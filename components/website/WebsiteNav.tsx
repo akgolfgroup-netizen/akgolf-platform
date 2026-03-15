@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
-import { NAV_LINKS } from "@/lib/website-constants";
+import { NAV_LINKS, BOOKING_URL } from "@/lib/website-constants";
 import { AKLogo } from "./AKLogo";
 
 export function WebsiteNav() {
@@ -69,12 +69,14 @@ export function WebsiteNav() {
             >
               Logg inn
             </Link>
-            <Link
-              href="/#apply"
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-btn w-btn-primary text-[13px]"
             >
-              Avtal en samtale
-            </Link>
+              Book time
+            </a>
           </div>
 
           {/* Mobile toggle */}
@@ -151,13 +153,15 @@ export function WebsiteNav() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.4 }}
               >
-                <Link
-                  href="/#apply"
+                <a
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
                   className="w-btn w-btn-primary mt-4"
                 >
-                  Avtal en samtale
-                </Link>
+                  Book time
+                </a>
               </motion.div>
             </div>
           </motion.div>

@@ -2,7 +2,6 @@
 
 import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FORMSPREE_ENDPOINT } from "@/lib/website-constants";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
@@ -11,20 +10,25 @@ export function ApplicationForm({ defaultProgram }: { defaultProgram?: string } 
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!FORMSPREE_ENDPOINT) {
-      setStatus("error");
-      return;
-    }
     setStatus("submitting");
 
     const form = e.currentTarget;
-    const data = new FormData(form);
+    const formData = new FormData(form);
+    
+    const data = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      handicap: formData.get("handicap") as string,
+      program: formData.get("program") as string,
+      message: formData.get("message") as string,
+    };
 
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        body: data,
-        headers: { Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
 
       if (res.ok) {
@@ -168,7 +172,7 @@ export function ApplicationForm({ defaultProgram }: { defaultProgram?: string } 
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-sm text-red-600"
+                className="text-sm text-error"
               >
                 Noe gikk galt. Prøv igjen eller send e-post til post@akgolf.no.
               </motion.p>

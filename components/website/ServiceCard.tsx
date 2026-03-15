@@ -1,14 +1,5 @@
 import Link from "next/link";
-
-const accentColors = {
-  academy: "bg-academy",
-  junior: "bg-junior",
-  software: "bg-software",
-  utvikling: "bg-utvikling",
-  gold: "bg-gold",
-} as const;
-
-type Accent = keyof typeof accentColors;
+import { ACCENT_COLORS, type Accent } from "@/lib/design-tokens";
 
 export function ServiceCard({
   title,
@@ -27,7 +18,7 @@ export function ServiceCard({
     <Link href={href} className="group block">
       <div className="w-service-card h-full flex flex-col">
         {/* Accent bar */}
-        <div className={`h-1 w-12 rounded-full ${accentColors[accent]} mb-6`} />
+        <div className={`h-1 w-12 rounded-full ${ACCENT_COLORS[accent]} mb-6`} />
 
         <h3 className="w-heading-sm mb-3 transition-opacity duration-300 group-hover:opacity-80">
           {title}
@@ -41,7 +32,7 @@ export function ServiceCard({
         <ul className="space-y-2 mb-6">
           {features.map((feature) => (
             <li key={feature} className="flex items-center gap-2 text-xs text-ink-60">
-              <span className={`w-1 h-1 rounded-full ${accentColors[accent]} shrink-0`} />
+              <span className={`w-1 h-1 rounded-full ${ACCENT_COLORS[accent]} shrink-0`} />
               {feature}
             </li>
           ))}

@@ -1,7 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { RevealOnScroll } from "./RevealOnScroll";
 import { SectionLabel } from "./SectionLabel";
-import { ImagePlaceholder } from "./ImagePlaceholder";
 import { TEAM } from "@/lib/website-constants";
 
 export function TeamSection() {
@@ -22,7 +22,15 @@ export function TeamSection() {
             <RevealOnScroll key={member.name} delay={i * 0.15}>
               <div className="flex flex-col items-center text-center">
                 <div className="w-full max-w-sm mb-6">
-                  <ImagePlaceholder aspect="3/4" label={member.name} />
+                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-ink-10">
+                    <Image
+                      src={i === 0 ? "/images/academy/AK-Golf-Academy-1.jpg" : "/images/academy/AK-Golf-Academy-2.jpg"}
+                      alt={member.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
                 </div>
 
                 <h3 className="w-heading-md mb-1">{member.name}</h3>

@@ -1,66 +1,82 @@
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { NextRequest, NextResponse } from "next/server";
+
+// Lazy initialization av Resend for å unngå byggefeil
+let resendInstance: any = null;
+function getResend() {
+  if (!resendInstance) {
+    const { Resend } = require("resend");
+    resendInstance = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resendInstance;
+}
 
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "post@akgolf.no";
 
-function isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const formData = await request.formData();
+    const body = await req.json();
+    const { name, email, phone, handicap, program, message } = body;
 
-    const name = (formData.get("name") as string)?.trim();
-    const email = (formData.get("email") as string)?.trim();
-    const phone = (formData.get("phone") as string)?.trim() || "";
-    const handicap = (formData.get("handicap") as string)?.trim() || "";
-    const program = (formData.get("program") as string)?.trim() || "";
-    const message = (formData.get("message") as string)?.trim() || "";
-
+    // Validering
     if (!name || !email) {
       return NextResponse.json(
-        { error: "Navn og e-post er påkrevd." },
+        { error: "Navn og e-post er påkrevd" },
         { status: 400 }
       );
     }
 
-    if (!isValidEmail(email)) {
+    const resend = getResend();
+
+    // Send e-post
+    const { data, error } = await resend.emails.send({
+      from: "AK Golf Website <kontakt@akgolf.no>",
+      to: CONTACT_EMAIL,
+      replyTo: email,
+      subject: `Ny henvendelse fra ${name} - AK Golf`,
+      html: `
+        <h2>Ny henvendelse fra nettsiden</h2>
+        <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Navn:</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${name}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">E-post:</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${email}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Telefon:</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${phone || "Ikke oppgitt"}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Handicap:</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${handicap || "Ikke oppgitt"}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Program:</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${program || "Ikke valgt"}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; vertical-align: top;">Melding:</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${message?.replace(/\n/g, "<br>") || "Ingen melding"}</td>
+          </tr>
+        </table>
+      `,
+    });
+
+    if (error) {
+      console.error("Resend error:", error);
       return NextResponse.json(
-        { error: "Ugyldig e-postadresse." },
-        { status: 400 }
+        { error: "Kunne ikke sende e-post" },
+        { status: 500 }
       );
     }
 
-    // Build email body
-    const lines = [
-      `Navn: ${name}`,
-      `E-post: ${email}`,
-      phone && `Telefon: ${phone}`,
-      handicap && `Handicap: ${handicap}`,
-      program && `Program: ${program}`,
-      message && `\nMelding:\n${message}`,
-    ].filter(Boolean);
-
-    // Send via Resend (falls back to console log if API key is placeholder)
-    if (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== "re_PLACEHOLDER") {
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      await resend.emails.send({
-        from: "AK Golf <noreply@akgolf.no>",
-        to: CONTACT_EMAIL,
-        replyTo: email,
-        subject: `Ny søknad: ${name}${program ? ` — ${program}` : ""}`,
-        text: lines.join("\n"),
-      });
-    } else {
-      console.log("[contact] Ny søknad mottatt (Resend ikke konfigurert):\n", lines.join("\n"));
-    }
-
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, id: data?.id });
   } catch (error) {
-    console.error("[contact] Feil ved mottak:", error);
+    console.error("Contact form error:", error);
     return NextResponse.json(
-      { error: "Noe gikk galt. Prøv igjen senere." },
+      { error: "Noe gikk galt" },
       { status: 500 }
     );
   }
