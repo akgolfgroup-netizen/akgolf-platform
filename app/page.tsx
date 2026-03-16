@@ -22,6 +22,7 @@ import {
   DIVISIONS,
   METHOD_PILLARS,
   TESTIMONIALS,
+  BOOKING_URL,
 } from "@/lib/website-constants";
 
 // ─── Loader ───
@@ -126,8 +127,8 @@ export default function HomePage() {
                 animate={{ opacity: loading ? 0 : 1, y: loading ? 20 : 0 }}
                 transition={{ duration: 0.8, delay: 1.0 }}
               >
-                <Link href="/#apply" className="w-btn w-btn-primary">{HERO.ctaPrimary}</Link>
-                <Link href="/booking" className="w-btn w-btn-gold">{HERO.ctaBooking}</Link>
+                <Link href="/booking" className="w-btn w-btn-primary">{HERO.ctaPrimary}</Link>
+                <Link href="/#apply" className="w-btn w-btn-gold">{HERO.ctaBooking || "Kontakt oss"}</Link>
                 <Link href="/#method" className="w-btn w-btn-secondary">{HERO.ctaSecondary} &rarr;</Link>
               </motion.div>
 
@@ -153,7 +154,7 @@ export default function HomePage() {
         <section className="w-section-lg bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="text-center mb-16">
+              <div className="text-center mb-12">
                 <SectionLabel>Våre divisjoner</SectionLabel>
                 <h2 className="w-heading-lg mt-4">Alt du trenger. Under ett tak.</h2>
               </div>
@@ -179,7 +180,7 @@ export default function HomePage() {
         <section id="method" className="w-section-lg bg-ink-100 w-section-dark">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="text-center mb-16">
+              <div className="text-center mb-12">
                 <SectionLabel>Vår metode</SectionLabel>
                 <h2 className="w-heading-lg text-white mt-4">
                   Tre pilarer. Ett system.
@@ -210,7 +211,7 @@ export default function HomePage() {
         <section className="bg-ink-100 w-section-lg w-section-dark">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="text-center mb-16">
+              <div className="text-center mb-12">
                 <SectionLabel>Hva elevene sier</SectionLabel>
                 <h2 className="w-heading-lg text-white mt-4">Resultater du kan høre.</h2>
               </div>
@@ -234,7 +235,7 @@ export default function HomePage() {
         <section id="apply" className="w-section-lg bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="text-center mb-16">
+              <div className="text-center mb-12">
                 <SectionLabel>Ta kontakt</SectionLabel>
                 <h2 className="w-heading-lg mt-4 mb-4">Start med en uforpliktende samtale.</h2>
                 <p className="text-ink-50 max-w-lg mx-auto">

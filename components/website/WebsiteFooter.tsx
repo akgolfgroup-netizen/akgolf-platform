@@ -46,7 +46,7 @@ export function WebsiteFooter() {
 
           {/* Divisions */}
           <div>
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-gold mb-5">
+            <h4 className="w-meta text-gold mb-5">
               Divisjoner
             </h4>
             <ul className="space-y-3">
@@ -65,7 +65,7 @@ export function WebsiteFooter() {
 
           {/* Company */}
           <div>
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-gold mb-5">
+            <h4 className="w-meta text-gold mb-5">
               Selskap
             </h4>
             <ul className="space-y-3">
@@ -84,7 +84,7 @@ export function WebsiteFooter() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-gold mb-5">
+            <h4 className="w-meta text-gold mb-5">
               Kontakt
             </h4>
             <ul className="space-y-3 text-sm text-ink-40">

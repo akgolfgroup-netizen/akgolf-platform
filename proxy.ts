@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Dashboard routes require authentication
+  // Website training plan dashboard requires authentication
   if (request.nextUrl.pathname.startsWith("/treningsplan/dashboard")) {
     if (!user) {
       const loginUrl = new URL("/auth/login", request.url);
@@ -39,16 +39,33 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Already logged-in users on login page → redirect to dashboard
+  // Portal requires authentication (except login page)
+  if (
+    request.nextUrl.pathname.startsWith("/portal") &&
+    !request.nextUrl.pathname.startsWith("/portal/login")
+  ) {
+    if (!user) {
+      return NextResponse.redirect(new URL("/portal/login", request.url));
+    }
+  }
+
+  // Already logged-in users on login pages → redirect
   if (request.nextUrl.pathname === "/auth/login" && user) {
     return NextResponse.redirect(
       new URL("/treningsplan/dashboard", request.url)
     );
+  }
+  if (request.nextUrl.pathname === "/portal/login" && user) {
+    return NextResponse.redirect(new URL("/portal", request.url));
   }
 
   return supabaseResponse;
 }
 
 export const config = {
-  matcher: ["/treningsplan/dashboard/:path*", "/auth/:path*"],
+  matcher: [
+    "/treningsplan/dashboard/:path*",
+    "/auth/:path*",
+    "/portal/:path*",
+  ],
 };

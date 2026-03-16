@@ -26,7 +26,7 @@ export const TEAM = [
     division: "AK Golf Junior Academy",
     bio: "Med over 10 års erfaring som golftrener på høyeste nivå har Anders viet karrieren sin til å hjelpe ambisiøse spillere med å nå sitt fulle potensial. Hans filosofi er enkel: teknikk alene er ikke nok — de beste resultatene kommer når vi jobber med hele spilleren.",
     certifications: ["PGA Professional", "TPI Certified", "Mental Coach", "Trackman Certified"],
-    contact: { email: "anders@akgolf.no", phone: "+47 900 00 000" },
+    contact: { email: "anders@akgolf.no", phone: "+47 909 67 995" },
   },
   {
     name: "Markus Røinås Pedersen",
@@ -34,7 +34,7 @@ export const TEAM = [
     division: "Junior Academy · GFGK",
     bio: "Markus har hovedansvar for juniortrening på GFGK og brenner for å utvikle neste generasjons golfere. Med bakgrunn i juniorutvikling og konkurransegolf skaper han et trygt og motiverende miljø der unge spillere kan vokse — både som golfere og mennesker.",
     certifications: ["PGA Professional"],
-    contact: { email: "markus@akgolf.no", phone: "+47 900 00 000" },
+    contact: { email: "markus@akgolf.no", phone: "+47 905 86 097" },
   },
 ] as const;
 
@@ -393,12 +393,15 @@ export const FOOTER_LINKS = {
   ],
   contact: {
     email: "post@akgolf.no",
-    phone: "+47 900 00 000",
+    phone: "+47 909 67 995",
     location: "GFGK, Vinger",
   },
 } as const;
 
-// ─── Formspree ───
+// ─── Booking ───
+export const BOOKING_URL = "https://booking-system-ip0prpfzq-akgolfgroup-netizens-projects.vercel.app";
+
+// ─── Formspree (deprecated - bruker nå /api/contact) ───
 export const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ID
   ? `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_ID}`
   : "";

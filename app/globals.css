@@ -75,6 +75,28 @@
   --duration-normal: 300ms;
   --duration-slow: 500ms;
 
+  /* Shadow tokens */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
+  --shadow-gold: 0 12px 40px rgba(184, 151, 92, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+
+  /* Border radius tokens */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Z-index scale */
+  --z-base: 0;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-nav: 50;
+  --z-overlay: 60;
+  --z-modal: 70;
+  --z-loader: 100;
+
 }
 
 /* ─── Base ─── */
@@ -334,6 +356,23 @@
     border-color: rgba(255, 255, 255, 0.1);
   }
 
+  /* Glassmorphism card — light sections with gold accent */
+  .w-glass-card-gold {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(184, 151, 92, 0.15);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: transform 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
+  }
+
+  .w-glass-card-gold:hover {
+    transform: translateY(-4px);
+    border-color: rgba(184, 151, 92, 0.35);
+    box-shadow: 0 12px 40px rgba(184, 151, 92, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+
   /* Service card (division cards) */
   .w-service-card {
     background: white;
@@ -416,6 +455,28 @@
   .w-select:focus {
     border-color: var(--color-gold);
     box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.1);
+  }
+
+  /* Meta label — footer headings, day labels, mono-captions */
+  .w-meta {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Body text — consistent paragraph styling */
+  .w-body {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--color-ink-50);
+  }
+
+  .w-body-lg {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-ink-50);
   }
 
   /* Section container */

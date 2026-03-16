@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
-import { NAV_LINKS } from "@/lib/website-constants";
+import { NAV_LINKS, BOOKING_URL } from "@/lib/website-constants";
 import { AKLogo } from "./AKLogo";
 
 export function WebsiteNav() {
@@ -62,11 +62,21 @@ export function WebsiteNav() {
               </Link>
             ))}
             <Link
-              href="/#apply"
+              href="/portal"
+              className={`text-[13px] font-medium tracking-wide transition-colors duration-300 ${
+                scrolled ? "text-ink-50 hover:text-ink-80" : "text-white/70 hover:text-white"
+              }`}
+            >
+              Logg inn
+            </Link>
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-btn w-btn-primary text-[13px]"
             >
-              Avtal en samtale
-            </Link>
+              Book time
+            </a>
           </div>
 
           {/* Mobile toggle */}
@@ -131,12 +141,27 @@ export function WebsiteNav() {
                 transition={{ delay: 0.35, duration: 0.4 }}
               >
                 <Link
-                  href="/#apply"
+                  href="/portal"
+                  onClick={() => setMobileOpen(false)}
+                  className="text-base font-medium text-ink-40 hover:text-ink-80 transition-colors"
+                >
+                  Logg inn
+                </Link>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+              >
+                <a
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
                   className="w-btn w-btn-primary mt-4"
                 >
-                  Avtal en samtale
-                </Link>
+                  Book time
+                </a>
               </motion.div>
             </div>
           </motion.div>

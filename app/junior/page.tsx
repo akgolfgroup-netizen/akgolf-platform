@@ -88,7 +88,7 @@ export default function JuniorPage() {
                   <div>
                     <SectionLabel>Din trener</SectionLabel>
                     <h2 className="w-heading-lg mt-4 mb-1">{juniorCoach.name}</h2>
-                    <p className="text-xs font-mono text-gold-text uppercase tracking-wider mb-6">
+                    <p className="w-meta text-gold-text mb-6">
                       {juniorCoach.role} · {juniorCoach.division}
                     </p>
                     <p className="text-ink-50 leading-relaxed mb-6">{juniorCoach.bio}</p>
@@ -221,7 +221,7 @@ export default function JuniorPage() {
               ].map((item) => (
                 <StaggerItem key={item.day}>
                   <div className="w-card h-full">
-                    <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-junior">{item.day}</span>
+                    <span className="w-meta text-junior">{item.day}</span>
                     <h4 className="font-display text-base font-semibold text-ink-90 mt-2 mb-2">{item.focus}</h4>
                     <p className="text-sm text-ink-50 leading-relaxed">{item.desc}</p>
                   </div>
