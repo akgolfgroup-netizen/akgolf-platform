@@ -17,8 +17,7 @@ import { PaymentStep } from "./components/PaymentStep";
 import { Confirmation } from "./components/Confirmation";
 import type { ServiceType, Instructor } from "./types";
 
-const PORTAL_URL =
-  process.env.NEXT_PUBLIC_PORTAL_URL ?? "/portal";
+// All API routes are internal to this monorepo — no external proxy needed
 
 type Step = "service" | "instructor" | "datetime" | "details" | "payment" | "confirmation";
 
@@ -118,7 +117,7 @@ function BookingContent() {
     setError(null);
 
     try {
-      const res = await fetch(`${PORTAL_URL}/api/booking/create`, {
+      const res = await fetch("/api/booking/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -156,7 +155,7 @@ function BookingContent() {
     setError(null);
 
     try {
-      const res = await fetch(`${PORTAL_URL}/api/booking/vipps-initiate`, {
+      const res = await fetch("/api/booking/vipps-initiate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bookingId }),
@@ -292,7 +291,6 @@ function BookingContent() {
                     <DateTimePicker
                       serviceTypeId={selectedService.id}
                       instructorId={selectedInstructor.id}
-                      portalUrl={PORTAL_URL}
                       onSelect={handleTimeSelect}
                     />
                   )}

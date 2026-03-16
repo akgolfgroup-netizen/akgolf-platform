@@ -8,7 +8,6 @@ import { StepHeader } from "./StepHeader";
 interface Props {
   serviceTypeId: string;
   instructorId: string;
-  portalUrl: string;
   onSelect: (startTime: string) => void;
 }
 
@@ -22,7 +21,7 @@ const MONTH_NAMES = [
   "Juli", "August", "September", "Oktober", "November", "Desember",
 ];
 
-export function DateTimePicker({ serviceTypeId, instructorId, portalUrl, onSelect }: Props) {
+export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [slots, setSlots] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -40,7 +39,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, portalUrl, onSelec
         instructorId,
         date: dateKey,
       });
-      const res = await fetch(`${portalUrl}/api/public/slots?${params}`);
+      const res = await fetch(`/api/portal/public/slots?${params}`);
       if (res.ok) {
         const data = await res.json();
         setSlots(data);
@@ -50,7 +49,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, portalUrl, onSelec
     } finally {
       setLoading(false);
     }
-  }, [serviceTypeId, instructorId, portalUrl]);
+  }, [serviceTypeId, instructorId]);
 
   useEffect(() => {
     if (selectedDate) {

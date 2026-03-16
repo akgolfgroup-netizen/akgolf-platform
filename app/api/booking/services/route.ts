@@ -1,35 +1,45 @@
 import { NextResponse } from "next/server";
-
-const PORTAL_API_URL =
-  process.env.PORTAL_INTERNAL_URL ?? process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://localhost:3001/portal";
+import { prisma } from "@/lib/portal/prisma";
 
 /**
  * GET /api/booking/services
- * Proxy to portal's public service-types API.
  * Returns active, public services with instructors.
+ * Reads directly from the database (same monorepo as portal).
  */
 export async function GET() {
   try {
-    const res = await fetch(`${PORTAL_API_URL}/api/public/service-types`, {
-      next: { revalidate: 60 },
+    const types = await prisma.serviceType.findMany({
+      where: { isPublic: true, isActive: true },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        category: true,
+        duration: true,
+        price: true,
+        color: true,
+        minNoticeHours: true,
+        maxAdvanceDays: true,
+        allowStripe: true,
+        allowVipps: true,
+        instructors: {
+          select: {
+            id: true,
+            title: true,
+            user: { select: { name: true, image: true } },
+          },
+        },
+      },
+      orderBy: { sortOrder: "asc" },
     });
 
-    if (!res.ok) {
-      return NextResponse.json(
-        { error: "Kunne ikke hente tjenester" },
-        { status: 503 }
-      );
-    }
-
-    const data = await res.json();
-
-    return NextResponse.json(data, {
+    return NextResponse.json(types, {
       headers: {
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       },
     });
   } catch (error) {
-    console.error("[booking/services] Failed to fetch from portal:", error);
+    console.error("[booking/services] DB error:", error);
     return NextResponse.json(
       { error: "Tjenester er midlertidig utilgjengelige" },
       { status: 503 }
