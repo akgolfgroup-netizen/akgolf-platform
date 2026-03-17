@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight, Loader2, CalendarDays } from "lucide-react";
 import { StepHeader } from "./StepHeader";
+import { cn } from "@/lib/portal/utils/cn";
 
 interface Props {
   serviceTypeId: string;
@@ -23,6 +24,7 @@ const MONTH_NAMES = [
 
 export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [slots, setSlots] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [viewMonth, setViewMonth] = useState(() => {
@@ -54,6 +56,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
   useEffect(() => {
     if (selectedDate) {
       fetchSlots(selectedDate);
+      setSelectedTime(null);
     }
   }, [selectedDate, fetchSlots]);
 
@@ -80,7 +83,13 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
       return { year: y, month: m };
     });
     setSelectedDate(null);
+    setSelectedTime(null);
     setSlots([]);
+  }
+
+  function handleTimeSelect(slot: string) {
+    setSelectedTime(slot);
+    onSelect(slot);
   }
 
   return (
@@ -91,37 +100,43 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
         description="Når passer det for deg?"
       />
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {/* Calendar */}
-        <div className="w-card">
-          <div className="flex items-center justify-between mb-4">
+      <div className="grid gap-6 lg:grid-cols-5">
+        {/* Calendar - takes 3 columns */}
+        <div className="lg:col-span-3 w-card">
+          {/* Header with month navigation */}
+          <div className="flex items-center justify-between mb-6">
             <button
               onClick={() => navigateMonth(-1)}
               disabled={!canGoPrev}
-              className="p-1.5 rounded-lg hover:bg-ink-10 disabled:opacity-30 transition-colors"
+              className="p-2 rounded-xl hover:bg-navy/5 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
             >
-              <ChevronLeft size={18} />
+              <ChevronLeft size={20} className="text-navy" />
             </button>
-            <h3 className="font-semibold text-ink-90">
+            <h3 className="font-semibold text-lg text-navy">
               {MONTH_NAMES[viewMonth.month]} {viewMonth.year}
             </h3>
             <button
               onClick={() => navigateMonth(1)}
-              className="p-1.5 rounded-lg hover:bg-ink-10 transition-colors"
+              className="p-2 rounded-xl hover:bg-navy/5 transition-all"
             >
-              <ChevronRight size={18} />
+              <ChevronRight size={20} className="text-navy" />
             </button>
           </div>
 
-          <div className="grid grid-cols-7 gap-1 text-center">
+          {/* Day names header */}
+          <div className="grid grid-cols-7 gap-1 mb-2">
             {DAY_NAMES.map((d) => (
-              <div key={d} className="text-xs font-medium text-ink-40 py-1">
+              <div key={d} className="text-xs font-semibold text-ink-40 text-center py-2">
                 {d}
               </div>
             ))}
+          </div>
+
+          {/* Calendar grid */}
+          <div className="grid grid-cols-7 gap-1">
             {calendarDays.map((day, i) => {
               if (day === null) {
-                return <div key={`empty-${i}`} />;
+                return <div key={`empty-${i}`} className="aspect-square" />;
               }
 
               const date = new Date(viewMonth.year, viewMonth.month, day);
@@ -131,66 +146,140 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
               const isToday = date.getTime() === today.getTime();
 
               return (
-                <button
+                <motion.button
                   key={dateKey}
+                  whileHover={!isPast ? { scale: 1.05 } : {}}
+                  whileTap={!isPast ? { scale: 0.95 } : {}}
                   disabled={isPast}
                   onClick={() => setSelectedDate(dateKey)}
-                  className={`
-                    relative w-full aspect-square flex items-center justify-center rounded-lg text-sm transition-all
-                    ${isPast ? "text-ink-30 cursor-not-allowed" : "hover:bg-gold/10 cursor-pointer"}
-                    ${isSelected ? "bg-gold text-white font-semibold" : ""}
-                    ${isToday && !isSelected ? "font-semibold text-gold" : ""}
-                  `}
+                  className={cn(
+                    "relative aspect-square flex items-center justify-center rounded-xl text-sm font-medium transition-all",
+                    isPast && "text-ink-20 cursor-not-allowed",
+                    !isPast && !isSelected && "hover:bg-gold/10 text-ink-80 cursor-pointer",
+                    isSelected && "bg-gold text-white shadow-lg shadow-gold/30",
+                    isToday && !isSelected && "ring-2 ring-gold ring-offset-2 text-gold font-bold"
+                  )}
                 >
                   {day}
-                </button>
+                  {/* Availability indicator dot */}
+                  {!isPast && !isSelected && (
+                    <div className="absolute bottom-1 w-1 h-1 rounded-full bg-gold/40" />
+                  )}
+                </motion.button>
               );
             })}
           </div>
+
+          {/* Legend */}
+          <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-ink-10">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-gold" />
+              <span className="text-xs text-ink-40">Ledig</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-ink-20" />
+              <span className="text-xs text-ink-40">Opptatt</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full ring-2 ring-gold" />
+              <span className="text-xs text-ink-40">I dag</span>
+            </div>
+          </div>
         </div>
 
-        {/* Time slots */}
-        <div className="w-card min-h-[280px]">
-          {!selectedDate ? (
-            <div className="flex items-center justify-center h-full text-ink-40 text-sm">
-              Velg en dato i kalenderen
-            </div>
-          ) : loading ? (
-            <div className="flex items-center justify-center h-full">
-              <Loader2 size={24} className="animate-spin text-gold" />
-            </div>
-          ) : slots.length === 0 ? (
-            <div className="flex items-center justify-center h-full text-ink-40 text-sm">
-              Ingen ledige tider denne dagen
-            </div>
-          ) : (
-            <>
-              <h4 className="text-sm font-medium text-ink-50 mb-3">
-                Ledige tider
-              </h4>
-              <div className="grid grid-cols-3 gap-2">
-                {slots.map((slot, i) => {
-                  const time = new Date(slot);
-                  const timeStr = time.toLocaleTimeString("nb-NO", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  });
-                  return (
-                    <motion.button
-                      key={slot}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: i * 0.02, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                      onClick={() => onSelect(slot)}
-                      className="px-3 py-2.5 rounded-lg border border-ink-20 text-sm font-medium text-ink-80 hover:border-gold hover:bg-gold/5 transition-all"
-                    >
-                      {timeStr}
-                    </motion.button>
-                  );
-                })}
-              </div>
-            </>
-          )}
+        {/* Time slots - takes 2 columns */}
+        <div className="lg:col-span-2">
+          <AnimatePresence mode="wait">
+            {!selectedDate ? (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="w-card min-h-[300px] flex flex-col items-center justify-center text-center p-6"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-gold/10 flex items-center justify-center mb-4">
+                  <CalendarDays size={28} className="text-gold" />
+                </div>
+                <h4 className="font-medium text-ink-90 mb-2">Velg en dato</h4>
+                <p className="text-sm text-ink-50">
+                  Klikk på en dato i kalenderen for å se ledige tider
+                </p>
+              </motion.div>
+            ) : loading ? (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="w-card min-h-[300px] flex items-center justify-center"
+              >
+                <Loader2 size={32} className="animate-spin text-gold" />
+              </motion.div>
+            ) : slots.length === 0 ? (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="w-card min-h-[300px] flex flex-col items-center justify-center text-center p-6"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-ink-10 flex items-center justify-center mb-4">
+                  <CalendarDays size={28} className="text-ink-40" />
+                </div>
+                <h4 className="font-medium text-ink-90 mb-2">Ingen ledige tider</h4>
+                <p className="text-sm text-ink-50">
+                  Prøv en annen dato eller kontakt oss for assistanse
+                </p>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                className="w-card"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="font-semibold text-navy">
+                    {new Date(selectedDate).toLocaleDateString("nb-NO", {
+                      weekday: "long",
+                      day: "numeric",
+                      month: "long",
+                    })}
+                  </h4>
+                  <span className="text-sm text-gold font-medium">
+                    {slots.length} ledige
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 max-h-[400px] overflow-y-auto pr-1">
+                  {slots.map((slot, i) => {
+                    const time = new Date(slot);
+                    const timeStr = time.toLocaleTimeString("nb-NO", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    });
+                    const isSelected = selectedTime === slot;
+
+                    return (
+                      <motion.button
+                        key={slot}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: i * 0.03, duration: 0.2 }}
+                        onClick={() => handleTimeSelect(slot)}
+                        className={cn(
+                          "px-4 py-3 rounded-xl text-sm font-medium transition-all",
+                          isSelected
+                            ? "bg-gold text-white shadow-lg shadow-gold/30"
+                            : "bg-ink-5 text-ink-80 hover:bg-gold/10 hover:text-gold border border-ink-10 hover:border-gold/30"
+                        )}
+                      >
+                        {timeStr}
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ function getResend() {
 }
 
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "post@akgolf.no";
+const FROM_EMAIL = process.env.FROM_EMAIL || "onboarding@resend.dev";
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     // Send e-post
     const { data, error } = await resend.emails.send({
-      from: "AK Golf Website <kontakt@akgolf.no>",
+      from: `AK Golf Website <${FROM_EMAIL}>`,
       to: CONTACT_EMAIL,
       replyTo: email,
       subject: `Ny henvendelse fra ${name} - AK Golf`,
