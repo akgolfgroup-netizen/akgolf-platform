@@ -36,10 +36,6 @@ export async function processRefund(
     return refundStripe(providerPaymentId, refundAmount);
   }
 
-  if (paymentMethod === PaymentMethod.VIPPS) {
-    return refundVipps(providerPaymentId, refundAmount);
-  }
-
   // INVOICE or NONE — no automated refund
   return {
     success: true,
@@ -73,87 +69,4 @@ async function refundStripe(
   }
 }
 
-async function refundVipps(
-  orderId: string,
-  amount: number
-): Promise<RefundResult> {
-  // Vipps ePayment API refund
-  const accessToken = await getVippsAccessToken();
-  if (!accessToken) {
-    return {
-      success: false,
-      refundedAmount: 0,
-      error: "Kunne ikke autentisere mot Vipps",
-    };
-  }
 
-  try {
-    const res = await fetch(
-      `https://api.vipps.no/epayment/v1/payments/${orderId}/refund`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-          "Ocp-Apim-Subscription-Key":
-            process.env.VIPPS_SUBSCRIPTION_KEY ?? "",
-          "Merchant-Serial-Number":
-            process.env.VIPPS_MERCHANT_SERIAL_NUMBER ?? "",
-        },
-        body: JSON.stringify({
-          modificationAmount: {
-            currency: "NOK",
-            value: amount,
-          },
-        }),
-      }
-    );
-
-    if (!res.ok) {
-      const body = await res.text();
-      console.error("[Refund] Vipps refund failed:", res.status, body);
-      return {
-        success: false,
-        refundedAmount: 0,
-        error: `Vipps refusjon feilet (${res.status})`,
-      };
-    }
-
-    return {
-      success: true,
-      refundedAmount: amount,
-      providerRefundId: `vipps-refund-${orderId}`,
-    };
-  } catch (error) {
-    console.error("[Refund] Vipps refund error:", error);
-    return {
-      success: false,
-      refundedAmount: 0,
-      error: error instanceof Error ? error.message : "Vipps refund feilet",
-    };
-  }
-}
-
-async function getVippsAccessToken(): Promise<string | null> {
-  try {
-    const res = await fetch(
-      "https://api.vipps.no/accesstoken/get",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          client_id: process.env.VIPPS_CLIENT_ID ?? "",
-          client_secret: process.env.VIPPS_CLIENT_SECRET ?? "",
-          "Ocp-Apim-Subscription-Key":
-            process.env.VIPPS_SUBSCRIPTION_KEY ?? "",
-        },
-      }
-    );
-
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.access_token ?? null;
-  } catch {
-    return null;
-  }
-}

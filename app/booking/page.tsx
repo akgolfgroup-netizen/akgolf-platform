@@ -9,6 +9,7 @@ import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SubPageHero } from "@/components/website/SubPageHero";
 import { RevealOnScroll } from "@/components/website/RevealOnScroll";
+import { ProgressBar } from "./components/ProgressBar";
 import { ServiceSelector } from "./components/ServiceSelector";
 import { InstructorSelector } from "./components/InstructorSelector";
 import { DateTimePicker } from "./components/DateTimePicker";
@@ -150,36 +151,6 @@ function BookingContent() {
     }
   }, [selectedService, selectedInstructor, selectedTime]);
 
-  async function handleVipps() {
-    if (!bookingId) return;
-    setError(null);
-
-    try {
-      const res = await fetch("/api/booking/vipps-initiate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bookingId }),
-      });
-
-      if (res.status === 501) {
-        setError("Vipps-betaling er ikke tilgjengelig ennå. Bruk kortbetaling.");
-        return;
-      }
-
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error ?? "Kunne ikke starte Vipps-betaling.");
-        return;
-      }
-
-      if (data.paymentUrl) {
-        window.location.href = data.paymentUrl;
-      }
-    } catch {
-      setError("Nettverksfeil. Prøv igjen.");
-    }
-  }
-
   function handlePaymentSuccess() {
     setStep("confirmation");
   }
@@ -207,7 +178,7 @@ function BookingContent() {
           eyebrow="Booking"
           heading="Book coaching"
           description="Velg tjeneste, trener og tidspunkt — vi tar oss av resten."
-          accent="gold"
+          accent="academy"
         />
 
         {/* Wizard content */}
@@ -282,6 +253,7 @@ function BookingContent() {
 
                   {step === "instructor" && selectedService && (
                     <InstructorSelector
+                      service={selectedService}
                       instructors={selectedService.instructors}
                       onSelect={handleInstructorSelect}
                     />
@@ -312,8 +284,6 @@ function BookingContent() {
                       bookingId={bookingId}
                       serviceName={selectedService.name}
                       amount={selectedService.price}
-                      allowVipps={selectedService.allowVipps}
-                      onVipps={handleVipps}
                       onSuccess={handlePaymentSuccess}
                     />
                   )}

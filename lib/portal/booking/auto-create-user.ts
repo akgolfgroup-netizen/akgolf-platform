@@ -1,4 +1,5 @@
 import { randomBytes } from "crypto";
+import bcrypt from "bcrypt";
 import { prisma } from "@/lib/portal/prisma";
 import { createPlayerProfile } from "@/lib/portal/notion/player-profiles";
 
@@ -8,8 +9,10 @@ interface AutoCreateResult {
   tempPassword?: string;
 }
 
+const SALT_ROUNDS = 12;
+
 /**
- * Find existing user by email, or create a new STUDENT user with a random password.
+ * Find existing user by email, or create a new STUDENT user with a hashed password.
  * Also creates a Notion player profile for new users.
  */
 export async function autoCreateUser(
@@ -28,16 +31,17 @@ export async function autoCreateUser(
 
   // Generate a random password (will be sent in welcome email)
   const tempPassword = randomBytes(6).toString("base64url"); // ~8 chars
+  
+  // Hash the password with bcrypt
+  const hashedPassword = await bcrypt.hash(tempPassword, SALT_ROUNDS);
 
-  // Create user
+  // Create user with hashed password
   const user = await prisma.user.create({
     data: {
       email,
       name,
       role: "STUDENT",
-      // Store hashed password — NextAuth Credentials provider will verify
-      // For now, store plaintext; hash should be added when Credentials provider is configured
-      password: tempPassword,
+      password: hashedPassword,
     },
   });
 
@@ -65,4 +69,15 @@ export async function autoCreateUser(
   }
 
   return { userId: user.id, isNewUser: true, tempPassword };
+}
+
+/**
+ * Verify a password against a hashed password.
+ * Used by NextAuth Credentials provider.
+ */
+export async function verifyPassword(
+  plainPassword: string,
+  hashedPassword: string
+): Promise<boolean> {
+  return bcrypt.compare(plainPassword, hashedPassword);
 }

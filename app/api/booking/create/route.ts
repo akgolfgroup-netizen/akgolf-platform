@@ -82,9 +82,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!["STRIPE", "VIPPS"].includes(paymentMethod)) {
+  if (paymentMethod !== "STRIPE") {
     return NextResponse.json(
-      { error: "Ugyldig betalingsmetode" },
+      { error: "Kun kortbetaling (Stripe) er tilgjengelig" },
       { status: 400 }
     );
   }
@@ -170,16 +170,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Valider at tjenesten støtter valgt betalingsmetode
-    if (paymentMethod === "STRIPE" && !serviceType.allowStripe) {
+    // Valider at tjenesten støtter Stripe-betaling
+    if (!serviceType.allowStripe) {
       return NextResponse.json(
-        { error: "Stripe-betaling er ikke tilgjengelig for denne tjenesten" },
-        { status: 400 }
-      );
-    }
-    if (paymentMethod === "VIPPS" && !serviceType.allowVipps) {
-      return NextResponse.json(
-        { error: "Vipps-betaling er ikke tilgjengelig for denne tjenesten" },
+        { error: "Betaling er ikke tilgjengelig for denne tjenesten" },
         { status: 400 }
       );
     }
@@ -263,7 +257,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (paymentMethod === "STRIPE") {
+    // Opprett Stripe Payment Intent
+    {
       let paymentIntent: Awaited<
         ReturnType<typeof stripe.paymentIntents.create>
       >;
@@ -311,8 +306,6 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Vipps: returnerer bare bookingId, Vipps-initiering skjer separat
-    return NextResponse.json({ bookingId: booking.id, isNewUser });
   } catch (error) {
     if (error instanceof ConflictError) {
       return NextResponse.json({ error: error.message }, { status: 409 });

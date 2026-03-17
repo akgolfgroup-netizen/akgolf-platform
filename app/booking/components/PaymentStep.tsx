@@ -12,14 +12,19 @@ import { motion } from "framer-motion";
 import { CreditCard, AlertCircle, Loader2, ShieldCheck } from "lucide-react";
 import { StepHeader } from "./StepHeader";
 
+// AK Golf Brand Colors - aligned with brand guidelines
+const AK_GOLD = "#B8975C";
+const AK_NAVY = "#0F2950";
+const AK_INK_90 = "#1a2d3d";
+
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-// Stripe Elements requires JS color values — mirrors CSS tokens from globals.css
+// Stripe Elements themed with AK Golf brand colors
 const STRIPE_THEME = {
-  colorPrimary: "#B8975C",    // --color-gold
+  colorPrimary: AK_GOLD,
   colorBackground: "#FFFFFF",
-  colorText: "#0F2950",       // --color-navy
-  colorDanger: "#EF4444",     // --color-error
+  colorText: AK_NAVY,
+  colorDanger: "#EF4444",
 } as const;
 
 interface Props {
@@ -27,8 +32,6 @@ interface Props {
   bookingId: string;
   serviceName: string;
   amount: number; // øre
-  allowVipps: boolean;
-  onVipps: () => void;
   onSuccess: () => void;
 }
 
@@ -115,29 +118,11 @@ function CheckoutForm({ bookingId, serviceName, onSuccess }: {
   );
 }
 
-// Vipps brand color — external brand requirement
-function VippsIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect width="24" height="24" rx="4" fill="#FF5B24" />
-      <path
-        d="M6 8.5C7.5 8.5 8.5 9.5 9.5 11L12 15L14.5 11C15.5 9.5 16.5 8.5 18 8.5"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export function PaymentStep({
   clientSecret,
   bookingId,
   serviceName,
   amount,
-  allowVipps,
-  onVipps,
   onSuccess,
 }: Props) {
   const priceNok = amount / 100;
@@ -175,25 +160,6 @@ export function PaymentStep({
             onSuccess={onSuccess}
           />
         </Elements>
-
-        {/* Vipps — external brand color #FF5B24 */}
-        {allowVipps && (
-          <>
-            <div className="flex items-center gap-3">
-              <div className="flex-1 h-px bg-ink-20" />
-              <span className="text-xs text-ink-40">eller</span>
-              <div className="flex-1 h-px bg-ink-20" />
-            </div>
-
-            <button
-              onClick={onVipps}
-              className="w-btn w-full rounded-full border-2 border-vipps text-vipps hover:bg-vipps hover:text-white transition-all"
-            >
-              <VippsIcon />
-              Betal med Vipps
-            </button>
-          </>
-        )}
       </div>
     </div>
   );

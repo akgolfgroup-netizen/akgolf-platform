@@ -110,29 +110,42 @@ export const FOUNDER = {
 } as const;
 
 // ─── Testimonials ───
+// TODO: Innhent tillatelse for fullt navn og bilder fra kundene
 export const TESTIMONIALS = [
   {
     quote: "Anders har fullstendig transformert spillet mitt. Fra 18 til 11 i handicap på ett år — med en metode som føles naturlig og bærekraftig.",
     name: "Thomas R.",
-    role: "Medlem siden 2022",
+    fullName: "Thomas Rasmussen", // Avventer samtykke
+    role: "Academy-elev",
+    club: "Gardermoen Golfklubb",
+    program: "academy-utvikling",
     featured: true,
   },
   {
     quote: "Den individuelle tilnærmingen er det som skiller seg ut. Her er du ikke et nummer — du er et prosjekt de bryr seg om.",
     name: "Maria L.",
+    fullName: "Maria Larsen", // Avventer samtykke
     role: "Academy-elev",
+    club: "GFGK",
+    program: "academy-grunn",
     featured: false,
   },
   {
     quote: "Junior-programmet ga datteren vår struktur, motivasjon og en ekte følelse av mestring. Anbefales på det sterkeste.",
     name: "Erik og Lise S.",
+    fullName: "Erik og Lise Solberg", // Avventer samtykke
     role: "Juniorforeldre",
+    club: "GFGK",
+    program: "junior-16-17",
     featured: false,
   },
   {
     quote: "Vi implementerte AK Golf sin sportsplan i klubben. Resultatet var en 40% økning i juniorrekruttering første år.",
     name: "Knut A.",
-    role: "Daglig leder, Bogstad GK",
+    fullName: "Knut Andersen", // Avventer samtykke
+    role: "Daglig leder",
+    club: "Bogstad Golfklubb",
+    program: "klubb",
     featured: false,
   },
 ] as const;

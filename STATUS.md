@@ -13,7 +13,7 @@
 | Brand guidelines alignment | Ferdig |
 | Innhold (tekst) | Ferdig (oppdatert CTA-tone, FAQ, personvern) |
 | Bilder | Ikke startet — kun plassholdere |
-| Booking-system | ✅ Ferdig — Offentlig booking + betaling på /academy/booking |
+| Booking-system | ✅ Ferdig — Stripe-betaling, avbestilling, passord-hashing |
 | Skjema-integrasjon | Ikke funksjonelt (Formspree placeholder) |
 | Kontaktinfo | Telefonnumre er placeholder, e-post og lokasjon oppdatert |
 | SEO | Metadata, sitemap, robots.txt, OG-tags, Twitter Card, JSON-LD (Organization, FAQPage) |
@@ -271,12 +271,13 @@
 | E-postbekreftelse | ✅ Ferdig | Velkomst- og booking-bekreftelse sendes |
 | Notion-profil | ✅ Ferdig | Opprettes automatisk for nye brukere |
 
-### ✅ Betaling uten innlogging
+### ✅ Betaling & Sikkerhet
 
 | Funksjon | Status | Kommentar |
 |----------|--------|-----------|
 | Stripe-betaling | ✅ Ferdig | Offentlig betalingsside på `/booking/[id]/pay` |
-| Vipps-betaling | ✅ Ferdig | Direkte redirect til Vipps etter booking |
+| Passord-hashing | ✅ Ferdig | bcrypt med salt rounds 12 |
+| Avbestilling | ✅ Ferdig | `/api/portal/bookings/cancel` med refund |
 | Betaling uten innlogging | ✅ Ferdig | Full støtte for gjeste-betaling |
 
 ### Miljøvariabler som kreves
@@ -288,16 +289,15 @@ DATABASE_URL=postgresql://...
 # Stripe (valgfritt, for betaling)
 STRIPE_SECRET_KEY=sk_...
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_...
-
-# Vipps (valgfritt, for betaling)
-VIPPS_CLIENT_ID=...
-VIPPS_CLIENT_SECRET=...
-VIPPS_SUBSCRIPTION_KEY=...
-VIPPS_MERCHANT_SERIAL_NUMBER=...
+STRIPE_WEBHOOK_SECRET=whsec_...
 
 # E-post (valgfritt, for bekreftelser)
 RESEND_API_KEY=re_...
 CONTACT_EMAIL=post@akgolf.no
+FROM_EMAIL=noreply@akgolf.no
+
+# Cron (valgfritt, for påminnelser)
+CRON_SECRET=your_secret_here
 ```
 
 ---

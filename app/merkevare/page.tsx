@@ -99,7 +99,7 @@ export default function MerkevarePage() {
           eyebrow="AK Golf Utvikling"
           heading="Få din golfklubbs merkevare analysert gratis."
           description="Last opp logoen din, så leverer vi en komplett merkevare-analyse med farger, typografi og logo-regler — innen 24 timer."
-          accent="gold"
+          accent="software"
         />
 
         {/* ─── Social Proof Strip ─── */}

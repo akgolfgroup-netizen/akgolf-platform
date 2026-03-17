@@ -25,7 +25,7 @@ export default function TreningsplanPage() {
             eyebrow={TRENINGSPLAN.hero.eyebrow}
             heading={TRENINGSPLAN.hero.heading}
             description={TRENINGSPLAN.hero.description}
-            accent="gold"
+            accent="software"
           />
 
           {/* ─── How it Works ─── */}
