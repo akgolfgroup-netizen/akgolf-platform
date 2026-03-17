@@ -159,6 +159,9 @@ npx prisma migrate deploy 2>/dev/null || npx prisma migrate dev --name init
 echo "  🔄 Genererer Prisma client..."
 npx prisma generate
 
+echo "  🔄 Installerer tsx (for TypeScript seed)..."
+npm install -g tsx 2>/dev/null || echo "  (tsx allerede installert)"
+
 echo "  🔄 Seeder database med standarddata..."
 npx prisma db seed 2>/dev/null || echo "  (Seed allerede kjørt)"
 
