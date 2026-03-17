@@ -104,6 +104,7 @@ async function main() {
           maxStudents: svc.maxStudents,
           color: svc.color,
           sortOrder: sortOrder++,
+          category: "INDIVIDUAL",
         },
       });
       console.log(`✅ Tjeneste opprettet: ${svc.name} (${svc.price / 100} kr)`);
