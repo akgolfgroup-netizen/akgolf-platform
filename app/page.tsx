@@ -196,6 +196,7 @@ export default function HomePage() {
                   title={pillar.title}
                   subtitle={pillar.subtitle}
                   description={pillar.description}
+                  image={pillar.image}
                   reversed={i % 2 === 1}
                   dark
                 />

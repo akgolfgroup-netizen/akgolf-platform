@@ -81,18 +81,21 @@ export const METHOD_PILLARS = [
     title: "AK-Formelen",
     subtitle: "Teknikk + Strategi + Mental styrke",
     description: "Vår unike treningsmetodikk kombinerer fysisk teknikk, strategisk kursmanagement og mental robusthet i ett integrert system. Hver elev får en skreddersydd plan basert på grundig analyse.",
+    image: "/images/branding/ak-golf-academy-05.jpg",
   },
   {
     number: "02",
     title: "Individuell utviklingsplan (IUP)",
     subtitle: "Din personlige vei til resultater",
     description: "Hver spiller får en detaljert, målstyrt utviklingsplan med klare milepæler, ukentlige fokusområder og kontinuerlig justering basert på fremgang og data.",
+    image: "/images/branding/ak-golf-academy-02.jpg",
   },
   {
     number: "03",
     title: "Mentalt spill",
     subtitle: "Prestasjon under press",
     description: "Vi integrerer mental trening i hver økt. Visualisering, rutiner, fokusteknikker og stressmestring — fordi de beste slagene skjer når hodet er klart.",
+    image: "/images/branding/ak-golf-academy-08.jpg",
   },
 ] as const;
 

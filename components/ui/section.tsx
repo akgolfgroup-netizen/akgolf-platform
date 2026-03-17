@@ -2,12 +2,14 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { motion as motionTokens } from "@/lib/design-tokens";
 
-export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
+export interface SectionProps {
   variant?: "light" | "dark" | "warm" | "cream";
   isAnimated?: boolean;
   containerSize?: "default" | "small" | "large";
+  className?: string;
+  children?: React.ReactNode;
+  id?: string;
 }
 
 const variants = {
@@ -29,7 +31,7 @@ export function Section({
   isAnimated = false,
   containerSize = "default",
   className,
-  ...props
+  id,
 }: SectionProps) {
   const baseClasses = cn(
     "py-20 md:py-28 lg:py-32",
@@ -49,20 +51,16 @@ export function Section({
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: motionTokens.ease.premium }}
+        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
         className={baseClasses}
-        {...props}
+        id={id}
       >
         {content}
       </motion.section>
     );
   }
 
-  return (
-    <section className={baseClasses} {...props}>
-      {content}
-    </section>
-  );
+  return <section className={baseClasses} id={id}>{content}</section>;
 }
 
 export function SectionHeader({

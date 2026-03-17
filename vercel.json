@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "buildCommand": "prisma generate && next build",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "crons": [
+    {
+      "path": "/api/portal/cron/send-reminders",
+      "schedule": "0 * * * *"
+    }
+  ],
+  "env": {
+    "NEXTAUTH_URL": "${VERCEL_URL}"
+  },
+  "headers": [
+    {
+      "source": "/api/portal/public/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
+        }
+      ]
+    }
+  ]
+}

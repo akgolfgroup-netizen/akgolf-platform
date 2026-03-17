@@ -13,8 +13,8 @@
 | Brand guidelines alignment | Ferdig |
 | Innhold (tekst) | Ferdig (oppdatert CTA-tone, FAQ, personvern) |
 | Bilder | Ikke startet — kun plassholdere |
-| Booking-system | ✅ Ferdig — Stripe-betaling, avbestilling, passord-hashing |
-| Skjema-integrasjon | Ikke funksjonelt (Formspree placeholder) |
+| Booking-system | ✅ **PRODUKSJONSKLAR** — Stripe-betaling, avbestilling, passord-hashing, cron, branding |
+| Skjema-integrasjon | ✅ Ferdig — Resend API (/api/contact) |
 | Kontaktinfo | Telefonnumre er placeholder, e-post og lokasjon oppdatert |
 | SEO | Metadata, sitemap, robots.txt, OG-tags, Twitter Card, JSON-LD (Organization, FAQPage) |
 | Personvern | Komplett GDPR-innhold (ikke bare placeholder) |
@@ -27,16 +27,10 @@
 
 ### CRITICAL — Må fikses før lansering
 
-#### 1. Koble opp kontaktskjema
-- **Fil:** `lib/website-constants.ts` linje 273
-- **Problem:** `FORMSPREE_ENDPOINT` er satt til `"https://formspree.io/f/YOUR_FORM_ID"` — skjemaet sender ingenting
-- **Oppgave:** Opprett Formspree-konto (eller alternativ: egen API-route, HubSpot, Resend), hent ekte form ID, oppdater konstanten
-- **Verifiser:** Send testskjema og bekreft at data mottas
-- [ ] Velg form-backend
-- [ ] Opprett konto og skjema
-- [ ] Oppdater `FORMSPREE_ENDPOINT` med ekte ID
-- [ ] Test innsending og bekreft mottak
-- [ ] Test feilhåndtering (ugyldig e-post, tom innsending)
+#### 1. ~~Koble opp kontaktskjema~~ ✅ FERDIG
+- **Løsning:** `/api/contact` med Resend (ikke Formspree)
+- **Status:** Funksjonelt — sender e-post til `CONTACT_EMAIL`
+- **Krever:** `RESEND_API_KEY` i miljøvariabler
 
 #### 2. Erstatt alle bildeplassholdere med ekte foto
 - **Komponenter:** `ImagePlaceholder.tsx` brukes i `MethodRow.tsx`, `SubPageHero.tsx`, og flere
@@ -253,6 +247,22 @@
      - `/booking/[id]/pay` — Offentlig Stripe-betalingsside
      - `/api/booking/vipps-initiate` — Støtter offentlige bookinger
      - Ny komponent: `PublicStripePaymentPage.tsx`
+- **Brand System Integrasjon - Fase 1, 2 & 4** (2026-03-17):
+  1. **Design Tokens**: Ny `lib/design-tokens.ts` med alle Brand System v3.2 verdier
+  2. **Global CSS**: Synkronisert `app/globals.css` og `app/portal/globals.css`
+  3. **Bilder**: Kopiert 44 branding-bilder til `public/images/branding/`
+  4. **UI Komponentbibliotek** (`components/ui/`):
+     - `Button` — Primary, Secondary, Ghost, Outline varianter
+     - `Card` — Default, Elevated, Bordered, Gold varianter
+     - `Input` — Med label, error, helper text, ikoner
+     - `Badge` — Default, Gold, Navy, Subtle, Outline varianter
+     - `Section` — Light, Dark, Warm, Cream bakgrunner
+  5. **Animsjonskomponenter** (`components/motion/`):
+     - `FadeIn` — Scroll-triggered fade in
+     - `SlideUp` — Slide up animation
+     - `ScaleOnHover` — Scale effect on hover
+     - `StaggerContainer` + `StaggerItem` — Stagger children animations
+  6. **Utilities**: `lib/utils.ts` med `cn()` funksjon
 
 ---
 
@@ -326,6 +336,16 @@ app/
         page.tsx       — Booking bekreftelse (støtter offentlige bookinger)
         PublicConfirmationView.tsx — Offentlig bekreftelsesvisning
       PublicStripePaymentPage.tsx — Offentlig Stripe betalingskomponent
+components/
+  ui/                    — NY: UI komponentbibliotek (Button, Card, Input, Badge, Section)
+  motion/                — NY: Animasjonskomponenter (FadeIn, SlideUp, StaggerContainer)
+lib/
+  design-tokens.ts       — NY: Brand System v3.2 design tokens
+  utils.ts               — NY: Utility funksjoner (cn)
+public/
+  images/
+    branding/            — NY: 44 branding-bilder fra Brand System
+    logo/                — NY: Logo-filer (SVG, PNG)
   junior/
     layout.tsx         — Metadata, OG-tags, JSON-LD FAQPage
     page.tsx           — Junior-underside (accent: junior/blue #3B82F6)

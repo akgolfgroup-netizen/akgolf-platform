@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { motion as motionTokens } from "@/lib/design-tokens";
 import { ReactNode } from "react";
 
-interface ScaleOnHoverProps {
+export interface ScaleOnHoverProps {
   children: ReactNode;
   className?: string;
   scale?: number;
@@ -18,7 +17,7 @@ export function ScaleOnHover({
   return (
     <motion.div
       whileHover={{ scale }}
-      transition={{ duration: 0.3, ease: motionTokens.ease.spring }}
+      transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
       className={className}
     >
       {children}

@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { motion as motionTokens } from "@/lib/design-tokens";
 import { ReactNode } from "react";
 
-interface FadeInProps {
+export interface FadeInProps {
   children: ReactNode;
   delay?: number;
   duration?: number;
@@ -37,7 +36,7 @@ export function FadeIn({
       transition={{
         duration,
         delay,
-        ease: motionTokens.ease.premium,
+        ease: [0.4, 0, 0.2, 1],
       }}
       className={className}
     >

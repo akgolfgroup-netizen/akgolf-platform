@@ -2,14 +2,18 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { colors, motion as motionTokens } from "@/lib/design-tokens";
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps {
   variant?: "primary" | "secondary" | "ghost" | "outline";
   size?: "sm" | "md" | "lg";
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  disabled?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  type?: "button" | "submit" | "reset";
 }
 
 const variants = {
@@ -40,9 +44,9 @@ export function Button({
 
   return (
     <motion.button
-      whileHover={isDisabled ? {} : { scale: 1.02, y: -1 }}
-      whileTap={isDisabled ? {} : { scale: 0.98 }}
-      transition={{ duration: 0.2, ease: motionTokens.ease.spring }}
+      whileHover={isDisabled ? undefined : { scale: 1.02, y: -1 }}
+      whileTap={isDisabled ? undefined : { scale: 0.98 }}
+      transition={{ duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
       className={cn(
         "inline-flex items-center justify-center gap-2 font-semibold rounded-full",
         "transition-all duration-300",

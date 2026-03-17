@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { motion as motionTokens } from "@/lib/design-tokens";
 import { ReactNode } from "react";
 
-interface StaggerContainerProps {
+export interface StaggerContainerProps {
   children: ReactNode;
   className?: string;
   staggerDelay?: number;
@@ -53,7 +52,7 @@ export function StaggerItem({ children, className }: StaggerItemProps) {
           y: 0,
           transition: {
             duration: 0.5,
-            ease: motionTokens.ease.premium,
+            ease: [0.4, 0, 0.2, 1],
           },
         },
       }}

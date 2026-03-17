@@ -8,8 +8,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
       { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "**.supabase.co" },
     ],
+    formats: ["image/webp", "image/avif"],
+    minimumCacheTTL: 60,
   },
+  // Enable compression
+  compress: true,
+  // Security headers
   async headers() {
     return [
       {
@@ -26,6 +32,28 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
+  },
+  // Redirects for old URLs
+  async redirects() {
+    return [
+      {
+        source: "/booking",
+        destination: "/academy/booking",
+        permanent: true,
+      },
+    ];
+  },
+  // Webpack optimization
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
   },
 };
 

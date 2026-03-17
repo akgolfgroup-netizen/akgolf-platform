@@ -24,7 +24,7 @@ export function TeamSection() {
                 <div className="w-full max-w-sm mb-6">
                   <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-ink-10">
                     <Image
-                      src={i === 0 ? "/images/academy/AK-Golf-Academy-1.jpg" : "/images/academy/AK-Golf-Academy-2.jpg"}
+                      src={i === 0 ? "/images/branding/ak-golf-academy-01.jpg" : "/images/branding/ak-golf-academy-04.jpg"}
                       alt={member.name}
                       fill
                       className="object-cover"

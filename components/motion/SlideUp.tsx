@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { motion as motionTokens } from "@/lib/design-tokens";
 import { ReactNode } from "react";
 
-interface SlideUpProps {
+export interface SlideUpProps {
   children: ReactNode;
   delay?: number;
   duration?: number;
@@ -27,7 +26,7 @@ export function SlideUp({
       transition={{
         duration,
         delay,
-        ease: motionTokens.ease.outExpo,
+        ease: [0, 0.55, 0.45, 1],
       }}
       className={className}
     >
