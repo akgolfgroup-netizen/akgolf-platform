@@ -1,9 +1,10 @@
 import { getPortalUser } from "@/lib/portal/auth";
-import { redirect } from "next/navigation";
 import { prisma } from "@/lib/portal/prisma";
 import { stripe } from "@/lib/portal/stripe";
 import { StripePaymentPage } from "../StripePaymentPage";
-import { AlertCircle, CreditCard, ShieldCheck } from "lucide-react";
+import { PublicStripePaymentPage } from "../PublicStripePaymentPage";
+import { AlertCircle, CreditCard, ShieldCheck, Loader2 } from "lucide-react";
+import { BookingStatus } from "@prisma/client";
 
 // Warm Light Theme
 const THEME = {
@@ -24,15 +25,15 @@ export default async function BookingPayPage({ params }: Props) {
   const { id } = await params;
 
   const user = await getPortalUser();
-  if (!user?.id) {
-    const callbackUrl = encodeURIComponent(`/portal/booking/${id}/pay`);
-    redirect(`/login?callbackUrl=${callbackUrl}`);
-  }
-
+  
+  // Fetch booking - if user is logged in, verify ownership; otherwise allow public access
   const booking = await prisma.booking.findFirst({
-    where: { id, studentId: user.id },
+    where: user?.id 
+      ? { id, studentId: user.id }
+      : { id },
     include: {
       serviceType: { select: { name: true, duration: true, price: true } },
+      student: { select: { name: true, email: true } },
     },
   });
 
@@ -60,6 +61,67 @@ export default async function BookingPayPage({ params }: Props) {
           </h2>
           <p style={{ color: THEME.textMuted }}>
             Vi kunne ikke finne denne bookingen. Kontroller at lenken er korrekt.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Check if booking is already paid or cancelled
+  if (booking.status === BookingStatus.CONFIRMED) {
+    return (
+      <div 
+        className="min-h-screen flex items-center justify-center px-4"
+        style={{ background: THEME.bg }}
+      >
+        <div
+          className="rounded-3xl p-10 max-w-md w-full text-center border"
+          style={{
+            background: THEME.bgElevated,
+            borderColor: THEME.border,
+          }}
+        >
+          <div 
+            className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"
+            style={{ background: `${THEME.gold}15` }}
+          >
+            <ShieldCheck className="w-8 h-8" style={{ color: THEME.gold }} />
+          </div>
+          <h2 className="text-xl font-semibold mb-2" style={{ color: THEME.navy }}>
+            Allerede betalt
+          </h2>
+          <p style={{ color: THEME.textMuted }}>
+            Denne bookingen er allerede betalt og bekreftet.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (booking.status === BookingStatus.CANCELLED) {
+    return (
+      <div 
+        className="min-h-screen flex items-center justify-center px-4"
+        style={{ background: THEME.bg }}
+      >
+        <div
+          className="rounded-3xl p-10 max-w-md w-full text-center border"
+          style={{
+            background: THEME.bgElevated,
+            borderColor: THEME.border,
+          }}
+        >
+          <div 
+            className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"
+            style={{ background: `${THEME.gold}15` }}
+          >
+            <AlertCircle className="w-8 h-8" style={{ color: THEME.gold }} />
+          </div>
+          <h2 className="text-xl font-semibold mb-2" style={{ color: THEME.navy }}>
+            Booking kansellert
+          </h2>
+          <p style={{ color: THEME.textMuted }}>
+            Denne bookingen har blitt kansellert.
           </p>
         </div>
       </div>
@@ -127,6 +189,20 @@ export default async function BookingPayPage({ params }: Props) {
           </p>
         </div>
       </div>
+    );
+  }
+
+  // If user is not logged in, show public payment page
+  if (!user?.id) {
+    return (
+      <PublicStripePaymentPage
+        clientSecret={paymentIntent.client_secret}
+        bookingId={id}
+        serviceName={booking.serviceType.name}
+        customerEmail={booking.student.email ?? ""}
+        customerName={booking.student.name ?? ""}
+        amount={booking.serviceType.price}
+      />
     );
   }
 

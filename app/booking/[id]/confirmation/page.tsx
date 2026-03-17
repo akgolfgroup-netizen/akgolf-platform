@@ -1,9 +1,9 @@
 import { getPortalUser } from "@/lib/portal/auth";
-import { redirect } from "next/navigation";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { prisma } from "@/lib/portal/prisma";
 import { ConfirmationView } from "./ConfirmationView";
+import { PublicConfirmationView } from "./PublicConfirmationView";
 import { Loader2, AlertCircle } from "lucide-react";
 
 // Warm Light Theme
@@ -12,7 +12,6 @@ const THEME = {
   bgElevated: "#FFFFFF",
   gold: "#B8975C",
   navy: "#0F2950",
-  text: "#02060D",
   textMuted: "#64748B",
   border: "#EBE5DA",
 };
@@ -25,16 +24,16 @@ export default async function BookingConfirmationPage({ params }: Props) {
   const { id } = await params;
 
   const user = await getPortalUser();
-  if (!user?.id) {
-    const callbackUrl = encodeURIComponent(`/portal/booking/${id}/confirmation`);
-    redirect(`/login?callbackUrl=${callbackUrl}`);
-  }
-
+  
+  // Fetch booking - if user is logged in, verify ownership; otherwise allow public access
   const booking = await prisma.booking.findFirst({
-    where: { id, studentId: user.id },
+    where: user?.id 
+      ? { id, studentId: user.id }
+      : { id },
     include: {
       serviceType: { select: { name: true, duration: true, price: true } },
       instructor: { include: { user: { select: { name: true, image: true } } } },
+      student: { select: { name: true, email: true } },
     },
   });
 
@@ -115,6 +114,22 @@ export default async function BookingConfirmationPage({ params }: Props) {
   });
 
   const instructorName = booking.instructor.user.name ?? "Ukjent instruktør";
+
+  // If user is not logged in, show public confirmation view
+  if (!user?.id) {
+    return (
+      <PublicConfirmationView
+        serviceName={booking.serviceType.name}
+        instructorName={instructorName}
+        formattedDate={formattedDate}
+        duration={booking.serviceType.duration}
+        priceNOK={priceNOK}
+        paymentMethod={booking.paymentMethod}
+        studentEmail={booking.student.email ?? ""}
+        bookingId={booking.id}
+      />
+    );
+  }
 
   return (
     <ConfirmationView

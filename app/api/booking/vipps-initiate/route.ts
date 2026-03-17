@@ -6,9 +6,6 @@ import { BookingStatus, PaymentMethod } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   const user = await getPortalUser();
-  if (!user?.id) {
-    return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });
-  }
 
   let body: { bookingId?: string };
   try {
@@ -22,11 +19,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Mangler bookingId" }, { status: 400 });
   }
 
+  // Fetch booking - if user is logged in, verify ownership; otherwise allow public access
   const booking = await prisma.booking.findFirst({
-    where: {
-      id: bookingId,
-      studentId: user.id,
-    },
+    where: user?.id
+      ? { id: bookingId, studentId: user.id }
+      : { id: bookingId },
     select: {
       id: true,
       status: true,
@@ -54,9 +51,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const nextAuthUrl = process.env.NEXTAUTH_URL;
-  if (!nextAuthUrl) {
-    console.error("[vipps-initiate] NEXTAUTH_URL is not configured");
+  const baseUrl = process.env.NEXTAUTH_URL || process.env.WEBSITE_URL;
+  if (!baseUrl) {
+    console.error("[vipps-initiate] No base URL configured");
     return NextResponse.json({ error: "Intern konfigurasjonsfeil" }, { status: 500 });
   }
 
@@ -67,8 +64,11 @@ export async function POST(req: NextRequest) {
       amount: booking.amount,
       description: `AK Golf Academy — ${booking.serviceType.name}`,
       // Vipps appends /v2/payments/{orderId} to callbackPrefix automatically
-      callbackUrl: `${nextAuthUrl}/api/webhooks/vipps`,
-      fallbackUrl: `${nextAuthUrl}/portal/booking/${bookingId}/confirmation`,
+      callbackUrl: `${baseUrl}/api/webhooks/vipps`,
+      // Use public confirmation page for public bookings, portal for logged-in users
+      fallbackUrl: user?.id
+        ? `${baseUrl}/portal/booking/${bookingId}/confirmation`
+        : `${baseUrl}/booking/${bookingId}/confirmation`,
     });
 
     // Persist the Vipps order ID on the booking (orderId === bookingId by convention)

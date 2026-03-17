@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SubPageHero } from "@/components/website/SubPageHero";
@@ -71,7 +73,7 @@ export default function AcademyPage() {
               </RevealOnScroll>
 
               <RevealOnScroll delay={0.2}>
-                <ImagePlaceholder aspect="4/3" label="Academy coaching" />
+                <ImagePlaceholder aspect="4/3" src="/images/academy/AK-Golf-Academy-1.jpg" label="Academy coaching" alt="AK Golf Academy coaching session" />
               </RevealOnScroll>
             </div>
           </div>
@@ -158,6 +160,19 @@ export default function AcademyPage() {
                 </StaggerItem>
               ))}
             </StaggerContainer>
+
+            <RevealOnScroll>
+              <div className="mt-12 text-center">
+                <p className="text-ink-50 mb-4">Ønsker du å booke en enkelt time?</p>
+                <Link
+                  href="/academy/booking"
+                  className="w-btn w-btn-primary inline-flex items-center gap-2"
+                >
+                  Book coaching-time
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </RevealOnScroll>
           </div>
         </section>
 
@@ -204,6 +219,8 @@ export default function AcademyPage() {
           description="Ta første steg mot ditt beste spill. Vi tar kontakt innen 48 timer."
           ctaLabel="Avtal en samtale"
           ctaHref="#apply"
+          secondaryCtaLabel="Book coaching-time"
+          secondaryCtaHref="/academy/booking"
         />
 
         {/* ─── Application Form ─── */}

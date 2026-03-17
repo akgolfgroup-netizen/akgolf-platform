@@ -10,6 +10,9 @@ export function CTASection({
   ctaLabel = "Book time",
   ctaHref = BOOKING_URL,
   external = true,
+  secondaryCtaLabel,
+  secondaryCtaHref,
+  secondaryExternal = false,
 }: {
   eyebrow?: string;
   heading: string;
@@ -17,6 +20,9 @@ export function CTASection({
   ctaLabel?: string;
   ctaHref?: string;
   external?: boolean;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
+  secondaryExternal?: boolean;
 }) {
   return (
     <section className="bg-ink-100 w-section">
@@ -26,20 +32,38 @@ export function CTASection({
             <SectionLabel>{eyebrow}</SectionLabel>
             <h2 className="w-heading-lg text-white mt-4 mb-4">{heading}</h2>
             <p className="text-ink-40 leading-relaxed mb-8">{description}</p>
-            {external ? (
-              <a 
-                href={ctaHref} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-btn w-btn-primary"
-              >
-                {ctaLabel}
-              </a>
-            ) : (
-              <Link href={ctaHref} className="w-btn w-btn-primary">
-                {ctaLabel}
-              </Link>
-            )}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {external ? (
+                <a 
+                  href={ctaHref} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-btn w-btn-primary"
+                >
+                  {ctaLabel}
+                </a>
+              ) : (
+                <Link href={ctaHref} className="w-btn w-btn-primary">
+                  {ctaLabel}
+                </Link>
+              )}
+              {secondaryCtaLabel && secondaryCtaHref && (
+                secondaryExternal ? (
+                  <a 
+                    href={secondaryCtaHref} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="w-btn w-btn-secondary"
+                  >
+                    {secondaryCtaLabel}
+                  </a>
+                ) : (
+                  <Link href={secondaryCtaHref} className="w-btn w-btn-secondary">
+                    {secondaryCtaLabel}
+                  </Link>
+                )
+              )}
+            </div>
           </div>
         </RevealOnScroll>
       </div>

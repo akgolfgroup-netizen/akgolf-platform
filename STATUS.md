@@ -1,6 +1,6 @@
 # AK Golf Website — Status & Arbeidsoppgaver
 
-> Sist oppdatert: 2026-03-11
+> Sist oppdatert: 2026-03-17
 
 ---
 
@@ -13,6 +13,7 @@
 | Brand guidelines alignment | Ferdig |
 | Innhold (tekst) | Ferdig (oppdatert CTA-tone, FAQ, personvern) |
 | Bilder | Ikke startet — kun plassholdere |
+| Booking-system | ✅ Ferdig — Offentlig booking + betaling på /academy/booking |
 | Skjema-integrasjon | Ikke funksjonelt (Formspree placeholder) |
 | Kontaktinfo | Telefonnumre er placeholder, e-post og lokasjon oppdatert |
 | SEO | Metadata, sitemap, robots.txt, OG-tags, Twitter Card, JSON-LD (Organization, FAQPage) |
@@ -39,17 +40,15 @@
 
 #### 2. Erstatt alle bildeplassholdere med ekte foto
 - **Komponenter:** `ImagePlaceholder.tsx` brukes i `MethodRow.tsx`, `SubPageHero.tsx`, og flere
-- **Problem:** Hele nettsiden bruker grå plassholder-bokser med kamera-ikon. Null visuell troverdighet.
-- **Behov:** Profesjonelle bilder av:
-  - [ ] Trener(e) i aksjon — coaching-situasjoner
+- **Status:** ✅ DELVIS FERDIG — Eksisterende bilder fra `/public/images/academy/` er nå koblet til
+- **Endringer:**
+  - [x] Academy-side: `AK-Golf-Academy-1.jpg` på coaching-seksjon
+  - [x] Junior-side: `AK-Golf-Academy-20.jpg` på junior coach-profil
+- **Gjenstående:** Profesjonelle bilder av:
+  - [ ] Trener(e) i aksjon — dedikerte coaching-situasjoner
   - [ ] Treningsfasiliteter (range, simulator, bane)
-  - [ ] Juniorspillere i trening
-  - [ ] Headshot av grunnlegger/hovedtrener for bio
+  - [ ] Portrettbilder av Anders og Markus (dedikerte headshots)
   - [ ] Stemningsbilder (bane, utstyr, detaljer)
-- **Teknisk:** Bildene legges i `/public/images/`, refereres via `ImagePlaceholder`-komponentens `src`-prop, eller erstattes med direkte `next/image`
-- [ ] Planlegg/gjennomfør fotografering
-- [ ] Optimaliser bilder (WebP, riktig størrelse)
-- [ ] Implementer i alle seksjoner
 
 #### 3. Legg inn reell kontaktinformasjon
 - **Filer:** `lib/website-constants.ts` linje 28, 36, 340
@@ -242,6 +241,64 @@
   2. Academy FAQ: "Hvordan søker jeg om plass?" → "Hvordan kommer jeg i gang?"
   3. Personvernside: Fullstendig GDPR-innhold (erstatter placeholder)
   4. Kryssreferanser i alle sportsplan-dokumenter
+- **Offentlig bookingsystem for Academy** (2026-03-17):
+  1. Ny side: `/academy/booking` — Offentlig booking uten innlogging
+  2. Gjenbruker eksisterende `/api/booking/create` som kobler til spillerportalen
+  3. Hvis e-post finnes i portalen → kobles til eksisterende bruker
+  4. Hvis e-post ikke finnes → opprettes ny bruker med midlertidig passord
+  5. Oppdatert `CTASection` med sekundær CTA-støtte
+  6. Lagt til booking-lenker på Academy-siden (pris-seksjon og CTA)
+  7. Oppdatert confirmation-side for å støtte offentlige bookinger
+  8. **Betaling uten innlogging**: Stripe og Vipps støtter nå betaling uten å logge inn
+     - `/booking/[id]/pay` — Offentlig Stripe-betalingsside
+     - `/api/booking/vipps-initiate` — Støtter offentlige bookinger
+     - Ny komponent: `PublicStripePaymentPage.tsx`
+
+---
+
+## Booking System Status (2026-03-17)
+
+### ✅ Operative funksjoner
+
+| Funksjon | Status | Kommentar |
+|----------|--------|-----------|
+| Offentlig booking-side | ✅ Ferdig | `/academy/booking` - ingen innlogging nødvendig |
+| Tjeneste-utvalg | ✅ Ferdig | Henter fra `/api/portal/public/service-types` |
+| Kalender/ledige tider | ✅ Ferdig | Henter fra `/api/portal/public/slots` |
+| Bruker-kobling | ✅ Ferdig | E-post sjekkes mot eksisterende brukere |
+| Auto-opprettelse | ✅ Ferdig | Ny bruker opprettes med midlertidig passord |
+| Bekreftelses-side | ✅ Ferdig | Offentlig tilgjengelig confirmation-side |
+| E-postbekreftelse | ✅ Ferdig | Velkomst- og booking-bekreftelse sendes |
+| Notion-profil | ✅ Ferdig | Opprettes automatisk for nye brukere |
+
+### ✅ Betaling uten innlogging
+
+| Funksjon | Status | Kommentar |
+|----------|--------|-----------|
+| Stripe-betaling | ✅ Ferdig | Offentlig betalingsside på `/booking/[id]/pay` |
+| Vipps-betaling | ✅ Ferdig | Direkte redirect til Vipps etter booking |
+| Betaling uten innlogging | ✅ Ferdig | Full støtte for gjeste-betaling |
+
+### Miljøvariabler som kreves
+
+```bash
+# Database (påkrevd)
+DATABASE_URL=postgresql://...
+
+# Stripe (valgfritt, for betaling)
+STRIPE_SECRET_KEY=sk_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_...
+
+# Vipps (valgfritt, for betaling)
+VIPPS_CLIENT_ID=...
+VIPPS_CLIENT_SECRET=...
+VIPPS_SUBSCRIPTION_KEY=...
+VIPPS_MERCHANT_SERIAL_NUMBER=...
+
+# E-post (valgfritt, for bekreftelser)
+RESEND_API_KEY=re_...
+CONTACT_EMAIL=post@akgolf.no
+```
 
 ---
 
@@ -259,6 +316,16 @@ app/
   academy/
     layout.tsx         — Metadata, OG-tags, JSON-LD FAQPage
     page.tsx           — Academy-underside (accent: academy/navy #0F2950)
+    booking/
+      page.tsx         — Offentlig booking-side (ingen innlogging nødvendig)
+  booking/
+    [id]/
+      pay/
+        page.tsx       — Stripe betalingsside (støtter offentlige bookinger)
+      confirmation/
+        page.tsx       — Booking bekreftelse (støtter offentlige bookinger)
+        PublicConfirmationView.tsx — Offentlig bekreftelsesvisning
+      PublicStripePaymentPage.tsx — Offentlig Stripe betalingskomponent
   junior/
     layout.tsx         — Metadata, OG-tags, JSON-LD FAQPage
     page.tsx           — Junior-underside (accent: junior/blue #3B82F6)

@@ -16,7 +16,7 @@ import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
 import { JUNIOR_PROGRAMS, JUNIOR_FAQ, JUNIOR_INTAKE, TEAM, TESTIMONIALS } from "@/lib/website-constants";
 
-const juniorCoach = TEAM.find(m => m.role === "Head Coach");
+const juniorCoach = TEAM.find(m => m.role === "Junior Coach");
 
 export default function JuniorPage() {
   return (
@@ -80,7 +80,7 @@ export default function JuniorPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <RevealOnScroll>
                   <div className="max-w-sm mx-auto lg:mx-0">
-                    <ImagePlaceholder aspect="3/4" label={juniorCoach.name} />
+                    <ImagePlaceholder aspect="3/4" src="/images/academy/AK-Golf-Academy-20.jpg" label={juniorCoach.name} alt={`${juniorCoach.name} - Junior Coach`} />
                   </div>
                 </RevealOnScroll>
 
