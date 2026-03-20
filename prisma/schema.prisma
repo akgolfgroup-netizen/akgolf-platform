@@ -821,3 +821,49 @@ model PlayerAchievement {
   @@unique([userId, achievementDefinitionId])
   @@index([userId])
 }
+
+// ============================================================
+// INNHOLD / BLOG (delt med akgolf-dashboard)
+// ============================================================
+
+enum ContentType {
+  SOME_POST
+  NEWSLETTER
+  ARTICLE
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+model ContentItem {
+  id          String        @id @default(cuid())
+  type        ContentType
+  status      ContentStatus @default(DRAFT)
+  title       String
+  slug        String?       @unique
+  body        String        @db.Text
+  bodyHtml    String?       @db.Text
+  excerpt     String?
+  platform    String?
+  hashtags    String[]
+  imageUrl    String?
+  scheduledAt DateTime?
+  publishedAt DateTime?
+  aiGenerated Boolean       @default(false)
+  aiModel     String?
+  notionPageId String?      @unique
+  segment     String?
+  createdBy   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([type, status])
+  @@index([scheduledAt])
+  @@index([slug])
+}

@@ -660,6 +660,70 @@
 
 }
 
+/* ─── Blog Article Typography ─── */
+.prose-ak {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--color-ink-70);
+}
+
+.prose-ak h1,
+.prose-ak h2,
+.prose-ak h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-ink-90);
+  letter-spacing: -0.02em;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose-ak h1 { font-size: 2rem; }
+.prose-ak h2 { font-size: 1.5rem; }
+.prose-ak h3 { font-size: 1.25rem; }
+
+.prose-ak p {
+  margin-bottom: 1.25rem;
+}
+
+.prose-ak strong {
+  font-weight: 600;
+  color: var(--color-ink-80);
+}
+
+.prose-ak a {
+  color: var(--color-soft-gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.prose-ak a:hover {
+  color: var(--color-gold-dark);
+}
+
+.prose-ak ul,
+.prose-ak ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.prose-ak li {
+  margin-bottom: 0.5rem;
+}
+
+.prose-ak ul li::marker {
+  color: var(--color-soft-gold);
+}
+
+.prose-ak blockquote {
+  border-left: 3px solid var(--color-soft-gold);
+  padding-left: 1.25rem;
+  margin: 2rem 0;
+  font-style: italic;
+  color: var(--color-ink-50);
+}
+
 /* ─── Accessibility ─── */
 @media (prefers-reduced-motion: reduce) {
   *,
