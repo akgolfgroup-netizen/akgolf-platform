@@ -416,7 +416,10 @@ export const FOOTER_LINKS = {
 } as const;
 
 // ─── Booking ───
-export const BOOKING_URL = "https://booking-system-ip0prpfzq-akgolfgroup-netizens-projects.vercel.app";
+export const BOOKING_URL = "https://book.akgolf.no";
+
+// ─── Portal ───
+export const PORTAL_URL = "https://portal.akgolf.no";
 
 // ─── Formspree (deprecated - bruker nå /api/contact) ───
 export const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ID

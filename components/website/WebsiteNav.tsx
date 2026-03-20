@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
-import { NAV_LINKS, BOOKING_URL } from "@/lib/website-constants";
+import { NAV_LINKS, BOOKING_URL, PORTAL_URL } from "@/lib/website-constants";
 import { AKLogo } from "./AKLogo";
 
 export function WebsiteNav() {
@@ -62,7 +62,7 @@ export function WebsiteNav() {
               </Link>
             ))}
             <Link
-              href="/portal"
+              href={PORTAL_URL}
               className={`text-[13px] font-medium tracking-wide transition-colors duration-300 ${
                 scrolled ? "text-ink-50 hover:text-ink-80" : "text-white/70 hover:text-white"
               }`}
@@ -141,7 +141,7 @@ export function WebsiteNav() {
                 transition={{ delay: 0.35, duration: 0.4 }}
               >
                 <Link
-                  href="/portal"
+                  href={PORTAL_URL}
                   onClick={() => setMobileOpen(false)}
                   className="text-base font-medium text-ink-40 hover:text-ink-80 transition-colors"
                 >
