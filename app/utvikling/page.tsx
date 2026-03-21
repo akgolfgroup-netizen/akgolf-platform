@@ -156,7 +156,7 @@ export default function UtviklingPage() {
             </RevealOnScroll>
 
             <RevealOnScroll delay={0.2}>
-              <ApplicationForm defaultProgram="klubb" />
+              <ApplicationForm />
             </RevealOnScroll>
           </div>
         </section>

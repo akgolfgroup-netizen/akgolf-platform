@@ -237,7 +237,7 @@ export default function AcademyPage() {
             </RevealOnScroll>
 
             <RevealOnScroll delay={0.2}>
-              <ApplicationForm defaultProgram="academy-utvikling" />
+              <ApplicationForm />
             </RevealOnScroll>
           </div>
         </section>

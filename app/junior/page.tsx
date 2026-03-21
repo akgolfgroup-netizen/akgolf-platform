@@ -327,7 +327,7 @@ export default function JuniorPage() {
             </RevealOnScroll>
 
             <RevealOnScroll delay={0.2}>
-              <ApplicationForm defaultProgram="junior-16-17" />
+              <ApplicationForm />
             </RevealOnScroll>
           </div>
         </section>
