@@ -184,8 +184,6 @@ export default function HomePage() {
 
                     <a
                       href={BOOKING_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className={`w-btn text-center ${
                         pkg.highlighted ? "w-btn-gold" : "w-btn-primary"
                       }`}
@@ -222,8 +220,6 @@ export default function HomePage() {
                     </p>
                     <a
                       href={BOOKING_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="w-btn w-btn-ghost text-center"
                     >
                       Book naa

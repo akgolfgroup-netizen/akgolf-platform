@@ -70,8 +70,6 @@ export function WebsiteNav() {
             </Link>
             <a
               href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
               className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-gold text-white transition-all duration-300 hover:bg-gold-dark"
             >
               Book coaching
@@ -154,8 +152,6 @@ export function WebsiteNav() {
               >
                 <a
                   href={BOOKING_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
                   className="w-btn w-btn-primary mt-4"
                 >
