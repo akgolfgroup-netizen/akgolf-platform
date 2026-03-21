@@ -35,7 +35,6 @@ export default function HomePage() {
               priority
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-ink-100/70 via-transparent to-transparent h-32" />
             <div className="absolute inset-0 bg-ink-100/40 md:bg-transparent" />
             <div className="absolute inset-0 bg-gradient-to-r from-ink-100/90 via-ink-100/70 to-ink-100/30" />
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-warm to-transparent" />
