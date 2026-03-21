@@ -12,7 +12,7 @@ export function TeamSection() {
           <div className="text-center mb-16">
             <SectionLabel>Dine trenere</SectionLabel>
             <h2 className="w-heading-lg mt-4">
-              Coaching på GFGK.
+              Møt teamet.
             </h2>
           </div>
         </RevealOnScroll>

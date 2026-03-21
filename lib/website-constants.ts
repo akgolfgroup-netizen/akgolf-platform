@@ -1,10 +1,8 @@
 // ─── Navigation ───
 export const NAV_LINKS = [
-  { label: "Hjem", href: "/" },
-  { label: "Academy", href: "/academy" },
-  // { label: "Junior", href: "/junior" }, // Skjult midlertidig
+  { label: "Coaching", href: "/academy" },
+  { label: "Junior Academy", href: "/junior" },
   { label: "Utvikling", href: "/utvikling" },
-  { label: "Blog", href: "/blog" },
 ] as const;
 
 // ─── Hero ───
@@ -13,8 +11,7 @@ export const HERO = {
   heading: "Coaching som endrer spillet.",
   subheading: "Individuell coaching på høyeste nivå for ambisiøse golfere som krever resultater.",
   urgencyBadge: "Sesong 2026 — begrenset kapasitet",
-  ctaPrimary: "Avtal en samtale",
-  ctaBooking: "Book coaching",
+  ctaPrimary: "Book coaching",
   ctaSecondary: "Se vår metode",
   trustItems: ["AK-Formelen", "Individuell utviklingsplan", "Mentalt spill"],
 } as const;
@@ -43,7 +40,7 @@ export const TEAM = [
 export const DIVISIONS = [
   {
     id: "academy",
-    title: "AK Golf Academy",
+    title: "Coaching",
     description: "1:1 coaching og skreddersydde utviklingsplaner for voksne spillere som vil ta spillet til neste nivå.",
     features: ["Individuell coaching", "Videoanalyse", "IUP-plan", "Mental trening"],
     href: "/academy",
@@ -58,18 +55,10 @@ export const DIVISIONS = [
     accent: "junior" as const,
   },
   {
-    id: "software",
-    title: "AK Golf Software",
-    description: "Digitale verktøy og plattformer som revolusjonerer treningshverdagen for klubber og trenere.",
-    features: ["QR-treningsskilt", "IUP-plattform", "Analyseverktøy", "Rapportering"],
-    href: "/utvikling",
-    accent: "software" as const,
-  },
-  {
-    id: "klubbtrening",
-    title: "Klubbtrening & Rådgiving",
-    description: "Sportsplaner, trenernettverk og organisasjonsutvikling for golfklubber som vil lede.",
-    features: ["Sportsplaner", "Trenerutvikling", "Programdesign", "Organisasjonsrådgiving"],
+    id: "utvikling",
+    title: "Utvikling & Teknologi",
+    description: "Digitale verktøy, sportsplaner og rådgiving for golfklubber, forbund og trenere.",
+    features: ["Sportsplaner", "QR-treningsskilt", "IUP-plattform", "Trenerutvikling"],
     href: "/utvikling",
     accent: "utvikling" as const,
   },

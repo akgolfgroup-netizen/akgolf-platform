@@ -113,8 +113,7 @@ export default function HomePage() {
                 animate={{ opacity: loading ? 0 : 1, y: loading ? 20 : 0 }}
                 transition={{ duration: 0.8, delay: 1.0 }}
               >
-                <Link href="/booking" className="w-btn w-btn-primary">{HERO.ctaPrimary}</Link>
-                <Link href="/#apply" className="w-btn w-btn-gold">{HERO.ctaBooking || "Kontakt oss"}</Link>
+                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="w-btn w-btn-primary">{HERO.ctaPrimary}</a>
                 <Link href="/#method" className="w-btn w-btn-secondary">{HERO.ctaSecondary} &rarr;</Link>
               </motion.div>
 
@@ -127,12 +126,12 @@ export default function HomePage() {
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">
-                <SectionLabel>Våre divisjoner</SectionLabel>
+                <SectionLabel>Hva vi tilbyr</SectionLabel>
                 <h2 className="w-heading-lg mt-4">Alt du trenger. Under ett tak.</h2>
               </div>
             </RevealOnScroll>
 
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {DIVISIONS.map((div) => (
                 <StaggerItem key={div.id}>
                   <ServiceCard

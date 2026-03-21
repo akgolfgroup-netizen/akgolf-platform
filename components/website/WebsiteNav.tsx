@@ -75,7 +75,7 @@ export function WebsiteNav() {
               rel="noopener noreferrer"
               className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-gold text-white transition-all duration-300 hover:bg-gold-dark"
             >
-              Book time
+              Book coaching
             </a>
           </div>
 
@@ -160,7 +160,7 @@ export function WebsiteNav() {
                   onClick={() => setMobileOpen(false)}
                   className="w-btn w-btn-primary mt-4"
                 >
-                  Book time
+                  Book coaching
                 </a>
               </motion.div>
             </div>
