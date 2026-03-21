@@ -16,7 +16,7 @@ import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
 import { JUNIOR_PROGRAMS, JUNIOR_FAQ, JUNIOR_INTAKE, TEAM, TESTIMONIALS } from "@/lib/website-constants";
 
-const juniorCoach = TEAM.find(m => m.name === "Markus Røinås Pedersen");
+const juniorCoach = TEAM.find(m => m.name === "Anders Kristiansen");
 
 export default function JuniorPage() {
   return (
@@ -92,16 +92,6 @@ export default function JuniorPage() {
                       {juniorCoach.role} · {juniorCoach.division}
                     </p>
                     <p className="text-ink-50 leading-relaxed mb-6">{juniorCoach.bio}</p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {juniorCoach.certifications.map((cert) => (
-                        <span
-                          key={cert}
-                          className="inline-flex items-center px-3 py-1.5 rounded-full bg-gold/10 border border-gold/20 text-xs font-medium text-gold-text"
-                        >
-                          {cert}
-                        </span>
-                      ))}
-                    </div>
                     <div className="flex items-center gap-4 text-sm">
                       <Link
                         href={`mailto:${juniorCoach.contact.email}`}
@@ -251,7 +241,6 @@ export default function JuniorPage() {
                       { title: "Kvartalsvise foreldremøter", desc: "Gjennomgang av fremgang, mål og planer fremover." },
                       { title: "Månedlige rapporter", desc: "Detaljerte fremgangsrapporter med data og trenervurderinger." },
                       { title: "Åpen kommunikasjon", desc: "Direkte kontakt med trenerteamet når dere trenger det." },
-                      { title: "Tydelig kommunikasjon", desc: "Åpne linjer mellom trenere og foreldre gjennom hele sesongen." },
                     ].map((item) => (
                       <li key={item.title} className="flex gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-junior shrink-0 mt-2" />

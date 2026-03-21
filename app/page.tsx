@@ -138,7 +138,7 @@ export default function HomePage() {
                 <SectionLabel>Pakker og priser</SectionLabel>
                 <h2 className="w-heading-lg mt-4">Velg pakken som passer deg.</h2>
                 <p className="text-ink-50 max-w-lg mx-auto mt-4">
-                  Alle abonnement er uten bindingstid og kan sies opp naar som helst.
+                  Alle abonnement er uten bindingstid og kan sies opp når som helst.
                 </p>
               </div>
             </RevealOnScroll>
@@ -156,7 +156,7 @@ export default function HomePage() {
                   >
                     {pkg.highlighted && (
                       <span className="absolute -top-3 left-8 bg-gold text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full">
-                        Mest populaer
+                        Mest populær
                       </span>
                     )}
 
@@ -199,7 +199,7 @@ export default function HomePage() {
             <RevealOnScroll>
               <div className="text-center mb-8">
                 <h3 className="w-heading-md">Ikke klar for abonnement?</h3>
-                <p className="text-ink-50 mt-2">Prov en enkeltsesjon uten binding.</p>
+                <p className="text-ink-50 mt-2">Prøv en enkeltsesjon uten binding.</p>
               </div>
             </RevealOnScroll>
 
@@ -222,7 +222,7 @@ export default function HomePage() {
                       href={BOOKING_URL}
                       className="w-btn w-btn-ghost text-center"
                     >
-                      Book naa
+                      Book nå
                     </a>
                   </div>
                 </StaggerItem>
@@ -241,7 +241,7 @@ export default function HomePage() {
                   Din treningsplattform mellom sesjonene.
                 </h2>
                 <p className="text-ink-40 max-w-lg mx-auto mt-4">
-                  Alle coaching-pakker inkluderer full tilgang til spillerportalen med treningsplan, statistikk og ovelsesbank.
+                  Alle coaching-pakker inkluderer full tilgang til spillerportalen med treningsplan, statistikk og øvelsesbank.
                 </p>
               </div>
             </RevealOnScroll>
@@ -344,8 +344,8 @@ export default function HomePage() {
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">
-                <SectionLabel>Sporsmal og svar</SectionLabel>
-                <h2 className="w-heading-lg mt-4">Ofte stilte sporsmal</h2>
+                <SectionLabel>Spørsmål og svar</SectionLabel>
+                <h2 className="w-heading-lg mt-4">Ofte stilte spørsmål</h2>
               </div>
             </RevealOnScroll>
 
@@ -368,7 +368,7 @@ export default function HomePage() {
                 <SectionLabel>Ta kontakt</SectionLabel>
                 <h2 className="w-heading-lg mt-4 mb-4">Start med en uforpliktende samtale.</h2>
                 <p className="text-ink-50 max-w-lg mx-auto">
-                  Fortell oss om dine maal, saa finner vi ut hvordan vi kan hjelpe deg videre.
+                  Fortell oss om dine mål, så finner vi ut hvordan vi kan hjelpe deg videre.
                 </p>
               </div>
             </RevealOnScroll>

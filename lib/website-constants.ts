@@ -255,30 +255,6 @@ export const ACADEMY_FEATURES = [
   { title: "Fysisk trening", description: "Golfspesifikk styrke, mobilitet og skadeforebygging i samarbeid med fysioterapeut." },
 ] as const;
 
-export const ACADEMY_PROGRAMS = [
-  {
-    name: "Grunnpakke",
-    price: "Fra 4 900,-/mnd",
-    description: "For spillere som vil ha en solid struktur og jevnlig oppfølging.",
-    features: ["2 coaching-økter/mnd", "IUP-plan", "Videoanalyse", "Meldingsstøtte"],
-    highlighted: false,
-  },
-  {
-    name: "Utviklingspakke",
-    price: "Fra 8 900,-/mnd",
-    description: "For ambisiøse spillere med klare mål og dedikasjon til forbedring.",
-    features: ["4 coaching-økter/mnd", "IUP-plan", "Ukentlig videoanalyse", "Mental trening", "Kursmanagement-økt", "Direkte trener-tilgang"],
-    highlighted: true,
-  },
-  {
-    name: "Elite",
-    price: "På forespørsel",
-    description: "For de som krever det aller beste — uten kompromisser.",
-    features: ["Ubegrenset coaching", "Daglig oppfølging", "Turneringsstøtte", "Fysisk trening", "Full IUP + mentalt", "Reise-coaching"],
-    highlighted: false,
-  },
-] as const;
-
 export const ACADEMY_FAQ = [
   { q: "Hva skiller AK Golf Academy fra andre golftrenere?", a: "Vi tilbyr en helhetlig, evidensbasert tilnærming der hver elev får en skreddersydd utviklingsplan. Kombinasjonen av 1:1 coaching, videoanalyse, mental trening og kontinuerlig oppfølging gir resultater langt over gjennomsnittet." },
   { q: "Hvor ofte bør jeg trene for å se resultater?", a: "De fleste av våre elever ser merkbar fremgang med 2-4 coaching-økter i måneden, kombinert med egentrening etter IUP-planen. Vi tilpasser opplegget etter ditt nivå og dine mål." },

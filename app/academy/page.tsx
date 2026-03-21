@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SubPageHero } from "@/components/website/SubPageHero";
 import { SectionLabel } from "@/components/website/SectionLabel";
 import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/website/RevealOnScroll";
 import { FeatureGrid } from "@/components/website/FeatureGrid";
-import { PricingCard } from "@/components/website/PricingCard";
+
 import { FeaturedTestimonial } from "@/components/website/FeaturedTestimonial";
 import { FAQAccordion } from "@/components/website/FAQAccordion";
 import { CTASection } from "@/components/website/CTASection";
@@ -19,10 +18,20 @@ import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
 import {
   ACADEMY_FEATURES,
-  ACADEMY_PROGRAMS,
   ACADEMY_FAQ,
+  COACHING_PACKAGES,
+  FLEX_PACKAGES,
+  BOOKING_URL,
   TESTIMONIALS,
 } from "@/lib/website-constants";
+
+function CheckIcon({ className }: { className?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
 
 export default function AcademyPage() {
   return (
@@ -139,40 +148,80 @@ export default function AcademyPage() {
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">
-                <SectionLabel>Programmer</SectionLabel>
+                <SectionLabel>Pakker og priser</SectionLabel>
                 <h2 className="w-heading-lg mt-4 mb-4">Velg pakken som passer deg.</h2>
                 <p className="text-ink-50 max-w-lg mx-auto">
-                  Alle pakker inkluderer tilgang til var treningsplattform og mulighet for oppgradering underveis.
+                  Alle abonnement er uten bindingstid og kan sies opp når som helst.
                 </p>
               </div>
             </RevealOnScroll>
 
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-              {ACADEMY_PROGRAMS.map((program) => (
-                <StaggerItem key={program.name}>
-                  <PricingCard
-                    name={program.name}
-                    price={program.price}
-                    description={program.description}
-                    features={program.features}
-                    highlighted={program.highlighted}
-                  />
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              {COACHING_PACKAGES.map((pkg) => (
+                <StaggerItem key={pkg.name}>
+                  <div
+                    className={`rounded-2xl p-8 flex flex-col h-full transition-all duration-400 ${
+                      pkg.highlighted
+                        ? "bg-ink-90 text-white border-2 border-gold/30 shadow-xl relative"
+                        : "bg-white border border-ink-10 hover:border-ink-20 hover:shadow-lg"
+                    }`}
+                  >
+                    {pkg.highlighted && (
+                      <span className="absolute -top-3 left-8 bg-gold text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full">
+                        Mest populær
+                      </span>
+                    )}
+                    <h3 className={`font-display text-xl font-semibold mb-1 ${pkg.highlighted ? "text-white" : "text-ink-90"}`}>
+                      {pkg.name}
+                    </h3>
+                    <p className={`font-mono text-2xl font-bold mb-1 ${pkg.highlighted ? "text-gold" : "text-gold-text"}`}>
+                      {pkg.price}
+                      <span className="text-sm font-normal ml-1">{pkg.period}</span>
+                    </p>
+                    <p className={`text-sm leading-relaxed mb-6 ${pkg.highlighted ? "text-ink-30" : "text-ink-50"}`}>
+                      {pkg.description}
+                    </p>
+                    <ul className="space-y-3 mb-8 flex-1">
+                      {pkg.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2.5 text-sm">
+                          <CheckIcon className="shrink-0 mt-0.5 text-gold" />
+                          <span className={pkg.highlighted ? "text-ink-20" : "text-ink-60"}>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <a href={BOOKING_URL} className={`w-btn text-center ${pkg.highlighted ? "w-btn-gold" : "w-btn-primary"}`}>
+                      Kom i gang
+                    </a>
+                  </div>
                 </StaggerItem>
               ))}
             </StaggerContainer>
 
             <RevealOnScroll>
-              <div className="mt-12 text-center">
-                <p className="text-ink-50 mb-4">Ønsker du å booke en enkelt time?</p>
-                <Link
-                  href="/academy/booking"
-                  className="w-btn w-btn-primary inline-flex items-center gap-2"
-                >
-                  Book coaching-time
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
+              <div className="text-center mb-8">
+                <h3 className="w-heading-md">Ikke klar for abonnement?</h3>
+                <p className="text-ink-50 mt-2">Prøv en enkeltsesjon uten binding.</p>
               </div>
             </RevealOnScroll>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+              {FLEX_PACKAGES.map((pkg) => (
+                <StaggerItem key={pkg.name}>
+                  <div className="w-card flex flex-col h-full">
+                    <div className="flex items-baseline justify-between mb-2">
+                      <h4 className="font-display text-lg font-semibold text-ink-90">{pkg.name}</h4>
+                      <span className="font-mono text-sm text-ink-40">{pkg.duration}</span>
+                    </div>
+                    <p className="font-mono text-2xl font-bold text-gold-text mb-2">
+                      {pkg.price}
+                      <span className="text-sm font-normal ml-1">{pkg.period}</span>
+                    </p>
+                    <p className="text-sm text-ink-50 leading-relaxed mb-6 flex-1">{pkg.description}</p>
+                    <a href={BOOKING_URL} className="w-btn w-btn-ghost text-center">Book nå</a>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
           </div>
         </section>
 
@@ -220,7 +269,7 @@ export default function AcademyPage() {
           ctaLabel="Avtal en samtale"
           ctaHref="#apply"
           secondaryCtaLabel="Book coaching-time"
-          secondaryCtaHref="/academy/booking"
+          secondaryCtaHref={BOOKING_URL}
         />
 
         {/* ─── Application Form ─── */}
