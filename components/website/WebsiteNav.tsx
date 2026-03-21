@@ -137,12 +137,12 @@ export function WebsiteNav() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.4 }}
+                transition={{ delay: 0.1 + NAV_LINKS.length * 0.05, duration: 0.4 }}
               >
                 <Link
                   href={PORTAL_URL}
                   onClick={() => setMobileOpen(false)}
-                  className="text-base font-medium text-ink-40 hover:text-ink-80 transition-colors"
+                  className="font-display text-2xl font-normal tracking-tight text-ink-40 hover:text-ink-80 transition-colors"
                 >
                   Logg inn
                 </Link>
@@ -150,7 +150,7 @@ export function WebsiteNav() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
+                transition={{ delay: 0.1 + (NAV_LINKS.length + 1) * 0.05, duration: 0.4 }}
               >
                 <a
                   href={BOOKING_URL}
