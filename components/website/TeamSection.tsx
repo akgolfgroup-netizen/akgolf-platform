@@ -23,13 +23,21 @@ export function TeamSection() {
               <div className="flex flex-col items-center text-center">
                 <div className="w-full max-w-sm mb-6">
                   <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-ink-10">
-                    <Image
-                      src={i === 0 ? "/images/branding/ak-golf-academy-01.jpg" : "/images/branding/ak-golf-academy-04.jpg"}
-                      alt={member.name}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
+                    {i === 0 ? (
+                      <Image
+                        src="/images/branding/ak-golf-academy-anders.jpg"
+                        alt={member.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-ink-05">
+                        <span className="font-display text-6xl font-semibold text-ink-30">
+                          {member.name.split(" ").map(n => n[0]).join("")}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
