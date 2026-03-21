@@ -179,8 +179,8 @@ export default function HomePage() {
         {/* ─── 4. Team (lys) ─── */}
         <TeamSection />
 
-        {/* ─── 5. Kontakt & Skjema (lys) ─── */}
-        <section id="apply" className="w-section-lg bg-surface-warm">
+        {/* ─── 5. Kontakt & Skjema ─── */}
+        <section id="apply" className="w-section-lg bg-surface-cream">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">

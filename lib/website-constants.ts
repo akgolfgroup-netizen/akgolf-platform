@@ -386,10 +386,9 @@ export const CREDENTIALS = [
 // ─── Footer ───
 export const FOOTER_LINKS = {
   divisions: [
-    { label: "Academy", href: "/academy" },
+    { label: "Coaching", href: "/academy" },
     { label: "Junior Academy", href: "/junior" },
-    { label: "Software", href: "/utvikling" },
-    { label: "Klubbtrening", href: "/utvikling" },
+    { label: "Utvikling", href: "/utvikling" },
   ],
   company: [
     { label: "Om oss", href: "/#story" },

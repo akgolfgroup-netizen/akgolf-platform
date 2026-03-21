@@ -47,7 +47,7 @@ export function WebsiteFooter() {
           {/* Divisions */}
           <div>
             <h4 className="w-meta text-gold mb-5">
-              Divisjoner
+              Tjenester
             </h4>
             <ul className="space-y-3">
               {FOOTER_LINKS.divisions.map((link) => (
