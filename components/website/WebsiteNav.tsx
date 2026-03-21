@@ -48,7 +48,7 @@ export function WebsiteNav() {
                 className={`relative text-[13px] font-medium tracking-wide transition-colors duration-300 py-1 ${
                   pathname === link.href
                     ? useDarkText ? "text-ink-90" : "text-white"
-                    : useDarkText ? "text-ink-50 hover:text-ink-80" : "text-white/70 hover:text-white"
+                    : useDarkText ? "text-ink-70 hover:text-ink-90" : "text-white/70 hover:text-white"
                 }`}
               >
                 {link.label}
@@ -64,7 +64,7 @@ export function WebsiteNav() {
             <Link
               href={PORTAL_URL}
               className={`text-[13px] font-medium tracking-wide transition-colors duration-300 ${
-                useDarkText ? "text-ink-50 hover:text-ink-80" : "text-white/70 hover:text-white"
+                useDarkText ? "text-ink-70 hover:text-ink-90" : "text-white/70 hover:text-white"
               }`}
             >
               Logg inn
