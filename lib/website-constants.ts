@@ -20,7 +20,7 @@ export const HERO = {
 export const TEAM = [
   {
     name: "Anders Kristiansen",
-    role: "Head Coach",
+    role: "Hovedtrener",
     division: "AK Golf Junior Academy",
     bio: "Med over 10 års erfaring som golftrener på høyeste nivå har Anders viet karrieren sin til å hjelpe ambisiøse spillere med å nå sitt fulle potensial. Hans filosofi er enkel: teknikk alene er ikke nok — de beste resultatene kommer når vi jobber med hele spilleren.",
     certifications: ["PGA Professional", "TPI Certified", "Mental Coach", "Trackman Certified"],
@@ -28,9 +28,9 @@ export const TEAM = [
   },
   {
     name: "Markus Røinås Pedersen",
-    role: "Junior Coach",
-    division: "Junior Academy · GFGK",
-    bio: "Markus har hovedansvar for juniortrening på GFGK og brenner for å utvikle neste generasjons golfere. Med bakgrunn i juniorutvikling og konkurransegolf skaper han et trygt og motiverende miljø der unge spillere kan vokse — både som golfere og mennesker.",
+    role: "Coach · Hovedtrener GFGK Junior",
+    division: "AK Golf Academy",
+    bio: "Markus er coach i AK Golf Academy og hovedtrener for junioravdelingen på GFGK. Med bakgrunn i juniorutvikling og konkurransegolf skaper han et trygt og motiverende miljø der unge spillere kan vokse — både som golfere og mennesker.",
     certifications: ["PGA Professional"],
     contact: { email: "markus@akgolf.no", phone: "+47 905 86 097" },
   },
