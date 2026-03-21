@@ -11,8 +11,6 @@ import { SectionLabel } from "@/components/website/SectionLabel";
 import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/website/RevealOnScroll";
 import { ServiceCard } from "@/components/website/ServiceCard";
 import { MethodRow } from "@/components/website/MethodRow";
-import { FeaturedTestimonial } from "@/components/website/FeaturedTestimonial";
-import { TestimonialCard } from "@/components/website/TestimonialCard";
 import { TeamSection } from "@/components/website/TeamSection";
 import { ProcessSteps } from "@/components/website/ProcessSteps";
 import { ApplicationForm } from "@/components/website/ApplicationForm";
@@ -21,7 +19,6 @@ import {
   HERO,
   DIVISIONS,
   METHOD_PILLARS,
-  TESTIMONIALS,
   BOOKING_URL,
 } from "@/lib/website-constants";
 
@@ -109,17 +106,6 @@ export default function HomePage() {
                 {HERO.subheading}
               </motion.p>
 
-              {/* Urgency badge */}
-              <motion.div
-                className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 rounded-full px-4 py-2 mb-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: loading ? 0 : 1 }}
-                transition={{ duration: 0.6, delay: 0.9 }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-gold w-animate-pulse-gold" />
-                <span className="text-xs text-gold-text font-medium">{HERO.urgencyBadge}</span>
-              </motion.div>
-
               {/* CTAs */}
               <motion.div
                 className="flex flex-wrap gap-4"
@@ -132,20 +118,6 @@ export default function HomePage() {
                 <Link href="/#method" className="w-btn w-btn-secondary">{HERO.ctaSecondary} &rarr;</Link>
               </motion.div>
 
-              {/* Trust strip */}
-              <motion.div
-                className="flex flex-wrap gap-6 mt-12"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: loading ? 0 : 1 }}
-                transition={{ duration: 0.6, delay: 1.2 }}
-              >
-                {HERO.trustItems.map((item) => (
-                  <span key={item} className="flex items-center gap-2 text-xs text-ink-30">
-                    <span className="w-1 h-1 rounded-full bg-gold" />
-                    {item}
-                  </span>
-                ))}
-              </motion.div>
             </div>
           </div>
         </section>
@@ -208,31 +180,7 @@ export default function HomePage() {
         {/* ─── 4. Team (lys) ─── */}
         <TeamSection />
 
-        {/* ─── 5. Testimonials (mørk) ─── */}
-        <section className="bg-ink-100 w-section-lg w-section-dark">
-          <div className="w-container">
-            <RevealOnScroll>
-              <div className="text-center mb-12">
-                <SectionLabel>Hva elevene sier</SectionLabel>
-                <h2 className="w-heading-lg text-white mt-4">Resultater du kan høre.</h2>
-              </div>
-            </RevealOnScroll>
-
-            {TESTIMONIALS.filter(t => t.featured).map(t => (
-              <FeaturedTestimonial key={t.name} quote={t.quote} name={t.name} role={t.role} />
-            ))}
-
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {TESTIMONIALS.filter(t => !t.featured).map(t => (
-                <StaggerItem key={t.name}>
-                  <TestimonialCard quote={t.quote} name={t.name} role={t.role} />
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
-        {/* ─── 6. Kontakt & Skjema (lys) ─── */}
+        {/* ─── 5. Kontakt & Skjema (lys) ─── */}
         <section id="apply" className="w-section-lg bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>

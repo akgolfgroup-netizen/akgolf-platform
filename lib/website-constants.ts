@@ -2,7 +2,7 @@
 export const NAV_LINKS = [
   { label: "Hjem", href: "/" },
   { label: "Academy", href: "/academy" },
-  { label: "Junior", href: "/junior" },
+  // { label: "Junior", href: "/junior" }, // Skjult midlertidig
   { label: "Utvikling", href: "/utvikling" },
   { label: "Blog", href: "/blog" },
 ] as const;

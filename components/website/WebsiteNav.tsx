@@ -32,11 +32,8 @@ export function WebsiteNav() {
       >
         <div className="w-container flex h-[52px] items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group" aria-label="AK Golf Group — Hjem">
+          <Link href="/" className="flex items-center gap-2.5 group" aria-label="AK Golf — Hjem">
             <AKLogo variant={scrolled ? "midnight" : "white"} size={28} />
-            <span className={`font-display text-sm font-semibold tracking-tight transition-colors duration-300 group-hover:text-gold ${scrolled ? "text-ink-90" : "text-white"}`}>
-              AK Golf Group
-            </span>
           </Link>
 
           {/* Desktop links */}
@@ -73,7 +70,7 @@ export function WebsiteNav() {
               href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-btn w-btn-primary text-[13px]"
+              className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-gold text-white transition-all duration-300 hover:bg-gold-dark"
             >
               Book time
             </a>

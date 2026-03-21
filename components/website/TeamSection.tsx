@@ -43,17 +43,6 @@ export function TeamSection() {
                   {member.bio}
                 </p>
 
-                <div className="flex flex-wrap justify-center gap-2 mb-6">
-                  {member.certifications.map((cert) => (
-                    <span
-                      key={cert}
-                      className="inline-flex items-center px-3 py-1.5 rounded-full bg-gold/10 border border-gold/20 text-xs font-medium text-gold-text"
-                    >
-                      {cert}
-                    </span>
-                  ))}
-                </div>
-
                 <div className="flex items-center gap-4 text-sm">
                   <Link
                     href={`mailto:${member.contact.email}`}

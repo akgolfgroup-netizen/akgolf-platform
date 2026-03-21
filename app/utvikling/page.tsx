@@ -5,9 +5,8 @@ import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SubPageHero } from "@/components/website/SubPageHero";
 import { SectionLabel } from "@/components/website/SectionLabel";
-import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/website/RevealOnScroll";
+import { RevealOnScroll } from "@/components/website/RevealOnScroll";
 import { FeatureGrid } from "@/components/website/FeatureGrid";
-import { FeaturedTestimonial } from "@/components/website/FeaturedTestimonial";
 import { ApplicationForm } from "@/components/website/ApplicationForm";
 import { ImagePlaceholder } from "@/components/website/ImagePlaceholder";
 import { RelatedPages } from "@/components/website/RelatedPages";
@@ -16,8 +15,6 @@ import { PageTransition } from "@/components/website/PageTransition";
 import {
   SOFTWARE_FEATURES,
   KLUBB_FEATURES,
-  UTVIKLING_AUDIENCES,
-  TESTIMONIALS,
 } from "@/lib/website-constants";
 
 export default function UtviklingPage() {
@@ -119,48 +116,6 @@ export default function UtviklingPage() {
                 </Link>
               </div>
             </RevealOnScroll>
-          </div>
-        </section>
-
-        {/* ─── Who Is This For ─── */}
-        <section className="w-section bg-surface-cream">
-          <div className="w-container">
-            <RevealOnScroll>
-              <div className="text-center mb-12">
-                <SectionLabel>Hvem er dette for?</SectionLabel>
-                <h2 className="w-heading-lg mt-4">Løsninger for hele golføkosystemet.</h2>
-              </div>
-            </RevealOnScroll>
-
-            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {UTVIKLING_AUDIENCES.map((audience) => (
-                <StaggerItem key={audience.title}>
-                  <div className="w-card h-full text-center">
-                    <div className="w-12 h-12 rounded-xl bg-ink-90 flex items-center justify-center mx-auto mb-4">
-                      <span className="font-mono text-sm text-gold">{audience.title.charAt(0)}</span>
-                    </div>
-                    <h4 className="font-display text-base font-semibold text-ink-90 mb-2">{audience.title}</h4>
-                    <p className="text-sm text-ink-50 leading-relaxed">{audience.description}</p>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
-        {/* ─── Testimonials ─── */}
-        <section className="bg-ink-100 w-section w-section-dark">
-          <div className="w-container">
-            <RevealOnScroll>
-              <SectionLabel>Fra våre kunder</SectionLabel>
-              <h2 className="w-heading-lg text-white mt-4 mb-12">Klubber som leder an.</h2>
-            </RevealOnScroll>
-
-            <FeaturedTestimonial
-              quote={TESTIMONIALS[3].quote}
-              name={TESTIMONIALS[3].name}
-              role={TESTIMONIALS[3].role}
-            />
           </div>
         </section>
 
