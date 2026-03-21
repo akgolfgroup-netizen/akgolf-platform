@@ -1,18 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
-import { AKLogo } from "@/components/website/AKLogo";
 import { SectionLabel } from "@/components/website/SectionLabel";
 import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/website/RevealOnScroll";
 import { ServiceCard } from "@/components/website/ServiceCard";
 import { MethodRow } from "@/components/website/MethodRow";
 import { TeamSection } from "@/components/website/TeamSection";
-import { ProcessSteps } from "@/components/website/ProcessSteps";
 import { ApplicationForm } from "@/components/website/ApplicationForm";
 import { BackToTop } from "@/components/website/BackToTop";
 import {
@@ -22,44 +18,9 @@ import {
   BOOKING_URL,
 } from "@/lib/website-constants";
 
-// ─── Loader ───
-function Loader({ onComplete }: { onComplete: () => void }) {
-  useEffect(() => {
-    const timer = setTimeout(onComplete, 1800);
-    return () => clearTimeout(timer);
-  }, [onComplete]);
-
-  return (
-    <motion.div
-      className="fixed inset-0 z-[100] bg-ink-100 flex flex-col items-center justify-center"
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <AKLogo variant="gold" size={48} />
-      <div className="mt-8 w-48 h-[2px] bg-ink-80 rounded-full overflow-hidden">
-        <div className="h-full bg-gold w-animate-loader rounded-full" />
-      </div>
-    </motion.div>
-  );
-}
-
 export default function HomePage() {
-  const [loading, setLoading] = useState(() => {
-    if (typeof window !== "undefined") {
-      return !sessionStorage.getItem("akgolf_visited");
-    }
-    return true;
-  });
-
-  function handleLoaderComplete() {
-    sessionStorage.setItem("akgolf_visited", "1");
-    setLoading(false);
-  }
-
   return (
     <>
-      <AnimatePresence>{loading && <Loader onComplete={handleLoaderComplete} />}</AnimatePresence>
-
       <WebsiteNav />
 
       <main id="main-content">
@@ -82,8 +43,8 @@ export default function HomePage() {
             <div className="max-w-3xl">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: loading ? 0 : 1, y: loading ? 20 : 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 <SectionLabel>{HERO.eyebrow}</SectionLabel>
               </motion.div>
@@ -91,8 +52,8 @@ export default function HomePage() {
               <motion.h1
                 className="w-heading-xl mt-6 mb-6 text-white"
                 initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: loading ? 0 : 1, y: loading ? 40 : 0 }}
-                transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 {HERO.heading}
               </motion.h1>
@@ -100,28 +61,25 @@ export default function HomePage() {
               <motion.p
                 className="text-lg md:text-xl text-ink-20 max-w-xl leading-relaxed mb-8"
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: loading ? 0 : 1, y: loading ? 20 : 0 }}
-                transition={{ duration: 0.8, delay: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 {HERO.subheading}
               </motion.p>
 
-              {/* CTAs */}
+              {/* CTA */}
               <motion.div
-                className="flex flex-wrap gap-4"
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: loading ? 0 : 1, y: loading ? 20 : 0 }}
-                transition={{ duration: 0.8, delay: 1.0 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
               >
                 <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="w-btn w-btn-primary">{HERO.ctaPrimary}</a>
-                <Link href="/#method" className="w-btn w-btn-secondary">{HERO.ctaSecondary} &rarr;</Link>
               </motion.div>
-
             </div>
           </div>
         </section>
 
-        {/* ─── 2. Divisjoner (lys) ─── */}
+        {/* ─── 2. Tjenester (lys) ─── */}
         <section className="w-section-lg bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>
@@ -179,7 +137,7 @@ export default function HomePage() {
         {/* ─── 4. Team (lys) ─── */}
         <TeamSection />
 
-        {/* ─── 5. Kontakt & Skjema ─── */}
+        {/* ─── 5. Kontakt ─── */}
         <section id="apply" className="w-section-lg bg-surface-cream">
           <div className="w-container">
             <RevealOnScroll>
@@ -192,12 +150,8 @@ export default function HomePage() {
               </div>
             </RevealOnScroll>
 
-            <ProcessSteps />
-
-            <RevealOnScroll delay={0.4}>
-              <div className="mt-12">
-                <ApplicationForm />
-              </div>
+            <RevealOnScroll delay={0.2}>
+              <ApplicationForm />
             </RevealOnScroll>
           </div>
         </section>

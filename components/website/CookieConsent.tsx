@@ -25,19 +25,17 @@ export function CookieConsent() {
   if (consent) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-ink-90 text-ink-20 border-t border-ink-70">
-      <div className="w-container flex flex-col sm:flex-row items-center justify-between gap-4 py-4">
-        <p className="text-sm text-center sm:text-left">
-          Vi bruker informasjonskapsler for å forbedre din opplevelse.
-        </p>
-        <div className="flex items-center gap-4 shrink-0">
-          <Link href="/personvern" className="text-sm text-ink-40 hover:text-ink-20 transition-colors">
-            Les mer
-          </Link>
-          <button onClick={handleAccept} className="w-btn w-btn-primary text-sm !py-2 !px-5">
-            Godta
-          </button>
-        </div>
+    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40 bg-white rounded-2xl shadow-lg border border-ink-10 p-5">
+      <p className="text-sm text-ink-60 mb-4">
+        Vi bruker informasjonskapsler for å forbedre din opplevelse.
+      </p>
+      <div className="flex items-center gap-3">
+        <button onClick={handleAccept} className="w-btn w-btn-primary text-sm !py-2 !px-5">
+          Godta
+        </button>
+        <Link href="/personvern" className="text-sm text-ink-40 hover:text-ink-70 transition-colors">
+          Les mer
+        </Link>
       </div>
     </div>
   );
