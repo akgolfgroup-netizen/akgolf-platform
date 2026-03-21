@@ -13,9 +13,8 @@ export function WebsiteNav() {
   const scrollY = useScrollPosition();
   const pathname = usePathname();
   const scrolled = scrollY > 20;
-  const isHome = pathname === "/";
-  // White text only on home hero (dark background). Subpages always use dark text.
-  const useDarkText = scrolled || !isHome;
+  // Always dark text — hero image is light
+  const useDarkText = true;
 
   // Prevent body scroll when mobile nav is open
   useEffect(() => {
