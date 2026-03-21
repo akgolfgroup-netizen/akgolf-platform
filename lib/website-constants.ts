@@ -8,12 +8,9 @@ export const NAV_LINKS = [
 // ─── Hero ───
 export const HERO = {
   eyebrow: "AK Golf Academy",
-  heading: "Coaching som endrer spillet.",
-  subheading: "Individuell coaching på høyeste nivå for ambisiøse golfere som krever resultater.",
-  urgencyBadge: "Sesong 2026 — begrenset kapasitet",
-  ctaPrimary: "Book coaching",
-  ctaSecondary: "Se vår metode",
-  trustItems: ["AK-Formelen", "Individuell utviklingsplan", "Mentalt spill"],
+  heading: "Bli en bedre golfspiller — med system.",
+  subheading: "AK Golf Academy kombinerer individuell coaching med en digital treningsplattform som følger deg mellom sesjonene. Strukturert utvikling for golfspillere på alle nivåer.",
+  ctaPrimary: "Se pakker og priser",
 } as const;
 
 // ─── Team ───
@@ -62,6 +59,85 @@ export const DIVISIONS = [
     href: "/utvikling",
     accent: "utvikling" as const,
   },
+] as const;
+
+// ─── How It Works ───
+export const HOW_IT_WORKS = {
+  eyebrow: "Slik fungerer det",
+  heading: "20 minutter som endrer spillet ditt.",
+  description: "Tradisjonell golfcoaching er én time, én gang i blant, uten oppfølging mellom sesjonene. Vi gjør det annerledes. Våre coaching-sesjoner er 20 minutter — fokuserte, målrettede og uten fyllminutter. Hver sesjon har ett mål. Etterpå oppdateres treningsplanen din i appen, slik at du vet nøyaktig hva du skal jobbe med til neste gang.",
+  steps: [
+    { number: "01", title: "Book selv i appen", description: "Velg tid som passer deg. AK Performance Pro-medlemmer ser tider 14 dager frem, AK Performance ser 7 dager." },
+    { number: "02", title: "20 minutter med fokus", description: "Én ting per sesjon. TrackMan-data logges automatisk i profilen din. Ingen small talk — bare utvikling." },
+    { number: "03", title: "Tren mellom sesjonene", description: "Treningsplanen oppdateres etter hver sesjon. Øvelsesbank, statistikk og progresjonslogging holder deg på sporet." },
+  ],
+} as const;
+
+// ─── Coaching Packages ───
+export const COACHING_PACKAGES = [
+  {
+    name: "AK Performance",
+    price: "1 599",
+    period: "kr/mnd",
+    description: "For deg som vil ha struktur og jevnlig coaching uten å binde opp hele kalenderen.",
+    features: ["2 x 20 min individuell coaching per måned", "Selvbooking via appen — 7 dager frem", "Full spillerportal med treningsplan", "TrackMan-data logget i din profil"],
+    highlighted: false,
+  },
+  {
+    name: "AK Performance Pro",
+    price: "1 999",
+    period: "kr/mnd",
+    description: "Dobbel frekvens for raskere utvikling. Prioritert booking.",
+    features: ["4 x 20 min individuell coaching per måned", "Selvbooking via appen — 14 dager frem", "Booker før AK Performance-medlemmer", "Full spillerportal med treningsplan", "TrackMan-data logget i din profil"],
+    highlighted: true,
+  },
+  {
+    name: "AK Junior Elite",
+    price: "2 499",
+    period: "kr/mnd",
+    description: "For ambisiøse juniorer som satser på konkurransegolf. Begrenset til 5 plasser.",
+    features: ["8 x 20 min coaching per måned (2 per uke)", "Faste tider tirsdag og torsdag", "Alderstilpasset treningsplan", "Progresjonslogging for junior og foreldre", "TrackMan-analyse hver sesjon", "Turneringskalender og sesongplanlegging"],
+    highlighted: false,
+  },
+] as const;
+
+export const FLEX_PACKAGES = [
+  {
+    name: "AK Flex 50",
+    price: "1 500",
+    period: "kr",
+    duration: "50 min",
+    description: "Én 50-minutters coaching-sesjon uten binding. Coaching-notater i appen etter sesjonen.",
+  },
+  {
+    name: "AK Flex 90",
+    price: "2 500",
+    period: "kr",
+    duration: "90 min",
+    description: "Én 90-minutters dypdykk uten binding. Coaching-notater i appen etter sesjonen.",
+  },
+] as const;
+
+// ─── Portal Features ───
+export const PORTAL_FEATURES = [
+  { title: "Treningsplan", description: "Oppdateres etter hver sesjon med konkrete øvelser og fokusområder." },
+  { title: "Øvelsesbank", description: "HD-videoer med instruksjoner for alle deler av spillet. Filtrert på tema og nivå." },
+  { title: "Treningsdagbok", description: "Logg runder, treningsøkter og score. Se utviklingen over tid." },
+  { title: "Statistikk Pro", description: "Detaljert analyse av styrker og svakheter. Fairway, GIR, putting, scrambling." },
+  { title: "AI-analyse", description: "Automatiserte anbefalinger basert på dine data. Hva bør du prioritere nå?" },
+  { title: "TrackMan-data", description: "Data fra coaching-sesjonene logget i profilen din. Trender over tid." },
+] as const;
+
+// ─── Coaching FAQ ───
+export const COACHING_FAQ = [
+  { q: "Hvordan booker jeg tid?", a: "Logg inn i appen og gå til «Book sesjon». Du ser ledige tider basert på din pakke. Velg tid, bekreft, ferdig." },
+  { q: "Hva skjer om jeg ikke bruker alle sesjonene mine?", a: "Ubrukte sesjoner forfaller ved månedslutt. Du får en påminnelse 10 dager før." },
+  { q: "Kan jeg avbestille en booket tid?", a: "Ja, innen 24 timer før sesjonen. Etter det telles den som brukt." },
+  { q: "Hva er forskjellen på AK Performance og AK Performance Pro?", a: "Dobbel frekvens (4 vs 2 sesjoner/mnd) og prioritert booking — du ser ledige tider 14 dager frem mot 7 dager." },
+  { q: "Hva inkluderer AK Flex?", a: "En enkeltstående coaching-sesjon på 50 eller 90 minutter. Du får coaching-notater i appen etterpå, men ikke tilgang til spillerportalen." },
+  { q: "Er det bindingstid?", a: "Nei. Alle abonnement er månedlige og kan sies opp når som helst." },
+  { q: "Hva er AK Junior Elite?", a: "Et eliteprogram for maks 5 ambisiøse juniorer. 2 treninger per uke med faste tider. Begrenset plasser — ta kontakt for å søke." },
+  { q: "Hvilken pakke passer for meg?", a: "Spiller du golf 1-2 ganger i uken og vil ha struktur? AK Performance. Trener du 3+ ganger i uken? AK Performance Pro. Vil du bare prøve først? Book en AK Flex-sesjon." },
 ] as const;
 
 // ─── Method Pillars ───
@@ -255,7 +331,7 @@ export const SOFTWARE_FEATURES = [
 
 export const KLUBB_FEATURES = [
   { title: "Sportsplaner", description: "Helhetlige sportsplaner tilpasset klubbens størrelse, ambisjoner og ressurser. Fra junior til elite." },
-  { title: "Programdesign", description: "Skreddersydde treningsprogrammer for alle nivåer. Strukturerte ukeplaner, periodisering og konkurransekalender." },
+  { title: "Programdesign", description: "Skreddysydde treningsprogrammer for alle nivåer. Strukturerte ukeplaner, periodisering og konkurransekalender." },
   { title: "Trenerutvikling", description: "Kurs, mentoring og nettverk for klubbtrenere. Hev kompetansen og behold de beste trenerne." },
   { title: "Organisasjonsrådgiving", description: "Strategisk rådgiving for golfklubber som vil profesjonalisere sportslig aktivitet og organisasjonsstruktur." },
 ] as const;
