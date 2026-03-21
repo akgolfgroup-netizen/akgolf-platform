@@ -9,52 +9,44 @@ export function WebsiteFooter() {
       {/* Gold gradient top edge */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
 
-      {/* Large brand watermark */}
-      <div className="absolute bottom-0 right-0 pointer-events-none select-none overflow-hidden" aria-hidden="true">
-        <span className="block font-display text-[20rem] md:text-[28rem] font-normal leading-none text-white/[0.015] translate-x-[15%] translate-y-[25%]">
-          AK
-        </span>
-      </div>
-
-      <div className="w-container relative py-16 md:py-20">
-        {/* Newsletter */}
-        <div className="pb-12 mb-12 border-b border-ink-80/50">
-          <div className="max-w-xl">
-            <h3 className="font-display text-lg font-semibold text-white mb-2">
-              Hold deg oppdatert
-            </h3>
-            <p className="text-sm text-ink-40 mb-5">
-              Få treningstips og nyheter fra AK Golf rett i innboksen.
-            </p>
-            <NewsletterSignup />
-          </div>
+      <div className="w-container relative py-10 md:py-16">
+        {/* Newsletter — compact on mobile */}
+        <div className="pb-8 mb-8 border-b border-ink-80/50">
+          <h3 className="font-display text-base font-semibold text-white mb-1">
+            Hold deg oppdatert
+          </h3>
+          <p className="text-xs text-ink-40 mb-3">
+            Treningstips og nyheter rett i innboksen.
+          </p>
+          <NewsletterSignup />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+        {/* Links grid — 2 cols on mobile, 4 on desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {/* Brand */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-2.5 mb-5">
-              <AKLogo variant="gold" size={28} />
+          <div className="col-span-2 md:col-span-1">
+            <div className="flex items-center gap-2 mb-3">
+              <AKLogo variant="gold" size={24} />
               <span className="font-display text-sm font-semibold text-white tracking-tight">
-                AK Golf Group
+                AK Golf
               </span>
             </div>
-            <p className="text-sm leading-relaxed text-ink-40 max-w-[280px]">
-              Premium golfutvikling for ambisiose spillere som krever resultater.
+            <p className="text-xs leading-relaxed text-ink-40 max-w-[240px]">
+              Premium golfcoaching for ambisiøse spillere.
             </p>
           </div>
 
-          {/* Divisions */}
+          {/* Tjenester */}
           <div>
-            <h4 className="w-meta text-gold mb-5">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-gold mb-3">
               Tjenester
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {FOOTER_LINKS.divisions.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-ink-40 hover:text-white transition-colors duration-300"
+                    className="text-xs text-ink-40 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -63,17 +55,17 @@ export function WebsiteFooter() {
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Selskap */}
           <div>
-            <h4 className="w-meta text-gold mb-5">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-gold mb-3">
               Selskap
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {FOOTER_LINKS.company.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-ink-40 hover:text-white transition-colors duration-300"
+                    className="text-xs text-ink-40 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -82,16 +74,16 @@ export function WebsiteFooter() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Kontakt */}
           <div>
-            <h4 className="w-meta text-gold mb-5">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-gold mb-3">
               Kontakt
             </h4>
-            <ul className="space-y-3 text-sm text-ink-40">
+            <ul className="space-y-2 text-xs text-ink-40">
               <li>
                 <a
                   href={`mailto:${FOOTER_LINKS.contact.email}`}
-                  className="hover:text-white transition-colors duration-300"
+                  className="hover:text-white transition-colors"
                 >
                   {FOOTER_LINKS.contact.email}
                 </a>
@@ -99,23 +91,19 @@ export function WebsiteFooter() {
               <li>
                 <a
                   href={`tel:${FOOTER_LINKS.contact.phone.replace(/\s/g, "")}`}
-                  className="hover:text-white transition-colors duration-300"
+                  className="hover:text-white transition-colors"
                 >
                   {FOOTER_LINKS.contact.phone}
                 </a>
               </li>
-              <li>{FOOTER_LINKS.contact.location}</li>
             </ul>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 pt-8 border-t border-ink-80/50 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-ink-50">
-            &copy; {new Date().getFullYear()} AK Golf Group. Alle rettigheter forbeholdt.
-          </p>
-          <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-ink-60">
-            Crafted with precision
+        <div className="mt-8 pt-6 border-t border-ink-80/50 flex justify-between items-center">
+          <p className="text-[10px] text-ink-50">
+            &copy; {new Date().getFullYear()} AK Golf Group
           </p>
         </div>
       </div>
