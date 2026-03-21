@@ -16,7 +16,7 @@ import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
 import { JUNIOR_PROGRAMS, JUNIOR_FAQ, JUNIOR_INTAKE, TEAM, TESTIMONIALS } from "@/lib/website-constants";
 
-const juniorCoach = TEAM.find(m => m.role === "Junior Coach");
+const juniorCoach = TEAM.find(m => m.name === "Markus Røinås Pedersen");
 
 export default function JuniorPage() {
   return (
