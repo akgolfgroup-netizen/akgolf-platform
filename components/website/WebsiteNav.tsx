@@ -13,6 +13,9 @@ export function WebsiteNav() {
   const scrollY = useScrollPosition();
   const pathname = usePathname();
   const scrolled = scrollY > 20;
+  const isHome = pathname === "/";
+  // White text only on home hero (dark background). Subpages always use dark text.
+  const useDarkText = scrolled || !isHome;
 
   // Prevent body scroll when mobile nav is open
   useEffect(() => {
@@ -33,7 +36,7 @@ export function WebsiteNav() {
         <div className="w-container flex h-[52px] items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group" aria-label="AK Golf — Hjem">
-            <AKLogo variant={scrolled ? "midnight" : "white"} size={28} />
+            <AKLogo variant={useDarkText ? "midnight" : "white"} size={28} />
           </Link>
 
           {/* Desktop links */}
@@ -44,8 +47,8 @@ export function WebsiteNav() {
                 href={link.href}
                 className={`relative text-[13px] font-medium tracking-wide transition-colors duration-300 py-1 ${
                   pathname === link.href
-                    ? scrolled ? "text-ink-90" : "text-white"
-                    : scrolled ? "text-ink-50 hover:text-ink-80" : "text-white/70 hover:text-white"
+                    ? useDarkText ? "text-ink-90" : "text-white"
+                    : useDarkText ? "text-ink-50 hover:text-ink-80" : "text-white/70 hover:text-white"
                 }`}
               >
                 {link.label}
@@ -61,7 +64,7 @@ export function WebsiteNav() {
             <Link
               href={PORTAL_URL}
               className={`text-[13px] font-medium tracking-wide transition-colors duration-300 ${
-                scrolled ? "text-ink-50 hover:text-ink-80" : "text-white/70 hover:text-white"
+                useDarkText ? "text-ink-50 hover:text-ink-80" : "text-white/70 hover:text-white"
               }`}
             >
               Logg inn
@@ -83,17 +86,17 @@ export function WebsiteNav() {
             aria-label={mobileOpen ? "Lukk meny" : "Åpne meny"}
           >
             <span
-              className={`block h-[1.5px] w-5 transition-all duration-300 ${scrolled ? "bg-ink-80" : "bg-white"} ${
+              className={`block h-[1.5px] w-5 transition-all duration-300 ${useDarkText ? "bg-ink-80" : "bg-white"} ${
                 mobileOpen ? "rotate-45 translate-y-[6.5px]" : ""
               }`}
             />
             <span
-              className={`block h-[1.5px] w-5 transition-all duration-300 ${scrolled ? "bg-ink-80" : "bg-white"} ${
+              className={`block h-[1.5px] w-5 transition-all duration-300 ${useDarkText ? "bg-ink-80" : "bg-white"} ${
                 mobileOpen ? "opacity-0" : ""
               }`}
             />
             <span
-              className={`block h-[1.5px] w-5 transition-all duration-300 ${scrolled ? "bg-ink-80" : "bg-white"} ${
+              className={`block h-[1.5px] w-5 transition-all duration-300 ${useDarkText ? "bg-ink-80" : "bg-white"} ${
                 mobileOpen ? "-rotate-45 -translate-y-[6.5px]" : ""
               }`}
             />
