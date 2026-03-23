@@ -197,12 +197,12 @@ function BookingContent() {
                         <ArrowLeft size={18} />
                       </button>
                     )}
-                    <span className="text-sm text-ink-40">
+                    <span className="text-sm text-ink-50">
                       Steg {currentStepNum} av {totalSteps}
                     </span>
                   </div>
                   {selectedService && (
-                    <span className="text-sm text-ink-40 hidden sm:block">
+                    <span className="text-sm text-ink-50 hidden sm:block">
                       {selectedService.name}
                       {selectedInstructor ? ` · ${selectedInstructor.user.name}` : ""}
                     </span>

@@ -36,7 +36,7 @@ export default function OvelserPage() {
       />
 
       {filtered.length === 0 ? (
-        <p className="text-sm text-ink-40 text-center py-12">
+        <p className="text-sm text-ink-50 text-center py-12">
           Ingen ovelser matcher filteret.
         </p>
       ) : (

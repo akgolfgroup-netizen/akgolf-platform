@@ -152,7 +152,7 @@ export function Confirmation({ serviceName, instructorName, dateTime, isNewUser 
                 <Calendar size={20} className="text-gold" />
               </div>
               <div>
-                <p className="text-xs text-ink-40 uppercase tracking-wider mb-0.5">Tjeneste</p>
+                <p className="text-xs text-ink-50 uppercase tracking-wider mb-0.5">Tjeneste</p>
                 <p className="font-medium text-ink-90">{serviceName}</p>
               </div>
             </div>
@@ -162,7 +162,7 @@ export function Confirmation({ serviceName, instructorName, dateTime, isNewUser 
                 <User size={20} className="text-gold" />
               </div>
               <div>
-                <p className="text-xs text-ink-40 uppercase tracking-wider mb-0.5">Trener</p>
+                <p className="text-xs text-ink-50 uppercase tracking-wider mb-0.5">Trener</p>
                 <p className="font-medium text-ink-90">{instructorName}</p>
               </div>
             </div>
@@ -172,7 +172,7 @@ export function Confirmation({ serviceName, instructorName, dateTime, isNewUser 
                 <Clock size={20} className="text-gold" />
               </div>
               <div>
-                <p className="text-xs text-ink-40 uppercase tracking-wider mb-0.5">Dato og tid</p>
+                <p className="text-xs text-ink-50 uppercase tracking-wider mb-0.5">Dato og tid</p>
                 <p className="font-medium text-ink-90 capitalize">
                   {formattedDate}, {formattedTime}
                 </p>

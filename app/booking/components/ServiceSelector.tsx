@@ -46,7 +46,7 @@ export function ServiceSelector({ services, onSelect }: Props) {
                         <h3 className="w-heading-sm group-hover:text-gold transition-colors">
                           {service.name}
                         </h3>
-                        <span className="text-xs text-ink-40 uppercase tracking-wider">
+                        <span className="text-xs text-ink-50 uppercase tracking-wider">
                           {categoryLabel}
                         </span>
                       </div>
@@ -63,7 +63,7 @@ export function ServiceSelector({ services, onSelect }: Props) {
                     )}
 
                     {/* Meta info */}
-                    <div className="flex items-center gap-4 text-xs text-ink-40">
+                    <div className="flex items-center gap-4 text-xs text-ink-50">
                       <span className="flex items-center gap-1.5">
                         <Clock size={14} className="text-gold" />
                         {service.duration} min

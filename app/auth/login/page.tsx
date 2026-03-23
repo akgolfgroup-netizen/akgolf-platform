@@ -59,7 +59,7 @@ function LoginForm() {
           Vi har sendt en innloggingslenke til
         </p>
         <p className="font-semibold text-ink-90 mb-8">{email}</p>
-        <p className="text-sm text-ink-40">
+        <p className="text-sm text-ink-50">
           Klikk lenken i e-posten for a logge inn. Sjekk spam-mappen om du ikke
           finner den.
         </p>
@@ -128,7 +128,7 @@ function LoginForm() {
           )}
         </button>
 
-        <p className="text-xs text-ink-40 text-center mt-4">
+        <p className="text-xs text-ink-50 text-center mt-4">
           Vi sender en sikker lenke til e-postadressen din. Ingen passord
           trengs.
         </p>
