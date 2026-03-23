@@ -44,3 +44,4 @@ next-env.d.ts
 # Notion project link
 .notion-project-id
 uploads/
+_archived/
