@@ -48,13 +48,13 @@ export default async function DashboardPage() {
         select: {
           title: true,
           periodType: true,
-          focusAreas: true,
+          goals: true,
           weeks: {
             take: 1,
             orderBy: { weekNumber: "desc" },
             select: {
               sessions: {
-                select: { dayOfWeek: true, sessionType: true, durationMinutes: true }
+                select: { dayOfWeek: true, title: true, durationMinutes: true }
               }
             }
           }
@@ -76,7 +76,7 @@ export default async function DashboardPage() {
           sessionDate: true,
           primaryFocus: true,
           aiKeyPoints: true,
-          coachNotes: true,
+          instructorNotes: true,
           instructor: { select: { user: { select: { name: true } } } },
         },
       }),
@@ -95,9 +95,9 @@ export default async function DashboardPage() {
       // Handicap history (last 6 entries)
       prisma.handicapEntry.findMany({
         where: { userId },
-        orderBy: { recordedAt: "desc" },
+        orderBy: { date: "desc" },
         take: 6,
-        select: { handicapIndex: true, recordedAt: true },
+        select: { handicapIndex: true, date: true },
       }),
     ]);
 
@@ -119,7 +119,7 @@ export default async function DashboardPage() {
     {
       label: "Treningsplan",
       value: activePlan?.title ?? "Ingen aktiv plan",
-      sub: activePlan?.focusAreas?.[0] ?? "Kontakt coach",
+      sub: activePlan?.goals?.[0] ?? "Kontakt coach",
       color: THEME.green,
       href: "/portal/treningsplan",
     },
@@ -218,10 +218,10 @@ export default async function DashboardPage() {
                 return (
                   <div
                     key={day}
-                    className={`text-center p-2 rounded-lg transition-colors ${isToday ? "ring-2" : ""}`}
+                    className="text-center p-2 rounded-lg transition-colors"
                     style={{
                       background: dayBooking ? `${THEME.gold}15` : THEME.surface,
-                      ringColor: isToday ? THEME.gold : "transparent",
+                      boxShadow: isToday ? `inset 0 0 0 2px ${THEME.gold}` : "none",
                     }}
                   >
                     <p className="text-[10px] font-medium mb-1" style={{ color: THEME.textSecondary }}>
@@ -241,7 +241,7 @@ export default async function DashboardPage() {
                       <div
                         className="w-1.5 h-1.5 rounded-full mx-auto mt-1"
                         style={{ background: THEME.green }}
-                        title={planSession.sessionType}
+                        title={planSession.title}
                       />
                     )}
                   </div>
@@ -316,9 +316,9 @@ export default async function DashboardPage() {
                   </p>
                 )}
 
-                {lastSession.coachNotes && !lastSession.aiKeyPoints && (
+                {lastSession.instructorNotes && !lastSession.aiKeyPoints && (
                   <p className="text-sm leading-relaxed line-clamp-4" style={{ color: THEME.text }}>
-                    {lastSession.coachNotes}
+                    {lastSession.instructorNotes}
                   </p>
                 )}
               </div>
@@ -384,7 +384,7 @@ export default async function DashboardPage() {
                       }}
                     />
                     <span className="text-[10px]" style={{ color: THEME.textSecondary }}>
-                      {format(entry.recordedAt, "MMM", { locale: nb })}
+                      {format(entry.date, "MMM", { locale: nb })}
                     </span>
                   </div>
                 );
