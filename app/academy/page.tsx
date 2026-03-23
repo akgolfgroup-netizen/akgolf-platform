@@ -61,7 +61,7 @@ export default function AcademyPage() {
                   <SectionLabel>Vår tilnærming</SectionLabel>
                   <h2 className="w-heading-lg mt-4 mb-6">
                     Ingen to spillere er like.<br />
-                    <span className="text-ink-40">Hvorfor skal treningen være det?</span>
+                    <span className="text-ink-50">Hvorfor skal treningen være det?</span>
                   </h2>
                   <p className="text-ink-50 leading-relaxed mb-4">
                     I AK Golf Academy starter alt med deg. Vi analyserer spillet ditt fra alle vinkler — teknikk, strategi, mentalt spill og fysikk — for å bygge en plan som er 100% tilpasset dine mål og ditt utgangspunkt.

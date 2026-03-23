@@ -140,7 +140,7 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 1.2 }}
               >
                 {HERO.trustItems.map((item) => (
-                  <span key={item} className="flex items-center gap-2 text-xs text-ink-30">
+                  <span key={item} className="flex items-center gap-2 text-xs text-ink-50">
                     <span className="w-1 h-1 rounded-full bg-gold" />
                     {item}
                   </span>

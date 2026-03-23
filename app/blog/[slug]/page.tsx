@@ -122,7 +122,7 @@ export default async function ArticlePage({ params }: Props) {
               {article.title}
             </h1>
             {article.excerpt && (
-              <p className="mt-4 text-lg text-ink-30 leading-relaxed">
+              <p className="mt-4 text-lg text-ink-50 leading-relaxed">
                 {article.excerpt}
               </p>
             )}
@@ -180,13 +180,13 @@ export default async function ArticlePage({ params }: Props) {
                           {r.title}
                         </h3>
                         {r.excerpt && (
-                          <p className="mt-1 text-sm text-ink-40 line-clamp-2">
+                          <p className="mt-1 text-sm text-ink-50 line-clamp-2">
                             {r.excerpt}
                           </p>
                         )}
                       </div>
                       {r.publishedAt && (
-                        <time className="shrink-0 text-xs text-ink-30">
+                        <time className="shrink-0 text-xs text-ink-50">
                           {formatDate(r.publishedAt)}
                         </time>
                       )}

@@ -109,7 +109,7 @@ export default function MerkevarePage() {
               {MERKEVARE_SOCIAL_PROOF.map((stat) => (
                 <StaggerItem key={stat.label}>
                   <span className="font-mono text-2xl md:text-3xl font-medium text-ink-90">{stat.value}</span>
-                  <p className="text-xs text-ink-40 mt-1">{stat.label}</p>
+                  <p className="text-xs text-ink-50 mt-1">{stat.label}</p>
                 </StaggerItem>
               ))}
             </StaggerContainer>
@@ -129,7 +129,7 @@ export default function MerkevarePage() {
                   </div>
                   <h2 className="w-heading-lg mb-6">
                     Alt starter med<br />
-                    <span className="text-ink-40">logoen din.</span>
+                    <span className="text-ink-50">logoen din.</span>
                   </h2>
                   <p className="text-ink-50 leading-relaxed mb-8">
                     Vi analyserer fargene, typografien og strukturen i logoen din — og leverer en profesjonell merkevare-analyse som viser hvordan klubben kan styrke sin visuelle identitet.
@@ -150,7 +150,7 @@ export default function MerkevarePage() {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-ink-80">{item.title}</p>
-                          <p className="text-xs text-ink-40">{item.desc}</p>
+                          <p className="text-xs text-ink-50">{item.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -162,12 +162,12 @@ export default function MerkevarePage() {
               <RevealOnScroll delay={0.2}>
                 <div className="w-card">
                   <h3 className="w-heading-sm mb-1">Last opp klubbens logo</h3>
-                  <p className="text-sm text-ink-40 mb-6">Fyll ut skjemaet under, så sender vi analysen til deg.</p>
+                  <p className="text-sm text-ink-50 mb-6">Fyll ut skjemaet under, så sender vi analysen til deg.</p>
 
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
                       <label htmlFor="klubbnavn" className="w-label flex items-center gap-1.5">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-40"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-50"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                         Klubbnavn *
                       </label>
                       <input
@@ -183,7 +183,7 @@ export default function MerkevarePage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
                         <label htmlFor="kontaktperson" className="w-label flex items-center gap-1.5">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-40"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-50"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                           Kontaktperson *
                         </label>
                         <input
@@ -197,7 +197,7 @@ export default function MerkevarePage() {
                       </div>
                       <div>
                         <label htmlFor="epost" className="w-label flex items-center gap-1.5">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-40"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-50"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                           E-post *
                         </label>
                         <input
@@ -214,7 +214,7 @@ export default function MerkevarePage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
                         <label htmlFor="telefon" className="w-label flex items-center gap-1.5">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-40"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-50"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                           Telefon
                         </label>
                         <input
@@ -227,7 +227,7 @@ export default function MerkevarePage() {
                       </div>
                       <div>
                         <label htmlFor="nettside" className="w-label flex items-center gap-1.5">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-40"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-50"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                           Nettside
                         </label>
                         <input
@@ -243,7 +243,7 @@ export default function MerkevarePage() {
                     {/* File upload — drag & drop */}
                     <div>
                       <label className="w-label flex items-center gap-1.5 mb-1.5">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-40"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink-50"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                         Logo (SVG, PNG eller PDF) *
                       </label>
                       <div
@@ -285,7 +285,7 @@ export default function MerkevarePage() {
                               <button
                                 type="button"
                                 onClick={(e) => { e.stopPropagation(); setSelectedFile(null); if (fileInputRef.current) fileInputRef.current.value = ""; }}
-                                className="text-ink-40 hover:text-ink-60 ml-1"
+                                className="text-ink-50 hover:text-ink-60 ml-1"
                               >
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                   <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
@@ -305,7 +305,7 @@ export default function MerkevarePage() {
                               <p className="text-sm text-ink-50">
                                 Dra og slipp logoen hit, eller <span className="text-gold font-medium">velg fil</span>
                               </p>
-                              <p className="text-xs text-ink-30 mt-1">SVG, PNG, PDF, AI eller EPS</p>
+                              <p className="text-xs text-ink-50 mt-1">SVG, PNG, PDF, AI eller EPS</p>
                             </motion.div>
                           )}
                         </AnimatePresence>
@@ -338,7 +338,7 @@ export default function MerkevarePage() {
                       ) : "Send inn — helt gratis"}
                     </button>
 
-                    <p className="text-xs text-ink-30 text-center">
+                    <p className="text-xs text-ink-50 text-center">
                       Vi deler aldri informasjonen din med tredjepart.
                     </p>
                   </form>
@@ -388,7 +388,7 @@ export default function MerkevarePage() {
             </StaggerContainer>
 
             <RevealOnScroll>
-              <p className="text-center text-sm text-ink-40 mt-8">
+              <p className="text-center text-sm text-ink-50 mt-8">
                 Alle pakker inkluderer en gratis forhåndsvisning av de tre første seksjonene.
               </p>
             </RevealOnScroll>
@@ -433,7 +433,7 @@ export default function MerkevarePage() {
               <div className="max-w-2xl mx-auto text-center rounded-2xl p-10 md:p-16 bg-ink-90/50 backdrop-blur-sm border border-white/[0.06]">
                 <SectionLabel>Klar for a starte?</SectionLabel>
                 <h2 className="w-heading-lg text-white mt-4 mb-4">Last opp logoen — vi gjor resten.</h2>
-                <p className="text-ink-40 leading-relaxed mb-8">
+                <p className="text-ink-50 leading-relaxed mb-8">
                   Helt gratis analyse av klubbens merkevare. Ingen forpliktelser, ingen skjulte kostnader.
                 </p>
                 <a href="#skjema" className="w-btn w-btn-gold">

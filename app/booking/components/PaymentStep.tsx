@@ -111,7 +111,7 @@ function CheckoutForm({ bookingId, serviceName, onSuccess }: {
         )}
       </button>
 
-      <p className="text-xs text-center text-ink-40">
+      <p className="text-xs text-center text-ink-50">
         Sikker betaling via Stripe. AK Golf lagrer ikke kortinformasjon.
       </p>
     </form>

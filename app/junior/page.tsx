@@ -55,7 +55,7 @@ export default function JuniorPage() {
                   <SectionLabel>Vår filosofi</SectionLabel>
                   <h2 className="w-heading-lg mt-4 mb-6">
                     Mer enn golf.<br />
-                    <span className="text-ink-40">Mestring for livet.</span>
+                    <span className="text-ink-50">Mestring for livet.</span>
                   </h2>
                   <p className="text-ink-50 leading-relaxed mb-4">
                     Junior Academy handler om mer enn å lage bedre golfere. Vi utvikler unge mennesker som lærer disiplin, målsetting, samarbeid og evnen til å håndtere både seirer og motgang.
@@ -168,7 +168,7 @@ export default function JuniorPage() {
               <div className="text-center mb-12">
                 <SectionLabel>{JUNIOR_INTAKE.heading}</SectionLabel>
                 <h2 className="w-heading-lg text-white mt-4 mb-4">Hvem passer Junior Academy for?</h2>
-                <p className="text-ink-30 max-w-2xl mx-auto">{JUNIOR_INTAKE.description}</p>
+                <p className="text-ink-50 max-w-2xl mx-auto">{JUNIOR_INTAKE.description}</p>
               </div>
             </RevealOnScroll>
 
@@ -177,7 +177,7 @@ export default function JuniorPage() {
                 <StaggerItem key={item.title}>
                   <div className="w-card-dark h-full">
                     <h4 className="text-white font-semibold mb-2">{item.title}</h4>
-                    <p className="text-sm text-ink-30 leading-relaxed">{item.description}</p>
+                    <p className="text-sm text-ink-50 leading-relaxed">{item.description}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -186,7 +186,7 @@ export default function JuniorPage() {
             <RevealOnScroll>
               <div className="text-center mb-8">
                 <h3 className="w-heading-md text-white mb-2">Slik kommer du i gang</h3>
-                <p className="text-ink-30">Fire enkle steg til Junior Academy.</p>
+                <p className="text-ink-50">Fire enkle steg til Junior Academy.</p>
               </div>
             </RevealOnScroll>
 
@@ -196,7 +196,7 @@ export default function JuniorPage() {
                   <div className="w-card-dark h-full">
                     <span className="font-mono text-xs text-gold-text tracking-[0.2em]">{step.step}</span>
                     <h4 className="text-white font-semibold mt-2 mb-2">{step.title}</h4>
-                    <p className="text-sm text-ink-30 leading-relaxed">{step.description}</p>
+                    <p className="text-sm text-ink-50 leading-relaxed">{step.description}</p>
                   </div>
                 </StaggerItem>
               ))}

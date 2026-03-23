@@ -108,7 +108,7 @@ export default function TreningsplanPage() {
               <RevealOnScroll>
                 <SectionLabel>AK-formelen</SectionLabel>
                 <h2 className="w-heading-lg text-white mt-4 mb-6">Bygget på vår proprietære metodikk.</h2>
-                <p className="text-ink-30 max-w-2xl leading-relaxed mb-12">
+                <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
                   Treningspyramiden sikrer at du alltid trener på riktig ting for ditt nivå. Nybegynnere bygger fundament med fysikk og teknikk, mens avanserte spillere fokuserer mer på spill og turnering.
                 </p>
               </RevealOnScroll>
@@ -124,7 +124,7 @@ export default function TreningsplanPage() {
                   <StaggerItem key={item.level}>
                     <div className="w-card-glass text-center">
                       <div className="font-mono text-lg font-bold text-gold mb-1">{item.level}</div>
-                      <div className="text-xs text-ink-30">{item.desc}</div>
+                      <div className="text-xs text-ink-50">{item.desc}</div>
                     </div>
                   </StaggerItem>
                 ))}

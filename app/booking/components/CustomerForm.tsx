@@ -78,7 +78,7 @@ export function CustomerForm({ onSubmit }: Props) {
 
         <div>
           <label htmlFor="phone" className="w-label">
-            Telefon <span className="text-ink-40">(valgfritt)</span>
+            Telefon <span className="text-ink-50">(valgfritt)</span>
           </label>
           <input
             id="phone"
