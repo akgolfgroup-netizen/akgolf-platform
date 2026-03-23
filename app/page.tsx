@@ -20,6 +20,8 @@ import {
   PORTAL_FEATURES,
   COACHING_FAQ,
   BOOKING_URL,
+  FOUNDATION_TEST,
+  SINGLE_SESSIONS,
 } from "@/lib/website-constants";
 
 function CheckIcon({ className }: { className?: string }) {
@@ -148,15 +150,49 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 3. Packages (lys) ─── */}
+        {/* ─── 3. Foundation Test (intro) ─── */}
+        <section id="start" className="w-section bg-ink-90">
+          <div className="w-container">
+            <RevealOnScroll>
+              <div className="max-w-3xl mx-auto text-center">
+                <span className="inline-block bg-gold text-white text-[10px] font-mono uppercase tracking-[0.15em] px-4 py-1.5 rounded-full mb-6">
+                  {FOUNDATION_TEST.tagline}
+                </span>
+                <h2 className="w-heading-lg text-white mb-4">{FOUNDATION_TEST.name}</h2>
+                <p className="text-ink-30 text-lg mb-8">{FOUNDATION_TEST.description}</p>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                  {FOUNDATION_TEST.includes.map((item) => (
+                    <div key={item} className="bg-ink-80 rounded-lg p-4">
+                      <CheckIcon className="text-gold mx-auto mb-2" />
+                      <p className="text-sm text-ink-20">{item}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-col items-center gap-4">
+                  <p className="font-mono text-3xl font-bold text-gold">
+                    {FOUNDATION_TEST.price} <span className="text-lg font-normal">kr</span>
+                  </p>
+                  <p className="text-ink-40 text-sm max-w-md">{FOUNDATION_TEST.refundNote}</p>
+                  <a href={BOOKING_URL} className="w-btn w-btn-gold">
+                    Book Foundation Test
+                  </a>
+                </div>
+              </div>
+            </RevealOnScroll>
+          </div>
+        </section>
+
+        {/* ─── 4. Packages (lys) ─── */}
         <section id="packages" className="w-section-lg bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">
-                <SectionLabel>Pakker og priser</SectionLabel>
-                <h2 className="w-heading-lg mt-4">Velg pakken som passer deg.</h2>
-                <p className="text-ink-50 max-w-lg mx-auto mt-4">
-                  Alle abonnement er uten bindingstid og kan sies opp når som helst.
+                <SectionLabel>The Foundation Method</SectionLabel>
+                <h2 className="w-heading-lg mt-4">Tre nivåer. Ett system.</h2>
+                <p className="text-ink-50 max-w-xl mx-auto mt-4">
+                  Alle abonnement inkluderer gruppetrening, individuelle check-ins og full tilgang til spillerportalen. Ingen bindingstid.
                 </p>
               </div>
             </RevealOnScroll>
@@ -189,7 +225,7 @@ export default function HomePage() {
                       {pkg.description}
                     </p>
 
-                    <ul className="space-y-3 mb-8 flex-1">
+                    <ul className="space-y-3 mb-6 flex-1">
                       {pkg.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-2.5 text-sm">
                           <CheckIcon className="shrink-0 mt-0.5 text-gold" />
@@ -199,6 +235,12 @@ export default function HomePage() {
                         </li>
                       ))}
                     </ul>
+
+                    {pkg.whoIsItFor && (
+                      <p className={`text-xs italic mb-6 ${pkg.highlighted ? "text-ink-40" : "text-ink-40"}`}>
+                        {pkg.whoIsItFor}
+                      </p>
+                    )}
 
                     <a
                       href={BOOKING_URL}

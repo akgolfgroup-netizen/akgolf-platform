@@ -67,39 +67,102 @@ export const HOW_IT_WORKS = {
   heading: "20 minutter som endrer spillet ditt.",
   description: "Tradisjonell golfcoaching er én time, én gang i blant, uten oppfølging mellom sesjonene. Vi gjør det annerledes. Våre coaching-sesjoner er 20 minutter — fokuserte, målrettede og uten fyllminutter. Hver sesjon har ett mål. Etterpå oppdateres treningsplanen din i appen, slik at du vet nøyaktig hva du skal jobbe med til neste gang.",
   steps: [
-    { number: "01", title: "Book selv i appen", description: "Velg tid som passer deg. AK Performance Pro-medlemmer ser tider 14 dager frem, AK Performance ser 7 dager." },
-    { number: "02", title: "20 minutter med fokus", description: "Én ting per sesjon. TrackMan-data logges automatisk i profilen din. Ingen small talk — bare utvikling." },
-    { number: "03", title: "Tren mellom sesjonene", description: "Treningsplanen oppdateres etter hver sesjon. Øvelsesbank, statistikk og progresjonslogging holder deg på sporet." },
+    { number: "01", title: "Start med Foundation Test", description: "50 minutter. TrackMan-analyse, putting-test og personlig anbefaling. Du får en baseline og vet nøyaktig hvor du står." },
+    { number: "02", title: "Velg ditt Foundation-nivå", description: "Tre pakker: Foundation, Foundation+ eller Foundation Elite. Alle inkluderer gruppe + individuelle check-ins + spillerportal." },
+    { number: "03", title: "Tren med system", description: "Gruppetrening for teknikk, check-ins for oppfølging, portal for treningsplan. Alt henger sammen." },
   ],
 } as const;
 
-// ─── Coaching Packages ───
+// ─── Foundation Test (Intro) ───
+export const FOUNDATION_TEST = {
+  name: "Foundation Test",
+  tagline: "Start her",
+  duration: "50 min",
+  price: "995",
+  description: "Din baseline. TrackMan-analyse, putting-test og konkret anbefaling.",
+  includes: [
+    "Kort samtale om mål og erfaring",
+    "TrackMan-analyse (driver + jern)",
+    "Kort spill og putting-test",
+    "Personlig anbefaling og plan"
+  ],
+  refundNote: "Beløpet trekkes fra første faktura ved oppstart innen 14 dager."
+} as const;
+
+// ─── Coaching Packages (The Foundation Method) ───
 export const COACHING_PACKAGES = [
   {
-    name: "AK Performance",
-    price: "1 599",
+    name: "Foundation",
+    price: "1 499",
     period: "kr/mnd",
-    description: "For deg som vil ha struktur og jevnlig coaching uten å binde opp hele kalenderen.",
-    features: ["2 x 20 min individuell coaching per måned", "Selvbooking via appen — 7 dager frem", "Full spillerportal med treningsplan", "TrackMan-data logget i din profil"],
+    description: "Systematisk utvikling med gruppe og individuell oppfølging.",
+    features: [
+      "2× gruppetrening (60 min) per måned",
+      "2× individuell check-in (20 min) per måned",
+      "Spillerportal Basic med treningsplan",
+      "AI-generert treningsplan",
+      "Coaching-notater etter hver økt"
+    ],
     highlighted: false,
+    whoIsItFor: "Deg som vil ha struktur og system uten å bruke formue."
   },
   {
-    name: "AK Performance Pro",
-    price: "1 999",
+    name: "Foundation+",
+    price: "2 999",
     period: "kr/mnd",
-    description: "Dobbel frekvens for raskere utvikling. Prioritert booking.",
-    features: ["4 x 20 min individuell coaching per måned", "Selvbooking via appen — 14 dager frem", "Booker før AK Performance-medlemmer", "Full spillerportal med treningsplan", "TrackMan-data logget i din profil"],
+    description: "Mer oppfølging, raskere resultater.",
+    features: [
+      "2× gruppetrening (60 min) per måned",
+      "4× individuell check-in (20 min) per måned",
+      "Full spillerportal med statistikk",
+      "Meldingsstøtte (svar innen 24t)",
+      "Kvartalsvis Foundation Test",
+      "Booker før Foundation-medlemmer"
+    ],
     highlighted: true,
+    whoIsItFor: "Deg som vil ha tettere oppfølging og raskere fremgang."
   },
   {
-    name: "AK Junior Elite",
-    price: "2 499",
+    name: "Foundation Elite",
+    price: "4 999",
     period: "kr/mnd",
-    description: "For ambisiøse juniorer som satser på konkurransegolf. Begrenset til 5 plasser.",
-    features: ["8 x 20 min coaching per måned (2 per uke)", "Faste tider tirsdag og torsdag", "Alderstilpasset treningsplan", "Progresjonslogging for junior og foreldre", "TrackMan-analyse hver sesjon", "Turneringskalender og sesongplanlegging"],
+    description: "Alt inkludert for maksimal utvikling.",
+    features: [
+      "4× gruppetrening (60 min) per måned",
+      "4× individuell check-in (20 min) per måned",
+      "Full spillerportal + Strokes Gained",
+      "Prioritert meldingsstøtte (svar innen 4t)",
+      "Kvartalsvis Foundation Test",
+      "1× playing lesson per kvartal",
+      "Decade Golf baneanalyse"
+    ],
     highlighted: false,
+    whoIsItFor: "Ambisiøse spillere som vil ha alt."
   },
 ] as const;
+
+// ─── Enkelttimer ───
+export const SINGLE_SESSIONS = {
+  anders: {
+    name: "Anders Kristiansen",
+    role: "Head Coach",
+    sessions: [
+      { name: "Privat 1:1", duration: "50 min", price: "1 500", priceLabel: "kr", maxParticipants: 1 },
+      { name: "Duo 2:1", duration: "50 min", price: "899", priceLabel: "kr/pers", maxParticipants: 2 },
+      { name: "Gruppetrening", duration: "60 min", price: "499", priceLabel: "kr/pers", maxParticipants: 4 },
+      { name: "Playing lesson", duration: "2 timer", price: "2 500", priceLabel: "kr", maxParticipants: 1 }
+    ]
+  },
+  markus: {
+    name: "Markus Røinås Pedersen",
+    role: "Coach",
+    sessions: [
+      { name: "Privat 1:1", duration: "50 min", price: "750", priceLabel: "kr", maxParticipants: 1 },
+      { name: "Duo 2:1", duration: "50 min", price: "499", priceLabel: "kr/pers", maxParticipants: 2 },
+      { name: "Gruppetrening", duration: "60 min", price: "349", priceLabel: "kr/pers", maxParticipants: 4 }
+    ]
+  }
+} as const;
 
 export const FLEX_PACKAGES = [
   {
@@ -130,14 +193,14 @@ export const PORTAL_FEATURES = [
 
 // ─── Coaching FAQ ───
 export const COACHING_FAQ = [
-  { q: "Hvordan booker jeg tid?", a: "Logg inn i appen og gå til «Book sesjon». Du ser ledige tider basert på din pakke. Velg tid, bekreft, ferdig." },
-  { q: "Hva skjer om jeg ikke bruker alle sesjonene mine?", a: "Ubrukte sesjoner forfaller ved månedslutt. Du får en påminnelse 10 dager før." },
-  { q: "Kan jeg avbestille en booket tid?", a: "Ja, innen 24 timer før sesjonen. Etter det telles den som brukt." },
-  { q: "Hva er forskjellen på AK Performance og AK Performance Pro?", a: "Dobbel frekvens (4 vs 2 sesjoner/mnd) og prioritert booking — du ser ledige tider 14 dager frem mot 7 dager." },
-  { q: "Hva inkluderer AK Flex?", a: "En enkeltstående coaching-sesjon på 50 eller 90 minutter. Du får coaching-notater i appen etterpå, men ikke tilgang til spillerportalen." },
+  { q: "Hva er Foundation Test?", a: "En 50-minutters baseline-test med TrackMan-analyse, putting-test og personlig anbefaling. Koster 995 kr — beløpet trekkes fra første faktura hvis du starter abonnement innen 14 dager." },
+  { q: "Hva er forskjellen på gruppe og check-in?", a: "Gruppetrening (60 min) er coaching med maks 4 deltakere. Check-in (20 min) er individuell oppfølging — vi sjekker fremgang, justerer én ting, og gir deg ny oppgave til neste gang." },
+  { q: "Inkluderer abonnement 1:1 coaching?", a: "Nei. Abonnement gir gruppe + check-ins. 50-minutters 1:1 coaching er et premium-produkt som kjøpes separat. Abonnenter får 20% rabatt på enkelttimer." },
+  { q: "Hva er forskjellen på Foundation og Foundation+?", a: "Foundation+ gir dobbelt så mange check-ins (4 vs 2), meldingsstøtte med svar innen 24 timer, og kvartalsvis re-test for å måle fremgang." },
+  { q: "Hva inkluderer Foundation Elite?", a: "Alt i Foundation+, pluss dobbelt så mange gruppeøkter (4 vs 2), prioritert meldingsstøtte (svar innen 4t), kvartalsvis playing lesson og Decade Golf baneanalyse." },
   { q: "Er det bindingstid?", a: "Nei. Alle abonnement er månedlige og kan sies opp når som helst." },
-  { q: "Hva er AK Junior Elite?", a: "Et eliteprogram for maks 5 ambisiøse juniorer. 2 treninger per uke med faste tider. Begrenset plasser — ta kontakt for å søke." },
-  { q: "Hvilken pakke passer for meg?", a: "Spiller du golf 1-2 ganger i uken og vil ha struktur? AK Performance. Trener du 3+ ganger i uken? AK Performance Pro. Vil du bare prøve først? Book en AK Flex-sesjon." },
+  { q: "Hva skjer om jeg ikke bruker alle øktene mine?", a: "Ubrukte økter forfaller ved månedslutt. Du får en påminnelse 10 dager før." },
+  { q: "Hvilken pakke passer for meg?", a: "Start med Foundation Test. Du får en personlig anbefaling basert på dine mål, nivå og tilgjengelig treningstid." },
 ] as const;
 
 // ─── Method Pillars ───
