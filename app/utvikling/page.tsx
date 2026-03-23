@@ -57,7 +57,7 @@ export default function UtviklingPage() {
                   </div>
                   <h2 className="w-heading-lg mb-6">
                     Digitale verktøy som<br />
-                    <span className="text-ink-40">forandrer treningshverdagen.</span>
+                    <span className="text-ink-50">forandrer treningshverdagen.</span>
                   </h2>
                   <p className="text-ink-50 leading-relaxed">
                     Vår programvare er utviklet av trenere, for trenere. Vi forstår hverdagen på rangen og på banen — og har bygget verktøy som faktisk gjør en forskjell.
@@ -98,7 +98,7 @@ export default function UtviklingPage() {
                   </div>
                   <h2 className="w-heading-lg mb-6">
                     Sportsplaner og rådgiving<br />
-                    <span className="text-ink-40">for ambisiose klubber.</span>
+                    <span className="text-ink-50">for ambisiose klubber.</span>
                   </h2>
                   <p className="text-ink-50 leading-relaxed">
                     Vi hjelper golfklubber med å bygge sportslige strukturer som tiltrekker medlemmer, utvikler spillere og skaper resultater. Fra sportsplan til trenernettverk.

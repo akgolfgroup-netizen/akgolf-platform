@@ -92,7 +92,24 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <a href="#packages" className="w-btn w-btn-primary">{HERO.ctaPrimary}</a>
+                <Link href="/booking" className="w-btn w-btn-primary">{HERO.ctaPrimary}</Link>
+                <Link href="/#apply" className="w-btn w-btn-gold">{HERO.ctaBooking || "Kontakt oss"}</Link>
+                <Link href="/#method" className="w-btn w-btn-secondary">{HERO.ctaSecondary} &rarr;</Link>
+              </motion.div>
+
+              {/* Trust strip */}
+              <motion.div
+                className="flex flex-wrap gap-6 mt-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: loading ? 0 : 1 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
+              >
+                {HERO.trustItems.map((item) => (
+                  <span key={item} className="flex items-center gap-2 text-xs text-ink-50">
+                    <span className="w-1 h-1 rounded-full bg-gold" />
+                    {item}
+                  </span>
+                ))}
               </motion.div>
             </div>
           </div>

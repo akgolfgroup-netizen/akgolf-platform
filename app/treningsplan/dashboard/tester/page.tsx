@@ -30,10 +30,10 @@ export default function TesterPage() {
 
       {/* Coming soon: Test result form */}
       <div className="w-card p-6 text-center border-2 border-dashed border-ink-10">
-        <p className="text-sm font-semibold text-ink-40 mb-1">
+        <p className="text-sm font-semibold text-ink-50 mb-1">
           Registrering av testresultater
         </p>
-        <p className="text-xs text-ink-30">
+        <p className="text-xs text-ink-50">
           Kommer snart — logg testresultatene dine og se planen justeres
           automatisk.
         </p>

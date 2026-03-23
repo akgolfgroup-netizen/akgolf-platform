@@ -27,7 +27,7 @@ export function ProgressBar({ currentStep, totalSteps, stepNames = STEP_NAMES }:
           <span className="text-sm font-medium text-gold">
             Steg {currentStep}
           </span>
-          <span className="text-sm text-ink-40">
+          <span className="text-sm text-ink-50">
             av {totalSteps}
           </span>
         </div>
@@ -78,7 +78,7 @@ export function ProgressBar({ currentStep, totalSteps, stepNames = STEP_NAMES }:
                 className={`text-[10px] uppercase tracking-wider hidden sm:block ${
                   isCompleted || isCurrent
                     ? "text-gold font-medium"
-                    : "text-ink-40"
+                    : "text-ink-50"
                 }`}
               >
                 {stepNames[i] || `Steg ${stepNum}`}

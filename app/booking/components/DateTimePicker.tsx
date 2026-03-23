@@ -126,7 +126,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
           {/* Day names header */}
           <div className="grid grid-cols-7 gap-1 mb-2">
             {DAY_NAMES.map((d) => (
-              <div key={d} className="text-xs font-semibold text-ink-40 text-center py-2">
+              <div key={d} className="text-xs font-semibold text-ink-50 text-center py-2">
                 {d}
               </div>
             ))}
@@ -174,15 +174,15 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
           <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-ink-10">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-gold" />
-              <span className="text-xs text-ink-40">Ledig</span>
+              <span className="text-xs text-ink-50">Ledig</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-ink-20" />
-              <span className="text-xs text-ink-40">Opptatt</span>
+              <span className="text-xs text-ink-50">Opptatt</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full ring-2 ring-gold" />
-              <span className="text-xs text-ink-40">I dag</span>
+              <span className="text-xs text-ink-50">I dag</span>
             </div>
           </div>
         </div>
@@ -222,7 +222,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
                 className="w-card min-h-[300px] flex flex-col items-center justify-center text-center p-6"
               >
                 <div className="w-16 h-16 rounded-2xl bg-ink-10 flex items-center justify-center mb-4">
-                  <CalendarDays size={28} className="text-ink-40" />
+                  <CalendarDays size={28} className="text-ink-50" />
                 </div>
                 <h4 className="font-medium text-ink-90 mb-2">Ingen ledige tider</h4>
                 <p className="text-sm text-ink-50">

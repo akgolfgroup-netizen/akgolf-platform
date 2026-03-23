@@ -62,7 +62,7 @@ export default async function BlogPage() {
             <h1 className="font-display text-3xl md:text-5xl font-bold text-white tracking-tight">
               Blog
             </h1>
-            <p className="mt-4 max-w-2xl text-lg text-ink-30">
+            <p className="mt-4 max-w-2xl text-lg text-ink-50">
               Artikler om golftrening, teknikk, mental styrke og spillerutvikling
               fra teamet hos AK Golf Academy.
             </p>
@@ -73,7 +73,7 @@ export default async function BlogPage() {
         <section className="w-container py-16 md:py-24">
           {articles.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-ink-40 text-lg">
+              <p className="text-ink-50 text-lg">
                 Ingen artikler publisert enna. Kom tilbake snart!
               </p>
             </div>

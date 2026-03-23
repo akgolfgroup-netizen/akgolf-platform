@@ -110,7 +110,7 @@ export default function PreviewPage() {
 
             {/* Pyramid */}
             <div className="mt-6 pt-6 border-t border-ink-10">
-              <div className="text-xs font-mono text-ink-40 mb-3 uppercase tracking-wider">Pyramidefordeling</div>
+              <div className="text-xs font-mono text-ink-50 mb-3 uppercase tracking-wider">Pyramidefordeling</div>
               <div className="flex gap-4 flex-wrap">
                 {(["FYS", "TEK", "SLAG", "SPILL", "TURN"] as const).map((level) => (
                   <div key={level} className="flex items-center gap-2">
@@ -145,7 +145,7 @@ export default function PreviewPage() {
                       </div>
                     ))}
                   </div>
-                  <div className="text-xs text-ink-40">
+                  <div className="text-xs text-ink-50">
                     <span className="font-medium">Mål: </span>
                     {phase.goals.join(", ")}
                   </div>
@@ -157,7 +157,7 @@ export default function PreviewPage() {
           {/* ─── Sample Weeks (first 2) ─── */}
           <div className="mb-8">
             <h2 className="w-heading-md mb-2">Eksempel-uker</h2>
-            <p className="text-sm text-ink-40 mb-4">De to første ukene av planen. Full plan tilgjengelig etter kjøp.</p>
+            <p className="text-sm text-ink-50 mb-4">De to første ukene av planen. Full plan tilgjengelig etter kjøp.</p>
 
             {sampleWeeks.map((week) => (
               <div key={week.weekNumber} className="mb-6">
@@ -170,19 +170,19 @@ export default function PreviewPage() {
                     <div key={day.dayNumber} className="bg-surface-cream rounded-lg p-4">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-medium text-ink-80">{day.dayName}</span>
-                        <span className="text-xs text-ink-40">{day.duration} min</span>
+                        <span className="text-xs text-ink-50">{day.duration} min</span>
                       </div>
                       <div className="text-xs text-ink-50">{day.sessionType}</div>
                       {day.mainA && (
                         <div className="mt-2 text-xs">
                           <span className="font-mono text-gold-text">{day.mainA.area}</span>
-                          <span className="text-ink-40"> — {day.mainA.focus}</span>
+                          <span className="text-ink-50"> — {day.mainA.focus}</span>
                         </div>
                       )}
                       {day.mainB && (
                         <div className="text-xs">
                           <span className="font-mono text-gold-text">{day.mainB.area}</span>
-                          <span className="text-ink-40"> — {day.mainB.focus}</span>
+                          <span className="text-ink-50"> — {day.mainB.focus}</span>
                         </div>
                       )}
                     </div>
@@ -200,7 +200,7 @@ export default function PreviewPage() {
                 <div key={i} className="bg-surface-cream rounded-lg p-4">
                   <div className="font-mono text-sm font-bold text-ink-80 mb-1">{test.label}</div>
                   <div className="text-xs text-ink-50">Uke {test.weekNumber}</div>
-                  <div className="text-xs text-ink-40 mt-1">{test.purpose}</div>
+                  <div className="text-xs text-ink-50 mt-1">{test.purpose}</div>
                 </div>
               ))}
             </div>
@@ -213,18 +213,18 @@ export default function PreviewPage() {
               <div className="flex items-center gap-4 mb-4">
                 <div className="text-center">
                   <div className="font-mono text-2xl font-bold text-ink-90">{progressionCriteria.currentCategory}</div>
-                  <div className="text-xs text-ink-40">Nå</div>
+                  <div className="text-xs text-ink-50">Nå</div>
                 </div>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gold">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
                 <div className="text-center">
                   <div className="font-mono text-2xl font-bold text-gold">{progressionCriteria.nextCategory}</div>
-                  <div className="text-xs text-ink-40">Neste mål</div>
+                  <div className="text-xs text-ink-50">Neste mål</div>
                 </div>
               </div>
               <p className="text-sm text-ink-50 mb-3">{summary.estimatedImprovement}</p>
-              <div className="text-xs text-ink-40">
+              <div className="text-xs text-ink-50">
                 Estimert tidslinje: {progressionCriteria.estimatedTimeline}
               </div>
             </div>
@@ -233,7 +233,7 @@ export default function PreviewPage() {
           {/* ─── Paywall CTA ─── */}
           <div className="bg-ink-100 rounded-2xl p-8 md:p-12 text-center">
             <h2 className="w-heading-md text-white mb-4">Lås opp full treningsplan</h2>
-            <p className="text-ink-30 max-w-lg mx-auto mb-8">
+            <p className="text-ink-50 max-w-lg mx-auto mb-8">
               Du har sett oversikten og de to første ukene. Kjøp full tilgang til alle 12 uker med detaljerte økter, øvelser og progresjon.
             </p>
 
@@ -273,7 +273,7 @@ export default function PreviewPage() {
 function SummaryItem({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="text-xs font-mono text-ink-40 uppercase tracking-wider mb-1">{label}</div>
+      <div className="text-xs font-mono text-ink-50 uppercase tracking-wider mb-1">{label}</div>
       <div className="text-sm font-medium text-ink-90">{value}</div>
     </div>
   );
