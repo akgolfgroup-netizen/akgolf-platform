@@ -34,7 +34,7 @@ async function main() {
       name: "Thomas Berg",
       email: "coach@akgolf.no",
       role: "INSTRUCTOR",
-      subscriptionTier: "FREE",
+      subscriptionTier: "VISITOR",
     },
   });
 

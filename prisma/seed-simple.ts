@@ -31,7 +31,7 @@ async function main() {
           email: coach.email,
           name: coach.name,
           role: key === "anders" ? "ADMIN" : "INSTRUCTOR",
-          subscriptionTier: "FREE",
+          subscriptionTier: "VISITOR",
         },
       });
       console.log(`✅ Bruker opprettet: ${coach.name}`);

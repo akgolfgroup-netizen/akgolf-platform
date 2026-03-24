@@ -6,9 +6,9 @@ import { SubscriptionStatus } from "@prisma/client";
  * Users with old subscriptionTier still get access to corresponding modules.
  */
 const LEGACY_TIER_MAP: Record<string, string[]> = {
-  PRO: ["dagbok", "statistikk", "sammenligning"],
+  PRO: ["dagbok-pro", "statistikk", "sammenligning"],
   ELITE: [
-    "dagbok",
+    "dagbok-premium",
     "ovelsesbank",
     "statistikk",
     "sammenligning",

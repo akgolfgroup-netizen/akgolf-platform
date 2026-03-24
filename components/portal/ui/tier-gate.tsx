@@ -5,7 +5,9 @@ import { SubscriptionTier } from "@prisma/client";
 import { hasTierAccess } from "@/lib/portal/rbac";
 
 const TIER_LABELS: Record<SubscriptionTier, string> = {
-  FREE: "Gratis",
+  VISITOR: "Gratis",
+  ACADEMY: "Academy",
+  STARTER: "Starter",
   PRO: "Pro",
   ELITE: "Elite",
 };

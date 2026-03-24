@@ -1,7 +1,18 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { getPortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { stripe } from "@/lib/portal/stripe";
+
+const CheckoutSchema = z
+  .object({
+    moduleSlug: z.string().optional(),
+    bundleSlug: z.string().optional(),
+    interval: z.enum(["month", "year"]).default("month"),
+  })
+  .refine((data) => data.moduleSlug || data.bundleSlug, {
+    message: "Må ha enten moduleSlug eller bundleSlug",
+  });
 
 export async function POST(req: Request) {
   const user = await getPortalUser();
@@ -10,15 +21,16 @@ export async function POST(req: Request) {
   }
 
   const body = await req.json();
-  const { moduleSlug, bundleSlug, interval = "month" } = body as {
-    moduleSlug?: string;
-    bundleSlug?: string;
-    interval?: "month" | "year";
-  };
+  const parsed = CheckoutSchema.safeParse(body);
 
-  if (!moduleSlug && !bundleSlug) {
-    return NextResponse.json({ error: "Mangler moduleSlug eller bundleSlug" }, { status: 400 });
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Ugyldig input", details: parsed.error.flatten() },
+      { status: 400 }
+    );
   }
+
+  const { moduleSlug, bundleSlug, interval } = parsed.data;
 
   // Look up the price ID
   let stripePriceId: string | null = null;
@@ -64,7 +76,7 @@ export async function POST(req: Request) {
   });
   const isEligibleForTrial = !previousSub;
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3002";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",

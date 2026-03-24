@@ -972,8 +972,8 @@ model AppSubscription {
   userId               String
   moduleId             String?
   bundleId             String?
-  stripeSubscriptionId String             @unique
-  stripeCustomerId     String
+  stripeSubscriptionId String?            @unique // null for free modules
+  stripeCustomerId     String?                   // null for free modules
   status               SubscriptionStatus @default(ACTIVE)
   interval             String             @default("month") // "month" | "year"
   currentPeriodStart   DateTime

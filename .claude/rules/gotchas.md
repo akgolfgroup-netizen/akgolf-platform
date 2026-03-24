@@ -100,6 +100,22 @@ import { prisma } from "../lib/portal/prisma";
 2. Sjekk at enums og modeller matcher
 3. Bruk `npx prisma db push` kun fra ETT prosjekt (unngå konflikter)
 
+## 12. Port-mismatch ved kopiering av kode
+
+**Problem:** Kode kopiert fra andre prosjekter kan ha feil port i fallback-URL.
+
+**Løsning:** ALLTID sjekk at fallback-porter matcher prosjektet:
+- akgolf-website: localhost:3000
+- akgolf-dashboard: localhost:3001
+
+```typescript
+// RIKTIG for website:
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+
+// FEIL — dette er dashboard-porten:
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3001";
+```
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer

@@ -104,6 +104,22 @@ export function ApperClient({
     }
   }
 
+  async function handleActivateFree(moduleSlug: string) {
+    setLoading(moduleSlug);
+    try {
+      const res = await fetch("/api/portal/subscriptions/activate-free", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ moduleSlug }),
+      });
+      if (res.ok) {
+        router.refresh();
+      }
+    } catch {
+      setLoading(null);
+    }
+  }
+
   function isModuleActive(slug: string) {
     return userModules.includes(slug);
   }
@@ -258,12 +274,34 @@ export function ApperClient({
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-bold text-[var(--color-snow)]">
-                    {mod.monthlyPriceNok / 100}
-                    <span className="text-xs font-normal text-[var(--color-gold-muted)] ml-0.5">
-                      kr/mnd
-                    </span>
+                    {mod.monthlyPriceNok === 0 ? (
+                      "Gratis"
+                    ) : (
+                      <>
+                        {mod.monthlyPriceNok / 100}
+                        <span className="text-xs font-normal text-[var(--color-gold-muted)] ml-0.5">
+                          kr/mnd
+                        </span>
+                      </>
+                    )}
                   </span>
-                  {!active && (
+                  {!active && mod.monthlyPriceNok === 0 ? (
+                    <button
+                      onClick={() => handleActivateFree(mod.slug)}
+                      disabled={loading !== null}
+                      className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors"
+                      style={{
+                        background: "rgba(34,197,94,0.2)",
+                        color: "#22C55E",
+                      }}
+                    >
+                      {loading === mod.slug ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        "Aktiver"
+                      )}
+                    </button>
+                  ) : !active ? (
                     <button
                       onClick={() => handleCheckout(mod.slug)}
                       disabled={loading !== null}
@@ -279,7 +317,7 @@ export function ApperClient({
                         "Prøv gratis"
                       )}
                     </button>
-                  )}
+                  ) : null}
                 </div>
               </div>
             );
