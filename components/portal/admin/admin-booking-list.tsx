@@ -28,11 +28,11 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  CONFIRMED: "bg-green-100 text-green-700",
-  PENDING: "bg-amber-100 text-amber-700",
-  COMPLETED: "bg-gray-100 text-gray-600",
-  NO_SHOW: "bg-red-100 text-red-700",
-  CANCELLED: "bg-gray-100 text-gray-500",
+  CONFIRMED: "bg-[rgba(34,197,94,0.15)] text-[#86EFAC]",
+  PENDING: "bg-[rgba(245,158,11,0.15)] text-[#FCD34D]",
+  COMPLETED: "bg-[rgba(15,41,80,0.3)] text-[var(--color-snow)]/70",
+  NO_SHOW: "bg-[rgba(239,68,68,0.15)] text-[#FCA5A5]",
+  CANCELLED: "bg-[rgba(15,41,80,0.3)] text-[var(--color-snow)]/50",
 };
 
 export function AdminBookingList() {
@@ -90,89 +90,89 @@ export function AdminBookingList() {
       {/* Search & filters */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-snow)]/50" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            placeholder="Sok etter navn, e-post eller tjeneste..."
-            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8975C]/40"
+            placeholder="Søk etter navn, e-post eller tjeneste..."
+            className="w-full pl-10 pr-4 py-2 rounded-xl text-sm text-[var(--color-snow)] placeholder:text-[var(--color-snow)]/40 bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
           />
         </div>
         <select
           value={statusFilter}
           onChange={(e) => handleStatusChange(e.target.value)}
-          className="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white"
+          className="text-sm rounded-xl px-3 py-2 text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)]"
         >
           <option value="ALL">Alle statuser</option>
           <option value="CONFIRMED">Bekreftet</option>
           <option value="PENDING">Venter</option>
-          <option value="COMPLETED">Fullfort</option>
-          <option value="NO_SHOW">Ikke mott</option>
+          <option value="COMPLETED">Fullført</option>
+          <option value="NO_SHOW">Ikke møtt</option>
           <option value="CANCELLED">Avbestilt</option>
         </select>
         <button
           onClick={handleSearch}
-          className="px-4 py-2 text-sm font-medium bg-[#0F2950] text-white rounded-lg hover:bg-[#0F2950]/90 transition-colors"
+          className="px-4 py-2 text-sm font-medium bg-[var(--color-gold)] text-white rounded-xl hover:bg-[var(--color-gold)]/90 transition-colors"
         >
-          Sok
+          Søk
         </button>
       </div>
 
       {/* Results table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="rounded-2xl border border-[rgba(15,41,80,0.4)] bg-[rgba(10,25,41,0.7)] backdrop-blur-md overflow-hidden">
         {loading ? (
-          <div className="py-12 text-center text-gray-400">Laster...</div>
+          <div className="py-12 text-center text-[var(--color-snow)]/50">Laster...</div>
         ) : bookings.length === 0 ? (
-          <div className="py-12 text-center text-gray-400 text-sm">
+          <div className="py-12 text-center text-[var(--color-snow)]/50 text-sm">
             Ingen bookinger funnet
           </div>
         ) : (
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-[rgba(15,41,80,0.3)] border-b border-[rgba(15,41,80,0.4)]">
               <tr>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Student</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Tjeneste</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Dato/tid</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Instruktor</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Status</th>
-                <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase">Belop</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-[var(--color-snow)]/50 uppercase">Student</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-[var(--color-snow)]/50 uppercase">Tjeneste</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-[var(--color-snow)]/50 uppercase">Dato/tid</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-[var(--color-snow)]/50 uppercase">Instruktør</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-[var(--color-snow)]/50 uppercase">Status</th>
+                <th className="text-right px-4 py-3 text-xs font-medium text-[var(--color-snow)]/50 uppercase">Beløp</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-[rgba(15,41,80,0.4)]">
               {bookings.map((b) => (
-                <tr key={b.id} className="hover:bg-gray-50">
+                <tr key={b.id} className="hover:bg-[rgba(15,41,80,0.3)]">
                   <td className="px-4 py-3">
-                    <p className="text-sm font-medium text-gray-800">{b.student.name ?? "—"}</p>
-                    <p className="text-xs text-gray-400">{b.student.email}</p>
+                    <p className="text-sm font-medium text-[var(--color-snow)]">{b.student.name ?? "—"}</p>
+                    <p className="text-xs text-[var(--color-snow)]/50">{b.student.email}</p>
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-700">{b.serviceType.name}</td>
+                  <td className="px-4 py-3 text-sm text-[var(--color-snow)]/70">{b.serviceType.name}</td>
                   <td className="px-4 py-3">
-                    <p className="text-sm text-gray-700">
+                    <p className="text-sm text-[var(--color-snow)]/70">
                       {format(new Date(b.startTime), "d. MMM yyyy", { locale: nb })}
                     </p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-[var(--color-snow)]/50">
                       {format(new Date(b.startTime), "HH:mm")}–{format(new Date(b.endTime), "HH:mm")}
                     </p>
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-700">
+                  <td className="px-4 py-3 text-sm text-[var(--color-snow)]/70">
                     {b.instructor.user.name ?? "—"}
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[b.status] ?? "bg-gray-100"}`}>
+                    <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[b.status] ?? "bg-[rgba(15,41,80,0.3)]"}`}>
                       {STATUS_LABELS[b.status] ?? b.status}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-700 text-right">
+                  <td className="px-4 py-3 text-sm text-[var(--color-snow)]/70 text-right">
                     kr {(b.amount / 100).toLocaleString("nb-NO")}
                   </td>
                   <td className="px-4 py-3 text-right">
                     {(b.status === "CONFIRMED" || b.status === "PENDING") && (
                       <button
                         onClick={() => handleCancel(b.id)}
-                        className="p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
+                        className="p-1 rounded hover:bg-[rgba(239,68,68,0.15)] text-[var(--color-snow)]/40 hover:text-[#FCA5A5] transition-colors"
                         title="Avbestill"
                       >
                         <XCircle className="w-4 h-4" />
@@ -188,7 +188,7 @@ export function AdminBookingList() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between text-sm text-gray-500">
+        <div className="flex items-center justify-between text-sm text-[var(--color-snow)]/50">
           <span>
             Viser {(page - 1) * 20 + 1}–{Math.min(page * 20, total)} av {total}
           </span>
@@ -196,14 +196,14 @@ export function AdminBookingList() {
             <button
               onClick={() => { setPage(page - 1); fetchBookings(query, statusFilter, page - 1); }}
               disabled={page === 1}
-              className="p-1.5 rounded hover:bg-gray-100 disabled:opacity-30"
+              className="p-1.5 rounded hover:bg-[rgba(15,41,80,0.3)] disabled:opacity-30"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => { setPage(page + 1); fetchBookings(query, statusFilter, page + 1); }}
               disabled={page >= totalPages}
-              className="p-1.5 rounded hover:bg-gray-100 disabled:opacity-30"
+              className="p-1.5 rounded hover:bg-[rgba(15,41,80,0.3)] disabled:opacity-30"
             >
               <ChevronRight className="w-4 h-4" />
             </button>

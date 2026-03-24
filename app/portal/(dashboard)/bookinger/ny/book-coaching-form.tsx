@@ -29,25 +29,6 @@ interface Props {
 
 type Step = "service" | "instructor" | "date" | "confirm";
 
-// Warm Light Theme - Inspired by Dashboard
-const THEME = {
-  bg: "#FAFBFC",           // Background
-  bgElevated: "#FFFFFF",    // Pure white for cards
-  bgSubtle: "#F8F9FA",      // Subtle warm gray
-  gold: "#B8975C",          // Soft Gold
-  goldLight: "#E8D4B0",     // Gold Light
-  goldMuted: "#E8D4B0",     // Gold Light (muted)
-  navy: "#0F2950",          // Midnight Navy
-  navyLight: "#10456A",     // Navy Light
-  text: "#02060D",          // Text primary
-  textMuted: "#64748B",     // Text secondary
-  textLight: "#9CA3AF",     // Tertiary text
-  border: "#EBE5DA",        // Border
-  shadow: "0 4px 20px rgba(0,0,0,0.06)",
-  shadowHover: "0 8px 30px rgba(0,0,0,0.1)",
-  shadowGold: "0 4px 20px rgba(184,151,92,0.2)",
-};
-
 export function BookCoachingForm({ serviceTypes }: Props) {
   const router = useRouter();
   const [step, setStep] = useState<Step>("service");
@@ -153,52 +134,43 @@ export function BookCoachingForm({ serviceTypes }: Props) {
         <div className="flex items-center justify-center">
           {(Object.keys(stepLabels) as Step[]).map((s, index, arr) => {
             const isActive = s === step;
-            const isCompleted = 
+            const isCompleted =
               (step === "instructor" && s === "service") ||
               (step === "date" && (s === "service" || s === "instructor")) ||
               (step === "confirm" && s !== "confirm");
-            
+
             return (
               <div key={s} className="flex items-center">
                 <div className="flex flex-col items-center">
                   <motion.div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300"
-                    style={{
-                      background: isActive 
-                        ? THEME.gold 
-                        : isCompleted 
-                          ? `${THEME.gold}20`
-                          : THEME.bgSubtle,
-                      color: isActive || isCompleted ? "#FFFFFF" : THEME.textMuted,
-                      border: isActive 
-                        ? "none"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
+                      isActive
+                        ? "bg-[var(--color-gold)] text-white border-none"
                         : isCompleted
-                          ? `2px solid ${THEME.gold}`
-                          : `2px solid ${THEME.border}`,
-                    }}
+                          ? "bg-[rgba(184,151,92,0.2)] text-white border-2 border-[var(--color-gold)]"
+                          : "bg-[rgba(15,41,80,0.3)] text-[var(--color-snow)]/70 border-2 border-[rgba(15,41,80,0.4)]"
+                    }`}
                     whileHover={!isActive ? { scale: 1.05 } : {}}
                   >
                     {isCompleted && s !== step ? (
-                      <Check className="w-5 h-5" style={{ color: isActive ? "#FFF" : THEME.gold }} />
+                      <Check className={`w-5 h-5 ${isActive ? "text-white" : "text-[var(--color-gold)]"}`} />
                     ) : (
                       index + 1
                     )}
                   </motion.div>
                   <span
-                    className="text-xs mt-2 font-medium"
-                    style={{
-                      color: isActive ? THEME.gold : THEME.textMuted,
-                    }}
+                    className={`text-xs mt-2 font-medium ${
+                      isActive ? "text-[var(--color-gold)]" : "text-[var(--color-snow)]/70"
+                    }`}
                   >
                     {stepLabels[s]}
                   </span>
                 </div>
                 {index < arr.length - 1 && (
-                  <div 
-                    className="w-16 h-0.5 mx-2"
-                    style={{ 
-                      background: isCompleted ? THEME.gold : THEME.border,
-                    }}
+                  <div
+                    className={`w-16 h-0.5 mx-2 ${
+                      isCompleted ? "bg-[var(--color-gold)]" : "bg-[rgba(15,41,80,0.4)]"
+                    }`}
                   />
                 )}
               </div>
@@ -218,13 +190,10 @@ export function BookCoachingForm({ serviceTypes }: Props) {
             transition={{ duration: 0.3 }}
           >
             <div className="text-center mb-8">
-              <h1 
-                className="text-3xl font-semibold mb-3"
-                style={{ color: THEME.navy }}
-              >
+              <h1 className="text-3xl font-semibold mb-3 text-[var(--color-snow)]">
                 Velg din treningsform
               </h1>
-              <p style={{ color: THEME.textMuted }}>
+              <p className="text-[var(--color-snow)]/70">
                 Alle våre coaching-timer inkluderer TrackMan-analyse og personlig tilpasning
               </p>
             </div>
@@ -241,72 +210,39 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div
-                    className="rounded-2xl p-6 transition-all duration-300 border"
-                    style={{
-                      background: THEME.bgElevated,
-                      borderColor: THEME.border,
-                      boxShadow: THEME.shadow,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.boxShadow = THEME.shadowHover;
-                      e.currentTarget.style.borderColor = THEME.goldMuted;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.boxShadow = THEME.shadow;
-                      e.currentTarget.style.borderColor = THEME.border;
-                    }}
-                  >
+                  <div className="rounded-2xl p-6 transition-all duration-300 border bg-[rgba(10,25,41,0.7)] border-[rgba(15,41,80,0.4)] hover:border-[rgba(184,151,92,0.4)]">
                     <div className="flex items-start justify-between gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
                           <div
                             className="w-4 h-4 rounded-full"
-                            style={{ backgroundColor: svc.color ?? THEME.gold }}
+                            style={{ backgroundColor: svc.color ?? "#B8975C" }}
                           />
-                          <h3 
-                            className="text-lg font-semibold transition-colors"
-                            style={{ color: THEME.navy }}
-                          >
+                          <h3 className="text-lg font-semibold transition-colors text-[var(--color-snow)]">
                             {svc.name}
                           </h3>
                         </div>
                         {svc.description && (
-                          <p 
-                            className="text-sm leading-relaxed mb-4"
-                            style={{ color: THEME.textMuted }}
-                          >
+                          <p className="text-sm leading-relaxed mb-4 text-[var(--color-snow)]/70">
                             {svc.description}
                           </p>
                         )}
                         <div className="flex items-center gap-6">
-                          <span 
-                            className="flex items-center gap-2 text-sm"
-                            style={{ color: THEME.textMuted }}
-                          >
-                            <Clock className="w-4 h-4" style={{ color: THEME.gold }} />
+                          <span className="flex items-center gap-2 text-sm text-[var(--color-snow)]/70">
+                            <Clock className="w-4 h-4 text-[var(--color-gold)]" />
                             {svc.duration} minutter
                           </span>
-                          <span 
-                            className="flex items-center gap-2 text-sm"
-                            style={{ color: THEME.textMuted }}
-                          >
-                            <User className="w-4 h-4" style={{ color: THEME.gold }} />
+                          <span className="flex items-center gap-2 text-sm text-[var(--color-snow)]/70">
+                            <User className="w-4 h-4 text-[var(--color-gold)]" />
                             {svc.maxStudents === 1 ? "Individuell" : `Gruppe (max ${svc.maxStudents})`}
                           </span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span 
-                          className="text-2xl font-semibold"
-                          style={{ color: THEME.gold }}
-                        >
+                        <span className="text-2xl font-semibold text-[var(--color-gold)]">
                           {formatPrice(svc.price)}
                         </span>
-                        <ChevronRight 
-                          className="w-5 h-5 mt-2 ml-auto opacity-0 group-hover:opacity-100 transition-opacity"
-                          style={{ color: THEME.gold }}
-                        />
+                        <ChevronRight className="w-5 h-5 mt-2 ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-[var(--color-gold)]" />
                       </div>
                     </div>
                   </div>
@@ -327,20 +263,16 @@ export function BookCoachingForm({ serviceTypes }: Props) {
           >
             <button
               onClick={() => { setStep("service"); setSelectedService(null); }}
-              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70"
-              style={{ color: THEME.textMuted }}
+              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-[var(--color-snow)]/70"
             >
               <ArrowLeft className="w-4 h-4" />
               Tilbake til tjenester
             </button>
 
-            <h1 
-              className="text-3xl font-semibold mb-2"
-              style={{ color: THEME.navy }}
-            >
+            <h1 className="text-3xl font-semibold mb-2 text-[var(--color-snow)]">
               Velg instruktør
             </h1>
-            <p className="mb-8" style={{ color: THEME.textMuted }}>
+            <p className="mb-8 text-[var(--color-snow)]/70">
               {selectedService.name}
             </p>
 
@@ -355,55 +287,27 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   className="w-full text-left group"
                   whileHover={{ x: 4 }}
                 >
-                  <div
-                    className="rounded-2xl p-5 flex items-center gap-5 transition-all duration-300 border"
-                    style={{
-                      background: THEME.bgElevated,
-                      borderColor: THEME.border,
-                      boxShadow: THEME.shadow,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.boxShadow = THEME.shadowHover;
-                      e.currentTarget.style.borderColor = THEME.goldMuted;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.boxShadow = THEME.shadow;
-                      e.currentTarget.style.borderColor = THEME.border;
-                    }}
-                  >
+                  <div className="rounded-2xl p-5 flex items-center gap-5 transition-all duration-300 border bg-[rgba(10,25,41,0.7)] border-[rgba(15,41,80,0.4)] hover:border-[rgba(184,151,92,0.4)]">
                     {inst.user.image ? (
-                      <img 
-                        src={inst.user.image} 
-                        alt="" 
-                        className="w-16 h-16 rounded-2xl object-cover border-2"
-                        style={{ borderColor: THEME.border }}
+                      <img
+                        src={inst.user.image}
+                        alt=""
+                        className="w-16 h-16 rounded-2xl object-cover border-2 border-[rgba(15,41,80,0.4)]"
                       />
                     ) : (
-                      <div
-                        className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold"
-                        style={{ 
-                          background: `linear-gradient(135deg, ${THEME.goldLight}, ${THEME.gold})`,
-                          color: "#FFFFFF",
-                        }}
-                      >
+                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold bg-gradient-to-br from-[var(--color-gold-light)] to-[var(--color-gold)] text-white">
                         {inst.user.name?.charAt(0) ?? "?"}
                       </div>
                     )}
                     <div className="flex-1">
-                      <h3 
-                        className="text-lg font-semibold mb-1"
-                        style={{ color: THEME.navy }}
-                      >
+                      <h3 className="text-lg font-semibold mb-1 text-[var(--color-snow)]">
                         {inst.user.name}
                       </h3>
                       {inst.title && (
-                        <p style={{ color: THEME.textMuted }}>{inst.title}</p>
+                        <p className="text-[var(--color-snow)]/70">{inst.title}</p>
                       )}
                     </div>
-                    <ChevronRight 
-                      className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all"
-                      style={{ color: THEME.gold }}
-                    />
+                    <ChevronRight className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all text-[var(--color-gold)]" />
                   </div>
                 </motion.button>
               ))}
@@ -431,68 +335,50 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   setSelectedInstructor(null);
                 }
               }}
-              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70"
-              style={{ color: THEME.textMuted }}
+              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-[var(--color-snow)]/70"
             >
               <ArrowLeft className="w-4 h-4" />
               Tilbake
             </button>
 
-            <h1 
-              className="text-3xl font-semibold mb-2"
-              style={{ color: THEME.navy }}
-            >
+            <h1 className="text-3xl font-semibold mb-2 text-[var(--color-snow)]">
               Velg dato og tid
             </h1>
-            <p className="mb-8" style={{ color: THEME.textMuted }}>
+            <p className="mb-8 text-[var(--color-snow)]/70">
               {selectedService.name} med {selectedInstructor.user.name}
             </p>
 
             {/* Date Pills */}
             <div className="mb-8">
-              <h3 
-                className="text-sm font-semibold mb-4 uppercase tracking-wide"
-                style={{ color: THEME.textLight }}
-              >
+              <h3 className="text-sm font-semibold mb-4 uppercase tracking-wide text-[var(--color-snow)]/50">
                 Velg dato
               </h3>
               <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
                 {dates.map((date) => {
                   const isSelected = selectedDate && format(date, "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd");
                   const isWeekend = date.getDay() === 0 || date.getDay() === 6;
-                  const isToday = format(date, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd");
-                  
+
                   return (
                     <motion.button
                       key={date.toISOString()}
                       onClick={() => !isWeekend && handleSelectDate(date)}
                       disabled={isWeekend}
-                      className="flex-shrink-0 rounded-2xl p-4 text-center min-w-[80px] transition-all duration-200"
-                      style={{
-                        background: isSelected ? THEME.gold : THEME.bgElevated,
-                        border: isSelected ? "none" : `1px solid ${THEME.border}`,
-                        boxShadow: isSelected ? THEME.shadowGold : THEME.shadow,
-                        opacity: isWeekend ? 0.4 : 1,
-                      }}
+                      className={`flex-shrink-0 rounded-2xl p-4 text-center min-w-[80px] transition-all duration-200 ${
+                        isSelected
+                          ? "bg-[var(--color-gold)] border-none"
+                          : "bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)]"
+                      }`}
+                      style={{ opacity: isWeekend ? 0.4 : 1 }}
                       whileHover={!isWeekend ? { scale: 1.02 } : {}}
                       whileTap={!isWeekend ? { scale: 0.98 } : {}}
                     >
-                      <p 
-                        className="text-xs uppercase tracking-wide mb-1"
-                        style={{ color: isSelected ? "#FFFFFF" : THEME.textLight }}
-                      >
+                      <p className={`text-xs uppercase tracking-wide mb-1 ${isSelected ? "text-white" : "text-[var(--color-snow)]/50"}`}>
                         {format(date, "EEE", { locale: nb })}
                       </p>
-                      <p 
-                        className="text-2xl font-semibold mb-1"
-                        style={{ color: isSelected ? "#FFFFFF" : THEME.navy }}
-                      >
+                      <p className={`text-2xl font-semibold mb-1 ${isSelected ? "text-white" : "text-[var(--color-snow)]"}`}>
                         {format(date, "d")}
                       </p>
-                      <p 
-                        className="text-xs"
-                        style={{ color: isSelected ? "rgba(255,255,255,0.8)" : THEME.textMuted }}
-                      >
+                      <p className={`text-xs ${isSelected ? "text-white/80" : "text-[var(--color-snow)]/70"}`}>
                         {format(date, "MMM", { locale: nb })}
                       </p>
                     </motion.button>
@@ -507,31 +393,22 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h3 
-                  className="text-sm font-semibold mb-4 uppercase tracking-wide"
-                  style={{ color: THEME.textLight }}
-                >
+                <h3 className="text-sm font-semibold mb-4 uppercase tracking-wide text-[var(--color-snow)]/50">
                   Ledige tider — {format(selectedDate, "EEEE d. MMMM", { locale: nb })}
                 </h3>
-                
+
                 {loading ? (
-                  <div className="flex items-center gap-3 py-12" style={{ color: THEME.textMuted }}>
+                  <div className="flex items-center gap-3 py-12 text-[var(--color-snow)]/70">
                     <Loader2 className="w-5 h-5 animate-spin" />
                     <span>Henter tilgjengelige tider...</span>
                   </div>
                 ) : availableSlots.length === 0 ? (
-                  <div 
-                    className="rounded-2xl p-8 text-center border"
-                    style={{ 
-                      background: THEME.bgSubtle,
-                      borderColor: THEME.border,
-                    }}
-                  >
-                    <Calendar className="w-12 h-12 mx-auto mb-4" style={{ color: THEME.textLight }} />
-                    <p style={{ color: THEME.textMuted }}>
+                  <div className="rounded-2xl p-8 text-center border bg-[rgba(15,41,80,0.3)] border-[rgba(15,41,80,0.4)]">
+                    <Calendar className="w-12 h-12 mx-auto mb-4 text-[var(--color-snow)]/50" />
+                    <p className="text-[var(--color-snow)]/70">
                       Ingen ledige tider denne dagen.
                     </p>
-                    <p className="text-sm mt-1" style={{ color: THEME.textLight }}>
+                    <p className="text-sm mt-1 text-[var(--color-snow)]/50">
                       Prøv en annen dato.
                     </p>
                   </div>
@@ -540,7 +417,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                     {availableSlots.map((slot) => {
                       const slotDate = new Date(slot);
                       const timeStr = format(slotDate, "HH:mm");
-                      
+
                       return (
                         <motion.button
                           key={slot}
@@ -548,18 +425,8 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                             setSelectedSlot(slot);
                             setStep("confirm");
                           }}
-                          className="rounded-xl py-4 text-sm font-medium transition-all duration-200 border"
-                          style={{
-                            background: THEME.bgElevated,
-                            borderColor: THEME.border,
-                            color: THEME.navy,
-                            boxShadow: THEME.shadow,
-                          }}
-                          whileHover={{ 
-                            scale: 1.02,
-                            boxShadow: THEME.shadowHover,
-                            borderColor: THEME.gold,
-                          }}
+                          className="rounded-xl py-4 text-sm font-medium transition-all duration-200 border bg-[rgba(10,25,41,0.7)] border-[rgba(15,41,80,0.4)] text-[var(--color-snow)] hover:border-[var(--color-gold)]"
+                          whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
                           {timeStr}
@@ -584,45 +451,28 @@ export function BookCoachingForm({ serviceTypes }: Props) {
           >
             <button
               onClick={() => setStep("date")}
-              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70"
-              style={{ color: THEME.textMuted }}
+              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-[var(--color-snow)]/70"
             >
               <ArrowLeft className="w-4 h-4" />
               Tilbake til tidspunkt
             </button>
 
-            <h1 
-              className="text-3xl font-semibold mb-2"
-              style={{ color: THEME.navy }}
-            >
+            <h1 className="text-3xl font-semibold mb-2 text-[var(--color-snow)]">
               Bekreft din booking
             </h1>
-            <p className="mb-8" style={{ color: THEME.textMuted }}>
+            <p className="mb-8 text-[var(--color-snow)]/70">
               Gjennomgå detaljene før betaling
             </p>
 
             {/* Summary Card */}
-            <div 
-              className="rounded-3xl p-8 mb-8 border"
-              style={{
-                background: THEME.bgElevated,
-                borderColor: THEME.border,
-                boxShadow: THEME.shadow,
-              }}
-            >
+            <div className="rounded-3xl p-8 mb-8 border bg-[rgba(10,25,41,0.7)] border-[rgba(15,41,80,0.4)]">
               {/* Header */}
-              <div 
-                className="flex items-center gap-4 pb-6 mb-6 border-b"
-                style={{ borderColor: THEME.border }}
-              >
+              <div className="flex items-center gap-4 pb-6 mb-6 border-b border-[rgba(15,41,80,0.4)]">
                 <div
                   className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: selectedService.color ?? THEME.gold }}
+                  style={{ backgroundColor: selectedService.color ?? "#B8975C" }}
                 />
-                <h3 
-                  className="text-xl font-semibold"
-                  style={{ color: THEME.navy }}
-                >
+                <h3 className="text-xl font-semibold text-[var(--color-snow)]">
                   {selectedService.name}
                 </h3>
               </div>
@@ -630,57 +480,42 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               {/* Details */}
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-4">
-                  <div 
-                    className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ background: `${THEME.gold}15` }}
-                  >
-                    <User className="w-5 h-5" style={{ color: THEME.gold }} />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[rgba(184,151,92,0.15)]">
+                    <User className="w-5 h-5 text-[var(--color-gold)]" />
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wide" style={{ color: THEME.textLight }}>Instruktør</p>
-                    <p className="font-medium" style={{ color: THEME.navy }}>{selectedInstructor.user.name}</p>
+                    <p className="text-xs uppercase tracking-wide text-[var(--color-snow)]/50">Instruktør</p>
+                    <p className="font-medium text-[var(--color-snow)]">{selectedInstructor.user.name}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div 
-                    className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ background: `${THEME.gold}15` }}
-                  >
-                    <Calendar className="w-5 h-5" style={{ color: THEME.gold }} />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[rgba(184,151,92,0.15)]">
+                    <Calendar className="w-5 h-5 text-[var(--color-gold)]" />
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wide" style={{ color: THEME.textLight }}>Dato og tid</p>
-                    <p className="font-medium" style={{ color: THEME.navy }}>
+                    <p className="text-xs uppercase tracking-wide text-[var(--color-snow)]/50">Dato og tid</p>
+                    <p className="font-medium text-[var(--color-snow)]">
                       {format(new Date(selectedSlot), "EEEE d. MMMM yyyy 'kl.' HH:mm", { locale: nb })}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div 
-                    className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ background: `${THEME.gold}15` }}
-                  >
-                    <Clock className="w-5 h-5" style={{ color: THEME.gold }} />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[rgba(184,151,92,0.15)]">
+                    <Clock className="w-5 h-5 text-[var(--color-gold)]" />
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wide" style={{ color: THEME.textLight }}>Varighet</p>
-                    <p className="font-medium" style={{ color: THEME.navy }}>{selectedService.duration} minutter</p>
+                    <p className="text-xs uppercase tracking-wide text-[var(--color-snow)]/50">Varighet</p>
+                    <p className="font-medium text-[var(--color-snow)]">{selectedService.duration} minutter</p>
                   </div>
                 </div>
               </div>
 
               {/* Price */}
-              <div 
-                className="flex items-center justify-between pt-6 border-t"
-                style={{ borderColor: THEME.border }}
-              >
-                <span style={{ color: THEME.textMuted }}>Totalpris</span>
-                <span 
-                  className="text-3xl font-semibold"
-                  style={{ color: THEME.gold }}
-                >
+              <div className="flex items-center justify-between pt-6 border-t border-[rgba(15,41,80,0.4)]">
+                <span className="text-[var(--color-snow)]/70">Totalpris</span>
+                <span className="text-3xl font-semibold text-[var(--color-gold)]">
                   {formatPrice(selectedService.price)}
                 </span>
               </div>
@@ -688,23 +523,15 @@ export function BookCoachingForm({ serviceTypes }: Props) {
 
             {/* Payment Buttons */}
             <div className="space-y-4">
-              <p 
-                className="text-sm text-center uppercase tracking-wide"
-                style={{ color: THEME.textLight }}
-              >
+              <p className="text-sm text-center uppercase tracking-wide text-[var(--color-snow)]/50">
                 Velg betalingsmetode
               </p>
-              
+
               <motion.button
                 onClick={() => handleBook("STRIPE")}
                 disabled={booking}
-                className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50"
-                style={{
-                  background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})`,
-                  color: "#FFFFFF",
-                  boxShadow: THEME.shadowGold,
-                }}
-                whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(184,151,92,0.3)" }}
+                className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 bg-gradient-to-r from-[var(--color-gold)] to-[var(--color-gold-light)] text-white"
+                whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
                 {booking ? (
@@ -723,17 +550,8 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               <motion.button
                 onClick={() => handleBook("VIPPS")}
                 disabled={booking}
-                className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 border-2"
-                style={{
-                  background: "transparent",
-                  color: "#FF5B24",
-                  borderColor: "#FF5B24",
-                }}
-                whileHover={{ 
-                  scale: 1.01,
-                  background: "#FF5B24",
-                  color: "#FFFFFF",
-                }}
+                className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 border-2 bg-transparent text-[#FF5B24] border-[#FF5B24] hover:bg-[#FF5B24] hover:text-white"
+                whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
                 {booking ? (
@@ -752,10 +570,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               </motion.button>
             </div>
 
-            <p 
-              className="text-xs text-center mt-6"
-              style={{ color: THEME.textLight }}
-            >
+            <p className="text-xs text-center mt-6 text-[var(--color-snow)]/50">
               Alle betalinger er sikre og krypterte. Du møter til timen selv om betalingen ikke er gjennomført ennå.
             </p>
           </motion.div>

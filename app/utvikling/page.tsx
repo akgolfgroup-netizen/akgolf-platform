@@ -5,7 +5,7 @@ import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SubPageHero } from "@/components/website/SubPageHero";
 import { SectionLabel } from "@/components/website/SectionLabel";
-import { RevealOnScroll } from "@/components/website/RevealOnScroll";
+import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/website/RevealOnScroll";
 import { FeatureGrid } from "@/components/website/FeatureGrid";
 import { ApplicationForm } from "@/components/website/ApplicationForm";
 import { ImagePlaceholder } from "@/components/website/ImagePlaceholder";
@@ -15,6 +15,8 @@ import { PageTransition } from "@/components/website/PageTransition";
 import {
   SOFTWARE_FEATURES,
   KLUBB_FEATURES,
+  UTVIKLING_PRODUCTS,
+  UTVIKLING_CASE_STUDIES,
 } from "@/lib/website-constants";
 
 export default function UtviklingPage() {
@@ -116,6 +118,90 @@ export default function UtviklingPage() {
                 </Link>
               </div>
             </RevealOnScroll>
+          </div>
+        </section>
+
+        {/* ─── Products ─── */}
+        <section id="products" className="w-section-lg bg-surface-warm">
+          <div className="w-container">
+            <RevealOnScroll>
+              <SectionLabel>Produkter</SectionLabel>
+              <h2 className="w-heading-lg mt-4 mb-4">Våre løsninger.</h2>
+              <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
+                Digitale verktøy og rådgivingstjenester som løfter trening og utvikling i din klubb.
+              </p>
+            </RevealOnScroll>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {UTVIKLING_PRODUCTS.map((product) => (
+                <StaggerItem key={product.id}>
+                  <div className="w-card h-full flex flex-col">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="w-2 h-2 rounded-full bg-utvikling" />
+                      <span className="text-xs font-mono text-utvikling uppercase tracking-wider">{product.tagline}</span>
+                    </div>
+                    <h3 className="w-heading-sm mb-2">{product.title}</h3>
+                    <p className="text-sm text-ink-50 leading-relaxed mb-4 flex-1">{product.description}</p>
+                    <ul className="space-y-2 mb-6">
+                      {product.features.map((feature) => (
+                        <li key={feature} className="flex items-center gap-2 text-xs text-ink-60">
+                          <span className="w-1 h-1 rounded-full bg-utvikling shrink-0" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="pt-4 border-t border-ink-10">
+                      <p className="font-mono text-lg font-bold text-utvikling">{product.pricing}</p>
+                      <p className="text-xs text-ink-40">{product.pricingNote}</p>
+                    </div>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* ─── Case Studies ─── */}
+        <section className="w-section-lg bg-ink-100 w-section-dark">
+          <div className="w-container">
+            <RevealOnScroll>
+              <SectionLabel>Case studies</SectionLabel>
+              <h2 className="w-heading-lg text-white mt-4 mb-4">Klubber vi har hjulpet.</h2>
+              <p className="text-ink-40 max-w-2xl mb-12">
+                Her er noen av klubbene som bruker våre løsninger.
+              </p>
+            </RevealOnScroll>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {UTVIKLING_CASE_STUDIES.map((study) => (
+                <StaggerItem key={study.club}>
+                  <div className="w-card-dark h-full">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                        <span className="text-lg font-bold text-white">{study.club.charAt(0)}</span>
+                      </div>
+                      <div>
+                        <h4 className="font-display font-semibold text-white">{study.club}</h4>
+                        <p className="text-xs text-ink-50">{study.year}</p>
+                      </div>
+                    </div>
+                    <blockquote className="text-sm text-ink-30 leading-relaxed mb-4 italic">
+                      &quot;{study.quote}&quot;
+                    </blockquote>
+                    <div className="flex items-center justify-between">
+                      <div className="flex gap-2">
+                        {study.products.map((product) => (
+                          <span key={product} className="px-2 py-1 rounded-full bg-utvikling/20 text-utvikling text-xs">
+                            {product}
+                          </span>
+                        ))}
+                      </div>
+                      <span className="text-sm font-semibold text-utvikling">{study.result}</span>
+                    </div>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
           </div>
         </section>
 

@@ -11,7 +11,7 @@ export default async function DashboardLayout({
   return (
     <div className="min-h-screen flex" style={{ background: "#FAFBFC" }}>
       <Sidebar user={user} />
-      <main className="flex-1 ml-60 min-h-screen relative z-10 p-8">
+      <main className="flex-1 ml-60 min-h-screen p-8">
         {children}
       </main>
     </div>

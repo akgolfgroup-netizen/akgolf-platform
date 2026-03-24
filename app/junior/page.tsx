@@ -14,7 +14,16 @@ import { ImagePlaceholder } from "@/components/website/ImagePlaceholder";
 import { RelatedPages } from "@/components/website/RelatedPages";
 import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
-import { JUNIOR_PROGRAMS, JUNIOR_FAQ, JUNIOR_INTAKE, TEAM, TESTIMONIALS } from "@/lib/website-constants";
+import {
+  JUNIOR_FAQ,
+  JUNIOR_INTAKE,
+  TEAM,
+  TESTIMONIALS,
+  JUNIOR_AGE_GROUPS,
+  JUNIOR_SEASON_PROGRAM,
+  JUNIOR_PACKAGES,
+  JUNIOR_PARENT_INFO,
+} from "@/lib/website-constants";
 
 const juniorCoach = TEAM.find(m => m.name === "Anders Kristiansen");
 
@@ -125,18 +134,19 @@ export default function JuniorPage() {
               </p>
             </RevealOnScroll>
 
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {JUNIOR_PROGRAMS.map((program) => (
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {JUNIOR_AGE_GROUPS.map((program) => (
                 <StaggerItem key={program.ageGroup}>
                   <div className="w-card h-full flex flex-col">
-                    <div className="flex items-center gap-3 mb-4">
+                    <div className="flex items-center justify-between mb-4">
                       <span className="inline-flex items-center px-3 py-1 rounded-full bg-junior/10 text-junior text-xs font-mono font-medium">
                         {program.ageGroup}
                       </span>
+                      <span className="text-xs text-ink-40">{program.sessionsPerWeek}×/uke</span>
                     </div>
                     <h3 className="w-heading-sm mb-2">{program.title}</h3>
-                    <p className="text-sm text-ink-50 leading-relaxed mb-6 flex-1">{program.description}</p>
-                    <ul className="space-y-2">
+                    <p className="text-sm text-ink-50 leading-relaxed mb-4 flex-1">{program.description}</p>
+                    <ul className="space-y-2 mb-4">
                       {program.features.map((feature) => (
                         <li key={feature} className="flex items-center gap-2 text-xs text-ink-60">
                           <span className="w-1 h-1 rounded-full bg-junior shrink-0" />
@@ -144,6 +154,113 @@ export default function JuniorPage() {
                         </li>
                       ))}
                     </ul>
+                    <div className="pt-4 border-t border-ink-10">
+                      <p className="font-mono text-lg font-bold text-junior">
+                        {program.price}
+                        <span className="text-sm font-normal text-ink-40 ml-1">kr/mnd</span>
+                      </p>
+                    </div>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* ─── Season Program ─── */}
+        <section className="w-section-lg">
+          <div className="w-container">
+            <RevealOnScroll>
+              <SectionLabel>{JUNIOR_SEASON_PROGRAM.heading}</SectionLabel>
+              <h2 className="w-heading-lg mt-4 mb-4">Trening hele året.</h2>
+              <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
+                {JUNIOR_SEASON_PROGRAM.description}
+              </p>
+            </RevealOnScroll>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {JUNIOR_SEASON_PROGRAM.seasons.map((season) => (
+                <StaggerItem key={season.name}>
+                  <div className="w-card h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="text-2xl">
+                        {season.name === "Vår" && "🌱"}
+                        {season.name === "Sommer" && "☀️"}
+                        {season.name === "Høst" && "🍂"}
+                        {season.name === "Vinter" && "❄️"}
+                      </span>
+                      <div>
+                        <h4 className="font-display font-semibold text-ink-90">{season.name}</h4>
+                        <p className="text-xs text-ink-40">{season.months}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm font-medium text-junior mb-3">{season.focus}</p>
+                    <ul className="space-y-2">
+                      {season.activities.map((activity) => (
+                        <li key={activity} className="flex items-center gap-2 text-xs text-ink-60">
+                          <span className="w-1 h-1 rounded-full bg-junior shrink-0" />
+                          {activity}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* ─── Pricing ─── */}
+        <section id="pricing" className="w-section-lg bg-surface-cream">
+          <div className="w-container">
+            <RevealOnScroll>
+              <div className="text-center mb-12">
+                <SectionLabel>Priser</SectionLabel>
+                <h2 className="w-heading-lg mt-4 mb-4">Junior-pakker</h2>
+                <p className="text-ink-50 max-w-lg mx-auto">
+                  Alle pakker er uten bindingstid og inkluderer tilgang til spillerportalen.
+                </p>
+              </div>
+            </RevealOnScroll>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              {JUNIOR_PACKAGES.map((pkg) => (
+                <StaggerItem key={pkg.name}>
+                  <div
+                    className={`rounded-2xl p-8 flex flex-col h-full transition-all duration-400 ${
+                      pkg.highlighted
+                        ? "bg-ink-90 text-white border-2 border-junior/30 shadow-xl relative"
+                        : "bg-white border border-ink-10 hover:border-ink-20 hover:shadow-lg"
+                    }`}
+                  >
+                    {pkg.highlighted && (
+                      <span className="absolute -top-3 left-8 bg-junior text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full">
+                        Anbefalt
+                      </span>
+                    )}
+                    <h3 className={`font-display text-xl font-semibold mb-1 ${pkg.highlighted ? "text-white" : "text-ink-90"}`}>
+                      {pkg.name}
+                    </h3>
+                    <p className={`font-mono text-2xl font-bold mb-1 ${pkg.highlighted ? "text-junior" : "text-junior"}`}>
+                      {pkg.price}
+                      <span className="text-sm font-normal ml-1">{pkg.period}</span>
+                    </p>
+                    <p className={`text-sm leading-relaxed mb-6 ${pkg.highlighted ? "text-ink-30" : "text-ink-50"}`}>
+                      {pkg.description}
+                    </p>
+                    <ul className="space-y-3 mb-8 flex-1">
+                      {pkg.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2.5 text-sm">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5 text-junior">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                          <span className={pkg.highlighted ? "text-ink-20" : "text-ink-60"}>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href="#apply" className={`w-btn text-center ${pkg.highlighted ? "bg-junior text-white hover:brightness-110" : "w-btn-primary"}`}>
+                      Avtal møte
+                    </Link>
                   </div>
                 </StaggerItem>
               ))}
@@ -224,36 +341,31 @@ export default function JuniorPage() {
         {/* ─── For Parents ─── */}
         <section className="w-section-lg">
           <div className="w-container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <RevealOnScroll>
-                <ImagePlaceholder aspect="4/3" src="/images/academy/AK-Golf-Academy-30.jpg" label="Foreldresamarbeid" />
-              </RevealOnScroll>
+            <RevealOnScroll>
+              <SectionLabel>For foreldre</SectionLabel>
+              <h2 className="w-heading-lg mt-4 mb-4">{JUNIOR_PARENT_INFO.heading}</h2>
+              <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
+                {JUNIOR_PARENT_INFO.description}
+              </p>
+            </RevealOnScroll>
 
-              <RevealOnScroll delay={0.2}>
-                <div>
-                  <SectionLabel>For foreldre</SectionLabel>
-                  <h2 className="w-heading-lg mt-4 mb-6">Vi er et team — dere inkludert.</h2>
-                  <p className="text-ink-50 leading-relaxed mb-6">
-                    Vi tror på tett samarbeid med foreldrene. Dere er en viktig del av utviklingsreisen, og vi holder dere informert og involvert gjennom hele prosessen.
-                  </p>
-                  <ul className="space-y-4">
-                    {[
-                      { title: "Kvartalsvise foreldremøter", desc: "Gjennomgang av fremgang, mål og planer fremover." },
-                      { title: "Månedlige rapporter", desc: "Detaljerte fremgangsrapporter med data og trenervurderinger." },
-                      { title: "Åpen kommunikasjon", desc: "Direkte kontakt med trenerteamet når dere trenger det." },
-                    ].map((item) => (
-                      <li key={item.title} className="flex gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-junior shrink-0 mt-2" />
-                        <div>
-                          <p className="text-sm font-medium text-ink-80">{item.title}</p>
-                          <p className="text-xs text-ink-50">{item.desc}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </RevealOnScroll>
-            </div>
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {JUNIOR_PARENT_INFO.expectations.map((section) => (
+                <StaggerItem key={section.title}>
+                  <div className="w-card h-full">
+                    <h4 className="font-display font-semibold text-ink-90 mb-4">{section.title}</h4>
+                    <ul className="space-y-3">
+                      {section.items.map((item) => (
+                        <li key={item} className="flex gap-3">
+                          <span className="w-1.5 h-1.5 rounded-full bg-junior shrink-0 mt-2" />
+                          <p className="text-sm text-ink-60 leading-relaxed">{item}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
           </div>
         </section>
 

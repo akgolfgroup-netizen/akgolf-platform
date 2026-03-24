@@ -1,6 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
-import { Topbar } from "@/components/portal/layout/topbar";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { getThisWeekTournamentPlans } from "@/modules/tournament-planner/actions";
@@ -18,14 +17,15 @@ export default async function DenneUkenPage() {
   const plans = await getThisWeekTournamentPlans(prisma, { from, to });
 
   return (
-    <div>
-      <Topbar title="Denne uken" />
-      <div className="p-6 max-w-2xl">
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold text-[var(--color-snow)]">Denne uken</h1>
+
+      <div className="max-w-2xl">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-[var(--color-snow)]">
+          <h2 className="text-lg font-semibold text-[var(--color-snow)]">
             Spillere i turnering
           </h2>
-          <span className="text-xs text-[var(--color-gold-muted)]">
+          <span className="text-xs text-[var(--color-ink-40)]">
             {plans.length} spillerplan{plans.length !== 1 ? "er" : ""}
           </span>
         </div>

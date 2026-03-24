@@ -64,7 +64,7 @@ export function PricingCard({
           highlighted ? "w-btn-gold" : "w-btn-primary"
         }`}
       >
-        Kom i gang
+        Reserver din plass
       </Link>
     </div>
   );

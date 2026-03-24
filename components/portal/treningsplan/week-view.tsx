@@ -3,8 +3,7 @@
 import { motion } from "framer-motion";
 import { Clock, CheckCircle2, Dumbbell } from "lucide-react";
 import { QuickCompleteButton } from "@/components/portal/dagbok/quick-complete-button";
-import { format, addDays, startOfWeek } from "date-fns";
-import { nb } from "date-fns/locale";
+import { format } from "date-fns";
 
 interface TrainingSession {
   id: string;
@@ -26,62 +25,47 @@ interface TrainingWeek {
   sessions: TrainingSession[];
 }
 
-const THEME = {
-  navy: "#0F2950",
-  gold: "#B8975C",
-  text: "#02060D",
-  textSecondary: "#64748B",
-  textTertiary: "#9CA3AF",
-  bg: "#FFFFFF",
-  bgSubtle: "#FAFBFC",
-  border: "#EBE5DA",
-  blue: "#3B82F6",
-  green: "#22C55E",
-  orange: "#F97316",
-  purple: "#8B5CF6",
-};
-
+// Mørkt tema farger for fokusområder
 const focusColors: Record<string, { bg: string; border: string; text: string; icon: string }> = {
-  range: { 
-    bg: "#EFF6FF", 
-    border: "#BFDBFE", 
-    text: "#1E40AF",
+  range: {
+    bg: "rgba(59,130,246,0.15)",
+    border: "rgba(59,130,246,0.4)",
+    text: "#93C5FD",
     icon: "#3B82F6"
   },
   naerspill: {
-    bg: "#FFFBEB",
-    border: "#FDE68A",
-    text: "#92400E",
+    bg: "rgba(184,151,92,0.15)",
+    border: "rgba(184,151,92,0.4)",
+    text: "#E8D4B0",
     icon: "#B8975C"
   },
-  putting: { 
-    bg: "#F0FDF4", 
-    border: "#BBF7D0", 
-    text: "#166534",
+  putting: {
+    bg: "rgba(34,197,94,0.15)",
+    border: "rgba(34,197,94,0.4)",
+    text: "#86EFAC",
     icon: "#22C55E"
   },
-  bane: { 
-    bg: "#FAF5FF", 
-    border: "#E9D5FF", 
-    text: "#6B21A8",
+  bane: {
+    bg: "rgba(139,92,246,0.15)",
+    border: "rgba(139,92,246,0.4)",
+    text: "#C4B5FD",
     icon: "#8B5CF6"
   },
-  styrke: { 
-    bg: "#FFF7ED", 
-    border: "#FED7AA", 
-    text: "#9A3412",
+  styrke: {
+    bg: "rgba(249,115,22,0.15)",
+    border: "rgba(249,115,22,0.4)",
+    text: "#FDBA74",
     icon: "#F97316"
   },
-  restitusjon: { 
-    bg: "#F3F4F6", 
-    border: "#D1D5DB", 
-    text: "#4B5563",
+  restitusjon: {
+    bg: "rgba(156,163,175,0.15)",
+    border: "rgba(156,163,175,0.4)",
+    text: "#D1D5DB",
     icon: "#9CA3AF"
   },
 };
 
 const DAY_NAMES = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
-const FULL_DAY_NAMES = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"];
 
 function getFocusStyle(focusArea?: string | null) {
   if (!focusArea) return focusColors.range;
@@ -126,36 +110,20 @@ export function WeekView({
       {/* Week Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
-          <div 
-            className="w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-lg"
-            style={{ 
-              background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.gold})`,
-              color: "#FFFFFF",
-            }}
-          >
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-lg bg-[var(--color-gold)] text-white">
             {week.weekNumber}
           </div>
           <div>
-            <h3 
-              className="font-semibold text-lg"
-              style={{ color: THEME.navy }}
-            >
+            <h3 className="font-semibold text-lg text-[var(--color-snow)]">
               Uke {week.weekNumber}
             </h3>
             {week.focus && (
-              <p style={{ color: THEME.textSecondary }}>{week.focus}</p>
+              <p className="text-[var(--color-snow)]/70">{week.focus}</p>
             )}
           </div>
         </div>
         {week.volumeLabel && (
-          <span 
-            className="text-sm px-4 py-2 rounded-full font-medium"
-            style={{ 
-              background: THEME.bgSubtle,
-              color: THEME.textSecondary,
-              border: `1px solid ${THEME.border}`,
-            }}
-          >
+          <span className="text-sm px-4 py-2 rounded-full font-medium bg-[rgba(15,41,80,0.3)] text-[var(--color-snow)]/70 border border-[rgba(15,41,80,0.4)]">
             {week.volumeLabel}
           </span>
         )}
@@ -173,22 +141,24 @@ export function WeekView({
           return (
             <div key={day} className="flex flex-col">
               {/* Day Header */}
-              <div 
-                className="text-center py-3 rounded-xl mb-3"
-                style={{
-                  background: isToday ? `${THEME.gold}15` : "transparent",
-                  border: isToday ? `1px solid ${THEME.gold}40` : "1px solid transparent",
-                }}
+              <div
+                className={`text-center py-3 rounded-xl mb-3 ${
+                  isToday
+                    ? "bg-[rgba(184,151,92,0.15)] border border-[rgba(184,151,92,0.4)]"
+                    : "bg-transparent border border-transparent"
+                }`}
               >
-                <p 
-                  className="text-xs font-medium uppercase tracking-wide"
-                  style={{ color: isToday ? THEME.gold : THEME.textTertiary }}
+                <p
+                  className={`text-xs font-medium uppercase tracking-wide ${
+                    isToday ? "text-[var(--color-gold)]" : "text-[var(--color-snow)]/50"
+                  }`}
                 >
                   {dayName}
                 </p>
-                <p 
-                  className="text-xl font-semibold mt-1"
-                  style={{ color: isToday ? THEME.navy : THEME.text }}
+                <p
+                  className={`text-xl font-semibold mt-1 ${
+                    isToday ? "text-[var(--color-snow)]" : "text-[var(--color-snow)]"
+                  }`}
                 >
                   {dateNum}
                 </p>
@@ -197,20 +167,14 @@ export function WeekView({
               {/* Sessions for this day */}
               <div className="flex flex-col gap-2 min-h-[100px]">
                 {sessions.length === 0 ? (
-                  <div 
-                    className="flex-1 rounded-xl flex items-center justify-center min-h-[80px]"
-                    style={{ 
-                      background: THEME.bgSubtle,
-                      border: `1px dashed ${THEME.border}`,
-                    }}
-                  >
-                    <span style={{ color: THEME.textTertiary }}>–</span>
+                  <div className="flex-1 rounded-xl flex items-center justify-center min-h-[80px] bg-transparent border border-dashed border-[rgba(15,41,80,0.4)]">
+                    <span className="text-[var(--color-snow)]/50">–</span>
                   </div>
                 ) : (
                   sessions.map((s) => {
                     const focusStyle = getFocusStyle(s.focusArea);
                     const isLogged = loggedSessionIds.includes(s.id);
-                    
+
                     return (
                       <motion.div
                         key={s.id}
@@ -219,35 +183,29 @@ export function WeekView({
                         whileHover={{ scale: 1.02 }}
                         className="rounded-xl p-3 cursor-default transition-shadow hover:shadow-md"
                         style={{
-                          background: isLogged ? "#F0FDF4" : focusStyle.bg,
-                          border: `1px solid ${isLogged ? "#BBF7D0" : focusStyle.border}`,
+                          background: isLogged ? "rgba(34,197,94,0.15)" : focusStyle.bg,
+                          border: `1px solid ${isLogged ? "rgba(34,197,94,0.4)" : focusStyle.border}`,
                         }}
                       >
                         {/* Focus area badge */}
                         <div className="flex items-center gap-1.5 mb-2">
-                          <Dumbbell className="w-3 h-3" style={{ color: isLogged ? THEME.green : focusStyle.icon }} />
-                          <span 
+                          <Dumbbell className="w-3 h-3" style={{ color: isLogged ? "#22C55E" : focusStyle.icon }} />
+                          <span
                             className="text-[10px] font-medium uppercase tracking-wide"
-                            style={{ color: isLogged ? THEME.green : focusStyle.text }}
+                            style={{ color: isLogged ? "#86EFAC" : focusStyle.text }}
                           >
                             {s.focusArea || "Trening"}
                           </span>
                         </div>
 
                         {/* Title */}
-                        <p 
-                          className="text-xs font-semibold leading-tight mb-2"
-                          style={{ color: THEME.text }}
-                        >
+                        <p className="text-xs font-semibold leading-tight mb-2 text-[var(--color-snow)]">
                           {s.title}
                         </p>
 
                         {/* Duration */}
                         {s.durationMinutes && (
-                          <p 
-                            className="text-[10px] flex items-center gap-1 mb-2"
-                            style={{ color: THEME.textSecondary }}
-                          >
+                          <p className="text-[10px] flex items-center gap-1 mb-2 text-[var(--color-snow)]/70">
                             <Clock className="w-3 h-3" />
                             {s.durationMinutes} min
                           </p>
@@ -257,10 +215,7 @@ export function WeekView({
                         {showCompleteButton && (
                           <div className="mt-2">
                             {isLogged ? (
-                              <div 
-                                className="flex items-center gap-1.5 text-[10px] font-medium"
-                                style={{ color: THEME.green }}
-                              >
+                              <div className="flex items-center gap-1.5 text-[10px] font-medium text-[#22C55E]">
                                 <CheckCircle2 className="w-3.5 h-3.5" />
                                 Fullført
                               </div>

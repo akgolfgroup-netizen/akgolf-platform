@@ -63,7 +63,7 @@ export function EliteHero({ onWatchVideo }: EliteHeroProps) {
                 href="/portal/login"
                 className="btn-action group"
               >
-                Kom i gang
+                Start din treningsreise
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
 

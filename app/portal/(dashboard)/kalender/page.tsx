@@ -3,19 +3,9 @@ import { PeriodizationBand } from "@/components/portal/kalender/periodization-ba
 import { CalendarListView } from "@/components/portal/kalender/calendar-list-view";
 import { CalendarWeekView } from "@/components/portal/kalender/calendar-week-view";
 import { CalendarSyncSettings } from "@/components/portal/kalender/calendar-sync-settings";
-import { Topbar } from "@/components/portal/layout/topbar";
 import { startOfISOWeek, endOfMonth, startOfMonth, addMonths } from "date-fns";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
-const THEME = {
-  navy: "#0F2950",
-  gold: "#B8975C",
-  goldLight: "#E8D4B0",
-  text: "#02060D",
-  textSecondary: "#64748B",
-  bg: "#FFFFFF",
-  border: "#EBE5DA",
-};
+import { ChevronLeft, ChevronRight, Info } from "lucide-react";
+import { PORTAL_CONTENT } from "@/lib/website-constants";
 
 export default async function KalenderPage({
   searchParams,
@@ -38,21 +28,16 @@ export default async function KalenderPage({
   ]);
 
   return (
-    <div>
-      <Topbar title="Kalender" />
-      <div className="p-8 max-w-5xl">
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold text-[var(--color-snow)]">Kalender</h1>
+
+      <div className="max-w-5xl space-y-6">
         {/* Periodization band */}
         <PeriodizationBand bands={periodBands} year={year} />
 
         {/* Controls */}
-        <div className="flex items-center justify-between mb-6">
-          <div 
-            className="flex gap-1 p-1 rounded-xl border"
-            style={{ 
-              background: "#FAFBFC",
-              borderColor: THEME.border,
-            }}
-          >
+        <div className="flex items-center justify-between">
+          <div className="flex gap-1 p-1 rounded-xl bg-[rgba(15,41,80,0.3)] border border-[rgba(15,41,80,0.4)]">
             {[
               { label: "Liste", val: "liste" },
               { label: "Uke", val: "uke" },
@@ -60,12 +45,11 @@ export default async function KalenderPage({
               <a
                 key={v.val}
                 href={`?view=${v.val}&offset=${monthOffset}`}
-                className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
-                style={{
-                  background: view === v.val ? `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})` : "transparent",
-                  color: view === v.val ? "#FFFFFF" : THEME.textSecondary,
-                  boxShadow: view === v.val ? "0 4px 12px rgba(184,151,92,0.25)" : "none",
-                }}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
+                  view === v.val
+                    ? "bg-[var(--color-gold)] text-white shadow-lg"
+                    : "text-[var(--color-ink-40)] hover:text-[var(--color-snow)] hover:bg-white/5"
+                }`}
               >
                 {v.label}
               </a>
@@ -75,29 +59,16 @@ export default async function KalenderPage({
           <div className="flex items-center gap-3">
             <a
               href={`?view=${view}&offset=${monthOffset - 1}`}
-              className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:shadow-md border"
-              style={{ 
-                background: THEME.bg,
-                borderColor: THEME.border,
-                color: THEME.text,
-              }}
+              className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:bg-white/10 bg-[rgba(15,41,80,0.3)] border border-[rgba(15,41,80,0.4)] text-[var(--color-snow)] cursor-pointer"
             >
               <ChevronLeft className="w-5 h-5" />
             </a>
-            <span 
-              className="text-base font-semibold min-w-[140px] text-center capitalize"
-              style={{ color: THEME.navy }}
-            >
+            <span className="text-base font-semibold min-w-[140px] text-center capitalize text-[var(--color-snow)]">
               {baseDate.toLocaleDateString("nb-NO", { month: "long", year: "numeric" })}
             </span>
             <a
               href={`?view=${view}&offset=${monthOffset + 1}`}
-              className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:shadow-md border"
-              style={{ 
-                background: THEME.bg,
-                borderColor: THEME.border,
-                color: THEME.text,
-              }}
+              className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:bg-white/10 bg-[rgba(15,41,80,0.3)] border border-[rgba(15,41,80,0.4)] text-[var(--color-snow)] cursor-pointer"
             >
               <ChevronRight className="w-5 h-5" />
             </a>
@@ -105,14 +76,7 @@ export default async function KalenderPage({
         </div>
 
         {/* Calendar content */}
-        <div 
-          className="rounded-3xl p-6 border"
-          style={{ 
-            background: THEME.bg,
-            borderColor: THEME.border,
-            boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
-          }}
-        >
+        <div className="rounded-2xl p-6 bg-[rgba(15,41,80,0.3)] border border-[rgba(15,41,80,0.4)]">
           {view === "uke" ? (
             <CalendarWeekView events={events} weekStart={startOfISOWeek(baseDate)} />
           ) : (
@@ -121,9 +85,53 @@ export default async function KalenderPage({
         </div>
 
         {/* iCal sync */}
-        <div className="mt-8">
-          <CalendarSyncSettings />
-        </div>
+        <CalendarSyncSettings />
+
+        {/* Info-seksjon */}
+        <details className="rounded-2xl bg-[rgba(15,41,80,0.3)] border border-[rgba(15,41,80,0.4)] group">
+          <summary className="flex items-center gap-2 px-5 py-4 cursor-pointer list-none">
+            <Info className="w-4 h-4 text-[var(--color-gold)]" />
+            <span className="text-sm font-medium text-[var(--color-snow)]">Kalender-info</span>
+            <span className="ml-auto text-xs text-[var(--color-ink-40)] group-open:hidden">Vis mer</span>
+            <span className="ml-auto text-xs text-[var(--color-ink-40)] hidden group-open:inline">Skjul</span>
+          </summary>
+          <div className="px-5 pb-5 space-y-4">
+            {/* Fargekoder */}
+            <div>
+              <p className="text-xs font-semibold text-[var(--color-ink-40)] uppercase tracking-widest mb-2">
+                Fargekoder
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {PORTAL_CONTENT.kalender.colorCodes.map((item) => (
+                  <div key={item.color} className="flex items-center gap-2">
+                    <span
+                      className={`w-3 h-3 rounded-full ${
+                        item.color === "gold"
+                          ? "bg-[var(--color-gold)]"
+                          : item.color === "blue"
+                          ? "bg-blue-500"
+                          : item.color === "green"
+                          ? "bg-green-500"
+                          : "bg-gray-500"
+                      }`}
+                    />
+                    <span className="text-sm text-[var(--color-ink-40)]">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Synkronisering */}
+            <div>
+              <p className="text-xs font-semibold text-[var(--color-ink-40)] uppercase tracking-widest mb-2">
+                Synkronisering
+              </p>
+              <p className="text-sm text-[var(--color-ink-40)]">
+                {PORTAL_CONTENT.kalender.syncInfo}
+              </p>
+            </div>
+          </div>
+        </details>
       </div>
     </div>
   );

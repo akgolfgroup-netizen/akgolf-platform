@@ -1,7 +1,6 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { getUserModuleSlugs } from "@/lib/portal/access";
-import { Topbar } from "@/components/portal/layout/topbar";
 import { ApperClient } from "./apper-client";
 
 export default async function ApperPage() {
@@ -32,9 +31,9 @@ export default async function ApperPage() {
   const hasStripeCustomer = !!user.stripeCustomerId;
 
   return (
-    <div>
-      <Topbar title="Apper" />
-      <div className="p-6 max-w-4xl">
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold text-[var(--color-snow)]">Apper</h1>
+      <div className="max-w-4xl">
         <ApperClient
           modules={modules}
           bundles={bundles}

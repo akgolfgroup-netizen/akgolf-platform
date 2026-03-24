@@ -29,7 +29,7 @@ function AnimatedCheckmark() {
       />
       
       {/* Inner circle with checkmark */}
-      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold to-[#D4B87A] flex items-center justify-center shadow-lg shadow-gold/30">
+      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold to-gold-light flex items-center justify-center shadow-lg shadow-gold/30">
         <motion.svg
           width="32"
           height="32"
@@ -57,7 +57,7 @@ function AnimatedCheckmark() {
 
 // Confetti particles
 function Confetti() {
-  const colors = ["#B8975C", "#0F2950", "#D4B87A", "#1a2d3d"];
+  const colors = ["var(--color-gold)", "var(--color-navy)", "var(--color-gold-light)", "var(--color-ink-90)"];
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">

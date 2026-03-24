@@ -82,6 +82,13 @@
   --color-warning: #F59E0B;
   --color-info: #3B82F6;
 
+  /* Portal/Dashboard utility colors (used in components) */
+  --color-bg-deep: #0A1929;
+  --color-bg: #0F172A;
+  --color-muted: rgba(255, 255, 255, 0.05);
+  --color-border: rgba(15, 41, 80, 0.3);
+  --color-gold-dim: rgba(184, 151, 92, 0.4);
+
   /* ═══════════════════════════════════════════════════════════════════════════ */
   /* TYPOGRAPHY */
   /* ═══════════════════════════════════════════════════════════════════════════ */
@@ -287,14 +294,27 @@
     color: var(--color-ink-100);
     padding: 0.875rem 2rem;
     border-radius: 9999px;
+    transition: opacity 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out;
   }
 
   .w-btn-primary:hover {
-    opacity: 0.85;
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(184, 151, 92, 0.25);
   }
 
   .w-btn-primary:active {
-    opacity: 0.75;
+    opacity: 0.95;
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(184, 151, 92, 0.15);
+  }
+
+  .w-btn-primary:disabled,
+  .w-btn-primary[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   .w-btn-secondary {
@@ -328,14 +348,27 @@
     padding: 0.875rem 2rem;
     border-radius: 9999px;
     font-weight: 600;
+    transition: opacity 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out;
   }
 
   .w-btn-gold:hover {
-    opacity: 0.85;
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(184, 151, 92, 0.3);
   }
 
   .w-btn-gold:active {
-    opacity: 0.75;
+    opacity: 0.95;
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(184, 151, 92, 0.2);
+  }
+
+  .w-btn-gold:disabled,
+  .w-btn-gold[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   /* Eyebrow label — uses gold-text for WCAG AA contrast */

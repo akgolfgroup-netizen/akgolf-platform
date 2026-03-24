@@ -109,6 +109,8 @@ model User {
   waitlistEntries  WaitlistEntry[]
   coachingSessions CoachingSession[] @relation("StudentSessions")
 
+  communicationsReceived CommunicationLog[] @relation("StudentCommunications")
+
   // Spillerprofil relations
   studentPlans          TrainingPlan[]         @relation("StudentPlans")
   createdPlans          TrainingPlan[]         @relation("CreatedPlans")
@@ -199,6 +201,7 @@ model Instructor {
   serviceTypes     ServiceType[]
   bookings         Booking[]
   coachingSessions CoachingSession[] @relation("InstructorSessions")
+  communications   CommunicationLog[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -989,4 +992,31 @@ model AppSubscription {
 
   @@index([userId])
   @@index([stripeSubscriptionId])
+}
+
+// ============================================================
+// COMMUNICATION LOG (Admin-logg over kommunikasjon med elever)
+// ============================================================
+
+enum CommunicationType {
+  EMAIL
+  SMS
+  NOTE
+  CALL
+}
+
+model CommunicationLog {
+  id           String            @id @default(cuid())
+  studentId    String
+  instructorId String
+  type         CommunicationType
+  subject      String?
+  content      String            @db.Text
+  sentAt       DateTime          @default(now())
+
+  student    User       @relation("StudentCommunications", fields: [studentId], references: [id])
+  instructor Instructor @relation(fields: [instructorId], references: [id])
+
+  @@index([studentId])
+  @@index([instructorId])
 }

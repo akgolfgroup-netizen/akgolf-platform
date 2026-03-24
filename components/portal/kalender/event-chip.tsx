@@ -1,11 +1,6 @@
 import { format } from "date-fns";
 import type { CalendarEvent } from "@/app/portal/(dashboard)/kalender/actions";
 
-const THEME = {
-  text: "#02060D",
-  textSecondary: "#64748B",
-};
-
 interface EventChipProps {
   event: CalendarEvent;
 }
@@ -25,14 +20,11 @@ export function EventChip({ event }: EventChipProps) {
         className="w-2 h-2 rounded-full flex-shrink-0"
         style={{ backgroundColor: event.color }}
       />
-      <span className="truncate font-medium" style={{ color: THEME.text }}>
+      <span className="truncate font-medium text-[var(--color-snow)]">
         {event.title}
       </span>
       {!event.allDay && (
-        <span 
-          className="flex-shrink-0 text-xs"
-          style={{ color: THEME.textSecondary }}
-        >
+        <span className="flex-shrink-0 text-xs text-[var(--color-snow)]/70">
           {format(new Date(event.startDate), "HH:mm")}
         </span>
       )}

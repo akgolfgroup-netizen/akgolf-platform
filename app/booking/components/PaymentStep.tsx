@@ -12,20 +12,7 @@ import { motion } from "framer-motion";
 import { CreditCard, AlertCircle, Loader2, ShieldCheck } from "lucide-react";
 import { StepHeader } from "./StepHeader";
 
-// AK Golf Brand Colors - aligned with brand guidelines
-const AK_GOLD = "#B8975C";
-const AK_NAVY = "#0F2950";
-const AK_INK_90 = "#1a2d3d";
-
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
-
-// Stripe Elements themed with AK Golf brand colors
-const STRIPE_THEME = {
-  colorPrimary: AK_GOLD,
-  colorBackground: "#FFFFFF",
-  colorText: AK_NAVY,
-  colorDanger: "#EF4444",
-} as const;
 
 interface Props {
   clientSecret: string;
@@ -146,7 +133,10 @@ export function PaymentStep({
             appearance: {
               theme: "stripe",
               variables: {
-                ...STRIPE_THEME,
+                colorPrimary: "#B8975C",
+                colorBackground: "#FFFFFF",
+                colorText: "#0F2950",
+                colorDanger: "#EF4444",
                 fontFamily: "Inter, sans-serif",
                 borderRadius: "8px",
                 spacingUnit: "4px",

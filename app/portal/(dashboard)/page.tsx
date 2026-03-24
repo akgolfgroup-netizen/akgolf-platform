@@ -1,24 +1,11 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
-import { Topbar } from "@/components/portal/layout/topbar";
 import { BookingStatus } from "@prisma/client";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { DashboardCards } from "@/components/portal/dashboard/dashboard-cards";
 import Link from "next/link";
-import { Plus, Calendar, TrendingDown, MessageSquare, ChevronRight } from "lucide-react";
-
-const THEME = {
-  navy: "#0F2950",
-  text: "#02060D",
-  textSecondary: "#64748B",
-  gold: "#B8975C",
-  goldMuted: "#E8D4B0",
-  blue: "#3B82F6",
-  green: "#22C55E",
-  surface: "#FAFBFC",
-  border: "#EBE5DA",
-};
+import { Sparkles, Calendar, TrendingDown, MessageSquare, ChevronRight, Target, BarChart3, Trophy } from "lucide-react";
+import { PORTAL_EMPTY_STATES } from "@/lib/website-constants";
 
 export default async function DashboardPage() {
   const user = await requirePortalUser();
@@ -29,7 +16,7 @@ export default async function DashboardPage() {
   const weekStart = startOfWeek(now, { weekStartsOn: 1 });
   const weekEnd = endOfWeek(now, { weekStartsOn: 1 });
 
-  const [nextBooking, activePlan, nextTournament, lastSession, weekBookings, handicapHistory] =
+  const [nextBooking, activePlan, lastSession, weekBookings, handicapHistory] =
     await Promise.all([
       // Next upcoming booking
       prisma.booking.findFirst({
@@ -59,13 +46,6 @@ export default async function DashboardPage() {
             }
           }
         },
-      }),
-
-      // Next tournament
-      prisma.playerTournamentPlan.findFirst({
-        where: { studentId: userId, tournament: { startDate: { gte: now } } },
-        include: { tournament: { select: { name: true, startDate: true } } },
-        orderBy: { tournament: { startDate: "asc" } },
       }),
 
       // Last coaching session
@@ -101,262 +81,274 @@ export default async function DashboardPage() {
       }),
     ]);
 
-  // Calculate handicap change
+  // Calculate handicap
   const currentHcp = handicapHistory[0]?.handicapIndex ?? null;
   const previousHcp = handicapHistory[handicapHistory.length - 1]?.handicapIndex ?? currentHcp;
   const hcpChange = currentHcp && previousHcp ? (previousHcp - currentHcp).toFixed(1) : null;
-
-  const cards = [
-    {
-      label: "Neste økt",
-      value: nextBooking ? nextBooking.serviceType.name : "Ingen kommende",
-      sub: nextBooking
-        ? format(nextBooking.startTime, "EEEE d. MMM 'kl' HH:mm", { locale: nb })
-        : "Book en time",
-      color: THEME.blue,
-      href: "/portal/bookinger",
-    },
-    {
-      label: "Treningsplan",
-      value: activePlan?.title ?? "Ingen aktiv plan",
-      sub: activePlan?.goals?.[0] ?? "Kontakt coach",
-      color: THEME.green,
-      href: "/portal/treningsplan",
-    },
-    {
-      label: "Neste turnering",
-      value: nextTournament?.tournament.name ?? "Ingen planlagt",
-      sub: nextTournament
-        ? format(nextTournament.tournament.startDate, "d. MMMM yyyy", { locale: nb })
-        : "Se turneringsplan",
-      color: THEME.gold,
-      href: "/portal/turneringsplan",
-    },
-    {
-      label: "Handicap",
-      value: currentHcp ? currentHcp.toFixed(1) : "—",
-      sub: hcpChange && parseFloat(hcpChange) > 0 ? `↓ ${hcpChange} siste periode` : "Logg runder for statistikk",
-      color: THEME.goldMuted,
-      href: "/portal/statistikk",
-    },
-  ];
 
   // Week days for training plan
   const weekDays = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
   const currentWeekSessions = activePlan?.weeks?.[0]?.sessions ?? [];
 
-  return (
-    <div className="min-h-screen" style={{ background: THEME.surface }}>
-      <Topbar title="Oversikt" />
+  // Greeting based on time
+  const hour = now.getHours();
+  const greeting = hour < 12 ? "God morgen" : hour < 17 ? "God dag" : "God kveld";
 
-      <div className="p-6 md:p-8 max-w-6xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h1
-              className="text-2xl md:text-3xl font-semibold tracking-tight"
-              style={{ color: THEME.navy }}
-            >
-              Hei, {user.name?.split(" ")[0] ?? "spiller"}
-            </h1>
-            <p className="text-sm mt-1" style={{ color: THEME.textSecondary }}>
-              {user.subscriptionTier === "FREE" ? "Gratis bruker" : `${user.subscriptionTier} medlem`}
-            </p>
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-[#0F2950]">
+            {greeting}, {user.name?.split(" ")[0] ?? "spiller"}
+          </h1>
+          <p className="text-sm text-[#64748B] mt-1">
+            {PORTAL_EMPTY_STATES.dashboard.welcome.replace("{name}", user.name?.split(" ")[0] ?? "spiller")}
+          </p>
+        </div>
+
+        <Link
+          href="/portal/bookinger/ny"
+          className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[#B8975C] text-white hover:brightness-110 transition-all cursor-pointer"
+          style={{ boxShadow: "0 4px 12px rgba(184,151,92,0.25)" }}
+        >
+          <Sparkles className="w-4 h-4" />
+          Book time
+        </Link>
+      </div>
+
+      {/* Bento Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Next training - Large card */}
+        <div className="md:col-span-2 md:row-span-2 rounded-2xl p-6 bg-white border border-[#EBE5DA]">
+          <div className="flex items-center gap-2 mb-4">
+            <Calendar className="w-5 h-5 text-[#B8975C]" />
+            <h2 className="font-semibold text-[#0F2950]">Neste trening</h2>
           </div>
 
+          {nextBooking ? (
+            <div className="space-y-4">
+              <div className="p-4 rounded-xl bg-[#B8975C]/10 border border-[#B8975C]/20">
+                <p className="text-lg font-semibold text-[#0F2950]">
+                  {nextBooking.serviceType.name}
+                </p>
+                <p className="text-sm text-[#64748B] mt-2">
+                  {format(nextBooking.startTime, "EEEE d. MMMM 'kl' HH:mm", { locale: nb })}
+                </p>
+              </div>
+
+              <Link
+                href="/portal/bookinger"
+                className="flex items-center justify-between px-4 py-3 rounded-xl bg-[#FAFBFC] hover:bg-[#F0F2F5] transition-colors cursor-pointer group"
+              >
+                <span className="text-sm font-medium text-[#0F2950]">
+                  Se alle bookinger
+                </span>
+                <ChevronRight className="w-4 h-4 text-[#64748B] group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <div className="w-12 h-12 rounded-full bg-[#F0F2F5] flex items-center justify-center mb-4">
+                <Calendar className="w-6 h-6 text-[#64748B]" />
+              </div>
+              <p className="text-[#64748B] mb-4">
+                {PORTAL_EMPTY_STATES.dashboard.noBookings}
+              </p>
+              <Link
+                href="/portal/bookinger/ny"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[#B8975C] text-white hover:brightness-110 transition-all cursor-pointer"
+              >
+                {PORTAL_EMPTY_STATES.bookinger.cta}
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Handicap */}
+        <div className="rounded-2xl p-5 bg-white border border-[#EBE5DA]">
+          <div className="flex items-center gap-2 mb-3">
+            <Target className="w-4 h-4 text-[#B8975C]" />
+            <span className="text-xs font-medium text-[#9CA3AF] uppercase tracking-wide">
+              Handicap
+            </span>
+          </div>
+          <p className="text-3xl font-bold text-[#0F2950]">
+            {currentHcp?.toFixed(1) ?? "—"}
+          </p>
+          <p className="text-sm text-[#64748B]">
+            hcp index
+          </p>
+          {hcpChange && parseFloat(hcpChange) > 0 && (
+            <div className="flex items-center gap-1 mt-2 text-xs text-[#16a34a]">
+              <TrendingDown className="w-3 h-3" />
+              <span>↓ {hcpChange} siste periode</span>
+            </div>
+          )}
+        </div>
+
+        {/* Training plan status */}
+        <div className="rounded-2xl p-5 bg-white border border-[#EBE5DA]">
+          <div className="flex items-center gap-2 mb-3">
+            <Trophy className="w-4 h-4 text-[#16a34a]" />
+            <span className="text-xs font-medium text-[#9CA3AF] uppercase tracking-wide">
+              Treningsplan
+            </span>
+          </div>
+          <p className="text-lg font-bold text-[#0F2950] line-clamp-1">
+            {activePlan?.title ?? "Ingen aktiv"}
+          </p>
+          <p className="text-sm text-[#64748B] line-clamp-1">
+            {activePlan?.goals?.[0] ?? PORTAL_EMPTY_STATES.dashboard.noPlan}
+          </p>
           <Link
-            href="/portal/bookinger/ny"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02] cursor-pointer"
-            style={{
-              background: THEME.gold,
-              color: "#FFFFFF",
-              boxShadow: "0 4px 12px rgba(184,151,92,0.25)",
-            }}
+            href="/portal/treningsplan"
+            className="text-xs text-[#B8975C] mt-2 inline-block hover:underline cursor-pointer"
           >
-            <Plus className="w-4 h-4" />
-            Book økt
+            Se plan →
           </Link>
         </div>
 
-        {/* Quick stats cards */}
-        <DashboardCards cards={cards} />
-
-        {/* Two column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-          {/* This week's schedule */}
-          <div
-            className="rounded-2xl p-6 transition-shadow hover:shadow-lg cursor-pointer"
-            style={{
-              background: "#FFFFFF",
-              border: `1px solid ${THEME.border}`,
-            }}
-          >
-            <div className="flex items-center justify-between mb-5">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5" style={{ color: THEME.gold }} />
-                <h2 className="font-semibold" style={{ color: THEME.navy }}>Denne uken</h2>
-              </div>
-              <Link
-                href="/portal/kalender"
-                className="text-xs font-medium flex items-center gap-1 hover:gap-2 transition-all cursor-pointer"
-                style={{ color: THEME.gold }}
-              >
-                Se kalender <ChevronRight className="w-3 h-3" />
-              </Link>
+        {/* This week's schedule */}
+        <div className="md:col-span-2 rounded-2xl p-6 bg-white border border-[#EBE5DA]">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-[#B8975C]" />
+              <h2 className="font-semibold text-[#0F2950]">Denne uken</h2>
             </div>
-
-            <div className="grid grid-cols-7 gap-2">
-              {weekDays.map((day, idx) => {
-                const dayDate = addDays(weekStart, idx);
-                const isToday = format(dayDate, "yyyy-MM-dd") === format(now, "yyyy-MM-dd");
-                const dayBooking = weekBookings.find(
-                  b => format(b.startTime, "yyyy-MM-dd") === format(dayDate, "yyyy-MM-dd")
-                );
-                const planSession = currentWeekSessions.find(s => s.dayOfWeek === idx + 1);
-
-                return (
-                  <div
-                    key={day}
-                    className="text-center p-2 rounded-lg transition-colors"
-                    style={{
-                      background: dayBooking ? `${THEME.gold}15` : THEME.surface,
-                      boxShadow: isToday ? `inset 0 0 0 2px ${THEME.gold}` : "none",
-                    }}
-                  >
-                    <p className="text-[10px] font-medium mb-1" style={{ color: THEME.textSecondary }}>
-                      {day}
-                    </p>
-                    <p className="text-xs font-semibold" style={{ color: THEME.navy }}>
-                      {format(dayDate, "d")}
-                    </p>
-                    {dayBooking && (
-                      <div
-                        className="w-1.5 h-1.5 rounded-full mx-auto mt-1"
-                        style={{ background: THEME.blue }}
-                        title={dayBooking.serviceType.name}
-                      />
-                    )}
-                    {planSession && !dayBooking && (
-                      <div
-                        className="w-1.5 h-1.5 rounded-full mx-auto mt-1"
-                        style={{ background: THEME.green }}
-                        title={planSession.title}
-                      />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {weekBookings.length > 0 && (
-              <div className="mt-4 pt-4 space-y-2" style={{ borderTop: `1px solid ${THEME.border}` }}>
-                {weekBookings.slice(0, 2).map(booking => (
-                  <div key={booking.id} className="flex items-center gap-3">
-                    <div
-                      className="w-1 h-8 rounded-full"
-                      style={{ background: THEME.blue }}
-                    />
-                    <div>
-                      <p className="text-sm font-medium" style={{ color: THEME.navy }}>
-                        {booking.serviceType.name}
-                      </p>
-                      <p className="text-xs" style={{ color: THEME.textSecondary }}>
-                        {format(booking.startTime, "EEEE 'kl' HH:mm", { locale: nb })}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <Link
+              href="/portal/kalender"
+              className="text-xs font-medium flex items-center gap-1 hover:gap-2 transition-all cursor-pointer text-[#B8975C]"
+            >
+              Se kalender <ChevronRight className="w-3 h-3" />
+            </Link>
           </div>
 
-          {/* Last coaching notes */}
-          <div
-            className="rounded-2xl p-6 transition-shadow hover:shadow-lg cursor-pointer"
-            style={{
-              background: "#FFFFFF",
-              border: `1px solid ${THEME.border}`,
-            }}
-          >
-            <div className="flex items-center justify-between mb-5">
-              <div className="flex items-center gap-2">
-                <MessageSquare className="w-5 h-5" style={{ color: THEME.gold }} />
-                <h2 className="font-semibold" style={{ color: THEME.navy }}>Siste coaching</h2>
-              </div>
-              <Link
-                href="/portal/coaching-historikk"
-                className="text-xs font-medium flex items-center gap-1 hover:gap-2 transition-all cursor-pointer"
-                style={{ color: THEME.gold }}
-              >
-                Se alle <ChevronRight className="w-3 h-3" />
-              </Link>
-            </div>
+          <div className="grid grid-cols-7 gap-2">
+            {weekDays.map((day, idx) => {
+              const dayDate = addDays(weekStart, idx);
+              const isToday = format(dayDate, "yyyy-MM-dd") === format(now, "yyyy-MM-dd");
+              const dayBooking = weekBookings.find(
+                b => format(b.startTime, "yyyy-MM-dd") === format(dayDate, "yyyy-MM-dd")
+              );
+              const planSession = currentWeekSessions.find(s => s.dayOfWeek === idx + 1);
 
-            {lastSession ? (
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 text-xs" style={{ color: THEME.textSecondary }}>
-                  <span>{format(lastSession.sessionDate, "d. MMMM yyyy", { locale: nb })}</span>
-                  <span>·</span>
-                  <span>{lastSession.instructor.user.name}</span>
-                </div>
-
-                {lastSession.primaryFocus && (
-                  <div
-                    className="inline-block px-3 py-1 rounded-full text-xs font-medium"
-                    style={{ background: `${THEME.gold}20`, color: THEME.gold }}
-                  >
-                    {lastSession.primaryFocus}
-                  </div>
-                )}
-
-                {lastSession.aiKeyPoints && (
-                  <p className="text-sm leading-relaxed" style={{ color: THEME.text }}>
-                    {lastSession.aiKeyPoints}
-                  </p>
-                )}
-
-                {lastSession.instructorNotes && !lastSession.aiKeyPoints && (
-                  <p className="text-sm leading-relaxed line-clamp-4" style={{ color: THEME.text }}>
-                    {lastSession.instructorNotes}
-                  </p>
-                )}
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-sm" style={{ color: THEME.textSecondary }}>
-                  Ingen coaching-sesjoner ennå
-                </p>
-                <Link
-                  href="/portal/bookinger/ny"
-                  className="inline-block mt-3 text-sm font-medium cursor-pointer"
-                  style={{ color: THEME.gold }}
+              return (
+                <div
+                  key={day}
+                  className={`text-center p-2 rounded-lg transition-colors ${
+                    dayBooking ? "bg-[#B8975C]/15" : "bg-[#FAFBFC]"
+                  } ${isToday ? "ring-2 ring-[#B8975C]" : ""}`}
                 >
-                  Book din første økt →
-                </Link>
-              </div>
-            )}
+                  <p className="text-[10px] font-medium mb-1 text-[#9CA3AF]">
+                    {day}
+                  </p>
+                  <p className="text-xs font-semibold text-[#0F2950]">
+                    {format(dayDate, "d")}
+                  </p>
+                  {dayBooking && (
+                    <div
+                      className="w-1.5 h-1.5 rounded-full mx-auto mt-1 bg-[#3B82F6]"
+                      title={dayBooking.serviceType.name}
+                    />
+                  )}
+                  {planSession && !dayBooking && (
+                    <div
+                      className="w-1.5 h-1.5 rounded-full mx-auto mt-1 bg-[#16a34a]"
+                      title={planSession.title}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
+
+          {weekBookings.length > 0 && (
+            <div className="mt-4 pt-4 space-y-2 border-t border-[#EBE5DA]">
+              {weekBookings.slice(0, 2).map(booking => (
+                <div key={booking.id} className="flex items-center gap-3">
+                  <div className="w-1 h-8 rounded-full bg-[#3B82F6]" />
+                  <div>
+                    <p className="text-sm font-medium text-[#0F2950]">
+                      {booking.serviceType.name}
+                    </p>
+                    <p className="text-xs text-[#64748B]">
+                      {format(booking.startTime, "EEEE 'kl' HH:mm", { locale: nb })}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Last coaching notes */}
+        <div className="md:col-span-2 rounded-2xl p-6 bg-white border border-[#EBE5DA]">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <MessageSquare className="w-5 h-5 text-[#B8975C]" />
+              <h2 className="font-semibold text-[#0F2950]">Siste coaching</h2>
+            </div>
+            <Link
+              href="/portal/coaching-historikk"
+              className="text-xs font-medium flex items-center gap-1 hover:gap-2 transition-all cursor-pointer text-[#B8975C]"
+            >
+              Se alle <ChevronRight className="w-3 h-3" />
+            </Link>
+          </div>
+
+          {lastSession ? (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-xs text-[#64748B]">
+                <span>{format(lastSession.sessionDate, "d. MMMM yyyy", { locale: nb })}</span>
+                <span>·</span>
+                <span>{lastSession.instructor.user.name}</span>
+              </div>
+
+              {lastSession.primaryFocus && (
+                <div className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#B8975C]/20 text-[#8B7243]">
+                  {lastSession.primaryFocus}
+                </div>
+              )}
+
+              {lastSession.aiKeyPoints && (
+                <p className="text-sm leading-relaxed text-[#0F2950]">
+                  {lastSession.aiKeyPoints}
+                </p>
+              )}
+
+              {lastSession.instructorNotes && !lastSession.aiKeyPoints && (
+                <p className="text-sm leading-relaxed line-clamp-4 text-[#0F2950]">
+                  {lastSession.instructorNotes}
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-sm text-[#64748B]">
+                Ingen coaching-sesjoner ennå
+              </p>
+              <Link
+                href="/portal/bookinger/ny"
+                className="inline-block mt-3 text-sm font-medium cursor-pointer text-[#B8975C]"
+              >
+                Book din første økt →
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Handicap trend (if data exists) */}
         {handicapHistory.length >= 2 && (
-          <div
-            className="rounded-2xl p-6"
-            style={{
-              background: "#FFFFFF",
-              border: `1px solid ${THEME.border}`,
-            }}
-          >
+          <div className="md:col-span-2 lg:col-span-4 rounded-2xl p-6 bg-white border border-[#EBE5DA]">
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2">
-                <TrendingDown className="w-5 h-5" style={{ color: THEME.green }} />
-                <h2 className="font-semibold" style={{ color: THEME.navy }}>Handicap-utvikling</h2>
+                <BarChart3 className="w-5 h-5 text-[#16a34a]" />
+                <h2 className="font-semibold text-[#0F2950]">Handicap-utvikling</h2>
               </div>
               <Link
                 href="/portal/statistikk"
-                className="text-xs font-medium flex items-center gap-1 hover:gap-2 transition-all cursor-pointer"
-                style={{ color: THEME.gold }}
+                className="text-xs font-medium flex items-center gap-1 hover:gap-2 transition-all cursor-pointer text-[#B8975C]"
               >
                 Full statistikk <ChevronRight className="w-3 h-3" />
               </Link>
@@ -371,7 +363,7 @@ export default async function DashboardPage() {
 
                 return (
                   <div key={idx} className="flex-1 flex flex-col items-center gap-1">
-                    <span className="text-xs font-medium" style={{ color: THEME.navy }}>
+                    <span className="text-xs font-medium text-[#0F2950]">
                       {entry.handicapIndex.toFixed(1)}
                     </span>
                     <div
@@ -379,11 +371,11 @@ export default async function DashboardPage() {
                       style={{
                         height: `${height}%`,
                         background: idx === handicapHistory.length - 1
-                          ? THEME.gold
-                          : `${THEME.gold}40`,
+                          ? "#B8975C"
+                          : "rgba(184,151,92,0.4)",
                       }}
                     />
-                    <span className="text-[10px]" style={{ color: THEME.textSecondary }}>
+                    <span className="text-[10px] text-[#9CA3AF]">
                       {format(entry.date, "MMM", { locale: nb })}
                     </span>
                   </div>
@@ -392,6 +384,17 @@ export default async function DashboardPage() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Mobile CTA */}
+      <div className="sm:hidden">
+        <Link
+          href="/portal/bookinger/ny"
+          className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-semibold bg-[#B8975C] text-white hover:brightness-110 transition-all cursor-pointer"
+        >
+          <Sparkles className="w-4 h-4" />
+          Book time
+        </Link>
       </div>
     </div>
   );

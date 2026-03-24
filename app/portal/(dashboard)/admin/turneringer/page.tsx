@@ -1,6 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
-import { Topbar } from "@/components/portal/layout/topbar";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { AddTournamentForm } from "./add-tournament-form";
@@ -23,15 +22,18 @@ export default async function AdminTuringeringerPage() {
   });
 
   return (
-    <div>
-      <Topbar title="Administrer turneringer" />
-      <div className="p-6 max-w-2xl">
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold text-[var(--color-snow)]">Administrer turneringer</h1>
+
+      <div className="max-w-2xl space-y-10">
         <TournamentAdminList tournaments={tournaments} />
 
-        <h2 className="text-lg font-bold text-[var(--color-snow)] mb-6 mt-10">
-          Legg til turnering
-        </h2>
-        <AddTournamentForm />
+        <div>
+          <h2 className="text-lg font-semibold text-[var(--color-snow)] mb-6">
+            Legg til turnering
+          </h2>
+          <AddTournamentForm />
+        </div>
       </div>
     </div>
   );

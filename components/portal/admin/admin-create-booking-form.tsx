@@ -45,46 +45,46 @@ export function AdminCreateBookingForm({ serviceTypes, instructors }: Props) {
 
   if (success) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
-        <Check className="w-8 h-8 text-green-500 mx-auto mb-3" />
-        <p className="text-green-800 font-semibold">Booking opprettet!</p>
+      <div className="bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.4)] rounded-2xl p-8 text-center">
+        <Check className="w-8 h-8 text-[#22C55E] mx-auto mb-3" />
+        <p className="text-[#86EFAC] font-semibold">Booking opprettet!</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+    <form onSubmit={handleSubmit} className="rounded-2xl border border-[rgba(15,41,80,0.4)] bg-[rgba(10,25,41,0.7)] backdrop-blur-md p-6 space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="text-xs font-medium text-gray-500 block mb-1">Kundens e-post</label>
+          <label className="text-xs font-medium text-[var(--color-snow)]/50 block mb-1">Kundens e-post</label>
           <input
             type="email"
             value={studentEmail}
             onChange={(e) => setStudentEmail(e.target.value)}
             required
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+            className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] placeholder:text-[var(--color-snow)]/40 bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
             placeholder="ola@eksempel.no"
           />
         </div>
         <div>
-          <label className="text-xs font-medium text-gray-500 block mb-1">Kundens navn</label>
+          <label className="text-xs font-medium text-[var(--color-snow)]/50 block mb-1">Kundens navn</label>
           <input
             type="text"
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             required
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+            className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] placeholder:text-[var(--color-snow)]/40 bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
             placeholder="Ola Nordmann"
           />
         </div>
       </div>
 
       <div>
-        <label className="text-xs font-medium text-gray-500 block mb-1">Tjeneste</label>
+        <label className="text-xs font-medium text-[var(--color-snow)]/50 block mb-1">Tjeneste</label>
         <select
           value={serviceTypeId}
           onChange={(e) => setServiceTypeId(e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white"
+          className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)]"
         >
           {serviceTypes.map((st) => (
             <option key={st.id} value={st.id}>
@@ -95,11 +95,11 @@ export function AdminCreateBookingForm({ serviceTypes, instructors }: Props) {
       </div>
 
       <div>
-        <label className="text-xs font-medium text-gray-500 block mb-1">Instruktor</label>
+        <label className="text-xs font-medium text-[var(--color-snow)]/50 block mb-1">Instruktør</label>
         <select
           value={instructorId}
           onChange={(e) => setInstructorId(e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white"
+          className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)]"
         >
           {instructors.map((inst) => (
             <option key={inst.id} value={inst.id}>
@@ -110,24 +110,24 @@ export function AdminCreateBookingForm({ serviceTypes, instructors }: Props) {
       </div>
 
       <div>
-        <label className="text-xs font-medium text-gray-500 block mb-1">Dato og tid</label>
+        <label className="text-xs font-medium text-[var(--color-snow)]/50 block mb-1">Dato og tid</label>
         <input
           type="datetime-local"
           value={startTime}
           onChange={(e) => setStartTime(e.target.value)}
           required
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+          className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
         />
       </div>
 
       {error && (
-        <p className="text-sm text-red-600 bg-red-50 rounded-lg px-4 py-2">{error}</p>
+        <p className="text-sm text-[#FCA5A5] bg-[rgba(239,68,68,0.15)] rounded-xl px-4 py-2">{error}</p>
       )}
 
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-2.5 px-4 bg-[#0F2950] text-white font-medium rounded-lg hover:bg-[#0F2950]/90 disabled:opacity-50 transition-colors"
+        className="w-full py-2.5 px-4 bg-[var(--color-gold)] text-white font-medium rounded-xl hover:bg-[var(--color-gold)]/90 disabled:opacity-50 transition-colors"
       >
         {submitting ? "Oppretter..." : "Opprett booking"}
       </button>

@@ -1,14 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SubPageHero } from "@/components/website/SubPageHero";
 import { SectionLabel } from "@/components/website/SectionLabel";
 import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/website/RevealOnScroll";
 import { FeatureGrid } from "@/components/website/FeatureGrid";
-
-import { FeaturedTestimonial } from "@/components/website/FeaturedTestimonial";
 import { FAQAccordion } from "@/components/website/FAQAccordion";
 import { CTASection } from "@/components/website/CTASection";
 import { ApplicationForm } from "@/components/website/ApplicationForm";
@@ -22,7 +19,8 @@ import {
   COACHING_PACKAGES,
   FLEX_PACKAGES,
   BOOKING_URL,
-  TESTIMONIALS,
+  ACADEMY_TESTIMONIALS,
+  ACADEMY_CTA,
 } from "@/lib/website-constants";
 
 function CheckIcon({ className }: { className?: string }) {
@@ -144,7 +142,7 @@ export default function AcademyPage() {
         </section>
 
         {/* ─── Pricing ─── */}
-        <section className="w-section-lg">
+        <section id="pricing" className="w-section-lg">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">
@@ -190,7 +188,7 @@ export default function AcademyPage() {
                       ))}
                     </ul>
                     <a href={BOOKING_URL} className={`w-btn text-center ${pkg.highlighted ? "w-btn-gold" : "w-btn-primary"}`}>
-                      Kom i gang
+                      Reserver din plass
                     </a>
                   </div>
                 </StaggerItem>
@@ -217,7 +215,7 @@ export default function AcademyPage() {
                       <span className="text-sm font-normal ml-1">{pkg.period}</span>
                     </p>
                     <p className="text-sm text-ink-50 leading-relaxed mb-6 flex-1">{pkg.description}</p>
-                    <a href={BOOKING_URL} className="w-btn w-btn-ghost text-center">Book nå</a>
+                    <a href={BOOKING_URL} className="w-btn w-btn-ghost text-center">Book din første sesjon</a>
                   </div>
                 </StaggerItem>
               ))}
@@ -230,14 +228,34 @@ export default function AcademyPage() {
           <div className="w-container">
             <RevealOnScroll>
               <SectionLabel>Fra våre elever</SectionLabel>
-              <h2 className="w-heading-lg text-white mt-4 mb-12">De som har opplevd det.</h2>
+              <h2 className="w-heading-lg text-white mt-4 mb-4">De som har opplevd det.</h2>
+              <p className="text-ink-40 max-w-2xl mb-12">
+                Våre elever oppnår konkrete resultater. Her er noen av historiene.
+              </p>
             </RevealOnScroll>
 
-            <FeaturedTestimonial
-              quote={TESTIMONIALS[0].quote}
-              name={TESTIMONIALS[0].name}
-              role={TESTIMONIALS[0].role}
-            />
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {ACADEMY_TESTIMONIALS.map((testimonial) => (
+                <StaggerItem key={testimonial.name}>
+                  <div className="w-card-dark h-full flex flex-col">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold/20 text-gold text-xs font-mono">
+                        <span>{testimonial.handicapBefore}</span>
+                        <span className="text-ink-40">→</span>
+                        <span>{testimonial.handicapAfter}</span>
+                      </div>
+                    </div>
+                    <blockquote className="text-sm text-ink-30 leading-relaxed flex-1 mb-4">
+                      &quot;{testimonial.quote}&quot;
+                    </blockquote>
+                    <div>
+                      <p className="text-sm font-medium text-white">{testimonial.name}</p>
+                      <p className="text-xs text-ink-50">{testimonial.role}</p>
+                    </div>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
           </div>
         </section>
 
@@ -263,13 +281,13 @@ export default function AcademyPage() {
 
         {/* ─── CTA ─── */}
         <CTASection
-          eyebrow="Klar for å starte?"
-          heading="Avtal en samtale om Academy."
-          description="Ta første steg mot ditt beste spill. Vi tar kontakt innen 48 timer."
-          ctaLabel="Avtal en samtale"
-          ctaHref="#apply"
-          secondaryCtaLabel="Book coaching-time"
-          secondaryCtaHref={BOOKING_URL}
+          eyebrow={ACADEMY_CTA.eyebrow}
+          heading={ACADEMY_CTA.heading}
+          description={ACADEMY_CTA.description}
+          ctaLabel={ACADEMY_CTA.primaryCta}
+          ctaHref={BOOKING_URL}
+          secondaryCtaLabel={ACADEMY_CTA.secondaryCta}
+          secondaryCtaHref="#pricing"
         />
 
         {/* ─── Application Form ─── */}

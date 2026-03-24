@@ -1,16 +1,8 @@
 import Link from "next/link";
 import { getUpcomingBookings, getPastBookings } from "./actions";
 import { BookingList } from "@/components/portal/bookinger/booking-list";
-import { Topbar } from "@/components/portal/layout/topbar";
 import { Plus } from "lucide-react";
-
-const THEME = {
-  navy: "#0F2950",
-  gold: "#B8975C",
-  goldLight: "#E8D4B0",
-  text: "#02060D",
-  textSecondary: "#64748B",
-};
+import { PORTAL_EMPTY_STATES } from "@/lib/website-constants";
 
 export default async function BookingerPage() {
   const [upcoming, past] = await Promise.all([
@@ -19,48 +11,38 @@ export default async function BookingerPage() {
   ]);
 
   return (
-    <div>
-      <Topbar title="Bookinger" />
-      <div className="p-8 max-w-3xl space-y-10">
-        {/* Book coaching button */}
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-[var(--color-snow)]">Bookinger</h1>
         <Link
-          href="/bookinger/ny"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
-          style={{
-            background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})`,
-            color: "#FFFFFF",
-            boxShadow: "0 4px 20px rgba(184,151,92,0.25)",
-          }}
+          href="/portal/bookinger/ny"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[var(--color-gold)] text-white hover:brightness-110 transition-all cursor-pointer"
+          style={{ boxShadow: "0 4px 12px rgba(184,151,92,0.25)" }}
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-4 h-4" />
           Book coaching
         </Link>
-
-        <section>
-          <h2 
-            className="text-xl font-semibold mb-5"
-            style={{ color: THEME.navy }}
-          >
-            Kommende treninger
-          </h2>
-          <BookingList
-            bookings={upcoming}
-            emptyMessage="Ingen kommende bookinger."
-          />
-        </section>
-
-        {past.length > 0 && (
-          <section>
-            <h2 
-              className="text-xl font-semibold mb-5"
-              style={{ color: THEME.navy }}
-            >
-              Tidligere treninger
-            </h2>
-            <BookingList bookings={past} emptyMessage="Ingen historikk ennå." />
-          </section>
-        )}
       </div>
+
+      <section className="space-y-4">
+        <h2 className="text-lg font-semibold text-[var(--color-snow)]">
+          Kommende treninger
+        </h2>
+        <BookingList
+          bookings={upcoming}
+          emptyMessage={PORTAL_EMPTY_STATES.bookinger.description}
+        />
+      </section>
+
+      {past.length > 0 && (
+        <section className="space-y-4">
+          <h2 className="text-lg font-semibold text-[var(--color-snow)]">
+            Tidligere treninger
+          </h2>
+          <BookingList bookings={past} emptyMessage="Ingen historikk ennå." />
+        </section>
+      )}
     </div>
   );
 }

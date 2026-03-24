@@ -248,7 +248,7 @@ export default function HomePage() {
                         pkg.highlighted ? "w-btn-gold" : "w-btn-primary"
                       }`}
                     >
-                      Kom i gang
+                      Reserver din plass
                     </a>
                   </div>
                 </StaggerItem>
@@ -282,7 +282,7 @@ export default function HomePage() {
                       href={BOOKING_URL}
                       className="w-btn w-btn-ghost text-center"
                     >
-                      Book nå
+                      Book din første sesjon
                     </a>
                   </div>
                 </StaggerItem>

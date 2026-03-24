@@ -100,18 +100,18 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="rounded-2xl border border-[rgba(15,41,80,0.4)] bg-[rgba(10,25,41,0.7)] backdrop-blur-md overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200">
-                <th className="w-16 px-3 py-3 text-left text-[10px] font-medium text-gray-400 uppercase">
+              <tr className="border-b border-[rgba(15,41,80,0.4)]">
+                <th className="w-16 px-3 py-3 text-left text-[10px] font-medium text-[var(--color-snow)]/50 uppercase">
                   Tid
                 </th>
                 {DAYS.map((day) => (
                   <th
                     key={day.value}
-                    className="px-1 py-3 text-center text-[10px] font-medium text-gray-400 uppercase"
+                    className="px-1 py-3 text-center text-[10px] font-medium text-[var(--color-snow)]/50 uppercase"
                   >
                     {day.label.slice(0, 3)}
                   </th>
@@ -120,8 +120,8 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
             </thead>
             <tbody>
               {HOURS.map((hour) => (
-                <tr key={hour} className="border-t border-gray-50">
-                  <td className="px-3 py-0 text-[10px] text-gray-400 w-16">
+                <tr key={hour} className="border-t border-[rgba(15,41,80,0.2)]">
+                  <td className="px-3 py-0 text-[10px] text-[var(--color-snow)]/50 w-16">
                     {String(hour).padStart(2, "0")}:00
                   </td>
                   {DAYS.map((day) => {
@@ -132,8 +132,8 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
                           onClick={() => toggleCell(day.value, hour)}
                           className={`w-full h-8 rounded transition-colors ${
                             active
-                              ? "bg-[#B8975C] hover:bg-[#B68D40]"
-                              : "bg-gray-50 hover:bg-gray-100"
+                              ? "bg-[var(--color-gold)] hover:bg-[var(--color-gold)]/80"
+                              : "bg-[rgba(15,41,80,0.3)] hover:bg-[rgba(15,41,80,0.5)]"
                           }`}
                         />
                       </td>
@@ -151,7 +151,7 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-[#0F2950] text-white rounded-lg hover:bg-[#0F2950]/90 disabled:opacity-50 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-[var(--color-gold)] text-white rounded-xl hover:bg-[var(--color-gold)]/90 disabled:opacity-50 transition-colors"
           >
             <Save className="w-4 h-4" />
             {saving ? "Lagrer..." : "Lagre endringer"}

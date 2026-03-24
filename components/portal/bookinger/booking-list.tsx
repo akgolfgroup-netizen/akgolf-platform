@@ -13,13 +13,6 @@ interface Booking {
   location?: { name: string } | null;
 }
 
-const THEME = {
-  gold: "#B8975C",
-  textSecondary: "#64748B",
-  textTertiary: "#9CA3AF",
-  border: "#EBE5DA",
-};
-
 function groupByDate(bookings: Booking[]): [string, Booking[]][] {
   const groups = new Map<string, Booking[]>();
   for (const b of bookings) {
@@ -46,12 +39,9 @@ interface BookingListProps {
 export function BookingList({ bookings, emptyMessage = "Ingen bookinger" }: BookingListProps) {
   if (bookings.length === 0) {
     return (
-      <div 
-        className="flex flex-col items-center justify-center py-16 text-center rounded-2xl border"
-        style={{ borderColor: THEME.border }}
-      >
-        <Calendar className="w-12 h-12 mb-4" style={{ color: THEME.textTertiary }} />
-        <p style={{ color: THEME.textSecondary }}>{emptyMessage}</p>
+      <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl border border-[rgba(15,41,80,0.4)]">
+        <Calendar className="w-12 h-12 mb-4 text-[var(--color-snow)]/50" />
+        <p className="text-[var(--color-snow)]/70">{emptyMessage}</p>
       </div>
     );
   }
@@ -62,10 +52,7 @@ export function BookingList({ bookings, emptyMessage = "Ingen bookinger" }: Book
     <div className="space-y-6">
       {groups.map(([dateStr, items]) => (
         <div key={dateStr}>
-          <p 
-            className="text-xs font-semibold uppercase tracking-wider mb-3 capitalize"
-            style={{ color: THEME.gold }}
-          >
+          <p className="text-xs font-semibold uppercase tracking-wider mb-3 capitalize text-[var(--color-gold)]">
             {dateLabel(dateStr)}
           </p>
           <div className="space-y-3">

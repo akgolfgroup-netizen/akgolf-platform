@@ -42,7 +42,7 @@ export function ProgressBar({ currentStep, totalSteps, stepNames = STEP_NAMES }:
         <motion.div
           className="h-full rounded-full"
           style={{
-            background: "linear-gradient(90deg, #B8975C 0%, #D4B87A 100%)",
+            background: "linear-gradient(90deg, var(--color-gold) 0%, var(--color-gold-light) 100%)",
           }}
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}

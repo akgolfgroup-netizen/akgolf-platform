@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Enhanced Wireframe System v2.0</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      /* AK Golf Brand Colors */
+      --navy: #0F2950;
+      --navy-dark: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --snow: #FAFBFC;
+      --ink-90: #02060D;
+      --ink-70: #3A4A5A;
+      --ink-50: #6B7B8D;
+      --ink-30: #C8CDD4;
+      --ink-10: #F0F2F5;
+      --success: #22C55E;
+      --error: #EF4444;
+      --warning: #F59E0B;
+      --info: #3B82F6;
+
+      /* Wireframe specific */
+      --wf-bg: #f8f9fa;
+      --wf-card: #ffffff;
+      --wf-border: #e5e7eb;
+      --wf-annotation: #fef3c7;
+      --wf-flow: #dbeafe;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--wf-bg);
+      color: var(--ink-90);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* HEADER & VERSION CONTROL */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .wf-header {
+      background: var(--navy);
+      color: white;
+      padding: 24px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .wf-header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .wf-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .wf-version {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+    }
+
+    .wf-version-badge {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .wf-last-updated {
+      opacity: 0.7;
+    }
+
+    .wf-impl-status {
+      background: #22c55e;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* NAVIGATION TABS */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .wf-tabs {
+      background: white;
+      border-bottom: 1px solid var(--wf-border);
+      padding: 0 32px;
+      position: sticky;
+      top: 72px;
+      z-index: 99;
+    }
+
+    .wf-tabs-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 4px;
+    }
+
+    .wf-tab {
+      padding: 16px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-50);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .wf-tab:hover {
+      color: var(--ink-70);
+    }
+
+    .wf-tab.active {
+      color: var(--navy);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* MAIN CONTAINER */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .wf-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+
+    .wf-section {
+      margin-bottom: 48px;
+    }
+
+    .wf-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .wf-section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .wf-section-subtitle {
+      font-size: 14px;
+      color: var(--ink-50);
+      margin-top: 4px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* USER FLOW DIAGRAM */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .flow-diagram {
+      background: white;
+      border: 1px solid var(--wf-border);
+      border-radius: 16px;
+      padding: 32px;
+      overflow-x: auto;
+    }
+
+    .flow-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: max-content;
+    }
+
+    .flow-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flow-step {
+      width: 140px;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .flow-step.entry {
+      background: var(--wf-flow);
+      border: 2px solid var(--info);
+      color: var(--info);
+    }
+
+    .flow-step.process {
+      background: white;
+      border: 1px solid var(--wf-border);
+      color: var(--ink-70);
+    }
+
+    .flow-step.decision {
+      background: var(--wf-annotation);
+      border: 2px solid var(--warning);
+      color: var(--ink-90);
+      transform: rotate(0deg);
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      width: 120px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .flow-step.action {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border: none;
+      color: white;
+    }
+
+    .flow-step.end {
+      background: var(--success);
+      border: none;
+      color: white;
+      border-radius: 24px;
+    }
+
+    .flow-arrow {
+      color: var(--ink-30);
+      flex-shrink: 0;
+    }
+
+    .flow-label {
+      font-size: 10px;
+      color: var(--ink-50);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* COMPONENT STATES */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .state-card {
+      background: white;
+      border: 1px solid var(--wf-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .state-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-50);
+      margin-bottom: 12px;
+    }
+
+    /* Button States */
+    .btn-demo {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-demo.default {
+      background: var(--gold);
+      color: white;
+    }
+
+    .btn-demo.hover {
+      background: #a6864f;
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(184, 151, 92, 0.3);
+    }
+
+    .btn-demo.active {
+      background: #8B7243;
+      color: white;
+      transform: translateY(0);
+    }
+
+    .btn-demo.disabled {
+      background: var(--ink-30);
+      color: var(--ink-50);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .btn-demo.loading {
+      background: var(--gold);
+      color: transparent;
+      position: relative;
+    }
+
+    .btn-demo.loading::after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 2px solid white;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      left: 50%;
+      top: 50%;
+      margin: -8px 0 0 -8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Input States */
+    .input-demo {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .input-demo.default {
+      border: 1px solid var(--ink-30);
+      background: white;
+    }
+
+    .input-demo.focus {
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.15);
+    }
+
+    .input-demo.error {
+      border: 2px solid var(--error);
+      background: #fef2f2;
+    }
+
+    .input-demo.success {
+      border: 2px solid var(--success);
+      background: #f0fdf4;
+    }
+
+    .input-demo.disabled {
+      border: 1px solid var(--ink-10);
+      background: var(--ink-10);
+      color: var(--ink-50);
+    }
+
+    .input-helper {
+      font-size: 12px;
+      margin-top: 6px;
+    }
+
+    .input-helper.error { color: var(--error); }
+    .input-helper.success { color: var(--success); }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* ANNOTATIONS */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .annotation-wrapper {
+      position: relative;
+    }
+
+    .annotation {
+      position: absolute;
+      background: var(--wf-annotation);
+      border: 1px solid var(--warning);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 12px;
+      max-width: 200px;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .annotation::before {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--wf-annotation);
+      border-left: 1px solid var(--warning);
+      border-bottom: 1px solid var(--warning);
+      transform: rotate(45deg);
+    }
+
+    .annotation.top::before {
+      bottom: -5px;
+      left: 20px;
+    }
+
+    .annotation.left::before {
+      right: -5px;
+      top: 20px;
+      transform: rotate(-45deg);
+    }
+
+    .annotation-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: var(--warning);
+      color: white;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* RESPONSIVE PREVIEW */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .responsive-section {
+      background: white;
+      border: 1px solid var(--wf-border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .responsive-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--wf-border);
+      background: var(--ink-10);
+    }
+
+    .device-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-50);
+      transition: all 0.2s;
+    }
+
+    .device-btn:hover {
+      background: white;
+    }
+
+    .device-btn.active {
+      background: white;
+      border-color: var(--gold);
+      color: var(--navy);
+    }
+
+    .responsive-preview {
+      padding: 32px;
+      display: flex;
+      justify-content: center;
+      background: var(--wf-bg);
+      min-height: 500px;
+    }
+
+    .device-frame {
+      background: white;
+      border: 1px solid var(--wf-border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: width 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .device-frame.desktop { width: 100%; max-width: 1200px; }
+    .device-frame.tablet { width: 768px; }
+    .device-frame.mobile { width: 375px; }
+
+    .device-screen {
+      padding: 24px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* WIREFRAME PREVIEW COMPONENTS */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .wf-preview-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--wf-border);
+    }
+
+    .wf-preview-logo {
+      width: 40px;
+      height: 40px;
+      background: var(--navy);
+      border-radius: 8px;
+    }
+
+    .wf-preview-menu {
+      display: flex;
+      gap: 24px;
+    }
+
+    .wf-preview-menu-item {
+      width: 60px;
+      height: 8px;
+      background: var(--ink-30);
+      border-radius: 4px;
+    }
+
+    .wf-preview-cta {
+      width: 100px;
+      height: 36px;
+      background: var(--gold);
+      border-radius: 18px;
+    }
+
+    .wf-preview-hero {
+      padding: 64px 24px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+      text-align: center;
+    }
+
+    .wf-preview-hero-title {
+      width: 60%;
+      height: 32px;
+      background: white;
+      border-radius: 4px;
+      margin: 0 auto 16px;
+    }
+
+    .wf-preview-hero-subtitle {
+      width: 40%;
+      height: 16px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 4px;
+      margin: 0 auto 24px;
+    }
+
+    .wf-preview-hero-btn {
+      width: 140px;
+      height: 44px;
+      background: var(--gold);
+      border-radius: 22px;
+      margin: 0 auto;
+    }
+
+    .wf-preview-section {
+      padding: 48px 24px;
+    }
+
+    .wf-preview-section-title {
+      width: 200px;
+      height: 24px;
+      background: var(--ink-30);
+      border-radius: 4px;
+      margin: 0 auto 32px;
+    }
+
+    .wf-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .wf-preview-card {
+      background: var(--ink-10);
+      border-radius: 12px;
+      padding: 24px;
+      height: 160px;
+    }
+
+    /* Mobile adjustments */
+    .device-frame.mobile .wf-preview-menu { display: none; }
+    .device-frame.mobile .wf-preview-grid { grid-template-columns: 1fr; }
+    .device-frame.mobile .wf-preview-hero-title { width: 90%; }
+    .device-frame.mobile .wf-preview-hero-subtitle { width: 70%; }
+
+    .device-frame.tablet .wf-preview-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* CHANGELOG */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .changelog {
+      background: white;
+      border: 1px solid var(--wf-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .changelog-header {
+      padding: 16px 20px;
+      background: var(--ink-10);
+      font-weight: 600;
+      font-size: 14px;
+      border-bottom: 1px solid var(--wf-border);
+    }
+
+    .changelog-list {
+      list-style: none;
+    }
+
+    .changelog-item {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--wf-border);
+      display: flex;
+      gap: 16px;
+    }
+
+    .changelog-item:last-child {
+      border-bottom: none;
+    }
+
+    .changelog-date {
+      font-size: 12px;
+      color: var(--ink-50);
+      width: 100px;
+      flex-shrink: 0;
+    }
+
+    .changelog-content {
+      flex: 1;
+    }
+
+    .changelog-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-right: 8px;
+    }
+
+    .changelog-tag.added { background: #dcfce7; color: #16a34a; }
+    .changelog-tag.changed { background: #dbeafe; color: #2563eb; }
+    .changelog-tag.fixed { background: #fef3c7; color: #d97706; }
+    .changelog-tag.removed { background: #fee2e2; color: #dc2626; }
+
+    .changelog-text {
+      font-size: 14px;
+      color: var(--ink-70);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* SPECIFICATION TABLE */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .spec-table {
+      width: 100%;
+      background: white;
+      border: 1px solid var(--wf-border);
+      border-radius: 12px;
+      overflow: hidden;
+      border-collapse: collapse;
+    }
+
+    .spec-table th,
+    .spec-table td {
+      padding: 14px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--wf-border);
+    }
+
+    .spec-table th {
+      background: var(--ink-10);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-50);
+    }
+
+    .spec-table td {
+      font-size: 14px;
+    }
+
+    .spec-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .spec-value {
+      font-family: 'SF Mono', monospace;
+      font-size: 13px;
+      background: var(--ink-10);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* UTILITY CLASSES */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+    @media (max-width: 1024px) {
+      .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+
+    .mt-8 { margin-top: 32px; }
+    .mb-4 { margin-bottom: 16px; }
+    .mb-6 { margin-bottom: 24px; }
+
+    .text-center { text-align: center; }
+    .text-sm { font-size: 14px; }
+    .text-muted { color: var(--ink-50); }
+  </style>
+</head>
+<body>
+  <!-- HEADER WITH VERSION CONTROL -->
+  <header class="wf-header">
+    <div class="wf-header-inner">
+      <div>
+        <h1 class="wf-title">AK Golf Platform — Enhanced Wireframe System</h1>
+      </div>
+      <div class="wf-version">
+        <span class="wf-impl-status">FERDIG</span>
+        <span class="wf-version-badge">v2.0</span>
+        <span class="wf-last-updated">Sist oppdatert: 24. mars 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="wf-tabs">
+    <div class="wf-tabs-inner">
+      <div class="wf-tab active" onclick="showSection('flows')">Brukerflyter</div>
+      <div class="wf-tab" onclick="showSection('states')">Komponent States</div>
+      <div class="wf-tab" onclick="showSection('responsive')">Responsiv</div>
+      <div class="wf-tab" onclick="showSection('specs')">Spesifikasjoner</div>
+      <div class="wf-tab" onclick="showSection('changelog')">Changelog</div>
+    </div>
+  </nav>
+
+  <main class="wf-container">
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 1: USER FLOWS -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="flows" class="wf-section">
+      <div class="wf-section-header">
+        <div>
+          <h2 class="wf-section-title">Brukerflyter</h2>
+          <p class="wf-section-subtitle">Visualiserte steg-for-steg flyter med beslutningspunkter</p>
+        </div>
+      </div>
+
+      <!-- Booking Flow -->
+      <h3 class="mb-4" style="font-size: 18px; font-weight: 600;">1. Booking-flyt (Ny kunde)</h3>
+      <div class="flow-diagram mb-6">
+        <div class="flow-container">
+          <div class="flow-node">
+            <div class="flow-step entry">Landingsside</div>
+            <span class="flow-label">Entry point</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step action">Klikk "Book time"</div>
+            <span class="flow-label">CTA</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step process">Velg tjeneste</div>
+            <span class="flow-label">Steg 1</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step process">Velg instruktør</div>
+            <span class="flow-label">Steg 2</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step process">Velg tid</div>
+            <span class="flow-label">Steg 3</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step process">Dine opplysninger</div>
+            <span class="flow-label">Steg 4</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step action">Stripe Checkout</div>
+            <span class="flow-label">Betaling</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step end">Bekreftelse</div>
+            <span class="flow-label">Suksess</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portal Login Flow -->
+      <h3 class="mb-4" style="font-size: 18px; font-weight: 600;">2. Portal innlogging-flyt</h3>
+      <div class="flow-diagram">
+        <div class="flow-container">
+          <div class="flow-node">
+            <div class="flow-step entry">/portal</div>
+            <span class="flow-label">Entry</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step process" style="background: var(--wf-annotation); border: 2px dashed var(--warning);">
+              Har session?
+            </div>
+            <span class="flow-label">Auth check</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step process">Login-side</div>
+            <span class="flow-label">Nei → Login</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step action">Supabase Auth</div>
+            <span class="flow-label">Magic link / Passord</span>
+          </div>
+
+          <i data-lucide="arrow-right" class="flow-arrow" style="width:24px;height:24px;"></i>
+
+          <div class="flow-node">
+            <div class="flow-step end">Dashboard</div>
+            <span class="flow-label">Ja → Dashboard</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 2: COMPONENT STATES -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="states" class="wf-section" style="display: none;">
+      <div class="wf-section-header">
+        <div>
+          <h2 class="wf-section-title">Komponent States</h2>
+          <p class="wf-section-subtitle">Alle interaksjonstilstander for nøkkelkomponenter</p>
+        </div>
+      </div>
+
+      <!-- Button States -->
+      <h3 class="mb-4" style="font-size: 18px; font-weight: 600;">Knapper (Primary)</h3>
+      <div class="states-grid mb-6">
+        <div class="state-card">
+          <div class="state-label">Default</div>
+          <button class="btn-demo default">Book time</button>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Hover</div>
+          <button class="btn-demo hover">Book time</button>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Active / Pressed</div>
+          <button class="btn-demo active">Book time</button>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Disabled</div>
+          <button class="btn-demo disabled" disabled>Book time</button>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Loading</div>
+          <button class="btn-demo loading">Book time</button>
+        </div>
+      </div>
+
+      <!-- Input States -->
+      <h3 class="mb-4" style="font-size: 18px; font-weight: 600;">Input-felter</h3>
+      <div class="states-grid">
+        <div class="state-card">
+          <div class="state-label">Default</div>
+          <input type="text" class="input-demo default" placeholder="Skriv inn e-post">
+        </div>
+        <div class="state-card">
+          <div class="state-label">Focus</div>
+          <input type="text" class="input-demo focus" value="anders@akgolf.no">
+        </div>
+        <div class="state-card">
+          <div class="state-label">Error</div>
+          <input type="text" class="input-demo error" value="ugyldig-epost">
+          <p class="input-helper error">Ugyldig e-postformat</p>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Success</div>
+          <input type="text" class="input-demo success" value="anders@akgolf.no">
+          <p class="input-helper success">E-post bekreftet</p>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Disabled</div>
+          <input type="text" class="input-demo disabled" value="Ikke redigerbar" disabled>
+        </div>
+      </div>
+
+      <!-- Card States -->
+      <h3 class="mb-4 mt-8" style="font-size: 18px; font-weight: 600;">Kort (Booking-slot)</h3>
+      <div class="states-grid">
+        <div class="state-card">
+          <div class="state-label">Ledig</div>
+          <div style="padding: 16px; background: white; border: 1px solid var(--ink-30); border-radius: 12px; cursor: pointer;">
+            <div style="font-weight: 600; color: var(--navy);">09:00 - 10:00</div>
+            <div style="font-size: 13px; color: var(--ink-50);">Individuell coaching</div>
+          </div>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Valgt</div>
+          <div style="padding: 16px; background: var(--gold); border: 2px solid var(--gold); border-radius: 12px; cursor: pointer;">
+            <div style="font-weight: 600; color: white;">09:00 - 10:00</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.8);">Individuell coaching</div>
+          </div>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Opptatt</div>
+          <div style="padding: 16px; background: var(--ink-10); border: 1px solid var(--ink-20); border-radius: 12px; opacity: 0.6; cursor: not-allowed;">
+            <div style="font-weight: 600; color: var(--ink-50);">09:00 - 10:00</div>
+            <div style="font-size: 13px; color: var(--ink-40);">Opptatt</div>
+          </div>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Få igjen</div>
+          <div style="padding: 16px; background: #fffbeb; border: 1px solid var(--warning); border-radius: 12px; cursor: pointer;">
+            <div style="font-weight: 600; color: var(--navy);">09:00 - 10:00</div>
+            <div style="font-size: 13px; color: var(--warning);">Kun 2 plasser igjen</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 3: RESPONSIVE PREVIEW -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="responsive" class="wf-section" style="display: none;">
+      <div class="wf-section-header">
+        <div>
+          <h2 class="wf-section-title">Responsiv Design</h2>
+          <p class="wf-section-subtitle">Forhåndsvisning på ulike skjermstørrelser</p>
+        </div>
+      </div>
+
+      <div class="responsive-section">
+        <div class="responsive-header">
+          <button class="device-btn active" onclick="setDevice('desktop', this)">
+            <i data-lucide="monitor" style="width:16px;height:16px;"></i>
+            Desktop (1200px)
+          </button>
+          <button class="device-btn" onclick="setDevice('tablet', this)">
+            <i data-lucide="tablet" style="width:16px;height:16px;"></i>
+            Tablet (768px)
+          </button>
+          <button class="device-btn" onclick="setDevice('mobile', this)">
+            <i data-lucide="smartphone" style="width:16px;height:16px;"></i>
+            Mobile (375px)
+          </button>
+        </div>
+
+        <div class="responsive-preview">
+          <div class="device-frame desktop" id="device-frame">
+            <!-- Nav -->
+            <div class="wf-preview-nav">
+              <div class="wf-preview-logo"></div>
+              <div class="wf-preview-menu">
+                <div class="wf-preview-menu-item"></div>
+                <div class="wf-preview-menu-item"></div>
+                <div class="wf-preview-menu-item"></div>
+                <div class="wf-preview-menu-item"></div>
+              </div>
+              <div class="wf-preview-cta"></div>
+            </div>
+
+            <!-- Hero -->
+            <div class="wf-preview-hero">
+              <div class="wf-preview-hero-title"></div>
+              <div class="wf-preview-hero-subtitle"></div>
+              <div class="wf-preview-hero-btn"></div>
+            </div>
+
+            <!-- Section -->
+            <div class="wf-preview-section">
+              <div class="wf-preview-section-title"></div>
+              <div class="wf-preview-grid">
+                <div class="wf-preview-card"></div>
+                <div class="wf-preview-card"></div>
+                <div class="wf-preview-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 4: SPECIFICATIONS -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="specs" class="wf-section" style="display: none;">
+      <div class="wf-section-header">
+        <div>
+          <h2 class="wf-section-title">Designspesifikasjoner</h2>
+          <p class="wf-section-subtitle">Tekniske detaljer for utviklere</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Spacing -->
+        <div>
+          <h3 class="mb-4" style="font-size: 16px; font-weight: 600;">Spacing</h3>
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Verdi</th>
+                <th>Bruk</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Section padding</td>
+                <td><span class="spec-value">112px / 80px</span></td>
+                <td>Desktop / Mobil</td>
+              </tr>
+              <tr>
+                <td>Card padding</td>
+                <td><span class="spec-value">24px</span></td>
+                <td>Standard kort</td>
+              </tr>
+              <tr>
+                <td>Grid gap</td>
+                <td><span class="spec-value">24px / 16px</span></td>
+                <td>Desktop / Mobil</td>
+              </tr>
+              <tr>
+                <td>Button padding</td>
+                <td><span class="spec-value">14px 32px</span></td>
+                <td>Primary buttons</td>
+              </tr>
+              <tr>
+                <td>Input padding</td>
+                <td><span class="spec-value">12px 16px</span></td>
+                <td>Form inputs</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Typography -->
+        <div>
+          <h3 class="mb-4" style="font-size: 16px; font-weight: 600;">Typografi</h3>
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Size / Weight</th>
+                <th>Line-height</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>H1 (Hero)</td>
+                <td><span class="spec-value">clamp(40px, 5.5vw, 72px) / 700</span></td>
+                <td>1.1</td>
+              </tr>
+              <tr>
+                <td>H2 (Section)</td>
+                <td><span class="spec-value">clamp(32px, 4vw, 48px) / 700</span></td>
+                <td>1.2</td>
+              </tr>
+              <tr>
+                <td>H3 (Card title)</td>
+                <td><span class="spec-value">18px / 600</span></td>
+                <td>1.3</td>
+              </tr>
+              <tr>
+                <td>Body</td>
+                <td><span class="spec-value">14px / 400</span></td>
+                <td>1.7</td>
+              </tr>
+              <tr>
+                <td>Small / Label</td>
+                <td><span class="spec-value">12px / 500</span></td>
+                <td>1.5</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Breakpoints -->
+      <h3 class="mb-4 mt-8" style="font-size: 16px; font-weight: 600;">Breakpoints</h3>
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Navn</th>
+            <th>Min-width</th>
+            <th>Kolonner</th>
+            <th>Container</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mobile</td>
+            <td><span class="spec-value">0px</span></td>
+            <td>1</td>
+            <td>100% - 48px</td>
+          </tr>
+          <tr>
+            <td>Tablet</td>
+            <td><span class="spec-value">768px</span></td>
+            <td>2</td>
+            <td>100% - 64px</td>
+          </tr>
+          <tr>
+            <td>Desktop</td>
+            <td><span class="spec-value">1024px</span></td>
+            <td>3-4</td>
+            <td>1120px max</td>
+          </tr>
+          <tr>
+            <td>Wide</td>
+            <td><span class="spec-value">1536px</span></td>
+            <td>4-6</td>
+            <td>1280px max</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 5: CHANGELOG -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="changelog" class="wf-section" style="display: none;">
+      <div class="wf-section-header">
+        <div>
+          <h2 class="wf-section-title">Endringslogg</h2>
+          <p class="wf-section-subtitle">Dokumenterte oppdateringer og revisjoner</p>
+        </div>
+      </div>
+
+      <div class="changelog">
+        <div class="changelog-header">Versjon 2.0 — Mars 2026</div>
+        <ul class="changelog-list">
+          <li class="changelog-item">
+            <span class="changelog-date">24. mars 2026</span>
+            <div class="changelog-content">
+              <span class="changelog-tag added">Lagt til</span>
+              <span class="changelog-text">Brukerflyt-diagrammer med beslutningspunkter</span>
+            </div>
+          </li>
+          <li class="changelog-item">
+            <span class="changelog-date">24. mars 2026</span>
+            <div class="changelog-content">
+              <span class="changelog-tag added">Lagt til</span>
+              <span class="changelog-text">Komponent state-dokumentasjon (hover, active, disabled, loading, error)</span>
+            </div>
+          </li>
+          <li class="changelog-item">
+            <span class="changelog-date">24. mars 2026</span>
+            <div class="changelog-content">
+              <span class="changelog-tag added">Lagt til</span>
+              <span class="changelog-text">Responsiv forhåndsvisning for desktop, tablet og mobil</span>
+            </div>
+          </li>
+          <li class="changelog-item">
+            <span class="changelog-date">24. mars 2026</span>
+            <div class="changelog-content">
+              <span class="changelog-tag added">Lagt til</span>
+              <span class="changelog-text">Tekniske spesifikasjoner for spacing, typografi og breakpoints</span>
+            </div>
+          </li>
+          <li class="changelog-item">
+            <span class="changelog-date">24. mars 2026</span>
+            <div class="changelog-content">
+              <span class="changelog-tag changed">Endret</span>
+              <span class="changelog-text">Byttet fra mørkt til lyst tema i portal</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="changelog mt-8">
+        <div class="changelog-header">Versjon 1.0 — Mars 2026</div>
+        <ul class="changelog-list">
+          <li class="changelog-item">
+            <span class="changelog-date">20. mars 2026</span>
+            <div class="changelog-content">
+              <span class="changelog-tag added">Lagt til</span>
+              <span class="changelog-text">Første versjon av wireframes: System overview, Landing page, Booking flow, Player portal</span>
+            </div>
+          </li>
+          <li class="changelog-item">
+            <span class="changelog-date">21. mars 2026</span>
+            <div class="changelog-content">
+              <span class="changelog-tag added">Lagt til</span>
+              <span class="changelog-text">Komponentbibliotek-dokumentasjon</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Tab navigation
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.wf-section').forEach(s => s.style.display = 'none');
+      // Show target section
+      document.getElementById(sectionId).style.display = 'block';
+      // Update tabs
+      document.querySelectorAll('.wf-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    // Device switcher
+    function setDevice(device, btn) {
+      const frame = document.getElementById('device-frame');
+      frame.className = 'device-frame ' + device;
+
+      // Update buttons
+      document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

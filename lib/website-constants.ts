@@ -8,9 +8,54 @@ export const NAV_LINKS = [
 // ─── Hero ───
 export const HERO = {
   eyebrow: "AK Golf Academy",
-  heading: "Bli en bedre golfspiller — med system.",
-  subheading: "AK Golf Academy kombinerer individuell coaching med en digital treningsplattform som følger deg mellom sesjonene. Strukturert utvikling for golfspillere på alle nivåer.",
-  ctaPrimary: "Se pakker og priser",
+  heading: "Bli en bedre golfspiller — systematisk.",
+  subheading: "Personlig coaching basert på The Foundation Method. Fra nybegynner til scratch med data-drevet metodikk og digital oppfølging.",
+  ctaPrimary: "Start din treningsreise",
+  ctaSecondary: "Slik jobber vi →",
+  stats: [
+    { value: "500+", label: "Spillere utviklet" },
+    { value: "15+", label: "Års erfaring" },
+    { value: "Tour-nivå", label: "Metodikk" },
+  ],
+} as const;
+
+// ─── The Foundation Method ───
+export const FOUNDATION_METHOD = {
+  eyebrow: "Vår metodikk",
+  heading: "The Foundation Method",
+  description: "Vår metodikk er bygget på 15 års erfaring og hundrevis av spillere. Fem faser som tar deg fra grunnmur til prestasjon.",
+  phases: [
+    {
+      id: "BUILD",
+      name: "BUILD",
+      title: "Bygg grunnmuren",
+      description: "Teknikk, grep, setup. De fundamentale bevegelsene som alt annet bygges på.",
+    },
+    {
+      id: "STAB",
+      name: "STAB",
+      title: "Stabiliser under press",
+      description: "Repetisjon og mestring. Gjør de riktige bevegelsene automatiske.",
+    },
+    {
+      id: "TEST",
+      name: "TEST",
+      title: "Test under stressor",
+      description: "Variasjon og utfordring. Simuler presset du møter på banen.",
+    },
+    {
+      id: "TRANSFER",
+      name: "TRANSFER",
+      title: "Overfør til banen",
+      description: "Fra range til spill. Bruk teknikkene i ekte spillsituasjoner.",
+    },
+    {
+      id: "PERFORM",
+      name: "PERFORM",
+      title: "Prestér i konkurranse",
+      description: "Når det gjelder. Fokus på mental styrke og strategisk spill.",
+    },
+  ],
 } as const;
 
 // ─── Team ───
@@ -523,6 +568,431 @@ export const BOOKING_URL = "https://book.akgolf.no";
 
 // ─── Portal ───
 export const PORTAL_URL = "https://portal.akgolf.no";
+
+// ─── Portal Empty States ───
+export const PORTAL_EMPTY_STATES = {
+  dashboard: {
+    welcome: "Hei {name}, klar for dagens trening?",
+    noBookings: "Ingen kommende bookinger. Book din neste sesjon for å fortsette utviklingen.",
+    noPlan: "Ingen aktiv treningsplan. Generer din personlige 12-ukers treningsplan.",
+  },
+  treningsplan: {
+    title: "Din treningsplan venter på deg",
+    description: "Basert på dine mål og nivå lager AI-en en skreddersydd plan.",
+    cta: "Generer min treningsplan",
+  },
+  statistikk: {
+    title: "Ingen statistikk ennå",
+    description: "Registrer din første runde for å se Strokes Gained-statistikk.",
+    cta: "Logg runde",
+  },
+  dagbok: {
+    title: "Treningsdagboken din er tom",
+    description: "Start å logge økter for å se progresjon over tid.",
+    cta: "Logg treningsøkt",
+  },
+  bookinger: {
+    title: "Ingen bookinger",
+    description: "Du har ingen kommende bookinger.",
+    cta: "Book din neste sesjon",
+  },
+  profil: {
+    levels: {
+      VISITOR: { name: "Gratis", description: "Treningsdagbok (maks 3/mnd), 10 øvelser" },
+      ACADEMY: { name: "Academy", description: "Full dagbok, øvelsesbank, statistikk" },
+      PRO: { name: "Pro", description: "Alt i Academy + AI-analyse" },
+      ELITE: { name: "Elite", description: "Alt + ubegrenset + prioritert support" },
+    },
+  },
+} as const;
+
+// ─── Academy Testimonials (voksne) ───
+export const ACADEMY_TESTIMONIALS = [
+  {
+    quote: "Anders har fullstendig transformert spillet mitt. Fra 18 til 11 i handicap på ett år — med en metode som føles naturlig og bærekraftig.",
+    name: "Thomas R.",
+    role: "Academy-elev",
+    handicapBefore: "18.4",
+    handicapAfter: "11.2",
+  },
+  {
+    quote: "Den individuelle tilnærmingen er det som skiller seg ut. Her er du ikke et nummer — du er et prosjekt de bryr seg om.",
+    name: "Maria L.",
+    role: "Academy-elev",
+    handicapBefore: "24.0",
+    handicapAfter: "16.5",
+  },
+  {
+    quote: "Endelig en trener som forstår at voksne har begrenset tid. 20-minutters sesjoner med tydelig fokus gir resultater.",
+    name: "Erik H.",
+    role: "Academy-elev",
+    handicapBefore: "14.8",
+    handicapAfter: "9.3",
+  },
+] as const;
+
+// ─── Academy Booking CTA ───
+export const ACADEMY_CTA = {
+  eyebrow: "Klar for å starte?",
+  heading: "Book din Foundation Test.",
+  description: "50 minutter. TrackMan-analyse, putting-test og personlig anbefaling. Du får en baseline og vet nøyaktig hvor du står.",
+  primaryCta: "Book Foundation Test",
+  secondaryCta: "Se priser",
+  valueProps: [
+    "Ingen bindingstid",
+    "Pengene tilbake ved oppstart innen 14 dager",
+    "Personlig anbefaling",
+  ],
+} as const;
+
+// ─── Junior Age Groups (komplett med alle aldersgrupper) ───
+export const JUNIOR_AGE_GROUPS = [
+  {
+    ageGroup: "6–9 år",
+    title: "Minis",
+    description: "Lek og grunnleggende motorikk. Golf som gøy, ikke prestasjon.",
+    features: ["Lekbasert trening", "Grunnleggende grep og sving", "Sosiale aktiviteter", "Korte økter (30 min)"],
+    sessionsPerWeek: 1,
+    price: "990",
+  },
+  {
+    ageGroup: "10–12 år",
+    title: "Aspiranter",
+    description: "Teknikkbygging og regelforståelse. Overgangen til strukturert trening.",
+    features: ["Teknikkfokus", "Introduksjon til regler", "Første turneringer", "Treningsdagbok"],
+    sessionsPerWeek: 2,
+    price: "1 490",
+  },
+  {
+    ageGroup: "13–15 år",
+    title: "Utviklere",
+    description: "Konkurransetrening og mental styrke. Seriøs satsing begynner.",
+    features: ["Periodisert trening", "Konkurranseprogram", "Mental trening intro", "Videoanalyse"],
+    sessionsPerWeek: 3,
+    price: "1 990",
+  },
+  {
+    ageGroup: "16–18 år",
+    title: "Elite",
+    description: "Systematisk prestasjonsfokus. Forberedelse til elite- eller college-golf.",
+    features: ["Full IUP", "Nasjonal/internasjonal konkurranse", "Fysisk trening", "Stipend-veiledning"],
+    sessionsPerWeek: 4,
+    price: "2 490",
+  },
+] as const;
+
+// ─── Junior Season Program ───
+export const JUNIOR_SEASON_PROGRAM = {
+  heading: "Sesongprogram",
+  description: "Trening hele året med tilpasset innhold for hver sesong.",
+  seasons: [
+    {
+      name: "Vår",
+      months: "Mars – Mai",
+      focus: "Oppstart og grunnlag",
+      activities: ["Teknikkgjennomgang", "Kursmanagement", "Sesongplanlegging", "Første turneringer"],
+    },
+    {
+      name: "Sommer",
+      months: "Juni – August",
+      focus: "Konkurranser og camp",
+      activities: ["Turneringssesongen", "Sommercamps", "Playing lessons", "Intensive ukessamlinger"],
+    },
+    {
+      name: "Høst",
+      months: "September – November",
+      focus: "Evaluering og forbedring",
+      activities: ["Sesongevaluering", "Teknikkjusteringer", "Mental trening", "Avsluttende turneringer"],
+    },
+    {
+      name: "Vinter",
+      months: "Desember – Februar",
+      focus: "Innendørs og fysisk",
+      activities: ["Simulator-trening", "Fysisk trening", "Videoanalyse", "Målsetting neste sesong"],
+    },
+  ],
+} as const;
+
+// ─── Junior Pricing ───
+export const JUNIOR_PACKAGES = [
+  {
+    name: "AK Junior Start",
+    price: "2 000",
+    period: "kr/mnd",
+    description: "For juniorer som vil ha strukturert trening med individuell oppfølging.",
+    features: [
+      "4× 20 min individuell check-in per måned",
+      "Tilgang til gruppetimer",
+      "Spillerportal med treningsplan",
+      "Månedlig fremgangsrapport",
+    ],
+    highlighted: false,
+  },
+  {
+    name: "AK Junior Elite",
+    price: "2 500",
+    period: "kr/mnd",
+    description: "For ambisiøse juniorer som satser på konkurranse.",
+    features: [
+      "8× 20 min individuell check-in per måned",
+      "Ubegrenset gruppetimer",
+      "Full spillerportal med statistikk",
+      "Turneringsplanlegging",
+      "Kvartalsvis Foundation Test",
+      "Prioritert booking",
+    ],
+    highlighted: true,
+  },
+] as const;
+
+// ─── Junior Parent Info ───
+export const JUNIOR_PARENT_INFO = {
+  heading: "Informasjon til foreldre",
+  description: "Vi tror på tett samarbeid med foreldrene. Dere er en viktig del av utviklingsreisen.",
+  expectations: [
+    {
+      title: "Hva forventes av foreldre",
+      items: [
+        "Sørg for at junioren kommer forberedt og i tide",
+        "Støtt uten å legge press — la treneren lede",
+        "Delta på foreldremøter og les fremgangsrapporter",
+        "Kommuniser åpent med trenerteamet ved bekymringer",
+      ],
+    },
+    {
+      title: "Hvordan følge med på fremgang",
+      items: [
+        "Spillerportalen gir sanntidsoversikt over treningsplan og progresjon",
+        "Månedlige fremgangsrapporter sendes på e-post",
+        "Kvartalsvise foreldremøter med gjennomgang av mål og utvikling",
+        "Direkte kontakt med trener ved behov",
+      ],
+    },
+    {
+      title: "Kommunikasjonskanaler",
+      items: [
+        "Spillerportal — treningsplan, bookinger, fremgang",
+        "E-post — rapporter og viktig informasjon",
+        "Telefon/SMS — akutte endringer og påminnelser",
+        "Foreldremøter — kvartalsvis gjennomgang",
+      ],
+    },
+  ],
+} as const;
+
+// ─── Utvikling Products ───
+export const UTVIKLING_PRODUCTS = [
+  {
+    id: "qr-skilt",
+    title: "QR-treningsskilt",
+    tagline: "Interaktiv øvelsesveiledning på range",
+    description: "Digitale treningsskilt med QR-koder som gir spillerne tilgang til øvelser, videoer og instruksjoner direkte på mobilen. Perfekt for selvbetjent trening.",
+    features: [
+      "HD-videoer med instruksjoner",
+      "Tilpasset ulike nivåer",
+      "Enkelt å oppdatere innhold",
+      "Merkevaretilpasset design",
+    ],
+    pricing: "Fra 15 000 kr",
+    pricingNote: "Inkluderer 10 skilt og oppsett",
+  },
+  {
+    id: "iup-system",
+    title: "IUP-plattform",
+    tagline: "Individuell utviklingsplan for juniorer",
+    description: "Skybasert plattform for individuelle utviklingsplaner. Spillere og trenere samarbeider i sanntid om mål, fremgang og treningsinnhold.",
+    features: [
+      "Spillerprofiler med mål og statistikk",
+      "Treningsplaner og øvelsesbank",
+      "Fremgangsrapporter",
+      "Foreldretilgang",
+    ],
+    pricing: "Fra 990 kr/mnd",
+    pricingNote: "Per trener, ubegrenset spillere",
+  },
+  {
+    id: "sportsplan",
+    title: "Sportsplan for klubber",
+    tagline: "Komplett årsplan for golfklubber",
+    description: "Helhetlige sportsplaner tilpasset klubbens størrelse, ambisjoner og ressurser. Fra junior til elite, med periodisering og konkurransekalender.",
+    features: [
+      "Treningsopplegg alle nivåer",
+      "Periodisering og årshjul",
+      "Konkurransekalender",
+      "Trenerutvikling",
+    ],
+    pricing: "Kontakt oss",
+    pricingNote: "Tilbud basert på klubbstørrelse",
+  },
+] as const;
+
+// ─── Utvikling Case Studies ───
+export const UTVIKLING_CASE_STUDIES = [
+  {
+    club: "Gamle Fredrikstad GK",
+    logo: "/images/clubs/gfgk-logo.png",
+    quote: "AK Golf hjalp oss med å implementere en komplett sportsplan. Resultatet var tydelig struktur og økt juniorrekruttering.",
+    result: "40% økning i juniorrekruttering",
+    year: "2025",
+    products: ["Sportsplan", "IUP-plattform"],
+  },
+  {
+    club: "Miklagard GK",
+    logo: "/images/clubs/miklagard-logo.png",
+    quote: "QR-skiltene på rangen har transformert selvtreningen. Medlemmene våre elsker det.",
+    result: "Økt rangeaktivitet",
+    year: "2025",
+    products: ["QR-treningsskilt"],
+  },
+] as const;
+
+// ─── Portal Content ───
+export const PORTAL_CONTENT = {
+  dashboard: {
+    welcomeTemplate: "Hei {name}, klar for dagens trening?",
+    emptyBookings: "Ingen kommende bookinger. Book din neste sesjon for å fortsette utviklingen.",
+    emptyPlan: "Ingen aktiv treningsplan. Generer din personlige 12-ukers treningsplan.",
+    onboardingHints: [
+      { step: 1, title: "Fullfør profilen din", description: "Legg til handicap og mål for personlige anbefalinger" },
+      { step: 2, title: "Book din første sesjon", description: "Start med en Foundation Test eller coaching-sesjon" },
+      { step: 3, title: "Sett deg et mål", description: "Definer hva du vil oppnå denne sesongen" },
+    ],
+  },
+  bookings: {
+    emptyState: "Du har ingen aktive bookinger. Book en sesjon for å komme i gang!",
+    cancellationRules: [
+      { hours: "24+", rule: "Gratis kansellering", fee: "0%" },
+      { hours: "2–24", rule: "Delvis gebyr", fee: "50%" },
+      { hours: "<2", rule: "Ingen refusjon", fee: "100%" },
+    ],
+    confirmationMessage: "Booking bekreftet! Du mottar en påminnelse 24 timer før.",
+  },
+  treningsplan: {
+    intro: "Din personlige treningsplan er generert av AI basert på dine mål, statistikk og tilgjengelig tid.",
+    howToUse: [
+      "Følg ukeplanen dag for dag",
+      "Marker økter som fullført i dagboken",
+      "Se progresjon over tid i statistikk-fanen",
+    ],
+    emptyState: "Generer din første treningsplan basert på dine mål og tilgjengelig tid.",
+  },
+  statistikk: {
+    sgExplanation: {
+      intro: "Strokes Gained måler hvor mange slag du vinner eller taper sammenlignet med en scratch-spiller på hver del av spillet.",
+      categories: [
+        { key: "SG: Tee", description: "Slag vunnet/tapt på utslagene (driver og lange fairway-slag)" },
+        { key: "SG: Approach", description: "Slag vunnet/tapt på innspill til green" },
+        { key: "SG: Short Game", description: "Slag vunnet/tapt rundt green (chipping, pitching, bunker)" },
+        { key: "SG: Putting", description: "Slag vunnet/tapt på green" },
+      ],
+    },
+    howToRegister: "Registrer din første runde for å se statistikk og identifisere svakheter.",
+    emptyState: "Ingen runder registrert ennå. Klikk «Legg til runde» for å komme i gang.",
+  },
+  dagbok: {
+    whyLog: "Å logge trening gir deg oversikt over hva du jobber med, og hjelper treneren å tilpasse coaching.",
+    slagCategories: [
+      { key: "S", name: "Sving", description: "Teknisk svingtrening — grip, setup, rotasjon" },
+      { key: "L", name: "Langspill", description: "Driving og fairway — distanse og presisjon" },
+      { key: "A", name: "Approach", description: "Innspill til green — avstander og banemanagement" },
+      { key: "G", name: "Green", description: "Putting og chipping — kort spill og finish" },
+    ],
+    emptyState: "Start å logge treningsøkter for å se din progresjon over tid.",
+  },
+  kalender: {
+    colorCodes: [
+      { color: "gold", label: "Coaching-sesjon" },
+      { color: "blue", label: "Planlagt trening" },
+      { color: "green", label: "Turnering" },
+      { color: "gray", label: "Ledig tid" },
+    ],
+    syncInfo: "Eksporter kalenderen til Google Calendar eller Apple Calendar for å få påminnelser på mobilen.",
+  },
+  profil: {
+    goalSetting: {
+      intro: "Sett deg konkrete, målbare mål for sesongen. Ditt mål vises på dashboardet og hjelper deg holde fokus.",
+      examples: [
+        { type: "Handicap", example: "Ned til 10.0 innen september" },
+        { type: "Teknisk", example: "Forbedre SG: Putting med 0.5" },
+        { type: "Aktivitet", example: "Trene 3 ganger i uken" },
+      ],
+    },
+    achievements: [
+      { id: "first-round", title: "Første runde registrert", description: "Registrer din første runde i statistikk" },
+      { id: "10-sessions", title: "10 treningsøkter logget", description: "Logg 10 treningsøkter i dagboken" },
+      { id: "hcp-improvement", title: "Handicap-forbedring", description: "Forbedre handicap med 2.0+ på én sesong" },
+      { id: "plan-completed", title: "Treningsplan fullført", description: "Fullfør alle økter i en treningsplan" },
+    ],
+  },
+  analyse: {
+    aiIntro: "Basert på dine runder og treningslogger analyserer AI-en ditt spill og gir personlige anbefalinger.",
+    weaknessExplanation: "Vi identifiserer hvor du taper flest slag sammenlignet med spillere på ditt nivå.",
+    focusRecommendation: "Prioriter trening på områder der du har størst forbedringspotensial.",
+  },
+} as const;
+
+// ─── Admin Content ───
+export const ADMIN_CONTENT = {
+  elever: {
+    emptyState: "Ingen spillere registrert. Spillere opprettes automatisk ved første booking.",
+    playerCategories: [
+      { key: "A", description: "Elite-spiller (HCP < 5)" },
+      { key: "B", description: "Konkurransespiller (HCP 5–10)" },
+      { key: "C", description: "Aktiv hobbyspiller (HCP 10–18)" },
+      { key: "D", description: "Hobbyspiller (HCP 18–27)" },
+      { key: "E", description: "Nybegynner (HCP 27–36)" },
+      { key: "J", description: "Junior (under 18 år)" },
+      { key: "K", description: "Klubbspiller (sporadisk trening)" },
+    ],
+  },
+  kalender: {
+    setupGuide: {
+      title: "Sett opp tilgjengelighet",
+      description: "Sett opp din ukentlige tilgjengelighet. Spillere kan kun booke i tidsrom du har markert som ledige.",
+      steps: [
+        "Velg ukedag",
+        "Marker tidsrom (f.eks. 09:00–17:00)",
+        "Velg lokasjon",
+        "Lagre",
+      ],
+    },
+  },
+} as const;
+
+// ─── Foundation Method — Coaching-filosofi ───
+export const FOUNDATION_METHOD_CONCEPT = {
+  name: "The Foundation Method",
+  tagline: "Varig endring. Ikke quick fixes.",
+  principles: [
+    { title: "Fundament først", description: "Pyramiden: FYS → TEK → SLAG → SPILL → TURN" },
+    { title: "Systematisk progresjon", description: "L-faser: KROPP → ARM → KØLLE → BALL → AUTO" },
+    { title: "Data erstatter følelser", description: "TrackMan + Decade Golf + portal" },
+    { title: "Hele spilleren", description: "Teknikk + strategi + fysisk + mental + livsmestring" },
+    { title: "Individuell plan, felles standard", description: "Skreddersydd for deg, basert på bevist metodikk" },
+  ],
+} as const;
+
+// ─── Academy Philosophy — Fra sportsplan ───
+export const ACADEMY_PHILOSOPHY = {
+  vision: "AK Golf Academy tilbyr individuell coaching for voksne spillere som ønsker systematisk utvikling.",
+  principles: [
+    { key: "Evidensbasert", description: "Data og analyse, ikke magefølelse" },
+    { key: "Individuelt tilpasset", description: "Ingen standardløsninger" },
+    { key: "Langsiktig", description: "Utvikling tar tid, vi er her for hele reisen" },
+    { key: "Helhetlig", description: "Teknikk, strategi, mental styrke og fysikk henger sammen" },
+  ],
+  targetAudience: "Voksne spillere (25–65 år) med handicap 5–36",
+} as const;
+
+// ─── Periodization — Sesongstruktur ───
+export const PERIODIZATION = {
+  periods: [
+    { code: "E", name: "Evaluering", weeks: "Uke 43", description: "Testuke med full kartlegging" },
+    { code: "G", name: "Grunnperiode", weeks: "Uke 44 – mars", description: "Bygge teknisk fundament" },
+    { code: "S", name: "Spesialisering", weeks: "April – mai", description: "Overføring til bane" },
+    { code: "T", name: "Turnering", weeks: "Mai – september", description: "Prestere og vedlikeholde" },
+  ],
+} as const;
 
 // ─── Formspree (deprecated - bruker nå /api/contact) ───
 export const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ID

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — System Overview & User Journeys</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #171717; line-height: 1.6; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+
+    h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    h2 { font-size: 24px; font-weight: 700; margin: 48px 0 24px; padding-top: 48px; border-top: 1px solid #e5e5e5; }
+    h3 { font-size: 18px; font-weight: 600; margin: 32px 0 16px; }
+    h4 { font-size: 14px; font-weight: 600; margin: 24px 0 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #737373; }
+
+    p { color: #525252; margin-bottom: 16px; }
+
+    .subtitle { font-size: 18px; color: #737373; margin-bottom: 48px; }
+
+    .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+    .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .card-icon { width: 40px; height: 40px; background: #f5f5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .card-title { font-size: 16px; font-weight: 600; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+    .flow-step { padding: 8px 16px; background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 13px; font-weight: 500; }
+    .flow-step.active { background: #171717; color: #fff; border-color: #171717; }
+    .flow-arrow { color: #a3a3a3; }
+
+    .list { list-style: none; }
+    .list li { padding: 8px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+    .list li:last-child { border-bottom: none; }
+
+    .badge { display: inline-flex; padding: 4px 8px; background: #f5f5f5; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+    .badge.primary { background: #171717; color: #fff; }
+    .badge.success { background: #dcfce7; color: #16a34a; }
+    .badge.warning { background: #fef3c7; color: #d97706; }
+
+    .table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .table th, .table td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e5e5; }
+    .table th { font-weight: 600; background: #fafafa; }
+
+    .screen-list { display: flex; flex-direction: column; gap: 8px; }
+    .screen-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #fafafa; border-radius: 8px; }
+    .screen-item code { font-size: 12px; color: #737373; }
+    .screen-item .status-badge { margin-left: auto; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; text-transform: uppercase; }
+    .screen-item .status-done { background: #dcfce7; color: #16a34a; }
+    .screen-item .status-todo { background: #fee2e2; color: #dc2626; }
+
+    .toc { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 24px; margin-bottom: 48px; }
+    .toc h3 { margin-top: 0; }
+    .toc-list { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .toc-list a { color: #171717; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+    .toc-list a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AK Golf Platform — System Overview</h1>
+    <p class="subtitle">Komplett brukerreise og funksjonsoversikt</p>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <h3>Innhold</h3>
+      <ul class="toc-list">
+        <li><a href="#users"><i data-lucide="users" style="width:16px;height:16px;"></i> Brukertyper & Roller</a></li>
+        <li><a href="#landing"><i data-lucide="globe" style="width:16px;height:16px;"></i> Landing Page</a></li>
+        <li><a href="#booking"><i data-lucide="calendar" style="width:16px;height:16px;"></i> Booking System</a></li>
+        <li><a href="#portal"><i data-lucide="layout-dashboard" style="width:16px;height:16px;"></i> Spillerportal</a></li>
+        <li><a href="#admin"><i data-lucide="shield" style="width:16px;height:16px;"></i> Admin Dashboard</a></li>
+        <li><a href="#screens"><i data-lucide="monitor" style="width:16px;height:16px;"></i> Alle Skjermer</a></li>
+      </ul>
+    </div>
+
+    <!-- ==================== -->
+    <!-- USER TYPES           -->
+    <!-- ==================== -->
+    <h2 id="users">1. Brukertyper & Roller</h2>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><i data-lucide="user" style="width:20px;height:20px;"></i></div>
+          <span class="card-title">Besøkende (Visitor)</span>
+        </div>
+        <ul class="list">
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Se landingsside</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Se tjenester & priser</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Starte booking (må registrere)</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Kontaktskjema</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><i data-lucide="user-check" style="width:20px;height:20px;"></i></div>
+          <span class="card-title">Spiller (Student)</span>
+        </div>
+        <ul class="list">
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Alt fra Besøkende</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Spillerportal (dashboard)</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Book & administrer timer</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Treningslogg & statistikk</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Treningsplan</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Profil & mål</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><i data-lucide="shield" style="width:20px;height:20px;"></i></div>
+          <span class="card-title">Instruktør / Admin</span>
+        </div>
+        <ul class="list">
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Alt fra Spiller</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Admin dashboard</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Elevliste & profiler</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Booking-kalender</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Tilgjengelighet</li>
+          <li><i data-lucide="check" style="width:14px;height:14px;color:#16a34a;"></i> Coaching-notater</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ==================== -->
+    <!-- LANDING PAGE         -->
+    <!-- ==================== -->
+    <h2 id="landing">2. Landing Page (Markedsside)</h2>
+
+    <h4>Brukerreise: Besøkende → Registrert kunde</h4>
+    <div class="flow">
+      <span class="flow-step">Ankommer side</span>
+      <i data-lucide="chevron-right" class="flow-arrow" style="width:16px;height:16px;"></i>
+      <span class="flow-step">Ser Hero</span>
+      <i data-lucide="chevron-right" class="flow-arrow" style="width:16px;height:16px;"></i>
+      <span class="flow-step">Scroller tjenester</span>
+      <i data-lucide="chevron-right" class="flow-arrow" style="width:16px;height:16px;"></i>
+      <span class="flow-step">Sjekker priser</span>
+      <i data-lucide="chevron-right" class="flow-arrow" style="width:16px;height:16px;"></i>
+      <span class="flow-step">Leser testimonials</span>
+      <i data-lucide="chevron-right" class="flow-arrow" style="width:16px;height:16px;"></i>
+      <span class="flow-step active">Klikker "Book"</span>
+    </div>
+
+    <h3>Seksjoner på Landing Page</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4 style="margin-top:0;">Navigation</h4>
+        <ul class="list">
+          <li>Logo (link til hjem)</li>
+          <li>Menylenker: Hjem, Coaching, Book, Priser</li>
+          <li>CTA: "Logg inn" (ghost) + "Kom i gang" (primær)</li>
+          <li>Mobil: Hamburger-meny</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0;">Hero Section</h4>
+        <ul class="list">
+          <li>Status-badge ("Ledige timer i dag")</li>
+          <li>Headline (stor, bold)</li>
+          <li>Subheadline (beskrivelse)</li>
+          <li>CTA-knapper: Primær + Sekundær</li>
+          <li>Status-bar (system online, trenere, ledige timer)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0;">Tjenester</h4>
+        <ul class="list">
+          <li>Seksjonstittel + intro</li>
+          <li>3 pakke-kort (Starter, Pro, Elite)</li>
+          <li>Pris, features, CTA per kort</li>
+          <li>5 tjenestetyper (ikoner): Individuell, Gruppe, Simulator, On-Course, Video</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0;">Trenere</h4>
+        <ul class="list">
+          <li>Grid med trener-kort</li>
+          <li>Foto, navn, spesialisering</li>
+          <li>Rating + antall anmeldelser</li>
+          <li>Link til full profil</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0;">Testimonials</h4>
+        <ul class="list">
+          <li>Sitat med stjerner</li>
+          <li>Navn, bilde, handicap-forbedring</li>
+          <li>Carousel eller grid</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0;">FAQ</h4>
+        <ul class="list">
+          <li>Accordion-format</li>
+          <li>5-8 vanlige spørsmål</li>
+          <li>Ekspander/kollaps animasjon</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0;">CTA Section</h4>
+        <ul class="list">
+          <li>Avsluttende oppfordring</li>
+          <li>Stor CTA-knapp</li>
+          <li>Sekundær link ("Kontakt oss")</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-top:0;">Footer</h4>
+        <ul class="list">
+          <li>Logo + kort beskrivelse</li>
+          <li>Lenkegrupper: Tjenester, Om oss, Support</li>
+          <li>Kontaktinfo</li>
+          <li>Sosiale medier</li>
+          <li>Copyright + personvern</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ==================== -->
+    <!-- BOOKING SYSTEM       -->
+    <!-- ==================== -->
+    <h2 id="booking">3. Booking System</h2>
+
+    <h4>Komplett booking-flyt</h4>
+    <div class="flow">
+      <span class="flow-step">1. Velg tjeneste</span>
+      <i data-lucide="chevron-right" class="flow-arrow" style="width:16px;height:16px;"></i>
+      <span class="flow-step">2. Velg trener</span>
+      <i data-lucide="chevron-right" class="flow-arrow" style="width:16px;height:16px;"></i>
+      <span class="flow-step">3. Velg tid</span>
+      <i data-lucide="chevron-right" class="flow-arrow" style="width:16px;height:16px;"></i>
+      <span class="flow-step">4. Dine opplysninger</span>
+      <i data-lucide="chevron-right" class="flow-arrow" style="width:16px;height:16px;"></i>
+      <span class="flow-step">5. Betaling</span>
+      <i data-lucide="chevron-right" class="flow-arrow" style="width:16px;height:16px;"></i>
+      <span class="flow-step active">6. Bekreftelse</span>
+    </div>
+
+    <h3>Steg-for-steg</h3>
+
+    <div class="card">
+      <h4 style="margin-top:0;">Steg 1: Velg tjeneste</h4>
+      <p>Bruker velger type coaching-time.</p>
+      <table class="table">
+        <tr><th>Element</th><th>Beskrivelse</th><th>Interaksjon</th></tr>
+        <tr><td>Tjenestetyper</td><td>Kort med ikon, navn, varighet, pris</td><td>Klikk for å velge (radio)</td></tr>
+        <tr><td>Pakke-valg</td><td>Starter/Pro/Elite (påvirker pris)</td><td>Dropdown eller toggle</td></tr>
+        <tr><td>Varighet</td><td>30/45/60/90 min</td><td>Velg fra liste</td></tr>
+        <tr><td>Neste-knapp</td><td>Disabled til valg er gjort</td><td>Navigerer til steg 2</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0;">Steg 2: Velg trener</h4>
+      <p>Bruker velger foretrukket instruktør.</p>
+      <table class="table">
+        <tr><th>Element</th><th>Beskrivelse</th><th>Interaksjon</th></tr>
+        <tr><td>Trener-kort</td><td>Avatar, navn, spesialisering, rating</td><td>Klikk for å velge</td></tr>
+        <tr><td>"Ingen preferanse"</td><td>Alternativ for første ledige</td><td>Checkbox/toggle</td></tr>
+        <tr><td>Filter</td><td>Spesialisering (putting, driver, etc.)</td><td>Dropdown-filter</td></tr>
+        <tr><td>Tilbake/Neste</td><td>Navigasjon mellom steg</td><td>Knapper</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0;">Steg 3: Velg dato & tid</h4>
+      <p>Kalender og tidsluke-visning.</p>
+      <table class="table">
+        <tr><th>Element</th><th>Beskrivelse</th><th>Interaksjon</th></tr>
+        <tr><td>Uke-navigator</td><td>Piler for forrige/neste uke</td><td>Klikk for å bytte uke</td></tr>
+        <tr><td>Dag-selector</td><td>7 dager synlig, dato + ukedag</td><td>Klikk for å velge dag</td></tr>
+        <tr><td>Tidsluke-grid</td><td>Ledige tider (grønn), opptatt (grå), valgt (svart)</td><td>Klikk for å velge tid</td></tr>
+        <tr><td>Lokasjon</td><td>Hvis flere steder finnes</td><td>Dropdown</td></tr>
+      </table>
+      <h4>States</h4>
+      <ul class="list">
+        <li><span class="badge">Ledig</span> — Kan velges</li>
+        <li><span class="badge warning">Få igjen</span> — Under 3 plasser</li>
+        <li><span class="badge" style="background:#e5e5e5;color:#737373;">Opptatt</span> — Ikke klikkbar</li>
+        <li><span class="badge primary">Valgt</span> — Brukerens valg</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0;">Steg 4: Dine opplysninger</h4>
+      <p>Kontaktinfo og tilleggsinformasjon.</p>
+      <table class="table">
+        <tr><th>Felt</th><th>Type</th><th>Validering</th></tr>
+        <tr><td>Fornavn</td><td>Text</td><td>Påkrevd</td></tr>
+        <tr><td>Etternavn</td><td>Text</td><td>Påkrevd</td></tr>
+        <tr><td>E-post</td><td>Email</td><td>Påkrevd, gyldig format</td></tr>
+        <tr><td>Telefon</td><td>Tel</td><td>Påkrevd, norsk format</td></tr>
+        <tr><td>Handicap</td><td>Number</td><td>Valgfritt, 0-54</td></tr>
+        <tr><td>Kommentar</td><td>Textarea</td><td>Valgfritt, maks 500 tegn</td></tr>
+        <tr><td>Vilkår</td><td>Checkbox</td><td>Må godkjennes</td></tr>
+      </table>
+      <p><strong>Eksisterende bruker:</strong> Hopp over — data hentes fra profil.</p>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0;">Steg 5: Betaling</h4>
+      <p>Stripe Checkout integration.</p>
+      <table class="table">
+        <tr><th>Element</th><th>Beskrivelse</th></tr>
+        <tr><td>Oppsummering</td><td>Tjeneste, trener, tid, pris</td></tr>
+        <tr><td>Rabattkode</td><td>Input + "Bruk"-knapp</td></tr>
+        <tr><td>Betalingsmetode</td><td>Kort (Stripe Elements)</td></tr>
+        <tr><td>Vipps-alternativ</td><td>Redirect til Vipps</td></tr>
+        <tr><td>Total</td><td>Pris inkl. MVA</td></tr>
+        <tr><td>"Betal"-knapp</td><td>Disabled under prosessering</td></tr>
+      </table>
+      <h4>Error states</h4>
+      <ul class="list">
+        <li>Kort avvist → Vis feilmelding, prøv igjen</li>
+        <li>Timeout → Vis melding, tilby ny betaling</li>
+        <li>Duplikat → Sjekk om booking allerede eksisterer</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0;">Steg 6: Bekreftelse</h4>
+      <p>Suksess-side etter betaling.</p>
+      <table class="table">
+        <tr><th>Element</th><th>Beskrivelse</th></tr>
+        <tr><td>Suksess-ikon</td><td>Checkmark i sirkel</td></tr>
+        <tr><td>Overskrift</td><td>"Booking bekreftet!"</td></tr>
+        <tr><td>Booking-detaljer</td><td>Tjeneste, trener, dato, tid, lokasjon</td></tr>
+        <tr><td>Referansenummer</td><td>Unik booking-ID</td></tr>
+        <tr><td>E-post-bekreftelse</td><td>"Kvittering sendt til din e-post"</td></tr>
+        <tr><td>Kalender-knapp</td><td>Legg til i Google/Apple Calendar</td></tr>
+        <tr><td>Portal-link</td><td>"Gå til din portal"</td></tr>
+      </table>
+    </div>
+
+    <h3>Booking-administrasjon (etter booking)</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4 style="margin-top:0;">Endre booking</h4>
+        <ul class="list">
+          <li>Tilgjengelig inntil 24t før</li>
+          <li>Velg ny dato/tid</li>
+          <li>Bekreft endring</li>
+          <li>E-post med oppdatert info</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0;">Kanseller booking</h4>
+        <ul class="list">
+          <li>Over 24t: Full refusjon</li>
+          <li>Under 24t: 50% refusjon</li>
+          <li>Under 2t: Ingen refusjon</li>
+          <li>Bekreftelse via e-post</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ==================== -->
+    <!-- PLAYER PORTAL        -->
+    <!-- ==================== -->
+    <h2 id="portal">4. Spillerportal</h2>
+
+    <h4>Portal-navigasjon</h4>
+    <div class="flow">
+      <span class="flow-step active">Dashboard</span>
+      <span class="flow-step">Mine bookinger</span>
+      <span class="flow-step">Treningsplan</span>
+      <span class="flow-step">Treningslogg</span>
+      <span class="flow-step">Statistikk</span>
+      <span class="flow-step">Kalender</span>
+      <span class="flow-step">Profil</span>
+    </div>
+
+    <h3>4.1 Dashboard (Hjem)</h3>
+    <div class="card">
+      <p>Oversiktsside med viktigste informasjon.</p>
+      <table class="table">
+        <tr><th>Komponent</th><th>Innhold</th><th>Handling</th></tr>
+        <tr><td>Velkomst-header</td><td>"God morgen, [Navn]" + dato</td><td>—</td></tr>
+        <tr><td>Quick actions</td><td>"Logg økt" + "Book time"</td><td>Knapper</td></tr>
+        <tr><td>Neste time</td><td>Dato, tid, trener, lokasjon</td><td>Klikk → booking-detaljer</td></tr>
+        <tr><td>Quick stats (4 kort)</td><td>Handicap, måloppnåelse, streak, økter</td><td>Klikk → statistikk</td></tr>
+        <tr><td>Ukens plan</td><td>7 dager med treningstype</td><td>Klikk → dag-detaljer</td></tr>
+        <tr><td>Siste aktiviteter</td><td>3 siste loggede økter</td><td>Klikk → økt-detaljer</td></tr>
+        <tr><td>Kommende timer</td><td>Liste med dato, tid, type</td><td>Klikk → booking</td></tr>
+        <tr><td>Achievements</td><td>Siste oppnådde badges</td><td>Klikk → alle achievements</td></tr>
+      </table>
+    </div>
+
+    <h3>4.2 Mine bookinger</h3>
+    <div class="card">
+      <table class="table">
+        <tr><th>Tab</th><th>Innhold</th></tr>
+        <tr><td>Kommende</td><td>Alle fremtidige bookinger, sortert etter dato</td></tr>
+        <tr><td>Tidligere</td><td>Historikk, med mulighet for å rebooke</td></tr>
+        <tr><td>Kansellerte</td><td>Kansellerte bookinger med refusjon-status</td></tr>
+      </table>
+      <h4>Booking-kort innhold</h4>
+      <ul class="list">
+        <li>Dato & tid</li>
+        <li>Tjenestetype + varighet</li>
+        <li>Trener (navn + bilde)</li>
+        <li>Lokasjon</li>
+        <li>Status-badge (Bekreftet, Fullført, Kansellert)</li>
+        <li>Handlinger: Endre, Kanseller, Legg til kalender</li>
+      </ul>
+    </div>
+
+    <h3>4.3 Treningsplan</h3>
+    <div class="card">
+      <table class="table">
+        <tr><th>Visning</th><th>Beskrivelse</th></tr>
+        <tr><td>Uke-oversikt</td><td>7 dager med treningstype og status</td></tr>
+        <tr><td>Dag-detaljer</td><td>Øvelser, varighet, fokusområde</td></tr>
+        <tr><td>Periodisering</td><td>Hvilken fase (forberedelse, konkurranse, restitusjon)</td></tr>
+      </table>
+      <h4>Dag-kort innhold</h4>
+      <ul class="list">
+        <li>Ukedag + dato</li>
+        <li>Treningstype-ikon (putting, range, hvile, etc.)</li>
+        <li>Status: Planlagt, Fullført, Hoppet over</li>
+        <li>Estimert tid</li>
+        <li>"Start økt"-knapp</li>
+      </ul>
+      <h4>Økt-detaljer (modal/side)</h4>
+      <ul class="list">
+        <li>Oppvarming (tid, øvelser)</li>
+        <li>Hoveddel (øvelser med reps/tid)</li>
+        <li>Nedtrapping</li>
+        <li>Notater fra trener</li>
+        <li>"Marker som fullført"-knapp</li>
+      </ul>
+    </div>
+
+    <h3>4.4 Treningslogg (Dagbok)</h3>
+    <div class="card">
+      <h4 style="margin-top:0;">Logg ny økt</h4>
+      <table class="table">
+        <tr><th>Felt</th><th>Type</th><th>Beskrivelse</th></tr>
+        <tr><td>Dato</td><td>Datepicker</td><td>Default: i dag</td></tr>
+        <tr><td>Type</td><td>Select</td><td>Tee Total, Approach, Nærspill, Putting, 9 hull, 18 hull, Simulator, Fysisk, Mental</td></tr>
+        <tr><td>Varighet</td><td>Number</td><td>Minutter</td></tr>
+        <tr><td>Intensitet</td><td>Slider 1-10</td><td>Opplevd belastning</td></tr>
+        <tr><td>Fokusområde</td><td>Multi-select</td><td>Driver, Jern, Wedge, Putting, etc.</td></tr>
+        <tr><td>Notater</td><td>Textarea</td><td>Fritt tekst</td></tr>
+        <tr><td>Humør</td><td>Emoji-select</td><td>5 nivåer</td></tr>
+      </table>
+      <h4>Logg-liste</h4>
+      <ul class="list">
+        <li>Filtrer på type, dato-range</li>
+        <li>Kalender-visning eller liste-visning</li>
+        <li>Klikk for å se/redigere detaljer</li>
+      </ul>
+    </div>
+
+    <h3>4.5 Statistikk</h3>
+    <div class="card">
+      <table class="table">
+        <tr><th>Seksjon</th><th>Data</th><th>Visualisering</th></tr>
+        <tr><td>Handicap-utvikling</td><td>HCP over tid</td><td>Linjediagram</td></tr>
+        <tr><td>Strokes Gained</td><td>SG per kategori</td><td>Radar-chart</td></tr>
+        <tr><td>Treningsvolum</td><td>Timer/økter per uke</td><td>Søylediagram</td></tr>
+        <tr><td>Fokusområder</td><td>Fordeling av treningstyper</td><td>Donut-chart</td></tr>
+        <tr><td>Scoring-trend</td><td>Gjennomsnittsscore</td><td>Linjediagram</td></tr>
+      </table>
+      <h4>Filter-alternativer</h4>
+      <ul class="list">
+        <li>Tidsperiode: 7d, 30d, 90d, 1 år, All tid</li>
+        <li>Treningstype</li>
+        <li>Sammenlign med forrige periode</li>
+      </ul>
+    </div>
+
+    <h3>4.6 Kalender</h3>
+    <div class="card">
+      <table class="table">
+        <tr><th>Visning</th><th>Beskrivelse</th></tr>
+        <tr><td>Måned</td><td>Oversikt med dots for events</td></tr>
+        <tr><td>Uke</td><td>Detaljert med tidslinje</td></tr>
+        <tr><td>Dag</td><td>Time-for-time visning</td></tr>
+      </table>
+      <h4>Event-typer (fargekodet)</h4>
+      <ul class="list">
+        <li>Coaching-time (booket)</li>
+        <li>Planlagt trening</li>
+        <li>Fullført trening</li>
+        <li>Turnering</li>
+      </ul>
+    </div>
+
+    <h3>4.7 Profil & Innstillinger</h3>
+    <div class="card">
+      <table class="table">
+        <tr><th>Seksjon</th><th>Felter</th></tr>
+        <tr><td>Personlig info</td><td>Navn, e-post, telefon, bilde</td></tr>
+        <tr><td>Golf-profil</td><td>Handicap, hjemmeklubb, medlem siden</td></tr>
+        <tr><td>Mål</td><td>Handicap-mål, treningsfrekvens-mål</td></tr>
+        <tr><td>Varsler</td><td>E-post, SMS, push-preferanser</td></tr>
+        <tr><td>Abonnement</td><td>Nåværende tier, oppgrader-link</td></tr>
+        <tr><td>Passord</td><td>Endre passord</td></tr>
+        <tr><td>Slett konto</td><td>Med bekreftelse</td></tr>
+      </table>
+    </div>
+
+    <!-- ==================== -->
+    <!-- ADMIN DASHBOARD      -->
+    <!-- ==================== -->
+    <h2 id="admin">5. Admin Dashboard</h2>
+
+    <h4>Admin-navigasjon</h4>
+    <div class="flow">
+      <span class="flow-step active">Oversikt</span>
+      <span class="flow-step">Kalender</span>
+      <span class="flow-step">Bookinger</span>
+      <span class="flow-step">Elever</span>
+      <span class="flow-step">Tilgjengelighet</span>
+      <span class="flow-step">Innstillinger</span>
+    </div>
+
+    <h3>5.1 Admin Oversikt</h3>
+    <div class="card">
+      <table class="table">
+        <tr><th>Widget</th><th>Innhold</th></tr>
+        <tr><td>Dagens timer</td><td>Liste med tidspunkt, elev, type</td></tr>
+        <tr><td>Ukestatistikk</td><td>Antall timer, omsetning, nye elever</td></tr>
+        <tr><td>Ventende forespørsler</td><td>Bookinger som trenger bekreftelse</td></tr>
+        <tr><td>Kommende uke</td><td>Mini-kalender med belegg</td></tr>
+      </table>
+    </div>
+
+    <h3>5.2 Booking-kalender</h3>
+    <div class="card">
+      <ul class="list">
+        <li>Dag/Uke/Måned-visning</li>
+        <li>Drag-and-drop for flytting</li>
+        <li>Klikk på tom slot → opprett booking</li>
+        <li>Klikk på booking → se/rediger detaljer</li>
+        <li>Fargekoding per status/tjenestetype</li>
+        <li>Filter på instruktør, tjenestetype</li>
+      </ul>
+    </div>
+
+    <h3>5.3 Elevliste</h3>
+    <div class="card">
+      <table class="table">
+        <tr><th>Kolonne</th><th>Beskrivelse</th></tr>
+        <tr><td>Navn</td><td>Klikk for profil</td></tr>
+        <tr><td>E-post/Telefon</td><td>Kontaktinfo</td></tr>
+        <tr><td>Handicap</td><td>Nåværende HCP</td></tr>
+        <tr><td>Siste økt</td><td>Dato for siste coaching</td></tr>
+        <tr><td>Totalt timer</td><td>Antall gjennomførte timer</td></tr>
+        <tr><td>Status</td><td>Aktiv, Inaktiv</td></tr>
+      </table>
+      <h4>Elev-profil (detaljside)</h4>
+      <ul class="list">
+        <li>Kontaktinfo</li>
+        <li>Coaching-historikk</li>
+        <li>Notater (per økt)</li>
+        <li>Mål og progresjon</li>
+        <li>Treningsplan (tildel/rediger)</li>
+      </ul>
+    </div>
+
+    <h3>5.4 Tilgjengelighet</h3>
+    <div class="card">
+      <ul class="list">
+        <li>Uke-grid med klikk-toggle for timer (08:00-22:00)</li>
+        <li>Blokkert tid (ferie, sykdom) med årsak</li>
+        <li>Gjentakende mønster (hver uke)</li>
+        <li>Unntak for spesifikke datoer</li>
+      </ul>
+    </div>
+
+    <!-- ==================== -->
+    <!-- ALL SCREENS          -->
+    <!-- ==================== -->
+    <h2 id="screens">6. Komplett skjerm-liste</h2>
+
+    <h3>Landing/Marketing</h3>
+    <div class="screen-list">
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Forside (Hero + seksjoner) <code>/</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Academy <code>/academy</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Junior <code>/junior</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Utvikling <code>/utvikling</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Personvern <code>/personvern</code> <span class="status-badge status-done">Ferdig</span></div>
+    </div>
+
+    <h3>Autentisering</h3>
+    <div class="screen-list">
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Logg inn <code>/auth/login</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Portal-innlogging <code>/portal/login</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Sett nytt passord <code>/auth/set-password</code> <span class="status-badge status-done">Ferdig</span></div>
+    </div>
+
+    <h3>Booking</h3>
+    <div class="screen-list">
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Velg tjeneste <code>/booking</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Ny booking (flerstegs) <code>/booking/new</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Betaling <code>/booking/[id]/pay</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Bekreftelse <code>/booking/[id]/confirmation</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Academy booking <code>/academy/booking</code> <span class="status-badge status-done">Ferdig</span></div>
+    </div>
+
+    <h3>Spillerportal</h3>
+    <div class="screen-list">
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Dashboard <code>/portal</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Mine bookinger <code>/portal/bookinger</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Ny booking <code>/portal/bookinger/ny</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Endre booking <code>/portal/bookinger/[id]/endre</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Treningsplan <code>/portal/treningsplan</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Treningslogg <code>/portal/dagbok</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Statistikk <code>/portal/statistikk</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Kalender <code>/portal/kalender</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Profil <code>/portal/profil</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Analyse <code>/portal/analyse</code> <span class="status-badge status-done">Ferdig</span></div>
+    </div>
+
+    <h3>Admin</h3>
+    <div class="screen-list">
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Denne uken <code>/portal/admin/denne-uken</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Booking-kalender <code>/portal/admin/kalender</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Alle bookinger <code>/portal/admin/bookinger</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Ny booking (admin) <code>/portal/admin/bookinger/ny</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Elevliste <code>/portal/admin/elever</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Elev-profil <code>/portal/admin/elever/[id]</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Tilgjengelighet <code>/portal/admin/tilgjengelighet</code> <span class="status-badge status-done">Ferdig</span></div>
+      <div class="screen-item"><i data-lucide="file" style="width:16px;height:16px;color:#737373;"></i> Turneringer <code>/portal/admin/turneringer</code> <span class="status-badge status-done">Ferdig</span></div>
+    </div>
+
+  </div>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
