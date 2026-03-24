@@ -21,6 +21,9 @@ import {
   BOOKING_URL,
   ACADEMY_TESTIMONIALS,
   ACADEMY_CTA,
+  ACADEMY_HERO,
+  ACADEMY_APPROACH,
+  ACADEMY_METHOD_PILLARS,
 } from "@/lib/website-constants";
 
 function CheckIcon({ className }: { className?: string }) {
@@ -53,9 +56,9 @@ export default function AcademyPage() {
         <PageTransition>
         {/* ─── Hero ─── */}
         <SubPageHero
-          eyebrow="AK Golf Academy"
-          heading="Din sving. Din plan. Dine resultater."
-          description="Individuell coaching og skreddersydde utviklingsplaner for voksne spillere som vil ta spillet til neste nivå. Evidensbasert, personlig og med dokumenterte resultater."
+          eyebrow={ACADEMY_HERO.eyebrow}
+          heading={ACADEMY_HERO.heading}
+          description={ACADEMY_HERO.description}
           accent="academy"
         />
 
@@ -65,16 +68,16 @@ export default function AcademyPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <RevealOnScroll>
                 <div>
-                  <SectionLabel>Vår tilnærming</SectionLabel>
+                  <SectionLabel>{ACADEMY_APPROACH.label}</SectionLabel>
                   <h2 className="w-heading-lg mt-4 mb-6">
-                    Ingen to spillere er like.<br />
-                    <span className="text-ink-50">Hvorfor skal treningen være det?</span>
+                    {ACADEMY_APPROACH.heading}<br />
+                    <span className="text-ink-50">{ACADEMY_APPROACH.subheading}</span>
                   </h2>
                   <p className="text-ink-50 leading-relaxed mb-4">
-                    I AK Golf Academy starter alt med deg. Vi analyserer spillet ditt fra alle vinkler — teknikk, strategi, mentalt spill og fysikk — for å bygge en plan som er 100% tilpasset dine mål og ditt utgangspunkt.
+                    {ACADEMY_APPROACH.paragraphs[0]}
                   </p>
                   <p className="text-ink-50 leading-relaxed">
-                    Vår evidensbaserte metode kombinerer det beste fra moderne golftreningsforskning med praktisk erfaring fra coaching på alle nivåer, fra nybegynner til tour-spiller.
+                    {ACADEMY_APPROACH.paragraphs[1]}
                   </p>
                 </div>
               </RevealOnScroll>
@@ -112,23 +115,7 @@ export default function AcademyPage() {
             </RevealOnScroll>
 
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  number: "01",
-                  title: "Teknisk analyse",
-                  description: "Grundig analyse av sving, kontakt og bevegelsesmønster med avansert videoteknologi. Klare, konkrete tilbakemeldinger du kan handle på.",
-                },
-                {
-                  number: "02",
-                  title: "Strategisk spill",
-                  description: "Kursmanagement, slagvalg og situasjonsanalyse. Lær deg å ta smartere beslutninger på banen — ikke bare slå hardere.",
-                },
-                {
-                  number: "03",
-                  title: "Mental styrke",
-                  description: "Rutiner, fokus og prestasjon under press. Det mentale spillet er det som skiller gode spillere fra de som virkelig leverer.",
-                },
-              ].map((item) => (
+              {ACADEMY_METHOD_PILLARS.map((item) => (
                 <StaggerItem key={item.number}>
                   <div className="w-glass-card-gold h-full">
                     <span className="font-mono text-2xl text-gold font-medium">{item.number}</span>

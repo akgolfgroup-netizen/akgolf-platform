@@ -8,10 +8,16 @@ export const NAV_LINKS = [
 // ─── Hero ───
 export const HERO = {
   eyebrow: "AK Golf Academy",
-  heading: "Bli en bedre golfspiller — systematisk.",
-  subheading: "Personlig coaching basert på The Foundation Method. Fra nybegynner til scratch med data-drevet metodikk og digital oppfølging.",
-  ctaPrimary: "Start din treningsreise",
-  ctaSecondary: "Slik jobber vi →",
+  heading: "Coaching som endrer spillet.",
+  subheading: "Individuell coaching på høyeste nivå for ambisiøse golfere som ønsker resultater.",
+  statusBadge: "Sesong 2026 - begrenset kapasitet",
+  ctaPrimary: "Book coaching",
+  ctaSecondary: "Les mer om Academy",
+  trustItems: [
+    { label: "Treningsformelen" },
+    { label: "Utviklingsplaner" },
+    { label: "Langsiktig utvikling" },
+  ],
   stats: [
     { value: "500+", label: "Spillere utviklet" },
     { value: "15+", label: "Års erfaring" },
@@ -134,56 +140,68 @@ export const FOUNDATION_TEST = {
   refundNote: "Beløpet trekkes fra første faktura ved oppstart innen 14 dager."
 } as const;
 
-// ─── Coaching Packages (The Foundation Method) ───
+// ─── Coaching Packages (Wireframe-struktur) ───
 export const COACHING_PACKAGES = [
   {
-    name: "Foundation",
-    price: "1 499",
+    name: "Starter",
+    price: "1 990",
     period: "kr/mnd",
-    description: "Systematisk utvikling med gruppe og individuell oppfølging.",
+    tagline: "For deg som vil prøve strukturert coaching",
+    description: "Perfekt for deg som ønsker å komme i gang med profesjonell coaching.",
+    whoIsItFor: "Passer for: Nybegynnere og hobbyspillere som vil ha strukturert veiledning",
     features: [
-      "2× gruppetrening (60 min) per måned",
-      "2× individuell check-in (20 min) per måned",
-      "Spillerportal Basic med treningsplan",
-      "AI-generert treningsplan",
-      "Coaching-notater etter hver økt"
+      "2 coaching-timer per måned",
+      "Individuell utviklingsplan (IUP)",
+      "Videoanalyse av sving",
+      "Tilgang til spillerportal",
+      "E-poststøtte"
     ],
     highlighted: false,
-    whoIsItFor: "Deg som vil ha struktur og system uten å bruke formue."
   },
   {
-    name: "Foundation+",
-    price: "2 999",
+    name: "Pro",
+    price: "3 490",
     period: "kr/mnd",
-    description: "Mer oppfølging, raskere resultater.",
+    tagline: "For ambisiøse spillere med klare mål",
+    description: "Vår mest populære pakke for spillere som vil se rask utvikling.",
+    whoIsItFor: "Passer for: Aktive spillere med handicap-mål og turneringsambisjoner",
     features: [
-      "2× gruppetrening (60 min) per måned",
-      "4× individuell check-in (20 min) per måned",
-      "Full spillerportal med statistikk",
-      "Meldingsstøtte (svar innen 24t)",
-      "Kvartalsvis Foundation Test",
-      "Booker før Foundation-medlemmer"
+      "4 coaching-timer per måned",
+      "Avansert IUP med periodisering",
+      "Ukentlig videoanalyse",
+      "TrackMan-data og analyse",
+      "Mental trening inkludert",
+      "Direkte meldingsstøtte"
     ],
     highlighted: true,
-    whoIsItFor: "Deg som vil ha tettere oppfølging og raskere fremgang."
   },
   {
-    name: "Foundation Elite",
-    price: "4 999",
+    name: "Elite",
+    price: "5 990",
     period: "kr/mnd",
-    description: "Alt inkludert for maksimal utvikling.",
+    tagline: "For spillere med seriøse ambisjoner",
+    description: "Full pakke for spillere som vil ha alt for maksimal utvikling.",
+    whoIsItFor: "Passer for: Konkurransespillere, juniorer på landslag, og aspirerende proffer",
     features: [
-      "4× gruppetrening (60 min) per måned",
-      "4× individuell check-in (20 min) per måned",
-      "Full spillerportal + Strokes Gained",
-      "Prioritert meldingsstøtte (svar innen 4t)",
-      "Kvartalsvis Foundation Test",
-      "1× playing lesson per kvartal",
-      "Decade Golf baneanalyse"
+      "Ubegrenset coaching-timer",
+      "Helhetlig IUP med alle områder",
+      "Daglig oppfølging og feedback",
+      "Turneringsstøtte og planlegging",
+      "Fysisk treningsprogram",
+      "Playing lessons på banen",
+      "Prioritert tilgang til trenere"
     ],
     highlighted: false,
-    whoIsItFor: "Ambisiøse spillere som vil ha alt."
   },
+] as const;
+
+// ─── Service Types (enkelttimer-kategorier) ───
+export const SERVICE_TYPES = [
+  { id: "individual", name: "1-til-1 Coaching", description: "Fra 1 500 kr / 60 min", icon: "user" },
+  { id: "tee-total", name: "Tee Total", description: "Driver og langspill", icon: "target" },
+  { id: "short-game", name: "Nærspill", description: "Chipping og bunker", icon: "flag" },
+  { id: "putting", name: "Putting", description: "Greenferdigheter", icon: "circle-dot" },
+  { id: "playing-lesson", name: "Playing Lesson", description: "Coaching på banen", icon: "map" },
 ] as const;
 
 // ─── Enkelttimer ───
@@ -238,15 +256,27 @@ export const PORTAL_FEATURES = [
 
 // ─── Coaching FAQ ───
 export const COACHING_FAQ = [
-  { q: "Hva er Foundation Test?", a: "En 50-minutters baseline-test med TrackMan-analyse, putting-test og personlig anbefaling. Koster 995 kr — beløpet trekkes fra første faktura hvis du starter abonnement innen 14 dager." },
-  { q: "Hva er forskjellen på gruppe og check-in?", a: "Gruppetrening (60 min) er coaching med maks 4 deltakere. Check-in (20 min) er individuell oppfølging — vi sjekker fremgang, justerer én ting, og gir deg ny oppgave til neste gang." },
-  { q: "Inkluderer abonnement 1:1 coaching?", a: "Nei. Abonnement gir gruppe + check-ins. 50-minutters 1:1 coaching er et premium-produkt som kjøpes separat. Abonnenter får 20% rabatt på enkelttimer." },
-  { q: "Hva er forskjellen på Foundation og Foundation+?", a: "Foundation+ gir dobbelt så mange check-ins (4 vs 2), meldingsstøtte med svar innen 24 timer, og kvartalsvis re-test for å måle fremgang." },
-  { q: "Hva inkluderer Foundation Elite?", a: "Alt i Foundation+, pluss dobbelt så mange gruppeøkter (4 vs 2), prioritert meldingsstøtte (svar innen 4t), kvartalsvis playing lesson og Decade Golf baneanalyse." },
-  { q: "Er det bindingstid?", a: "Nei. Alle abonnement er månedlige og kan sies opp når som helst." },
-  { q: "Hva skjer om jeg ikke bruker alle øktene mine?", a: "Ubrukte økter forfaller ved månedslutt. Du får en påminnelse 10 dager før." },
-  { q: "Hvilken pakke passer for meg?", a: "Start med Foundation Test. Du får en personlig anbefaling basert på dine mål, nivå og tilgjengelig treningstid." },
+  { q: "Hva er minimumsnivå for å delta?", a: "Vi tar imot spillere på alle nivåer, fra nybegynnere til elite. Det viktigste er motivasjon og treningsvilje. Vi tilpasser programmet etter ditt utgangspunkt og dine mål." },
+  { q: "Hvordan fungerer utviklingsplanen (IUP)?", a: "IUP er din personlige utviklingsplan med klare mål, ukentlige fokusområder og kontinuerlig justering basert på fremgang. Du får tilgang via vår spillerportal hvor du kan følge utviklingen din over tid." },
+  { q: "Kan jeg bytte pakke underveis?", a: "Ja, du kan oppgradere eller nedgradere pakken din når som helst. Endringen trer i kraft fra neste faktureringsperiode." },
+  { q: "Hva er avbestillingsreglene?", a: "Gratis avbestilling inntil 24 timer før timen. Avbestilling 12-24 timer før: 50% gebyr. Under 12 timer: full pris. No-show belastes full pris." },
+  { q: "Tilbyr dere coaching for juniorer?", a: "Ja! Vi har et eget Junior Academy-program for spillere mellom 13-19 år. Les mer på vår Junior-side eller ta kontakt for en uforpliktende samtale." },
+  { q: "Hvor holder dere til?", a: "Vi holder til på Glåmdal Golf & Aktiv (GFGK) i Vinger. Vi har tilgang til driving range, nærspillsområde, putting green og full 18-hulls bane." },
 ] as const;
+
+// ─── Final CTA ───
+export const FINAL_CTA = {
+  eyebrow: "Klar for å starte?",
+  heading: "Ta det første steget mot ditt beste spill",
+  description: "Book en uforpliktende samtale eller start direkte med din første coaching-time.",
+  ctaPrimary: "Book coaching nå",
+  ctaSecondary: "Ta kontakt først",
+  trustItems: [
+    { label: "Ingen binding", icon: "shield-check" },
+    { label: "Svar innen 24 timer", icon: "clock" },
+    { label: "Trygg betaling", icon: "credit-card" },
+  ],
+} as const;
 
 // ─── Method Pillars ───
 export const METHOD_PILLARS = [
@@ -645,6 +675,77 @@ export const ACADEMY_CTA = {
   ],
 } as const;
 
+// ─── Academy Hero ───
+export const ACADEMY_HERO = {
+  eyebrow: "AK Golf Academy",
+  heading: "Din sving. Din plan. Dine resultater.",
+  description: "Individuell coaching og skreddersydde utviklingsplaner for voksne spillere som vil ta spillet til neste nivå. Evidensbasert, personlig og med dokumenterte resultater.",
+} as const;
+
+// ─── Academy Philosophy Section ───
+export const ACADEMY_APPROACH = {
+  label: "Vår tilnærming",
+  heading: "Ingen to spillere er like.",
+  subheading: "Hvorfor skal treningen være det?",
+  paragraphs: [
+    "I AK Golf Academy starter alt med deg. Vi analyserer spillet ditt fra alle vinkler — teknikk, strategi, mentalt spill og fysikk — for å bygge en plan som er 100% tilpasset dine mål og ditt utgangspunkt.",
+    "Vår evidensbaserte metode kombinerer det beste fra moderne golftreningsforskning med praktisk erfaring fra coaching på alle nivåer, fra nybegynner til tour-spiller.",
+  ],
+} as const;
+
+// ─── Academy AK-Method Pillars ───
+export const ACADEMY_METHOD_PILLARS = [
+  {
+    number: "01",
+    title: "Teknisk analyse",
+    description: "Grundig analyse av sving, kontakt og bevegelsesmønster med avansert videoteknologi. Klare, konkrete tilbakemeldinger du kan handle på.",
+  },
+  {
+    number: "02",
+    title: "Strategisk spill",
+    description: "Kursmanagement, slagvalg og situasjonsanalyse. Lær deg å ta smartere beslutninger på banen — ikke bare slå hardere.",
+  },
+  {
+    number: "03",
+    title: "Mental styrke",
+    description: "Rutiner, fokus og prestasjon under press. Det mentale spillet er det som skiller gode spillere fra de som virkelig leverer.",
+  },
+] as const;
+
+// ─── Junior Hero ───
+export const JUNIOR_HERO = {
+  eyebrow: "Junior Academy",
+  heading: "Neste generasjon golfere starter her.",
+  description: "Strukturert talentutvikling for unge spillere med ambisjon. Fra grunnleggende ferdigheter til nasjonal og internasjonal konkurranse — vi bygger hele spilleren.",
+} as const;
+
+// ─── Junior Philosophy Section ───
+export const JUNIOR_PHILOSOPHY = {
+  label: "Vår filosofi",
+  heading: "Mer enn golf.",
+  subheading: "Mestring for livet.",
+  paragraphs: [
+    "Junior Academy handler om mer enn å lage bedre golfere. Vi utvikler unge mennesker som lærer disiplin, målsetting, samarbeid og evnen til å håndtere både seirer og motgang.",
+    "Vår aldersinndelte treningsstruktur sikrer at hver junior får utfordringer og støtte tilpasset sitt ståsted i utviklingen. Fra den første konkurranseopplevelsen til forberedelse for elite- og college-golf — med en naturlig overgang til vårt Academy-program for voksne.",
+  ],
+} as const;
+
+// ─── Junior Training Week ───
+export const JUNIOR_TRAINING_WEEK = [
+  { day: "Mandag", focus: "Teknikk & sving", description: "Individuell og gruppebasert teknikktrening med videoanalyse." },
+  { day: "Onsdag", focus: "Kort spill", description: "Putting, chipping og bunkerslag — ferdighetene som redder score." },
+  { day: "Torsdag", focus: "Banespill", description: "Kursmanagement, strategisk spill og simulerte turneringssituasjoner." },
+  { day: "Lørdag", focus: "Konkurranse", description: "Interne og eksterne turneringer, eller intensiv treningsøkt." },
+] as const;
+
+// ─── Junior CTA ───
+export const JUNIOR_CTA = {
+  eyebrow: "Neste generasjon starter nå",
+  heading: "Avtal et møte om Junior Academy.",
+  description: "Gi din junior en strukturert vei mot sine golfmål. Vi tar kontakt for en uforpliktende samtale.",
+  primaryCta: "Avtal et møte",
+} as const;
+
 // ─── Junior Age Groups (komplett med alle aldersgrupper) ───
 export const JUNIOR_AGE_GROUPS = [
   {
@@ -778,6 +879,38 @@ export const JUNIOR_PARENT_INFO = {
       ],
     },
   ],
+} as const;
+
+// ─── Utvikling Hero ───
+export const UTVIKLING_HERO = {
+  eyebrow: "Utvikling & Teknologi",
+  heading: "Teknologi og rådgiving for golfens fremtid.",
+  description: "Digitale treningsverktøy og sportslig rådgiving for golfklubber, forbund og trenere som vil ligge i forkant.",
+} as const;
+
+// ─── Utvikling Software Section ───
+export const UTVIKLING_SOFTWARE = {
+  label: "AK Golf Software",
+  heading: "Digitale verktøy som",
+  subheading: "forandrer treningshverdagen.",
+  description: "Vår programvare er utviklet av trenere, for trenere. Vi forstår hverdagen på rangen og på banen — og har bygget verktøy som faktisk gjør en forskjell.",
+} as const;
+
+// ─── Utvikling Klubb Section ───
+export const UTVIKLING_KLUBB = {
+  label: "Klubbtrening & Rådgiving",
+  heading: "Sportsplaner og rådgiving",
+  subheading: "for ambisiose klubber.",
+  description: "Vi hjelper golfklubber med å bygge sportslige strukturer som tiltrekker medlemmer, utvikler spillere og skaper resultater. Fra sportsplan til trenernettverk.",
+} as const;
+
+// ─── Utvikling CTA ───
+export const UTVIKLING_CTA = {
+  label: "Interessert?",
+  heading: "Book en samtale.",
+  description: "Vi starter alltid med en uforpliktende samtale for å forstå deres behov og ambisjoner. Deretter lager vi et skreddersydd forslag.",
+  primaryCta: "Book en samtale",
+  secondaryCta: "Tilbake til forsiden",
 } as const;
 
 // ─── Utvikling Products ───

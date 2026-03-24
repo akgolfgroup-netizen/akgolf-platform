@@ -23,6 +23,10 @@ import {
   JUNIOR_SEASON_PROGRAM,
   JUNIOR_PACKAGES,
   JUNIOR_PARENT_INFO,
+  JUNIOR_HERO,
+  JUNIOR_PHILOSOPHY,
+  JUNIOR_TRAINING_WEEK,
+  JUNIOR_CTA,
 } from "@/lib/website-constants";
 
 const juniorCoach = TEAM.find(m => m.name === "Anders Kristiansen");
@@ -49,9 +53,9 @@ export default function JuniorPage() {
         <PageTransition>
         {/* ─── Hero ─── */}
         <SubPageHero
-          eyebrow="Junior Academy"
-          heading="Neste generasjon golfere starter her."
-          description="Strukturert talentutvikling for unge spillere med ambisjon. Fra grunnleggende ferdigheter til nasjonal og internasjonal konkurranse — vi bygger hele spilleren."
+          eyebrow={JUNIOR_HERO.eyebrow}
+          heading={JUNIOR_HERO.heading}
+          description={JUNIOR_HERO.description}
           accent="junior"
         />
 
@@ -61,16 +65,18 @@ export default function JuniorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <RevealOnScroll>
                 <div>
-                  <SectionLabel>Vår filosofi</SectionLabel>
+                  <SectionLabel>{JUNIOR_PHILOSOPHY.label}</SectionLabel>
                   <h2 className="w-heading-lg mt-4 mb-6">
-                    Mer enn golf.<br />
-                    <span className="text-ink-50">Mestring for livet.</span>
+                    {JUNIOR_PHILOSOPHY.heading}<br />
+                    <span className="text-ink-50">{JUNIOR_PHILOSOPHY.subheading}</span>
                   </h2>
                   <p className="text-ink-50 leading-relaxed mb-4">
-                    Junior Academy handler om mer enn å lage bedre golfere. Vi utvikler unge mennesker som lærer disiplin, målsetting, samarbeid og evnen til å håndtere både seirer og motgang.
+                    {JUNIOR_PHILOSOPHY.paragraphs[0]}
                   </p>
                   <p className="text-ink-50 leading-relaxed">
-                    Vår aldersinndelte treningsstruktur sikrer at hver junior får utfordringer og støtte tilpasset sitt ståsted i utviklingen. Fra den første konkurranseopplevelsen til forberedelse for elite- og college-golf — med en naturlig overgang til vårt <Link href="/academy" className="text-junior underline underline-offset-2 hover:text-junior/80 transition-colors">Academy-program</Link> for voksne.
+                    {JUNIOR_PHILOSOPHY.paragraphs[1].split("Academy-program")[0]}
+                    <Link href="/academy" className="text-junior underline underline-offset-2 hover:text-junior/80 transition-colors">Academy-program</Link>
+                    {JUNIOR_PHILOSOPHY.paragraphs[1].split("Academy-program")[1]}
                   </p>
                 </div>
               </RevealOnScroll>
@@ -320,17 +326,12 @@ export default function JuniorPage() {
             </RevealOnScroll>
 
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { day: "Mandag", focus: "Teknikk & sving", desc: "Individuell og gruppebasert teknikktrening med videoanalyse." },
-                { day: "Onsdag", focus: "Kort spill", desc: "Putting, chipping og bunkerslag — ferdighetene som redder score." },
-                { day: "Torsdag", focus: "Banespill", desc: "Kursmanagement, strategisk spill og simulerte turneringssituasjoner." },
-                { day: "Lørdag", focus: "Konkurranse", desc: "Interne og eksterne turneringer, eller intensiv treningsøkt." },
-              ].map((item) => (
+              {JUNIOR_TRAINING_WEEK.map((item) => (
                 <StaggerItem key={item.day}>
                   <div className="w-card h-full">
                     <span className="w-meta text-junior">{item.day}</span>
                     <h4 className="font-display text-base font-semibold text-ink-90 mt-2 mb-2">{item.focus}</h4>
-                    <p className="text-sm text-ink-50 leading-relaxed">{item.desc}</p>
+                    <p className="text-sm text-ink-50 leading-relaxed">{item.description}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -407,10 +408,10 @@ export default function JuniorPage() {
 
         {/* ─── CTA ─── */}
         <CTASection
-          eyebrow="Neste generasjon starter nå"
-          heading="Avtal et møte om Junior Academy."
-          description="Gi din junior en strukturert vei mot sine golfmål. Vi tar kontakt for en uforpliktende samtale."
-          ctaLabel="Avtal et møte"
+          eyebrow={JUNIOR_CTA.eyebrow}
+          heading={JUNIOR_CTA.heading}
+          description={JUNIOR_CTA.description}
+          ctaLabel={JUNIOR_CTA.primaryCta}
           ctaHref="#apply"
         />
 

@@ -126,6 +126,10 @@ model User {
   goals             Goal[]
   appSubscriptions  AppSubscription[]
 
+  // Øvelsebank
+  createdExercises  ExerciseDefinition[] @relation("CreatedExercises")
+  exerciseBank      UserExerciseBank[]
+
   stripeCustomerId String? @unique
 
   createdAt DateTime @default(now())
@@ -607,6 +611,66 @@ model TrainingPlanSession {
   createdAt DateTime @default(now())
 
   @@index([weekId])
+}
+
+// ============================================================
+// EXERCISE BANK (Øvelsebibliotek)
+// ============================================================
+
+model ExerciseDefinition {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?  @db.Text
+  instructions String?  @db.Text
+  videoUrl     String?
+  imageUrl     String?
+
+  // AK-formelen kategorisering
+  pyramid         String   // FYS, TEK, SLAG, SPILL, TURN
+  area            String   // TEE, INN200, CHIP, PUTT0-3, etc.
+  lPhase          String?  // KROPP, ARM, KØLLE, BALL, AUTO
+  pPositionStart  String?  // P1-P9
+  pPositionEnd    String?  // P1-P9
+
+  // Utstyr og krav
+  equipment             String[]
+  minDurationMinutes    Int      @default(5)
+  maxDurationMinutes    Int      @default(30)
+
+  // Metadata
+  difficulty     Int      @default(2) // 1-5
+  isPublic       Boolean  @default(false)
+  isSystemDrill  Boolean  @default(false) // Standard AK Golf drill
+  createdById    String?
+  tags           String[]
+
+  createdBy    User?              @relation("CreatedExercises", fields: [createdById], references: [id])
+  bankEntries  UserExerciseBank[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([pyramid])
+  @@index([area])
+  @@index([isPublic])
+}
+
+model UserExerciseBank {
+  id           String   @id @default(cuid())
+  userId       String
+  exerciseId   String
+  isFavorite   Boolean  @default(false)
+  usageCount   Int      @default(0)
+  lastUsedAt   DateTime?
+  personalNotes String? @db.Text
+
+  user     User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise ExerciseDefinition @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, exerciseId])
+  @@index([userId])
 }
 
 // ============================================================

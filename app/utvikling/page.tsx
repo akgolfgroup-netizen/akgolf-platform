@@ -17,6 +17,10 @@ import {
   KLUBB_FEATURES,
   UTVIKLING_PRODUCTS,
   UTVIKLING_CASE_STUDIES,
+  UTVIKLING_HERO,
+  UTVIKLING_SOFTWARE,
+  UTVIKLING_KLUBB,
+  UTVIKLING_CTA,
 } from "@/lib/website-constants";
 
 export default function UtviklingPage() {
@@ -41,9 +45,9 @@ export default function UtviklingPage() {
         <PageTransition>
         {/* ─── Hero ─── */}
         <SubPageHero
-          eyebrow="Utvikling & Teknologi"
-          heading="Teknologi og rådgiving for golfens fremtid."
-          description="Digitale treningsverktøy og sportslig rådgiving for golfklubber, forbund og trenere som vil ligge i forkant."
+          eyebrow={UTVIKLING_HERO.eyebrow}
+          heading={UTVIKLING_HERO.heading}
+          description={UTVIKLING_HERO.description}
           accent="utvikling"
         />
 
@@ -55,14 +59,14 @@ export default function UtviklingPage() {
                 <div>
                   <div className="flex items-center gap-3 mb-4">
                     <span className="w-2 h-2 rounded-full bg-software" />
-                    <SectionLabel>AK Golf Software</SectionLabel>
+                    <SectionLabel>{UTVIKLING_SOFTWARE.label}</SectionLabel>
                   </div>
                   <h2 className="w-heading-lg mb-6">
-                    Digitale verktøy som<br />
-                    <span className="text-ink-50">forandrer treningshverdagen.</span>
+                    {UTVIKLING_SOFTWARE.heading}<br />
+                    <span className="text-ink-50">{UTVIKLING_SOFTWARE.subheading}</span>
                   </h2>
                   <p className="text-ink-50 leading-relaxed">
-                    Vår programvare er utviklet av trenere, for trenere. Vi forstår hverdagen på rangen og på banen — og har bygget verktøy som faktisk gjør en forskjell.
+                    {UTVIKLING_SOFTWARE.description}
                   </p>
                 </div>
               </RevealOnScroll>
@@ -96,14 +100,14 @@ export default function UtviklingPage() {
                 <div>
                   <div className="flex items-center gap-3 mb-4">
                     <span className="w-2 h-2 rounded-full bg-utvikling" />
-                    <SectionLabel>Klubbtrening & Rådgiving</SectionLabel>
+                    <SectionLabel>{UTVIKLING_KLUBB.label}</SectionLabel>
                   </div>
                   <h2 className="w-heading-lg mb-6">
-                    Sportsplaner og rådgiving<br />
-                    <span className="text-ink-50">for ambisiose klubber.</span>
+                    {UTVIKLING_KLUBB.heading}<br />
+                    <span className="text-ink-50">{UTVIKLING_KLUBB.subheading}</span>
                   </h2>
                   <p className="text-ink-50 leading-relaxed">
-                    Vi hjelper golfklubber med å bygge sportslige strukturer som tiltrekker medlemmer, utvikler spillere og skaper resultater. Fra sportsplan til trenernettverk.
+                    {UTVIKLING_KLUBB.description}
                   </p>
                 </div>
               </RevealOnScroll>
@@ -114,7 +118,7 @@ export default function UtviklingPage() {
             <RevealOnScroll>
               <div className="mt-12 text-center">
                 <Link href="#apply" className="w-btn w-btn-primary">
-                  Book en samtale
+                  {UTVIKLING_CTA.primaryCta}
                 </Link>
               </div>
             </RevealOnScroll>
@@ -210,17 +214,17 @@ export default function UtviklingPage() {
           <div className="w-container">
             <RevealOnScroll>
               <div className="max-w-2xl mx-auto text-center">
-                <SectionLabel>Interessert?</SectionLabel>
-                <h2 className="w-heading-lg mt-4 mb-4">Book en samtale.</h2>
+                <SectionLabel>{UTVIKLING_CTA.label}</SectionLabel>
+                <h2 className="w-heading-lg mt-4 mb-4">{UTVIKLING_CTA.heading}</h2>
                 <p className="text-ink-50 leading-relaxed mb-8">
-                  Vi starter alltid med en uforpliktende samtale for å forstå deres behov og ambisjoner. Deretter lager vi et skreddersydd forslag.
+                  {UTVIKLING_CTA.description}
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <Link href="#apply" className="w-btn w-btn-primary">
-                    Book en samtale
+                    {UTVIKLING_CTA.primaryCta}
                   </Link>
                   <Link href="/" className="w-btn w-btn-secondary">
-                    Tilbake til forsiden &rarr;
+                    {UTVIKLING_CTA.secondaryCta} &rarr;
                   </Link>
                 </div>
               </div>
