@@ -8,15 +8,15 @@ export const NAV_LINKS = [
 // ─── Hero ───
 export const HERO = {
   eyebrow: "AK Golf Academy",
-  heading: "Coaching som endrer spillet.",
-  subheading: "Individuell coaching på høyeste nivå for ambisiøse golfere som ønsker resultater.",
+  heading: "Bli en bedre golfspiller — med system",
+  subheading: "AK Golf Academy kombinerer individuell coaching med en digital treningsplattform som følger deg mellom sesjonene. Strukturert utvikling for golfspillere på alle nivåer.",
   statusBadge: "Sesong 2026 - begrenset kapasitet",
-  ctaPrimary: "Book coaching",
+  ctaPrimary: "Se pakker og priser",
   ctaSecondary: "Les mer om Academy",
   trustItems: [
-    { label: "Treningsformelen" },
-    { label: "Utviklingsplaner" },
-    { label: "Langsiktig utvikling" },
+    { label: "20-minutters sesjoner" },
+    { label: "Digital treningsplan" },
+    { label: "TrackMan-analyse" },
   ],
   stats: [
     { value: "500+", label: "Spillere utviklet" },
@@ -68,18 +68,18 @@ export const FOUNDATION_METHOD = {
 export const TEAM = [
   {
     name: "Anders Kristiansen",
-    role: "Hovedtrener",
-    division: "AK Golf Junior Academy",
-    bio: "Med over 10 års erfaring som golftrener på høyeste nivå har Anders viet karrieren sin til å hjelpe ambisiøse spillere med å nå sitt fulle potensial. Hans filosofi er enkel: teknikk alene er ikke nok — de beste resultatene kommer når vi jobber med hele spilleren.",
-    certifications: ["PGA Professional", "TPI Certified", "Mental Coach", "Trackman Certified"],
+    role: "Hovedcoach",
+    division: "AK Golf Academy",
+    bio: "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse og DECADE-metodikk. Hver spiller får en individuell utviklingsplan — ikke bare data, men konkret retning.",
+    certifications: ["PGA Professional", "TPI Certified", "TrackMan Certified", "DECADE Certified"],
     contact: { email: "anders@akgolf.no", phone: "+47 909 67 995" },
   },
   {
-    name: "Markus Røinås Pedersen",
-    role: "Coach · Hovedtrener GFGK Junior",
+    name: "Markus",
+    role: "Assistentcoach",
     division: "AK Golf Academy",
-    bio: "Markus er coach i AK Golf Academy og hovedtrener for junioravdelingen på GFGK. Med bakgrunn i juniorutvikling og konkurransegolf skaper han et trygt og motiverende miljø der unge spillere kan vokse — både som golfere og mennesker.",
-    certifications: ["PGA Professional"],
+    bio: "College-golf fra USA. Spesialisert på gruppetrening, banecoaching og nybegynneropplæring. Kjører 9 Hull, After Work, Første Sesong og banecoaching på korthullsbanen. 20 min individuell coaching: 300 kr.",
+    certifications: [],
     contact: { email: "markus@akgolf.no", phone: "+47 905 86 097" },
   },
 ] as const;
@@ -115,12 +115,12 @@ export const DIVISIONS = [
 // ─── How It Works ───
 export const HOW_IT_WORKS = {
   eyebrow: "Slik fungerer det",
-  heading: "20 minutter som endrer spillet ditt.",
+  heading: "20 minutter som endrer spillet ditt",
   description: "Tradisjonell golfcoaching er én time, én gang i blant, uten oppfølging mellom sesjonene. Vi gjør det annerledes. Våre coaching-sesjoner er 20 minutter — fokuserte, målrettede og uten fyllminutter. Hver sesjon har ett mål. Etterpå oppdateres treningsplanen din i appen, slik at du vet nøyaktig hva du skal jobbe med til neste gang.",
   steps: [
-    { number: "01", title: "Start med Foundation Test", description: "50 minutter. TrackMan-analyse, putting-test og personlig anbefaling. Du får en baseline og vet nøyaktig hvor du står." },
-    { number: "02", title: "Velg ditt Foundation-nivå", description: "Tre pakker: Foundation, Foundation+ eller Foundation Elite. Alle inkluderer gruppe + individuelle check-ins + spillerportal." },
-    { number: "03", title: "Tren med system", description: "Gruppetrening for teknikk, check-ins for oppfølging, portal for treningsplan. Alt henger sammen." },
+    { number: "01", title: "Book selv i appen", description: "Velg tid som passer deg. Performance Pro-medlemmer ser tider 14 dager frem, Performance ser 7 dager." },
+    { number: "02", title: "20 minutter med fokus", description: "Én ting per sesjon. Teknisk veiledning etter plan — ikke tilfeldig trening. TrackMan bekrefter at endringene sitter." },
+    { number: "03", title: "Tren mellom sesjonene", description: "Treningsplanen oppdateres etter hver sesjon. Øvelsesbank, statistikk og progresjonslogging holder deg på sporet." },
   ],
 } as const;
 
@@ -306,14 +306,14 @@ export const METHOD_PILLARS = [
 // ─── Founder ───
 export const FOUNDER = {
   name: "Anders Kristiansen",
-  title: "Grunnlegger & Head Pro",
+  title: "Grunnlegger & Head Coach",
   bio: [
-    "Med over 10 års erfaring som golftrenere på høyeste nivå har jeg viet karrieren min til å hjelpe ambisiøse spillere med å nå sitt fulle potensial. Fra juniorer med drøm om college-golf til voksne som jakter personlige mål — tilnærmingen er alltid individuell, evidensbasert og resultatorientert.",
-    "Jeg grunnla AK Golf Group fordi jeg så et gap i markedet: spillere som ønsket mer enn generelle tips og gruppeundervisning, men en ekte partner i utviklingen. En trener som kjenner spillet ditt, følger opp mellom øktene, og justerer planen basert på data — ikke magefølelse.",
-    "Min filosofi er enkel: teknikk alene er ikke nok. De beste resultatene kommer når vi jobber med hele spilleren — teknikk, strategi, mentalt spill og fysikk — i et integrert system tilpasset akkurat deg.",
+    "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse og DECADE-metodikk.",
+    "Hver spiller får en individuell utviklingsplan som oppdateres etter hver sesjon — ikke bare data fra TrackMan, men konkret retning og nøyaktig hva du skal jobbe med til neste gang.",
+    "Min filosofi er enkel: coaching-sesjonen er kontaktpunktet, spillerportalen er motoren. Alt henger sammen — trening mellom sesjoner, statistikk, og progresjon over tid.",
   ],
-  certifications: ["PGA Professional", "TPI Certified", "Mental Coach", "Trackman Certified"],
-  experience: "10+",
+  certifications: ["PGA Professional", "TPI Certified", "TrackMan Certified", "DECADE Certified"],
+  experience: "15+",
 } as const;
 
 // ─── Testimonials ───
