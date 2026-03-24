@@ -70,8 +70,8 @@ export const TEAM = [
     name: "Anders Kristiansen",
     role: "Hovedcoach",
     division: "AK Golf Academy",
-    bio: "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse og DECADE-metodikk. Hver spiller får en individuell utviklingsplan — ikke bare data, men konkret retning.",
-    certifications: ["PGA Professional", "TPI Certified", "TrackMan Certified", "DECADE Certified"],
+    bio: "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse. Hver spiller får en individuell utviklingsplan — ikke bare data, men konkret retning.",
+    certifications: ["PGA Professional", "TPI Certified", "TrackMan Certified"],
     contact: { email: "anders@akgolf.no", phone: "+47 909 67 995" },
   },
   {
@@ -308,11 +308,11 @@ export const FOUNDER = {
   name: "Anders Kristiansen",
   title: "Grunnlegger & Head Coach",
   bio: [
-    "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse og DECADE-metodikk.",
+    "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse.",
     "Hver spiller får en individuell utviklingsplan som oppdateres etter hver sesjon — ikke bare data fra TrackMan, men konkret retning og nøyaktig hva du skal jobbe med til neste gang.",
     "Min filosofi er enkel: coaching-sesjonen er kontaktpunktet, spillerportalen er motoren. Alt henger sammen — trening mellom sesjoner, statistikk, og progresjon over tid.",
   ],
-  certifications: ["PGA Professional", "TPI Certified", "TrackMan Certified", "DECADE Certified"],
+  certifications: ["PGA Professional", "TPI Certified", "TrackMan Certified"],
   experience: "15+",
 } as const;
 
@@ -1099,7 +1099,7 @@ export const FOUNDATION_METHOD_CONCEPT = {
   principles: [
     { title: "Fundament først", description: "Pyramiden: FYS → TEK → SLAG → SPILL → TURN" },
     { title: "Systematisk progresjon", description: "L-faser: KROPP → ARM → KØLLE → BALL → AUTO" },
-    { title: "Data erstatter følelser", description: "TrackMan + Decade Golf + portal" },
+    { title: "Data erstatter følelser", description: "TrackMan + spillerportal" },
     { title: "Hele spilleren", description: "Teknikk + strategi + fysisk + mental + livsmestring" },
     { title: "Individuell plan, felles standard", description: "Skreddersydd for deg, basert på bevist metodikk" },
   ],
