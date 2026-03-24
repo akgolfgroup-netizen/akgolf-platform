@@ -57,9 +57,24 @@ enum UserRole {
 }
 
 enum SubscriptionTier {
-  FREE
+  VISITOR
+  ACADEMY
+  STARTER
   PRO
   ELITE
+}
+
+enum SubscriptionSource {
+  COACHING
+  STRIPE
+  MANUAL
+}
+
+enum DashboardRole {
+  ADMIN
+  INSTRUCTOR
+  VOLUNTEER
+  CLUB_REP
 }
 
 model User {
@@ -72,12 +87,17 @@ model User {
   phone         String?
   role          UserRole  @default(STUDENT)
 
-  subscriptionTier     SubscriptionTier @default(FREE)
-  calendarToken        String?          @unique
-  googleCalendarTokens Json?
-  googleCalendarId     String?
-  password             String?
-  notionPageId         String?
+  subscriptionTier       SubscriptionTier    @default(VISITOR)
+  subscriptionSource     SubscriptionSource?
+  stripeSubscriptionId   String?
+  subscriptionExpiresAt  DateTime?
+  activeCoachingCustomer Boolean             @default(false)
+  isActive               Boolean             @default(true)
+  calendarToken          String?             @unique
+  googleCalendarTokens   Json?
+  googleCalendarId       String?
+  password               String?
+  notionPageId           String?
 
   accounts Account[]
   sessions Session[]
@@ -108,6 +128,20 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// DASHBOARD ACCESS (delt med akgolf-dashboard)
+// ============================================================
+
+model DashboardAccess {
+  id        String        @id @default(cuid())
+  email     String        @unique
+  role      DashboardRole
+  name      String?
+  active    Boolean       @default(true)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }
 
 // ============================================================
