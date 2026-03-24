@@ -7,9 +7,9 @@ import { Check, Mail, Calendar, Clock, CreditCard, User, LogIn } from "lucide-re
 const THEME = {
   bg: "#FAFBFC",
   bgElevated: "#FFFFFF",
-  gold: "#B8975C",
+  gold: "#B07D4F",
   goldLight: "#E8D4B0",
-  navy: "#0F2950",
+  navy: "#0A1929",
   text: "#02060D",
   textMuted: "#64748B",
   border: "#EBE5DA",

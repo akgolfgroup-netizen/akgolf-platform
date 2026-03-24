@@ -31,19 +31,19 @@ const focusColors: Record<string, { bg: string; border: string; text: string; ic
     bg: "rgba(59,130,246,0.15)",
     border: "rgba(59,130,246,0.4)",
     text: "#93C5FD",
-    icon: "#3B82F6"
+    icon: "#38BDF8"
   },
   naerspill: {
     bg: "rgba(184,151,92,0.15)",
     border: "rgba(184,151,92,0.4)",
     text: "#E8D4B0",
-    icon: "#B8975C"
+    icon: "#B07D4F"
   },
   putting: {
     bg: "rgba(34,197,94,0.15)",
     border: "rgba(34,197,94,0.4)",
     text: "#86EFAC",
-    icon: "#22C55E"
+    icon: "#10B981"
   },
   bane: {
     bg: "rgba(139,92,246,0.15)",
@@ -189,7 +189,7 @@ export function WeekView({
                       >
                         {/* Focus area badge */}
                         <div className="flex items-center gap-1.5 mb-2">
-                          <Dumbbell className="w-3 h-3" style={{ color: isLogged ? "#22C55E" : focusStyle.icon }} />
+                          <Dumbbell className="w-3 h-3" style={{ color: isLogged ? "#10B981" : focusStyle.icon }} />
                           <span
                             className="text-[10px] font-medium uppercase tracking-wide"
                             style={{ color: isLogged ? "#86EFAC" : focusStyle.text }}
@@ -215,7 +215,7 @@ export function WeekView({
                         {showCompleteButton && (
                           <div className="mt-2">
                             {isLogged ? (
-                              <div className="flex items-center gap-1.5 text-[10px] font-medium text-[#22C55E]">
+                              <div className="flex items-center gap-1.5 text-[10px] font-medium text-[#10B981]">
                                 <CheckCircle2 className="w-3.5 h-3.5" />
                                 Fullført
                               </div>

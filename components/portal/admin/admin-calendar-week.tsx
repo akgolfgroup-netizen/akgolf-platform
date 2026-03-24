@@ -26,7 +26,7 @@ function bookingHeight(startTime: Date, endTime: Date): number {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  CONFIRMED: "#22c55e",
+  CONFIRMED: "#10b981",
   PENDING: "#f59e0b",
   COMPLETED: "#6b7280",
   NO_SHOW: "#ef4444",

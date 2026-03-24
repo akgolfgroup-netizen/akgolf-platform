@@ -163,7 +163,7 @@ export default async function StatistikkPage() {
         {/* SG Explanation */}
         <details className="rounded-lg border border-[#E5E5E5] overflow-hidden bg-white">
           <summary className="flex items-center gap-2 px-4 py-3 cursor-pointer hover:bg-[#F5F5F5] transition-colors">
-            <Info className="w-4 h-4 text-[#B8975C]" />
+            <Info className="w-4 h-4 text-[#B07D4F]" />
             <span className="text-sm font-medium text-[#171717]">Hva er Strokes Gained?</span>
           </summary>
           <div className="px-4 pb-4 pt-2 border-t border-[#E5E5E5]">
@@ -173,7 +173,7 @@ export default async function StatistikkPage() {
             <div className="space-y-2">
               {PORTAL_CONTENT.statistikk.sgExplanation.categories.map((cat) => (
                 <div key={cat.key} className="flex gap-3">
-                  <span className="text-xs font-semibold text-[#B8975C] shrink-0 w-24">{cat.key}</span>
+                  <span className="text-xs font-semibold text-[#B07D4F] shrink-0 w-24">{cat.key}</span>
                   <span className="text-xs text-[#525252]">{cat.description}</span>
                 </div>
               ))}

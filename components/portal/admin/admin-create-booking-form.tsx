@@ -46,7 +46,7 @@ export function AdminCreateBookingForm({ serviceTypes, instructors }: Props) {
   if (success) {
     return (
       <div className="bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.4)] rounded-2xl p-8 text-center">
-        <Check className="w-8 h-8 text-[#22C55E] mx-auto mb-3" />
+        <Check className="w-8 h-8 text-[#10B981] mx-auto mb-3" />
         <p className="text-[#86EFAC] font-semibold">Booking opprettet!</p>
       </div>
     );

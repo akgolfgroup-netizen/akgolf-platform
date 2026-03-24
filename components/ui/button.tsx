@@ -17,7 +17,7 @@ export interface ButtonProps {
 }
 
 const variants = {
-  primary: "bg-gradient-to-r from-[#B8975C] to-[#D4C4A8] text-white shadow-gold",
+  primary: "bg-gradient-to-r from-[#B07D4F] to-[#D4C4A8] text-white shadow-gold",
   secondary: "bg-navy text-white hover:bg-navy-light",
   ghost: "bg-transparent text-navy hover:bg-navy/5",
   outline: "bg-transparent border-2 border-navy text-navy hover:bg-navy/5",

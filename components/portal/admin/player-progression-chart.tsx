@@ -110,7 +110,7 @@ export function PlayerProgressionChart({
       <div className="flex items-center gap-6 mb-4">
         <div>
           <p className="text-xs text-gray-500 uppercase tracking-wider">Nåværende</p>
-          <p className="text-2xl font-bold text-[#0F2950]">{lastHcp.toFixed(1)}</p>
+          <p className="text-2xl font-bold text-[#0A1929]">{lastHcp.toFixed(1)}</p>
         </div>
         {improvement !== 0 && (
           <div>
@@ -122,7 +122,7 @@ export function PlayerProgressionChart({
         )}
         <div>
           <p className="text-xs text-gray-500 uppercase tracking-wider">Coaching-økter</p>
-          <p className="text-lg font-semibold text-[#B8975C]">{coachingSessions.length}</p>
+          <p className="text-lg font-semibold text-[#B07D4F]">{coachingSessions.length}</p>
         </div>
       </div>
 
@@ -156,9 +156,9 @@ export function PlayerProgressionChart({
           <Line
             type="monotone"
             dataKey="handicap"
-            stroke="#B8975C"
+            stroke="#B07D4F"
             strokeWidth={2}
-            dot={{ fill: "#B8975C", r: 3, strokeWidth: 0 }}
+            dot={{ fill: "#B07D4F", r: 3, strokeWidth: 0 }}
             activeDot={{ r: 5 }}
           />
           {reg && (
@@ -178,7 +178,7 @@ export function PlayerProgressionChart({
               x={data[marker.x]?.date}
               y={marker.y}
               r={6}
-              fill="#3B82F6"
+              fill="#38BDF8"
               stroke="white"
               strokeWidth={2}
             />
@@ -189,16 +189,16 @@ export function PlayerProgressionChart({
       {/* Legend */}
       <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-0.5 bg-[#B8975C]" />
+          <div className="w-3 h-0.5 bg-[#B07D4F]" />
           <span>Handicap</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#3B82F6]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#38BDF8]" />
           <span>Coaching-økt</span>
         </div>
         {reg && (
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 bg-[#B8975C]/30" style={{ backgroundImage: "repeating-linear-gradient(90deg, #B8975C 0, #B8975C 4px, transparent 4px, transparent 8px)" }} />
+            <div className="w-3 h-0.5 bg-[#B07D4F]/30" style={{ backgroundImage: "repeating-linear-gradient(90deg, #B07D4F 0, #B07D4F 4px, transparent 4px, transparent 8px)" }} />
             <span>Trend</span>
           </div>
         )}

@@ -27,7 +27,7 @@ const statusConfig: Record<string, { label: string; bg: string; color: string }>
 
 export function BookingCard({ booking }: BookingCardProps) {
   const status = statusConfig[booking.status] ?? statusConfig.PENDING;
-  const accent = booking.serviceType.color ?? "#B8975C";
+  const accent = booking.serviceType.color ?? "#B07D4F";
 
   return (
     <div

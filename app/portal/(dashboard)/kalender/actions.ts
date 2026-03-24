@@ -37,7 +37,7 @@ export interface PeriodBand {
 }
 
 const PERIOD_COLORS: Record<string, string> = {
-  grunnperiode: "#3B82F6",
+  grunnperiode: "#38BDF8",
   spesialiseringsperiode: "#F97316",
   turneringsperiode: "#EF4444",
 };
@@ -107,7 +107,7 @@ export async function getCalendarEvents(
       title: b.serviceType.name,
       startDate: b.startTime,
       endDate: b.endTime,
-      color: "#3B82F6",
+      color: "#38BDF8",
     });
   }
 
@@ -118,7 +118,7 @@ export async function getCalendarEvents(
       type: "coaching",
       title: c.primaryFocus ?? "Coachingsesjon",
       startDate: c.sessionDate,
-      color: "#B8975C",
+      color: "#B07D4F",
     });
   }
 
@@ -134,7 +134,7 @@ export async function getCalendarEvents(
             type: "training",
             title: s.title,
             startDate: sessionDate,
-            color: "#22C55E",
+            color: "#10B981",
           });
         }
       }
@@ -152,7 +152,7 @@ export async function getCalendarEvents(
       title: tp.tournament.name,
       startDate: tp.tournament.startDate,
       endDate: tp.tournament.endDate ?? undefined,
-      color: goalConfig?.color ?? "#B8975C",
+      color: goalConfig?.color ?? "#B07D4F",
       allDay: true,
     });
   }
@@ -187,6 +187,6 @@ export async function getPeriodizationBands(
     startDate: p.startDate,
     endDate: p.endDate,
     label: p.label,
-    color: PERIOD_COLORS[p.periodType] ?? "#3B82F6",
+    color: PERIOD_COLORS[p.periodType] ?? "#38BDF8",
   }));
 }

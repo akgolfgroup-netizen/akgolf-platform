@@ -213,7 +213,7 @@ export function ApperClient({
                       className="px-4 py-2 rounded-xl text-xs font-semibold transition-colors"
                       style={{
                         background: isPremium
-                          ? "linear-gradient(135deg, #c9a96e, #B8975C)"
+                          ? "linear-gradient(135deg, #c9a96e, #B07D4F)"
                           : "rgba(184,151,92,0.2)",
                         color: isPremium ? "#0a1929" : "var(--color-gold)",
                       }}
@@ -292,7 +292,7 @@ export function ApperClient({
                       className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors"
                       style={{
                         background: "rgba(34,197,94,0.2)",
-                        color: "#22C55E",
+                        color: "#10B981",
                       }}
                     >
                       {loading === mod.slug ? (

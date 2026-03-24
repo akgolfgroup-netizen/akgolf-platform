@@ -10,10 +10,10 @@
 export const colors = {
   // Primære brand-farger
   primary: {
-    midnightNavy: '#0F2950',
+    midnightNavy: '#0A1929',
     navyLight: '#10456A',
     navyDark: '#0A1929',
-    softGold: '#B8975C',
+    softGold: '#B07D4F',
     goldLight: '#D4C4A8',
     goldDark: '#8B7243',
     goldMuted: '#E8D4B0',
@@ -48,7 +48,7 @@ export const colors = {
 
   // Sub-brand farger
   subBrand: {
-    academy: '#0F2950',
+    academy: '#0A1929',
     academyLight: '#10456A',
     academyDark: '#0A1929',
     junior: '#3B82F6',

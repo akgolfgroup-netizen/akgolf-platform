@@ -18,16 +18,16 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 const THEME = {
   bg: "#FAFBFC",
   bgElevated: "#FFFFFF",
-  gold: "#B8975C",
+  gold: "#B07D4F",
   goldLight: "#E8D4B0",
-  navy: "#0F2950",
+  navy: "#0A1929",
   text: "#02060D",
   textMuted: "#64748B",
   textLight: "#9CA3AF",
   border: "#EBE5DA",
   error: "#EF4444",
   shadow: "0 4px 8px rgba(0,0,0,0.1)",
-  shadowGold: "0 4px 16px rgba(184,151,92,0.3)",
+  shadowGold: "0 4px 16px rgba(176,125,79,0.3)",
 };
 
 interface CheckoutFormProps {

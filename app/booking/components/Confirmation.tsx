@@ -43,7 +43,7 @@ function AnimatedCheckmark() {
       >
         <motion.path
           d="M5 13l4 4L19 7"
-          stroke="#22C55E"
+          stroke="#10B981"
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -58,26 +58,26 @@ function AnimatedCheckmark() {
 
 // Confetti particles with pre-generated values to avoid Math.random in render
 const CONFETTI_PARTICLES = [
-  { id: 0, color: "#B8975C", left: 15, x: 45, duration: 2.5, delay: 0.1 },
-  { id: 1, color: "#0F2950", left: 28, x: -32, duration: 3.2, delay: 0.2 },
+  { id: 0, color: "#B07D4F", left: 15, x: 45, duration: 2.5, delay: 0.1 },
+  { id: 1, color: "#0A1929", left: 28, x: -32, duration: 3.2, delay: 0.2 },
   { id: 2, color: "#D4C4A8", left: 42, x: 18, duration: 2.8, delay: 0.05 },
-  { id: 3, color: "#22C55E", left: 55, x: -65, duration: 3.5, delay: 0.3 },
-  { id: 4, color: "#B8975C", left: 68, x: 28, duration: 2.2, delay: 0.15 },
-  { id: 5, color: "#0F2950", left: 82, x: -42, duration: 3.8, delay: 0.25 },
+  { id: 3, color: "#10B981", left: 55, x: -65, duration: 3.5, delay: 0.3 },
+  { id: 4, color: "#B07D4F", left: 68, x: 28, duration: 2.2, delay: 0.15 },
+  { id: 5, color: "#0A1929", left: 82, x: -42, duration: 3.8, delay: 0.25 },
   { id: 6, color: "#D4C4A8", left: 12, x: 55, duration: 2.6, delay: 0.35 },
-  { id: 7, color: "#22C55E", left: 35, x: -15, duration: 3.0, delay: 0.08 },
-  { id: 8, color: "#B8975C", left: 48, x: 72, duration: 2.4, delay: 0.22 },
-  { id: 9, color: "#0F2950", left: 62, x: -48, duration: 3.3, delay: 0.12 },
+  { id: 7, color: "#10B981", left: 35, x: -15, duration: 3.0, delay: 0.08 },
+  { id: 8, color: "#B07D4F", left: 48, x: 72, duration: 2.4, delay: 0.22 },
+  { id: 9, color: "#0A1929", left: 62, x: -48, duration: 3.3, delay: 0.12 },
   { id: 10, color: "#D4C4A8", left: 75, x: 38, duration: 2.7, delay: 0.4 },
-  { id: 11, color: "#22C55E", left: 88, x: -25, duration: 3.6, delay: 0.18 },
-  { id: 12, color: "#B8975C", left: 22, x: 62, duration: 2.3, delay: 0.28 },
-  { id: 13, color: "#0F2950", left: 38, x: -55, duration: 3.1, delay: 0.38 },
+  { id: 11, color: "#10B981", left: 88, x: -25, duration: 3.6, delay: 0.18 },
+  { id: 12, color: "#B07D4F", left: 22, x: 62, duration: 2.3, delay: 0.28 },
+  { id: 13, color: "#0A1929", left: 38, x: -55, duration: 3.1, delay: 0.38 },
   { id: 14, color: "#D4C4A8", left: 52, x: 35, duration: 2.9, delay: 0.02 },
-  { id: 15, color: "#22C55E", left: 65, x: -72, duration: 3.4, delay: 0.32 },
-  { id: 16, color: "#B8975C", left: 78, x: 22, duration: 2.1, delay: 0.42 },
-  { id: 17, color: "#0F2950", left: 92, x: -38, duration: 3.7, delay: 0.06 },
+  { id: 15, color: "#10B981", left: 65, x: -72, duration: 3.4, delay: 0.32 },
+  { id: 16, color: "#B07D4F", left: 78, x: 22, duration: 2.1, delay: 0.42 },
+  { id: 17, color: "#0A1929", left: 92, x: -38, duration: 3.7, delay: 0.06 },
   { id: 18, color: "#D4C4A8", left: 8, x: 48, duration: 2.5, delay: 0.16 },
-  { id: 19, color: "#22C55E", left: 45, x: -62, duration: 3.9, delay: 0.26 },
+  { id: 19, color: "#10B981", left: 45, x: -62, duration: 3.9, delay: 0.26 },
 ];
 
 function Confetti() {

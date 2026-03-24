@@ -4,6 +4,7 @@ import { BookingStatus } from "@prisma/client";
 import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import Link from "next/link";
+import { PORTAL_CONTENT } from "@/lib/website-constants";
 import {
   Bell,
   Plus,
@@ -132,10 +133,10 @@ export default async function DashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">
-            Hei, {user.name?.split(" ")[0] ?? "spiller"}!
+            {PORTAL_CONTENT.dashboard.welcomeTemplate.replace("{name}", user.name?.split(" ")[0] ?? "spiller")}
           </h1>
           <p className="text-sm text-[#737373] mt-1">
-            Velkommen tilbake. Her er din oversikt.
+            Her er din oversikt for {format(now, "EEEE d. MMMM", { locale: nb })}.
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -398,7 +399,7 @@ export default async function DashboardPage() {
               ))}
               {weekBookings.length === 0 && (
                 <p className="text-sm text-[#737373] text-center py-4">
-                  Ingen kommende okter denne uken
+                  {PORTAL_CONTENT.dashboard.emptyBookings}
                 </p>
               )}
             </div>

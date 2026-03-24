@@ -13,7 +13,7 @@ import {
   Bed,
   Calendar,
 } from "lucide-react";
-import { PORTAL_EMPTY_STATES } from "@/lib/website-constants";
+import { PORTAL_CONTENT } from "@/lib/website-constants";
 import { format, startOfISOWeek, addDays, isToday } from "date-fns";
 import { nb } from "date-fns/locale";
 import Link from "next/link";
@@ -195,6 +195,23 @@ export default async function TreningsplanPage() {
       </div>
 
       <div className="max-w-6xl space-y-4">
+        {/* AI Intro */}
+        {plan && (
+          <div className="rounded-lg p-4 bg-[#1a1a1a] border border-[#333]">
+            <p className="text-sm text-[#A3A3A3] mb-3">{PORTAL_CONTENT.treningsplan.intro}</p>
+            <div className="flex flex-wrap gap-4">
+              {PORTAL_CONTENT.treningsplan.howToUse.map((tip, idx) => (
+                <div key={idx} className="flex items-center gap-2 text-xs text-[#737373]">
+                  <span className="w-5 h-5 rounded-full bg-[#B07D4F]/20 text-[#B07D4F] flex items-center justify-center font-medium">
+                    {idx + 1}
+                  </span>
+                  {tip}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Week Overview */}
         <div className="grid grid-cols-7 gap-3">
           {weekDays.map((day) => {
@@ -349,7 +366,7 @@ export default async function TreningsplanPage() {
             <h3 className="text-lg font-semibold text-white mb-2">Ingen aktiv treningsplan</h3>
             <p className="text-[#737373] max-w-md">
               {canGenerate
-                ? PORTAL_EMPTY_STATES.treningsplan.description
+                ? PORTAL_CONTENT.treningsplan.emptyState
                 : "Kontakt din coach for a fa en personlig treningsplan."}
             </p>
             {canGenerate && (

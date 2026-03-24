@@ -67,7 +67,7 @@ export function EditableCoachingNotes({ session }: Props) {
             )}
             <button
               onClick={() => setIsOpen(true)}
-              className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-500 hover:text-[#B8975C]"
+              className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-500 hover:text-[#B07D4F]"
               title="Rediger notater"
             >
               <Pencil className="w-4 h-4" />
@@ -88,7 +88,7 @@ export function EditableCoachingNotes({ session }: Props) {
           <ul className="mt-2 space-y-1">
             {session.aiKeyPoints.map((point, i) => (
               <li key={i} className="text-xs text-gray-600 flex gap-1.5">
-                <span className="text-[#B8975C]">•</span>
+                <span className="text-[#B07D4F]">•</span>
                 {point}
               </li>
             ))}
