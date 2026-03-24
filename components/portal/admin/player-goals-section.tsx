@@ -50,7 +50,7 @@ export function PlayerGoalsSection({ goals }: PlayerGoalsSectionProps) {
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-start gap-3 flex-1">
                 <div className="p-2 rounded-lg bg-white border border-gray-200">
-                  <Icon className="w-4 h-4 text-[#B8975C]" />
+                  <Icon className="w-4 h-4 text-[#B07D4F]" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-gray-800 text-sm">{goal.title}</p>
@@ -83,7 +83,7 @@ export function PlayerGoalsSection({ goals }: PlayerGoalsSectionProps) {
                 </div>
                 <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-[#B8975C] rounded-full transition-all"
+                    className="h-full bg-[#B07D4F] rounded-full transition-all"
                     style={{ width: `${progress}%` }}
                   />
                 </div>

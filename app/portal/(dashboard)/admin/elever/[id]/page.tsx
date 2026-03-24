@@ -61,7 +61,7 @@ export default async function StudentProfilePage({ params }: Props) {
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-[#0F2950]">
+          <h1 className="text-2xl font-bold text-[#0A1929]">
             {student.name ?? "Ukjent"}
           </h1>
           <div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
@@ -117,8 +117,8 @@ export default async function StudentProfilePage({ params }: Props) {
       {/* Handicap Progression */}
       {student.handicapEntries && student.handicapEntries.length > 0 && (
         <div>
-          <h2 className="text-lg font-semibold text-[#0F2950] mb-3 flex items-center gap-2">
-            <TrendingDown className="w-5 h-5 text-[#B8975C]" />
+          <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
+            <TrendingDown className="w-5 h-5 text-[#B07D4F]" />
             Handicap-utvikling
           </h2>
           <div className="bg-white rounded-xl border border-gray-200 p-5">
@@ -133,8 +133,8 @@ export default async function StudentProfilePage({ params }: Props) {
       {/* Player Goals */}
       {student.goals && student.goals.length > 0 && (
         <div>
-          <h2 className="text-lg font-semibold text-[#0F2950] mb-3 flex items-center gap-2">
-            <Target className="w-5 h-5 text-[#B8975C]" />
+          <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
+            <Target className="w-5 h-5 text-[#B07D4F]" />
             Spillerens mål
           </h2>
           <div className="bg-white rounded-xl border border-gray-200 p-4">
@@ -145,7 +145,7 @@ export default async function StudentProfilePage({ params }: Props) {
 
       {/* Booking history */}
       <div>
-        <h2 className="text-lg font-semibold text-[#0F2950] mb-3">
+        <h2 className="text-lg font-semibold text-[#0A1929] mb-3">
           Bookinghistorikk
         </h2>
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
@@ -192,7 +192,7 @@ export default async function StudentProfilePage({ params }: Props) {
 
       {/* Coaching sessions */}
       <div>
-        <h2 className="text-lg font-semibold text-[#0F2950] mb-3">
+        <h2 className="text-lg font-semibold text-[#0A1929] mb-3">
           Coaching-okter
         </h2>
         <div className="space-y-3">
@@ -210,8 +210,8 @@ export default async function StudentProfilePage({ params }: Props) {
 
       {/* Communication log */}
       <div>
-        <h2 className="text-lg font-semibold text-[#0F2950] mb-3 flex items-center gap-2">
-          <MessageCircle className="w-5 h-5 text-[#B8975C]" />
+        <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
+          <MessageCircle className="w-5 h-5 text-[#B07D4F]" />
           Kommunikasjonslogg
         </h2>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
@@ -240,7 +240,7 @@ function StatCard({
         {icon}
         <span className="text-xs font-medium uppercase">{label}</span>
       </div>
-      <p className="text-lg font-semibold text-[#0F2950]">{value}</p>
+      <p className="text-lg font-semibold text-[#0A1929]">{value}</p>
     </div>
   );
 }

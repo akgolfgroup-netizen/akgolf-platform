@@ -10,8 +10,9 @@ import {
   Target,
   Smile,
   Meh,
+  Info,
 } from "lucide-react";
-import { PORTAL_EMPTY_STATES } from "@/lib/website-constants";
+import { PORTAL_CONTENT } from "@/lib/website-constants";
 
 export default async function DagbokPage() {
   await requirePortalUser();
@@ -70,6 +71,24 @@ export default async function DagbokPage() {
       </div>
 
       <div className="max-w-3xl space-y-4">
+        {/* Why Log info */}
+        <div className="rounded-lg p-4 bg-[#1a1a1a] border border-[#333]">
+          <div className="flex items-start gap-3">
+            <Info className="w-5 h-5 text-[#B07D4F] mt-0.5" />
+            <div>
+              <p className="text-sm text-[#A3A3A3] mb-3">{PORTAL_CONTENT.dagbok.whyLog}</p>
+              <div className="grid grid-cols-4 gap-2">
+                {PORTAL_CONTENT.dagbok.slagCategories.map((cat) => (
+                  <div key={cat.key} className="p-2 rounded bg-[#262626]">
+                    <span className="text-sm font-bold text-[#B07D4F]">{cat.key}</span>
+                    <span className="text-xs text-white ml-1">{cat.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Filter Bar */}
         <div className="flex items-center justify-between">
           <div className="flex gap-1 p-1 rounded-lg bg-[#F5F5F5]">
@@ -145,10 +164,10 @@ export default async function DagbokPage() {
           <div className="flex flex-col items-center justify-center py-16 text-center rounded-lg bg-white border border-[#E5E5E5]">
             <NotebookPen className="w-10 h-10 text-[#D4D4D4] mb-3" />
             <p className="text-sm font-medium text-[#171717] mb-1">
-              {PORTAL_EMPTY_STATES.dagbok.title}
+              Ingen treningslogger ennå
             </p>
             <p className="text-sm text-[#737373]">
-              {PORTAL_EMPTY_STATES.dagbok.description}
+              {PORTAL_CONTENT.dagbok.emptyState}
             </p>
           </div>
         )}

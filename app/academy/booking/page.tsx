@@ -39,10 +39,10 @@ const THEME = {
   bg: "#FAFBFC",
   bgElevated: "#FFFFFF",
   bgSubtle: "#F8F9FA",
-  gold: "#B8975C",
+  gold: "#B07D4F",
   goldLight: "#E8D4B0",
   goldMuted: "#E8D4B0",
-  navy: "#0F2950",
+  navy: "#0A1929",
   navyLight: "#10456A",
   text: "#02060D",
   textMuted: "#64748B",
@@ -231,11 +231,11 @@ export default function AcademyBookingPage() {
       <main className="min-h-screen bg-[#FAFBFC]" id="main-content">
         <PageTransition>
           {/* Hero Section */}
-          <section className="bg-[#0F2950] py-20">
+          <section className="bg-[#0A1929] py-20">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center">
-                  <span className="inline-block px-4 py-1.5 rounded-full bg-[#B8975C]/20 text-[#B8975C] text-sm font-medium mb-4">
+                  <span className="inline-block px-4 py-1.5 rounded-full bg-[#B07D4F]/20 text-[#B07D4F] text-sm font-medium mb-4">
                     AK Golf Academy
                   </span>
                   <h1 className="text-4xl md:text-5xl font-semibold text-white mb-4">

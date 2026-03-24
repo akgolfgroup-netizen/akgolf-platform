@@ -162,7 +162,7 @@ function NyLoggForm({
         <select
           value={type}
           onChange={(e) => setType(e.target.value as CommunicationType)}
-          className="w-full appearance-none pl-3 pr-8 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#0F2950]/20 focus:border-[#0F2950]"
+          className="w-full appearance-none pl-3 pr-8 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#0A1929]/20 focus:border-[#0A1929]"
         >
           {TYPE_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -179,7 +179,7 @@ function NyLoggForm({
         placeholder="Emne (valgfritt)"
         value={subject}
         onChange={(e) => setSubject(e.target.value)}
-        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0F2950]/20 focus:border-[#0F2950]"
+        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0A1929]/20 focus:border-[#0A1929]"
       />
 
       {/* Innhold */}
@@ -189,7 +189,7 @@ function NyLoggForm({
         value={content}
         onChange={(e) => setContent(e.target.value)}
         rows={4}
-        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-[#0F2950]/20 focus:border-[#0F2950]"
+        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-[#0A1929]/20 focus:border-[#0A1929]"
       />
 
       {feil && (
@@ -200,7 +200,7 @@ function NyLoggForm({
         <button
           type="submit"
           disabled={isPending || !content.trim()}
-          className="px-4 py-2 text-sm font-medium text-white bg-[#0F2950] rounded-lg hover:bg-[#0A1929] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 text-sm font-medium text-white bg-[#0A1929] rounded-lg hover:bg-[#0A1929]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isPending ? "Lagrer..." : "Lagre"}
         </button>
@@ -237,7 +237,7 @@ export function CommunicationLog({
         {!visSkjema && (
           <button
             onClick={() => setVisSkjema(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#0F2950] border border-[#0F2950]/30 rounded-lg hover:bg-[#0F2950]/5 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#0A1929] border border-[#0A1929]/30 rounded-lg hover:bg-[#0A1929]/5 transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             Ny oppforing

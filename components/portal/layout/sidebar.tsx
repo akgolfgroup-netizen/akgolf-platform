@@ -51,7 +51,7 @@ const THEME = {
   bg: "#171717",
   bgHover: "#262626",
   bgActive: "#262626",
-  gold: "#B8975C",
+  gold: "#B07D4F",
   white: "#FFFFFF",
   textMuted: "#A3A3A3",
   textDim: "#737373",

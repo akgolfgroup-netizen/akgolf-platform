@@ -56,7 +56,7 @@ export function TierGate({ userTier, required, children }: TierGateProps) {
           <div
             className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold"
             style={{
-              background: "linear-gradient(135deg, #c9a96e 0%, #B8975C 100%)",
+              background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
               color: "#0a1929",
             }}
           >

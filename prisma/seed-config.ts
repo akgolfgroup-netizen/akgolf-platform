@@ -38,7 +38,7 @@ export const SERVICES = {
     duration: 60, // minutter
     price: 99500, // 995 kr ← ENDRE (i øre)
     maxStudents: 1,
-    color: "#B8975C",
+    color: "#B07D4F",
     coachId: "anders",
     active: true, // ← ENDRE til false hvis ikke tilgjengelig
   },
@@ -80,7 +80,7 @@ export const SERVICES = {
     duration: 60,
     price: 79500, // 795 kr ← ENDRE
     maxStudents: 1,
-    color: "#B8975C",
+    color: "#B07D4F",
     coachId: "markus",
     active: false, // ← ENDRE til true hvis tilgjengelig
   },

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getUpcomingBookings, getPastBookings } from "./actions";
 import { BookingList } from "@/components/portal/bookinger/booking-list";
-import { Plus } from "lucide-react";
-import { PORTAL_EMPTY_STATES } from "@/lib/website-constants";
+import { Plus, Info } from "lucide-react";
+import { PORTAL_CONTENT } from "@/lib/website-constants";
 
 export default async function BookingerPage() {
   const [upcoming, past] = await Promise.all([
@@ -25,13 +25,31 @@ export default async function BookingerPage() {
         </Link>
       </div>
 
+      {/* Cancellation Rules */}
+      <div className="rounded-lg p-4 bg-[#1a1a1a] border border-[#333]">
+        <div className="flex items-start gap-3">
+          <Info className="w-5 h-5 text-[#B07D4F] mt-0.5" />
+          <div>
+            <p className="text-sm font-medium text-white mb-2">Avbestillingsregler</p>
+            <div className="grid grid-cols-3 gap-4 text-xs">
+              {PORTAL_CONTENT.bookings.cancellationRules.map((rule) => (
+                <div key={rule.hours} className="text-[#A3A3A3]">
+                  <span className="font-medium text-white">{rule.hours} timer:</span>{" "}
+                  {rule.rule} ({rule.fee})
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <section className="space-y-4">
         <h2 className="text-lg font-semibold text-[var(--color-snow)]">
           Kommende treninger
         </h2>
         <BookingList
           bookings={upcoming}
-          emptyMessage={PORTAL_EMPTY_STATES.bookinger.description}
+          emptyMessage={PORTAL_CONTENT.bookings.emptyState}
         />
       </section>
 

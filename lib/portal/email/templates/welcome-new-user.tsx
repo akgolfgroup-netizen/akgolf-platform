@@ -189,7 +189,7 @@ const detailRow = {
 };
 
 const button = {
-  backgroundColor: "#B8975C",
+  backgroundColor: "#B07D4F",
   borderRadius: "6px",
   color: "#ffffff",
   fontSize: "14px",
@@ -207,7 +207,7 @@ const hr = {
 };
 
 const link = {
-  color: "#B8975C",
+  color: "#B07D4F",
   textDecoration: "underline",
 };
 

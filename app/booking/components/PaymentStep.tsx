@@ -210,9 +210,9 @@ export function PaymentStep({
             appearance: {
               theme: "stripe",
               variables: {
-                colorPrimary: "#B8975C",
+                colorPrimary: "#B07D4F",
                 colorBackground: "#FFFFFF",
-                colorText: "#0F2950",
+                colorText: "#0A1929",
                 colorDanger: "#EF4444",
                 fontFamily: "Inter, sans-serif",
                 borderRadius: "8px",

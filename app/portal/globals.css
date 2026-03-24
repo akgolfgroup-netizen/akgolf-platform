@@ -12,11 +12,11 @@
   /* ═══════════════════════════════════════════════════════════════════════════ */
   
   /* Primary Brand Colors */
-  --color-midnight-navy:     #0F2950;
+  --color-midnight-navy:     #0A1929;
   --color-navy-light:        #10456A;
   --color-navy-dark:         #0A1929;
   
-  --color-soft-gold:         #B8975C;
+  --color-soft-gold:         #B07D4F;
   --color-gold-light:        #D4C4A8;
   --color-gold-dark:         #8B7243;
   --color-gold-muted:        #E8D4B0;
@@ -33,12 +33,12 @@
   --color-bg-elevated:       #FFFFFF;
   --color-bg-card:           #FFFFFF;
 
-  --color-gold:              #B8975C;
+  --color-gold:              #B07D4F;
   --color-gold-light:        #E8D4B0;
   --color-gold-muted:        #D4C4A8;
   --color-gold-dark:         #B68D40;
 
-  --color-navy:              #0F2950;
+  --color-navy:              #0A1929;
   --color-navy-light:        #10456A;
   --color-navy-muted:        #6B7B8C;
 
@@ -67,8 +67,8 @@
   --color-deep-ink:          #0A1929;
 
   /* Sub-brand colors */
-  --color-blue:              #3B82F6;
-  --color-green:             #22C55E;
+  --color-blue:              #38BDF8;
+  --color-green:             #10B981;
   --color-orange:            #F97316;
   --color-red:               #EF4444;
 
@@ -81,12 +81,12 @@
   --color-gold-dim:          #B68D40;
 
   /* Goal type colors */
-  --color-goal-prestasjon:       #B8975C;
-  --color-goal-utvikling:        #3B82F6;
-  --color-goal-trening:          #22C55E;
+  --color-goal-prestasjon:       #B07D4F;
+  --color-goal-utvikling:        #38BDF8;
+  --color-goal-trening:          #10B981;
 
   /* Periodization colors */
-  --color-period-grunn:          #3B82F6;
+  --color-period-grunn:          #38BDF8;
   --color-period-spesialisering: #F97316;
   --color-period-turnering:      #EF4444;
 
@@ -413,7 +413,7 @@ body::before {
   padding: 0.75rem 1.5rem;
   font-weight: 600;
   font-size: 0.875rem;
-  background: var(--color-success, #22C55E);
+  background: var(--color-success, #10B981);
   color: white;
   border-radius: 0.75rem;
   border: none;

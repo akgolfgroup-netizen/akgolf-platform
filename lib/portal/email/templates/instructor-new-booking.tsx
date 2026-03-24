@@ -113,7 +113,7 @@ const detailRow = {
 };
 
 const link = {
-  color: "#B8975C",
+  color: "#B07D4F",
   textDecoration: "underline",
 };
 

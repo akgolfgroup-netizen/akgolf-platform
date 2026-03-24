@@ -216,7 +216,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                         <div className="flex items-center gap-3 mb-3">
                           <div
                             className="w-4 h-4 rounded-full"
-                            style={{ backgroundColor: svc.color ?? "#B8975C" }}
+                            style={{ backgroundColor: svc.color ?? "#B07D4F" }}
                           />
                           <h3 className="text-lg font-semibold transition-colors text-[var(--color-snow)]">
                             {svc.name}
@@ -470,7 +470,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               <div className="flex items-center gap-4 pb-6 mb-6 border-b border-[rgba(15,41,80,0.4)]">
                 <div
                   className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: selectedService.color ?? "#B8975C" }}
+                  style={{ backgroundColor: selectedService.color ?? "#B07D4F" }}
                 />
                 <h3 className="text-xl font-semibold text-[var(--color-snow)]">
                   {selectedService.name}

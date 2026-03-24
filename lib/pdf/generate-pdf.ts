@@ -22,9 +22,9 @@ Font.register({
 
 // AK Golf design tokens
 const colors = {
-  navy: "#0F2950",
+  navy: "#0A1929",
   navyDark: "#0A1929",
-  gold: "#B8975C",
+  gold: "#B07D4F",
   goldLight: "#D4C4A8",
   goldMuted: "#E8D4B0",
   ink90: "#02060D",
