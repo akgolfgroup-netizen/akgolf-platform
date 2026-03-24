@@ -9,6 +9,7 @@ export type PortalUser = {
   image: string | null;
   role: string;
   subscriptionTier: string;
+  stripeCustomerId: string | null;
 };
 
 export async function getPortalUser(): Promise<PortalUser | null> {
@@ -29,6 +30,7 @@ export async function getPortalUser(): Promise<PortalUser | null> {
       image: true,
       role: true,
       subscriptionTier: true,
+      stripeCustomerId: true,
     },
   });
 
@@ -43,6 +45,7 @@ export async function getPortalUser(): Promise<PortalUser | null> {
         image: true,
         role: true,
         subscriptionTier: true,
+        stripeCustomerId: true,
       },
     });
 
@@ -63,6 +66,7 @@ export async function getPortalUser(): Promise<PortalUser | null> {
     image: user.image,
     role: user.role,
     subscriptionTier: user.subscriptionTier,
+    stripeCustomerId: user.stripeCustomerId,
   };
 }
 

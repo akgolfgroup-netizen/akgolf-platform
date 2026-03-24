@@ -102,6 +102,9 @@ model User {
   achievements          PlayerAchievement[]
 
   goals             Goal[]
+  appSubscriptions  AppSubscription[]
+
+  stripeCustomerId String? @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -866,4 +869,90 @@ model ContentItem {
   @@index([type, status])
   @@index([scheduledAt])
   @@index([slug])
+}
+
+// ============================================================
+// APP SUBSCRIPTIONS (modulbasert tilgang)
+// ============================================================
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+  TRIALING
+}
+
+model AppModule {
+  id                  String   @id @default(cuid())
+  slug                String   @unique
+  name                String
+  description         String?  @db.Text
+  icon                String?
+  monthlyPriceNok     Int                       // Pris i øre (4900 = 49 kr)
+  yearlyPriceNok      Int?
+  stripePriceId       String?
+  stripeYearlyPriceId String?
+  isActive            Boolean  @default(true)
+  sortOrder           Int      @default(0)
+
+  subscriptions AppSubscription[]
+  bundleItems   BundleItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AppBundle {
+  id                  String   @id @default(cuid())
+  slug                String   @unique
+  name                String
+  description         String?  @db.Text
+  monthlyPriceNok     Int
+  yearlyPriceNok      Int?
+  stripePriceId       String?
+  stripeYearlyPriceId String?
+  isActive            Boolean  @default(true)
+  sortOrder           Int      @default(0)
+
+  items         BundleItem[]
+  subscriptions AppSubscription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BundleItem {
+  id       String    @id @default(cuid())
+  bundleId String
+  moduleId String
+
+  bundle AppBundle @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+  module AppModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([bundleId, moduleId])
+}
+
+model AppSubscription {
+  id                   String             @id @default(cuid())
+  userId               String
+  moduleId             String?
+  bundleId             String?
+  stripeSubscriptionId String             @unique
+  stripeCustomerId     String
+  status               SubscriptionStatus @default(ACTIVE)
+  interval             String             @default("month") // "month" | "year"
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  cancelAtPeriodEnd    Boolean            @default(false)
+
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module AppModule? @relation(fields: [moduleId], references: [id])
+  bundle AppBundle? @relation(fields: [bundleId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([stripeSubscriptionId])
 }
