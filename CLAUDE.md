@@ -1,6 +1,27 @@
+@.claude/rules/gotchas.md
+@.claude/rules/prisma-auth.md
+@.claude/rules/code-style.md
+@.claude/rules/architecture.md
+
 # AK Golf Website & Portal
 
 Premium golfcoaching-plattform for AK Golf Group. Norskspråklig markedsside med undersider (Academy, Junior, Utvikling, Personvern) pluss et komplett portal/dashboard-system for elever og instruktører.
+
+## FØR DU GJØR NOE
+
+1. **Les `.claude/rules/gotchas.md`** — kjente feller som har forårsaket bugs
+2. **Kjør `/preflight`** — verifiserer at miljøet er klart
+3. **Sjekk enum-verdier** — SubscriptionTier er VISITOR/ACADEMY/STARTER/PRO/ELITE (delt med dashboard)
+4. **Markedsside-tekst** — ALLTID i `lib/website-constants.ts`, aldri hardkodet
+
+## Når du oppdager en ny feil
+
+Legg den til i `.claude/rules/gotchas.md` umiddelbart slik at den aldri skjer igjen.
+
+## Spesialiserte agenter
+
+- `/.claude/agents/portal-specialist.md` — for portal/dashboard-arbeid
+- `/.claude/agents/website-specialist.md` — for markedsside-arbeid
 
 ## Tech Stack
 
