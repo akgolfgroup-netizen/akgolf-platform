@@ -1,11 +1,11 @@
 "use client";
 
 import { createBrowserClient } from "@supabase/ssr";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 
-function getSupabase() {
+function createSupabaseBrowser() {
   return createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -22,6 +22,9 @@ export default function LoginPage() {
   const [sent, setSent] = useState(false);
   const [mode, setMode] = useState<"password" | "magic">("password");
 
+  // Memoize supabase client to avoid recreating on each render
+  const getSupabase = useCallback(() => createSupabaseBrowser(), []);
+
   async function handlePasswordLogin(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -33,15 +36,16 @@ export default function LoginPage() {
       password,
     });
 
-    setLoading(false);
-
     if (authError) {
+      setLoading(false);
       if (authError.message.includes("Invalid login credentials")) {
         setError("Feil e-post eller passord. Prøv igjen.");
       } else {
         setError("Kunne ikke logge inn. Prøv igjen.");
       }
     } else {
+      // Refresh server components to pick up new auth cookies, then navigate
+      router.refresh();
       router.push("/portal");
     }
   }
