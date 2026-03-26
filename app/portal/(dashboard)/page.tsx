@@ -204,19 +204,19 @@ export default async function DashboardPage() {
   // Trend alerts (example data - in production, calculate from real trends)
   const alerts: TrendAlert[] = [];
 
-  // KPI items
+  // KPI items (icon som streng - resolves i KpiStrip client component)
   const kpiItems = [
     {
       label: "Handicap",
       value: currentHcp ?? 0,
-      icon: Target,
+      icon: "Target",
       color: "text-gold",
       bg: "bg-gold/10",
     },
     {
       label: "Treningsstreak",
       value: streak,
-      icon: Flame,
+      icon: "Flame",
       color: "text-orange-500",
       bg: "bg-orange-50",
       suffix: " dager",
@@ -224,14 +224,14 @@ export default async function DashboardPage() {
     {
       label: "Okter denne mnd",
       value: recentLogs.length,
-      icon: Activity,
+      icon: "Activity",
       color: "text-purple-500",
       bg: "bg-purple-50",
     },
     {
       label: "Achievements",
       value: achievements.length,
-      icon: Trophy,
+      icon: "Trophy",
       color: "text-yellow-500",
       bg: "bg-yellow-50",
     },

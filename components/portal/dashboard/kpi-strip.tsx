@@ -1,13 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { LucideIcon } from "lucide-react";
+import { Target, Flame, Activity, Trophy, LucideIcon } from "lucide-react";
 import { AnimatedNumber } from "@/components/animated-number";
+
+const iconMap: Record<string, LucideIcon> = {
+  Target,
+  Flame,
+  Activity,
+  Trophy,
+};
 
 interface KpiItem {
   label: string;
   value: number;
-  icon: LucideIcon;
+  icon: string;
   color: string;
   bg: string;
   suffix?: string;
@@ -48,7 +55,9 @@ export function KpiStrip({ items }: KpiStripProps) {
       viewport={{ once: true, margin: "-50px" }}
       className="grid grid-cols-2 md:grid-cols-4 gap-4"
     >
-      {items.map((item) => (
+      {items.map((item) => {
+        const Icon = iconMap[item.icon] || Target;
+        return (
         <motion.div key={item.label} variants={itemVariants}>
           <motion.div
             whileHover={{ scale: 1.02 }}
@@ -56,7 +65,7 @@ export function KpiStrip({ items }: KpiStripProps) {
             className="kpi-card gradient-border-soft p-4 rounded-xl"
           >
             <div className={`${item.bg} p-2 rounded-lg w-fit`}>
-              <item.icon className={`h-5 w-5 ${item.color}`} />
+              <Icon className={`h-5 w-5 ${item.color}`} />
             </div>
             <AnimatedNumber
               value={item.value}
@@ -66,7 +75,8 @@ export function KpiStrip({ items }: KpiStripProps) {
             <p className="text-sm text-[#737373]">{item.label}</p>
           </motion.div>
         </motion.div>
-      ))}
+        );
+      })}
     </motion.div>
   );
 }

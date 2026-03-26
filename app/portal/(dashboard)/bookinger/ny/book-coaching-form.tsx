@@ -84,7 +84,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
     setBooking(true);
 
     try {
-      const res = await fetch("/portal/api/booking/create", {
+      const res = await fetch("/api/booking/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -99,9 +99,9 @@ export function BookCoachingForm({ serviceTypes }: Props) {
         const data = await res.json();
         if (data.bookingId) {
           if (paymentMethod === "STRIPE" && data.clientSecret) {
-            router.push(`/portal/booking/${data.bookingId}/pay`);
+            router.push(`/booking/${data.bookingId}/pay`);
           } else {
-            router.push(`/portal/booking/${data.bookingId}/confirmation`);
+            router.push(`/booking/${data.bookingId}/confirmation`);
           }
         } else {
           router.push("/portal/bookinger");

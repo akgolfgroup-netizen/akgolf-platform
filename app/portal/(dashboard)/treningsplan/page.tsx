@@ -171,7 +171,7 @@ export default async function TreningsplanPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Treningsplan</h1>
-          <p className="text-sm text-[#737373] mt-1">
+          <p className="text-sm text-[#737373] mt-1" suppressHydrationWarning>
             Uke {weekNumber} - {format(weekStart, "d. MMMM", { locale: nb })} - {format(addDays(weekStart, 6), "d. MMMM yyyy", { locale: nb })}
           </p>
         </div>
@@ -213,7 +213,7 @@ export default async function TreningsplanPage() {
         )}
 
         {/* Week Overview */}
-        <div className="grid grid-cols-7 gap-3">
+        <div className="grid grid-cols-7 gap-3" suppressHydrationWarning>
           {weekDays.map((day) => {
             const Icon = getSessionIcon(day);
             const iconColor = getSessionIconColor(day);
@@ -229,6 +229,7 @@ export default async function TreningsplanPage() {
                     ? "bg-green-500/5 border-green-500/30"
                     : "bg-[#1a1a1a] border-[#333] hover:border-[#444]"
                 } ${day.isRest ? "cursor-default" : "cursor-pointer"}`}
+                suppressHydrationWarning
               >
                 <p className="text-[10px] text-[#737373] uppercase tracking-wide">
                   {day.dayName.slice(0, 3)}
