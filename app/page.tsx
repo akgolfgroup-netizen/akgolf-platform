@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
@@ -339,11 +340,15 @@ export default function HomePage() {
               {TEAM.map((member, i) => (
                 <StaggerItem key={member.name}>
                   <div className="bg-white rounded-2xl border border-ink-10 p-8 text-center">
-                    {/* Avatar placeholder */}
-                    <div className="w-24 h-24 rounded-full bg-ink-10 flex items-center justify-center mx-auto mb-6">
-                      <span className="font-display text-2xl font-semibold text-ink-40">
-                        {member.name.split(" ").map(n => n[0]).join("")}
-                      </span>
+                    {/* Profile Image */}
+                    <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 ring-2 ring-gold/20">
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        width={96}
+                        height={96}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
 
                     <h3 className="font-display text-xl font-semibold text-ink-90 mb-1">

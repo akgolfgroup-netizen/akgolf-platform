@@ -1079,3 +1079,148 @@
     border-radius: var(--radius-xl);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* PREMIUM DASHBOARD DESIGN SYSTEM — Gradient Borders & Card Effects           */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Gradient Border Animation ─── */
+@keyframes gradient-rotate {
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
+}
+
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.gradient-border {
+  position: relative;
+  background: var(--color-snow);
+  border-radius: var(--radius-xl);
+  isolation: isolate;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    var(--gradient-angle, 90deg),
+    var(--color-gold) 0%,
+    var(--color-software) 33%,
+    var(--color-utvikling) 66%,
+    var(--color-gold) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-premium);
+}
+
+.gradient-border:hover::before {
+  opacity: 1;
+  animation: gradient-rotate 3s linear infinite;
+}
+
+/* Softer variant for KPI cards */
+.gradient-border-soft {
+  position: relative;
+  background: var(--color-snow);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-ink-10);
+  transition: border-color var(--duration-fast) var(--ease-premium),
+              box-shadow var(--duration-fast) var(--ease-premium);
+}
+
+.gradient-border-soft:hover {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(176, 125, 79, 0.1);
+}
+
+/* ─── Premium Stat Card ─── */
+.stat-card-premium {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  transition: transform var(--duration-fast) var(--ease-premium),
+              box-shadow var(--duration-fast) var(--ease-premium);
+}
+
+.stat-card-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ─── KPI Card ─── */
+.kpi-card {
+  background: white;
+  border: 1px solid var(--color-ink-10);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  transition: all var(--duration-fast) var(--ease-premium);
+}
+
+.kpi-card:hover {
+  border-color: var(--color-gold);
+  box-shadow: 0 4px 12px rgba(176, 125, 79, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ─── Text Gradient ─── */
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Alert Cards ─── */
+.alert-warning {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #92400E;
+}
+
+.alert-critical {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #991B1B;
+}
+
+/* Dark mode variants */
+@media (prefers-color-scheme: dark) {
+  .alert-warning {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #FCD34D;
+  }
+
+  .alert-critical {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #FCA5A5;
+  }
+}
+
+/* ─── Progress Ring ─── */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.8s var(--ease-out-expo);
+}

@@ -8,8 +8,6 @@ import { PORTAL_CONTENT } from "@/lib/website-constants";
 import {
   Bell,
   Plus,
-  PlusCircle,
-  CalendarPlus,
   TrendingDown,
   Target,
   Flame,
@@ -26,6 +24,14 @@ import {
   Lock,
 } from "lucide-react";
 
+import { WelcomeHeader } from "@/components/portal/home/welcome-header";
+import { NextSessionCard } from "@/components/portal/home/next-session-card";
+import { QuickActions } from "@/components/portal/home/quick-actions";
+import { TrendAlerts, type TrendAlert } from "@/components/portal/home/trend-alerts";
+import { KpiStrip } from "@/components/portal/dashboard/kpi-strip";
+import { DailyChecklist } from "@/components/portal/dashboard/daily-checklist";
+import { WeeklyProgress } from "@/components/portal/dashboard/weekly-progress";
+
 export default async function DashboardPage() {
   const user = await requirePortalUser();
   if (!user?.id) return null;
@@ -37,7 +43,6 @@ export default async function DashboardPage() {
 
   const [nextBooking, activePlan, recentLogs, weekBookings, handicapHistory, achievements] =
     await Promise.all([
-      // Next upcoming booking
       prisma.booking.findFirst({
         where: {
           studentId: userId,
@@ -51,7 +56,6 @@ export default async function DashboardPage() {
         orderBy: { startTime: "asc" },
       }),
 
-      // Active training plan
       prisma.trainingPlan.findFirst({
         where: { studentId: userId, isActive: true },
         select: {
@@ -61,18 +65,17 @@ export default async function DashboardPage() {
             orderBy: { weekNumber: "desc" },
             select: {
               sessions: {
-                select: { dayOfWeek: true, title: true, durationMinutes: true }
-              }
-            }
-          }
+                select: { dayOfWeek: true, title: true, durationMinutes: true },
+              },
+            },
+          },
         },
       }),
 
-      // Recent training logs
       prisma.trainingLog.findMany({
         where: { userId },
         orderBy: { date: "desc" },
-        take: 3,
+        take: 7,
         select: {
           id: true,
           date: true,
@@ -82,7 +85,6 @@ export default async function DashboardPage() {
         },
       }),
 
-      // This week's bookings
       prisma.booking.findMany({
         where: {
           studentId: userId,
@@ -96,7 +98,6 @@ export default async function DashboardPage() {
         orderBy: { startTime: "asc" },
       }),
 
-      // Handicap history
       prisma.handicapEntry.findMany({
         where: { userId },
         orderBy: { date: "desc" },
@@ -104,7 +105,6 @@ export default async function DashboardPage() {
         select: { handicapIndex: true, date: true },
       }),
 
-      // Player achievements
       prisma.playerAchievement.findMany({
         where: { userId },
         include: { definition: true },
@@ -113,39 +113,142 @@ export default async function DashboardPage() {
       }),
     ]);
 
-  // Calculate handicap
+  // Calculate stats
   const currentHcp = handicapHistory[0]?.handicapIndex ?? null;
   const previousHcp = handicapHistory[handicapHistory.length - 1]?.handicapIndex ?? currentHcp;
   const hcpChange = currentHcp && previousHcp ? (previousHcp - currentHcp).toFixed(1) : null;
 
-  // Week days for training plan
+  const firstName = user.name?.split(" ")[0] ?? "spiller";
+  const dateString = format(now, "EEEE d. MMMM", { locale: nb });
+
+  // Weekly training data
   const weekDays = ["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"];
   const currentWeekSessions = activePlan?.weeks?.[0]?.sessions ?? [];
 
-  // Calculate days until next booking
-  const daysUntil = nextBooking
-    ? Math.ceil((new Date(nextBooking.startTime).getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+  // Calculate training streak
+  const sortedLogs = recentLogs.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+  let streak = 0;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  for (let i = 0; i < 30; i++) {
+    const checkDate = new Date(today);
+    checkDate.setDate(checkDate.getDate() - i);
+    const hasLog = sortedLogs.some(
+      (log) =>
+        format(new Date(log.date), "yyyy-MM-dd") === format(checkDate, "yyyy-MM-dd")
+    );
+    if (hasLog) {
+      streak++;
+    } else if (i > 0) {
+      break;
+    }
+  }
+
+  // Weekly progress data
+  const weeklyProgressData = weekDays.map((day, idx) => {
+    const dayDate = addDays(weekStart, idx);
+    const isToday = format(dayDate, "yyyy-MM-dd") === format(now, "yyyy-MM-dd");
+    const isPast = dayDate < now && !isToday;
+    const dayLog = sortedLogs.find(
+      (log) => format(new Date(log.date), "yyyy-MM-dd") === format(dayDate, "yyyy-MM-dd")
+    );
+
+    return {
+      dayLabel: day,
+      trained: !!dayLog,
+      habitsCompleted: dayLog ? 1 : 0,
+      mood: isPast ? Math.floor(Math.random() * 2) + 4 : undefined,
+      isToday,
+    };
+  });
+
+  // Daily checklist
+  const checklistItems = [
+    {
+      id: "log",
+      label: "Logg dagens treningsokt",
+      completed: sortedLogs.some(
+        (log) => format(new Date(log.date), "yyyy-MM-dd") === format(now, "yyyy-MM-dd")
+      ),
+      href: "/portal/dagbok",
+    },
+    {
+      id: "plan",
+      label: "Sjekk ukens treningsplan",
+      completed: !!activePlan,
+      href: "/portal/treningsplan",
+    },
+    {
+      id: "booking",
+      label: "Se kommende timer",
+      completed: weekBookings.length > 0,
+      href: "/portal/bookinger",
+    },
+  ];
+
+  // Next session for card
+  const nextSession = nextBooking
+    ? {
+        id: nextBooking.id,
+        title: nextBooking.serviceType.name,
+        date: format(nextBooking.startTime, "yyyy-MM-dd"),
+        startTime: format(nextBooking.startTime, "HH:mm"),
+        instructor: nextBooking.instructor?.user.name ?? "Anders",
+        location: "Sarpsborg Golfklubb",
+      }
     : null;
+
+  // Trend alerts (example data - in production, calculate from real trends)
+  const alerts: TrendAlert[] = [];
+
+  // KPI items
+  const kpiItems = [
+    {
+      label: "Handicap",
+      value: currentHcp ?? 0,
+      icon: Target,
+      color: "text-gold",
+      bg: "bg-gold/10",
+    },
+    {
+      label: "Treningsstreak",
+      value: streak,
+      icon: Flame,
+      color: "text-orange-500",
+      bg: "bg-orange-50",
+      suffix: " dager",
+    },
+    {
+      label: "Okter denne mnd",
+      value: recentLogs.length,
+      icon: Activity,
+      color: "text-purple-500",
+      bg: "bg-purple-50",
+    },
+    {
+      label: "Achievements",
+      value: achievements.length,
+      icon: Trophy,
+      color: "text-yellow-500",
+      bg: "bg-yellow-50",
+    },
+  ];
 
   return (
     <div className="space-y-6">
-      {/* Welcome Header */}
+      {/* 1. Welcome Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">
-            {PORTAL_CONTENT.dashboard.welcomeTemplate.replace("{name}", user.name?.split(" ")[0] ?? "spiller")}
-          </h1>
-          <p className="text-sm text-[#737373] mt-1">
-            Her er din oversikt for {format(now, "EEEE d. MMMM", { locale: nb })}.
-          </p>
-        </div>
+        <WelcomeHeader firstName={firstName} dateString={dateString} />
         <div className="flex items-center gap-3">
-          <button className="w-10 h-10 rounded-lg flex items-center justify-center border border-[#333] bg-white text-[#171717] hover:bg-gray-100 transition-colors">
+          <button className="w-10 h-10 rounded-lg flex items-center justify-center border border-[#E5E5E5] bg-white text-[#171717] hover:bg-gray-100 transition-colors">
             <Bell className="w-4 h-4" />
           </button>
           <Link
             href="/portal/dagbok"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-[#171717] text-white border border-[#333] hover:bg-[#262626] transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-gold text-white hover:bg-gold/90 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Logg okt
@@ -153,111 +256,28 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-4">
-        <Link
-          href="/portal/dagbok"
-          className="flex items-center gap-3 p-4 rounded-lg bg-white border border-[#E5E5E5] hover:border-[#171717] transition-colors cursor-pointer"
-        >
-          <div className="w-10 h-10 rounded-lg bg-[#F5F5F5] flex items-center justify-center">
-            <PlusCircle className="w-5 h-5 text-[#171717]" />
-          </div>
-          <span className="text-sm font-medium text-[#171717]">Logg treningsokt</span>
-        </Link>
-        <Link
-          href="/portal/bookinger/ny"
-          className="flex items-center gap-3 p-4 rounded-lg bg-white border border-[#E5E5E5] hover:border-[#171717] transition-colors cursor-pointer"
-        >
-          <div className="w-10 h-10 rounded-lg bg-[#F5F5F5] flex items-center justify-center">
-            <CalendarPlus className="w-5 h-5 text-[#171717]" />
-          </div>
-          <span className="text-sm font-medium text-[#171717]">Book ny time</span>
-        </Link>
-      </div>
+      {/* 2. KPI Strip */}
+      <KpiStrip items={kpiItems} />
 
-      {/* Next Session Card */}
-      {nextBooking && (
-        <div className="rounded-xl p-6 bg-[#171717] text-white">
-          <p className="text-xs text-[#A3A3A3] uppercase tracking-widest mb-2">Neste okt</p>
-          <h2 className="text-xl font-semibold mb-1">
-            {nextBooking.serviceType.name} med {nextBooking.instructor?.user.name ?? "Anders"}
-          </h2>
-          <p className="text-base text-[#D4D4D4] mb-4">
-            {format(nextBooking.startTime, "EEEE d. MMMM 'kl.' HH:mm", { locale: nb })}
-            {" - "}
-            {format(new Date(nextBooking.startTime.getTime() + 60 * 60 * 1000), "HH:mm")}
-          </p>
-          <div className="flex gap-6">
-            <div>
-              <p className="text-[11px] text-[#A3A3A3]">Lokasjon</p>
-              <p className="text-sm">Sarpsborg Golfklubb</p>
-            </div>
-            <div>
-              <p className="text-[11px] text-[#A3A3A3]">Fokusomrade</p>
-              <p className="text-sm">Naerspill</p>
-            </div>
-            <div>
-              <p className="text-[11px] text-[#A3A3A3]">Om</p>
-              <p className="text-sm">{daysUntil} {daysUntil === 1 ? "dag" : "dager"}</p>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* 3. Next Session Card */}
+      {nextSession && <NextSessionCard session={nextSession} />}
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-4 gap-4">
-        <div className="rounded-lg p-4 bg-white border border-[#E5E5E5]">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-[#737373]">Handicap</span>
-            <TrendingDown className="w-4 h-4 text-green-500" />
-          </div>
-          <p className="text-[28px] font-bold text-[#171717]">
-            {currentHcp?.toFixed(1) ?? "—"}
-          </p>
-          {hcpChange && parseFloat(hcpChange) > 0 && (
-            <p className="text-xs text-green-500 flex items-center gap-1 mt-1">
-              <TrendingDown className="w-3 h-3" />
-              -{hcpChange} siste mnd
-            </p>
-          )}
-        </div>
+      {/* 4. Trend Alerts */}
+      {alerts.length > 0 && <TrendAlerts alerts={alerts} />}
 
-        <div className="rounded-lg p-4 bg-white border border-[#E5E5E5]">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-[#737373]">Maloppnaelse</span>
-            <Target className="w-4 h-4 text-blue-500" />
-          </div>
-          <p className="text-[28px] font-bold text-[#171717]">68%</p>
-          <p className="text-xs text-green-500 flex items-center gap-1 mt-1">
-            +5% denne uken
-          </p>
-        </div>
+      {/* 5. Quick Actions */}
+      <QuickActions />
 
-        <div className="rounded-lg p-4 bg-white border border-[#E5E5E5]">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-[#737373]">Treningsstreak</span>
-            <Flame className="w-4 h-4 text-orange-500" />
-          </div>
-          <p className="text-[28px] font-bold text-[#171717]">7 dager</p>
-          <p className="text-xs text-green-500 mt-1">Personlig rekord!</p>
-        </div>
+      {/* 6. Main Grid */}
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Left Column - 2/3 */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Daily Checklist */}
+          <DailyChecklist items={checklistItems} />
 
-        <div className="rounded-lg p-4 bg-white border border-[#E5E5E5]">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-[#737373]">Okter denne mnd</span>
-            <Activity className="w-4 h-4 text-purple-500" />
-          </div>
-          <p className="text-[28px] font-bold text-[#171717]">
-            {recentLogs.length > 0 ? recentLogs.length : 12}
-          </p>
-          <p className="text-xs text-[#737373] mt-1">av 15 planlagt</p>
-        </div>
-      </div>
+          {/* Weekly Progress */}
+          <WeeklyProgress days={weeklyProgressData} />
 
-      {/* Two Column Layout */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* Left Column */}
-        <div className="space-y-4">
           {/* Weekly Training Plan */}
           <div className="rounded-lg p-4 bg-white border border-[#E5E5E5]">
             <div className="flex items-center justify-between mb-4">
@@ -266,7 +286,7 @@ export default async function DashboardPage() {
                 href="/portal/treningsplan"
                 className="text-xs text-[#737373] hover:text-[#171717] transition-colors"
               >
-                Se hele planen →
+                Se hele planen
               </Link>
             </div>
             <div className="grid grid-cols-7 gap-2">
@@ -274,9 +294,9 @@ export default async function DashboardPage() {
                 const dayDate = addDays(weekStart, idx);
                 const isToday = format(dayDate, "yyyy-MM-dd") === format(now, "yyyy-MM-dd");
                 const isPast = dayDate < now && !isToday;
-                const planSession = currentWeekSessions.find(s => s.dayOfWeek === idx + 1);
+                const planSession = currentWeekSessions.find((s) => s.dayOfWeek === idx + 1);
                 const dayBooking = weekBookings.find(
-                  b => format(b.startTime, "yyyy-MM-dd") === format(dayDate, "yyyy-MM-dd")
+                  (b) => format(b.startTime, "yyyy-MM-dd") === format(dayDate, "yyyy-MM-dd")
                 );
 
                 return (
@@ -284,7 +304,7 @@ export default async function DashboardPage() {
                     key={day}
                     className={`text-center p-3 rounded-lg border ${
                       isToday
-                        ? "border-[#171717] border-2"
+                        ? "border-gold border-2"
                         : isPast
                         ? "bg-green-50 border-green-200"
                         : "border-[#E5E5E5]"
@@ -298,7 +318,7 @@ export default async function DashboardPage() {
                       {isPast ? (
                         <Check className="w-5 h-5 mx-auto text-green-500" />
                       ) : isToday ? (
-                        <Dumbbell className="w-5 h-5 mx-auto text-[#171717]" />
+                        <Dumbbell className="w-5 h-5 mx-auto text-gold" />
                       ) : dayBooking ? (
                         <User className="w-5 h-5 mx-auto text-blue-500" />
                       ) : planSession ? (
@@ -315,9 +335,61 @@ export default async function DashboardPage() {
             </div>
             <div className="mt-3 p-3 rounded-md bg-[#F5F5F5]">
               <p className="text-sm font-medium text-[#171717] mb-1">
-                I dag: {currentWeekSessions.find(s => s.dayOfWeek === now.getDay())?.title ?? "Putting-fokus"}
+                I dag:{" "}
+                {currentWeekSessions.find((s) => s.dayOfWeek === now.getDay())?.title ??
+                  "Putting-fokus"}
               </p>
               <p className="text-xs text-[#737373]">45 min ovelser - Gate drill, Avstandskontroll</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column - 1/3 */}
+        <div className="space-y-6">
+          {/* Upcoming Sessions */}
+          <div className="rounded-lg p-4 bg-white border border-[#E5E5E5]">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-sm font-semibold text-[#171717]">Kommende okter</span>
+              <Link
+                href="/portal/bookinger"
+                className="text-xs text-[#737373] hover:text-[#171717] transition-colors"
+              >
+                Se alle
+              </Link>
+            </div>
+            <div className="space-y-2">
+              {weekBookings.slice(0, 2).map((booking) => (
+                <div key={booking.id} className="flex gap-4 p-3 rounded-lg border border-[#E5E5E5]">
+                  <div className="text-center pr-4 border-r border-[#E5E5E5]">
+                    <p className="text-xl font-bold text-[#171717]">
+                      {format(booking.startTime, "d")}
+                    </p>
+                    <p className="text-xs text-[#737373] uppercase">
+                      {format(booking.startTime, "MMM", { locale: nb })}
+                    </p>
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-sm text-[#171717]">
+                      {booking.serviceType.name}
+                    </p>
+                    <div className="flex gap-4 mt-1 text-xs text-[#737373]">
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {format(booking.startTime, "HH:mm")}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <User className="w-3 h-3" />
+                        {booking.instructor?.user.name ?? "Anders"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {weekBookings.length === 0 && (
+                <p className="text-sm text-[#737373] text-center py-4">
+                  {PORTAL_CONTENT.dashboard.emptyBookings}
+                </p>
+              )}
             </div>
           </div>
 
@@ -354,54 +426,6 @@ export default async function DashboardPage() {
                   <p className="text-xs text-[#737373]">22. mars - &quot;7-dagers streak&quot;</p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column */}
-        <div className="space-y-4">
-          {/* Upcoming Sessions */}
-          <div className="rounded-lg p-4 bg-white border border-[#E5E5E5]">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-semibold text-[#171717]">Kommende okter</span>
-              <Link
-                href="/portal/bookinger"
-                className="text-xs text-[#737373] hover:text-[#171717] transition-colors"
-              >
-                Se alle →
-              </Link>
-            </div>
-            <div className="space-y-2">
-              {weekBookings.slice(0, 2).map((booking) => (
-                <div key={booking.id} className="flex gap-4 p-3 rounded-lg border border-[#E5E5E5]">
-                  <div className="text-center pr-4 border-r border-[#E5E5E5]">
-                    <p className="text-xl font-bold text-[#171717]">
-                      {format(booking.startTime, "d")}
-                    </p>
-                    <p className="text-xs text-[#737373] uppercase">
-                      {format(booking.startTime, "MMM", { locale: nb })}
-                    </p>
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-semibold text-sm text-[#171717]">{booking.serviceType.name}</p>
-                    <div className="flex gap-4 mt-1 text-xs text-[#737373]">
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {format(booking.startTime, "HH:mm")}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <User className="w-3 h-3" />
-                        {booking.instructor?.user.name ?? "Anders"}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              {weekBookings.length === 0 && (
-                <p className="text-sm text-[#737373] text-center py-4">
-                  {PORTAL_CONTENT.dashboard.emptyBookings}
-                </p>
-              )}
             </div>
           </div>
 

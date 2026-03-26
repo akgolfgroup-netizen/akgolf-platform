@@ -18,6 +18,8 @@ import {
   BarChart3,
   Users as UsersIcon,
   Clock,
+  ClipboardCheck,
+  Dumbbell,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
@@ -30,6 +32,11 @@ const navItems = [
   { href: "/portal/dagbok", label: "Treningsdagbok", icon: BookOpen },
   { href: "/portal/statistikk", label: "Statistikk", icon: BarChart3 },
   { href: "/portal/kalender", label: "Kalender", icon: Calendar },
+];
+
+const trainingItems = [
+  { href: "/portal/trening/tester", label: "Trackman Tester", icon: ClipboardCheck },
+  { href: "/portal/trening/ovelser", label: "Øvelser", icon: Dumbbell },
 ];
 
 const accountItems = [
@@ -114,6 +121,39 @@ export function Sidebar({ user }: SidebarProps) {
             );
           })}
         </ul>
+
+        {/* Trening section */}
+        <div className="mt-4 pt-2">
+          <p
+            className="px-5 py-2 text-[11px] font-medium uppercase tracking-widest"
+            style={{ color: THEME.textDim }}
+          >
+            Trening
+          </p>
+          <ul className="space-y-0.5">
+            {trainingItems.map((item) => {
+              const active = pathname === item.href ||
+                pathname.startsWith(`${item.href}/`);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
+                      active
+                        ? "text-white border-l-[3px] border-white"
+                        : "text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
+                    )}
+                    style={active ? { background: THEME.bgActive } : undefined}
+                  >
+                    <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
 
         {/* Konto section */}
         <div className="mt-4 pt-2">
