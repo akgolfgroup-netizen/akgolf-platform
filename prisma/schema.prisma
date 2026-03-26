@@ -145,8 +145,8 @@ model User {
 
   // Video analysis
   swingVideos       SwingVideo[]
-  videoStorageUsed  Int @default(0)  // Bytes brukt
-  videoStorageLimit Int @default(2147483648) // 2 GB i bytes
+  videoStorageUsed  BigInt @default(0)  // Bytes brukt
+  videoStorageLimit BigInt @default(2147483648) // 2 GB i bytes
 
   // Trackman
   trackmanSessions TrackmanSession[]
@@ -1287,7 +1287,7 @@ model SwingVideo {
   userId        String
   url           String
   thumbnailUrl  String?
-  fileSize      Int      // Bytes - for kvote-tracking
+  fileSize      BigInt   // Bytes - for kvote-tracking
   title         String?
   coachNotes    String?  @db.Text
   aiAnalysis    Json?
