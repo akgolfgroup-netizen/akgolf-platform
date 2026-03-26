@@ -1,7 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const MAINTENANCE_MODE = process.env.MAINTENANCE_MODE === "true";
+// MIDLERTIDIG: Hardkodet vedlikeholdsmodus - sett til false for å deaktivere
+const MAINTENANCE_MODE = true;
 const BYPASS_KEY = process.env.MAINTENANCE_BYPASS_KEY;
 
 export async function proxy(request: NextRequest) {
