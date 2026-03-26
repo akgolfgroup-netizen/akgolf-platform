@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { randomUUID } from "crypto";
 import { prisma } from "../lib/portal/prisma";
 import { ServiceCategory } from "@prisma/client";
 
@@ -333,7 +334,7 @@ async function main() {
       console.log(`✏️  Oppdatert: ${service.name} → ${service.price} kr`);
     } else {
       await prisma.serviceType.create({
-        data: service,
+        data: { ...service, id: randomUUID(), updatedAt: new Date() },
       });
       console.log(`➕ Opprettet: ${service.name} → ${service.price} kr`);
     }

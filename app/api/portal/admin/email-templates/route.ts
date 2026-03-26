@@ -20,12 +20,15 @@ export async function POST(request: Request) {
       );
     }
 
+    const { nanoid } = await import("nanoid");
     const template = await prisma.emailTemplate.create({
       data: {
+        id: nanoid(),
         name,
         subject,
         htmlContent: htmlContent ?? "",
         variables: variables ?? [],
+        updatedAt: new Date(),
       },
     });
 

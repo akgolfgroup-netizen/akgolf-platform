@@ -34,12 +34,12 @@ export async function GET(req: NextRequest) {
       status: true,
       paymentStatus: true,
       amount: true,
-      serviceType: {
+      ServiceType: {
         select: { name: true, duration: true },
       },
-      instructor: {
+      Instructor: {
         select: {
-          user: {
+          User: {
             select: { name: true, image: true },
           },
         },

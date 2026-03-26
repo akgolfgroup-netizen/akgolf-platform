@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { prisma } from "@/lib/portal/prisma";
 import { ACHIEVEMENT_DEFINITIONS } from "./definitions";
 
@@ -11,6 +12,7 @@ export async function checkAchievements(userId: string): Promise<string[]> {
     await prisma.achievementDefinition.upsert({
       where: { key: def.key },
       create: {
+        id: randomUUID(),
         key: def.key,
         title: def.title,
         description: def.description,
@@ -76,7 +78,7 @@ export async function checkAchievements(userId: string): Promise<string[]> {
 
     if (earned) {
       await prisma.playerAchievement.create({
-        data: { userId, achievementDefinitionId: def.id },
+        data: { id: randomUUID(), userId, achievementDefinitionId: def.id },
       });
       newlyUnlocked.push(def.key);
     }

@@ -20,7 +20,7 @@ export async function GET(
   }
 
   const events: CalEvent[] = [];
-  const baseUrl = process.env.NEXTAUTH_URL ?? "http://localhost:3001";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
   // Training plan sessions
   const plan = await prisma.trainingPlan.findFirst({

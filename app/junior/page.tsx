@@ -326,9 +326,9 @@ export default function JuniorPage() {
                   <div className="w-card h-full">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-2xl">
-                        {season.name === "Var" && "🌱"}
+                        {season.name === "Vår" && "🌱"}
                         {season.name === "Sommer" && "☀️"}
-                        {season.name === "Host" && "🍂"}
+                        {season.name === "Høst" && "🍂"}
                         {season.name === "Vinter" && "❄️"}
                       </span>
                       <div>

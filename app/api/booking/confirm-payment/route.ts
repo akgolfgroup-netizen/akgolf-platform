@@ -48,42 +48,44 @@ export async function POST(req: NextRequest) {
         stripePaymentId: paymentIntentId,
       },
       include: {
-        serviceType: { select: { name: true, duration: true } },
-        instructor: {
-          select: { user: { select: { name: true, email: true } } },
+        ServiceType: { select: { name: true, duration: true } },
+        Instructor: {
+          select: { User: { select: { name: true, email: true } } },
         },
-        student: { select: { name: true, email: true } },
+        User: { select: { name: true, email: true } },
       },
     });
 
     // Opprett betalingstransaksjon
     await prisma.paymentTransaction.create({
       data: {
+        id: crypto.randomUUID(),
         bookingId,
         paymentMethod: booking.paymentMethod,
         grossAmount: booking.amount,
         vatAmount: booking.vatAmount,
-        vatRate: booking.serviceType
+        vatRate: booking.ServiceType
           ? Math.round((booking.vatAmount / booking.amount) * 100)
           : 0,
         netAmount: booking.amount - booking.vatAmount,
         providerRef: paymentIntentId,
         status: PaymentStatus.PAID,
         paidAt: new Date(),
+        updatedAt: new Date(),
       },
     });
 
     // Send bekreftelses-e-post (non-blocking)
-    if (booking.student.email && booking.instructor.user.email) {
+    if (booking.User.email && booking.Instructor.User.email) {
       sendBookingConfirmation({
         bookingId,
-        studentName: booking.student.name ?? "Kunde",
-        studentEmail: booking.student.email,
-        instructorName: booking.instructor.user.name ?? "Instruktør",
-        instructorEmail: booking.instructor.user.email,
-        serviceName: booking.serviceType.name,
+        studentName: booking.User.name ?? "Kunde",
+        studentEmail: booking.User.email,
+        instructorName: booking.Instructor.User.name ?? "Instruktør",
+        instructorEmail: booking.Instructor.User.email,
+        serviceName: booking.ServiceType.name,
         startTime: booking.startTime,
-        duration: booking.serviceType.duration,
+        duration: booking.ServiceType.duration,
         amount: booking.amount,
         vatAmount: booking.vatAmount,
         location: "Gamle Fredrikstad Golfklubb",

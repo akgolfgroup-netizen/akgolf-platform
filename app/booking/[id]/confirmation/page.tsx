@@ -31,9 +31,9 @@ export default async function BookingConfirmationPage({ params }: Props) {
       ? { id, studentId: user.id }
       : { id },
     include: {
-      serviceType: { select: { name: true, duration: true, price: true } },
-      instructor: { include: { user: { select: { name: true, image: true } } } },
-      student: { select: { name: true, email: true } },
+      ServiceType: { select: { name: true, duration: true, price: true } },
+      Instructor: { include: { User: { select: { name: true, image: true } } } },
+      User: { select: { name: true, email: true } },
     },
   });
 
@@ -109,25 +109,25 @@ export default async function BookingConfirmationPage({ params }: Props) {
 
   // Format price
   // Prisene er lagret i kroner
-  const priceNOK = booking.serviceType.price.toLocaleString("nb-NO", {
+  const priceNOK = booking.ServiceType.price.toLocaleString("nb-NO", {
     style: "currency",
     currency: "NOK",
     minimumFractionDigits: 0,
   });
 
-  const instructorName = booking.instructor.user.name ?? "Ukjent instruktør";
+  const instructorName = booking.Instructor.User.name ?? "Ukjent instruktør";
 
   // If user is not logged in, show public confirmation view
   if (!user?.id) {
     return (
       <PublicConfirmationView
-        serviceName={booking.serviceType.name}
+        serviceName={booking.ServiceType.name}
         instructorName={instructorName}
         formattedDate={formattedDate}
-        duration={booking.serviceType.duration}
+        duration={booking.ServiceType.duration}
         priceNOK={priceNOK}
         paymentMethod={booking.paymentMethod}
-        studentEmail={booking.student.email ?? ""}
+        studentEmail={booking.User.email ?? ""}
         bookingId={booking.id}
       />
     );
@@ -135,10 +135,10 @@ export default async function BookingConfirmationPage({ params }: Props) {
 
   return (
     <ConfirmationView
-      serviceName={booking.serviceType.name}
+      serviceName={booking.ServiceType.name}
       instructorName={instructorName}
       formattedDate={formattedDate}
-      duration={booking.serviceType.duration}
+      duration={booking.ServiceType.duration}
       priceNOK={priceNOK}
       paymentMethod={booking.paymentMethod}
     />

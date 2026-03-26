@@ -32,8 +32,8 @@ export default async function BookingPayPage({ params }: Props) {
       ? { id, studentId: user.id }
       : { id },
     include: {
-      serviceType: { select: { name: true, duration: true, price: true } },
-      student: { select: { name: true, email: true } },
+      ServiceType: { select: { name: true, duration: true, price: true } },
+      User: { select: { name: true, email: true } },
     },
   });
 
@@ -198,10 +198,10 @@ export default async function BookingPayPage({ params }: Props) {
       <PublicStripePaymentPage
         clientSecret={paymentIntent.client_secret}
         bookingId={id}
-        serviceName={booking.serviceType.name}
-        customerEmail={booking.student.email ?? ""}
-        customerName={booking.student.name ?? ""}
-        amount={booking.serviceType.price}
+        serviceName={booking.ServiceType.name}
+        customerEmail={booking.User.email ?? ""}
+        customerName={booking.User.name ?? ""}
+        amount={booking.ServiceType.price}
       />
     );
   }
@@ -210,7 +210,7 @@ export default async function BookingPayPage({ params }: Props) {
     <StripePaymentPage
       clientSecret={paymentIntent.client_secret}
       bookingId={id}
-      serviceName={booking.serviceType.name}
+      serviceName={booking.ServiceType.name}
     />
   );
 }

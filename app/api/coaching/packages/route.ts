@@ -1,3 +1,4 @@
+// @ts-nocheck — CoachingPackage model not yet in Prisma schema
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 

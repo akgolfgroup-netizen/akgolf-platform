@@ -7,9 +7,9 @@ import {
   BookingStatus,
   PaymentMethod,
   PaymentStatus,
-  CoachingSubscriptionTier,
 } from "@prisma/client";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
+import { nanoid } from "nanoid";
 import {
   createQuotaForNewSubscription,
   resetQuotaForNewPeriod,
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
         vatAmount: true,
         startTime: true,
         ServiceType: { select: { name: true, duration: true, vatRate: true } },
-        Student: { select: { name: true, email: true } },
+        User: { select: { name: true, email: true } },
         Instructor: {
           select: {
             User: { select: { name: true, email: true } },
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
         `[Stripe Webhook] Already processed or not found: ${paymentIntentId}`
       );
     } else {
-      const vatRate = booking.serviceType?.vatRate ?? 25;
+      const vatRate = booking.ServiceType?.vatRate ?? 25;
       const netAmount = booking.amount - booking.vatAmount;
 
       await prisma.$transaction([
@@ -95,6 +95,7 @@ export async function POST(req: Request) {
         }),
         prisma.paymentTransaction.create({
           data: {
+            id: nanoid(),
             bookingId: booking.id,
             paymentMethod: PaymentMethod.STRIPE,
             grossAmount: booking.amount,
@@ -105,6 +106,7 @@ export async function POST(req: Request) {
             providerRef: paymentIntentId,
             status: PaymentStatus.PAID,
             paidAt: new Date(),
+            updatedAt: new Date(),
           },
         }),
       ]);
@@ -113,16 +115,16 @@ export async function POST(req: Request) {
       // Send confirmation emails (non-blocking — don't fail the webhook)
       sendBookingConfirmation({
         bookingId: booking.id,
-        studentName: booking.student?.name ?? "Golfer",
-        studentEmail: booking.student?.email ?? "",
-        instructorName: booking.instructor?.user?.name ?? "Trener",
-        instructorEmail: booking.instructor?.user?.email ?? "",
-        serviceName: booking.serviceType?.name ?? "Coaching",
+        studentName: booking.User?.name ?? "Golfer",
+        studentEmail: booking.User?.email ?? "",
+        instructorName: booking.Instructor?.User?.name ?? "Trener",
+        instructorEmail: booking.Instructor?.User?.email ?? "",
+        serviceName: booking.ServiceType?.name ?? "Coaching",
         startTime: booking.startTime,
-        duration: booking.serviceType?.duration ?? 60,
+        duration: booking.ServiceType?.duration ?? 60,
         amount: booking.amount,
         vatAmount: booking.vatAmount,
-        location: booking.location?.name ?? "Gamle Fredrikstad Golfklubb",
+        location: booking.Location?.name ?? "Gamle Fredrikstad Golfklubb",
       }).catch((err) =>
         console.error("[Stripe Webhook] Email send failed:", err)
       );
@@ -162,7 +164,9 @@ export async function POST(req: Request) {
 
 // ─── Subscription Handlers ───
 
-function mapPriceToTier(priceId: string): CoachingSubscriptionTier | null {
+type CoachingTier = "PERFORMANCE_PRO" | "PERFORMANCE" | "START";
+
+function mapPriceToTier(priceId: string): CoachingTier | null {
   if (priceId === process.env.STRIPE_PRICE_PERFORMANCE_PRO) {
     return "PERFORMANCE_PRO";
   }
