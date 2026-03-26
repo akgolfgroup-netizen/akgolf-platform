@@ -1,4 +1,3 @@
-// @ts-nocheck — SubscriptionQuota, CoachingSubscriptionTier not yet in Prisma schema
 /**
  * Subscription Quota Management for AK Golf Coaching
  *

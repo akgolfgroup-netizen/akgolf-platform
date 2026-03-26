@@ -1,4 +1,3 @@
-// @ts-nocheck — CoachingPackage, CoachingAvailability, BillingType, CoachingBookingType not yet in Prisma schema
 /**
  * Seed-script for coaching-pakker og tilgjengelighet.
  *

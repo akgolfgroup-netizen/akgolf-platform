@@ -1,4 +1,3 @@
-// @ts-nocheck — Notification model and NotificationType enum not yet in Prisma schema
 import { prisma } from "@/lib/portal/prisma";
 import type { NotificationType } from "@prisma/client";
 

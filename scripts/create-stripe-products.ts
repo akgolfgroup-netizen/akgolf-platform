@@ -1,4 +1,3 @@
-// @ts-nocheck — AppModule, AppBundle models not yet in Prisma schema
 import "dotenv/config";
 import Stripe from "stripe";
 import { prisma } from "../lib/portal/prisma";

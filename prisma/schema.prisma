@@ -203,6 +203,7 @@ model Instructor {
   User                   User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
   InstructorAvailability InstructorAvailability[]
   ServiceType            ServiceType[]
+  CommunicationLog       CommunicationLog[]
 }
 
 model InstructorAvailability {
@@ -576,7 +577,10 @@ model User {
   notionPageId                                String?
   createdAt                                   DateTime                   @default(now())
   updatedAt                                   DateTime
+  isActive                                    Boolean                    @default(true)
   activeCoachingCustomer                      Boolean                    @default(false)
+  videoStorageUsed                            BigInt                     @default(0)
+  videoStorageLimit                           BigInt                     @default(2147483648)
   stripeCustomerId                            String?                    @unique
   stripeSubscriptionId                        String?
   subscriptionExpiresAt                       DateTime?
@@ -602,6 +606,17 @@ model User {
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
   TrainingSubscription                        TrainingSubscription?
   WaitlistEntry                               WaitlistEntry[]
+  UserSubscription                            UserSubscription[]
+  CommunicationLog                            CommunicationLog[]
+  Notification                                Notification[]
+  AppSubscription                             AppSubscription[]
+  SubscriptionQuota                           SubscriptionQuota?
+  ExerciseDefinition                          ExerciseDefinition[]
+  Message                                     Message[]
+  SwingVideo                                  SwingVideo[]
+  TrackmanSession                             TrackmanSession[]
+  UserExerciseBank                            UserExerciseBank[]
+  Conversation                                Conversation[]             @relation("ConversationParticipants")
 }
 
 model VerificationToken {
@@ -717,4 +732,377 @@ enum WaitlistStatus {
   CONFIRMED
   EXPIRED
   CANCELLED
+}
+
+// ============================================================
+// Nye enums for coaching, apper og kommunikasjon
+// ============================================================
+
+enum BillingType {
+  RECURRING
+  ONE_TIME
+}
+
+enum CoachingBookingType {
+  SELF_BOOK
+  DROP_IN
+  FIXED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  TRIALING
+  CANCELLED
+  EXPIRED
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+}
+
+enum CommunicationType {
+  EMAIL
+  SMS
+  NOTE
+  CALL
+}
+
+enum NotificationType {
+  BOOKING_CONFIRMED
+  BOOKING_CANCELLED
+  BOOKING_REMINDER
+  PLAN_GENERATED
+  PLAN_READY
+  ACHIEVEMENT_UNLOCKED
+  TOURNAMENT_REMINDER
+  COACHING_SUMMARY
+  TRAINING_REMINDER
+  GENERAL
+}
+
+enum CoachingSubscriptionTier {
+  PERFORMANCE
+  PERFORMANCE_PRO
+  START
+}
+
+enum DashboardRole {
+  ADMIN
+  INSTRUCTOR
+  VOLUNTEER
+  CLUB_REP
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContentType {
+  SOME_POST
+  NEWSLETTER
+  ARTICLE
+}
+
+// ============================================================
+// Nye modeller for coaching, apper og kommunikasjon
+// ============================================================
+
+model CoachingPackage {
+  id                 String             @id @default(cuid())
+  name               String
+  slug               String             @unique
+  priceNok           Int
+  billingType        BillingType
+  bookingType        CoachingBookingType
+  sessionsPerMonth   Int?
+  sessionDurationMin Int                @default(20)
+  bookingWindowDays  Int?
+  bookingWindowHours Int?
+  maxBookingsPerWeek Int?
+  slotsRequired      Int                @default(1)
+  description        String?
+  features           String[]           @default([])
+  sortOrder          Int                @default(0)
+  maxPlayersPerSlot  Int                @default(1)
+  isActive           Boolean            @default(true)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  UserSubscription   UserSubscription[]
+}
+
+model UserSubscription {
+  id                    String             @id @default(cuid())
+  userId                String
+  packageId             String
+  status                SubscriptionStatus @default(ACTIVE)
+  sessionsUsedThisMonth Int                @default(0)
+  billingPeriodStart    DateTime?
+  billingPeriodEnd      DateTime?
+  stripeSubscriptionId  String?            @unique
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  user                  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  package               CoachingPackage    @relation(fields: [packageId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+}
+
+model CoachingAvailability {
+  id          String   @id @default(cuid())
+  dayOfWeek   Int
+  startTime   String
+  endTime     String
+  isActive    Boolean  @default(true)
+  reservedFor String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([dayOfWeek, isActive])
+}
+
+model CommunicationLog {
+  id           String            @id @default(cuid())
+  studentId    String
+  instructorId String
+  type         CommunicationType
+  subject      String?
+  content      String
+  sentAt       DateTime          @default(now())
+  student      User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  instructor   Instructor        @relation(fields: [instructorId], references: [id])
+
+  @@index([studentId])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  linkUrl   String?
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+}
+
+model AppModule {
+  id                  String            @id @default(cuid())
+  slug                String            @unique
+  name                String
+  description         String?
+  icon                String?
+  monthlyPriceNok     Int               @default(0)
+  yearlyPriceNok      Int?
+  stripePriceId       String?
+  stripeYearlyPriceId String?
+  isActive            Boolean           @default(true)
+  sortOrder           Int               @default(0)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  BundleItem          BundleItem[]
+  AppSubscription     AppSubscription[]
+}
+
+model AppBundle {
+  id                  String            @id @default(cuid())
+  slug                String            @unique
+  name                String
+  description         String?
+  monthlyPriceNok     Int               @default(0)
+  yearlyPriceNok      Int?
+  stripePriceId       String?
+  stripeYearlyPriceId String?
+  isActive            Boolean           @default(true)
+  sortOrder           Int               @default(0)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  items               BundleItem[]
+  AppSubscription     AppSubscription[]
+}
+
+model BundleItem {
+  id       String    @id @default(cuid())
+  bundleId String
+  moduleId String
+  bundle   AppBundle  @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+  module   AppModule  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([bundleId, moduleId])
+}
+
+model AppSubscription {
+  id                   String    @id @default(cuid())
+  userId               String
+  moduleId             String?
+  bundleId             String?
+  status               String    @default("ACTIVE")
+  stripeSubscriptionId String?   @unique
+  cancelAtPeriodEnd    Boolean   @default(false)
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module               AppModule? @relation(fields: [moduleId], references: [id])
+  bundle               AppBundle? @relation(fields: [bundleId], references: [id])
+
+  @@index([userId])
+}
+
+model DashboardAccess {
+  id        String        @id @default(cuid())
+  email     String        @unique
+  role      DashboardRole
+  name      String?
+  active    Boolean       @default(true)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model SubscriptionQuota {
+  id                String                   @id @default(cuid())
+  userId            String                   @unique
+  subscriptionId    String?
+  tier              CoachingSubscriptionTier
+  sessionsAllowed   Int
+  sessionsUsed      Int                      @default(0)
+  periodStart       DateTime
+  periodEnd         DateTime
+  bookingWindowDays Int                      @default(7)
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+  user              User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ContentItem {
+  id           String        @id @default(cuid())
+  type         ContentType
+  status       ContentStatus @default(DRAFT)
+  title        String
+  slug         String?       @unique
+  body         String
+  bodyHtml     String?
+  excerpt      String?
+  platform     String?
+  hashtags     String[]
+  imageUrl     String?
+  scheduledAt  DateTime?
+  publishedAt  DateTime?
+  aiGenerated  Boolean       @default(false)
+  aiModel      String?
+  notionPageId String?       @unique
+  segment      String?
+  createdBy    String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([scheduledAt])
+  @@index([slug])
+  @@index([type, status])
+}
+
+model Conversation {
+  id           String    @id @default(cuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  Message      Message[]
+  participants User[]    @relation("ConversationParticipants")
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  senderId       String
+  content        String
+  readAt         DateTime?
+  createdAt      DateTime     @default(now())
+  Conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  User           User         @relation(fields: [senderId], references: [id])
+
+  @@index([conversationId])
+  @@index([senderId])
+}
+
+model ExerciseDefinition {
+  id                 String             @id @default(cuid())
+  name               String
+  description        String?
+  instructions       String?
+  videoUrl           String?
+  imageUrl           String?
+  pyramid            String
+  area               String
+  lPhase             String?
+  pPositionStart     String?
+  pPositionEnd       String?
+  equipment          String[]
+  minDurationMinutes Int                @default(5)
+  maxDurationMinutes Int                @default(30)
+  difficulty         Int                @default(2)
+  isPublic           Boolean            @default(false)
+  isSystemDrill      Boolean            @default(false)
+  createdById        String?
+  tags               String[]
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  User               User?              @relation(fields: [createdById], references: [id])
+  UserExerciseBank   UserExerciseBank[]
+
+  @@index([area])
+  @@index([isPublic])
+  @@index([pyramid])
+}
+
+model SwingVideo {
+  id           String   @id @default(cuid())
+  userId       String
+  url          String
+  thumbnailUrl String?
+  fileSize     BigInt
+  title        String?
+  coachNotes   String?
+  aiAnalysis   Json?
+  sessionId    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model TrackmanSession {
+  id          String   @id @default(cuid())
+  userId      String
+  sessionDate DateTime
+  club        String
+  shots       Json
+  averages    Json
+  createdAt   DateTime @default(now())
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([sessionDate])
+  @@index([userId])
+}
+
+model UserExerciseBank {
+  id                 String             @id @default(cuid())
+  userId             String
+  exerciseId         String
+  isFavorite         Boolean            @default(false)
+  usageCount         Int                @default(0)
+  lastUsedAt         DateTime?
+  personalNotes      String?
+  createdAt          DateTime           @default(now())
+  ExerciseDefinition ExerciseDefinition @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  User               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, exerciseId])
+  @@index([userId])
 }

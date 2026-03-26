@@ -1,4 +1,3 @@
-// @ts-nocheck — AppSubscription model not yet added to Prisma schema
 import { NextResponse } from "next/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";

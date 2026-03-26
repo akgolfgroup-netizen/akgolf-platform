@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
@@ -23,7 +22,7 @@ export async function getCommunicationLogs(studentId: string) {
       sentAt: true,
       instructor: {
         select: {
-          user: {
+          User: {
             select: { name: true },
           },
         },

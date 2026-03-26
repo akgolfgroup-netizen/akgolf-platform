@@ -1,4 +1,3 @@
-// @ts-nocheck — AppSubscription, AppBundle, BundleItem, SubscriptionStatus not yet in Prisma schema
 import { prisma } from "@/lib/portal/prisma";
 import { SubscriptionStatus } from "@prisma/client";
 

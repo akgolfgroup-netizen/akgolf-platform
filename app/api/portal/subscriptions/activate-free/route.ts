@@ -1,4 +1,3 @@
-// @ts-nocheck — AppModule and AppSubscription models not yet added to Prisma schema
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getPortalUser } from "@/lib/portal/auth";

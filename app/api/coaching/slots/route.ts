@@ -1,4 +1,3 @@
-// @ts-nocheck — CoachingPackage, CoachingAvailability models not yet in Prisma schema
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { BookingStatus } from "@prisma/client";

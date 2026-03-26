@@ -1,4 +1,3 @@
-// @ts-nocheck — Notification model not yet added to Prisma schema
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";

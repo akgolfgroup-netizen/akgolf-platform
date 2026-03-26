@@ -132,9 +132,13 @@ fileSize          BigInt
 
 **Status:** akgolf-website er nå master for all funksjonalitet. Spillerportal og akgolf-booking er arkivert.
 
-**Nye modeller:** CoachingPackage, UserSubscription, CoachingAvailability, Notification, Conversation, Message, SwingVideo, TrackmanSession
+**Nye modeller (alle i schema.prisma):** CoachingPackage, UserSubscription, CoachingAvailability, CommunicationLog, Notification, AppModule, AppBundle, BundleItem, AppSubscription, SubscriptionQuota, DashboardAccess, ContentItem, Conversation, Message, ExerciseDefinition, SwingVideo, TrackmanSession, UserExerciseBank
 
-**Nye API-er:** `/api/coaching/*`, `/api/cron/*`, `/api/portal/admin/email-templates`, etc.
+**Nye enums:** BillingType, CoachingBookingType, SubscriptionStatus, CommunicationType, NotificationType, CoachingSubscriptionTier, DashboardRole, ContentStatus, ContentType
+
+**Nye API-er:** `/api/coaching/*`, `/api/cron/*`, `/api/portal/admin/email-templates`, `/api/portal/notifications`, `/api/portal/subscriptions/*`
+
+**Viktig:** Prisma-relasjoner bruker stor forbokstav (f.eks. `User`, ikke `user`). Sjekk alltid mot schema ved select/where.
 
 ## 15. Priser er lagret i KRONER (ikke øre)
 
