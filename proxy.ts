@@ -1,7 +1,40 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+const MAINTENANCE_MODE = process.env.MAINTENANCE_MODE === "true";
+const BYPASS_KEY = process.env.MAINTENANCE_BYPASS_KEY;
+
 export async function proxy(request: NextRequest) {
+  // ─── Maintenance Mode ───
+  if (MAINTENANCE_MODE) {
+    const pathname = request.nextUrl.pathname;
+
+    // Bypass med secret key
+    if (BYPASS_KEY && request.nextUrl.searchParams.get("bypass") === BYPASS_KEY) {
+      const response = NextResponse.next({ request });
+      response.cookies.set("maintenance_bypass", "true", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24,
+      });
+      return response;
+    }
+
+    // Sjekk bypass-cookie
+    if (request.cookies.get("maintenance_bypass")?.value === "true") {
+      // Continue to normal flow
+    } else if (
+      !pathname.startsWith("/api") &&
+      !pathname.startsWith("/_next") &&
+      !pathname.startsWith("/favicon") &&
+      !pathname.startsWith("/icon") &&
+      pathname !== "/maintenance"
+    ) {
+      return NextResponse.rewrite(new URL("/maintenance", request.url));
+    }
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -64,8 +97,7 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/treningsplan/dashboard/:path*",
-    "/auth/:path*",
-    "/portal/:path*",
+    // Match all paths except static files
+    "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };

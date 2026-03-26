@@ -48,7 +48,7 @@ export function AIWeaknessCard() {
       className="rounded-xl border p-5"
       style={{
         background: "linear-gradient(135deg, rgba(13,34,68,0.6) 0%, rgba(10,25,41,0.8) 100%)",
-        borderColor: "rgba(184,151,92,0.3)",
+        borderColor: "rgba(176,125,79,0.3)",
       }}
     >
       <div className="flex items-center gap-2 mb-3">
@@ -56,7 +56,7 @@ export function AIWeaknessCard() {
         <h3 className="text-sm font-semibold text-[var(--color-snow)]">Svakhetsanalyse</h3>
         <span
           className="ml-auto text-[10px] px-2 py-0.5 rounded-full font-medium"
-          style={{ background: "rgba(184,151,92,0.15)", color: "var(--color-gold)" }}
+          style={{ background: "rgba(176,125,79,0.15)", color: "var(--color-gold)" }}
         >
           Elite
         </span>
@@ -118,7 +118,7 @@ export function AIWeaknessCard() {
             {/* Primary weakness */}
             <div
               className="rounded-lg p-3"
-              style={{ background: "rgba(184,151,92,0.08)", border: "1px solid rgba(184,151,92,0.15)" }}
+              style={{ background: "rgba(176,125,79,0.08)", border: "1px solid rgba(176,125,79,0.15)" }}
             >
               <p className="text-[10px] uppercase tracking-widest text-[var(--color-gold-dim)] mb-1">
                 Primær svakhet

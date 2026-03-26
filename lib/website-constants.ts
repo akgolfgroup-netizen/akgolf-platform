@@ -72,7 +72,7 @@ export const TEAM = [
     division: "AK Golf Academy",
     bio: "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse. Hver spiller får en individuell utviklingsplan — ikke bare data, men konkret retning.",
     certifications: ["PGA Professional", "TPI Certified", "TrackMan Certified"],
-    contact: { email: "anders@akgolf.no", phone: "+47 909 67 995" },
+    contact: { email: "anders@akgolf.no" },
   },
   {
     name: "Markus",
@@ -80,7 +80,7 @@ export const TEAM = [
     division: "AK Golf Academy",
     bio: "College-golf fra USA. Spesialisert på gruppetrening, banecoaching og nybegynneropplæring. Kjører 9 Hull, After Work, Første Sesong og banecoaching på korthullsbanen. 20 min individuell coaching: 300 kr.",
     certifications: [],
-    contact: { email: "markus@akgolf.no", phone: "+47 905 86 097" },
+    contact: { email: "markus@akgolf.no" },
   },
 ] as const;
 
@@ -140,60 +140,80 @@ export const FOUNDATION_TEST = {
   refundNote: "Beløpet trekkes fra første faktura ved oppstart innen 14 dager."
 } as const;
 
-// ─── Coaching Packages (Wireframe-struktur) ───
+// ─── Coaching Packages (Abonnement) ───
 export const COACHING_PACKAGES = [
   {
-    name: "Starter",
-    price: "1 990",
+    name: "Performance Pro",
+    price: "2 000",
     period: "kr/mnd",
-    tagline: "For deg som vil prøve strukturert coaching",
-    description: "Perfekt for deg som ønsker å komme i gang med profesjonell coaching.",
-    whoIsItFor: "Passer for: Nybegynnere og hobbyspillere som vil ha strukturert veiledning",
+    tagline: "For deg som satser",
+    description: "4 × 20 min individuell coaching per måned. Teknisk veiledning etter plan — du vet alltid hva du jobber med og hvorfor. TrackMan brukes for å bekrefte endringer.",
+    whoIsItFor: "Passer for: Ambisiøse spillere som trener 3+ ganger i uken.",
     features: [
-      "2 coaching-timer per måned",
-      "Individuell utviklingsplan (IUP)",
-      "Videoanalyse av sving",
-      "Tilgang til spillerportal",
-      "E-poststøtte"
-    ],
-    highlighted: false,
-  },
-  {
-    name: "Pro",
-    price: "3 490",
-    period: "kr/mnd",
-    tagline: "For ambisiøse spillere med klare mål",
-    description: "Vår mest populære pakke for spillere som vil se rask utvikling.",
-    whoIsItFor: "Passer for: Aktive spillere med handicap-mål og turneringsambisjoner",
-    features: [
-      "4 coaching-timer per måned",
-      "Avansert IUP med periodisering",
-      "Ukentlig videoanalyse",
-      "TrackMan-data og analyse",
-      "Mental trening inkludert",
-      "Direkte meldingsstøtte"
+      "4 × 20 min individuell coaching/mnd",
+      "Selvbooking 14 dager frem",
+      "Prioritert tilgang foran Performance",
+      "TrackMan i hver sesjon",
+      "Full spillerportal med treningsplan",
+      "Coaching-notater etter hver sesjon"
     ],
     highlighted: true,
+    stripeMetadata: {
+      type: "subscription",
+      sessions_per_month: 4,
+      session_duration: 20,
+      booking_window_days: 14,
+      max_per_week: 2,
+    },
   },
   {
-    name: "Elite",
-    price: "5 990",
+    name: "Performance",
+    price: "1 600",
     period: "kr/mnd",
-    tagline: "For spillere med seriøse ambisjoner",
-    description: "Full pakke for spillere som vil ha alt for maksimal utvikling.",
-    whoIsItFor: "Passer for: Konkurransespillere, juniorer på landslag, og aspirerende proffer",
+    tagline: "Struktur uten stress",
+    description: "2 × 20 min individuell coaching per måned med TrackMan. Selvbooking 7 dager frem. Full spillerportal med treningsplan oppdatert etter hver sesjon.",
+    whoIsItFor: "Passer for: Klubbspillere som spiller 1–2 ganger i uken.",
     features: [
-      "Ubegrenset coaching-timer",
-      "Helhetlig IUP med alle områder",
-      "Daglig oppfølging og feedback",
-      "Turneringsstøtte og planlegging",
-      "Fysisk treningsprogram",
-      "Playing lessons på banen",
-      "Prioritert tilgang til trenere"
+      "2 × 20 min individuell coaching/mnd",
+      "Selvbooking 7 dager frem",
+      "TrackMan i hver sesjon",
+      "Full spillerportal med treningsplan",
+      "Coaching-notater etter hver sesjon"
     ],
     highlighted: false,
+    stripeMetadata: {
+      type: "subscription",
+      sessions_per_month: 2,
+      session_duration: 20,
+      booking_window_days: 7,
+      max_per_week: 1,
+    },
   },
 ] as const;
+
+// ─── Onboarding Package ───
+export const ONBOARDING_PACKAGE = {
+  name: "Start",
+  price: "3 000",
+  period: "kr",
+  tagline: "Din inngang til strukturert coaching",
+  description: "3 × 20 min individuelle sesjoner over 30 dager. TrackMan spredningsanalyse med 7-jern og driver, personlig teknisk plan og 30 dagers tilgang til spillerportalen.",
+  whoIsItFor: "Passer for: Alle som vil prøve AK Golf-metoden før de forplikter seg til abonnement.",
+  features: [
+    "3 × 20 min coaching over 30 dager",
+    "TrackMan spredningsanalyse",
+    "Personlig teknisk plan",
+    "30 dagers portaltilgang"
+  ],
+  nextStep: "Etter Start anbefaler vi overgang til Performance eller Performance Pro.",
+  stripeMetadata: {
+    type: "onboarding",
+    sessions: 3,
+    session_duration: 20,
+    portal_days: 30,
+    includes_trackman_baseline: true,
+  },
+} as const;
 
 // ─── Service Types (enkelttimer-kategorier) ───
 export const SERVICE_TYPES = [
@@ -227,22 +247,301 @@ export const SINGLE_SESSIONS = {
   }
 } as const;
 
+// ─── Drop-in / Flex ───
 export const FLEX_PACKAGES = [
   {
-    name: "AK Flex 50",
+    name: "Flex 50 Solo",
     price: "1 500",
     period: "kr",
     duration: "50 min",
-    description: "Én 50-minutters coaching-sesjon uten binding. Coaching-notater i appen etter sesjonen.",
+    description: "Én 50-minutters coaching-sesjon uten binding. Book ledige tider 48 timer i forveien. Du får coaching-notater i appen etter sesjonen — men ingen spillerportal.",
+    stripeMetadata: {
+      type: "drop_in",
+      session_duration: 50,
+      booking_window_hours: 48,
+      slots_required: 2,
+    },
   },
   {
-    name: "AK Flex 90",
+    name: "Flex 50 Duo",
+    price: "1 700",
+    pricePerPerson: "850",
+    period: "kr",
+    duration: "50 min",
+    description: "50 min coaching delt mellom 2 spillere. Book ledige tider 48 timer i forveien.",
+    stripeMetadata: {
+      type: "drop_in",
+      session_duration: 50,
+      booking_window_hours: 48,
+      slots_required: 2,
+      participants: 2,
+    },
+  },
+  {
+    name: "Flex 90 Solo",
     price: "2 500",
     period: "kr",
     duration: "90 min",
-    description: "Én 90-minutters dypdykk uten binding. Coaching-notater i appen etter sesjonen.",
+    description: "Én 90-minutters dypdykk uten binding. Ideell for teknisk gjennomgang, putting-analyse eller sesongplanlegging. Book ledige tider 48 timer i forveien.",
+    stripeMetadata: {
+      type: "drop_in",
+      session_duration: 90,
+      booking_window_hours: 48,
+      slots_required: 4,
+    },
+  },
+  {
+    name: "Flex 90 Duo",
+    price: "2 800",
+    pricePerPerson: "1 400",
+    period: "kr",
+    duration: "90 min",
+    description: "90 min coaching delt mellom 2 spillere. Book ledige tider 48 timer i forveien.",
+    stripeMetadata: {
+      type: "drop_in",
+      session_duration: 90,
+      booking_window_hours: 48,
+      slots_required: 4,
+      participants: 2,
+    },
   },
 ] as const;
+
+// ─── Banecoaching ───
+export const BANECOACHING = [
+  {
+    name: "On-Course 9",
+    price: "3 000",
+    period: "kr/spiller",
+    coach: "Anders",
+    description: "9 hull på 18-hullsbanen med Anders. Strategi i praksis — du lærer å velge riktig slag basert på din faktiske spredning.",
+    details: "Maks 2 spillere. Varighet ca. 2,5 timer. Inkluderer greenfee.",
+    stripeMetadata: {
+      type: "playing_lesson",
+      holes: 9,
+      course: "18-hull",
+      max_participants: 2,
+      includes_greenfee: true,
+    },
+  },
+  {
+    name: "On-Course Par 3",
+    price: "500",
+    period: "kr/spiller",
+    coach: "Markus",
+    description: "9 hull på korthullsbanen med Markus. Fokus på kort spill, banemanagement og scoring.",
+    details: "Grupper à 4 spillere. Lav terskel, høyt læringsutbytte. Perfekt som neste steg etter Første Sesong.",
+    stripeMetadata: {
+      type: "playing_lesson",
+      holes: 9,
+      course: "par3",
+      max_participants: 4,
+    },
+  },
+] as const;
+
+// ─── Markus Coaching ───
+export const MARKUS_SESSIONS = {
+  name: "Markus 20 min",
+  price: "300",
+  period: "kr",
+  description: "Individuell coaching med Markus. Samme 20-minutters format som Anders, men til halv pris. Perfekt for spillere som vil ha hyppigere oppfølging uten å øke budsjettet.",
+  bookingNote: "Book via appen.",
+} as const;
+
+// ─── Gruppekonsepter ───
+export const GROUP_CONCEPTS = [
+  {
+    id: "gameday",
+    name: "Gameday",
+    price: "2 500",
+    period: "kr/person",
+    category: "helg",
+    description: "En hel dag golf med strategi og TrackMan-analyse. 12 spillere, 1 TrackMan, 3 stasjoner som roterer. Starter med felles briefing, deretter 4 timer med teknikk, kort spill og banemanagement. Avslutter med 9 hull under press.",
+    details: "Lørdag/søndag, 09:00–16:00. Lunsj inkludert. ~9 helger per sesong.",
+    includes: ["Komplett spillerrapport i appen"],
+    stripeMetadata: {
+      type: "group_event",
+      format: "full_day",
+      participants: 12,
+      includes_lunch: true,
+    },
+  },
+  {
+    id: "forste-sesong",
+    name: "Første Sesong",
+    price: "4 500",
+    period: "kr",
+    category: "nybegynner",
+    description: "8-ukers program for deg som aldri har spilt golf — eller nettopp tatt VTG-kurs. Du lærer det du faktisk trenger for å komme deg ut på banen: grip, sving, kort spill, putting, regler og baneoppførsel.",
+    details: "Alt på korthullsbanen — 9 hull par 3 som er perfekt for nybegynnere. Maks 8 deltakere per kull, 3 kull per sesong.",
+    includes: [
+      "8 gruppetreninger à 90 min",
+      "3 guidede runder på korthullsbanen",
+      "Utstyrslån",
+      "30 dagers portaltilgang"
+    ],
+    stripeMetadata: {
+      type: "group_program",
+      weeks: 8,
+      sessions: 11,
+      max_participants: 8,
+    },
+  },
+  {
+    id: "9-hull-kveld",
+    name: "9 Hull",
+    price: "250",
+    period: "kr/kveld",
+    seasonPass: "3 500",
+    category: "ukentlig",
+    description: "Ukentlig 9 hull på korthullsbanen med Markus.",
+    variants: [
+      { name: "9 Hull Social", description: "Alle nivåer. Scramble-format, sosialt fokus. Perfekt for deg som vil spille mer uten press." },
+      { name: "9 Hull Challenge", description: "Hcp under 36. Individuell stableford. For deg som vil trene på scoring." }
+    ],
+    stripeMetadata: {
+      type: "recurring_group",
+      frequency: "weekly",
+    },
+  },
+  {
+    id: "after-work",
+    name: "After Work",
+    price: "500",
+    period: "kr/person",
+    category: "bedrift",
+    description: "Fredagskveld 17–20 på korthullsbanen. Markus kjører alt — introduksjon, instruksjon på range, 9 hull i grupper og premieutdeling.",
+    details: "Ingen golferfaring nødvendig. Utstyr inkludert. Maks 24 deltakere.",
+    stripeMetadata: {
+      type: "corporate_event",
+      max_participants: 24,
+      includes_equipment: true,
+    },
+  },
+  {
+    id: "bedriftsgolf",
+    name: "Bedriftsgolf",
+    price: "2 500",
+    period: "kr/person",
+    category: "bedrift",
+    description: "Premium halvdagsevent med Anders på 18-hullsbanen. TrackMan-stasjon, instruksjon, 9 hull scramble, lunsj og premieutdeling.",
+    details: "For bedrifter som vil gi teamet en eksklusiv opplevelse. Maks 16 deltakere.",
+    stripeMetadata: {
+      type: "corporate_event",
+      max_participants: 16,
+      includes_lunch: true,
+      includes_trackman: true,
+    },
+  },
+  {
+    id: "vintertrening",
+    name: "Vintertrening",
+    price: "3 500",
+    period: "kr",
+    category: "sesong",
+    description: "6-ukers simulatorprogram fra november til mars. Ukentlige økter med TrackMan-data, teknisk gjennomgang og strukturerte øvelser.",
+    details: "Hold utviklingen gående gjennom vinteren. Maks 6 spillere per kull.",
+    stripeMetadata: {
+      type: "seasonal_program",
+      weeks: 6,
+      max_participants: 6,
+    },
+  },
+] as const;
+
+// ─── Digital Platform (for hele Norge) ───
+export const DIGITAL_PLATFORM = {
+  intro: {
+    heading: "Tren strukturert uansett hvor du bor",
+    description: "Bor du utenfor Fredrikstad? AK Golf-plattformen gir deg tilgang til det samme systemet som våre fysiske spillere bruker — uten å møte opp.",
+  },
+  tiers: [
+    {
+      name: "Free",
+      price: "0",
+      period: "kr",
+      description: "Prøv plattformen uten risiko.",
+      features: [
+        "Treningsdagbok (maks 3 runder/mnd)",
+        "10 øvelser fra øvelsesbanken",
+        "Basisstatistikk"
+      ],
+      stripeMetadata: { type: "digital_subscription", tier: "free" },
+    },
+    {
+      name: "Pro",
+      price: "300",
+      period: "kr/mnd",
+      description: "Alt du trenger for å trene strukturert på egen hånd.",
+      features: [
+        "Full treningsdagbok",
+        "Komplett øvelsesbank",
+        "Statistikk Pro",
+        "Treningsplanlegger med periodisering",
+        "AI-analyse med benchmarking"
+      ],
+      highlighted: true,
+      stripeMetadata: {
+        type: "digital_subscription",
+        tier: "pro",
+        portal_access: "full",
+        ai_analysis: true,
+        benchmarking: true,
+      },
+    },
+    {
+      name: "Pro + Coaching",
+      price: "800",
+      period: "kr/mnd",
+      description: "Alt i Pro, pluss personlig oppfølging.",
+      features: [
+        "Alt i Pro",
+        "2 swing-videoer per uke med AI-assistert feedback",
+        "1 × 20 min videosamtale i måneden",
+        "Personlig treningsplan justert månedlig",
+        "Responstid: 48 timer"
+      ],
+      stripeMetadata: {
+        type: "digital_subscription",
+        tier: "pro_coaching",
+        swing_videos_per_week: 2,
+        video_calls_per_month: 1,
+        response_hours: 48,
+      },
+    },
+    {
+      name: "Elite",
+      price: "1 500",
+      period: "kr/mnd",
+      description: "Alt i Pro + Coaching, pluss prioritert oppfølging.",
+      features: [
+        "Alt i Pro + Coaching",
+        "3 × 20 min live videosesjon per måned",
+        "Ubegrenset swing-video",
+        "Prioritert responstid (12 timer)",
+        "Turneringsplanlegging"
+      ],
+      note: "Maks 50 spillere.",
+      stripeMetadata: {
+        type: "digital_subscription",
+        tier: "elite",
+        live_sessions_per_month: 3,
+        swing_videos: "unlimited",
+        response_hours: 12,
+        max_capacity: 50,
+      },
+    },
+  ],
+  juniorDigital: {
+    name: "Junior Digital",
+    price: "200",
+    period: "kr/mnd",
+    description: "Treningsplan tilpasset alder, øvelsesvideoer og progresjonslogging synlig for foreldre.",
+    note: "For juniorer utenfor Fredrikstad som vil trene strukturert. Fra Q3 2026.",
+    available: false,
+  },
+} as const;
 
 // ─── Portal Features ───
 export const PORTAL_FEATURES = [
@@ -588,7 +887,6 @@ export const FOOTER_LINKS = {
   ],
   contact: {
     email: "post@akgolf.no",
-    phone: "+47 909 67 995",
     location: "GFGK, Vinger",
   },
 } as const;
@@ -814,37 +1112,88 @@ export const JUNIOR_SEASON_PROGRAM = {
   ],
 } as const;
 
-// ─── Junior Pricing ───
+// ─── Junior Academy Packages ───
 export const JUNIOR_PACKAGES = [
   {
-    name: "AK Junior Start",
-    price: "2 000",
-    period: "kr/mnd",
-    description: "For juniorer som vil ha strukturert trening med individuell oppfølging.",
-    features: [
-      "4× 20 min individuell check-in per måned",
-      "Tilgang til gruppetimer",
-      "Spillerportal med treningsplan",
-      "Månedlig fremgangsrapport",
-    ],
-    highlighted: false,
-  },
-  {
-    name: "AK Junior Elite",
+    name: "Academy",
     price: "2 500",
     period: "kr/mnd",
-    description: "For ambisiøse juniorer som satser på konkurranse.",
+    tagline: "Kjernetroppen",
+    description: "8 utvalgte spillere som satser på konkurransegolf. Individuell 15-minutters oppfølging 2–3 ganger per uke i skoleåret, 5 ganger per uke om sommeren.",
     features: [
-      "8× 20 min individuell check-in per måned",
-      "Ubegrenset gruppetimer",
-      "Full spillerportal med statistikk",
-      "Turneringsplanlegging",
-      "Kvartalsvis Foundation Test",
-      "Prioritert booking",
+      "Individuell 15-min oppfølging (2–3×/uke)",
+      "Fellestrening onsdag",
+      "Full spillerportal med progresjonslogging",
+      "TrackMan-analyse hver sesjon",
+      "5 samlingsdager + treningsleir",
+      "Helårsmedlemskap (12 mnd)"
     ],
     highlighted: true,
+    stripeMetadata: {
+      type: "subscription",
+      format: "15min_individual",
+      days: "annenhver_man_ons_annenhver_tor",
+      group_session: "onsdag",
+      coach: "anders",
+    },
+  },
+  {
+    name: "Prospect",
+    price: "2 000",
+    period: "kr/mnd",
+    tagline: "Under utvikling mot Academy",
+    description: "4 talentspillere under utvikling mot full Academy. Samme treningsopplegg som Academy-spillerne. Evalueres løpende for oppgradering.",
+    features: [
+      "Samme opplegg som Academy",
+      "Evalueres løpende",
+      "Helårsmedlemskap (12 mnd)"
+    ],
+    highlighted: false,
+    stripeMetadata: {
+      type: "subscription",
+      format: "15min_individual",
+      tier: "prospect",
+    },
   },
 ] as const;
+
+// ─── Junior Camp ───
+export const JUNIOR_CAMP = {
+  name: "Junior Camp",
+  price: "4 500",
+  period: "kr/deltaker",
+  description: "Intensive ukescamper i skoleferier. 5 dager × 3 timer med teknikk, TrackMan-baseline, kort spill, strategiprinsipper og banemanagement på korthullsbanen.",
+  details: "Avslutningsrunde med individuell tilbakemelding i appen. Maks 12 deltakere. 3 camper per år.",
+  stripeMetadata: {
+    type: "camp",
+    days: 5,
+    hours_per_day: 3,
+    max_participants: 12,
+  },
+} as const;
+
+// ─── Junior Academy Info ───
+export const JUNIOR_ACADEMY_INFO = {
+  heading: "AK Golf Junior Academy — For de som satser",
+  intro: "AK Golf Junior Academy er et privat satsningslag for utvalgte juniorer som vil utvikle seg mot konkurransegolf. Dette er ikke et tilbud for alle — det er for spillere som er villige til å legge ned arbeidet.",
+  benefits: [
+    "Individuell oppfølging med 15-minutters sesjoner flere ganger i uken",
+    "TrackMan-analyse i hver sesjon",
+    "Fellestrening onsdager",
+    "Komplett sesongplan med periodisering",
+    "Mentaltrening, fysisk trening, custom fitting og treningsleir (sponsorfinansiert)"
+  ],
+  pathway: {
+    heading: "Spillerreisen",
+    steps: [
+      { name: "CIS Fredrikstad", note: "gratis, skoletid" },
+      { name: "GFGK Junior", note: "klubbmedlemskap" },
+      { name: "Junior Camp", note: "4 500 kr" },
+      { name: "AK Golf Junior Academy", note: "2 000–2 500 kr/mnd" },
+      { name: "WANG Toppidrett", note: "videregående" }
+    ],
+  },
+} as const;
 
 // ─── Junior Parent Info ───
 export const JUNIOR_PARENT_INFO = {
@@ -903,6 +1252,75 @@ export const UTVIKLING_KLUBB = {
   subheading: "for ambisiose klubber.",
   description: "Vi hjelper golfklubber med å bygge sportslige strukturer som tiltrekker medlemmer, utvikler spillere og skaper resultater. Fra sportsplan til trenernettverk.",
 } as const;
+
+// ─── Utvikling Intro (Two Services) ───
+export const UTVIKLING_SERVICES = {
+  eyebrow: "To hovedområder",
+  heading: "Software og rådgiving — under samme tak.",
+  description: "Vi kombinerer digitale verktøy med sportslig rådgiving. Resultatet er helhetlige løsninger som faktisk fungerer i hverdagen.",
+  services: [
+    {
+      id: "software",
+      title: "Software",
+      subtitle: "Digitale treningsverktøy",
+      description: "Spillerportal, treningsplanlegger og statistikkverktøy som gir spillere og trenere full oversikt.",
+      features: ["Spillerportal med IUP", "AI-treningsplanlegger", "Strokes Gained-analyse", "QR-treningsskilt"],
+      accent: "software" as const,
+    },
+    {
+      id: "klubbutvikling",
+      title: "Klubbutvikling",
+      subtitle: "Sportslig rådgiving",
+      description: "Sportsplaner, trenerveiledning og sertifiseringsprogrammer for golfklubber og forbund.",
+      features: ["Sportsplaner", "Trenerveiledning", "Sertifiseringsprogram", "Organisasjonsutvikling"],
+      accent: "utvikling" as const,
+    },
+  ],
+} as const;
+
+// ─── Utvikling Software Features (Detailed) ───
+export const UTVIKLING_SOFTWARE_FEATURES = [
+  {
+    id: "spillerportal",
+    title: "Spillerportal",
+    description: "Komplett digital plattform der spillere følger sin utvikling, ser treningsplaner og kommuniserer med trener.",
+    details: ["Individuell utviklingsplan (IUP)", "Treningslogg og progresjon", "Coaching-notater", "Målsetting og oppfølging"],
+  },
+  {
+    id: "treningsplanlegger",
+    title: "AI-treningsplanlegger",
+    description: "Automatisk genererte treningsplaner basert på spillerens mål, nivå og tilgjengelig tid.",
+    details: ["Periodisert struktur", "Tilpasset nivå", "Dynamisk justering", "Øvelsesbank med video"],
+  },
+  {
+    id: "statistikk",
+    title: "Strokes Gained-analyse",
+    description: "Avansert statistikk som viser nøyaktig hvor spilleren vinner og taper slag mot sammenlignbare spillere.",
+    details: ["SG: Tee, Approach, Short Game, Putting", "Benchmarking mot nivå", "Trendanalyse", "Svakhetsidentifisering"],
+  },
+] as const;
+
+// ─── Utvikling Klubb Features (Detailed) ───
+export const UTVIKLING_KLUBB_FEATURES = [
+  {
+    id: "sportsplaner",
+    title: "Sportsplaner",
+    description: "Helhetlige sportsplaner tilpasset klubbens størrelse, ambisjoner og ressurser.",
+    details: ["Årshjul med periodisering", "Treningsopplegg alle nivåer", "Konkurransekalender", "Måling og evaluering"],
+  },
+  {
+    id: "trenerveiledning",
+    title: "Trenerveiledning",
+    description: "Strukturert veiledning og mentorskap for klubbtrenere som vil utvikle seg.",
+    details: ["1:1 mentoring", "Metodikk-workshop", "Observasjon og feedback", "Nettverk med andre trenere"],
+  },
+  {
+    id: "sertifisering",
+    title: "Sertifiseringsprogram",
+    description: "Formell sertifisering for trenere basert på dokumentert kompetanse og resultater.",
+    details: ["Nivåinndelt sertifisering", "Praktisk og teoretisk test", "Årlig resertifisering", "Kvalitetssikring"],
+  },
+] as const;
 
 // ─── Utvikling CTA ───
 export const UTVIKLING_CTA = {

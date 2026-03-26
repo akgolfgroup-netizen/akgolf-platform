@@ -107,7 +107,7 @@ export function HandicapChart({ entries }: HandicapChartProps) {
           <Line
             type="monotone"
             dataKey="trend"
-            stroke="rgba(184,151,92,0.4)"
+            stroke="rgba(176,125,79,0.4)"
             strokeWidth={1.5}
             strokeDasharray="4 4"
             dot={false}

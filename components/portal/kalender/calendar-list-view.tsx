@@ -49,7 +49,7 @@ export function CalendarListView({ events }: CalendarListViewProps) {
               Uke {format(weekStart, "I", { locale: nb })} · {format(weekStart, "d. MMMM", { locale: nb })}
             </span>
             {isSameWeek(weekStart, new Date(), { weekStartsOn: 1 }) && (
-              <span className="text-xs px-3 py-1 rounded-full font-medium bg-[rgba(184,151,92,0.15)] text-[var(--color-gold)] border border-[rgba(184,151,92,0.3)]">
+              <span className="text-xs px-3 py-1 rounded-full font-medium bg-[rgba(176,125,79,0.15)] text-[var(--color-gold)] border border-[rgba(176,125,79,0.3)]">
                 Denne uken
               </span>
             )}

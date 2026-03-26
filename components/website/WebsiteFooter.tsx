@@ -89,12 +89,12 @@ export function WebsiteFooter() {
                 </a>
               </li>
               <li>
-                <a
-                  href={`tel:${FOOTER_LINKS.contact.phone.replace(/\s/g, "")}`}
+                <Link
+                  href="/#contact"
                   className="hover:text-white transition-colors"
                 >
-                  {FOOTER_LINKS.contact.phone}
-                </a>
+                  Send oss en melding
+                </Link>
               </li>
             </ul>
           </div>

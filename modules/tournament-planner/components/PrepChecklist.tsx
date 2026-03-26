@@ -83,7 +83,7 @@ export function PrepChecklistComponent({ checklist, onChange }: PrepChecklistPro
                 <span
                   className="w-4 h-4 rounded flex items-center justify-center flex-shrink-0 border transition-colors"
                   style={{
-                    borderColor: item.checked ? "#22C55E" : "rgba(184,151,92,0.3)",
+                    borderColor: item.checked ? "#22C55E" : "rgba(176,125,79,0.3)",
                     background: item.checked ? "rgba(34,197,94,0.15)" : "transparent",
                   }}
                 >

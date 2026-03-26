@@ -290,7 +290,7 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
               style={{
                 background: "linear-gradient(135deg, var(--color-gold), var(--color-gold-light))",
               }}
-              whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(184,151,92,0.3)" }}
+              whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(176,125,79,0.3)" }}
               whileTap={{ scale: 0.99 }}
             >
               {loading === "stripe" ? (

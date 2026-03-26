@@ -101,7 +101,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
                   <Star
                     className="w-6 h-6"
                     style={{
-                      color: n <= rating ? "var(--color-gold)" : "rgba(184,151,92,0.2)",
+                      color: n <= rating ? "var(--color-gold)" : "rgba(176,125,79,0.2)",
                       fill: n <= rating ? "var(--color-gold)" : "transparent",
                     }}
                   />
@@ -123,7 +123,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
                   onClick={() => setFocusArea(opt.value)}
                   className="px-3 py-1 rounded-full text-xs font-medium border transition-colors"
                   style={{
-                    background: focusArea === opt.value ? "rgba(184,151,92,0.15)" : "transparent",
+                    background: focusArea === opt.value ? "rgba(176,125,79,0.15)" : "transparent",
                     borderColor: focusArea === opt.value ? "var(--color-gold)" : "rgba(15,41,80,0.8)",
                     color: focusArea === opt.value ? "var(--color-gold)" : "var(--color-gold-muted)",
                   }}

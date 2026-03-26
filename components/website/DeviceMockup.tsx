@@ -16,7 +16,7 @@ export function DeviceMockup({ imageSrc, alt = "App preview", className = "" }: 
       <div
         className="absolute inset-0 blur-3xl opacity-30"
         style={{
-          background: "radial-gradient(ellipse at center, rgba(184,151,92,0.4) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at center, rgba(176,125,79,0.4) 0%, transparent 70%)",
           transform: "translateY(10%)",
         }}
       />

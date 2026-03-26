@@ -82,10 +82,10 @@ export function AchievementGrid({ definitions, unlocked }: AchievementGridProps)
                 }`}
                 style={{
                   background: isUnlocked
-                    ? "linear-gradient(135deg, rgba(184,151,92,0.25) 0%, rgba(184,151,92,0.1) 100%)"
+                    ? "linear-gradient(135deg, rgba(176,125,79,0.25) 0%, rgba(176,125,79,0.1) 100%)"
                     : "rgba(15,41,80,0.4)",
                   border: isUnlocked
-                    ? "1px solid rgba(184,151,92,0.5)"
+                    ? "1px solid rgba(176,125,79,0.5)"
                     : "1px solid rgba(15,41,80,0.6)",
                 }}
               >

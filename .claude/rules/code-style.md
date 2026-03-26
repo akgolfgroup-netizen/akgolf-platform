@@ -56,23 +56,23 @@ import { HERO_CONTENT } from "@/lib/website-constants";
 
 ## Styling
 
-### Design tokens
+### Design tokens (Brand System v5.0 Final)
 Definert i `globals.css` med `@theme inline`:
 ```css
---color-navy: #0F2950;
---color-gold: #B8975C;
---color-ink-deep: #0A1929;
+--color-navy: #000000;         /* Svart */
+--color-gold: #B07D4F;         /* Bronse */
+--color-ink-deep: #000000;     /* Svart */
 ```
 
-### Sub-brand farger
-| Side | Accent |
+### Sub-brand farger (Monokrom + Signal)
+| Side | Aksent |
 |------|--------|
-| Academy | Navy #0F2950 |
-| Junior | Blue #3B82F6 |
-| Utvikling | Green #22C55E |
+| Academy | Bronse #B07D4F |
+| Software | Blå #38BDF8 |
+| Utvikling | Grønn #10B981 |
 
 ### Font
-Inter via `next/font/local` — ALDRI importer fra Google Fonts direkte.
+Manrope via `next/font/local` — ALDRI importer fra Google Fonts direkte.
 
 ## Animasjoner
 

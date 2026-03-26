@@ -1,6 +1,7 @@
 /**
- * AK Golf Brand System v3.2 - Design Tokens
+ * AK Golf Brand System v5.0 Final - Design Tokens
  * Single source of truth for all design values
+ * Monokrom + Signal: Bronse #B07D4F · Blå #38BDF8 · Grønn #10B981
  */
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -8,73 +9,73 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const colors = {
-  // Primære brand-farger
+  // Primære brand-farger (Brand Guide Final)
   primary: {
-    midnightNavy: '#0A1929',
-    navyLight: '#10456A',
-    navyDark: '#0A1929',
-    softGold: '#B07D4F',
-    goldLight: '#D4C4A8',
-    goldDark: '#8B7243',
-    goldMuted: '#E8D4B0',
-    goldText: '#6B5530',
-    snow: '#FAFBFC',
-    deepInk: '#0A1929',
+    midnightNavy: '#000000',  // Nå svart
+    navyLight: '#171717',
+    navyDark: '#000000',
+    softGold: '#B07D4F',      // Bronse
+    goldLight: '#F3EBE2',
+    goldDark: '#8E6340',
+    goldMuted: '#F3EBE2',
+    goldText: '#8E6340',
+    snow: '#F5F5F5',
+    deepInk: '#000000',
   },
 
-  // Ink-skala (kald blå-grå)
+  // Ink-skala (neutral grey — Brand Guide Final)
   ink: {
-    5: '#FAFBFC',
-    10: '#F0F2F5',
-    20: '#E2E6EB',
-    30: '#C8CDD4',
-    40: '#9BA5B2',
-    50: '#6B7B8D',
-    60: '#4F5D6B',
-    70: '#3A4A5A',
-    80: '#222F3D',
-    90: '#02060D',
-    100: '#0A1929',
+    5: '#F5F5F5',
+    10: '#E5E5E5',
+    20: '#D4D4D4',
+    30: '#A3A3A3',
+    40: '#737373',
+    50: '#525252',
+    60: '#404040',
+    70: '#262626',
+    80: '#171717',
+    90: '#000000',
+    100: '#000000',
   },
 
   // Overflater
   surface: {
-    warm: '#FAFBFC',
-    cream: '#F8F9FA',
-    warmNeutral: '#F0EDE8',
-    lightGray: '#E8ECF0',
-    snow: '#F8F9FA',
+    warm: '#F5F5F5',
+    cream: '#F5F5F5',
+    warmNeutral: '#F3EBE2',
+    lightGray: '#E5E5E5',
+    snow: '#F5F5F5',
   },
 
-  // Sub-brand farger
+  // Sub-brand farger (Brand Guide Final)
   subBrand: {
-    academy: '#0A1929',
-    academyLight: '#10456A',
-    academyDark: '#0A1929',
-    junior: '#3B82F6',
-    juniorLight: '#60A5FA',
-    juniorDark: '#2563EB',
-    software: '#8B5CF6',
-    softwareLight: '#A78BFA',
-    softwareDark: '#7C3AED',
-    utvikling: '#22C55E',
-    utviklingLight: '#4ADE80',
-    utviklingDark: '#16A34A',
+    academy: '#B07D4F',       // Bronse
+    academyLight: '#F3EBE2',
+    academyDark: '#8E6340',
+    junior: '#B07D4F',        // Bruker Academy-bronse
+    juniorLight: '#F3EBE2',
+    juniorDark: '#8E6340',
+    software: '#38BDF8',      // Sky Blue
+    softwareLight: '#E8F6FE',
+    softwareDark: '#0EA5E9',
+    utvikling: '#10B981',     // Emerald
+    utviklingLight: '#E6F9F1',
+    utviklingDark: '#059669',
   },
 
   // Semantiske farger
   semantic: {
-    success: '#22C55E',
+    success: '#10B981',
     error: '#EF4444',
     warning: '#F59E0B',
-    info: '#3B82F6',
+    info: '#38BDF8',
     vipps: '#FF5B24',
   },
 
   // Ikoner og tekst
   icon: {
-    gray: '#64748B',
-    muted: '#9BA5B2',
+    gray: '#737373',
+    muted: '#A3A3A3',
   },
 } as const;
 
@@ -96,8 +97,8 @@ export const ACCENT_COLORS = {
 
 export const typography = {
   fontFamily: {
-    sans: 'var(--font-inter), Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    display: 'var(--font-inter), Inter, system-ui, -apple-system, sans-serif',
+    sans: 'var(--font-manrope), Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    display: 'var(--font-manrope), Manrope, system-ui, -apple-system, sans-serif',
     mono: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',
   },
 
@@ -316,9 +317,9 @@ export const shadows = {
   sm: '0 1px 2px rgba(0, 0, 0, 0.04)',
   md: '0 4px 12px rgba(0, 0, 0, 0.06)',
   lg: '0 12px 40px rgba(0, 0, 0, 0.08)',
-  gold: '0 12px 40px rgba(184, 151, 92, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04)',
-  goldSm: '0 4px 20px rgba(184, 151, 92, 0.2)',
-  goldLg: '0 8px 30px rgba(184, 151, 92, 0.3)',
+  gold: '0 12px 40px rgba(176, 125, 79, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04)',
+  goldSm: '0 4px 20px rgba(176, 125, 79, 0.2)',
+  goldLg: '0 8px 30px rgba(176, 125, 79, 0.3)',
   inner: 'inset 0 2px 4px rgba(0, 0, 0, 0.06)',
   none: 'none',
 } as const;
@@ -336,10 +337,10 @@ export const borders = {
   },
 
   color: {
-    default: 'rgba(15, 41, 80, 0.08)',
-    light: 'rgba(15, 41, 80, 0.05)',
-    gold: 'rgba(184, 151, 92, 0.3)',
-    goldMuted: 'rgba(184, 151, 92, 0.15)',
+    default: 'rgba(0, 0, 0, 0.08)',
+    light: 'rgba(0, 0, 0, 0.05)',
+    gold: 'rgba(176, 125, 79, 0.3)',
+    goldMuted: 'rgba(176, 125, 79, 0.15)',
   },
 
   radius: {

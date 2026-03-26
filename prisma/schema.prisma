@@ -130,10 +130,45 @@ model User {
   createdExercises  ExerciseDefinition[] @relation("CreatedExercises")
   exerciseBank      UserExerciseBank[]
 
+  // Subscription quota (for booking limits)
+  subscriptionQuota SubscriptionQuota?
+
   stripeCustomerId String? @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// SUBSCRIPTION QUOTA (for coaching booking limits)
+// ============================================================
+
+enum CoachingSubscriptionTier {
+  PERFORMANCE_PRO   // 4 sesjoner per måned
+  PERFORMANCE       // 2 sesjoner per måned
+  START             // 3 sesjoner over 30 dager (onboarding)
+}
+
+model SubscriptionQuota {
+  id              String                   @id @default(cuid())
+  userId          String                   @unique
+  subscriptionId  String?                  // Stripe subscription ID
+  tier            CoachingSubscriptionTier
+  sessionsAllowed Int                      // 2, 3 eller 4 avhengig av tier
+  sessionsUsed    Int                      @default(0)
+  periodStart     DateTime
+  periodEnd       DateTime
+
+  // Booking window - hvor langt frem kan brukeren booke
+  bookingWindowDays Int @default(7)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([periodEnd])
 }
 
 // ============================================================

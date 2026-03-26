@@ -10,8 +10,11 @@ import { FAQAccordion } from "@/components/website/FAQAccordion";
 import { BackToTop } from "@/components/website/BackToTop";
 import {
   HERO,
+  HOW_IT_WORKS,
   COACHING_PACKAGES,
-  SERVICE_TYPES,
+  ONBOARDING_PACKAGE,
+  FLEX_PACKAGES,
+  PORTAL_FEATURES,
   TEAM,
   TESTIMONIALS,
   COACHING_FAQ,
@@ -46,22 +49,6 @@ function StarIcon({ filled = true }: { filled?: boolean }) {
       className="text-ink-70"
     >
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-  );
-}
-
-function ServiceIcon({ icon }: { icon: string }) {
-  const iconPaths: Record<string, React.ReactNode> = {
-    user: <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />,
-    target: <><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></>,
-    flag: <><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" x2="4" y1="22" y2="15" /></>,
-    "circle-dot": <><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="1" /></>,
-    map: <><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z" /><path d="M9 3v15" /><path d="M15 6v15" /></>,
-  };
-
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      {iconPaths[icon] || iconPaths.user}
     </svg>
   );
 }
@@ -154,33 +141,62 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 2. Services / Packages ─── */}
-        <section id="packages" className="w-section-lg bg-surface-warm">
+        {/* ─── 2. Slik fungerer det ─── */}
+        <section id="how-it-works" className="w-section-lg bg-white">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">
-                <SectionLabel>Coaching-pakker</SectionLabel>
-                <h2 className="w-heading-lg mt-4">Velg pakken som passer deg</h2>
-                <p className="text-ink-50 max-w-xl mx-auto mt-4">
-                  Alle pakker inkluderer tilgang til vår treningsplattform og mulighet for oppgradering underveis.
+                <SectionLabel>{HOW_IT_WORKS.eyebrow}</SectionLabel>
+                <h2 className="w-heading-lg mt-4">{HOW_IT_WORKS.heading}</h2>
+                <p className="text-ink-50 max-w-2xl mx-auto mt-4 leading-relaxed">
+                  {HOW_IT_WORKS.description}
                 </p>
               </div>
             </RevealOnScroll>
 
-            {/* Package Cards */}
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {HOW_IT_WORKS.steps.map((step) => (
+                <StaggerItem key={step.number}>
+                  <div className="text-center">
+                    <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gold/10 text-gold font-mono font-bold text-lg mb-4">
+                      {step.number}
+                    </span>
+                    <h3 className="font-display text-lg font-semibold text-ink-90 mb-2">{step.title}</h3>
+                    <p className="text-sm text-ink-50 leading-relaxed">{step.description}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* ─── 3. Services / Packages ─── */}
+        <section id="packages" className="w-section-lg bg-surface-warm">
+          <div className="w-container">
+            <RevealOnScroll>
+              <div className="text-center mb-12">
+                <SectionLabel>Abonnement</SectionLabel>
+                <h2 className="w-heading-lg mt-4">Coaching med system</h2>
+                <p className="text-ink-50 max-w-xl mx-auto mt-4">
+                  Alle abonnement inkluderer full spillerportal med treningsplan, øvelsesbank og statistikk. Coaching-tjenester er MVA-fritatt.
+                </p>
+              </div>
+            </RevealOnScroll>
+
+            {/* Subscription Cards */}
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12">
               {COACHING_PACKAGES.map((pkg) => (
                 <StaggerItem key={pkg.name}>
                   <div
                     className={`rounded-2xl p-8 flex flex-col h-full transition-all duration-300 ${
                       pkg.highlighted
-                        ? "bg-white border-2 border-ink-30 shadow-xl relative"
+                        ? "bg-white border-2 border-gold shadow-xl relative"
                         : "bg-white border border-ink-10 hover:border-ink-20 hover:shadow-lg"
                     }`}
                   >
                     {pkg.highlighted && (
-                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-ink-90 text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full">
-                        Mest populær
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full">
+                        For de som satser
                       </span>
                     )}
 
@@ -189,24 +205,26 @@ export default function HomePage() {
                     </h3>
                     <p className="text-sm text-ink-50 mb-4">{pkg.tagline}</p>
 
-                    <div className="mb-6">
+                    <div className="mb-4">
                       <span className="font-mono text-4xl font-bold text-ink-90 tracking-tight">
-                        {pkg.price} kr
+                        {pkg.price}
                       </span>
-                      <span className="text-sm text-ink-50 ml-1">/mnd</span>
+                      <span className="text-sm text-ink-50 ml-1">{pkg.period}</span>
                     </div>
+
+                    <p className="text-sm text-ink-50 mb-6 leading-relaxed">{pkg.description}</p>
 
                     <ul className="space-y-3 mb-8 flex-1">
                       {pkg.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-2.5 text-sm">
-                          <CheckIcon className="shrink-0 mt-0.5 text-ink-40" />
+                          <CheckIcon className="shrink-0 mt-0.5 text-gold" />
                           <span className="text-ink-60">{feature}</span>
                         </li>
                       ))}
                     </ul>
 
                     <Link
-                      href={`/academy/booking?package=${pkg.name.toLowerCase()}`}
+                      href={`/academy/booking?package=${pkg.name.toLowerCase().replace(' ', '-')}`}
                       className={`w-btn text-center w-full ${
                         pkg.highlighted ? "w-btn-primary" : "w-btn-secondary"
                       }`}
@@ -218,34 +236,91 @@ export default function HomePage() {
               ))}
             </StaggerContainer>
 
-            {/* Service Types */}
+            {/* Start Package */}
             <RevealOnScroll>
-              <div className="text-center mb-8">
-                <h3 className="w-heading-md">Eller book enkelttimer</h3>
-                <p className="text-ink-50 text-sm mt-2">Velg den tjenesten som passer ditt behov</p>
+              <div className="max-w-2xl mx-auto mb-12">
+                <div className="rounded-2xl p-8 bg-ink-05 border border-ink-10">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                    <div className="flex-1">
+                      <span className="inline-block px-2 py-1 bg-gold/10 text-gold text-xs font-mono uppercase tracking-wider rounded mb-3">
+                        Onboarding
+                      </span>
+                      <h3 className="font-display text-xl font-semibold text-ink-90 mb-2">{ONBOARDING_PACKAGE.name}</h3>
+                      <p className="text-sm text-ink-50 mb-4">{ONBOARDING_PACKAGE.description}</p>
+                      <ul className="flex flex-wrap gap-4 text-xs text-ink-60">
+                        {ONBOARDING_PACKAGE.features.map((f) => (
+                          <li key={f} className="flex items-center gap-1.5">
+                            <CheckIcon className="w-3 h-3 text-gold" />
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="text-center md:text-right">
+                      <p className="font-mono text-3xl font-bold text-ink-90">{ONBOARDING_PACKAGE.price} <span className="text-base font-normal text-ink-50">{ONBOARDING_PACKAGE.period}</span></p>
+                      <Link href="/academy/booking?package=start" className="w-btn w-btn-secondary mt-4 inline-flex">
+                        Kom i gang
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </div>
             </RevealOnScroll>
 
-            <StaggerContainer className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {SERVICE_TYPES.map((service) => (
-                <StaggerItem key={service.id}>
-                  <Link
-                    href={`/academy/booking?service=${service.id}`}
-                    className="group bg-white rounded-xl border border-ink-10 p-6 text-center transition-all hover:border-ink-30 hover:-translate-y-0.5"
-                  >
-                    <div className="w-12 h-12 rounded-lg bg-ink-05 flex items-center justify-center mx-auto mb-4 text-ink-50 group-hover:bg-ink-10 transition-colors">
-                      <ServiceIcon icon={service.icon} />
-                    </div>
-                    <h4 className="font-semibold text-sm text-ink-80 mb-1">{service.name}</h4>
-                    <p className="text-xs text-ink-50">{service.description}</p>
-                  </Link>
+            {/* Flex Drop-in */}
+            <RevealOnScroll>
+              <div className="text-center mb-8">
+                <h3 className="w-heading-md">Trenger du binding? Nei.</h3>
+                <p className="text-ink-50 text-sm mt-2">Flex gir deg coaching uten forpliktelser — men du får kun coaching-notater, ikke spillerportal.</p>
+              </div>
+            </RevealOnScroll>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              {FLEX_PACKAGES.map((pkg) => (
+                <StaggerItem key={pkg.name}>
+                  <div className="bg-white rounded-xl border border-ink-10 p-6 text-center hover:border-ink-20 hover:shadow-lg transition-all">
+                    <h4 className="font-semibold text-sm text-ink-80 mb-1">{pkg.name}</h4>
+                    <p className="font-mono text-2xl font-bold text-ink-90 mb-1">
+                      {pkg.price} <span className="text-sm font-normal text-ink-50">{pkg.period}</span>
+                    </p>
+                    {"pricePerPerson" in pkg && pkg.pricePerPerson && (
+                      <p className="text-xs text-ink-40 mb-2">{pkg.pricePerPerson} kr/pers</p>
+                    )}
+                    <p className="text-xs text-ink-50">{pkg.duration}</p>
+                  </div>
                 </StaggerItem>
               ))}
             </StaggerContainer>
           </div>
         </section>
 
-        {/* ─── 3. Instructors ─── */}
+        {/* ─── 4. Spillerportalen ─── */}
+        <section id="portal" className="w-section-lg bg-ink-90">
+          <div className="w-container">
+            <RevealOnScroll>
+              <div className="text-center mb-12">
+                <span className="text-gold"><SectionLabel>Spillerportalen</SectionLabel></span>
+                <h2 className="w-heading-lg text-white mt-4">Alt mellom sesjonene — i en app</h2>
+                <p className="text-ink-40 max-w-xl mx-auto mt-4">
+                  Coaching-sesjonen er kontaktpunktet. Spillerportalen er motoren.
+                </p>
+              </div>
+            </RevealOnScroll>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {PORTAL_FEATURES.map((feature) => (
+                <StaggerItem key={feature.title}>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <h4 className="font-semibold text-white mb-2">{feature.title}</h4>
+                    <p className="text-sm text-ink-40 leading-relaxed">{feature.description}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* ─── 5. Instructors ─── */}
         <section id="team" className="w-section-lg bg-ink-05">
           <div className="w-container">
             <RevealOnScroll>
@@ -303,7 +378,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 4. Testimonials ─── */}
+        {/* ─── 6. Testimonials ─── */}
         <section className="w-section-lg bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>
@@ -360,7 +435,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 5. FAQ ─── */}
+        {/* ─── 7. FAQ ─── */}
         <section id="faq" className="w-section-lg bg-ink-05">
           <div className="w-container">
             <RevealOnScroll>
@@ -378,7 +453,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 6. Final CTA ─── */}
+        {/* ─── 8. Final CTA ─── */}
         <section className="w-section-lg bg-ink-90">
           <div className="w-container">
             <RevealOnScroll>

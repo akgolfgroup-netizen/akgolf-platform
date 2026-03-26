@@ -60,9 +60,30 @@
     .toc-list { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .toc-list a { color: #171717; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 8px; }
     .toc-list a:hover { text-decoration: underline; }
+
+    /* Implementation Status Banner */
+    .impl-status-banner {
+      background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+      color: white;
+      padding: 8px 16px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .impl-status-banner .status-tag {
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
   </style>
 </head>
 <body>
+  <!-- Implementation Status Banner -->
+  <div class="impl-status-banner">
+    Implementeringsstatus: System Overview <span class="status-tag">FERDIG</span>
+  </div>
+
   <div class="container">
     <h1>AK Golf Platform — System Overview</h1>
     <p class="subtitle">Komplett brukerreise og funksjonsoversikt</p>

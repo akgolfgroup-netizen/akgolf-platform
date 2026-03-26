@@ -3,10 +3,10 @@ import localFont from "next/font/local";
 import { CookieConsent } from "@/components/website/CookieConsent";
 import "./globals.css";
 
-const inter = localFont({
-  src: "./fonts/InterVariable.woff2",
-  variable: "--font-inter",
-  weight: "300 700",
+const manrope = localFont({
+  src: "./fonts/ManropeVariable.woff2",
+  variable: "--font-manrope",
+  weight: "300 800",
   display: "swap",
 });
 
@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="nb" className="h-full">
       <body
-        className={`${inter.variable} h-full`}
+        className={`${manrope.variable} h-full`}
       >
         <a href="#main-content" className="w-skip-link">
           Gå til hovedinnhold

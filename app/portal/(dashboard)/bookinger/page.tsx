@@ -18,7 +18,7 @@ export default async function BookingerPage() {
         <Link
           href="/portal/bookinger/ny"
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[var(--color-gold)] text-white hover:brightness-110 transition-all cursor-pointer"
-          style={{ boxShadow: "0 4px 12px rgba(184,151,92,0.25)" }}
+          style={{ boxShadow: "0 4px 12px rgba(176,125,79,0.25)" }}
         >
           <Plus className="w-4 h-4" />
           Book coaching

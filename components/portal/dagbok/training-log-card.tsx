@@ -81,7 +81,7 @@ export function TrainingLogCard({ log }: { log: TrainingLog }) {
                     key={i}
                     className="w-2.5 h-2.5"
                     style={{
-                      color: i < log.rating! ? "var(--color-gold)" : "rgba(184,151,92,0.2)",
+                      color: i < log.rating! ? "var(--color-gold)" : "rgba(176,125,79,0.2)",
                       fill: i < log.rating! ? "var(--color-gold)" : "transparent",
                     }}
                   />

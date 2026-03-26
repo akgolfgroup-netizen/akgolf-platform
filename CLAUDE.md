@@ -66,7 +66,7 @@ app/
 ├── global-error.tsx         # Global error boundary
 ├── sitemap.ts / robots.ts   # SEO (MetadataRoute)
 │
-├── academy/                 # Academy-underside (accent: navy #0F2950)
+├── academy/                 # Academy-underside (accent: bronse #B07D4F)
 │   ├── page.tsx / layout.tsx
 │   └── booking/page.tsx     # Academy booking
 ├── junior/                  # Junior-underside (accent: blue #3B82F6)
@@ -232,26 +232,26 @@ Supabase Auth (ingen NextAuth/Auth.js):
 
 ## Styling & Design System
 
-### Colors (Brand System v3.2)
+### Colors (Brand System v5.0 Final — Monokrom + Signal)
 
-- **Ink-skala:** Kald blågrå fra `#FAFBFC` (05) til `#0A1929` (100/deep ink)
-- **Navy:** `#0F2950` (primær), `#0A1929` (dark/deep ink)
-- **Gull:** `#B8975C` (primær accent), `#D4C4A8` (light), `#8B7243` (dark)
-- **Sub-brand:** Academy=navy `#0F2950`, Junior=blue `#3B82F6`, Software=purple `#8B5CF6`, Utvikling=green `#22C55E`
-- **Overflater:** Snow `#FAFBFC`, Cloud `#F0F2F5`
-- **Semantisk:** Success `#22C55E`, Error `#EF4444`, Warning `#F59E0B`, Info `#3B82F6`
+- **Ink-skala:** Nøytral grå fra `#F5F5F5` (05) til `#000000` (100)
+- **Primær:** `#000000` (svart bokstaver)
+- **Bronse (Academy):** `#B07D4F` (primær), `#F3EBE2` (light), `#8E6340` (dark)
+- **Sub-brand:** Academy=Bronse `#B07D4F`, Software=Blå `#38BDF8`, Utvikling=Grønn `#10B981`
+- **Overflater:** Snow `#F5F5F5`, Warm `#F3EBE2`
+- **Semantisk:** Success `#10B981`, Error `#EF4444`, Warning `#F59E0B`, Info `#38BDF8`
 
 ### Typography
 
-- **Font:** Inter (variabel, 300–700) via `next/font/local` i `layout.tsx`
-- Headings: `font-display` (= Inter), weight 700, tracking -0.02em
-- Body: `font-sans` (= Inter)
+- **Font:** Manrope (variabel, 300–700) via `next/font/local` i `layout.tsx`
+- Headings: `font-display` (= Manrope), weight 700, tracking -0.02em
+- Body: `font-sans` (= Manrope)
 - Alle font-variabler definert som CSS custom properties i `globals.css`
 
 ### Logo
 
-- Kalligrafisk K-mark SVG i `components/website/AKLogo.tsx`
-- Nav: midnight, Footer: gull
+- Kalligrafisk AK-mark SVG i `components/website/AKLogo.tsx`
+- Svarte bokstaver + kontekstavhengig prikk-farge (bronse/blå/grønn)
 
 ## Environment Variables
 

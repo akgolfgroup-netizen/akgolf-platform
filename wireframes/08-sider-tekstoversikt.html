@@ -54,9 +54,30 @@
     .summary-label { font-size: 12px; color: #a3a3a3; margin-top: 4px; }
 
     @media (max-width: 600px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* Implementation Status Banner */
+    .impl-status-banner {
+      background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+      color: white;
+      padding: 8px 16px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .impl-status-banner .status-tag {
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
   </style>
 </head>
 <body>
+  <!-- Implementation Status Banner -->
+  <div class="impl-status-banner">
+    Implementeringsstatus: Tekstinnhold <span class="status-tag">FERDIG</span>
+  </div>
+
   <div class="container">
     <h1>Sider og tekstinnhold</h1>
     <p class="subtitle">Oversikt over alle sider som trenger tekstinnhold</p>

@@ -34,8 +34,8 @@ const focusColors: Record<string, { bg: string; border: string; text: string; ic
     icon: "#38BDF8"
   },
   naerspill: {
-    bg: "rgba(184,151,92,0.15)",
-    border: "rgba(184,151,92,0.4)",
+    bg: "rgba(176,125,79,0.15)",
+    border: "rgba(176,125,79,0.4)",
     text: "#E8D4B0",
     icon: "#B07D4F"
   },
@@ -144,7 +144,7 @@ export function WeekView({
               <div
                 className={`text-center py-3 rounded-xl mb-3 ${
                   isToday
-                    ? "bg-[rgba(184,151,92,0.15)] border border-[rgba(184,151,92,0.4)]"
+                    ? "bg-[rgba(176,125,79,0.15)] border border-[rgba(176,125,79,0.4)]"
                     : "bg-transparent border border-transparent"
                 }`}
               >

@@ -161,10 +161,10 @@ export function ApperClient({
                 className="rounded-2xl p-6 border relative overflow-hidden"
                 style={{
                   background: isPremium
-                    ? "linear-gradient(135deg, rgba(184,151,92,0.15) 0%, rgba(10,25,41,0.9) 100%)"
+                    ? "linear-gradient(135deg, rgba(176,125,79,0.15) 0%, rgba(10,25,41,0.9) 100%)"
                     : "rgba(10,25,41,0.7)",
                   borderColor: isPremium
-                    ? "rgba(184,151,92,0.4)"
+                    ? "rgba(176,125,79,0.4)"
                     : "rgba(15,41,80,0.8)",
                 }}
               >
@@ -185,7 +185,7 @@ export function ApperClient({
                       key={item.module.slug}
                       className="text-[10px] px-2 py-0.5 rounded-full border"
                       style={{
-                        borderColor: "rgba(184,151,92,0.3)",
+                        borderColor: "rgba(176,125,79,0.3)",
                         color: "var(--color-gold-muted)",
                       }}
                     >
@@ -214,7 +214,7 @@ export function ApperClient({
                       style={{
                         background: isPremium
                           ? "linear-gradient(135deg, #c9a96e, #B07D4F)"
-                          : "rgba(184,151,92,0.2)",
+                          : "rgba(176,125,79,0.2)",
                         color: isPremium ? "#0a1929" : "var(--color-gold)",
                       }}
                     >
@@ -256,7 +256,7 @@ export function ApperClient({
                 <div className="flex items-start justify-between mb-3">
                   <div
                     className="w-9 h-9 rounded-xl flex items-center justify-center"
-                    style={{ background: "rgba(184,151,92,0.15)" }}
+                    style={{ background: "rgba(176,125,79,0.15)" }}
                   >
                     <Icon className="w-4.5 h-4.5 text-[var(--color-gold)]" />
                   </div>
@@ -307,7 +307,7 @@ export function ApperClient({
                       disabled={loading !== null}
                       className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors"
                       style={{
-                        background: "rgba(184,151,92,0.2)",
+                        background: "rgba(176,125,79,0.2)",
                         color: "var(--color-gold)",
                       }}
                     >

@@ -51,19 +51,12 @@ export function TeamSection() {
                   {member.bio}
                 </p>
 
-                <div className="flex items-center gap-4 text-sm">
+                <div className="text-sm">
                   <Link
                     href={`mailto:${member.contact.email}`}
                     className="text-ink-50 hover:text-ink-80 transition-colors"
                   >
                     {member.contact.email}
-                  </Link>
-                  <span className="text-ink-20">|</span>
-                  <Link
-                    href={`tel:${member.contact.phone.replace(/\s/g, "")}`}
-                    className="text-ink-50 hover:text-ink-80 transition-colors"
-                  >
-                    {member.contact.phone}
                   </Link>
                 </div>
               </div>

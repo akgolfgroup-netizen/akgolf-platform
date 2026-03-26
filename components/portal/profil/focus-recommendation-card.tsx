@@ -92,7 +92,7 @@ export function FocusRecommendationCard() {
                     <span
                       className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
                       style={{
-                        background: "rgba(184,151,92,0.15)",
+                        background: "rgba(176,125,79,0.15)",
                         color: "var(--color-gold)",
                       }}
                     >

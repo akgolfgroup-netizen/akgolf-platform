@@ -147,7 +147,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                       isActive
                         ? "bg-[var(--color-gold)] text-white border-none"
                         : isCompleted
-                          ? "bg-[rgba(184,151,92,0.2)] text-white border-2 border-[var(--color-gold)]"
+                          ? "bg-[rgba(176,125,79,0.2)] text-white border-2 border-[var(--color-gold)]"
                           : "bg-[rgba(15,41,80,0.3)] text-[var(--color-snow)]/70 border-2 border-[rgba(15,41,80,0.4)]"
                     }`}
                     whileHover={!isActive ? { scale: 1.05 } : {}}
@@ -210,7 +210,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="rounded-2xl p-6 transition-all duration-300 border bg-[rgba(10,25,41,0.7)] border-[rgba(15,41,80,0.4)] hover:border-[rgba(184,151,92,0.4)]">
+                  <div className="rounded-2xl p-6 transition-all duration-300 border bg-[rgba(10,25,41,0.7)] border-[rgba(15,41,80,0.4)] hover:border-[rgba(176,125,79,0.4)]">
                     <div className="flex items-start justify-between gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
@@ -287,7 +287,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   className="w-full text-left group"
                   whileHover={{ x: 4 }}
                 >
-                  <div className="rounded-2xl p-5 flex items-center gap-5 transition-all duration-300 border bg-[rgba(10,25,41,0.7)] border-[rgba(15,41,80,0.4)] hover:border-[rgba(184,151,92,0.4)]">
+                  <div className="rounded-2xl p-5 flex items-center gap-5 transition-all duration-300 border bg-[rgba(10,25,41,0.7)] border-[rgba(15,41,80,0.4)] hover:border-[rgba(176,125,79,0.4)]">
                     {inst.user.image ? (
                       <img
                         src={inst.user.image}
@@ -480,7 +480,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               {/* Details */}
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[rgba(184,151,92,0.15)]">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[rgba(176,125,79,0.15)]">
                     <User className="w-5 h-5 text-[var(--color-gold)]" />
                   </div>
                   <div>
@@ -490,7 +490,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[rgba(184,151,92,0.15)]">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[rgba(176,125,79,0.15)]">
                     <Calendar className="w-5 h-5 text-[var(--color-gold)]" />
                   </div>
                   <div>
@@ -502,7 +502,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[rgba(184,151,92,0.15)]">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[rgba(176,125,79,0.15)]">
                     <Clock className="w-5 h-5 text-[var(--color-gold)]" />
                   </div>
                   <div>

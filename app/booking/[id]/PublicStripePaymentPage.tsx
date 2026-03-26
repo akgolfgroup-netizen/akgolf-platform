@@ -140,7 +140,7 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
           color: "#FFFFFF",
           boxShadow: THEME.shadowGold,
         }}
-        whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(184,151,92,0.3)" }}
+        whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(176,125,79,0.3)" }}
         whileTap={{ scale: 0.99 }}
       >
         {loading ? (

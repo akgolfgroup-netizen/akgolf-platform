@@ -18,8 +18,8 @@ export function EliteHero({ onWatchVideo }: EliteHeroProps) {
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: `linear-gradient(rgba(184,151,92,0.5) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(184,151,92,0.5) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(176,125,79,0.5) 1px, transparent 1px),
+                           linear-gradient(90deg, rgba(176,125,79,0.5) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />

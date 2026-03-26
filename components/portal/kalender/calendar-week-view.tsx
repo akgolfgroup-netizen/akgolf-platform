@@ -30,7 +30,7 @@ export function CalendarWeekView({ events, weekStart }: CalendarWeekViewProps) {
             <div
               className={`text-center py-3 mb-3 rounded-xl border ${
                 isTodayFlag
-                  ? "bg-[rgba(184,151,92,0.15)] border-[rgba(184,151,92,0.4)]"
+                  ? "bg-[rgba(176,125,79,0.15)] border-[rgba(176,125,79,0.4)]"
                   : "bg-transparent border-[rgba(15,41,80,0.4)]"
               }`}
             >
