@@ -5,6 +5,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { revalidatePath } from "next/cache";
 import type { GoalCategory, GoalStatus } from "@prisma/client";
+import { nanoid } from "nanoid";
 
 export async function getGoals() {
   const user = await requirePortalUser();
@@ -29,6 +30,8 @@ export async function createGoal(data: {
 
   await prisma.goal.create({
     data: {
+      id: nanoid(),
+      updatedAt: new Date(),
       userId: user.id,
       title: data.title,
       description: data.description ?? null,

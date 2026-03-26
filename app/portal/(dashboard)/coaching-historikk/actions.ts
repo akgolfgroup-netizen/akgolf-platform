@@ -5,6 +5,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { revalidatePath } from "next/cache";
 import { isStaff } from "@/lib/portal/rbac";
+import { nanoid } from "nanoid";
 
 export async function getCoachingSessions() {
   const user = await requirePortalUser();
@@ -17,9 +18,9 @@ export async function getCoachingSessions() {
   return prisma.coachingSession.findMany({
     where,
     include: {
-      student: { select: { name: true, image: true } },
-      instructor: {
-        select: { user: { select: { name: true } }, title: true },
+      User: { select: { name: true, image: true } },
+      Instructor: {
+        select: { User: { select: { name: true } }, title: true },
       },
     },
     orderBy: { sessionDate: "desc" },
@@ -43,7 +44,15 @@ export async function createCoachingSession(data: {
 
   const created = await prisma.coachingSession.create({
     data: {
-      ...data,
+      id: nanoid(),
+      updatedAt: new Date(),
+      bookingId: data.bookingId,
+      studentId: data.studentId,
+      instructorId: data.instructorId,
+      sessionDate: data.sessionDate,
+      primaryFocus: data.primaryFocus,
+      instructorNotes: data.instructorNotes,
+      studentNotes: data.studentNotes,
       techniquesCovered: [],
       drillsAssigned: [],
       videoUrls: [],

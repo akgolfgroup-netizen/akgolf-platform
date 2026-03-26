@@ -6,10 +6,16 @@ import { BookOpen, Plus } from "lucide-react";
 import Link from "next/link";
 
 export default async function CoachingHistorikkPage() {
-  const [user, sessions] = await Promise.all([
+  const [user, rawSessions] = await Promise.all([
     requirePortalUser(),
     getCoachingSessions(),
   ]);
+
+  const sessions = rawSessions.map((s) => ({
+    ...s,
+    student: { name: s.User?.name ?? null, image: s.User?.image ?? null },
+    instructor: { user: { name: s.Instructor?.User?.name ?? null }, title: s.Instructor?.title ?? null },
+  }));
 
   const canGenerateAI = isStaff(user?.role);
 

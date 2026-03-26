@@ -6,6 +6,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { revalidatePath } from "next/cache";
 import { checkAchievements } from "@/lib/portal/achievements/check-achievements";
 import type { RoundSource } from "@prisma/client";
+import { nanoid } from "nanoid";
 
 export async function getRoundStats(limit = 20) {
   const user = await requirePortalUser();
@@ -70,6 +71,8 @@ export async function addRoundStats(data: {
 
   await prisma.roundStats.create({
     data: {
+      id: nanoid(),
+      updatedAt: new Date(),
       userId: user.id,
       date: new Date(data.date),
       courseName: data.courseName ?? null,

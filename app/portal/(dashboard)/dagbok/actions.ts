@@ -6,6 +6,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { revalidatePath } from "next/cache";
 import { startOfMonth, endOfMonth } from "date-fns";
 import { checkAchievements } from "@/lib/portal/achievements/check-achievements";
+import { nanoid } from "nanoid";
 
 export async function getTrainingLogs(month?: Date) {
   const user = await requirePortalUser();
@@ -21,7 +22,7 @@ export async function getTrainingLogs(month?: Date) {
       date: { gte: from, lte: to },
     },
     include: {
-      planSession: {
+      TrainingPlanSession: {
         select: { id: true, title: true, focusArea: true, durationMinutes: true },
       },
     },
@@ -44,6 +45,8 @@ export async function logSession(data: {
 
   await prisma.trainingLog.create({
     data: {
+      id: nanoid(),
+      updatedAt: new Date(),
       userId: user.id,
       planSessionId: data.planSessionId ?? null,
       date: new Date(data.date),

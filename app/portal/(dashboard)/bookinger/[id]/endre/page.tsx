@@ -17,13 +17,13 @@ export default async function ReschedulePage({ params }: Props) {
   const booking = await prisma.booking.findUnique({
     where: { id },
     include: {
-      serviceType: {
+      ServiceType: {
         select: { id: true, name: true, duration: true },
       },
-      instructor: {
+      Instructor: {
         select: {
           id: true,
-          user: { select: { name: true } },
+          User: { select: { name: true } },
         },
       },
     },
@@ -38,18 +38,18 @@ export default async function ReschedulePage({ params }: Props) {
       <div>
         <h1 className="text-2xl font-bold text-[#0A1929]">Endre tidspunkt</h1>
         <p className="text-sm text-gray-500 mt-1">
-          {booking.serviceType.name} med{" "}
-          {booking.instructor.user.name ?? "Instruktor"}
+          {booking.ServiceType.name} med{" "}
+          {booking.Instructor.User.name ?? "Instruktor"}
         </p>
       </div>
 
       <RescheduleForm
         bookingId={booking.id}
-        serviceTypeId={booking.serviceType.id}
-        instructorId={booking.instructor.id}
-        instructorName={booking.instructor.user.name ?? "Instruktor"}
-        serviceName={booking.serviceType.name}
-        duration={booking.serviceType.duration}
+        serviceTypeId={booking.ServiceType.id}
+        instructorId={booking.Instructor.id}
+        instructorName={booking.Instructor.User.name ?? "Instruktor"}
+        serviceName={booking.ServiceType.name}
+        duration={booking.ServiceType.duration}
       />
     </div>
   );

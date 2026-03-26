@@ -51,8 +51,8 @@ export default async function DashboardPage() {
           status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
         },
         include: {
-          serviceType: { select: { name: true } },
-          instructor: { select: { user: { select: { name: true } } } },
+          ServiceType: { select: { name: true } },
+          Instructor: { select: { User: { select: { name: true } } } },
         },
         orderBy: { startTime: "asc" },
       }),
@@ -61,11 +61,11 @@ export default async function DashboardPage() {
         where: { studentId: userId, isActive: true },
         select: {
           title: true,
-          weeks: {
+          TrainingPlanWeek: {
             take: 1,
             orderBy: { weekNumber: "desc" },
             select: {
-              sessions: {
+              TrainingPlanSession: {
                 select: { dayOfWeek: true, title: true, durationMinutes: true },
               },
             },
@@ -93,8 +93,8 @@ export default async function DashboardPage() {
           status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
         },
         include: {
-          serviceType: { select: { name: true } },
-          instructor: { select: { user: { select: { name: true } } } },
+          ServiceType: { select: { name: true } },
+          Instructor: { select: { User: { select: { name: true } } } },
         },
         orderBy: { startTime: "asc" },
       }),
@@ -108,7 +108,7 @@ export default async function DashboardPage() {
 
       prisma.playerAchievement.findMany({
         where: { userId },
-        include: { definition: true },
+        include: { AchievementDefinition: true },
         orderBy: { unlockedAt: "desc" },
         take: 4,
       }),
@@ -124,7 +124,7 @@ export default async function DashboardPage() {
 
   // Weekly training data
   const weekDays = ["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"];
-  const currentWeekSessions = activePlan?.weeks?.[0]?.sessions ?? [];
+  const currentWeekSessions = activePlan?.TrainingPlanWeek?.[0]?.TrainingPlanSession ?? [];
 
   // Calculate training streak
   const sortedLogs = recentLogs.sort(
@@ -194,10 +194,10 @@ export default async function DashboardPage() {
   const nextSession = nextBooking
     ? {
         id: nextBooking.id,
-        title: nextBooking.serviceType.name,
+        title: nextBooking.ServiceType.name,
         date: format(nextBooking.startTime, "yyyy-MM-dd"),
         startTime: format(nextBooking.startTime, "HH:mm"),
-        instructor: nextBooking.instructor?.user.name ?? "Anders",
+        instructor: nextBooking.Instructor?.User.name ?? "Anders",
         location: "Sarpsborg Golfklubb",
       }
     : null;
@@ -295,7 +295,7 @@ export default async function DashboardPage() {
                 const dayDate = addDays(weekStart, idx);
                 const isToday = format(dayDate, "yyyy-MM-dd") === format(now, "yyyy-MM-dd");
                 const isPast = dayDate < now && !isToday;
-                const planSession = currentWeekSessions.find((s) => s.dayOfWeek === idx + 1);
+                const planSession = currentWeekSessions.find((s: { dayOfWeek: number; title: string; durationMinutes: number | null }) => s.dayOfWeek === idx + 1);
                 const dayBooking = weekBookings.find(
                   (b) => format(b.startTime, "yyyy-MM-dd") === format(dayDate, "yyyy-MM-dd")
                 );
@@ -337,7 +337,7 @@ export default async function DashboardPage() {
             <div className="mt-3 p-3 rounded-md bg-[var(--portal-surface-sunken)]">
               <p className="text-sm font-medium text-[var(--portal-text-primary)] mb-1">
                 I dag:{" "}
-                {currentWeekSessions.find((s) => s.dayOfWeek === now.getDay())?.title ??
+                {currentWeekSessions.find((s: { dayOfWeek: number; title: string; durationMinutes: number | null }) => s.dayOfWeek === now.getDay())?.title ??
                   "Putting-fokus"}
               </p>
               <p className="text-xs text-[var(--portal-text-muted)]">45 min ovelser - Gate drill, Avstandskontroll</p>
@@ -377,7 +377,7 @@ export default async function DashboardPage() {
                     </div>
                     <div className="flex-1">
                       <p className="font-semibold text-sm text-[var(--portal-text-primary)]">
-                        {booking.serviceType.name}
+                        {booking.ServiceType.name}
                       </p>
                       <div className="flex gap-4 mt-1 text-xs text-[var(--portal-text-muted)]">
                         <span className="flex items-center gap-1">
@@ -386,7 +386,7 @@ export default async function DashboardPage() {
                         </span>
                         <span className="flex items-center gap-1">
                           <User className="w-3 h-3" />
-                          {booking.instructor?.user.name ?? "Anders"}
+                          {booking.Instructor?.User.name ?? "Anders"}
                         </span>
                       </div>
                     </div>
