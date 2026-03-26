@@ -133,6 +133,24 @@ model User {
   // Subscription quota (for booking limits)
   subscriptionQuota SubscriptionQuota?
 
+  // Coaching packages
+  coachingSubscriptions UserSubscription[]
+
+  // Notifications
+  notifications Notification[]
+
+  // Messaging
+  conversations Conversation[] @relation("ConversationParticipants")
+  sentMessages  Message[]      @relation("SentMessages")
+
+  // Video analysis
+  swingVideos       SwingVideo[]
+  videoStorageUsed  Int @default(0)  // Bytes brukt
+  videoStorageLimit Int @default(2147483648) // 2 GB i bytes
+
+  // Trackman
+  trackmanSessions TrackmanSession[]
+
   stripeCustomerId String? @unique
 
   createdAt DateTime @default(now())
@@ -485,12 +503,13 @@ model CoachingSession {
   notionPageId     String?
 
   // AI summary fields
-  aiSummary        String?   @db.Text
-  aiKeyPoints      String[]  @default([])
-  aiFocusAreas     String[]  @default([])
-  aiActionItems    String[]  @default([])
-  aiGeneratedAt    DateTime?
-  uploadedFilePath String?
+  transcriptionText String?   @db.Text
+  aiSummary         String?   @db.Text
+  aiKeyPoints       String[]  @default([])
+  aiFocusAreas      String[]  @default([])
+  aiActionItems     String[]  @default([])
+  aiGeneratedAt     DateTime?
+  uploadedFilePath  String?
 
   booking    Booking    @relation(fields: [bookingId], references: [id])
   student    User       @relation("StudentSessions", fields: [studentId], references: [id])
@@ -1118,4 +1137,186 @@ model CommunicationLog {
 
   @@index([studentId])
   @@index([instructorId])
+}
+
+// ============================================================
+// COACHING PACKAGES (fra akgolf-booking)
+// ============================================================
+
+enum BillingType {
+  RECURRING
+  ONE_TIME
+}
+
+enum CoachingBookingType {
+  FIXED
+  SELF_BOOK
+  DROP_IN
+}
+
+model CoachingPackage {
+  id                  String              @id @default(cuid())
+  name                String
+  slug                String              @unique
+  stripeProductId     String?
+  stripePriceId       String?
+  priceNok            Int
+  billingType         BillingType
+  bookingType         CoachingBookingType
+  sessionsPerMonth    Int?
+  sessionDurationMin  Int                 @default(20)
+  bookingWindowDays   Int?
+  bookingWindowHours  Int?
+  dropInReleaseHours  Int?
+  maxPlayersPerSlot   Int                 @default(1)
+  maxBookingsPerWeek  Int?
+  maxCapacity         Int?
+  slotsRequired       Int                 @default(1)
+  isActive            Boolean             @default(true)
+  sortOrder           Int                 @default(0)
+  description         String?             @db.Text
+  features            String[]
+
+  subscriptions UserSubscription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserSubscription {
+  id                    String             @id @default(cuid())
+  userId                String
+  packageId             String
+  stripeSubscriptionId  String?            @unique
+  status                SubscriptionStatus @default(ACTIVE)
+  sessionsUsedThisMonth Int                @default(0)
+  billingPeriodStart    DateTime?
+  billingPeriodEnd      DateTime?
+
+  user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  package CoachingPackage @relation(fields: [packageId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model CoachingAvailability {
+  id          String  @id @default(cuid())
+  dayOfWeek   Int     // 0=Sunday, 1=Monday, ..., 6=Saturday
+  startTime   String  // "12:00"
+  endTime     String  // "12:25"
+  isActive    Boolean @default(true)
+  reservedFor String? // "junior_elite" or null for open
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([dayOfWeek, startTime])
+  @@index([dayOfWeek])
+}
+
+// ============================================================
+// NOTIFICATIONS (fra Spillerportal)
+// ============================================================
+
+enum NotificationType {
+  BOOKING_CONFIRMED
+  BOOKING_CANCELLED
+  PLAN_READY
+  TOURNAMENT_REMINDER
+  COACHING_SUMMARY
+  TRAINING_REMINDER
+  ACHIEVEMENT_UNLOCKED
+  GENERAL
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String           @db.Text
+  read      Boolean          @default(false)
+  linkUrl   String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, read])
+  @@index([userId, createdAt])
+}
+
+// ============================================================
+// MESSAGING SYSTEM (In-app chat)
+// ============================================================
+
+model Conversation {
+  id           String    @id @default(cuid())
+  participants User[]    @relation("ConversationParticipants")
+  messages     Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  senderId       String
+  content        String       @db.Text
+  readAt         DateTime?
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation("SentMessages", fields: [senderId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([conversationId])
+  @@index([senderId])
+}
+
+// ============================================================
+// VIDEO ANALYSIS
+// ============================================================
+
+model SwingVideo {
+  id            String   @id @default(cuid())
+  userId        String
+  url           String
+  thumbnailUrl  String?
+  fileSize      Int      // Bytes - for kvote-tracking
+  title         String?
+  coachNotes    String?  @db.Text
+  aiAnalysis    Json?
+  sessionId     String?  // Kobling til coaching-sesjon
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ============================================================
+// TRACKMAN DATA
+// ============================================================
+
+model TrackmanSession {
+  id          String   @id @default(cuid())
+  userId      String
+  sessionDate DateTime
+  club        String
+  shots       Json     // Array av shot-data
+  averages    Json     // Beregnede gjennomsnitt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([sessionDate])
 }
