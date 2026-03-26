@@ -76,10 +76,10 @@ export const TEAM = [
     contact: { email: "anders@akgolf.no", phone: "+47 909 67 995" },
   },
   {
-    name: "Markus Hatlelid",
+    name: "Markus",
     role: "Assistentcoach",
     division: "AK Golf Academy",
-    image: "/images/team/markus-hatlelid.jpg",
+    image: "/images/team/markus.jpg",
     bio: "College-golf fra USA. Spesialisert på gruppetrening, banecoaching og nybegynneropplæring. Kjører 9 Hull, After Work, Første Sesong og banecoaching på korthullsbanen. 20 min individuell coaching: 300 kr.",
     certifications: [],
     contact: { email: "markus@akgolf.no", phone: "+47 905 86 097" },
