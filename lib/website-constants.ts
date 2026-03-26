@@ -80,7 +80,7 @@ export const TEAM = [
     division: "AK Golf Academy",
     bio: "College-golf fra USA. Spesialisert på gruppetrening, banecoaching og nybegynneropplæring. Kjører 9 Hull, After Work, Første Sesong og banecoaching på korthullsbanen. 20 min individuell coaching: 300 kr.",
     certifications: [],
-    contact: { email: "markus@akgolf.no" },
+    contact: { email: "markus@akgolf.no", phone: "+47 905 86 097" },
   },
 ] as const;
 
