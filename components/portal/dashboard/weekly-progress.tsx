@@ -39,8 +39,8 @@ export function WeeklyProgress({ days }: WeeklyProgressProps) {
   }));
 
   return (
-    <div className="p-5 rounded-xl border border-[#E5E5E5] bg-white">
-      <h3 className="text-sm font-semibold text-[#171717] mb-4">
+    <div className="portal-card p-5 rounded-xl">
+      <h3 className="text-sm font-semibold text-[var(--portal-text-primary)] mb-4">
         Ukens fremgang
       </h3>
       <ResponsiveContainer width="100%" height={160}>
@@ -56,7 +56,8 @@ export function WeeklyProgress({ days }: WeeklyProgressProps) {
                     y={0}
                     dy={12}
                     textAnchor="middle"
-                    className="text-xs fill-[#737373]"
+                    className="text-xs"
+                    fill="var(--portal-text-muted)"
                   >
                     {payload.value}
                   </text>
@@ -97,16 +98,16 @@ export function WeeklyProgress({ days }: WeeklyProgressProps) {
               if (!active || !payload || payload.length === 0) return null;
               const entry = payload[0].payload;
               return (
-                <div className="bg-white border border-[#E5E5E5] rounded-lg p-2 shadow-lg text-xs">
-                  <p className="font-medium text-[#171717]">{entry.day}</p>
-                  <p className="text-[#737373]">
+                <div className="bg-[var(--portal-card-bg-solid)] border border-[var(--portal-card-border)] rounded-lg p-2 shadow-lg text-xs">
+                  <p className="font-medium text-[var(--portal-text-primary)]">{entry.day}</p>
+                  <p className="text-[var(--portal-text-muted)]">
                     Trening: {entry.training ? "Ja" : "Nei"}
                   </p>
-                  <p className="text-[#737373]">
+                  <p className="text-[var(--portal-text-muted)]">
                     Vaner: {entry.habits}
                   </p>
                   {entry.mood && (
-                    <p className="text-[#737373]">
+                    <p className="text-[var(--portal-text-muted)]">
                       Humr: {moodEmoji[entry.mood]}
                     </p>
                   )}

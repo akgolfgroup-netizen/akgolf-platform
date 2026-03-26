@@ -78,9 +78,9 @@ export function WebsiteNav() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden flex flex-col justify-center items-center w-11 h-11 gap-[5px] group"
+            className="md:hidden flex flex-col justify-center items-center w-11 h-11 gap-[5px] group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold rounded-lg"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? "Lukk meny" : "Åpne meny"}
+            aria-label={mobileOpen ? "Lukk meny" : "Apne meny"}
           >
             <span
               className={`block h-[1.5px] w-5 transition-all duration-300 ${useDarkText ? "bg-ink-80" : "bg-white"} ${
@@ -132,6 +132,10 @@ export function WebsiteNav() {
                   </Link>
                 </motion.div>
               ))}
+
+              {/* Separator */}
+              <div className="w-12 h-px bg-ink-20 mx-auto" />
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -140,7 +144,7 @@ export function WebsiteNav() {
                 <Link
                   href={PORTAL_URL}
                   onClick={() => setMobileOpen(false)}
-                  className="font-display text-2xl font-normal tracking-tight text-ink-40 hover:text-ink-80 transition-colors"
+                  className="font-display text-lg font-normal tracking-tight text-ink-50 hover:text-ink-80 transition-colors"
                 >
                   Logg inn
                 </Link>
@@ -153,7 +157,7 @@ export function WebsiteNav() {
                 <a
                   href={BOOKING_URL}
                   onClick={() => setMobileOpen(false)}
-                  className="w-btn w-btn-primary mt-4"
+                  className="w-btn w-btn-primary w-btn-shimmer text-lg px-8 py-4 mt-4"
                 >
                   Book coaching
                 </a>

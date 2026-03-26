@@ -60,7 +60,7 @@ export function QuickActions() {
         <motion.div key={action.href} variants={itemVariants}>
           <Link
             href={action.href}
-            className="flex flex-col items-center gap-2 p-4 rounded-xl border border-[#E5E5E5] bg-white hover:border-gold/50 transition-colors"
+            className="flex flex-col items-center gap-2 p-4 rounded-xl border border-[var(--portal-card-border)] bg-[var(--portal-card-bg-solid)] hover:border-gold/50 transition-colors"
           >
             <motion.div
               whileTap={{ scale: 0.95 }}
@@ -68,7 +68,7 @@ export function QuickActions() {
             >
               <action.icon className="h-5 w-5 text-white" />
             </motion.div>
-            <span className="text-sm font-medium text-[#171717]">
+            <span className="text-sm font-medium text-[var(--portal-text-primary)]">
               {action.label}
             </span>
           </Link>

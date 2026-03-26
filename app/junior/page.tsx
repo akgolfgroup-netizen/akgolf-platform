@@ -58,8 +58,8 @@ export default function JuniorPage() {
         <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
           {/* Gradient mesh */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full bg-junior opacity-[0.05] blur-[80px]" />
-            <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-gold opacity-[0.02] blur-[60px]" />
+            <div className="absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full bg-junior opacity-[0.08] blur-[80px]" />
+            <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-gold opacity-[0.05] blur-[60px]" />
             <div className="absolute top-0 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-junior/15 to-transparent" />
           </div>
 
@@ -123,10 +123,10 @@ export default function JuniorPage() {
         <section className="w-section-lg bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>
-              <SectionLabel>Aldersgrupper og nivåer</SectionLabel>
+              <SectionLabel>Aldersgrupper og nivaer</SectionLabel>
               <h2 className="w-heading-lg mt-4 mb-4">Riktig trening til riktig tid.</h2>
               <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
-                Vår progresjon er designet for å bygge ferdigheter systematisk, med økende intensitet og spesialisering etter hvert som junioren modnes.
+                Var progresjon er designet for a bygge ferdigheter systematisk, med okende intensitet og spesialisering etter hvert som junioren modnes.
               </p>
             </RevealOnScroll>
 
@@ -138,7 +138,7 @@ export default function JuniorPage() {
                       <span className="inline-flex items-center px-3 py-1 rounded-full bg-junior/10 text-junior text-xs font-mono font-medium">
                         {program.ageGroup}
                       </span>
-                      <span className="text-xs text-ink-40">{program.sessionsPerWeek}×/uke</span>
+                      <span className="text-xs text-ink-50">{program.sessionsPerWeek}x/uke</span>
                     </div>
                     <h3 className="w-heading-sm mb-2">{program.title}</h3>
                     <p className="text-sm text-ink-50 leading-relaxed mb-4 flex-1">{program.description}</p>
@@ -153,7 +153,7 @@ export default function JuniorPage() {
                     <div className="pt-4 border-t border-ink-10">
                       <p className="font-mono text-lg font-bold text-junior">
                         {program.price}
-                        <span className="text-sm font-normal text-ink-40 ml-1">kr/mnd</span>
+                        <span className="text-sm font-normal text-ink-50 ml-1">kr/mnd</span>
                       </p>
                     </div>
                   </div>
@@ -180,7 +180,7 @@ export default function JuniorPage() {
               {/* Benefits */}
               <RevealOnScroll>
                 <div className="w-card-dark h-full">
-                  <h3 className="text-white font-semibold text-lg mb-6">Hva du får</h3>
+                  <h3 className="text-white font-semibold text-lg mb-6">Hva du far</h3>
                   <ul className="space-y-4">
                     {JUNIOR_ACADEMY_INFO.benefits.map((benefit) => (
                       <li key={benefit} className="flex items-start gap-3">
@@ -231,13 +231,13 @@ export default function JuniorPage() {
                         Anbefalt
                       </span>
                     )}
-                    <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-ink-40 mb-2">{pkg.tagline}</span>
+                    <span className={`text-[10px] font-mono uppercase tracking-[0.15em] mb-2 ${pkg.highlighted ? "text-ink-50" : "text-ink-40"}`}>{pkg.tagline}</span>
                     <h3 className={`font-display text-xl font-semibold mb-1 ${pkg.highlighted ? "text-ink-90" : "text-white"}`}>
                       {pkg.name}
                     </h3>
                     <p className="font-mono text-2xl font-bold text-junior mb-1">
                       {pkg.price}
-                      <span className={`text-sm font-normal ml-1 ${pkg.highlighted ? "text-ink-40" : "text-ink-50"}`}>{pkg.period}</span>
+                      <span className={`text-sm font-normal ml-1 ${pkg.highlighted ? "text-ink-50" : "text-ink-50"}`}>{pkg.period}</span>
                     </p>
                     <p className={`text-sm leading-relaxed mb-6 ${pkg.highlighted ? "text-ink-50" : "text-ink-40"}`}>
                       {pkg.description}
@@ -253,7 +253,7 @@ export default function JuniorPage() {
                       ))}
                     </ul>
                     <Link href="#apply" className={`w-btn text-center ${pkg.highlighted ? "bg-junior text-white hover:brightness-110" : "bg-ink-70 text-white hover:bg-ink-60"}`}>
-                      Avtal et møte
+                      Avtal et mote
                     </Link>
                   </div>
                 </StaggerItem>
@@ -272,7 +272,7 @@ export default function JuniorPage() {
                   <h2 className="w-heading-lg mt-4 mb-2">{JUNIOR_CAMP.name}</h2>
                   <p className="font-mono text-2xl font-bold text-junior mb-6">
                     {JUNIOR_CAMP.price}
-                    <span className="text-sm font-normal text-ink-40 ml-1">{JUNIOR_CAMP.period}</span>
+                    <span className="text-sm font-normal text-ink-50 ml-1">{JUNIOR_CAMP.period}</span>
                   </p>
                   <p className="text-ink-50 leading-relaxed mb-4">
                     {JUNIOR_CAMP.description}
@@ -314,7 +314,7 @@ export default function JuniorPage() {
           <div className="w-container">
             <RevealOnScroll>
               <SectionLabel>{JUNIOR_SEASON_PROGRAM.heading}</SectionLabel>
-              <h2 className="w-heading-lg mt-4 mb-4">Trening hele året.</h2>
+              <h2 className="w-heading-lg mt-4 mb-4">Trening hele aret.</h2>
               <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
                 {JUNIOR_SEASON_PROGRAM.description}
               </p>
@@ -326,14 +326,14 @@ export default function JuniorPage() {
                   <div className="w-card h-full">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-2xl">
-                        {season.name === "Vår" && "🌱"}
+                        {season.name === "Var" && "🌱"}
                         {season.name === "Sommer" && "☀️"}
-                        {season.name === "Høst" && "🍂"}
+                        {season.name === "Host" && "🍂"}
                         {season.name === "Vinter" && "❄️"}
                       </span>
                       <div>
                         <h4 className="font-display font-semibold text-ink-90">{season.name}</h4>
-                        <p className="text-xs text-ink-40">{season.months}</p>
+                        <p className="text-xs text-ink-50">{season.months}</p>
                       </div>
                     </div>
                     <p className="text-sm font-medium text-junior mb-3">{season.focus}</p>
@@ -375,7 +375,7 @@ export default function JuniorPage() {
         </section>
 
         {/* ─── Philosophy ─── */}
-        <section className="w-section bg-white">
+        <section className="w-section-lg bg-white">
           <div className="w-container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <RevealOnScroll>
@@ -516,7 +516,7 @@ export default function JuniorPage() {
           <div className="w-container">
             <RevealOnScroll>
               <SectionLabel>Fra juniorforeldre</SectionLabel>
-              <h2 className="w-heading-lg mt-4 mb-12">Familier som stoler på oss.</h2>
+              <h2 className="w-heading-lg mt-4 mb-12">Familier som stoler pa oss.</h2>
             </RevealOnScroll>
 
             <FeaturedTestimonial
@@ -533,9 +533,9 @@ export default function JuniorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               <RevealOnScroll>
                 <div className="lg:sticky lg:top-24">
-                  <SectionLabel>Spørsmål & svar</SectionLabel>
+                  <SectionLabel>Sporsmal & svar</SectionLabel>
                   <h2 className="w-heading-lg mt-4">
-                    Ofte stilte<br />spørsmål.
+                    Ofte stilte<br />sporsmal.
                   </h2>
                 </div>
               </RevealOnScroll>
@@ -564,7 +564,7 @@ export default function JuniorPage() {
                 <SectionLabel>Ta kontakt</SectionLabel>
                 <h2 className="w-heading-lg mt-4 mb-4">Start med et uforpliktende mote.</h2>
                 <p className="text-ink-50 max-w-lg mx-auto">
-                  Fyll ut skjemaet under, så tar vi kontakt innen 48 timer for å avtale et mote.
+                  Fyll ut skjemaet under, sa tar vi kontakt innen 48 timer for a avtale et mote.
                 </p>
               </div>
             </RevealOnScroll>

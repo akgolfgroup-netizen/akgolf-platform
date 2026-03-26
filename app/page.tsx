@@ -109,7 +109,7 @@ export default function HomePage() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
               >
-                {["PGA Professional", "Trackman Certified", "TPI Certified", "10+ års erfaring"].map((item) => (
+                {["PGA Professional", "Trackman Certified", "TPI Certified", "10+ ars erfaring"].map((item) => (
                   <span key={item} className="flex items-center gap-2 text-xs text-ink-50">
                     <span className="w-1 h-1 rounded-full bg-gold" />
                     {item}
@@ -213,7 +213,7 @@ export default function HomePage() {
             <RevealOnScroll>
               <div className="text-center mb-12">
                 <SectionLabel>The Foundation Method</SectionLabel>
-                <h2 className="w-heading-lg mt-4">Tre nivåer. Ett system.</h2>
+                <h2 className="w-heading-lg mt-4">Tre nivaer. Ett system.</h2>
                 <p className="text-ink-50 max-w-xl mx-auto mt-4">
                   Alle abonnement inkluderer gruppetrening, individuelle check-ins og full tilgang til spillerportalen. Ingen bindingstid.
                 </p>
@@ -225,54 +225,60 @@ export default function HomePage() {
               {COACHING_PACKAGES.map((pkg) => (
                 <StaggerItem key={pkg.name}>
                   <div
-                    className={`rounded-2xl p-8 flex flex-col h-full transition-all duration-400 ${
+                    className={`rounded-2xl flex flex-col h-full transition-all duration-400 ${
                       pkg.highlighted
-                        ? "bg-ink-90 text-white border-2 border-gold/30 shadow-xl relative hover:border-gold/50 hover:-translate-y-2 hover:shadow-2xl"
+                        ? "bg-ink-90 text-white border-2 border-gold/50 shadow-[0_8px_30px_rgba(184,151,92,0.3)] relative hover:border-gold/70 hover:-translate-y-2 hover:shadow-2xl md:scale-[1.03] md:-my-2"
                         : "bg-white border border-ink-10 hover:border-ink-20 hover:shadow-lg hover:-translate-y-1"
                     }`}
                   >
                     {pkg.highlighted && (
-                      <span className="absolute -top-3 left-8 bg-gold text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full w-badge-glow">
-                        Mest populær
-                      </span>
+                      <div className="h-1 bg-gradient-to-r from-gold via-gold-light to-gold rounded-t-2xl -mx-[1px] -mt-[1px]" />
                     )}
 
-                    <h3 className={`font-display text-xl font-semibold mb-1 ${pkg.highlighted ? "text-white" : "text-ink-90"}`}>
-                      {pkg.name}
-                    </h3>
-                    <p className={`font-mono text-2xl font-bold mb-1 ${pkg.highlighted ? "text-gold" : "text-gold-text"}`}>
-                      {pkg.price}
-                      <span className="text-sm font-normal ml-1">{pkg.period}</span>
-                    </p>
-                    <p className={`text-sm leading-relaxed mb-6 ${pkg.highlighted ? "text-ink-30" : "text-ink-50"}`}>
-                      {pkg.description}
-                    </p>
+                    <div className="p-8 flex flex-col flex-1">
+                      {pkg.highlighted && (
+                        <span className="absolute -top-3 left-8 bg-gold text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full w-badge-glow">
+                          Mest populaer
+                        </span>
+                      )}
 
-                    <ul className="space-y-3 mb-6 flex-1">
-                      {pkg.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-2.5 text-sm">
-                          <CheckIcon className="shrink-0 mt-0.5 text-gold" />
-                          <span className={pkg.highlighted ? "text-ink-20" : "text-ink-60"}>
-                            {feature}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {pkg.whoIsItFor && (
-                      <p className={`text-xs italic mb-6 ${pkg.highlighted ? "text-ink-40" : "text-ink-40"}`}>
-                        {pkg.whoIsItFor}
+                      <h3 className={`font-display text-xl font-semibold mb-1 ${pkg.highlighted ? "text-white" : "text-ink-90"}`}>
+                        {pkg.name}
+                      </h3>
+                      <p className={`font-mono text-2xl font-bold mb-1 ${pkg.highlighted ? "text-gold" : "text-gold-text"}`}>
+                        {pkg.price}
+                        <span className="text-sm font-normal ml-1">{pkg.period}</span>
                       </p>
-                    )}
+                      <p className={`text-sm leading-relaxed mb-6 ${pkg.highlighted ? "text-ink-30" : "text-ink-50"}`}>
+                        {pkg.description}
+                      </p>
 
-                    <a
-                      href={BOOKING_URL}
-                      className={`w-btn text-center ${
-                        pkg.highlighted ? "w-btn-gold" : "w-btn-primary"
-                      }`}
-                    >
-                      Kom i gang
-                    </a>
+                      <ul className="space-y-3 mb-6 flex-1">
+                        {pkg.features.map((feature) => (
+                          <li key={feature} className="flex items-start gap-2.5 text-sm">
+                            <CheckIcon className="shrink-0 mt-0.5 text-gold" />
+                            <span className={pkg.highlighted ? "text-ink-20" : "text-ink-60"}>
+                              {feature}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      {pkg.whoIsItFor && (
+                        <p className={`text-xs italic mb-6 ${pkg.highlighted ? "text-ink-40" : "text-ink-50"}`}>
+                          {pkg.whoIsItFor}
+                        </p>
+                      )}
+
+                      <a
+                        href={BOOKING_URL}
+                        className={`w-btn text-center ${
+                          pkg.highlighted ? "w-btn-gold" : "w-btn-primary"
+                        }`}
+                      >
+                        Kom i gang
+                      </a>
+                    </div>
                   </div>
                 </StaggerItem>
               ))}
@@ -282,7 +288,7 @@ export default function HomePage() {
             <RevealOnScroll>
               <div className="text-center mb-8">
                 <h3 className="w-heading-md">Ikke klar for abonnement?</h3>
-                <p className="text-ink-50 mt-2">Prøv en enkeltsesjon uten binding.</p>
+                <p className="text-ink-50 mt-2">Prov en enkeltsesjon uten binding.</p>
               </div>
             </RevealOnScroll>
 
@@ -292,7 +298,7 @@ export default function HomePage() {
                   <div className="w-card flex flex-col h-full">
                     <div className="flex items-baseline justify-between mb-2">
                       <h4 className="font-display text-lg font-semibold text-ink-90">{pkg.name}</h4>
-                      <span className="font-mono text-sm text-ink-40">{pkg.duration}</span>
+                      <span className="font-mono text-sm text-ink-50">{pkg.duration}</span>
                     </div>
                     <p className="font-mono text-2xl font-bold text-gold-text mb-2">
                       {pkg.price}
@@ -305,7 +311,7 @@ export default function HomePage() {
                       href={BOOKING_URL}
                       className="w-btn w-btn-ghost text-center"
                     >
-                      Book nå
+                      Book na
                     </a>
                   </div>
                 </StaggerItem>
@@ -324,7 +330,7 @@ export default function HomePage() {
                   Din treningsplattform mellom sesjonene.
                 </h2>
                 <p className="text-ink-40 max-w-lg mx-auto mt-4">
-                  Alle coaching-pakker inkluderer full tilgang til spillerportalen med treningsplan, statistikk og øvelsesbank.
+                  Alle coaching-pakker inkluderer full tilgang til spillerportalen med treningsplan, statistikk og ovelsesbank.
                 </p>
               </div>
             </RevealOnScroll>
@@ -379,14 +385,14 @@ export default function HomePage() {
                         <line x1="18" y1="6" x2="6" y2="18" />
                         <line x1="6" y1="6" x2="18" y2="18" />
                       </svg>
-                      <span className="text-ink-40">Ingen spillerportal-tilgang</span>
+                      <span className="text-ink-50">Ingen spillerportal-tilgang</span>
                     </li>
                     <li className="flex items-start gap-2.5">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5 text-ink-30">
                         <line x1="18" y1="6" x2="6" y2="18" />
                         <line x1="6" y1="6" x2="18" y2="18" />
                       </svg>
-                      <span className="text-ink-40">Ingen treningsplan mellom sesjonene</span>
+                      <span className="text-ink-50">Ingen treningsplan mellom sesjonene</span>
                     </li>
                   </ul>
                 </div>
@@ -427,8 +433,8 @@ export default function HomePage() {
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">
-                <SectionLabel>Spørsmål og svar</SectionLabel>
-                <h2 className="w-heading-lg mt-4">Ofte stilte spørsmål</h2>
+                <SectionLabel>Sporsmal og svar</SectionLabel>
+                <h2 className="w-heading-lg mt-4">Ofte stilte sporsmal</h2>
               </div>
             </RevealOnScroll>
 
@@ -451,7 +457,7 @@ export default function HomePage() {
                 <SectionLabel>Ta kontakt</SectionLabel>
                 <h2 className="w-heading-lg mt-4 mb-4">Start med en uforpliktende samtale.</h2>
                 <p className="text-ink-50 max-w-lg mx-auto">
-                  Fortell oss om dine mål, så finner vi ut hvordan vi kan hjelpe deg videre.
+                  Fortell oss om dine mal, sa finner vi ut hvordan vi kan hjelpe deg videre.
                 </p>
               </div>
             </RevealOnScroll>

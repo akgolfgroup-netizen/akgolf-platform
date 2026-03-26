@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Clock, MapPin, Users } from "lucide-react";
 import Link from "next/link";
+import { BorderBeam } from "@/components/portal/ui/border-beam";
 
 interface NextSessionCardProps {
   session: {
@@ -50,20 +51,20 @@ export function NextSessionCard({ session }: NextSessionCardProps) {
   return (
     <Link href={`/portal/bookinger/${session.id}`}>
       <motion.div
-        className={`p-5 rounded-xl border ${
+        className={`relative overflow-hidden p-5 rounded-xl border ${
           isUrgent
             ? "border-gold ring-2 ring-gold/20"
-            : "border-[#E5E5E5]"
-        } bg-white hover:shadow-lg transition-shadow`}
+            : "border-[var(--portal-card-border)]"
+        } bg-[var(--portal-card-bg)] hover:border-[var(--portal-card-border-hover)] transition-all`}
         whileHover={{ scale: 1.01 }}
         transition={{ duration: 0.2 }}
       >
         <p className="text-xs font-semibold text-gold uppercase mb-2">
           Neste okt
         </p>
-        <h3 className="text-lg font-bold text-[#171717]">{session.title}</h3>
+        <h3 className="text-lg font-bold text-[var(--portal-text-primary)]">{session.title}</h3>
 
-        <div className="flex gap-4 mt-3 text-sm text-[#737373]">
+        <div className="flex gap-4 mt-3 text-sm text-[var(--portal-text-muted)]">
           {session.groupName && (
             <span className="flex items-center gap-1">
               <Users className="h-4 w-4" />
@@ -87,15 +88,24 @@ export function NextSessionCard({ session }: NextSessionCardProps) {
         <div className="flex gap-3 mt-4">
           {(["hours", "minutes", "seconds"] as const).map((unit) => (
             <div key={unit} className="text-center">
-              <div className="text-2xl font-mono font-bold text-[#171717]">
+              <div className="text-2xl font-mono font-bold text-[var(--portal-text-primary)]">
                 {String(timeLeft[unit]).padStart(2, "0")}
               </div>
-              <div className="text-xs text-[#737373]">
+              <div className="text-xs text-[var(--portal-text-muted)]">
                 {unit === "hours" ? "t" : unit === "minutes" ? "m" : "s"}
               </div>
             </div>
           ))}
         </div>
+
+        {isUrgent && (
+          <BorderBeam
+            colorFrom="#B07D4F"
+            colorTo="rgba(176, 125, 79, 0.3)"
+            duration={4}
+            size={200}
+          />
+        )}
       </motion.div>
     </Link>
   );

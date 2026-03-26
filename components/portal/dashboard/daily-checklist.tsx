@@ -51,7 +51,7 @@ export function DailyChecklist({
   };
 
   return (
-    <div className="rounded-xl p-5 bg-white border border-[#E5E5E5]">
+    <div className="portal-card rounded-xl p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <svg width="48" height="48" className="progress-ring">
@@ -63,7 +63,7 @@ export function DailyChecklist({
               strokeOpacity={0.1}
               strokeWidth={4}
               fill="none"
-              className="text-[#E5E5E5]"
+              className="text-[var(--portal-card-border)]"
             />
             <motion.circle
               cx="24"
@@ -81,8 +81,8 @@ export function DailyChecklist({
             />
           </svg>
           <div>
-            <h3 className="text-sm font-semibold text-[#171717]">{title}</h3>
-            <p className="text-xs text-[#737373]">
+            <h3 className="text-sm font-semibold text-[var(--portal-text-primary)]">{title}</h3>
+            <p className="text-xs text-[var(--portal-text-muted)]">
               {completedCount} av {totalCount} fullfort
             </p>
           </div>
@@ -103,8 +103,8 @@ export function DailyChecklist({
               variants={itemVariants}
               className={`flex items-center gap-3 p-3 rounded-lg border transition-colors ${
                 item.completed
-                  ? "border-green-200 bg-green-50"
-                  : "border-[#E5E5E5] hover:border-gold/30"
+                  ? "border-green-500/30 bg-green-500/10"
+                  : "border-[var(--portal-card-border)] hover:border-gold/30"
               }`}
             >
               {item.completed ? (
@@ -116,13 +116,13 @@ export function DailyChecklist({
                   <CheckCircle2 className="h-5 w-5 text-green-500" />
                 </motion.div>
               ) : (
-                <Circle className="h-5 w-5 text-[#D4D4D4]" />
+                <Circle className="h-5 w-5 text-[var(--portal-text-muted)]" />
               )}
               <span
                 className={`text-sm ${
                   item.completed
-                    ? "text-[#737373] line-through"
-                    : "text-[#171717]"
+                    ? "text-[var(--portal-text-muted)] line-through"
+                    : "text-[var(--portal-text-primary)]"
                 }`}
               >
                 {item.label}

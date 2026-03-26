@@ -5,6 +5,8 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { AKLogo } from "@/components/website/AKLogo";
+import { ShimmerButton } from "@/components/portal/ui/shimmer-button";
+import { Spotlight } from "@/components/portal/ui/spotlight";
 
 function createSupabaseBrowser() {
   return createBrowserClient(
@@ -40,9 +42,9 @@ export default function LoginPage() {
     if (authError) {
       setLoading(false);
       if (authError.message.includes("Invalid login credentials")) {
-        setError("Feil e-post eller passord. Prøv igjen.");
+        setError("Feil e-post eller passord. Prov igjen.");
       } else {
-        setError("Kunne ikke logge inn. Prøv igjen.");
+        setError("Kunne ikke logge inn. Prov igjen.");
       }
     } else {
       // Refresh server components to pick up new auth cookies, then navigate
@@ -67,7 +69,7 @@ export default function LoginPage() {
     setLoading(false);
 
     if (authError) {
-      setError("Kunne ikke sende innloggingslenke. Prøv igjen.");
+      setError("Kunne ikke sende innloggingslenke. Prov igjen.");
     } else {
       setSent(true);
     }
@@ -75,33 +77,23 @@ export default function LoginPage() {
 
   if (sent) {
     return (
-      <div
-        className="min-h-screen flex items-center justify-content px-4"
-        style={{ background: "#f5f5f5", fontFamily: "'Inter', sans-serif" }}
-      >
+      <div className="min-h-screen flex items-center justify-center px-4 bg-[var(--portal-bg)]">
         <div className="w-full max-w-sm mx-auto text-center">
-          <div
-            className="w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4"
-            style={{ background: "#f5f5f5", border: "1px solid #e5e5e5" }}
-          >
-            <Mail className="w-5 h-5" style={{ color: "#737373" }} />
+          <div className="w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4 bg-[var(--portal-surface-sunken)] border border-[var(--portal-card-border)]">
+            <Mail className="w-5 h-5 text-[var(--portal-text-muted)]" />
           </div>
-          <h1
-            className="text-xl font-semibold mb-2"
-            style={{ color: "#171717" }}
-          >
+          <h1 className="text-xl font-semibold mb-2 text-[var(--portal-text-primary)]">
             Sjekk e-posten din
           </h1>
-          <p className="text-sm" style={{ color: "#525252" }}>
+          <p className="text-sm text-[var(--portal-text-secondary)]">
             Vi har sendt en innloggingslenke til{" "}
-            <strong style={{ color: "#171717" }}>{email}</strong>
+            <strong className="text-[var(--portal-text-primary)]">{email}</strong>
           </p>
           <button
             onClick={() => setSent(false)}
-            className="mt-6 text-sm font-medium cursor-pointer"
-            style={{ color: "#171717", background: "none", border: "none" }}
+            className="mt-6 text-sm font-medium cursor-pointer bg-transparent border-none text-[var(--portal-text-primary)] hover:text-[var(--portal-accent)]"
           >
-            ← Tilbake til innlogging
+            &larr; Tilbake til innlogging
           </button>
         </div>
       </div>
@@ -109,64 +101,46 @@ export default function LoginPage() {
   }
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center px-4"
-      style={{ background: "#f5f5f5", fontFamily: "'Inter', sans-serif" }}
-    >
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-[var(--portal-bg)] relative overflow-hidden">
+      <Spotlight fill="rgba(176, 125, 79, 0.06)" className="-top-40 left-0 md:-top-20 md:left-60" />
+
+      <div className="w-full max-w-sm relative z-10">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <AKLogo variant="academy" size={48} />
           </div>
-          <h1
-            className="text-xl font-semibold"
-            style={{ color: "#171717" }}
-          >
+          <h1 className="text-xl font-semibold text-[var(--portal-text-primary)]">
             Spillerportal
           </h1>
-          <p
-            className="text-sm mt-1"
-            style={{ color: "#737373" }}
-          >
-            Logg inn for å fortsette
+          <p className="text-sm mt-1 text-[var(--portal-text-muted)]">
+            Logg inn for a fortsette
           </p>
         </div>
 
         {/* Card */}
-        <div
-          className="rounded-xl p-6"
-          style={{
-            background: "#fff",
-            border: "1px solid #e5e5e5",
-          }}
-        >
+        <div className="portal-card rounded-xl p-6">
           {/* Mode Toggle */}
-          <div
-            className="flex rounded-lg p-1 mb-5"
-            style={{ background: "#f5f5f5" }}
-          >
+          <div className="flex rounded-lg p-1 mb-5 bg-[var(--portal-surface-sunken)]">
             <button
               type="button"
               onClick={() => setMode("password")}
-              className="flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all cursor-pointer"
-              style={{
-                background: mode === "password" ? "#fff" : "transparent",
-                color: mode === "password" ? "#171717" : "#737373",
-                border: mode === "password" ? "1px solid #e5e5e5" : "1px solid transparent",
-              }}
+              className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all cursor-pointer ${
+                mode === "password"
+                  ? "bg-[var(--portal-card-bg-solid)] text-[var(--portal-text-primary)] border border-[var(--portal-card-border)]"
+                  : "bg-transparent text-[var(--portal-text-muted)] border border-transparent"
+              }`}
             >
               Passord
             </button>
             <button
               type="button"
               onClick={() => setMode("magic")}
-              className="flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all cursor-pointer"
-              style={{
-                background: mode === "magic" ? "#fff" : "transparent",
-                color: mode === "magic" ? "#171717" : "#737373",
-                border: mode === "magic" ? "1px solid #e5e5e5" : "1px solid transparent",
-              }}
+              className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all cursor-pointer ${
+                mode === "magic"
+                  ? "bg-[var(--portal-card-bg-solid)] text-[var(--portal-text-primary)] border border-[var(--portal-card-border)]"
+                  : "bg-transparent text-[var(--portal-text-muted)] border border-transparent"
+              }`}
             >
               Magic Link
             </button>
@@ -178,37 +152,18 @@ export default function LoginPage() {
           >
             {/* Email */}
             <div>
-              <label
-                className="block text-sm font-medium mb-1.5"
-                style={{ color: "#171717" }}
-              >
+              <label className="block text-sm font-medium mb-1.5 text-[var(--portal-text-primary)]">
                 E-postadresse
               </label>
               <div className="relative">
-                <Mail
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
-                  style={{ color: "#737373" }}
-                />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--portal-text-muted)]" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="navn@eksempel.no"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm outline-none transition-all"
-                  style={{
-                    background: "#fff",
-                    border: "1px solid #e5e5e5",
-                    color: "#171717",
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "#171717";
-                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(23, 23, 23, 0.1)";
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "#e5e5e5";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
+                  className="portal-input w-full pl-10 pr-4 py-2.5 rounded-lg text-sm"
                 />
               </div>
             </div>
@@ -216,43 +171,23 @@ export default function LoginPage() {
             {/* Password (only in password mode) */}
             {mode === "password" && (
               <div>
-                <label
-                  className="block text-sm font-medium mb-1.5"
-                  style={{ color: "#171717" }}
-                >
+                <label className="block text-sm font-medium mb-1.5 text-[var(--portal-text-primary)]">
                   Passord
                 </label>
                 <div className="relative">
-                  <Lock
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
-                    style={{ color: "#737373" }}
-                  />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--portal-text-muted)]" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
                     required
-                    className="w-full pl-10 pr-10 py-2.5 rounded-lg text-sm outline-none transition-all"
-                    style={{
-                      background: "#fff",
-                      border: "1px solid #e5e5e5",
-                      color: "#171717",
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = "#171717";
-                      e.currentTarget.style.boxShadow = "0 0 0 3px rgba(23, 23, 23, 0.1)";
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = "#e5e5e5";
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
+                    className="portal-input w-full pl-10 pr-10 py-2.5 rounded-lg text-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
-                    style={{ color: "#737373", background: "none", border: "none" }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer bg-transparent border-none text-[var(--portal-text-muted)] hover:text-[var(--portal-text-primary)]"
                   >
                     {showPassword ? (
                       <EyeOff className="w-4 h-4" />
@@ -265,21 +200,18 @@ export default function LoginPage() {
             )}
 
             {error && (
-              <p className="text-xs" style={{ color: "#dc2626" }}>
+              <p className="text-xs text-red-400">
                 {error}
               </p>
             )}
 
-            <button
+            <ShimmerButton
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-lg font-medium text-sm transition-all cursor-pointer disabled:cursor-not-allowed"
-              style={{
-                background: loading ? "#a3a3a3" : "#171717",
-                color: "#fff",
-                border: "1px solid",
-                borderColor: loading ? "#a3a3a3" : "#171717",
-              }}
+              className="w-full"
+              background="var(--portal-accent)"
+              shimmerColor="rgba(255, 255, 255, 0.3)"
+              borderRadius="8px"
             >
               {loading
                 ? mode === "password"
@@ -288,7 +220,7 @@ export default function LoginPage() {
                 : mode === "password"
                   ? "Logg inn"
                   : "Send innloggingslenke"}
-            </button>
+            </ShimmerButton>
           </form>
 
           {/* Forgot password link */}
@@ -297,8 +229,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setMode("magic")}
-                className="text-sm cursor-pointer"
-                style={{ color: "#737373", background: "none", border: "none" }}
+                className="text-sm cursor-pointer bg-transparent border-none text-[var(--portal-text-muted)] hover:text-[var(--portal-text-primary)]"
               >
                 Glemt passord? Bruk magic link
               </button>
@@ -307,17 +238,13 @@ export default function LoginPage() {
         </div>
 
         {/* Footer */}
-        <p
-          className="text-center text-sm mt-6"
-          style={{ color: "#737373" }}
-        >
+        <p className="text-center text-sm mt-6 text-[var(--portal-text-muted)]">
           Har du ikke tilgang?{" "}
           <a
             href="/academy"
-            className="font-medium"
-            style={{ color: "#171717" }}
+            className="font-medium text-[var(--portal-accent)]"
           >
-            Søk om plass
+            Sok om plass
           </a>
         </p>
       </div>

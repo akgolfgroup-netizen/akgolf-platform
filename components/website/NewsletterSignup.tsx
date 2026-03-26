@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { Loader2 } from "lucide-react";
 import { FORMSPREE_ENDPOINT } from "@/lib/website-constants";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -58,7 +59,12 @@ export function NewsletterSignup() {
         disabled={status === "submitting"}
         className="w-btn w-btn-gold whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {status === "submitting" ? "Sender..." : "Meld meg på"}
+        {status === "submitting" ? (
+          <span className="flex items-center gap-2">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Sender...
+          </span>
+        ) : "Meld meg på"}
       </button>
       {status === "error" && (
         <p className="text-xs text-red-400 sm:absolute sm:mt-12">

@@ -108,9 +108,11 @@ export default async function BookingConfirmationPage({ params }: Props) {
   const formattedDate = rawDate.charAt(0).toUpperCase() + rawDate.slice(1);
 
   // Format price
-  const priceNOK = (booking.serviceType.price / 100).toLocaleString("nb-NO", {
+  // Prisene er lagret i kroner
+  const priceNOK = booking.serviceType.price.toLocaleString("nb-NO", {
     style: "currency",
     currency: "NOK",
+    minimumFractionDigits: 0,
   });
 
   const instructorName = booking.instructor.user.name ?? "Ukjent instruktør";

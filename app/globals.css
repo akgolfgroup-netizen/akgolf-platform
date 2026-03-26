@@ -86,9 +86,9 @@
   /* TYPOGRAPHY */
   /* ═══════════════════════════════════════════════════════════════════════════ */
   
-  /* Fonts — Inter is the only font */
-  --font-sans: var(--font-inter), Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: var(--font-inter), Inter, system-ui, -apple-system, sans-serif;
+  /* Fonts — Manrope is the only font (loaded via next/font/local in layout.tsx) */
+  --font-sans: var(--font-manrope), Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-manrope), Manrope, system-ui, -apple-system, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
   /* Font weights */
@@ -629,7 +629,7 @@
     background: white;
     border: 1px solid var(--color-ink-20);
     border-radius: 0.5rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     outline: none;
   }
 
@@ -637,9 +637,11 @@
     color: var(--color-ink-40);
   }
 
+  
   .w-input:focus {
     border-color: var(--color-gold);
-    box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.1);
+    box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.15);
+    transform: translateY(-1px);
   }
 
   .w-select {
@@ -651,7 +653,7 @@
     background: white;
     border: 1px solid var(--color-ink-20);
     border-radius: 0.5rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     outline: none;
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%239BA5B2' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -662,7 +664,8 @@
 
   .w-select:focus {
     border-color: var(--color-gold);
-    box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.1);
+    box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.15);
+    transform: translateY(-1px);
   }
 
   /* Meta label — footer headings, day labels, mono-captions */
@@ -848,6 +851,80 @@
   margin: 2rem 0;
   font-style: italic;
   color: var(--color-ink-50);
+}
+
+/* ─── Portal Dark Theme Tokens ─── */
+@layer components {
+  /* Portal semantic tokens — dark premium theme */
+  :root {
+    --portal-bg: #0A1929;
+    --portal-card-bg: rgba(15, 25, 45, 0.7);
+    --portal-card-bg-solid: #111827;
+    --portal-card-border: rgba(255, 255, 255, 0.08);
+    --portal-card-border-hover: rgba(255, 255, 255, 0.15);
+    --portal-surface-sunken: rgba(0, 0, 0, 0.3);
+    --portal-surface-raised: rgba(255, 255, 255, 0.04);
+    --portal-text-primary: #F1F5F9;
+    --portal-text-secondary: #94A3B8;
+    --portal-text-muted: #64748B;
+    --portal-accent: var(--color-gold);
+    --portal-accent-glow: rgba(184, 151, 92, 0.15);
+    --portal-success: #22C55E;
+    --portal-error: #EF4444;
+  }
+
+  /* Portal card utility */
+  .portal-card {
+    background: var(--portal-card-bg);
+    border: 1px solid var(--portal-card-border);
+    border-radius: 1rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .portal-card:hover {
+    border-color: var(--portal-card-border-hover);
+  }
+
+  .portal-card-solid {
+    background: var(--portal-card-bg-solid);
+    border: 1px solid var(--portal-card-border);
+    border-radius: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .portal-card-solid:hover {
+    border-color: var(--portal-card-border-hover);
+  }
+
+  /* Portal input */
+  .portal-input {
+    display: block;
+    width: 100%;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    color: var(--portal-text-primary);
+    background: var(--portal-surface-sunken);
+    border: 1px solid var(--portal-card-border);
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .portal-input::placeholder {
+    color: var(--portal-text-muted);
+  }
+
+  .portal-input:focus {
+    border-color: var(--portal-accent);
+    box-shadow: 0 0 0 3px var(--portal-accent-glow);
+  }
+
+  /* Portal text utilities */
+  .portal-text { color: var(--portal-text-primary); }
+  .portal-text-secondary { color: var(--portal-text-secondary); }
+  .portal-text-muted { color: var(--portal-text-muted); }
 }
 
 /* ─── Accessibility ─── */

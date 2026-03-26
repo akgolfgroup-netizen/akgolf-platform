@@ -22,7 +22,7 @@ export function WelcomeHeader({ firstName, dateString }: WelcomeHeaderProps) {
       <p className="text-xs font-semibold text-gold uppercase tracking-wider">
         {dateString}
       </p>
-      <h1 className="text-3xl font-bold text-[#171717]">
+      <h1 className="text-3xl font-bold text-[var(--portal-text-primary)]">
         {greeting},{" "}
         <span className="text-gradient-gold">{firstName}</span>
       </h1>

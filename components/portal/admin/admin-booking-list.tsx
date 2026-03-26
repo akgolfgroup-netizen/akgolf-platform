@@ -166,7 +166,7 @@ export function AdminBookingList() {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm text-[var(--color-snow)]/70 text-right">
-                    kr {(b.amount / 100).toLocaleString("nb-NO")}
+                    kr {b.amount.toLocaleString("nb-NO")}
                   </td>
                   <td className="px-4 py-3 text-right">
                     {(b.status === "CONFIRMED" || b.status === "PENDING") && (

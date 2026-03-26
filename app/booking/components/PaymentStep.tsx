@@ -18,7 +18,7 @@ interface Props {
   clientSecret: string;
   bookingId: string;
   serviceName: string;
-  amount: number; // ore
+  amount: number; // kroner
   duration?: number;
   onSuccess: () => void;
 }
@@ -46,7 +46,7 @@ function CheckoutForm({
   const subtotal = amount;
   const discount = appliedDiscount?.amount ?? 0;
   const total = subtotal - discount;
-  const totalNok = total / 100;
+  const totalNok = total;
 
   async function handleApplyDiscount() {
     // For now, simulate discount code
@@ -92,12 +92,12 @@ function CheckoutForm({
           <span className="text-ink-70">
             {serviceName} ({duration} min)
           </span>
-          <span className="text-ink-90">kr {(subtotal / 100).toLocaleString("nb-NO")}</span>
+          <span className="text-ink-90">kr {subtotal.toLocaleString("nb-NO")}</span>
         </div>
         {appliedDiscount && (
           <div className="flex justify-between items-center py-2 text-sm text-success">
             <span>Rabattkode: {appliedDiscount.code}</span>
-            <span>-kr {(appliedDiscount.amount / 100).toLocaleString("nb-NO")}</span>
+            <span>-kr {appliedDiscount.amount.toLocaleString("nb-NO")}</span>
           </div>
         )}
         <div className="flex justify-between items-center pt-4 mt-2 border-t-2 border-ink-20">

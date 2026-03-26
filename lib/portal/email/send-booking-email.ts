@@ -18,8 +18,9 @@ interface BookingEmailData {
   location: string;
 }
 
-function formatNOK(amountOre: number): string {
-  return `kr ${(amountOre / 100).toLocaleString("nb-NO", {
+function formatNOK(amount: number): string {
+  // Prisene er lagret i kroner
+  return `kr ${amount.toLocaleString("nb-NO", {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   })}`;
