@@ -1,22 +1,30 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { prisma } from "@/lib/portal/prisma";
 
 export async function GET() {
   try {
-    const { data, error } = await supabase
-      .from("CoachingPackage")
-      .select("id, name, slug, priceNok, billingType, bookingType, sessionsPerMonth, sessionDurationMin, bookingWindowDays, bookingWindowHours, maxBookingsPerWeek, slotsRequired, description, sortOrder")
-      .eq("isActive", true)
-      .order("sortOrder", { ascending: true });
+    const packages = await prisma.coachingPackage.findMany({
+      where: { isActive: true },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        priceNok: true,
+        billingType: true,
+        bookingType: true,
+        sessionsPerMonth: true,
+        sessionDurationMin: true,
+        bookingWindowDays: true,
+        bookingWindowHours: true,
+        maxBookingsPerWeek: true,
+        slotsRequired: true,
+        description: true,
+        sortOrder: true,
+      },
+      orderBy: { sortOrder: "asc" },
+    });
 
-    if (error) throw error;
-
-    return NextResponse.json(data, {
+    return NextResponse.json(packages, {
       headers: {
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
       },

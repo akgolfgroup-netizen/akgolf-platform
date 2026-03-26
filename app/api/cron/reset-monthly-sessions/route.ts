@@ -1,21 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyCronAuth } from "@/lib/cron-auth";
-import { getSupabaseAdmin } from "@/lib/supabase-admin";
+import { prisma } from "@/lib/portal/prisma";
 import { sendMonthlyResetEmail } from "@/lib/portal/email/send-monthly-reset-email";
+import { SubscriptionStatus } from "@prisma/client";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-interface SubscriptionRow {
-  id: string;
-  userId: string;
-  packageId: string;
-  sessionsUsedThisMonth: number;
-  billingPeriodStart: string;
-  billingPeriodEnd: string;
-  user: { id: string; name: string | null; email: string | null } | null;
-  package: { name: string; sessionsPerMonth: number | null } | null;
-}
 
 /**
  * Cron: Nullstill sessionsUsedThisMonth ved slutten av faktureringsperioden.
@@ -32,45 +22,21 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const supabase = getSupabaseAdmin();
   const now = new Date();
   const results = { reset: 0, notified: 0, errors: 0 };
 
   try {
     // Finn aktive abonnementer der faktureringsperioden har utlopt
-    const { data: rawSubs, error: fetchError } = await supabase
-      .from("UserSubscription")
-      .select(
-        `
-        id,
-        userId,
-        packageId,
-        sessionsUsedThisMonth,
-        billingPeriodStart,
-        billingPeriodEnd,
-        user:User!UserSubscription_userId_fkey (
-          id, name, email
-        ),
-        package:CoachingPackage!UserSubscription_packageId_fkey (
-          name, sessionsPerMonth
-        )
-      `
-      )
-      .eq("status", "ACTIVE")
-      .lte("billingPeriodEnd", now.toISOString());
-
-    if (fetchError) {
-      console.error(
-        "[cron/reset] Feil ved henting av utlopte abonnementer:",
-        fetchError
-      );
-      return NextResponse.json(
-        { error: "Feil ved henting av abonnementer" },
-        { status: 500 }
-      );
-    }
-
-    const expiredSubs = (rawSubs ?? []) as unknown as SubscriptionRow[];
+    const expiredSubs = await prisma.userSubscription.findMany({
+      where: {
+        status: SubscriptionStatus.ACTIVE,
+        billingPeriodEnd: { lte: now },
+      },
+      include: {
+        user: { select: { id: true, name: true, email: true } },
+        package: { select: { name: true, sessionsPerMonth: true } },
+      },
+    });
 
     if (expiredSubs.length === 0) {
       console.log("[cron/reset] Ingen abonnementer a nullstille");
@@ -84,6 +50,9 @@ export async function GET(request: NextRequest) {
 
     for (const sub of expiredSubs) {
       try {
+        // Skip if billingPeriodEnd is null (should not happen due to filter)
+        if (!sub.billingPeriodEnd) continue;
+
         const sessionsUsed = sub.sessionsUsedThisMonth ?? 0;
         const sessionsTotal = sub.package?.sessionsPerMonth ?? 0;
         const unusedSessions = Math.max(0, sessionsTotal - sessionsUsed);
@@ -95,23 +64,14 @@ export async function GET(request: NextRequest) {
         newEnd.setMonth(newEnd.getMonth() + 1);
 
         // Oppdater abonnementet
-        const { error: updateError } = await supabase
-          .from("UserSubscription")
-          .update({
+        await prisma.userSubscription.update({
+          where: { id: sub.id },
+          data: {
             sessionsUsedThisMonth: 0,
-            billingPeriodStart: newStart.toISOString(),
-            billingPeriodEnd: newEnd.toISOString(),
-          })
-          .eq("id", sub.id);
-
-        if (updateError) {
-          console.error(
-            `[cron/reset] Feil ved oppdatering av sub ${sub.id}:`,
-            updateError
-          );
-          results.errors++;
-          continue;
-        }
+            billingPeriodStart: newStart,
+            billingPeriodEnd: newEnd,
+          },
+        });
 
         results.reset++;
 
