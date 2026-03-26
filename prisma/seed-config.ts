@@ -1,6 +1,8 @@
 // =============================================================================
 // AK Golf Booking - Seed Konfigurasjon
 // =============================================================================
+// Oppdatert: 2026-03-26 — AK Golf Academy 2026 konsept
+//
 // ENDRE KUN VERDIENE I DENNE FILEN
 // Etter endring: kjør `npx prisma db seed`
 // =============================================================================
@@ -13,96 +15,133 @@ export const COACHES = {
   anders: {
     name: "Anders Kristiansen",
     email: "anders@akgolf.no",
-    phone: "+47 000 00 000", // ← ENDRE
+    phone: "+47 918 16 456",
     title: "Head Coach",
-    bio: "PGA-sertifisert trener med fokus på helhetlig spillutvikling.", // ← ENDRE
+    bio: "PGA-sertifisert trener med fokus på helhetlig spillerutvikling. Spesialist på The Foundation Method — en strukturert tilnærming til golf som bygger solide ferdigheter fra bunnen.",
   },
   markus: {
-    name: "Markus Røinås Pedersen",
+    name: "Markus Hatlelid",
     email: "markus@akgolf.no",
-    phone: "+47 000 00 000", // ← ENDRE
-    title: "Junior Coach",
-    bio: "Spesialist på juniorutvikling og talentarbeid.", // ← ENDRE
+    phone: "+47 000 00 000",
+    title: "Assistant Coach & Junior Coordinator",
+    bio: "Spesialist på juniorutvikling og breddearbeid. Ansvarlig for GFGK juniorprogram og treningsgrupper.",
   },
 };
 
 // -----------------------------------------------------------------------------
-// 2. TJENESTER & PRISER (i øre - 100 = 1 kr)
+// 2. TJENESTER & PRISER (i kroner)
 // -----------------------------------------------------------------------------
+// Fra AK Golf Academy 2026 konsept
 
 export const SERVICES = {
-  // Anders - Voksne
-  individual: {
-    name: "Individuell coaching",
-    description: "1-til-1 coachingtime med TrackMan-analyse og videogjennomgang.",
-    duration: 60, // minutter
-    price: 99500, // 995 kr ← ENDRE (i øre)
+  // ─── Onboarding ───
+  start: {
+    name: "Start",
+    description: "3 × 20-minutters økter over 3 uker + 30 dagers portal. Kartlegging og utviklingsplan.",
+    duration: 20, // per økt
+    price: 3000, // 3 000 kr
     maxStudents: 1,
-    color: "#B8975C",
+    color: "#B07D4F",
     coachId: "anders",
-    active: true, // ← ENDRE til false hvis ikke tilgjengelig
+    active: true,
   },
-  playing: {
-    name: "Playing lesson",
-    description: "Coaching ute på banen. 9 hull med fokus på kursmanagement og mental strategi.",
-    duration: 120,
-    price: 179500, // 1795 kr ← ENDRE
+  foundationTest: {
+    name: "Foundation Test",
+    description: "50 min introduksjonstime. Full kartlegging. Refunderbar ved abo-kjøp innen 14 dager.",
+    duration: 50,
+    price: 995, // 995 kr
     maxStudents: 1,
+    color: "#B07D4F",
+    coachId: "anders",
+    active: true,
+  },
+
+  // ─── Drop-in / Flex (48t booking-vindu) ───
+  flex50Solo: {
+    name: "Flex 50 Solo",
+    description: "50 min intensiv én-til-én coaching med videoanalyse.",
+    duration: 50,
+    price: 1500, // 1 500 kr
+    maxStudents: 1,
+    color: "#B07D4F",
+    coachId: "anders",
+    active: true,
+  },
+  flex50Duo: {
+    name: "Flex 50 Duo",
+    description: "50 min coaching for to spillere. 850 kr per person.",
+    duration: 50,
+    price: 1700, // 1 700 kr totalt (850 × 2)
+    maxStudents: 2,
+    color: "#1565C0",
+    coachId: "anders",
+    active: true,
+  },
+  flex90Solo: {
+    name: "Flex 90 Solo",
+    description: "90 min dybdecoaching én-til-én. Flere fokusområder + on-range praksis.",
+    duration: 90,
+    price: 2500, // 2 500 kr
+    maxStudents: 1,
+    color: "#B07D4F",
+    coachId: "anders",
+    active: true,
+  },
+  flex90Duo: {
+    name: "Flex 90 Duo",
+    description: "90 min dybdecoaching for to spillere. 1 400 kr per person.",
+    duration: 90,
+    price: 2800, // 2 800 kr totalt (1400 × 2)
+    maxStudents: 2,
+    color: "#1565C0",
+    coachId: "anders",
+    active: true,
+  },
+
+  // ─── Banecoaching ───
+  onCourse9: {
+    name: "On-Course 9",
+    description: "Banecoaching 9 hull med Anders. Live kursmanagement med DECADE-prinsipper. Maks 2 spillere.",
+    duration: 150, // ~2.5 timer
+    price: 3000, // 3 000 kr/spiller
+    maxStudents: 2, // Maks 2 spillere
     color: "#2E7D32",
     coachId: "anders",
     active: true,
   },
-  group: {
-    name: "Gruppetrening",
-    description: "Trening i gruppe (maks 4). Fokus på kortspill og putting.",
-    duration: 90,
-    price: 49500, // 495 kr/pers ← ENDRE
+  onCoursePar3: {
+    name: "On-Course Par 3",
+    description: "9 hull på korthullsbanen med Markus. Grunnleggende banemanagement. Grupper à 4.",
+    duration: 90, // ~90 min
+    price: 500, // 500 kr/spiller
     maxStudents: 4,
-    color: "#1565C0",
-    coachId: "anders",
-    active: false, // ← ENDRE til true hvis tilgjengelig
-  },
-  simulator: {
-    name: "Simulator-time",
-    description: "TrackMan-sesjon i Mulligan Indoor Golf simulator.",
-    duration: 60,
-    price: 59500, // 595 kr ← ENDRE
-    maxStudents: 2,
-    color: "#6A1B9A",
-    coachId: "anders",
-    active: false, // ← ENDRE til true hvis tilgjengelig
+    color: "#2E7D32",
+    coachId: "markus",
+    active: true,
   },
 
-  // Markus - Junior
-  juniorIndividual: {
-    name: "Junior - Individuell coaching",
-    description: "1-til-1 coaching for juniorer (13-19 år).",
-    duration: 60,
-    price: 79500, // 795 kr ← ENDRE
+  // ─── Markus individuell ───
+  markus20: {
+    name: "Markus 20 min",
+    description: "Kort treningsøkt med Markus. Raske justeringer eller oppfølging.",
+    duration: 20,
+    price: 300, // 300 kr
     maxStudents: 1,
-    color: "#B8975C",
-    coachId: "markus",
-    active: false, // ← ENDRE til true hvis tilgjengelig
-  },
-  junior21: {
-    name: "Junior 2:1 coaching",
-    description: "Coaching for 2 juniorer samtidig. 90 minutter.",
-    duration: 90,
-    price: 45000, // 450 kr/pers ← ENDRE
-    maxStudents: 2,
     color: "#E65100",
     coachId: "markus",
-    active: true, // ← ENDRE
+    active: true,
   },
+
+  // ─── Junior (Markus) ───
   juniorGroup: {
-    name: "Junior gruppetrening",
-    description: "Team-trening for juniorer.",
-    duration: 90,
-    price: 35000, // 350 kr ← ENDRE
-    maxStudents: 6,
+    name: "Junior Gruppetrening",
+    description: "GFGK junior treningsgrupper. Treningsavgift TBD.",
+    duration: 60,
+    price: 0, // TBD
+    maxStudents: 8,
     color: "#1565C0",
     coachId: "markus",
-    active: false, // ← ENDRE til true hvis tilgjengelig
+    active: false, // Aktiveres når pris er satt
   },
 };
 
@@ -113,70 +152,212 @@ export const SERVICES = {
 export const LOCATIONS = {
   gfgk: {
     name: "Gamle Fredrikstad Golfklubb",
-    address: "Golfveien 1, 1605 Fredrikstad", // ← ENDRE
+    address: "Golfveien 1, 1605 Fredrikstad",
+    description: "Hovedlokasjon for AK Golf Academy. Driving range, short game area og 18-hulls bane.",
+  },
+  miklagard: {
+    name: "Miklagard Golf",
+    address: "Miklagardveien 1, 2004 Lillestrøm",
+    description: "Sekundærlokasjon. Anders tilgjengelig annenhver fredag 13:00-19:00.",
   },
   mulligan: {
     name: "Mulligan Indoor Golf",
-    address: "Mosseveien 50, 1619 Fredrikstad", // ← ENDRE
+    address: "Mosseveien 50, 1619 Fredrikstad",
+    description: "Innendørs simulatorfasiliteter med TrackMan. Vintertrening.",
   },
   wang: {
     name: "AK Golf Academy - Wang",
-    address: "Wang UH, Toneheim, 2320 Ridabu", // ← ENDRE
+    address: "Wang Toppidrett, 2320 Ridabu",
+    description: "Wang Toppidrett Fredrikstad samarbeid.",
   },
 };
 
 // -----------------------------------------------------------------------------
-// 4. ÅPNINGSTIDER
-// Format: { dag: { start: "HH:MM", end: "HH:MM", location: "sted" } }
-// Dager: mon, tue, wed, thu, fri, sat, sun
+// 4. ÅPNINGSTIDER - Anders
 // -----------------------------------------------------------------------------
+// Fra AK Golf Academy 2026 konsept:
+// - Pause 14:00–15:00 hver dag (henting)
+// - Miklagard: annenhver fredag 13:00–19:00
+// - Lørdag: varierer med turnus
 
 export const AVAILABILITY = {
   anders: {
-    mon: { start: "09:00", end: "17:00", location: "gfgk" },
-    tue: { start: "09:00", end: "17:00", location: "gfgk" },
-    wed: { start: "09:00", end: "17:00", location: "mulligan" },
-    thu: { start: "09:00", end: "17:00", location: "gfgk" },
-    fri: null, // Stengt
-    sat: { start: "10:00", end: "14:00", location: "gfgk" },
-    sun: null, // Etter avtale
+    // Mandag: 12:00–20:00 (annenhver), pause 14:00–15:00
+    mon: [
+      { start: "12:00", end: "14:00", location: "gfgk" },
+      { start: "15:00", end: "20:00", location: "gfgk" },
+    ],
+    // Tirsdag: 13:00–20:00 (fast), pause 14:00–15:00
+    tue: [
+      { start: "13:00", end: "14:00", location: "gfgk" },
+      { start: "15:00", end: "20:00", location: "gfgk" },
+    ],
+    // Onsdag: 12:00–16:00, pause 14:00–15:00 (GFGK juniortrening fra 16:00)
+    wed: [
+      { start: "12:00", end: "14:00", location: "gfgk" },
+      { start: "15:00", end: "16:00", location: "gfgk" },
+    ],
+    // Torsdag: 13:00–20:00 (fast), pause 14:00–15:00
+    thu: [
+      { start: "13:00", end: "14:00", location: "gfgk" },
+      { start: "15:00", end: "20:00", location: "gfgk" },
+    ],
+    // Fredag: 10:00–14:00 på GFGK (annenhver: 13:00–19:00 på Miklagard)
+    fri: [{ start: "10:00", end: "14:00", location: "gfgk" }],
+    // Lørdag: Varierer basert på turnus — håndteres manuelt
+    sat: null,
+    // Søndag: Stengt
+    sun: null,
   },
   markus: {
-    mon: null, // Stengt
-    tue: { start: "14:00", end: "20:00", location: "gfgk" },
-    wed: null, // Stengt
-    thu: { start: "14:00", end: "20:00", location: "mulligan" },
-    fri: { start: "14:00", end: "18:00", location: "gfgk" },
-    sat: { start: "10:00", end: "16:00", location: "gfgk" },
-    sun: null, // Stengt
+    // Markus jobber KUN på GFGK
+    // Timer TBD basert på juniortrening og gruppetimer
+    mon: null,
+    tue: [{ start: "14:00", end: "20:00", location: "gfgk" }],
+    wed: [{ start: "16:00", end: "20:00", location: "gfgk" }], // Juniortrening
+    thu: [{ start: "14:00", end: "20:00", location: "gfgk" }],
+    fri: [{ start: "14:00", end: "18:00", location: "gfgk" }],
+    sat: [{ start: "10:00", end: "16:00", location: "gfgk" }],
+    sun: null,
   },
 };
 
 // -----------------------------------------------------------------------------
-// 5. ABBONNEMENTSPAKKER (VALGFRITT)
+// 5. ABONNEMENTSPAKKER
 // -----------------------------------------------------------------------------
+// Fra AK Golf Academy 2026 konsept
 
 export const PACKAGES = {
-  basis: {
-    name: "Grunnpakke",
-    description: "2 coaching-økter/mnd, IUP-plan, videoanalyse, meldingsstøtte",
-    monthlyPrice: 490000, // 4900 kr/mnd ← ENDRE
+  performance: {
+    name: "Performance",
+    description: "2 × 20 min/mnd. 7 dagers booking-vindu. Maks 1/uke.",
+    monthlyPrice: 1600, // 1 600 kr/mnd
     sessionsPerMonth: 2,
-    active: false, // ← ENDRE til true hvis tilgjengelig
+    sessionDurationMin: 20,
+    bookingWindowDays: 7,
+    maxPerWeek: 1,
+    active: true,
   },
-  elite: {
-    name: "Elite",
-    description: "4 coaching-økter/mnd, IUP-plan, ukentlig videoanalyse, mental trening, kursmanagement-økt, direkte trener-tilgang",
-    monthlyPrice: 890000, // 8900 kr/mnd ← ENDRE
+  performancePro: {
+    name: "Performance Pro",
+    description: "4 × 20 min/mnd. 14 dagers booking-vindu. Maks 2/uke. Prioritert tilgang.",
+    monthlyPrice: 2000, // 2 000 kr/mnd
     sessionsPerMonth: 4,
-    active: false, // ← ENDRE til true hvis tilgjengelig
+    sessionDurationMin: 20,
+    bookingWindowDays: 14,
+    maxPerWeek: 2,
+    active: true,
   },
-  elitePlus: {
-    name: "Elite+",
-    description: "Ubegrenset coaching, daglig oppfølging, turneringsstøtte, fysisk trening, full IUP + mentalt, reise-coaching",
-    monthlyPrice: 0, // På forespørsel
-    sessionsPerMonth: 999,
+};
+
+// -----------------------------------------------------------------------------
+// 6. BOOKING-REGLER
+// -----------------------------------------------------------------------------
+
+export const BOOKING_RULES = {
+  // Avbestilling
+  cancellation: {
+    fullRefundHours: 24, // >24t før: 100% refusjon
+    partialRefundHours: 2, // 2-24t før: 50% refusjon
+    noRefundHours: 0, // <2t før: ingen refusjon
+  },
+
+  // Drop-in / Flex
+  dropIn: {
+    bookingWindowHours: 48, // Kun 48t frem i tid
+    minNoticeHours: 2, // Minimum 2t før
+  },
+
+  // Abonnement
+  subscription: {
+    sessionReleaseHours: 24, // Frigjør sesjon ved avbestilling >24t før
+  },
+
+  // Generelt
+  general: {
+    slotDurationMin: 20, // Standard slot-varighet
+    slotGapMin: 5, // Pause mellom slots
+    totalSlotMin: 25, // 20 + 5 = 25 min mellom hver start
+  },
+};
+
+// -----------------------------------------------------------------------------
+// 7. GFGK JUNIOR TRENINGSGRUPPER (pris TBD)
+// -----------------------------------------------------------------------------
+
+export const GFGK_JUNIOR_GROUPS = {
+  nybegynnere: {
+    name: "Nybegynnere",
+    coach: "markus",
+    frequency: "Helårstilbud",
+    price: 0, // TBD
     active: false,
+  },
+  juniorGolfskole: {
+    name: "Junior og golfskole",
+    coach: "markus",
+    frequency: "10 t/uke, helår m/vinteraktivitet",
+    price: 0, // TBD
+    active: false,
+  },
+  hcp30Plus: {
+    name: "Hcp 30+",
+    coach: "markus",
+    frequency: "1 × 60 min/uke",
+    price: 0, // TBD
+    active: false,
+  },
+  hcp16_29: {
+    name: "Hcp 16–29",
+    coach: "markus",
+    frequency: "1 × 60 min/uke",
+    price: 0, // TBD
+    active: false,
+  },
+  hcp0_15: {
+    name: "Hcp 0–15",
+    coach: "anders",
+    frequency: "1 × 60 min/uke",
+    price: 0, // TBD
+    active: false,
+  },
+  konkurranseSatsing: {
+    name: "Konkurranse/satsing",
+    coach: "markus",
+    frequency: "Inkl. i junior 10 t/uke",
+    price: 0, // TBD
+    active: false,
+  },
+};
+
+// -----------------------------------------------------------------------------
+// 8. AK GOLF JUNIOR ACADEMY (kommersiell elite)
+// -----------------------------------------------------------------------------
+
+export const JUNIOR_ACADEMY = {
+  academy: {
+    name: "Academy",
+    price: 2500, // 2 500 kr/mnd
+    maxPlayers: 8,
+    coach: "anders",
+    description: "Elite-program for utvalgte juniorer. 8 spillere.",
+    active: true,
+  },
+  prospect: {
+    name: "Prospect",
+    price: 2000, // 2 000 kr/mnd
+    maxPlayers: 4,
+    coach: "anders",
+    description: "Utviklingsprogram for talentfulle juniorer. 4 spillere.",
+    active: true,
+  },
+  camp: {
+    name: "Junior Camp",
+    price: 4500, // 4 500 kr/deltaker
+    maxPlayers: 12,
+    coach: "anders",
+    description: "Intensiv camp for juniorer. Flere ganger per år.",
+    active: true,
   },
 };
 
@@ -184,11 +365,15 @@ export const PACKAGES = {
 // INSTRUKSJONER
 // -----------------------------------------------------------------------------
 //
-// 1. ENDRE kun verdiene over (priser i ØRE - 100 = 1 kr)
+// 1. ENDRE verdiene over (priser i KRONER)
 // 2. Sett `active: true` for tjenester som tilbys
 // 3. Sett `active: false` for tjenester som IKKE tilbys
-// 4. Endre åpningstider i AVAILABILITY
-// 5. Lagre filen
-// 6. Kjør: npx prisma db seed
+// 4. Lagre filen
+// 5. Kjør: npx prisma db seed
+//
+// MERK:
+// - Miklagard-fredager (annenhver) må legges til manuelt i CoachingAvailability
+// - Lørdager (varierer) må legges til manuelt
+// - GFGK Junior treningsgrupper aktiveres når pris er satt
 //
 // =============================================================================

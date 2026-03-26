@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CookieConsent } from "@/components/website/CookieConsent";
 import "./globals.css";
 
-const inter = localFont({
-  src: "./fonts/InterVariable.woff2",
-  variable: "--font-inter",
-  weight: "300 700",
+const manrope = localFont({
+  src: "./fonts/ManropeVariable.woff2",
+  variable: "--font-manrope",
+  weight: "300 800",
   display: "swap",
 });
 
@@ -17,6 +19,7 @@ export const metadata: Metadata = {
     default: "AK Golf Group",
     template: "%s | AK Golf Group",
   },
+  manifest: "/manifest.json",
   description:
     "Premium golfutvikling for ambisiøse spillere. Individuell coaching, juniorakademi og teknologiløsninger for golfens fremtid.",
   metadataBase: new URL(SITE_URL),
@@ -45,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="nb" className="h-full">
       <body
-        className={`${inter.variable} h-full`}
+        className={`${manrope.variable} h-full`}
       >
         <a href="#main-content" className="w-skip-link">
           Gå til hovedinnhold
@@ -104,6 +107,22 @@ export default function RootLayout({
         />
         {children}
         <CookieConsent />
+        <Analytics />
+        <SpeedInsights />
+        {/* Microsoft Clarity - heatmaps og session recordings */}
+        {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];if(y&&y.parentNode)y.parentNode.insertBefore(t,y);
+                })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");
+              `,
+            }}
+          />
+        )}
       </body>
     </html>
   );

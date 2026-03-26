@@ -7,8 +7,14 @@ import {
   BookingStatus,
   PaymentMethod,
   PaymentStatus,
+  CoachingSubscriptionTier,
 } from "@prisma/client";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
+import {
+  createQuotaForNewSubscription,
+  resetQuotaForNewPeriod,
+  cancelSubscriptionQuota,
+} from "@/lib/portal/booking/subscription-quota";
 
 export const dynamic = "force-dynamic";
 
@@ -136,5 +142,168 @@ export async function POST(req: Request) {
     );
   }
 
+  // ─── Subscription Events ───
+  else if (event.type === "customer.subscription.created") {
+    const subscription = event.data.object as Stripe.Subscription;
+    await handleSubscriptionCreated(subscription);
+  } else if (event.type === "customer.subscription.updated") {
+    const subscription = event.data.object as Stripe.Subscription;
+    await handleSubscriptionUpdated(subscription);
+  } else if (event.type === "customer.subscription.deleted") {
+    const subscription = event.data.object as Stripe.Subscription;
+    await handleSubscriptionCanceled(subscription);
+  } else if (event.type === "invoice.paid") {
+    const invoice = event.data.object as Stripe.Invoice;
+    await handleInvoicePaid(invoice);
+  }
+
   return NextResponse.json({ received: true }, { status: 200 });
+}
+
+// ─── Subscription Handlers ───
+
+function mapPriceToTier(priceId: string): CoachingSubscriptionTier | null {
+  if (priceId === process.env.STRIPE_PRICE_PERFORMANCE_PRO) {
+    return "PERFORMANCE_PRO";
+  }
+  if (priceId === process.env.STRIPE_PRICE_PERFORMANCE) {
+    return "PERFORMANCE";
+  }
+  if (priceId === process.env.STRIPE_PRICE_START) {
+    return "START";
+  }
+  return null;
+}
+
+async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
+  const customerId = subscription.customer as string;
+  const priceId = subscription.items.data[0]?.price.id;
+
+  if (!priceId) {
+    console.log("[Stripe Webhook] No price ID found in subscription");
+    return;
+  }
+
+  const tier = mapPriceToTier(priceId);
+  if (!tier) {
+    console.log(`[Stripe Webhook] Unknown price ID: ${priceId}`);
+    return;
+  }
+
+  // Find user by Stripe customer ID
+  const user = await prisma.user.findFirst({
+    where: { stripeCustomerId: customerId },
+  });
+
+  if (!user) {
+    console.log(`[Stripe Webhook] No user found for customer: ${customerId}`);
+    return;
+  }
+
+  // Create subscription quota
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const subAny = subscription as any;
+  const periodEndTimestamp = subAny.current_period_end ?? subAny.currentPeriodEnd;
+  const periodEnd = new Date(periodEndTimestamp * 1000);
+  await createQuotaForNewSubscription(user.id, subscription.id, tier, periodEnd);
+
+  // Update user subscription info
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      stripeSubscriptionId: subscription.id,
+      subscriptionTier: tier === "PERFORMANCE_PRO" ? "PRO" : "ACADEMY",
+      subscriptionSource: "STRIPE",
+      subscriptionExpiresAt: periodEnd,
+      activeCoachingCustomer: true,
+    },
+  });
+
+  console.log(`[Stripe Webhook] Subscription created for user ${user.id}, tier: ${tier}`);
+}
+
+async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
+  const customerId = subscription.customer as string;
+  const priceId = subscription.items.data[0]?.price.id;
+
+  if (!priceId) return;
+
+  const tier = mapPriceToTier(priceId);
+  if (!tier) return;
+
+  const user = await prisma.user.findFirst({
+    where: { stripeCustomerId: customerId },
+  });
+
+  if (!user) return;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const subAny = subscription as any;
+  const periodEndTimestamp = subAny.current_period_end ?? subAny.currentPeriodEnd;
+  const periodEnd = new Date(periodEndTimestamp * 1000);
+
+  // Update user and quota
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      subscriptionTier: tier === "PERFORMANCE_PRO" ? "PRO" : "ACADEMY",
+      subscriptionExpiresAt: periodEnd,
+    },
+  });
+
+  console.log(`[Stripe Webhook] Subscription updated for user ${user.id}, tier: ${tier}`);
+}
+
+async function handleSubscriptionCanceled(subscription: Stripe.Subscription) {
+  const customerId = subscription.customer as string;
+
+  const user = await prisma.user.findFirst({
+    where: { stripeCustomerId: customerId },
+  });
+
+  if (!user) return;
+
+  // Remove quota and downgrade user
+  await cancelSubscriptionQuota(user.id);
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      stripeSubscriptionId: null,
+      subscriptionTier: "VISITOR",
+      subscriptionSource: null,
+      subscriptionExpiresAt: null,
+      activeCoachingCustomer: false,
+    },
+  });
+
+  console.log(`[Stripe Webhook] Subscription canceled for user ${user.id}`);
+}
+
+async function handleInvoicePaid(invoice: Stripe.Invoice) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const invoiceAny = invoice as any;
+  const subscriptionId = (invoiceAny.subscription ?? invoiceAny.subscriptionId) as string | null;
+  if (!subscriptionId) return;
+
+  // Fetch the subscription to get the customer and price
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+  const customerId = subscription.customer as string;
+  const priceId = subscription.items.data[0]?.price.id;
+
+  if (!priceId) return;
+
+  const tier = mapPriceToTier(priceId);
+  if (!tier) return;
+
+  const user = await prisma.user.findFirst({
+    where: { stripeCustomerId: customerId },
+  });
+
+  if (!user) return;
+
+  // Reset quota for new billing period
+  await resetQuotaForNewPeriod(user.id, subscriptionId, tier);
+
+  console.log(`[Stripe Webhook] Quota reset for user ${user.id} (invoice paid)`);
 }

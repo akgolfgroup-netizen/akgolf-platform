@@ -54,7 +54,7 @@ export function PlanVsActualChart({ data }: PlanVsActualChartProps) {
         />
         <Tooltip
           contentStyle={{
-            background: "#0F2950",
+            background: "#0A1929",
             border: "1px solid rgba(15,41,80,0.9)",
             borderRadius: "8px",
             fontSize: "12px",

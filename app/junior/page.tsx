@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
-import { SubPageHero } from "@/components/website/SubPageHero";
 import { SectionLabel } from "@/components/website/SectionLabel";
 import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/website/RevealOnScroll";
 import { FeaturedTestimonial } from "@/components/website/FeaturedTestimonial";
@@ -14,7 +13,24 @@ import { ImagePlaceholder } from "@/components/website/ImagePlaceholder";
 import { RelatedPages } from "@/components/website/RelatedPages";
 import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
-import { JUNIOR_PROGRAMS, JUNIOR_FAQ, JUNIOR_INTAKE, TEAM, TESTIMONIALS } from "@/lib/website-constants";
+import { motion } from "framer-motion";
+import { EASE_ENTRANCE } from "@/lib/design-tokens";
+import {
+  JUNIOR_FAQ,
+  JUNIOR_INTAKE,
+  TEAM,
+  TESTIMONIALS,
+  JUNIOR_AGE_GROUPS,
+  JUNIOR_SEASON_PROGRAM,
+  JUNIOR_PACKAGES,
+  JUNIOR_PARENT_INFO,
+  JUNIOR_HERO,
+  JUNIOR_PHILOSOPHY,
+  JUNIOR_TRAINING_WEEK,
+  JUNIOR_CTA,
+  JUNIOR_CAMP,
+  JUNIOR_ACADEMY_INFO,
+} from "@/lib/website-constants";
 
 const juniorCoach = TEAM.find(m => m.name === "Anders Kristiansen");
 
@@ -38,36 +54,350 @@ export default function JuniorPage() {
           }}
         />
         <PageTransition>
-        {/* ─── Hero ─── */}
-        <SubPageHero
-          eyebrow="Junior Academy"
-          heading="Neste generasjon golfere starter her."
-          description="Strukturert talentutvikling for unge spillere med ambisjon. Fra grunnleggende ferdigheter til nasjonal og internasjonal konkurranse — vi bygger hele spilleren."
-          accent="junior"
-        />
+        {/* ─── Hero Section with Badge ─── */}
+        <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+          {/* Gradient mesh */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full bg-junior opacity-[0.05] blur-[80px]" />
+            <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-gold opacity-[0.02] blur-[60px]" />
+            <div className="absolute top-0 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-junior/15 to-transparent" />
+          </div>
 
-        {/* ─── Philosophy ─── */}
-        <section className="w-section bg-surface-warm">
+          <div className="w-container relative">
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [...EASE_ENTRANCE] }}
+              className="mb-8"
+            >
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-ink-10 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-junior animate-pulse" />
+                <span className="text-xs font-medium text-ink-70 tracking-wide">
+                  Junior Academy — Neste generasjon golfere
+                </span>
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [...EASE_ENTRANCE] }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-2 h-2 rounded-full bg-junior" />
+                <SectionLabel>{JUNIOR_HERO.eyebrow}</SectionLabel>
+              </div>
+            </motion.div>
+
+            <motion.h1
+              className="w-heading-xl max-w-3xl mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.1, ease: [...EASE_ENTRANCE] }}
+            >
+              {JUNIOR_HERO.heading}
+            </motion.h1>
+
+            <motion.p
+              className="text-lg text-ink-50 max-w-2xl leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [...EASE_ENTRANCE] }}
+            >
+              {JUNIOR_HERO.description}
+            </motion.p>
+
+            {/* Horizontal accent line */}
+            <motion.div
+              className="mt-12 w-16 h-px bg-gradient-to-r from-junior/50 to-transparent"
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [...EASE_ENTRANCE] }}
+              style={{ transformOrigin: "left" }}
+            />
+          </div>
+        </section>
+
+        {/* ─── Age Groups & Levels ─── */}
+        <section className="w-section-lg bg-surface-warm">
+          <div className="w-container">
+            <RevealOnScroll>
+              <SectionLabel>Aldersgrupper og nivåer</SectionLabel>
+              <h2 className="w-heading-lg mt-4 mb-4">Riktig trening til riktig tid.</h2>
+              <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
+                Vår progresjon er designet for å bygge ferdigheter systematisk, med økende intensitet og spesialisering etter hvert som junioren modnes.
+              </p>
+            </RevealOnScroll>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {JUNIOR_AGE_GROUPS.map((program) => (
+                <StaggerItem key={program.ageGroup}>
+                  <div className="w-card h-full flex flex-col">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-junior/10 text-junior text-xs font-mono font-medium">
+                        {program.ageGroup}
+                      </span>
+                      <span className="text-xs text-ink-40">{program.sessionsPerWeek}×/uke</span>
+                    </div>
+                    <h3 className="w-heading-sm mb-2">{program.title}</h3>
+                    <p className="text-sm text-ink-50 leading-relaxed mb-4 flex-1">{program.description}</p>
+                    <ul className="space-y-2 mb-4">
+                      {program.features.map((feature) => (
+                        <li key={feature} className="flex items-center gap-2 text-xs text-ink-60">
+                          <span className="w-1 h-1 rounded-full bg-junior shrink-0" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="pt-4 border-t border-ink-10">
+                      <p className="font-mono text-lg font-bold text-junior">
+                        {program.price}
+                        <span className="text-sm font-normal text-ink-40 ml-1">kr/mnd</span>
+                      </p>
+                    </div>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* ─── Junior Academy Info (Abonnement) ─── */}
+        <section className="w-section-lg bg-ink-100 w-section-dark">
+          <div className="w-container">
+            <RevealOnScroll>
+              <div className="text-center mb-12">
+                <SectionLabel>AK Golf Junior Academy</SectionLabel>
+                <h2 className="w-heading-lg text-white mt-4 mb-4">For de som satser.</h2>
+                <p className="text-ink-40 max-w-2xl mx-auto leading-relaxed">
+                  {JUNIOR_ACADEMY_INFO.intro}
+                </p>
+              </div>
+            </RevealOnScroll>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+              {/* Benefits */}
+              <RevealOnScroll>
+                <div className="w-card-dark h-full">
+                  <h3 className="text-white font-semibold text-lg mb-6">Hva du får</h3>
+                  <ul className="space-y-4">
+                    {JUNIOR_ACADEMY_INFO.benefits.map((benefit) => (
+                      <li key={benefit} className="flex items-start gap-3">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5 text-junior">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        <span className="text-ink-30 text-sm leading-relaxed">{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </RevealOnScroll>
+
+              {/* Pathway */}
+              <RevealOnScroll delay={0.2}>
+                <div className="w-card-dark h-full">
+                  <h3 className="text-white font-semibold text-lg mb-6">{JUNIOR_ACADEMY_INFO.pathway.heading}</h3>
+                  <div className="space-y-4">
+                    {JUNIOR_ACADEMY_INFO.pathway.steps.map((step, index) => (
+                      <div key={step.name} className="flex items-center gap-4">
+                        <span className="w-8 h-8 rounded-full bg-junior/20 flex items-center justify-center text-junior text-xs font-mono font-bold">
+                          {index + 1}
+                        </span>
+                        <div className="flex-1">
+                          <p className="text-white text-sm font-medium">{step.name}</p>
+                          <p className="text-ink-50 text-xs">{step.note}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </RevealOnScroll>
+            </div>
+
+            {/* Academy Packages */}
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              {JUNIOR_PACKAGES.map((pkg) => (
+                <StaggerItem key={pkg.name}>
+                  <div
+                    className={`rounded-2xl p-8 flex flex-col h-full transition-all duration-400 ${
+                      pkg.highlighted
+                        ? "bg-white border-2 border-junior/30 shadow-xl relative"
+                        : "bg-ink-80 border border-ink-60 hover:border-ink-50"
+                    }`}
+                  >
+                    {pkg.highlighted && (
+                      <span className="absolute -top-3 left-8 bg-junior text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full">
+                        Anbefalt
+                      </span>
+                    )}
+                    <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-ink-40 mb-2">{pkg.tagline}</span>
+                    <h3 className={`font-display text-xl font-semibold mb-1 ${pkg.highlighted ? "text-ink-90" : "text-white"}`}>
+                      {pkg.name}
+                    </h3>
+                    <p className="font-mono text-2xl font-bold text-junior mb-1">
+                      {pkg.price}
+                      <span className={`text-sm font-normal ml-1 ${pkg.highlighted ? "text-ink-40" : "text-ink-50"}`}>{pkg.period}</span>
+                    </p>
+                    <p className={`text-sm leading-relaxed mb-6 ${pkg.highlighted ? "text-ink-50" : "text-ink-40"}`}>
+                      {pkg.description}
+                    </p>
+                    <ul className="space-y-3 mb-8 flex-1">
+                      {pkg.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2.5 text-sm">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5 text-junior">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                          <span className={pkg.highlighted ? "text-ink-60" : "text-ink-40"}>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href="#apply" className={`w-btn text-center ${pkg.highlighted ? "bg-junior text-white hover:brightness-110" : "bg-ink-70 text-white hover:bg-ink-60"}`}>
+                      Avtal et møte
+                    </Link>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* ─── Junior Camp ─── */}
+        <section className="w-section-lg bg-surface-cream">
           <div className="w-container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <RevealOnScroll>
                 <div>
-                  <SectionLabel>Vår filosofi</SectionLabel>
+                  <SectionLabel>Junior Camp</SectionLabel>
+                  <h2 className="w-heading-lg mt-4 mb-2">{JUNIOR_CAMP.name}</h2>
+                  <p className="font-mono text-2xl font-bold text-junior mb-6">
+                    {JUNIOR_CAMP.price}
+                    <span className="text-sm font-normal text-ink-40 ml-1">{JUNIOR_CAMP.period}</span>
+                  </p>
+                  <p className="text-ink-50 leading-relaxed mb-4">
+                    {JUNIOR_CAMP.description}
+                  </p>
+                  <p className="text-ink-50 leading-relaxed mb-8">
+                    {JUNIOR_CAMP.details}
+                  </p>
+
+                  <div className="flex flex-wrap gap-3 mb-8">
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-junior/10 text-junior text-xs font-medium">
+                      5 dager
+                    </span>
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-junior/10 text-junior text-xs font-medium">
+                      3 timer/dag
+                    </span>
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-junior/10 text-junior text-xs font-medium">
+                      Maks 12 deltakere
+                    </span>
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-junior/10 text-junior text-xs font-medium">
+                      3 camper/sesong
+                    </span>
+                  </div>
+
+                  <Link href="#apply" className="w-btn w-btn-primary">
+                    Meld interesse for camp
+                  </Link>
+                </div>
+              </RevealOnScroll>
+
+              <RevealOnScroll delay={0.2}>
+                <ImagePlaceholder aspect="4/3" src="/images/academy/AK-Golf-Academy-22.jpg" label="Junior Camp" />
+              </RevealOnScroll>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Season Program / Arshjul ─── */}
+        <section className="w-section-lg">
+          <div className="w-container">
+            <RevealOnScroll>
+              <SectionLabel>{JUNIOR_SEASON_PROGRAM.heading}</SectionLabel>
+              <h2 className="w-heading-lg mt-4 mb-4">Trening hele året.</h2>
+              <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
+                {JUNIOR_SEASON_PROGRAM.description}
+              </p>
+            </RevealOnScroll>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {JUNIOR_SEASON_PROGRAM.seasons.map((season) => (
+                <StaggerItem key={season.name}>
+                  <div className="w-card h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="text-2xl">
+                        {season.name === "Vår" && "🌱"}
+                        {season.name === "Sommer" && "☀️"}
+                        {season.name === "Høst" && "🍂"}
+                        {season.name === "Vinter" && "❄️"}
+                      </span>
+                      <div>
+                        <h4 className="font-display font-semibold text-ink-90">{season.name}</h4>
+                        <p className="text-xs text-ink-40">{season.months}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm font-medium text-junior mb-3">{season.focus}</p>
+                    <ul className="space-y-2">
+                      {season.activities.map((activity) => (
+                        <li key={activity} className="flex items-center gap-2 text-xs text-ink-60">
+                          <span className="w-1 h-1 rounded-full bg-junior shrink-0" />
+                          {activity}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* ─── Training Week ─── */}
+        <section className="w-section bg-surface-warm">
+          <div className="w-container">
+            <RevealOnScroll>
+              <SectionLabel>Treningsstruktur</SectionLabel>
+              <h2 className="w-heading-lg mt-4 mb-12">En uke i Junior Academy.</h2>
+            </RevealOnScroll>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {JUNIOR_TRAINING_WEEK.map((item) => (
+                <StaggerItem key={item.day}>
+                  <div className="w-card h-full">
+                    <span className="w-meta text-junior">{item.day}</span>
+                    <h4 className="font-display text-base font-semibold text-ink-90 mt-2 mb-2">{item.focus}</h4>
+                    <p className="text-sm text-ink-50 leading-relaxed">{item.description}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* ─── Philosophy ─── */}
+        <section className="w-section bg-white">
+          <div className="w-container">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <RevealOnScroll>
+                <div>
+                  <SectionLabel>{JUNIOR_PHILOSOPHY.label}</SectionLabel>
                   <h2 className="w-heading-lg mt-4 mb-6">
-                    Mer enn golf.<br />
-                    <span className="text-ink-50">Mestring for livet.</span>
+                    {JUNIOR_PHILOSOPHY.heading}<br />
+                    <span className="text-ink-50">{JUNIOR_PHILOSOPHY.subheading}</span>
                   </h2>
                   <p className="text-ink-50 leading-relaxed mb-4">
-                    Junior Academy handler om mer enn å lage bedre golfere. Vi utvikler unge mennesker som lærer disiplin, målsetting, samarbeid og evnen til å håndtere både seirer og motgang.
+                    {JUNIOR_PHILOSOPHY.paragraphs[0]}
                   </p>
                   <p className="text-ink-50 leading-relaxed">
-                    Vår aldersinndelte treningsstruktur sikrer at hver junior får utfordringer og støtte tilpasset sitt ståsted i utviklingen. Fra den første konkurranseopplevelsen til forberedelse for elite- og college-golf — med en naturlig overgang til vårt <Link href="/academy" className="text-junior underline underline-offset-2 hover:text-junior/80 transition-colors">Academy-program</Link> for voksne.
+                    {JUNIOR_PHILOSOPHY.paragraphs[1].split("Academy-program")[0]}
+                    <Link href="/academy" className="text-junior underline underline-offset-2 hover:text-junior/80 transition-colors">Academy-program</Link>
+                    {JUNIOR_PHILOSOPHY.paragraphs[1].split("Academy-program")[1]}
                   </p>
                 </div>
               </RevealOnScroll>
 
               <RevealOnScroll delay={0.2}>
-                <ImagePlaceholder aspect="4/3" src="/images/academy/AK-Golf-Academy-22.jpg" label="Junior trening" />
+                <ImagePlaceholder aspect="4/3" src="/images/academy/AK-Golf-Academy-20.jpg" label="Junior trening" />
               </RevealOnScroll>
             </div>
           </div>
@@ -75,7 +405,7 @@ export default function JuniorPage() {
 
         {/* ─── Junior Coach ─── */}
         {juniorCoach && (
-          <section className="w-section-lg">
+          <section className="w-section-lg bg-surface-warm">
             <div className="w-container">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <RevealOnScroll>
@@ -92,19 +422,12 @@ export default function JuniorPage() {
                       {juniorCoach.role} · {juniorCoach.division}
                     </p>
                     <p className="text-ink-50 leading-relaxed mb-6">{juniorCoach.bio}</p>
-                    <div className="flex items-center gap-4 text-sm">
+                    <div className="text-sm">
                       <Link
                         href={`mailto:${juniorCoach.contact.email}`}
                         className="text-ink-50 hover:text-ink-80 transition-colors"
                       >
                         {juniorCoach.contact.email}
-                      </Link>
-                      <span className="text-ink-20">|</span>
-                      <Link
-                        href={`tel:${juniorCoach.contact.phone.replace(/\s/g, "")}`}
-                        className="text-ink-50 hover:text-ink-80 transition-colors"
-                      >
-                        {juniorCoach.contact.phone}
                       </Link>
                     </div>
                   </div>
@@ -114,33 +437,27 @@ export default function JuniorPage() {
           </section>
         )}
 
-        {/* ─── Age Programs ─── */}
-        <section className="w-section-lg bg-surface-warm">
+        {/* ─── For Parents ─── */}
+        <section className="w-section-lg">
           <div className="w-container">
             <RevealOnScroll>
-              <SectionLabel>Aldersprogrammer</SectionLabel>
-              <h2 className="w-heading-lg mt-4 mb-4">Riktig trening til riktig tid.</h2>
+              <SectionLabel>For foreldre</SectionLabel>
+              <h2 className="w-heading-lg mt-4 mb-4">{JUNIOR_PARENT_INFO.heading}</h2>
               <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
-                Vår progresjon er designet for å bygge ferdigheter systematisk, med økende intensitet og spesialisering etter hvert som junioren modnes.
+                {JUNIOR_PARENT_INFO.description}
               </p>
             </RevealOnScroll>
 
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {JUNIOR_PROGRAMS.map((program) => (
-                <StaggerItem key={program.ageGroup}>
-                  <div className="w-card h-full flex flex-col">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-junior/10 text-junior text-xs font-mono font-medium">
-                        {program.ageGroup}
-                      </span>
-                    </div>
-                    <h3 className="w-heading-sm mb-2">{program.title}</h3>
-                    <p className="text-sm text-ink-50 leading-relaxed mb-6 flex-1">{program.description}</p>
-                    <ul className="space-y-2">
-                      {program.features.map((feature) => (
-                        <li key={feature} className="flex items-center gap-2 text-xs text-ink-60">
-                          <span className="w-1 h-1 rounded-full bg-junior shrink-0" />
-                          {feature}
+              {JUNIOR_PARENT_INFO.expectations.map((section) => (
+                <StaggerItem key={section.title}>
+                  <div className="w-card h-full">
+                    <h4 className="font-display font-semibold text-ink-90 mb-4">{section.title}</h4>
+                    <ul className="space-y-3">
+                      {section.items.map((item) => (
+                        <li key={item} className="flex gap-3">
+                          <span className="w-1.5 h-1.5 rounded-full bg-junior shrink-0 mt-2" />
+                          <p className="text-sm text-ink-60 leading-relaxed">{item}</p>
                         </li>
                       ))}
                     </ul>
@@ -194,75 +511,12 @@ export default function JuniorPage() {
           </div>
         </section>
 
-        {/* ─── Training Structure ─── */}
-        <section className="w-section bg-surface-warm">
-          <div className="w-container">
-            <RevealOnScroll>
-              <SectionLabel>Treningsstruktur</SectionLabel>
-              <h2 className="w-heading-lg mt-4 mb-12">En uke i Junior Academy.</h2>
-            </RevealOnScroll>
-
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { day: "Mandag", focus: "Teknikk & sving", desc: "Individuell og gruppebasert teknikktrening med videoanalyse." },
-                { day: "Onsdag", focus: "Kort spill", desc: "Putting, chipping og bunkerslag — ferdighetene som redder score." },
-                { day: "Torsdag", focus: "Banespill", desc: "Kursmanagement, strategisk spill og simulerte turneringssituasjoner." },
-                { day: "Lørdag", focus: "Konkurranse", desc: "Interne og eksterne turneringer, eller intensiv treningsøkt." },
-              ].map((item) => (
-                <StaggerItem key={item.day}>
-                  <div className="w-card h-full">
-                    <span className="w-meta text-junior">{item.day}</span>
-                    <h4 className="font-display text-base font-semibold text-ink-90 mt-2 mb-2">{item.focus}</h4>
-                    <p className="text-sm text-ink-50 leading-relaxed">{item.desc}</p>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
-        {/* ─── For Parents ─── */}
-        <section className="w-section-lg">
-          <div className="w-container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <RevealOnScroll>
-                <ImagePlaceholder aspect="4/3" src="/images/academy/AK-Golf-Academy-30.jpg" label="Foreldresamarbeid" />
-              </RevealOnScroll>
-
-              <RevealOnScroll delay={0.2}>
-                <div>
-                  <SectionLabel>For foreldre</SectionLabel>
-                  <h2 className="w-heading-lg mt-4 mb-6">Vi er et team — dere inkludert.</h2>
-                  <p className="text-ink-50 leading-relaxed mb-6">
-                    Vi tror på tett samarbeid med foreldrene. Dere er en viktig del av utviklingsreisen, og vi holder dere informert og involvert gjennom hele prosessen.
-                  </p>
-                  <ul className="space-y-4">
-                    {[
-                      { title: "Kvartalsvise foreldremøter", desc: "Gjennomgang av fremgang, mål og planer fremover." },
-                      { title: "Månedlige rapporter", desc: "Detaljerte fremgangsrapporter med data og trenervurderinger." },
-                      { title: "Åpen kommunikasjon", desc: "Direkte kontakt med trenerteamet når dere trenger det." },
-                    ].map((item) => (
-                      <li key={item.title} className="flex gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-junior shrink-0 mt-2" />
-                        <div>
-                          <p className="text-sm font-medium text-ink-80">{item.title}</p>
-                          <p className="text-xs text-ink-50">{item.desc}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </RevealOnScroll>
-            </div>
-          </div>
-        </section>
-
         {/* ─── Testimonials ─── */}
-        <section className="bg-ink-100 w-section w-section-dark">
+        <section className="bg-surface-warm w-section">
           <div className="w-container">
             <RevealOnScroll>
               <SectionLabel>Fra juniorforeldre</SectionLabel>
-              <h2 className="w-heading-lg text-white mt-4 mb-12">Familier som stoler på oss.</h2>
+              <h2 className="w-heading-lg mt-4 mb-12">Familier som stoler på oss.</h2>
             </RevealOnScroll>
 
             <FeaturedTestimonial
@@ -274,7 +528,7 @@ export default function JuniorPage() {
         </section>
 
         {/* ─── FAQ ─── */}
-        <section className="w-section-lg bg-surface-warm">
+        <section className="w-section-lg bg-white">
           <div className="w-container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               <RevealOnScroll>
@@ -295,10 +549,10 @@ export default function JuniorPage() {
 
         {/* ─── CTA ─── */}
         <CTASection
-          eyebrow="Neste generasjon starter nå"
-          heading="Avtal et møte om Junior Academy."
-          description="Gi din junior en strukturert vei mot sine golfmål. Vi tar kontakt for en uforpliktende samtale."
-          ctaLabel="Avtal et møte"
+          eyebrow={JUNIOR_CTA.eyebrow}
+          heading={JUNIOR_CTA.heading}
+          description={JUNIOR_CTA.description}
+          ctaLabel={JUNIOR_CTA.primaryCta}
           ctaHref="#apply"
         />
 
@@ -308,9 +562,9 @@ export default function JuniorPage() {
             <RevealOnScroll>
               <div className="text-center mb-12">
                 <SectionLabel>Ta kontakt</SectionLabel>
-                <h2 className="w-heading-lg mt-4 mb-4">Start med et uforpliktende møte.</h2>
+                <h2 className="w-heading-lg mt-4 mb-4">Start med et uforpliktende mote.</h2>
                 <p className="text-ink-50 max-w-lg mx-auto">
-                  Fyll ut skjemaet under, så tar vi kontakt innen 48 timer for å avtale et møte.
+                  Fyll ut skjemaet under, så tar vi kontakt innen 48 timer for å avtale et mote.
                 </p>
               </div>
             </RevealOnScroll>

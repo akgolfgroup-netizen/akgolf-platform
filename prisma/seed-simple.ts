@@ -6,10 +6,9 @@
 // Deretter kjør: npx prisma db seed
 // =============================================================================
 
-import { PrismaClient } from "@prisma/client";
+import "dotenv/config";
+import { prisma } from "../lib/portal/prisma";
 import { COACHES, SERVICES, LOCATIONS, AVAILABILITY, PACKAGES } from "./seed-config";
-
-const prisma = new PrismaClient();
 
 const dayMap: Record<string, number> = {
   mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6, sun: 0,
@@ -31,7 +30,7 @@ async function main() {
           email: coach.email,
           name: coach.name,
           role: key === "anders" ? "ADMIN" : "INSTRUCTOR",
-          subscriptionTier: "FREE",
+          subscriptionTier: "VISITOR",
         },
       });
       console.log(`✅ Bruker opprettet: ${coach.name}`);
@@ -107,14 +106,14 @@ async function main() {
           category: "INDIVIDUAL",
         },
       });
-      console.log(`✅ Tjeneste opprettet: ${svc.name} (${svc.price / 100} kr)`);
+      console.log(`✅ Tjeneste opprettet: ${svc.name} (${svc.price} kr)`);
     } else {
       // Oppdater pris hvis endret
       await prisma.serviceType.update({
         where: { id: serviceType.id },
         data: { price: svc.price },
       });
-      console.log(`🔄 Pris oppdatert: ${svc.name} (${svc.price / 100} kr)`);
+      console.log(`🔄 Pris oppdatert: ${svc.name} (${svc.price} kr)`);
     }
 
     serviceMap[key] = serviceType.id;
@@ -137,17 +136,22 @@ async function main() {
       where: { instructorId },
     });
 
-    for (const [dayKey, time] of Object.entries(schedule)) {
-      if (!time) continue; // Stengt denne dagen
+    for (const [dayKey, timeBlocks] of Object.entries(schedule)) {
+      if (!timeBlocks) continue; // Stengt denne dagen
 
-      await prisma.instructorAvailability.create({
-        data: {
-          instructorId,
-          dayOfWeek: dayMap[dayKey],
-          startTime: time.start,
-          endTime: time.end,
-        },
-      });
+      // Støtt både enkelt-objekt (gammel) og array (ny) struktur
+      const blocks = Array.isArray(timeBlocks) ? timeBlocks : [timeBlocks];
+
+      for (const time of blocks) {
+        await prisma.instructorAvailability.create({
+          data: {
+            instructorId,
+            dayOfWeek: dayMap[dayKey],
+            startTime: time.start,
+            endTime: time.end,
+          },
+        });
+      }
     }
 
     console.log(`✅ Åpningstider satt for: ${COACHES[coachKey as keyof typeof COACHES].name}`);
@@ -159,7 +163,7 @@ async function main() {
   console.log("\n📊 Oppsummering:");
   console.log(`   Trenere: ${Object.keys(COACHES).length}`);
   console.log(`   Lokasjoner: ${Object.keys(LOCATIONS).length}`);
-  console.log(`   Aktive tjenester: ${Object.values(SERVICES).filter((s: any) => s.active).length}`);
+  console.log(`   Aktive tjenester: ${Object.values(SERVICES).filter((s) => s.active).length}`);
   console.log(`   Pakker definert: ${Object.keys(PACKAGES).length}`);
 
   console.log("\n✅ Seeding fullført!");

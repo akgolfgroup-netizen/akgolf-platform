@@ -34,7 +34,7 @@ async function main() {
       name: "Thomas Berg",
       email: "coach@akgolf.no",
       role: "INSTRUCTOR",
-      subscriptionTier: "FREE",
+      subscriptionTier: "VISITOR",
     },
   });
 
@@ -73,7 +73,7 @@ async function main() {
       duration: 60,
       price: 99500, // 995 kr
       maxStudents: 1,
-      color: "#B8975C",
+      color: "#B07D4F",
       sortOrder: 1,
     },
     {

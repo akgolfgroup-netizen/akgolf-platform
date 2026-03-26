@@ -21,9 +21,9 @@ interface Goal {
 
 const CATEGORY_CONFIG: Record<GoalCategory, { label: string; color: string }> = {
   SCORE: { label: "Score", color: "var(--color-gold)" },
-  PHYSICAL: { label: "Fysisk", color: "#22C55E" },
+  PHYSICAL: { label: "Fysisk", color: "#10B981" },
   MENTAL: { label: "Mental", color: "#8B5CF6" },
-  TOURNAMENT: { label: "Turnering", color: "#3B82F6" },
+  TOURNAMENT: { label: "Turnering", color: "#38BDF8" },
   PROCESS: { label: "Prosess", color: "#F59E0B" },
 };
 
@@ -157,7 +157,7 @@ function GoalCard({
         onClick={onToggle}
         className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-md border flex items-center justify-center transition-colors"
         style={{
-          borderColor: isCompleted ? "#22C55E" : "rgba(184,151,92,0.3)",
+          borderColor: isCompleted ? "#10B981" : "rgba(176,125,79,0.3)",
           background: isCompleted ? "rgba(34,197,94,0.15)" : "transparent",
         }}
       >

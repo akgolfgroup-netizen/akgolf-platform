@@ -12,8 +12,10 @@ export default function PortalLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Providers>
-      {children}
-    </Providers>
+    <div className="min-h-screen bg-gradient-to-b from-[var(--color-deep-ink)] to-[#0D2137]">
+      <Providers>
+        {children}
+      </Providers>
+    </div>
   );
 }

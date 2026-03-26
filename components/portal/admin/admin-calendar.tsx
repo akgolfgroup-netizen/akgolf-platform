@@ -91,46 +91,46 @@ export function AdminCalendar({ instructors }: Props) {
         <div className="flex items-center gap-1">
           <button
             onClick={navigateBack}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-[rgba(15,41,80,0.3)] transition-colors text-[var(--color-snow)]"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={goToToday}
-            className="px-3 py-1.5 text-sm font-medium rounded-lg hover:bg-gray-100 transition-colors"
+            className="px-3 py-1.5 text-sm font-medium rounded-lg hover:bg-[rgba(15,41,80,0.3)] transition-colors text-[var(--color-snow)]"
           >
             I dag
           </button>
           <button
             onClick={navigateForward}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-[rgba(15,41,80,0.3)] transition-colors text-[var(--color-snow)]"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
-        <span className="text-sm font-semibold text-[#0F2950] capitalize min-w-[200px]">
+        <span className="text-sm font-semibold text-[var(--color-snow)] capitalize min-w-[200px]">
           {dateLabel}
         </span>
 
         {/* View toggle */}
-        <div className="flex bg-gray-100 rounded-lg p-0.5 ml-auto">
+        <div className="flex bg-[rgba(15,41,80,0.3)] rounded-xl p-0.5 ml-auto">
           <button
             onClick={() => switchView("day")}
-            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
               viewMode === "day"
-                ? "bg-white text-[#0F2950] shadow-sm"
-                : "text-gray-500 hover:text-gray-700"
+                ? "bg-[var(--color-gold)] text-white"
+                : "text-[var(--color-snow)]/50 hover:text-[var(--color-snow)]"
             }`}
           >
             Dag
           </button>
           <button
             onClick={() => switchView("week")}
-            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
               viewMode === "week"
-                ? "bg-white text-[#0F2950] shadow-sm"
-                : "text-gray-500 hover:text-gray-700"
+                ? "bg-[var(--color-gold)] text-white"
+                : "text-[var(--color-snow)]/50 hover:text-[var(--color-snow)]"
             }`}
           >
             Uke
@@ -141,7 +141,7 @@ export function AdminCalendar({ instructors }: Props) {
         <select
           value={selectedInstructorId}
           onChange={(e) => filterByInstructor(e.target.value)}
-          className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white"
+          className="text-sm rounded-xl px-3 py-1.5 text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)]"
         >
           <option value="">Alle instruktører</option>
           {instructors.map((inst) => (
@@ -154,7 +154,7 @@ export function AdminCalendar({ instructors }: Props) {
 
       {/* Calendar content */}
       {loading ? (
-        <div className="flex items-center justify-center py-20 text-gray-400">
+        <div className="flex items-center justify-center py-20 text-[var(--color-snow)]/50">
           <CalendarIcon className="w-5 h-5 animate-pulse mr-2" />
           Laster...
         </div>

@@ -10,8 +10,8 @@ import { BookingStatus } from "@prisma/client";
 const THEME = {
   bg: "#FAFBFC",
   bgElevated: "#FFFFFF",
-  gold: "#B8975C",
-  navy: "#0F2950",
+  gold: "#B07D4F",
+  navy: "#0A1929",
   text: "#02060D",
   textMuted: "#64748B",
   border: "#EBE5DA",

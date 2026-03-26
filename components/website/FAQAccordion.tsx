@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-function FAQItem({ q, a }: { q: string; a: string }) {
+function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
   const [open, setOpen] = useState(false);
+  const answerId = `faq-answer-${index}`;
 
   return (
     <div
@@ -16,6 +17,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between w-full py-5 text-left group"
         aria-expanded={open}
+        aria-controls={answerId}
       >
         <span className={`font-display text-base font-semibold pr-8 transition-colors ${
           open ? "text-ink-90" : "text-ink-80 group-hover:text-ink-90"
@@ -40,6 +42,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
+            id={answerId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -63,8 +66,8 @@ export function FAQAccordion({
 }) {
   return (
     <div>
-      {items.map((item) => (
-        <FAQItem key={item.q} q={item.q} a={item.a} />
+      {items.map((item, index) => (
+        <FAQItem key={item.q} q={item.q} a={item.a} index={index} />
       ))}
     </div>
   );

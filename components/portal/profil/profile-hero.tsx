@@ -19,8 +19,8 @@ const roleLabelMap: Record<string, string> = {
 
 const tierConfig: Record<string, { label: string; color: string; bg: string; border: string }> = {
   FREE: { label: "Free", color: "#8a9bb0", bg: "rgba(138,155,176,0.1)", border: "rgba(138,155,176,0.2)" },
-  PRO: { label: "Pro", color: "#3B82F6", bg: "rgba(59,130,246,0.1)", border: "rgba(59,130,246,0.25)" },
-  ELITE: { label: "Elite", color: "#B8975C", bg: "rgba(184,151,92,0.12)", border: "rgba(184,151,92,0.3)" },
+  PRO: { label: "Pro", color: "#38BDF8", bg: "rgba(56,189,248,0.1)", border: "rgba(56,189,248,0.25)" },
+  ELITE: { label: "Elite", color: "#B07D4F", bg: "rgba(176,125,79,0.12)", border: "rgba(176,125,79,0.3)" },
 };
 
 export function ProfileHero({ name, image, role, subscriptionTier, currentHandicap }: ProfileHeroProps) {
@@ -43,7 +43,7 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
       {/* Subtle gold accent line top */}
       <div
         className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(184,151,92,0.5), transparent)" }}
+        style={{ background: "linear-gradient(90deg, transparent, rgba(176,125,79,0.5), transparent)" }}
       />
 
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
@@ -55,7 +55,7 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
         >
           <div
             className="w-24 h-24 rounded-2xl overflow-hidden flex items-center justify-center text-2xl font-black"
-            style={{ background: "linear-gradient(135deg, #c9a96e 0%, #B8975C 100%)", color: "#0A1929" }}
+            style={{ background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)", color: "#0A1929" }}
           >
             {image ? (
               <img src={image} alt={name ?? ""} className="w-full h-full object-cover" />
@@ -66,7 +66,7 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
           {/* Ring overlay on hover via parent */}
           <div
             className="absolute inset-0 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-            style={{ boxShadow: "0 0 0 2px rgba(184,151,92,0.6)" }}
+            style={{ boxShadow: "0 0 0 2px rgba(176,125,79,0.6)" }}
           />
         </motion.div>
 
@@ -76,7 +76,7 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
             {/* Role badge */}
             <span
               className="text-xs font-medium px-2.5 py-0.5 rounded-full"
-              style={{ background: "rgba(184,151,92,0.1)", color: "var(--color-gold)", border: "1px solid rgba(184,151,92,0.2)" }}
+              style={{ background: "rgba(176,125,79,0.1)", color: "var(--color-gold)", border: "1px solid rgba(176,125,79,0.2)" }}
             >
               {roleLabelMap[role] ?? role}
             </span>
@@ -102,8 +102,8 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
             transition={{ delay: 0.15, duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             className="flex-shrink-0 flex flex-col items-center justify-center rounded-2xl px-6 py-4"
             style={{
-              background: "linear-gradient(135deg, rgba(184,151,92,0.15) 0%, rgba(184,151,92,0.08) 100%)",
-              border: "1px solid rgba(184,151,92,0.35)",
+              background: "linear-gradient(135deg, rgba(176,125,79,0.15) 0%, rgba(176,125,79,0.08) 100%)",
+              border: "1px solid rgba(176,125,79,0.35)",
               minWidth: "100px",
             }}
           >

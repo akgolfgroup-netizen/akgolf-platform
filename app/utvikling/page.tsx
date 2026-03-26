@@ -3,18 +3,25 @@
 import Link from "next/link";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
-import { SubPageHero } from "@/components/website/SubPageHero";
 import { SectionLabel } from "@/components/website/SectionLabel";
-import { RevealOnScroll } from "@/components/website/RevealOnScroll";
-import { FeatureGrid } from "@/components/website/FeatureGrid";
+import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/website/RevealOnScroll";
 import { ApplicationForm } from "@/components/website/ApplicationForm";
 import { ImagePlaceholder } from "@/components/website/ImagePlaceholder";
 import { RelatedPages } from "@/components/website/RelatedPages";
 import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
+import { motion } from "framer-motion";
+import { EASE_ENTRANCE } from "@/lib/design-tokens";
 import {
-  SOFTWARE_FEATURES,
-  KLUBB_FEATURES,
+  UTVIKLING_HERO,
+  UTVIKLING_SERVICES,
+  UTVIKLING_SOFTWARE,
+  UTVIKLING_SOFTWARE_FEATURES,
+  UTVIKLING_KLUBB,
+  UTVIKLING_KLUBB_FEATURES,
+  UTVIKLING_PRODUCTS,
+  UTVIKLING_CASE_STUDIES,
+  UTVIKLING_CTA,
 } from "@/lib/website-constants";
 
 export default function UtviklingPage() {
@@ -37,132 +44,365 @@ export default function UtviklingPage() {
           }}
         />
         <PageTransition>
-        {/* ─── Hero ─── */}
-        <SubPageHero
-          eyebrow="Utvikling & Teknologi"
-          heading="Teknologi og rådgiving for golfens fremtid."
-          description="Digitale treningsverktøy og sportslig rådgiving for golfklubber, forbund og trenere som vil ligge i forkant."
-          accent="utvikling"
-        />
+          {/* ─── Hero with Badge ─── */}
+          <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+            {/* Gradient mesh */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full bg-utvikling opacity-[0.03] blur-[80px]" />
+              <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-software opacity-[0.02] blur-[60px]" />
+              <div className="absolute top-0 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-utvikling/10 to-transparent" />
+            </div>
 
-        {/* ─── Software Section ─── */}
-        <section id="software" className="w-section-lg bg-surface-warm">
-          <div className="w-container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
+            <div className="w-container relative">
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [...EASE_ENTRANCE] }}
+                className="mb-8"
+              >
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-utvikling/10 border border-utvikling/20">
+                  <span className="w-2 h-2 rounded-full bg-utvikling animate-pulse" />
+                  <span className="text-sm font-medium text-utvikling">Utvikling — For klubber og forbund</span>
+                </span>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease: [...EASE_ENTRANCE] }}
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-utvikling" />
+                  <SectionLabel>{UTVIKLING_HERO.eyebrow}</SectionLabel>
+                </div>
+              </motion.div>
+
+              <motion.h1
+                className="w-heading-xl max-w-3xl mb-6"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.15, ease: [...EASE_ENTRANCE] }}
+              >
+                {UTVIKLING_HERO.heading}
+              </motion.h1>
+
+              <motion.p
+                className="text-lg text-ink-50 max-w-2xl leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.25, ease: [...EASE_ENTRANCE] }}
+              >
+                {UTVIKLING_HERO.description}
+              </motion.p>
+
+              {/* Horizontal accent */}
+              <motion.div
+                className="mt-12 w-16 h-px bg-gradient-to-r from-utvikling/40 to-transparent"
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={{ opacity: 1, scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.4, ease: [...EASE_ENTRANCE] }}
+                style={{ transformOrigin: "left" }}
+              />
+            </div>
+          </section>
+
+          {/* ─── Two Main Services ─── */}
+          <section className="w-section-lg bg-surface-warm">
+            <div className="w-container">
               <RevealOnScroll>
-                <div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="w-2 h-2 rounded-full bg-software" />
-                    <SectionLabel>AK Golf Software</SectionLabel>
+                <div className="text-center max-w-2xl mx-auto mb-16">
+                  <SectionLabel>{UTVIKLING_SERVICES.eyebrow}</SectionLabel>
+                  <h2 className="w-heading-lg mt-4 mb-4">{UTVIKLING_SERVICES.heading}</h2>
+                  <p className="text-ink-50 leading-relaxed">{UTVIKLING_SERVICES.description}</p>
+                </div>
+              </RevealOnScroll>
+
+              <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {UTVIKLING_SERVICES.services.map((service) => (
+                  <StaggerItem key={service.id}>
+                    <div className="w-card h-full flex flex-col p-8">
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className={`w-3 h-3 rounded-full ${service.accent === "software" ? "bg-software" : "bg-utvikling"}`} />
+                        <span className={`text-xs font-mono uppercase tracking-wider ${service.accent === "software" ? "text-software" : "text-utvikling"}`}>
+                          {service.subtitle}
+                        </span>
+                      </div>
+                      <h3 className="w-heading-md mb-3">{service.title}</h3>
+                      <p className="text-ink-50 leading-relaxed mb-6 flex-1">{service.description}</p>
+                      <ul className="space-y-2">
+                        {service.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 text-sm text-ink-60">
+                            <span className={`w-1.5 h-1.5 rounded-full ${service.accent === "software" ? "bg-software" : "bg-utvikling"}`} />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-6 pt-6 border-t border-ink-10">
+                        <Link
+                          href={`#${service.id}`}
+                          className={`text-sm font-medium ${service.accent === "software" ? "text-software hover:text-software/80" : "text-utvikling hover:text-utvikling/80"} transition-colors`}
+                        >
+                          Les mer om {service.title.toLowerCase()} &rarr;
+                        </Link>
+                      </div>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          </section>
+
+          {/* ─── Software Section ─── */}
+          <section id="software" className="w-section-lg">
+            <div className="w-container">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
+                <RevealOnScroll>
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="w-2 h-2 rounded-full bg-software" />
+                      <SectionLabel>{UTVIKLING_SOFTWARE.label}</SectionLabel>
+                    </div>
+                    <h2 className="w-heading-lg mb-6">
+                      {UTVIKLING_SOFTWARE.heading}<br />
+                      <span className="text-ink-50">{UTVIKLING_SOFTWARE.subheading}</span>
+                    </h2>
+                    <p className="text-ink-50 leading-relaxed">
+                      {UTVIKLING_SOFTWARE.description}
+                    </p>
                   </div>
-                  <h2 className="w-heading-lg mb-6">
-                    Digitale verktøy som<br />
-                    <span className="text-ink-50">forandrer treningshverdagen.</span>
-                  </h2>
-                  <p className="text-ink-50 leading-relaxed">
-                    Vår programvare er utviklet av trenere, for trenere. Vi forstår hverdagen på rangen og på banen — og har bygget verktøy som faktisk gjør en forskjell.
+                </RevealOnScroll>
+
+                <RevealOnScroll delay={0.2}>
+                  <ImagePlaceholder aspect="16/10" src="/images/academy/AK-Golf-Academy-3.jpg" label="Software dashboard" />
+                </RevealOnScroll>
+              </div>
+
+              <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {UTVIKLING_SOFTWARE_FEATURES.map((feature) => (
+                  <StaggerItem key={feature.id}>
+                    <div className="w-card h-full flex flex-col">
+                      <div className="w-10 h-10 rounded-lg bg-software/10 flex items-center justify-center mb-4">
+                        <div className="w-3 h-3 rounded-full bg-software" />
+                      </div>
+                      <h4 className="font-display text-lg font-semibold text-ink-90 mb-2">
+                        {feature.title}
+                      </h4>
+                      <p className="text-sm text-ink-50 leading-relaxed mb-4 flex-1">
+                        {feature.description}
+                      </p>
+                      <ul className="space-y-1.5">
+                        {feature.details.map((detail) => (
+                          <li key={detail} className="flex items-center gap-2 text-xs text-ink-60">
+                            <span className="w-1 h-1 rounded-full bg-software" />
+                            {detail}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+
+              <RevealOnScroll>
+                <div className="mt-12 text-center">
+                  <Link href="#apply" className="w-btn w-btn-primary">
+                    Bestill en demo
+                  </Link>
+                </div>
+              </RevealOnScroll>
+            </div>
+          </section>
+
+          {/* ─── Klubbutvikling Section ─── */}
+          <section id="klubbutvikling" className="w-section-lg bg-surface-warm">
+            <div className="w-container">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
+                <RevealOnScroll delay={0.2} className="order-2 lg:order-1">
+                  <ImagePlaceholder aspect="16/10" src="/images/academy/AK-Golf-Academy-17.jpg" label="Klubbtrening" />
+                </RevealOnScroll>
+
+                <RevealOnScroll className="order-1 lg:order-2">
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="w-2 h-2 rounded-full bg-utvikling" />
+                      <SectionLabel>{UTVIKLING_KLUBB.label}</SectionLabel>
+                    </div>
+                    <h2 className="w-heading-lg mb-6">
+                      {UTVIKLING_KLUBB.heading}<br />
+                      <span className="text-ink-50">{UTVIKLING_KLUBB.subheading}</span>
+                    </h2>
+                    <p className="text-ink-50 leading-relaxed">
+                      {UTVIKLING_KLUBB.description}
+                    </p>
+                  </div>
+                </RevealOnScroll>
+              </div>
+
+              <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {UTVIKLING_KLUBB_FEATURES.map((feature) => (
+                  <StaggerItem key={feature.id}>
+                    <div className="w-card h-full flex flex-col">
+                      <div className="w-10 h-10 rounded-lg bg-utvikling/10 flex items-center justify-center mb-4">
+                        <div className="w-3 h-3 rounded-full bg-utvikling" />
+                      </div>
+                      <h4 className="font-display text-lg font-semibold text-ink-90 mb-2">
+                        {feature.title}
+                      </h4>
+                      <p className="text-sm text-ink-50 leading-relaxed mb-4 flex-1">
+                        {feature.description}
+                      </p>
+                      <ul className="space-y-1.5">
+                        {feature.details.map((detail) => (
+                          <li key={detail} className="flex items-center gap-2 text-xs text-ink-60">
+                            <span className="w-1 h-1 rounded-full bg-utvikling" />
+                            {detail}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+
+              <RevealOnScroll>
+                <div className="mt-12 text-center">
+                  <Link href="#apply" className="w-btn w-btn-primary">
+                    {UTVIKLING_CTA.primaryCta}
+                  </Link>
+                </div>
+              </RevealOnScroll>
+            </div>
+          </section>
+
+          {/* ─── Products ─── */}
+          <section id="products" className="w-section-lg">
+            <div className="w-container">
+              <RevealOnScroll>
+                <SectionLabel>Produkter</SectionLabel>
+                <h2 className="w-heading-lg mt-4 mb-4">Konkrete løsninger.</h2>
+                <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
+                  Digitale verktøy og rådgivingstjenester med fast pris. Alt skreddersys til klubbens behov.
+                </p>
+              </RevealOnScroll>
+
+              <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {UTVIKLING_PRODUCTS.map((product) => (
+                  <StaggerItem key={product.id}>
+                    <div className="w-card h-full flex flex-col">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="w-2 h-2 rounded-full bg-utvikling" />
+                        <span className="text-xs font-mono text-utvikling uppercase tracking-wider">{product.tagline}</span>
+                      </div>
+                      <h3 className="w-heading-sm mb-2">{product.title}</h3>
+                      <p className="text-sm text-ink-50 leading-relaxed mb-4 flex-1">{product.description}</p>
+                      <ul className="space-y-2 mb-6">
+                        {product.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 text-xs text-ink-60">
+                            <span className="w-1 h-1 rounded-full bg-utvikling shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="pt-4 border-t border-ink-10">
+                        <p className="font-mono text-lg font-bold text-utvikling">{product.pricing}</p>
+                        <p className="text-xs text-ink-40">{product.pricingNote}</p>
+                      </div>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          </section>
+
+          {/* ─── Case Studies / References ─── */}
+          <section className="w-section-lg bg-ink-100 w-section-dark">
+            <div className="w-container">
+              <RevealOnScroll>
+                <SectionLabel>Referanser</SectionLabel>
+                <h2 className="w-heading-lg text-white mt-4 mb-4">Klubber vi har hjulpet.</h2>
+                <p className="text-ink-40 max-w-2xl mb-12">
+                  Fra sportsplaner til digitale verktøy. Her er noen av klubbene som bruker våre løsninger.
+                </p>
+              </RevealOnScroll>
+
+              <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {UTVIKLING_CASE_STUDIES.map((study) => (
+                  <StaggerItem key={study.club}>
+                    <div className="w-card-dark h-full">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                          <span className="text-lg font-bold text-white">{study.club.charAt(0)}</span>
+                        </div>
+                        <div>
+                          <h4 className="font-display font-semibold text-white">{study.club}</h4>
+                          <p className="text-xs text-ink-50">{study.year}</p>
+                        </div>
+                      </div>
+                      <blockquote className="text-sm text-ink-30 leading-relaxed mb-4 italic">
+                        &quot;{study.quote}&quot;
+                      </blockquote>
+                      <div className="flex items-center justify-between">
+                        <div className="flex gap-2">
+                          {study.products.map((product) => (
+                            <span key={product} className="px-2 py-1 rounded-full bg-utvikling/20 text-utvikling text-xs">
+                              {product}
+                            </span>
+                          ))}
+                        </div>
+                        <span className="text-sm font-semibold text-utvikling">{study.result}</span>
+                      </div>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          </section>
+
+          {/* ─── Contact CTA ─── */}
+          <section className="w-section-lg bg-surface-warm">
+            <div className="w-container">
+              <RevealOnScroll>
+                <div className="max-w-2xl mx-auto text-center">
+                  <SectionLabel>{UTVIKLING_CTA.label}</SectionLabel>
+                  <h2 className="w-heading-lg mt-4 mb-4">{UTVIKLING_CTA.heading}</h2>
+                  <p className="text-ink-50 leading-relaxed mb-8">
+                    {UTVIKLING_CTA.description}
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-4">
+                    <Link href="#apply" className="w-btn w-btn-primary">
+                      {UTVIKLING_CTA.primaryCta}
+                    </Link>
+                    <Link href="/" className="w-btn w-btn-secondary">
+                      {UTVIKLING_CTA.secondaryCta} &rarr;
+                    </Link>
+                  </div>
+                </div>
+              </RevealOnScroll>
+            </div>
+          </section>
+
+          {/* ─── Application Form ─── */}
+          <section id="apply" className="w-section-lg bg-surface-cream">
+            <div className="w-container">
+              <RevealOnScroll>
+                <div className="text-center mb-12">
+                  <SectionLabel>Ta kontakt</SectionLabel>
+                  <h2 className="w-heading-lg mt-4 mb-4">Fortell oss om deres behov.</h2>
+                  <p className="text-ink-50 max-w-lg mx-auto">
+                    Fyll ut skjemaet under, så tar vi kontakt for en uforpliktende samtale om deres muligheter.
                   </p>
                 </div>
               </RevealOnScroll>
 
               <RevealOnScroll delay={0.2}>
-                <ImagePlaceholder aspect="16/10" src="/images/academy/AK-Golf-Academy-3.jpg" label="Software dashboard" />
+                <ApplicationForm />
               </RevealOnScroll>
             </div>
+          </section>
 
-            <FeatureGrid features={SOFTWARE_FEATURES} columns={2} />
-
-            <RevealOnScroll>
-              <div className="mt-12 text-center">
-                <Link href="#apply" className="w-btn w-btn-primary">
-                  Bestill en demo
-                </Link>
-              </div>
-            </RevealOnScroll>
-          </div>
-        </section>
-
-        {/* ─── Klubbtrening Section ─── */}
-        <section id="klubb" className="w-section-lg">
-          <div className="w-container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
-              <RevealOnScroll delay={0.2} className="order-2 lg:order-1">
-                <ImagePlaceholder aspect="16/10" src="/images/academy/AK-Golf-Academy-17.jpg" label="Klubbtrening" />
-              </RevealOnScroll>
-
-              <RevealOnScroll className="order-1 lg:order-2">
-                <div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="w-2 h-2 rounded-full bg-utvikling" />
-                    <SectionLabel>Klubbtrening & Rådgiving</SectionLabel>
-                  </div>
-                  <h2 className="w-heading-lg mb-6">
-                    Sportsplaner og rådgiving<br />
-                    <span className="text-ink-50">for ambisiose klubber.</span>
-                  </h2>
-                  <p className="text-ink-50 leading-relaxed">
-                    Vi hjelper golfklubber med å bygge sportslige strukturer som tiltrekker medlemmer, utvikler spillere og skaper resultater. Fra sportsplan til trenernettverk.
-                  </p>
-                </div>
-              </RevealOnScroll>
-            </div>
-
-            <FeatureGrid features={KLUBB_FEATURES} columns={2} />
-
-            <RevealOnScroll>
-              <div className="mt-12 text-center">
-                <Link href="#apply" className="w-btn w-btn-primary">
-                  Book en samtale
-                </Link>
-              </div>
-            </RevealOnScroll>
-          </div>
-        </section>
-
-        {/* ─── B2B CTA ─── */}
-        <section className="w-section-lg bg-surface-warm">
-          <div className="w-container">
-            <RevealOnScroll>
-              <div className="max-w-2xl mx-auto text-center">
-                <SectionLabel>Interessert?</SectionLabel>
-                <h2 className="w-heading-lg mt-4 mb-4">Book en samtale.</h2>
-                <p className="text-ink-50 leading-relaxed mb-8">
-                  Vi starter alltid med en uforpliktende samtale for å forstå deres behov og ambisjoner. Deretter lager vi et skreddersydd forslag.
-                </p>
-                <div className="flex flex-wrap justify-center gap-4">
-                  <Link href="#apply" className="w-btn w-btn-primary">
-                    Book en samtale
-                  </Link>
-                  <Link href="/" className="w-btn w-btn-secondary">
-                    Tilbake til forsiden &rarr;
-                  </Link>
-                </div>
-              </div>
-            </RevealOnScroll>
-          </div>
-        </section>
-
-        {/* ─── Application Form ─── */}
-        <section id="apply" className="w-section-lg bg-surface-cream">
-          <div className="w-container">
-            <RevealOnScroll>
-              <div className="text-center mb-12">
-                <SectionLabel>Ta kontakt</SectionLabel>
-                <h2 className="w-heading-lg mt-4 mb-4">Fortell oss om deres behov.</h2>
-                <p className="text-ink-50 max-w-lg mx-auto">
-                  Fyll ut skjemaet under, så tar vi kontakt for en uforpliktende samtale om deres muligheter.
-                </p>
-              </div>
-            </RevealOnScroll>
-
-            <RevealOnScroll delay={0.2}>
-              <ApplicationForm />
-            </RevealOnScroll>
-          </div>
-        </section>
-
-        {/* ─── Related Pages ─── */}
-        <RelatedPages exclude="utvikling" />
+          {/* ─── Related Pages ─── */}
+          <RelatedPages exclude="utvikling" />
         </PageTransition>
       </main>
 

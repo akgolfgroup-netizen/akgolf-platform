@@ -56,7 +56,7 @@ export function FocusRecommendationCard() {
               onClick={fetchRecommendation}
               className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold transition-opacity hover:opacity-90"
               style={{
-                background: "linear-gradient(135deg, #c9a96e 0%, #B8975C 100%)",
+                background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
                 color: "#0a1929",
               }}
             >
@@ -92,7 +92,7 @@ export function FocusRecommendationCard() {
                     <span
                       className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
                       style={{
-                        background: "rgba(184,151,92,0.15)",
+                        background: "rgba(176,125,79,0.15)",
                         color: "var(--color-gold)",
                       }}
                     >

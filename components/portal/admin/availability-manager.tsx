@@ -97,7 +97,7 @@ export function AvailabilityManager({ instructors }: Props) {
         <select
           value={selectedInstructorId}
           onChange={(e) => handleInstructorChange(e.target.value)}
-          className="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white"
+          className="text-sm rounded-xl px-3 py-2 text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)]"
         >
           {instructors.map((inst) => (
             <option key={inst.id} value={inst.id}>
@@ -107,13 +107,13 @@ export function AvailabilityManager({ instructors }: Props) {
         </select>
 
         {/* Tabs */}
-        <div className="flex bg-gray-100 rounded-lg p-0.5">
+        <div className="flex bg-[rgba(15,41,80,0.3)] rounded-xl p-0.5">
           <button
             onClick={() => setActiveTab("schedule")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
               activeTab === "schedule"
-                ? "bg-white text-[#0F2950] shadow-sm"
-                : "text-gray-500"
+                ? "bg-[var(--color-gold)] text-white"
+                : "text-[var(--color-snow)]/50"
             }`}
           >
             <Clock className="w-3.5 h-3.5" />
@@ -121,10 +121,10 @@ export function AvailabilityManager({ instructors }: Props) {
           </button>
           <button
             onClick={() => setActiveTab("blocked")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
               activeTab === "blocked"
-                ? "bg-white text-[#0F2950] shadow-sm"
-                : "text-gray-500"
+                ? "bg-[var(--color-gold)] text-white"
+                : "text-[var(--color-snow)]/50"
             }`}
           >
             <Ban className="w-3.5 h-3.5" />
@@ -134,7 +134,7 @@ export function AvailabilityManager({ instructors }: Props) {
       </div>
 
       {loading ? (
-        <div className="py-20 text-center text-gray-400">Laster...</div>
+        <div className="py-20 text-center text-[var(--color-snow)]/50">Laster...</div>
       ) : activeTab === "schedule" ? (
         <AvailabilityWeekGrid
           slots={slots}
@@ -149,20 +149,20 @@ export function AvailabilityManager({ instructors }: Props) {
           />
 
           {/* Blocked time list */}
-          <div className="bg-white rounded-xl border border-gray-200">
+          <div className="rounded-2xl border border-[rgba(15,41,80,0.4)] bg-[rgba(10,25,41,0.7)] backdrop-blur-md">
             {blockedTimes.length === 0 ? (
-              <p className="text-sm text-gray-400 p-6 text-center">
+              <p className="text-sm text-[var(--color-snow)]/50 p-6 text-center">
                 Ingen blokkerte tider
               </p>
             ) : (
-              <ul className="divide-y divide-gray-100">
+              <ul className="divide-y divide-[rgba(15,41,80,0.4)]">
                 {blockedTimes.map((bt) => (
                   <li
                     key={bt.id}
                     className="flex items-center justify-between px-4 py-3"
                   >
                     <div>
-                      <p className="text-sm font-medium text-gray-800">
+                      <p className="text-sm font-medium text-[var(--color-snow)]">
                         {format(new Date(bt.startTime), "d. MMM yyyy HH:mm", {
                           locale: nb,
                         })}{" "}
@@ -172,12 +172,12 @@ export function AvailabilityManager({ instructors }: Props) {
                         })}
                       </p>
                       {bt.reason && (
-                        <p className="text-xs text-gray-500">{bt.reason}</p>
+                        <p className="text-xs text-[var(--color-snow)]/50">{bt.reason}</p>
                       )}
                     </div>
                     <button
                       onClick={() => handleDeleteBlocked(bt.id)}
-                      className="p-1.5 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
+                      className="p-1.5 rounded-lg hover:bg-[rgba(239,68,68,0.15)] text-[var(--color-snow)]/40 hover:text-[#FCA5A5] transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>

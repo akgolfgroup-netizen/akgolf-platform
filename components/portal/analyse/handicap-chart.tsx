@@ -85,7 +85,7 @@ export function HandicapChart({ entries }: HandicapChartProps) {
         />
         <Tooltip
           contentStyle={{
-            background: "#0F2950",
+            background: "#0A1929",
             border: "1px solid rgba(15,41,80,0.9)",
             borderRadius: "8px",
             fontSize: "12px",
@@ -107,7 +107,7 @@ export function HandicapChart({ entries }: HandicapChartProps) {
           <Line
             type="monotone"
             dataKey="trend"
-            stroke="rgba(184,151,92,0.4)"
+            stroke="rgba(176,125,79,0.4)"
             strokeWidth={1.5}
             strokeDasharray="4 4"
             dot={false}

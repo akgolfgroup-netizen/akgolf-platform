@@ -5,7 +5,9 @@ import { SubscriptionTier } from "@prisma/client";
 import { hasTierAccess } from "@/lib/portal/rbac";
 
 const TIER_LABELS: Record<SubscriptionTier, string> = {
-  FREE: "Gratis",
+  VISITOR: "Gratis",
+  ACADEMY: "Academy",
+  STARTER: "Starter",
   PRO: "Pro",
   ELITE: "Elite",
 };
@@ -34,13 +36,13 @@ export function TierGate({ userTier, required, children }: TierGateProps) {
           className="rounded-2xl p-6 text-center max-w-xs mx-auto"
           style={{
             background: "linear-gradient(135deg, rgba(13,34,68,0.95) 0%, rgba(10,25,41,0.98) 100%)",
-            border: "1px solid rgba(184,151,92,0.3)",
+            border: "1px solid rgba(176,125,79,0.3)",
             backdropFilter: "blur(8px)",
           }}
         >
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-3"
-            style={{ background: "rgba(184,151,92,0.15)" }}
+            style={{ background: "rgba(176,125,79,0.15)" }}
           >
             <Lock className="w-5 h-5 text-[var(--color-gold)]" />
           </div>
@@ -54,7 +56,7 @@ export function TierGate({ userTier, required, children }: TierGateProps) {
           <div
             className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold"
             style={{
-              background: "linear-gradient(135deg, #c9a96e 0%, #B8975C 100%)",
+              background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
               color: "#0a1929",
             }}
           >

@@ -122,7 +122,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
             className={cn(
               "px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200",
               mode === tab.key
-                ? "bg-[var(--color-gold)] text-white shadow-[0_2px_8px_rgba(184,151,92,0.3)]"
+                ? "bg-[var(--color-gold)] text-white shadow-[0_2px_8px_rgba(176,125,79,0.3)]"
                 : tab.disabled
                 ? "bg-[var(--color-border)] text-[var(--color-text-tertiary)] cursor-not-allowed opacity-50"
                 : "bg-[var(--color-border)] text-[var(--color-text-secondary)] hover:bg-[var(--color-gold-muted)] hover:text-white"

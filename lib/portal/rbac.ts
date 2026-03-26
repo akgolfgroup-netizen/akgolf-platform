@@ -17,9 +17,11 @@ export function isStaff(role?: string): boolean {
 }
 
 const TIER_RANK: Record<SubscriptionTier, number> = {
-  [SubscriptionTier.FREE]: 0,
-  [SubscriptionTier.PRO]: 1,
-  [SubscriptionTier.ELITE]: 2,
+  [SubscriptionTier.VISITOR]: 0,
+  [SubscriptionTier.ACADEMY]: 1,
+  [SubscriptionTier.STARTER]: 2,
+  [SubscriptionTier.PRO]: 3,
+  [SubscriptionTier.ELITE]: 4,
 };
 
 export function hasTierAccess(

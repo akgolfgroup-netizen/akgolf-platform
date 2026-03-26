@@ -1,13 +1,5 @@
 import type { PeriodBand } from "@/app/portal/(dashboard)/kalender/actions";
 
-const THEME = {
-  gold: "#B8975C",
-  textSecondary: "#64748B",
-  textTertiary: "#9CA3AF",
-  bg: "#FAFBFC",
-  border: "#EBE5DA",
-};
-
 const PERIOD_LABELS: Record<string, string> = {
   grunnperiode: "Grunnperiode",
   spesialiseringsperiode: "Spesialisering",
@@ -32,19 +24,10 @@ export function PeriodizationBand({ bands, year }: PeriodizationBandProps) {
 
   return (
     <div className="mb-6">
-      <p 
-        className="text-xs font-semibold uppercase tracking-wider mb-2"
-        style={{ color: THEME.gold }}
-      >
+      <p className="text-xs font-semibold uppercase tracking-wider mb-2 text-[var(--color-gold)]">
         Periodisering {year}
       </p>
-      <div 
-        className="relative h-8 rounded-xl overflow-hidden border"
-        style={{ 
-          background: THEME.bg,
-          borderColor: THEME.border,
-        }}
-      >
+      <div className="relative h-8 rounded-xl overflow-hidden border bg-[rgba(15,41,80,0.3)] border-[rgba(15,41,80,0.4)]">
         {bands.map((band, i) => {
           const left = Math.max(0, toPercent(new Date(band.startDate)));
           const right = Math.min(100, toPercent(new Date(band.endDate)));
@@ -81,12 +64,8 @@ export function PeriodizationBand({ bands, year }: PeriodizationBandProps) {
           return (
             <div
               key={i}
-              className="absolute top-0 bottom-0 border-l"
-              style={{ 
-                left: `${pct}%`,
-                borderColor: `${THEME.border}`,
-                opacity: 0.5,
-              }}
+              className="absolute top-0 bottom-0 border-l border-[rgba(15,41,80,0.4)] opacity-50"
+              style={{ left: `${pct}%` }}
             />
           );
         })}
@@ -99,11 +78,8 @@ export function PeriodizationBand({ bands, year }: PeriodizationBandProps) {
           return (
             <span
               key={m}
-              className="absolute text-[10px] transform -translate-x-1/2"
-              style={{ 
-                left: `${pct}%`,
-                color: THEME.textTertiary,
-              }}
+              className="absolute text-[10px] transform -translate-x-1/2 text-[var(--color-snow)]/50"
+              style={{ left: `${pct}%` }}
             >
               {m}
             </span>

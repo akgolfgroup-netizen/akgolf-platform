@@ -4,16 +4,6 @@ import type { CalendarEvent } from "@/app/portal/(dashboard)/kalender/actions";
 import { EventChip } from "./event-chip";
 import { Calendar } from "lucide-react";
 
-const THEME = {
-  gold: "#B8975C",
-  navy: "#0F2950",
-  text: "#02060D",
-  textSecondary: "#64748B",
-  textTertiary: "#9CA3AF",
-  border: "#EBE5DA",
-  bgSubtle: "#FAFBFC",
-};
-
 interface CalendarListViewProps {
   events: CalendarEvent[];
 }
@@ -39,12 +29,9 @@ const TYPE_LABELS: Record<string, string> = {
 export function CalendarListView({ events }: CalendarListViewProps) {
   if (events.length === 0) {
     return (
-      <div 
-        className="text-center py-16 rounded-2xl border"
-        style={{ borderColor: THEME.border }}
-      >
-        <Calendar className="w-12 h-12 mx-auto mb-4" style={{ color: THEME.textTertiary }} />
-        <p style={{ color: THEME.textSecondary }}>
+      <div className="text-center py-16 rounded-2xl border border-[rgba(15,41,80,0.4)]">
+        <Calendar className="w-12 h-12 mx-auto mb-4 text-[var(--color-snow)]/50" />
+        <p className="text-[var(--color-snow)]/70">
           Ingen hendelser i denne perioden.
         </p>
       </div>
@@ -58,21 +45,11 @@ export function CalendarListView({ events }: CalendarListViewProps) {
       {weeks.map(({ weekStart, events: weekEvents }) => (
         <div key={format(weekStart, "yyyy-'W'II")}>
           <div className="flex items-center gap-3 mb-4">
-            <span 
-              className="text-sm font-semibold uppercase tracking-wider"
-              style={{ color: THEME.gold }}
-            >
+            <span className="text-sm font-semibold uppercase tracking-wider text-[var(--color-gold)]">
               Uke {format(weekStart, "I", { locale: nb })} · {format(weekStart, "d. MMMM", { locale: nb })}
             </span>
             {isSameWeek(weekStart, new Date(), { weekStartsOn: 1 }) && (
-              <span 
-                className="text-xs px-3 py-1 rounded-full font-medium"
-                style={{
-                  background: `${THEME.gold}15`,
-                  color: THEME.gold,
-                  border: `1px solid ${THEME.gold}30`,
-                }}
-              >
+              <span className="text-xs px-3 py-1 rounded-full font-medium bg-[rgba(176,125,79,0.15)] text-[var(--color-gold)] border border-[rgba(176,125,79,0.3)]">
                 Denne uken
               </span>
             )}
@@ -83,14 +60,15 @@ export function CalendarListView({ events }: CalendarListViewProps) {
               <div key={e.id} className="flex items-start gap-4">
                 <div className="w-20 flex-shrink-0 text-right">
                   <p
-                    className="text-sm font-medium"
-                    style={{ 
-                      color: isToday(new Date(e.startDate)) ? THEME.gold : THEME.text 
-                    }}
+                    className={`text-sm font-medium ${
+                      isToday(new Date(e.startDate))
+                        ? "text-[var(--color-gold)]"
+                        : "text-[var(--color-snow)]"
+                    }`}
                   >
                     {format(new Date(e.startDate), "EEE d.", { locale: nb })}
                   </p>
-                  <p style={{ color: THEME.textTertiary }}>
+                  <p className="text-[var(--color-snow)]/50">
                     {TYPE_LABELS[e.type]}
                   </p>
                 </div>

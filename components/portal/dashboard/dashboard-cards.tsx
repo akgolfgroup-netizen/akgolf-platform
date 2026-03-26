@@ -12,13 +12,6 @@ interface DashboardCard {
   href: string;
 }
 
-const THEME = {
-  bg: "#FFFFFF",
-  text: "#02060D",
-  textSecondary: "#64748B",
-  border: "#EBE5DA",
-};
-
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -43,14 +36,7 @@ export function DashboardCards({ cards }: { cards: DashboardCard[] }) {
       {cards.map((card) => (
         <motion.div key={card.label} variants={cardVariant}>
           <Link href={card.href} className="group block h-full">
-            <div
-              className="relative h-full rounded-2xl p-6 transition-all duration-300 overflow-hidden"
-              style={{
-                background: THEME.bg,
-                border: `1px solid ${THEME.border}`,
-                boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
-              }}
-            >
+            <div className="relative h-full rounded-2xl p-6 transition-all duration-300 overflow-hidden bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)]">
               {/* Hover glow */}
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl"
@@ -68,10 +54,7 @@ export function DashboardCards({ cards }: { cards: DashboardCard[] }) {
               <div className="relative">
                 {/* Label row */}
                 <div className="flex items-start justify-between mb-4">
-                  <p 
-                    className="text-xs font-semibold uppercase tracking-widest"
-                    style={{ color: THEME.textSecondary }}
-                  >
+                  <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-snow)]/70">
                     {card.label}
                   </p>
                   <ArrowUpRight
@@ -81,10 +64,7 @@ export function DashboardCards({ cards }: { cards: DashboardCard[] }) {
                 </div>
 
                 {/* Value */}
-                <p 
-                  className="text-lg font-semibold line-clamp-2 leading-snug mb-3 transition-colors"
-                  style={{ color: THEME.text }}
-                >
+                <p className="text-lg font-semibold line-clamp-2 leading-snug mb-3 transition-colors text-[var(--color-snow)]">
                   {card.value}
                 </p>
 
@@ -94,10 +74,7 @@ export function DashboardCards({ cards }: { cards: DashboardCard[] }) {
                     className="w-2 h-2 rounded-full flex-shrink-0"
                     style={{ backgroundColor: card.color }}
                   />
-                  <p 
-                    className="text-sm truncate"
-                    style={{ color: THEME.textSecondary }}
-                  >
+                  <p className="text-sm truncate text-[var(--color-snow)]/70">
                     {card.sub}
                   </p>
                 </div>

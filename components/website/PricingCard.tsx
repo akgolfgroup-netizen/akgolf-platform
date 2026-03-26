@@ -48,6 +48,7 @@ export function PricingCard({
               stroke="currentColor"
               strokeWidth="2"
               className="shrink-0 mt-0.5 text-gold"
+              aria-hidden="true"
             >
               <polyline points="20 6 9 17 4 12" />
             </svg>
@@ -64,7 +65,7 @@ export function PricingCard({
           highlighted ? "w-btn-gold" : "w-btn-primary"
         }`}
       >
-        Kom i gang
+        Reserver din plass
       </Link>
     </div>
   );

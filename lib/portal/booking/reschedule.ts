@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/portal/prisma";
-import { BookingStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
+import { BookingStatus } from "@prisma/client";
 import { addMinutes } from "date-fns";
 
 interface RescheduleResult {

@@ -68,7 +68,7 @@ export function ThisWeekTournaments({ plans }: ThisWeekTournamentsProps) {
                 ) : (
                   <div
                     className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-[var(--color-bg-deep)] flex-shrink-0"
-                    style={{ background: "linear-gradient(135deg, #c9a96e 0%, #B8975C 100%)" }}
+                    style={{ background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)" }}
                   >
                     {plan.student.name?.charAt(0) ?? "?"}
                   </div>

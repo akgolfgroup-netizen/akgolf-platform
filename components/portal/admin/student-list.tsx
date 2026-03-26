@@ -49,40 +49,40 @@ export function StudentList() {
       {/* Search */}
       <div className="flex gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-snow)]/50" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            placeholder="Sok etter navn eller e-post..."
-            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8975C]/40"
+            placeholder="Søk etter navn eller e-post..."
+            className="w-full pl-10 pr-4 py-2 rounded-xl text-sm text-[var(--color-snow)] placeholder:text-[var(--color-snow)]/40 bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
           />
         </div>
         <button
           onClick={handleSearch}
-          className="px-4 py-2 text-sm font-medium bg-[#0F2950] text-white rounded-lg hover:bg-[#0F2950]/90 transition-colors"
+          className="px-4 py-2 text-sm font-medium bg-[var(--color-gold)] text-white rounded-xl hover:bg-[var(--color-gold)]/90 transition-colors"
         >
-          Sok
+          Søk
         </button>
       </div>
 
-      <p className="text-xs text-gray-400">{total} elever totalt</p>
+      <p className="text-xs text-[var(--color-snow)]/50">{total} elever totalt</p>
 
       {/* Student list */}
-      <div className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100">
+      <div className="rounded-2xl border border-[rgba(15,41,80,0.4)] bg-[rgba(10,25,41,0.7)] backdrop-blur-md divide-y divide-[rgba(15,41,80,0.4)]">
         {loading ? (
-          <div className="py-12 text-center text-gray-400">Laster...</div>
+          <div className="py-12 text-center text-[var(--color-snow)]/50">Laster...</div>
         ) : students.length === 0 ? (
-          <div className="py-12 text-center text-gray-400 text-sm">
+          <div className="py-12 text-center text-[var(--color-snow)]/50 text-sm">
             Ingen elever funnet
           </div>
         ) : (
           students.map((student) => (
             <Link
               key={student.id}
-              href={`/admin/elever/${student.id}`}
-              className="flex items-center gap-4 px-4 py-3 hover:bg-gray-50 transition-colors"
+              href={`/portal/admin/elever/${student.id}`}
+              className="flex items-center gap-4 px-4 py-3 hover:bg-[rgba(15,41,80,0.3)] transition-colors"
             >
               {student.image ? (
                 <img
@@ -91,27 +91,27 @@ export function StudentList() {
                   className="w-10 h-10 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-sm font-semibold text-gray-500">
+                <div className="w-10 h-10 rounded-full bg-[rgba(15,41,80,0.5)] flex items-center justify-center text-sm font-semibold text-[var(--color-snow)]/70">
                   {student.name?.charAt(0) ?? "?"}
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-800 truncate">
+                <p className="text-sm font-medium text-[var(--color-snow)] truncate">
                   {student.name ?? "Ukjent"}
                 </p>
-                <p className="text-xs text-gray-400 truncate">
+                <p className="text-xs text-[var(--color-snow)]/50 truncate">
                   {student.email}
                 </p>
               </div>
               <div className="text-right flex-shrink-0">
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-[var(--color-snow)]/70">
                   {student._count.bookings} bookinger
                 </p>
-                <p className="text-xs text-gray-400">
-                  {student._count.coachingSessions} okter
+                <p className="text-xs text-[var(--color-snow)]/50">
+                  {student._count.coachingSessions} økter
                 </p>
               </div>
-              <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0" />
+              <ChevronRight className="w-4 h-4 text-[var(--color-snow)]/30 flex-shrink-0" />
             </Link>
           ))
         )}

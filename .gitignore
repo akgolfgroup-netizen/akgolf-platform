@@ -45,3 +45,5 @@ next-env.d.ts
 .notion-project-id
 uploads/
 _archived/
+mcp-server/
+.env*.local

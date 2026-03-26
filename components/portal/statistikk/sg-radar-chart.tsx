@@ -56,8 +56,8 @@ export function SGRadarChart({ playerSG, benchmark }: SGRadarChartProps) {
             <Radar
               name="Benchmark"
               dataKey="benchmark"
-              stroke="#3B82F6"
-              fill="#3B82F6"
+              stroke="#38BDF8"
+              fill="#38BDF8"
               fillOpacity={0.1}
               strokeWidth={1.5}
               dot={false}
@@ -66,11 +66,11 @@ export function SGRadarChart({ playerSG, benchmark }: SGRadarChartProps) {
           <Radar
             name="Din SG"
             dataKey="player"
-            stroke="#B8975C"
-            fill="#B8975C"
+            stroke="#B07D4F"
+            fill="#B07D4F"
             fillOpacity={0.2}
             strokeWidth={2}
-            dot={{ fill: "#B8975C", r: 3 }}
+            dot={{ fill: "#B07D4F", r: 3 }}
           />
         </RadarChart>
       </ResponsiveContainer>

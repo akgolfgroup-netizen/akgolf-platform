@@ -9,34 +9,39 @@ import {
   CalendarPlus,
   BookOpen,
   Target,
-  Trophy,
   Calendar,
   CalendarCheck,
   LayoutDashboard,
   ShieldCheck,
   LogOut,
   NotebookPen,
-  BarChart2,
   BarChart3,
   Users as UsersIcon,
   Clock,
+  ClipboardCheck,
+  Dumbbell,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
 import type { PortalUser } from "@/lib/portal/auth";
 
 const navItems = [
-  { href: "/portal", label: "Oversikt", icon: LayoutDashboard },
-  { href: "/portal/profil", label: "Min profil", icon: User },
-  { href: "/portal/bookinger", label: "Bookinger", icon: CalendarDays },
-  { href: "/portal/coaching-historikk", label: "Coachinghistorikk", icon: BookOpen },
+  { href: "/portal", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/portal/bookinger", label: "Mine Bookinger", icon: CalendarCheck },
   { href: "/portal/treningsplan", label: "Treningsplan", icon: Target },
-  { href: "/portal/dagbok", label: "Dagbok", icon: NotebookPen },
-  { href: "/portal/analyse", label: "Analyse", icon: BarChart2 },
+  { href: "/portal/dagbok", label: "Treningsdagbok", icon: BookOpen },
   { href: "/portal/statistikk", label: "Statistikk", icon: BarChart3 },
-  { href: "/portal/sammenligning", label: "Sammenligning", icon: UsersIcon },
-  { href: "/portal/turneringsplan", label: "Turneringsplan", icon: Trophy },
   { href: "/portal/kalender", label: "Kalender", icon: Calendar },
+];
+
+const trainingItems = [
+  { href: "/portal/trening/tester", label: "Trackman Tester", icon: ClipboardCheck },
+  { href: "/portal/trening/ovelser", label: "Øvelser", icon: Dumbbell },
+];
+
+const accountItems = [
+  { href: "/portal/profil", label: "Profil", icon: User },
+  { href: "/portal/coaching-historikk", label: "Historikk", icon: NotebookPen },
 ];
 
 const staffItems = [
@@ -44,21 +49,21 @@ const staffItems = [
   { href: "/portal/admin/bookinger", label: "Bookinger", icon: CalendarPlus },
   { href: "/portal/admin/elever", label: "Elever", icon: UsersIcon },
   { href: "/portal/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
+  { href: "/portal/admin/kapasitet", label: "Kapasitet", icon: BarChart3 },
   { href: "/portal/admin/denne-uken", label: "Denne uken", icon: CalendarCheck },
   { href: "/portal/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
 ];
 
-// Theme constants
+// Dark theme using CSS variables (globals.css)
 const THEME = {
-  bg: "#FAFBFC",
-  bgElevated: "#FFFFFF",
-  gold: "#B8975C",
-  goldLight: "#E8D4B0",
-  navy: "#0F2950",
-  text: "#02060D",
-  textSecondary: "#64748B",
-  textTertiary: "#9CA3AF",
-  border: "#EBE5DA",
+  bg: "var(--color-ink-80)",           // #171717
+  bgHover: "var(--color-ink-70)",      // #262626
+  bgActive: "var(--color-ink-70)",     // #262626
+  gold: "var(--color-gold)",           // #B07D4F
+  white: "var(--color-white)",         // #FFFFFF
+  textMuted: "var(--color-ink-30)",    // #A3A3A3
+  textDim: "var(--color-ink-40)",      // #737373
+  border: "var(--color-ink-60)",       // ~#333
 };
 
 interface SidebarProps {
@@ -81,48 +86,19 @@ export function Sidebar({ user }: SidebarProps) {
   return (
     <aside
       className="fixed left-0 top-0 h-full w-60 flex flex-col z-20"
-      style={{
-        background: THEME.bgElevated,
-        borderRight: `1px solid ${THEME.border}`,
-      }}
+      style={{ background: THEME.bg }}
     >
       {/* Logo */}
       <div
         className="px-5 py-5"
         style={{ borderBottom: `1px solid ${THEME.border}` }}
       >
-        <div className="flex items-center gap-3">
-          <img
-            src="/portal/ak-logo.svg"
-            alt="AK Golf"
-            className="w-10 h-10 rounded-xl flex-shrink-0"
-          />
-          <div>
-            <p
-              className="text-sm font-semibold leading-tight tracking-tight"
-              style={{ color: THEME.navy }}
-            >
-              Golf Academy
-            </p>
-            <p
-              className="text-[10px] font-medium uppercase tracking-widest mt-0.5"
-              style={{ color: THEME.gold }}
-            >
-              Spillerportal
-            </p>
-          </div>
-        </div>
+        <span className="text-lg font-bold text-white">AK Golf</span>
       </div>
 
-      {/* Nav */}
-      <nav className="flex-1 px-3 py-4 overflow-y-auto">
-        <p
-          className="px-3 text-[10px] font-semibold uppercase tracking-widest mb-3"
-          style={{ color: THEME.textTertiary }}
-        >
-          Meny
-        </p>
-        <ul className="space-y-1">
+      {/* Main Nav */}
+      <nav className="flex-1 py-4 overflow-y-auto">
+        <ul className="space-y-0.5">
           {navItems.map((item) => {
             const active = pathname === item.href ||
               (item.href !== "/portal" && pathname.startsWith(`${item.href}/`));
@@ -131,38 +107,105 @@ export function Sidebar({ user }: SidebarProps) {
                 <Link
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group",
+                    "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
                     active
-                      ? "text-white"
-                      : "hover:bg-gray-50"
+                      ? "text-white border-l-[3px] border-white"
+                      : "text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
                   )}
-                  style={active ? {
-                    background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})`,
-                    boxShadow: "0 4px 12px rgba(184,151,92,0.25)",
-                  } : { color: THEME.textSecondary }}
+                  style={active ? { background: THEME.bgActive } : undefined}
                 >
-                  <item.icon
-                    className={cn(
-                      "w-4 h-4 flex-shrink-0 transition-colors",
-                      active ? "text-white" : "text-current group-hover:text-[#B8975C]"
-                    )}
-                  />
-                  <span className="truncate">{item.label}</span>
+                  <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
+                  <span>{item.label}</span>
                 </Link>
               </li>
             );
           })}
+        </ul>
 
-          {isStaff(user.role) && (
-            <>
-              <li className="pt-4 pb-2">
-                <p
-                  className="px-3 text-[10px] font-semibold uppercase tracking-widest"
-                  style={{ color: THEME.textTertiary }}
-                >
-                  Admin
-                </p>
-              </li>
+        {/* Trening section */}
+        <div className="mt-4 pt-2">
+          <p
+            className="px-5 py-2 text-[11px] font-medium uppercase tracking-widest"
+            style={{ color: THEME.textDim }}
+          >
+            Trening
+          </p>
+          <ul className="space-y-0.5">
+            {trainingItems.map((item) => {
+              const active = pathname === item.href ||
+                pathname.startsWith(`${item.href}/`);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
+                      active
+                        ? "text-white border-l-[3px] border-white"
+                        : "text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
+                    )}
+                    style={active ? { background: THEME.bgActive } : undefined}
+                  >
+                    <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/* Konto section */}
+        <div className="mt-4 pt-2">
+          <p
+            className="px-5 py-2 text-[11px] font-medium uppercase tracking-widest"
+            style={{ color: THEME.textDim }}
+          >
+            Konto
+          </p>
+          <ul className="space-y-0.5">
+            {accountItems.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
+                      active
+                        ? "text-white border-l-[3px] border-white"
+                        : "text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
+                    )}
+                    style={active ? { background: THEME.bgActive } : undefined}
+                  >
+                    <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
+            <li>
+              <button
+                onClick={handleSignOut}
+                className="w-full flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150 text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
+              >
+                <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
+                <span>Logg ut</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        {/* Admin section */}
+        {isStaff(user.role) && (
+          <div className="mt-4 pt-2">
+            <p
+              className="px-5 py-2 text-[11px] font-medium uppercase tracking-widest"
+              style={{ color: THEME.textDim }}
+            >
+              Admin
+            </p>
+            <ul className="space-y-0.5">
               {staffItems.map((item) => {
                 const active = pathname === item.href;
                 return (
@@ -170,79 +213,51 @@ export function Sidebar({ user }: SidebarProps) {
                     <Link
                       href={item.href}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
+                        "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
                         active
-                          ? "text-white"
-                          : "hover:bg-gray-50"
+                          ? "text-white border-l-[3px] border-white"
+                          : "text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
                       )}
-                      style={active ? {
-                        background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})`,
-                        boxShadow: "0 4px 12px rgba(184,151,92,0.25)",
-                      } : { color: THEME.textSecondary }}
+                      style={active ? { background: THEME.bgActive } : undefined}
                     >
-                      <item.icon
-                        className={cn(
-                          "w-4 h-4 flex-shrink-0",
-                          active ? "text-white" : "text-current"
-                        )}
-                      />
+                      <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
                       <span>{item.label}</span>
                     </Link>
                   </li>
                 );
               })}
-            </>
-          )}
-        </ul>
+            </ul>
+          </div>
+        )}
       </nav>
 
       {/* User footer */}
       <div
-        className="mx-4 mb-4 p-4 rounded-2xl"
-        style={{
-          background: THEME.bg,
-          border: `1px solid ${THEME.border}`,
-        }}
+        className="px-5 py-4 flex items-center gap-3"
+        style={{ borderTop: `1px solid ${THEME.border}` }}
       >
-        <div className="flex items-center gap-3 mb-3">
+        <div
+          className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+          style={{ background: "#404040" }}
+        >
           {user.image ? (
             <img
               src={user.image}
               alt=""
-              className="w-10 h-10 rounded-xl object-cover flex-shrink-0 border-2"
-              style={{ borderColor: THEME.border }}
+              className="w-9 h-9 rounded-full object-cover"
             />
           ) : (
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-              style={{ background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})` }}
-            >
-              {user.name?.charAt(0) ?? "?"}
-            </div>
+            <User className="w-[18px] h-[18px] text-[#A3A3A3]" />
           )}
-          <div className="min-w-0 flex-1">
-            <p
-              className="text-sm font-semibold truncate leading-tight"
-              style={{ color: THEME.navy }}
-            >
-              {user.name}
-            </p>
-            <p
-              className="text-[10px] truncate capitalize mt-0.5"
-              style={{ color: THEME.textTertiary }}
-            >
-              {user.role?.toLowerCase()}
-            </p>
-          </div>
         </div>
-        <button
-          onClick={handleSignOut}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all duration-200 hover:bg-white"
-          style={{ color: THEME.textSecondary }}
-        >
-          <LogOut className="w-3.5 h-3.5 flex-shrink-0" />
-          Logg ut
-        </button>
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-medium text-white truncate">
+            {user.name ?? "Spiller"}
+          </p>
+          <p className="text-xs text-[#737373] truncate">
+            {user.email}
+          </p>
+        </div>
       </div>
     </aside>
   );

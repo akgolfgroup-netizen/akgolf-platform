@@ -5,7 +5,12 @@ import { getStudentProfile } from "../actions";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import Link from "next/link";
-import { ArrowLeft, Mail, Phone, Calendar, BookOpen, ExternalLink } from "lucide-react";
+import { ArrowLeft, Mail, Phone, Calendar, BookOpen, ExternalLink, Target, TrendingDown, MessageCircle } from "lucide-react";
+import { PlayerProgressionChart } from "@/components/portal/admin/player-progression-chart";
+import { PlayerGoalsSection } from "@/components/portal/admin/player-goals-section";
+import { EditableCoachingNotes } from "@/components/portal/admin/editable-coaching-notes";
+import { CommunicationLog } from "@/components/portal/admin/communication-log";
+import { getCommunicationLogs } from "./communication-actions";
 
 export const dynamic = "force-dynamic";
 
@@ -39,6 +44,8 @@ export default async function StudentProfilePage({ params }: Props) {
   const student = await getStudentProfile(id);
   if (!student) notFound();
 
+  const communicationLogs = await getCommunicationLogs(id);
+
   const totalSpent = student.bookings
     .filter((b) => b.paymentStatus === "PAID")
     .reduce((sum, b) => sum + b.amount, 0);
@@ -54,7 +61,7 @@ export default async function StudentProfilePage({ params }: Props) {
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-[#0F2950]">
+          <h1 className="text-2xl font-bold text-[#0A1929]">
             {student.name ?? "Ukjent"}
           </h1>
           <div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
@@ -107,9 +114,38 @@ export default async function StudentProfilePage({ params }: Props) {
         />
       </div>
 
+      {/* Handicap Progression */}
+      {student.handicapEntries && student.handicapEntries.length > 0 && (
+        <div>
+          <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
+            <TrendingDown className="w-5 h-5 text-[#B07D4F]" />
+            Handicap-utvikling
+          </h2>
+          <div className="bg-white rounded-xl border border-gray-200 p-5">
+            <PlayerProgressionChart
+              handicapEntries={student.handicapEntries}
+              coachingSessions={student.coachingSessions}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Player Goals */}
+      {student.goals && student.goals.length > 0 && (
+        <div>
+          <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
+            <Target className="w-5 h-5 text-[#B07D4F]" />
+            Spillerens mål
+          </h2>
+          <div className="bg-white rounded-xl border border-gray-200 p-4">
+            <PlayerGoalsSection goals={student.goals} />
+          </div>
+        </div>
+      )}
+
       {/* Booking history */}
       <div>
-        <h2 className="text-lg font-semibold text-[#0F2950] mb-3">
+        <h2 className="text-lg font-semibold text-[#0A1929] mb-3">
           Bookinghistorikk
         </h2>
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
@@ -156,7 +192,7 @@ export default async function StudentProfilePage({ params }: Props) {
 
       {/* Coaching sessions */}
       <div>
-        <h2 className="text-lg font-semibold text-[#0F2950] mb-3">
+        <h2 className="text-lg font-semibold text-[#0A1929] mb-3">
           Coaching-okter
         </h2>
         <div className="space-y-3">
@@ -166,38 +202,23 @@ export default async function StudentProfilePage({ params }: Props) {
             </p>
           ) : (
             student.coachingSessions.map((cs) => (
-              <div
-                key={cs.id}
-                className="bg-white rounded-xl border border-gray-200 p-4"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-sm font-medium text-gray-800">
-                    {format(new Date(cs.sessionDate), "d. MMMM yyyy", { locale: nb })}
-                  </p>
-                  {cs.progressRating && (
-                    <span className="text-xs text-gray-500">
-                      Progresjon: {cs.progressRating}/10
-                    </span>
-                  )}
-                </div>
-                {cs.primaryFocus && (
-                  <p className="text-xs text-gray-500 mb-1">
-                    Fokus: {cs.primaryFocus}
-                  </p>
-                )}
-                {cs.aiKeyPoints.length > 0 && (
-                  <ul className="mt-2 space-y-1">
-                    {cs.aiKeyPoints.map((point, i) => (
-                      <li key={i} className="text-xs text-gray-600 flex gap-1.5">
-                        <span className="text-[#B8975C]">•</span>
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              <EditableCoachingNotes key={cs.id} session={cs} />
             ))
           )}
+        </div>
+      </div>
+
+      {/* Communication log */}
+      <div>
+        <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
+          <MessageCircle className="w-5 h-5 text-[#B07D4F]" />
+          Kommunikasjonslogg
+        </h2>
+        <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <CommunicationLog
+            studentId={id}
+            initialLogs={communicationLogs}
+          />
         </div>
       </div>
     </div>
@@ -219,7 +240,7 @@ function StatCard({
         {icon}
         <span className="text-xs font-medium uppercase">{label}</span>
       </div>
-      <p className="text-lg font-semibold text-[#0F2950]">{value}</p>
+      <p className="text-lg font-semibold text-[#0A1929]">{value}</p>
     </div>
   );
 }

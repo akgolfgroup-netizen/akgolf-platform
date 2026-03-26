@@ -1,6 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
-import { Topbar } from "@/components/portal/layout/topbar";
 import { BookCoachingForm } from "./book-coaching-form";
 
 export default async function NyBookingPage() {
@@ -30,11 +29,8 @@ export default async function NyBookingPage() {
   });
 
   return (
-    <div>
-      <Topbar title="Book coaching" />
-      <div className="p-6 max-w-2xl">
-        <BookCoachingForm serviceTypes={serviceTypes} />
-      </div>
+    <div className="p-6 max-w-2xl">
+      <BookCoachingForm serviceTypes={serviceTypes} />
     </div>
   );
 }

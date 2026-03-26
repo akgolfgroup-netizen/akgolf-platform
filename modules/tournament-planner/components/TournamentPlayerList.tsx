@@ -35,7 +35,7 @@ export function TournamentPlayerList({ plans }: TournamentPlayerListProps) {
           ) : (
             <div
               className="w-7 h-7 rounded-md flex items-center justify-center text-[10px] font-bold text-[var(--color-bg-deep)] flex-shrink-0"
-              style={{ background: "linear-gradient(135deg, #c9a96e 0%, #B8975C 100%)" }}
+              style={{ background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)" }}
             >
               {plan.student.name?.charAt(0) ?? "?"}
             </div>

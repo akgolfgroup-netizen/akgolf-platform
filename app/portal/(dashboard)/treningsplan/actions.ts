@@ -3,11 +3,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 
 import { prisma } from "@/lib/portal/prisma";
-import {
-  startOfISOWeek,
-  endOfISOWeek,
-  isWithinInterval,
-} from "date-fns";
+import { endOfISOWeek, isWithinInterval } from "date-fns";
 
 export async function getActivePlan(studentId?: string) {
   const user = await requirePortalUser();
@@ -32,7 +28,6 @@ export async function getCurrentWeekSessions(studentId?: string) {
 
   const id = studentId ?? user.id;
   const now = new Date();
-  const weekStart = startOfISOWeek(now);
   const weekEnd = endOfISOWeek(now);
 
   const plan = await prisma.trainingPlan.findFirst({

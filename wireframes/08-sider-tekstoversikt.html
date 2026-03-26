@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Sider og tekstinnhold</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #171717; line-height: 1.6; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+
+    h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    h2 { font-size: 24px; font-weight: 700; margin: 48px 0 24px; padding-top: 48px; border-top: 1px solid #e5e5e5; }
+    h3 { font-size: 18px; font-weight: 600; margin: 24px 0 12px; }
+    h4 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #737373; margin-bottom: 12px; }
+
+    p { color: #525252; margin-bottom: 16px; }
+    .subtitle { font-size: 18px; color: #737373; margin-bottom: 48px; }
+
+    .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .card-title { font-size: 16px; font-weight: 600; }
+    .card-path { font-size: 12px; color: #737373; font-family: monospace; background: #f5f5f5; padding: 2px 8px; border-radius: 4px; }
+
+    .badge { display: inline-flex; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+    .badge-done { background: #dcfce7; color: #16a34a; }
+    .badge-partial { background: #fef3c7; color: #d97706; }
+    .badge-todo { background: #fee2e2; color: #dc2626; }
+    .badge-portal { background: #dbeafe; color: #1d4ed8; }
+
+    .section-list { list-style: none; }
+    .section-list li { padding: 8px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+    .section-list li:last-child { border-bottom: none; }
+
+    .check { color: #16a34a; }
+    .pending { color: #d97706; }
+    .missing { color: #dc2626; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 16px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e5e5; }
+    th { background: #fafafa; font-weight: 600; }
+
+    .source-link { color: #2563eb; text-decoration: none; font-size: 13px; }
+    .source-link:hover { text-decoration: underline; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .summary-box { background: #171717; color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 32px; }
+    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+    .summary-value { font-size: 32px; font-weight: 700; }
+    .summary-label { font-size: 12px; color: #a3a3a3; margin-top: 4px; }
+
+    @media (max-width: 600px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* Implementation Status Banner */
+    .impl-status-banner {
+      background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+      color: white;
+      padding: 8px 16px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .impl-status-banner .status-tag {
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Implementation Status Banner -->
+  <div class="impl-status-banner">
+    Implementeringsstatus: Tekstinnhold <span class="status-tag">FERDIG</span>
+  </div>
+
+  <div class="container">
+    <h1>Sider og tekstinnhold</h1>
+    <p class="subtitle">Oversikt over alle sider som trenger tekstinnhold</p>
+
+    <!-- Summary -->
+    <div class="summary-box">
+      <div class="summary-grid">
+        <div>
+          <div class="summary-value">35</div>
+          <div class="summary-label">Totalt sider</div>
+        </div>
+        <div>
+          <div class="summary-value" style="color:#4ade80">35</div>
+          <div class="summary-label">Ferdig implementert</div>
+        </div>
+        <div>
+          <div class="summary-value" style="color:#fbbf24">0</div>
+          <div class="summary-label">Delvis ferdig</div>
+        </div>
+        <div>
+          <div class="summary-value" style="color:#f87171">0</div>
+          <div class="summary-label">Mangler</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== -->
+    <!-- MARKEDSSIDE           -->
+    <!-- ===================== -->
+    <h2>1. Markedsside (Offentlig)</h2>
+    <p>Sider som er synlige for alle besøkende før innlogging.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Forside</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Hero med CTA</li>
+          <li><span class="check">✓</span> Divisjoner (Coaching, Junior, Utvikling)</li>
+          <li><span class="check">✓</span> How It Works</li>
+          <li><span class="check">✓</span> Foundation Test</li>
+          <li><span class="check">✓</span> Coaching-pakker (Foundation, Foundation+, Elite)</li>
+          <li><span class="check">✓</span> Portal Features</li>
+          <li><span class="check">✓</span> Drop-in vs Abonnement</li>
+          <li><span class="check">✓</span> Team (trenere)</li>
+          <li><span class="check">✓</span> FAQ</li>
+          <li><span class="check">✓</span> Søknadsskjema</li>
+        </ul>
+        <p style="font-size:13px;color:#737373;margin-top:12px;">
+          <strong>Kilde:</strong> lib/website-constants.ts
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Academy (Coaching)</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/academy/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Hero med sub-brand</li>
+          <li><span class="check">✓</span> Coaching-pakker</li>
+          <li><span class="check">✓</span> Treningsmetodikk (AK-metoden)</li>
+          <li><span class="check">✓</span> Testimonials med handicap-forbedring</li>
+          <li><span class="check">✓</span> Booking-CTA med value props</li>
+        </ul>
+        <p style="font-size:13px;color:#737373;margin-top:12px;">
+          <strong>Kilde:</strong> lib/website-constants.ts (ACADEMY_TESTIMONIALS, ACADEMY_CTA)
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Junior Academy</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/junior/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Hero med sub-brand</li>
+          <li><span class="check">✓</span> Aldersinndeling (Minis, Aspiranter, Utviklere, Elite)</li>
+          <li><span class="check">✓</span> Sesongprogram (4 sesonger)</li>
+          <li><span class="check">✓</span> Priser junior-pakker</li>
+          <li><span class="check">✓</span> Foreldreinfo</li>
+          <li><span class="check">✓</span> Coach-profil</li>
+        </ul>
+        <p style="font-size:13px;color:#737373;margin-top:12px;">
+          <strong>Kilde:</strong> lib/website-constants.ts (JUNIOR_AGE_GROUPS, JUNIOR_SEASON_PROGRAM, JUNIOR_PACKAGES)
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Utvikling & Teknologi</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/utvikling/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Hero med sub-brand</li>
+          <li><span class="check">✓</span> Produktoversikt (QR-skilt, IUP, Sportsplan)</li>
+          <li><span class="check">✓</span> Software features</li>
+          <li><span class="check">✓</span> Klubbtrening features</li>
+          <li><span class="check">✓</span> Case studies (2 klubber)</li>
+          <li><span class="check">✓</span> Priser og kontakt</li>
+        </ul>
+        <p style="font-size:13px;color:#737373;margin-top:12px;">
+          <strong>Kilde:</strong> lib/website-constants.ts (UTVIKLING_PRODUCTS, UTVIKLING_CASE_STUDIES)
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Personvern</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/personvern/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Personvernerklæring</li>
+          <li><span class="check">✓</span> GDPR-info</li>
+          <li><span class="check">✓</span> Kontaktinfo</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Booking-flyt</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/booking/*</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Velg tjeneste</li>
+          <li><span class="check">✓</span> Velg instruktør</li>
+          <li><span class="check">✓</span> Velg tid</li>
+          <li><span class="check">✓</span> Betaling</li>
+          <li><span class="check">✓</span> Bekreftelse</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ===================== -->
+    <!-- SPILLERPORTAL         -->
+    <!-- ===================== -->
+    <h2>2. Spillerportal (Innlogget)</h2>
+    <p>Sider for innloggede spillere. UI-tekst og hjelpetekst.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Dashboard</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/portal/(dashboard)/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Velkomsttekst (fra PORTAL_EMPTY_STATES)</li>
+          <li><span class="check">✓</span> Tomtilstand-tekst (ingen bookinger)</li>
+          <li><span class="check">✓</span> Onboarding-hint definert i constants</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Bookinger</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/portal/(dashboard)/bookinger/*</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Ingen bookinger-tekst</li>
+          <li><span class="check">✓</span> Kanselleringsregler (i constants)</li>
+          <li><span class="check">✓</span> Bekreftelsesmeldinger</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Treningsplan</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/portal/(dashboard)/treningsplan/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Intro til AI-treningsplan</li>
+          <li><span class="check">✓</span> Hvordan bruke planen (i constants)</li>
+          <li><span class="check">✓</span> Tomtilstand fra PORTAL_EMPTY_STATES</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Statistikk</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/portal/(dashboard)/statistikk/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Strokes Gained forklaring (i constants)</li>
+          <li><span class="check">✓</span> Hvordan registrere runder</li>
+          <li><span class="check">✓</span> Tomtilstand fra PORTAL_EMPTY_STATES</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Treningsdagbok</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/portal/(dashboard)/dagbok/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Hvorfor logge trening (i constants)</li>
+          <li><span class="check">✓</span> Kategorier (SLAG) definert</li>
+          <li><span class="check">✓</span> Tomtilstand fra PORTAL_EMPTY_STATES</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Kalender</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/portal/(dashboard)/kalender/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Fargekoder forklaring (i constants)</li>
+          <li><span class="check">✓</span> Synk til Google/Apple</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Profil & Mål</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/portal/(dashboard)/profil/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Mål-setting forklaring (i constants)</li>
+          <li><span class="check">✓</span> Achievements beskrivelser (i constants)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Analyse (AI)</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/portal/(dashboard)/analyse/page.tsx</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> AI-analyse intro (i constants)</li>
+          <li><span class="check">✓</span> Svakhetsanalyse forklaring</li>
+          <li><span class="check">✓</span> Fokusanbefaling</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ===================== -->
+    <!-- ADMIN                 -->
+    <!-- ===================== -->
+    <h2>3. Admin (Instruktør/Admin)</h2>
+    <p>Administrasjonssider for trenere og admin.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Spillerliste</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/portal/(dashboard)/admin/elever/*</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Ingen spillere-tekst (ADMIN_CONTENT)</li>
+          <li><span class="check">✓</span> Spillerkategorier (A-K) definert</li>
+          <li><span class="check">✓</span> Spillerprogresjon-graf (PlayerProgressionChart)</li>
+          <li><span class="check">✓</span> Spillermål-seksjon (PlayerGoalsSection)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Kalender & Tilgjengelighet</span>
+          <span class="badge badge-done">Ferdig</span>
+        </div>
+        <div class="card-path">/app/portal/(dashboard)/admin/kalender/*</div>
+        <ul class="section-list">
+          <li><span class="check">✓</span> Hvordan sette opp timer</li>
+          <li><span class="check">✓</span> Tilgjengelighet-guide (ADMIN_CONTENT)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ===================== -->
+    <!-- TEKSTKILDER           -->
+    <!-- ===================== -->
+    <h2>4. Tekstkilder (Google Drive)</h2>
+    <p>Eksisterende dokumenter som inneholder tekst som kan brukes.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Dokument</th>
+          <th>Innhold</th>
+          <th>Brukes til</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>01_AK_Golf_Academy/metodikk/AK_Masterdokument_v2.0.docx</code></td>
+          <td>Komplett metodikk, SLAG-kategorier, treningspyramide, spillerkategorier</td>
+          <td>Junior, Utvikling, Portal (Statistikk, Dagbok)</td>
+        </tr>
+        <tr>
+          <td><code>01_AK_Golf_Academy/metodikk/CANON_System_*.md</code></td>
+          <td>Kanonisk metodikk: Core, Trening, Spiller</td>
+          <td>Academy, Portal (Treningsplan)</td>
+        </tr>
+        <tr>
+          <td><code>01_AK_Golf_Academy/strategi/Forretningsplan_2026_2030.md</code></td>
+          <td>Visjon, mål, tjenester, priser</td>
+          <td>Om oss, Priser</td>
+        </tr>
+        <tr>
+          <td><code>02_WANG_Toppidrett/</code></td>
+          <td>Junior-program, sesongplaner, aldersinndeling</td>
+          <td>Junior Academy</td>
+        </tr>
+        <tr>
+          <td><code>03_AK_Golf_Software/</code></td>
+          <td>Produktspecs, roadmap, features</td>
+          <td>Utvikling & Teknologi</td>
+        </tr>
+        <tr>
+          <td><code>04_Mulligan_Indoor/</code></td>
+          <td>Simulator-info, priser</td>
+          <td>Booking (simulator-tjenester)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ===================== -->
+    <!-- NESTE STEG            -->
+    <!-- ===================== -->
+    <h2>5. Prioritert rekkefølge</h2>
+
+    <div class="card">
+      <h4>Prioritet 1 — Markedsside (konvertering)</h4>
+      <ol style="padding-left: 20px; font-size: 14px; color: #525252;">
+        <li>Junior Academy — komplett med aldersinndeling og priser</li>
+        <li>Academy — testimonials og coaching-filosofi</li>
+        <li>Utvikling — produkter og case studies</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h4>Prioritet 2 — Portal (brukeropplevelse)</h4>
+      <ol style="padding-left: 20px; font-size: 14px; color: #525252;">
+        <li>Onboarding-tekst for nye brukere</li>
+        <li>Tomtilstand-meldinger</li>
+        <li>Hjelpetekst for hver funksjon</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h4>Prioritet 3 — Admin</h4>
+      <ol style="padding-left: 20px; font-size: 14px; color: #525252;">
+        <li>Guide for nye instruktører</li>
+        <li>Spillerkategori-forklaringer</li>
+      </ol>
+    </div>
+
+  </div>
+</body>
+</html>

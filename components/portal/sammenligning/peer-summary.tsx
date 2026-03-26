@@ -11,7 +11,7 @@ export function PeerSummary({ skillLevelLabel, peerCount, aboveAverageCount, tot
   return (
     <div
       className="rounded-xl p-4 border border-[var(--color-gold)]/20"
-      style={{ background: "rgba(184,151,92,0.05)" }}
+      style={{ background: "rgba(176,125,79,0.05)" }}
     >
       <p className="text-sm text-[var(--color-snow)]">
         Du er over snittet i{" "}

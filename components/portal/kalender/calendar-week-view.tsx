@@ -1,6 +1,5 @@
 import {
   format,
-  startOfISOWeek,
   addDays,
   isToday,
   isSameDay,
@@ -8,16 +7,6 @@ import {
 import { nb } from "date-fns/locale";
 import type { CalendarEvent } from "@/app/portal/(dashboard)/kalender/actions";
 import { EventChip } from "./event-chip";
-
-const THEME = {
-  gold: "#B8975C",
-  navy: "#0F2950",
-  text: "#02060D",
-  textSecondary: "#64748B",
-  textTertiary: "#9CA3AF",
-  border: "#EBE5DA",
-  bgSubtle: "#FAFBFC",
-};
 
 interface CalendarWeekViewProps {
   events: CalendarEvent[];
@@ -38,22 +27,24 @@ export function CalendarWeekView({ events, weekStart }: CalendarWeekViewProps) {
         return (
           <div key={day.toISOString()} className="flex flex-col">
             {/* Day header */}
-            <div 
-              className="text-center py-3 mb-3 rounded-xl"
-              style={{
-                background: isTodayFlag ? `${THEME.gold}15` : "transparent",
-                border: isTodayFlag ? `1px solid ${THEME.gold}40` : `1px solid ${THEME.border}`,
-              }}
+            <div
+              className={`text-center py-3 mb-3 rounded-xl border ${
+                isTodayFlag
+                  ? "bg-[rgba(176,125,79,0.15)] border-[rgba(176,125,79,0.4)]"
+                  : "bg-transparent border-[rgba(15,41,80,0.4)]"
+              }`}
             >
-              <p 
-                className="text-xs font-medium uppercase tracking-wider"
-                style={{ color: isTodayFlag ? THEME.gold : THEME.textTertiary }}
+              <p
+                className={`text-xs font-medium uppercase tracking-wider ${
+                  isTodayFlag ? "text-[var(--color-gold)]" : "text-[var(--color-snow)]/50"
+                }`}
               >
                 {format(day, "EEE", { locale: nb })}
               </p>
               <p
-                className="text-xl font-semibold mt-1"
-                style={{ color: isTodayFlag ? THEME.navy : THEME.text }}
+                className={`text-xl font-semibold mt-1 ${
+                  isTodayFlag ? "text-[var(--color-snow)]" : "text-[var(--color-snow)]"
+                }`}
               >
                 {format(day, "d")}
               </p>
@@ -62,14 +53,8 @@ export function CalendarWeekView({ events, weekStart }: CalendarWeekViewProps) {
             {/* Events */}
             <div className="space-y-2 flex-1 min-h-[100px]">
               {dayEvents.length === 0 ? (
-                <div 
-                  className="h-16 rounded-xl flex items-center justify-center"
-                  style={{ 
-                    background: THEME.bgSubtle,
-                    border: `1px dashed ${THEME.border}`,
-                  }}
-                >
-                  <span style={{ color: THEME.textTertiary }}>–</span>
+                <div className="h-16 rounded-xl flex items-center justify-center bg-transparent border border-dashed border-[rgba(15,41,80,0.4)]">
+                  <span className="text-[var(--color-snow)]/50">–</span>
                 </div>
               ) : (
                 dayEvents.map((e) => (

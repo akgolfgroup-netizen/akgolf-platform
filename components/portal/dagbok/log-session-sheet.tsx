@@ -65,7 +65,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
       <div
         className="relative w-full max-w-md rounded-t-2xl sm:rounded-2xl p-6"
         style={{
-          background: "linear-gradient(180deg, #0F2950 0%, #0A1929 100%)",
+          background: "linear-gradient(180deg, #0A1929 0%, #0A1929 100%)",
           border: "1px solid rgba(15,41,80,0.9)",
         }}
       >
@@ -101,7 +101,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
                   <Star
                     className="w-6 h-6"
                     style={{
-                      color: n <= rating ? "var(--color-gold)" : "rgba(184,151,92,0.2)",
+                      color: n <= rating ? "var(--color-gold)" : "rgba(176,125,79,0.2)",
                       fill: n <= rating ? "var(--color-gold)" : "transparent",
                     }}
                   />
@@ -123,7 +123,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
                   onClick={() => setFocusArea(opt.value)}
                   className="px-3 py-1 rounded-full text-xs font-medium border transition-colors"
                   style={{
-                    background: focusArea === opt.value ? "rgba(184,151,92,0.15)" : "transparent",
+                    background: focusArea === opt.value ? "rgba(176,125,79,0.15)" : "transparent",
                     borderColor: focusArea === opt.value ? "var(--color-gold)" : "rgba(15,41,80,0.8)",
                     color: focusArea === opt.value ? "var(--color-gold)" : "var(--color-gold-muted)",
                   }}
@@ -198,7 +198,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
             disabled={isPending}
             className="w-full py-2.5 rounded-xl text-sm font-semibold transition-opacity"
             style={{
-              background: "linear-gradient(135deg, #c9a96e 0%, #B8975C 100%)",
+              background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
               color: "#0a1929",
               opacity: isPending ? 0.7 : 1,
             }}

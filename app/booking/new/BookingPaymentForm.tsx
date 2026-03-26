@@ -33,24 +33,6 @@ interface Props {
   studentId: string;
 }
 
-// Warm Light Theme
-const THEME = {
-  bg: "#FAFBFC",
-  bgElevated: "#FFFFFF",
-  gold: "#B8975C",
-  goldLight: "#E8D4B0",
-  goldMuted: "#D4C4A8",
-  navy: "#0F2950",
-  text: "#02060D",
-  textMuted: "#64748B",
-  textLight: "#9CA3AF",
-  border: "#EBE5DA",
-  error: "#EF4444",
-  shadow: "0 4px 8px rgba(0,0,0,0.1)",
-  shadowHover: "0 8px 30px rgba(0,0,0,0.1)",
-  shadowGold: "0 4px 16px rgba(184,151,92,0.3)",
-};
-
 function VippsIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -74,15 +56,13 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
   const startDate = new Date(startTime);
   if (isNaN(startDate.getTime())) {
     return (
-      <div 
-        className="min-h-screen flex items-center justify-center"
-        style={{ background: THEME.bg }}
-      >
-        <p style={{ color: THEME.textMuted }}>Ugyldig tidspunkt.</p>
+      <div className="min-h-screen flex items-center justify-center bg-snow">
+        <p className="text-ink-50">Ugyldig tidspunkt.</p>
       </div>
     );
   }
-  const priceNok = serviceType.price / 100;
+  // Prisene er lagret i kroner (ikke øre)
+  const priceNok = serviceType.price;
 
   const formattedDate = format(startDate, "EEEE d. MMMM yyyy", { locale: nb });
   const formattedTime = format(startDate, "HH:mm", { locale: nb });
@@ -192,21 +172,14 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
-          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border"
-          style={{ 
-            background: `${THEME.gold}15`,
-            borderColor: `${THEME.gold}30`,
-          }}
+          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border bg-gold/10 border-gold/30"
         >
-          <CreditCard size={28} style={{ color: THEME.gold }} />
+          <CreditCard size={28} className="text-gold" />
         </motion.div>
-        <h1 
-          className="text-2xl font-semibold mb-2"
-          style={{ color: THEME.navy }}
-        >
+        <h1 className="text-2xl font-semibold mb-2 text-navy">
           Bekreft og betal
         </h1>
-        <p style={{ color: THEME.textMuted }}>
+        <p className="text-ink-50">
           Gjennomgå detaljene og velg betalingsmetode
         </p>
       </div>
@@ -216,34 +189,23 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="rounded-3xl p-8 mb-6 border"
-        style={{
-          background: THEME.bgElevated,
-          borderColor: THEME.border,
-          boxShadow: THEME.shadow,
-        }}
+        className="rounded-3xl p-8 mb-6 border bg-white border-border shadow-md"
       >
-        <h3 
-          className="text-xs font-semibold uppercase tracking-widest mb-6"
-          style={{ color: THEME.textLight }}
-        >
+        <h3 className="text-xs font-semibold uppercase tracking-widest mb-6 text-ink-40">
           Bookingdetaljer
         </h3>
 
         <div className="space-y-5">
           {/* Service */}
           <div className="flex items-start gap-4">
-            <div 
-              className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-              style={{ background: `${THEME.gold}12` }}
-            >
-              <CreditCard size={20} style={{ color: THEME.gold }} />
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gold/10">
+              <CreditCard size={20} className="text-gold" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide mb-1" style={{ color: THEME.textLight }}>Tjeneste</p>
-              <p className="font-semibold" style={{ color: THEME.navy }}>{serviceType.name}</p>
+              <p className="text-xs uppercase tracking-wide mb-1 text-ink-40">Tjeneste</p>
+              <p className="font-semibold text-navy">{serviceType.name}</p>
               {serviceType.description && (
-                <p className="text-sm mt-1" style={{ color: THEME.textMuted }}>
+                <p className="text-sm mt-1 text-ink-50">
                   {serviceType.description}
                 </p>
               )}
@@ -252,11 +214,8 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
 
           {/* Instructor */}
           <div className="flex items-center gap-4">
-            <div 
-              className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-              style={{ background: `${THEME.gold}12` }}
-            >
-              <User size={20} style={{ color: THEME.gold }} />
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gold/10">
+              <User size={20} className="text-gold" />
             </div>
             <div className="flex items-center gap-3">
               {instructor.user.image && (
@@ -269,8 +228,8 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
                 />
               )}
               <div>
-                <p className="text-xs uppercase tracking-wide mb-1" style={{ color: THEME.textLight }}>Instruktør</p>
-                <p className="font-semibold" style={{ color: THEME.navy }}>
+                <p className="text-xs uppercase tracking-wide mb-1 text-ink-40">Instruktør</p>
+                <p className="font-semibold text-navy">
                   {instructor.user.name ?? "Ukjent instruktør"}
                 </p>
               </div>
@@ -279,15 +238,12 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
 
           {/* Date */}
           <div className="flex items-center gap-4">
-            <div 
-              className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-              style={{ background: `${THEME.gold}12` }}
-            >
-              <Calendar size={20} style={{ color: THEME.gold }} />
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gold/10">
+              <Calendar size={20} className="text-gold" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide mb-1" style={{ color: THEME.textLight }}>Dato og tid</p>
-              <p className="font-semibold" style={{ color: THEME.navy }}>
+              <p className="text-xs uppercase tracking-wide mb-1 text-ink-40">Dato og tid</p>
+              <p className="font-semibold text-navy">
                 {capitalizedDate} kl. {formattedTime}
               </p>
             </div>
@@ -295,29 +251,20 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
 
           {/* Duration */}
           <div className="flex items-center gap-4">
-            <div 
-              className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-              style={{ background: `${THEME.gold}12` }}
-            >
-              <Clock size={20} style={{ color: THEME.gold }} />
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gold/10">
+              <Clock size={20} className="text-gold" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide mb-1" style={{ color: THEME.textLight }}>Varighet</p>
-              <p className="font-semibold" style={{ color: THEME.navy }}>{serviceType.duration} minutter</p>
+              <p className="text-xs uppercase tracking-wide mb-1 text-ink-40">Varighet</p>
+              <p className="font-semibold text-navy">{serviceType.duration} minutter</p>
             </div>
           </div>
         </div>
 
         {/* Price */}
-        <div 
-          className="mt-6 pt-6 flex items-center justify-between border-t"
-          style={{ borderColor: THEME.border }}
-        >
-          <span className="text-sm" style={{ color: THEME.textMuted }}>Totalpris</span>
-          <span 
-            className="text-3xl font-semibold"
-            style={{ color: THEME.gold }}
-          >
+        <div className="mt-6 pt-6 flex items-center justify-between border-t border-border">
+          <span className="text-sm text-ink-50">Totalpris</span>
+          <span className="text-3xl font-semibold text-gold">
             {priceNok.toLocaleString("nb-NO", { style: "currency", currency: "NOK", minimumFractionDigits: 0, maximumFractionDigits: 0 })}
           </span>
         </div>
@@ -328,17 +275,9 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="rounded-3xl p-8 border"
-        style={{
-          background: THEME.bgElevated,
-          borderColor: THEME.border,
-          boxShadow: THEME.shadow,
-        }}
+        className="rounded-3xl p-8 border bg-white border-border shadow-md"
       >
-        <p 
-          className="text-xs font-semibold uppercase tracking-widest mb-5"
-          style={{ color: THEME.textLight }}
-        >
+        <p className="text-xs font-semibold uppercase tracking-widest mb-5 text-ink-40">
           Velg betalingsmetode
         </p>
 
@@ -348,13 +287,11 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
             <motion.button
               onClick={handleStripe}
               disabled={isAnyLoading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50 text-white shadow-lg shadow-gold/30"
               style={{
-                background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})`,
-                color: "#FFFFFF",
-                boxShadow: THEME.shadowGold,
+                background: "linear-gradient(135deg, var(--color-gold), var(--color-gold-light))",
               }}
-              whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(184,151,92,0.3)" }}
+              whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(176,125,79,0.3)" }}
               whileTap={{ scale: 0.99 }}
             >
               {loading === "stripe" ? (
@@ -376,13 +313,8 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
             <motion.button
               onClick={handleVipps}
               disabled={isAnyLoading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50 border-2"
-              style={{
-                background: "transparent",
-                color: "#FF5B24",
-                borderColor: "#FF5B24",
-              }}
-              whileHover={{ 
+              className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50 border-2 bg-transparent text-[#FF5B24] border-[#FF5B24]"
+              whileHover={{
                 scale: 1.01,
                 background: "#FF5B24",
                 color: "#FFFFFF",
@@ -409,21 +341,17 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-5 flex items-start gap-3 px-4 py-4 rounded-xl border"
-            style={{ 
-              background: `${THEME.error}10`,
-              borderColor: `${THEME.error}30`,
-            }}
+            className="mt-5 flex items-start gap-3 px-4 py-4 rounded-xl border bg-error/10 border-error/30"
           >
-            <AlertCircle size={18} style={{ color: THEME.error }} className="flex-shrink-0 mt-0.5" />
-            <p className="text-sm" style={{ color: THEME.error }}>{error}</p>
+            <AlertCircle size={18} className="text-error flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-error">{error}</p>
           </motion.div>
         )}
 
         {/* Security Note */}
         <div className="mt-6 flex items-center justify-center gap-2">
-          <ShieldCheck size={14} style={{ color: THEME.textLight }} />
-          <p className="text-xs" style={{ color: THEME.textLight }}>
+          <ShieldCheck size={14} className="text-ink-40" />
+          <p className="text-xs text-ink-40">
             Sikker betaling. AK Golf lagrer ikke kortinformasjon.
           </p>
         </div>

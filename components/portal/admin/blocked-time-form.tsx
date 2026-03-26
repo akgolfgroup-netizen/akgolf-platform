@@ -41,41 +41,41 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-xl border border-gray-200 p-4"
+      className="rounded-2xl border border-[rgba(15,41,80,0.4)] bg-[rgba(10,25,41,0.7)] backdrop-blur-md p-4"
     >
-      <h3 className="text-sm font-semibold text-[#0F2950] mb-3">
+      <h3 className="text-sm font-semibold text-[var(--color-snow)] mb-3">
         Legg til blokkert tid
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div>
-          <label className="text-xs text-gray-500 mb-1 block">Fra</label>
+          <label className="text-xs text-[var(--color-snow)]/50 mb-1 block">Fra</label>
           <input
             type="datetime-local"
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+            className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
             required
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 mb-1 block">Til</label>
+          <label className="text-xs text-[var(--color-snow)]/50 mb-1 block">Til</label>
           <input
             type="datetime-local"
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+            className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
             required
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 mb-1 block">
-            Arsak (valgfritt)
+          <label className="text-xs text-[var(--color-snow)]/50 mb-1 block">
+            Årsak (valgfritt)
           </label>
           <input
             type="text"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+            className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] placeholder:text-[var(--color-snow)]/40 bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
             placeholder="F.eks. ferie, sykdom..."
           />
         </div>
@@ -83,7 +83,7 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
       <button
         type="submit"
         disabled={saving || !startTime || !endTime}
-        className="mt-3 flex items-center gap-1.5 px-4 py-2 text-xs font-medium bg-[#0F2950] text-white rounded-lg hover:bg-[#0F2950]/90 disabled:opacity-50 transition-colors"
+        className="mt-3 flex items-center gap-1.5 px-4 py-2 text-xs font-medium bg-[var(--color-gold)] text-white rounded-xl hover:bg-[var(--color-gold)]/90 disabled:opacity-50 transition-colors"
       >
         <Plus className="w-3.5 h-3.5" />
         {saving ? "Legger til..." : "Legg til"}

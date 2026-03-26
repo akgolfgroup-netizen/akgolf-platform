@@ -1,7 +1,16 @@
+// Brand Guide Final — Farger per kontekst
+// Monokrom + Signal: Bronse #B07D4F · Blå #38BDF8 · Grønn #10B981
 const VARIANTS = {
-  midnight: { path: "#0A1929", dot: "#B8975C" },
-  gold:     { path: "#B8975C", dot: "#B8975C" },
-  white:    { path: "#FFFFFF", dot: "#B8975C" },
+  // Hovedvarianter (Brand Guide Final)
+  neutral:   { path: "#000000", dot: "#D4D4D4" },  // Paraply — nøytral prikk
+  academy:   { path: "#000000", dot: "#B07D4F" },  // Golf Academy — bronse
+  software:  { path: "#000000", dot: "#38BDF8" },  // Software — blå
+  utvikling: { path: "#000000", dot: "#10B981" },  // Utvikling — grønn
+  inverted:  { path: "#FFFFFF", dot: "#525252" },  // Invertert (mørk bakgrunn)
+  // Legacy (bakoverkompatibilitet → nå svart bokstaver)
+  midnight:  { path: "#000000", dot: "#B07D4F" },
+  gold:      { path: "#B07D4F", dot: "#B07D4F" },
+  white:     { path: "#FFFFFF", dot: "#B07D4F" },
 } as const;
 
 type LogoVariant = keyof typeof VARIANTS;

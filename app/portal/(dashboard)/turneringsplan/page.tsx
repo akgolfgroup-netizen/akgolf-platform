@@ -2,7 +2,6 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { getTournamentsWithPlans } from "@/modules/tournament-planner";
 import { getPeriodizationForDateRange } from "@/modules/tournament-planner/actions";
-import { Topbar } from "@/components/portal/layout/topbar";
 import { TournamentListWithPeriods } from "./tournament-list-with-periods";
 import { startOfYear, endOfYear } from "date-fns";
 
@@ -23,14 +22,15 @@ export default async function TurneringsplanPage() {
   );
 
   return (
-    <div>
-      <Topbar title="Turneringsplan" />
-      <div className="p-6 max-w-2xl">
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold text-[var(--color-snow)]">Turneringsplan</h1>
+
+      <div className="max-w-2xl">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-[var(--color-snow)]">
+          <h2 className="text-lg font-semibold text-[var(--color-snow)]">
             Kommende turneringer
           </h2>
-          <span className="text-xs text-[var(--color-gold-muted)]">
+          <span className="text-xs text-[var(--color-ink-40)]">
             {tournaments.length} turneringer
           </span>
         </div>
