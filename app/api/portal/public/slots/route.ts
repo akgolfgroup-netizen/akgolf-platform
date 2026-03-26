@@ -5,7 +5,7 @@ import { BookingStatus } from "@prisma/client";
 
 export async function GET(req: NextRequest) {
   const corsOrigin =
-    process.env.WEBSITE_URL ?? "http://localhost:3003";
+    process.env.WEBSITE_URL ?? "http://localhost:3000";
 
   const corsHeaders = {
     "Access-Control-Allow-Origin": corsOrigin,
@@ -116,7 +116,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function OPTIONS(req: NextRequest) {
-  const corsOrigin = process.env.WEBSITE_URL ?? "http://localhost:3003";
+  const corsOrigin = process.env.WEBSITE_URL ?? "http://localhost:3000";
   return new NextResponse(null, {
     headers: {
       "Access-Control-Allow-Origin": corsOrigin,

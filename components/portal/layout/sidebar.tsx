@@ -42,20 +42,21 @@ const staffItems = [
   { href: "/portal/admin/bookinger", label: "Bookinger", icon: CalendarPlus },
   { href: "/portal/admin/elever", label: "Elever", icon: UsersIcon },
   { href: "/portal/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
+  { href: "/portal/admin/kapasitet", label: "Kapasitet", icon: BarChart3 },
   { href: "/portal/admin/denne-uken", label: "Denne uken", icon: CalendarCheck },
   { href: "/portal/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
 ];
 
-// Dark theme matching wireframe
+// Dark theme using CSS variables (globals.css)
 const THEME = {
-  bg: "#171717",
-  bgHover: "#262626",
-  bgActive: "#262626",
-  gold: "#B07D4F",
-  white: "#FFFFFF",
-  textMuted: "#A3A3A3",
-  textDim: "#737373",
-  border: "#333333",
+  bg: "var(--color-ink-80)",           // #171717
+  bgHover: "var(--color-ink-70)",      // #262626
+  bgActive: "var(--color-ink-70)",     // #262626
+  gold: "var(--color-gold)",           // #B07D4F
+  white: "var(--color-white)",         // #FFFFFF
+  textMuted: "var(--color-ink-30)",    // #A3A3A3
+  textDim: "var(--color-ink-40)",      // #737373
+  border: "var(--color-ink-60)",       // ~#333
 };
 
 interface SidebarProps {

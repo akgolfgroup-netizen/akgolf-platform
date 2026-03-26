@@ -17,12 +17,13 @@ interface BookingCardProps {
   };
 }
 
+// Status colors using semantic tokens
 const statusConfig: Record<string, { label: string; bg: string; color: string }> = {
-  PENDING: { label: "Venter", bg: "rgba(217,119,6,0.2)", color: "#FBBF24" },
-  CONFIRMED: { label: "Bekreftet", bg: "rgba(34,197,94,0.2)", color: "#86EFAC" },
-  CANCELLED: { label: "Avlyst", bg: "rgba(220,38,38,0.2)", color: "#FCA5A5" },
-  COMPLETED: { label: "Fullført", bg: "rgba(156,163,175,0.2)", color: "#D1D5DB" },
-  NO_SHOW: { label: "Møtte ikke", bg: "rgba(220,38,38,0.2)", color: "#FCA5A5" },
+  PENDING: { label: "Venter", bg: "color-mix(in srgb, var(--color-warning) 20%, transparent)", color: "var(--color-warning)" },
+  CONFIRMED: { label: "Bekreftet", bg: "color-mix(in srgb, var(--color-success) 20%, transparent)", color: "var(--color-success)" },
+  CANCELLED: { label: "Avlyst", bg: "color-mix(in srgb, var(--color-error) 20%, transparent)", color: "var(--color-error)" },
+  COMPLETED: { label: "Fullført", bg: "color-mix(in srgb, var(--color-ink-30) 20%, transparent)", color: "var(--color-ink-30)" },
+  NO_SHOW: { label: "Møtte ikke", bg: "color-mix(in srgb, var(--color-error) 20%, transparent)", color: "var(--color-error)" },
 };
 
 export function BookingCard({ booking }: BookingCardProps) {

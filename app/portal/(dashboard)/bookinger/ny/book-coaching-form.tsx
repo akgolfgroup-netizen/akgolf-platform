@@ -68,7 +68,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
     try {
       const dateStr = format(date, "yyyy-MM-dd");
       const res = await fetch(
-        `/portal/api/public/slots?serviceTypeId=${selectedService!.id}&instructorId=${selectedInstructor!.id}&date=${dateStr}`
+        `/api/portal/public/slots?serviceTypeId=${selectedService!.id}&instructorId=${selectedInstructor!.id}&date=${dateStr}`
       );
       const slots = await res.json();
       setAvailableSlots(Array.isArray(slots) ? slots : []);

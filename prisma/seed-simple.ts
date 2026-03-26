@@ -137,17 +137,22 @@ async function main() {
       where: { instructorId },
     });
 
-    for (const [dayKey, time] of Object.entries(schedule)) {
-      if (!time) continue; // Stengt denne dagen
+    for (const [dayKey, timeBlocks] of Object.entries(schedule)) {
+      if (!timeBlocks) continue; // Stengt denne dagen
 
-      await prisma.instructorAvailability.create({
-        data: {
-          instructorId,
-          dayOfWeek: dayMap[dayKey],
-          startTime: time.start,
-          endTime: time.end,
-        },
-      });
+      // Støtt både enkelt-objekt (gammel) og array (ny) struktur
+      const blocks = Array.isArray(timeBlocks) ? timeBlocks : [timeBlocks];
+
+      for (const time of blocks) {
+        await prisma.instructorAvailability.create({
+          data: {
+            instructorId,
+            dayOfWeek: dayMap[dayKey],
+            startTime: time.start,
+            endTime: time.end,
+          },
+        });
+      }
     }
 
     console.log(`✅ Åpningstider satt for: ${COACHES[coachKey as keyof typeof COACHES].name}`);
@@ -159,7 +164,7 @@ async function main() {
   console.log("\n📊 Oppsummering:");
   console.log(`   Trenere: ${Object.keys(COACHES).length}`);
   console.log(`   Lokasjoner: ${Object.keys(LOCATIONS).length}`);
-  console.log(`   Aktive tjenester: ${Object.values(SERVICES).filter((s: any) => s.active).length}`);
+  console.log(`   Aktive tjenester: ${Object.values(SERVICES).filter((s) => s.active).length}`);
   console.log(`   Pakker definert: ${Object.keys(PACKAGES).length}`);
 
   console.log("\n✅ Seeding fullført!");

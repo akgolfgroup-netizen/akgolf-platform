@@ -533,9 +533,9 @@ export default function JuniorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               <RevealOnScroll>
                 <div className="lg:sticky lg:top-24">
-                  <SectionLabel>Sporsmal & svar</SectionLabel>
+                  <SectionLabel>Spørsmål & svar</SectionLabel>
                   <h2 className="w-heading-lg mt-4">
-                    Ofte stilte<br />sporsmal.
+                    Ofte stilte<br />spørsmål.
                   </h2>
                 </div>
               </RevealOnScroll>

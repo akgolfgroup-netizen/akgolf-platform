@@ -17,10 +17,10 @@ export interface ButtonProps {
 }
 
 const variants = {
-  primary: "bg-gradient-to-r from-[#B07D4F] to-[#D4C4A8] text-white shadow-gold",
-  secondary: "bg-navy text-white hover:bg-navy-light",
-  ghost: "bg-transparent text-navy hover:bg-navy/5",
-  outline: "bg-transparent border-2 border-navy text-navy hover:bg-navy/5",
+  primary: "bg-gradient-to-r from-gold to-gold-light text-ink-90 shadow-gold",
+  secondary: "bg-ink-90 text-white hover:bg-ink-80",
+  ghost: "bg-transparent text-ink-90 hover:bg-ink-05",
+  outline: "bg-transparent border-2 border-ink-90 text-ink-90 hover:bg-ink-05",
 };
 
 const sizes = {

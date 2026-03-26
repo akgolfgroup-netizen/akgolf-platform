@@ -427,7 +427,7 @@
     border-color: var(--color-ink-50);
   }
 
-  /* Eyebrow label — uses gold-text for WCAG AA contrast */
+  /* Eyebrow label — uses darker gold-text for WCAG AA contrast (4.5:1+) */
   .w-eyebrow {
     display: inline-flex;
     align-items: center;
@@ -437,7 +437,7 @@
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-gold-text);
+    color: #6B5A3D; /* Mørkere bronse for WCAG AA kontrast på hvit bakgrunn */
   }
 
   .w-eyebrow::before {
@@ -605,6 +605,20 @@
     box-shadow: 0 0 0 3px rgba(176, 125, 79, 0.1);
   }
 
+  .w-input:disabled {
+    background: var(--color-ink-05);
+    color: var(--color-ink-40);
+    cursor: not-allowed;
+  }
+
+  .w-input:invalid:not(:placeholder-shown) {
+    border-color: var(--color-error);
+  }
+
+  .w-input:invalid:not(:placeholder-shown):focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+
   .w-select {
     display: block;
     width: 100%;
@@ -626,6 +640,18 @@
   .w-select:focus {
     border-color: var(--color-gold);
     box-shadow: 0 0 0 3px rgba(176, 125, 79, 0.1);
+  }
+
+  /* Touch targets — ensure minimum 44px for accessibility (WCAG 2.5.5) */
+  @media (pointer: coarse) {
+    .w-btn,
+    .w-input,
+    .w-select,
+    button,
+    [role="button"],
+    a {
+      min-height: 44px;
+    }
   }
 
   /* Meta label — footer headings, day labels, mono-captions */

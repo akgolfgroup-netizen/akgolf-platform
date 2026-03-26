@@ -142,7 +142,7 @@ export default function HomePage() {
         </section>
 
         {/* ─── 2. Slik fungerer det ─── */}
-        <section id="how-it-works" className="w-section-lg bg-white">
+        <section id="method" className="w-section-lg bg-white">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">
@@ -320,8 +320,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 5. Instructors ─── */}
-        <section id="team" className="w-section-lg bg-ink-05">
+        {/* ─── 5. Instructors / Om oss ─── */}
+        <section id="team" className="w-section-lg bg-ink-05 relative">
+          {/* Alias anchor for "Om oss" / story */}
+          <div id="story" className="absolute -top-24" />
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">
@@ -453,8 +455,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 8. Final CTA ─── */}
-        <section className="w-section-lg bg-ink-90">
+        {/* ─── 8. Final CTA / Apply / Contact ─── */}
+        <section id="apply" className="w-section-lg bg-ink-90 relative">
+          {/* Alias anchor for contact */}
+          <div id="contact" className="absolute -top-24" />
           <div className="w-container">
             <RevealOnScroll>
               <div className="max-w-2xl mx-auto text-center">
