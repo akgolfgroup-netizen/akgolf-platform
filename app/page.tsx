@@ -139,6 +139,26 @@ export default function HomePage() {
                 ))}
               </motion.div>
             </div>
+
+            {/* Hero Image */}
+            <motion.div
+              className="mt-16 max-w-5xl mx-auto"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1 }}
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <Image
+                  src="/images/hero/forside.jpg"
+                  alt="Coaching på golfbanen med TrackMan-teknologi"
+                  width={1200}
+                  height={675}
+                  className="w-full h-auto"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
+            </motion.div>
           </div>
         </section>
 
@@ -340,16 +360,24 @@ export default function HomePage() {
               {TEAM.map((member, i) => (
                 <StaggerItem key={member.name}>
                   <div className="bg-white rounded-2xl border border-ink-10 p-8 text-center">
-                    {/* Profile Image */}
-                    <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 ring-2 ring-gold/20">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        width={96}
-                        height={96}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                    {/* Profile Image or Placeholder */}
+                    {member.image ? (
+                      <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 ring-2 ring-gold/20">
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          width={96}
+                          height={96}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-24 h-24 rounded-full bg-ink-10 flex items-center justify-center mx-auto mb-6">
+                        <span className="font-display text-2xl font-semibold text-ink-40">
+                          {member.name.split(" ").map(n => n[0]).join("")}
+                        </span>
+                      </div>
+                    )}
 
                     <h3 className="font-display text-xl font-semibold text-ink-90 mb-1">
                       {member.name}
