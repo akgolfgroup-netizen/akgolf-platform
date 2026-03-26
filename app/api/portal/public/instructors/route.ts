@@ -9,7 +9,7 @@ export async function GET() {
         title: true,
         bio: true,
         specialization: true,
-        user: { select: { name: true, image: true } },
+        User: { select: { name: true, image: true } },
       },
     });
 

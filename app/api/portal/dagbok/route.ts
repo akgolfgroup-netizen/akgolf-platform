@@ -1,6 +1,7 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
+import { nanoid } from "nanoid";
 
 export async function GET(req: NextRequest) {
   const user = await getPortalUser();
@@ -19,7 +20,7 @@ export async function GET(req: NextRequest) {
         ? { date: { gte: new Date(from), lte: new Date(to) } }
         : {}),
     },
-    include: { planSession: { select: { title: true, focusArea: true } } },
+    include: { TrainingPlanSession: { select: { title: true, focusArea: true } } },
     orderBy: { date: "desc" },
   });
 
@@ -47,6 +48,7 @@ export async function POST(req: NextRequest) {
 
   const log = await prisma.trainingLog.create({
     data: {
+      id: nanoid(),
       userId: user.id,
       planSessionId: planSessionId ?? null,
       date: date ? new Date(date) : new Date(),
@@ -57,6 +59,7 @@ export async function POST(req: NextRequest) {
       rating: rating ?? null,
       deviatedFromPlan: deviatedFromPlan ?? false,
       deviationReason: deviationReason ?? null,
+      updatedAt: new Date(),
     },
   });
 

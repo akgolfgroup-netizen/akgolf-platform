@@ -22,11 +22,11 @@ export async function GET() {
         maxAdvanceDays: true,
         allowStripe: true,
         allowVipps: true,
-        instructors: {
+        Instructor: {
           select: {
             id: true,
             title: true,
-            user: { select: { name: true, image: true } },
+            User: { select: { name: true, image: true } },
           },
         },
       },

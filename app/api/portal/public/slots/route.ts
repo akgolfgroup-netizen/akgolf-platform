@@ -72,7 +72,7 @@ export async function GET(req: NextRequest) {
     const instructor = await prisma.instructor.findFirst({
       where: {
         id: instructorId,
-        serviceTypes: { some: { id: serviceTypeId } },
+        ServiceType: { some: { id: serviceTypeId } },
       },
       select: { id: true },
     });

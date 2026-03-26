@@ -26,11 +26,11 @@ export async function GET(
   const plan = await prisma.trainingPlan.findFirst({
     where: { studentId: user.id, isActive: true },
     include: {
-      weeks: {
+      TrainingPlanWeek: {
         include: {
-          sessions: {
+          TrainingPlanSession: {
             include: {
-              trainingLogs: {
+              TrainingLog: {
                 where: { userId: user.id },
                 select: { id: true },
               },
@@ -43,13 +43,13 @@ export async function GET(
   });
 
   if (plan) {
-    for (const week of plan.weeks) {
-      for (const session of week.sessions) {
+    for (const week of plan.TrainingPlanWeek) {
+      for (const session of week.TrainingPlanSession) {
         const sessionDate = new Date(week.weekStart);
         sessionDate.setDate(sessionDate.getDate() + (session.dayOfWeek - 1));
         sessionDate.setUTCHours(8, 0, 0, 0); // Default 08:00 UTC
 
-        const isLogged = session.trainingLogs.length > 0;
+        const isLogged = session.TrainingLog.length > 0;
         const duration = session.durationMinutes ?? 60;
         const dtend = addMinutes(sessionDate, duration);
 
@@ -80,15 +80,15 @@ export async function GET(
       status: { in: ["CONFIRMED", "PENDING"] },
       startTime: { gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
     },
-    include: { serviceType: true, instructor: { include: { user: true } } },
+    include: { ServiceType: true, Instructor: { include: { User: true } } },
   });
 
   for (const b of bookings) {
     events.push({
       uid: `booking-${b.id}@akgolf`,
-      summary: `${b.status === "CONFIRMED" ? "" : "⏳ "}${b.serviceType.name}`,
+      summary: `${b.status === "CONFIRMED" ? "" : "⏳ "}${b.ServiceType.name}`,
       description: [
-        `Coach: ${b.instructor.user.name ?? ""}`,
+        `Coach: ${b.Instructor.User.name ?? ""}`,
         `Status: ${b.status === "CONFIRMED" ? "Bekreftet" : "Venter"}`,
         `${baseUrl}/bookinger`,
       ].join("\\n"),
@@ -101,11 +101,11 @@ export async function GET(
   // Tournament plans
   const tournaments = await prisma.playerTournamentPlan.findMany({
     where: { studentId: user.id },
-    include: { tournament: true },
+    include: { Tournament: true },
   });
 
   for (const tp of tournaments) {
-    const t = tp.tournament;
+    const t = tp.Tournament;
     const dtstart = new Date(t.startDate);
     const dtend = t.endDate ? new Date(t.endDate) : new Date(t.startDate);
 
@@ -133,7 +133,7 @@ export async function GET(
       userId: user.id,
       date: { gte: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000) },
     },
-    include: { planSession: { select: { title: true } } },
+    include: { TrainingPlanSession: { select: { title: true } } },
   });
 
   for (const log of logs) {
@@ -143,7 +143,7 @@ export async function GET(
 
     events.push({
       uid: `log-${log.id}@akgolf`,
-      summary: `✓ ${log.planSession?.title ?? "Treningsøkt"}`,
+      summary: `✓ ${log.TrainingPlanSession?.title ?? "Treningsøkt"}`,
       description: [
         log.focusArea ? `Fokus: ${log.focusArea}` : "",
         log.notes ?? "",

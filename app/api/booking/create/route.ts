@@ -6,6 +6,7 @@ import { addMinutes } from "date-fns";
 import { BookingStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
 import { autoCreateUser } from "@/lib/portal/booking/auto-create-user";
 import { sendWelcomeEmail } from "@/lib/portal/email/send-welcome-email";
+import { nanoid } from "nanoid";
 
 class ConflictError extends Error {
   constructor(message: string) {
@@ -122,11 +123,11 @@ export async function POST(req: NextRequest) {
       prisma.instructor.findFirst({
         where: {
           id: instructorId,
-          serviceTypes: { some: { id: serviceTypeId } },
+          ServiceType: { some: { id: serviceTypeId } },
         },
         select: {
           id: true,
-          user: { select: { name: true, email: true } },
+          User: { select: { name: true, email: true } },
         },
       }),
     ]);
@@ -221,6 +222,7 @@ export async function POST(req: NextRequest) {
 
         return tx.booking.create({
           data: {
+            id: nanoid(),
             studentId,
             instructorId,
             serviceTypeId,
@@ -234,6 +236,7 @@ export async function POST(req: NextRequest) {
             paymentStatus: PaymentStatus.PENDING,
             amount: serviceType.price,
             vatAmount,
+            updatedAt: new Date(),
           },
         });
       },
@@ -247,7 +250,7 @@ export async function POST(req: NextRequest) {
         email: email!,
         tempPassword,
         serviceName: serviceType.name,
-        instructorName: instructorWithService.user.name ?? "Instruktør",
+        instructorName: instructorWithService.User.name ?? "Instruktør",
         startTime: start,
         duration: serviceType.duration,
         amount: serviceType.price,

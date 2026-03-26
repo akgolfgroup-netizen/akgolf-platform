@@ -36,8 +36,8 @@ export async function POST(req: NextRequest) {
         status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
       },
       include: {
-        serviceType: { select: { name: true } },
-        instructor: { select: { user: { select: { name: true } } } },
+        ServiceType: { select: { name: true } },
+        Instructor: { select: { User: { select: { name: true } } } },
       },
     });
 
@@ -100,8 +100,8 @@ export async function POST(req: NextRequest) {
     // Notify waitlist if applicable
     await notifyNextOnWaitlist(
       bookingId,
-      booking.serviceType.name,
-      booking.instructor.user.name ?? "Instruktør",
+      booking.ServiceType.name,
+      booking.Instructor.User.name ?? "Instruktør",
       booking.startTime
     ).catch((err) => {
       console.error(`[Cancel] Waitlist notification failed:`, err);

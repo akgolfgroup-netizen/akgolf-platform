@@ -60,14 +60,14 @@ export async function POST(req: Request) {
         amount: true,
         vatAmount: true,
         startTime: true,
-        serviceType: { select: { name: true, duration: true, vatRate: true } },
-        student: { select: { name: true, email: true } },
-        instructor: {
+        ServiceType: { select: { name: true, duration: true, vatRate: true } },
+        Student: { select: { name: true, email: true } },
+        Instructor: {
           select: {
-            user: { select: { name: true, email: true } },
+            User: { select: { name: true, email: true } },
           },
         },
-        location: { select: { name: true } },
+        Location: { select: { name: true } },
       },
     });
 

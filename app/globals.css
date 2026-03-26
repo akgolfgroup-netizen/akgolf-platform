@@ -338,6 +338,57 @@
     opacity: 0.75;
   }
 
+  /* Enhanced button with glow effect */
+  .w-btn-glow {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .w-btn-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-premium);
+  }
+
+  .w-btn-glow:hover::before {
+    opacity: 1;
+  }
+
+  .w-btn-glow:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px rgba(184, 151, 92, 0.35);
+  }
+
+  /* Shimmer effect for CTA buttons */
+  .w-btn-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .w-btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      transparent 100%
+    );
+    animation: shimmer-slide 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer-slide {
+    0%, 100% { left: -100%; }
+    50% { left: 100%; }
+  }
+
   /* Eyebrow label — uses gold-text for WCAG AA contrast */
   .w-eyebrow {
     display: inline-flex;
@@ -406,6 +457,38 @@
 
   .w-card:hover {
     border-color: var(--color-ink-20);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Card with lift effect on hover */
+  .w-card-lift {
+    background: white;
+    border: 1px solid var(--color-ink-10);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: all 0.4s var(--ease-premium);
+  }
+
+  .w-card-lift:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-ink-20);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Card lift with gold accent */
+  .w-card-lift-gold {
+    background: white;
+    border: 1px solid var(--color-ink-10);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: all 0.4s var(--ease-premium);
+  }
+
+  .w-card-lift-gold:hover {
+    transform: translateY(-6px);
+    border-color: rgba(184, 151, 92, 0.3);
+    box-shadow: var(--shadow-gold);
   }
 
   .w-card-dark {
@@ -414,11 +497,13 @@
     border-radius: 1rem;
     padding: 2rem;
     color: var(--color-ink-20);
-    transition: border-color 0.3s, opacity 0.3s;
+    transition: all 0.4s var(--ease-premium);
   }
 
   .w-card-dark:hover {
-    border-color: var(--color-ink-60);
+    border-color: var(--color-ink-50);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
   }
 
   /* Glassmorphism card — dark sections */
@@ -477,12 +562,53 @@
   .w-section-dark::before {
     content: '';
     position: absolute;
-    top: -60px;
+    top: -80px;
     left: 0;
     right: 0;
-    height: 60px;
-    background: linear-gradient(to bottom, transparent, var(--color-ink-100));
+    height: 80px;
+    background: linear-gradient(to bottom, transparent 0%, var(--color-ink-100) 100%);
     pointer-events: none;
+  }
+
+  /* Section fade transition (dark → light) */
+  .w-section-light-fade {
+    position: relative;
+  }
+
+  .w-section-light-fade::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent 0%, var(--color-surface-warm) 100%);
+    pointer-events: none;
+  }
+
+  /* Pulsing glow badge */
+  .w-badge-glow {
+    animation: badge-pulse 2.5s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(184, 151, 92, 0.4);
+  }
+
+  @keyframes badge-pulse {
+    0%, 100% {
+      box-shadow: 0 0 15px rgba(184, 151, 92, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(184, 151, 92, 0.6);
+    }
+  }
+
+  /* Scroll indicator animation */
+  .w-scroll-indicator {
+    animation: scroll-bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-bounce {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(8px); opacity: 0.6; }
   }
 
   /* Form elements */

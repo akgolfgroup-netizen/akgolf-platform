@@ -57,9 +57,11 @@ export default function HomePage() {
               priority
               sizes="100vw"
             />
+            {/* Enhanced gradient overlay with radial accent */}
             <div className="absolute inset-0 bg-ink-100/40 md:bg-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-ink-100/90 via-ink-100/70 to-ink-100/30" />
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-warm to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-ink-100/95 via-ink-100/75 to-ink-100/20" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_20%_40%,rgba(184,151,92,0.08),transparent)]" />
+            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-surface-warm via-surface-warm/80 to-transparent" />
           </div>
 
           <div className="w-container relative w-full">
@@ -116,6 +118,27 @@ export default function HomePage() {
               </motion.div>
             </div>
           </div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.5 }}
+          >
+            <span className="text-[10px] font-mono uppercase tracking-widest text-ink-40">Scroll</span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              className="text-gold w-scroll-indicator"
+            >
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </motion.div>
         </section>
 
         {/* ─── 2. How It Works (lys) ─── */}
@@ -204,12 +227,12 @@ export default function HomePage() {
                   <div
                     className={`rounded-2xl p-8 flex flex-col h-full transition-all duration-400 ${
                       pkg.highlighted
-                        ? "bg-ink-90 text-white border-2 border-gold/30 shadow-xl relative"
-                        : "bg-white border border-ink-10 hover:border-ink-20 hover:shadow-lg"
+                        ? "bg-ink-90 text-white border-2 border-gold/30 shadow-xl relative hover:border-gold/50 hover:-translate-y-2 hover:shadow-2xl"
+                        : "bg-white border border-ink-10 hover:border-ink-20 hover:shadow-lg hover:-translate-y-1"
                     }`}
                   >
                     {pkg.highlighted && (
-                      <span className="absolute -top-3 left-8 bg-gold text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full">
+                      <span className="absolute -top-3 left-8 bg-gold text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full w-badge-glow">
                         Mest populær
                       </span>
                     )}
@@ -292,7 +315,7 @@ export default function HomePage() {
         </section>
 
         {/* ─── 4. Portal Features (mork) ─── */}
-        <section className="w-section-lg bg-ink-100 w-section-dark">
+        <section className="w-section-lg bg-ink-100 w-section-dark pt-28">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-12">
@@ -324,7 +347,7 @@ export default function HomePage() {
         </section>
 
         {/* ─── 5. Drop-in vs Abonnement (lys) ─── */}
-        <section className="w-section-lg bg-surface-warm">
+        <section className="w-section-lg bg-surface-warm w-section-light-fade pt-28">
           <div className="w-container">
             <RevealOnScroll>
               <div className="max-w-2xl mx-auto text-center">

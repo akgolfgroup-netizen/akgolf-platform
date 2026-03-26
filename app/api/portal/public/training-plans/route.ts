@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
         isActive: true,
         ...(group === "junior"
           ? {
-              student: {
+              User_TrainingPlan_studentIdToUser: {
                 role: "STUDENT",
               },
             }
@@ -25,11 +25,11 @@ export async function GET(request: NextRequest) {
         startDate: true,
         endDate: true,
         goals: true,
-        weeks: {
+        TrainingPlanWeek: {
           select: {
             weekNumber: true,
             focus: true,
-            sessions: {
+            TrainingPlanSession: {
               select: {
                 dayOfWeek: true,
                 title: true,

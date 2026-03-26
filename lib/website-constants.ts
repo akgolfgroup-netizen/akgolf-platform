@@ -516,6 +516,11 @@ export const FOOTER_LINKS = {
     phone: "+47 909 67 995",
     location: "GFGK, Vinger",
   },
+  social: [
+    { label: "Instagram", href: "https://instagram.com/akgolfacademy", icon: "instagram" },
+    { label: "Facebook", href: "https://facebook.com/akgolfacademy", icon: "facebook" },
+    { label: "LinkedIn", href: "https://linkedin.com/company/akgolfgroup", icon: "linkedin" },
+  ],
 } as const;
 
 // ─── Booking ───

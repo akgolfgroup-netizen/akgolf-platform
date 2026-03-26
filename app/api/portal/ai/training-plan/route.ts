@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { generateTrainingPlan } from "@/lib/portal/ai/training-plan";
 import { isStaff } from "@/lib/portal/rbac";
-import { addDays, format, startOfISOWeek } from "date-fns";
+import { addDays } from "date-fns";
+import { nanoid } from "nanoid";
 
 export async function POST(req: NextRequest) {
   const user = await getPortalUser();
@@ -35,6 +36,7 @@ export async function POST(req: NextRequest) {
 
   const plan = await prisma.trainingPlan.create({
     data: {
+      id: nanoid(),
       studentId,
       createdById: user.id,
       title: result.title,
@@ -44,16 +46,19 @@ export async function POST(req: NextRequest) {
       endDate: addDays(planStart, durationWeeks * 7 - 1),
       isActive: true,
       aiGenerated: true,
-      weeks: {
+      updatedAt: new Date(),
+      TrainingPlanWeek: {
         create: result.weeks.map((w) => {
           const weekStart = addDays(planStart, (w.weekNumber - 1) * 7);
           return {
+            id: nanoid(),
             weekNumber: w.weekNumber,
             weekStart,
             focus: w.focus,
             volumeLabel: w.volumeLabel,
-            sessions: {
+            TrainingPlanSession: {
               create: w.sessions.map((s, idx) => ({
+                id: nanoid(),
                 dayOfWeek: s.dayOfWeek,
                 title: s.title,
                 description: s.description,
@@ -67,7 +72,7 @@ export async function POST(req: NextRequest) {
         }),
       },
     },
-    include: { weeks: { include: { sessions: true } } },
+    include: { TrainingPlanWeek: { include: { TrainingPlanSession: true } } },
   });
 
   return NextResponse.json(plan);

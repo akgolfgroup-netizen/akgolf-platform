@@ -38,17 +38,17 @@ export async function GET(req: NextRequest) {
       reminderSentAt: null,
     },
     include: {
-      student: { select: { name: true, email: true } },
-      serviceType: { select: { name: true, duration: true } },
-      instructor: { select: { user: { select: { name: true } } } },
-      location: { select: { name: true } },
+      User: { select: { name: true, email: true } },
+      ServiceType: { select: { name: true, duration: true } },
+      Instructor: { select: { User: { select: { name: true } } } },
+      Location: { select: { name: true } },
     },
   });
 
   const resend = getResend();
 
   for (const booking of emailBookings) {
-    if (!booking.student.email || !resend) continue;
+    if (!booking.User.email || !resend) continue;
 
     const dateStr = format(booking.startTime, "EEEE d. MMMM yyyy", {
       locale: nb,
@@ -58,16 +58,16 @@ export async function GET(req: NextRequest) {
     try {
       await resend.emails.send({
         from: FROM_EMAIL,
-        to: booking.student.email,
-        subject: `Påminnelse: ${booking.serviceType.name} — ${dateStr}`,
+        to: booking.User.email,
+        subject: `Påminnelse: ${booking.ServiceType.name} — ${dateStr}`,
         react: BookingReminderEmail({
-          studentName: booking.student.name ?? "Hei",
-          serviceName: booking.serviceType.name,
-          instructorName: booking.instructor.user.name ?? "Instruktør",
+          studentName: booking.User.name ?? "Hei",
+          serviceName: booking.ServiceType.name,
+          instructorName: booking.Instructor.User.name ?? "Instruktør",
           date: dateStr,
           time: timeStr,
-          duration: booking.serviceType.duration,
-          location: booking.location?.name ?? "Gamle Fredrikstad Golfklubb",
+          duration: booking.ServiceType.duration,
+          location: booking.Location?.name ?? "Gamle Fredrikstad Golfklubb",
         }),
       });
 
@@ -96,22 +96,22 @@ export async function GET(req: NextRequest) {
       smsReminderSentAt: null,
     },
     include: {
-      student: { select: { name: true, phone: true } },
-      serviceType: { select: { name: true } },
-      instructor: { select: { user: { select: { name: true } } } },
+      User: { select: { name: true, phone: true } },
+      ServiceType: { select: { name: true } },
+      Instructor: { select: { User: { select: { name: true } } } },
     },
   });
 
   for (const booking of smsBookings) {
-    if (!booking.student.phone) continue;
+    if (!booking.User.phone) continue;
 
     try {
       const sent = await sendReminderSms({
-        phone: booking.student.phone,
-        studentName: booking.student.name ?? "Hei",
-        serviceName: booking.serviceType.name,
+        phone: booking.User.phone,
+        studentName: booking.User.name ?? "Hei",
+        serviceName: booking.ServiceType.name,
         startTime: booking.startTime,
-        instructorName: booking.instructor.user.name ?? "Instruktør",
+        instructorName: booking.Instructor.User.name ?? "Instruktør",
       });
 
       if (sent) {

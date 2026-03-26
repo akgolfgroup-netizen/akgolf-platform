@@ -70,7 +70,7 @@ export function WebsiteNav() {
             </Link>
             <a
               href={BOOKING_URL}
-              className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-gold text-white transition-all duration-300 hover:bg-gold-dark"
+              className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-gold text-white transition-all duration-300 hover:bg-gold-dark w-btn-shimmer"
             >
               Book coaching
             </a>
