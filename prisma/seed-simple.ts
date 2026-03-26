@@ -6,10 +6,9 @@
 // Deretter kjør: npx prisma db seed
 // =============================================================================
 
-import { PrismaClient } from "@prisma/client";
+import "dotenv/config";
+import { prisma } from "../lib/portal/prisma";
 import { COACHES, SERVICES, LOCATIONS, AVAILABILITY, PACKAGES } from "./seed-config";
-
-const prisma = new PrismaClient();
 
 const dayMap: Record<string, number> = {
   mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6, sun: 0,
@@ -107,14 +106,14 @@ async function main() {
           category: "INDIVIDUAL",
         },
       });
-      console.log(`✅ Tjeneste opprettet: ${svc.name} (${svc.price / 100} kr)`);
+      console.log(`✅ Tjeneste opprettet: ${svc.name} (${svc.price} kr)`);
     } else {
       // Oppdater pris hvis endret
       await prisma.serviceType.update({
         where: { id: serviceType.id },
         data: { price: svc.price },
       });
-      console.log(`🔄 Pris oppdatert: ${svc.name} (${svc.price / 100} kr)`);
+      console.log(`🔄 Pris oppdatert: ${svc.name} (${svc.price} kr)`);
     }
 
     serviceMap[key] = serviceType.id;

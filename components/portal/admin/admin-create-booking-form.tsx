@@ -88,7 +88,7 @@ export function AdminCreateBookingForm({ serviceTypes, instructors }: Props) {
         >
           {serviceTypes.map((st) => (
             <option key={st.id} value={st.id}>
-              {st.name} ({st.duration} min — kr {(st.price / 100).toLocaleString("nb-NO")})
+              {st.name} ({st.duration} min — kr {st.price.toLocaleString("nb-NO")})
             </option>
           ))}
         </select>

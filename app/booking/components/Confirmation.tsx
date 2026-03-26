@@ -287,7 +287,7 @@ export function Confirmation({
                   Betalt
                 </span>
                 <span className="font-medium text-ink-90">
-                  kr {(price / 100).toLocaleString("nb-NO")}
+                  kr {price.toLocaleString("nb-NO")}
                 </span>
               </div>
             )}

@@ -29,7 +29,7 @@ export const COACHES = {
 };
 
 // -----------------------------------------------------------------------------
-// 2. TJENESTER & PRISER (i øre - 100 = 1 kr)
+// 2. TJENESTER & PRISER (i kroner)
 // -----------------------------------------------------------------------------
 // Fra AK Golf Academy 2026 konsept
 
@@ -39,7 +39,7 @@ export const SERVICES = {
     name: "Start",
     description: "3 × 20-minutters økter over 3 uker + 30 dagers portal. Kartlegging og utviklingsplan.",
     duration: 20, // per økt
-    price: 300000, // 3 000 kr
+    price: 3000, // 3 000 kr
     maxStudents: 1,
     color: "#B07D4F",
     coachId: "anders",
@@ -49,7 +49,7 @@ export const SERVICES = {
     name: "Foundation Test",
     description: "50 min introduksjonstime. Full kartlegging. Refunderbar ved abo-kjøp innen 14 dager.",
     duration: 50,
-    price: 99500, // 995 kr
+    price: 995, // 995 kr
     maxStudents: 1,
     color: "#B07D4F",
     coachId: "anders",
@@ -61,7 +61,7 @@ export const SERVICES = {
     name: "Flex 50 Solo",
     description: "50 min intensiv én-til-én coaching med videoanalyse.",
     duration: 50,
-    price: 150000, // 1 500 kr
+    price: 1500, // 1 500 kr
     maxStudents: 1,
     color: "#B07D4F",
     coachId: "anders",
@@ -71,7 +71,7 @@ export const SERVICES = {
     name: "Flex 50 Duo",
     description: "50 min coaching for to spillere. 850 kr per person.",
     duration: 50,
-    price: 170000, // 1 700 kr totalt (850 × 2)
+    price: 1700, // 1 700 kr totalt (850 × 2)
     maxStudents: 2,
     color: "#1565C0",
     coachId: "anders",
@@ -81,7 +81,7 @@ export const SERVICES = {
     name: "Flex 90 Solo",
     description: "90 min dybdecoaching én-til-én. Flere fokusområder + on-range praksis.",
     duration: 90,
-    price: 250000, // 2 500 kr
+    price: 2500, // 2 500 kr
     maxStudents: 1,
     color: "#B07D4F",
     coachId: "anders",
@@ -91,7 +91,7 @@ export const SERVICES = {
     name: "Flex 90 Duo",
     description: "90 min dybdecoaching for to spillere. 1 400 kr per person.",
     duration: 90,
-    price: 280000, // 2 800 kr totalt (1400 × 2)
+    price: 2800, // 2 800 kr totalt (1400 × 2)
     maxStudents: 2,
     color: "#1565C0",
     coachId: "anders",
@@ -103,7 +103,7 @@ export const SERVICES = {
     name: "On-Course 9",
     description: "Banecoaching 9 hull med Anders. Live kursmanagement med DECADE-prinsipper. Maks 2 spillere.",
     duration: 150, // ~2.5 timer
-    price: 300000, // 3 000 kr/spiller
+    price: 3000, // 3 000 kr/spiller
     maxStudents: 2, // Maks 2 spillere
     color: "#2E7D32",
     coachId: "anders",
@@ -113,7 +113,7 @@ export const SERVICES = {
     name: "On-Course Par 3",
     description: "9 hull på korthullsbanen med Markus. Grunnleggende banemanagement. Grupper à 4.",
     duration: 90, // ~90 min
-    price: 50000, // 500 kr/spiller
+    price: 500, // 500 kr/spiller
     maxStudents: 4,
     color: "#2E7D32",
     coachId: "markus",
@@ -125,7 +125,7 @@ export const SERVICES = {
     name: "Markus 20 min",
     description: "Kort treningsøkt med Markus. Raske justeringer eller oppfølging.",
     duration: 20,
-    price: 30000, // 300 kr
+    price: 300, // 300 kr
     maxStudents: 1,
     color: "#E65100",
     coachId: "markus",
@@ -231,7 +231,7 @@ export const PACKAGES = {
   performance: {
     name: "Performance",
     description: "2 × 20 min/mnd. 7 dagers booking-vindu. Maks 1/uke.",
-    monthlyPrice: 160000, // 1 600 kr/mnd
+    monthlyPrice: 1600, // 1 600 kr/mnd
     sessionsPerMonth: 2,
     sessionDurationMin: 20,
     bookingWindowDays: 7,
@@ -241,7 +241,7 @@ export const PACKAGES = {
   performancePro: {
     name: "Performance Pro",
     description: "4 × 20 min/mnd. 14 dagers booking-vindu. Maks 2/uke. Prioritert tilgang.",
-    monthlyPrice: 200000, // 2 000 kr/mnd
+    monthlyPrice: 2000, // 2 000 kr/mnd
     sessionsPerMonth: 4,
     sessionDurationMin: 20,
     bookingWindowDays: 14,
@@ -337,7 +337,7 @@ export const GFGK_JUNIOR_GROUPS = {
 export const JUNIOR_ACADEMY = {
   academy: {
     name: "Academy",
-    price: 250000, // 2 500 kr/mnd
+    price: 2500, // 2 500 kr/mnd
     maxPlayers: 8,
     coach: "anders",
     description: "Elite-program for utvalgte juniorer. 8 spillere.",
@@ -345,7 +345,7 @@ export const JUNIOR_ACADEMY = {
   },
   prospect: {
     name: "Prospect",
-    price: 200000, // 2 000 kr/mnd
+    price: 2000, // 2 000 kr/mnd
     maxPlayers: 4,
     coach: "anders",
     description: "Utviklingsprogram for talentfulle juniorer. 4 spillere.",
@@ -353,7 +353,7 @@ export const JUNIOR_ACADEMY = {
   },
   camp: {
     name: "Junior Camp",
-    price: 450000, // 4 500 kr/deltaker
+    price: 4500, // 4 500 kr/deltaker
     maxPlayers: 12,
     coach: "anders",
     description: "Intensiv camp for juniorer. Flere ganger per år.",
@@ -365,7 +365,7 @@ export const JUNIOR_ACADEMY = {
 // INSTRUKSJONER
 // -----------------------------------------------------------------------------
 //
-// 1. ENDRE verdiene over (priser i ØRE - 100 = 1 kr)
+// 1. ENDRE verdiene over (priser i KRONER)
 // 2. Sett `active: true` for tjenester som tilbys
 // 3. Sett `active: false` for tjenester som IKKE tilbys
 // 4. Lagre filen

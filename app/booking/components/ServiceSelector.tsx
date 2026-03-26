@@ -35,7 +35,8 @@ export function ServiceSelector({ services, onSelect }: Props) {
 
       <StaggerContainer className="grid gap-4 md:grid-cols-2">
         {services.map((service) => {
-          const priceNok = service.price / 100;
+          // Prisene er lagret i kroner (ikke øre)
+          const priceNok = service.price;
           const categoryLabel = getServiceCategoryLabel(service.category);
           const isSelected = selectedId === service.id;
 

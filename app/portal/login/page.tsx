@@ -4,6 +4,7 @@ import { createBrowserClient } from "@supabase/ssr";
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { AKLogo } from "@/components/website/AKLogo";
 
 function createSupabaseBrowser() {
   return createBrowserClient(
@@ -115,11 +116,8 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div
-            className="w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4"
-            style={{ background: "#171717" }}
-          >
-            <span className="text-lg font-bold text-white">AK</span>
+          <div className="flex justify-center mb-4">
+            <AKLogo variant="academy" size={48} />
           </div>
           <h1
             className="text-xl font-semibold"

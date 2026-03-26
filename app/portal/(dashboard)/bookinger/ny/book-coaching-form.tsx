@@ -40,9 +40,9 @@ export function BookCoachingForm({ serviceTypes }: Props) {
   const [loading, setLoading] = useState(false);
   const [booking, setBooking] = useState(false);
 
-  const formatPrice = (ore: number) => {
-    const kr = ore / 100;
-    return kr.toLocaleString("nb-NO", { minimumFractionDigits: 0 }) + " kr";
+  const formatPrice = (price: number) => {
+    // Prisene er lagret i kroner (ikke øre)
+    return price.toLocaleString("nb-NO", { minimumFractionDigits: 0 }) + " kr";
   };
 
   const handleSelectService = (svc: ServiceType) => {

@@ -11,8 +11,9 @@ interface Props {
   duration?: number;
 }
 
-function formatPrice(priceOre: number): string {
-  return (priceOre / 100).toLocaleString("nb-NO");
+function formatPrice(price: number): string {
+  // Prisene er lagret i kroner (ikke øre)
+  return price.toLocaleString("nb-NO");
 }
 
 function formatDateTime(dateTimeStr: string): { date: string; time: string } {

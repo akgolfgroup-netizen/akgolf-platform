@@ -61,7 +61,8 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
       </div>
     );
   }
-  const priceNok = serviceType.price / 100;
+  // Prisene er lagret i kroner (ikke øre)
+  const priceNok = serviceType.price;
 
   const formattedDate = format(startDate, "EEEE d. MMMM yyyy", { locale: nb });
   const formattedTime = format(startDate, "HH:mm", { locale: nb });
