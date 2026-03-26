@@ -36,10 +36,12 @@ Legg den til i `.claude/rules/gotchas.md` umiddelbart slik at den aldri skjer ig
 - **SMS:** Twilio (booking-påminnelser)
 - **Content:** Notion API (spillerprofiler, innhold)
 - **Golf data:** DataGolf API
+- **Analytics:** Vercel Analytics + Speed Insights + Microsoft Clarity
+- **PWA:** manifest.json for installerbar app
 - **Animations:** Framer Motion 12.x
 - **Charts:** Recharts
 - **PDF:** @react-pdf/renderer
-- **Fonts:** Inter (variabel, via `next/font/local` — InterVariable.woff2)
+- **Fonts:** Manrope (variabel, via `next/font/local` — ManropeVariable.woff2)
 - **TypeScript:** strict
 - **Linting:** ESLint 9 + eslint-config-next
 
@@ -98,7 +100,8 @@ app/
 │       │   ├── elever/      # Elevliste + [id]-detaljer
 │       │   ├── kalender/    # Kalenderstyring
 │       │   ├── tilgjengelighet/ # Tilgjengelighetsstyring
-│       │   └── turneringer/ # Turneringsstyring
+│       │   ├── turneringer/ # Turneringsstyring
+│       │   └── e-postmaler/ # Admin e-postmal-editor
 │       ├── analyse/         # Statistikk & AI-analyse
 │       ├── bookinger/       # Elevens bookinger (+ny, [id]/endre)
 │       ├── coaching-historikk/ # Coaching-historikk
@@ -113,15 +116,22 @@ app/
 └── api/                     # API-ruter
     ├── auth/logout/         # Utlogging
     ├── contact/             # Kontaktskjema → Resend
-    ├── booking/             # create, services, reschedule
+    ├── booking/             # [bookingId], confirm-payment, create, list, reschedule, services, slots
+    ├── coaching/            # book, packages, slots (fra akgolf-booking)
+    ├── cron/                # release-dropin-slots, reset-monthly-sessions
     └── portal/
-        ├── public/          # Åpne endepunkter (slots, instructors, service-types, etc.)
-        ├── ai/              # AI-endepunkter (coaching-summary, focus, weakness, training-plan)
-        ├── bookings/cancel/ # Kansellering
+        ├── public/          # Åpne endepunkter (slots, instructors, service-types, resources, etc.)
+        ├── ai/              # coaching-summary, coaching-transcription, focus, weakness, training-plan
+        ├── admin/           # email-templates CRUD
+        ├── bookings/        # cancel, create-group, reschedule
         ├── dagbok/          # Treningsdagbok
-        ├── calendar/        # iCal-feed + token
-        ├── cron/            # Planlagte påminnelser
+        ├── calendar/        # iCal-feed, token, google/auth, google/callback
+        ├── cron/            # send-reminders
         ├── datagolf/        # DataGolf-integrasjon
+        ├── export/          # CSV-eksport
+        ├── notifications/   # Notifikasjoner CRUD
+        ├── payment-preferences/ # Betalingspreferanser
+        ├── subscriptions/   # Stripe-abonnementer
         ├── tournament-planner/ # Turneringsplanlegging CRUD
         └── webhooks/stripe/ # Stripe webhook
 ```
@@ -166,7 +176,10 @@ lib/
 ├── design-tokens.ts       # Design system tokens
 ├── utils.ts               # Generelle utilities
 ├── notion.ts              # Notion API-integrasjon
+├── cron-auth.ts           # Cron-autentisering
+├── supabase-admin.ts      # Supabase admin client
 ├── ai/                    # AI: system-prompt, generate-plan, plan-schema, category-engine
+├── api/                   # validation.ts (Zod request validation)
 ├── pdf/                   # PDF-generering
 ├── stripe/                # Stripe-produktdefinisjoner
 ├── supabase/              # Supabase client (browser) + server
@@ -176,12 +189,15 @@ lib/
     ├── rbac.ts            # Rollebasert tilgangskontroll
     ├── slots.ts           # Tidsluke-generering
     ├── stripe.ts          # Stripe-integrasjon
+    ├── invoice.ts         # Fakturagenerering
+    ├── notifications.ts   # Notifikasjonshåndtering
     ├── achievements/      # Achievement-definisjoner + sjekk
-    ├── ai/                # AI: coaching-summary, focus-recommendation, weakness-analysis, training-plan
+    ├── ai/                # coaching-summary, coaching-transcription, focus, weakness, training-plan
     ├── booking/           # auto-create-user, cancellation-policy, refund, reschedule, waitlist
-    ├── calendar/          # iCal-feed
+    ├── calendar/          # ical.ts, google-calendar.ts (Google Calendar OAuth)
     ├── datagolf/          # DataGolf API-klient
-    ├── email/             # Resend + e-postmaler (booking-confirmed, reminder, welcome, etc.)
+    ├── email/             # Resend + e-postmaler (templates/)
+    ├── export/            # csv-stats.ts (statistikk-eksport)
     ├── golf/              # expected-strokes, skill-levels, sg-benchmarks, training-areas
     ├── notion/            # Notion-klient, player-profiles
     ├── sms/               # Twilio SMS-påminnelser
@@ -205,12 +221,15 @@ content/
 
 PostgreSQL via Prisma med `@prisma/adapter-pg`. Nøkkelmodeller:
 
-- **User** — Rolle: STUDENT, INSTRUCTOR, ADMIN. Tier: FREE, PRO, ELITE
+- **User** — Rolle: STUDENT, INSTRUCTOR, ADMIN. Tier: VISITOR/ACADEMY/STARTER/PRO/ELITE
 - **Instructor** + **InstructorAvailability** — Instruktørprofiler og ukentlig tilgjengelighet
 - **ServiceType** — INDIVIDUAL, GROUP, VTG_COURSE, SIMULATOR, PLAYING_LESSON
 - **Booking** — Status: PENDING → CONFIRMED → COMPLETED/CANCELLED/NO_SHOW
-- **CoachingSession** — Utvidet booking med AI-felter (oppsummering, notater)
-- **PaymentTransaction** — Stripe/Vipps/faktura, refunderinger
+- **CoachingSession** — Utvidet booking med AI-felter (oppsummering, transcriptionText, notater)
+- **CoachingPackage** — Coaching-pakker med billing/booking-type
+- **UserSubscription** — Brukerabonnementer på coaching-pakker
+- **CoachingAvailability** — Coaching-tilgjengelighet per ukedag
+- **PaymentTransaction** — Stripe/faktura, refunderinger
 - **TrainingPlan/Week/Session** — AI-genererte periodiserte treningsplaner
 - **TrainingLog** — Treningsdagbok
 - **RoundStats** — Golfrundestatistikk (Strokes Gained)
@@ -218,6 +237,10 @@ PostgreSQL via Prisma med `@prisma/adapter-pg`. Nøkkelmodeller:
 - **Tournament** + **PlayerTournamentPlan** + **TournamentPrep** — Turneringsplanlegging
 - **PeriodizationPeriod** — Treningsperioder
 - **AchievementDefinition** + **PlayerAchievement** — Gamification
+- **Notification** — In-app notifikasjoner
+- **Conversation** + **Message** — In-app meldingssystem
+- **SwingVideo** — Videoanalyse med kvote-tracking
+- **TrackmanSession** — Trackman CSV-import data
 
 ## Authentication
 
@@ -269,6 +292,7 @@ Se `.env.example` for komplett liste. Nøkkelvariabler:
 | DataGolf | `DATAGOLF_API_KEY` |
 | Google OAuth | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` |
 | Cron | `CRON_SECRET` |
+| Analytics | `NEXT_PUBLIC_CLARITY_PROJECT_ID` |
 | App | `NEXT_PUBLIC_APP_URL` |
 
 ## API Patterns

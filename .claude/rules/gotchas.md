@@ -29,16 +29,17 @@ const nextConfig: NextConfig = {
 
 **Løsning:** Bruk `OR: [{ supabaseId }, { id }]` for brukeroppslag.
 
-## 4. Inter-font loading
+## 4. Font-fil må være ekte woff2
 
-**Problem:** Google Fonts import kan feile/være treg.
+**Problem:** Korrupt font-fil (f.eks. HTML i stedet for woff2) gir kryptisk Turbopack-feil: `Can't resolve 'next/font/local/target.css'`
 
-**Løsning:** Bruk lokal font via `next/font/local`:
+**Løsning:** Sjekk font-filen med `file app/fonts/ManropeVariable.woff2` — skal vise "Web Open Font Format", ikke "HTML document".
+
 ```typescript
 // app/layout.tsx
-const inter = localFont({
-  src: "./InterVariable.woff2",
-  variable: "--font-inter",
+const manrope = localFont({
+  src: "./fonts/ManropeVariable.woff2",
+  variable: "--font-manrope",
 });
 ```
 
@@ -115,6 +116,25 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 // FEIL — dette er dashboard-porten:
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3001";
 ```
+
+## 13. Video storage — bruk BigInt
+
+**Problem:** `videoStorageLimit` (2 GB = 2147483648 bytes) overskrider PostgreSQL INT-grensen (~2.1 milliarder).
+
+**Løsning:** Bruk `BigInt` for byte-felter:
+```prisma
+videoStorageUsed  BigInt @default(0)
+videoStorageLimit BigInt @default(2147483648)
+fileSize          BigInt
+```
+
+## 14. Konsolidert kodebase (2026-03-26)
+
+**Status:** akgolf-website er nå master for all funksjonalitet. Spillerportal og akgolf-booking er arkivert.
+
+**Nye modeller:** CoachingPackage, UserSubscription, CoachingAvailability, Notification, Conversation, Message, SwingVideo, TrackmanSession
+
+**Nye API-er:** `/api/coaching/*`, `/api/cron/*`, `/api/portal/admin/email-templates`, etc.
 
 ---
 
