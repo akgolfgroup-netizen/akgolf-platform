@@ -72,7 +72,7 @@ export const TEAM = [
     division: "AK Golf Academy",
     bio: "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse. Hver spiller får en individuell utviklingsplan — ikke bare data, men konkret retning.",
     certifications: ["PGA Professional", "TPI Certified", "TrackMan Certified"],
-    contact: { email: "anders@akgolf.no" },
+    contact: { email: "anders@akgolf.no", phone: "+47 909 67 995" },
   },
   {
     name: "Markus",
