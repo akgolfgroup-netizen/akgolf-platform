@@ -1,56 +1,39 @@
 import { AKLogo } from "@/components/website/AKLogo";
 
 export const metadata = {
-  title: "Vedlikehold | AK Golf Group",
-  description: "Vi oppgraderer nettsiden. Tilbake snart.",
+  title: "Vedlikehold | AK Golf",
 };
 
 export default function MaintenancePage() {
   return (
-    <main className="min-h-screen bg-ink-deep flex flex-col items-center justify-center px-6 text-center">
-      <div className="max-w-md">
-        {/* Logo */}
-        <div className="mb-8">
-          <AKLogo className="h-16 w-auto mx-auto text-gold" />
+    <div className="min-h-screen bg-ink-90 flex items-center justify-center p-6">
+      <div className="max-w-md text-center">
+        <div className="flex justify-center mb-8">
+          <AKLogo variant="gold" size={64} />
         </div>
 
-        {/* Tittel */}
-        <h1 className="text-3xl font-bold text-white mb-4">
-          Vi oppgraderer nettsiden
+        <h1 className="text-2xl font-display font-bold text-white mb-4">
+          Vi oppgraderer
         </h1>
 
-        {/* Beskrivelse */}
-        <p className="text-ink-40 text-lg mb-8">
-          Vi jobber med forbedringer for a gi deg en enda bedre opplevelse.
-          Nettsiden er tilbake innen kort tid.
+        <p className="text-ink-30 mb-8 leading-relaxed">
+          AK Golf er nede for vedlikehold. Vi jobber med forbedringer og er snart tilbake.
         </p>
 
-        {/* Forventet ferdig */}
-        <div className="bg-ink-90/50 rounded-xl p-6 mb-8 border border-ink-80">
-          <p className="text-ink-30 text-sm uppercase tracking-wider mb-2">
-            Forventet ferdig
-          </p>
-          <p className="text-white text-xl font-semibold">
-            25. mars 2026
-          </p>
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-ink-80 rounded-full text-sm text-ink-40">
+          <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+          Tilbake om kort tid
         </div>
 
-        {/* Kontaktinfo */}
-        <div className="text-ink-40">
-          <p className="mb-2">Har du sporsmal?</p>
-          <a
-            href="mailto:post@akgolf.no"
-            className="text-gold hover:text-gold-light transition-colors"
-          >
-            post@akgolf.no
-          </a>
+        <div className="mt-12 pt-8 border-t border-ink-80">
+          <p className="text-xs text-ink-50">
+            Spørsmål? Kontakt oss på{" "}
+            <a href="mailto:post@akgolf.no" className="text-gold hover:underline">
+              post@akgolf.no
+            </a>
+          </p>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="absolute bottom-6 text-ink-50 text-sm">
-        AK Golf Group AS
-      </footer>
-    </main>
+    </div>
   );
 }
