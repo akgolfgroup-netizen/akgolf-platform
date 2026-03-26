@@ -171,7 +171,7 @@ export default function AcademyPage() {
                   <SectionLabel>Pakker og priser</SectionLabel>
                   <h2 className="w-heading-lg mt-4">Velg pakken som passer deg</h2>
                   <p className="text-ink-50 max-w-xl mx-auto mt-4">
-                    Alle abonnement inkluderer full spillerportal med treningsplan, øvelsesbank og statistikk. Coaching-tjenester er MVA-fritatt.
+                    Alle abonnement inkluderer full spillerportal med treningsplan, ovelsesbank og statistikk. Coaching-tjenester er MVA-fritatt.
                   </p>
                 </div>
               </RevealOnScroll>
@@ -183,20 +183,23 @@ export default function AcademyPage() {
                     <div
                       className={`rounded-2xl overflow-hidden flex flex-col h-full transition-all duration-300 ${
                         pkg.highlighted
-                          ? "bg-[#000000] shadow-2xl relative ring-2 ring-[#B07D4F]/30"
+                          ? "bg-[#000000] shadow-[0_8px_30px_rgba(184,151,92,0.3)] relative ring-2 ring-[#B07D4F]/50 md:scale-[1.03] md:-my-2"
                           : "bg-white border border-ink-10 hover:border-[#000000]/20 hover:shadow-xl"
                       }`}
                     >
                       {/* Premium header for highlighted package */}
                       {pkg.highlighted && (
-                        <div className="bg-gradient-to-r from-[#B07D4F] to-[#F3EBE2] px-8 py-3">
-                          <span className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#000000] font-semibold">
-                            For de som satser
-                          </span>
-                        </div>
+                        <>
+                          <div className="h-1 bg-gradient-to-r from-gold via-gold-light to-gold" />
+                          <div className="bg-gradient-to-r from-[#B07D4F] to-[#F3EBE2] px-8 py-3">
+                            <span className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#000000] font-semibold">
+                              For de som satser
+                            </span>
+                          </div>
+                        </>
                       )}
 
-                      <div className={`p-8 flex flex-col flex-1 ${pkg.highlighted ? "" : ""}`}>
+                      <div className="p-8 flex flex-col flex-1">
                         <h3 className={`font-display text-xl font-semibold mb-1 ${pkg.highlighted ? "text-white" : "text-ink-90"}`}>
                           {pkg.name}
                         </h3>
@@ -279,7 +282,7 @@ export default function AcademyPage() {
                   <SectionLabel>Flex drop-in</SectionLabel>
                   <h2 className="w-heading-lg mt-4">Trenger du binding? Nei.</h2>
                   <p className="text-ink-50 text-sm mt-4 max-w-lg mx-auto">
-                    Flex gir deg coaching uten forpliktelser — men du får kun coaching-notater, ikke spillerportal.
+                    Flex gir deg coaching uten forpliktelser — men du far kun coaching-notater, ikke spillerportal.
                   </p>
                 </div>
               </RevealOnScroll>
@@ -293,7 +296,7 @@ export default function AcademyPage() {
                         {pkg.price} <span className="text-sm font-normal text-ink-50">{pkg.period}</span>
                       </p>
                       {"pricePerPerson" in pkg && pkg.pricePerPerson && (
-                        <p className="text-xs text-ink-40 mb-2">{pkg.pricePerPerson} kr/pers</p>
+                        <p className="text-xs text-ink-50 mb-2">{pkg.pricePerPerson} kr/pers</p>
                       )}
                       <p className="text-xs text-ink-50">{pkg.duration}</p>
                     </div>
@@ -309,9 +312,9 @@ export default function AcademyPage() {
               <RevealOnScroll>
                 <div className="text-center mb-12">
                   <SectionLabel>Banecoaching</SectionLabel>
-                  <h2 className="w-heading-lg mt-4">Coaching ute på banen</h2>
+                  <h2 className="w-heading-lg mt-4">Coaching ute pa banen</h2>
                   <p className="text-ink-50 max-w-xl mx-auto mt-4">
-                    Strategi i praksis — lær å velge riktig slag basert på din faktiske spredning.
+                    Strategi i praksis — laer a velge riktig slag basert pa din faktiske spredning.
                   </p>
                 </div>
               </RevealOnScroll>
@@ -329,7 +332,7 @@ export default function AcademyPage() {
                       <h3 className="font-display text-xl font-semibold text-[#000000] mb-2">{item.name}</h3>
                       <p className="font-mono text-3xl font-bold text-ink-90 mb-4">{item.price} <span className="text-sm font-normal text-ink-50">kr</span></p>
                       <p className="text-sm text-ink-50 mb-4 leading-relaxed">{item.description}</p>
-                      <p className="text-xs text-ink-40">{item.details}</p>
+                      <p className="text-xs text-ink-50">{item.details}</p>
                     </div>
                   </StaggerItem>
                 ))}
@@ -401,8 +404,8 @@ export default function AcademyPage() {
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center mb-12">
-                  <span className="text-[#B07D4F]"><SectionLabel>Fra våre elever</SectionLabel></span>
-                  <h2 className="w-heading-lg text-white mt-4">Resultater du kan høre</h2>
+                  <span className="text-[#B07D4F]"><SectionLabel>Fra vare elever</SectionLabel></span>
+                  <h2 className="w-heading-lg text-white mt-4">Resultater du kan hore</h2>
                   <p className="text-ink-40 max-w-lg mx-auto mt-4">
                     Ekte historier fra spillere som har opplevd transformasjonen.
                   </p>
@@ -444,8 +447,8 @@ export default function AcademyPage() {
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center mb-12">
-                  <SectionLabel>Vanlige spørsmål</SectionLabel>
-                  <h2 className="w-heading-lg mt-4">Ofte stilte spørsmål</h2>
+                  <SectionLabel>Vanlige sporsmal</SectionLabel>
+                  <h2 className="w-heading-lg mt-4">Ofte stilte sporsmal</h2>
                 </div>
               </RevealOnScroll>
 

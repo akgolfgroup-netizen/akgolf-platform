@@ -62,7 +62,7 @@ export function KpiStrip({ items }: KpiStripProps) {
           <motion.div
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
-            className="kpi-card gradient-border-soft p-4 rounded-xl"
+            className="portal-card p-4 rounded-xl"
           >
             <div className={`${item.bg} p-2 rounded-lg w-fit`}>
               <Icon className={`h-5 w-5 ${item.color}`} />
@@ -70,9 +70,9 @@ export function KpiStrip({ items }: KpiStripProps) {
             <AnimatedNumber
               value={item.value}
               suffix={item.suffix}
-              className="text-2xl font-bold text-[#171717] mt-2 block"
+              className="text-2xl font-bold text-[var(--portal-text-primary)] mt-2 block"
             />
-            <p className="text-sm text-[#737373]">{item.label}</p>
+            <p className="text-sm text-[var(--portal-text-muted)]">{item.label}</p>
           </motion.div>
         </motion.div>
         );

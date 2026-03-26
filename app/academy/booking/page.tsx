@@ -88,7 +88,7 @@ export default function AcademyBookingPage() {
   }, []);
 
   const formatPrice = (price: number) => {
-    // Prisene er lagret i kroner (ikke øre)
+    // Prisene er lagret i kroner
     return price.toLocaleString("nb-NO", { minimumFractionDigits: 0 }) + " kr";
   };
 

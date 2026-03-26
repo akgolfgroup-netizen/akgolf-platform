@@ -184,9 +184,11 @@ export function PublicStripePaymentPage({
   customerName,
   amount,
 }: PublicStripePaymentPageProps) {
-  const priceNOK = (amount / 100).toLocaleString("nb-NO", {
+  // Prisene er lagret i kroner
+  const priceNOK = amount.toLocaleString("nb-NO", {
     style: "currency",
     currency: "NOK",
+    minimumFractionDigits: 0,
   });
 
   return (

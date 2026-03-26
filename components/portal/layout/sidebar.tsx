@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   User,
   CalendarDays,
@@ -20,10 +21,12 @@ import {
   Clock,
   ClipboardCheck,
   Dumbbell,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
 import type { PortalUser } from "@/lib/portal/auth";
+import { useSidebar } from "./sidebar-context";
 
 const navItems = [
   { href: "/portal", label: "Dashboard", icon: LayoutDashboard },
@@ -70,56 +73,58 @@ interface SidebarProps {
   user: PortalUser;
 }
 
-export function Sidebar({ user }: SidebarProps) {
-  const pathname = usePathname();
-  const router = useRouter();
-
-  async function handleSignOut() {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
-    await supabase.auth.signOut();
-    router.push("/portal/login");
-  }
+function NavLink({
+  item,
+  pathname,
+  onClick,
+}: {
+  item: { href: string; label: string; icon: React.ComponentType<{ className?: string }> };
+  pathname: string;
+  onClick?: () => void;
+}) {
+  const active =
+    pathname === item.href ||
+    (item.href !== "/portal" && pathname.startsWith(`${item.href}/`));
 
   return (
-    <aside
-      className="fixed left-0 top-0 h-full w-60 flex flex-col z-20"
-      style={{ background: THEME.bg }}
-    >
-      {/* Logo */}
-      <div
-        className="px-5 py-5"
-        style={{ borderBottom: `1px solid ${THEME.border}` }}
+    <li>
+      <Link
+        href={item.href}
+        onClick={onClick}
+        className={cn(
+          "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
+          active
+            ? "text-white border-l-[3px] border-white"
+            : "text-[var(--portal-text-secondary)] hover:text-white hover:bg-[var(--portal-surface-raised)]"
+        )}
+        style={active ? { background: THEME.bgActive } : undefined}
       >
-        <span className="text-lg font-bold text-white">AK Golf</span>
-      </div>
+        <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
+        <span>{item.label}</span>
+      </Link>
+    </li>
+  );
+}
 
+function SidebarContent({
+  user,
+  pathname,
+  onSignOut,
+  onNavClick,
+}: {
+  user: PortalUser;
+  pathname: string;
+  onSignOut: () => void;
+  onNavClick?: () => void;
+}) {
+  return (
+    <>
       {/* Main Nav */}
       <nav className="flex-1 py-4 overflow-y-auto">
         <ul className="space-y-0.5">
-          {navItems.map((item) => {
-            const active = pathname === item.href ||
-              (item.href !== "/portal" && pathname.startsWith(`${item.href}/`));
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
-                    active
-                      ? "text-white border-l-[3px] border-white"
-                      : "text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
-                  )}
-                  style={active ? { background: THEME.bgActive } : undefined}
-                >
-                  <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
-                  <span>{item.label}</span>
-                </Link>
-              </li>
-            );
-          })}
+          {navItems.map((item) => (
+            <NavLink key={item.href} item={item} pathname={pathname} onClick={onNavClick} />
+          ))}
         </ul>
 
         {/* Trening section */}
@@ -131,27 +136,9 @@ export function Sidebar({ user }: SidebarProps) {
             Trening
           </p>
           <ul className="space-y-0.5">
-            {trainingItems.map((item) => {
-              const active = pathname === item.href ||
-                pathname.startsWith(`${item.href}/`);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
-                      active
-                        ? "text-white border-l-[3px] border-white"
-                        : "text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
-                    )}
-                    style={active ? { background: THEME.bgActive } : undefined}
-                  >
-                    <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
-                    <span>{item.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
+            {trainingItems.map((item) => (
+              <NavLink key={item.href} item={item} pathname={pathname} onClick={onNavClick} />
+            ))}
           </ul>
         </div>
 
@@ -164,30 +151,16 @@ export function Sidebar({ user }: SidebarProps) {
             Konto
           </p>
           <ul className="space-y-0.5">
-            {accountItems.map((item) => {
-              const active = pathname === item.href;
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
-                      active
-                        ? "text-white border-l-[3px] border-white"
-                        : "text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
-                    )}
-                    style={active ? { background: THEME.bgActive } : undefined}
-                  >
-                    <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
-                    <span>{item.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
+            {accountItems.map((item) => (
+              <NavLink key={item.href} item={item} pathname={pathname} onClick={onNavClick} />
+            ))}
             <li>
               <button
-                onClick={handleSignOut}
-                className="w-full flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150 text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
+                onClick={() => {
+                  onSignOut();
+                  onNavClick?.();
+                }}
+                className="w-full flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150 text-[var(--portal-text-secondary)] hover:text-white hover:bg-[var(--portal-surface-raised)] cursor-pointer"
               >
                 <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
                 <span>Logg ut</span>
@@ -206,26 +179,9 @@ export function Sidebar({ user }: SidebarProps) {
               Admin
             </p>
             <ul className="space-y-0.5">
-              {staffItems.map((item) => {
-                const active = pathname === item.href;
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
-                        active
-                          ? "text-white border-l-[3px] border-white"
-                          : "text-[#A3A3A3] hover:text-white hover:bg-[#262626]"
-                      )}
-                      style={active ? { background: THEME.bgActive } : undefined}
-                    >
-                      <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
-                      <span>{item.label}</span>
-                    </Link>
-                  </li>
-                );
-              })}
+              {staffItems.map((item) => (
+                <NavLink key={item.href} item={item} pathname={pathname} onClick={onNavClick} />
+              ))}
             </ul>
           </div>
         )}
@@ -238,7 +194,7 @@ export function Sidebar({ user }: SidebarProps) {
       >
         <div
           className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
-          style={{ background: "#404040" }}
+          style={{ background: "var(--portal-text-muted)" }}
         >
           {user.image ? (
             <img
@@ -247,18 +203,104 @@ export function Sidebar({ user }: SidebarProps) {
               className="w-9 h-9 rounded-full object-cover"
             />
           ) : (
-            <User className="w-[18px] h-[18px] text-[#A3A3A3]" />
+            <User className="w-[18px] h-[18px] text-[var(--portal-text-secondary)]" />
           )}
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-white truncate">
             {user.name ?? "Spiller"}
           </p>
-          <p className="text-xs text-[#737373] truncate">
+          <p className="text-xs text-[var(--portal-text-muted)] truncate">
             {user.email}
           </p>
         </div>
       </div>
-    </aside>
+    </>
+  );
+}
+
+export function Sidebar({ user }: SidebarProps) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { isOpen, close } = useSidebar();
+
+  async function handleSignOut() {
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    await supabase.auth.signOut();
+    router.push("/portal/login");
+  }
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <aside
+        className="fixed left-0 top-0 h-full w-60 hidden lg:flex flex-col z-20"
+        style={{ background: THEME.bg }}
+      >
+        {/* Logo */}
+        <div
+          className="px-5 py-5"
+          style={{ borderBottom: `1px solid ${THEME.border}` }}
+        >
+          <span className="text-lg font-bold text-white">AK Golf</span>
+        </div>
+
+        <SidebarContent
+          user={user}
+          pathname={pathname}
+          onSignOut={handleSignOut}
+        />
+      </aside>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={close}
+              className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+            />
+            {/* Drawer */}
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden"
+              style={{ background: THEME.bg }}
+            >
+              {/* Close button */}
+              <div
+                className="flex items-center justify-between px-5 py-4"
+                style={{ borderBottom: `1px solid ${THEME.border}` }}
+              >
+                <span className="text-lg font-bold text-white">AK Golf</span>
+                <button
+                  onClick={close}
+                  className="p-1 rounded-lg text-[var(--portal-text-muted)] hover:text-white transition-colors cursor-pointer"
+                  aria-label="Lukk meny"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <SidebarContent
+                user={user}
+                pathname={pathname}
+                onSignOut={handleSignOut}
+                onNavClick={close}
+              />
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

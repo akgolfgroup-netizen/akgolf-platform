@@ -106,7 +106,7 @@ export default async function StudentProfilePage({ params }: Props) {
         />
         <StatCard
           label="Totalt betalt"
-          value={`kr ${(totalSpent / 100).toLocaleString("nb-NO")}`}
+          value={`kr ${totalSpent.toLocaleString("nb-NO")}`}
         />
         <StatCard
           label="Kunde siden"
@@ -180,7 +180,7 @@ export default async function StudentProfilePage({ params }: Props) {
                       </span>
                     </td>
                     <td className="px-4 py-2 text-sm text-gray-700 text-right">
-                      kr {(b.amount / 100).toLocaleString("nb-NO")}
+                      kr {b.amount.toLocaleString("nb-NO")}
                     </td>
                   </tr>
                 ))}

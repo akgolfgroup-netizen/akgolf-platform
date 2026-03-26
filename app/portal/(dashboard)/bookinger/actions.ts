@@ -163,7 +163,7 @@ export async function cancelBooking(
 
   const refundAmountFormatted =
     refundedAmount > 0
-      ? `kr ${(refundedAmount / 100).toLocaleString("nb-NO", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
+      ? `kr ${refundedAmount.toLocaleString("nb-NO", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
       : null;
 
   const refundInfo =

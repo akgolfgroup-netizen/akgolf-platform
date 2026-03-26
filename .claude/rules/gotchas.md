@@ -136,6 +136,27 @@ fileSize          BigInt
 
 **Nye API-er:** `/api/coaching/*`, `/api/cron/*`, `/api/portal/admin/email-templates`, etc.
 
+## 15. Priser er lagret i KRONER (ikke øre)
+
+**Problem:** Prisene i databasen (ServiceType.price, PaymentTransaction.amount) er lagret i **kroner**. ALDRI del på 100 ved visning. Seed-config.ts bruker kroner (995 = 995 kr, 3000 = 3000 kr).
+
+**Løsning:**
+```typescript
+// VISNING — pris er allerede i kroner, vis direkte
+const priceNok = service.price;
+`kr ${price.toLocaleString("nb-NO")}` // → "kr 995"
+
+// STRIPE — forventer øre, GANG med 100
+stripe.paymentIntents.create({ amount: service.price * 100 });
+
+// MVA — vatRate er i prosent (25), beregning gir kroner
+const vatAmount = Math.round((price * vatRate) / 100);
+```
+
+**MERK:** Gammel seed.ts (ubrukt) har priser i øre. Bruk kun seed-config.ts.
+
+**Fikset 2026-03-26:** 9 filer rettet — fjernet feilaktig `/100` i visning, lagt til `* 100` for Stripe.
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer

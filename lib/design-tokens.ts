@@ -13,7 +13,7 @@ export const colors = {
     midnightNavy: '#0A1929',
     navyLight: '#10456A',
     navyDark: '#0A1929',
-    softGold: '#B07D4F',
+    softGold: '#B8975C',
     goldLight: '#D4C4A8',
     goldDark: '#8B7243',
     goldMuted: '#E8D4B0',
@@ -96,8 +96,8 @@ export const ACCENT_COLORS = {
 
 export const typography = {
   fontFamily: {
-    sans: 'var(--font-inter), Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    display: 'var(--font-inter), Inter, system-ui, -apple-system, sans-serif',
+    sans: 'var(--font-manrope), Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    display: 'var(--font-manrope), Manrope, system-ui, -apple-system, sans-serif',
     mono: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',
   },
 
@@ -228,7 +228,7 @@ export const spacing = {
 
   // Container
   container: {
-    maxWidth: '1200px',
+    maxWidth: '1120px',
     padding: {
       mobile: '1rem',
       tablet: '1.5rem',

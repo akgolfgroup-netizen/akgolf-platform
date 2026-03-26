@@ -19,8 +19,8 @@ export function SubPageHero({
     <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
       {/* Gradient mesh */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className={`absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full ${ACCENT_COLORS[accent]} opacity-[0.03] blur-[80px]`} />
-        <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-gold opacity-[0.02] blur-[60px]" />
+        <div className={`absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full ${ACCENT_COLORS[accent]} opacity-[0.08] blur-[80px]`} />
+        <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-gold opacity-[0.05] blur-[60px]" />
         {/* Decorative gold line */}
         <div className="absolute top-0 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-gold/10 to-transparent" />
       </div>

@@ -67,39 +67,41 @@ export function ApplicationForm() {
             onSubmit={handleSubmit}
             className="space-y-5"
           >
-            <div>
-              <label htmlFor="name" className="w-label">Navn *</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                className="w-input"
-                placeholder="Ditt fulle navn"
-              />
-            </div>
+            <div className={`space-y-5 transition-opacity duration-200 ${status === "submitting" ? "opacity-60 pointer-events-none" : ""}`}>
+              <div>
+                <label htmlFor="name" className="w-label">Navn *</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  className="w-input"
+                  placeholder="Ditt fulle navn"
+                />
+              </div>
 
-            <div>
-              <label htmlFor="email" className="w-label">E-post *</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                className="w-input"
-                placeholder="din@epost.no"
-              />
-            </div>
+              <div>
+                <label htmlFor="email" className="w-label">E-post *</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  className="w-input"
+                  placeholder="din@epost.no"
+                />
+              </div>
 
-            <div>
-              <label htmlFor="message" className="w-label">Melding</label>
-              <textarea
-                id="message"
-                name="message"
-                rows={4}
-                className="w-input resize-none"
-                placeholder="Fortell oss om dine mål og ambisjoner..."
-              />
+              <div>
+                <label htmlFor="message" className="w-label">Melding</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  className="w-input resize-none"
+                  placeholder="Fortell oss om dine mål og ambisjoner..."
+                />
+              </div>
             </div>
 
             {status === "error" && (
