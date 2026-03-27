@@ -183,7 +183,7 @@ export async function POST(req: NextRequest) {
     // Buffer-vinduer for konfliktsjekk (lagret endTime inkluderer IKKE buffer)
     const conflictStart = addMinutes(start, -serviceType.bufferBefore);
     const conflictEnd = addMinutes(end, serviceType.bufferAfter);
-    // price er lagret i øre (1 kr = 100 øre)
+    // price er lagret i kroner, vatRate er i prosent (f.eks. 25)
     const vatAmount = Math.round(
       (serviceType.price * serviceType.vatRate) / 100
     );
@@ -266,9 +266,9 @@ export async function POST(req: NextRequest) {
         ReturnType<typeof stripe.paymentIntents.create>
       >;
       try {
-        // price er lagret i øre — sendes direkte til Stripe (krever øre/cents)
+        // price er lagret i kroner — Stripe krever øre, så gang med 100
         paymentIntent = await stripe.paymentIntents.create({
-          amount: serviceType.price,
+          amount: serviceType.price * 100,
           currency: "nok",
           metadata: { bookingId: booking.id },
           automatic_payment_methods: { enabled: true },

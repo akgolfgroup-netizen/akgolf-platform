@@ -2,6 +2,7 @@ import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { isStaff } from "@/lib/portal/rbac";
+import { nanoid } from "nanoid";
 
 interface ImportCompetition {
   golfboxId: number;
@@ -49,6 +50,7 @@ export async function POST(req: NextRequest) {
     } else {
       await prisma.tournament.create({
         data: {
+          id: nanoid(),
           golfboxId: comp.golfboxId,
           name: comp.name,
           startDate: new Date(comp.startDate),
@@ -56,6 +58,7 @@ export async function POST(req: NextRequest) {
           location: comp.venue || undefined,
           level: comp.level,
           createdById: user.id,
+          updatedAt: new Date(),
         },
       });
       created++;

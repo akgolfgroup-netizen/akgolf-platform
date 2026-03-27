@@ -256,7 +256,7 @@ export default async function TreningsplanPage() {
               <div>
                 <div className="flex items-center gap-3 mb-1">
                   <span className="text-lg font-semibold text-white">
-                    Dagens okt: {todaySession.title}
+                    Dagens økt: {todaySession.title}
                   </span>
                   {todaySession.pyramid && todaySession.area && (
                     <SessionIdDisplay
@@ -275,7 +275,7 @@ export default async function TreningsplanPage() {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-[#B07D4F] text-white hover:bg-[#A06D3F] transition-colors"
               >
                 <Play className="w-4 h-4" />
-                Start okt
+                Start økt
               </Link>
             </div>
 

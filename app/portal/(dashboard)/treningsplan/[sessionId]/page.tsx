@@ -248,7 +248,7 @@ const DEMO_SESSIONS: Record<string, DemoSessionData> = {
   },
   "tee-session": {
     title: "Tee Total - Driver og Trejern",
-    description: "Full swing-okt med fokus pa svingtempo og ballbane",
+    description: "Full swing-økt med fokus på svingtempo og ballbane",
     durationMinutes: 60,
     intensity: "high",
     objective: "Bygge konsistent draw med kontrollert svingtempo",
@@ -382,7 +382,7 @@ export default async function SessionPage({ params }: Props) {
   if (!demoSession) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <h1 className="text-xl font-semibold text-white mb-2">Okt ikke funnet</h1>
+        <h1 className="text-xl font-semibold text-white mb-2">Økt ikke funnet</h1>
         <p className="text-[#737373]">Denne okten finnes ikke.</p>
       </div>
     );

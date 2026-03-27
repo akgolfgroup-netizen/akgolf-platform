@@ -132,9 +132,42 @@ fileSize          BigInt
 
 **Status:** akgolf-website er nå master for all funksjonalitet. Spillerportal og akgolf-booking er arkivert.
 
-**Nye modeller:** CoachingPackage, UserSubscription, CoachingAvailability, Notification, Conversation, Message, SwingVideo, TrackmanSession
+**Nye modeller (alle i schema.prisma):** CoachingPackage, UserSubscription, CoachingAvailability, CommunicationLog, Notification, AppModule, AppBundle, BundleItem, AppSubscription, SubscriptionQuota, DashboardAccess, ContentItem, Conversation, Message, ExerciseDefinition, SwingVideo, TrackmanSession, UserExerciseBank
 
-**Nye API-er:** `/api/coaching/*`, `/api/cron/*`, `/api/portal/admin/email-templates`, etc.
+**Nye enums:** BillingType, CoachingBookingType, SubscriptionStatus, CommunicationType, NotificationType, CoachingSubscriptionTier, DashboardRole, ContentStatus, ContentType
+
+**Nye API-er:** `/api/coaching/*`, `/api/cron/*`, `/api/portal/admin/email-templates`, `/api/portal/notifications`, `/api/portal/subscriptions/*`
+
+**Viktig:** Prisma-relasjoner bruker stor forbokstav (f.eks. `User`, ikke `user`). Sjekk alltid mot schema ved select/where.
+
+## 15. Priser er lagret i KRONER (ikke øre)
+
+**Problem:** Prisene i databasen (ServiceType.price, PaymentTransaction.amount) er lagret i **kroner**. ALDRI del på 100 ved visning. Seed-config.ts bruker kroner (995 = 995 kr, 3000 = 3000 kr).
+
+**Løsning:**
+```typescript
+// VISNING — pris er allerede i kroner, vis direkte
+const priceNok = service.price;
+`kr ${price.toLocaleString("nb-NO")}` // → "kr 995"
+
+// STRIPE — forventer øre, GANG med 100
+stripe.paymentIntents.create({ amount: service.price * 100 });
+
+// MVA — vatRate er i prosent (25), beregning gir kroner
+const vatAmount = Math.round((price * vatRate) / 100);
+```
+
+**MERK:** Gammel seed.ts (ubrukt) har priser i øre. Bruk kun seed-config.ts.
+
+**Fikset 2026-03-26:** 9 filer rettet — fjernet feilaktig `/100` i visning, lagt til `* 100` for Stripe.
+
+## 16. Aldri lag separat globals.css for portal
+
+**Problem:** Portal hadde egen `app/portal/globals.css` som importerte Tailwind dobbelt, overskrev font (Inter i stedet for Manrope), og kolliderte med rot-CSS-ens `--portal-*` variabler.
+
+**Løsning:** Én enkelt `app/globals.css` for hele appen. Portal-tokens (`--portal-*`), shadcn-variabler, bento-grid og alle utilities ligger i root CSS. Portal-layout importerer IKKE egen CSS.
+
+**Regel:** Aldri lag `globals.css` i undermapper. Alt portal-spesifikt CSS legges i `app/globals.css` under seksjonen "Portal Dark Theme Tokens".
 
 ---
 

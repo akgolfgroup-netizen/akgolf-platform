@@ -3,6 +3,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { BookingStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
 import { addMinutes } from "date-fns";
+import { nanoid } from "nanoid";
 
 interface Participant {
   name: string;
@@ -113,6 +114,7 @@ export async function POST(req: NextRequest) {
 
       return tx.booking.create({
         data: {
+          id: nanoid(),
           studentId: user.id,
           instructorId,
           serviceTypeId,
@@ -124,8 +126,10 @@ export async function POST(req: NextRequest) {
           amount: serviceType.price,
           vatAmount,
           isGroupBooking: true,
-          groupParticipants: {
+          updatedAt: new Date(),
+          GroupParticipant: {
             create: participants.map((p: Participant) => ({
+              id: nanoid(),
               name: p.name,
               email: p.email,
               phone: p.phone ?? null,

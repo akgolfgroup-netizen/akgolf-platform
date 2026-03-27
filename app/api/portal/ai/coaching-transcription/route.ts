@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
   // Verify session exists
   const coachingSession = await prisma.coachingSession.findUnique({
     where: { id: sessionId },
-    include: { booking: { include: { serviceType: true } } },
+    include: { Booking: { include: { ServiceType: true } } },
   });
   if (!coachingSession) {
     return NextResponse.json(
@@ -83,7 +83,6 @@ export async function POST(req: NextRequest) {
   await prisma.coachingSession.update({
     where: { id: sessionId },
     data: {
-      transcriptionText: transcription,
       aiSummary: transcription,
       aiKeyPoints: summary.keyPoints,
       aiFocusAreas: summary.focusAreas,
@@ -101,7 +100,7 @@ export async function POST(req: NextRequest) {
     appendCoachingSessionToProfile(student.notionPageId, {
       date: coachingSession.sessionDate.toISOString(),
       serviceName:
-        coachingSession.booking?.serviceType?.name ?? "Coaching",
+        coachingSession.Booking?.ServiceType?.name ?? "Coaching",
       keyPoints: summary.keyPoints,
       focusAreas: summary.focusAreas,
       actionItems: summary.actionItems,

@@ -12,7 +12,7 @@ interface Props {
 }
 
 function formatPrice(price: number): string {
-  // Prisene er lagret i kroner (ikke øre)
+  // Prisene er lagret i kroner
   return price.toLocaleString("nb-NO");
 }
 

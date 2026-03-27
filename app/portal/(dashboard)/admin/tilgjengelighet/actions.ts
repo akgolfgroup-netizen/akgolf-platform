@@ -5,6 +5,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { isStaff } from "@/lib/portal/rbac";
 import { revalidatePath } from "next/cache";
+import { nanoid } from "nanoid";
 
 export async function getAvailability(instructorId: string) {
   const user = await requirePortalUser();
@@ -31,6 +32,7 @@ export async function upsertAvailability(
     ...slots.map((slot) =>
       prisma.instructorAvailability.create({
         data: {
+          id: nanoid(),
           instructorId,
           dayOfWeek: slot.dayOfWeek,
           startTime: slot.startTime,
@@ -70,6 +72,7 @@ export async function createBlockedTime(data: {
 
   await prisma.blockedTime.create({
     data: {
+      id: nanoid(),
       instructorId: data.instructorId || null,
       startTime: new Date(data.startTime),
       endTime: new Date(data.endTime),

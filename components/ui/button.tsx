@@ -50,6 +50,7 @@ export function Button({
       className={cn(
         "inline-flex items-center justify-center gap-2 font-semibold rounded-full",
         "transition-all duration-300",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold",
         "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
         variants[variant],
         sizes[size],

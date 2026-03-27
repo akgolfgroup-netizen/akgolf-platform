@@ -48,8 +48,8 @@ export default function UtviklingPage() {
           <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
             {/* Gradient mesh */}
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full bg-utvikling opacity-[0.03] blur-[80px]" />
-              <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-software opacity-[0.02] blur-[60px]" />
+              <div className="absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full bg-utvikling opacity-[0.08] blur-[80px]" />
+              <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-software opacity-[0.05] blur-[60px]" />
               <div className="absolute top-0 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-utvikling/10 to-transparent" />
             </div>
 
@@ -280,9 +280,9 @@ export default function UtviklingPage() {
             <div className="w-container">
               <RevealOnScroll>
                 <SectionLabel>Produkter</SectionLabel>
-                <h2 className="w-heading-lg mt-4 mb-4">Konkrete løsninger.</h2>
+                <h2 className="w-heading-lg mt-4 mb-4">Konkrete losninger.</h2>
                 <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
-                  Digitale verktøy og rådgivingstjenester med fast pris. Alt skreddersys til klubbens behov.
+                  Digitale verktoy og radgivingstjenester med fast pris. Alt skreddersys til klubbens behov.
                 </p>
               </RevealOnScroll>
 
@@ -306,7 +306,7 @@ export default function UtviklingPage() {
                       </ul>
                       <div className="pt-4 border-t border-ink-10">
                         <p className="font-mono text-lg font-bold text-utvikling">{product.pricing}</p>
-                        <p className="text-xs text-ink-40">{product.pricingNote}</p>
+                        <p className="text-xs text-ink-50">{product.pricingNote}</p>
                       </div>
                     </div>
                   </StaggerItem>
@@ -322,7 +322,7 @@ export default function UtviklingPage() {
                 <SectionLabel>Referanser</SectionLabel>
                 <h2 className="w-heading-lg text-white mt-4 mb-4">Klubber vi har hjulpet.</h2>
                 <p className="text-ink-40 max-w-2xl mb-12">
-                  Fra sportsplaner til digitale verktøy. Her er noen av klubbene som bruker våre løsninger.
+                  Fra sportsplaner til digitale verktoy. Her er noen av klubbene som bruker vare losninger.
                 </p>
               </RevealOnScroll>
 
@@ -390,7 +390,7 @@ export default function UtviklingPage() {
                   <SectionLabel>Ta kontakt</SectionLabel>
                   <h2 className="w-heading-lg mt-4 mb-4">Fortell oss om deres behov.</h2>
                   <p className="text-ink-50 max-w-lg mx-auto">
-                    Fyll ut skjemaet under, så tar vi kontakt for en uforpliktende samtale om deres muligheter.
+                    Fyll ut skjemaet under, sa tar vi kontakt for en uforpliktende samtale om deres muligheter.
                   </p>
                 </div>
               </RevealOnScroll>

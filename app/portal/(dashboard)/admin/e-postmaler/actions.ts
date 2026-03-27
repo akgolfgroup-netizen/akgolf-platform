@@ -4,6 +4,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { isAdmin } from "@/lib/portal/rbac";
 import { prisma } from "@/lib/portal/prisma";
 import { revalidatePath } from "next/cache";
+import { nanoid } from "nanoid";
 
 export async function getTemplates() {
   const user = await requirePortalUser();
@@ -29,6 +30,8 @@ export async function createTemplate(data: {
 
   const template = await prisma.emailTemplate.create({
     data: {
+      id: nanoid(),
+      updatedAt: new Date(),
       name: data.name,
       subject: data.subject,
       htmlContent: data.htmlContent,

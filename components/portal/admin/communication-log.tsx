@@ -26,7 +26,7 @@ interface CommunicationEntry {
   content: string;
   sentAt: Date;
   instructor: {
-    user: {
+    User: {
       name: string | null;
     };
   };
@@ -131,7 +131,7 @@ function NyLoggForm({
         subject: subject || null,
         content,
         sentAt: new Date(),
-        instructor: { user: { name: "Deg" } },
+        instructor: { User: { name: "Deg" } },
       });
 
       setSubject("");
@@ -291,9 +291,9 @@ export function CommunicationLog({
                           locale: nb,
                         })}
                       </span>
-                      {log.instructor.user.name && (
+                      {log.instructor.User.name && (
                         <span className="text-xs text-gray-400">
-                          av {log.instructor.user.name}
+                          av {log.instructor.User.name}
                         </span>
                       )}
                     </div>

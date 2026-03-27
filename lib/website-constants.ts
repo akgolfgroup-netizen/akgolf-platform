@@ -1201,8 +1201,8 @@ export const JUNIOR_ACADEMY_INFO = {
     steps: [
       { name: "CIS Fredrikstad", note: "gratis, skoletid" },
       { name: "GFGK Junior", note: "klubbmedlemskap" },
-      { name: "Junior Camp", note: "4 500 kr" },
-      { name: "AK Golf Junior Academy", note: "2 000–2 500 kr/mnd" },
+      { name: "Junior Camp", note: "kontakt oss for pris" },
+      { name: "AK Golf Junior Academy", note: "kontakt oss for pris" },
       { name: "WANG Toppidrett", note: "videregående" }
     ],
   },

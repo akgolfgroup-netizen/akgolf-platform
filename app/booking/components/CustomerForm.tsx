@@ -219,9 +219,9 @@ export function CustomerForm({ onSubmit }: Props) {
               className="w-input"
             >
               <option value="">Velg...</option>
-              <option value="beginner">Nybegynner (0-2 ar)</option>
-              <option value="intermediate">Moderat (2-5 ar)</option>
-              <option value="experienced">Erfaren (5+ ar)</option>
+              <option value="beginner">Nybegynner (0-2 år)</option>
+              <option value="intermediate">Moderat (2-5 år)</option>
+              <option value="experienced">Erfaren (5+ år)</option>
             </select>
           </div>
 

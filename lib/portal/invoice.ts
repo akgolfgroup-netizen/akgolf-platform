@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { prisma } from "@/lib/portal/prisma";
 
 /**
@@ -76,6 +77,7 @@ export async function generateInvoice(
   // Create PaymentTransaction record
   const transaction = await prisma.paymentTransaction.create({
     data: {
+      id: randomUUID(),
       bookingId: booking.id,
       paymentMethod: "INVOICE",
       grossAmount: booking.amount,
@@ -84,6 +86,7 @@ export async function generateInvoice(
       netAmount: booking.amount - booking.vatAmount,
       providerRef: invoiceId,
       status: "PENDING",
+      updatedAt: new Date(),
     },
   });
 

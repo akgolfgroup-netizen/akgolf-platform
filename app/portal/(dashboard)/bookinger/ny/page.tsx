@@ -18,11 +18,11 @@ export default async function NyBookingPage() {
       price: true,
       color: true,
       maxStudents: true,
-      instructors: {
+      Instructor: {
         select: {
           id: true,
           title: true,
-          user: { select: { name: true, image: true } },
+          User: { select: { name: true, image: true } },
         },
       },
     },
@@ -30,7 +30,14 @@ export default async function NyBookingPage() {
 
   return (
     <div className="p-6 max-w-2xl">
-      <BookCoachingForm serviceTypes={serviceTypes} />
+      <BookCoachingForm serviceTypes={serviceTypes.map((st) => ({
+        ...st,
+        instructors: st.Instructor.map((i) => ({
+          id: i.id,
+          title: i.title,
+          user: { name: i.User.name, image: i.User.image },
+        })),
+      }))} />
     </div>
   );
 }

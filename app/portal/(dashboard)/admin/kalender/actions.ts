@@ -30,7 +30,7 @@ export async function getBookingsForPeriod(
   const start = startOfDay(new Date(startDate));
   const end = endOfDay(new Date(endDate));
 
-  return prisma.booking.findMany({
+  const bookings = await prisma.booking.findMany({
     where: {
       startTime: { gte: start },
       endTime: { lte: end },
@@ -43,26 +43,43 @@ export async function getBookingsForPeriod(
       endTime: true,
       status: true,
       adminNotes: true,
-      student: { select: { name: true, email: true } },
-      serviceType: { select: { name: true, color: true, duration: true } },
-      instructor: { select: { id: true, user: { select: { name: true } } } },
-      location: { select: { name: true } },
+      User: { select: { name: true, email: true } },
+      ServiceType: { select: { name: true, color: true, duration: true } },
+      Instructor: { select: { id: true, User: { select: { name: true } } } },
+      Location: { select: { name: true } },
     },
     orderBy: { startTime: "asc" },
   });
+
+  return bookings.map((b) => ({
+    id: b.id,
+    startTime: b.startTime,
+    endTime: b.endTime,
+    status: b.status,
+    student: { name: b.User?.name ?? null, email: b.User?.email ?? null },
+    serviceType: { name: b.ServiceType.name, color: b.ServiceType.color, duration: b.ServiceType.duration },
+    instructor: { id: b.Instructor.id, user: { name: b.Instructor.User?.name ?? null } },
+    location: b.Location ? { name: b.Location.name } : null,
+    adminNotes: b.adminNotes,
+  }));
 }
 
 export async function getInstructors() {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return [];
 
-  return prisma.instructor.findMany({
+  const instructors = await prisma.instructor.findMany({
     select: {
       id: true,
-      user: { select: { name: true, image: true } },
+      User: { select: { name: true, image: true } },
     },
-    orderBy: { user: { name: "asc" } },
+    orderBy: { User: { name: "asc" } },
   });
+
+  return instructors.map((i) => ({
+    id: i.id,
+    user: { name: i.User.name, image: i.User.image },
+  }));
 }
 
 export async function getBookingsForDay(date: string, instructorId?: string) {

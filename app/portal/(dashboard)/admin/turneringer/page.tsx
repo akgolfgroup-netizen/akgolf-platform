@@ -9,17 +9,26 @@ export default async function AdminTuringeringerPage() {
   const user = await requirePortalUser();
   if (!user || !isStaff(user.role)) redirect("/");
 
-  const tournaments = await prisma.tournament.findMany({
+  const rawTournaments = await prisma.tournament.findMany({
     orderBy: { startDate: "asc" },
     include: {
-      _count: { select: { playerPlans: true } },
-      playerPlans: {
+      _count: { select: { PlayerTournamentPlan: true } },
+      PlayerTournamentPlan: {
         include: {
-          student: { select: { id: true, name: true, image: true } },
+          User: { select: { id: true, name: true, image: true } },
         },
       },
     },
   });
+
+  const tournaments = rawTournaments.map((t) => ({
+    ...t,
+    _count: { playerPlans: t._count.PlayerTournamentPlan },
+    playerPlans: t.PlayerTournamentPlan.map((pp) => ({
+      ...pp,
+      student: { id: pp.User.id, name: pp.User.name, image: pp.User.image },
+    })),
+  }));
 
   return (
     <div className="space-y-6">

@@ -46,7 +46,7 @@ export default async function StudentProfilePage({ params }: Props) {
 
   const communicationLogs = await getCommunicationLogs(id);
 
-  const totalSpent = student.bookings
+  const totalSpent = student.Booking
     .filter((b) => b.paymentStatus === "PAID")
     .reduce((sum, b) => sum + b.amount, 0);
 
@@ -96,17 +96,17 @@ export default async function StudentProfilePage({ params }: Props) {
       <div className="grid grid-cols-4 gap-4">
         <StatCard
           label="Bookinger"
-          value={String(student.bookings.length)}
+          value={String(student.Booking.length)}
           icon={<Calendar className="w-4 h-4" />}
         />
         <StatCard
-          label="Coaching-okter"
-          value={String(student.coachingSessions.length)}
+          label="Coaching-økter"
+          value={String(student.CoachingSession.length)}
           icon={<BookOpen className="w-4 h-4" />}
         />
         <StatCard
           label="Totalt betalt"
-          value={`kr ${(totalSpent / 100).toLocaleString("nb-NO")}`}
+          value={`kr ${totalSpent.toLocaleString("nb-NO")}`}
         />
         <StatCard
           label="Kunde siden"
@@ -115,7 +115,7 @@ export default async function StudentProfilePage({ params }: Props) {
       </div>
 
       {/* Handicap Progression */}
-      {student.handicapEntries && student.handicapEntries.length > 0 && (
+      {student.HandicapEntry && student.HandicapEntry.length > 0 && (
         <div>
           <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
             <TrendingDown className="w-5 h-5 text-[#B07D4F]" />
@@ -123,22 +123,22 @@ export default async function StudentProfilePage({ params }: Props) {
           </h2>
           <div className="bg-white rounded-xl border border-gray-200 p-5">
             <PlayerProgressionChart
-              handicapEntries={student.handicapEntries}
-              coachingSessions={student.coachingSessions}
+              handicapEntries={student.HandicapEntry}
+              coachingSessions={student.CoachingSession}
             />
           </div>
         </div>
       )}
 
       {/* Player Goals */}
-      {student.goals && student.goals.length > 0 && (
+      {student.Goal && student.Goal.length > 0 && (
         <div>
           <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
             <Target className="w-5 h-5 text-[#B07D4F]" />
             Spillerens mål
           </h2>
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <PlayerGoalsSection goals={student.goals} />
+            <PlayerGoalsSection goals={student.Goal} />
           </div>
         </div>
       )}
@@ -149,7 +149,7 @@ export default async function StudentProfilePage({ params }: Props) {
           Bookinghistorikk
         </h2>
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-          {student.bookings.length === 0 ? (
+          {student.Booking.length === 0 ? (
             <p className="text-sm text-gray-400 p-6 text-center">
               Ingen bookinger
             </p>
@@ -165,14 +165,14 @@ export default async function StudentProfilePage({ params }: Props) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {student.bookings.map((b) => (
+                {student.Booking.map((b) => (
                   <tr key={b.id} className="hover:bg-gray-50">
                     <td className="px-4 py-2 text-sm text-gray-700">
                       {format(new Date(b.startTime), "d. MMM yyyy HH:mm", { locale: nb })}
                     </td>
-                    <td className="px-4 py-2 text-sm text-gray-700">{b.serviceType.name}</td>
+                    <td className="px-4 py-2 text-sm text-gray-700">{b.ServiceType.name}</td>
                     <td className="px-4 py-2 text-sm text-gray-700">
-                      {b.instructor.user.name ?? "—"}
+                      {b.Instructor.User.name ?? "—"}
                     </td>
                     <td className="px-4 py-2">
                       <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[b.status] ?? "bg-gray-100"}`}>
@@ -180,7 +180,7 @@ export default async function StudentProfilePage({ params }: Props) {
                       </span>
                     </td>
                     <td className="px-4 py-2 text-sm text-gray-700 text-right">
-                      kr {(b.amount / 100).toLocaleString("nb-NO")}
+                      kr {b.amount.toLocaleString("nb-NO")}
                     </td>
                   </tr>
                 ))}
@@ -193,15 +193,15 @@ export default async function StudentProfilePage({ params }: Props) {
       {/* Coaching sessions */}
       <div>
         <h2 className="text-lg font-semibold text-[#0A1929] mb-3">
-          Coaching-okter
+          Coaching-økter
         </h2>
         <div className="space-y-3">
-          {student.coachingSessions.length === 0 ? (
+          {student.CoachingSession.length === 0 ? (
             <p className="text-sm text-gray-400 bg-white rounded-xl border border-gray-200 p-6 text-center">
-              Ingen coaching-okter registrert
+              Ingen coaching-økter registrert
             </p>
           ) : (
-            student.coachingSessions.map((cs) => (
+            student.CoachingSession.map((cs) => (
               <EditableCoachingNotes key={cs.id} session={cs} />
             ))
           )}

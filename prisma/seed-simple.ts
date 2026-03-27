@@ -7,6 +7,7 @@
 // =============================================================================
 
 import "dotenv/config";
+import { randomUUID } from "crypto";
 import { prisma } from "../lib/portal/prisma";
 import { COACHES, SERVICES, LOCATIONS, AVAILABILITY, PACKAGES } from "./seed-config";
 
@@ -27,10 +28,12 @@ async function main() {
     if (!user) {
       user = await prisma.user.create({
         data: {
+          id: randomUUID(),
           email: coach.email,
           name: coach.name,
           role: key === "anders" ? "ADMIN" : "INSTRUCTOR",
           subscriptionTier: "VISITOR",
+          updatedAt: new Date(),
         },
       });
       console.log(`✅ Bruker opprettet: ${coach.name}`);
@@ -44,10 +47,12 @@ async function main() {
     if (!instructor) {
       instructor = await prisma.instructor.create({
         data: {
+          id: randomUUID(),
           userId: user.id,
           title: coach.title,
           bio: coach.bio,
           specialization: "",
+          updatedAt: new Date(),
         },
       });
       console.log(`✅ Instruktør-profil opprettet: ${coach.name}`);
@@ -67,8 +72,10 @@ async function main() {
     if (!location) {
       location = await prisma.location.create({
         data: {
+          id: randomUUID(),
           name: loc.name,
           address: loc.address,
+          updatedAt: new Date(),
         },
       });
       console.log(`✅ Lokasjon opprettet: ${loc.name}`);
@@ -96,6 +103,7 @@ async function main() {
     if (!serviceType) {
       serviceType = await prisma.serviceType.create({
         data: {
+          id: randomUUID(),
           name: svc.name,
           description: svc.description,
           duration: svc.duration,
@@ -104,6 +112,7 @@ async function main() {
           color: svc.color,
           sortOrder: sortOrder++,
           category: "INDIVIDUAL",
+          updatedAt: new Date(),
         },
       });
       console.log(`✅ Tjeneste opprettet: ${svc.name} (${svc.price} kr)`);
@@ -122,7 +131,7 @@ async function main() {
     await prisma.instructor.update({
       where: { id: instructorId },
       data: {
-        serviceTypes: { connect: { id: serviceType.id } },
+        ServiceType: { connect: { id: serviceType.id } },
       },
     });
   }
@@ -145,6 +154,7 @@ async function main() {
       for (const time of blocks) {
         await prisma.instructorAvailability.create({
           data: {
+            id: randomUUID(),
             instructorId,
             dayOfWeek: dayMap[dayKey],
             startTime: time.start,

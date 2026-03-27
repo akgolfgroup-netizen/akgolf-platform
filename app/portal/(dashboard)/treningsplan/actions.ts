@@ -14,8 +14,8 @@ export async function getActivePlan(studentId?: string) {
   return prisma.trainingPlan.findFirst({
     where: { studentId: id, isActive: true },
     include: {
-      weeks: {
-        include: { sessions: { orderBy: { sortOrder: "asc" } } },
+      TrainingPlanWeek: {
+        include: { TrainingPlanSession: { orderBy: { sortOrder: "asc" } } },
         orderBy: { weekNumber: "asc" },
       },
     },
@@ -33,11 +33,11 @@ export async function getCurrentWeekSessions(studentId?: string) {
   const plan = await prisma.trainingPlan.findFirst({
     where: { studentId: id, isActive: true },
     include: {
-      weeks: {
+      TrainingPlanWeek: {
         where: {
           weekStart: { lte: weekEnd },
         },
-        include: { sessions: { orderBy: { dayOfWeek: "asc" } } },
+        include: { TrainingPlanSession: { orderBy: { dayOfWeek: "asc" } } },
         orderBy: { weekNumber: "asc" },
       },
     },
@@ -46,12 +46,12 @@ export async function getCurrentWeekSessions(studentId?: string) {
   if (!plan) return [];
 
   // Find week that contains today
-  const currentWeek = plan.weeks.find((w) =>
+  const currentWeek = plan.TrainingPlanWeek.find((w: { weekStart: Date }) =>
     isWithinInterval(now, {
       start: w.weekStart,
       end: endOfISOWeek(w.weekStart),
     })
   );
 
-  return currentWeek?.sessions ?? [];
+  return currentWeek?.TrainingPlanSession ?? [];
 }

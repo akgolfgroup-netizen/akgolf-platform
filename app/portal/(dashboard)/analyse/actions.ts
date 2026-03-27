@@ -5,6 +5,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { subMonths, startOfDay, subDays } from "date-fns";
 import { revalidatePath } from "next/cache";
+import { nanoid } from "nanoid";
 
 export async function getHandicapEntries(months = 12) {
   const user = await requirePortalUser();
@@ -29,6 +30,7 @@ export async function addHandicapEntry(data: {
 
   await prisma.handicapEntry.create({
     data: {
+      id: nanoid(),
       userId: user.id,
       date: new Date(data.date),
       handicapIndex: data.handicapIndex,
@@ -49,7 +51,7 @@ export async function getTrainingLogsForAnalyse(days = 90) {
       date: { gte: subDays(new Date(), days) },
     },
     include: {
-      planSession: { select: { weekId: true, focusArea: true, durationMinutes: true } },
+      TrainingPlanSession: { select: { weekId: true, focusArea: true, durationMinutes: true } },
     },
     orderBy: { date: "asc" },
   });
@@ -65,11 +67,11 @@ export async function getPlanVsActual(weeks = 8) {
   const plan = await prisma.trainingPlan.findFirst({
     where: { studentId: user.id, isActive: true },
     include: {
-      weeks: {
+      TrainingPlanWeek: {
         where: { weekStart: { gte: from } },
         include: {
-          sessions: {
-            include: { trainingLogs: { where: { userId: user.id } } },
+          TrainingPlanSession: {
+            include: { TrainingLog: { where: { userId: user.id } } },
           },
         },
         orderBy: { weekNumber: "asc" },
@@ -79,11 +81,11 @@ export async function getPlanVsActual(weeks = 8) {
 
   if (!plan) return [];
 
-  return plan.weeks.map((week) => ({
+  return plan.TrainingPlanWeek.map((week) => ({
     weekNumber: week.weekNumber,
     weekStart: week.weekStart,
-    planned: week.sessions.length,
-    completed: week.sessions.filter((s) => s.trainingLogs.length > 0).length,
+    planned: week.TrainingPlanSession.length,
+    completed: week.TrainingPlanSession.filter((s: { TrainingLog: unknown[] }) => s.TrainingLog.length > 0).length,
   }));
 }
 

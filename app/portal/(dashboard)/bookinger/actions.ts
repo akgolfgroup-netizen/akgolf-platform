@@ -15,14 +15,14 @@ import { isStaff } from "@/lib/portal/rbac";
 import { notifyNextOnWaitlist } from "@/lib/portal/booking/waitlist";
 
 const bookingInclude = {
-  serviceType: { select: { name: true, category: true, color: true, duration: true } },
-  instructor: {
+  ServiceType: { select: { name: true, category: true, color: true, duration: true } },
+  Instructor: {
     select: {
-      user: { select: { name: true, image: true } },
+      User: { select: { name: true, image: true } },
       title: true,
     },
   },
-  location: { select: { name: true } },
+  Location: { select: { name: true } },
 } as const;
 
 export async function getUpcomingBookings(studentId?: string) {
@@ -31,7 +31,7 @@ export async function getUpcomingBookings(studentId?: string) {
 
   const id = studentId ?? user.id;
 
-  return prisma.booking.findMany({
+  const bookings = await prisma.booking.findMany({
     where: {
       studentId: id,
       startTime: { gte: new Date() },
@@ -41,6 +41,13 @@ export async function getUpcomingBookings(studentId?: string) {
     orderBy: { startTime: "asc" },
     take: 20,
   });
+
+  return bookings.map((b) => ({
+    ...b,
+    serviceType: { name: b.ServiceType.name, category: b.ServiceType.category, color: b.ServiceType.color, duration: b.ServiceType.duration },
+    instructor: { user: { name: b.Instructor.User.name, image: b.Instructor.User.image }, title: b.Instructor.title },
+    location: b.Location ? { name: b.Location.name } : null,
+  }));
 }
 
 export async function getPastBookings(studentId?: string) {
@@ -49,7 +56,7 @@ export async function getPastBookings(studentId?: string) {
 
   const id = studentId ?? user.id;
 
-  return prisma.booking.findMany({
+  const bookings = await prisma.booking.findMany({
     where: {
       studentId: id,
       OR: [
@@ -61,6 +68,13 @@ export async function getPastBookings(studentId?: string) {
     orderBy: { startTime: "desc" },
     take: 30,
   });
+
+  return bookings.map((b) => ({
+    ...b,
+    serviceType: { name: b.ServiceType.name, category: b.ServiceType.category, color: b.ServiceType.color, duration: b.ServiceType.duration },
+    instructor: { user: { name: b.Instructor.User.name, image: b.Instructor.User.image }, title: b.Instructor.title },
+    location: b.Location ? { name: b.Location.name } : null,
+  }));
 }
 
 export interface CancelBookingResult {
@@ -80,9 +94,9 @@ export async function cancelBooking(
   const booking = await prisma.booking.findUnique({
     where: { id },
     include: {
-      serviceType: { select: { name: true } },
-      instructor: { select: { user: { select: { name: true, email: true } } } },
-      student: { select: { name: true, email: true } },
+      ServiceType: { select: { name: true } },
+      Instructor: { select: { User: { select: { name: true, email: true } } } },
+      User: { select: { name: true, email: true } },
     },
   });
   if (!booking) throw new Error("Booking ikke funnet");
@@ -163,7 +177,7 @@ export async function cancelBooking(
 
   const refundAmountFormatted =
     refundedAmount > 0
-      ? `kr ${(refundedAmount / 100).toLocaleString("nb-NO", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
+      ? `kr ${refundedAmount.toLocaleString("nb-NO", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
       : null;
 
   const refundInfo =
@@ -174,10 +188,10 @@ export async function cancelBooking(
         : "Ingen refusjon";
 
   sendCancellationEmail({
-    studentEmail: booking.student.email ?? "",
-    studentName: booking.student.name ?? "Kunde",
-    serviceName: booking.serviceType.name,
-    instructorName: booking.instructor.user.name ?? "Instruktør",
+    studentEmail: booking.User.email ?? "",
+    studentName: booking.User.name ?? "Kunde",
+    serviceName: booking.ServiceType.name,
+    instructorName: booking.Instructor.User.name ?? "Instruktør",
     date: dateStr,
     time: timeStr,
     refundInfo,
@@ -189,8 +203,8 @@ export async function cancelBooking(
   // Notify next person on waitlist (non-blocking)
   notifyNextOnWaitlist(
     id,
-    booking.serviceType.name,
-    booking.instructor.user.name ?? "Instruktør",
+    booking.ServiceType.name,
+    booking.Instructor.User.name ?? "Instruktør",
     booking.startTime
   ).catch((err) =>
     console.error("[cancelBooking] Waitlist notification failed:", err)

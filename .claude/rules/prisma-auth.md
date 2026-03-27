@@ -22,12 +22,12 @@ const user = await prisma.user.findUnique({
 
 ## KRITISK: SubscriptionTier enum
 
-Website/Portal bruker disse verdiene:
-- `FREE` (gratis bruker)
+Website og Dashboard bruker NÅ SAMME verdier (synkronisert 2026-03-24):
+- `VISITOR` (gratis bruker, default)
+- `ACADEMY`
+- `STARTER`
 - `PRO`
 - `ELITE`
-
-**MERK:** Dashboard bruker andre verdier (VISITOR, ACADEMY, STARTER). ALDRI bland.
 
 ## Auth-mønster for Portal
 
