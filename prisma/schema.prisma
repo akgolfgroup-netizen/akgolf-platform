@@ -1204,7 +1204,7 @@ model PushSubscription {
   id         String   @id @default(cuid())
   userId     String
   user       User     @relation("PushSubscriptions", fields: [userId], references: [id], onDelete: Cascade)
-  endpoint   String
+  endpoint   String   @unique
   p256dh     String
   auth       String
   deviceType String
