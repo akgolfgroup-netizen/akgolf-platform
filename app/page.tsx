@@ -109,7 +109,7 @@ export default function HomePage() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
               >
-                {["PGA Professional", "Trackman Certified", "TPI Certified", "10+ ars erfaring"].map((item) => (
+                {["PGA Professional", "Trackman Certified", "TPI Certified", "10+ års erfaring"].map((item) => (
                   <span key={item} className="flex items-center gap-2 text-xs text-ink-50">
                     <span className="w-1 h-1 rounded-full bg-gold" />
                     {item}

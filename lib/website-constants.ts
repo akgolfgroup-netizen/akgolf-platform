@@ -767,7 +767,7 @@ export const TRENINGSPLAN = {
   },
   howItWorks: [
     { number: "01", title: "Svar pa 4 sporsmal", description: "Handicap, mal, tilgjengelig tid og fokusomrade. Det tar under ett minutt." },
-    { number: "02", title: "AI genererer planen", description: "Var AI bygger en personalisert 12-ukers plan basert pa AK-formelen og tusenvis av datapunkter." },
+    { number: "02", title: "AI genererer planen", description: "Vår AI bygger en personalisert 12-ukers plan basert pa AK-formelen og tusenvis av datapunkter." },
     { number: "03", title: "Se forhandsvisning", description: "Du far se en gratis oppsummering av planen for du velger a lase opp hele." },
   ],
   pricing: [
@@ -797,7 +797,7 @@ export const TRENINGSPLAN = {
     },
   ],
   faq: [
-    { q: "Hvordan fungerer AI-treningsplanen?", a: "Du svarer pa fire sporsmal om ditt niva, mal, tid og fokus. Var AI bruker AK-formelen til a generere en skreddersydd 12-ukers plan med okt-for-okt-detaljer." },
+    { q: "Hvordan fungerer AI-treningsplanen?", a: "Du svarer på fire spørsmål om ditt nivå, mål, tid og fokus. Vår AI bruker AK-formelen til å generere en skreddersydd 12-ukers plan med økt-for-økt-detaljer." },
     { q: "Er planen virkelig personalisert?", a: "Ja. Planen tilpasses ditt handicap, tilgjengelige treningstid, fokusomrader og mal. Ingen to planer er like." },
     { q: "Kan jeg se planen for jeg kjoper?", a: "Absolutt. Du far en gratis forhandsvisning med oppsummering av ukeplanen for du bestemmer deg." },
     { q: "Hva er forskjellen pa PDF og web-dashboard?", a: "PDF-planen er en komplett nedlastbar plan. Web-dashboardet gir deg i tillegg progressjonssporing, ukentlige justeringer og ovelsesvideoer." },
@@ -1195,8 +1195,8 @@ export const JUNIOR_ACADEMY_INFO = {
     steps: [
       { name: "CIS Fredrikstad", note: "gratis, skoletid" },
       { name: "GFGK Junior", note: "klubbmedlemskap" },
-      { name: "Junior Camp", note: "4 500 kr" },
-      { name: "AK Golf Junior Academy", note: "2 000–2 500 kr/mnd" },
+      { name: "Junior Camp", note: "kontakt oss for pris" },
+      { name: "AK Golf Junior Academy", note: "kontakt oss for pris" },
       { name: "WANG Toppidrett", note: "videregående" }
     ],
   },

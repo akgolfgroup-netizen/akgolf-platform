@@ -36,7 +36,7 @@ export default async function DagbokPage() {
     {
       id: "2",
       date: "I gar, 14:00",
-      title: "Coaching-okt med Anders",
+      title: "Coaching-økt med Anders",
       status: "Coaching",
       statusColor: "blue",
       duration: "60 min",
@@ -66,7 +66,7 @@ export default async function DagbokPage() {
         <h1 className="text-2xl font-bold text-white">Treningsdagbok</h1>
         <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-[#171717] text-white border border-[#333] hover:bg-[#262626] transition-colors">
           <Plus className="w-4 h-4" />
-          Logg ny okt
+          Logg ny økt
         </button>
       </div>
 

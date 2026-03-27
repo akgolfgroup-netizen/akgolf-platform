@@ -100,7 +100,7 @@ export default async function StudentProfilePage({ params }: Props) {
           icon={<Calendar className="w-4 h-4" />}
         />
         <StatCard
-          label="Coaching-okter"
+          label="Coaching-økter"
           value={String(student.CoachingSession.length)}
           icon={<BookOpen className="w-4 h-4" />}
         />
@@ -193,12 +193,12 @@ export default async function StudentProfilePage({ params }: Props) {
       {/* Coaching sessions */}
       <div>
         <h2 className="text-lg font-semibold text-[#0A1929] mb-3">
-          Coaching-okter
+          Coaching-økter
         </h2>
         <div className="space-y-3">
           {student.CoachingSession.length === 0 ? (
             <p className="text-sm text-gray-400 bg-white rounded-xl border border-gray-200 p-6 text-center">
-              Ingen coaching-okter registrert
+              Ingen coaching-økter registrert
             </p>
           ) : (
             student.CoachingSession.map((cs) => (

@@ -223,7 +223,7 @@ export default async function DashboardPage() {
       suffix: " dager",
     },
     {
-      label: "Okter denne mnd",
+      label: "Økter denne mnd",
       value: recentLogs.length,
       icon: "Activity",
       color: "text-purple-500",
@@ -252,7 +252,7 @@ export default async function DashboardPage() {
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-gold text-white hover:bg-gold/90 transition-colors"
           >
             <Plus className="w-4 h-4" />
-            Logg okt
+            Logg økt
           </Link>
         </div>
       </div>
@@ -340,7 +340,7 @@ export default async function DashboardPage() {
                 {currentWeekSessions.find((s: { dayOfWeek: number; title: string; durationMinutes: number | null }) => s.dayOfWeek === now.getDay())?.title ??
                   "Putting-fokus"}
               </p>
-              <p className="text-xs text-[var(--portal-text-muted)]">45 min ovelser - Gate drill, Avstandskontroll</p>
+              <p className="text-xs text-[var(--portal-text-muted)]">45 min øvelser - Gate drill, Avstandskontroll</p>
             </div>
           </div>
         </div>
@@ -356,7 +356,7 @@ export default async function DashboardPage() {
           >
             <div className="p-4">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-sm font-semibold text-[var(--portal-text-primary)]">Kommende okter</span>
+                <span className="text-sm font-semibold text-[var(--portal-text-primary)]">Kommende økter</span>
                 <Link
                   href="/portal/bookinger"
                   className="text-xs text-[var(--portal-text-muted)] hover:text-[var(--portal-text-primary)] transition-colors"
@@ -427,7 +427,7 @@ export default async function DashboardPage() {
                     <CalendarCheck className="w-4 h-4 text-blue-500" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-[var(--portal-text-primary)]">Coaching-okt fullfort</p>
+                    <p className="text-sm font-medium text-[var(--portal-text-primary)]">Coaching-økt fullført</p>
                     <p className="text-xs text-[var(--portal-text-muted)]">I gar - Med Anders - Naerspill</p>
                   </div>
                 </div>
