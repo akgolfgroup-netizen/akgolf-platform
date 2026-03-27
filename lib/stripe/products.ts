@@ -1,44 +1,8 @@
 // Stripe product configuration
 // Products and prices are created in Stripe Dashboard — these are lookup keys
 
-// ─── AI Treningsplaner ───
-export const AI_PLAN_PRODUCTS = {
-  basis: {
-    name: "AI Treningsplan — Basis",
-    priceId: process.env.STRIPE_PRICE_BASIS!,
-    mode: "payment" as const,
-    amount: 19900, // 199 NOK in øre
-  },
-  standard: {
-    name: "AI Treningsplan — Standard",
-    priceId: process.env.STRIPE_PRICE_STANDARD!,
-    mode: "subscription" as const,
-    amount: 69900, // 699 NOK per season
-  },
-  premium: {
-    name: "AI Treningsplan — Premium",
-    priceId: process.env.STRIPE_PRICE_PREMIUM!,
-    mode: "subscription" as const,
-    amount: 199900, // 1999 NOK per year
-  },
-} as const;
-
 // ─── Coaching Abonnement ───
 export const COACHING_SUBSCRIPTION_PRODUCTS = {
-  performancePro: {
-    name: "Performance Pro",
-    priceId: process.env.STRIPE_PRICE_PERFORMANCE_PRO!,
-    mode: "subscription" as const,
-    amount: 200000, // 2000 NOK/mnd i øre
-    interval: "month" as const,
-    metadata: {
-      sessionsPerMonth: 4,
-      sessionDuration: 20,
-      bookingWindowDays: 14,
-      maxPerWeek: 2,
-      tier: "PERFORMANCE_PRO",
-    },
-  },
   performance: {
     name: "Performance",
     priceId: process.env.STRIPE_PRICE_PERFORMANCE!,
@@ -53,57 +17,107 @@ export const COACHING_SUBSCRIPTION_PRODUCTS = {
       tier: "PERFORMANCE",
     },
   },
-} as const;
-
-// ─── Onboarding / Engangskjøp ───
-export const ONBOARDING_PRODUCTS = {
-  start: {
-    name: "Start (Onboarding)",
-    priceId: process.env.STRIPE_PRICE_START!,
-    mode: "payment" as const,
-    amount: 300000, // 3000 NOK i øre
+  performancePro: {
+    name: "Performance Pro",
+    priceId: process.env.STRIPE_PRICE_PERFORMANCE_PRO!,
+    mode: "subscription" as const,
+    amount: 200000, // 2000 NOK/mnd i øre
+    interval: "month" as const,
     metadata: {
-      sessions: 3,
+      sessionsPerMonth: 4,
       sessionDuration: 20,
-      portalDays: 30,
-      includesTrackmanBaseline: true,
+      bookingWindowDays: 14,
+      maxPerWeek: 2,
+      tier: "PERFORMANCE_PRO",
     },
   },
-  foundationTest: {
-    name: "Foundation Test",
-    priceId: process.env.STRIPE_PRICE_FOUNDATION_TEST!,
+  juniorAcademy: {
+    name: "Junior Academy",
+    priceId: process.env.STRIPE_PRICE_JUNIOR_ACADEMY!,
+    mode: "subscription" as const,
+    amount: 250000, // 2500 NOK/mnd i øre
+    interval: "month" as const,
+    metadata: {
+      sessionsPerMonth: 0, // Gruppetrening, ikke individuelt
+      sessionDuration: 60,
+      bookingWindowDays: 7,
+      maxPerWeek: 0,
+      tier: "JUNIOR_ACADEMY",
+    },
+  },
+  juniorElite: {
+    name: "Junior Elite",
+    priceId: process.env.STRIPE_PRICE_JUNIOR_ELITE!,
+    mode: "subscription" as const,
+    amount: 250000, // 2500 NOK/mnd i øre
+    interval: "month" as const,
+    metadata: {
+      sessionsPerMonth: 8,
+      sessionDuration: 20,
+      bookingWindowDays: 14,
+      maxPerWeek: 2,
+      tier: "JUNIOR_ELITE",
+    },
+  },
+} as const;
+
+// ─── Flex-pakker (engangskjøp) ───
+export const FLEX_PRODUCTS = {
+  flex50: {
+    name: "Flex 50",
+    priceId: process.env.STRIPE_PRICE_FLEX50!,
     mode: "payment" as const,
-    amount: 99500, // 995 NOK i øre
+    amount: 150000, // 1500 NOK i øre
     metadata: {
       sessionDuration: 50,
-      refundableOnSubscription: true,
+      tier: "FLEX",
+    },
+  },
+  flex90: {
+    name: "Flex 90",
+    priceId: process.env.STRIPE_PRICE_FLEX90!,
+    mode: "payment" as const,
+    amount: 250000, // 2500 NOK i øre
+    metadata: {
+      sessionDuration: 90,
+      tier: "FLEX",
     },
   },
 } as const;
 
-// ─── Legacy alias for backwards compatibility ───
-export const STRIPE_PRODUCTS = AI_PLAN_PRODUCTS;
-
 // ─── Types ───
-export type AIPlanTier = keyof typeof AI_PLAN_PRODUCTS;
 export type CoachingTier = keyof typeof COACHING_SUBSCRIPTION_PRODUCTS;
-export type OnboardingProduct = keyof typeof ONBOARDING_PRODUCTS;
-
-// Legacy alias
-export type PlanTier = AIPlanTier;
+export type FlexProduct = keyof typeof FLEX_PRODUCTS;
 
 // ─── Helpers ───
 export function getCoachingProductByTier(tier: string) {
   const normalized = tier.toLowerCase().replace(/_/g, "");
-  if (normalized === "performancepro") return COACHING_SUBSCRIPTION_PRODUCTS.performancePro;
   if (normalized === "performance") return COACHING_SUBSCRIPTION_PRODUCTS.performance;
+  if (normalized === "performancepro") return COACHING_SUBSCRIPTION_PRODUCTS.performancePro;
+  if (normalized === "junioracademy") return COACHING_SUBSCRIPTION_PRODUCTS.juniorAcademy;
+  if (normalized === "juniorelite") return COACHING_SUBSCRIPTION_PRODUCTS.juniorElite;
+  return null;
+}
+
+export function getFlexProduct(product: string) {
+  const normalized = product.toLowerCase().replace(/[_-]/g, "");
+  if (normalized === "flex50") return FLEX_PRODUCTS.flex50;
+  if (normalized === "flex90") return FLEX_PRODUCTS.flex90;
   return null;
 }
 
 export function getSessionsPerMonth(tier: CoachingTier): number {
-  return COACHING_SUBSCRIPTION_PRODUCTS[tier].metadata.sessionsPerMonth;
+  const product = COACHING_SUBSCRIPTION_PRODUCTS[tier];
+  return product.metadata.sessionsPerMonth ?? 0;
 }
 
 export function getBookingWindowDays(tier: CoachingTier): number {
-  return COACHING_SUBSCRIPTION_PRODUCTS[tier].metadata.bookingWindowDays;
+  const product = COACHING_SUBSCRIPTION_PRODUCTS[tier];
+  return product.metadata.bookingWindowDays ?? 7;
 }
+
+// ─── Alle produkter ───
+export const ALL_COACHING_PRODUCTS = {
+  ...COACHING_SUBSCRIPTION_PRODUCTS,
+  ...FLEX_PRODUCTS,
+} as const;
