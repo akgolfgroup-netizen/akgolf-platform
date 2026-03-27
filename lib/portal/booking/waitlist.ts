@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { prisma } from "@/lib/portal/prisma";
 import { WaitlistStatus } from "@prisma/client";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
@@ -23,11 +24,11 @@ export async function notifyNextOnWaitlist(
     },
     orderBy: { position: "asc" },
     include: {
-      student: { select: { name: true, email: true } },
+      User: { select: { name: true, email: true } },
     },
   });
 
-  if (!nextEntry || !nextEntry.student.email) return;
+  if (!nextEntry || !nextEntry.User.email) return;
 
   // Mark as notified with 24h expiry
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -50,10 +51,10 @@ export async function notifyNextOnWaitlist(
   try {
     await resend.emails.send({
       from: FROM_EMAIL,
-      to: nextEntry.student.email,
+      to: nextEntry.User.email,
       subject: `Plass ledig! ${serviceName} — ${dateStr}`,
       react: WaitlistAvailableEmail({
-        studentName: nextEntry.student.name ?? "Hei",
+        studentName: nextEntry.User.name ?? "Hei",
         serviceName,
         instructorName,
         date: dateStr,
@@ -62,7 +63,7 @@ export async function notifyNextOnWaitlist(
       }),
     });
     console.log(
-      `[Waitlist] Notified ${nextEntry.student.email} for booking ${bookingId}`
+      `[Waitlist] Notified ${nextEntry.User.email} for booking ${bookingId}`
     );
   } catch (error) {
     console.error("[Waitlist] Failed to send notification:", error);
@@ -98,10 +99,12 @@ export async function addToWaitlist(
 
   await prisma.waitlistEntry.create({
     data: {
+      id: randomUUID(),
       bookingId,
       studentId,
       position,
       status: WaitlistStatus.WAITING,
+      updatedAt: new Date(),
     },
   });
 

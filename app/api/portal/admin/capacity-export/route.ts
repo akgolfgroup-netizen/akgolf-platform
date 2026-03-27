@@ -26,8 +26,8 @@ export async function GET(req: NextRequest) {
   // Hent alle instruktorer
   const instructors = await prisma.instructor.findMany({
     include: {
-      user: { select: { name: true } },
-      availability: true,
+      User: { select: { name: true } },
+      InstructorAvailability: true,
     },
   });
 
@@ -38,8 +38,8 @@ export async function GET(req: NextRequest) {
       status: { in: [BookingStatus.CONFIRMED, BookingStatus.COMPLETED] },
     },
     include: {
-      serviceType: { select: { price: true, duration: true } },
-      instructor: { select: { id: true } },
+      ServiceType: { select: { price: true, duration: true } },
+      Instructor: { select: { id: true } },
     },
   });
 
@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
     let maxWeeklyRevenue = 0;
     const avgPricePerHour = 1500;
 
-    for (const avail of instructor.availability) {
+    for (const avail of instructor.InstructorAvailability) {
       const startMinutes = parseInt(avail.startTime.split(":")[0]) * 60 + parseInt(avail.startTime.split(":")[1]);
       const endMinutes = parseInt(avail.endTime.split(":")[0]) * 60 + parseInt(avail.endTime.split(":")[1]);
       const slotsInWindow = Math.floor((endMinutes - startMinutes) / 50);
@@ -58,15 +58,15 @@ export async function GET(req: NextRequest) {
     }
 
     const bookedSlots = weeklyBookings.filter(
-      (b) => b.instructor?.id === instructor.id
+      (b) => b.Instructor?.id === instructor.id
     ).length;
 
     const weeklyRevenue = weeklyBookings
-      .filter((b) => b.instructor?.id === instructor.id)
-      .reduce((sum, b) => sum + b.serviceType.price, 0);
+      .filter((b) => b.Instructor?.id === instructor.id)
+      .reduce((sum, b) => sum + b.ServiceType.price, 0);
 
     return {
-      name: instructor.user.name ?? "Ukjent",
+      name: instructor.User.name ?? "Ukjent",
       weeklySlots,
       bookedSlots,
       occupancy: weeklySlots > 0 ? Math.round((bookedSlots / weeklySlots) * 1000) / 1000 : 0,
@@ -85,7 +85,7 @@ export async function GET(req: NextRequest) {
     const dayData: Record<string, { booked: number; total: number }> = {};
 
     for (const instructor of instructors) {
-      const totalSlots = instructor.availability
+      const totalSlots = instructor.InstructorAvailability
         .filter((a: { dayOfWeek: number }) => a.dayOfWeek === dayOfWeek)
         .reduce((sum: number, a: { startTime: string; endTime: string }) => {
           const startMinutes = parseInt(a.startTime.split(":")[0]) * 60 + parseInt(a.startTime.split(":")[1]);
@@ -95,11 +95,11 @@ export async function GET(req: NextRequest) {
 
       const bookedSlots = weeklyBookings.filter(
         (b) =>
-          b.instructor?.id === instructor.id &&
+          b.Instructor?.id === instructor.id &&
           new Date(b.startTime).toDateString() === day.toDateString()
       ).length;
 
-      const name = instructor.user.name ?? "Ukjent";
+      const name = instructor.User.name ?? "Ukjent";
       dayData[name] = { booked: bookedSlots, total: totalSlots };
     }
 

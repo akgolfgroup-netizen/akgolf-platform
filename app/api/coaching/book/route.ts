@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "crypto";
 import { prisma } from "@/lib/portal/prisma";
 import { getPortalUser } from "@/lib/portal/auth";
 import { stripe } from "@/lib/portal/stripe";
@@ -144,7 +145,7 @@ export async function POST(req: NextRequest) {
     // Get the primary instructor (Anders)
     const instructor = await prisma.instructor.findFirst({
       where: {
-        user: { role: "ADMIN" },
+        User: { role: "ADMIN" },
       },
       select: { id: true },
     });
@@ -196,11 +197,13 @@ export async function POST(req: NextRequest) {
         // Create the booking
         const newBooking = await tx.booking.create({
           data: {
+            id: randomUUID(),
             studentId: user.id,
             instructorId: instructor.id,
             serviceTypeId: serviceType.id,
             startTime: start,
             endTime: end,
+            updatedAt: new Date(),
             status:
               coachingPackage.billingType === BillingType.RECURRING
                 ? BookingStatus.CONFIRMED

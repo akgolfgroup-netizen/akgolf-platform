@@ -36,8 +36,8 @@ export async function searchStudents(query: string, page = 1) {
         createdAt: true,
         _count: {
           select: {
-            bookings: true,
-            coachingSessions: true,
+            Booking: true,
+            CoachingSession: true,
           },
         },
       },
@@ -66,7 +66,7 @@ export async function getStudentProfile(studentId: string) {
       createdAt: true,
       notionPageId: true,
       subscriptionTier: true,
-      bookings: {
+      Booking: {
         select: {
           id: true,
           startTime: true,
@@ -74,13 +74,13 @@ export async function getStudentProfile(studentId: string) {
           status: true,
           amount: true,
           paymentStatus: true,
-          serviceType: { select: { name: true } },
-          instructor: { select: { user: { select: { name: true } } } },
+          ServiceType: { select: { name: true } },
+          Instructor: { select: { User: { select: { name: true } } } },
         },
         orderBy: { startTime: "desc" },
         take: 50,
       },
-      coachingSessions: {
+      CoachingSession: {
         select: {
           id: true,
           sessionDate: true,
@@ -93,7 +93,7 @@ export async function getStudentProfile(studentId: string) {
         orderBy: { sessionDate: "desc" },
         take: 20,
       },
-      handicapEntries: {
+      HandicapEntry: {
         select: {
           id: true,
           date: true,
@@ -103,7 +103,7 @@ export async function getStudentProfile(studentId: string) {
         orderBy: { date: "asc" },
         take: 24,
       },
-      goals: {
+      Goal: {
         select: {
           id: true,
           title: true,

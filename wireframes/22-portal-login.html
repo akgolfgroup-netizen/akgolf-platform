@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Portal Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C8CDD4;
+      --ink-40: #9BA5B2;
+      --ink-50: #6B7B8D;
+      --ink-60: #4F5D6B;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --gold-dark: #8B7243;
+      --success: #22C55E;
+      --error: #EF4444;
+      --error-light: #FEE2E2;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-full: 9999px;
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Manrope', sans-serif; background: var(--ink-100); color: var(--ink-90); line-height: 1.6; min-height: 100vh; }
+
+    .login-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* === LEFT PANEL (BRANDING) === */
+    .login-brand {
+      background: linear-gradient(135deg, var(--ink-100) 0%, #0F2950 100%);
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-brand::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(184, 151, 92, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 1;
+    }
+    .brand-logo-mark {
+      width: 48px;
+      height: 48px;
+      background: var(--gold);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+    }
+    .brand-logo-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .brand-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 1;
+    }
+    .brand-headline {
+      font-size: 42px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .brand-headline span {
+      color: var(--gold);
+    }
+    .brand-subtext {
+      font-size: 16px;
+      color: var(--ink-40);
+      max-width: 400px;
+      line-height: 1.7;
+    }
+
+    .brand-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .brand-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink-30);
+      font-size: 14px;
+    }
+    .brand-feature-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(184, 151, 92, 0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+
+    .brand-footer {
+      z-index: 1;
+      color: var(--ink-50);
+      font-size: 12px;
+    }
+
+    /* === RIGHT PANEL (FORM) === */
+    .login-form-panel {
+      background: white;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-form-container {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .login-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .login-header p {
+      font-size: 14px;
+      color: var(--ink-50);
+    }
+
+    .login-tabs {
+      display: flex;
+      background: var(--ink-10);
+      border-radius: var(--radius-lg);
+      padding: 4px;
+      margin-bottom: 32px;
+    }
+    .login-tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-50);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .login-tab.active {
+      background: white;
+      color: var(--ink-90);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-80);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .form-input:hover {
+      border-color: var(--ink-30);
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.15);
+    }
+    .form-input.error {
+      border-color: var(--error);
+      background: var(--error-light);
+    }
+
+    .form-input-icon {
+      position: relative;
+    }
+    .form-input-icon input {
+      padding-left: 44px;
+    }
+    .form-input-icon i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--ink-40);
+      width: 20px;
+      height: 20px;
+    }
+    .form-input-icon .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--ink-40);
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+    }
+
+    .form-error {
+      font-size: 12px;
+      color: var(--error);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .form-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--ink-60);
+    }
+    .form-checkbox input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--gold);
+    }
+    .form-link {
+      font-size: 13px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .form-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--gold);
+      color: white;
+      border: none;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      background: var(--gold-dark);
+    }
+    .btn-primary:disabled {
+      background: var(--ink-20);
+      color: var(--ink-40);
+      cursor: not-allowed;
+    }
+    .btn-primary.loading::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--ink-20);
+    }
+    .divider span {
+      font-size: 12px;
+      color: var(--ink-40);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .social-buttons {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-social {
+      flex: 1;
+      padding: 12px;
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-social:hover {
+      background: var(--ink-05);
+      border-color: var(--ink-30);
+    }
+    .btn-social img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid var(--ink-10);
+    }
+    .login-footer p {
+      font-size: 14px;
+      color: var(--ink-50);
+    }
+    .login-footer a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* === MAGIC LINK SENT STATE === */
+    .magic-link-sent {
+      text-align: center;
+      padding: 24px;
+    }
+    .magic-link-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, rgba(184, 151, 92, 0.1) 0%, rgba(184, 151, 92, 0.2) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: var(--gold);
+    }
+    .magic-link-sent h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .magic-link-sent p {
+      font-size: 14px;
+      color: var(--ink-50);
+      margin-bottom: 8px;
+    }
+    .magic-link-sent .email {
+      font-weight: 600;
+      color: var(--ink-80);
+    }
+    .magic-link-sent .resend {
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--ink-50);
+    }
+    .magic-link-sent .resend a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* === MOBILE === */
+    @media (max-width: 900px) {
+      .login-page {
+        grid-template-columns: 1fr;
+      }
+      .login-brand {
+        display: none;
+      }
+      .login-form-panel {
+        padding: 24px;
+      }
+    }
+
+    /* === WIREFRAME DEMO CONTROLS === */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-xl);
+      z-index: 100;
+    }
+    .demo-controls h4 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-50);
+      margin-bottom: 12px;
+    }
+    .demo-controls button {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      background: var(--ink-10);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+    .demo-controls button:last-child {
+      margin-bottom: 0;
+    }
+    .demo-controls button:hover {
+      background: var(--ink-20);
+    }
+    .demo-controls button.active {
+      background: var(--gold);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-page">
+  <!-- Left Panel - Branding -->
+  <div class="login-brand">
+    <div class="brand-logo">
+      <div class="brand-logo-mark">K</div>
+      <span class="brand-logo-text">AK Golf Portal</span>
+    </div>
+
+    <div class="brand-content">
+      <h2 class="brand-headline">
+        Din personlige<br>
+        <span>golfutvikling</span>
+      </h2>
+      <p class="brand-subtext">
+        Følg din fremgang, book timer, og få AI-drevne treningsplaner tilpasset ditt spill.
+      </p>
+
+      <div class="brand-features">
+        <div class="brand-feature">
+          <div class="brand-feature-icon">
+            <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          </div>
+          <span>Enkel timebestilling og kalendersynkronisering</span>
+        </div>
+        <div class="brand-feature">
+          <div class="brand-feature-icon">
+            <i data-lucide="bar-chart-2" style="width:18px;height:18px;"></i>
+          </div>
+          <span>Strokes Gained-statistikk og handicap-tracking</span>
+        </div>
+        <div class="brand-feature">
+          <div class="brand-feature-icon">
+            <i data-lucide="brain" style="width:18px;height:18px;"></i>
+          </div>
+          <span>AI-genererte treningsplaner basert på ditt spill</span>
+        </div>
+        <div class="brand-feature">
+          <div class="brand-feature-icon">
+            <i data-lucide="video" style="width:18px;height:18px;"></i>
+          </div>
+          <span>Videoanalyse og coaching-oppsummeringer</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-footer">
+      © 2024 AK Golf Group AS. Alle rettigheter reservert.
+    </div>
+  </div>
+
+  <!-- Right Panel - Login Form -->
+  <div class="login-form-panel">
+    <div class="login-form-container">
+
+      <!-- Login Form (Default State) -->
+      <div id="login-form">
+        <div class="login-header">
+          <h1>Velkommen tilbake</h1>
+          <p>Logg inn for å fortsette til portalen</p>
+        </div>
+
+        <div class="login-tabs">
+          <div class="login-tab active">E-post</div>
+          <div class="login-tab">Magic Link</div>
+        </div>
+
+        <form>
+          <div class="form-group">
+            <label class="form-label">E-postadresse</label>
+            <div class="form-input-icon">
+              <i data-lucide="mail"></i>
+              <input type="email" class="form-input" placeholder="din@epost.no" value="anders@akgolf.no" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Passord</label>
+            <div class="form-input-icon">
+              <i data-lucide="lock"></i>
+              <input type="password" class="form-input" placeholder="••••••••" value="••••••••" />
+              <i data-lucide="eye" class="toggle-password"></i>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label class="form-checkbox">
+              <input type="checkbox" checked />
+              Husk meg
+            </label>
+            <a href="#" class="form-link">Glemt passord?</a>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            Logg inn
+            <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+          </button>
+        </form>
+
+        <div class="divider">
+          <span>eller</span>
+        </div>
+
+        <div class="social-buttons">
+          <button class="btn-social">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Google
+          </button>
+          <button class="btn-social">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            GitHub
+          </button>
+        </div>
+
+        <div class="login-footer">
+          <p>Har du ikke konto? <a href="#">Opprett konto</a></p>
+        </div>
+      </div>
+
+      <!-- Magic Link Sent State (Hidden by default) -->
+      <div id="magic-link-sent" style="display: none;">
+        <div class="magic-link-sent">
+          <div class="magic-link-icon">
+            <i data-lucide="mail-check" style="width:36px;height:36px;"></i>
+          </div>
+          <h2>Sjekk e-posten din</h2>
+          <p>Vi har sendt en innloggingslenke til:</p>
+          <p class="email">anders@akgolf.no</p>
+          <p class="resend">
+            Fikk du ikke e-posten? <a href="#">Send på nytt</a>
+          </p>
+          <button class="btn-primary" style="margin-top: 24px;">
+            <i data-lucide="arrow-left" style="width:18px;height:18px;"></i>
+            Tilbake til innlogging
+          </button>
+        </div>
+      </div>
+
+      <!-- Error State (Hidden by default) -->
+      <div id="login-error" style="display: none;">
+        <div class="login-header">
+          <h1>Velkommen tilbake</h1>
+          <p>Logg inn for å fortsette til portalen</p>
+        </div>
+
+        <div style="background: var(--error-light); border: 1px solid var(--error); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 24px; display: flex; align-items: flex-start; gap: 12px;">
+          <i data-lucide="alert-circle" style="width:20px;height:20px;color:var(--error);flex-shrink:0;margin-top:2px;"></i>
+          <div style="font-size: 13px; color: var(--error);">
+            <strong>Innlogging feilet</strong><br>
+            E-post eller passord er feil. Prøv igjen eller bruk "Glemt passord".
+          </div>
+        </div>
+
+        <form>
+          <div class="form-group">
+            <label class="form-label">E-postadresse</label>
+            <div class="form-input-icon">
+              <i data-lucide="mail"></i>
+              <input type="email" class="form-input error" value="anders@akgolf.no" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Passord</label>
+            <div class="form-input-icon">
+              <i data-lucide="lock"></i>
+              <input type="password" class="form-input error" value="••••••••" />
+              <i data-lucide="eye" class="toggle-password"></i>
+            </div>
+            <div class="form-error">
+              <i data-lucide="alert-circle" style="width:14px;height:14px;"></i>
+              Feil passord
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label class="form-checkbox">
+              <input type="checkbox" />
+              Husk meg
+            </label>
+            <a href="#" class="form-link">Glemt passord?</a>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            Prøv igjen
+            <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Demo Controls -->
+<div class="demo-controls">
+  <h4>Vis tilstand</h4>
+  <button class="active" onclick="showState('login-form')">Default</button>
+  <button onclick="showState('magic-link-sent')">Magic Link Sendt</button>
+  <button onclick="showState('login-error')">Feil</button>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  function showState(stateId) {
+    document.querySelectorAll('.login-form-container > div').forEach(el => {
+      el.style.display = 'none';
+    });
+    document.getElementById(stateId).style.display = 'block';
+
+    document.querySelectorAll('.demo-controls button').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    lucide.createIcons();
+  }
+</script>
+
+</body>
+</html>

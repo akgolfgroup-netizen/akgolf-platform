@@ -1,4 +1,4 @@
-import { randomBytes } from "crypto";
+import { randomBytes, randomUUID } from "crypto";
 import bcrypt from "bcrypt";
 import { prisma } from "@/lib/portal/prisma";
 import { createPlayerProfile } from "@/lib/portal/notion/player-profiles";
@@ -38,10 +38,12 @@ export async function autoCreateUser(
   // Create user with hashed password
   const user = await prisma.user.create({
     data: {
+      id: randomUUID(),
       email,
       name,
       role: "STUDENT",
       password: hashedPassword,
+      updatedAt: new Date(),
     },
   });
 

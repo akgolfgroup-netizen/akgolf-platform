@@ -1,4 +1,3 @@
-import "./globals.css";
 import { Providers } from "@/components/portal/providers";
 
 export const metadata = {

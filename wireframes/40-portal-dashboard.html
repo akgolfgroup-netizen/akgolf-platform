@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Portal Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C8CDD4;
+      --ink-40: #9BA5B2;
+      --ink-50: #6B7B8D;
+      --ink-60: #4F5D6B;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --gold-dark: #8B7243;
+      --success: #22C55E;
+      --success-light: #DCFCE7;
+      --error: #EF4444;
+      --error-light: #FEE2E2;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --info: #3B82F6;
+      --info-light: #DBEAFE;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Manrope', sans-serif; background: var(--ink-05); color: var(--ink-90); line-height: 1.6; }
+
+    /* === LAYOUT === */
+    .portal-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      background: var(--ink-100);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      width: 260px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 24px;
+    }
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+    .logo-text {
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-lg);
+      color: var(--ink-40);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .nav-item:hover {
+      background: rgba(255,255,255,0.05);
+      color: white;
+    }
+    .nav-item.active {
+      background: rgba(184, 151, 92, 0.15);
+      color: var(--gold);
+    }
+    .nav-item i { width: 20px; height: 20px; }
+    .nav-badge {
+      margin-left: auto;
+      background: var(--error);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .nav-section {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-50);
+      padding: 0 16px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+    }
+    .sidebar-user:hover {
+      background: rgba(255,255,255,0.05);
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .user-info {
+      flex: 1;
+    }
+    .user-name {
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .user-role {
+      color: var(--ink-50);
+      font-size: 12px;
+    }
+
+    /* === MAIN === */
+    .main {
+      margin-left: 260px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* === TOPBAR === */
+    .topbar {
+      background: white;
+      border-bottom: 1px solid var(--ink-20);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+    .topbar-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .topbar-subtitle {
+      font-size: 13px;
+      color: var(--ink-50);
+    }
+    .topbar-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .topbar-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--ink-05);
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-full);
+      width: 240px;
+    }
+    .topbar-search input {
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      width: 100%;
+    }
+    .topbar-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--ink-05);
+      border: 1px solid var(--ink-20);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-60);
+      cursor: pointer;
+      position: relative;
+    }
+    .topbar-icon:hover {
+      background: var(--ink-10);
+    }
+    .topbar-icon .badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      background: var(--error);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* === CONTENT === */
+    .content {
+      padding: 32px;
+      flex: 1;
+    }
+
+    /* === WELCOME BANNER === */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--ink-100) 0%, #0F2950 100%);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 60%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(184, 151, 92, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .welcome-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .welcome-content p {
+      font-size: 14px;
+      color: var(--ink-40);
+      max-width: 400px;
+    }
+    .welcome-action {
+      display: flex;
+      gap: 12px;
+      z-index: 1;
+    }
+    .btn-gold {
+      padding: 12px 24px;
+      background: var(--gold);
+      color: white;
+      border: none;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost {
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    /* === STATS GRID === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+    }
+    .stat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .stat-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--ink-05);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-60);
+    }
+    .stat-change {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+    }
+    .stat-change.positive {
+      background: var(--success-light);
+      color: var(--success);
+    }
+    .stat-change.negative {
+      background: var(--error-light);
+      color: var(--error);
+    }
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--ink-50);
+    }
+
+    /* === MAIN GRID === */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    /* === CARD === */
+    .card {
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--ink-10);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .card-link {
+      font-size: 13px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-body {
+      padding: 24px;
+    }
+
+    /* === BOOKING LIST === */
+    .booking-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .booking-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .booking-item:last-child {
+      border-bottom: none;
+    }
+    .booking-date {
+      width: 56px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .booking-date-day {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ink-90);
+    }
+    .booking-date-month {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-50);
+    }
+    .booking-info {
+      flex: 1;
+    }
+    .booking-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .booking-meta {
+      font-size: 13px;
+      color: var(--ink-50);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .booking-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .booking-status {
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .booking-status.confirmed {
+      background: var(--success-light);
+      color: var(--success);
+    }
+    .booking-status.pending {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+    /* === QUICK ACTIONS === */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .quick-action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 20px;
+      background: var(--ink-05);
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .quick-action:hover {
+      background: white;
+      border-color: var(--gold);
+      box-shadow: var(--shadow-md);
+    }
+    .quick-action-icon {
+      width: 44px;
+      height: 44px;
+      background: white;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+    .quick-action:hover .quick-action-icon {
+      background: var(--gold);
+      color: white;
+    }
+    .quick-action-label {
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* === HANDICAP CHART === */
+    .handicap-chart {
+      height: 200px;
+      position: relative;
+      margin-top: 16px;
+    }
+    .chart-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(184, 151, 92, 0.1) 0%, transparent 100%);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+    }
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      width: 100%;
+      height: 100%;
+    }
+    .chart-bar {
+      flex: 1;
+      background: var(--gold);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      opacity: 0.7;
+    }
+    .chart-bar:last-child {
+      opacity: 1;
+    }
+    .handicap-current {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .handicap-value {
+      font-size: 36px;
+      font-weight: 700;
+    }
+    .handicap-change {
+      font-size: 14px;
+      color: var(--success);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* === ACHIEVEMENT === */
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .achievement {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      background: var(--ink-05);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+    .achievement-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .achievement-icon.locked {
+      background: var(--ink-20);
+      color: var(--ink-40);
+    }
+    .achievement-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink-60);
+    }
+
+    /* === ACTIVITY FEED === */
+    .activity-feed {
+      display: flex;
+      flex-direction: column;
+    }
+    .activity-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+    .activity-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--ink-10);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-50);
+      flex-shrink: 0;
+    }
+    .activity-icon.success {
+      background: var(--success-light);
+      color: var(--success);
+    }
+    .activity-icon.info {
+      background: var(--info-light);
+      color: var(--info);
+    }
+    .activity-content {
+      flex: 1;
+    }
+    .activity-text {
+      font-size: 13px;
+      color: var(--ink-80);
+    }
+    .activity-text strong {
+      font-weight: 600;
+    }
+    .activity-time {
+      font-size: 12px;
+      color: var(--ink-40);
+      margin-top: 2px;
+    }
+
+    @media (max-width: 1200px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .portal-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .main {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="portal-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">K</div>
+      <span class="logo-text">AK Golf Portal</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active">
+        <i data-lucide="home"></i>
+        Dashboard
+      </a>
+      <a href="#" class="nav-item">
+        <i data-lucide="calendar"></i>
+        Mine bookinger
+        <span class="nav-badge">2</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i data-lucide="bar-chart-2"></i>
+        Statistikk
+      </a>
+      <a href="#" class="nav-item">
+        <i data-lucide="target"></i>
+        Treningsplan
+      </a>
+      <a href="#" class="nav-item">
+        <i data-lucide="book-open"></i>
+        Dagbok
+      </a>
+      <a href="#" class="nav-item">
+        <i data-lucide="calendar-days"></i>
+        Kalender
+      </a>
+
+      <div class="nav-section">
+        <div class="nav-section-label">Analyse</div>
+        <a href="#" class="nav-item">
+          <i data-lucide="activity"></i>
+          Strokes Gained
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="users"></i>
+          Sammenligning
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="history"></i>
+          Coaching-historikk
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">Innstillinger</div>
+        <a href="#" class="nav-item">
+          <i data-lucide="user"></i>
+          Profil
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="settings"></i>
+          Innstillinger
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar">ON</div>
+        <div class="user-info">
+          <div class="user-name">Ola Nordmann</div>
+          <div class="user-role">PRO-medlem</div>
+        </div>
+        <i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--ink-50);"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div>
+        <h1 class="topbar-title">Dashboard</h1>
+        <p class="topbar-subtitle">Velkommen tilbake, Ola</p>
+      </div>
+      <div class="topbar-actions">
+        <div class="topbar-search">
+          <i data-lucide="search" style="width:16px;height:16px;color:var(--ink-40);"></i>
+          <input type="text" placeholder="Søk..." />
+        </div>
+        <div class="topbar-icon">
+          <i data-lucide="bell" style="width:18px;height:18px;"></i>
+          <span class="badge">3</span>
+        </div>
+        <div class="topbar-icon">
+          <i data-lucide="message-square" style="width:18px;height:18px;"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- Welcome Banner -->
+      <div class="welcome-banner">
+        <div class="welcome-content">
+          <h2>God morgen, Ola! ☀️</h2>
+          <p>Du har en time i morgen kl. 14:00 med Anders. Husk å varme opp kortspillet!</p>
+        </div>
+        <div class="welcome-action">
+          <button class="btn-gold">
+            <i data-lucide="calendar-plus" style="width:18px;height:18px;"></i>
+            Book ny time
+          </button>
+          <button class="btn-ghost">
+            Se treningsplan
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon">
+              <i data-lucide="trophy" style="width:22px;height:22px;"></i>
+            </div>
+            <div class="stat-change positive">
+              <i data-lucide="trending-down" style="width:14px;height:14px;"></i>
+              -0.6
+            </div>
+          </div>
+          <div class="stat-value">8.4</div>
+          <div class="stat-label">Handicap</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon">
+              <i data-lucide="calendar-check" style="width:22px;height:22px;"></i>
+            </div>
+            <div class="stat-change positive">
+              <i data-lucide="trending-up" style="width:14px;height:14px;"></i>
+              +2
+            </div>
+          </div>
+          <div class="stat-value">12</div>
+          <div class="stat-label">Timer denne måneden</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon">
+              <i data-lucide="flag" style="width:22px;height:22px;"></i>
+            </div>
+          </div>
+          <div class="stat-value">6</div>
+          <div class="stat-label">Runder logget</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon">
+              <i data-lucide="target" style="width:22px;height:22px;"></i>
+            </div>
+          </div>
+          <div class="stat-value">73%</div>
+          <div class="stat-label">Måloppnåelse</div>
+        </div>
+      </div>
+
+      <!-- Main Grid -->
+      <div class="main-grid">
+
+        <!-- Left Column -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+
+          <!-- Upcoming Bookings -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Kommende bookinger</h3>
+              <a href="#" class="card-link">
+                Se alle
+                <i data-lucide="chevron-right" style="width:16px;height:16px;"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <div class="booking-list">
+                <div class="booking-item">
+                  <div class="booking-date">
+                    <div class="booking-date-day">28</div>
+                    <div class="booking-date-month">Mar</div>
+                  </div>
+                  <div class="booking-info">
+                    <div class="booking-title">Individuell time</div>
+                    <div class="booking-meta">
+                      <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 14:00 - 15:00</span>
+                      <span><i data-lucide="user" style="width:14px;height:14px;"></i> Anders K.</span>
+                    </div>
+                  </div>
+                  <div class="booking-status confirmed">Bekreftet</div>
+                </div>
+
+                <div class="booking-item">
+                  <div class="booking-date">
+                    <div class="booking-date-day">02</div>
+                    <div class="booking-date-month">Apr</div>
+                  </div>
+                  <div class="booking-info">
+                    <div class="booking-title">Spilletime på banen</div>
+                    <div class="booking-meta">
+                      <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 10:00 - 12:30</span>
+                      <span><i data-lucide="user" style="width:14px;height:14px;"></i> Anders K.</span>
+                    </div>
+                  </div>
+                  <div class="booking-status pending">Venter</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Handicap Progress -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Handicap-utvikling</h3>
+              <a href="#" class="card-link">
+                Se statistikk
+                <i data-lucide="chevron-right" style="width:16px;height:16px;"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <div class="handicap-current">
+                <span class="handicap-value">8.4</span>
+                <span class="handicap-change">
+                  <i data-lucide="trending-down" style="width:16px;height:16px;"></i>
+                  -0.6 siste 3 mnd
+                </span>
+              </div>
+              <div class="handicap-chart">
+                <div class="chart-placeholder">
+                  <div class="chart-bars">
+                    <div class="chart-bar" style="height: 85%;"></div>
+                    <div class="chart-bar" style="height: 80%;"></div>
+                    <div class="chart-bar" style="height: 75%;"></div>
+                    <div class="chart-bar" style="height: 70%;"></div>
+                    <div class="chart-bar" style="height: 65%;"></div>
+                    <div class="chart-bar" style="height: 60%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+
+          <!-- Quick Actions -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Hurtigvalg</h3>
+            </div>
+            <div class="card-body">
+              <div class="quick-actions">
+                <a href="#" class="quick-action">
+                  <div class="quick-action-icon">
+                    <i data-lucide="calendar-plus" style="width:20px;height:20px;"></i>
+                  </div>
+                  <span class="quick-action-label">Book time</span>
+                </a>
+                <a href="#" class="quick-action">
+                  <div class="quick-action-icon">
+                    <i data-lucide="plus-circle" style="width:20px;height:20px;"></i>
+                  </div>
+                  <span class="quick-action-label">Logg runde</span>
+                </a>
+                <a href="#" class="quick-action">
+                  <div class="quick-action-icon">
+                    <i data-lucide="play-circle" style="width:20px;height:20px;"></i>
+                  </div>
+                  <span class="quick-action-label">Start trening</span>
+                </a>
+                <a href="#" class="quick-action">
+                  <div class="quick-action-icon">
+                    <i data-lucide="message-square" style="width:20px;height:20px;"></i>
+                  </div>
+                  <span class="quick-action-label">Melding</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Achievements -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Achievements</h3>
+              <a href="#" class="card-link">
+                Se alle
+                <i data-lucide="chevron-right" style="width:16px;height:16px;"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <div class="achievement-grid">
+                <div class="achievement">
+                  <div class="achievement-icon">
+                    <i data-lucide="flame" style="width:18px;height:18px;"></i>
+                  </div>
+                  <span class="achievement-name">7-dagers streak</span>
+                </div>
+                <div class="achievement">
+                  <div class="achievement-icon">
+                    <i data-lucide="target" style="width:18px;height:18px;"></i>
+                  </div>
+                  <span class="achievement-name">Under 10 HCP</span>
+                </div>
+                <div class="achievement">
+                  <div class="achievement-icon locked">
+                    <i data-lucide="award" style="width:18px;height:18px;"></i>
+                  </div>
+                  <span class="achievement-name">10 timer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Feed -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Aktivitet</h3>
+            </div>
+            <div class="card-body">
+              <div class="activity-feed">
+                <div class="activity-item">
+                  <div class="activity-icon success">
+                    <i data-lucide="check" style="width:16px;height:16px;"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-text"><strong>Treningsplan</strong> ble oppdatert av Anders</div>
+                    <div class="activity-time">For 2 timer siden</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon info">
+                    <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-text">Du booket en <strong>individuell time</strong></div>
+                    <div class="activity-time">I går kl. 15:32</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon">
+                    <i data-lucide="flag" style="width:16px;height:16px;"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-text">Du logget en <strong>runde på 78</strong></div>
+                    <div class="activity-time">For 3 dager siden</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
+
+</body>
+</html>

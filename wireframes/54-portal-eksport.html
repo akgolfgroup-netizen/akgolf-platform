@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>54 — Portal Eksport | AK Golf Wireframes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-50: #6B7B8D;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --success: #22C55E;
+      --error: #EF4444;
+      --warning: #F59E0B;
+      --info: #3B82F6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--ink-100);
+      color: var(--ink-05);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(180deg, #0F2950 0%, var(--ink-100) 100%);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 32px;
+      padding: 0 8px;
+    }
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: var(--ink-50);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .nav-item:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ink-05);
+    }
+    .nav-item.active {
+      background: rgba(184,151,92,0.15);
+      color: var(--gold);
+    }
+    .sidebar-user {
+      padding: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: var(--ink-100);
+    }
+    .user-info { flex: 1; }
+    .user-name { font-size: 14px; font-weight: 600; }
+    .user-tier { font-size: 11px; color: var(--gold); }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      margin-left: 260px;
+      min-height: 100vh;
+    }
+    .topbar {
+      height: 64px;
+      background: rgba(15,41,80,0.5);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+    .topbar-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .content {
+      padding: 32px;
+      max-width: 1000px;
+    }
+
+    /* Page Header */
+    .page-header {
+      margin-bottom: 32px;
+    }
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .page-desc {
+      color: var(--ink-50);
+      font-size: 14px;
+    }
+
+    /* Export Options Grid */
+    .export-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    /* Export Card */
+    .export-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .export-card:hover {
+      border-color: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      transform: translateY(-2px);
+    }
+    .export-card.selected {
+      border-color: var(--gold);
+      background: rgba(184,151,92,0.1);
+    }
+    .export-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .export-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon-pdf {
+      background: rgba(239,68,68,0.15);
+      color: var(--error);
+    }
+    .icon-csv {
+      background: rgba(34,197,94,0.15);
+      color: var(--success);
+    }
+    .icon-excel {
+      background: rgba(34,197,94,0.15);
+      color: var(--success);
+    }
+    .icon-ical {
+      background: rgba(59,130,246,0.15);
+      color: var(--info);
+    }
+    .icon-json {
+      background: rgba(245,158,11,0.15);
+      color: var(--warning);
+    }
+    .export-info {
+      flex: 1;
+    }
+    .export-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .export-desc {
+      font-size: 13px;
+      color: var(--ink-50);
+      line-height: 1.5;
+    }
+    .export-badge {
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(184,151,92,0.15);
+      color: var(--gold);
+    }
+    .export-formats {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .format-tag {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.08);
+      color: var(--ink-50);
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 32px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Date Range Picker */
+    .date-range {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .date-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .date-field {
+      flex: 1;
+    }
+    .date-label {
+      font-size: 12px;
+      color: var(--ink-50);
+      margin-bottom: 8px;
+    }
+    .date-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: var(--ink-05);
+      font-size: 14px;
+    }
+    .date-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .date-presets {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .preset-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--ink-50);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .preset-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--ink-05);
+    }
+    .preset-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink-100);
+    }
+
+    /* Data Selection */
+    .data-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .data-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .data-option:hover {
+      border-color: rgba(255,255,255,0.12);
+    }
+    .data-option.selected {
+      border-color: var(--gold);
+      background: rgba(184,151,92,0.08);
+    }
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      transition: all 0.2s;
+    }
+    .data-option.selected .checkbox {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink-100);
+    }
+    .option-label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Export History */
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .history-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .history-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .history-info {
+      flex: 1;
+    }
+    .history-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .history-meta {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+    .history-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .action-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: none;
+      color: var(--ink-50);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--ink-05);
+    }
+
+    /* Action Buttons */
+    .export-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .btn-ghost {
+      padding: 12px 24px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: var(--ink-50);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ink-05);
+    }
+    .btn-primary {
+      padding: 12px 24px;
+      background: var(--gold);
+      border: none;
+      border-radius: 8px;
+      color: var(--ink-100);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background: #8B7243;
+    }
+
+    /* Progress Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: var(--ink-100);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 32px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .modal-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(184,151,92,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--gold);
+    }
+    .modal-icon.success {
+      background: rgba(34,197,94,0.15);
+      color: var(--success);
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .modal-desc {
+      font-size: 14px;
+      color: var(--ink-50);
+      margin-bottom: 24px;
+    }
+    .progress-bar {
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 4px;
+      width: 65%;
+      transition: width 0.3s;
+    }
+    .progress-text {
+      font-size: 13px;
+      color: var(--ink-50);
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    /* Demo Controls */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      z-index: 200;
+      color: var(--ink-90);
+    }
+    .demo-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-50);
+      margin-bottom: 12px;
+    }
+    .demo-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .demo-btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--ink-20);
+      background: white;
+      cursor: pointer;
+    }
+    .demo-btn:hover {
+      background: var(--ink-10);
+    }
+    .demo-btn.active {
+      background: var(--gold);
+      color: white;
+      border-color: var(--gold);
+    }
+
+    /* Wireframe Info */
+    .wireframe-info {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: var(--gold);
+      color: var(--ink-100);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 200;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wireframe-info">54 — Portal Eksport</div>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">AK Golf</div>
+  <nav class="sidebar-nav">
+    <a href="40-portal-dashboard.html" class="nav-item">
+      <i data-lucide="home" style="width:20px;height:20px;"></i>
+      Dashboard
+    </a>
+    <a href="47-portal-statistikk.html" class="nav-item">
+      <i data-lucide="bar-chart-3" style="width:20px;height:20px;"></i>
+      Statistikk
+    </a>
+    <a href="42-portal-dagbok.html" class="nav-item">
+      <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+      Treningsdagbok
+    </a>
+    <a href="49-portal-coaching-historikk.html" class="nav-item">
+      <i data-lucide="history" style="width:20px;height:20px;"></i>
+      Coaching-historikk
+    </a>
+    <a href="#" class="nav-item active">
+      <i data-lucide="download" style="width:20px;height:20px;"></i>
+      Eksporter data
+    </a>
+    <a href="51-portal-innstillinger.html" class="nav-item">
+      <i data-lucide="settings" style="width:20px;height:20px;"></i>
+      Innstillinger
+    </a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="user-avatar">MH</div>
+    <div class="user-info">
+      <div class="user-name">Maria Hansen</div>
+      <div class="user-tier">PRO-medlem</div>
+    </div>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main">
+  <header class="topbar">
+    <h1 class="topbar-title">Eksporter data</h1>
+  </header>
+
+  <div class="content">
+
+    <div class="page-header">
+      <h2 class="page-title">Last ned dine data</h2>
+      <p class="page-desc">Eksporter treningsdata, statistikk og coaching-historikk i ulike formater.</p>
+    </div>
+
+    <!-- Export Format Selection -->
+    <div class="section">
+      <div class="section-title">
+        <i data-lucide="file-down" style="width:18px;height:18px;color:var(--gold);"></i>
+        Velg eksportformat
+      </div>
+      <div class="export-grid">
+
+        <div class="export-card selected">
+          <div class="export-header">
+            <div class="export-icon icon-pdf">
+              <i data-lucide="file-text" style="width:24px;height:24px;"></i>
+            </div>
+            <div class="export-info">
+              <div class="export-title">PDF-rapport</div>
+              <div class="export-desc">Komplett rapport med grafer, statistikk og coaching-oppsummering. Perfekt for utskrift.</div>
+            </div>
+          </div>
+          <div class="export-formats">
+            <span class="format-tag">PDF</span>
+            <span class="format-tag">A4</span>
+            <span class="format-tag">Grafer</span>
+          </div>
+        </div>
+
+        <div class="export-card">
+          <div class="export-header">
+            <div class="export-icon icon-csv">
+              <i data-lucide="table" style="width:24px;height:24px;"></i>
+            </div>
+            <div class="export-info">
+              <div class="export-title">CSV-data</div>
+              <div class="export-desc">Rådata for analyse i Excel, Google Sheets eller egne verktøy.</div>
+            </div>
+          </div>
+          <div class="export-formats">
+            <span class="format-tag">CSV</span>
+            <span class="format-tag">UTF-8</span>
+          </div>
+        </div>
+
+        <div class="export-card">
+          <div class="export-header">
+            <div class="export-icon icon-ical">
+              <i data-lucide="calendar" style="width:24px;height:24px;"></i>
+            </div>
+            <div class="export-info">
+              <div class="export-title">iCal-kalender</div>
+              <div class="export-desc">Eksporter bookinger og treninger til din kalender-app.</div>
+            </div>
+          </div>
+          <div class="export-formats">
+            <span class="format-tag">ICS</span>
+            <span class="format-tag">iCal</span>
+          </div>
+        </div>
+
+        <div class="export-card">
+          <div class="export-header">
+            <div class="export-icon icon-json">
+              <i data-lucide="braces" style="width:24px;height:24px;"></i>
+            </div>
+            <div class="export-info">
+              <div class="export-title">JSON-data</div>
+              <div class="export-desc">Strukturert dataformat for utviklere og integrasjoner.</div>
+            </div>
+            <span class="export-badge">Avansert</span>
+          </div>
+          <div class="export-formats">
+            <span class="format-tag">JSON</span>
+            <span class="format-tag">API-format</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Date Range -->
+    <div class="section">
+      <div class="section-title">
+        <i data-lucide="calendar-range" style="width:18px;height:18px;color:var(--gold);"></i>
+        Tidsperiode
+      </div>
+      <div class="date-range">
+        <div class="date-row">
+          <div class="date-field">
+            <div class="date-label">Fra dato</div>
+            <input type="date" class="date-input" value="2026-01-01">
+          </div>
+          <div class="date-field">
+            <div class="date-label">Til dato</div>
+            <input type="date" class="date-input" value="2026-03-27">
+          </div>
+        </div>
+        <div class="date-presets">
+          <button class="preset-btn">Siste uke</button>
+          <button class="preset-btn">Siste måned</button>
+          <button class="preset-btn active">Siste 3 mnd</button>
+          <button class="preset-btn">I år</button>
+          <button class="preset-btn">Alt</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Selection -->
+    <div class="section">
+      <div class="section-title">
+        <i data-lucide="check-square" style="width:18px;height:18px;color:var(--gold);"></i>
+        Velg data
+      </div>
+      <div class="data-options">
+        <div class="data-option selected" onclick="this.classList.toggle('selected')">
+          <div class="checkbox"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+          <span class="option-label">Strokes Gained</span>
+        </div>
+        <div class="data-option selected" onclick="this.classList.toggle('selected')">
+          <div class="checkbox"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+          <span class="option-label">Rundestatistikk</span>
+        </div>
+        <div class="data-option selected" onclick="this.classList.toggle('selected')">
+          <div class="checkbox"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+          <span class="option-label">Handicap-historikk</span>
+        </div>
+        <div class="data-option" onclick="this.classList.toggle('selected')">
+          <div class="checkbox"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+          <span class="option-label">Treningsdagbok</span>
+        </div>
+        <div class="data-option selected" onclick="this.classList.toggle('selected')">
+          <div class="checkbox"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+          <span class="option-label">Coaching-økter</span>
+        </div>
+        <div class="data-option" onclick="this.classList.toggle('selected')">
+          <div class="checkbox"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+          <span class="option-label">Treningsplaner</span>
+        </div>
+        <div class="data-option" onclick="this.classList.toggle('selected')">
+          <div class="checkbox"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+          <span class="option-label">Trackman-data</span>
+        </div>
+        <div class="data-option" onclick="this.classList.toggle('selected')">
+          <div class="checkbox"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+          <span class="option-label">Bookinghistorikk</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export History -->
+    <div class="section">
+      <div class="section-title">
+        <i data-lucide="history" style="width:18px;height:18px;color:var(--gold);"></i>
+        Tidligere eksporter
+      </div>
+      <div class="history-list">
+        <div class="history-item">
+          <div class="history-icon icon-pdf">
+            <i data-lucide="file-text" style="width:20px;height:20px;"></i>
+          </div>
+          <div class="history-info">
+            <div class="history-name">Kvartalsrapport_Q1_2026.pdf</div>
+            <div class="history-meta">Eksportert 20. mars 2026 — 2.4 MB</div>
+          </div>
+          <div class="history-actions">
+            <button class="action-btn"><i data-lucide="download" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+        <div class="history-item">
+          <div class="history-icon icon-csv">
+            <i data-lucide="table" style="width:20px;height:20px;"></i>
+          </div>
+          <div class="history-info">
+            <div class="history-name">Strokes_Gained_2025.csv</div>
+            <div class="history-meta">Eksportert 5. januar 2026 — 156 KB</div>
+          </div>
+          <div class="history-actions">
+            <button class="action-btn"><i data-lucide="download" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+        <div class="history-item">
+          <div class="history-icon icon-ical">
+            <i data-lucide="calendar" style="width:20px;height:20px;"></i>
+          </div>
+          <div class="history-info">
+            <div class="history-name">Bookinger_2025.ics</div>
+            <div class="history-meta">Eksportert 31. desember 2025 — 24 KB</div>
+          </div>
+          <div class="history-actions">
+            <button class="action-btn"><i data-lucide="download" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="export-actions">
+      <button class="btn-ghost">Tilbakestill valg</button>
+      <button class="btn-primary" onclick="showProgressModal()">
+        <i data-lucide="download" style="width:18px;height:18px;"></i>
+        Generer eksport
+      </button>
+    </div>
+
+  </div>
+</main>
+
+<!-- Progress Modal -->
+<div class="modal-overlay" id="progressModal">
+  <div class="modal">
+    <div class="modal-icon" id="modalIcon">
+      <i data-lucide="loader-2" style="width:32px;height:32px;" class="spin"></i>
+    </div>
+    <div class="modal-title" id="modalTitle">Genererer PDF...</div>
+    <div class="modal-desc" id="modalDesc">Rapporten din blir generert. Dette kan ta noen sekunder.</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-text" id="progressText">65% fullført</div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-icon success">
+      <i data-lucide="check" style="width:32px;height:32px;"></i>
+    </div>
+    <div class="modal-title">Eksport fullført!</div>
+    <div class="modal-desc">Rapporten er klar for nedlasting.</div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="hideModals()">Lukk</button>
+      <button class="btn-primary">
+        <i data-lucide="download" style="width:18px;height:18px;"></i>
+        Last ned
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Demo Controls -->
+<div class="demo-controls">
+  <div class="demo-title">Demo Kontroller</div>
+  <div class="demo-buttons">
+    <button class="demo-btn active">Skjema</button>
+    <button class="demo-btn" onclick="showProgressModal()">Progress</button>
+    <button class="demo-btn" onclick="showSuccessModal()">Suksess</button>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  // Export card selection
+  document.querySelectorAll('.export-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.export-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+    });
+  });
+
+  // Preset buttons
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  function showProgressModal() {
+    document.getElementById('progressModal').classList.add('active');
+    document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Simulate progress
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 15;
+      document.getElementById('progressFill').style.width = progress + '%';
+      document.getElementById('progressText').textContent = progress + '% fullført';
+
+      if (progress >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          document.getElementById('progressModal').classList.remove('active');
+          showSuccessModal();
+        }, 500);
+      }
+    }, 400);
+  }
+
+  function showSuccessModal() {
+    document.getElementById('progressModal').classList.remove('active');
+    document.getElementById('successModal').classList.add('active');
+  }
+
+  function hideModals() {
+    document.getElementById('progressModal').classList.remove('active');
+    document.getElementById('successModal').classList.remove('active');
+  }
+</script>
+
+<style>
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .spin {
+    animation: spin 1s linear infinite;
+  }
+</style>
+
+</body>
+</html>

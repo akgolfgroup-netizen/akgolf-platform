@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
  * 1. Les sessionsUsedThisMonth og sessionsPerMonth fra pakken
  * 2. Nullstill sessionsUsedThisMonth til 0
  * 3. Flytt billingPeriodStart/End en maned frem
- * 4. Send e-post om ubrukte okter (hvis noen)
+ * 4. Send e-post om ubrukte økter (hvis noen)
  */
 export async function GET(request: NextRequest) {
   if (!verifyCronAuth(request)) {
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
 
         results.reset++;
 
-        // Send e-post om ubrukte okter
+        // Send e-post om ubrukte økter
         if (unusedSessions > 0 && sub.user?.email) {
           try {
             await sendMonthlyResetEmail({

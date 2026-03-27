@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meldinger — AK Golf Portal Wireframe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C9D0D8;
+      --ink-50: #6B7B8D;
+      --ink-70: #3D4F61;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --navy: #0F2950;
+      --success: #22C55E;
+      --success-light: #DCFCE7;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --error: #EF4444;
+      --error-light: #FEE2E2;
+      --info: #3B82F6;
+      --info-light: #DBEAFE;
+      --sidebar-width: 260px;
+      --topbar-height: 64px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--ink-05);
+      color: var(--ink-90);
+      line-height: 1.5;
+    }
+
+    .portal-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--ink-100);
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+    .sidebar-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .sidebar-nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+    }
+    .nav-section {
+      margin-bottom: 24px;
+    }
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-50);
+      padding: 8px 12px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--ink-30);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.15s;
+      margin-bottom: 2px;
+    }
+    .nav-item:hover {
+      background: rgba(255,255,255,0.05);
+      color: white;
+    }
+    .nav-item.active {
+      background: rgba(184, 151, 92, 0.15);
+      color: var(--gold);
+    }
+    .nav-badge {
+      margin-left: auto;
+      background: var(--error);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      min-width: 18px;
+      text-align: center;
+    }
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      border-radius: 8px;
+    }
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .user-info {
+      flex: 1;
+    }
+    .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+    }
+    .user-tier {
+      font-size: 11px;
+      color: var(--ink-50);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .topbar {
+      height: var(--topbar-height);
+      background: white;
+      border-bottom: 1px solid var(--ink-20);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      flex-shrink: 0;
+    }
+    .topbar-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Messages Layout */
+    .messages-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Conversations List */
+    .conversations-panel {
+      width: 340px;
+      background: white;
+      border-right: 1px solid var(--ink-20);
+      display: flex;
+      flex-direction: column;
+    }
+    .conversations-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--ink-20);
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--ink-05);
+      border: 1px solid var(--ink-20);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .search-box input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 14px;
+      flex: 1;
+      font-family: inherit;
+    }
+    .conversations-list {
+      flex: 1;
+      overflow-y: auto;
+    }
+    .conversation-item {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      border-bottom: 1px solid var(--ink-10);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .conversation-item:hover {
+      background: var(--ink-05);
+    }
+    .conversation-item.active {
+      background: #F5F0E8;
+      border-left: 3px solid var(--gold);
+    }
+    .conversation-item.unread {
+      background: #FFFBF5;
+    }
+    .conversation-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--ink-20);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--ink-70);
+      flex-shrink: 0;
+      position: relative;
+    }
+    .conversation-avatar.instructor {
+      background: var(--gold-light);
+      color: var(--ink-90);
+    }
+    .online-indicator {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
+      background: var(--success);
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+    .conversation-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .conversation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+    .conversation-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-90);
+    }
+    .conversation-time {
+      font-size: 11px;
+      color: var(--ink-50);
+      flex-shrink: 0;
+    }
+    .conversation-preview {
+      font-size: 13px;
+      color: var(--ink-50);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .conversation-item.unread .conversation-preview {
+      color: var(--ink-80);
+      font-weight: 500;
+    }
+    .unread-badge {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    /* Chat Panel */
+    .chat-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--ink-05);
+    }
+    .chat-header {
+      background: white;
+      border-bottom: 1px solid var(--ink-20);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .chat-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .chat-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .chat-subtitle {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+    .chat-header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .message-group.sent {
+      align-items: flex-end;
+    }
+    .message-group.received {
+      align-items: flex-start;
+    }
+
+    .message-date {
+      text-align: center;
+      font-size: 12px;
+      color: var(--ink-50);
+      margin: 16px 0;
+    }
+
+    .message {
+      max-width: 70%;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .message.sent {
+      background: var(--gold);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .message.received {
+      background: white;
+      color: var(--ink-90);
+      border-bottom-left-radius: 4px;
+      border: 1px solid var(--ink-20);
+    }
+    .message-time {
+      font-size: 11px;
+      color: var(--ink-50);
+      margin-top: 4px;
+    }
+    .message-group.sent .message-time {
+      text-align: right;
+    }
+
+    .message-attachment {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+    .message.received .message-attachment {
+      background: var(--ink-05);
+    }
+
+    /* Typing Indicator */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: 16px;
+      border-bottom-left-radius: 4px;
+      max-width: fit-content;
+    }
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+    }
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--ink-30);
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-4px); }
+    }
+
+    /* Chat Input */
+    .chat-input-container {
+      background: white;
+      border-top: 1px solid var(--ink-20);
+      padding: 16px 24px;
+    }
+    .chat-input {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .chat-input-actions {
+      display: flex;
+      gap: 4px;
+    }
+    .input-wrapper {
+      flex: 1;
+      background: var(--ink-05);
+      border: 1px solid var(--ink-20);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .input-wrapper input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .send-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--gold);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: background 0.15s;
+    }
+    .send-btn:hover {
+      background: #8B7243;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #8B7243;
+    }
+    .btn-secondary {
+      background: white;
+      color: var(--ink-80);
+      border: 1px solid var(--ink-20);
+    }
+    .btn-secondary:hover {
+      background: var(--ink-05);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-70);
+      padding: 8px;
+    }
+    .btn-ghost:hover {
+      background: var(--ink-10);
+    }
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-50);
+    }
+    .btn-icon:hover {
+      background: var(--ink-10);
+      color: var(--ink-80);
+    }
+
+    /* Empty State */
+    .empty-chat {
+      display: none;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 48px;
+    }
+    .empty-chat.active {
+      display: flex;
+    }
+    .empty-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--ink-10);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: var(--ink-50);
+    }
+    .empty-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .empty-desc {
+      font-size: 14px;
+      color: var(--ink-50);
+      margin-bottom: 24px;
+    }
+
+    /* Demo Controls */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink-100);
+      color: white;
+      padding: 16px;
+      border-radius: 12px;
+      display: flex;
+      gap: 8px;
+      z-index: 200;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    }
+    .demo-btn {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .demo-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .demo-btn.active {
+      background: var(--gold);
+    }
+
+    /* New Message Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 480px;
+      overflow: hidden;
+    }
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--ink-20);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: var(--ink-10);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-50);
+    }
+    .modal-body {
+      padding: 24px;
+    }
+    .recipient-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .recipient-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--ink-20);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .recipient-item:hover {
+      border-color: var(--gold);
+      background: var(--ink-05);
+    }
+    .recipient-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .recipient-info {
+      flex: 1;
+    }
+    .recipient-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .recipient-role {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+
+    .chat-panel.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="portal-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">AK Golf</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Oversikt</div>
+        <a href="40-portal-dashboard.html" class="nav-item">
+          <i data-lucide="home" style="width:18px;height:18px;"></i>
+          Dashboard
+        </a>
+        <a href="41-portal-bookinger.html" class="nav-item">
+          <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          Mine Bookinger
+        </a>
+        <a href="52-portal-meldinger.html" class="nav-item active">
+          <i data-lucide="message-circle" style="width:18px;height:18px;"></i>
+          Meldinger
+          <span class="nav-badge">2</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Trening</div>
+        <a href="49-portal-coaching-historikk.html" class="nav-item">
+          <i data-lucide="history" style="width:18px;height:18px;"></i>
+          Coaching-historikk
+        </a>
+        <a href="45-portal-treningsplan.html" class="nav-item">
+          <i data-lucide="target" style="width:18px;height:18px;"></i>
+          Treningsplan
+        </a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar">ML</div>
+        <div class="user-info">
+          <div class="user-name">Magnus Larsen</div>
+          <div class="user-tier">PRO-medlem</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="topbar">
+      <h1 class="topbar-title">Meldinger</h1>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('newMessageModal').classList.add('active')">
+          <i data-lucide="plus" style="width:16px;height:16px;"></i>
+          Ny melding
+        </button>
+      </div>
+    </header>
+
+    <div class="messages-layout">
+      <!-- Conversations Panel -->
+      <div class="conversations-panel">
+        <div class="conversations-header">
+          <div class="search-box">
+            <i data-lucide="search" style="width:18px;height:18px;color:var(--ink-50);"></i>
+            <input type="text" placeholder="Søk i meldinger...">
+          </div>
+        </div>
+        <div class="conversations-list">
+          <div class="conversation-item active">
+            <div class="conversation-avatar instructor">
+              <span>AK</span>
+              <div class="online-indicator"></div>
+            </div>
+            <div class="conversation-content">
+              <div class="conversation-header">
+                <span class="conversation-name">Anders Kristiansen</span>
+                <span class="conversation-time">14:32</span>
+              </div>
+              <div class="conversation-preview">Bra jobba i dag! Husk å gjøre pump drill-øvelsen...</div>
+            </div>
+          </div>
+
+          <div class="conversation-item unread">
+            <div class="conversation-avatar instructor">HO</div>
+            <div class="conversation-content">
+              <div class="conversation-header">
+                <span class="conversation-name">Henrik Olsen</span>
+                <span class="conversation-time">I går</span>
+              </div>
+              <div class="conversation-preview">Har du sett på videoen jeg sendte?</div>
+            </div>
+            <div class="unread-badge"></div>
+          </div>
+
+          <div class="conversation-item unread">
+            <div class="conversation-avatar" style="background: var(--info-light); color: var(--info);">
+              <i data-lucide="bell" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="conversation-content">
+              <div class="conversation-header">
+                <span class="conversation-name">AK Golf System</span>
+                <span class="conversation-time">I går</span>
+              </div>
+              <div class="conversation-preview">Din treningsplan er oppdatert for uke 13</div>
+            </div>
+            <div class="unread-badge"></div>
+          </div>
+
+          <div class="conversation-item">
+            <div class="conversation-avatar instructor">AK</div>
+            <div class="conversation-content">
+              <div class="conversation-header">
+                <span class="conversation-name">Anders Kristiansen</span>
+                <span class="conversation-time">23. mar</span>
+              </div>
+              <div class="conversation-preview">Vi sees torsdag kl 10!</div>
+            </div>
+          </div>
+
+          <div class="conversation-item">
+            <div class="conversation-avatar" style="background: #EDE9FE; color: #8B5CF6;">
+              <i data-lucide="trophy" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="conversation-content">
+              <div class="conversation-header">
+                <span class="conversation-name">Turneringer</span>
+                <span class="conversation-time">20. mar</span>
+              </div>
+              <div class="conversation-preview">Påmelding til Norgescup er nå åpen</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Panel -->
+      <div class="chat-panel" id="chatPanel">
+        <div class="chat-header">
+          <div class="chat-header-left">
+            <div class="chat-avatar">AK</div>
+            <div>
+              <div class="chat-title">Anders Kristiansen</div>
+              <div class="chat-subtitle">
+                <span style="color: var(--success);">Online</span> - Hovedtrener
+              </div>
+            </div>
+          </div>
+          <div class="chat-header-actions">
+            <button class="btn-icon">
+              <i data-lucide="phone" style="width:18px;height:18px;"></i>
+            </button>
+            <button class="btn-icon">
+              <i data-lucide="video" style="width:18px;height:18px;"></i>
+            </button>
+            <button class="btn-icon">
+              <i data-lucide="more-vertical" style="width:18px;height:18px;"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="chat-messages">
+          <div class="message-date">I dag</div>
+
+          <div class="message-group received">
+            <div class="message received">
+              Hei Magnus! Hvordan gikk det med putting-drillene i helgen?
+            </div>
+            <div class="message-time">09:15</div>
+          </div>
+
+          <div class="message-group sent">
+            <div class="message sent">
+              Hei! Det gikk bra - merker at startretting er mye bedre nå. Traff 8 av 10 fra 2 meter
+            </div>
+            <div class="message-time">10:23</div>
+          </div>
+
+          <div class="message-group received">
+            <div class="message received">
+              Strålende! Det er akkurat det vi jobbet med. Fortsett med det, og prøv å øke avstanden gradvis denne uken.
+            </div>
+            <div class="message-time">10:45</div>
+          </div>
+
+          <div class="message-group sent">
+            <div class="message sent">
+              Skal gjøre det! Jeg har også trent på det du viste meg med grip-pressure. Føles mye mer naturlig nå
+            </div>
+            <div class="message-time">11:02</div>
+          </div>
+
+          <div class="message-group received">
+            <div class="message received">
+              Perfekt! Jeg har lagt ved en video fra økten vår i går - ta en titt på forskjellen fra der du var for en måned siden
+            </div>
+            <div class="message received">
+              <div class="message-attachment">
+                <i data-lucide="video" style="width:16px;height:16px;"></i>
+                Swing_sammenligning.mp4
+              </div>
+            </div>
+            <div class="message-time">13:18</div>
+          </div>
+
+          <div class="message-group sent">
+            <div class="message sent">
+              Wow, det er utrolig å se utviklingen! Takk for at du setter dette sammen
+            </div>
+            <div class="message-time">14:05</div>
+          </div>
+
+          <div class="message-group received">
+            <div class="message received">
+              Bra jobba i dag! Husk å gjøre pump drill-øvelsen før simulator-økten på fredag. Fokuser på å holde vinkelen lengre.
+            </div>
+            <div class="message-time">14:32</div>
+          </div>
+
+          <!-- Typing indicator -->
+          <div class="typing-indicator" id="typingIndicator" style="display: none;">
+            <div class="typing-dots">
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+            </div>
+            <span style="font-size: 12px; color: var(--ink-50);">Anders skriver...</span>
+          </div>
+        </div>
+
+        <div class="chat-input-container">
+          <div class="chat-input">
+            <div class="chat-input-actions">
+              <button class="btn-icon">
+                <i data-lucide="paperclip" style="width:18px;height:18px;"></i>
+              </button>
+              <button class="btn-icon">
+                <i data-lucide="image" style="width:18px;height:18px;"></i>
+              </button>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" placeholder="Skriv en melding...">
+              <button class="btn-icon" style="color: var(--ink-30);">
+                <i data-lucide="smile" style="width:18px;height:18px;"></i>
+              </button>
+            </div>
+            <button class="send-btn">
+              <i data-lucide="send" style="width:18px;height:18px;"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-chat" id="emptyChat">
+        <div class="empty-icon">
+          <i data-lucide="message-circle" style="width:36px;height:36px;"></i>
+        </div>
+        <div class="empty-title">Velg en samtale</div>
+        <div class="empty-desc">Velg en eksisterende samtale eller start en ny for å begynne</div>
+        <button class="btn btn-primary" onclick="document.getElementById('newMessageModal').classList.add('active')">
+          <i data-lucide="plus" style="width:16px;height:16px;"></i>
+          Ny melding
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- New Message Modal -->
+<div class="modal-overlay" id="newMessageModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Ny melding</div>
+      <button class="modal-close" onclick="document.getElementById('newMessageModal').classList.remove('active')">
+        <i data-lucide="x" style="width:18px;height:18px;"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="search-box" style="margin-bottom: 16px;">
+        <i data-lucide="search" style="width:18px;height:18px;color:var(--ink-50);"></i>
+        <input type="text" placeholder="Søk etter instruktør...">
+      </div>
+      <div class="recipient-list">
+        <div class="recipient-item">
+          <div class="recipient-avatar">AK</div>
+          <div class="recipient-info">
+            <div class="recipient-name">Anders Kristiansen</div>
+            <div class="recipient-role">Hovedtrener</div>
+          </div>
+          <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--ink-50);"></i>
+        </div>
+        <div class="recipient-item">
+          <div class="recipient-avatar">HO</div>
+          <div class="recipient-info">
+            <div class="recipient-name">Henrik Olsen</div>
+            <div class="recipient-role">Instruktør - Kort spill</div>
+          </div>
+          <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--ink-50);"></i>
+        </div>
+        <div class="recipient-item">
+          <div class="recipient-avatar">LS</div>
+          <div class="recipient-info">
+            <div class="recipient-name">Linda Svensen</div>
+            <div class="recipient-role">Instruktør - Junior</div>
+          </div>
+          <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--ink-50);"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Demo Controls -->
+<div class="demo-controls">
+  <button class="demo-btn active" onclick="showChatState('conversation')">Samtale</button>
+  <button class="demo-btn" onclick="showChatState('typing')">Skriver</button>
+  <button class="demo-btn" onclick="showChatState('empty')">Tom</button>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  function showChatState(state) {
+    document.querySelectorAll('.demo-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const chatPanel = document.getElementById('chatPanel');
+    const emptyChat = document.getElementById('emptyChat');
+    const typingIndicator = document.getElementById('typingIndicator');
+
+    if (state === 'conversation') {
+      chatPanel.classList.remove('hidden');
+      emptyChat.classList.remove('active');
+      typingIndicator.style.display = 'none';
+    } else if (state === 'typing') {
+      chatPanel.classList.remove('hidden');
+      emptyChat.classList.remove('active');
+      typingIndicator.style.display = 'flex';
+    } else if (state === 'empty') {
+      chatPanel.classList.add('hidden');
+      emptyChat.classList.add('active');
+    }
+  }
+
+  // Close modal on overlay click
+  document.getElementById('newMessageModal').addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal-overlay')) {
+      e.target.classList.remove('active');
+    }
+  });
+</script>
+
+</body>
+</html>

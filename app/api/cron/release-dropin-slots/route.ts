@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
     const totalBookings = upcomingBookings.length;
 
     console.log(
-      `[cron/dropin] Status: ${totalOpenSlots} apne slots totalt, ${totalBookings} bookinger neste 48t`
+      `[cron/dropin] Status: ${totalOpenSlots} åpne slots totalt, ${totalBookings} bookinger neste 48t`
     );
 
     return NextResponse.json({

@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { prisma } from "@/lib/portal/prisma";
 import { BookingStatus } from "@prisma/client";
 import { addMinutes } from "date-fns";
@@ -21,7 +22,7 @@ export async function rescheduleBooking(
   const booking = await prisma.booking.findUnique({
     where: { id: bookingId },
     include: {
-      serviceType: {
+      ServiceType: {
         select: {
           duration: true,
           bufferBefore: true,
@@ -54,20 +55,20 @@ export async function rescheduleBooking(
     return { success: false, error: "Nytt tidspunkt må være i fremtiden" };
   }
 
-  const minNoticeMs = booking.serviceType.minNoticeHours * 60 * 60 * 1000;
+  const minNoticeMs = booking.ServiceType.minNoticeHours * 60 * 60 * 1000;
   if (newStartTime.getTime() - now.getTime() < minNoticeMs) {
     return {
       success: false,
-      error: `Krever minst ${booking.serviceType.minNoticeHours} timers varsel`,
+      error: `Krever minst ${booking.ServiceType.minNoticeHours} timers varsel`,
     };
   }
 
-  const newEndTime = addMinutes(newStartTime, booking.serviceType.duration);
+  const newEndTime = addMinutes(newStartTime, booking.ServiceType.duration);
   const conflictStart = addMinutes(
     newStartTime,
-    -booking.serviceType.bufferBefore
+    -booking.ServiceType.bufferBefore
   );
-  const conflictEnd = addMinutes(newEndTime, booking.serviceType.bufferAfter);
+  const conflictEnd = addMinutes(newEndTime, booking.ServiceType.bufferAfter);
 
   // Atomic: cancel old + create new in serializable transaction
   try {
@@ -123,6 +124,7 @@ export async function rescheduleBooking(
         // Create new booking with same payment info
         return tx.booking.create({
           data: {
+            id: randomUUID(),
             studentId: booking.studentId,
             instructorId: booking.instructorId,
             serviceTypeId: booking.serviceTypeId,
@@ -137,6 +139,7 @@ export async function rescheduleBooking(
             vatAmount: booking.vatAmount,
             stripePaymentId: booking.stripePaymentId,
             vippsOrderId: booking.vippsOrderId,
+            updatedAt: new Date(),
           },
         });
       },

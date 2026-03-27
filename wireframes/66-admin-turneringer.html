@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>66 — Admin Turneringer | AK Golf Wireframes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-50: #6B7B8D;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --success: #22C55E;
+      --error: #EF4444;
+      --warning: #F59E0B;
+      --info: #3B82F6;
+      --purple: #8B5CF6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--ink-100);
+      color: var(--ink-05);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(180deg, #0F2950 0%, var(--ink-100) 100%);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 32px;
+      padding: 0 8px;
+    }
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-section {
+      margin-top: 24px;
+      margin-bottom: 8px;
+      padding: 0 16px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-50);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: var(--ink-50);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .nav-item:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ink-05);
+    }
+    .nav-item.active {
+      background: rgba(184,151,92,0.15);
+      color: var(--gold);
+    }
+    .sidebar-user {
+      padding: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--error);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+    }
+    .user-info { flex: 1; }
+    .user-name { font-size: 14px; font-weight: 600; }
+    .user-role { font-size: 11px; color: var(--error); }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      margin-left: 260px;
+      min-height: 100vh;
+    }
+    .topbar {
+      height: 64px;
+      background: rgba(15,41,80,0.5);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+    .topbar-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .topbar-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-primary {
+      padding: 10px 20px;
+      background: var(--gold);
+      border: none;
+      border-radius: 8px;
+      color: var(--ink-100);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      background: #8B7243;
+    }
+
+    .content {
+      padding: 32px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 0;
+    }
+    .tab {
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-50);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.2s;
+    }
+    .tab:hover {
+      color: var(--ink-05);
+    }
+    .tab.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    /* Tournament Grid */
+    .tournament-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+
+    /* Tournament Card */
+    .tournament-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .tournament-card:hover {
+      border-color: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+    }
+    .tournament-header {
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(184,151,92,0.1) 0%, rgba(15,41,80,0.3) 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .tournament-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .badge-upcoming {
+      background: rgba(59,130,246,0.2);
+      color: var(--info);
+    }
+    .badge-ongoing {
+      background: rgba(34,197,94,0.2);
+      color: var(--success);
+    }
+    .badge-completed {
+      background: rgba(107,123,141,0.2);
+      color: var(--ink-50);
+    }
+    .badge-planning {
+      background: rgba(245,158,11,0.2);
+      color: var(--warning);
+    }
+    .tournament-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .tournament-date {
+      font-size: 14px;
+      color: var(--ink-50);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tournament-body {
+      padding: 20px;
+    }
+    .tournament-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .tournament-stat {
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--ink-50);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .tournament-players {
+      margin-bottom: 20px;
+    }
+    .players-label {
+      font-size: 12px;
+      color: var(--ink-50);
+      margin-bottom: 8px;
+    }
+    .players-avatars {
+      display: flex;
+      align-items: center;
+    }
+    .player-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--ink-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-100);
+      margin-left: -8px;
+    }
+    .player-avatar:first-child {
+      margin-left: 0;
+    }
+    .player-avatar.more {
+      background: rgba(255,255,255,0.1);
+      color: var(--ink-50);
+    }
+
+    .tournament-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .action-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: transparent;
+      color: var(--ink-50);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ink-05);
+    }
+    .action-btn.primary {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink-100);
+    }
+    .action-btn.primary:hover {
+      background: #8B7243;
+    }
+
+    /* Season Overview */
+    .season-overview {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .season-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .season-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .season-period {
+      font-size: 13px;
+      color: var(--ink-50);
+    }
+    .season-stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+    }
+    .season-stat {
+      text-align: center;
+      padding: 16px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+    }
+    .season-stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .season-stat-value.gold { color: var(--gold); }
+    .season-stat-value.success { color: var(--success); }
+    .season-stat-value.info { color: var(--info); }
+    .season-stat-label {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+      margin-top: 24px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255,255,255,0.1);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 24px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--ink-100);
+      border: 2px solid var(--ink-50);
+    }
+    .timeline-item.active::before {
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+    .timeline-item.completed::before {
+      border-color: var(--success);
+      background: var(--success);
+    }
+    .timeline-date {
+      font-size: 12px;
+      color: var(--ink-50);
+      margin-bottom: 4px;
+    }
+    .timeline-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .timeline-desc {
+      font-size: 13px;
+      color: var(--ink-50);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: var(--ink-100);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: none;
+      color: var(--ink-50);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-close:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--ink-05);
+    }
+    .modal-body {
+      padding: 24px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-50);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: var(--ink-05);
+      font-size: 14px;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .modal-footer {
+      padding: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .btn-ghost {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: var(--ink-50);
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ink-05);
+    }
+
+    /* Demo Controls */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      z-index: 200;
+      color: var(--ink-90);
+    }
+    .demo-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-50);
+      margin-bottom: 12px;
+    }
+    .demo-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .demo-btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--ink-20);
+      background: white;
+      cursor: pointer;
+    }
+    .demo-btn:hover {
+      background: var(--ink-10);
+    }
+    .demo-btn.active {
+      background: var(--gold);
+      color: white;
+      border-color: var(--gold);
+    }
+
+    /* Wireframe Info */
+    .wireframe-info {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: var(--gold);
+      color: var(--ink-100);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 200;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wireframe-info">66 — Admin Turneringer</div>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">AK Golf</div>
+  <nav class="sidebar-nav">
+    <a href="60-admin-dashboard.html" class="nav-item">
+      <i data-lucide="layout-dashboard" style="width:20px;height:20px;"></i>
+      Dashboard
+    </a>
+    <div class="nav-section">Administrasjon</div>
+    <a href="65-admin-kalender.html" class="nav-item">
+      <i data-lucide="calendar" style="width:20px;height:20px;"></i>
+      Kalender
+    </a>
+    <a href="62-admin-bookinger.html" class="nav-item">
+      <i data-lucide="calendar-check" style="width:20px;height:20px;"></i>
+      Bookinger
+    </a>
+    <a href="61-admin-elever.html" class="nav-item">
+      <i data-lucide="users" style="width:20px;height:20px;"></i>
+      Elever
+    </a>
+    <a href="63-admin-tilgjengelighet.html" class="nav-item">
+      <i data-lucide="clock" style="width:20px;height:20px;"></i>
+      Tilgjengelighet
+    </a>
+    <a href="#" class="nav-item active">
+      <i data-lucide="trophy" style="width:20px;height:20px;"></i>
+      Turneringer
+    </a>
+    <a href="64-admin-e-postmaler.html" class="nav-item">
+      <i data-lucide="mail" style="width:20px;height:20px;"></i>
+      E-postmaler
+    </a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="user-avatar">AK</div>
+    <div class="user-info">
+      <div class="user-name">Anders Kristiansen</div>
+      <div class="user-role">Administrator</div>
+    </div>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main">
+  <header class="topbar">
+    <h1 class="topbar-title">Turneringer</h1>
+    <div class="topbar-actions">
+      <button class="btn-primary" onclick="showModal()">
+        <i data-lucide="plus" style="width:18px;height:18px;"></i>
+        Ny turnering
+      </button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- Season Overview -->
+    <div class="season-overview">
+      <div class="season-header">
+        <div class="season-title">Sesong 2026</div>
+        <div class="season-period">April - Oktober</div>
+      </div>
+      <div class="season-stats">
+        <div class="season-stat">
+          <div class="season-stat-value gold">12</div>
+          <div class="season-stat-label">Turneringer</div>
+        </div>
+        <div class="season-stat">
+          <div class="season-stat-value info">4</div>
+          <div class="season-stat-label">Kommende</div>
+        </div>
+        <div class="season-stat">
+          <div class="season-stat-value success">8</div>
+          <div class="season-stat-label">Fullført</div>
+        </div>
+        <div class="season-stat">
+          <div class="season-stat-value">156</div>
+          <div class="season-stat-label">Deltakere totalt</div>
+        </div>
+        <div class="season-stat">
+          <div class="season-stat-value">24</div>
+          <div class="season-stat-label">Academy-spillere</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active">Alle turneringer</button>
+      <button class="tab">Kommende</button>
+      <button class="tab">Fullførte</button>
+      <button class="tab">Planlegging</button>
+    </div>
+
+    <!-- Tournament Grid -->
+    <div class="tournament-grid">
+
+      <!-- Ongoing Tournament -->
+      <div class="tournament-card">
+        <div class="tournament-header">
+          <span class="tournament-badge badge-ongoing">
+            <i data-lucide="radio" style="width:12px;height:12px;"></i>
+            Pågår nå
+          </span>
+          <div class="tournament-name">Vårklassikeren 2026</div>
+          <div class="tournament-date">
+            <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+            27. mars 2026 — Fredrikstad GK
+          </div>
+        </div>
+        <div class="tournament-body">
+          <div class="tournament-stats">
+            <div class="tournament-stat">
+              <div class="stat-value">36</div>
+              <div class="stat-label">Deltakere</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">18</div>
+              <div class="stat-label">Hull</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">8</div>
+              <div class="stat-label">Academy</div>
+            </div>
+          </div>
+          <div class="tournament-players">
+            <div class="players-label">Academy-spillere</div>
+            <div class="players-avatars">
+              <div class="player-avatar">MH</div>
+              <div class="player-avatar">EN</div>
+              <div class="player-avatar">KO</div>
+              <div class="player-avatar">JB</div>
+              <div class="player-avatar more">+4</div>
+            </div>
+          </div>
+          <div class="tournament-actions">
+            <button class="action-btn primary">
+              <i data-lucide="activity" style="width:16px;height:16px;"></i>
+              Live-score
+            </button>
+            <button class="action-btn">
+              <i data-lucide="settings" style="width:16px;height:16px;"></i>
+              Administrer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Tournament -->
+      <div class="tournament-card">
+        <div class="tournament-header">
+          <span class="tournament-badge badge-upcoming">
+            <i data-lucide="clock" style="width:12px;height:12px;"></i>
+            Om 2 uker
+          </span>
+          <div class="tournament-name">Påsketurneringen</div>
+          <div class="tournament-date">
+            <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+            10. april 2026 — Sarpsborg GK
+          </div>
+        </div>
+        <div class="tournament-body">
+          <div class="tournament-stats">
+            <div class="tournament-stat">
+              <div class="stat-value">28</div>
+              <div class="stat-label">Påmeldte</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">36</div>
+              <div class="stat-label">Maks</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">6</div>
+              <div class="stat-label">Academy</div>
+            </div>
+          </div>
+          <div class="tournament-players">
+            <div class="players-label">Academy-spillere (påmeldt)</div>
+            <div class="players-avatars">
+              <div class="player-avatar">MH</div>
+              <div class="player-avatar">LS</div>
+              <div class="player-avatar">PJ</div>
+              <div class="player-avatar more">+3</div>
+            </div>
+          </div>
+          <div class="tournament-actions">
+            <button class="action-btn">
+              <i data-lucide="user-plus" style="width:16px;height:16px;"></i>
+              Påmelding
+            </button>
+            <button class="action-btn">
+              <i data-lucide="settings" style="width:16px;height:16px;"></i>
+              Rediger
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Planning Tournament -->
+      <div class="tournament-card">
+        <div class="tournament-header">
+          <span class="tournament-badge badge-planning">
+            <i data-lucide="edit-3" style="width:12px;height:12px;"></i>
+            Planlegging
+          </span>
+          <div class="tournament-name">Junior Mesterskapet</div>
+          <div class="tournament-date">
+            <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+            Mai 2026 — Ikke valgt bane
+          </div>
+        </div>
+        <div class="tournament-body">
+          <div class="tournament-stats">
+            <div class="tournament-stat">
+              <div class="stat-value">—</div>
+              <div class="stat-label">Deltakere</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">24</div>
+              <div class="stat-label">Maks</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">—</div>
+              <div class="stat-label">Academy</div>
+            </div>
+          </div>
+
+          <!-- Timeline for planning -->
+          <div class="timeline">
+            <div class="timeline-item completed">
+              <div class="timeline-date">Fullført</div>
+              <div class="timeline-title">Dato valgt</div>
+            </div>
+            <div class="timeline-item active">
+              <div class="timeline-date">Pågår</div>
+              <div class="timeline-title">Velg bane</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Neste</div>
+              <div class="timeline-title">Åpne påmelding</div>
+            </div>
+          </div>
+
+          <div class="tournament-actions" style="margin-top: 16px;">
+            <button class="action-btn primary">
+              <i data-lucide="edit" style="width:16px;height:16px;"></i>
+              Fortsett planlegging
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Completed Tournament -->
+      <div class="tournament-card">
+        <div class="tournament-header">
+          <span class="tournament-badge badge-completed">
+            <i data-lucide="check-circle" style="width:12px;height:12px;"></i>
+            Fullført
+          </span>
+          <div class="tournament-name">Sesongåpning 2026</div>
+          <div class="tournament-date">
+            <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+            15. mars 2026 — Fredrikstad GK
+          </div>
+        </div>
+        <div class="tournament-body">
+          <div class="tournament-stats">
+            <div class="tournament-stat">
+              <div class="stat-value">32</div>
+              <div class="stat-label">Deltakere</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">18</div>
+              <div class="stat-label">Hull</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">5</div>
+              <div class="stat-label">Academy</div>
+            </div>
+          </div>
+          <div class="tournament-players">
+            <div class="players-label">Academy-resultater</div>
+            <div class="players-avatars">
+              <div class="player-avatar" style="background: var(--gold);">1</div>
+              <div class="player-avatar">MH</div>
+              <div class="player-avatar" style="background: #C0C0C0;">3</div>
+              <div class="player-avatar">EN</div>
+            </div>
+          </div>
+          <div class="tournament-actions">
+            <button class="action-btn">
+              <i data-lucide="trophy" style="width:16px;height:16px;"></i>
+              Resultater
+            </button>
+            <button class="action-btn">
+              <i data-lucide="bar-chart-2" style="width:16px;height:16px;"></i>
+              Statistikk
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Another completed -->
+      <div class="tournament-card">
+        <div class="tournament-header">
+          <span class="tournament-badge badge-completed">
+            <i data-lucide="check-circle" style="width:12px;height:12px;"></i>
+            Fullført
+          </span>
+          <div class="tournament-name">Innendørs-NM Kvalik</div>
+          <div class="tournament-date">
+            <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+            1. februar 2026 — Mulligan Indoor
+          </div>
+        </div>
+        <div class="tournament-body">
+          <div class="tournament-stats">
+            <div class="tournament-stat">
+              <div class="stat-value">16</div>
+              <div class="stat-label">Deltakere</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">36</div>
+              <div class="stat-label">Hull</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">4</div>
+              <div class="stat-label">Academy</div>
+            </div>
+          </div>
+          <div class="tournament-players">
+            <div class="players-label">Kvalifiserte til NM</div>
+            <div class="players-avatars">
+              <div class="player-avatar">MH</div>
+              <div class="player-avatar">EN</div>
+            </div>
+          </div>
+          <div class="tournament-actions">
+            <button class="action-btn">
+              <i data-lucide="trophy" style="width:16px;height:16px;"></i>
+              Resultater
+            </button>
+            <button class="action-btn">
+              <i data-lucide="copy" style="width:16px;height:16px;"></i>
+              Dupliser
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming 2 -->
+      <div class="tournament-card">
+        <div class="tournament-header">
+          <span class="tournament-badge badge-upcoming">
+            <i data-lucide="clock" style="width:12px;height:12px;"></i>
+            Om 6 uker
+          </span>
+          <div class="tournament-name">Academy Cup</div>
+          <div class="tournament-date">
+            <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+            8. mai 2026 — Fredrikstad GK
+          </div>
+        </div>
+        <div class="tournament-body">
+          <div class="tournament-stats">
+            <div class="tournament-stat">
+              <div class="stat-value">12</div>
+              <div class="stat-label">Påmeldte</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">24</div>
+              <div class="stat-label">Maks</div>
+            </div>
+            <div class="tournament-stat">
+              <div class="stat-value">12</div>
+              <div class="stat-label">Academy</div>
+            </div>
+          </div>
+          <div class="tournament-players">
+            <div class="players-label">Kun for Academy-spillere</div>
+            <div class="players-avatars">
+              <div class="player-avatar">MH</div>
+              <div class="player-avatar">EN</div>
+              <div class="player-avatar">KO</div>
+              <div class="player-avatar">JB</div>
+              <div class="player-avatar more">+8</div>
+            </div>
+          </div>
+          <div class="tournament-actions">
+            <button class="action-btn">
+              <i data-lucide="user-plus" style="width:16px;height:16px;"></i>
+              Påmelding
+            </button>
+            <button class="action-btn">
+              <i data-lucide="settings" style="width:16px;height:16px;"></i>
+              Rediger
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<!-- Modal: New Tournament -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Ny turnering</div>
+      <button class="modal-close" onclick="hideModal()">
+        <i data-lucide="x" style="width:18px;height:18px;"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Turneringsnavn</label>
+        <input type="text" class="form-input" placeholder="F.eks. Sommerturneringen 2026">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Dato</label>
+          <input type="date" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Starttid</label>
+          <input type="time" class="form-input" value="10:00">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bane</label>
+        <select class="form-input">
+          <option>Velg bane...</option>
+          <option>Fredrikstad GK</option>
+          <option>Sarpsborg GK</option>
+          <option>Halden GK</option>
+          <option>Mulligan Indoor</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Antall hull</label>
+          <select class="form-input">
+            <option>18 hull</option>
+            <option>9 hull</option>
+            <option>36 hull</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Maks deltakere</label>
+          <input type="number" class="form-input" value="36">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Format</label>
+        <select class="form-input">
+          <option>Slagspill</option>
+          <option>Stableford</option>
+          <option>Matchplay</option>
+          <option>Foursome</option>
+          <option>Scramble</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Beskrivelse</label>
+        <textarea class="form-input" rows="3" placeholder="Informasjon om turneringen..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="hideModal()">Avbryt</button>
+      <button class="btn-primary">Opprett turnering</button>
+    </div>
+  </div>
+</div>
+
+<!-- Demo Controls -->
+<div class="demo-controls">
+  <div class="demo-title">Demo Kontroller</div>
+  <div class="demo-buttons">
+    <button class="demo-btn active">Liste</button>
+    <button class="demo-btn" onclick="showModal()">+ Ny modal</button>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  function showModal() {
+    document.getElementById('modal').classList.add('active');
+  }
+
+  function hideModal() {
+    document.getElementById('modal').classList.remove('active');
+  }
+
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

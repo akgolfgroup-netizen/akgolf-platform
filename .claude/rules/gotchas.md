@@ -132,9 +132,13 @@ fileSize          BigInt
 
 **Status:** akgolf-website er nå master for all funksjonalitet. Spillerportal og akgolf-booking er arkivert.
 
-**Nye modeller:** CoachingPackage, UserSubscription, CoachingAvailability, Notification, Conversation, Message, SwingVideo, TrackmanSession
+**Nye modeller (alle i schema.prisma):** CoachingPackage, UserSubscription, CoachingAvailability, CommunicationLog, Notification, AppModule, AppBundle, BundleItem, AppSubscription, SubscriptionQuota, DashboardAccess, ContentItem, Conversation, Message, ExerciseDefinition, SwingVideo, TrackmanSession, UserExerciseBank
 
-**Nye API-er:** `/api/coaching/*`, `/api/cron/*`, `/api/portal/admin/email-templates`, etc.
+**Nye enums:** BillingType, CoachingBookingType, SubscriptionStatus, CommunicationType, NotificationType, CoachingSubscriptionTier, DashboardRole, ContentStatus, ContentType
+
+**Nye API-er:** `/api/coaching/*`, `/api/cron/*`, `/api/portal/admin/email-templates`, `/api/portal/notifications`, `/api/portal/subscriptions/*`
+
+**Viktig:** Prisma-relasjoner bruker stor forbokstav (f.eks. `User`, ikke `user`). Sjekk alltid mot schema ved select/where.
 
 ## 15. Priser er lagret i KRONER (ikke øre)
 
@@ -156,6 +160,22 @@ const vatAmount = Math.round((price * vatRate) / 100);
 **MERK:** Gammel seed.ts (ubrukt) har priser i øre. Bruk kun seed-config.ts.
 
 **Fikset 2026-03-26:** 9 filer rettet — fjernet feilaktig `/100` i visning, lagt til `* 100` for Stripe.
+
+## 16. Aldri lag separat globals.css for portal
+
+**Problem:** Portal hadde egen `app/portal/globals.css` som importerte Tailwind dobbelt, overskrev font (Inter i stedet for Manrope), og kolliderte med rot-CSS-ens `--portal-*` variabler.
+
+**Løsning:** Én enkelt `app/globals.css` for hele appen. Portal-tokens (`--portal-*`), shadcn-variabler, bento-grid og alle utilities ligger i root CSS. Portal-layout importerer IKKE egen CSS.
+
+**Regel:** Aldri lag `globals.css` i undermapper. Alt portal-spesifikt CSS legges i `app/globals.css` under seksjonen "Portal Dark Theme Tokens".
+
+## 17. Next.js 16: proxy.ts, ikke middleware.ts
+
+**Problem:** Next.js 16 krever `proxy.ts` i stedet for `middleware.ts`. Hvis begge eksisterer, krasjer appen ved oppstart.
+
+**Løsning:** Bruk kun `proxy.ts` i prosjektrot. Slett `middleware.ts` hvis den finnes.
+
+**Regel:** All edge-logikk (auth, redirects, maintenance mode) går i `proxy.ts`.
 
 ---
 

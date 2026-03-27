@@ -22,7 +22,7 @@ export async function getMyProfile() {
       image: true,
       role: true,
       subscriptionTier: true,
-      instructorProfile: {
+      Instructor: {
         select: { specialization: true, title: true, bio: true },
       },
     },

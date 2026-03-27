@@ -203,6 +203,7 @@ model Instructor {
   User                   User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
   InstructorAvailability InstructorAvailability[]
   ServiceType            ServiceType[]
+  CommunicationLog       CommunicationLog[]
 }
 
 model InstructorAvailability {
@@ -576,7 +577,10 @@ model User {
   notionPageId                                String?
   createdAt                                   DateTime                   @default(now())
   updatedAt                                   DateTime
+  isActive                                    Boolean                    @default(true)
   activeCoachingCustomer                      Boolean                    @default(false)
+  videoStorageUsed                            BigInt                     @default(0)
+  videoStorageLimit                           BigInt                     @default(2147483648)
   stripeCustomerId                            String?                    @unique
   stripeSubscriptionId                        String?
   subscriptionExpiresAt                       DateTime?
@@ -603,7 +607,16 @@ model User {
   TrainingSubscription                        TrainingSubscription?
   WaitlistEntry                               WaitlistEntry[]
   UserSubscription                            UserSubscription[]
+  CommunicationLog                            CommunicationLog[]
   Notification                                Notification[]
+  AppSubscription                             AppSubscription[]
+  SubscriptionQuota                           SubscriptionQuota?
+  ExerciseDefinition                          ExerciseDefinition[]
+  Message                                     Message[]
+  SwingVideo                                  SwingVideo[]
+  TrackmanSession                             TrackmanSession[]
+  UserExerciseBank                            UserExerciseBank[]
+  Conversation                                Conversation[]             @relation("ConversationParticipants")
   // Coach Hub relations
   assignedMessages                            UnifiedMessage[]           @relation("AssignedMessages")
   approvedResponses                           AIResponse[]               @relation("ApprovedResponses")
@@ -635,86 +648,6 @@ model WaitlistEntry {
   @@unique([bookingId, studentId])
   @@index([status])
 }
-
-// ============================================================================
-// Coach Hub Models — Unified Inbox med AI-assistent
-// ============================================================================
-
-model UnifiedMessage {
-  id           String        @id @default(cuid())
-  channel      Channel
-  direction    Direction
-  externalId   String
-  senderName   String
-  senderHandle String
-  subject      String?
-  content      String        @db.Text
-  receivedAt   DateTime
-  status       MessageStatus @default(PENDING)
-  assignedToId String?
-  assignedTo   User?         @relation("AssignedMessages", fields: [assignedToId], references: [id])
-  threadId     String?
-  aiResponse   AIResponse?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-
-  @@index([channel])
-  @@index([status])
-  @@index([assignedToId])
-  @@index([receivedAt])
-}
-
-model AIResponse {
-  id           String         @id @default(cuid())
-  messageId    String         @unique
-  message      UnifiedMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
-  draftContent String         @db.Text
-  finalContent String?        @db.Text
-  confidence   Float
-  category     String
-  modelUsed    String
-  autoSent     Boolean        @default(false)
-  wasEdited    Boolean        @default(false)
-  editDiff     String?        @db.Text
-  approvedById String?
-  approvedBy   User?          @relation("ApprovedResponses", fields: [approvedById], references: [id])
-  approvedAt   DateTime?
-  createdAt    DateTime       @default(now())
-}
-
-model AILearning {
-  id         String    @id @default(cuid())
-  userId     String
-  user       User      @relation("UserLearnings", fields: [userId], references: [id])
-  category   String
-  pattern    String    @db.Text
-  response   String    @db.Text
-  confidence Float     @default(0.5)
-  usageCount Int       @default(0)
-  lastUsed   DateTime?
-  corrections Json?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-
-  @@index([userId, category])
-}
-
-model PushSubscription {
-  id         String   @id @default(cuid())
-  userId     String
-  user       User     @relation("PushSubscriptions", fields: [userId], references: [id])
-  endpoint   String   @unique
-  p256dh     String
-  auth       String
-  deviceType String
-  createdAt  DateTime @default(now())
-
-  @@index([userId])
-}
-
-// ============================================================================
-// Enums
-// ============================================================================
 
 enum BookingStatus {
   PENDING
@@ -806,6 +739,10 @@ enum WaitlistStatus {
   CANCELLED
 }
 
+// ============================================================
+// Nye enums for coaching, apper og kommunikasjon
+// ============================================================
+
 enum BillingType {
   RECURRING
   ONE_TIME
@@ -821,15 +758,57 @@ enum SubscriptionStatus {
   ACTIVE
   TRIALING
   CANCELLED
+  EXPIRED
   PAST_DUE
-  PAUSED
+  CANCELED
+  INCOMPLETE
+}
+
+enum CommunicationType {
+  EMAIL
+  SMS
+  NOTE
+  CALL
 }
 
 enum NotificationType {
+  BOOKING_CONFIRMED
+  BOOKING_CANCELLED
   BOOKING_REMINDER
-  SESSION_SUMMARY
-  ACHIEVEMENT
-  SYSTEM
+  PLAN_GENERATED
+  PLAN_READY
+  ACHIEVEMENT_UNLOCKED
+  TOURNAMENT_REMINDER
+  COACHING_SUMMARY
+  TRAINING_REMINDER
+  GENERAL
+}
+
+enum CoachingSubscriptionTier {
+  PERFORMANCE
+  PERFORMANCE_PRO
+  START
+}
+
+enum DashboardRole {
+  ADMIN
+  INSTRUCTOR
+  VOLUNTEER
+  CLUB_REP
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContentType {
+  SOME_POST
+  NEWSLETTER
+  ARTICLE
 }
 
 // Coach Hub enums
@@ -855,9 +834,9 @@ enum Direction {
   OUTBOUND
 }
 
-// ============================================================================
-// Existing Models (continued)
-// ============================================================================
+// ============================================================
+// Nye modeller for coaching, apper og kommunikasjon
+// ============================================================
 
 model CoachingPackage {
   id                 String              @id @default(cuid())
@@ -914,6 +893,20 @@ model CoachingAvailability {
   @@index([dayOfWeek, isActive])
 }
 
+model CommunicationLog {
+  id           String            @id @default(cuid())
+  studentId    String
+  instructorId String
+  type         CommunicationType
+  subject      String?
+  content      String
+  sentAt       DateTime          @default(now())
+  student      User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  instructor   Instructor        @relation(fields: [instructorId], references: [id])
+
+  @@index([studentId])
+}
+
 model Notification {
   id        String           @id @default(cuid())
   userId    String
@@ -926,4 +919,296 @@ model Notification {
   user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, read])
+}
+
+model AppModule {
+  id                  String            @id @default(cuid())
+  slug                String            @unique
+  name                String
+  description         String?
+  icon                String?
+  monthlyPriceNok     Int               @default(0)
+  yearlyPriceNok      Int?
+  stripePriceId       String?
+  stripeYearlyPriceId String?
+  isActive            Boolean           @default(true)
+  sortOrder           Int               @default(0)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  BundleItem          BundleItem[]
+  AppSubscription     AppSubscription[]
+}
+
+model AppBundle {
+  id                  String            @id @default(cuid())
+  slug                String            @unique
+  name                String
+  description         String?
+  monthlyPriceNok     Int               @default(0)
+  yearlyPriceNok      Int?
+  stripePriceId       String?
+  stripeYearlyPriceId String?
+  isActive            Boolean           @default(true)
+  sortOrder           Int               @default(0)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  items               BundleItem[]
+  AppSubscription     AppSubscription[]
+}
+
+model BundleItem {
+  id       String    @id @default(cuid())
+  bundleId String
+  moduleId String
+  bundle   AppBundle @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+  module   AppModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([bundleId, moduleId])
+}
+
+model AppSubscription {
+  id                   String     @id @default(cuid())
+  userId               String
+  moduleId             String?
+  bundleId             String?
+  status               String     @default("ACTIVE")
+  stripeSubscriptionId String?    @unique
+  cancelAtPeriodEnd    Boolean    @default(false)
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  user                 User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module               AppModule? @relation(fields: [moduleId], references: [id])
+  bundle               AppBundle? @relation(fields: [bundleId], references: [id])
+
+  @@index([userId])
+}
+
+model DashboardAccess {
+  id        String        @id @default(cuid())
+  email     String        @unique
+  role      DashboardRole
+  name      String?
+  active    Boolean       @default(true)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model SubscriptionQuota {
+  id                String                   @id @default(cuid())
+  userId            String                   @unique
+  subscriptionId    String?
+  tier              CoachingSubscriptionTier
+  sessionsAllowed   Int
+  sessionsUsed      Int                      @default(0)
+  periodStart       DateTime
+  periodEnd         DateTime
+  bookingWindowDays Int                      @default(7)
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+  user              User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ContentItem {
+  id           String        @id @default(cuid())
+  type         ContentType
+  status       ContentStatus @default(DRAFT)
+  title        String
+  slug         String?       @unique
+  body         String
+  bodyHtml     String?
+  excerpt      String?
+  platform     String?
+  hashtags     String[]
+  imageUrl     String?
+  scheduledAt  DateTime?
+  publishedAt  DateTime?
+  aiGenerated  Boolean       @default(false)
+  aiModel      String?
+  notionPageId String?       @unique
+  segment      String?
+  createdBy    String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([scheduledAt])
+  @@index([slug])
+  @@index([type, status])
+}
+
+model Conversation {
+  id           String    @id @default(cuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  Message      Message[]
+  participants User[]    @relation("ConversationParticipants")
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  senderId       String
+  content        String
+  readAt         DateTime?
+  createdAt      DateTime     @default(now())
+  Conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  User           User         @relation(fields: [senderId], references: [id])
+
+  @@index([conversationId])
+  @@index([senderId])
+}
+
+model ExerciseDefinition {
+  id                 String             @id @default(cuid())
+  name               String
+  description        String?
+  instructions       String?
+  videoUrl           String?
+  imageUrl           String?
+  pyramid            String
+  area               String
+  lPhase             String?
+  pPositionStart     String?
+  pPositionEnd       String?
+  equipment          String[]
+  minDurationMinutes Int                @default(5)
+  maxDurationMinutes Int                @default(30)
+  difficulty         Int                @default(2)
+  isPublic           Boolean            @default(false)
+  isSystemDrill      Boolean            @default(false)
+  createdById        String?
+  tags               String[]
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  User               User?              @relation(fields: [createdById], references: [id])
+  UserExerciseBank   UserExerciseBank[]
+
+  @@index([area])
+  @@index([isPublic])
+  @@index([pyramid])
+}
+
+model SwingVideo {
+  id           String   @id @default(cuid())
+  userId       String
+  url          String
+  thumbnailUrl String?
+  fileSize     BigInt
+  title        String?
+  coachNotes   String?
+  aiAnalysis   Json?
+  sessionId    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model TrackmanSession {
+  id          String   @id @default(cuid())
+  userId      String
+  sessionDate DateTime
+  club        String
+  shots       Json
+  averages    Json
+  createdAt   DateTime @default(now())
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([sessionDate])
+  @@index([userId])
+}
+
+model UserExerciseBank {
+  id                 String             @id @default(cuid())
+  userId             String
+  exerciseId         String
+  isFavorite         Boolean            @default(false)
+  usageCount         Int                @default(0)
+  lastUsedAt         DateTime?
+  personalNotes      String?
+  createdAt          DateTime           @default(now())
+  ExerciseDefinition ExerciseDefinition @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  User               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, exerciseId])
+  @@index([userId])
+}
+
+// ============================================================================
+// Coach Hub Models — Unified Inbox med AI-assistent
+// ============================================================================
+
+model UnifiedMessage {
+  id           String        @id @default(cuid())
+  channel      Channel
+  direction    Direction
+  externalId   String
+  senderName   String
+  senderHandle String
+  subject      String?
+  content      String        @db.Text
+  receivedAt   DateTime
+  status       MessageStatus @default(PENDING)
+  assignedToId String?
+  assignedTo   User?         @relation("AssignedMessages", fields: [assignedToId], references: [id])
+  threadId     String?
+  aiResponse   AIResponse?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([channel])
+  @@index([status])
+  @@index([assignedToId])
+  @@index([receivedAt])
+}
+
+model AIResponse {
+  id           String         @id @default(cuid())
+  messageId    String         @unique
+  message      UnifiedMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  draftContent String         @db.Text
+  finalContent String?        @db.Text
+  confidence   Float
+  category     String
+  modelUsed    String
+  autoSent     Boolean        @default(false)
+  wasEdited    Boolean        @default(false)
+  editDiff     String?        @db.Text
+  approvedById String?
+  approvedBy   User?          @relation("ApprovedResponses", fields: [approvedById], references: [id])
+  approvedAt   DateTime?
+  createdAt    DateTime       @default(now())
+}
+
+model AILearning {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation("UserLearnings", fields: [userId], references: [id], onDelete: Cascade)
+  category    String
+  pattern     String    @db.Text
+  response    String    @db.Text
+  confidence  Float     @default(0.5)
+  usageCount  Int       @default(0)
+  lastUsed    DateTime?
+  corrections Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([category])
+}
+
+model PushSubscription {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation("PushSubscriptions", fields: [userId], references: [id], onDelete: Cascade)
+  endpoint   String
+  p256dh     String
+  auth       String
+  deviceType String
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
 }

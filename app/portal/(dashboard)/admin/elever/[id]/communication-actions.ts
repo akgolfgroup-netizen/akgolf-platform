@@ -22,7 +22,7 @@ export async function getCommunicationLogs(studentId: string) {
       sentAt: true,
       instructor: {
         select: {
-          user: {
+          User: {
             select: { name: true },
           },
         },

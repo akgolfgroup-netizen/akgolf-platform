@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import type { PrismaClient } from "@prisma/client";
 import type {
   PlanTournamentInput,
@@ -30,14 +31,14 @@ export async function getTournamentsWithPlans(
     where,
     orderBy: { startDate: "asc" },
     include: {
-      playerPlans: {
+      PlayerTournamentPlan: {
         where: { studentId },
       },
     },
   });
 
   return tournaments.map((t) => {
-    const plan = t.playerPlans[0];
+    const plan = t.PlayerTournamentPlan[0];
     return {
       ...t,
       level: t.level as import("./types").TournamentLevel,
@@ -67,12 +68,14 @@ export async function planTournament(
       },
     },
     create: {
+      id: randomUUID(),
       studentId: data.studentId,
       tournamentId: data.tournamentId,
       planLevel: data.planLevel,
       goalType: data.goalType,
       notes: data.notes,
       isRegistered: data.isRegistered ?? false,
+      updatedAt: new Date(),
     },
     update: {
       planLevel: data.planLevel,
@@ -97,7 +100,7 @@ export async function createTournament(
   db: PrismaClient,
   data: CreateTournamentInput
 ): Promise<void> {
-  await db.tournament.create({ data });
+  await db.tournament.create({ data: { ...data, id: randomUUID(), updatedAt: new Date() } });
 }
 
 // --- Fase 1: Coach "Denne uken" ---
@@ -119,10 +122,10 @@ export async function getThisWeekTournamentPlans(
   const plans = await db.playerTournamentPlan.findMany({
     where,
     include: {
-      student: { select: { id: true, name: true, image: true } },
-      tournament: true,
+      User: { select: { id: true, name: true, image: true } },
+      Tournament: true,
     },
-    orderBy: { tournament: { startDate: "asc" } },
+    orderBy: { Tournament: { startDate: "asc" } },
   });
 
   return plans as unknown as TournamentPlanWithStudent[];
@@ -152,9 +155,9 @@ export async function getTournamentWithPlayers(
   const tournament = await db.tournament.findUnique({
     where: { id: tournamentId },
     include: {
-      playerPlans: {
+      PlayerTournamentPlan: {
         include: {
-          student: { select: { id: true, name: true, image: true } },
+          User: { select: { id: true, name: true, image: true } },
         },
       },
     },
@@ -228,7 +231,9 @@ export async function syncTournamentsFromSources(
       await db.tournament.create({
         data: {
           ...data,
+          id: randomUUID(),
           createdById,
+          updatedAt: new Date(),
         },
       });
       created++;
@@ -271,6 +276,7 @@ export async function saveTournamentPrep(
       },
     },
     create: {
+      id: randomUUID(),
       tournamentId: data.tournamentId,
       userId: data.userId,
       courseStrategy: data.courseStrategy ? JSON.parse(JSON.stringify(data.courseStrategy)) : undefined,
@@ -278,6 +284,7 @@ export async function saveTournamentPrep(
       readinessScore: data.readinessScore ?? null,
       mentalPrepNotes: data.mentalPrepNotes ?? null,
       warmupPlan: data.warmupPlan ?? null,
+      updatedAt: new Date(),
     },
     update: {
       ...(data.courseStrategy !== undefined && { courseStrategy: JSON.parse(JSON.stringify(data.courseStrategy)) }),

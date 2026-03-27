@@ -7,6 +7,7 @@ import { BookingStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
 import { autoCreateUser } from "@/lib/portal/booking/auto-create-user";
 import { sendWelcomeEmail } from "@/lib/portal/email/send-welcome-email";
 import { nanoid } from "nanoid";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 class ConflictError extends Error {
   constructor(message: string) {
@@ -16,6 +17,24 @@ class ConflictError extends Error {
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limiting
+  const clientIp = getClientIp(req);
+  const rateLimit = checkRateLimit(`booking:create:${clientIp}`, RATE_LIMITS.BOOKING_CREATE);
+
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "For mange forespørsler. Vent litt før du prøver igjen." },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(Math.ceil((rateLimit.resetAt - Date.now()) / 1000)),
+          "X-RateLimit-Limit": String(RATE_LIMITS.BOOKING_CREATE.limit),
+          "X-RateLimit-Remaining": String(rateLimit.remaining),
+        },
+      }
+    );
+  }
+
   // Support both authenticated and unauthenticated booking
   const user = await getPortalUser();
 
@@ -187,6 +206,23 @@ export async function POST(req: NextRequest) {
     const vatAmount = Math.round(
       (serviceType.price * serviceType.vatRate) / 100
     );
+
+    // Sjekk for duplikat-booking (samme bruker, samme tid)
+    const existingUserBooking = await prisma.booking.findFirst({
+      where: {
+        studentId,
+        instructorId,
+        startTime: start,
+        status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
+      },
+    });
+
+    if (existingUserBooking) {
+      return NextResponse.json(
+        { error: "Du har allerede en booking på dette tidspunktet" },
+        { status: 409 }
+      );
+    }
 
     // Atomisk konfliktsjekk + opprettelse via serializable transaksjon
     // Sjekker både eksisterende bookinger og blokerte tider (inkl. buffertid)

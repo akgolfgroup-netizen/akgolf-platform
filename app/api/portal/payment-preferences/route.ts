@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { CustomerType, PaymentMethod } from "@prisma/client";
+import { nanoid } from "nanoid";
 
 export async function GET() {
   try {
@@ -52,6 +53,7 @@ export async function PUT(request: Request) {
     const preference = await prisma.customerPaymentPreference.upsert({
       where: { userId: user.id },
       create: {
+        id: nanoid(),
         userId: user.id,
         customerType: (customerType as CustomerType) ?? "PRIVATE",
         preferredMethod: (preferredMethod as PaymentMethod) ?? "NONE",
@@ -59,6 +61,7 @@ export async function PUT(request: Request) {
         orgNumber: orgNumber ?? null,
         invoiceEmail: invoiceEmail ?? null,
         invoiceAddress: invoiceAddress ?? null,
+        updatedAt: new Date(),
       },
       update: {
         customerType: customerType as CustomerType | undefined,

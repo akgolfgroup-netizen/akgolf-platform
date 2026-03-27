@@ -19,8 +19,8 @@ export default async function AdminNewBookingPage() {
       orderBy: { sortOrder: "asc" },
     }),
     prisma.instructor.findMany({
-      select: { id: true, user: { select: { name: true } } },
-      orderBy: { user: { name: "asc" } },
+      select: { id: true, User: { select: { name: true } } },
+      orderBy: { User: { name: "asc" } },
     }),
   ]);
 
@@ -36,7 +36,7 @@ export default async function AdminNewBookingPage() {
       </div>
       <AdminCreateBookingForm
         serviceTypes={serviceTypes}
-        instructors={instructors}
+        instructors={instructors.map((i) => ({ id: i.id, user: { name: i.User?.name ?? null } }))}
       />
     </div>
   );

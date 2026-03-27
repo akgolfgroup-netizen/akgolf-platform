@@ -62,7 +62,7 @@ export async function getCalendarEvents(
           startTime: { gte: from, lte: to },
           status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
         },
-        include: { serviceType: { select: { name: true } } },
+        include: { ServiceType: { select: { name: true } } },
       }),
 
       // Coaching sessions
@@ -78,12 +78,12 @@ export async function getCalendarEvents(
       prisma.trainingPlan.findFirst({
         where: { studentId: id, isActive: true },
         include: {
-          weeks: {
+          TrainingPlanWeek: {
             where: {
               weekStart: { lte: to },
             },
             include: {
-              sessions: { where: { dayOfWeek: { gte: 1, lte: 7 } } },
+              TrainingPlanSession: { where: { dayOfWeek: { gte: 1, lte: 7 } } },
             },
           },
         },
@@ -93,9 +93,9 @@ export async function getCalendarEvents(
       prisma.playerTournamentPlan.findMany({
         where: {
           studentId: id,
-          tournament: { startDate: { gte: from, lte: to } },
+          Tournament: { startDate: { gte: from, lte: to } },
         },
-        include: { tournament: true },
+        include: { Tournament: true },
       }),
     ]);
 
@@ -104,7 +104,7 @@ export async function getCalendarEvents(
     events.push({
       id: b.id,
       type: "booking",
-      title: b.serviceType.name,
+      title: b.ServiceType.name,
       startDate: b.startTime,
       endDate: b.endTime,
       color: "#38BDF8",
@@ -124,9 +124,9 @@ export async function getCalendarEvents(
 
   // Training sessions → green (map dayOfWeek to actual date)
   if (activePlan) {
-    for (const week of activePlan.weeks) {
+    for (const week of activePlan.TrainingPlanWeek) {
       const weekMon = startOfISOWeek(week.weekStart);
-      for (const s of week.sessions) {
+      for (const s of week.TrainingPlanSession) {
         const sessionDate = addDays(weekMon, s.dayOfWeek - 1);
         if (sessionDate >= from && sessionDate <= to) {
           events.push({
@@ -143,15 +143,15 @@ export async function getCalendarEvents(
 
   // Tournament plans → goal type color
   for (const tp of playerTournaments) {
-    if (!tp.tournament) continue;
+    if (!tp.Tournament) continue;
     const goalConfig =
       GOAL_TYPE_CONFIG[tp.goalType as keyof typeof GOAL_TYPE_CONFIG];
     events.push({
       id: tp.id,
       type: "tournament",
-      title: tp.tournament.name,
-      startDate: tp.tournament.startDate,
-      endDate: tp.tournament.endDate ?? undefined,
+      title: tp.Tournament.name,
+      startDate: tp.Tournament.startDate,
+      endDate: tp.Tournament.endDate ?? undefined,
       color: goalConfig?.color ?? "#B07D4F",
       allDay: true,
     });

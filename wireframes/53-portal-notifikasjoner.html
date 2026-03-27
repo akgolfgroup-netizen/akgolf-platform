@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>53 — Portal Notifikasjoner | AK Golf Wireframes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-50: #6B7B8D;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --success: #22C55E;
+      --error: #EF4444;
+      --warning: #F59E0B;
+      --info: #3B82F6;
+      --accent-academy: #B07D4F;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--ink-100);
+      color: var(--ink-05);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(180deg, #0F2950 0%, var(--ink-100) 100%);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 32px;
+      padding: 0 8px;
+    }
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: var(--ink-50);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .nav-item:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ink-05);
+    }
+    .nav-item.active {
+      background: rgba(184,151,92,0.15);
+      color: var(--gold);
+    }
+    .nav-badge {
+      margin-left: auto;
+      background: var(--error);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+    .sidebar-user {
+      padding: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: var(--ink-100);
+    }
+    .user-info {
+      flex: 1;
+    }
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .user-tier {
+      font-size: 11px;
+      color: var(--gold);
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      margin-left: 260px;
+      min-height: 100vh;
+    }
+    .topbar {
+      height: 64px;
+      background: rgba(15,41,80,0.5);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+    .topbar-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .topbar-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .content {
+      padding: 32px;
+      max-width: 900px;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      padding: 4px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      width: fit-content;
+    }
+    .filter-tab {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-50);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .filter-tab:hover {
+      color: var(--ink-05);
+    }
+    .filter-tab.active {
+      background: rgba(255,255,255,0.1);
+      color: var(--ink-05);
+    }
+    .filter-count {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 12px;
+    }
+    .filter-tab.active .filter-count {
+      background: var(--gold);
+      color: var(--ink-100);
+    }
+
+    /* Actions Bar */
+    .actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .bulk-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--ink-50);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ink-05);
+    }
+    .settings-link {
+      color: var(--ink-50);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .settings-link:hover {
+      color: var(--gold);
+    }
+
+    /* Notification Groups */
+    .notification-group {
+      margin-bottom: 32px;
+    }
+    .group-header {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-50);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .group-divider {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* Notification Card */
+    .notification-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .notification-card:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.1);
+    }
+    .notification-card.unread {
+      background: rgba(184,151,92,0.08);
+      border-color: rgba(184,151,92,0.2);
+    }
+    .notification-card.unread::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--gold);
+      border-radius: 12px 0 0 12px;
+    }
+    .notification-card {
+      position: relative;
+    }
+
+    .notification-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .notification-icon.booking {
+      background: rgba(139,92,246,0.15);
+      color: #8B5CF6;
+    }
+    .notification-icon.coaching {
+      background: rgba(34,197,94,0.15);
+      color: var(--success);
+    }
+    .notification-icon.ai {
+      background: rgba(59,130,246,0.15);
+      color: var(--info);
+    }
+    .notification-icon.achievement {
+      background: rgba(184,151,92,0.15);
+      color: var(--gold);
+    }
+    .notification-icon.reminder {
+      background: rgba(245,158,11,0.15);
+      color: var(--warning);
+    }
+    .notification-icon.system {
+      background: rgba(255,255,255,0.08);
+      color: var(--ink-50);
+    }
+
+    .notification-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .notification-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-05);
+      margin-bottom: 4px;
+    }
+    .notification-message {
+      font-size: 13px;
+      color: var(--ink-50);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .notification-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+    .notification-time {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .notification-actions {
+      display: flex;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .notification-card:hover .notification-actions {
+      opacity: 1;
+    }
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      color: var(--ink-50);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: var(--ink-05);
+    }
+    .action-btn.delete:hover {
+      background: rgba(239,68,68,0.2);
+      color: var(--error);
+    }
+
+    /* CTA in notification */
+    .notification-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--gold);
+      color: var(--ink-100);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 8px;
+    }
+    .notification-cta:hover {
+      background: #8B7243;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 64px 32px;
+      color: var(--ink-50);
+    }
+    .empty-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      opacity: 0.5;
+    }
+    .empty-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink-05);
+      margin-bottom: 8px;
+    }
+    .empty-message {
+      font-size: 14px;
+    }
+
+    /* Demo Controls */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      z-index: 200;
+      color: var(--ink-90);
+    }
+    .demo-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-50);
+      margin-bottom: 12px;
+    }
+    .demo-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .demo-btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--ink-20);
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .demo-btn:hover {
+      background: var(--ink-10);
+    }
+    .demo-btn.active {
+      background: var(--gold);
+      color: white;
+      border-color: var(--gold);
+    }
+
+    /* Wireframe Info */
+    .wireframe-info {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: var(--gold);
+      color: var(--ink-100);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 200;
+    }
+
+    /* Hide states by default */
+    .state-empty, .state-filtered {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wireframe-info">53 — Portal Notifikasjoner</div>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">AK Golf</div>
+  <nav class="sidebar-nav">
+    <a href="40-portal-dashboard.html" class="nav-item">
+      <i data-lucide="home" style="width:20px;height:20px;"></i>
+      Dashboard
+    </a>
+    <a href="41-portal-bookinger.html" class="nav-item">
+      <i data-lucide="calendar" style="width:20px;height:20px;"></i>
+      Mine Bookinger
+    </a>
+    <a href="42-portal-dagbok.html" class="nav-item">
+      <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+      Treningsdagbok
+    </a>
+    <a href="45-portal-treningsplan.html" class="nav-item">
+      <i data-lucide="target" style="width:20px;height:20px;"></i>
+      Treningsplan
+    </a>
+    <a href="#" class="nav-item active">
+      <i data-lucide="bell" style="width:20px;height:20px;"></i>
+      Notifikasjoner
+      <span class="nav-badge">5</span>
+    </a>
+    <a href="52-portal-meldinger.html" class="nav-item">
+      <i data-lucide="message-circle" style="width:20px;height:20px;"></i>
+      Meldinger
+    </a>
+    <a href="51-portal-innstillinger.html" class="nav-item">
+      <i data-lucide="settings" style="width:20px;height:20px;"></i>
+      Innstillinger
+    </a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="user-avatar">MH</div>
+    <div class="user-info">
+      <div class="user-name">Maria Hansen</div>
+      <div class="user-tier">PRO-medlem</div>
+    </div>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main">
+  <header class="topbar">
+    <h1 class="topbar-title">Notifikasjoner</h1>
+    <div class="topbar-actions">
+      <button class="btn-ghost">
+        <i data-lucide="check-check" style="width:16px;height:16px;"></i>
+        Marker alle som lest
+      </button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">
+        Alle
+        <span class="filter-count">12</span>
+      </button>
+      <button class="filter-tab" data-filter="unread">
+        Ulest
+        <span class="filter-count">5</span>
+      </button>
+      <button class="filter-tab" data-filter="booking">
+        Booking
+        <span class="filter-count">3</span>
+      </button>
+      <button class="filter-tab" data-filter="coaching">
+        Coaching
+        <span class="filter-count">4</span>
+      </button>
+      <button class="filter-tab" data-filter="system">
+        System
+        <span class="filter-count">2</span>
+      </button>
+    </div>
+
+    <!-- Actions Bar -->
+    <div class="actions-bar">
+      <div class="bulk-actions">
+        <button class="btn-ghost">
+          <i data-lucide="archive" style="width:14px;height:14px;"></i>
+          Arkiver leste
+        </button>
+      </div>
+      <a href="51-portal-innstillinger.html" class="settings-link">
+        <i data-lucide="settings" style="width:14px;height:14px;"></i>
+        Varslingsinnstillinger
+      </a>
+    </div>
+
+    <!-- State: Default (notifications) -->
+    <div class="state-default">
+
+      <!-- Today -->
+      <div class="notification-group">
+        <div class="group-header">
+          <span>I dag</span>
+          <div class="group-divider"></div>
+        </div>
+
+        <div class="notification-card unread">
+          <div class="notification-icon booking">
+            <i data-lucide="calendar-check" style="width:22px;height:22px;"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Booking bekreftet</div>
+            <div class="notification-message">Din time med Anders Kristiansen er bekreftet for i morgen kl. 10:00. Husk å møte opp 10 minutter før.</div>
+            <div class="notification-meta">
+              <span class="notification-time">
+                <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                For 23 minutter siden
+              </span>
+            </div>
+            <a href="41-portal-bookinger.html" class="notification-cta">
+              Se booking
+              <i data-lucide="arrow-right" style="width:12px;height:12px;"></i>
+            </a>
+          </div>
+          <div class="notification-actions">
+            <button class="action-btn"><i data-lucide="check" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn delete"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+
+        <div class="notification-card unread">
+          <div class="notification-icon ai">
+            <i data-lucide="sparkles" style="width:22px;height:22px;"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Ny AI-treningsplan klar</div>
+            <div class="notification-message">Basert på din siste coaching-sesjon har vi generert en oppdatert treningsplan med fokus på putting.</div>
+            <div class="notification-meta">
+              <span class="notification-time">
+                <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                For 1 time siden
+              </span>
+            </div>
+            <a href="45-portal-treningsplan.html" class="notification-cta">
+              Se treningsplan
+              <i data-lucide="arrow-right" style="width:12px;height:12px;"></i>
+            </a>
+          </div>
+          <div class="notification-actions">
+            <button class="action-btn"><i data-lucide="check" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn delete"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+
+        <div class="notification-card unread">
+          <div class="notification-icon achievement">
+            <i data-lucide="trophy" style="width:22px;height:22px;"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Achievement opplåst!</div>
+            <div class="notification-message">Gratulerer! Du har opplåst "Treningsmaskin" — 30 dager med trening på rad. Fortsett det gode arbeidet!</div>
+            <div class="notification-meta">
+              <span class="notification-time">
+                <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                For 2 timer siden
+              </span>
+            </div>
+          </div>
+          <div class="notification-actions">
+            <button class="action-btn"><i data-lucide="check" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn delete"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Yesterday -->
+      <div class="notification-group">
+        <div class="group-header">
+          <span>I går</span>
+          <div class="group-divider"></div>
+        </div>
+
+        <div class="notification-card unread">
+          <div class="notification-icon coaching">
+            <i data-lucide="video" style="width:22px;height:22px;"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Coaching-oppsummering tilgjengelig</div>
+            <div class="notification-message">AI-oppsummering av din coaching-sesjon med Anders er nå klar. Se hva dere jobbet med og anbefalinger for videre trening.</div>
+            <div class="notification-meta">
+              <span class="notification-time">
+                <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                I går kl. 16:45
+              </span>
+            </div>
+            <a href="49-portal-coaching-historikk.html" class="notification-cta">
+              Se oppsummering
+              <i data-lucide="arrow-right" style="width:12px;height:12px;"></i>
+            </a>
+          </div>
+          <div class="notification-actions">
+            <button class="action-btn"><i data-lucide="check" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn delete"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+
+        <div class="notification-card unread">
+          <div class="notification-icon reminder">
+            <i data-lucide="alarm-clock" style="width:22px;height:22px;"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Husk å logge treningen din</div>
+            <div class="notification-message">Du har ikke logget trening på 3 dager. Hold streaken din i gang ved å logge dagens økt.</div>
+            <div class="notification-meta">
+              <span class="notification-time">
+                <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                I går kl. 20:00
+              </span>
+            </div>
+            <a href="42-portal-dagbok.html" class="notification-cta">
+              Logg trening
+              <i data-lucide="arrow-right" style="width:12px;height:12px;"></i>
+            </a>
+          </div>
+          <div class="notification-actions">
+            <button class="action-btn"><i data-lucide="check" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn delete"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+
+        <div class="notification-card">
+          <div class="notification-icon booking">
+            <i data-lucide="calendar-x" style="width:22px;height:22px;"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Ledig time tilgjengelig</div>
+            <div class="notification-message">En time ble kansellert og er nå tilgjengelig. Fredag 28. mars kl. 14:00 med Anders Kristiansen.</div>
+            <div class="notification-meta">
+              <span class="notification-time">
+                <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                I går kl. 11:30
+              </span>
+            </div>
+          </div>
+          <div class="notification-actions">
+            <button class="action-btn"><i data-lucide="check" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn delete"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Earlier -->
+      <div class="notification-group">
+        <div class="group-header">
+          <span>Denne uken</span>
+          <div class="group-divider"></div>
+        </div>
+
+        <div class="notification-card">
+          <div class="notification-icon coaching">
+            <i data-lucide="file-text" style="width:22px;height:22px;"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Trackman-data tilgjengelig</div>
+            <div class="notification-message">Data fra din siste Trackman-sesjon er nå importert og tilgjengelig i statistikk-modulen.</div>
+            <div class="notification-meta">
+              <span class="notification-time">
+                <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                Tirsdag kl. 10:15
+              </span>
+            </div>
+          </div>
+          <div class="notification-actions">
+            <button class="action-btn"><i data-lucide="check" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn delete"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+
+        <div class="notification-card">
+          <div class="notification-icon system">
+            <i data-lucide="info" style="width:22px;height:22px;"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Sesongen starter snart</div>
+            <div class="notification-message">Vårsesongen starter 1. april. Se over treningsplanen din og sett nye mål for sesongen.</div>
+            <div class="notification-meta">
+              <span class="notification-time">
+                <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                Mandag kl. 09:00
+              </span>
+            </div>
+          </div>
+          <div class="notification-actions">
+            <button class="action-btn"><i data-lucide="check" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn delete"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+
+        <div class="notification-card">
+          <div class="notification-icon achievement">
+            <i data-lucide="star" style="width:22px;height:22px;"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Ny milepæl nådd</div>
+            <div class="notification-message">Fantastisk! Du har gjennomført 50 coaching-timer med AK Golf Academy. Fortsett den gode innsatsen!</div>
+            <div class="notification-meta">
+              <span class="notification-time">
+                <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                Søndag kl. 12:00
+              </span>
+            </div>
+          </div>
+          <div class="notification-actions">
+            <button class="action-btn"><i data-lucide="check" style="width:16px;height:16px;"></i></button>
+            <button class="action-btn delete"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- State: Empty -->
+    <div class="state-empty">
+      <div class="empty-state">
+        <div class="empty-icon">
+          <i data-lucide="bell-off" style="width:64px;height:64px;"></i>
+        </div>
+        <div class="empty-title">Ingen notifikasjoner</div>
+        <div class="empty-message">Du er helt oppdatert! Nye varsler vil vises her.</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Demo Controls -->
+<div class="demo-controls">
+  <div class="demo-title">Demo Kontroller</div>
+  <div class="demo-buttons">
+    <button class="demo-btn active" onclick="showState('default')">Med varsler</button>
+    <button class="demo-btn" onclick="showState('empty')">Tom</button>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  function showState(state) {
+    document.querySelectorAll('.demo-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    document.querySelector('.state-default').style.display = state === 'default' ? 'block' : 'none';
+    document.querySelector('.state-empty').style.display = state === 'empty' ? 'block' : 'none';
+  }
+
+  // Filter tabs functionality
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

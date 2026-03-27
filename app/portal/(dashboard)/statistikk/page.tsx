@@ -30,7 +30,7 @@ export default async function StatistikkPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-[var(--portal-text-primary)]">Statistikk</h1>
         <div className="flex gap-1 p-1 rounded-lg bg-[var(--portal-surface-sunken)]">
-          {["7 dager", "30 dager", "90 dager", "1 ar"].map((period, idx) => (
+          {["7 dager", "30 dager", "90 dager", "1 år"].map((period, idx) => (
             <button
               key={period}
               className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${

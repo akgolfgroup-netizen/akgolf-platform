@@ -55,9 +55,9 @@ export default async function BookingNewPage({ searchParams }: Props) {
     prisma.instructor.findFirst({
       where: {
         id: instructorId,
-        serviceTypes: { some: { id: serviceTypeId } },
+        ServiceType: { some: { id: serviceTypeId } },
       },
-      include: { user: { select: { name: true, image: true } } },
+      include: { User: { select: { name: true, image: true } } },
     }),
   ]);
 
@@ -85,7 +85,7 @@ export default async function BookingNewPage({ searchParams }: Props) {
         serviceType={serviceType}
         instructor={{
           id: instructor.id,
-          user: { name: instructor.user.name, image: instructor.user.image },
+          user: { name: instructor.User.name, image: instructor.User.image },
         }}
         startTime={startTime}
         studentId={user.id}

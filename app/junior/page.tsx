@@ -126,7 +126,7 @@ export default function JuniorPage() {
               <SectionLabel>Aldersgrupper og nivaer</SectionLabel>
               <h2 className="w-heading-lg mt-4 mb-4">Riktig trening til riktig tid.</h2>
               <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
-                Var progresjon er designet for a bygge ferdigheter systematisk, med okende intensitet og spesialisering etter hvert som junioren modnes.
+                Vår progresjon er designet for å bygge ferdigheter systematisk, med økende intensitet og spesialisering etter hvert som junioren modnes.
               </p>
             </RevealOnScroll>
 
@@ -151,9 +151,8 @@ export default function JuniorPage() {
                       ))}
                     </ul>
                     <div className="pt-4 border-t border-ink-10">
-                      <p className="font-mono text-lg font-bold text-junior">
-                        {program.price}
-                        <span className="text-sm font-normal text-ink-50 ml-1">kr/mnd</span>
+                      <p className="text-sm font-medium text-junior">
+                        Kontakt oss for pris
                       </p>
                     </div>
                   </div>
@@ -235,9 +234,8 @@ export default function JuniorPage() {
                     <h3 className={`font-display text-xl font-semibold mb-1 ${pkg.highlighted ? "text-ink-90" : "text-white"}`}>
                       {pkg.name}
                     </h3>
-                    <p className="font-mono text-2xl font-bold text-junior mb-1">
-                      {pkg.price}
-                      <span className={`text-sm font-normal ml-1 ${pkg.highlighted ? "text-ink-50" : "text-ink-50"}`}>{pkg.period}</span>
+                    <p className="text-sm font-medium text-junior mb-1">
+                      Kontakt oss for pris
                     </p>
                     <p className={`text-sm leading-relaxed mb-6 ${pkg.highlighted ? "text-ink-50" : "text-ink-40"}`}>
                       {pkg.description}
@@ -270,9 +268,8 @@ export default function JuniorPage() {
                 <div>
                   <SectionLabel>Junior Camp</SectionLabel>
                   <h2 className="w-heading-lg mt-4 mb-2">{JUNIOR_CAMP.name}</h2>
-                  <p className="font-mono text-2xl font-bold text-junior mb-6">
-                    {JUNIOR_CAMP.price}
-                    <span className="text-sm font-normal text-ink-50 ml-1">{JUNIOR_CAMP.period}</span>
+                  <p className="text-sm font-medium text-junior mb-6">
+                    Kontakt oss for pris
                   </p>
                   <p className="text-ink-50 leading-relaxed mb-4">
                     {JUNIOR_CAMP.description}
@@ -326,9 +323,9 @@ export default function JuniorPage() {
                   <div className="w-card h-full">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-2xl">
-                        {season.name === "Var" && "🌱"}
+                        {season.name === "Vår" && "🌱"}
                         {season.name === "Sommer" && "☀️"}
-                        {season.name === "Host" && "🍂"}
+                        {season.name === "Høst" && "🍂"}
                         {season.name === "Vinter" && "❄️"}
                       </span>
                       <div>

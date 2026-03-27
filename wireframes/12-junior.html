@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Junior Wireframe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C8CDD4;
+      --ink-40: #9BA5B2;
+      --ink-50: #6B7B8D;
+      --ink-60: #4F5D6B;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      /* Junior accent: Blue */
+      --accent: #3B82F6;
+      --accent-light: #DBEAFE;
+      --accent-dark: #2563EB;
+      --surface-warm: #F0F7FF;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-2xl: 1.5rem;
+      --radius-full: 9999px;
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Manrope', sans-serif; background: white; color: var(--ink-90); line-height: 1.6; }
+
+    /* === NAVIGATION === */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: white;
+      box-shadow: var(--shadow-md);
+      padding: 12px 48px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: var(--ink-90);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      position: relative;
+    }
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .logo-text { font-size: 18px; font-weight: 600; }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      margin-left: 64px;
+    }
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-60);
+      text-decoration: none;
+    }
+    .nav-link.active { color: var(--accent); }
+    .nav-actions { margin-left: auto; }
+    .nav-cta {
+      padding: 12px 24px;
+      background: var(--accent);
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* === HERO === */
+    .hero {
+      background: linear-gradient(135deg, var(--ink-100) 0%, #1E3A5F 100%);
+      padding: 160px 48px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 60%;
+      height: 160%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+    }
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      color: white;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      font-size: 18px;
+      color: var(--ink-40);
+      max-width: 560px;
+      margin: 0 auto 32px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+    .btn-accent {
+      padding: 16px 32px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius-full);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-ghost {
+      padding: 16px 32px;
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius-full);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* === SECTIONS === */
+    .section { padding: 100px 48px; }
+    .section-blue { background: var(--surface-warm); }
+    .section-dark { background: var(--ink-100); color: white; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--ink-50);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* === AGE GROUPS === */
+    .age-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .age-card {
+      background: white;
+      border: 2px solid var(--ink-20);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .age-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+    .age-emoji {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .age-range {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .age-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .age-desc {
+      font-size: 14px;
+      color: var(--ink-50);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .age-features {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+    .age-feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--ink-60);
+    }
+    .age-feature i { color: var(--accent); width: 16px; height: 16px; }
+
+    /* === FUN APPROACH === */
+    .fun-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .fun-image {
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--accent-light) 0%, #93C5FD 100%);
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .fun-content h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .fun-content p {
+      font-size: 15px;
+      color: var(--ink-50);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .fun-highlights {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .fun-highlight {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: var(--accent-light);
+      border-radius: var(--radius-lg);
+    }
+    .fun-highlight-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .fun-highlight span {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* === SCHEDULE === */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .schedule-card {
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .schedule-header {
+      background: var(--accent);
+      color: white;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .schedule-header h3 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .schedule-body {
+      padding: 24px;
+    }
+    .schedule-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--ink-10);
+      font-size: 14px;
+    }
+    .schedule-row:last-child { border-bottom: none; }
+    .schedule-day { font-weight: 500; }
+    .schedule-time { color: var(--ink-50); }
+    .schedule-price {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--ink-20);
+    }
+    .schedule-price .value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .schedule-price .period {
+      font-size: 14px;
+      color: var(--ink-50);
+    }
+
+    /* === TESTIMONIALS === */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .testimonial-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+    }
+    .testimonial-text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--ink-30);
+      margin-bottom: 24px;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #93C5FD 0%, var(--accent) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+    .testimonial-name { font-size: 14px; font-weight: 600; color: white; }
+    .testimonial-role { font-size: 13px; color: var(--ink-50); }
+
+    /* === FAQ === */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .faq-item {
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .faq-question i { color: var(--accent); }
+    .faq-answer {
+      font-size: 14px;
+      color: var(--ink-50);
+      line-height: 1.7;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--ink-10);
+    }
+
+    /* === CTA === */
+    .cta-section {
+      background: var(--accent);
+      padding: 80px 48px;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 32px;
+    }
+    .cta-section .btn-white {
+      padding: 16px 32px;
+      background: white;
+      color: var(--accent);
+      border: none;
+      border-radius: var(--radius-full);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* === FOOTER === */
+    .footer {
+      background: var(--ink-100);
+      padding: 60px 48px 30px;
+      color: white;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-links { display: flex; gap: 32px; }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--ink-40);
+      text-decoration: none;
+    }
+    .footer-copyright { font-size: 13px; color: var(--ink-50); }
+
+    @media (max-width: 1024px) {
+      .age-grid, .fun-grid, .schedule-grid, .testimonial-grid, .faq-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .section { padding: 60px 24px; }
+      .hero { padding: 120px 24px 60px; }
+      .fun-highlights { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-logo">
+    <div class="logo-mark">K</div>
+    <span class="logo-text">AK Golf</span>
+  </div>
+  <div class="nav-links">
+    <a href="#" class="nav-link">Hjem</a>
+    <a href="#" class="nav-link">Academy</a>
+    <a href="#" class="nav-link active">Junior</a>
+    <a href="#" class="nav-link">Utvikling</a>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="nav-cta">Meld på</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <i data-lucide="star" style="width:14px;height:14px;"></i>
+      For barn & ungdom 6-18 år
+    </div>
+    <h1>
+      Golf er gøy<br>
+      <span>— for alle aldre!</span>
+    </h1>
+    <p>
+      Hos oss lærer barn og ungdom golf gjennom lek, mestring og sosialt samvær. Vi bygger ferdigheter og selvtillit for livet.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-accent">
+        Meld på nå
+        <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+      </button>
+      <button class="btn-ghost">Sesonginfo</button>
+    </div>
+  </div>
+</section>
+
+<!-- Age Groups -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Aldersgrupper</div>
+      <h2 class="section-title">Tilpasset opplegg for alle</h2>
+      <p class="section-subtitle">
+        Vi deler inn etter alder og nivå for å sikre at alle får utfordringer på sitt nivå.
+      </p>
+    </div>
+
+    <div class="age-grid">
+      <div class="age-card">
+        <div class="age-emoji">🐣</div>
+        <div class="age-range">6-9 år</div>
+        <h3 class="age-title">Minis</h3>
+        <p class="age-desc">
+          Første møte med golf! Fokus på motorikk, lek og grunnleggende bevegelser.
+        </p>
+        <div class="age-features">
+          <div class="age-feature">
+            <i data-lucide="check"></i>
+            <span>Tilpasset utstyr</span>
+          </div>
+          <div class="age-feature">
+            <i data-lucide="check"></i>
+            <span>Lekbasert læring</span>
+          </div>
+          <div class="age-feature">
+            <i data-lucide="check"></i>
+            <span>60 min per økt</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="age-card">
+        <div class="age-emoji">⭐</div>
+        <div class="age-range">10-13 år</div>
+        <h3 class="age-title">Juniors</h3>
+        <p class="age-desc">
+          Bygger videre på grunnlaget med mer teknikk, regler og banespill.
+        </p>
+        <div class="age-features">
+          <div class="age-feature">
+            <i data-lucide="check"></i>
+            <span>Teknikk-fokus</span>
+          </div>
+          <div class="age-feature">
+            <i data-lucide="check"></i>
+            <span>Spill på banen</span>
+          </div>
+          <div class="age-feature">
+            <i data-lucide="check"></i>
+            <span>90 min per økt</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="age-card">
+        <div class="age-emoji">🚀</div>
+        <div class="age-range">14-18 år</div>
+        <h3 class="age-title">Teens</h3>
+        <p class="age-desc">
+          For de som vil satse mer! Konkurransetrening og målrettet utvikling.
+        </p>
+        <div class="age-features">
+          <div class="age-feature">
+            <i data-lucide="check"></i>
+            <span>Konkurranseprepp</span>
+          </div>
+          <div class="age-feature">
+            <i data-lucide="check"></i>
+            <span>Videoanalyse</span>
+          </div>
+          <div class="age-feature">
+            <i data-lucide="check"></i>
+            <span>2 timer per økt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Fun Approach -->
+<section class="section section-blue">
+  <div class="container">
+    <div class="fun-grid">
+      <div class="fun-image">
+        [Bilde: Glade barn på driving range]
+      </div>
+      <div class="fun-content">
+        <div class="section-eyebrow" style="justify-content: flex-start;">
+          <span style="display: flex; align-items: center; gap: 12px;">
+            <span style="width: 24px; height: 2px; background: var(--accent);"></span>
+            Vår tilnærming
+          </span>
+        </div>
+        <h2>Læring gjennom lek</h2>
+        <p>
+          Vi tror barn lærer best når de har det gøy. Derfor kombinerer vi strukturert trening med leker, konkurranser og sosiale aktiviteter.
+        </p>
+        <div class="fun-highlights">
+          <div class="fun-highlight">
+            <div class="fun-highlight-icon">
+              <i data-lucide="trophy" style="width:20px;height:20px;"></i>
+            </div>
+            <span>Ukentlige konkurranser</span>
+          </div>
+          <div class="fun-highlight">
+            <div class="fun-highlight-icon">
+              <i data-lucide="users" style="width:20px;height:20px;"></i>
+            </div>
+            <span>Små grupper (maks 8)</span>
+          </div>
+          <div class="fun-highlight">
+            <div class="fun-highlight-icon">
+              <i data-lucide="award" style="width:20px;height:20px;"></i>
+            </div>
+            <span>Ferdighetsmerker</span>
+          </div>
+          <div class="fun-highlight">
+            <div class="fun-highlight-icon">
+              <i data-lucide="sun" style="width:20px;height:20px;"></i>
+            </div>
+            <span>Sommercamp</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Schedule -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Treningstider</div>
+      <h2 class="section-title">Sesong 2024</h2>
+      <p class="section-subtitle">
+        Treningen går fra april til oktober. Påmelding åpner 1. mars.
+      </p>
+    </div>
+
+    <div class="schedule-grid">
+      <div class="schedule-card">
+        <div class="schedule-header">
+          <i data-lucide="calendar" style="width:20px;height:20px;"></i>
+          <h3>Minis (6-9 år)</h3>
+        </div>
+        <div class="schedule-body">
+          <div class="schedule-row">
+            <span class="schedule-day">Tirsdag</span>
+            <span class="schedule-time">16:00 - 17:00</span>
+          </div>
+          <div class="schedule-row">
+            <span class="schedule-day">Lørdag</span>
+            <span class="schedule-time">10:00 - 11:00</span>
+          </div>
+          <div class="schedule-price">
+            <span class="value">kr 3 500</span>
+            <span class="period">/ sesong</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="schedule-card">
+        <div class="schedule-header">
+          <i data-lucide="calendar" style="width:20px;height:20px;"></i>
+          <h3>Juniors (10-13 år)</h3>
+        </div>
+        <div class="schedule-body">
+          <div class="schedule-row">
+            <span class="schedule-day">Onsdag</span>
+            <span class="schedule-time">16:00 - 17:30</span>
+          </div>
+          <div class="schedule-row">
+            <span class="schedule-day">Lørdag</span>
+            <span class="schedule-time">11:00 - 12:30</span>
+          </div>
+          <div class="schedule-price">
+            <span class="value">kr 4 500</span>
+            <span class="period">/ sesong</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="schedule-card">
+        <div class="schedule-header">
+          <i data-lucide="calendar" style="width:20px;height:20px;"></i>
+          <h3>Teens (14-18 år)</h3>
+        </div>
+        <div class="schedule-body">
+          <div class="schedule-row">
+            <span class="schedule-day">Torsdag</span>
+            <span class="schedule-time">16:30 - 18:30</span>
+          </div>
+          <div class="schedule-row">
+            <span class="schedule-day">Søndag</span>
+            <span class="schedule-time">10:00 - 12:00</span>
+          </div>
+          <div class="schedule-price">
+            <span class="value">kr 5 500</span>
+            <span class="period">/ sesong</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="schedule-card">
+        <div class="schedule-header" style="background: var(--gold);">
+          <i data-lucide="sun" style="width:20px;height:20px;"></i>
+          <h3>Sommercamp</h3>
+        </div>
+        <div class="schedule-body">
+          <div class="schedule-row">
+            <span class="schedule-day">Uke 26</span>
+            <span class="schedule-time">09:00 - 15:00</span>
+          </div>
+          <div class="schedule-row">
+            <span class="schedule-day">Uke 28</span>
+            <span class="schedule-time">09:00 - 15:00</span>
+          </div>
+          <div class="schedule-price">
+            <span class="value">kr 2 900</span>
+            <span class="period">/ uke</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Fornøyde foreldre</div>
+      <h2 class="section-title">Hva familiene sier</h2>
+    </div>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text">
+          "Emma gleder seg til hver trening! Hun har funnet gode venner og utviklet seg enormt. Instruktørene er fantastiske med barna."
+        </p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">KN</div>
+          <div>
+            <div class="testimonial-name">Kristine Nilsen</div>
+            <div class="testimonial-role">Mamma til Emma (8)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-text">
+          "Sønnen min var skeptisk i starten, men nå er golf favorittaktiviteten. Sommercamp var høydepunktet i fjor!"
+        </p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">TH</div>
+          <div>
+            <div class="testimonial-name">Thomas Hansen</div>
+            <div class="testimonial-role">Pappa til Oliver (11)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Spørsmål</div>
+      <h2 class="section-title">For foreldre</h2>
+    </div>
+
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-question">
+          Trenger barnet eget utstyr?
+          <i data-lucide="chevron-down" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="faq-answer">
+          Nei, vi har utstyr tilpasset alle aldre og størrelser. Etter hvert kan dere vurdere å kjøpe eget, og vi hjelper gjerne med råd.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Hva om barnet ikke kan reglene?
+          <i data-lucide="chevron-down" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="faq-answer">
+          Det er helt greit! Vi lærer regler og etikette gradvis som en del av treningen. Ingen forkunnskaper kreves.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Kan foreldre være med?
+          <i data-lucide="chevron-down" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="faq-answer">
+          Absolutt! Foreldre er velkomne til å se på. Vi arrangerer også familie-golfdager der dere kan spille sammen.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Hva skjer ved dårlig vær?
+          <i data-lucide="chevron-down" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="faq-answer">
+          Ved regn eller dårlig vær flytter vi treningen innendørs til simulatoren. SMS sendes ut senest 2 timer før.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Klar for å prøve golf?</h2>
+  <p>Første trening er gratis og uforpliktende!</p>
+  <button class="btn-white">
+    Book gratis prøvetime
+    <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+  </button>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="#">Hjem</a>
+      <a href="#">Academy</a>
+      <a href="#">Junior</a>
+      <a href="#">Kontakt</a>
+    </div>
+    <div class="footer-copyright">© 2024 AK Golf Group AS</div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+</script>
+
+</body>
+</html>

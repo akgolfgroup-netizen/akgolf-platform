@@ -3,6 +3,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { stripe } from "@/lib/portal/stripe";
 import { BookingStatus, PaymentStatus } from "@prisma/client";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
+import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
 
 export async function POST(req: NextRequest) {
   let body: { bookingId?: string; paymentIntentId?: string };
@@ -48,47 +49,63 @@ export async function POST(req: NextRequest) {
         stripePaymentId: paymentIntentId,
       },
       include: {
-        serviceType: { select: { name: true, duration: true } },
-        instructor: {
-          select: { user: { select: { name: true, email: true } } },
+        ServiceType: { select: { name: true, duration: true } },
+        Instructor: {
+          select: { User: { select: { name: true, email: true, phone: true } } },
         },
-        student: { select: { name: true, email: true } },
+        User: { select: { name: true, email: true } },
       },
     });
 
     // Opprett betalingstransaksjon
     await prisma.paymentTransaction.create({
       data: {
+        id: crypto.randomUUID(),
         bookingId,
         paymentMethod: booking.paymentMethod,
         grossAmount: booking.amount,
         vatAmount: booking.vatAmount,
-        vatRate: booking.serviceType
+        vatRate: booking.ServiceType
           ? Math.round((booking.vatAmount / booking.amount) * 100)
           : 0,
         netAmount: booking.amount - booking.vatAmount,
         providerRef: paymentIntentId,
         status: PaymentStatus.PAID,
         paidAt: new Date(),
+        updatedAt: new Date(),
       },
     });
 
     // Send bekreftelses-e-post (non-blocking)
-    if (booking.student.email && booking.instructor.user.email) {
+    if (booking.User.email && booking.Instructor.User.email) {
       sendBookingConfirmation({
         bookingId,
-        studentName: booking.student.name ?? "Kunde",
-        studentEmail: booking.student.email,
-        instructorName: booking.instructor.user.name ?? "Instruktør",
-        instructorEmail: booking.instructor.user.email,
-        serviceName: booking.serviceType.name,
+        studentName: booking.User.name ?? "Kunde",
+        studentEmail: booking.User.email,
+        instructorName: booking.Instructor.User.name ?? "Instruktør",
+        instructorEmail: booking.Instructor.User.email,
+        serviceName: booking.ServiceType.name,
         startTime: booking.startTime,
-        duration: booking.serviceType.duration,
+        duration: booking.ServiceType.duration,
         amount: booking.amount,
         vatAmount: booking.vatAmount,
         location: "Gamle Fredrikstad Golfklubb",
       }).catch((err: unknown) =>
         console.error("[confirm-payment] Email failed:", err)
+      );
+    }
+
+    // Send SMS til instruktør (non-blocking)
+    if (booking.Instructor.User.phone) {
+      sendBookingConfirmationSms({
+        instructorPhone: booking.Instructor.User.phone,
+        instructorName: booking.Instructor.User.name ?? "Instruktør",
+        studentName: booking.User.name ?? "Kunde",
+        serviceName: booking.ServiceType.name,
+        startTime: booking.startTime,
+        duration: booking.ServiceType.duration,
+      }).catch((err: unknown) =>
+        console.error("[confirm-payment] SMS failed:", err)
       );
     }
 

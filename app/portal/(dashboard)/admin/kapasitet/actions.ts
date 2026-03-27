@@ -51,8 +51,8 @@ export async function getCapacityData(): Promise<CapacityData> {
   // Hent alle instruktorer
   const instructors = await prisma.instructor.findMany({
     include: {
-      user: { select: { name: true } },
-      availability: true,
+      User: { select: { name: true } },
+      InstructorAvailability: true,
     },
   });
 
@@ -63,8 +63,8 @@ export async function getCapacityData(): Promise<CapacityData> {
       status: { in: [BookingStatus.CONFIRMED, BookingStatus.COMPLETED] },
     },
     include: {
-      serviceType: { select: { price: true, duration: true } },
-      instructor: { select: { id: true } },
+      ServiceType: { select: { price: true, duration: true } },
+      Instructor: { select: { id: true } },
     },
   });
 
@@ -75,7 +75,7 @@ export async function getCapacityData(): Promise<CapacityData> {
       status: { in: [BookingStatus.CONFIRMED, BookingStatus.COMPLETED] },
     },
     include: {
-      serviceType: { select: { price: true } },
+      ServiceType: { select: { price: true } },
     },
   });
 
@@ -86,7 +86,7 @@ export async function getCapacityData(): Promise<CapacityData> {
     let maxWeeklyRevenue = 0;
     const avgPricePerHour = 1500; // Gjennomsnittlig pris per time
 
-    for (const avail of instructor.availability) {
+    for (const avail of instructor.InstructorAvailability) {
       const startMinutes = parseInt(avail.startTime.split(":")[0]) * 60 + parseInt(avail.startTime.split(":")[1]);
       const endMinutes = parseInt(avail.endTime.split(":")[0]) * 60 + parseInt(avail.endTime.split(":")[1]);
       const slotsInWindow = Math.floor((endMinutes - startMinutes) / 50); // 50 min per slot
@@ -96,17 +96,17 @@ export async function getCapacityData(): Promise<CapacityData> {
 
     // Tell bookede slots denne uken
     const bookedSlots = weeklyBookings.filter(
-      (b) => b.instructor?.id === instructor.id
+      (b) => b.Instructor?.id === instructor.id
     ).length;
 
     // Beregn faktisk inntekt
     const weeklyRevenue = weeklyBookings
-      .filter((b) => b.instructor?.id === instructor.id)
-      .reduce((sum, b) => sum + b.serviceType.price, 0);
+      .filter((b) => b.Instructor?.id === instructor.id)
+      .reduce((sum, b) => sum + b.ServiceType.price, 0);
 
     return {
       id: instructor.id,
-      name: instructor.user.name ?? "Ukjent",
+      name: instructor.User.name ?? "Ukjent",
       weeklySlots,
       bookedSlots,
       occupancy: weeklySlots > 0 ? bookedSlots / weeklySlots : 0,
@@ -124,7 +124,7 @@ export async function getCapacityData(): Promise<CapacityData> {
     const coachesData: Record<string, { booked: number; total: number }> = {};
 
     for (const instructor of instructors) {
-      const totalSlots = instructor.availability
+      const totalSlots = instructor.InstructorAvailability
         .filter((a: { dayOfWeek: number }) => a.dayOfWeek === dayOfWeek)
         .reduce((sum: number, a: { startTime: string; endTime: string }) => {
           const startMinutes = parseInt(a.startTime.split(":")[0]) * 60 + parseInt(a.startTime.split(":")[1]);
@@ -134,11 +134,11 @@ export async function getCapacityData(): Promise<CapacityData> {
 
       const bookedSlots = weeklyBookings.filter(
         (b) =>
-          b.instructor?.id === instructor.id &&
+          b.Instructor?.id === instructor.id &&
           new Date(b.startTime).toDateString() === day.toDateString()
       ).length;
 
-      coachesData[instructor.user.name ?? "Ukjent"] = {
+      coachesData[instructor.User.name ?? "Ukjent"] = {
         booked: bookedSlots,
         total: totalSlots,
       };
@@ -162,7 +162,7 @@ export async function getCapacityData(): Promise<CapacityData> {
   weeklyTotal.occupancy = weeklyTotal.slots > 0 ? weeklyTotal.booked / weeklyTotal.slots : 0;
 
   const monthlyTotal = {
-    revenue: monthlyBookings.reduce((sum, b) => sum + b.serviceType.price, 0),
+    revenue: monthlyBookings.reduce((sum, b) => sum + b.ServiceType.price, 0),
     maxRevenue: weeklyTotal.maxRevenue * 4, // Estimat
     bookedCount: monthlyBookings.length,
   };

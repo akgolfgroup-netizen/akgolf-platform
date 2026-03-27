@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Sammenligning</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C8CDD4;
+      --ink-40: #9BA5B2;
+      --ink-50: #6B7B8D;
+      --ink-60: #4F5D6B;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --gold-dark: #8B7243;
+      --success: #22C55E;
+      --success-light: #DCFCE7;
+      --error: #EF4444;
+      --error-light: #FEE2E2;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --info: #3B82F6;
+      --info-light: #DBEAFE;
+      --purple: #8B5CF6;
+      --purple-light: #EDE9FE;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Manrope', sans-serif; background: var(--ink-05); color: var(--ink-90); line-height: 1.6; }
+
+    /* === PORTAL LAYOUT === */
+    .portal-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      background: var(--ink-100);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      width: 260px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 24px;
+    }
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+    .logo-text { color: white; font-size: 16px; font-weight: 600; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 4px; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-lg);
+      color: var(--ink-40);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: white; }
+    .nav-item.active { background: rgba(184,151,92,0.15); color: var(--gold); }
+    .nav-section {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-50);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 24px 16px 8px;
+    }
+
+    /* === MAIN CONTENT === */
+    .main-content { margin-left: 260px; min-height: 100vh; }
+
+    /* === TOPBAR === */
+    .topbar {
+      background: white;
+      border-bottom: 1px solid var(--ink-20);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-title { font-size: 20px; font-weight: 700; }
+
+    /* === PAGE CONTENT === */
+    .page-content { padding: 32px; }
+
+    /* === COMPARISON SELECTOR === */
+    .selector-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .selector-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .selector-header h3 { font-size: 16px; font-weight: 600; }
+
+    .comparison-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .comparison-option {
+      padding: 16px;
+      border: 2px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .comparison-option:hover { border-color: var(--gold); }
+    .comparison-option.selected { border-color: var(--gold); background: rgba(184,151,92,0.1); }
+    .comparison-option-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 12px;
+      background: var(--ink-10);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-60);
+    }
+    .comparison-option.selected .comparison-option-icon { background: var(--gold); color: white; }
+    .comparison-option h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .comparison-option p { font-size: 12px; color: var(--ink-50); }
+
+    /* === PLAYERS COMPARISON === */
+    .players-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .player-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      padding: 24px;
+      text-align: center;
+    }
+    .player-card.you { border-color: var(--gold); }
+    .player-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-full);
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 700;
+      color: white;
+    }
+    .player-card.you .player-avatar { background: var(--gold); }
+    .player-card.peer .player-avatar { background: var(--ink-60); }
+    .player-name { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+    .player-meta { font-size: 13px; color: var(--ink-50); }
+    .player-hcp {
+      display: inline-block;
+      padding: 6px 16px;
+      background: var(--ink-05);
+      border-radius: var(--radius-full);
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 16px;
+    }
+    .vs-badge {
+      width: 48px;
+      height: 48px;
+      background: var(--ink-100);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* === STATS COMPARISON === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .stat-compare-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      overflow: hidden;
+    }
+    .stat-compare-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--ink-20);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .stat-compare-header h4 { font-size: 14px; font-weight: 600; }
+    .stat-compare-body { padding: 20px; }
+
+    .stat-bar-row {
+      margin-bottom: 16px;
+    }
+    .stat-bar-row:last-child { margin-bottom: 0; }
+    .stat-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .stat-bar-label span:first-child { color: var(--ink-60); }
+    .stat-bar-container {
+      display: flex;
+      gap: 4px;
+      height: 24px;
+    }
+    .stat-bar {
+      height: 100%;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+      min-width: 40px;
+    }
+    .stat-bar.you { background: var(--gold); }
+    .stat-bar.peer { background: var(--ink-60); }
+    .stat-bar.better { background: var(--success); }
+    .stat-bar.worse { background: var(--error); }
+
+    /* === RADAR CHART === */
+    .radar-section {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .radar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .radar-header h3 { font-size: 16px; font-weight: 600; }
+    .radar-legend {
+      display: flex;
+      gap: 16px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+    }
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .legend-dot.you { background: var(--gold); }
+    .legend-dot.peer { background: var(--ink-60); }
+
+    .radar-chart {
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .radar-placeholder {
+      width: 280px;
+      height: 280px;
+      position: relative;
+    }
+    .radar-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .radar-bg circle {
+      fill: none;
+      stroke: var(--ink-10);
+      stroke-width: 1;
+    }
+    .radar-you, .radar-peer {
+      position: absolute;
+      inset: 0;
+    }
+    .radar-you polygon {
+      fill: rgba(184,151,92,0.3);
+      stroke: var(--gold);
+      stroke-width: 2;
+    }
+    .radar-peer polygon {
+      fill: rgba(79,93,107,0.2);
+      stroke: var(--ink-60);
+      stroke-width: 2;
+      stroke-dasharray: 4 2;
+    }
+    .radar-labels {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .radar-label {
+      position: absolute;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-60);
+      white-space: nowrap;
+    }
+    .radar-label.top { top: 0; left: 50%; transform: translateX(-50%); }
+    .radar-label.top-right { top: 15%; right: 0; }
+    .radar-label.bottom-right { bottom: 15%; right: 0; }
+    .radar-label.bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .radar-label.bottom-left { bottom: 15%; left: 0; }
+    .radar-label.top-left { top: 15%; left: 0; }
+
+    /* === SUMMARY TABLE === */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .summary-table th,
+    .summary-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .summary-table th {
+      background: var(--ink-05);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-50);
+      text-transform: uppercase;
+    }
+    .summary-table td { font-size: 14px; }
+    .summary-table tr:last-child td { border-bottom: none; }
+    .diff-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .diff-badge.better { background: var(--success-light); color: #166534; }
+    .diff-badge.worse { background: var(--error-light); color: #991B1B; }
+    .diff-badge.equal { background: var(--ink-10); color: var(--ink-60); }
+
+    /* === BUTTONS === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary { background: var(--ink-10); color: var(--ink-80); }
+    .btn-secondary:hover { background: var(--ink-20); }
+    .btn-sm { padding: 6px 12px; font-size: 13px; }
+
+    /* === DEMO CONTROLS === */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink-100);
+      padding: 16px;
+      border-radius: var(--radius-xl);
+      z-index: 200;
+      min-width: 200px;
+    }
+    .demo-controls h4 {
+      color: white;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .demo-btn {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: var(--radius-md);
+      color: white;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .demo-btn:hover { background: rgba(255,255,255,0.2); }
+    .demo-btn:last-child { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+  <div class="portal-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">K</div>
+        <span class="logo-text">AK Golf Portal</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item">
+          <i data-lucide="layout-dashboard"></i>
+          Dashboard
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="calendar"></i>
+          Mine bookinger
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="target"></i>
+          Treningsplan
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="bar-chart-3"></i>
+          Statistikk
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="book-open"></i>
+          Treningsdagbok
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="trophy"></i>
+          Turneringer
+        </a>
+
+        <div class="nav-section">Analyse</div>
+        <a href="#" class="nav-item">
+          <i data-lucide="brain"></i>
+          AI-analyse
+        </a>
+        <a href="#" class="nav-item active">
+          <i data-lucide="users"></i>
+          Sammenligning
+        </a>
+
+        <div class="nav-section">Konto</div>
+        <a href="#" class="nav-item">
+          <i data-lucide="user"></i>
+          Profil
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="settings"></i>
+          Innstillinger
+        </a>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <h1 class="topbar-title">Sammenligning</h1>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <div class="page-content">
+        <!-- SELECTOR -->
+        <div class="selector-card">
+          <div class="selector-header">
+            <h3>Sammenlign med</h3>
+          </div>
+          <div class="comparison-options">
+            <div class="comparison-option selected">
+              <div class="comparison-option-icon">
+                <i data-lucide="users" style="width:24px;height:24px"></i>
+              </div>
+              <h4>Snitt HCP 8-10</h4>
+              <p>Spillere på ditt nivå</p>
+            </div>
+            <div class="comparison-option">
+              <div class="comparison-option-icon">
+                <i data-lucide="trophy" style="width:24px;height:24px"></i>
+              </div>
+              <h4>Scratch-spiller</h4>
+              <p>HCP 0 benchmark</p>
+            </div>
+            <div class="comparison-option">
+              <div class="comparison-option-icon">
+                <i data-lucide="user" style="width:24px;height:24px"></i>
+              </div>
+              <h4>Velg spiller</h4>
+              <p>Spesifikk spiller</p>
+            </div>
+            <div class="comparison-option">
+              <div class="comparison-option-icon">
+                <i data-lucide="history" style="width:24px;height:24px"></i>
+              </div>
+              <h4>Deg selv</h4>
+              <p>For 6 mnd siden</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLAYERS ROW -->
+        <div class="players-row">
+          <div class="player-card you">
+            <div class="player-avatar">AK</div>
+            <div class="player-name">Anders Kristiansen</div>
+            <div class="player-meta">24 runder i år</div>
+            <div class="player-hcp">8.4</div>
+          </div>
+          <div class="vs-badge">VS</div>
+          <div class="player-card peer">
+            <div class="player-avatar">
+              <i data-lucide="users" style="width:40px;height:40px"></i>
+            </div>
+            <div class="player-name">Snitt HCP 8-10</div>
+            <div class="player-meta">Basert på 1,240 spillere</div>
+            <div class="player-hcp">9.0</div>
+          </div>
+        </div>
+
+        <!-- STATS COMPARISON -->
+        <div class="stats-grid">
+          <div class="stat-compare-card">
+            <div class="stat-compare-header">
+              <h4>Strokes Gained</h4>
+            </div>
+            <div class="stat-compare-body">
+              <div class="stat-bar-row">
+                <div class="stat-bar-label">
+                  <span>Off the Tee</span>
+                  <span>Du: +0.8 | Snitt: +0.3</span>
+                </div>
+                <div class="stat-bar-container">
+                  <div class="stat-bar better" style="flex:0.8">+0.8</div>
+                  <div class="stat-bar peer" style="flex:0.3">+0.3</div>
+                </div>
+              </div>
+              <div class="stat-bar-row">
+                <div class="stat-bar-label">
+                  <span>Approach</span>
+                  <span>Du: -0.4 | Snitt: +0.1</span>
+                </div>
+                <div class="stat-bar-container">
+                  <div class="stat-bar worse" style="flex:0.4">-0.4</div>
+                  <div class="stat-bar peer" style="flex:0.1">+0.1</div>
+                </div>
+              </div>
+              <div class="stat-bar-row">
+                <div class="stat-bar-label">
+                  <span>Around the Green</span>
+                  <span>Du: +0.1 | Snitt: 0.0</span>
+                </div>
+                <div class="stat-bar-container">
+                  <div class="stat-bar you" style="flex:0.1">+0.1</div>
+                  <div class="stat-bar peer" style="flex:0.05">0.0</div>
+                </div>
+              </div>
+              <div class="stat-bar-row">
+                <div class="stat-bar-label">
+                  <span>Putting</span>
+                  <span>Du: -0.8 | Snitt: -0.2</span>
+                </div>
+                <div class="stat-bar-container">
+                  <div class="stat-bar worse" style="flex:0.8">-0.8</div>
+                  <div class="stat-bar peer" style="flex:0.2">-0.2</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-compare-card">
+            <div class="stat-compare-header">
+              <h4>Nøkkeltall</h4>
+            </div>
+            <div class="stat-compare-body">
+              <table class="summary-table">
+                <thead>
+                  <tr>
+                    <th>Statistikk</th>
+                    <th>Du</th>
+                    <th>Snitt</th>
+                    <th>Diff</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Snitt score</td>
+                    <td>74.2</td>
+                    <td>76.1</td>
+                    <td><span class="diff-badge better">-1.9</span></td>
+                  </tr>
+                  <tr>
+                    <td>GIR %</td>
+                    <td>42%</td>
+                    <td>48%</td>
+                    <td><span class="diff-badge worse">-6%</span></td>
+                  </tr>
+                  <tr>
+                    <td>FIR %</td>
+                    <td>58%</td>
+                    <td>52%</td>
+                    <td><span class="diff-badge better">+6%</span></td>
+                  </tr>
+                  <tr>
+                    <td>Putts/runde</td>
+                    <td>32.4</td>
+                    <td>31.2</td>
+                    <td><span class="diff-badge worse">+1.2</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sand saves</td>
+                    <td>38%</td>
+                    <td>35%</td>
+                    <td><span class="diff-badge better">+3%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- RADAR CHART -->
+        <div class="radar-section">
+          <div class="radar-header">
+            <h3>Spillprofil sammenligning</h3>
+            <div class="radar-legend">
+              <div class="legend-item">
+                <div class="legend-dot you"></div>
+                <span>Du</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot peer"></div>
+                <span>Snitt HCP 8-10</span>
+              </div>
+            </div>
+          </div>
+          <div class="radar-chart">
+            <div class="radar-placeholder">
+              <svg class="radar-bg" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="90"/>
+                <circle cx="100" cy="100" r="60"/>
+                <circle cx="100" cy="100" r="30"/>
+              </svg>
+              <svg class="radar-peer" viewBox="0 0 200 200">
+                <polygon points="100,30 160,60 170,130 100,175 30,130 40,60"/>
+              </svg>
+              <svg class="radar-you" viewBox="0 0 200 200">
+                <polygon points="100,20 175,55 155,140 100,170 45,140 25,55"/>
+              </svg>
+              <div class="radar-labels">
+                <span class="radar-label top">Driving</span>
+                <span class="radar-label top-right">Approach</span>
+                <span class="radar-label bottom-right">Short Game</span>
+                <span class="radar-label bottom">Putting</span>
+                <span class="radar-label bottom-left">Kursadm.</span>
+                <span class="radar-label top-left">Mental</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- DEMO CONTROLS -->
+  <div class="demo-controls">
+    <h4>Wireframe demo</h4>
+    <button class="demo-btn">vs Snitt HCP</button>
+    <button class="demo-btn">vs Scratch</button>
+    <button class="demo-btn">vs Deg selv</button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

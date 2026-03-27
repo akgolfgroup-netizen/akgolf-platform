@@ -2,8 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { generateSlots } from "@/lib/portal/slots";
 import { BookingStatus } from "@prisma/client";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function GET(req: NextRequest) {
+  // Rate limiting
+  const clientIp = getClientIp(req);
+  const rateLimit = checkRateLimit(`booking:slots:${clientIp}`, RATE_LIMITS.BOOKING_SLOTS);
+
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "For mange forespørsler" },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rateLimit.resetAt - Date.now()) / 1000)) } }
+    );
+  }
+
   const { searchParams } = new URL(req.url);
   const serviceTypeId = searchParams.get("serviceTypeId");
   const instructorId = searchParams.get("instructorId");
@@ -57,7 +69,7 @@ export async function GET(req: NextRequest) {
     const instructor = await prisma.instructor.findFirst({
       where: {
         id: instructorId,
-        serviceTypes: { some: { id: serviceTypeId } },
+        ServiceType: { some: { id: serviceTypeId } },
       },
       select: { id: true },
     });

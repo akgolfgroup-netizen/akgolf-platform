@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Innstillinger — AK Golf Portal Wireframe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C9D0D8;
+      --ink-50: #6B7B8D;
+      --ink-70: #3D4F61;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --navy: #0F2950;
+      --success: #22C55E;
+      --success-light: #DCFCE7;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --error: #EF4444;
+      --error-light: #FEE2E2;
+      --info: #3B82F6;
+      --info-light: #DBEAFE;
+      --sidebar-width: 260px;
+      --topbar-height: 64px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--ink-05);
+      color: var(--ink-90);
+      line-height: 1.5;
+    }
+
+    .portal-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--ink-100);
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+    .sidebar-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .sidebar-nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+    }
+    .nav-section {
+      margin-bottom: 24px;
+    }
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-50);
+      padding: 8px 12px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--ink-30);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.15s;
+      margin-bottom: 2px;
+    }
+    .nav-item:hover {
+      background: rgba(255,255,255,0.05);
+      color: white;
+    }
+    .nav-item.active {
+      background: rgba(184, 151, 92, 0.15);
+      color: var(--gold);
+    }
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      border-radius: 8px;
+    }
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .user-info {
+      flex: 1;
+    }
+    .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+    }
+    .user-tier {
+      font-size: 11px;
+      color: var(--ink-50);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+    }
+
+    .topbar {
+      height: var(--topbar-height);
+      background: white;
+      border-bottom: 1px solid var(--ink-20);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .content-area {
+      padding: 32px;
+      max-width: 900px;
+    }
+
+    /* Settings Layout */
+    .settings-layout {
+      display: flex;
+      gap: 32px;
+    }
+    .settings-nav {
+      width: 200px;
+      flex-shrink: 0;
+    }
+    .settings-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--ink-70);
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-bottom: 4px;
+    }
+    .settings-nav-item:hover {
+      background: var(--ink-10);
+    }
+    .settings-nav-item.active {
+      background: var(--gold-light);
+      color: var(--ink-90);
+      font-weight: 600;
+    }
+    .settings-content {
+      flex: 1;
+    }
+
+    /* Settings Section */
+    .settings-section {
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    .settings-section-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--ink-20);
+    }
+    .settings-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .settings-section-desc {
+      font-size: 13px;
+      color: var(--ink-50);
+    }
+    .settings-section-body {
+      padding: 24px;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-80);
+      margin-bottom: 6px;
+    }
+    .form-hint {
+      font-size: 12px;
+      color: var(--ink-50);
+      margin-top: 4px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--ink-20);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .form-input:disabled {
+      background: var(--ink-05);
+      color: var(--ink-50);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Toggle Switch */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .toggle-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .toggle-row:first-child {
+      padding-top: 0;
+    }
+    .toggle-info {
+      flex: 1;
+    }
+    .toggle-label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    .toggle-desc {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+    .toggle-switch {
+      width: 48px;
+      height: 26px;
+      background: var(--ink-30);
+      border-radius: 13px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle-switch.active {
+      background: var(--gold);
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .toggle-switch.active::after {
+      transform: translateX(22px);
+    }
+
+    /* Select Dropdown */
+    .form-select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--ink-20);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      background: white;
+      cursor: pointer;
+    }
+
+    /* Connected Account */
+    .connected-account {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--ink-05);
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .connected-account:last-child {
+      margin-bottom: 0;
+    }
+    .account-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .account-icon.google { background: #FEF2F2; }
+    .account-icon.apple { background: var(--ink-10); }
+    .account-icon.stripe { background: #EDE9FE; }
+    .account-info {
+      flex: 1;
+    }
+    .account-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .account-email {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+    .account-status {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+    .account-status.connected {
+      background: var(--success-light);
+      color: var(--success);
+    }
+    .account-status.disconnected {
+      background: var(--ink-10);
+      color: var(--ink-50);
+    }
+
+    /* Subscription Card */
+    .subscription-card {
+      background: linear-gradient(135deg, var(--ink-100) 0%, var(--navy) 100%);
+      color: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .subscription-tier {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: var(--gold);
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .subscription-name {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .subscription-price {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 16px;
+    }
+    .subscription-features {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .subscription-feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+    .subscription-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #8B7243;
+    }
+    .btn-secondary {
+      background: white;
+      color: var(--ink-80);
+      border: 1px solid var(--ink-20);
+    }
+    .btn-secondary:hover {
+      background: var(--ink-05);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-70);
+    }
+    .btn-ghost:hover {
+      background: var(--ink-10);
+    }
+    .btn-danger {
+      background: var(--error-light);
+      color: var(--error);
+    }
+    .btn-danger:hover {
+      background: #FECACA;
+    }
+    .btn-outline-white {
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Danger Zone */
+    .danger-zone {
+      border-color: var(--error-light);
+    }
+    .danger-zone .settings-section-header {
+      background: var(--error-light);
+      border-color: transparent;
+    }
+    .danger-zone .settings-section-title {
+      color: var(--error);
+    }
+
+    /* Demo Controls */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink-100);
+      color: white;
+      padding: 16px;
+      border-radius: 12px;
+      display: flex;
+      gap: 8px;
+      z-index: 200;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    }
+    .demo-btn {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .demo-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .demo-btn.active {
+      background: var(--gold);
+    }
+
+    /* Tab Sections */
+    .settings-tab {
+      display: none;
+    }
+    .settings-tab.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<div class="portal-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">AK Golf</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Oversikt</div>
+        <a href="40-portal-dashboard.html" class="nav-item">
+          <i data-lucide="home" style="width:18px;height:18px;"></i>
+          Dashboard
+        </a>
+        <a href="41-portal-bookinger.html" class="nav-item">
+          <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          Mine Bookinger
+        </a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Konto</div>
+        <a href="43-portal-profil.html" class="nav-item">
+          <i data-lucide="user" style="width:18px;height:18px;"></i>
+          Min Profil
+        </a>
+        <a href="51-portal-innstillinger.html" class="nav-item active">
+          <i data-lucide="settings" style="width:18px;height:18px;"></i>
+          Innstillinger
+        </a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar">ML</div>
+        <div class="user-info">
+          <div class="user-name">Magnus Larsen</div>
+          <div class="user-tier">PRO-medlem</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="topbar">
+      <h1 class="topbar-title">Innstillinger</h1>
+    </header>
+
+    <div class="content-area">
+      <div class="settings-layout">
+        <!-- Settings Navigation -->
+        <nav class="settings-nav">
+          <div class="settings-nav-item active" onclick="showSettingsTab('profile')">
+            <i data-lucide="user" style="width:18px;height:18px;"></i>
+            Profil
+          </div>
+          <div class="settings-nav-item" onclick="showSettingsTab('notifications')">
+            <i data-lucide="bell" style="width:18px;height:18px;"></i>
+            Varsler
+          </div>
+          <div class="settings-nav-item" onclick="showSettingsTab('connected')">
+            <i data-lucide="link" style="width:18px;height:18px;"></i>
+            Tilkoblinger
+          </div>
+          <div class="settings-nav-item" onclick="showSettingsTab('subscription')">
+            <i data-lucide="credit-card" style="width:18px;height:18px;"></i>
+            Abonnement
+          </div>
+          <div class="settings-nav-item" onclick="showSettingsTab('privacy')">
+            <i data-lucide="shield" style="width:18px;height:18px;"></i>
+            Personvern
+          </div>
+        </nav>
+
+        <!-- Settings Content -->
+        <div class="settings-content">
+          <!-- Profile Tab -->
+          <div class="settings-tab active" id="profileTab">
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">Personlig informasjon</div>
+                <div class="settings-section-desc">Oppdater din profil og kontaktinformasjon</div>
+              </div>
+              <div class="settings-section-body">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Fornavn</label>
+                    <input type="text" class="form-input" value="Magnus">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Etternavn</label>
+                    <input type="text" class="form-input" value="Larsen">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">E-post</label>
+                  <input type="email" class="form-input" value="magnus@example.com">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Telefon</label>
+                  <input type="tel" class="form-input" value="+47 900 00 000">
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Klubb</label>
+                    <input type="text" class="form-input" value="Fredrikstad GK">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Handicap</label>
+                    <input type="text" class="form-input" value="8.4">
+                  </div>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 8px;">Lagre endringer</button>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">Endre passord</div>
+                <div class="settings-section-desc">Oppdater ditt passord for innlogging</div>
+              </div>
+              <div class="settings-section-body">
+                <div class="form-group">
+                  <label class="form-label">Nåværende passord</label>
+                  <input type="password" class="form-input" placeholder="********">
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Nytt passord</label>
+                    <input type="password" class="form-input">
+                    <div class="form-hint">Minst 8 tegn</div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Bekreft passord</label>
+                    <input type="password" class="form-input">
+                  </div>
+                </div>
+                <button class="btn btn-secondary" style="margin-top: 8px;">Oppdater passord</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notifications Tab -->
+          <div class="settings-tab" id="notificationsTab">
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">E-postvarsler</div>
+                <div class="settings-section-desc">Velg hvilke e-poster du vil motta</div>
+              </div>
+              <div class="settings-section-body">
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Booking-bekreftelser</div>
+                    <div class="toggle-desc">Bekreftelse når du booker en time</div>
+                  </div>
+                  <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Påminnelser</div>
+                    <div class="toggle-desc">Påminnelse 24 timer før avtale</div>
+                  </div>
+                  <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Treningsplan-oppdateringer</div>
+                    <div class="toggle-desc">Når treningsplanen din oppdateres</div>
+                  </div>
+                  <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Nyhetsbrev</div>
+                    <div class="toggle-desc">Tips, artikler og nyheter fra AK Golf</div>
+                  </div>
+                  <div class="toggle-switch" onclick="this.classList.toggle('active')"></div>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Kampanjer og tilbud</div>
+                    <div class="toggle-desc">Spesialtilbud og rabatter</div>
+                  </div>
+                  <div class="toggle-switch" onclick="this.classList.toggle('active')"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">SMS-varsler</div>
+                <div class="settings-section-desc">Velg hvilke SMS-meldinger du vil motta</div>
+              </div>
+              <div class="settings-section-body">
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Booking-påminnelser</div>
+                    <div class="toggle-desc">SMS-påminnelse 1 time før avtale</div>
+                  </div>
+                  <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Kanselleringer</div>
+                    <div class="toggle-desc">Varsling ved endringer fra instruktør</div>
+                  </div>
+                  <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connected Tab -->
+          <div class="settings-tab" id="connectedTab">
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">Tilkoblede kontoer</div>
+                <div class="settings-section-desc">Administrer dine tilkoblede tjenester</div>
+              </div>
+              <div class="settings-section-body">
+                <div class="connected-account">
+                  <div class="account-icon google">
+                    <i data-lucide="mail" style="width:20px;height:20px;color:#EA4335;"></i>
+                  </div>
+                  <div class="account-info">
+                    <div class="account-name">Google</div>
+                    <div class="account-email">magnus@gmail.com</div>
+                  </div>
+                  <span class="account-status connected">Tilkoblet</span>
+                </div>
+                <div class="connected-account">
+                  <div class="account-icon apple">
+                    <i data-lucide="smartphone" style="width:20px;height:20px;"></i>
+                  </div>
+                  <div class="account-info">
+                    <div class="account-name">Apple</div>
+                    <div class="account-email">Ikke tilkoblet</div>
+                  </div>
+                  <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;">Koble til</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">Kalendersynkronisering</div>
+                <div class="settings-section-desc">Synkroniser bookinger med din kalender</div>
+              </div>
+              <div class="settings-section-body">
+                <div class="connected-account">
+                  <div class="account-icon google">
+                    <i data-lucide="calendar" style="width:20px;height:20px;color:#4285F4;"></i>
+                  </div>
+                  <div class="account-info">
+                    <div class="account-name">Google Calendar</div>
+                    <div class="account-email">Synkroniserer automatisk</div>
+                  </div>
+                  <span class="account-status connected">Aktiv</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">Golf-integrasjoner</div>
+                <div class="settings-section-desc">Koble til eksterne golftjenester</div>
+              </div>
+              <div class="settings-section-body">
+                <div class="connected-account">
+                  <div class="account-icon" style="background: #1B5E20;">
+                    <span style="font-size: 12px; font-weight: 700; color: white;">GB</span>
+                  </div>
+                  <div class="account-info">
+                    <div class="account-name">GolfBox</div>
+                    <div class="account-email">Hent handicap og runder</div>
+                  </div>
+                  <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;">Koble til</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subscription Tab -->
+          <div class="settings-tab" id="subscriptionTab">
+            <div class="subscription-card">
+              <div class="subscription-tier">
+                <i data-lucide="crown" style="width:14px;height:14px;"></i>
+                PRO
+              </div>
+              <div class="subscription-name">PRO Membership</div>
+              <div class="subscription-price">kr 990/mnd - Neste fakturering: 1. april 2026</div>
+              <div class="subscription-features">
+                <div class="subscription-feature">
+                  <i data-lucide="check" style="width:16px;height:16px;color:var(--success);"></i>
+                  Ubegrenset AI-analyse
+                </div>
+                <div class="subscription-feature">
+                  <i data-lucide="check" style="width:16px;height:16px;color:var(--success);"></i>
+                  Personlig treningsplan
+                </div>
+                <div class="subscription-feature">
+                  <i data-lucide="check" style="width:16px;height:16px;color:var(--success);"></i>
+                  Prioritert booking
+                </div>
+                <div class="subscription-feature">
+                  <i data-lucide="check" style="width:16px;height:16px;color:var(--success);"></i>
+                  Video-analyse (5 per mnd)
+                </div>
+              </div>
+              <div class="subscription-actions">
+                <button class="btn btn-primary">Oppgrader til Elite</button>
+                <button class="btn btn-outline-white">Se alle planer</button>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">Betalingsmetode</div>
+                <div class="settings-section-desc">Administrer din betalingsinformasjon</div>
+              </div>
+              <div class="settings-section-body">
+                <div class="connected-account">
+                  <div class="account-icon stripe">
+                    <i data-lucide="credit-card" style="width:20px;height:20px;color:#635BFF;"></i>
+                  </div>
+                  <div class="account-info">
+                    <div class="account-name">Visa •••• 4242</div>
+                    <div class="account-email">Utløper 12/28</div>
+                  </div>
+                  <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;">Endre</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">Faktura-historikk</div>
+                <div class="settings-section-desc">Se og last ned tidligere fakturaer</div>
+              </div>
+              <div class="settings-section-body">
+                <table style="width: 100%; font-size: 13px;">
+                  <thead>
+                    <tr style="border-bottom: 1px solid var(--ink-20);">
+                      <th style="text-align: left; padding: 8px 0; font-weight: 600;">Dato</th>
+                      <th style="text-align: left; padding: 8px 0; font-weight: 600;">Beskrivelse</th>
+                      <th style="text-align: right; padding: 8px 0; font-weight: 600;">Beløp</th>
+                      <th style="width: 80px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom: 1px solid var(--ink-10);">
+                      <td style="padding: 12px 0; color: var(--ink-50);">1. mar 2026</td>
+                      <td style="padding: 12px 0;">PRO Membership</td>
+                      <td style="padding: 12px 0; text-align: right;">kr 990</td>
+                      <td style="padding: 12px 0; text-align: right;">
+                        <button class="btn btn-ghost" style="padding: 4px 8px;">
+                          <i data-lucide="download" style="width:14px;height:14px;"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--ink-10);">
+                      <td style="padding: 12px 0; color: var(--ink-50);">1. feb 2026</td>
+                      <td style="padding: 12px 0;">PRO Membership</td>
+                      <td style="padding: 12px 0; text-align: right;">kr 990</td>
+                      <td style="padding: 12px 0; text-align: right;">
+                        <button class="btn btn-ghost" style="padding: 4px 8px;">
+                          <i data-lucide="download" style="width:14px;height:14px;"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 0; color: var(--ink-50);">1. jan 2026</td>
+                      <td style="padding: 12px 0;">PRO Membership</td>
+                      <td style="padding: 12px 0; text-align: right;">kr 990</td>
+                      <td style="padding: 12px 0; text-align: right;">
+                        <button class="btn btn-ghost" style="padding: 4px 8px;">
+                          <i data-lucide="download" style="width:14px;height:14px;"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy Tab -->
+          <div class="settings-tab" id="privacyTab">
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">Databehandling</div>
+                <div class="settings-section-desc">Kontroller hvordan vi bruker dine data</div>
+              </div>
+              <div class="settings-section-body">
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Anonymisert statistikk</div>
+                    <div class="toggle-desc">Bidra til forbedring av tjenesten med anonyme data</div>
+                  </div>
+                  <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Personaliserte anbefalinger</div>
+                    <div class="toggle-desc">Få tilpassede forslag basert på din treningshistorikk</div>
+                  </div>
+                  <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-header">
+                <div class="settings-section-title">Eksporter mine data</div>
+                <div class="settings-section-desc">Last ned en kopi av alle dine data</div>
+              </div>
+              <div class="settings-section-body">
+                <p style="font-size: 13px; color: var(--ink-70); margin-bottom: 16px;">
+                  Du kan be om en eksport av all din personlige data inkludert treningshistorikk,
+                  statistikk og bookinger. Eksporten sendes til din e-post.
+                </p>
+                <button class="btn btn-secondary">
+                  <i data-lucide="download" style="width:16px;height:16px;"></i>
+                  Be om dataeksport
+                </button>
+              </div>
+            </div>
+
+            <div class="settings-section danger-zone">
+              <div class="settings-section-header">
+                <div class="settings-section-title">Faresone</div>
+                <div class="settings-section-desc" style="color: var(--error);">Irreversible handlinger</div>
+              </div>
+              <div class="settings-section-body">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 500; margin-bottom: 2px;">Slett all treningshistorikk</div>
+                    <div style="font-size: 12px; color: var(--ink-50);">Fjerner alle loggførte treninger og statistikk</div>
+                  </div>
+                  <button class="btn btn-danger" style="padding: 6px 12px; font-size: 12px;">Slett</button>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 500; margin-bottom: 2px;">Slett konto permanent</div>
+                    <div style="font-size: 12px; color: var(--ink-50);">Sletter kontoen og alle tilknyttede data</div>
+                  </div>
+                  <button class="btn btn-danger" style="padding: 6px 12px; font-size: 12px;">Slett konto</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Demo Controls -->
+<div class="demo-controls">
+  <button class="demo-btn active" onclick="showSettingsTab('profile')">Profil</button>
+  <button class="demo-btn" onclick="showSettingsTab('notifications')">Varsler</button>
+  <button class="demo-btn" onclick="showSettingsTab('connected')">Tilkoblinger</button>
+  <button class="demo-btn" onclick="showSettingsTab('subscription')">Abonnement</button>
+  <button class="demo-btn" onclick="showSettingsTab('privacy')">Personvern</button>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  function showSettingsTab(tabName) {
+    // Update nav items
+    document.querySelectorAll('.settings-nav-item').forEach(item => item.classList.remove('active'));
+    document.querySelectorAll('.demo-btn').forEach(btn => btn.classList.remove('active'));
+
+    // Find and activate the correct nav item
+    const navItems = document.querySelectorAll('.settings-nav-item');
+    const tabMap = { profile: 0, notifications: 1, connected: 2, subscription: 3, privacy: 4 };
+    if (navItems[tabMap[tabName]]) {
+      navItems[tabMap[tabName]].classList.add('active');
+    }
+
+    // Update demo buttons
+    const demoButtons = document.querySelectorAll('.demo-btn');
+    if (demoButtons[tabMap[tabName]]) {
+      demoButtons[tabMap[tabName]].classList.add('active');
+    }
+
+    // Hide all tabs
+    document.querySelectorAll('.settings-tab').forEach(tab => tab.classList.remove('active'));
+
+    // Show selected tab
+    document.getElementById(tabName + 'Tab').classList.add('active');
+  }
+</script>
+
+</body>
+</html>

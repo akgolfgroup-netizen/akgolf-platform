@@ -21,13 +21,13 @@ export async function GET(
         paymentStatus: true,
         paymentMethod: true,
         stripePaymentId: true,
-        serviceType: {
+        ServiceType: {
           select: { name: true, duration: true },
         },
-        instructor: {
-          select: { user: { select: { name: true } } },
+        Instructor: {
+          select: { User: { select: { name: true } } },
         },
-        student: {
+        User: {
           select: { name: true, email: true },
         },
       },

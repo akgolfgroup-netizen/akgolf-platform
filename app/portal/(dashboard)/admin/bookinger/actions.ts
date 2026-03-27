@@ -7,6 +7,7 @@ import { isStaff } from "@/lib/portal/rbac";
 import { BookingStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
 import { addMinutes } from "date-fns";
 import { revalidatePath } from "next/cache";
+import { nanoid } from "nanoid";
 
 const bookingSelect = {
   id: true,
@@ -20,10 +21,10 @@ const bookingSelect = {
   cancelReason: true,
   adminNotes: true,
   createdAt: true,
-  student: { select: { id: true, name: true, email: true, phone: true } },
-  serviceType: { select: { name: true, color: true, duration: true } },
-  instructor: { select: { id: true, user: { select: { name: true } } } },
-  location: { select: { name: true } },
+  User: { select: { id: true, name: true, email: true, phone: true } },
+  ServiceType: { select: { name: true, color: true, duration: true } },
+  Instructor: { select: { id: true, User: { select: { name: true } } } },
+  Location: { select: { name: true } },
 } as const;
 
 export async function searchBookings(query: string, status?: string, page = 1) {
@@ -41,9 +42,9 @@ export async function searchBookings(query: string, status?: string, page = 1) {
 
   if (query) {
     where.OR = [
-      { student: { name: { contains: query, mode: "insensitive" } } },
-      { student: { email: { contains: query, mode: "insensitive" } } },
-      { serviceType: { name: { contains: query, mode: "insensitive" } } },
+      { User: { name: { contains: query, mode: "insensitive" } } },
+      { User: { email: { contains: query, mode: "insensitive" } } },
+      { ServiceType: { name: { contains: query, mode: "insensitive" } } },
     ];
   }
 
@@ -100,6 +101,8 @@ export async function adminCreateBooking(data: {
   if (!student) {
     student = await prisma.user.create({
       data: {
+        id: nanoid(),
+        updatedAt: new Date(),
         email: data.studentEmail,
         name: data.studentName,
         role: "STUDENT",
@@ -121,6 +124,8 @@ export async function adminCreateBooking(data: {
 
   const booking = await prisma.booking.create({
     data: {
+      id: nanoid(),
+      updatedAt: new Date(),
       studentId: student.id,
       instructorId: data.instructorId,
       serviceTypeId: data.serviceTypeId,
