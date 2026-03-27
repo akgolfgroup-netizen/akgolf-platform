@@ -1,0 +1,102 @@
+"use client";
+
+import { cn } from "@/lib/utils";
+import {
+  Mail,
+  Instagram,
+  MessageCircle,
+  Phone,
+  MessageSquare,
+  Inbox,
+} from "lucide-react";
+
+// Midlertidige typer til Prisma-modeller er lagt til
+export type Channel =
+  | "EMAIL"
+  | "INSTAGRAM"
+  | "MESSENGER"
+  | "WHATSAPP"
+  | "IMESSAGE";
+
+const channels: {
+  value: Channel | "ALL";
+  label: string;
+  icon: React.ReactNode;
+  color: string;
+}[] = [
+  {
+    value: "ALL",
+    label: "Alle",
+    icon: <Inbox className="h-4 w-4" />,
+    color: "bg-[var(--color-ink-80)]",
+  },
+  {
+    value: "EMAIL",
+    label: "E-post",
+    icon: <Mail className="h-4 w-4" />,
+    color: "bg-red-500",
+  },
+  {
+    value: "INSTAGRAM",
+    label: "Instagram",
+    icon: <Instagram className="h-4 w-4" />,
+    color: "bg-pink-500",
+  },
+  {
+    value: "MESSENGER",
+    label: "Messenger",
+    icon: <MessageCircle className="h-4 w-4" />,
+    color: "bg-blue-500",
+  },
+  {
+    value: "WHATSAPP",
+    label: "WhatsApp",
+    icon: <Phone className="h-4 w-4" />,
+    color: "bg-green-500",
+  },
+  {
+    value: "IMESSAGE",
+    label: "iMessage",
+    icon: <MessageSquare className="h-4 w-4" />,
+    color: "bg-emerald-500",
+  },
+];
+
+interface ChannelFilterProps {
+  selected: Channel | "ALL";
+  onChange: (channel: Channel | "ALL") => void;
+  counts: Record<Channel | "ALL", number>;
+}
+
+export function ChannelFilter({
+  selected,
+  onChange,
+  counts,
+}: ChannelFilterProps) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {channels.map((channel) => (
+        <button
+          key={channel.value}
+          onClick={() => onChange(channel.value)}
+          className={cn(
+            "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+            selected === channel.value
+              ? "bg-[var(--color-gold)] text-[var(--color-ink-100)]"
+              : "bg-[var(--color-ink-90)] text-[var(--color-ink-40)] hover:bg-[var(--color-ink-80)] hover:text-white"
+          )}
+        >
+          <span className={cn("rounded p-1 text-white", channel.color)}>
+            {channel.icon}
+          </span>
+          {channel.label}
+          {counts[channel.value] > 0 && (
+            <span className="ml-1 rounded-full bg-red-500 px-2 py-0.5 text-xs text-white">
+              {counts[channel.value]}
+            </span>
+          )}
+        </button>
+      ))}
+    </div>
+  );
+}
