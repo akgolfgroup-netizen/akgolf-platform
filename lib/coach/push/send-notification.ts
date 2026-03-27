@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/portal/prisma";
-import { webpush } from "./vapid";
+import { webpush, ensureVapidConfigured } from "./vapid";
 
 interface NotificationPayload {
   title: string;
@@ -17,6 +17,11 @@ export async function sendPushNotification(
   userId: string,
   payload: NotificationPayload
 ): Promise<void> {
+  if (!ensureVapidConfigured()) {
+    console.warn("Push notifications not available - VAPID not configured");
+    return;
+  }
+
   const subscriptions = await prisma.pushSubscription.findMany({
     where: { userId },
   });
