@@ -815,6 +815,7 @@ model CoachingPackage {
   name               String
   slug               String             @unique
   priceNok           Int
+  vatRate            Int                @default(25)
   billingType        BillingType
   bookingType        CoachingBookingType
   sessionsPerMonth   Int?

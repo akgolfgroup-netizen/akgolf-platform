@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Booking Flow (Flerstegs)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C8CDD4;
+      --ink-40: #9BA5B2;
+      --ink-50: #6B7B8D;
+      --ink-60: #4F5D6B;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --gold-dark: #8B7243;
+      --success: #22C55E;
+      --success-light: #DCFCE7;
+      --error: #EF4444;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Manrope', sans-serif; background: var(--ink-05); color: var(--ink-90); line-height: 1.6; }
+
+    /* === HEADER === */
+    .booking-header {
+      background: white;
+      border-bottom: 1px solid var(--ink-20);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .booking-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--ink-90);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .logo-text {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .booking-progress {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .step-number.completed {
+      background: var(--success);
+      color: white;
+    }
+    .step-number.active {
+      background: var(--gold);
+      color: white;
+    }
+    .step-number.pending {
+      background: var(--ink-10);
+      color: var(--ink-40);
+    }
+    .step-label {
+      font-size: 13px;
+      color: var(--ink-50);
+      transition: all 0.3s;
+    }
+    .step-label.active {
+      color: var(--ink-90);
+      font-weight: 500;
+    }
+    .step-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--ink-20);
+      border-radius: 1px;
+    }
+    .step-divider.completed {
+      background: var(--success);
+    }
+
+    .header-close {
+      margin-left: 24px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: var(--ink-50);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .header-close:hover {
+      background: var(--ink-10);
+      color: var(--ink-90);
+    }
+
+    /* === MAIN LAYOUT === */
+    .booking-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      min-height: calc(100vh - 69px);
+    }
+
+    .booking-main {
+      padding: 48px;
+      overflow-y: auto;
+    }
+
+    .booking-sidebar {
+      background: white;
+      border-left: 1px solid var(--ink-20);
+      padding: 32px;
+      position: sticky;
+      top: 69px;
+      height: calc(100vh - 69px);
+      overflow-y: auto;
+    }
+
+    /* === STEP CONTENT === */
+    .step-content {
+      max-width: 640px;
+    }
+    .step-header {
+      margin-bottom: 32px;
+    }
+    .step-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .step-header p {
+      font-size: 15px;
+      color: var(--ink-50);
+    }
+
+    /* === SERVICE SELECTION === */
+    .service-grid {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .service-card {
+      background: white;
+      border: 2px solid var(--ink-20);
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .service-card:hover {
+      border-color: var(--ink-30);
+      box-shadow: var(--shadow-md);
+    }
+    .service-card.selected {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, rgba(184, 151, 92, 0.02) 0%, rgba(184, 151, 92, 0.05) 100%);
+    }
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--ink-10);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-60);
+      flex-shrink: 0;
+    }
+    .service-card.selected .service-icon {
+      background: var(--gold);
+      color: white;
+    }
+    .service-info {
+      flex: 1;
+    }
+    .service-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .service-desc {
+      font-size: 13px;
+      color: var(--ink-50);
+      margin-bottom: 8px;
+    }
+    .service-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+    }
+    .service-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--ink-60);
+    }
+    .service-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink-90);
+      white-space: nowrap;
+    }
+    .service-check {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--ink-20);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .service-card.selected .service-check {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: white;
+    }
+
+    /* === INSTRUCTOR SELECTION === */
+    .instructor-section {
+      margin-top: 40px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .instructor-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .instructor-card {
+      background: white;
+      border: 2px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .instructor-card:hover {
+      border-color: var(--ink-30);
+    }
+    .instructor-card.selected {
+      border-color: var(--gold);
+      background: rgba(184, 151, 92, 0.03);
+    }
+    .instructor-avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .instructor-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .instructor-info p {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+
+    /* === CALENDAR === */
+    .calendar-section {
+      margin-top: 40px;
+    }
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .calendar-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .calendar-nav button {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--ink-20);
+      background: white;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--ink-60);
+    }
+    .calendar-nav button:hover {
+      background: var(--ink-10);
+    }
+    .calendar-month {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .calendar-grid {
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: var(--ink-05);
+      border-bottom: 1px solid var(--ink-20);
+    }
+    .weekday {
+      padding: 12px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-50);
+    }
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 1px solid transparent;
+    }
+    .calendar-day:hover {
+      background: var(--ink-05);
+    }
+    .calendar-day.other-month {
+      color: var(--ink-30);
+    }
+    .calendar-day.today {
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .calendar-day.selected {
+      background: var(--gold);
+      color: white;
+      border-radius: var(--radius-md);
+    }
+    .calendar-day.disabled {
+      color: var(--ink-20);
+      cursor: not-allowed;
+    }
+    .calendar-day.has-slots::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      width: 4px;
+      height: 4px;
+      background: var(--success);
+      border-radius: 50%;
+    }
+
+    /* === TIME SLOTS === */
+    .timeslots-section {
+      margin-top: 24px;
+    }
+    .timeslots-date {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-60);
+      margin-bottom: 12px;
+    }
+    .timeslots-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .timeslot {
+      padding: 12px;
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-md);
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .timeslot:hover {
+      border-color: var(--gold);
+      background: rgba(184, 151, 92, 0.03);
+    }
+    .timeslot.selected {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: white;
+    }
+    .timeslot.unavailable {
+      background: var(--ink-05);
+      color: var(--ink-30);
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    /* === FORM FIELDS === */
+    .form-section {
+      margin-bottom: 32px;
+    }
+    .form-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--ink-20);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+    .form-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-80);
+    }
+    .form-input {
+      padding: 14px 16px;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .form-input:hover {
+      border-color: var(--ink-30);
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.15);
+    }
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* === SIDEBAR === */
+    .sidebar-section {
+      margin-bottom: 24px;
+    }
+    .sidebar-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-50);
+      margin-bottom: 16px;
+    }
+
+    .booking-summary {
+      background: var(--ink-05);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .summary-service {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--ink-20);
+    }
+    .summary-service-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .summary-service-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .summary-service-info p {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .summary-row.muted {
+      color: var(--ink-50);
+    }
+    .summary-divider {
+      height: 1px;
+      background: var(--ink-20);
+      margin: 12px 0;
+    }
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .sidebar-instructor {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+    }
+    .sidebar-instructor-avatar {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+    .sidebar-instructor-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .sidebar-instructor-info p {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+
+    .sidebar-datetime {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+    }
+    .sidebar-datetime-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--ink-10);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-60);
+    }
+    .sidebar-datetime-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .sidebar-datetime-info p {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+
+    .sidebar-cta {
+      margin-top: 24px;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 16px 24px;
+      background: var(--gold);
+      color: white;
+      border: none;
+      border-radius: var(--radius-full);
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      background: var(--gold-dark);
+    }
+    .btn-primary:disabled {
+      background: var(--ink-20);
+      color: var(--ink-40);
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 14px 24px;
+      background: transparent;
+      color: var(--ink-60);
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-secondary:hover {
+      background: var(--ink-05);
+      border-color: var(--ink-30);
+    }
+
+    .sidebar-trust {
+      margin-top: 24px;
+      padding: 16px;
+      background: var(--success-light);
+      border-radius: var(--radius-lg);
+      display: flex;
+      gap: 12px;
+    }
+    .sidebar-trust i {
+      color: var(--success);
+      flex-shrink: 0;
+    }
+    .sidebar-trust p {
+      font-size: 12px;
+      color: var(--ink-60);
+    }
+    .sidebar-trust strong {
+      color: var(--ink-80);
+    }
+
+    /* === CONFIRMATION === */
+    .confirmation-page {
+      text-align: center;
+      padding: 48px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .confirmation-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      animation: pop 0.4s ease-out;
+    }
+    @keyframes pop {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .confirmation-page h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .confirmation-page p {
+      font-size: 15px;
+      color: var(--ink-50);
+      margin-bottom: 32px;
+    }
+
+    .confirmation-card {
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      text-align: left;
+      margin-bottom: 24px;
+    }
+    .confirmation-card-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .confirmation-card-row:last-child {
+      border-bottom: none;
+    }
+    .confirmation-card-label {
+      font-size: 13px;
+      color: var(--ink-50);
+    }
+    .confirmation-card-value {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .confirmation-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .confirmation-actions .btn-primary {
+      width: auto;
+      padding: 14px 32px;
+    }
+
+    /* === DEMO CONTROLS === */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+    }
+    .demo-controls h4 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-50);
+      margin-bottom: 12px;
+    }
+    .demo-controls button {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      background: var(--ink-10);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+    .demo-controls button:last-child {
+      margin-bottom: 0;
+    }
+    .demo-controls button:hover {
+      background: var(--ink-20);
+    }
+    .demo-controls button.active {
+      background: var(--gold);
+      color: white;
+    }
+
+    @media (max-width: 900px) {
+      .booking-layout {
+        grid-template-columns: 1fr;
+      }
+      .booking-sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: auto;
+        max-height: 40vh;
+        border-left: none;
+        border-top: 1px solid var(--ink-20);
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+      }
+      .booking-main {
+        padding: 24px;
+        padding-bottom: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="booking-header">
+  <div class="booking-logo">
+    <div class="logo-mark">K</div>
+    <span class="logo-text">Book time</span>
+  </div>
+
+  <div class="booking-progress" id="progress-bar">
+    <div class="progress-step">
+      <div class="step-number completed" id="step1-num">✓</div>
+      <span class="step-label" id="step1-label">Velg tjeneste</span>
+    </div>
+    <div class="step-divider completed" id="divider1"></div>
+    <div class="progress-step">
+      <div class="step-number active" id="step2-num">2</div>
+      <span class="step-label active" id="step2-label">Velg tid</span>
+    </div>
+    <div class="step-divider" id="divider2"></div>
+    <div class="progress-step">
+      <div class="step-number pending" id="step3-num">3</div>
+      <span class="step-label" id="step3-label">Dine opplysninger</span>
+    </div>
+    <div class="step-divider" id="divider3"></div>
+    <div class="progress-step">
+      <div class="step-number pending" id="step4-num">4</div>
+      <span class="step-label" id="step4-label">Bekreft</span>
+    </div>
+  </div>
+
+  <div class="header-close">
+    <i data-lucide="x" style="width:20px;height:20px;"></i>
+  </div>
+</header>
+
+<div class="booking-layout">
+
+  <!-- Main Content -->
+  <main class="booking-main">
+
+    <!-- Step 1: Select Service -->
+    <div class="step-content" id="step1" style="display: none;">
+      <div class="step-header">
+        <h1>Velg tjeneste</h1>
+        <p>Velg type time og instruktør for å se ledige tider.</p>
+      </div>
+
+      <div class="service-grid">
+        <div class="service-card selected">
+          <div class="service-icon">
+            <i data-lucide="user" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="service-info">
+            <h3 class="service-name">Individuell time</h3>
+            <p class="service-desc">En-til-en coaching med personlig oppfølging og videoanalyse.</p>
+            <div class="service-meta">
+              <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 60 min</span>
+              <span><i data-lucide="video" style="width:14px;height:14px;"></i> Video inkl.</span>
+            </div>
+          </div>
+          <div class="service-price">kr 1 200</div>
+          <div class="service-check">
+            <i data-lucide="check" style="width:14px;height:14px;"></i>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i data-lucide="users" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="service-info">
+            <h3 class="service-name">Gruppetime (2-4 pers)</h3>
+            <p class="service-desc">Lærerikt og sosialt med andre på samme nivå.</p>
+            <div class="service-meta">
+              <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 90 min</span>
+              <span><i data-lucide="users" style="width:14px;height:14px;"></i> 2-4 deltakere</span>
+            </div>
+          </div>
+          <div class="service-price">kr 600</div>
+          <div class="service-check"></div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i data-lucide="flag" style="width:24px;height:24px;"></i>
+          </div>
+          <div class="service-info">
+            <h3 class="service-name">Spilletime på banen</h3>
+            <p class="service-desc">Coaching under spill med fokus på kursmanagement.</p>
+            <div class="service-meta">
+              <span><i data-lucide="clock" style="width:14px;height:14px;"></i> 2-3 timer</span>
+              <span><i data-lucide="map-pin" style="width:14px;height:14px;"></i> 9 hull</span>
+            </div>
+          </div>
+          <div class="service-price">kr 2 500</div>
+          <div class="service-check"></div>
+        </div>
+      </div>
+
+      <div class="instructor-section">
+        <h3 class="section-title">Velg instruktør</h3>
+        <div class="instructor-grid">
+          <div class="instructor-card selected">
+            <div class="instructor-avatar">AK</div>
+            <div class="instructor-info">
+              <h4>Anders Kristiansen</h4>
+              <p>Head Pro • PGA Class A</p>
+            </div>
+          </div>
+          <div class="instructor-card">
+            <div class="instructor-avatar">MH</div>
+            <div class="instructor-info">
+              <h4>Maria Hansen</h4>
+              <p>Junior Coach • LPGA</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Select Time -->
+    <div class="step-content" id="step2">
+      <div class="step-header">
+        <h1>Velg tid</h1>
+        <p>Velg dato og tidspunkt som passer deg.</p>
+      </div>
+
+      <div class="calendar-section">
+        <div class="calendar-header">
+          <h3 class="section-title" style="margin-bottom: 0;">Mars 2024</h3>
+          <div class="calendar-nav">
+            <button><i data-lucide="chevron-left" style="width:18px;height:18px;"></i></button>
+            <button><i data-lucide="chevron-right" style="width:18px;height:18px;"></i></button>
+          </div>
+        </div>
+
+        <div class="calendar-grid">
+          <div class="calendar-weekdays">
+            <div class="weekday">Man</div>
+            <div class="weekday">Tir</div>
+            <div class="weekday">Ons</div>
+            <div class="weekday">Tor</div>
+            <div class="weekday">Fre</div>
+            <div class="weekday">Lør</div>
+            <div class="weekday">Søn</div>
+          </div>
+          <div class="calendar-days">
+            <div class="calendar-day other-month">26</div>
+            <div class="calendar-day other-month">27</div>
+            <div class="calendar-day other-month">28</div>
+            <div class="calendar-day other-month">29</div>
+            <div class="calendar-day">1</div>
+            <div class="calendar-day">2</div>
+            <div class="calendar-day">3</div>
+            <div class="calendar-day">4</div>
+            <div class="calendar-day">5</div>
+            <div class="calendar-day">6</div>
+            <div class="calendar-day">7</div>
+            <div class="calendar-day">8</div>
+            <div class="calendar-day">9</div>
+            <div class="calendar-day">10</div>
+            <div class="calendar-day">11</div>
+            <div class="calendar-day">12</div>
+            <div class="calendar-day">13</div>
+            <div class="calendar-day">14</div>
+            <div class="calendar-day">15</div>
+            <div class="calendar-day">16</div>
+            <div class="calendar-day">17</div>
+            <div class="calendar-day">18</div>
+            <div class="calendar-day">19</div>
+            <div class="calendar-day">20</div>
+            <div class="calendar-day">21</div>
+            <div class="calendar-day">22</div>
+            <div class="calendar-day">23</div>
+            <div class="calendar-day">24</div>
+            <div class="calendar-day">25</div>
+            <div class="calendar-day today">26</div>
+            <div class="calendar-day">27</div>
+            <div class="calendar-day selected">28</div>
+            <div class="calendar-day">29</div>
+            <div class="calendar-day">30</div>
+            <div class="calendar-day">31</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeslots-section">
+        <div class="timeslots-date">Torsdag 28. mars</div>
+        <div class="timeslots-grid">
+          <div class="timeslot unavailable">09:00</div>
+          <div class="timeslot unavailable">10:00</div>
+          <div class="timeslot">11:00</div>
+          <div class="timeslot">12:00</div>
+          <div class="timeslot">13:00</div>
+          <div class="timeslot selected">14:00</div>
+          <div class="timeslot">15:00</div>
+          <div class="timeslot">16:00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Your Details -->
+    <div class="step-content" id="step3" style="display: none;">
+      <div class="step-header">
+        <h1>Dine opplysninger</h1>
+        <p>Fyll ut kontaktinformasjon for å fullføre bookingen.</p>
+      </div>
+
+      <div class="form-section">
+        <h3 class="form-section-title">Kontaktinformasjon</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Fornavn</label>
+            <input type="text" class="form-input" placeholder="Ola" value="Ola" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Etternavn</label>
+            <input type="text" class="form-input" placeholder="Nordmann" value="Nordmann" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-post</label>
+            <input type="email" class="form-input" placeholder="ola@eksempel.no" value="ola@eksempel.no" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefon</label>
+            <input type="tel" class="form-input" placeholder="+47 999 99 999" value="+47 999 99 999" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="form-section-title">Golfinformasjon</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Handicap (valgfritt)</label>
+            <input type="text" class="form-input" placeholder="f.eks. 18.4" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Erfaring</label>
+            <select class="form-input">
+              <option>Nybegynner (0-2 år)</option>
+              <option selected>Middels (2-5 år)</option>
+              <option>Erfaren (5+ år)</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Hva ønsker du å jobbe med?</label>
+            <textarea class="form-input form-textarea" placeholder="Beskriv gjerne hva du ønsker å fokusere på...">Ønsker å forbedre kortspillet, spesielt pitching og chipping. Har også utfordringer med slice på driven.</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Confirmation -->
+    <div class="step-content" id="step4" style="display: none;">
+      <div class="confirmation-page">
+        <div class="confirmation-icon">
+          <i data-lucide="check" style="width:40px;height:40px;color:white;"></i>
+        </div>
+        <h1>Booking bekreftet!</h1>
+        <p>Du vil motta en bekreftelse på e-post innen kort tid.</p>
+
+        <div class="confirmation-card">
+          <div class="confirmation-card-row">
+            <span class="confirmation-card-label">Tjeneste</span>
+            <span class="confirmation-card-value">Individuell time (60 min)</span>
+          </div>
+          <div class="confirmation-card-row">
+            <span class="confirmation-card-label">Instruktør</span>
+            <span class="confirmation-card-value">Anders Kristiansen</span>
+          </div>
+          <div class="confirmation-card-row">
+            <span class="confirmation-card-label">Dato</span>
+            <span class="confirmation-card-value">Torsdag 28. mars 2024</span>
+          </div>
+          <div class="confirmation-card-row">
+            <span class="confirmation-card-label">Tid</span>
+            <span class="confirmation-card-value">14:00 - 15:00</span>
+          </div>
+          <div class="confirmation-card-row">
+            <span class="confirmation-card-label">Totalt</span>
+            <span class="confirmation-card-value" style="color: var(--gold); font-weight: 600;">kr 1 200</span>
+          </div>
+        </div>
+
+        <div class="confirmation-actions">
+          <button class="btn-primary">
+            <i data-lucide="calendar-plus" style="width:18px;height:18px;"></i>
+            Legg til i kalender
+          </button>
+          <button class="btn-secondary" style="width: auto; padding: 14px 32px;">
+            Til forsiden
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Sidebar -->
+  <aside class="booking-sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <h4 class="sidebar-title">Din booking</h4>
+      <div class="booking-summary">
+        <div class="summary-service">
+          <div class="summary-service-icon">
+            <i data-lucide="user" style="width:20px;height:20px;"></i>
+          </div>
+          <div class="summary-service-info">
+            <h4>Individuell time</h4>
+            <p>60 minutter</p>
+          </div>
+        </div>
+        <div class="summary-row">
+          <span>Time</span>
+          <span>kr 1 200</span>
+        </div>
+        <div class="summary-row muted">
+          <span>MVA (25%)</span>
+          <span>kr 240</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-total">
+          <span>Totalt</span>
+          <span>kr 1 200</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4 class="sidebar-title">Instruktør</h4>
+      <div class="sidebar-instructor">
+        <div class="sidebar-instructor-avatar">AK</div>
+        <div class="sidebar-instructor-info">
+          <h4>Anders Kristiansen</h4>
+          <p>Head Pro • PGA Class A</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4 class="sidebar-title">Tidspunkt</h4>
+      <div class="sidebar-datetime">
+        <div class="sidebar-datetime-icon">
+          <i data-lucide="calendar" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="sidebar-datetime-info">
+          <h4>Torsdag 28. mars</h4>
+          <p>14:00 - 15:00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-cta">
+      <button class="btn-primary">
+        Fortsett
+        <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+      </button>
+      <button class="btn-secondary">
+        <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
+        Tilbake
+      </button>
+    </div>
+
+    <div class="sidebar-trust">
+      <i data-lucide="shield-check" style="width:24px;height:24px;"></i>
+      <p>
+        <strong>Gratis avbestilling</strong><br>
+        Avbestill inntil 24 timer før timen uten kostnad.
+      </p>
+    </div>
+  </aside>
+
+</div>
+
+<!-- Demo Controls -->
+<div class="demo-controls">
+  <h4>Vis steg</h4>
+  <button onclick="showStep(1)">1. Velg tjeneste</button>
+  <button class="active" onclick="showStep(2)">2. Velg tid</button>
+  <button onclick="showStep(3)">3. Opplysninger</button>
+  <button onclick="showStep(4)">4. Bekreftelse</button>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  function showStep(step) {
+    // Hide all steps
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById('step' + i).style.display = 'none';
+    }
+    // Show selected step
+    document.getElementById('step' + step).style.display = 'block';
+
+    // Update progress bar
+    for (let i = 1; i <= 4; i++) {
+      const num = document.getElementById('step' + i + '-num');
+      const label = document.getElementById('step' + i + '-label');
+      const divider = document.getElementById('divider' + i);
+
+      if (i < step) {
+        num.className = 'step-number completed';
+        num.innerHTML = '✓';
+        label.className = 'step-label';
+        if (divider) divider.className = 'step-divider completed';
+      } else if (i === step) {
+        num.className = 'step-number active';
+        num.innerHTML = i;
+        label.className = 'step-label active';
+        if (divider) divider.className = 'step-divider';
+      } else {
+        num.className = 'step-number pending';
+        num.innerHTML = i;
+        label.className = 'step-label';
+        if (divider) divider.className = 'step-divider';
+      }
+    }
+
+    // Hide sidebar on confirmation
+    document.getElementById('sidebar').style.display = step === 4 ? 'none' : 'block';
+
+    // Update demo buttons
+    document.querySelectorAll('.demo-controls button').forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === step - 1);
+    });
+
+    lucide.createIcons();
+  }
+</script>
+
+</body>
+</html>

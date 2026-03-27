@@ -169,6 +169,14 @@ const vatAmount = Math.round((price * vatRate) / 100);
 
 **Regel:** Aldri lag `globals.css` i undermapper. Alt portal-spesifikt CSS legges i `app/globals.css` under seksjonen "Portal Dark Theme Tokens".
 
+## 17. Next.js 16: proxy.ts, ikke middleware.ts
+
+**Problem:** Next.js 16 krever `proxy.ts` i stedet for `middleware.ts`. Hvis begge eksisterer, krasjer appen ved oppstart.
+
+**Løsning:** Bruk kun `proxy.ts` i prosjektrot. Slett `middleware.ts` hvis den finnes.
+
+**Regel:** All edge-logikk (auth, redirects, maintenance mode) går i `proxy.ts`.
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer

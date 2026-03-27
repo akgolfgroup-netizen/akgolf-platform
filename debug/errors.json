@@ -1,0 +1,183 @@
+{
+  "generatedAt": "2026-03-27T07:30:00.000Z",
+  "swarmId": "swarm-1774596576289-qomkjq",
+  "summary": {
+    "total": 15,
+    "critical": 2,
+    "high": 5,
+    "medium": 6,
+    "low": 2
+  },
+  "errors": [
+    {
+      "id": "ERR-001",
+      "type": "runtime",
+      "severity": "critical",
+      "file": "app/portal/(dashboard)/page.tsx",
+      "line": 163,
+      "description": "Math.random() kalt under render - impure function som gir ustabile resultater",
+      "stackTrace": "Math.floor(Math.random() * 2) + 4",
+      "suggestedFix": "Flytt random-generering til useMemo eller useEffect, eller bruk en deterministisk verdi basert på dato"
+    },
+    {
+      "id": "ERR-002",
+      "type": "typescript",
+      "severity": "critical",
+      "file": "app/layout.tsx",
+      "line": 3,
+      "description": "Manglende npm-pakker: @vercel/analytics/react og @vercel/speed-insights/next",
+      "stackTrace": "Cannot find module '@vercel/analytics/react'",
+      "suggestedFix": "npm install @vercel/analytics @vercel/speed-insights"
+    },
+    {
+      "id": "ERR-003",
+      "type": "typescript",
+      "severity": "high",
+      "file": "app/api/coaching/book/route.ts",
+      "line": 66,
+      "description": "Prisma-modeller mangler: coachingPackage, userSubscription",
+      "stackTrace": "Property 'coachingPackage' does not exist on type 'PrismaClient'",
+      "suggestedFix": "Legg til CoachingPackage og UserSubscription modeller i prisma/schema.prisma og kjør prisma generate"
+    },
+    {
+      "id": "ERR-004",
+      "type": "typescript",
+      "severity": "high",
+      "file": "app/api/coaching/slots/route.ts",
+      "line": 55,
+      "description": "Prisma-modell mangler: coachingAvailability",
+      "stackTrace": "Property 'coachingAvailability' does not exist on type 'PrismaClient'",
+      "suggestedFix": "Legg til CoachingAvailability modell i prisma/schema.prisma"
+    },
+    {
+      "id": "ERR-005",
+      "type": "typescript",
+      "severity": "high",
+      "file": "app/api/portal/notifications/route.ts",
+      "line": 16,
+      "description": "Prisma-modell mangler: notification",
+      "stackTrace": "Property 'notification' does not exist on type 'PrismaClient'",
+      "suggestedFix": "Legg til Notification modell i prisma/schema.prisma"
+    },
+    {
+      "id": "ERR-006",
+      "type": "typescript",
+      "severity": "high",
+      "file": "app/api/portal/subscriptions/route.ts",
+      "line": 11,
+      "description": "Prisma-modeller mangler: appModule, appBundle, appSubscription",
+      "stackTrace": "Property 'appSubscription' does not exist on type 'PrismaClient'",
+      "suggestedFix": "Legg til AppModule, AppBundle, AppSubscription modeller i prisma/schema.prisma"
+    },
+    {
+      "id": "ERR-007",
+      "type": "typescript",
+      "severity": "high",
+      "file": "multiple",
+      "line": 0,
+      "description": "Prisma include/select bruker feil case: serviceType, student, instructor, user, booking bør være ServiceType, Student, etc.",
+      "stackTrace": "Object literal may only specify known properties, but 'serviceType' does not exist",
+      "suggestedFix": "Endre alle include/select til PascalCase: { ServiceType: true, Student: true, Instructor: true }",
+      "affectedFiles": [
+        "app/api/booking/[bookingId]/route.ts:24",
+        "app/api/booking/confirm-payment/route.ts:51",
+        "app/api/booking/list/route.ts:37",
+        "app/api/booking/slots/route.ts:60",
+        "app/booking/[id]/confirmation/page.tsx:34",
+        "app/booking/[id]/pay/page.tsx:35",
+        "app/booking/new/page.tsx:58-60",
+        "app/api/portal/admin/capacity-export/route.ts:29,41",
+        "app/api/portal/ai/coaching-transcription/route.ts:61",
+        "app/api/portal/webhooks/stripe/route.ts:70"
+      ]
+    },
+    {
+      "id": "ERR-008",
+      "type": "typescript",
+      "severity": "medium",
+      "file": "multiple",
+      "line": 0,
+      "description": "Prisma create mangler påkrevde felter: id, updatedAt",
+      "stackTrace": "Type is missing the following properties: id, updatedAt",
+      "suggestedFix": "Sjekk Prisma schema - hvis id/updatedAt har @default, regenerer Prisma client. Ellers legg til verdier.",
+      "affectedFiles": [
+        "app/api/booking/confirm-payment/route.ts:61",
+        "app/api/coaching/book/route.ts:198",
+        "app/api/portal/admin/email-templates/route.ts:24",
+        "app/api/portal/payment-preferences/route.ts:54",
+        "app/api/portal/tournament-planner/import/confirm/route.ts:51",
+        "app/api/portal/webhooks/stripe/route.ts:97"
+      ]
+    },
+    {
+      "id": "ERR-009",
+      "type": "typescript",
+      "severity": "medium",
+      "file": "app/api/coaching/book/route.ts",
+      "line": 10,
+      "description": "Manglende Prisma enums: BillingType, SubscriptionStatus",
+      "stackTrace": "Module '@prisma/client' has no exported member 'BillingType'",
+      "suggestedFix": "Legg til enum BillingType og SubscriptionStatus i prisma/schema.prisma"
+    },
+    {
+      "id": "ERR-010",
+      "type": "typescript",
+      "severity": "medium",
+      "file": "app/api/portal/webhooks/stripe/route.ts",
+      "line": 10,
+      "description": "Feil enum-navn: CoachingSubscriptionTier bør være SubscriptionTier",
+      "stackTrace": "Did you mean 'SubscriptionTier'?",
+      "suggestedFix": "Endre import fra CoachingSubscriptionTier til SubscriptionTier"
+    },
+    {
+      "id": "ERR-011",
+      "type": "typescript",
+      "severity": "medium",
+      "file": "app/api/coaching/slots/route.ts",
+      "line": 169,
+      "description": "Implicit any type på parameter 'b'",
+      "stackTrace": "Parameter 'b' implicitly has an 'any' type",
+      "suggestedFix": "Legg til eksplisitt type på parameteren, f.eks. (b: Booking) =>"
+    },
+    {
+      "id": "ERR-012",
+      "type": "typescript",
+      "severity": "medium",
+      "file": "app/api/portal/ai/coaching-transcription/route.ts",
+      "line": 86,
+      "description": "Ugyldig felt i CoachingSession update: transcriptionText",
+      "stackTrace": "'transcriptionText' does not exist in type",
+      "suggestedFix": "Sjekk felt-navn i Prisma schema for CoachingSession modellen"
+    },
+    {
+      "id": "ERR-013",
+      "type": "logic",
+      "severity": "medium",
+      "file": "app/api/portal/bookings/create-group/route.ts",
+      "line": 127,
+      "description": "groupParticipants finnes ikke i Booking create input",
+      "stackTrace": "'groupParticipants' does not exist in type",
+      "suggestedFix": "Bruk nested create syntax eller opprett GroupParticipant separat etter booking"
+    },
+    {
+      "id": "ERR-014",
+      "type": "logic",
+      "severity": "low",
+      "file": "app/api/contact/route.ts",
+      "line": 4,
+      "description": "Bruker 'any' type og require() i stedet for import",
+      "stackTrace": "Unexpected any. A require() style import is forbidden",
+      "suggestedFix": "Endre til: import Resend from 'resend'; og bruk riktig type"
+    },
+    {
+      "id": "ERR-015",
+      "type": "ui",
+      "severity": "low",
+      "file": "app/booking/[id]/confirmation/ConfirmationView.tsx",
+      "line": 226,
+      "description": "Uescaped anførselstegn i JSX",
+      "stackTrace": "'\"' can be escaped with '&quot;'",
+      "suggestedFix": "Erstatt \" med &quot; eller bruk {\"tekst\"}"
+    }
+  ]
+}

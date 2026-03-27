@@ -3,6 +3,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { stripe } from "@/lib/portal/stripe";
 import { BookingStatus, PaymentStatus } from "@prisma/client";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
+import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
 
 export async function POST(req: NextRequest) {
   let body: { bookingId?: string; paymentIntentId?: string };
@@ -50,7 +51,7 @@ export async function POST(req: NextRequest) {
       include: {
         ServiceType: { select: { name: true, duration: true } },
         Instructor: {
-          select: { User: { select: { name: true, email: true } } },
+          select: { User: { select: { name: true, email: true, phone: true } } },
         },
         User: { select: { name: true, email: true } },
       },
@@ -91,6 +92,20 @@ export async function POST(req: NextRequest) {
         location: "Gamle Fredrikstad Golfklubb",
       }).catch((err: unknown) =>
         console.error("[confirm-payment] Email failed:", err)
+      );
+    }
+
+    // Send SMS til instruktør (non-blocking)
+    if (booking.Instructor.User.phone) {
+      sendBookingConfirmationSms({
+        instructorPhone: booking.Instructor.User.phone,
+        instructorName: booking.Instructor.User.name ?? "Instruktør",
+        studentName: booking.User.name ?? "Kunde",
+        serviceName: booking.ServiceType.name,
+        startTime: booking.startTime,
+        duration: booking.ServiceType.duration,
+      }).catch((err: unknown) =>
+        console.error("[confirm-payment] SMS failed:", err)
       );
     }
 

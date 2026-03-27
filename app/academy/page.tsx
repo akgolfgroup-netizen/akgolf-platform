@@ -282,7 +282,7 @@ export default function AcademyPage() {
                   <SectionLabel>Flex drop-in</SectionLabel>
                   <h2 className="w-heading-lg mt-4">Trenger du binding? Nei.</h2>
                   <p className="text-ink-50 text-sm mt-4 max-w-lg mx-auto">
-                    Flex gir deg coaching uten forpliktelser — men du far kun coaching-notater, ikke spillerportal.
+                    Flex gir deg coaching uten forpliktelser — men du får kun coaching-notater, ikke spillerportal.
                   </p>
                 </div>
               </RevealOnScroll>
@@ -295,10 +295,8 @@ export default function AcademyPage() {
                       <p className="font-mono text-2xl font-bold text-[#000000] mb-1">
                         {pkg.price} <span className="text-sm font-normal text-ink-50">{pkg.period}</span>
                       </p>
-                      {"pricePerPerson" in pkg && pkg.pricePerPerson && (
-                        <p className="text-xs text-ink-50 mb-2">{pkg.pricePerPerson} kr/pers</p>
-                      )}
                       <p className="text-xs text-ink-50">{pkg.duration}</p>
+                      <p className="text-xs text-ink-40 mt-2">{pkg.tagline}</p>
                     </div>
                   </StaggerItem>
                 ))}
