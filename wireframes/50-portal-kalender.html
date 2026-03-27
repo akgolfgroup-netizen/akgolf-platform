@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalender — AK Golf Portal Wireframe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C9D0D8;
+      --ink-50: #6B7B8D;
+      --ink-70: #3D4F61;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --navy: #0F2950;
+      --success: #22C55E;
+      --success-light: #DCFCE7;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --error: #EF4444;
+      --error-light: #FEE2E2;
+      --info: #3B82F6;
+      --info-light: #DBEAFE;
+      --accent-academy: #B07D4F;
+      --sidebar-width: 260px;
+      --topbar-height: 64px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--ink-05);
+      color: var(--ink-90);
+      line-height: 1.5;
+    }
+
+    .portal-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--ink-100);
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+    .sidebar-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .sidebar-nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+    }
+    .nav-section {
+      margin-bottom: 24px;
+    }
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-50);
+      padding: 8px 12px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--ink-30);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.15s;
+      margin-bottom: 2px;
+    }
+    .nav-item:hover {
+      background: rgba(255,255,255,0.05);
+      color: white;
+    }
+    .nav-item.active {
+      background: rgba(184, 151, 92, 0.15);
+      color: var(--gold);
+    }
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      border-radius: 8px;
+    }
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .user-info {
+      flex: 1;
+    }
+    .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+    }
+    .user-tier {
+      font-size: 11px;
+      color: var(--ink-50);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+    }
+
+    .topbar {
+      height: var(--topbar-height);
+      background: white;
+      border-bottom: 1px solid var(--ink-20);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .topbar-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .content-area {
+      padding: 24px 32px;
+    }
+
+    /* Calendar Header */
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .calendar-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .calendar-month {
+      font-size: 24px;
+      font-weight: 700;
+      min-width: 200px;
+      text-align: center;
+    }
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--ink-20);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--ink-70);
+      transition: all 0.15s;
+    }
+    .nav-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .view-tabs {
+      display: flex;
+      background: var(--ink-10);
+      border-radius: 8px;
+      padding: 4px;
+    }
+    .view-tab {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-50);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .view-tab.active {
+      background: white;
+      color: var(--ink-90);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #8B7243;
+    }
+    .btn-secondary {
+      background: white;
+      color: var(--ink-80);
+      border: 1px solid var(--ink-20);
+    }
+    .btn-secondary:hover {
+      background: var(--ink-05);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-70);
+    }
+    .btn-ghost:hover {
+      background: var(--ink-10);
+    }
+
+    /* Calendar Grid */
+    .calendar-container {
+      display: flex;
+      gap: 24px;
+    }
+    .calendar-main {
+      flex: 1;
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .calendar-sidebar-right {
+      width: 320px;
+    }
+
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: var(--ink-05);
+      border-bottom: 1px solid var(--ink-20);
+    }
+    .weekday {
+      padding: 12px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-50);
+      text-transform: uppercase;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    .calendar-day {
+      min-height: 120px;
+      padding: 8px;
+      border-right: 1px solid var(--ink-10);
+      border-bottom: 1px solid var(--ink-10);
+      background: white;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .calendar-day:nth-child(7n) {
+      border-right: none;
+    }
+    .calendar-day:hover {
+      background: var(--ink-05);
+    }
+    .calendar-day.other-month {
+      background: var(--ink-05);
+    }
+    .calendar-day.other-month .day-number {
+      color: var(--ink-30);
+    }
+    .calendar-day.today {
+      background: #FFFBF5;
+    }
+    .calendar-day.today .day-number {
+      background: var(--gold);
+      color: white;
+    }
+    .calendar-day.selected {
+      background: #F5F0E8;
+    }
+
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .day-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-80);
+    }
+    .day-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--gold-light);
+      color: var(--accent-academy);
+      font-weight: 600;
+    }
+
+    .day-events {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .day-event {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .day-event.coaching {
+      background: var(--info-light);
+      color: var(--info);
+    }
+    .day-event.training {
+      background: var(--success-light);
+      color: var(--success);
+    }
+    .day-event.tournament {
+      background: #EDE9FE;
+      color: #8B5CF6;
+    }
+    .day-event.reminder {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+    .more-events {
+      font-size: 11px;
+      color: var(--ink-50);
+      padding: 2px 0;
+    }
+
+    /* Upcoming Events Sidebar */
+    .upcoming-card {
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .upcoming-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .upcoming-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .upcoming-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      background: var(--ink-05);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .upcoming-item:hover {
+      background: var(--ink-10);
+    }
+    .upcoming-date {
+      text-align: center;
+      min-width: 44px;
+    }
+    .upcoming-day {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .upcoming-month {
+      font-size: 11px;
+      color: var(--ink-50);
+      text-transform: uppercase;
+    }
+    .upcoming-info {
+      flex: 1;
+    }
+    .upcoming-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .upcoming-meta {
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+    .upcoming-type {
+      width: 4px;
+      border-radius: 2px;
+    }
+    .upcoming-type.coaching { background: var(--info); }
+    .upcoming-type.training { background: var(--success); }
+    .upcoming-type.tournament { background: #8B5CF6; }
+
+    /* Legend */
+    .legend-card {
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .legend-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .legend-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--ink-70);
+    }
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+    .legend-dot.coaching { background: var(--info-light); border: 1px solid var(--info); }
+    .legend-dot.training { background: var(--success-light); border: 1px solid var(--success); }
+    .legend-dot.tournament { background: #EDE9FE; border: 1px solid #8B5CF6; }
+    .legend-dot.reminder { background: var(--warning-light); border: 1px solid var(--warning); }
+
+    /* Sync Card */
+    .sync-card {
+      background: white;
+      border: 1px solid var(--ink-20);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .sync-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .sync-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .sync-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--ink-20);
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .sync-btn:hover {
+      border-color: var(--gold);
+      background: var(--ink-05);
+    }
+    .sync-btn.connected {
+      border-color: var(--success);
+      background: var(--success-light);
+    }
+    .sync-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .sync-icon.google { background: #FEF2F2; }
+    .sync-icon.apple { background: var(--ink-10); }
+    .sync-icon.ical { background: #DBEAFE; }
+    .sync-info {
+      flex: 1;
+      text-align: left;
+    }
+    .sync-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .sync-status {
+      font-size: 11px;
+      color: var(--ink-50);
+    }
+    .sync-status.connected {
+      color: var(--success);
+    }
+
+    /* Week View */
+    .week-view {
+      display: none;
+    }
+    .week-view.active {
+      display: block;
+    }
+    .month-view:not(.hidden) {
+      display: block;
+    }
+    .month-view.hidden {
+      display: none;
+    }
+
+    .week-header {
+      display: grid;
+      grid-template-columns: 60px repeat(7, 1fr);
+      border-bottom: 1px solid var(--ink-20);
+    }
+    .week-header-cell {
+      padding: 16px 8px;
+      text-align: center;
+      border-right: 1px solid var(--ink-10);
+    }
+    .week-header-cell:last-child {
+      border-right: none;
+    }
+    .week-day-name {
+      font-size: 11px;
+      color: var(--ink-50);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .week-day-num {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .week-day-num.today {
+      background: var(--gold);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: 60px repeat(7, 1fr);
+    }
+    .time-column {
+      border-right: 1px solid var(--ink-20);
+    }
+    .time-slot {
+      height: 60px;
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--ink-50);
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .week-day-column {
+      border-right: 1px solid var(--ink-10);
+      position: relative;
+    }
+    .week-day-column:last-child {
+      border-right: none;
+    }
+    .hour-slot {
+      height: 60px;
+      border-bottom: 1px solid var(--ink-10);
+    }
+
+    .week-event {
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-weight: 500;
+      overflow: hidden;
+    }
+    .week-event.coaching {
+      background: var(--info-light);
+      color: var(--info);
+      border-left: 3px solid var(--info);
+    }
+    .week-event.training {
+      background: var(--success-light);
+      color: var(--success);
+      border-left: 3px solid var(--success);
+    }
+    .week-event-time {
+      font-size: 10px;
+      opacity: 0.8;
+    }
+    .week-event-title {
+      font-weight: 600;
+    }
+
+    /* Demo Controls */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink-100);
+      color: white;
+      padding: 16px;
+      border-radius: 12px;
+      display: flex;
+      gap: 8px;
+      z-index: 200;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    }
+    .demo-btn {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .demo-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .demo-btn.active {
+      background: var(--gold);
+    }
+
+    /* Event Detail Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow: hidden;
+    }
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--ink-20);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: var(--ink-10);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-50);
+    }
+    .modal-body {
+      padding: 24px;
+    }
+    .event-detail-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .event-detail-type.coaching {
+      background: var(--info-light);
+      color: var(--info);
+    }
+    .event-detail-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .event-detail-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .event-detail-row:last-child {
+      border-bottom: none;
+    }
+    .event-detail-icon {
+      color: var(--ink-50);
+      margin-top: 2px;
+    }
+    .event-detail-content {
+      flex: 1;
+    }
+    .event-detail-label {
+      font-size: 12px;
+      color: var(--ink-50);
+      margin-bottom: 2px;
+    }
+    .event-detail-value {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--ink-20);
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+  </style>
+</head>
+<body>
+
+<div class="portal-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">AK Golf</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Oversikt</div>
+        <a href="40-portal-dashboard.html" class="nav-item">
+          <i data-lucide="home" style="width:18px;height:18px;"></i>
+          Dashboard
+        </a>
+        <a href="41-portal-bookinger.html" class="nav-item">
+          <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+          Mine Bookinger
+        </a>
+        <a href="50-portal-kalender.html" class="nav-item active">
+          <i data-lucide="calendar-days" style="width:18px;height:18px;"></i>
+          Kalender
+        </a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Trening</div>
+        <a href="49-portal-coaching-historikk.html" class="nav-item">
+          <i data-lucide="history" style="width:18px;height:18px;"></i>
+          Coaching-historikk
+        </a>
+        <a href="45-portal-treningsplan.html" class="nav-item">
+          <i data-lucide="target" style="width:18px;height:18px;"></i>
+          Treningsplan
+        </a>
+        <a href="42-portal-dagbok.html" class="nav-item">
+          <i data-lucide="book-open" style="width:18px;height:18px;"></i>
+          Treningsdagbok
+        </a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Analyse</div>
+        <a href="47-portal-statistikk.html" class="nav-item">
+          <i data-lucide="bar-chart-3" style="width:18px;height:18px;"></i>
+          Strokes Gained
+        </a>
+        <a href="44-portal-ai-analyse.html" class="nav-item">
+          <i data-lucide="brain" style="width:18px;height:18px;"></i>
+          AI-analyse
+        </a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar">ML</div>
+        <div class="user-info">
+          <div class="user-name">Magnus Larsen</div>
+          <div class="user-tier">PRO-medlem</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="topbar-title">Kalender</h1>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('eventModal').classList.add('active')">
+          <i data-lucide="plus" style="width:16px;height:16px;"></i>
+          Ny hendelse
+        </button>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <!-- Calendar Header -->
+      <div class="calendar-header">
+        <div class="calendar-nav">
+          <button class="nav-btn"><i data-lucide="chevron-left" style="width:20px;height:20px;"></i></button>
+          <div class="calendar-month">Mars 2026</div>
+          <button class="nav-btn"><i data-lucide="chevron-right" style="width:20px;height:20px;"></i></button>
+          <button class="btn btn-ghost" style="margin-left: 8px;">I dag</button>
+        </div>
+        <div class="view-tabs">
+          <button class="view-tab active" onclick="showCalendarView('month')">Måned</button>
+          <button class="view-tab" onclick="showCalendarView('week')">Uke</button>
+        </div>
+      </div>
+
+      <div class="calendar-container">
+        <!-- Calendar Main -->
+        <div class="calendar-main">
+          <!-- Month View -->
+          <div class="month-view" id="monthView">
+            <div class="calendar-weekdays">
+              <div class="weekday">Man</div>
+              <div class="weekday">Tir</div>
+              <div class="weekday">Ons</div>
+              <div class="weekday">Tor</div>
+              <div class="weekday">Fre</div>
+              <div class="weekday">Lør</div>
+              <div class="weekday">Søn</div>
+            </div>
+            <div class="calendar-grid">
+              <!-- Week 1 -->
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">23</span></div></div>
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">24</span></div></div>
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">25</span></div></div>
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">26</span></div></div>
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">27</span></div></div>
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">28</span></div></div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">1</span></div></div>
+
+              <!-- Week 2 -->
+              <div class="calendar-day"><div class="day-header"><span class="day-number">2</span></div></div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">3</span></div>
+                <div class="day-events">
+                  <div class="day-event training">Egentrening</div>
+                </div>
+              </div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">4</span></div></div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">5</span></div>
+                <div class="day-events">
+                  <div class="day-event coaching">Coaching 10:00</div>
+                </div>
+              </div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">6</span></div></div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">7</span></div></div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">8</span></div></div>
+
+              <!-- Week 3 -->
+              <div class="calendar-day"><div class="day-header"><span class="day-number">9</span></div></div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">10</span></div>
+                <div class="day-events">
+                  <div class="day-event training">Putting drill</div>
+                </div>
+              </div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">11</span></div></div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">12</span></div>
+                <div class="day-events">
+                  <div class="day-event coaching">Coaching 14:00</div>
+                </div>
+              </div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">13</span></div></div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">14</span></div>
+                <div class="day-events">
+                  <div class="day-event tournament">Klubbmesterskap</div>
+                </div>
+              </div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">15</span></div>
+                <div class="day-events">
+                  <div class="day-event tournament">Klubbmesterskap</div>
+                </div>
+              </div>
+
+              <!-- Week 4 -->
+              <div class="calendar-day"><div class="day-header"><span class="day-number">16</span></div></div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">17</span></div>
+                <div class="day-events">
+                  <div class="day-event training">Full sving økt</div>
+                </div>
+              </div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">18</span></div></div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">19</span></div>
+                <div class="day-events">
+                  <div class="day-event coaching">Gruppe 16:00</div>
+                </div>
+              </div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">20</span></div></div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">21</span></div></div>
+              <div class="calendar-day"><div class="day-header"><span class="day-number">22</span></div></div>
+
+              <!-- Week 5 -->
+              <div class="calendar-day"><div class="day-header"><span class="day-number">23</span></div></div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">24</span></div>
+                <div class="day-events">
+                  <div class="day-event training">Egentrening</div>
+                </div>
+              </div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">25</span></div>
+                <div class="day-events">
+                  <div class="day-event reminder">Videoanalyse</div>
+                </div>
+              </div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">26</span></div>
+                <div class="day-events">
+                  <div class="day-event coaching">Coaching 10:00</div>
+                </div>
+              </div>
+              <div class="calendar-day today">
+                <div class="day-header">
+                  <span class="day-number">27</span>
+                  <span class="day-badge">I dag</span>
+                </div>
+                <div class="day-events">
+                  <div class="day-event coaching">Simulator 15:00</div>
+                </div>
+              </div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">28</span></div>
+                <div class="day-events">
+                  <div class="day-event tournament">Norgescup</div>
+                </div>
+              </div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">29</span></div>
+                <div class="day-events">
+                  <div class="day-event tournament">Norgescup</div>
+                </div>
+              </div>
+
+              <!-- Week 6 -->
+              <div class="calendar-day"><div class="day-header"><span class="day-number">30</span></div></div>
+              <div class="calendar-day">
+                <div class="day-header"><span class="day-number">31</span></div>
+                <div class="day-events">
+                  <div class="day-event training">Kort spill</div>
+                </div>
+              </div>
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">1</span></div></div>
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">2</span></div></div>
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">3</span></div></div>
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">4</span></div></div>
+              <div class="calendar-day other-month"><div class="day-header"><span class="day-number">5</span></div></div>
+            </div>
+          </div>
+
+          <!-- Week View -->
+          <div class="week-view" id="weekView">
+            <div class="week-header">
+              <div class="week-header-cell" style="border-right: 1px solid var(--ink-20);"></div>
+              <div class="week-header-cell">
+                <div class="week-day-name">Man</div>
+                <div class="week-day-num">23</div>
+              </div>
+              <div class="week-header-cell">
+                <div class="week-day-name">Tir</div>
+                <div class="week-day-num">24</div>
+              </div>
+              <div class="week-header-cell">
+                <div class="week-day-name">Ons</div>
+                <div class="week-day-num">25</div>
+              </div>
+              <div class="week-header-cell">
+                <div class="week-day-name">Tor</div>
+                <div class="week-day-num">26</div>
+              </div>
+              <div class="week-header-cell">
+                <div class="week-day-name">Fre</div>
+                <div class="week-day-num today">27</div>
+              </div>
+              <div class="week-header-cell">
+                <div class="week-day-name">Lør</div>
+                <div class="week-day-num">28</div>
+              </div>
+              <div class="week-header-cell">
+                <div class="week-day-name">Søn</div>
+                <div class="week-day-num">29</div>
+              </div>
+            </div>
+            <div class="week-grid">
+              <div class="time-column">
+                <div class="time-slot">08:00</div>
+                <div class="time-slot">09:00</div>
+                <div class="time-slot">10:00</div>
+                <div class="time-slot">11:00</div>
+                <div class="time-slot">12:00</div>
+                <div class="time-slot">13:00</div>
+                <div class="time-slot">14:00</div>
+                <div class="time-slot">15:00</div>
+                <div class="time-slot">16:00</div>
+                <div class="time-slot">17:00</div>
+                <div class="time-slot">18:00</div>
+                <div class="time-slot">19:00</div>
+              </div>
+              <!-- Monday -->
+              <div class="week-day-column">
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+              </div>
+              <!-- Tuesday -->
+              <div class="week-day-column">
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="week-event training" style="top: 120px; height: 60px;">
+                  <div class="week-event-time">10:00 - 11:00</div>
+                  <div class="week-event-title">Egentrening</div>
+                </div>
+              </div>
+              <!-- Wednesday -->
+              <div class="week-day-column">
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+              </div>
+              <!-- Thursday -->
+              <div class="week-day-column">
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="week-event coaching" style="top: 120px; height: 60px;">
+                  <div class="week-event-time">10:00 - 11:00</div>
+                  <div class="week-event-title">Coaching</div>
+                </div>
+              </div>
+              <!-- Friday (today) -->
+              <div class="week-day-column" style="background: #FFFBF5;">
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="week-event coaching" style="top: 420px; height: 60px;">
+                  <div class="week-event-time">15:00 - 16:00</div>
+                  <div class="week-event-title">Simulator</div>
+                </div>
+              </div>
+              <!-- Saturday -->
+              <div class="week-day-column">
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+              </div>
+              <!-- Sunday -->
+              <div class="week-day-column">
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+                <div class="hour-slot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar Sidebar -->
+        <div class="calendar-sidebar-right">
+          <div class="upcoming-card">
+            <div class="upcoming-title">
+              <i data-lucide="clock" style="width:16px;height:16px;color:var(--gold);"></i>
+              Kommende
+            </div>
+            <div class="upcoming-list">
+              <div class="upcoming-item" onclick="document.getElementById('eventModal').classList.add('active')">
+                <div class="upcoming-type coaching"></div>
+                <div class="upcoming-date">
+                  <div class="upcoming-day">27</div>
+                  <div class="upcoming-month">Mar</div>
+                </div>
+                <div class="upcoming-info">
+                  <div class="upcoming-name">Simulator Session</div>
+                  <div class="upcoming-meta">15:00 - 16:00 med Anders</div>
+                </div>
+              </div>
+              <div class="upcoming-item">
+                <div class="upcoming-type tournament"></div>
+                <div class="upcoming-date">
+                  <div class="upcoming-day">28</div>
+                  <div class="upcoming-month">Mar</div>
+                </div>
+                <div class="upcoming-info">
+                  <div class="upcoming-name">Norgescup Runde 1</div>
+                  <div class="upcoming-meta">Fredrikstad GK</div>
+                </div>
+              </div>
+              <div class="upcoming-item">
+                <div class="upcoming-type training"></div>
+                <div class="upcoming-date">
+                  <div class="upcoming-day">31</div>
+                  <div class="upcoming-month">Mar</div>
+                </div>
+                <div class="upcoming-info">
+                  <div class="upcoming-name">Kort spill trening</div>
+                  <div class="upcoming-meta">10:00 - 11:30</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-card">
+            <div class="legend-title">Forklaring</div>
+            <div class="legend-items">
+              <div class="legend-item">
+                <div class="legend-dot coaching"></div>
+                <span>Coaching / Bookinger</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot training"></div>
+                <span>Egentrening</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot tournament"></div>
+                <span>Turneringer</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot reminder"></div>
+                <span>Påminnelser</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sync-card">
+            <div class="sync-title">Kalendersynk</div>
+            <div class="sync-options">
+              <button class="sync-btn connected">
+                <div class="sync-icon google">
+                  <i data-lucide="mail" style="width:18px;height:18px;color:#EA4335;"></i>
+                </div>
+                <div class="sync-info">
+                  <div class="sync-name">Google Calendar</div>
+                  <div class="sync-status connected">Tilkoblet</div>
+                </div>
+                <i data-lucide="check-circle" style="width:18px;height:18px;color:var(--success);"></i>
+              </button>
+              <button class="sync-btn">
+                <div class="sync-icon apple">
+                  <i data-lucide="smartphone" style="width:18px;height:18px;"></i>
+                </div>
+                <div class="sync-info">
+                  <div class="sync-name">Apple Kalender</div>
+                  <div class="sync-status">Koble til</div>
+                </div>
+                <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--ink-50);"></i>
+              </button>
+              <button class="sync-btn">
+                <div class="sync-icon ical">
+                  <i data-lucide="link" style="width:18px;height:18px;color:var(--info);"></i>
+                </div>
+                <div class="sync-info">
+                  <div class="sync-name">iCal-lenke</div>
+                  <div class="sync-status">Kopier URL</div>
+                </div>
+                <i data-lucide="copy" style="width:18px;height:18px;color:var(--ink-50);"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Event Detail Modal -->
+<div class="modal-overlay" id="eventModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Hendelsesdetaljer</div>
+      <button class="modal-close" onclick="document.getElementById('eventModal').classList.remove('active')">
+        <i data-lucide="x" style="width:18px;height:18px;"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="event-detail-type coaching">
+        <i data-lucide="user" style="width:14px;height:14px;"></i>
+        Coaching
+      </div>
+      <div class="event-detail-title">Simulator Session</div>
+
+      <div class="event-detail-row">
+        <i data-lucide="calendar" class="event-detail-icon" style="width:18px;height:18px;"></i>
+        <div class="event-detail-content">
+          <div class="event-detail-label">Dato</div>
+          <div class="event-detail-value">Fredag 27. mars 2026</div>
+        </div>
+      </div>
+
+      <div class="event-detail-row">
+        <i data-lucide="clock" class="event-detail-icon" style="width:18px;height:18px;"></i>
+        <div class="event-detail-content">
+          <div class="event-detail-label">Tid</div>
+          <div class="event-detail-value">15:00 - 16:00 (60 min)</div>
+        </div>
+      </div>
+
+      <div class="event-detail-row">
+        <i data-lucide="user" class="event-detail-icon" style="width:18px;height:18px;"></i>
+        <div class="event-detail-content">
+          <div class="event-detail-label">Instruktør</div>
+          <div class="event-detail-value">Anders Kristiansen</div>
+        </div>
+      </div>
+
+      <div class="event-detail-row">
+        <i data-lucide="map-pin" class="event-detail-icon" style="width:18px;height:18px;"></i>
+        <div class="event-detail-content">
+          <div class="event-detail-label">Lokasjon</div>
+          <div class="event-detail-value">Mulligan Indoor Golf, Trackman Bay 1</div>
+        </div>
+      </div>
+
+      <div class="event-detail-row">
+        <i data-lucide="file-text" class="event-detail-icon" style="width:18px;height:18px;"></i>
+        <div class="event-detail-content">
+          <div class="event-detail-label">Fokus</div>
+          <div class="event-detail-value">Driver-optimalisering med Trackman</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary">Endre tid</button>
+      <button class="btn btn-primary">
+        <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+        Vis vei
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Demo Controls -->
+<div class="demo-controls">
+  <button class="demo-btn active" onclick="showCalendarView('month')">Måned</button>
+  <button class="demo-btn" onclick="showCalendarView('week')">Uke</button>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  function showCalendarView(view) {
+    document.querySelectorAll('.demo-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.view-tab').forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const monthView = document.getElementById('monthView');
+    const weekView = document.getElementById('weekView');
+
+    if (view === 'month') {
+      monthView.classList.remove('hidden');
+      weekView.classList.remove('active');
+      document.querySelectorAll('.view-tab')[0].classList.add('active');
+    } else {
+      monthView.classList.add('hidden');
+      weekView.classList.add('active');
+      document.querySelectorAll('.view-tab')[1].classList.add('active');
+    }
+  }
+
+  // Close modal on overlay click
+  document.getElementById('eventModal').addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal-overlay')) {
+      e.target.classList.remove('active');
+    }
+  });
+</script>
+
+</body>
+</html>

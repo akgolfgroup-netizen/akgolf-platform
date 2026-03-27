@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-postmaler — AK Golf Admin Wireframe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C9D0D8;
+      --ink-50: #6B7B8D;
+      --ink-70: #3D4F61;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --success: #22C55E;
+      --success-light: #DCFCE7;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --error: #EF4444;
+      --error-light: #FEE2E2;
+      --info: #3B82F6;
+      --info-light: #DBEAFE;
+      --sidebar-width: 260px;
+      --topbar-height: 64px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Manrope', sans-serif; background: var(--ink-05); color: var(--ink-90); line-height: 1.5; }
+
+    .portal-layout { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--ink-100);
+      color: white;
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+    .sidebar-header { padding: 20px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .sidebar-logo { font-size: 20px; font-weight: 700; color: var(--gold); }
+    .sidebar-badge { display: inline-flex; padding: 4px 8px; background: var(--error); border-radius: 4px; font-size: 10px; font-weight: 600; margin-left: 8px; }
+    .sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
+    .nav-section { margin-bottom: 24px; }
+    .nav-section-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-50); padding: 8px 12px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; color: var(--ink-30); text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.15s; margin-bottom: 2px; }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: white; }
+    .nav-item.active { background: rgba(184, 151, 92, 0.15); color: var(--gold); }
+    .sidebar-footer { padding: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .user-card { display: flex; align-items: center; gap: 12px; padding: 8px; }
+    .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; }
+    .user-info { flex: 1; }
+    .user-name { font-size: 13px; font-weight: 600; color: white; }
+    .user-tier { font-size: 11px; color: var(--ink-50); }
+
+    .main-content { flex: 1; margin-left: var(--sidebar-width); }
+    .topbar { height: var(--topbar-height); background: white; border-bottom: 1px solid var(--ink-20); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; position: sticky; top: 0; z-index: 50; }
+    .topbar-title { font-size: 18px; font-weight: 600; }
+    .topbar-actions { display: flex; gap: 12px; }
+
+    .content-area { padding: 32px; display: flex; gap: 24px; }
+
+    .templates-list { width: 320px; flex-shrink: 0; }
+    .template-editor { flex: 1; }
+
+    .list-card { background: white; border: 1px solid var(--ink-20); border-radius: 12px; overflow: hidden; }
+    .list-header { padding: 16px 20px; border-bottom: 1px solid var(--ink-20); display: flex; align-items: center; justify-content: space-between; }
+    .list-title { font-size: 14px; font-weight: 600; }
+    .list-body { max-height: calc(100vh - 250px); overflow-y: auto; }
+
+    .template-item { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--ink-10); cursor: pointer; transition: background 0.15s; }
+    .template-item:hover { background: var(--ink-05); }
+    .template-item.active { background: #F5F0E8; border-left: 3px solid var(--gold); }
+    .template-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .template-icon.booking { background: var(--info-light); color: var(--info); }
+    .template-icon.reminder { background: var(--warning-light); color: var(--warning); }
+    .template-icon.confirm { background: var(--success-light); color: var(--success); }
+    .template-icon.cancel { background: var(--error-light); color: var(--error); }
+    .template-icon.welcome { background: #EDE9FE; color: #8B5CF6; }
+    .template-info { flex: 1; }
+    .template-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .template-trigger { font-size: 11px; color: var(--ink-50); }
+    .template-status { width: 8px; height: 8px; border-radius: 50%; }
+    .template-status.active { background: var(--success); }
+    .template-status.inactive { background: var(--ink-30); }
+
+    .editor-card { background: white; border: 1px solid var(--ink-20); border-radius: 12px; }
+    .editor-header { padding: 20px 24px; border-bottom: 1px solid var(--ink-20); display: flex; align-items: center; justify-content: space-between; }
+    .editor-title { font-size: 16px; font-weight: 600; }
+    .editor-actions { display: flex; gap: 8px; }
+    .editor-body { padding: 24px; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-80); margin-bottom: 6px; }
+    .form-input { width: 100%; padding: 10px 14px; border: 1px solid var(--ink-20); border-radius: 8px; font-size: 14px; font-family: inherit; }
+    .form-input:focus { outline: none; border-color: var(--gold); }
+
+    .editor-toolbar { display: flex; gap: 4px; padding: 8px; background: var(--ink-05); border: 1px solid var(--ink-20); border-bottom: none; border-radius: 8px 8px 0 0; }
+    .toolbar-btn { width: 32px; height: 32px; border-radius: 4px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--ink-50); }
+    .toolbar-btn:hover { background: white; color: var(--ink-80); }
+    .toolbar-btn.active { background: white; color: var(--gold); }
+    .toolbar-divider { width: 1px; background: var(--ink-20); margin: 0 4px; }
+
+    .editor-textarea { width: 100%; min-height: 300px; padding: 16px; border: 1px solid var(--ink-20); border-radius: 0 0 8px 8px; font-size: 14px; font-family: inherit; line-height: 1.6; resize: vertical; }
+    .editor-textarea:focus { outline: none; border-color: var(--gold); }
+
+    .variables-panel { margin-top: 20px; padding: 16px; background: var(--ink-05); border-radius: 8px; }
+    .variables-title { font-size: 12px; font-weight: 600; color: var(--ink-50); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .variables-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .variable-chip { padding: 6px 12px; background: white; border: 1px solid var(--ink-20); border-radius: 6px; font-size: 12px; font-family: monospace; color: var(--ink-70); cursor: pointer; transition: all 0.15s; }
+    .variable-chip:hover { border-color: var(--gold); background: #FFFBF5; }
+
+    .preview-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--ink-20); }
+    .preview-title { font-size: 14px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .preview-frame { background: white; border: 1px solid var(--ink-20); border-radius: 8px; padding: 24px; max-width: 600px; }
+    .preview-header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid var(--ink-10); margin-bottom: 20px; }
+    .preview-logo { font-size: 24px; font-weight: 700; color: var(--gold); }
+    .preview-body { font-size: 14px; color: var(--ink-80); line-height: 1.7; }
+    .preview-body h2 { font-size: 18px; margin-bottom: 12px; }
+    .preview-body p { margin-bottom: 12px; }
+    .preview-cta { display: inline-block; padding: 12px 24px; background: var(--gold); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; margin: 16px 0; }
+    .preview-footer { text-align: center; padding-top: 20px; border-top: 1px solid var(--ink-10); margin-top: 20px; font-size: 12px; color: var(--ink-50); }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; font-family: inherit; }
+    .btn-primary { background: var(--gold); color: white; }
+    .btn-primary:hover { background: #8B7243; }
+    .btn-secondary { background: white; color: var(--ink-80); border: 1px solid var(--ink-20); }
+    .btn-secondary:hover { background: var(--ink-05); }
+    .btn-ghost { background: transparent; color: var(--ink-70); padding: 8px 12px; }
+    .btn-ghost:hover { background: var(--ink-10); }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; }
+    .toggle-label { font-size: 14px; font-weight: 500; }
+    .toggle-switch { width: 44px; height: 24px; background: var(--ink-30); border-radius: 12px; position: relative; cursor: pointer; transition: background 0.2s; }
+    .toggle-switch.active { background: var(--gold); }
+    .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+    .toggle-switch.active::after { transform: translateX(20px); }
+
+    .demo-controls { position: fixed; bottom: 24px; right: 24px; background: var(--ink-100); color: white; padding: 16px; border-radius: 12px; z-index: 200; box-shadow: 0 4px 24px rgba(0,0,0,0.2); font-size: 11px; }
+  </style>
+</head>
+<body>
+
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">AK Golf <span class="sidebar-badge">Admin</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Admin</div>
+        <a href="60-admin-dashboard.html" class="nav-item"><i data-lucide="layout-dashboard" style="width:18px;height:18px;"></i> Dashboard</a>
+        <a href="61-admin-elever.html" class="nav-item"><i data-lucide="users" style="width:18px;height:18px;"></i> Elever</a>
+        <a href="62-admin-bookinger.html" class="nav-item"><i data-lucide="calendar" style="width:18px;height:18px;"></i> Bookinger</a>
+        <a href="63-admin-tilgjengelighet.html" class="nav-item"><i data-lucide="clock" style="width:18px;height:18px;"></i> Tilgjengelighet</a>
+        <a href="#" class="nav-item active"><i data-lucide="mail" style="width:18px;height:18px;"></i> E-postmaler</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar">AK</div>
+        <div class="user-info">
+          <div class="user-name">Anders Kristiansen</div>
+          <div class="user-tier">Hovedtrener</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <h1 class="topbar-title">E-postmaler</h1>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary"><i data-lucide="send" style="width:16px;height:16px;"></i> Send test</button>
+        <button class="btn btn-primary"><i data-lucide="save" style="width:16px;height:16px;"></i> Lagre</button>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <div class="templates-list">
+        <div class="list-card">
+          <div class="list-header">
+            <div class="list-title">Maler</div>
+            <button class="btn btn-ghost btn-sm"><i data-lucide="plus" style="width:14px;height:14px;"></i></button>
+          </div>
+          <div class="list-body">
+            <div class="template-item active">
+              <div class="template-icon confirm"><i data-lucide="check-circle" style="width:18px;height:18px;"></i></div>
+              <div class="template-info">
+                <div class="template-name">Booking bekreftet</div>
+                <div class="template-trigger">Ved ny booking</div>
+              </div>
+              <div class="template-status active"></div>
+            </div>
+            <div class="template-item">
+              <div class="template-icon reminder"><i data-lucide="bell" style="width:18px;height:18px;"></i></div>
+              <div class="template-info">
+                <div class="template-name">Påminnelse 24t</div>
+                <div class="template-trigger">24 timer før</div>
+              </div>
+              <div class="template-status active"></div>
+            </div>
+            <div class="template-item">
+              <div class="template-icon reminder"><i data-lucide="bell" style="width:18px;height:18px;"></i></div>
+              <div class="template-info">
+                <div class="template-name">Påminnelse 1t</div>
+                <div class="template-trigger">1 time før</div>
+              </div>
+              <div class="template-status active"></div>
+            </div>
+            <div class="template-item">
+              <div class="template-icon cancel"><i data-lucide="x-circle" style="width:18px;height:18px;"></i></div>
+              <div class="template-info">
+                <div class="template-name">Kansellering</div>
+                <div class="template-trigger">Ved kansellering</div>
+              </div>
+              <div class="template-status active"></div>
+            </div>
+            <div class="template-item">
+              <div class="template-icon booking"><i data-lucide="calendar-check" style="width:18px;height:18px;"></i></div>
+              <div class="template-info">
+                <div class="template-name">Endret tid</div>
+                <div class="template-trigger">Ved endring</div>
+              </div>
+              <div class="template-status active"></div>
+            </div>
+            <div class="template-item">
+              <div class="template-icon welcome"><i data-lucide="sparkles" style="width:18px;height:18px;"></i></div>
+              <div class="template-info">
+                <div class="template-name">Velkommen</div>
+                <div class="template-trigger">Ny bruker</div>
+              </div>
+              <div class="template-status active"></div>
+            </div>
+            <div class="template-item">
+              <div class="template-icon booking"><i data-lucide="file-text" style="width:18px;height:18px;"></i></div>
+              <div class="template-info">
+                <div class="template-name">Økt-oppsummering</div>
+                <div class="template-trigger">Etter økt</div>
+              </div>
+              <div class="template-status inactive"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-editor">
+        <div class="editor-card">
+          <div class="editor-header">
+            <div class="editor-title">Booking bekreftet</div>
+            <div class="editor-actions">
+              <button class="btn btn-ghost btn-sm"><i data-lucide="copy" style="width:14px;height:14px;"></i> Dupliser</button>
+              <button class="btn btn-ghost btn-sm"><i data-lucide="trash-2" style="width:14px;height:14px;"></i></button>
+            </div>
+          </div>
+          <div class="editor-body">
+            <div class="toggle-row" style="padding-top: 0; border-bottom: 1px solid var(--ink-10); padding-bottom: 16px; margin-bottom: 16px;">
+              <div class="toggle-label">Aktiv</div>
+              <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Emne</label>
+              <input type="text" class="form-input" value="Booking bekreftet: {{service_name}} {{date}}">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Innhold</label>
+              <div class="editor-toolbar">
+                <button class="toolbar-btn"><i data-lucide="bold" style="width:16px;height:16px;"></i></button>
+                <button class="toolbar-btn"><i data-lucide="italic" style="width:16px;height:16px;"></i></button>
+                <button class="toolbar-btn"><i data-lucide="underline" style="width:16px;height:16px;"></i></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn"><i data-lucide="link" style="width:16px;height:16px;"></i></button>
+                <button class="toolbar-btn"><i data-lucide="image" style="width:16px;height:16px;"></i></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn"><i data-lucide="list" style="width:16px;height:16px;"></i></button>
+                <button class="toolbar-btn"><i data-lucide="list-ordered" style="width:16px;height:16px;"></i></button>
+              </div>
+              <textarea class="editor-textarea">Hei {{first_name}},
+
+Din booking hos AK Golf Academy er bekreftet!
+
+**Detaljer:**
+- **Tjeneste:** {{service_name}}
+- **Dato:** {{date}}
+- **Tid:** {{time}}
+- **Instruktør:** {{instructor_name}}
+- **Sted:** {{location}}
+
+Husk å møte opp 10 minutter før avtalt tid.
+
+Har du spørsmål? Svar på denne e-posten eller ring oss på {{phone}}.
+
+Vi gleder oss til å se deg!
+
+Med vennlig hilsen,
+{{instructor_name}}
+AK Golf Academy</textarea>
+            </div>
+
+            <div class="variables-panel">
+              <div class="variables-title"><i data-lucide="code" style="width:14px;height:14px;"></i> Tilgjengelige variabler</div>
+              <div class="variables-list">
+                <span class="variable-chip">{{first_name}}</span>
+                <span class="variable-chip">{{last_name}}</span>
+                <span class="variable-chip">{{email}}</span>
+                <span class="variable-chip">{{service_name}}</span>
+                <span class="variable-chip">{{date}}</span>
+                <span class="variable-chip">{{time}}</span>
+                <span class="variable-chip">{{instructor_name}}</span>
+                <span class="variable-chip">{{location}}</span>
+                <span class="variable-chip">{{price}}</span>
+                <span class="variable-chip">{{phone}}</span>
+              </div>
+            </div>
+
+            <div class="preview-section">
+              <div class="preview-title"><i data-lucide="eye" style="width:16px;height:16px;"></i> Forhåndsvisning</div>
+              <div class="preview-frame">
+                <div class="preview-header">
+                  <div class="preview-logo">AK Golf</div>
+                </div>
+                <div class="preview-body">
+                  <p>Hei Magnus,</p>
+                  <p>Din booking hos AK Golf Academy er bekreftet!</p>
+                  <h2>Detaljer:</h2>
+                  <p>
+                    <strong>Tjeneste:</strong> Individuell Coaching<br>
+                    <strong>Dato:</strong> Fredag 28. mars 2026<br>
+                    <strong>Tid:</strong> 10:00 - 11:00<br>
+                    <strong>Instruktør:</strong> Anders Kristiansen<br>
+                    <strong>Sted:</strong> Fredrikstad GK, Range
+                  </p>
+                  <p>Husk å møte opp 10 minutter før avtalt tid.</p>
+                  <a href="#" class="preview-cta">Se booking i portalen</a>
+                  <p>Har du spørsmål? Svar på denne e-posten eller ring oss på +47 900 00 000.</p>
+                  <p>Vi gleder oss til å se deg!</p>
+                  <p>Med vennlig hilsen,<br>Anders Kristiansen<br>AK Golf Academy</p>
+                </div>
+                <div class="preview-footer">
+                  AK Golf Academy | Fredrikstad | akgolf.no
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="demo-controls">Admin E-postmaler</div>
+
+<script>lucide.createIcons();</script>
+
+</body>
+</html>

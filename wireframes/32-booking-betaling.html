@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Betaling</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C8CDD4;
+      --ink-40: #9BA5B2;
+      --ink-50: #6B7B8D;
+      --ink-60: #4F5D6B;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --gold-dark: #8B7243;
+      --success: #22C55E;
+      --success-light: #DCFCE7;
+      --error: #EF4444;
+      --error-light: #FEE2E2;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --info: #3B82F6;
+      --info-light: #DBEAFE;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--ink-05);
+      color: var(--ink-90);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* === HEADER === */
+    .header {
+      background: white;
+      border-bottom: 1px solid var(--ink-20);
+      padding: 16px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--ink-90);
+    }
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--ink-90);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+    .logo-text { font-size: 18px; font-weight: 600; }
+    .header-secure {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--ink-50);
+    }
+    .header-secure i { color: var(--success); }
+
+    /* === MAIN LAYOUT === */
+    .main-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+    }
+
+    /* === PROGRESS === */
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .progress-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .progress-step.completed .progress-number {
+      background: var(--success);
+      color: white;
+    }
+    .progress-step.active .progress-number {
+      background: var(--gold);
+      color: white;
+    }
+    .progress-step.upcoming .progress-number {
+      background: var(--ink-20);
+      color: var(--ink-50);
+    }
+    .progress-label {
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .progress-step.completed .progress-label { color: var(--success); }
+    .progress-step.active .progress-label { color: var(--ink-90); }
+    .progress-step.upcoming .progress-label { color: var(--ink-40); }
+    .progress-line {
+      flex: 1;
+      height: 2px;
+      background: var(--ink-20);
+    }
+    .progress-line.completed { background: var(--success); }
+
+    /* === PAYMENT FORM === */
+    .payment-section {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      padding: 32px;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    /* === PAYMENT METHODS === */
+    .payment-methods {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .payment-method {
+      flex: 1;
+      padding: 16px;
+      border: 2px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .payment-method:hover { border-color: var(--ink-30); }
+    .payment-method.selected { border-color: var(--gold); background: rgba(184,151,92,0.05); }
+    .payment-method-icon {
+      height: 24px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .payment-method-icon img { height: 24px; }
+    .payment-method-label { font-size: 13px; font-weight: 500; }
+
+    /* === CARD FORM === */
+    .card-form { margin-bottom: 32px; }
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-80);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,151,92,0.1);
+    }
+    .form-input.error {
+      border-color: var(--error);
+    }
+    .form-input::placeholder { color: var(--ink-40); }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-error {
+      font-size: 12px;
+      color: var(--error);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-preview {
+      background: linear-gradient(135deg, var(--ink-100) 0%, #1a3a5c 100%);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      color: white;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-preview::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
+    .card-chip {
+      width: 40px;
+      height: 30px;
+      background: linear-gradient(135deg, #d4af37 0%, #f0d875 50%, #d4af37 100%);
+      border-radius: 6px;
+      margin-bottom: 24px;
+    }
+    .card-number {
+      font-size: 20px;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+      font-family: monospace;
+    }
+    .card-details {
+      display: flex;
+      justify-content: space-between;
+    }
+    .card-detail-label {
+      font-size: 10px;
+      opacity: 0.6;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .card-detail-value { font-size: 14px; }
+
+    /* === BILLING ADDRESS === */
+    .billing-toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: var(--ink-05);
+      border-radius: var(--radius-lg);
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    .toggle-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--ink-30);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .toggle-checkbox.checked {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .toggle-label { font-size: 14px; }
+
+    /* === ORDER SUMMARY === */
+    .order-summary {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      padding: 24px;
+      position: sticky;
+      top: 24px;
+    }
+    .summary-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--ink-20);
+    }
+    .booking-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .booking-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--ink-05);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+    .booking-details { flex: 1; }
+    .booking-name { font-weight: 600; margin-bottom: 4px; }
+    .booking-meta { font-size: 13px; color: var(--ink-50); }
+    .booking-price { font-weight: 600; }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    .summary-row.total {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--ink-20);
+    }
+    .summary-row span:first-child { color: var(--ink-60); }
+    .summary-row.total span:first-child { color: var(--ink-90); }
+
+    /* === BUTTONS === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 32px;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--gold-dark); }
+    .btn-primary:disabled {
+      background: var(--ink-30);
+      cursor: not-allowed;
+    }
+
+    .secure-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--ink-50);
+    }
+    .secure-note i { color: var(--success); }
+
+    /* === TRUST BADGES === */
+    .trust-badges {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--ink-10);
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--ink-50);
+    }
+
+    /* === PROCESSING STATE === */
+    .processing-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .processing-overlay.show { display: flex; }
+    .processing-content {
+      text-align: center;
+    }
+    .processing-spinner {
+      width: 64px;
+      height: 64px;
+      border: 4px solid var(--ink-10);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .processing-content h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .processing-content p { color: var(--ink-50); }
+
+    /* === ERROR STATE === */
+    .error-banner {
+      background: var(--error-light);
+      border: 1px solid var(--error);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: none;
+    }
+    .error-banner.show { display: flex; }
+    .error-banner i { color: var(--error); margin-right: 12px; flex-shrink: 0; }
+    .error-banner-content h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #991B1B;
+      margin-bottom: 4px;
+    }
+    .error-banner-content p { font-size: 13px; color: #991B1B; }
+
+    /* === DEMO CONTROLS === */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink-100);
+      padding: 16px;
+      border-radius: var(--radius-xl);
+      z-index: 200;
+      min-width: 180px;
+    }
+    .demo-controls h4 {
+      color: white;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .demo-btn {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: var(--radius-md);
+      color: white;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .demo-btn:hover { background: rgba(255,255,255,0.2); }
+    .demo-btn:last-child { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <a href="#" class="header-logo">
+      <div class="logo-mark">K</div>
+      <span class="logo-text">AK Golf</span>
+    </a>
+    <div class="header-secure">
+      <i data-lucide="lock" style="width:16px;height:16px"></i>
+      Sikker betaling
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main-layout">
+    <div>
+      <!-- PROGRESS -->
+      <div class="progress-bar">
+        <div class="progress-step completed">
+          <div class="progress-number"><i data-lucide="check" style="width:14px;height:14px"></i></div>
+          <span class="progress-label">Tjeneste</span>
+        </div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">
+          <div class="progress-number"><i data-lucide="check" style="width:14px;height:14px"></i></div>
+          <span class="progress-label">Tidspunkt</span>
+        </div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step completed">
+          <div class="progress-number"><i data-lucide="check" style="width:14px;height:14px"></i></div>
+          <span class="progress-label">Dine opplysninger</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step active">
+          <div class="progress-number">4</div>
+          <span class="progress-label">Betaling</span>
+        </div>
+      </div>
+
+      <!-- PAYMENT SECTION -->
+      <div class="payment-section">
+        <h1 class="section-title">Betaling</h1>
+
+        <!-- ERROR BANNER -->
+        <div class="error-banner" id="error-banner">
+          <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+          <div class="error-banner-content">
+            <h4>Betalingen feilet</h4>
+            <p>Kortet ble avvist. Vennligst sjekk kortdetaljene og prøv igjen.</p>
+          </div>
+        </div>
+
+        <!-- PAYMENT METHODS -->
+        <div class="payment-methods">
+          <div class="payment-method selected">
+            <div class="payment-method-icon">
+              <i data-lucide="credit-card" style="width:24px;height:24px;color:var(--ink-60)"></i>
+            </div>
+            <div class="payment-method-label">Kort</div>
+          </div>
+          <div class="payment-method">
+            <div class="payment-method-icon">
+              <span style="font-weight:700;color:#5f259f">Vipps</span>
+            </div>
+            <div class="payment-method-label">Vipps</div>
+          </div>
+          <div class="payment-method">
+            <div class="payment-method-icon">
+              <span style="font-weight:700;color:#003087">Klarna</span>
+            </div>
+            <div class="payment-method-label">Klarna</div>
+          </div>
+        </div>
+
+        <!-- CARD PREVIEW -->
+        <div class="card-preview">
+          <div class="card-chip"></div>
+          <div class="card-number">•••• •••• •••• 4242</div>
+          <div class="card-details">
+            <div>
+              <div class="card-detail-label">Kortinnehaver</div>
+              <div class="card-detail-value">ANDERS KRISTIANSEN</div>
+            </div>
+            <div>
+              <div class="card-detail-label">Utløper</div>
+              <div class="card-detail-value">12/28</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD FORM -->
+        <div class="card-form">
+          <div class="form-group">
+            <label class="form-label">Kortnummer</label>
+            <input type="text" class="form-input" placeholder="1234 5678 9012 3456" value="4242 4242 4242 4242">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Navn på kort</label>
+            <input type="text" class="form-input" placeholder="OLAS NORDMANN" value="ANDERS KRISTIANSEN">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Utløpsdato</label>
+              <input type="text" class="form-input" placeholder="MM/ÅÅ" value="12/28">
+            </div>
+            <div class="form-group">
+              <label class="form-label">CVC</label>
+              <input type="text" class="form-input" placeholder="123" value="•••">
+            </div>
+          </div>
+        </div>
+
+        <!-- BILLING ADDRESS -->
+        <div class="billing-toggle">
+          <div class="toggle-checkbox checked">
+            <i data-lucide="check" style="width:14px;height:14px;color:white"></i>
+          </div>
+          <span class="toggle-label">Fakturaadresse er lik min adresse</span>
+        </div>
+
+        <button class="btn btn-primary" onclick="showProcessing()">
+          <i data-lucide="lock" style="width:18px;height:18px"></i>
+          Betal kr 1 295
+        </button>
+
+        <div class="secure-note">
+          <i data-lucide="shield-check" style="width:14px;height:14px"></i>
+          Betalingen er sikret med SSL-kryptering
+        </div>
+
+        <div class="trust-badges">
+          <div class="trust-badge">
+            <i data-lucide="credit-card" style="width:14px;height:14px"></i>
+            Visa / Mastercard
+          </div>
+          <div class="trust-badge">
+            <i data-lucide="lock" style="width:14px;height:14px"></i>
+            Stripe sikret
+          </div>
+          <div class="trust-badge">
+            <i data-lucide="shield" style="width:14px;height:14px"></i>
+            PCI-sertifisert
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDER SUMMARY -->
+    <aside class="order-summary">
+      <h2 class="summary-title">Din bestilling</h2>
+
+      <div class="booking-item">
+        <div class="booking-icon">
+          <i data-lucide="target" style="width:24px;height:24px"></i>
+        </div>
+        <div class="booking-details">
+          <div class="booking-name">Individuell coaching</div>
+          <div class="booking-meta">
+            Fredag 28. mars, 10:00-11:00<br>
+            Anders Kristiansen
+          </div>
+        </div>
+        <div class="booking-price">kr 1 295</div>
+      </div>
+
+      <div class="summary-row">
+        <span>Delsum</span>
+        <span>kr 1 295</span>
+      </div>
+      <div class="summary-row">
+        <span>MVA (25%)</span>
+        <span>kr 259</span>
+      </div>
+      <div class="summary-row total">
+        <span>Totalt</span>
+        <span>kr 1 295</span>
+      </div>
+
+      <div style="background:var(--info-light);padding:12px 16px;border-radius:var(--radius-md);margin-top:20px;font-size:12px;color:#1E40AF">
+        <strong>Avbestilling:</strong> Gratis avbestilling inntil 24 timer før timen.
+      </div>
+    </aside>
+  </main>
+
+  <!-- PROCESSING OVERLAY -->
+  <div class="processing-overlay" id="processing">
+    <div class="processing-content">
+      <div class="processing-spinner"></div>
+      <h3>Behandler betaling...</h3>
+      <p>Vennligst vent mens vi behandler betalingen din</p>
+    </div>
+  </div>
+
+  <!-- DEMO CONTROLS -->
+  <div class="demo-controls">
+    <h4>Wireframe demo</h4>
+    <button class="demo-btn" onclick="showDefault()">Standard</button>
+    <button class="demo-btn" onclick="showProcessing()">Behandler...</button>
+    <button class="demo-btn" onclick="showError()">Feil</button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function showProcessing() {
+      document.getElementById('processing').classList.add('show');
+    }
+
+    function showDefault() {
+      document.getElementById('processing').classList.remove('show');
+      document.getElementById('error-banner').classList.remove('show');
+    }
+
+    function showError() {
+      document.getElementById('processing').classList.remove('show');
+      document.getElementById('error-banner').classList.add('show');
+    }
+  </script>
+</body>
+</html>

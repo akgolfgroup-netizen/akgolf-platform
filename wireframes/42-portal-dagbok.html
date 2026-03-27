@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Treningsdagbok</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C8CDD4;
+      --ink-40: #9BA5B2;
+      --ink-50: #6B7B8D;
+      --ink-60: #4F5D6B;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --gold-dark: #8B7243;
+      --success: #22C55E;
+      --success-light: #DCFCE7;
+      --error: #EF4444;
+      --error-light: #FEE2E2;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --info: #3B82F6;
+      --info-light: #DBEAFE;
+      --purple: #8B5CF6;
+      --purple-light: #EDE9FE;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Manrope', sans-serif; background: var(--ink-05); color: var(--ink-90); line-height: 1.6; }
+
+    /* === PORTAL LAYOUT === */
+    .portal-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      background: var(--ink-100);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      width: 260px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 24px;
+    }
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+    .logo-text { color: white; font-size: 16px; font-weight: 600; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 4px; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-lg);
+      color: var(--ink-40);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: white; }
+    .nav-item.active { background: rgba(184,151,92,0.15); color: var(--gold); }
+    .nav-section {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-50);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 24px 16px 8px;
+    }
+
+    /* === MAIN CONTENT === */
+    .main-content { margin-left: 260px; min-height: 100vh; }
+
+    /* === TOPBAR === */
+    .topbar {
+      background: white;
+      border-bottom: 1px solid var(--ink-20);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-title { font-size: 20px; font-weight: 700; }
+    .topbar-actions { display: flex; gap: 12px; align-items: center; }
+
+    /* === PAGE CONTENT === */
+    .page-content { padding: 32px; }
+
+    /* === STATS OVERVIEW === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      border: 1px solid var(--ink-20);
+    }
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stat-icon.green { background: var(--success-light); color: #166534; }
+    .stat-icon.blue { background: var(--info-light); color: #1E40AF; }
+    .stat-icon.purple { background: var(--purple-light); color: var(--purple); }
+    .stat-icon.gold { background: #FEF3C7; color: #92400E; }
+    .stat-label { font-size: 13px; color: var(--ink-50); margin-bottom: 4px; }
+    .stat-value { font-size: 28px; font-weight: 700; color: var(--ink-90); }
+    .stat-change {
+      font-size: 12px;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .stat-change.positive { color: var(--success); }
+
+    /* === CALENDAR STRIP === */
+    .calendar-strip {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .calendar-header h3 { font-size: 16px; font-weight: 600; }
+    .calendar-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .calendar-nav-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-md);
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .calendar-nav-btn:hover { background: var(--ink-10); }
+    .calendar-label { font-size: 14px; font-weight: 500; color: var(--ink-60); padding: 0 12px; }
+
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    .calendar-day {
+      text-align: center;
+      padding: 12px 8px;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .calendar-day:hover { background: var(--ink-10); }
+    .calendar-day.today { background: rgba(184,151,92,0.1); border: 2px solid var(--gold); }
+    .calendar-day.selected { background: var(--gold); color: white; }
+    .calendar-day.has-log::after {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      margin: 4px auto 0;
+    }
+    .calendar-day-name { font-size: 11px; color: var(--ink-50); text-transform: uppercase; margin-bottom: 4px; }
+    .calendar-day-num { font-size: 16px; font-weight: 600; }
+
+    /* === CONTENT GRID === */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+    }
+
+    /* === LOG ENTRIES === */
+    .log-section {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+    }
+    .section-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--ink-20);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .section-header h3 { font-size: 16px; font-weight: 600; }
+
+    .log-entry {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--ink-10);
+      transition: background 0.2s;
+    }
+    .log-entry:hover { background: var(--ink-05); }
+    .log-entry:last-child { border-bottom: none; }
+    .log-entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .log-entry-type {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .log-type-badge {
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .log-type-badge.putting { background: var(--success-light); color: #166534; }
+    .log-type-badge.driving { background: var(--warning-light); color: #92400E; }
+    .log-type-badge.approach { background: var(--info-light); color: #1E40AF; }
+    .log-type-badge.round { background: var(--purple-light); color: var(--purple); }
+    .log-type-badge.gym { background: var(--error-light); color: #991B1B; }
+    .log-entry-time { font-size: 12px; color: var(--ink-50); }
+
+    .log-entry h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .log-entry p { font-size: 14px; color: var(--ink-60); line-height: 1.5; }
+
+    .log-entry-stats {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--ink-10);
+    }
+    .log-stat {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--ink-50);
+    }
+    .log-stat i { width: 14px; height: 14px; }
+
+    .log-entry-mood {
+      display: flex;
+      gap: 4px;
+      margin-top: 12px;
+    }
+    .mood-emoji {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      opacity: 0.3;
+    }
+    .mood-emoji.active { opacity: 1; }
+
+    /* === QUICK LOG PANEL === */
+    .quick-log {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      padding: 24px;
+      position: sticky;
+      top: 100px;
+    }
+    .quick-log h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .quick-log-types {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .quick-log-type {
+      padding: 12px;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quick-log-type:hover { border-color: var(--gold); }
+    .quick-log-type.selected { background: rgba(184,151,92,0.1); border-color: var(--gold); }
+    .quick-log-type i { margin-bottom: 4px; }
+    .quick-log-type span { display: block; font-size: 12px; font-weight: 500; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-80);
+      margin-bottom: 8px;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,151,92,0.1);
+    }
+    .form-textarea { min-height: 100px; resize: vertical; }
+
+    .mood-selector {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .mood-option {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 24px;
+    }
+    .mood-option:hover { border-color: var(--gold); }
+    .mood-option.selected { background: rgba(184,151,92,0.1); border-color: var(--gold); }
+
+    /* === BUTTONS === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn-primary { background: var(--gold); color: white; }
+    .btn-primary:hover { background: var(--gold-dark); }
+    .btn-secondary { background: var(--ink-10); color: var(--ink-80); }
+    .btn-secondary:hover { background: var(--ink-20); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-60);
+      padding: 8px 12px;
+      width: auto;
+    }
+    .btn-ghost:hover { background: var(--ink-10); color: var(--ink-80); }
+
+    /* === STREAKS WIDGET === */
+    .streak-widget {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      color: white;
+      margin-top: 20px;
+    }
+    .streak-widget h4 {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .streak-value {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .streak-label { font-size: 14px; opacity: 0.9; }
+    .streak-calendar {
+      display: flex;
+      gap: 4px;
+      margin-top: 16px;
+    }
+    .streak-day {
+      flex: 1;
+      height: 24px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+    }
+    .streak-day.completed { background: white; }
+
+    /* === DEMO CONTROLS === */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink-100);
+      padding: 16px;
+      border-radius: var(--radius-xl);
+      z-index: 200;
+      min-width: 200px;
+    }
+    .demo-controls h4 {
+      color: white;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .demo-btn {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: var(--radius-md);
+      color: white;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .demo-btn:hover { background: rgba(255,255,255,0.2); }
+    .demo-btn:last-child { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+  <div class="portal-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">K</div>
+        <span class="logo-text">AK Golf Portal</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item">
+          <i data-lucide="layout-dashboard"></i>
+          Dashboard
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="calendar"></i>
+          Mine bookinger
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="target"></i>
+          Treningsplan
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="bar-chart-3"></i>
+          Statistikk
+        </a>
+        <a href="#" class="nav-item active">
+          <i data-lucide="book-open"></i>
+          Treningsdagbok
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="trophy"></i>
+          Turneringer
+        </a>
+
+        <div class="nav-section">Analyse</div>
+        <a href="#" class="nav-item">
+          <i data-lucide="brain"></i>
+          AI-analyse
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="users"></i>
+          Sammenligning
+        </a>
+
+        <div class="nav-section">Konto</div>
+        <a href="#" class="nav-item">
+          <i data-lucide="user"></i>
+          Profil
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="settings"></i>
+          Innstillinger
+        </a>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <h1 class="topbar-title">Treningsdagbok</h1>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" style="width:auto">
+            <i data-lucide="download" style="width:16px;height:16px"></i>
+            Eksporter
+          </button>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <div class="page-content">
+        <!-- STATS GRID -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon green">
+                <i data-lucide="flame" style="width:20px;height:20px"></i>
+              </div>
+            </div>
+            <div class="stat-label">Nåværende streak</div>
+            <div class="stat-value">12</div>
+            <div class="stat-change positive">
+              <i data-lucide="trending-up" style="width:14px;height:14px"></i>
+              dager på rad
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon blue">
+                <i data-lucide="calendar-check" style="width:20px;height:20px"></i>
+              </div>
+            </div>
+            <div class="stat-label">Økter denne måneden</div>
+            <div class="stat-value">18</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon purple">
+                <i data-lucide="clock" style="width:20px;height:20px"></i>
+              </div>
+            </div>
+            <div class="stat-label">Timer totalt</div>
+            <div class="stat-value">24.5</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon gold">
+                <i data-lucide="target" style="width:20px;height:20px"></i>
+              </div>
+            </div>
+            <div class="stat-label">Mest trente område</div>
+            <div class="stat-value" style="font-size:18px">Putting</div>
+          </div>
+        </div>
+
+        <!-- CALENDAR STRIP -->
+        <div class="calendar-strip">
+          <div class="calendar-header">
+            <h3>Mars 2026</h3>
+            <div class="calendar-nav">
+              <button class="calendar-nav-btn">
+                <i data-lucide="chevron-left" style="width:16px;height:16px"></i>
+              </button>
+              <span class="calendar-label">Uke 13</span>
+              <button class="calendar-nav-btn">
+                <i data-lucide="chevron-right" style="width:16px;height:16px"></i>
+              </button>
+            </div>
+          </div>
+          <div class="calendar-days">
+            <div class="calendar-day has-log">
+              <div class="calendar-day-name">Man</div>
+              <div class="calendar-day-num">24</div>
+            </div>
+            <div class="calendar-day has-log">
+              <div class="calendar-day-name">Tir</div>
+              <div class="calendar-day-num">25</div>
+            </div>
+            <div class="calendar-day has-log">
+              <div class="calendar-day-name">Ons</div>
+              <div class="calendar-day-num">26</div>
+            </div>
+            <div class="calendar-day today selected has-log">
+              <div class="calendar-day-name">Tor</div>
+              <div class="calendar-day-num">27</div>
+            </div>
+            <div class="calendar-day">
+              <div class="calendar-day-name">Fre</div>
+              <div class="calendar-day-num">28</div>
+            </div>
+            <div class="calendar-day">
+              <div class="calendar-day-name">Lør</div>
+              <div class="calendar-day-num">29</div>
+            </div>
+            <div class="calendar-day">
+              <div class="calendar-day-name">Søn</div>
+              <div class="calendar-day-num">30</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTENT GRID -->
+        <div class="content-grid">
+          <!-- LOG ENTRIES -->
+          <div class="log-section">
+            <div class="section-header">
+              <h3>Torsdag 27. mars</h3>
+              <span style="font-size:13px;color:var(--ink-50)">2 logger</span>
+            </div>
+
+            <div class="log-entry">
+              <div class="log-entry-header">
+                <div class="log-entry-type">
+                  <span class="log-type-badge putting">Putting</span>
+                </div>
+                <span class="log-entry-time">09:30</span>
+              </div>
+              <h4>Gate drill og klokka</h4>
+              <p>
+                Jobbet med gate drill fra 3 meter. Fikk 18/20 gjennom porten.
+                Deretter klokka fra 5 meter, fikk 6/8 første runde og 7/8 andre.
+                Føler at linjene er mye bedre etter coaching i går.
+              </p>
+              <div class="log-entry-stats">
+                <span class="log-stat">
+                  <i data-lucide="clock"></i>
+                  45 min
+                </span>
+                <span class="log-stat">
+                  <i data-lucide="target"></i>
+                  Gate: 90%
+                </span>
+                <span class="log-stat">
+                  <i data-lucide="target"></i>
+                  Klokka: 81%
+                </span>
+              </div>
+              <div class="log-entry-mood">
+                <span class="mood-emoji">😤</span>
+                <span class="mood-emoji">😐</span>
+                <span class="mood-emoji">🙂</span>
+                <span class="mood-emoji active">😊</span>
+                <span class="mood-emoji">🔥</span>
+              </div>
+            </div>
+
+            <div class="log-entry">
+              <div class="log-entry-header">
+                <div class="log-entry-type">
+                  <span class="log-type-badge approach">Approach</span>
+                </div>
+                <span class="log-entry-time">11:00</span>
+              </div>
+              <h4>Wedge 100-130 meter</h4>
+              <p>
+                Fokus på kontroll av avstand. SW til 100, GW til 115, PW til 130.
+                Spredningen er fortsatt litt stor, men bedre enn forrige uke.
+              </p>
+              <div class="log-entry-stats">
+                <span class="log-stat">
+                  <i data-lucide="clock"></i>
+                  60 min
+                </span>
+                <span class="log-stat">
+                  <i data-lucide="target"></i>
+                  50 baller
+                </span>
+              </div>
+              <div class="log-entry-mood">
+                <span class="mood-emoji">😤</span>
+                <span class="mood-emoji">😐</span>
+                <span class="mood-emoji active">🙂</span>
+                <span class="mood-emoji">😊</span>
+                <span class="mood-emoji">🔥</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUICK LOG PANEL -->
+          <div class="quick-log">
+            <h3>
+              <i data-lucide="plus-circle" style="width:20px;height:20px;color:var(--gold)"></i>
+              Logg trening
+            </h3>
+
+            <div class="quick-log-types">
+              <div class="quick-log-type selected">
+                <i data-lucide="target" style="width:20px;height:20px;color:var(--success)"></i>
+                <span>Putting</span>
+              </div>
+              <div class="quick-log-type">
+                <i data-lucide="crosshair" style="width:20px;height:20px;color:var(--info)"></i>
+                <span>Approach</span>
+              </div>
+              <div class="quick-log-type">
+                <i data-lucide="zap" style="width:20px;height:20px;color:var(--warning)"></i>
+                <span>Driver</span>
+              </div>
+              <div class="quick-log-type">
+                <i data-lucide="flag" style="width:20px;height:20px;color:var(--purple)"></i>
+                <span>Runde</span>
+              </div>
+              <div class="quick-log-type">
+                <i data-lucide="dumbbell" style="width:20px;height:20px;color:var(--error)"></i>
+                <span>Gym</span>
+              </div>
+              <div class="quick-log-type">
+                <i data-lucide="plus" style="width:20px;height:20px;color:var(--ink-50)"></i>
+                <span>Annet</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Varighet</label>
+              <select class="form-select">
+                <option>15 min</option>
+                <option>30 min</option>
+                <option selected>45 min</option>
+                <option>60 min</option>
+                <option>90 min</option>
+                <option>2 timer</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Tittel</label>
+              <input type="text" class="form-input" placeholder="Hva trente du på?">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Notater</label>
+              <textarea class="form-textarea" placeholder="Beskriv treningen din..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Hvordan føltes det?</label>
+              <div class="mood-selector">
+                <div class="mood-option">😤</div>
+                <div class="mood-option">😐</div>
+                <div class="mood-option">🙂</div>
+                <div class="mood-option selected">😊</div>
+                <div class="mood-option">🔥</div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary">
+              <i data-lucide="check" style="width:16px;height:16px"></i>
+              Lagre logg
+            </button>
+
+            <!-- STREAK WIDGET -->
+            <div class="streak-widget">
+              <h4>Din streak</h4>
+              <div class="streak-value">12</div>
+              <div class="streak-label">dager på rad</div>
+              <div class="streak-calendar">
+                <div class="streak-day completed"></div>
+                <div class="streak-day completed"></div>
+                <div class="streak-day completed"></div>
+                <div class="streak-day completed"></div>
+                <div class="streak-day completed"></div>
+                <div class="streak-day completed"></div>
+                <div class="streak-day completed"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- DEMO CONTROLS -->
+  <div class="demo-controls">
+    <h4>Wireframe demo</h4>
+    <button class="demo-btn">Med logger</button>
+    <button class="demo-btn">Tom dag</button>
+    <button class="demo-btn">Streak brutt</button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

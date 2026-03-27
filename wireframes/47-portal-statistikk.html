@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Strokes Gained Statistikk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink-05: #FAFBFC;
+      --ink-10: #F0F2F5;
+      --ink-20: #E2E6EB;
+      --ink-30: #C8CDD4;
+      --ink-40: #9BA5B2;
+      --ink-50: #6B7B8D;
+      --ink-60: #4F5D6B;
+      --ink-80: #222F3D;
+      --ink-90: #02060D;
+      --ink-100: #0A1929;
+      --gold: #B8975C;
+      --gold-light: #D4C4A8;
+      --gold-dark: #8B7243;
+      --success: #22C55E;
+      --success-light: #DCFCE7;
+      --error: #EF4444;
+      --error-light: #FEE2E2;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --info: #3B82F6;
+      --info-light: #DBEAFE;
+      --purple: #8B5CF6;
+      --purple-light: #EDE9FE;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Manrope', sans-serif; background: var(--ink-05); color: var(--ink-90); line-height: 1.6; }
+
+    /* === PORTAL LAYOUT === */
+    .portal-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      background: var(--ink-100);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      width: 260px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 24px;
+    }
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+    .logo-text { color: white; font-size: 16px; font-weight: 600; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 4px; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-lg);
+      color: var(--ink-40);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: white; }
+    .nav-item.active { background: rgba(184,151,92,0.15); color: var(--gold); }
+    .nav-section {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-50);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 24px 16px 8px;
+    }
+
+    /* === MAIN CONTENT === */
+    .main-content { margin-left: 260px; min-height: 100vh; }
+
+    /* === TOPBAR === */
+    .topbar {
+      background: white;
+      border-bottom: 1px solid var(--ink-20);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-title { font-size: 20px; font-weight: 700; }
+    .topbar-actions { display: flex; gap: 12px; align-items: center; }
+
+    /* === PAGE CONTENT === */
+    .page-content { padding: 32px; }
+
+    /* === HANDICAP HERO === */
+    .handicap-hero {
+      background: linear-gradient(135deg, var(--ink-100) 0%, var(--ink-80) 100%);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      color: white;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 48px;
+      align-items: center;
+    }
+    .handicap-display {
+      text-align: center;
+    }
+    .handicap-value {
+      font-size: 72px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .handicap-label {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-top: 8px;
+    }
+    .handicap-trend {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: rgba(34,197,94,0.2);
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 600;
+      color: #86EFAC;
+    }
+    .handicap-chart {
+      height: 100px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .chart-bar {
+      width: 24px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px 4px 0 0;
+      transition: all 0.3s;
+    }
+    .chart-bar:hover { background: var(--gold); }
+    .chart-bar.current { background: var(--gold); }
+    .handicap-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .handicap-stat {
+      text-align: right;
+    }
+    .handicap-stat-value { font-size: 24px; font-weight: 700; }
+    .handicap-stat-label { font-size: 12px; opacity: 0.7; }
+
+    /* === SG OVERVIEW === */
+    .sg-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .sg-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .sg-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+    .sg-card.positive::before { background: var(--success); }
+    .sg-card.negative::before { background: var(--error); }
+    .sg-card.neutral::before { background: var(--ink-30); }
+    .sg-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .sg-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sg-icon.driving { background: var(--warning-light); color: #92400E; }
+    .sg-icon.approach { background: var(--info-light); color: #1E40AF; }
+    .sg-icon.around { background: var(--purple-light); color: var(--purple); }
+    .sg-icon.putting { background: var(--success-light); color: #166534; }
+    .sg-trend {
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .sg-trend.up { color: var(--success); }
+    .sg-trend.down { color: var(--error); }
+    .sg-label {
+      font-size: 13px;
+      color: var(--ink-50);
+      margin-bottom: 4px;
+    }
+    .sg-value {
+      font-size: 32px;
+      font-weight: 700;
+    }
+    .sg-value.positive { color: var(--success); }
+    .sg-value.negative { color: var(--error); }
+    .sg-benchmark {
+      font-size: 12px;
+      color: var(--ink-50);
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--ink-10);
+    }
+
+    /* === CHARTS SECTION === */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .chart-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      padding: 24px;
+    }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .chart-header h3 { font-size: 16px; font-weight: 600; }
+    .chart-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--ink-10);
+      padding: 4px;
+      border-radius: var(--radius-md);
+    }
+    .chart-tab {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--ink-60);
+    }
+    .chart-tab.active {
+      background: white;
+      color: var(--ink-90);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* === LINE CHART PLACEHOLDER === */
+    .line-chart {
+      height: 250px;
+      position: relative;
+      border-left: 1px solid var(--ink-20);
+      border-bottom: 1px solid var(--ink-20);
+      margin-left: 40px;
+      margin-bottom: 20px;
+    }
+    .chart-y-axis {
+      position: absolute;
+      left: -40px;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--ink-50);
+      padding: 0 8px;
+    }
+    .chart-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+    }
+    .chart-line svg {
+      width: 100%;
+      height: 100%;
+    }
+    .chart-line path {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 2;
+    }
+    .chart-line .area {
+      fill: url(#goldGradient);
+      stroke: none;
+    }
+    .chart-x-axis {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--ink-50);
+      padding-left: 40px;
+    }
+
+    /* === RADAR CHART PLACEHOLDER === */
+    .radar-chart {
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .radar-bg {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+    }
+    .radar-bg circle {
+      fill: none;
+      stroke: var(--ink-10);
+      stroke-width: 1;
+    }
+    .radar-polygon {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+    }
+    .radar-polygon polygon {
+      fill: rgba(184,151,92,0.2);
+      stroke: var(--gold);
+      stroke-width: 2;
+    }
+    .radar-labels {
+      position: absolute;
+      width: 260px;
+      height: 260px;
+    }
+    .radar-label {
+      position: absolute;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink-60);
+    }
+    .radar-label.top { top: 0; left: 50%; transform: translateX(-50%); }
+    .radar-label.right { right: 0; top: 50%; transform: translateY(-50%); }
+    .radar-label.bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .radar-label.left { left: 0; top: 50%; transform: translateY(-50%); }
+
+    /* === ROUNDS TABLE === */
+    .rounds-section {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--ink-20);
+      overflow: hidden;
+    }
+    .section-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--ink-20);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .section-header h3 { font-size: 16px; font-weight: 600; }
+    .rounds-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .rounds-table th,
+    .rounds-table td {
+      padding: 14px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    .rounds-table th {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-50);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--ink-05);
+    }
+    .rounds-table td { font-size: 14px; }
+    .rounds-table tr:last-child td { border-bottom: none; }
+    .rounds-table tr:hover td { background: var(--ink-05); }
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .score-badge.under { background: var(--success-light); color: #166534; }
+    .score-badge.over { background: var(--error-light); color: #991B1B; }
+    .score-badge.even { background: var(--ink-10); color: var(--ink-60); }
+    .sg-mini {
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .sg-mini.positive { color: var(--success); }
+    .sg-mini.negative { color: var(--error); }
+
+    /* === BUTTONS === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--gold); color: white; }
+    .btn-primary:hover { background: var(--gold-dark); }
+    .btn-secondary { background: var(--ink-10); color: var(--ink-80); }
+    .btn-secondary:hover { background: var(--ink-20); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-60);
+      padding: 8px 12px;
+    }
+    .btn-ghost:hover { background: var(--ink-10); color: var(--ink-80); }
+    .btn-sm { padding: 6px 12px; font-size: 13px; }
+
+    /* === MODAL === */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: white;
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--ink-20);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h2 { font-size: 18px; font-weight: 600; }
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--ink-10);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-body { padding: 24px; }
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--ink-20);
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    /* === FORM === */
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-80);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--ink-20);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,151,92,0.1);
+    }
+
+    /* === EMPTY STATE === */
+    .empty-state {
+      text-align: center;
+      padding: 64px 32px;
+    }
+    .empty-state-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--ink-10);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .empty-state-icon i { width: 32px; height: 32px; color: var(--ink-40); }
+    .empty-state h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink-90);
+      margin-bottom: 8px;
+    }
+    .empty-state p {
+      color: var(--ink-50);
+      margin-bottom: 24px;
+    }
+
+    /* === DEMO CONTROLS === */
+    .demo-controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink-100);
+      padding: 16px;
+      border-radius: var(--radius-xl);
+      z-index: 200;
+      min-width: 200px;
+    }
+    .demo-controls h4 {
+      color: white;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .demo-btn {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: var(--radius-md);
+      color: white;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .demo-btn:hover { background: rgba(255,255,255,0.2); }
+    .demo-btn:last-child { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+  <div class="portal-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">K</div>
+        <span class="logo-text">AK Golf Portal</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item">
+          <i data-lucide="layout-dashboard"></i>
+          Dashboard
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="calendar"></i>
+          Mine bookinger
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="target"></i>
+          Treningsplan
+        </a>
+        <a href="#" class="nav-item active">
+          <i data-lucide="bar-chart-3"></i>
+          Statistikk
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="book-open"></i>
+          Treningsdagbok
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="trophy"></i>
+          Turneringer
+        </a>
+
+        <div class="nav-section">Analyse</div>
+        <a href="#" class="nav-item">
+          <i data-lucide="brain"></i>
+          AI-analyse
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="users"></i>
+          Sammenligning
+        </a>
+
+        <div class="nav-section">Konto</div>
+        <a href="#" class="nav-item">
+          <i data-lucide="user"></i>
+          Profil
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="settings"></i>
+          Innstillinger
+        </a>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <h1 class="topbar-title">Strokes Gained Statistikk</h1>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary">
+            <i data-lucide="download" style="width:16px;height:16px"></i>
+            Eksporter
+          </button>
+          <button class="btn btn-primary" onclick="showModal('add-round')">
+            <i data-lucide="plus" style="width:16px;height:16px"></i>
+            Legg til runde
+          </button>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <div class="page-content" id="main-content">
+        <!-- HANDICAP HERO -->
+        <div class="handicap-hero">
+          <div class="handicap-display">
+            <div class="handicap-value">8.4</div>
+            <div class="handicap-label">Nåværende handicap</div>
+            <div class="handicap-trend">
+              <i data-lucide="trending-down" style="width:16px;height:16px"></i>
+              -1.2 siste 3 mnd
+            </div>
+          </div>
+          <div class="handicap-chart">
+            <div class="chart-bar" style="height:70%"></div>
+            <div class="chart-bar" style="height:65%"></div>
+            <div class="chart-bar" style="height:75%"></div>
+            <div class="chart-bar" style="height:60%"></div>
+            <div class="chart-bar" style="height:55%"></div>
+            <div class="chart-bar" style="height:50%"></div>
+            <div class="chart-bar" style="height:45%"></div>
+            <div class="chart-bar" style="height:48%"></div>
+            <div class="chart-bar" style="height:42%"></div>
+            <div class="chart-bar" style="height:40%"></div>
+            <div class="chart-bar" style="height:38%"></div>
+            <div class="chart-bar current" style="height:35%"></div>
+          </div>
+          <div class="handicap-stats">
+            <div class="handicap-stat">
+              <div class="handicap-stat-value">74.2</div>
+              <div class="handicap-stat-label">Gjennomsnitt score</div>
+            </div>
+            <div class="handicap-stat">
+              <div class="handicap-stat-value">71</div>
+              <div class="handicap-stat-label">Beste score</div>
+            </div>
+            <div class="handicap-stat">
+              <div class="handicap-stat-value">24</div>
+              <div class="handicap-stat-label">Runder i år</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STROKES GAINED CARDS -->
+        <div class="sg-grid">
+          <div class="sg-card positive">
+            <div class="sg-header">
+              <div class="sg-icon driving">
+                <i data-lucide="zap" style="width:20px;height:20px"></i>
+              </div>
+              <span class="sg-trend up">
+                <i data-lucide="trending-up" style="width:14px;height:14px"></i>
+                +0.3
+              </span>
+            </div>
+            <div class="sg-label">SG: Off the Tee</div>
+            <div class="sg-value positive">+0.8</div>
+            <div class="sg-benchmark">Bedre enn 72% av spillere på ditt nivå</div>
+          </div>
+
+          <div class="sg-card negative">
+            <div class="sg-header">
+              <div class="sg-icon approach">
+                <i data-lucide="crosshair" style="width:20px;height:20px"></i>
+              </div>
+              <span class="sg-trend down">
+                <i data-lucide="trending-down" style="width:14px;height:14px"></i>
+                -0.2
+              </span>
+            </div>
+            <div class="sg-label">SG: Approach</div>
+            <div class="sg-value negative">-0.4</div>
+            <div class="sg-benchmark">Svakere enn 58% av spillere på ditt nivå</div>
+          </div>
+
+          <div class="sg-card neutral">
+            <div class="sg-header">
+              <div class="sg-icon around">
+                <i data-lucide="target" style="width:20px;height:20px"></i>
+              </div>
+              <span class="sg-trend up">
+                <i data-lucide="trending-up" style="width:14px;height:14px"></i>
+                +0.1
+              </span>
+            </div>
+            <div class="sg-label">SG: Around the Green</div>
+            <div class="sg-value">+0.1</div>
+            <div class="sg-benchmark">Gjennomsnittlig for ditt nivå</div>
+          </div>
+
+          <div class="sg-card negative">
+            <div class="sg-header">
+              <div class="sg-icon putting">
+                <i data-lucide="circle" style="width:20px;height:20px"></i>
+              </div>
+              <span class="sg-trend down">
+                <i data-lucide="trending-down" style="width:14px;height:14px"></i>
+                -0.4
+              </span>
+            </div>
+            <div class="sg-label">SG: Putting</div>
+            <div class="sg-value negative">-0.8</div>
+            <div class="sg-benchmark">Svakere enn 78% av spillere på ditt nivå</div>
+          </div>
+        </div>
+
+        <!-- CHARTS -->
+        <div class="charts-grid">
+          <!-- Line Chart -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>Handicap-utvikling</h3>
+              <div class="chart-tabs">
+                <button class="chart-tab">3 mnd</button>
+                <button class="chart-tab active">6 mnd</button>
+                <button class="chart-tab">1 år</button>
+                <button class="chart-tab">Alt</button>
+              </div>
+            </div>
+            <div class="line-chart">
+              <div class="chart-y-axis">
+                <span>12</span>
+                <span>10</span>
+                <span>8</span>
+                <span>6</span>
+              </div>
+              <div class="chart-line">
+                <svg viewBox="0 0 600 200" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" style="stop-color:rgba(184,151,92,0.3)"/>
+                      <stop offset="100%" style="stop-color:rgba(184,151,92,0)"/>
+                    </linearGradient>
+                  </defs>
+                  <path class="area" d="M0,120 C50,110 100,130 150,100 C200,70 250,90 300,60 C350,80 400,50 450,70 C500,40 550,55 600,30 L600,200 L0,200 Z"/>
+                  <path d="M0,120 C50,110 100,130 150,100 C200,70 250,90 300,60 C350,80 400,50 450,70 C500,40 550,55 600,30"/>
+                </svg>
+              </div>
+            </div>
+            <div class="chart-x-axis">
+              <span>Okt</span>
+              <span>Nov</span>
+              <span>Des</span>
+              <span>Jan</span>
+              <span>Feb</span>
+              <span>Mar</span>
+            </div>
+          </div>
+
+          <!-- Radar Chart -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>Spillprofil</h3>
+            </div>
+            <div class="radar-chart">
+              <svg class="radar-bg" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="90"/>
+                <circle cx="100" cy="100" r="60"/>
+                <circle cx="100" cy="100" r="30"/>
+              </svg>
+              <svg class="radar-polygon" viewBox="0 0 200 200">
+                <polygon points="100,25 175,75 160,160 40,160 25,75"/>
+              </svg>
+              <div class="radar-labels">
+                <span class="radar-label top">Driving</span>
+                <span class="radar-label" style="top:25%;right:0">Approach</span>
+                <span class="radar-label" style="bottom:15%;right:10%">Short game</span>
+                <span class="radar-label" style="bottom:15%;left:10%">Putting</span>
+                <span class="radar-label" style="top:25%;left:0">Kursadm.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROUNDS TABLE -->
+        <div class="rounds-section">
+          <div class="section-header">
+            <h3>Siste runder</h3>
+            <button class="btn btn-ghost btn-sm">
+              Se alle
+              <i data-lucide="chevron-right" style="width:14px;height:14px"></i>
+            </button>
+          </div>
+          <table class="rounds-table">
+            <thead>
+              <tr>
+                <th>Dato</th>
+                <th>Bane</th>
+                <th>Score</th>
+                <th>SG: Total</th>
+                <th>SG: Tee</th>
+                <th>SG: App</th>
+                <th>SG: AtG</th>
+                <th>SG: Putt</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>24. mar 2026</td>
+                <td>Fredrikstad GK</td>
+                <td><span class="score-badge under">-1 (71)</span></td>
+                <td><span class="sg-mini positive">+2.4</span></td>
+                <td><span class="sg-mini positive">+1.2</span></td>
+                <td><span class="sg-mini positive">+0.8</span></td>
+                <td><span class="sg-mini positive">+0.2</span></td>
+                <td><span class="sg-mini positive">+0.2</span></td>
+                <td><button class="btn btn-ghost btn-sm"><i data-lucide="eye" style="width:14px;height:14px"></i></button></td>
+              </tr>
+              <tr>
+                <td>20. mar 2026</td>
+                <td>Sarpsborg GK</td>
+                <td><span class="score-badge over">+4 (76)</span></td>
+                <td><span class="sg-mini negative">-1.2</span></td>
+                <td><span class="sg-mini positive">+0.5</span></td>
+                <td><span class="sg-mini negative">-0.8</span></td>
+                <td><span class="sg-mini negative">-0.3</span></td>
+                <td><span class="sg-mini negative">-0.6</span></td>
+                <td><button class="btn btn-ghost btn-sm"><i data-lucide="eye" style="width:14px;height:14px"></i></button></td>
+              </tr>
+              <tr>
+                <td>15. mar 2026</td>
+                <td>Fredrikstad GK</td>
+                <td><span class="score-badge even">E (72)</span></td>
+                <td><span class="sg-mini positive">+1.8</span></td>
+                <td><span class="sg-mini positive">+0.9</span></td>
+                <td><span class="sg-mini positive">+0.4</span></td>
+                <td><span class="sg-mini positive">+0.3</span></td>
+                <td><span class="sg-mini positive">+0.2</span></td>
+                <td><button class="btn btn-ghost btn-sm"><i data-lucide="eye" style="width:14px;height:14px"></i></button></td>
+              </tr>
+              <tr>
+                <td>10. mar 2026</td>
+                <td>Onsøy GK</td>
+                <td><span class="score-badge over">+6 (78)</span></td>
+                <td><span class="sg-mini negative">-2.1</span></td>
+                <td><span class="sg-mini positive">+0.3</span></td>
+                <td><span class="sg-mini negative">-1.0</span></td>
+                <td><span class="sg-mini negative">-0.2</span></td>
+                <td><span class="sg-mini negative">-1.2</span></td>
+                <td><button class="btn btn-ghost btn-sm"><i data-lucide="eye" style="width:14px;height:14px"></i></button></td>
+              </tr>
+              <tr>
+                <td>5. mar 2026</td>
+                <td>Fredrikstad GK</td>
+                <td><span class="score-badge over">+2 (74)</span></td>
+                <td><span class="sg-mini positive">+0.6</span></td>
+                <td><span class="sg-mini positive">+0.8</span></td>
+                <td><span class="sg-mini negative">-0.2</span></td>
+                <td><span class="sg-mini positive">+0.4</span></td>
+                <td><span class="sg-mini negative">-0.4</span></td>
+                <td><button class="btn btn-ghost btn-sm"><i data-lucide="eye" style="width:14px;height:14px"></i></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- EMPTY STATE (hidden by default) -->
+      <div class="page-content" id="empty-content" style="display:none">
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <i data-lucide="bar-chart-3"></i>
+          </div>
+          <h3>Ingen statistikk ennå</h3>
+          <p>Legg til din første runde for å begynne å spore din Strokes Gained-utvikling.</p>
+          <button class="btn btn-primary" onclick="showModal('add-round')">
+            <i data-lucide="plus" style="width:16px;height:16px"></i>
+            Legg til første runde
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ADD ROUND MODAL -->
+  <div class="modal-overlay" id="modal-add-round">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Legg til runde</h2>
+        <button class="modal-close" onclick="hideModal('add-round')">
+          <i data-lucide="x" style="width:16px;height:16px"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Dato</label>
+            <input type="date" class="form-input" value="2026-03-27">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bane</label>
+            <select class="form-input">
+              <option>Fredrikstad GK</option>
+              <option>Sarpsborg GK</option>
+              <option>Onsøy GK</option>
+              <option>Moss GK</option>
+              <option>Annen bane...</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Tees</label>
+            <select class="form-input">
+              <option>Gul (5890m)</option>
+              <option>Hvit (6280m)</option>
+              <option>Blå (6540m)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Score</label>
+            <input type="number" class="form-input" placeholder="72">
+          </div>
+        </div>
+
+        <h4 style="font-size:14px;font-weight:600;margin:24px 0 16px">Strokes Gained (valgfritt)</h4>
+        <p style="font-size:13px;color:var(--ink-50);margin-bottom:16px">
+          Legg inn SG-verdier hvis du har dem fra Arccos, Garmin eller lignende.
+        </p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">SG: Off the Tee</label>
+            <input type="number" step="0.1" class="form-input" placeholder="0.0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">SG: Approach</label>
+            <input type="number" step="0.1" class="form-input" placeholder="0.0">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">SG: Around the Green</label>
+            <input type="number" step="0.1" class="form-input" placeholder="0.0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">SG: Putting</label>
+            <input type="number" step="0.1" class="form-input" placeholder="0.0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Notater (valgfritt)</label>
+          <textarea class="form-input" style="min-height:80px" placeholder="Hvordan føltes runden? Noe spesielt å huske?"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="hideModal('add-round')">Avbryt</button>
+        <button class="btn btn-primary">Lagre runde</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMO CONTROLS -->
+  <div class="demo-controls">
+    <h4>Wireframe demo</h4>
+    <button class="demo-btn" onclick="showWithData()">Med data</button>
+    <button class="demo-btn" onclick="showEmpty()">Tom tilstand</button>
+    <button class="demo-btn" onclick="showModal('add-round')">Legg til runde</button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function showModal(type) {
+      document.getElementById('modal-' + type).classList.add('show');
+    }
+
+    function hideModal(type) {
+      document.getElementById('modal-' + type).classList.remove('show');
+    }
+
+    function showWithData() {
+      document.getElementById('main-content').style.display = 'block';
+      document.getElementById('empty-content').style.display = 'none';
+    }
+
+    function showEmpty() {
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('empty-content').style.display = 'block';
+    }
+
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
