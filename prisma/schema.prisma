@@ -602,6 +602,13 @@ model User {
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
   TrainingSubscription                        TrainingSubscription?
   WaitlistEntry                               WaitlistEntry[]
+  UserSubscription                            UserSubscription[]
+  Notification                                Notification[]
+  // Coach Hub relations
+  assignedMessages                            UnifiedMessage[]           @relation("AssignedMessages")
+  approvedResponses                           AIResponse[]               @relation("ApprovedResponses")
+  learnings                                   AILearning[]               @relation("UserLearnings")
+  pushSubscriptions                           PushSubscription[]         @relation("PushSubscriptions")
 }
 
 model VerificationToken {
@@ -628,6 +635,86 @@ model WaitlistEntry {
   @@unique([bookingId, studentId])
   @@index([status])
 }
+
+// ============================================================================
+// Coach Hub Models — Unified Inbox med AI-assistent
+// ============================================================================
+
+model UnifiedMessage {
+  id           String        @id @default(cuid())
+  channel      Channel
+  direction    Direction
+  externalId   String
+  senderName   String
+  senderHandle String
+  subject      String?
+  content      String        @db.Text
+  receivedAt   DateTime
+  status       MessageStatus @default(PENDING)
+  assignedToId String?
+  assignedTo   User?         @relation("AssignedMessages", fields: [assignedToId], references: [id])
+  threadId     String?
+  aiResponse   AIResponse?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([channel])
+  @@index([status])
+  @@index([assignedToId])
+  @@index([receivedAt])
+}
+
+model AIResponse {
+  id           String         @id @default(cuid())
+  messageId    String         @unique
+  message      UnifiedMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  draftContent String         @db.Text
+  finalContent String?        @db.Text
+  confidence   Float
+  category     String
+  modelUsed    String
+  autoSent     Boolean        @default(false)
+  wasEdited    Boolean        @default(false)
+  editDiff     String?        @db.Text
+  approvedById String?
+  approvedBy   User?          @relation("ApprovedResponses", fields: [approvedById], references: [id])
+  approvedAt   DateTime?
+  createdAt    DateTime       @default(now())
+}
+
+model AILearning {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation("UserLearnings", fields: [userId], references: [id])
+  category   String
+  pattern    String    @db.Text
+  response   String    @db.Text
+  confidence Float     @default(0.5)
+  usageCount Int       @default(0)
+  lastUsed   DateTime?
+  corrections Json?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([userId, category])
+}
+
+model PushSubscription {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation("PushSubscriptions", fields: [userId], references: [id])
+  endpoint   String   @unique
+  p256dh     String
+  auth       String
+  deviceType String
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+}
+
+// ============================================================================
+// Enums
+// ============================================================================
 
 enum BookingStatus {
   PENDING
@@ -717,4 +804,126 @@ enum WaitlistStatus {
   CONFIRMED
   EXPIRED
   CANCELLED
+}
+
+enum BillingType {
+  RECURRING
+  ONE_TIME
+}
+
+enum CoachingBookingType {
+  SELF_BOOK
+  DROP_IN
+  FIXED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  TRIALING
+  CANCELLED
+  PAST_DUE
+  PAUSED
+}
+
+enum NotificationType {
+  BOOKING_REMINDER
+  SESSION_SUMMARY
+  ACHIEVEMENT
+  SYSTEM
+}
+
+// Coach Hub enums
+enum Channel {
+  EMAIL
+  INSTAGRAM
+  MESSENGER
+  WHATSAPP
+  IMESSAGE
+}
+
+enum MessageStatus {
+  PENDING
+  AI_PROCESSING
+  AI_READY
+  APPROVED
+  SENT
+  FAILED
+}
+
+enum Direction {
+  INBOUND
+  OUTBOUND
+}
+
+// ============================================================================
+// Existing Models (continued)
+// ============================================================================
+
+model CoachingPackage {
+  id                 String              @id @default(cuid())
+  name               String
+  slug               String              @unique
+  priceNok           Int
+  vatRate            Int                 @default(25)
+  billingType        BillingType
+  bookingType        CoachingBookingType
+  sessionsPerMonth   Int?
+  sessionDurationMin Int                 @default(20)
+  bookingWindowDays  Int?
+  bookingWindowHours Int?
+  maxBookingsPerWeek Int?
+  slotsRequired      Int                 @default(1)
+  description        String?
+  features           String[]            @default([])
+  sortOrder          Int                 @default(0)
+  maxPlayersPerSlot  Int                 @default(1)
+  isActive           Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  UserSubscription   UserSubscription[]
+}
+
+model UserSubscription {
+  id                    String             @id @default(cuid())
+  userId                String
+  packageId             String
+  status                SubscriptionStatus @default(ACTIVE)
+  sessionsUsedThisMonth Int                @default(0)
+  billingPeriodStart    DateTime?
+  billingPeriodEnd      DateTime?
+  stripeSubscriptionId  String?            @unique
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  user                  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  package               CoachingPackage    @relation(fields: [packageId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+}
+
+model CoachingAvailability {
+  id          String   @id @default(cuid())
+  dayOfWeek   Int
+  startTime   String
+  endTime     String
+  isActive    Boolean  @default(true)
+  reservedFor String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([dayOfWeek, isActive])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  linkUrl   String?
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
 }
