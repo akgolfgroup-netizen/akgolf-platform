@@ -13,7 +13,6 @@ import { FAQAccordion } from "@/components/website/FAQAccordion";
 import { BackToTop } from "@/components/website/BackToTop";
 import {
   HERO,
-  DIVISIONS,
   HOW_IT_WORKS,
   COACHING_PACKAGES,
   FLEX_PACKAGES,
@@ -21,24 +20,37 @@ import {
   COACHING_FAQ,
   BOOKING_URL,
   FOUNDATION_TEST,
-  SINGLE_SESSIONS,
 } from "@/lib/website-constants";
+
+/* ─── Ikoner ─── */
 
 function CheckIcon({ className }: { className?: string }) {
   return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      className={className}
-    >
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className={className}>
       <polyline points="20 6 9 17 4 12" />
     </svg>
   );
 }
+
+function XIcon({ className }: { className?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  );
+}
+
+/* ─── Animasjons-variants ─── */
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: i * 0.15, ease: [0.25, 0.46, 0.45, 0.94] },
+  }),
+};
 
 export default function HomePage() {
   return (
@@ -46,8 +58,12 @@ export default function HomePage() {
       <WebsiteNav />
 
       <main id="main-content">
-        {/* ─── 1. Hero (mork) ─── */}
-        <section className="relative min-h-screen flex items-center pt-[52px]">
+
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* 1. HERO — Full viewport, single statement                        */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <section className="relative min-h-[100svh] flex items-center pt-[52px]">
+          {/* Background */}
           <div className="absolute inset-0 pointer-events-none">
             <Image
               src="/images/hero/hero-main.jpg"
@@ -57,60 +73,63 @@ export default function HomePage() {
               priority
               sizes="100vw"
             />
-            {/* Enhanced gradient overlay with radial accent */}
             <div className="absolute inset-0 bg-ink-100/40 md:bg-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-ink-100/95 via-ink-100/75 to-ink-100/20" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_20%_40%,rgba(184,151,92,0.08),transparent)]" />
-            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-surface-warm via-surface-warm/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-ink-100/95 via-ink-100/70 to-ink-100/10" />
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-warm to-transparent" />
           </div>
 
           <div className="w-container relative w-full">
-            <div className="max-w-3xl">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+            <div className="max-w-2xl">
+              <motion.p
+                className="text-xs font-mono uppercase tracking-[0.2em] text-gold mb-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <SectionLabel>{HERO.eyebrow}</SectionLabel>
-              </motion.div>
+                {HERO.eyebrow}
+              </motion.p>
 
               <motion.h1
-                className="w-heading-xl mt-6 mb-6 text-white"
+                className="font-display text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-white mb-6"
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 {HERO.heading}
               </motion.h1>
 
               <motion.p
-                className="text-lg md:text-xl text-ink-20 max-w-xl leading-relaxed mb-8"
+                className="text-lg md:text-xl text-ink-30 max-w-lg leading-relaxed mb-10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                transition={{ duration: 0.7, delay: 0.6 }}
               >
                 {HERO.subheading}
               </motion.p>
 
               <motion.div
+                className="flex flex-wrap gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.8 }}
+                transition={{ duration: 0.7, delay: 0.8 }}
               >
-                <Link href="/#packages" className="w-btn w-btn-primary">{HERO.ctaPrimary}</Link>
-                <Link href="/#apply" className="w-btn w-btn-gold">Kontakt oss</Link>
-                <Link href="/#method" className="w-btn w-btn-secondary">Slik jobber vi &rarr;</Link>
+                <Link href="/#packages" className="w-btn w-btn-gold w-btn-glow">
+                  Se pakker og priser
+                </Link>
+                <Link href="/#apply" className="w-btn w-btn-ghost border-white/20 text-white hover:bg-white/10 hover:border-white/40">
+                  Kontakt oss
+                </Link>
               </motion.div>
 
               {/* Trust strip */}
               <motion.div
-                className="flex flex-wrap gap-6 mt-12"
+                className="flex flex-wrap gap-x-6 gap-y-2 mt-14"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
               >
                 {["PGA Professional", "Trackman Certified", "TPI Certified", "10+ års erfaring"].map((item) => (
-                  <span key={item} className="flex items-center gap-2 text-xs text-ink-50">
+                  <span key={item} className="flex items-center gap-2 text-[11px] text-ink-40 font-medium tracking-wide">
                     <span className="w-1 h-1 rounded-full bg-gold" />
                     {item}
                   </span>
@@ -127,45 +146,36 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 1.5 }}
           >
             <span className="text-[10px] font-mono uppercase tracking-widest text-ink-40">Scroll</span>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              className="text-gold w-scroll-indicator"
-            >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gold w-scroll-indicator">
               <path d="M12 5v14M5 12l7 7 7-7" />
             </svg>
           </motion.div>
         </section>
 
-        {/* ─── 2. How It Works (lys) ─── */}
-        <section className="w-section-lg bg-surface-warm">
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* 2. SLIK FUNGERER DET — 3 steg, massiv whitespace                 */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-28 md:py-40 bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="text-center mb-6">
+              <div className="text-center mb-20">
                 <SectionLabel>{HOW_IT_WORKS.eyebrow}</SectionLabel>
-                <h2 className="w-heading-lg mt-4">{HOW_IT_WORKS.heading}</h2>
+                <h2 className="w-heading-lg mt-5">{HOW_IT_WORKS.heading}</h2>
+                <p className="text-ink-50 max-w-xl mx-auto mt-5 text-lg leading-relaxed">
+                  {HOW_IT_WORKS.description}
+                </p>
               </div>
             </RevealOnScroll>
 
-            <RevealOnScroll delay={0.1}>
-              <p className="text-ink-50 max-w-2xl mx-auto text-center leading-relaxed mb-16">
-                {HOW_IT_WORKS.description}
-              </p>
-            </RevealOnScroll>
-
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 max-w-4xl mx-auto">
               {HOW_IT_WORKS.steps.map((step) => (
                 <StaggerItem key={step.number}>
                   <div className="text-center">
-                    <span className="inline-block font-mono text-4xl font-bold text-gold-muted mb-4">
+                    <span className="inline-block font-display text-5xl md:text-6xl font-bold text-ink-10 mb-5">
                       {step.number}
                     </span>
-                    <h3 className="w-heading-sm mb-3">{step.title}</h3>
-                    <p className="text-sm text-ink-50 leading-relaxed">{step.description}</p>
+                    <h3 className="font-display text-lg font-semibold text-ink-90 mb-3">{step.title}</h3>
+                    <p className="text-sm text-ink-50 leading-relaxed max-w-xs mx-auto">{step.description}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -173,90 +183,197 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 3. Foundation Test (intro) ─── */}
-        <section id="start" className="w-section bg-ink-90">
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* 3. FOUNDATION TEST — Inngangspunkt, lav terskel                  */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <section id="start" className="relative overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
+            {/* Bilde */}
+            <div className="relative h-72 lg:h-auto">
+              <Image
+                src="/images/sections/instruksjon.jpg"
+                alt="Golf coaching session"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
+
+            {/* Innhold */}
+            <div className="bg-ink-90 flex items-center p-10 md:p-16 lg:p-20">
+              <RevealOnScroll>
+                <div className="max-w-lg">
+                  <span className="inline-block bg-gold/20 text-gold text-[10px] font-mono uppercase tracking-[0.15em] px-4 py-1.5 rounded-full mb-6">
+                    {FOUNDATION_TEST.tagline}
+                  </span>
+                  <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+                    {FOUNDATION_TEST.name}
+                  </h2>
+                  <p className="text-ink-30 text-lg leading-relaxed mb-8">{FOUNDATION_TEST.description}</p>
+
+                  <div className="grid grid-cols-2 gap-3 mb-10">
+                    {FOUNDATION_TEST.includes.map((item) => (
+                      <div key={item} className="flex items-center gap-2.5">
+                        <CheckIcon className="text-gold shrink-0" />
+                        <span className="text-sm text-ink-20">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex items-end gap-6">
+                    <div>
+                      <span className="font-display text-4xl font-bold text-white">{FOUNDATION_TEST.price} kr</span>
+                      <p className="text-xs text-ink-40 mt-1">{FOUNDATION_TEST.refundNote}</p>
+                    </div>
+                    <a href={BOOKING_URL} className="w-btn w-btn-gold shrink-0">
+                      Book nå
+                    </a>
+                  </div>
+                </div>
+              </RevealOnScroll>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* 4. PRIS-SAMMENLIGNING — Flex vs Abonnement (pris-psykologi)      */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-28 md:py-40 bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="max-w-3xl mx-auto text-center">
-                <span className="inline-block bg-gold text-white text-[10px] font-mono uppercase tracking-[0.15em] px-4 py-1.5 rounded-full mb-6">
-                  {FOUNDATION_TEST.tagline}
-                </span>
-                <h2 className="w-heading-lg text-white mb-4">{FOUNDATION_TEST.name}</h2>
-                <p className="text-ink-30 text-lg mb-8">{FOUNDATION_TEST.description}</p>
+              <div className="text-center mb-16">
+                <SectionLabel>Sammenligning</SectionLabel>
+                <h2 className="w-heading-lg mt-5">Enkelttime eller abonnement?</h2>
+                <p className="text-ink-50 max-w-lg mx-auto mt-4 text-lg">
+                  De fleste sparer over 60% med abonnement sammenlignet med enkelttimer.
+                </p>
+              </div>
+            </RevealOnScroll>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                  {FOUNDATION_TEST.includes.map((item) => (
-                    <div key={item} className="bg-ink-80 rounded-lg p-4">
-                      <CheckIcon className="text-gold mx-auto mb-2" />
-                      <p className="text-sm text-ink-20">{item}</p>
-                    </div>
-                  ))}
+            <RevealOnScroll delay={0.1}>
+              <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Flex */}
+                <div className="bg-white rounded-2xl p-8 border border-ink-10">
+                  <p className="text-xs font-mono uppercase tracking-wider text-ink-40 mb-4">Enkeltsesjoner</p>
+                  <h3 className="font-display text-xl font-semibold text-ink-90 mb-2">AK Flex</h3>
+                  <p className="font-display text-3xl font-bold text-ink-80 mb-6">
+                    fra 1 500 <span className="text-base font-normal text-ink-40">kr/time</span>
+                  </p>
+                  <ul className="space-y-3">
+                    {[
+                      { ok: true, text: "Ingen binding" },
+                      { ok: true, text: "50 eller 90 min per sesjon" },
+                      { ok: true, text: "Coaching-notater etterpå" },
+                      { ok: false, text: "Ingen spillerportal" },
+                      { ok: false, text: "Ingen treningsplan" },
+                      { ok: false, text: "Ingen selvbooking" },
+                    ].map((item) => (
+                      <li key={item.text} className="flex items-start gap-2.5 text-sm">
+                        {item.ok ? (
+                          <CheckIcon className="shrink-0 mt-0.5 text-ink-30" />
+                        ) : (
+                          <XIcon className="shrink-0 mt-0.5 text-ink-20" />
+                        )}
+                        <span className={item.ok ? "text-ink-60" : "text-ink-30"}>{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                <div className="flex flex-col items-center gap-4">
-                  <p className="font-mono text-3xl font-bold text-gold">
-                    {FOUNDATION_TEST.price} <span className="text-lg font-normal">kr</span>
+                {/* Abonnement */}
+                <div className="bg-ink-90 rounded-2xl p-8 border-2 border-gold/40 relative">
+                  <div className="absolute -top-3 right-8">
+                    <span className="bg-gold text-ink-100 text-[10px] font-mono uppercase tracking-wider px-3 py-1 rounded-full font-semibold">
+                      Spar 67%
+                    </span>
+                  </div>
+                  <p className="text-xs font-mono uppercase tracking-wider text-gold/70 mb-4">Abonnement</p>
+                  <h3 className="font-display text-xl font-semibold text-white mb-2">AK Performance</h3>
+                  <p className="font-display text-3xl font-bold text-gold mb-1">
+                    fra 500 <span className="text-base font-normal text-gold/60">kr/økt</span>
                   </p>
-                  <p className="text-ink-40 text-sm max-w-md">{FOUNDATION_TEST.refundNote}</p>
-                  <a href={BOOKING_URL} className="w-btn w-btn-gold">
-                    Book Foundation Test
-                  </a>
+                  <p className="text-xs text-ink-40 mb-6">Performance Pro: 4 økter/mnd = 2 000 kr</p>
+                  <ul className="space-y-3">
+                    {[
+                      "Ingen binding — si opp når som helst",
+                      "Jevnlig coaching med fast frekvens",
+                      "Full spillerportal med treningsplan",
+                      "TrackMan-data i din profil",
+                      "Selvbooking via appen",
+                      "AI-analyse og øvelsesbank",
+                    ].map((text) => (
+                      <li key={text} className="flex items-start gap-2.5 text-sm">
+                        <CheckIcon className="shrink-0 mt-0.5 text-gold" />
+                        <span className="text-ink-20">{text}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </RevealOnScroll>
           </div>
         </section>
 
-        {/* ─── 4. Packages (lys) ─── */}
-        <section id="packages" className="w-section-lg bg-surface-warm">
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* 5. COACHING-PAKKER — Performance & Performance Pro                */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <section id="packages" className="py-28 md:py-40 bg-white">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="text-center mb-12">
-                <SectionLabel>The Foundation Method</SectionLabel>
-                <h2 className="w-heading-lg mt-4">Tre nivaer. Ett system.</h2>
+              <div className="text-center mb-16">
+                <SectionLabel>Velg din pakke</SectionLabel>
+                <h2 className="w-heading-lg mt-5">To nivåer. Ingen bindingstid.</h2>
                 <p className="text-ink-50 max-w-xl mx-auto mt-4">
-                  Alle abonnement inkluderer gruppetrening, individuelle check-ins og full tilgang til spillerportalen. Ingen bindingstid.
+                  Begge inkluderer full spillerportal, treningsplan og TrackMan-data. Oppgrader eller si opp når som helst.
                 </p>
               </div>
             </RevealOnScroll>
 
-            {/* Subscription packages */}
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
               {COACHING_PACKAGES.map((pkg) => (
                 <StaggerItem key={pkg.name}>
                   <div
-                    className={`rounded-2xl flex flex-col h-full transition-all duration-400 ${
+                    className={`rounded-3xl flex flex-col h-full transition-all duration-300 ${
                       pkg.highlighted
-                        ? "bg-ink-90 text-white border-2 border-gold/50 shadow-[0_8px_30px_rgba(184,151,92,0.3)] relative hover:border-gold/70 hover:-translate-y-2 hover:shadow-2xl md:scale-[1.03] md:-my-2"
-                        : "bg-white border border-ink-10 hover:border-ink-20 hover:shadow-lg hover:-translate-y-1"
+                        ? "bg-ink-90 text-white border-2 border-gold/40 relative shadow-[0_8px_40px_rgba(184,151,92,0.2)] hover:shadow-[0_12px_50px_rgba(184,151,92,0.3)] hover:-translate-y-1"
+                        : "bg-surface-warm border border-ink-10 hover:border-ink-20 hover:shadow-lg hover:-translate-y-1"
                     }`}
                   >
                     {pkg.highlighted && (
-                      <div className="h-1 bg-gradient-to-r from-gold via-gold-light to-gold rounded-t-2xl -mx-[1px] -mt-[1px]" />
+                      <div className="absolute -top-3 left-8">
+                        <span className="bg-gold text-ink-100 text-[10px] font-mono uppercase tracking-wider px-4 py-1 rounded-full font-semibold">
+                          Mest populær
+                        </span>
+                      </div>
                     )}
 
-                    <div className="p-8 flex flex-col flex-1">
-                      {pkg.highlighted && (
-                        <span className="absolute -top-3 left-8 bg-gold text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full w-badge-glow">
-                          Mest populaer
-                        </span>
-                      )}
-
-                      <h3 className={`font-display text-xl font-semibold mb-1 ${pkg.highlighted ? "text-white" : "text-ink-90"}`}>
+                    <div className="p-10 flex flex-col flex-1">
+                      <h3 className={`font-display text-2xl font-bold mb-2 ${pkg.highlighted ? "text-white" : "text-ink-90"}`}>
                         {pkg.name}
                       </h3>
-                      <p className={`font-mono text-2xl font-bold mb-1 ${pkg.highlighted ? "text-gold" : "text-gold-text"}`}>
-                        {pkg.price}
-                        <span className="text-sm font-normal ml-1">{pkg.period}</span>
+
+                      <div className="mb-2">
+                        <span className={`font-display text-4xl font-bold ${pkg.highlighted ? "text-gold" : "text-ink-80"}`}>
+                          {pkg.price}
+                        </span>
+                        <span className={`text-sm ml-1 ${pkg.highlighted ? "text-ink-40" : "text-ink-50"}`}>
+                          {pkg.period}
+                        </span>
+                      </div>
+
+                      {/* Pris per økt beregning */}
+                      <p className={`text-xs font-mono mb-6 ${pkg.highlighted ? "text-gold/60" : "text-ink-40"}`}>
+                        = {pkg.highlighted ? "500" : "800"} kr per økt
                       </p>
-                      <p className={`text-sm leading-relaxed mb-6 ${pkg.highlighted ? "text-ink-30" : "text-ink-50"}`}>
+
+                      <p className={`text-sm leading-relaxed mb-8 ${pkg.highlighted ? "text-ink-30" : "text-ink-50"}`}>
                         {pkg.description}
                       </p>
 
-                      <ul className="space-y-3 mb-6 flex-1">
+                      <ul className="space-y-3 mb-8 flex-1">
                         {pkg.features.map((feature) => (
                           <li key={feature} className="flex items-start gap-2.5 text-sm">
-                            <CheckIcon className="shrink-0 mt-0.5 text-gold" />
+                            <CheckIcon className={`shrink-0 mt-0.5 ${pkg.highlighted ? "text-gold" : "text-gold-text"}`} />
                             <span className={pkg.highlighted ? "text-ink-20" : "text-ink-60"}>
                               {feature}
                             </span>
@@ -264,17 +381,9 @@ export default function HomePage() {
                         ))}
                       </ul>
 
-                      {pkg.whoIsItFor && (
-                        <p className={`text-xs italic mb-6 ${pkg.highlighted ? "text-ink-40" : "text-ink-50"}`}>
-                          {pkg.whoIsItFor}
-                        </p>
-                      )}
-
                       <a
                         href={BOOKING_URL}
-                        className={`w-btn text-center ${
-                          pkg.highlighted ? "w-btn-gold" : "w-btn-primary"
-                        }`}
+                        className={`w-btn text-center ${pkg.highlighted ? "w-btn-gold w-btn-glow" : "w-btn-primary"}`}
                       >
                         Kom i gang
                       </a>
@@ -284,34 +393,29 @@ export default function HomePage() {
               ))}
             </StaggerContainer>
 
-            {/* Flex packages */}
+            {/* Flex alternativ */}
             <RevealOnScroll>
-              <div className="text-center mb-8">
-                <h3 className="w-heading-md">Ikke klar for abonnement?</h3>
-                <p className="text-ink-50 mt-2">Prov en enkeltsesjon uten binding.</p>
+              <div className="text-center mt-20 mb-10">
+                <h3 className="font-display text-xl font-semibold text-ink-90">Ikke klar for abonnement?</h3>
+                <p className="text-ink-50 mt-2">Prøv en enkeltsesjon uten binding.</p>
               </div>
             </RevealOnScroll>
 
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
               {FLEX_PACKAGES.map((pkg) => (
                 <StaggerItem key={pkg.name}>
-                  <div className="w-card flex flex-col h-full">
-                    <div className="flex items-baseline justify-between mb-2">
-                      <h4 className="font-display text-lg font-semibold text-ink-90">{pkg.name}</h4>
-                      <span className="font-mono text-sm text-ink-50">{pkg.duration}</span>
+                  <div className="bg-surface-warm rounded-2xl p-6 border border-ink-05 hover:border-ink-10 transition-colors">
+                    <div className="flex items-baseline justify-between mb-1">
+                      <h4 className="font-display text-base font-semibold text-ink-90">{pkg.name}</h4>
+                      <span className="text-xs text-ink-40 font-mono">{pkg.duration}</span>
                     </div>
-                    <p className="font-mono text-2xl font-bold text-gold-text mb-2">
+                    <p className="font-display text-xl font-bold text-ink-80 mb-2">
                       {pkg.price}
-                      <span className="text-sm font-normal ml-1">{pkg.period}</span>
+                      <span className="text-sm font-normal text-ink-40 ml-1">{pkg.period}</span>
                     </p>
-                    <p className="text-sm text-ink-50 leading-relaxed mb-6 flex-1">
-                      {pkg.description}
-                    </p>
-                    <a
-                      href={BOOKING_URL}
-                      className="w-btn w-btn-ghost text-center"
-                    >
-                      Book na
+                    <p className="text-sm text-ink-50 leading-relaxed mb-4">{pkg.description}</p>
+                    <a href={BOOKING_URL} className="w-btn w-btn-ghost text-center w-full text-sm">
+                      Book nå
                     </a>
                   </div>
                 </StaggerItem>
@@ -320,25 +424,27 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 4. Portal Features (mork) ─── */}
-        <section className="w-section-lg bg-ink-100 w-section-dark pt-28">
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* 6. SPILLERPORTALEN — Hva du får som medlem                       */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-28 md:py-40 bg-ink-100">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="text-center mb-12">
+              <div className="text-center mb-16">
                 <SectionLabel>Spillerportalen</SectionLabel>
-                <h2 className="w-heading-lg text-white mt-4">
-                  Din treningsplattform mellom sesjonene.
+                <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white mt-5 tracking-tight">
+                  Tren smartere mellom øktene.
                 </h2>
-                <p className="text-ink-40 max-w-lg mx-auto mt-4">
-                  Alle coaching-pakker inkluderer full tilgang til spillerportalen med treningsplan, statistikk og ovelsesbank.
+                <p className="text-ink-40 max-w-lg mx-auto mt-4 text-lg">
+                  Alle coaching-pakker inkluderer full tilgang til spillerportalen med treningsplan, statistikk og øvelsesbank.
                 </p>
               </div>
             </RevealOnScroll>
 
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {PORTAL_FEATURES.map((feature) => (
                 <StaggerItem key={feature.title}>
-                  <div className="w-card-dark p-6">
+                  <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 hover:bg-white/[0.06] hover:border-white/[0.1] transition-all duration-300">
                     <h3 className="font-display text-base font-semibold text-white mb-2">
                       {feature.title}
                     </h3>
@@ -352,93 +458,19 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 5. Drop-in vs Abonnement (lys) ─── */}
-        <section className="w-section-lg bg-surface-warm w-section-light-fade pt-28">
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* 7. FAQ                                                            */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <section id="faq" className="py-28 md:py-40 bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="max-w-2xl mx-auto text-center">
-                <SectionLabel>Sammenligning</SectionLabel>
-                <h2 className="w-heading-lg mt-4 mb-6">Enkelttime eller abonnement?</h2>
+              <div className="text-center mb-16">
+                <SectionLabel>Spørsmål og svar</SectionLabel>
+                <h2 className="w-heading-lg mt-5">Ofte stilte spørsmål</h2>
               </div>
             </RevealOnScroll>
 
-            <RevealOnScroll delay={0.15}>
-              <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Flex */}
-                <div className="w-card">
-                  <h3 className="w-heading-sm mb-4">AK Flex (enkeltsesjoner)</h3>
-                  <ul className="space-y-3 text-sm text-ink-60">
-                    <li className="flex items-start gap-2.5">
-                      <CheckIcon className="shrink-0 mt-0.5 text-gold" />
-                      <span>Ingen binding eller abonnement</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <CheckIcon className="shrink-0 mt-0.5 text-gold" />
-                      <span>50 eller 90 minutter per sesjon</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <CheckIcon className="shrink-0 mt-0.5 text-gold" />
-                      <span>Coaching-notater i appen etterpaa</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5 text-ink-30">
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                      </svg>
-                      <span className="text-ink-50">Ingen spillerportal-tilgang</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5 text-ink-30">
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                      </svg>
-                      <span className="text-ink-50">Ingen treningsplan mellom sesjonene</span>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Subscription */}
-                <div className="w-card border-gold/20">
-                  <h3 className="w-heading-sm mb-4">AK Performance (abonnement)</h3>
-                  <ul className="space-y-3 text-sm text-ink-60">
-                    <li className="flex items-start gap-2.5">
-                      <CheckIcon className="shrink-0 mt-0.5 text-gold" />
-                      <span>Jevnlig coaching med fast frekvens</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <CheckIcon className="shrink-0 mt-0.5 text-gold" />
-                      <span>Full spillerportal med treningsplan</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <CheckIcon className="shrink-0 mt-0.5 text-gold" />
-                      <span>TrackMan-data logget i profilen</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <CheckIcon className="shrink-0 mt-0.5 text-gold" />
-                      <span>Selvbooking via appen</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <CheckIcon className="shrink-0 mt-0.5 text-gold" />
-                      <span>Ingen bindingstid</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </RevealOnScroll>
-          </div>
-        </section>
-
-        {/* ─── 6. FAQ (cream) ─── */}
-        <section id="faq" className="w-section-lg bg-surface-cream">
-          <div className="w-container">
-            <RevealOnScroll>
-              <div className="text-center mb-12">
-                <SectionLabel>Sporsmal og svar</SectionLabel>
-                <h2 className="w-heading-lg mt-4">Ofte stilte sporsmal</h2>
-              </div>
-            </RevealOnScroll>
-
-            <RevealOnScroll delay={0.15}>
+            <RevealOnScroll delay={0.1}>
               <div className="max-w-2xl mx-auto">
                 <FAQAccordion items={COACHING_FAQ} />
               </div>
@@ -446,23 +478,27 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 7. Team (lys) ─── */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* 8. TEAM                                                           */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
         <TeamSection />
 
-        {/* ─── 8. Kontakt ─── */}
-        <section id="apply" className="w-section-lg bg-surface-cream">
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* 9. KONTAKT / CTA                                                  */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <section id="apply" className="py-28 md:py-40 bg-surface-warm">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="text-center mb-12">
+              <div className="text-center mb-16">
                 <SectionLabel>Ta kontakt</SectionLabel>
-                <h2 className="w-heading-lg mt-4 mb-4">Start med en uforpliktende samtale.</h2>
-                <p className="text-ink-50 max-w-lg mx-auto">
-                  Fortell oss om dine mal, sa finner vi ut hvordan vi kan hjelpe deg videre.
+                <h2 className="w-heading-lg mt-5 mb-4">Klar for å starte?</h2>
+                <p className="text-ink-50 max-w-md mx-auto text-lg">
+                  Fortell oss om dine mål, så finner vi ut hvordan vi kan hjelpe deg videre.
                 </p>
               </div>
             </RevealOnScroll>
 
-            <RevealOnScroll delay={0.2}>
+            <RevealOnScroll delay={0.15}>
               <ApplicationForm />
             </RevealOnScroll>
           </div>
