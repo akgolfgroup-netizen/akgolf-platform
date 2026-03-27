@@ -161,6 +161,14 @@ const vatAmount = Math.round((price * vatRate) / 100);
 
 **Fikset 2026-03-26:** 9 filer rettet — fjernet feilaktig `/100` i visning, lagt til `* 100` for Stripe.
 
+## 16. Aldri lag separat globals.css for portal
+
+**Problem:** Portal hadde egen `app/portal/globals.css` som importerte Tailwind dobbelt, overskrev font (Inter i stedet for Manrope), og kolliderte med rot-CSS-ens `--portal-*` variabler.
+
+**Løsning:** Én enkelt `app/globals.css` for hele appen. Portal-tokens (`--portal-*`), shadcn-variabler, bento-grid og alle utilities ligger i root CSS. Portal-layout importerer IKKE egen CSS.
+
+**Regel:** Aldri lag `globals.css` i undermapper. Alt portal-spesifikt CSS legges i `app/globals.css` under seksjonen "Portal Dark Theme Tokens".
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer
