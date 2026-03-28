@@ -30,6 +30,8 @@ export async function proxy(request: NextRequest) {
       !pathname.startsWith("/_next") &&
       !pathname.startsWith("/favicon") &&
       !pathname.startsWith("/icon") &&
+      !pathname.startsWith("/portal") &&
+      !pathname.startsWith("/auth") &&
       pathname !== "/maintenance"
     ) {
       return NextResponse.rewrite(new URL("/maintenance", request.url));
