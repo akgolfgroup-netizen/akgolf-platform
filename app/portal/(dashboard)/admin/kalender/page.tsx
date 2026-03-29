@@ -3,7 +3,7 @@ import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { getInstructors } from "./actions";
 import { AdminCalendar } from "@/components/portal/admin/admin-calendar";
-import { ADMIN_CONTENT } from "@/lib/website-constants";
+import { Calendar } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -16,14 +16,30 @@ export default async function AdminCalendarPage() {
   const instructors = await getInstructors();
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-[var(--color-snow)]">Kalender</h1>
-        <p className="text-sm text-[var(--color-ink-40)] mt-1">
-          Oversikt over alle bookinger
-        </p>
+    <div className="min-h-screen bg-gradient-to-br from-[#F8F8FC] via-[#F0F4F8] to-[#F5F5F7]">
+      <div className="max-w-[1600px] mx-auto p-6">
+        {/* Header */}
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--apple-admin-accent)] to-[var(--apple-admin-accent-dark)] flex items-center justify-center shadow-lg">
+              <Calendar className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em]" style={{ fontFamily: "var(--font-display)" }}>
+                Kalender
+              </h1>
+              <p className="text-[15px] text-[var(--apple-gray-500)]">
+                Oversikt over alle bookinger
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Calendar Card */}
+        <div className="rounded-2xl bg-white/70 backdrop-blur-xl border border-white/50 shadow-[var(--shadow-card)] p-6">
+          <AdminCalendar instructors={instructors} />
+        </div>
       </div>
-      <AdminCalendar instructors={instructors} />
     </div>
   );
 }

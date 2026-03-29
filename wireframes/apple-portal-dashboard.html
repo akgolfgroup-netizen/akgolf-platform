@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Portal Dashboard (Apple Quality)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      /* Typography */
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', monospace;
+
+      /* Spacing - 8pt grid */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+
+      /* Colors */
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F7;
+      --gray-200: #E8E8ED;
+      --gray-300: #D2D2D7;
+      --gray-400: #AEAEB2;
+      --gray-500: #8E8E93;
+      --gray-600: #636366;
+      --gray-700: #48484A;
+      --gray-800: #3A3A3C;
+      --gray-900: #2C2C2E;
+      --gray-950: #1D1D1F;
+
+      --gold-50: #FDF8F0;
+      --gold-100: #F8EDDB;
+      --gold-200: #F0D9B5;
+      --gold-300: #E5C089;
+      --gold-400: #D4A35C;
+      --gold-500: #B8975C;
+      --gold-600: #9A7B47;
+      --gold-700: #7A6138;
+
+      --success: #34C759;
+      --success-light: #D1FAE5;
+      --warning: #FF9500;
+      --warning-light: #FEF3C7;
+      --error: #FF3B30;
+      --info: #007AFF;
+      --info-light: #DBEAFE;
+
+      /* Elevation - Layered shadows for depth */
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-gold: 0 4px 24px rgba(184, 151, 92, 0.2);
+
+      /* Premium layered shadows */
+      --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.02);
+      --shadow-card-hover: 0 4px 8px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.08), 0 24px 48px rgba(0,0,0,0.04);
+      --shadow-glow-gold: 0 4px 16px rgba(184, 151, 92, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      --shadow-glow-gold-hover: 0 8px 24px rgba(184, 151, 92, 0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+
+      /* Radius */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-full: 9999px;
+
+      /* Animation */
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-system);
+      background: var(--gray-950);
+      color: var(--gray-50);
+      line-height: 1.5;
+    }
+
+    /* === LAYOUT === */
+    .portal {
+      display: grid;
+      display: block;
+      min-height: 100vh;
+    }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      background: linear-gradient(180deg, #2C2C2E 0%, #1D1D1F 100%);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      width: 260px;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding-bottom: var(--space-6);
+      margin-bottom: var(--space-6);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--gold-500);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .logo-text {
+      font-size: 17px;
+      font-weight: 600;
+      color: white;
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-400);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      text-decoration: none;
+      position: relative;
+    }
+
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gold-500);
+      transition: all 0.3s ease;
+      border-radius: 1px;
+    }
+
+    .nav-item:hover::after {
+      width: 80%;
+      left: 10%;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.04);
+      color: white;
+    }
+
+    .nav-item.active {
+      background: rgba(184, 151, 92, 0.12);
+      color: var(--gold-400);
+    }
+
+    .nav-item i { width: 20px; height: 20px; stroke-width: 1.75; }
+
+    .nav-section {
+      margin-top: var(--space-8);
+      padding-top: var(--space-6);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-600);
+      padding: 0 var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: var(--space-6);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background var(--duration-fast) var(--ease-smooth);
+    }
+
+    .user-card:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--gold-300) 0%, var(--gold-500) 100%);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: white;
+      box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.2);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .user-card:hover .user-avatar {
+      box-shadow: 0 0 0 4px rgba(184, 151, 92, 0.3), 0 0 16px rgba(184, 151, 92, 0.2);
+    }
+
+    .user-info { flex: 1; }
+    .user-name { font-size: 14px; font-weight: 500; color: white; }
+    .user-tier { font-size: 12px; color: var(--gold-400); }
+
+    /* === MAIN === */
+    .main {
+      margin-left: 260px;
+      background: linear-gradient(135deg, #F8F8FC 0%, #F0F4F8 50%, #F5F5F7 100%);
+      min-height: 100vh;
+      padding-right: var(--space-4);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .main::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .main-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-10) var(--space-8);
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* === HEADER === */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--space-10);
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    .header-content h1 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gray-950);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-1);
+    }
+
+    .header-content p {
+      font-size: 15px;
+      color: var(--gray-500);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      font-family: var(--font-system);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .btn-primary {
+      background: var(--gold-500);
+      color: white;
+      box-shadow: var(--shadow-glow-gold);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-600);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow-gold-hover);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--gray-700);
+      border: 1px solid var(--gray-200);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-100);
+      border-color: var(--gray-300);
+    }
+
+    .btn i { width: 18px; height: 18px; stroke-width: 2; }
+
+    /* === STATS GRID === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 0;
+      box-shadow: var(--shadow-card);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .stat-card.featured {
+      background: linear-gradient(135deg, var(--gold-50) 0%, white 60%);
+      border-color: var(--gold-200);
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+
+    .stat-label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-500);
+    }
+
+    .stat-label i { width: 16px; height: 16px; stroke-width: 2; }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gray-950) 0%, var(--gray-700) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-unit {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--gray-400);
+      margin-left: var(--space-1);
+    }
+
+    .stat-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      margin-top: var(--space-3);
+      font-size: 13px;
+      font-weight: 500;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+
+    .stat-trend.positive {
+      background: var(--success-light);
+      color: #059669;
+    }
+
+    .stat-trend.negative {
+      background: #FEE2E2;
+      color: #DC2626;
+    }
+
+    .stat-trend i { width: 14px; height: 14px; }
+
+    /* === BENTO GRID === */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-4);
+      overflow: visible;
+      min-width: 0;
+    }
+
+    .bento-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 0;
+      box-shadow: var(--shadow-card);
+    }
+
+    .bento-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .bento-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-5) var(--space-6);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .bento-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .bento-card-action {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gold-600);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .bento-card-action:hover { color: var(--gold-700); }
+    .bento-card-action i { width: 14px; height: 14px; }
+
+    .bento-card-body {
+      padding: var(--space-6);
+    }
+
+    /* Next Session - Featured */
+    .next-session {
+      grid-column: span 8;
+    }
+
+    .next-session .bento-card-body {
+      display: flex;
+      gap: var(--space-6);
+      align-items: flex-start;
+    }
+
+    .session-date {
+      width: 80px;
+      height: 80px;
+      background: var(--gold-50);
+      border: 1px solid var(--gold-200);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .session-date-day {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gold-600);
+      line-height: 1;
+    }
+
+    .session-date-month {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .session-info { flex: 1; min-width: 0; }
+
+    .session-type {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gold-600);
+      margin-bottom: var(--space-2);
+    }
+
+    .session-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-950);
+      margin-bottom: var(--space-3);
+    }
+
+    .session-meta {
+      display: flex;
+      gap: var(--space-5);
+      flex-wrap: wrap;
+    }
+
+    .session-meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 14px;
+      color: var(--gray-500);
+    }
+
+    .session-meta-item i { width: 16px; height: 16px; color: var(--gray-400); }
+
+    /* Weather Card */
+    .weather-card {
+      grid-column: span 4;
+    }
+
+    .weather-main {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    .weather-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #FEF3C7 0%, #FBBF24 100%);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .weather-icon i { width: 28px; height: 28px; color: #92400E; }
+
+    .weather-temp {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gray-950);
+      line-height: 1;
+    }
+
+    .weather-condition {
+      font-size: 14px;
+      color: var(--gray-500);
+    }
+
+    .weather-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background: var(--success-light);
+      color: #059669;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-5);
+    }
+
+    .weather-badge i { width: 14px; height: 14px; }
+
+    .weather-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+    }
+
+    .weather-detail {
+      text-align: center;
+      padding: var(--space-3);
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+    }
+
+    .weather-detail-icon {
+      width: 20px;
+      height: 20px;
+      margin: 0 auto var(--space-2);
+      color: var(--gray-400);
+    }
+
+    .weather-detail-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .weather-detail-label {
+      font-size: 11px;
+      color: var(--gray-500);
+    }
+
+    /* Week Calendar */
+    .week-calendar {
+      grid-column: span 8;
+    }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: var(--space-2);
+    }
+
+    .week-day {
+      text-align: center;
+      padding: var(--space-4) var(--space-2);
+      border-radius: var(--radius-lg);
+      background: var(--gray-50);
+      transition: all var(--duration-fast) var(--ease-smooth);
+      cursor: pointer;
+      position: relative;
+      min-width: 0;
+    }
+
+    .week-day:hover {
+      background: var(--gray-100);
+    }
+
+    .week-day.today {
+      background: var(--gold-50);
+      border: 2px solid var(--gold-400);
+    }
+
+    .week-day.trained {
+      background: var(--success-light);
+    }
+
+    .week-day.has-booking::after {
+      content: '';
+      position: absolute;
+      top: var(--space-2);
+      right: var(--space-2);
+      width: 8px;
+      height: 8px;
+      background: var(--info);
+      border-radius: var(--radius-full);
+    }
+
+    .week-day-name {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gray-500);
+      margin-bottom: var(--space-2);
+    }
+
+    .week-day.today .week-day-name { color: var(--gold-600); }
+
+    .week-day-number {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: var(--space-2);
+    }
+
+    .week-day.today .week-day-number { color: var(--gold-700); }
+
+    .week-day-status {
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .week-day-status i { width: 16px; height: 16px; }
+
+    /* Checklist */
+    .checklist {
+      grid-column: span 4;
+    }
+
+    .checklist-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .checklist-item:hover {
+      background: var(--gray-100);
+    }
+
+    .checklist-item.completed {
+      opacity: 0.6;
+    }
+
+    .checklist-checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--gray-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .checklist-item.completed .checklist-checkbox {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .checklist-checkbox i {
+      width: 14px;
+      height: 14px;
+      color: white;
+      opacity: 0;
+    }
+
+    .checklist-item.completed .checklist-checkbox i {
+      opacity: 1;
+    }
+
+    .checklist-content { flex: 1; min-width: 0; }
+
+    .checklist-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-900);
+    }
+
+    .checklist-item.completed .checklist-title {
+      text-decoration: line-through;
+      color: var(--gray-500);
+    }
+
+    .checklist-desc {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    .checklist-points {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold-600);
+      background: var(--gold-50);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    /* Insights */
+    .insights {
+      grid-column: span 6;
+    }
+
+    .insight-card {
+      display: flex;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-3);
+    }
+
+    .insight-card:last-child { margin-bottom: 0; }
+
+    .insight-icon {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .insight-icon i { width: 20px; height: 20px; }
+    .insight-icon.tip i { color: var(--info); }
+    .insight-icon.streak i { color: var(--warning); }
+
+    .insight-text {
+      font-size: 14px;
+      color: var(--gray-700);
+      line-height: 1.5;
+    }
+
+    /* Quick Links */
+    .quick-links {
+      grid-column: span 6;
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      text-decoration: none;
+    }
+
+    .link-card:hover {
+      background: var(--gray-100);
+      transform: translateX(4px);
+    }
+
+    .link-icon {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
+    }
+
+    .link-icon i { width: 20px; height: 20px; color: var(--gray-600); }
+
+    .link-content { flex: 1; min-width: 0; }
+
+    .link-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-900);
+    }
+
+    .link-desc {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    .link-arrow {
+      color: var(--gray-400);
+      flex-shrink: 0;
+    }
+
+    .link-card:hover .link-arrow { color: var(--gray-600); }
+
+    /* Animation */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate { animation: fadeInUp 0.5s cubic-bezier(0, 0, 0.2, 1) forwards; }
+    .delay-1 { animation-delay: 50ms; }
+    .delay-2 { animation-delay: 100ms; }
+    .delay-3 { animation-delay: 150ms; }
+    .delay-4 { animation-delay: 200ms; }
+    .delay-5 { animation-delay: 250ms; }
+    .delay-6 { animation-delay: 300ms; }
+
+    /* === RESPONSIVE BREAKPOINTS === */
+
+    /* Tablet landscape and smaller desktops */
+    @media (max-width: 1280px) {
+      .main-inner {
+        max-width: 100%;
+        padding: var(--space-8) var(--space-6);
+      }
+    }
+
+    /* Tablet */
+    @media (max-width: 1024px) {
+      .portal {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+        padding-right: 0;
+      }
+
+      .main-inner {
+        padding: var(--space-6) var(--space-4);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .bento-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .next-session {
+        grid-column: span 6;
+      }
+
+      .weather-card {
+        grid-column: span 6;
+      }
+
+      .week-calendar {
+        grid-column: span 6;
+      }
+
+      .checklist {
+        grid-column: span 6;
+      }
+
+      .insights {
+        grid-column: span 6;
+      }
+
+      .quick-links {
+        grid-column: span 6;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .header {
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .header-content h1 {
+        font-size: 24px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-3);
+      }
+
+      .stat-card {
+        padding: var(--space-4);
+      }
+
+      .stat-value {
+        font-size: 28px;
+      }
+
+      .bento-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+      }
+
+      .next-session,
+      .weather-card,
+      .week-calendar,
+      .checklist,
+      .insights,
+      .quick-links {
+        grid-column: span 1;
+      }
+
+      .next-session .bento-card-body {
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .session-date {
+        width: 60px;
+        height: 60px;
+      }
+
+      .session-date-day {
+        font-size: 24px;
+      }
+
+      .week-grid {
+        gap: var(--space-1);
+      }
+
+      .week-day {
+        padding: var(--space-3) var(--space-1);
+      }
+
+      .week-day-name {
+        font-size: 10px;
+      }
+
+      .week-day-number {
+        font-size: 16px;
+      }
+
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .weather-details {
+        gap: var(--space-2);
+      }
+
+      .weather-detail {
+        padding: var(--space-2);
+      }
+    }
+  
+    /* Responsive fixes */
+    @media (max-width: 1400px) {
+      .main-inner { max-width: 100%; padding: var(--space-8) var(--space-6); }
+    }
+    @media (max-width: 1024px) {
+      .portal { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .bento-grid { grid-template-columns: repeat(6, 1fr); }
+      .bento-card { grid-column: span 6 !important; }
+    }
+    @media (max-width: 768px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card { grid-column: span 1 !important; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">K</div>
+        <span class="logo-text">AK Golf</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active">
+          <i data-lucide="layout-dashboard"></i>
+          Dashboard
+        </a>
+        <a class="nav-item">
+          <i data-lucide="calendar"></i>
+          Bookinger
+        </a>
+        <a class="nav-item">
+          <i data-lucide="book-open"></i>
+          Treningsdagbok
+        </a>
+        <a class="nav-item">
+          <i data-lucide="bar-chart-2"></i>
+          Statistikk
+        </a>
+        <a class="nav-item">
+          <i data-lucide="target"></i>
+          Treningsplan
+        </a>
+
+        <div class="nav-section">
+          <div class="nav-section-label">Mer</div>
+          <a class="nav-item">
+            <i data-lucide="trophy"></i>
+            Achievements
+          </a>
+          <a class="nav-item">
+            <i data-lucide="history"></i>
+            Coaching-historikk
+          </a>
+          <a class="nav-item">
+            <i data-lucide="settings"></i>
+            Innstillinger
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">AK</div>
+          <div class="user-info">
+            <div class="user-name">Anders Kristiansen</div>
+            <div class="user-tier">Pro-medlem</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="main-inner">
+        <!-- Header -->
+        <header class="header animate">
+          <div class="header-content">
+            <h1>God morgen, Anders</h1>
+            <p>Fredag 28. mars 2026</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-secondary">
+              <i data-lucide="bell"></i>
+            </button>
+            <button class="btn btn-primary">
+              <i data-lucide="plus"></i>
+              Logg okt
+            </button>
+          </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card featured animate delay-1">
+            <div class="stat-header">
+              <span class="stat-label">
+                <i data-lucide="target" style="color: var(--success);"></i>
+                Handicap
+              </span>
+            </div>
+            <div class="stat-value">12.4</div>
+            <div class="stat-trend positive">
+              <i data-lucide="trending-down"></i>
+              -1.2 siste 30 dager
+            </div>
+          </div>
+
+          <div class="stat-card animate delay-2">
+            <div class="stat-header">
+              <span class="stat-label">
+                <i data-lucide="flame" style="color: var(--warning);"></i>
+                Streak
+              </span>
+            </div>
+            <div class="stat-value">7<span class="stat-unit">dager</span></div>
+            <div class="stat-trend positive">
+              <i data-lucide="trophy"></i>
+              Personlig rekord!
+            </div>
+          </div>
+
+          <div class="stat-card animate delay-3">
+            <div class="stat-header">
+              <span class="stat-label">
+                <i data-lucide="calendar" style="color: var(--info);"></i>
+                Mars
+              </span>
+            </div>
+            <div class="stat-value">12<span class="stat-unit">okter</span></div>
+            <div class="stat-trend positive">
+              <i data-lucide="trending-up"></i>
+              +4 fra forrige
+            </div>
+          </div>
+
+          <div class="stat-card animate delay-4">
+            <div class="stat-header">
+              <span class="stat-label">
+                <i data-lucide="award" style="color: var(--gold-500);"></i>
+                Achievements
+              </span>
+            </div>
+            <div class="stat-value">8<span class="stat-unit">/ 24</span></div>
+          </div>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="bento-grid">
+          <!-- Next Session -->
+          <div class="bento-card next-session animate delay-5">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Neste time</span>
+              <a href="#" class="bento-card-action">
+                Se alle bookinger
+                <i data-lucide="chevron-right"></i>
+              </a>
+            </div>
+            <div class="bento-card-body">
+              <div class="session-date">
+                <span class="session-date-day">29</span>
+                <span class="session-date-month">mar</span>
+              </div>
+              <div class="session-info">
+                <div class="session-type">Coaching</div>
+                <div class="session-title">Putting & Naerspill</div>
+                <div class="session-meta">
+                  <div class="session-meta-item">
+                    <i data-lucide="clock"></i>
+                    14:00 - 15:00
+                  </div>
+                  <div class="session-meta-item">
+                    <i data-lucide="user"></i>
+                    Anders K.
+                  </div>
+                  <div class="session-meta-item">
+                    <i data-lucide="map-pin"></i>
+                    Sarpsborg GK
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weather -->
+          <div class="bento-card weather-card animate delay-5">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Golfvar i dag</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="weather-main">
+                <div class="weather-icon">
+                  <i data-lucide="sun"></i>
+                </div>
+                <div>
+                  <div class="weather-temp">14°</div>
+                  <div class="weather-condition">Delvis skyet</div>
+                </div>
+              </div>
+              <div class="weather-badge">
+                <i data-lucide="check-circle"></i>
+                Perfekt golfvar
+              </div>
+              <div class="weather-details">
+                <div class="weather-detail">
+                  <i data-lucide="wind" class="weather-detail-icon"></i>
+                  <div class="weather-detail-value">12</div>
+                  <div class="weather-detail-label">km/t</div>
+                </div>
+                <div class="weather-detail">
+                  <i data-lucide="droplets" class="weather-detail-icon"></i>
+                  <div class="weather-detail-value">20%</div>
+                  <div class="weather-detail-label">nedbor</div>
+                </div>
+                <div class="weather-detail">
+                  <i data-lucide="thermometer" class="weather-detail-icon"></i>
+                  <div class="weather-detail-value">12°</div>
+                  <div class="weather-detail-label">foles som</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week Calendar -->
+          <div class="bento-card week-calendar animate delay-6">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Denne uken</span>
+              <a href="#" class="bento-card-action">
+                Se kalender
+                <i data-lucide="chevron-right"></i>
+              </a>
+            </div>
+            <div class="bento-card-body">
+              <div class="week-grid">
+                <div class="week-day trained">
+                  <div class="week-day-name">Man</div>
+                  <div class="week-day-number">24</div>
+                  <div class="week-day-status">
+                    <i data-lucide="check" style="color: var(--success);"></i>
+                  </div>
+                </div>
+                <div class="week-day trained">
+                  <div class="week-day-name">Tir</div>
+                  <div class="week-day-number">25</div>
+                  <div class="week-day-status">
+                    <i data-lucide="check" style="color: var(--success);"></i>
+                  </div>
+                </div>
+                <div class="week-day">
+                  <div class="week-day-name">Ons</div>
+                  <div class="week-day-number">26</div>
+                  <div class="week-day-status"></div>
+                </div>
+                <div class="week-day trained">
+                  <div class="week-day-name">Tor</div>
+                  <div class="week-day-number">27</div>
+                  <div class="week-day-status">
+                    <i data-lucide="check" style="color: var(--success);"></i>
+                  </div>
+                </div>
+                <div class="week-day today">
+                  <div class="week-day-name">Fre</div>
+                  <div class="week-day-number">28</div>
+                  <div class="week-day-status">
+                    <i data-lucide="play" style="color: var(--gold-600);"></i>
+                  </div>
+                </div>
+                <div class="week-day has-booking">
+                  <div class="week-day-name">Lor</div>
+                  <div class="week-day-number">29</div>
+                  <div class="week-day-status">
+                    <i data-lucide="calendar" style="color: var(--info);"></i>
+                  </div>
+                </div>
+                <div class="week-day">
+                  <div class="week-day-name">Son</div>
+                  <div class="week-day-number">30</div>
+                  <div class="week-day-status">
+                    <span style="font-size: 11px; color: var(--gray-400);">Hvile</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Checklist -->
+          <div class="bento-card checklist animate delay-6">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Dagens oppgaver</span>
+              <span style="font-size: 13px; color: var(--gray-500);">1/3</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="checklist-items">
+                <div class="checklist-item completed">
+                  <div class="checklist-checkbox">
+                    <i data-lucide="check"></i>
+                  </div>
+                  <div class="checklist-content">
+                    <div class="checklist-title">Sjekk treningsplanen</div>
+                    <div class="checklist-desc">Se hva som venter</div>
+                  </div>
+                  <span class="checklist-points">+10 XP</span>
+                </div>
+                <div class="checklist-item">
+                  <div class="checklist-checkbox">
+                    <i data-lucide="check"></i>
+                  </div>
+                  <div class="checklist-content">
+                    <div class="checklist-title">Logg dagens okt</div>
+                    <div class="checklist-desc">Bygg din streak</div>
+                  </div>
+                  <span class="checklist-points">+15 XP</span>
+                </div>
+                <div class="checklist-item">
+                  <div class="checklist-checkbox">
+                    <i data-lucide="check"></i>
+                  </div>
+                  <div class="checklist-content">
+                    <div class="checklist-title">Book neste time</div>
+                    <div class="checklist-desc">Personlig veiledning</div>
+                  </div>
+                  <span class="checklist-points">+25 XP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Insights -->
+          <div class="bento-card insights animate delay-6">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Personlige innsikter</span>
+              <span style="font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em;">AI-drevet</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="insight-card">
+                <div class="insight-icon tip">
+                  <i data-lucide="lightbulb"></i>
+                </div>
+                <div class="insight-text">
+                  Spillere med HCP 10-15 sparer flest slag pa putting og naerspill. Prioriter dette i treningsøktene.
+                </div>
+              </div>
+              <div class="insight-card">
+                <div class="insight-icon streak">
+                  <i data-lucide="flame"></i>
+                </div>
+                <div class="insight-text">
+                  7 dager i rad! Du har sla din personlige rekord. Fortsett slik for a na neste milepal.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="bento-card quick-links animate delay-6">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Snarveier</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="links-grid">
+                <a class="link-card">
+                  <div class="link-icon">
+                    <i data-lucide="bar-chart-2"></i>
+                  </div>
+                  <div class="link-content">
+                    <div class="link-title">Statistikk</div>
+                    <div class="link-desc">Se din utvikling</div>
+                  </div>
+                  <i data-lucide="chevron-right" class="link-arrow"></i>
+                </a>
+                <a class="link-card">
+                  <div class="link-icon">
+                    <i data-lucide="target"></i>
+                  </div>
+                  <div class="link-content">
+                    <div class="link-title">Treningsplan</div>
+                    <div class="link-desc">Ukens fokus</div>
+                  </div>
+                  <i data-lucide="chevron-right" class="link-arrow"></i>
+                </a>
+                <a class="link-card">
+                  <div class="link-icon">
+                    <i data-lucide="trophy"></i>
+                  </div>
+                  <div class="link-content">
+                    <div class="link-title">Achievements</div>
+                    <div class="link-desc">8 av 24</div>
+                  </div>
+                  <i data-lucide="chevron-right" class="link-arrow"></i>
+                </a>
+                <a class="link-card">
+                  <div class="link-icon">
+                    <i data-lucide="history"></i>
+                  </div>
+                  <div class="link-content">
+                    <div class="link-title">Historikk</div>
+                    <div class="link-desc">Siste okter</div>
+                  </div>
+                  <i data-lucide="chevron-right" class="link-arrow"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

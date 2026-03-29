@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking bekreftet | AK Golf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, sans-serif;
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F7;
+      --gray-200: #E8E8ED;
+      --gray-300: #D2D2D7;
+      --gray-400: #AEAEB2;
+      --gray-500: #8E8E93;
+      --gray-600: #636366;
+      --gray-700: #48484A;
+      --gray-800: #3A3A3C;
+      --gray-900: #2C2C2E;
+      --gray-950: #1D1D1F;
+
+      --gold-50: #FDF8F0;
+      --gold-100: #F8EDDB;
+      --gold-200: #F0D9B5;
+      --gold-400: #D4A35C;
+      --gold-500: #B8975C;
+      --gold-600: #9A7B47;
+      --gold-700: #7A6138;
+
+      --success: #34C759;
+      --success-light: #D1FAE5;
+      --info: #007AFF;
+      --info-light: #DBEAFE;
+
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-gold: 0 4px 24px rgba(184, 151, 92, 0.2);
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-full: 9999px;
+
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-premium: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+      --duration-slow: 500ms;
+
+      /* Premium Effects */
+      --shadow-gold-glow: 0 4px 16px rgba(184, 151, 92, 0.4);
+      --shadow-gold-glow-lg: 0 8px 32px rgba(184, 151, 92, 0.5);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-system);
+      background: linear-gradient(180deg, #FAFAFA 0%, #F5F5F7 100%);
+      color: var(--gray-950);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* === HEADER === */
+    .header {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: var(--space-4) var(--space-6);
+    }
+
+    .header-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--gray-950);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gray-950);
+    }
+
+    /* === MAIN CONTENT === */
+    .main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6);
+      text-align: center;
+    }
+
+    /* === SUCCESS ANIMATION === */
+    .success-icon {
+      width: 96px;
+      height: 96px;
+      background: var(--success);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-8);
+      box-shadow: 0 8px 32px rgba(52, 199, 89, 0.3);
+      animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes scaleIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .success-icon i {
+      width: 48px;
+      height: 48px;
+      color: white;
+      stroke-width: 2.5;
+    }
+
+    .success-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gray-950);
+      margin-bottom: var(--space-3);
+      letter-spacing: -0.02em;
+    }
+
+    .success-subtitle {
+      font-size: 17px;
+      color: var(--gray-600);
+      margin-bottom: var(--space-10);
+    }
+
+    /* === BOOKING CARD === */
+    .booking-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-lg);
+      text-align: left;
+      margin-bottom: var(--space-8);
+    }
+
+    .booking-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: var(--space-6);
+    }
+
+    .booking-avatar {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--gold-200) 0%, var(--gold-400) 100%);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: white;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .booking-info {
+      flex: 1;
+    }
+
+    .booking-service {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-950);
+      margin-bottom: var(--space-1);
+    }
+
+    .booking-instructor {
+      font-size: 15px;
+      color: var(--gray-600);
+    }
+
+    .booking-details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .booking-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+
+    .detail-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gray-100);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .detail-icon i {
+      width: 20px;
+      height: 20px;
+      color: var(--gray-600);
+    }
+
+    .detail-content {
+      flex: 1;
+    }
+
+    .detail-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray-400);
+      margin-bottom: var(--space-1);
+    }
+
+    .detail-value {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--gray-950);
+    }
+
+    .detail-sub {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: var(--space-1);
+    }
+
+    /* === BOOKING ID === */
+    .booking-id {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-5);
+      margin-top: var(--space-6);
+    }
+
+    .booking-id-label {
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+
+    .booking-id-value {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-700);
+      letter-spacing: 0.02em;
+    }
+
+    /* === CALENDAR BUTTONS === */
+    .calendar-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+    }
+
+    .calendar-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4);
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      text-decoration: none;
+    }
+
+    .calendar-btn:hover {
+      border-color: var(--gray-300);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .calendar-btn i {
+      width: 24px;
+      height: 24px;
+      color: var(--gray-600);
+    }
+
+    .calendar-btn span {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    /* === INFO BOXES === */
+    .info-box {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      background: var(--info-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-6);
+      text-align: left;
+    }
+
+    .info-box i {
+      width: 20px;
+      height: 20px;
+      color: var(--info);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .info-box p {
+      font-size: 14px;
+      color: var(--gray-700);
+      line-height: 1.6;
+    }
+
+    /* === ACTIONS === */
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-4) var(--space-6);
+      font-family: var(--font-system);
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--gold-500);
+      color: white;
+      box-shadow: var(--shadow-gold-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-400);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold-glow-lg);
+    }
+
+    .btn-secondary {
+      background: var(--gray-100);
+      color: var(--gray-700);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-200);
+    }
+
+    .btn i {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* === FOOTER === */
+    .footer {
+      text-align: center;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    .footer-text {
+      font-size: 14px;
+      color: var(--gray-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .footer-contact {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-6);
+    }
+
+    .footer-contact a {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 14px;
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-smooth);
+    }
+
+    .footer-contact a:hover {
+      color: var(--gray-950);
+    }
+
+    .footer-contact a i {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* === CONFETTI ANIMATION === */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: fall 3s linear forwards;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 640px) {
+      .calendar-buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-btn {
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .booking-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-contact {
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-logo">
+        <div class="logo-mark">AK</div>
+        <span class="logo-text">AK Golf</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Success Icon -->
+    <div class="success-icon">
+      <i data-lucide="check"></i>
+    </div>
+
+    <h1 class="success-title">Booking bekreftet!</h1>
+    <p class="success-subtitle">Du vil motta en bekreftelse på e-post med alle detaljer.</p>
+
+    <!-- Booking Card -->
+    <div class="booking-card">
+      <div class="booking-header">
+        <div class="booking-avatar">AK</div>
+        <div class="booking-info">
+          <div class="booking-service">Individuell coaching</div>
+          <div class="booking-instructor">med Anders Kristiansen</div>
+        </div>
+      </div>
+
+      <div class="booking-details">
+        <div class="booking-detail">
+          <div class="detail-icon">
+            <i data-lucide="calendar"></i>
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Dato & tid</div>
+            <div class="detail-value">Lørdag 28. mars 2026</div>
+            <div class="detail-sub">10:00 - 11:00 (60 min)</div>
+          </div>
+        </div>
+
+        <div class="booking-detail">
+          <div class="detail-icon">
+            <i data-lucide="map-pin"></i>
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Sted</div>
+            <div class="detail-value">AK Golf Academy</div>
+            <div class="detail-sub">Onsøyveien 12, 1621 Fredrikstad</div>
+          </div>
+        </div>
+
+        <div class="booking-detail">
+          <div class="detail-icon">
+            <i data-lucide="credit-card"></i>
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Betalt</div>
+            <div class="detail-value">995 kr</div>
+            <div class="detail-sub">Visa •••• 4242</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-id">
+        <span class="booking-id-label">Booking-ID</span>
+        <span class="booking-id-value">AKG-2026-03-2847</span>
+      </div>
+    </div>
+
+    <!-- Calendar Buttons -->
+    <div class="calendar-buttons">
+      <a href="#" class="calendar-btn">
+        <i data-lucide="calendar-plus"></i>
+        <span>Google Calendar</span>
+      </a>
+      <a href="#" class="calendar-btn">
+        <i data-lucide="apple"></i>
+        <span>Apple Calendar</span>
+      </a>
+      <a href="#" class="calendar-btn">
+        <i data-lucide="calendar"></i>
+        <span>Outlook</span>
+      </a>
+    </div>
+
+    <!-- Info Box -->
+    <div class="info-box">
+      <i data-lucide="info"></i>
+      <p>
+        Husk å møte opp 10 minutter før avtalt tid. Ta med golfsko og hansker. Køller og baller er tilgjengelig på stedet.
+      </p>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <a href="#" class="btn btn-primary">
+        <i data-lucide="user"></i>
+        <span>Gå til min portal</span>
+      </a>
+      <a href="#" class="btn btn-secondary">
+        <i data-lucide="home"></i>
+        <span>Tilbake til forsiden</span>
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-text">Har du spørsmål om din booking?</p>
+    <div class="footer-contact">
+      <a href="tel:+4790000000">
+        <i data-lucide="phone"></i>
+        <span>+47 900 00 000</span>
+      </a>
+      <a href="mailto:kontakt@akgolf.no">
+        <i data-lucide="mail"></i>
+        <span>kontakt@akgolf.no</span>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // Confetti animation
+    function createConfetti() {
+      const colors = ['#B8975C', '#D4A35C', '#34C759', '#007AFF', '#F0D9B5'];
+      const shapes = ['square', 'circle'];
+
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)] === 'circle' ? '50%' : '0';
+          confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          confetti.style.animationDelay = Math.random() * 0.5 + 's';
+          document.body.appendChild(confetti);
+
+          setTimeout(() => {
+            confetti.remove();
+          }, 5000);
+        }, i * 30);
+      }
+    }
+
+    // Trigger confetti on load
+    createConfetti();
+  </script>
+</body>
+</html>

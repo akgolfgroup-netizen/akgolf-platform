@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Mine Bookinger (Apple Quality)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      /* Typography */
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', monospace;
+
+      /* Spacing - 8pt grid */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+
+      /* Colors */
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F7;
+      --gray-200: #E8E8ED;
+      --gray-300: #D2D2D7;
+      --gray-400: #AEAEB2;
+      --gray-500: #8E8E93;
+      --gray-600: #636366;
+      --gray-700: #48484A;
+      --gray-800: #3A3A3C;
+      --gray-900: #2C2C2E;
+      --gray-950: #1D1D1F;
+
+      --gold-50: #FDF8F0;
+      --gold-100: #F8EDDB;
+      --gold-200: #F0D9B5;
+      --gold-300: #E5C089;
+      --gold-400: #D4A35C;
+      --gold-500: #B8975C;
+      --gold-600: #9A7B47;
+      --gold-700: #7A6138;
+
+      --success: #34C759;
+      --success-light: #D1FAE5;
+      --warning: #FF9500;
+      --warning-light: #FEF3C7;
+      --error: #FF3B30;
+      --error-light: #FEE2E2;
+      --info: #007AFF;
+      --info-light: #DBEAFE;
+
+      /* Elevation - Layered shadows for depth */
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-gold: 0 4px 24px rgba(184, 151, 92, 0.2);
+
+      /* Premium layered shadows */
+      --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.02);
+      --shadow-card-hover: 0 4px 8px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.08), 0 24px 48px rgba(0,0,0,0.04);
+      --shadow-glow-gold: 0 4px 16px rgba(184, 151, 92, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      --shadow-glow-gold-hover: 0 8px 24px rgba(184, 151, 92, 0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+
+      /* Radius */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-full: 9999px;
+
+      /* Animation */
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-system);
+      background: var(--gray-950);
+      color: var(--gray-50);
+      line-height: 1.5;
+    }
+
+    /* === LAYOUT === */
+    .portal {
+      display: grid;
+      display: block;
+      min-height: 100vh;
+    }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      background: linear-gradient(180deg, #2C2C2E 0%, #1D1D1F 100%);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      width: 260px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding-bottom: var(--space-6);
+      margin-bottom: var(--space-6);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--gold-500);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .logo-text {
+      font-size: 17px;
+      font-weight: 600;
+      color: white;
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-400);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      text-decoration: none;
+      position: relative;
+    }
+
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gold-500);
+      transition: all 0.3s ease;
+      border-radius: 1px;
+    }
+
+    .nav-item:hover::after {
+      width: 80%;
+      left: 10%;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.04);
+      color: white;
+    }
+
+    .nav-item.active {
+      background: rgba(184, 151, 92, 0.12);
+      color: var(--gold-400);
+    }
+
+    .nav-item i { width: 20px; height: 20px; stroke-width: 1.75; }
+
+    .nav-section {
+      margin-top: var(--space-8);
+      padding-top: var(--space-6);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-600);
+      padding: 0 var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: var(--space-6);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background var(--duration-fast) var(--ease-smooth);
+    }
+
+    .user-card:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--gold-300) 0%, var(--gold-500) 100%);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: white;
+      box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.2);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .user-card:hover .user-avatar {
+      box-shadow: 0 0 0 4px rgba(184, 151, 92, 0.3), 0 0 16px rgba(184, 151, 92, 0.2);
+    }
+
+    .user-info { flex: 1; }
+    .user-name { font-size: 14px; font-weight: 500; color: white; }
+    .user-tier { font-size: 12px; color: var(--gold-400); }
+
+    /* === MAIN === */
+    .main {
+      margin-left: 260px;
+      background: linear-gradient(135deg, #F8F8FC 0%, #F0F4F8 50%, #F5F5F7 100%);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .main::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .main-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-10) var(--space-8);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* === HEADER === */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--space-8);
+    }
+
+    .header-content h1 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gray-950);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-1);
+    }
+
+    .header-content p {
+      font-size: 15px;
+      color: var(--gray-500);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      font-family: var(--font-system);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .btn-primary {
+      background: var(--gold-500);
+      color: white;
+      box-shadow: var(--shadow-glow-gold);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-600);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow-gold-hover);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--gray-700);
+      border: 1px solid var(--gray-200);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-100);
+      border-color: var(--gray-300);
+    }
+
+    .btn i { width: 18px; height: 18px; stroke-width: 2; }
+
+    /* === FILTER TABS === */
+    .filter-tabs {
+      display: flex;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+      padding: var(--space-1);
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-200);
+      width: fit-content;
+    }
+
+    .filter-tab {
+      padding: var(--space-2) var(--space-4);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-500);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      border: none;
+      background: transparent;
+    }
+
+    .filter-tab:hover {
+      color: var(--gray-700);
+    }
+
+    .filter-tab.active {
+      background: var(--gray-950);
+      color: white;
+    }
+
+    .filter-tab .count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      margin-left: var(--space-2);
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--gray-100);
+      border-radius: var(--radius-full);
+    }
+
+    .filter-tab.active .count {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* === BOOKINGS LIST === */
+    .bookings-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .booking-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      padding: var(--space-6);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: var(--space-6);
+      align-items: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-card);
+    }
+
+    .booking-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .booking-date {
+      width: 72px;
+      height: 72px;
+      background: var(--gold-50);
+      border: 1px solid var(--gold-200);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .booking-date-day {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold-600);
+      line-height: 1;
+    }
+
+    .booking-date-month {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .booking-info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .booking-type {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gold-600);
+    }
+
+    .booking-type i {
+      width: 14px;
+      height: 14px;
+    }
+
+    .booking-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-950);
+    }
+
+    .booking-meta {
+      display: flex;
+      gap: var(--space-5);
+      flex-wrap: wrap;
+    }
+
+    .booking-meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 14px;
+      color: var(--gray-500);
+    }
+
+    .booking-meta-item i {
+      width: 16px;
+      height: 16px;
+      color: var(--gray-400);
+    }
+
+    .booking-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      align-items: flex-end;
+    }
+
+    .booking-status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+    }
+
+    .booking-status.confirmed {
+      background: var(--success-light);
+      color: #059669;
+    }
+
+    .booking-status.pending {
+      background: var(--warning-light);
+      color: #D97706;
+    }
+
+    .booking-status.completed {
+      background: var(--info-light);
+      color: #2563EB;
+    }
+
+    .booking-status.cancelled {
+      background: var(--error-light);
+      color: #DC2626;
+    }
+
+    .booking-status i {
+      width: 14px;
+      height: 14px;
+    }
+
+    .booking-action-btns {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--gray-200);
+      background: white;
+      color: var(--gray-500);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .action-btn:hover {
+      background: var(--gray-100);
+      color: var(--gray-700);
+      border-color: var(--gray-300);
+    }
+
+    .action-btn i {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* === EMPTY STATE === */
+    .empty-state {
+      text-align: center;
+      padding: var(--space-12) var(--space-8);
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--gray-200);
+    }
+
+    .empty-state-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--gray-100);
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-6);
+    }
+
+    .empty-state-icon i {
+      width: 40px;
+      height: 40px;
+      color: var(--gray-400);
+    }
+
+    .empty-state h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: var(--space-2);
+    }
+
+    .empty-state p {
+      font-size: 15px;
+      color: var(--gray-500);
+      margin-bottom: var(--space-6);
+    }
+
+    /* === SECTION DIVIDER === */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin: var(--space-8) 0 var(--space-6);
+    }
+
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+
+    .section-divider-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate { animation: fadeInUp 0.5s cubic-bezier(0, 0, 0.2, 1) forwards; }
+    .delay-1 { animation-delay: 50ms; }
+    .delay-2 { animation-delay: 100ms; }
+    .delay-3 { animation-delay: 150ms; }
+    .delay-4 { animation-delay: 200ms; }
+    .delay-5 { animation-delay: 250ms; }
+    .delay-6 { animation-delay: 300ms; }
+    .delay-7 { animation-delay: 350ms; }
+    .delay-8 { animation-delay: 400ms; }
+  
+    /* Responsive fixes */
+    @media (max-width: 1400px) {
+      .main-inner { max-width: 100%; padding: var(--space-8) var(--space-6); }
+    }
+    @media (max-width: 1024px) {
+      .portal { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .bento-grid { grid-template-columns: repeat(6, 1fr); }
+      .bento-card { grid-column: span 6 !important; }
+    }
+    @media (max-width: 768px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card { grid-column: span 1 !important; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">K</div>
+        <span class="logo-text">AK Golf</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item">
+          <i data-lucide="layout-dashboard"></i>
+          Dashboard
+        </a>
+        <a class="nav-item active">
+          <i data-lucide="calendar"></i>
+          Bookinger
+        </a>
+        <a class="nav-item">
+          <i data-lucide="book-open"></i>
+          Treningsdagbok
+        </a>
+        <a class="nav-item">
+          <i data-lucide="bar-chart-2"></i>
+          Statistikk
+        </a>
+        <a class="nav-item">
+          <i data-lucide="target"></i>
+          Treningsplan
+        </a>
+        <a class="nav-item">
+          <i data-lucide="brain"></i>
+          AI-analyse
+        </a>
+
+        <div class="nav-section">
+          <div class="nav-section-label">Mer</div>
+          <a class="nav-item">
+            <i data-lucide="user"></i>
+            Profil
+          </a>
+          <a class="nav-item">
+            <i data-lucide="users"></i>
+            Sammenligning
+          </a>
+          <a class="nav-item">
+            <i data-lucide="trophy"></i>
+            Turneringer
+          </a>
+          <a class="nav-item">
+            <i data-lucide="settings"></i>
+            Innstillinger
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">AK</div>
+          <div class="user-info">
+            <div class="user-name">Anders Kristiansen</div>
+            <div class="user-tier">Pro-medlem</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="main-inner">
+        <!-- Header -->
+        <header class="header animate">
+          <div class="header-content">
+            <h1>Mine bookinger</h1>
+            <p>Se og administrer dine coaching-timer</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-primary">
+              <i data-lucide="plus"></i>
+              Ny booking
+            </button>
+          </div>
+        </header>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs animate delay-1">
+          <button class="filter-tab active">
+            Alle <span class="count">5</span>
+          </button>
+          <button class="filter-tab">
+            Kommende <span class="count">3</span>
+          </button>
+          <button class="filter-tab">
+            Fullfort <span class="count">2</span>
+          </button>
+          <button class="filter-tab">
+            Kansellert <span class="count">0</span>
+          </button>
+        </div>
+
+        <!-- Upcoming Bookings -->
+        <div class="bookings-list">
+          <div class="booking-card animate delay-2">
+            <div class="booking-date">
+              <span class="booking-date-day">29</span>
+              <span class="booking-date-month">mar</span>
+            </div>
+            <div class="booking-info">
+              <div class="booking-type">
+                <i data-lucide="video"></i>
+                Coaching-time
+              </div>
+              <div class="booking-title">Putting & Naerspill</div>
+              <div class="booking-meta">
+                <div class="booking-meta-item">
+                  <i data-lucide="clock"></i>
+                  14:00 - 15:00
+                </div>
+                <div class="booking-meta-item">
+                  <i data-lucide="user"></i>
+                  Anders K.
+                </div>
+                <div class="booking-meta-item">
+                  <i data-lucide="map-pin"></i>
+                  Sarpsborg GK
+                </div>
+              </div>
+            </div>
+            <div class="booking-actions">
+              <div class="booking-status confirmed">
+                <i data-lucide="check-circle"></i>
+                Bekreftet
+              </div>
+              <div class="booking-action-btns">
+                <button class="action-btn" title="Endre tidspunkt">
+                  <i data-lucide="calendar-clock"></i>
+                </button>
+                <button class="action-btn" title="Kanseller">
+                  <i data-lucide="x"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="booking-card animate delay-3">
+            <div class="booking-date">
+              <span class="booking-date-day">02</span>
+              <span class="booking-date-month">apr</span>
+            </div>
+            <div class="booking-info">
+              <div class="booking-type">
+                <i data-lucide="target"></i>
+                Gruppetime
+              </div>
+              <div class="booking-title">Langspill & Driver</div>
+              <div class="booking-meta">
+                <div class="booking-meta-item">
+                  <i data-lucide="clock"></i>
+                  10:00 - 11:30
+                </div>
+                <div class="booking-meta-item">
+                  <i data-lucide="users"></i>
+                  4 deltakere
+                </div>
+                <div class="booking-meta-item">
+                  <i data-lucide="map-pin"></i>
+                  Mulligan Indoor
+                </div>
+              </div>
+            </div>
+            <div class="booking-actions">
+              <div class="booking-status pending">
+                <i data-lucide="clock"></i>
+                Venter bekreftelse
+              </div>
+              <div class="booking-action-btns">
+                <button class="action-btn" title="Endre tidspunkt">
+                  <i data-lucide="calendar-clock"></i>
+                </button>
+                <button class="action-btn" title="Kanseller">
+                  <i data-lucide="x"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="booking-card animate delay-4">
+            <div class="booking-date">
+              <span class="booking-date-day">05</span>
+              <span class="booking-date-month">apr</span>
+            </div>
+            <div class="booking-info">
+              <div class="booking-type">
+                <i data-lucide="video"></i>
+                Coaching-time
+              </div>
+              <div class="booking-title">Banespill & Strategi</div>
+              <div class="booking-meta">
+                <div class="booking-meta-item">
+                  <i data-lucide="clock"></i>
+                  09:00 - 11:00
+                </div>
+                <div class="booking-meta-item">
+                  <i data-lucide="user"></i>
+                  Anders K.
+                </div>
+                <div class="booking-meta-item">
+                  <i data-lucide="map-pin"></i>
+                  Gamle Fredrikstad GK
+                </div>
+              </div>
+            </div>
+            <div class="booking-actions">
+              <div class="booking-status confirmed">
+                <i data-lucide="check-circle"></i>
+                Bekreftet
+              </div>
+              <div class="booking-action-btns">
+                <button class="action-btn" title="Endre tidspunkt">
+                  <i data-lucide="calendar-clock"></i>
+                </button>
+                <button class="action-btn" title="Kanseller">
+                  <i data-lucide="x"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Divider -->
+        <div class="section-divider animate delay-5">
+          <div class="section-divider-line"></div>
+          <span class="section-divider-text">Tidligere bookinger</span>
+          <div class="section-divider-line"></div>
+        </div>
+
+        <!-- Past Bookings -->
+        <div class="bookings-list">
+          <div class="booking-card animate delay-6" style="opacity: 0.8;">
+            <div class="booking-date" style="background: var(--gray-100); border-color: var(--gray-200);">
+              <span class="booking-date-day" style="color: var(--gray-500);">22</span>
+              <span class="booking-date-month" style="color: var(--gray-400);">mar</span>
+            </div>
+            <div class="booking-info">
+              <div class="booking-type" style="color: var(--gray-500);">
+                <i data-lucide="video"></i>
+                Coaching-time
+              </div>
+              <div class="booking-title" style="color: var(--gray-700);">Sving-analyse med Trackman</div>
+              <div class="booking-meta">
+                <div class="booking-meta-item">
+                  <i data-lucide="clock"></i>
+                  14:00 - 15:00
+                </div>
+                <div class="booking-meta-item">
+                  <i data-lucide="user"></i>
+                  Anders K.
+                </div>
+                <div class="booking-meta-item">
+                  <i data-lucide="map-pin"></i>
+                  Mulligan Indoor
+                </div>
+              </div>
+            </div>
+            <div class="booking-actions">
+              <div class="booking-status completed">
+                <i data-lucide="check"></i>
+                Fullfort
+              </div>
+              <div class="booking-action-btns">
+                <button class="action-btn" title="Se oppsummering">
+                  <i data-lucide="file-text"></i>
+                </button>
+                <button class="action-btn" title="Book igjen">
+                  <i data-lucide="repeat"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="booking-card animate delay-7" style="opacity: 0.8;">
+            <div class="booking-date" style="background: var(--gray-100); border-color: var(--gray-200);">
+              <span class="booking-date-day" style="color: var(--gray-500);">15</span>
+              <span class="booking-date-month" style="color: var(--gray-400);">mar</span>
+            </div>
+            <div class="booking-info">
+              <div class="booking-type" style="color: var(--gray-500);">
+                <i data-lucide="video"></i>
+                Coaching-time
+              </div>
+              <div class="booking-title" style="color: var(--gray-700);">Bunker & Chippeslag</div>
+              <div class="booking-meta">
+                <div class="booking-meta-item">
+                  <i data-lucide="clock"></i>
+                  10:00 - 11:00
+                </div>
+                <div class="booking-meta-item">
+                  <i data-lucide="user"></i>
+                  Anders K.
+                </div>
+                <div class="booking-meta-item">
+                  <i data-lucide="map-pin"></i>
+                  Sarpsborg GK
+                </div>
+              </div>
+            </div>
+            <div class="booking-actions">
+              <div class="booking-status completed">
+                <i data-lucide="check"></i>
+                Fullfort
+              </div>
+              <div class="booking-action-btns">
+                <button class="action-btn" title="Se oppsummering">
+                  <i data-lucide="file-text"></i>
+                </button>
+                <button class="action-btn" title="Book igjen">
+                  <i data-lucide="repeat"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

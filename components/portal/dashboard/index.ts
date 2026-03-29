@@ -1,3 +1,12 @@
 export { KpiStrip } from "./kpi-strip";
 export { DailyChecklist } from "./daily-checklist";
 export { WeeklyProgress } from "./weekly-progress";
+export { WeekRings } from "./week-rings";
+export { HeroStats } from "./hero-stats";
+export { EmptyState } from "./empty-state";
+export { ContextActions } from "./context-actions";
+export { PremiumChecklist } from "./premium-checklist";
+export { AchievementShowcase } from "./achievement-showcase";
+export { PersonalInsights } from "./personal-insights";
+export { GolfWeather, GolfWeatherDemo } from "./golf-weather";
+export { OnboardingWelcome } from "./onboarding-welcome";

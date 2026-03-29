@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Treningsplan (Apple Quality)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, sans-serif;
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px;
+      --gray-50: #FAFAFA; --gray-100: #F5F5F7; --gray-200: #E8E8ED; --gray-300: #D2D2D7;
+      --gray-400: #AEAEB2; --gray-500: #8E8E93; --gray-600: #636366; --gray-700: #48484A;
+      --gray-800: #3A3A3C; --gray-900: #2C2C2E; --gray-950: #1D1D1F;
+      --gold-50: #FDF8F0; --gold-100: #F8EDDB; --gold-200: #F0D9B5; --gold-300: #E5C089;
+      --gold-400: #D4A35C; --gold-500: #B8975C; --gold-600: #9A7B47; --gold-700: #7A6138;
+      --success: #34C759; --success-light: #D1FAE5; --warning: #FF9500; --warning-light: #FEF3C7;
+      --error: #FF3B30; --error-light: #FEE2E2; --info: #007AFF; --info-light: #DBEAFE;
+      --purple: #8B5CF6; --purple-light: #EDE9FE;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-gold: 0 4px 24px rgba(184, 151, 92, 0.2);
+      /* Premium layered shadows */
+      --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.02);
+      --shadow-card-hover: 0 4px 8px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.08), 0 24px 48px rgba(0,0,0,0.04);
+      --shadow-glow-gold: 0 4px 16px rgba(184, 151, 92, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      --shadow-glow-gold-hover: 0 8px 24px rgba(184, 151, 92, 0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+      --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 20px;
+      --radius-2xl: 24px; --radius-full: 9999px;
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 150ms; --duration-normal: 250ms;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-system); background: var(--gray-950); color: var(--gray-50); line-height: 1.5; overflow-x: hidden; }
+
+    .portal { display: block; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      background: linear-gradient(180deg, #2C2C2E 0%, #1D1D1F 100%); border-right: 1px solid rgba(255,255,255,0.06);
+      padding: var(--space-6); display: flex; flex-direction: column;
+      position: fixed; width: 260px; height: 100vh; overflow-y: auto;
+    }
+    .sidebar-logo { display: flex; align-items: center; gap: var(--space-3); padding-bottom: var(--space-6); margin-bottom: var(--space-6); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .logo-mark { width: 40px; height: 40px; background: var(--gold-500); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 700; color: white; }
+    .logo-text { font-size: 17px; font-weight: 600; color: white; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: var(--space-1); }
+    .nav-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); font-size: 14px; font-weight: 500; color: var(--gray-400); cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth); text-decoration: none; position: relative; }
+    .nav-item::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gold-500); transition: all 0.3s ease; border-radius: 1px; }
+    .nav-item:hover::after { width: 80%; left: 10%; }
+    .nav-item:hover { background: rgba(255,255,255,0.04); color: white; }
+    .nav-item.active { background: rgba(184, 151, 92, 0.12); color: var(--gold-400); }
+    .nav-item i { width: 20px; height: 20px; stroke-width: 1.75; }
+    .nav-section { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid rgba(255,255,255,0.06); }
+    .nav-section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-600); padding: 0 var(--space-4); margin-bottom: var(--space-2); }
+    .sidebar-footer { margin-top: auto; padding-top: var(--space-6); border-top: 1px solid rgba(255,255,255,0.06); }
+    .user-card { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-md); cursor: pointer; }
+    .user-avatar { width: 40px; height: 40px; background: linear-gradient(135deg, var(--gold-300) 0%, var(--gold-500) 100%); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: white; box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.2); transition: box-shadow 0.3s ease; }
+    .user-card:hover .user-avatar { box-shadow: 0 0 0 4px rgba(184, 151, 92, 0.3), 0 0 16px rgba(184, 151, 92, 0.2); }
+    .user-info { flex: 1; }
+    .user-name { font-size: 14px; font-weight: 500; color: white; }
+    .user-tier { font-size: 12px; color: var(--gold-400); }
+
+    /* Main */
+    .main { margin-left: 260px; background: linear-gradient(135deg, #F8F8FC 0%, #F0F4F8 50%, #F5F5F7 100%); min-height: 100vh; overflow-x: hidden; position: relative; }
+    .main::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0); background-size: 24px 24px; pointer-events: none; }
+    .main-inner { max-width: 1200px; margin: 0 auto; padding: var(--space-10) var(--space-8); min-width: 0; position: relative; z-index: 1; }
+
+    .header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--space-8); }
+    .header-content h1 { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--gray-950); letter-spacing: -0.02em; margin-bottom: var(--space-1); }
+    .header-content p { font-size: 15px; color: var(--gray-500); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-3) var(--space-5); font-family: var(--font-system); font-size: 15px; font-weight: 600; line-height: 1; border-radius: var(--radius-md); border: none; cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth); }
+    .btn-primary { background: var(--gold-500); color: white; box-shadow: var(--shadow-glow-gold); }
+    .btn-primary:hover { background: var(--gold-600); transform: translateY(-2px); box-shadow: var(--shadow-glow-gold-hover); }
+    .btn-secondary { background: white; color: var(--gray-700); border: 1px solid var(--gray-200); }
+    .btn-secondary:hover { background: var(--gray-100); }
+    .btn i { width: 18px; height: 18px; stroke-width: 2; }
+
+    /* AI Badge */
+    .ai-badge { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); background: linear-gradient(135deg, var(--purple-light) 0%, #DDD6FE 100%); border-radius: var(--radius-full); font-size: 12px; font-weight: 600; color: var(--purple); margin-left: var(--space-3); }
+    .ai-badge i { width: 14px; height: 14px; }
+
+    /* Week Navigation */
+    .week-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-6); }
+    .week-nav-title { font-size: 20px; font-weight: 600; color: var(--gray-900); }
+    .week-nav-controls { display: flex; gap: var(--space-2); }
+    .week-nav-btn { width: 36px; height: 36px; border-radius: var(--radius-md); border: 1px solid var(--gray-200); background: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--duration-fast) var(--ease-smooth); }
+    .week-nav-btn:hover { background: var(--gray-100); }
+    .week-nav-btn i { width: 18px; height: 18px; color: var(--gray-600); }
+
+    /* Periodization Band */
+    .period-band { display: flex; gap: var(--space-2); margin-bottom: var(--space-6); padding: var(--space-4); background: white; border-radius: var(--radius-xl); border: 1px solid var(--gray-200); }
+    .period-item { flex: 1; padding: var(--space-3); border-radius: var(--radius-md); text-align: center; cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth); }
+    .period-item:hover { background: var(--gray-100); }
+    .period-item.active { background: var(--gold-100); border: 1px solid var(--gold-300); }
+    .period-item.base { background: var(--info-light); border: 1px solid #93C5FD; }
+    .period-item.build { background: var(--warning-light); border: 1px solid #FCD34D; }
+    .period-item.peak { background: var(--error-light); border: 1px solid #FCA5A5; }
+    .period-item.recovery { background: var(--success-light); border: 1px solid #86EFAC; }
+    .period-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-600); margin-bottom: var(--space-1); }
+    .period-name { font-size: 13px; font-weight: 500; color: var(--gray-900); }
+    .period-item.base .period-name { color: #2563EB; }
+    .period-item.build .period-name { color: #D97706; }
+    .period-item.peak .period-name { color: #DC2626; }
+    .period-item.recovery .period-name { color: #059669; }
+
+    /* Week Grid */
+    .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--space-3); margin-bottom: var(--space-8); }
+    .day-card { background: white; border-radius: var(--radius-xl); border: 1px solid var(--gray-200); overflow: hidden; transition: all var(--duration-normal) var(--ease-smooth); }
+    .day-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .day-card.today { border-color: var(--gold-400); border-width: 2px; }
+    .day-card.completed { opacity: 0.7; }
+    .day-header { padding: var(--space-3) var(--space-4); background: var(--gray-50); border-bottom: 1px solid var(--gray-100); text-align: center; }
+    .day-card.today .day-header { background: var(--gold-50); }
+    .day-name { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-500); }
+    .day-card.today .day-name { color: var(--gold-600); }
+    .day-number { font-size: 20px; font-weight: 700; color: var(--gray-900); }
+    .day-card.today .day-number { color: var(--gold-700); }
+    .day-body { padding: var(--space-3); min-height: 200px; }
+    .day-session { padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-2); cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth); }
+    .day-session:last-child { margin-bottom: 0; }
+    .day-session:hover { transform: scale(1.02); }
+    .day-session.putting { background: var(--info-light); border-left: 3px solid var(--info); }
+    .day-session.driving { background: var(--error-light); border-left: 3px solid var(--error); }
+    .day-session.approach { background: var(--success-light); border-left: 3px solid var(--success); }
+    .day-session.coaching { background: var(--gold-100); border-left: 3px solid var(--gold-500); }
+    .day-session.rest { background: var(--gray-100); border-left: 3px solid var(--gray-400); }
+    .session-time { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-500); margin-bottom: var(--space-1); }
+    .session-title { font-size: 12px; font-weight: 500; color: var(--gray-900); margin-bottom: var(--space-1); }
+    .session-duration { font-size: 11px; color: var(--gray-500); display: flex; align-items: center; gap: var(--space-1); }
+    .session-duration i { width: 12px; height: 12px; }
+    .day-empty { padding: var(--space-4); text-align: center; color: var(--gray-400); font-size: 13px; }
+
+    /* Bento Grid */
+    .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--space-4); min-width: 0; }
+    .bento-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: var(--radius-xl); border: 1px solid rgba(255, 255, 255, 0.5); overflow: hidden; min-width: 0; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: var(--shadow-card); }
+    .bento-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--shadow-card-hover); }
+    .bento-card-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--gray-100); }
+    .bento-card-title { font-size: 15px; font-weight: 600; color: var(--gray-900); }
+    .bento-card-body { padding: var(--space-6); }
+
+    /* Focus Areas */
+    .focus-card { grid-column: span 4; }
+    .focus-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .focus-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-md); }
+    .focus-icon { width: 36px; height: 36px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .focus-icon.putting { background: var(--info-light); }
+    .focus-icon.putting i { color: var(--info); }
+    .focus-icon.approach { background: var(--success-light); }
+    .focus-icon.approach i { color: var(--success); }
+    .focus-icon.driving { background: var(--error-light); }
+    .focus-icon.driving i { color: var(--error); }
+    .focus-icon i { width: 18px; height: 18px; }
+    .focus-content { flex: 1; }
+    .focus-name { font-size: 14px; font-weight: 500; color: var(--gray-900); }
+    .focus-time { font-size: 12px; color: var(--gray-500); }
+
+    /* Weekly Stats */
+    .stats-card { grid-column: span 4; }
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    .stat-item { text-align: center; padding: var(--space-4); background: var(--gray-50); border-radius: var(--radius-lg); }
+    .stat-value { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--gray-950); line-height: 1; }
+    .stat-label { font-size: 12px; color: var(--gray-500); margin-top: var(--space-1); }
+
+    /* Notes */
+    .notes-card { grid-column: span 4; }
+    .coach-note { background: var(--gold-50); border: 1px solid var(--gold-200); border-radius: var(--radius-lg); padding: var(--space-4); }
+    .coach-note-header { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); }
+    .coach-note-header i { width: 16px; height: 16px; color: var(--gold-600); }
+    .coach-note-label { font-size: 12px; font-weight: 600; color: var(--gold-600); }
+    .coach-note-text { font-size: 14px; color: var(--gray-700); line-height: 1.5; }
+
+    /* Animation */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate { animation: fadeInUp 0.5s cubic-bezier(0, 0, 0.2, 1) forwards; }
+    .delay-1 { animation-delay: 50ms; } .delay-2 { animation-delay: 100ms; }
+    .delay-3 { animation-delay: 150ms; } .delay-4 { animation-delay: 200ms; }
+    .delay-5 { animation-delay: 250ms; } .delay-6 { animation-delay: 300ms; }
+  
+    /* Responsive fixes */
+    @media (max-width: 1400px) {
+      .main-inner { max-width: 100%; padding: var(--space-8) var(--space-6); }
+    }
+    @media (max-width: 1024px) {
+      .portal { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .bento-grid { grid-template-columns: repeat(6, 1fr); }
+      .bento-card { grid-column: span 6 !important; }
+    }
+    @media (max-width: 768px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card { grid-column: span 1 !important; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">K</div>
+        <span class="logo-text">AK Golf</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+        <a class="nav-item"><i data-lucide="calendar"></i> Bookinger</a>
+        <a class="nav-item"><i data-lucide="book-open"></i> Treningsdagbok</a>
+        <a class="nav-item"><i data-lucide="bar-chart-2"></i> Statistikk</a>
+        <a class="nav-item active"><i data-lucide="target"></i> Treningsplan</a>
+        <a class="nav-item"><i data-lucide="brain"></i> AI-analyse</a>
+        <div class="nav-section">
+          <div class="nav-section-label">Mer</div>
+          <a class="nav-item"><i data-lucide="user"></i> Profil</a>
+          <a class="nav-item"><i data-lucide="users"></i> Sammenligning</a>
+          <a class="nav-item"><i data-lucide="trophy"></i> Turneringer</a>
+          <a class="nav-item"><i data-lucide="settings"></i> Innstillinger</a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">AK</div>
+          <div class="user-info">
+            <div class="user-name">Anders Kristiansen</div>
+            <div class="user-tier">Pro-medlem</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="main-inner">
+        <header class="header animate">
+          <div class="header-content">
+            <h1>Treningsplan <span class="ai-badge"><i data-lucide="sparkles"></i> AI-generert</span></h1>
+            <p>Personlig periodisert plan basert pa dine mal og svakheter</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-secondary"><i data-lucide="download"></i> Eksporter</button>
+            <button class="btn btn-primary"><i data-lucide="sparkles"></i> Generer ny plan</button>
+          </div>
+        </header>
+
+        <!-- Periodization Band -->
+        <div class="period-band animate delay-1">
+          <div class="period-item base">
+            <div class="period-label">Uke 10-12</div>
+            <div class="period-name">Grunntrening</div>
+          </div>
+          <div class="period-item build active">
+            <div class="period-label">Uke 13-15</div>
+            <div class="period-name">Oppbygging</div>
+          </div>
+          <div class="period-item peak">
+            <div class="period-label">Uke 16-17</div>
+            <div class="period-name">Topp</div>
+          </div>
+          <div class="period-item recovery">
+            <div class="period-label">Uke 18</div>
+            <div class="period-name">Restitusjon</div>
+          </div>
+        </div>
+
+        <!-- Week Navigation -->
+        <div class="week-nav animate delay-2">
+          <div class="week-nav-title">Uke 13: 23. - 29. mars 2026</div>
+          <div class="week-nav-controls">
+            <button class="week-nav-btn"><i data-lucide="chevron-left"></i></button>
+            <button class="week-nav-btn"><i data-lucide="chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Week Grid -->
+        <div class="week-grid animate delay-3">
+          <!-- Monday -->
+          <div class="day-card completed">
+            <div class="day-header">
+              <div class="day-name">Man</div>
+              <div class="day-number">23</div>
+            </div>
+            <div class="day-body">
+              <div class="day-session putting">
+                <div class="session-time">Morgen</div>
+                <div class="session-title">Putting Gate Drill</div>
+                <div class="session-duration"><i data-lucide="clock"></i> 20 min</div>
+              </div>
+              <div class="day-session driving">
+                <div class="session-time">Ettermiddag</div>
+                <div class="session-title">Driver - konsistens</div>
+                <div class="session-duration"><i data-lucide="clock"></i> 45 min</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tuesday -->
+          <div class="day-card completed">
+            <div class="day-header">
+              <div class="day-name">Tir</div>
+              <div class="day-number">24</div>
+            </div>
+            <div class="day-body">
+              <div class="day-session approach">
+                <div class="session-time">Morgen</div>
+                <div class="session-title">Naerspill 30-50m</div>
+                <div class="session-duration"><i data-lucide="clock"></i> 40 min</div>
+              </div>
+              <div class="day-session putting">
+                <div class="session-time">Kveld</div>
+                <div class="session-title">Distansekontroll</div>
+                <div class="session-duration"><i data-lucide="clock"></i> 15 min</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wednesday -->
+          <div class="day-card completed">
+            <div class="day-header">
+              <div class="day-name">Ons</div>
+              <div class="day-number">25</div>
+            </div>
+            <div class="day-body">
+              <div class="day-session rest">
+                <div class="session-time">Hviledag</div>
+                <div class="session-title">Aktiv restitusjon</div>
+                <div class="session-duration"><i data-lucide="coffee"></i> Lett stretching</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thursday -->
+          <div class="day-card completed">
+            <div class="day-header">
+              <div class="day-name">Tor</div>
+              <div class="day-number">26</div>
+            </div>
+            <div class="day-body">
+              <div class="day-session putting">
+                <div class="session-time">Morgen</div>
+                <div class="session-title">Korte putter 1-3m</div>
+                <div class="session-duration"><i data-lucide="clock"></i> 25 min</div>
+              </div>
+              <div class="day-session approach">
+                <div class="session-time">Ettermiddag</div>
+                <div class="session-title">Pitch & chip</div>
+                <div class="session-duration"><i data-lucide="clock"></i> 35 min</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Friday -->
+          <div class="day-card today">
+            <div class="day-header">
+              <div class="day-name">Fre</div>
+              <div class="day-number">27</div>
+            </div>
+            <div class="day-body">
+              <div class="day-session putting">
+                <div class="session-time">Morgen</div>
+                <div class="session-title">Gate drill</div>
+                <div class="session-duration"><i data-lucide="clock"></i> 20 min</div>
+              </div>
+              <div class="day-session driving">
+                <div class="session-time">Formiddag</div>
+                <div class="session-title">Trackman-okt</div>
+                <div class="session-duration"><i data-lucide="clock"></i> 60 min</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Saturday -->
+          <div class="day-card">
+            <div class="day-header">
+              <div class="day-name">Lor</div>
+              <div class="day-number">28</div>
+            </div>
+            <div class="day-body">
+              <div class="day-session coaching">
+                <div class="session-time">14:00</div>
+                <div class="session-title">Coaching-time</div>
+                <div class="session-duration"><i data-lucide="user"></i> Anders K.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sunday -->
+          <div class="day-card">
+            <div class="day-header">
+              <div class="day-name">Son</div>
+              <div class="day-number">29</div>
+            </div>
+            <div class="day-body">
+              <div class="day-session approach">
+                <div class="session-time">Morgen</div>
+                <div class="session-title">9 hull - scoring</div>
+                <div class="session-duration"><i data-lucide="clock"></i> 2 timer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="bento-grid">
+          <!-- Focus Areas -->
+          <div class="bento-card focus-card animate delay-4">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Ukefokus</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="focus-list">
+                <div class="focus-item">
+                  <div class="focus-icon putting"><i data-lucide="target"></i></div>
+                  <div class="focus-content">
+                    <div class="focus-name">Putting (1-3m)</div>
+                    <div class="focus-time">4 okter - 80 min totalt</div>
+                  </div>
+                </div>
+                <div class="focus-item">
+                  <div class="focus-icon approach"><i data-lucide="crosshair"></i></div>
+                  <div class="focus-content">
+                    <div class="focus-name">Naerspill</div>
+                    <div class="focus-time">3 okter - 75 min totalt</div>
+                  </div>
+                </div>
+                <div class="focus-item">
+                  <div class="focus-icon driving"><i data-lucide="zap"></i></div>
+                  <div class="focus-content">
+                    <div class="focus-name">Driver</div>
+                    <div class="focus-time">2 okter - 105 min totalt</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weekly Stats -->
+          <div class="bento-card stats-card animate delay-5">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Ukestatistikk</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="stats-grid">
+                <div class="stat-item">
+                  <div class="stat-value">9</div>
+                  <div class="stat-label">Planlagte okter</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value">5</div>
+                  <div class="stat-label">Fullforte</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value">4.3t</div>
+                  <div class="stat-label">Total tid</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value">56%</div>
+                  <div class="stat-label">Fremgang</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coach Notes -->
+          <div class="bento-card notes-card animate delay-6">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Coach-notater</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="coach-note">
+                <div class="coach-note-header">
+                  <i data-lucide="message-circle"></i>
+                  <span class="coach-note-label">Fra Anders K.</span>
+                </div>
+                <p class="coach-note-text">
+                  Fokuser pa tempo i putting denne uken. Du har tendens til a forsere backswingen
+                  pa korte putter. Bruk metronom-appen pa 60 BPM.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

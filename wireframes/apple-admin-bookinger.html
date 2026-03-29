@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Admin Bookinger (Apple Quality)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', monospace;
+
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+
+      --gray-50: #FAFAFA; --gray-100: #F5F5F7; --gray-200: #E8E8ED;
+      --gray-300: #D2D2D7; --gray-400: #AEAEB2; --gray-500: #8E8E93;
+      --gray-600: #636366; --gray-700: #48484A; --gray-800: #3A3A3C;
+      --gray-900: #2C2C2E; --gray-950: #1D1D1F;
+
+      --gold-50: #FDF8F0; --gold-100: #F8EDDB; --gold-200: #F0D9B5;
+      --gold-300: #E5C089; --gold-400: #D4A35C; --gold-500: #B8975C;
+      --gold-600: #9A7B47; --gold-700: #7A6138;
+
+      --success: #34C759; --success-light: #D1FAE5;
+      --warning: #FF9500; --warning-light: #FEF3C7;
+      --error: #FF3B30; --error-light: #FEE2E2;
+      --info: #007AFF; --info-light: #DBEAFE;
+
+      --admin-accent: #6366F1; --admin-accent-light: #E0E7FF; --admin-accent-dark: #4F46E5;
+
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.02);
+      --shadow-card-hover: 0 20px 40px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.04);
+
+      --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px;
+      --radius-xl: 20px; --radius-full: 9999px;
+
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 150ms; --duration-normal: 250ms;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-system); background: var(--gray-950); color: var(--gray-50); line-height: 1.5; overflow-x: hidden; }
+
+    .portal { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      background: linear-gradient(180deg, #2C2C2E 0%, #1D1D1F 100%);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: var(--space-6);
+      display: flex; flex-direction: column;
+      position: fixed; width: 280px; height: 100vh; overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding-bottom: var(--space-6); margin-bottom: var(--space-4);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .logo-mark {
+      width: 44px; height: 44px; background: var(--gold-500);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 18px; font-weight: 700; color: white;
+    }
+    .logo-text-group { display: flex; flex-direction: column; }
+    .logo-text { font-size: 17px; font-weight: 600; color: white; }
+    .logo-mode { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--admin-accent); }
+
+    .admin-badge {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background: var(--admin-accent); color: white;
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; border-radius: var(--radius-sm);
+      margin-bottom: var(--space-6);
+    }
+    .admin-badge i { width: 14px; height: 14px; }
+
+    .sidebar-nav { display: flex; flex-direction: column; gap: var(--space-1); }
+    .nav-item {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-3) var(--space-4); border-radius: var(--radius-md);
+      font-size: 14px; font-weight: 500; color: var(--gray-400);
+      cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth);
+      text-decoration: none;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.04); color: white; }
+    .nav-item.active { background: rgba(99, 102, 241, 0.15); color: var(--admin-accent); }
+    .nav-item i { width: 20px; height: 20px; stroke-width: 1.75; }
+    .nav-item .badge {
+      margin-left: auto; padding: 2px 8px; background: var(--error); color: white;
+      font-size: 11px; font-weight: 600; border-radius: var(--radius-full);
+    }
+
+    .nav-section { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid rgba(255,255,255,0.06); }
+    .nav-section-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--gray-600);
+      padding: 0 var(--space-4); margin-bottom: var(--space-3);
+    }
+    .nav-section.admin-section {
+      background: rgba(99, 102, 241, 0.05);
+      margin-left: calc(var(--space-6) * -1); margin-right: calc(var(--space-6) * -1);
+      padding-left: var(--space-6); padding-right: var(--space-6); padding-bottom: var(--space-4);
+      border-top: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    .nav-section.admin-section .nav-section-label { color: var(--admin-accent); }
+
+    .sidebar-footer { margin-top: auto; padding-top: var(--space-6); border-top: 1px solid rgba(255,255,255,0.06); }
+    .user-card {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-3); border-radius: var(--radius-md);
+      cursor: pointer; transition: background var(--duration-fast) var(--ease-smooth);
+    }
+    .user-card:hover { background: rgba(255,255,255,0.04); }
+    .user-avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--admin-accent) 0%, var(--admin-accent-dark) 100%);
+      border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 14px; color: white;
+    }
+    .user-info { flex: 1; }
+    .user-name { font-size: 14px; font-weight: 500; color: white; }
+    .user-role { font-size: 12px; color: var(--admin-accent); }
+
+    /* === MAIN === */
+    .main { margin-left: 280px; background: linear-gradient(135deg, #F8F8FC 0%, #F0F4F8 50%, #F5F5F7 100%); min-height: 100vh; }
+    .main-inner { max-width: 1400px; margin: 0 auto; padding: var(--space-8); }
+
+    /* === HEADER === */
+    .header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: var(--space-6);
+    }
+    .header-content h1 {
+      font-family: var(--font-display); font-size: 32px; font-weight: 700;
+      color: var(--gray-950); letter-spacing: -0.02em; margin-bottom: var(--space-1);
+    }
+    .header-content p { font-size: 15px; color: var(--gray-500); }
+    .header-actions { display: flex; gap: var(--space-3); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: var(--space-2); padding: var(--space-3) var(--space-5);
+      font-family: var(--font-system); font-size: 14px; font-weight: 600;
+      line-height: 1; border-radius: var(--radius-md); border: none;
+      cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth);
+    }
+    .btn-primary { background: var(--admin-accent); color: white; box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255,255,255,0.2); }
+    .btn-primary:hover { background: var(--admin-accent-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5), inset 0 1px 0 rgba(255,255,255,0.2); }
+    .btn-secondary { background: white; color: var(--gray-700); border: 1px solid var(--gray-200); }
+    .btn-secondary:hover { background: var(--gray-100); border-color: var(--gray-300); }
+    .btn i { width: 18px; height: 18px; stroke-width: 2; }
+
+    /* === STATUS TABS === */
+    .status-tabs {
+      display: flex; gap: var(--space-2);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      padding: var(--space-2);
+      border-radius: var(--radius-xl); border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: var(--shadow-card);
+      margin-bottom: var(--space-6);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .status-tabs:hover { transform: translateY(-2px); box-shadow: var(--shadow-card-hover); }
+    .status-tab {
+      display: flex; align-items: center; gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      font-size: 14px; font-weight: 500; color: var(--gray-500);
+      background: transparent; border: none; border-radius: var(--radius-lg);
+      cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth);
+    }
+    .status-tab:hover { background: var(--gray-50); color: var(--gray-700); }
+    .status-tab.active { background: var(--admin-accent); color: white; }
+    .status-tab .count {
+      padding: 2px 8px; border-radius: var(--radius-full);
+      font-size: 12px; font-weight: 600;
+      background: var(--gray-100); color: var(--gray-600);
+    }
+    .status-tab.active .count { background: rgba(255,255,255,0.2); color: white; }
+
+    /* === FILTER BAR === */
+    .filter-bar {
+      display: flex; align-items: center; gap: var(--space-4);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      padding: var(--space-4) var(--space-5);
+      border-radius: var(--radius-xl); border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: var(--shadow-card);
+      margin-bottom: var(--space-6);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .filter-bar:hover { transform: translateY(-2px); box-shadow: var(--shadow-card-hover); }
+    .search-box {
+      display: flex; align-items: center; gap: var(--space-3);
+      flex: 1; padding: var(--space-3) var(--space-4);
+      background: var(--gray-50); border-radius: var(--radius-md);
+      border: 1px solid transparent;
+    }
+    .search-box:focus-within {
+      background: white; border-color: var(--admin-accent);
+      box-shadow: 0 0 0 3px var(--admin-accent-light);
+    }
+    .search-box i { width: 18px; height: 18px; color: var(--gray-400); }
+    .search-box input {
+      flex: 1; border: none; background: transparent;
+      font-size: 14px; color: var(--gray-900); outline: none;
+    }
+    .search-box input::placeholder { color: var(--gray-400); }
+
+    .filter-group { display: flex; align-items: center; gap: var(--space-2); }
+    .filter-label { font-size: 13px; font-weight: 500; color: var(--gray-500); }
+    .filter-select {
+      padding: var(--space-2) var(--space-4); padding-right: var(--space-8);
+      font-size: 14px; font-weight: 500; color: var(--gray-700);
+      background: var(--gray-50); border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md); cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+    }
+    .filter-divider { width: 1px; height: 32px; background: var(--gray-200); }
+
+    .date-range {
+      display: flex; align-items: center; gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--gray-50); border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md); font-size: 14px; color: var(--gray-700);
+      cursor: pointer;
+    }
+    .date-range i { width: 16px; height: 16px; color: var(--gray-400); }
+
+    /* === BULK ACTIONS === */
+    .bulk-actions {
+      display: flex; align-items: center; gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      background: var(--admin-accent); color: white;
+      border-radius: var(--radius-xl); margin-bottom: var(--space-4);
+    }
+    .bulk-selected { font-size: 14px; font-weight: 500; }
+    .bulk-selected strong { font-weight: 600; }
+    .bulk-btn {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: rgba(255,255,255,0.15); color: white;
+      font-size: 13px; font-weight: 500;
+      border: none; border-radius: var(--radius-md); cursor: pointer;
+    }
+    .bulk-btn:hover { background: rgba(255,255,255,0.25); }
+    .bulk-btn i { width: 16px; height: 16px; }
+    .bulk-btn.danger { background: rgba(255,59,48,0.3); }
+    .bulk-btn.danger:hover { background: rgba(255,59,48,0.5); }
+    .bulk-close {
+      margin-left: auto; width: 32px; height: 32px;
+      background: rgba(255,255,255,0.15); border: none; border-radius: var(--radius-md);
+      color: white; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bulk-close i { width: 18px; height: 18px; }
+
+    /* === DATA TABLE === */
+    .data-table {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .data-table:hover { box-shadow: var(--shadow-card-hover); }
+
+    .table-header {
+      display: grid;
+      grid-template-columns: 48px 140px 1fr 140px 120px 100px 120px;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      background: var(--gray-50); border-bottom: 1px solid var(--gray-200);
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--gray-500);
+    }
+    .table-header span { display: flex; align-items: center; gap: var(--space-1); }
+    .table-header .sortable { cursor: pointer; }
+    .table-header .sortable:hover { color: var(--admin-accent); }
+    .table-header .sortable i { width: 14px; height: 14px; }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 48px 140px 1fr 140px 120px 100px 120px;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      align-items: center;
+      border-bottom: 1px solid var(--gray-100);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .table-row:hover { background: rgba(99, 102, 241, 0.04); transform: scale(1.005); }
+    .table-row:last-child { border-bottom: none; }
+    .table-row.selected { background: var(--admin-accent-light); }
+
+    /* Checkbox */
+    .checkbox-cell { display: flex; align-items: center; justify-content: center; }
+    .checkbox {
+      width: 20px; height: 20px; border: 2px solid var(--gray-300);
+      border-radius: 6px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .checkbox:hover { border-color: var(--admin-accent); }
+    .checkbox.checked { background: var(--admin-accent); border-color: var(--admin-accent); }
+    .checkbox.checked i { width: 14px; height: 14px; color: white; }
+
+    /* Date/time cell */
+    .datetime-cell { display: flex; flex-direction: column; }
+    .datetime-date { font-size: 14px; font-weight: 500; color: var(--gray-900); }
+    .datetime-time {
+      font-family: var(--font-mono);
+      font-size: 12px; color: var(--gray-500);
+    }
+
+    /* Student cell */
+    .student-cell { display: flex; align-items: center; gap: var(--space-3); }
+    .student-avatar {
+      width: 36px; height: 36px; border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--gold-300) 0%, var(--gold-500) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: white;
+    }
+    .student-info { display: flex; flex-direction: column; }
+    .student-name { font-size: 14px; font-weight: 500; color: var(--gray-900); }
+    .student-tier { font-size: 12px; color: var(--gray-500); }
+
+    /* Service type */
+    .service-cell {
+      display: flex; align-items: center; gap: var(--space-2);
+    }
+    .service-icon {
+      width: 28px; height: 28px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .service-icon i { width: 14px; height: 14px; }
+    .service-icon.individual { background: var(--admin-accent-light); color: var(--admin-accent); }
+    .service-icon.group { background: var(--success-light); color: #059669; }
+    .service-icon.playing { background: var(--gold-100); color: var(--gold-600); }
+    .service-icon.simulator { background: var(--info-light); color: var(--info); }
+
+    .service-text { font-size: 13px; color: var(--gray-700); }
+
+    /* Status badges */
+    .status-badge {
+      display: inline-flex; align-items: center; gap: var(--space-1);
+      padding: var(--space-1) var(--space-3);
+      font-size: 12px; font-weight: 500; border-radius: var(--radius-full);
+    }
+    .status-badge.confirmed { background: var(--success-light); color: #059669; }
+    .status-badge.pending { background: var(--warning-light); color: #D97706; }
+    .status-badge.completed { background: var(--info-light); color: var(--info); }
+    .status-badge.cancelled { background: var(--error-light); color: #DC2626; }
+    .status-badge.no-show { background: var(--gray-100); color: var(--gray-600); }
+
+    /* Payment */
+    .payment-cell { display: flex; flex-direction: column; }
+    .payment-amount { font-size: 14px; font-weight: 500; color: var(--gray-900); }
+    .payment-status { font-size: 11px; }
+    .payment-status.paid { color: var(--success); }
+    .payment-status.unpaid { color: var(--error); }
+    .payment-status.refunded { color: var(--warning); }
+
+    /* Actions */
+    .actions-cell { display: flex; gap: var(--space-2); }
+    .action-btn {
+      width: 32px; height: 32px; border-radius: var(--radius-sm);
+      border: 1px solid var(--gray-200); background: white;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .action-btn i { width: 16px; height: 16px; color: var(--gray-500); }
+    .action-btn:hover { border-color: var(--admin-accent); background: var(--admin-accent-light); }
+    .action-btn:hover i { color: var(--admin-accent); }
+
+    /* === PAGINATION === */
+    .pagination {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-4) var(--space-5);
+      background: var(--gray-50); border-top: 1px solid var(--gray-200);
+    }
+    .pagination-info { font-size: 13px; color: var(--gray-500); }
+    .pagination-controls { display: flex; align-items: center; gap: var(--space-2); }
+    .page-btn {
+      width: 36px; height: 36px; border-radius: var(--radius-md);
+      border: 1px solid var(--gray-200); background: white;
+      font-size: 14px; font-weight: 500; color: var(--gray-700); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .page-btn:hover { border-color: var(--admin-accent); background: var(--admin-accent-light); color: var(--admin-accent); }
+    .page-btn.active { background: var(--admin-accent); border-color: var(--admin-accent); color: white; }
+    .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .page-btn i { width: 18px; height: 18px; }
+  
+    /* Responsive fixes */
+    @media (max-width: 1400px) {
+      .main-inner { max-width: 100%; padding: var(--space-8) var(--space-6); }
+    }
+    @media (max-width: 1024px) {
+      .portal { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .bento-grid { grid-template-columns: repeat(6, 1fr); }
+      .bento-card { grid-column: span 6 !important; }
+    }
+    @media (max-width: 768px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card { grid-column: span 1 !important; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">AK</div>
+        <div class="logo-text-group">
+          <span class="logo-text">AK Golf</span>
+          <span class="logo-mode">Instruktor</span>
+        </div>
+      </div>
+
+      <div class="admin-badge">
+        <i data-lucide="shield-check"></i>
+        Administrator
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item"><i data-lucide="layout-dashboard"></i>Portal Dashboard</a>
+        <a href="#" class="nav-item"><i data-lucide="calendar"></i>Min Kalender</a>
+        <a href="#" class="nav-item"><i data-lucide="message-square"></i>Meldinger<span class="badge">3</span></a>
+      </nav>
+
+      <div class="nav-section admin-section">
+        <div class="nav-section-label">Administrasjon</div>
+        <nav class="sidebar-nav">
+          <a href="apple-admin-dashboard.html" class="nav-item"><i data-lucide="gauge"></i>Admin Dashboard</a>
+          <a href="apple-admin-elever.html" class="nav-item"><i data-lucide="users"></i>Elever</a>
+          <a href="#" class="nav-item active"><i data-lucide="calendar-check"></i>Bookinger<span class="badge">5</span></a>
+          <a href="apple-admin-tilgjengelighet.html" class="nav-item"><i data-lucide="clock"></i>Tilgjengelighet</a>
+          <a href="apple-admin-kalender.html" class="nav-item"><i data-lucide="calendar-days"></i>Kalender</a>
+          <a href="apple-admin-turneringer.html" class="nav-item"><i data-lucide="trophy"></i>Turneringer</a>
+        </nav>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">System</div>
+        <nav class="sidebar-nav">
+          <a href="#" class="nav-item"><i data-lucide="mail"></i>E-postmaler</a>
+          <a href="#" class="nav-item"><i data-lucide="settings"></i>Innstillinger</a>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">AK</div>
+          <div class="user-info">
+            <div class="user-name">Anders Kristiansen</div>
+            <div class="user-role">Instruktor / Admin</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <div class="main-inner">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-content">
+            <h1>Bookinger</h1>
+            <p>Administrer alle bookinger — filtrer, endre status og behandle betalinger</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-secondary">
+              <i data-lucide="download"></i>
+              Eksporter
+            </button>
+            <button class="btn btn-primary">
+              <i data-lucide="plus"></i>
+              Ny Booking
+            </button>
+          </div>
+        </header>
+
+        <!-- Status Tabs -->
+        <div class="status-tabs">
+          <button class="status-tab active">
+            Alle <span class="count">156</span>
+          </button>
+          <button class="status-tab">
+            Ventende <span class="count">5</span>
+          </button>
+          <button class="status-tab">
+            Bekreftet <span class="count">42</span>
+          </button>
+          <button class="status-tab">
+            Fullfort <span class="count">98</span>
+          </button>
+          <button class="status-tab">
+            Kansellert <span class="count">11</span>
+          </button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input type="text" placeholder="Sok etter elev, booking-ID...">
+          </div>
+
+          <div class="filter-divider"></div>
+
+          <div class="filter-group">
+            <span class="filter-label">Type:</span>
+            <select class="filter-select">
+              <option>Alle</option>
+              <option>Individuell</option>
+              <option>Gruppe</option>
+              <option>Spilletime</option>
+              <option>Simulator</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <span class="filter-label">Betaling:</span>
+            <select class="filter-select">
+              <option>Alle</option>
+              <option>Betalt</option>
+              <option>Ubetalt</option>
+              <option>Refundert</option>
+            </select>
+          </div>
+
+          <div class="date-range">
+            <i data-lucide="calendar"></i>
+            <span>28. mar - 4. apr</span>
+          </div>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div class="bulk-actions">
+          <span class="bulk-selected"><strong>2</strong> bookinger valgt</span>
+          <button class="bulk-btn"><i data-lucide="check-circle"></i>Bekreft</button>
+          <button class="bulk-btn"><i data-lucide="mail"></i>Send paaminnelse</button>
+          <button class="bulk-btn"><i data-lucide="calendar"></i>Endre tid</button>
+          <button class="bulk-btn danger"><i data-lucide="x-circle"></i>Kanseller</button>
+          <button class="bulk-close"><i data-lucide="x"></i></button>
+        </div>
+
+        <!-- Data Table -->
+        <div class="data-table">
+          <div class="table-header">
+            <span class="checkbox-cell">
+              <div class="checkbox"><i data-lucide="check" style="display:none;"></i></div>
+            </span>
+            <span class="sortable">Dato/Tid <i data-lucide="chevrons-up-down"></i></span>
+            <span class="sortable">Elev <i data-lucide="chevrons-up-down"></i></span>
+            <span>Type</span>
+            <span class="sortable">Status <i data-lucide="chevrons-up-down"></i></span>
+            <span>Betaling</span>
+            <span>Handlinger</span>
+          </div>
+
+          <div class="table-row selected">
+            <div class="checkbox-cell">
+              <div class="checkbox checked"><i data-lucide="check"></i></div>
+            </div>
+            <div class="datetime-cell">
+              <span class="datetime-date">I dag</span>
+              <span class="datetime-time">10:30 - 11:30</span>
+            </div>
+            <div class="student-cell">
+              <div class="student-avatar">KL</div>
+              <div class="student-info">
+                <span class="student-name">Kristine Larsen</span>
+                <span class="student-tier">ELITE</span>
+              </div>
+            </div>
+            <div class="service-cell">
+              <div class="service-icon playing"><i data-lucide="flag"></i></div>
+              <span class="service-text">Spilletime</span>
+            </div>
+            <span class="status-badge confirmed">Bekreftet</span>
+            <div class="payment-cell">
+              <span class="payment-amount">kr 1,495</span>
+              <span class="payment-status paid">Betalt</span>
+            </div>
+            <div class="actions-cell">
+              <button class="action-btn"><i data-lucide="eye"></i></button>
+              <button class="action-btn"><i data-lucide="edit-2"></i></button>
+              <button class="action-btn"><i data-lucide="more-horizontal"></i></button>
+            </div>
+          </div>
+
+          <div class="table-row selected">
+            <div class="checkbox-cell">
+              <div class="checkbox checked"><i data-lucide="check"></i></div>
+            </div>
+            <div class="datetime-cell">
+              <span class="datetime-date">I dag</span>
+              <span class="datetime-time">13:00 - 14:00</span>
+            </div>
+            <div class="student-cell">
+              <div class="student-avatar">OB</div>
+              <div class="student-info">
+                <span class="student-name">Ole Berg</span>
+                <span class="student-tier">STARTER</span>
+              </div>
+            </div>
+            <div class="service-cell">
+              <div class="service-icon group"><i data-lucide="users"></i></div>
+              <span class="service-text">Gruppetrening</span>
+            </div>
+            <span class="status-badge pending">Venter</span>
+            <div class="payment-cell">
+              <span class="payment-amount">kr 495</span>
+              <span class="payment-status unpaid">Ubetalt</span>
+            </div>
+            <div class="actions-cell">
+              <button class="action-btn"><i data-lucide="eye"></i></button>
+              <button class="action-btn"><i data-lucide="edit-2"></i></button>
+              <button class="action-btn"><i data-lucide="more-horizontal"></i></button>
+            </div>
+          </div>
+
+          <div class="table-row">
+            <div class="checkbox-cell">
+              <div class="checkbox"><i data-lucide="check" style="display:none;"></i></div>
+            </div>
+            <div class="datetime-cell">
+              <span class="datetime-date">I dag</span>
+              <span class="datetime-time">15:00 - 16:00</span>
+            </div>
+            <div class="student-cell">
+              <div class="student-avatar">ES</div>
+              <div class="student-info">
+                <span class="student-name">Emma Solberg</span>
+                <span class="student-tier">PRO</span>
+              </div>
+            </div>
+            <div class="service-cell">
+              <div class="service-icon individual"><i data-lucide="user"></i></div>
+              <span class="service-text">Individuell time</span>
+            </div>
+            <span class="status-badge confirmed">Bekreftet</span>
+            <div class="payment-cell">
+              <span class="payment-amount">kr 995</span>
+              <span class="payment-status paid">Betalt</span>
+            </div>
+            <div class="actions-cell">
+              <button class="action-btn"><i data-lucide="eye"></i></button>
+              <button class="action-btn"><i data-lucide="edit-2"></i></button>
+              <button class="action-btn"><i data-lucide="more-horizontal"></i></button>
+            </div>
+          </div>
+
+          <div class="table-row">
+            <div class="checkbox-cell">
+              <div class="checkbox"><i data-lucide="check" style="display:none;"></i></div>
+            </div>
+            <div class="datetime-cell">
+              <span class="datetime-date">29. mar</span>
+              <span class="datetime-time">09:00 - 10:00</span>
+            </div>
+            <div class="student-cell">
+              <div class="student-avatar">MH</div>
+              <div class="student-info">
+                <span class="student-name">Marius Hansen</span>
+                <span class="student-tier">PRO</span>
+              </div>
+            </div>
+            <div class="service-cell">
+              <div class="service-icon individual"><i data-lucide="user"></i></div>
+              <span class="service-text">Individuell time</span>
+            </div>
+            <span class="status-badge confirmed">Bekreftet</span>
+            <div class="payment-cell">
+              <span class="payment-amount">kr 995</span>
+              <span class="payment-status paid">Betalt</span>
+            </div>
+            <div class="actions-cell">
+              <button class="action-btn"><i data-lucide="eye"></i></button>
+              <button class="action-btn"><i data-lucide="edit-2"></i></button>
+              <button class="action-btn"><i data-lucide="more-horizontal"></i></button>
+            </div>
+          </div>
+
+          <div class="table-row">
+            <div class="checkbox-cell">
+              <div class="checkbox"><i data-lucide="check" style="display:none;"></i></div>
+            </div>
+            <div class="datetime-cell">
+              <span class="datetime-date">29. mar</span>
+              <span class="datetime-time">14:00 - 15:00</span>
+            </div>
+            <div class="student-cell">
+              <div class="student-avatar">TN</div>
+              <div class="student-info">
+                <span class="student-name">Thomas Nilsen</span>
+                <span class="student-tier">STARTER</span>
+              </div>
+            </div>
+            <div class="service-cell">
+              <div class="service-icon simulator"><i data-lucide="monitor"></i></div>
+              <span class="service-text">Simulator</span>
+            </div>
+            <span class="status-badge pending">Venter</span>
+            <div class="payment-cell">
+              <span class="payment-amount">kr 795</span>
+              <span class="payment-status unpaid">Ubetalt</span>
+            </div>
+            <div class="actions-cell">
+              <button class="action-btn"><i data-lucide="eye"></i></button>
+              <button class="action-btn"><i data-lucide="edit-2"></i></button>
+              <button class="action-btn"><i data-lucide="more-horizontal"></i></button>
+            </div>
+          </div>
+
+          <div class="table-row">
+            <div class="checkbox-cell">
+              <div class="checkbox"><i data-lucide="check" style="display:none;"></i></div>
+            </div>
+            <div class="datetime-cell">
+              <span class="datetime-date">27. mar</span>
+              <span class="datetime-time">11:00 - 12:00</span>
+            </div>
+            <div class="student-cell">
+              <div class="student-avatar">ID</div>
+              <div class="student-info">
+                <span class="student-name">Ingrid Dahl</span>
+                <span class="student-tier">STARTER</span>
+              </div>
+            </div>
+            <div class="service-cell">
+              <div class="service-icon individual"><i data-lucide="user"></i></div>
+              <span class="service-text">Individuell time</span>
+            </div>
+            <span class="status-badge completed">Fullfort</span>
+            <div class="payment-cell">
+              <span class="payment-amount">kr 995</span>
+              <span class="payment-status paid">Betalt</span>
+            </div>
+            <div class="actions-cell">
+              <button class="action-btn"><i data-lucide="eye"></i></button>
+              <button class="action-btn"><i data-lucide="edit-2"></i></button>
+              <button class="action-btn"><i data-lucide="more-horizontal"></i></button>
+            </div>
+          </div>
+
+          <div class="table-row">
+            <div class="checkbox-cell">
+              <div class="checkbox"><i data-lucide="check" style="display:none;"></i></div>
+            </div>
+            <div class="datetime-cell">
+              <span class="datetime-date">26. mar</span>
+              <span class="datetime-time">16:00 - 17:00</span>
+            </div>
+            <div class="student-cell">
+              <div class="student-avatar">SJ</div>
+              <div class="student-info">
+                <span class="student-name">Sara Johnsen</span>
+                <span class="student-tier">VISITOR</span>
+              </div>
+            </div>
+            <div class="service-cell">
+              <div class="service-icon individual"><i data-lucide="user"></i></div>
+              <span class="service-text">Individuell time</span>
+            </div>
+            <span class="status-badge cancelled">Kansellert</span>
+            <div class="payment-cell">
+              <span class="payment-amount">kr 995</span>
+              <span class="payment-status refunded">Refundert</span>
+            </div>
+            <div class="actions-cell">
+              <button class="action-btn"><i data-lucide="eye"></i></button>
+              <button class="action-btn"><i data-lucide="edit-2"></i></button>
+              <button class="action-btn"><i data-lucide="more-horizontal"></i></button>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <span class="pagination-info">Viser 1-7 av 156 bookinger</span>
+            <div class="pagination-controls">
+              <button class="page-btn" disabled><i data-lucide="chevron-left"></i></button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn">2</button>
+              <button class="page-btn">3</button>
+              <button class="page-btn">...</button>
+              <button class="page-btn">23</button>
+              <button class="page-btn"><i data-lucide="chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

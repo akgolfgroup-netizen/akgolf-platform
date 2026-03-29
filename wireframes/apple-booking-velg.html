@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking — Velg tjeneste | AK Golf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, sans-serif;
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F7;
+      --gray-200: #E8E8ED;
+      --gray-300: #D2D2D7;
+      --gray-400: #AEAEB2;
+      --gray-500: #8E8E93;
+      --gray-600: #636366;
+      --gray-700: #48484A;
+      --gray-800: #3A3A3C;
+      --gray-900: #2C2C2E;
+      --gray-950: #1D1D1F;
+
+      --gold-50: #FDF8F0;
+      --gold-100: #F8EDDB;
+      --gold-200: #F0D9B5;
+      --gold-400: #D4A35C;
+      --gold-500: #B8975C;
+      --gold-600: #9A7B47;
+      --gold-700: #7A6138;
+
+      --success: #34C759;
+      --info: #007AFF;
+
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-gold: 0 4px 24px rgba(184, 151, 92, 0.2);
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-full: 9999px;
+
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-premium: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+      --duration-slow: 500ms;
+
+      /* Premium Effects */
+      --shadow-gold-glow: 0 4px 16px rgba(184, 151, 92, 0.4);
+      --shadow-gold-glow-lg: 0 8px 32px rgba(184, 151, 92, 0.5);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-system);
+      background: linear-gradient(180deg, #FAFAFA 0%, #F5F5F7 100%);
+      color: var(--gray-950);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* === HEADER === */
+    .header {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: var(--space-4) var(--space-6);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-back {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-smooth);
+    }
+
+    .header-back:hover {
+      color: var(--gray-950);
+    }
+
+    .header-back i {
+      width: 18px;
+      height: 18px;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--gray-950);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gray-950);
+    }
+
+    .header-help {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 14px;
+      color: var(--gray-500);
+      text-decoration: none;
+    }
+
+    .header-help:hover {
+      color: var(--gray-700);
+    }
+
+    .header-help i {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* === PROGRESS BAR === */
+    .progress {
+      background: white;
+      border-bottom: 1px solid var(--gray-200);
+      padding: var(--space-4) var(--space-6);
+    }
+
+    .progress-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+    }
+
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .step-dot.active {
+      background: var(--gold-500);
+      color: white;
+    }
+
+    .step-dot.completed {
+      background: var(--success);
+      color: white;
+    }
+
+    .step-dot.upcoming {
+      background: var(--gray-200);
+      color: var(--gray-500);
+    }
+
+    .step-label {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .step-label.active {
+      color: var(--gray-950);
+    }
+
+    .step-label.upcoming {
+      color: var(--gray-400);
+    }
+
+    .step-line {
+      width: 40px;
+      height: 2px;
+      background: var(--gray-200);
+    }
+
+    .step-line.completed {
+      background: var(--success);
+    }
+
+    /* === MAIN CONTENT === */
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: var(--space-10) var(--space-6);
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gray-950);
+      text-align: center;
+      margin-bottom: var(--space-2);
+      letter-spacing: -0.02em;
+    }
+
+    .page-subtitle {
+      font-size: 16px;
+      color: var(--gray-500);
+      text-align: center;
+      margin-bottom: var(--space-10);
+    }
+
+    /* === SERVICE SELECTION === */
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-10);
+    }
+
+    .service-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-smooth);
+      position: relative;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.12);
+    }
+
+    .service-card.selected {
+      border-color: var(--gold-500);
+      background: var(--gold-50);
+    }
+
+    .service-card.selected::after {
+      content: '';
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      width: 24px;
+      height: 24px;
+      background: var(--gold-500);
+      border-radius: var(--radius-full);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gray-100);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .service-card.selected .service-icon {
+      background: var(--gold-100);
+    }
+
+    .service-icon i {
+      width: 24px;
+      height: 24px;
+      color: var(--gray-600);
+    }
+
+    .service-card.selected .service-icon i {
+      color: var(--gold-600);
+    }
+
+    .service-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--gray-950);
+      margin-bottom: var(--space-1);
+    }
+
+    .service-duration {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-bottom: var(--space-3);
+    }
+
+    .service-price {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold-600);
+    }
+
+    .service-price span {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gray-500);
+    }
+
+    /* === INSTRUCTOR SELECTION === */
+    .instructor-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-10);
+    }
+
+    .instructor-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-smooth);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .instructor-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.1);
+    }
+
+    .instructor-card.selected {
+      border-color: var(--gold-500);
+      background: var(--gold-50);
+    }
+
+    .instructor-avatar {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--gold-200) 0%, var(--gold-400) 100%);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .instructor-info {
+      flex: 1;
+    }
+
+    .instructor-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gray-950);
+      margin-bottom: var(--space-1);
+    }
+
+    .instructor-title {
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+
+    .instructor-rating {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      margin-top: var(--space-2);
+    }
+
+    .instructor-rating i {
+      width: 14px;
+      height: 14px;
+      color: var(--gold-400);
+      fill: var(--gold-400);
+    }
+
+    .instructor-rating span {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    .instructor-next {
+      text-align: right;
+    }
+
+    .instructor-next-label {
+      font-size: 11px;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .instructor-next-time {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .radio-dot {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--gray-300);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .instructor-card.selected .radio-dot {
+      border-color: var(--gold-500);
+      background: var(--gold-500);
+    }
+
+    .instructor-card.selected .radio-dot::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: var(--radius-full);
+    }
+
+    /* === CONTINUE BUTTON === */
+    .continue-section {
+      background: white;
+      border-top: 1px solid var(--gray-200);
+      padding: var(--space-6);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .continue-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .summary {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .summary-service {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-950);
+    }
+
+    .summary-price {
+      font-size: 14px;
+      color: var(--gray-500);
+    }
+
+    .btn-continue {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4) var(--space-8);
+      background: var(--gold-500);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-gold-glow);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .btn-continue:hover {
+      background: var(--gold-400);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold-glow-lg);
+    }
+
+    .btn-continue:disabled {
+      background: var(--gray-300);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .btn-continue i {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 640px) {
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .progress-step .step-label {
+        display: none;
+      }
+
+      .header-back span {
+        display: none;
+      }
+
+      .continue-inner {
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .summary {
+        text-align: center;
+      }
+
+      .btn-continue {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="header-back">
+        <i data-lucide="arrow-left"></i>
+        <span>Tilbake</span>
+      </a>
+      <div class="header-logo">
+        <div class="logo-mark">AK</div>
+        <span class="logo-text">AK Golf</span>
+      </div>
+      <a href="#" class="header-help">
+        <i data-lucide="help-circle"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress">
+    <div class="progress-inner">
+      <div class="progress-steps">
+        <div class="progress-step">
+          <div class="step-dot active">1</div>
+          <span class="step-label active">Velg tjeneste</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="progress-step">
+          <div class="step-dot upcoming">2</div>
+          <span class="step-label upcoming">Tid & detaljer</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="progress-step">
+          <div class="step-dot upcoming">3</div>
+          <span class="step-label upcoming">Betaling</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="progress-step">
+          <div class="step-dot upcoming">4</div>
+          <span class="step-label upcoming">Bekreftelse</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main">
+    <h1 class="page-title">Velg din coaching-time</h1>
+    <p class="page-subtitle">Start med å velge type time og instruktør</p>
+
+    <!-- Service Selection -->
+    <div class="section-title">Type time</div>
+    <div class="service-grid">
+      <div class="service-card selected">
+        <div class="service-icon">
+          <i data-lucide="user"></i>
+        </div>
+        <div class="service-name">Individuell coaching</div>
+        <div class="service-duration">60 minutter</div>
+        <div class="service-price">995 kr</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <i data-lucide="users"></i>
+        </div>
+        <div class="service-name">Duo-coaching</div>
+        <div class="service-duration">60 minutter</div>
+        <div class="service-price">795 kr <span>per person</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <i data-lucide="flag"></i>
+        </div>
+        <div class="service-name">On-course lesson</div>
+        <div class="service-duration">90 minutter</div>
+        <div class="service-price">1 495 kr</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <i data-lucide="video"></i>
+        </div>
+        <div class="service-name">Videoanalyse</div>
+        <div class="service-duration">30 minutter</div>
+        <div class="service-price">595 kr</div>
+      </div>
+    </div>
+
+    <!-- Instructor Selection -->
+    <div class="section-title">Velg instruktør</div>
+    <div class="instructor-list">
+      <div class="instructor-card selected">
+        <div class="instructor-avatar">AK</div>
+        <div class="instructor-info">
+          <div class="instructor-name">Anders Kristiansen</div>
+          <div class="instructor-title">Head Pro, PGA Professional</div>
+          <div class="instructor-rating">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <span>4.9 (127 vurderinger)</span>
+          </div>
+        </div>
+        <div class="instructor-next">
+          <div class="instructor-next-label">Neste ledig</div>
+          <div class="instructor-next-time">I morgen, 10:00</div>
+        </div>
+        <div class="radio-dot"></div>
+      </div>
+      <div class="instructor-card">
+        <div class="instructor-avatar">MH</div>
+        <div class="instructor-info">
+          <div class="instructor-name">Martin Hansen</div>
+          <div class="instructor-title">Assistant Pro</div>
+          <div class="instructor-rating">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <span>4.8 (64 vurderinger)</span>
+          </div>
+        </div>
+        <div class="instructor-next">
+          <div class="instructor-next-label">Neste ledig</div>
+          <div class="instructor-next-time">I dag, 15:00</div>
+        </div>
+        <div class="radio-dot"></div>
+      </div>
+      <div class="instructor-card">
+        <div class="instructor-avatar">SL</div>
+        <div class="instructor-info">
+          <div class="instructor-name">Silje Larsen</div>
+          <div class="instructor-title">Junior Coach</div>
+          <div class="instructor-rating">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <span>4.9 (42 vurderinger)</span>
+          </div>
+        </div>
+        <div class="instructor-next">
+          <div class="instructor-next-label">Neste ledig</div>
+          <div class="instructor-next-time">Onsdag, 16:00</div>
+        </div>
+        <div class="radio-dot"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Continue Button -->
+  <div class="continue-section">
+    <div class="continue-inner">
+      <div class="summary">
+        <div class="summary-service">Individuell coaching med Anders</div>
+        <div class="summary-price">995 kr for 60 min</div>
+      </div>
+      <button class="btn-continue">
+        <span>Velg tid</span>
+        <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Add interactivity for demo
+    document.querySelectorAll('.service-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+      });
+    });
+
+    document.querySelectorAll('.instructor-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.instructor-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+      });
+    });
+  </script>
+</body>
+</html>

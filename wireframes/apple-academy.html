@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf Academy — Apple Quality Wireframe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      /* Typography */
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, sans-serif;
+
+      /* Spacing - 8pt grid */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+
+      /* Colors */
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F7;
+      --gray-200: #E8E8ED;
+      --gray-300: #D2D2D7;
+      --gray-400: #AEAEB2;
+      --gray-500: #8E8E93;
+      --gray-600: #636366;
+      --gray-700: #48484A;
+      --gray-800: #3A3A3C;
+      --gray-900: #2C2C2E;
+      --gray-950: #1D1D1F;
+
+      /* Bronze/Gold Accent (Academy) */
+      --bronze-50: #FDF8F3;
+      --bronze-100: #F8EDE0;
+      --bronze-200: #F0D9BD;
+      --bronze-300: #E5C08A;
+      --bronze-400: #C9985A;
+      --bronze-500: #B07D4F;
+      --bronze-600: #8E6340;
+      --bronze-700: #6E4D32;
+
+      /* Elevation */
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-xl: 0 16px 48px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.06);
+      --shadow-bronze: 0 4px 24px rgba(176, 125, 79, 0.2);
+      --shadow-bronze-lg: 0 8px 40px rgba(176, 125, 79, 0.25);
+
+      /* Radius */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-3xl: 32px;
+      --radius-full: 9999px;
+
+      /* Animation */
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-premium: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+      --duration-slow: 500ms;
+
+      /* Premium Effects */
+      --shadow-bronze-glow: 0 4px 16px rgba(176, 125, 79, 0.4);
+      --shadow-bronze-glow-lg: 0 8px 32px rgba(176, 125, 79, 0.5);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-system);
+      background: white;
+      color: var(--gray-950);
+      line-height: 1.5;
+    }
+
+    /* === NAVIGATION === */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(29, 29, 31, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--gray-950);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      position: relative;
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background: var(--bronze-500);
+      border-radius: 50%;
+    }
+
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-smooth);
+    }
+
+    .nav-link:hover {
+      color: white;
+    }
+
+    .nav-link.active {
+      color: var(--bronze-400);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--bronze-500);
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      box-shadow: var(--shadow-bronze-glow);
+    }
+
+    .nav-cta:hover {
+      background: var(--bronze-400);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-bronze-glow-lg);
+    }
+
+    /* === HERO SECTION === */
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      padding: calc(64px + var(--space-20)) var(--space-6) var(--space-20);
+      background: linear-gradient(135deg, #1D1D1F 0%, #2C2C2E 50%, #1D1D1F 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(176, 125, 79, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--bronze-100);
+      color: var(--bronze-700);
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: white;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-title .accent {
+      background: linear-gradient(135deg, var(--bronze-400) 0%, var(--bronze-500) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--gray-400);
+      margin-bottom: var(--space-8);
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: var(--space-4);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-family: var(--font-system);
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      padding: var(--space-4) var(--space-8);
+      font-size: 16px;
+      background: var(--bronze-500);
+      color: white;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-bronze-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--bronze-400);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-bronze-glow-lg);
+    }
+
+    .btn-secondary {
+      padding: var(--space-4) var(--space-8);
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-3xl);
+    }
+
+    .hero-image-main {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--gray-200) 0%, var(--gray-300) 100%);
+      border-radius: var(--radius-3xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-400);
+      font-size: 14px;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hero-image:hover .hero-image-main {
+      transform: scale(1.05);
+    }
+
+    .hero-stat-card {
+      position: absolute;
+      bottom: var(--space-8);
+      left: -40px;
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-stat-inner {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .hero-stat-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--bronze-100);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-stat-icon i {
+      color: var(--bronze-600);
+      width: 24px;
+      height: 24px;
+    }
+
+    .hero-stat-number {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gray-950);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: var(--space-1);
+    }
+
+    /* === FEATURES SECTION === */
+    .features-section {
+      padding: var(--space-24) var(--space-6);
+      background: linear-gradient(180deg, #FAFAFA 0%, #F5F5F7 100%);
+    }
+
+    .features-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto var(--space-16);
+    }
+
+    .features-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--bronze-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .features-title {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--gray-950);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-4);
+    }
+
+    .features-subtitle {
+      font-size: 18px;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .feature-card:hover {
+      background: white;
+      transform: translateY(-8px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.12);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--bronze-100);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-5);
+    }
+
+    .feature-icon i {
+      color: var(--bronze-600);
+      width: 28px;
+      height: 28px;
+    }
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-950);
+      margin-bottom: var(--space-3);
+    }
+
+    .feature-text {
+      font-size: 15px;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* === PRICING SECTION === */
+    .pricing-section {
+      padding: var(--space-24) var(--space-6);
+      background: linear-gradient(180deg, #FAFAFA 0%, #F5F5F7 100%);
+    }
+
+    .pricing-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .pricing-header {
+      text-align: center;
+      margin-bottom: var(--space-16);
+    }
+
+    .pricing-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--bronze-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .pricing-title {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--gray-950);
+      letter-spacing: -0.02em;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .pricing-card {
+      background: white;
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      border: 1px solid var(--gray-200);
+      transition: all var(--duration-normal) var(--ease-smooth);
+      position: relative;
+    }
+
+    .pricing-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--bronze-300);
+      box-shadow: var(--shadow-bronze);
+    }
+
+    .pricing-card.featured::before {
+      content: 'Mest populær';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bronze-500);
+      color: white;
+      padding: var(--space-1) var(--space-4);
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .pricing-name {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gray-950);
+      margin-bottom: var(--space-2);
+    }
+
+    .pricing-desc {
+      font-size: 14px;
+      color: var(--gray-500);
+      margin-bottom: var(--space-6);
+    }
+
+    .pricing-price {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-1);
+      margin-bottom: var(--space-6);
+    }
+
+    .pricing-amount {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--gray-950);
+      letter-spacing: -0.02em;
+    }
+
+    .pricing-period {
+      font-size: 15px;
+      color: var(--gray-500);
+    }
+
+    .pricing-features {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+    }
+
+    .pricing-feature {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: 14px;
+      color: var(--gray-700);
+    }
+
+    .pricing-feature i {
+      width: 18px;
+      height: 18px;
+      color: var(--bronze-500);
+    }
+
+    .pricing-btn {
+      width: 100%;
+      padding: var(--space-4);
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      text-decoration: none;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .pricing-btn-primary {
+      background: var(--bronze-500);
+      color: white;
+    }
+
+    .pricing-btn-primary:hover {
+      background: var(--bronze-600);
+    }
+
+    .pricing-btn-secondary {
+      background: var(--gray-100);
+      color: var(--gray-700);
+    }
+
+    .pricing-btn-secondary:hover {
+      background: var(--gray-200);
+    }
+
+    /* === INSTRUCTOR SECTION === */
+    .instructor-section {
+      padding: var(--space-24) var(--space-6);
+      background: white;
+    }
+
+    .instructor-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--space-16);
+      align-items: center;
+    }
+
+    .instructor-image {
+      position: relative;
+    }
+
+    .instructor-photo {
+      width: 100%;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, var(--bronze-100) 0%, var(--bronze-200) 100%);
+      border-radius: var(--radius-3xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bronze-400);
+      font-size: 14px;
+    }
+
+    .instructor-content {
+      padding: var(--space-6) 0;
+    }
+
+    .instructor-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--bronze-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .instructor-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gray-950);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-4);
+    }
+
+    .instructor-text {
+      font-size: 16px;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: var(--space-6);
+    }
+
+    .instructor-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .instructor-stat {
+      text-align: center;
+    }
+
+    .instructor-stat-value {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--bronze-500);
+      line-height: 1;
+    }
+
+    .instructor-stat-label {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: var(--space-1);
+    }
+
+    /* === FAQ SECTION === */
+    .faq-section {
+      padding: var(--space-24) var(--space-6);
+      background: var(--gray-50);
+    }
+
+    .faq-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+
+    .faq-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--bronze-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .faq-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gray-950);
+      letter-spacing: -0.02em;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .faq-item {
+      background: white;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+    }
+
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-5) var(--space-6);
+      cursor: pointer;
+    }
+
+    .faq-question-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .faq-question i {
+      width: 20px;
+      height: 20px;
+      color: var(--gray-400);
+      transition: transform var(--duration-normal) var(--ease-smooth);
+    }
+
+    .faq-item.open .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      padding: 0 var(--space-6) var(--space-5);
+      font-size: 15px;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+
+    /* === CTA SECTION === */
+    .cta-section {
+      padding: var(--space-24) var(--space-6);
+      background: linear-gradient(135deg, var(--bronze-500) 0%, var(--bronze-600) 100%);
+      text-align: center;
+    }
+
+    .cta-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-4);
+    }
+
+    .cta-text {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.6;
+      margin-bottom: var(--space-8);
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-5) var(--space-10);
+      background: white;
+      color: var(--bronze-600);
+      font-size: 17px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .cta-button i {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* === FOOTER === */
+    .footer {
+      padding: var(--space-16) var(--space-6);
+      background: var(--gray-100);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-12);
+      margin-bottom: var(--space-12);
+      padding-bottom: var(--space-12);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .footer-description {
+      font-size: 14px;
+      color: var(--gray-600);
+      line-height: 1.6;
+      max-width: 280px;
+    }
+
+    .footer-column-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .footer-link {
+      font-size: 14px;
+      color: var(--gray-700);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-smooth);
+    }
+
+    .footer-link:hover {
+      color: var(--bronze-500);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copyright {
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: var(--space-4);
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      background: var(--gray-200);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-600);
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .social-link:hover {
+      background: var(--bronze-500);
+      color: white;
+    }
+
+    .social-link i {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-subtitle { margin: 0 auto var(--space-8); }
+      .hero-actions { justify-content: center; }
+      .hero-image { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .instructor-inner { grid-template-columns: 1fr; text-align: center; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-title { font-size: 40px; }
+      .features-title { font-size: 32px; }
+      .pricing-title { font-size: 32px; }
+      .cta-title { font-size: 32px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="logo-mark">AK</div>
+        <span class="logo-text">AK Golf</span>
+      </div>
+      <div class="nav-links">
+        <a href="#" class="nav-link">Hjem</a>
+        <a href="#" class="nav-link active">Academy</a>
+        <a href="#" class="nav-link">Junior</a>
+        <a href="#" class="nav-link">Utvikling</a>
+        <a href="#" class="nav-link">Om oss</a>
+        <a href="#" class="nav-cta">
+          <span>Book time</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i data-lucide="award" style="width: 16px; height: 16px;"></i>
+          Premium Golf Academy
+        </div>
+        <h1 class="hero-title">
+          Personlig coaching<br>for <span class="accent">voksne</span> spillere
+        </h1>
+        <p class="hero-subtitle">
+          AK Golf Academy tilbyr skreddersydd coaching for voksne spillere som ønsker å forbedre spillet sitt. Fra nybegynner til lav-handicapper.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">
+            <span>Book vurderingstime</span>
+            <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+          </a>
+          <a href="#" class="btn btn-secondary">
+            <span>Se priser</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-image-main">[Academy coaching bilde]</div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-inner">
+            <div class="hero-stat-icon">
+              <i data-lucide="trending-down"></i>
+            </div>
+            <div>
+              <div class="hero-stat-number">-5.2</div>
+              <div class="hero-stat-label">Snitt HCP-forbedring</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="features-inner">
+      <div class="features-header">
+        <div class="features-eyebrow">Hva vi tilbyr</div>
+        <h2 class="features-title">Alt du trenger for å utvikle spillet</h2>
+        <p class="features-subtitle">
+          Komplett treningsprogram med personlig oppfølging og moderne teknologi.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="user"></i>
+          </div>
+          <h3 class="feature-title">1-til-1 Coaching</h3>
+          <p class="feature-text">
+            Personlige timer med dedikert fokus på dine behov og mål. Trackman-analyse inkludert.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="video"></i>
+          </div>
+          <h3 class="feature-title">Videoanalyse</h3>
+          <p class="feature-text">
+            Detaljert analyse av swing med sammenligning mot proffnivå. Tilgang i elevportalen.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="calendar"></i>
+          </div>
+          <h3 class="feature-title">Treningsplan</h3>
+          <p class="feature-text">
+            AI-generert periodisert treningsplan tilpasset dine mål og tilgjengelig tid.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="bar-chart-2"></i>
+          </div>
+          <h3 class="feature-title">Strokes Gained</h3>
+          <p class="feature-text">
+            Datadrevet analyse av spillet ditt. Finn ut hvor du faktisk taper slag.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="smartphone"></i>
+          </div>
+          <h3 class="feature-title">Elevportal</h3>
+          <p class="feature-text">
+            Digital plattform med all din treningsdata, opptak, notater og fremgang.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i data-lucide="target"></i>
+          </div>
+          <h3 class="feature-title">Målsporing</h3>
+          <p class="feature-text">
+            Sett mål og følg med på fremgangen din. Ukentlig statusrapport sendes på e-post.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing-section">
+    <div class="pricing-inner">
+      <div class="pricing-header">
+        <div class="pricing-eyebrow">Priser</div>
+        <h2 class="pricing-title">Velg ditt medlemskap</h2>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3 class="pricing-name">Starter</h3>
+          <p class="pricing-desc">Perfekt for å komme i gang</p>
+          <div class="pricing-price">
+            <span class="pricing-amount">995</span>
+            <span class="pricing-period">kr/time</span>
+          </div>
+          <div class="pricing-features">
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>Enkelttimer etter behov</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>Trackman-analyse</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>Videoopptak sendes på e-post</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>Grunnleggende elevportal</span>
+            </div>
+          </div>
+          <a href="#" class="pricing-btn pricing-btn-secondary">Kom i gang</a>
+        </div>
+        <div class="pricing-card featured">
+          <h3 class="pricing-name">Academy</h3>
+          <p class="pricing-desc">Vår mest populære pakke</p>
+          <div class="pricing-price">
+            <span class="pricing-amount">3 995</span>
+            <span class="pricing-period">kr/mnd</span>
+          </div>
+          <div class="pricing-features">
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>4 timer coaching per måned</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>AI-treningsplan</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>Ubegrenset videoanalyse</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>Full elevportal-tilgang</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>Chat-støtte med coach</span>
+            </div>
+          </div>
+          <a href="#" class="pricing-btn pricing-btn-primary">Velg Academy</a>
+        </div>
+        <div class="pricing-card">
+          <h3 class="pricing-name">Elite</h3>
+          <p class="pricing-desc">For seriøse spillere</p>
+          <div class="pricing-price">
+            <span class="pricing-amount">7 995</span>
+            <span class="pricing-period">kr/mnd</span>
+          </div>
+          <div class="pricing-features">
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>8 timer coaching per måned</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>On-course coaching</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>Turneringsplanlegging</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>Mentaltrening</span>
+            </div>
+            <div class="pricing-feature">
+              <i data-lucide="check"></i>
+              <span>Prioritert booking</span>
+            </div>
+          </div>
+          <a href="#" class="pricing-btn pricing-btn-secondary">Velg Elite</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instructor Section -->
+  <section class="instructor-section">
+    <div class="instructor-inner">
+      <div class="instructor-image">
+        <div class="instructor-photo">[Anders coaching bilde]</div>
+      </div>
+      <div class="instructor-content">
+        <div class="instructor-eyebrow">Din coach</div>
+        <h2 class="instructor-title">Anders Kristiansen</h2>
+        <p class="instructor-text">
+          PGA-sertifisert instruktør med over 15 års erfaring. Spesialisert på The Foundation Method — en helhetlig tilnærming til golftrening som kombinerer teknikk, strategi og mental styrke.
+        </p>
+        <p class="instructor-text">
+          Anders har hjulpet hundrevis av spillere fra alle nivåer å forbedre spillet sitt og nå sine mål.
+        </p>
+        <div class="instructor-stats">
+          <div class="instructor-stat">
+            <div class="instructor-stat-value">500+</div>
+            <div class="instructor-stat-label">Elever coachet</div>
+          </div>
+          <div class="instructor-stat">
+            <div class="instructor-stat-value">15+</div>
+            <div class="instructor-stat-label">Års erfaring</div>
+          </div>
+          <div class="instructor-stat">
+            <div class="instructor-stat-value">4.9</div>
+            <div class="instructor-stat-label">Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="faq-header">
+        <div class="faq-eyebrow">Ofte stilte spørsmål</div>
+        <h2 class="faq-title">Har du spørsmål?</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <div class="faq-question">
+            <span class="faq-question-text">Hvor lang tid tar en coaching-time?</span>
+            <i data-lucide="chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            En standard coaching-time varer 60 minutter. Dette inkluderer oppvarming, trening, og oppsummering av neste steg. Vi tilbyr også 30-minutters fokusøkter for spesifikke utfordringer.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-question-text">Hva er The Foundation Method?</span>
+            <i data-lucide="chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            The Foundation Method er vår helhetlige tilnærming til golftrening. Den fokuserer på å bygge solide fundamenter i teknikk, mentalitet og strategi før man går videre til mer avanserte konsepter.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-question-text">Trenger jeg eget utstyr?</span>
+            <i data-lucide="chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Det er fint om du har egne køller, men vi har lånekøller tilgjengelig. For nybegynnere anbefaler vi å starte med låneutstyr mens du lærer grunnleggende teknikk.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-question-text">Kan jeg avbestille en time?</span>
+            <i data-lucide="chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Ja, du kan avbestille eller endre en booking inntil 24 timer før avtalt tid uten kostnad. Ved senere avbestilling vil timen bli belastet.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2 class="cta-title">Klar for å bli bedre?</h2>
+      <p class="cta-text">
+        Book en gratis vurderingstime så lager vi en plan sammen for å ta spillet ditt til neste nivå.
+      </p>
+      <a href="#" class="cta-button">
+        <span>Book gratis vurdering</span>
+        <i data-lucide="arrow-right"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="logo-mark">AK</div>
+            <span class="logo-text">AK Golf</span>
+          </div>
+          <p class="footer-description">
+            Premium golfcoaching for alle nivåer. Fra nybegynner til elite.
+          </p>
+        </div>
+        <div class="footer-column">
+          <div class="footer-column-title">Tjenester</div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">Academy</a>
+            <a href="#" class="footer-link">Junior</a>
+            <a href="#" class="footer-link">Utvikling</a>
+            <a href="#" class="footer-link">Simulator</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <div class="footer-column-title">Selskap</div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">Om oss</a>
+            <a href="#" class="footer-link">Kontakt</a>
+            <a href="#" class="footer-link">Blogg</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <div class="footer-column-title">Juridisk</div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">Personvern</a>
+            <a href="#" class="footer-link">Vilkår</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">© 2026 AK Golf Group AS</span>
+        <div class="footer-socials">
+          <a href="#" class="social-link">
+            <i data-lucide="instagram"></i>
+          </a>
+          <a href="#" class="social-link">
+            <i data-lucide="youtube"></i>
+          </a>
+          <a href="#" class="social-link">
+            <i data-lucide="facebook"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

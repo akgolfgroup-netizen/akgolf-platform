@@ -919,6 +919,7 @@
 @layer components {
   /* Portal semantic tokens — dark premium theme */
   :root {
+    /* Base colors */
     --portal-bg: #0A1929;
     --portal-card-bg: rgba(15, 25, 45, 0.7);
     --portal-card-bg-solid: #111827;
@@ -933,6 +934,56 @@
     --portal-accent-glow: rgba(184, 151, 92, 0.15);
     --portal-success: #22C55E;
     --portal-error: #EF4444;
+
+    /* Apple-inspired gray scale */
+    --apple-gray-50: #FAFAFA;
+    --apple-gray-100: #F5F5F7;
+    --apple-gray-200: #E8E8ED;
+    --apple-gray-300: #D2D2D7;
+    --apple-gray-400: #AEAEB2;
+    --apple-gray-500: #8E8E93;
+    --apple-gray-600: #636366;
+    --apple-gray-700: #48484A;
+    --apple-gray-800: #3A3A3C;
+    --apple-gray-900: #2C2C2E;
+    --apple-gray-950: #1D1D1F;
+
+    /* Apple-inspired gold */
+    --apple-gold-50: #FDF8F0;
+    --apple-gold-100: #F8EDDB;
+    --apple-gold-200: #F0D9B5;
+    --apple-gold-300: #E5C089;
+    --apple-gold-400: #D4A35C;
+    --apple-gold-500: #B8975C;
+    --apple-gold-600: #9A7B47;
+    --apple-gold-700: #7A6138;
+
+    /* Admin accent (indigo/purple) */
+    --apple-admin-accent: #6366F1;
+    --apple-admin-accent-light: #E0E7FF;
+    --apple-admin-accent-dark: #4F46E5;
+
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-bg-dark: rgba(45, 45, 47, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-border-dark: rgba(255, 255, 255, 0.1);
+    --glass-blur: 20px;
+
+    /* Layered shadows */
+    --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.02);
+    --shadow-card-hover: 0 4px 8px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.08), 0 24px 48px rgba(0,0,0,0.04);
+    --shadow-glow-gold: 0 4px 16px rgba(184, 151, 92, 0.4);
+    --shadow-glow-gold-hover: 0 8px 32px rgba(184, 151, 92, 0.5);
+
+    /* Gradient backgrounds */
+    --gradient-surface: linear-gradient(135deg, #F8F8FC 0%, #F0F4F8 50%, #F5F5F7 100%);
+    --gradient-sidebar: linear-gradient(180deg, #2C2C2E 0%, #1D1D1F 100%);
+    --gradient-hero-dark: linear-gradient(135deg, #1D1D1F 0%, #2C2C2E 50%, #1D1D1F 100%);
+
+    /* Motion */
+    --ease-apple: cubic-bezier(0.4, 0, 0.2, 1);
+    --duration-hover: 300ms;
   }
 
   /* Portal card utility */
@@ -987,6 +1038,178 @@
   .portal-text { color: var(--portal-text-primary); }
   .portal-text-secondary { color: var(--portal-text-secondary); }
   .portal-text-muted { color: var(--portal-text-muted); }
+
+  /* Apple Glassmorphism */
+  .apple-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+  }
+
+  .apple-glass-dark {
+    background: var(--glass-bg-dark);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border-dark);
+  }
+
+  /* Apple Card with hover lift */
+  .apple-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+    transition: all var(--duration-hover) var(--ease-apple);
+  }
+
+  .apple-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Bento Grid */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .bento-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Bento Card sizes */
+  .bento-1 { grid-column: span 1; }
+  .bento-2 { grid-column: span 2; }
+  .bento-3 { grid-column: span 3; }
+  .bento-4 { grid-column: span 4; }
+  .bento-6 { grid-column: span 6; }
+  .bento-8 { grid-column: span 8; }
+  .bento-12 { grid-column: span 12; }
+
+  @media (max-width: 1024px) {
+    .bento-1, .bento-2, .bento-3 { grid-column: span 3; }
+    .bento-4, .bento-6, .bento-8, .bento-12 { grid-column: span 6; }
+  }
+
+  @media (max-width: 768px) {
+    .bento-1, .bento-2, .bento-3, .bento-4, .bento-6, .bento-8, .bento-12 {
+      grid-column: span 1;
+    }
+  }
+
+  /* Apple Button */
+  .apple-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: all var(--duration-hover) var(--ease-apple);
+  }
+
+  .apple-btn-primary {
+    background: var(--apple-gold-500);
+    color: white;
+    box-shadow: var(--shadow-glow-gold);
+  }
+
+  .apple-btn-primary:hover {
+    background: var(--apple-gold-600);
+    box-shadow: var(--shadow-glow-gold-hover);
+    transform: translateY(-2px);
+  }
+
+  .apple-btn-secondary {
+    background: var(--apple-gray-100);
+    color: var(--apple-gray-900);
+  }
+
+  .apple-btn-secondary:hover {
+    background: var(--apple-gray-200);
+  }
+
+  /* Apple Badge */
+  .apple-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+  }
+
+  .apple-badge-success {
+    background: rgba(52, 199, 89, 0.12);
+    color: #34C759;
+  }
+
+  .apple-badge-warning {
+    background: rgba(255, 149, 0, 0.12);
+    color: #FF9500;
+  }
+
+  .apple-badge-error {
+    background: rgba(255, 59, 48, 0.12);
+    color: #FF3B30;
+  }
+
+  .apple-badge-info {
+    background: rgba(0, 122, 255, 0.12);
+    color: #007AFF;
+  }
+
+  .apple-badge-gold {
+    background: rgba(184, 151, 92, 0.15);
+    color: var(--apple-gold-500);
+  }
+
+  /* Gradient surface background */
+  .bg-gradient-surface {
+    background: var(--gradient-surface);
+  }
+
+  /* Text gradient */
+  .text-gradient-dark {
+    background: linear-gradient(135deg, var(--apple-gray-950) 0%, var(--apple-gray-700) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtle dot pattern */
+  .pattern-dots {
+    background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.03) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+
+  /* Hover lift utility */
+  .hover-lift {
+    transition: transform var(--duration-hover) var(--ease-apple),
+                box-shadow var(--duration-hover) var(--ease-apple);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
 }
 
 /* ─── shadcn UI Base Variables ─── */

@@ -3,8 +3,9 @@ import { prisma } from "@/lib/portal/prisma";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { getThisWeekTournamentPlans } from "@/modules/tournament-planner/actions";
-import { ThisWeekTournaments } from "@/modules/tournament-planner/components/ThisWeekTournaments";
-import { startOfWeek, endOfWeek } from "date-fns";
+import { startOfWeek, endOfWeek, format } from "date-fns";
+import { nb } from "date-fns/locale";
+import { ThisWeekClient } from "./this-week-client";
 
 export default async function DenneUkenPage() {
   const user = await requirePortalUser();
@@ -16,22 +17,13 @@ export default async function DenneUkenPage() {
 
   const plans = await getThisWeekTournamentPlans(prisma, { from, to });
 
-  return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-[var(--color-snow)]">Denne uken</h1>
+  // Get week stats
+  const weekStats = {
+    totalPlayers: plans.length,
+    tournaments: new Set(plans.map((p) => p.tournamentId)).size,
+    registered: plans.filter((p) => p.isRegistered).length,
+    weekLabel: `${format(from, "d.", { locale: nb })} - ${format(to, "d. MMMM", { locale: nb })}`,
+  };
 
-      <div className="max-w-2xl">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-[var(--color-snow)]">
-            Spillere i turnering
-          </h2>
-          <span className="text-xs text-[var(--color-ink-40)]">
-            {plans.length} spillerplan{plans.length !== 1 ? "er" : ""}
-          </span>
-        </div>
-
-        <ThisWeekTournaments plans={plans} />
-      </div>
-    </div>
-  );
+  return <ThisWeekClient plans={plans} weekStats={weekStats} />;
 }
