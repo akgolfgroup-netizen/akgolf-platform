@@ -204,7 +204,9 @@ export async function handleCallback(
     data: { googleCalendarTokens: tokens as object },
   });
 
-  console.log(`[Google Calendar] Tokens saved for user ${userId}`);
+  if (process.env.NODE_ENV !== "production") {
+    console.log("[Google Calendar] Tokens saved successfully");
+  }
 }
 
 /**

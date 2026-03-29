@@ -1,8 +1,16 @@
 import "dotenv/config";
 import { createClient } from "@supabase/supabase-js";
+import { randomBytes } from "crypto";
 
-const email = "anders@akgolf.no";
-const newPassword = "anders";
+// Hent e-post og passord fra argumenter eller miljøvariabler
+const email = process.argv[2] || process.env.ADMIN_EMAIL;
+const newPassword = process.argv[3] || randomBytes(16).toString("hex");
+
+if (!email) {
+  console.error("Bruk: tsx scripts/set-user-password.ts <email> [passord]");
+  console.error("  eller sett ADMIN_EMAIL miljøvariabel");
+  process.exit(1);
+}
 
 async function setPassword() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -59,9 +67,12 @@ async function setPassword() {
   }
 
   console.log(`Passord oppdatert for ${email}`);
-  console.log("Logg inn med:");
-  console.log(`  E-post: ${email}`);
-  console.log(`  Passord: ${newPassword}`);
+
+  // Vis passord kun hvis det ble auto-generert (ingen passord-arg)
+  if (!process.argv[3]) {
+    console.log("Generert passord (lagre dette sikkert):");
+    console.log(`  ${newPassword}`);
+  }
 }
 
 setPassword();

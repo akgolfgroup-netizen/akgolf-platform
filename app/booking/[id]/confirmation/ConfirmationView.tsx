@@ -223,7 +223,7 @@ export function ConfirmationView({
           style={{ color: THEME.textMuted }}
         >
           En bekreftelse er sendt til din e-post.<br/>
-          Du kan administrere bookingen fra "Bookinger" i menyen.
+          Du kan administrere bookingen fra &quot;Bookinger&quot; i menyen.
         </motion.p>
 
         {/* CTA Button */}
