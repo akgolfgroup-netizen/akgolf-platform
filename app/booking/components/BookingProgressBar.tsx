@@ -18,7 +18,7 @@ const STEPS = [
 
 export function BookingProgressBar({ currentStep }: Props) {
   return (
-    <div className="flex items-center justify-between bg-white border border-ink-10 rounded-xl p-4 mb-6">
+    <div className="flex items-center justify-between bg-white border border-grey-200 rounded-[20px] p-4 mb-6">
       {STEPS.map((step, index) => {
         const isCompleted = step.num < currentStep;
         const isCurrent = step.num === currentStep;
@@ -32,19 +32,19 @@ export function BookingProgressBar({ currentStep }: Props) {
                 initial={false}
                 animate={{
                   backgroundColor: isCompleted
-                    ? "#10B981"
+                    ? "#34C759"
                     : isCurrent
-                    ? "#171717"
-                    : "#F5F5F5",
+                    ? "#1D1D1F"
+                    : "#F5F5F7",
                   borderColor: isCompleted
-                    ? "#10B981"
+                    ? "#34C759"
                     : isCurrent
-                    ? "#171717"
-                    : "#E5E5E5",
+                    ? "#1D1D1F"
+                    : "#E8E8ED",
                 }}
                 className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold border-2"
                 style={{
-                  color: isCompleted || isCurrent ? "#FFFFFF" : "#737373",
+                  color: isCompleted || isCurrent ? "#FFFFFF" : "#86868B",
                 }}
               >
                 {isCompleted ? (
@@ -55,7 +55,7 @@ export function BookingProgressBar({ currentStep }: Props) {
               </motion.div>
               <span
                 className={`text-sm hidden md:block ${
-                  isCurrent ? "font-medium text-ink-90" : "text-ink-50"
+                  isCurrent ? "font-medium text-black" : "text-grey-500"
                 }`}
               >
                 {step.label}
@@ -67,9 +67,9 @@ export function BookingProgressBar({ currentStep }: Props) {
               <div className="flex-1 mx-3 h-0.5 hidden sm:block">
                 <motion.div
                   className="h-full rounded-full"
-                  initial={{ backgroundColor: "#E5E5E5" }}
+                  initial={{ backgroundColor: "#E8E8ED" }}
                   animate={{
-                    backgroundColor: isCompleted ? "#10B981" : "#E5E5E5",
+                    backgroundColor: isCompleted ? "#34C759" : "#E8E8ED",
                   }}
                   transition={{ duration: 0.3 }}
                 />

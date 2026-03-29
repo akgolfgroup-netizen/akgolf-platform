@@ -48,10 +48,10 @@ export function InstructorSelector({ service, instructors, onSelect }: Props) {
           transition={{ delay: 0, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           onClick={() => handleSelect("no-preference")}
           className={`
-            relative w-full text-left rounded-2xl p-5 transition-all duration-300 border-2 border-dashed
+            relative w-full text-left rounded-[20px] p-5 transition-all duration-300 border-2 border-dashed
             ${selectedId === "no-preference"
-              ? "border-gold bg-gold/5"
-              : "border-ink-20 hover:border-ink-40 bg-ink-5"
+              ? "border-black bg-grey-100"
+              : "border-grey-300 hover:border-grey-400 bg-grey-100"
             }
           `}
         >
@@ -60,24 +60,24 @@ export function InstructorSelector({ service, instructors, onSelect }: Props) {
             <div
               className={`
                 w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0
-                ${selectedId === "no-preference" ? "bg-gold/20" : "bg-ink-10"}
+                ${selectedId === "no-preference" ? "bg-black" : "bg-grey-200"}
               `}
             >
               <Shuffle
                 size={28}
-                className={selectedId === "no-preference" ? "text-gold" : "text-ink-50"}
+                className={selectedId === "no-preference" ? "text-white" : "text-grey-500"}
               />
             </div>
 
             {/* Info */}
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-lg mb-0.5 text-ink-90">
+              <h3 className="font-semibold text-lg mb-0.5 text-black">
                 Ingen preferanse
               </h3>
-              <p className="text-sm text-ink-50">
+              <p className="text-sm text-grey-500">
                 Vi finner den beste tilgjengelige instruktoren
               </p>
-              <div className="inline-flex items-center gap-1.5 mt-2 text-xs font-medium px-2.5 py-1 rounded-full bg-info/10 text-info">
+              <div className="inline-flex items-center gap-1.5 mt-2 text-xs font-medium px-2.5 py-1 rounded-full bg-grey-200 text-grey-600">
                 Raskest tilgjengelig
               </div>
             </div>
@@ -86,7 +86,7 @@ export function InstructorSelector({ service, instructors, onSelect }: Props) {
             <div
               className={`
                 w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0
-                ${selectedId === "no-preference" ? "border-gold bg-gold" : "border-ink-20"}
+                ${selectedId === "no-preference" ? "border-black bg-black" : "border-grey-300"}
               `}
             >
               {selectedId === "no-preference" && (
@@ -119,11 +119,11 @@ export function InstructorSelector({ service, instructors, onSelect }: Props) {
       </div>
 
       {/* Navigation */}
-      <div className="flex justify-end mt-8 pt-6 border-t border-ink-10">
+      <div className="flex justify-end mt-8 pt-6 border-t border-grey-200">
         <button
           onClick={handleContinue}
           disabled={!canContinue}
-          className="w-btn w-btn-gold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="w-btn w-btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           Velg tid
           <ArrowRight size={18} />

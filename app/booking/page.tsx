@@ -223,7 +223,7 @@ function BookingContent() {
                   {step !== "service" && step !== "confirmation" && (
                     <button
                       onClick={goBack}
-                      className="flex items-center gap-2 text-sm text-ink-50 hover:text-ink-90 mb-6 transition-colors"
+                      className="flex items-center gap-2 text-sm text-grey-500 hover:text-black mb-6 transition-colors"
                     >
                       <ArrowLeft size={16} />
                       Tilbake
@@ -307,7 +307,7 @@ function BookingContent() {
                             </svg>
                           </motion.div>
                           <h2 className="w-heading-md mb-2">Betaling mottatt!</h2>
-                          <p className="text-ink-50 mb-6">
+                          <p className="text-grey-500 mb-6">
                             Bookingen din er bekreftet. Sjekk e-posten din for detaljer og innlogging.
                           </p>
                           <Link href="/" className="w-btn w-btn-primary">
