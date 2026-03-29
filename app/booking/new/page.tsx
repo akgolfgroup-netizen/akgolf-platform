@@ -21,7 +21,7 @@ export default async function BookingNewPage({ searchParams }: Props) {
     const callbackUrl = encodeURIComponent(
       `/portal/booking/new?serviceTypeId=${serviceTypeId ?? ""}&instructorId=${instructorId ?? ""}&startTime=${startTime ?? ""}`
     );
-    redirect(`/login?callbackUrl=${callbackUrl}`);
+    redirect(`/portal/login?callbackUrl=${callbackUrl}`);
   }
 
   if (!serviceTypeId || !instructorId || !startTime) {

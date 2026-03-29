@@ -4,8 +4,19 @@ import { stripe } from "@/lib/portal/stripe";
 import { BookingStatus, PaymentStatus } from "@prisma/client";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
 import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function POST(req: NextRequest) {
+  // Rate limiting to prevent abuse
+  const clientIp = getClientIp(req);
+  const rateLimit = checkRateLimit(`confirm-payment:${clientIp}`, RATE_LIMITS.BOOKING_CREATE);
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "For mange forespørsler" },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rateLimit.resetAt - Date.now()) / 1000)) } }
+    );
+  }
+
   let body: { bookingId?: string; paymentIntentId?: string };
   try {
     body = await req.json();

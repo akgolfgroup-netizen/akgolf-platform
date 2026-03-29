@@ -193,6 +193,40 @@ if (request.nextUrl.pathname.startsWith("/coach")) {
 
 **Regel:** `requirePortalUser()` i layout er backup. `proxy.ts` er primær auth-guard.
 
+## 19. API-ruter MÅ ha autentisering og rate limiting
+
+**Problem:** Offentlige API-ruter uten autentisering kan lekke data eller tillate abuse.
+
+**Løsning:**
+- ALLE API-ruter som returnerer eller modifiserer brukerdata MÅ kalle `getPortalUser()` eller `requirePortalUser()`
+- ALLE offentlige endepunkter MÅ ha rate limiting via `checkRateLimit()`
+- ALDRI reflekter brukerinput direkte i feilmeldinger uten escaping
+
+```typescript
+// Eksempel på sikker API-rute
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { getPortalUser } from "@/lib/portal/auth";
+
+export async function GET(req: NextRequest) {
+  // 1. Rate limiting først
+  const rateLimit = checkRateLimit(`endpoint:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
+  // 2. Auth-sjekk
+  const user = await getPortalUser();
+  if (!user?.id) {
+    return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });
+  }
+
+  // 3. Escape brukerinput i feilmeldinger
+  const safeInput = userInput.replace(/[<>&"']/g, "");
+}
+```
+
+**Fikset 2026-03-29:** 6 filer — booking-API-er, waitlist, XSS i feilmelding.
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer

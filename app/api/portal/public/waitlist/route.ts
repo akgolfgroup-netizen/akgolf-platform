@@ -1,8 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addToWaitlist } from "@/lib/portal/booking/waitlist";
 import { autoCreateUser } from "@/lib/portal/booking/auto-create-user";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function POST(req: NextRequest) {
+  // Rate limiting to prevent spam
+  const clientIp = getClientIp(req);
+  const rateLimit = checkRateLimit(`waitlist:${clientIp}`, RATE_LIMITS.CONTACT_FORM);
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "For mange forespørsler. Prøv igjen senere." },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rateLimit.resetAt - Date.now()) / 1000)) } }
+    );
+  }
+
   let body: {
     bookingId?: string;
     email?: string;

@@ -13,8 +13,10 @@ export async function GET(req: NextRequest) {
   const statusParams = req.nextUrl.searchParams.getAll("status");
   for (const s of statusParams) {
     if (!VALID_STATUSES.includes(s)) {
+      // Escape user input to prevent XSS in error messages
+      const safeStatus = s.replace(/[<>&"']/g, "");
       return NextResponse.json(
-        { error: `Ugyldig status: ${s}` },
+        { error: `Ugyldig status: ${safeStatus}` },
         { status: 400 }
       );
     }
