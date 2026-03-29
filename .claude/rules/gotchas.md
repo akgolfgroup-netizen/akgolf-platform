@@ -177,6 +177,22 @@ const vatAmount = Math.round((price * vatRate) / 100);
 
 **Regel:** All edge-logikk (auth, redirects, maintenance mode) går i `proxy.ts`.
 
+## 18. Nye beskyttede ruter MÅ legges til i proxy.ts
+
+**Problem:** Når du lager nye beskyttede ruter (f.eks. `/coach`), holder det IKKE å bare bruke `requirePortalUser()` i layout. Brukeren vil se en feilside før redirect skjer.
+
+**Løsning:** ALLTID legg til auth-sjekk i `proxy.ts` for nye beskyttede ruter:
+```typescript
+// Coach Hub requires authentication
+if (request.nextUrl.pathname.startsWith("/coach")) {
+  if (!user) {
+    return NextResponse.redirect(new URL("/portal/login", request.url));
+  }
+}
+```
+
+**Regel:** `requirePortalUser()` i layout er backup. `proxy.ts` er primær auth-guard.
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer

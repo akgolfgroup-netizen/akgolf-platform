@@ -56,7 +56,7 @@ export function ApplicationForm() {
               </svg>
             </div>
             <h3 className="w-heading-sm mb-2">Melding mottatt!</h3>
-            <p className="text-sm text-ink-50">Vi tar kontakt innen 48 timer.</p>
+            <p className="text-sm text-grey-500">Vi tar kontakt innen 48 timer.</p>
           </motion.div>
         ) : (
           <motion.form
@@ -117,7 +117,7 @@ export function ApplicationForm() {
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="w-btn w-btn-gold w-full disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-btn w-btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {status === "submitting" ? (
                 <span className="flex items-center justify-center gap-2">

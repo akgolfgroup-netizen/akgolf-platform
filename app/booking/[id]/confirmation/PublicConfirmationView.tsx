@@ -3,17 +3,15 @@
 import Link from "next/link";
 import { Check, Mail, Calendar, Clock, CreditCard, User, LogIn } from "lucide-react";
 
-// Warm Light Theme
+// Apple Light Theme 2026
 const THEME = {
-  bg: "#FAFBFC",
+  bg: "#F5F5F7",
   bgElevated: "#FFFFFF",
-  gold: "#B07D4F",
-  goldLight: "#E8D4B0",
-  navy: "#0A1929",
-  text: "#02060D",
-  textMuted: "#64748B",
-  border: "#EBE5DA",
-  shadow: "0 4px 20px rgba(0,0,0,0.06)",
+  primary: "#1D1D1F",
+  text: "#1D1D1F",
+  textMuted: "#86868B",
+  border: "#E8E8ED",
+  shadow: "0 4px 20px rgba(0,0,0,0.04)",
 };
 
 interface Props {
@@ -51,13 +49,13 @@ export function PublicConfirmationView({
         >
           <div 
             className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
-            style={{ background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})` }}
+            style={{ background: THEME.primary }}
           >
             <Check className="w-10 h-10 text-white" />
           </div>
           <h1 
             className="text-3xl font-semibold mb-3"
-            style={{ color: THEME.navy }}
+            style={{ color: THEME.text }}
           >
             Booking bekreftet!
           </h1>
@@ -77,7 +75,7 @@ export function PublicConfirmationView({
         >
           <h2 
             className="text-xl font-semibold mb-6 pb-4 border-b"
-            style={{ color: THEME.navy, borderColor: THEME.border }}
+            style={{ color: THEME.text, borderColor: THEME.border }}
           >
             Bookingdetaljer
           </h2>
@@ -86,9 +84,9 @@ export function PublicConfirmationView({
             <div className="flex items-center gap-4">
               <div 
                 className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: `${THEME.gold}15` }}
+                style={{ background: THEME.bg }}
               >
-                <Calendar className="w-6 h-6" style={{ color: THEME.gold }} />
+                <Calendar className="w-6 h-6" style={{ color: THEME.primary }} />
               </div>
               <div>
                 <p className="text-sm" style={{ color: THEME.textMuted }}>Dato og tid</p>
@@ -99,9 +97,9 @@ export function PublicConfirmationView({
             <div className="flex items-center gap-4">
               <div 
                 className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: `${THEME.gold}15` }}
+                style={{ background: THEME.bg }}
               >
-                <User className="w-6 h-6" style={{ color: THEME.gold }} />
+                <User className="w-6 h-6" style={{ color: THEME.primary }} />
               </div>
               <div>
                 <p className="text-sm" style={{ color: THEME.textMuted }}>Instruktør</p>
@@ -112,9 +110,9 @@ export function PublicConfirmationView({
             <div className="flex items-center gap-4">
               <div 
                 className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: `${THEME.gold}15` }}
+                style={{ background: THEME.bg }}
               >
-                <Clock className="w-6 h-6" style={{ color: THEME.gold }} />
+                <Clock className="w-6 h-6" style={{ color: THEME.primary }} />
               </div>
               <div>
                 <p className="text-sm" style={{ color: THEME.textMuted }}>Varighet</p>
@@ -125,9 +123,9 @@ export function PublicConfirmationView({
             <div className="flex items-center gap-4">
               <div 
                 className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: `${THEME.gold}15` }}
+                style={{ background: THEME.bg }}
               >
-                <CreditCard className="w-6 h-6" style={{ color: THEME.gold }} />
+                <CreditCard className="w-6 h-6" style={{ color: THEME.primary }} />
               </div>
               <div>
                 <p className="text-sm" style={{ color: THEME.textMuted }}>Pris</p>
@@ -141,14 +139,14 @@ export function PublicConfirmationView({
         <div 
           className="rounded-2xl p-6 mb-8 border"
           style={{
-            background: `${THEME.gold}08`,
+            background: THEME.bg,
             borderColor: THEME.border,
           }}
         >
           <div className="flex items-start gap-4">
-            <Mail className="w-6 h-6 shrink-0 mt-0.5" style={{ color: THEME.gold }} />
+            <Mail className="w-6 h-6 shrink-0 mt-0.5" style={{ color: THEME.primary }} />
             <div>
-              <h3 className="font-semibold mb-1" style={{ color: THEME.navy }}>
+              <h3 className="font-semibold mb-1" style={{ color: THEME.text }}>
                 Bekreftelse sendt
               </h3>
               <p className="text-sm" style={{ color: THEME.textMuted }}>
@@ -168,9 +166,9 @@ export function PublicConfirmationView({
           }}
         >
           <div className="flex items-start gap-4">
-            <LogIn className="w-6 h-6 shrink-0 mt-0.5" style={{ color: THEME.gold }} />
+            <LogIn className="w-6 h-6 shrink-0 mt-0.5" style={{ color: THEME.primary }} />
             <div className="flex-1">
-              <h3 className="font-semibold mb-1" style={{ color: THEME.navy }}>
+              <h3 className="font-semibold mb-1" style={{ color: THEME.text }}>
                 Din spillerportal
               </h3>
               <p className="text-sm mb-4" style={{ color: THEME.textMuted }}>
@@ -181,7 +179,7 @@ export function PublicConfirmationView({
                 href="/portal/login"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300"
                 style={{
-                  background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})`,
+                  background: THEME.primary,
                   color: "#FFFFFF",
                 }}
               >

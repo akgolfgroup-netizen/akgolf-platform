@@ -42,8 +42,8 @@ interface CustomerData {
 export default function BookingPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 size={24} className="animate-spin text-gold" />
+      <div className="min-h-screen flex items-center justify-center bg-[#F5F5F7]">
+        <Loader2 size={24} className="animate-spin text-[#1D1D1F]" />
       </div>
     }>
       <BookingContent />
@@ -182,7 +182,7 @@ function BookingContent() {
   return (
     <>
       <WebsiteNav />
-      <main className="min-h-screen bg-ink-5">
+      <main className="min-h-screen bg-[#F5F5F7]">
         <SubPageHero
           eyebrow="Booking"
           heading="Book coaching"
@@ -213,7 +213,7 @@ function BookingContent() {
             {/* Loading state */}
             {loadingServices ? (
               <div className="flex items-center justify-center py-20">
-                <Loader2 size={24} className="animate-spin text-gold" />
+                <Loader2 size={24} className="animate-spin text-[#1D1D1F]" />
               </div>
             ) : (
               <div className={showSidebar ? "grid gap-6 lg:grid-cols-[1fr_340px]" : ""}>
@@ -264,8 +264,8 @@ function BookingContent() {
                       {step === "details" && (
                         creatingBooking ? (
                           <div className="flex flex-col items-center justify-center py-20">
-                            <Loader2 size={24} className="animate-spin text-gold mb-4" />
-                            <p className="text-ink-50">Oppretter booking...</p>
+                            <Loader2 size={24} className="animate-spin text-[#1D1D1F] mb-4" />
+                            <p className="text-[#86868B]">Oppretter booking...</p>
                           </div>
                         ) : (
                           <CustomerForm onSubmit={handleCustomerSubmit} />

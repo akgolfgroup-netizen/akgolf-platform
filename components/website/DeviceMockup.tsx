@@ -12,11 +12,11 @@ interface DeviceMockupProps {
 export function DeviceMockup({ imageSrc, alt = "App preview", className = "" }: DeviceMockupProps) {
   return (
     <div className={`relative ${className}`}>
-      {/* Glow effect behind device */}
+      {/* Subtle glow effect behind device */}
       <div
-        className="absolute inset-0 blur-3xl opacity-30"
+        className="absolute inset-0 blur-3xl opacity-20"
         style={{
-          background: "radial-gradient(ellipse at center, rgba(176,125,79,0.4) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, transparent 70%)",
           transform: "translateY(10%)",
         }}
       />
@@ -60,8 +60,8 @@ export function DeviceMockup({ imageSrc, alt = "App preview", className = "" }: 
               style={{
                 background: "#1a1a1a",
                 boxShadow: `
-                  0 50px 100px -20px rgba(0,0,0,0.5),
-                  0 30px 60px -30px rgba(0,0,0,0.6),
+                  0 50px 100px -20px rgba(0,0,0,0.3),
+                  0 30px 60px -30px rgba(0,0,0,0.4),
                   inset 0 1px 0 rgba(255,255,255,0.1),
                   inset 0 -1px 0 rgba(0,0,0,0.3)
                 `,

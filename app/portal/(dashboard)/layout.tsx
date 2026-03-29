@@ -12,7 +12,7 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex bg-[var(--portal-bg)]">
+      <div className="min-h-screen flex bg-[#F5F5F7]">
         <PremiumSidebar user={user} />
         <MobileHeader />
         <main className="flex-1 lg:ml-64 min-h-screen p-4 lg:p-8 pt-18 lg:pt-8">

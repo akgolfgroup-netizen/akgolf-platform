@@ -53,13 +53,13 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Service Reminder */}
-      <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border bg-gold/5 border-gold/30">
-        <CreditCard size={20} className="text-gold" />
-        <p className="font-medium text-navy">{serviceName}</p>
+      <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border bg-[#F5F5F7] border-[#E8E8ED]">
+        <CreditCard size={20} className="text-[#1D1D1F]" />
+        <p className="font-medium text-[#1D1D1F]">{serviceName}</p>
       </div>
 
       {/* Stripe Payment Element */}
-      <div className="rounded-2xl p-5 border bg-white border-border">
+      <div className="rounded-2xl p-5 border bg-white border-[#E8E8ED]">
         <PaymentElement
           options={{
             layout: "tabs",
@@ -83,11 +83,8 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
       <motion.button
         type="submit"
         disabled={!stripe || !elements || loading}
-        className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50 text-white shadow-lg shadow-gold/30"
-        style={{
-          background: "linear-gradient(135deg, var(--color-gold), var(--color-gold-light))",
-        }}
-        whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(176,125,79,0.3)" }}
+        className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50 text-white bg-[#1D1D1F] shadow-lg shadow-black/15"
+        whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(29,29,31,0.25)" }}
         whileTap={{ scale: 0.99 }}
       >
         {loading ? (
@@ -104,7 +101,7 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
       </motion.button>
 
       {/* Security Note */}
-      <p className="text-xs text-center text-ink-40">
+      <p className="text-xs text-center text-[#AEAEB2]">
         Sikker betaling via Stripe. AK Golf Academy lagrer ikke kortinformasjon.
       </p>
     </form>
@@ -123,7 +120,7 @@ export function StripePaymentPage({
   serviceName,
 }: StripePaymentPageProps) {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-snow">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F5F5F7]">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -136,14 +133,14 @@ export function StripePaymentPage({
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border bg-gold/10 border-gold/30"
+            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border bg-[#F5F5F7] border-[#E8E8ED]"
           >
-            <CreditCard size={28} className="text-gold" />
+            <CreditCard size={28} className="text-[#1D1D1F]" />
           </motion.div>
-          <h1 className="text-2xl font-semibold mb-2 text-navy">
+          <h1 className="text-2xl font-semibold mb-2 text-[#1D1D1F]">
             Fullfør betaling
           </h1>
-          <p className="text-ink-50">
+          <p className="text-[#86868B]">
             Sikker kortbetaling med Stripe
           </p>
         </div>
@@ -153,7 +150,7 @@ export function StripePaymentPage({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-3xl p-8 border bg-white border-border shadow-md"
+          className="rounded-3xl p-8 border bg-white border-[#E8E8ED] shadow-md"
         >
           <Elements
             stripe={stripePromise}
@@ -162,11 +159,11 @@ export function StripePaymentPage({
               appearance: {
                 theme: "stripe",
                 variables: {
-                  colorPrimary: "#B07D4F",
+                  colorPrimary: "#1D1D1F",
                   colorBackground: "#FFFFFF",
-                  colorText: "#0A1929",
+                  colorText: "#1D1D1F",
                   colorDanger: "#EF4444",
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "Manrope, sans-serif",
                   borderRadius: "12px",
                   spacingUnit: "4px",
                 },

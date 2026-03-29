@@ -45,14 +45,7 @@ export default function UtviklingPage() {
         />
         <PageTransition>
           {/* ─── Hero with Badge ─── */}
-          <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-            {/* Gradient mesh */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full bg-utvikling opacity-[0.08] blur-[80px]" />
-              <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-software opacity-[0.05] blur-[60px]" />
-              <div className="absolute top-0 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-utvikling/10 to-transparent" />
-            </div>
-
+          <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-white">
             <div className="w-container relative">
               {/* Badge */}
               <motion.div
@@ -61,9 +54,9 @@ export default function UtviklingPage() {
                 transition={{ duration: 0.8, ease: [...EASE_ENTRANCE] }}
                 className="mb-8"
               >
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-utvikling/10 border border-utvikling/20">
-                  <span className="w-2 h-2 rounded-full bg-utvikling animate-pulse" />
-                  <span className="text-sm font-medium text-utvikling">Utvikling — For klubber og forbund</span>
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-grey-100 border border-grey-200">
+                  <span className="w-2 h-2 rounded-full bg-black" />
+                  <span className="text-sm font-medium text-grey-600">Utvikling — For klubber og forbund</span>
                 </span>
               </motion.div>
 
@@ -73,7 +66,7 @@ export default function UtviklingPage() {
                 transition={{ duration: 0.8, delay: 0.1, ease: [...EASE_ENTRANCE] }}
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-2 h-2 rounded-full bg-utvikling" />
+                  <div className="w-2 h-2 rounded-full bg-black" />
                   <SectionLabel>{UTVIKLING_HERO.eyebrow}</SectionLabel>
                 </div>
               </motion.div>
@@ -88,7 +81,7 @@ export default function UtviklingPage() {
               </motion.h1>
 
               <motion.p
-                className="text-lg text-ink-50 max-w-2xl leading-relaxed"
+                className="text-lg text-grey-500 max-w-2xl leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.25, ease: [...EASE_ENTRANCE] }}
@@ -98,7 +91,7 @@ export default function UtviklingPage() {
 
               {/* Horizontal accent */}
               <motion.div
-                className="mt-12 w-16 h-px bg-gradient-to-r from-utvikling/40 to-transparent"
+                className="mt-12 w-16 h-px bg-gradient-to-r from-grey-300 to-transparent"
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={{ opacity: 1, scaleX: 1 }}
                 transition={{ duration: 0.8, delay: 0.4, ease: [...EASE_ENTRANCE] }}
@@ -108,13 +101,13 @@ export default function UtviklingPage() {
           </section>
 
           {/* ─── Two Main Services ─── */}
-          <section className="w-section-lg bg-surface-warm">
+          <section className="w-section-lg bg-grey-100">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center max-w-2xl mx-auto mb-16">
                   <SectionLabel>{UTVIKLING_SERVICES.eyebrow}</SectionLabel>
                   <h2 className="w-heading-lg mt-4 mb-4">{UTVIKLING_SERVICES.heading}</h2>
-                  <p className="text-ink-50 leading-relaxed">{UTVIKLING_SERVICES.description}</p>
+                  <p className="text-grey-500 leading-relaxed">{UTVIKLING_SERVICES.description}</p>
                 </div>
               </RevealOnScroll>
 
@@ -123,25 +116,25 @@ export default function UtviklingPage() {
                   <StaggerItem key={service.id}>
                     <div className="w-card h-full flex flex-col p-8">
                       <div className="flex items-center gap-3 mb-4">
-                        <span className={`w-3 h-3 rounded-full ${service.accent === "software" ? "bg-software" : "bg-utvikling"}`} />
-                        <span className={`text-xs font-mono uppercase tracking-wider ${service.accent === "software" ? "text-software" : "text-utvikling"}`}>
+                        <span className="w-3 h-3 rounded-full bg-black" />
+                        <span className="text-xs font-mono uppercase tracking-wider text-grey-500">
                           {service.subtitle}
                         </span>
                       </div>
                       <h3 className="w-heading-md mb-3">{service.title}</h3>
-                      <p className="text-ink-50 leading-relaxed mb-6 flex-1">{service.description}</p>
+                      <p className="text-grey-500 leading-relaxed mb-6 flex-1">{service.description}</p>
                       <ul className="space-y-2">
                         {service.features.map((feature) => (
-                          <li key={feature} className="flex items-center gap-2 text-sm text-ink-60">
-                            <span className={`w-1.5 h-1.5 rounded-full ${service.accent === "software" ? "bg-software" : "bg-utvikling"}`} />
+                          <li key={feature} className="flex items-center gap-2 text-sm text-grey-600">
+                            <span className="w-1.5 h-1.5 rounded-full bg-grey-400" />
                             {feature}
                           </li>
                         ))}
                       </ul>
-                      <div className="mt-6 pt-6 border-t border-ink-10">
+                      <div className="mt-6 pt-6 border-t border-grey-200">
                         <Link
                           href={`#${service.id}`}
-                          className={`text-sm font-medium ${service.accent === "software" ? "text-software hover:text-software/80" : "text-utvikling hover:text-utvikling/80"} transition-colors`}
+                          className="text-sm font-medium text-black hover:text-grey-600 transition-colors"
                         >
                           Les mer om {service.title.toLowerCase()} &rarr;
                         </Link>
@@ -154,20 +147,20 @@ export default function UtviklingPage() {
           </section>
 
           {/* ─── Software Section ─── */}
-          <section id="software" className="w-section-lg">
+          <section id="software" className="w-section-lg bg-white">
             <div className="w-container">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
                 <RevealOnScroll>
                   <div>
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="w-2 h-2 rounded-full bg-software" />
+                      <span className="w-2 h-2 rounded-full bg-black" />
                       <SectionLabel>{UTVIKLING_SOFTWARE.label}</SectionLabel>
                     </div>
                     <h2 className="w-heading-lg mb-6">
                       {UTVIKLING_SOFTWARE.heading}<br />
-                      <span className="text-ink-50">{UTVIKLING_SOFTWARE.subheading}</span>
+                      <span className="text-grey-500">{UTVIKLING_SOFTWARE.subheading}</span>
                     </h2>
-                    <p className="text-ink-50 leading-relaxed">
+                    <p className="text-grey-500 leading-relaxed">
                       {UTVIKLING_SOFTWARE.description}
                     </p>
                   </div>
@@ -182,19 +175,19 @@ export default function UtviklingPage() {
                 {UTVIKLING_SOFTWARE_FEATURES.map((feature) => (
                   <StaggerItem key={feature.id}>
                     <div className="w-card h-full flex flex-col">
-                      <div className="w-10 h-10 rounded-lg bg-software/10 flex items-center justify-center mb-4">
-                        <div className="w-3 h-3 rounded-full bg-software" />
+                      <div className="w-10 h-10 rounded-lg bg-grey-100 flex items-center justify-center mb-4">
+                        <div className="w-3 h-3 rounded-full bg-black" />
                       </div>
-                      <h4 className="font-display text-lg font-semibold text-ink-90 mb-2">
+                      <h4 className="font-display text-lg font-semibold text-black mb-2">
                         {feature.title}
                       </h4>
-                      <p className="text-sm text-ink-50 leading-relaxed mb-4 flex-1">
+                      <p className="text-sm text-grey-500 leading-relaxed mb-4 flex-1">
                         {feature.description}
                       </p>
                       <ul className="space-y-1.5">
                         {feature.details.map((detail) => (
-                          <li key={detail} className="flex items-center gap-2 text-xs text-ink-60">
-                            <span className="w-1 h-1 rounded-full bg-software" />
+                          <li key={detail} className="flex items-center gap-2 text-xs text-grey-600">
+                            <span className="w-1 h-1 rounded-full bg-grey-400" />
                             {detail}
                           </li>
                         ))}
@@ -215,7 +208,7 @@ export default function UtviklingPage() {
           </section>
 
           {/* ─── Klubbutvikling Section ─── */}
-          <section id="klubbutvikling" className="w-section-lg bg-surface-warm">
+          <section id="klubbutvikling" className="w-section-lg bg-grey-100">
             <div className="w-container">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
                 <RevealOnScroll delay={0.2} className="order-2 lg:order-1">
@@ -225,14 +218,14 @@ export default function UtviklingPage() {
                 <RevealOnScroll className="order-1 lg:order-2">
                   <div>
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="w-2 h-2 rounded-full bg-utvikling" />
+                      <span className="w-2 h-2 rounded-full bg-black" />
                       <SectionLabel>{UTVIKLING_KLUBB.label}</SectionLabel>
                     </div>
                     <h2 className="w-heading-lg mb-6">
                       {UTVIKLING_KLUBB.heading}<br />
-                      <span className="text-ink-50">{UTVIKLING_KLUBB.subheading}</span>
+                      <span className="text-grey-500">{UTVIKLING_KLUBB.subheading}</span>
                     </h2>
-                    <p className="text-ink-50 leading-relaxed">
+                    <p className="text-grey-500 leading-relaxed">
                       {UTVIKLING_KLUBB.description}
                     </p>
                   </div>
@@ -243,19 +236,19 @@ export default function UtviklingPage() {
                 {UTVIKLING_KLUBB_FEATURES.map((feature) => (
                   <StaggerItem key={feature.id}>
                     <div className="w-card h-full flex flex-col">
-                      <div className="w-10 h-10 rounded-lg bg-utvikling/10 flex items-center justify-center mb-4">
-                        <div className="w-3 h-3 rounded-full bg-utvikling" />
+                      <div className="w-10 h-10 rounded-lg bg-grey-200 flex items-center justify-center mb-4">
+                        <div className="w-3 h-3 rounded-full bg-black" />
                       </div>
-                      <h4 className="font-display text-lg font-semibold text-ink-90 mb-2">
+                      <h4 className="font-display text-lg font-semibold text-black mb-2">
                         {feature.title}
                       </h4>
-                      <p className="text-sm text-ink-50 leading-relaxed mb-4 flex-1">
+                      <p className="text-sm text-grey-500 leading-relaxed mb-4 flex-1">
                         {feature.description}
                       </p>
                       <ul className="space-y-1.5">
                         {feature.details.map((detail) => (
-                          <li key={detail} className="flex items-center gap-2 text-xs text-ink-60">
-                            <span className="w-1 h-1 rounded-full bg-utvikling" />
+                          <li key={detail} className="flex items-center gap-2 text-xs text-grey-600">
+                            <span className="w-1 h-1 rounded-full bg-grey-400" />
                             {detail}
                           </li>
                         ))}
@@ -276,12 +269,12 @@ export default function UtviklingPage() {
           </section>
 
           {/* ─── Products ─── */}
-          <section id="products" className="w-section-lg">
+          <section id="products" className="w-section-lg bg-white">
             <div className="w-container">
               <RevealOnScroll>
                 <SectionLabel>Produkter</SectionLabel>
                 <h2 className="w-heading-lg mt-4 mb-4">Konkrete losninger.</h2>
-                <p className="text-ink-50 max-w-2xl leading-relaxed mb-12">
+                <p className="text-grey-500 max-w-2xl leading-relaxed mb-12">
                   Digitale verktoy og radgivingstjenester med fast pris. Alt skreddersys til klubbens behov.
                 </p>
               </RevealOnScroll>
@@ -291,22 +284,22 @@ export default function UtviklingPage() {
                   <StaggerItem key={product.id}>
                     <div className="w-card h-full flex flex-col">
                       <div className="flex items-center gap-2 mb-3">
-                        <span className="w-2 h-2 rounded-full bg-utvikling" />
-                        <span className="text-xs font-mono text-utvikling uppercase tracking-wider">{product.tagline}</span>
+                        <span className="w-2 h-2 rounded-full bg-black" />
+                        <span className="text-xs font-mono text-grey-500 uppercase tracking-wider">{product.tagline}</span>
                       </div>
                       <h3 className="w-heading-sm mb-2">{product.title}</h3>
-                      <p className="text-sm text-ink-50 leading-relaxed mb-4 flex-1">{product.description}</p>
+                      <p className="text-sm text-grey-500 leading-relaxed mb-4 flex-1">{product.description}</p>
                       <ul className="space-y-2 mb-6">
                         {product.features.map((feature) => (
-                          <li key={feature} className="flex items-center gap-2 text-xs text-ink-60">
-                            <span className="w-1 h-1 rounded-full bg-utvikling shrink-0" />
+                          <li key={feature} className="flex items-center gap-2 text-xs text-grey-600">
+                            <span className="w-1 h-1 rounded-full bg-grey-400 shrink-0" />
                             {feature}
                           </li>
                         ))}
                       </ul>
-                      <div className="pt-4 border-t border-ink-10">
-                        <p className="font-mono text-lg font-bold text-utvikling">{product.pricing}</p>
-                        <p className="text-xs text-ink-50">{product.pricingNote}</p>
+                      <div className="pt-4 border-t border-grey-200">
+                        <p className="font-mono text-lg font-bold text-black">{product.pricing}</p>
+                        <p className="text-xs text-grey-500">{product.pricingNote}</p>
                       </div>
                     </div>
                   </StaggerItem>
@@ -316,12 +309,12 @@ export default function UtviklingPage() {
           </section>
 
           {/* ─── Case Studies / References ─── */}
-          <section className="w-section-lg bg-ink-100 w-section-dark">
+          <section className="w-section-lg bg-grey-100">
             <div className="w-container">
               <RevealOnScroll>
                 <SectionLabel>Referanser</SectionLabel>
-                <h2 className="w-heading-lg text-white mt-4 mb-4">Klubber vi har hjulpet.</h2>
-                <p className="text-ink-40 max-w-2xl mb-12">
+                <h2 className="w-heading-lg mt-4 mb-4">Klubber vi har hjulpet.</h2>
+                <p className="text-grey-500 max-w-2xl mb-12">
                   Fra sportsplaner til digitale verktoy. Her er noen av klubbene som bruker vare losninger.
                 </p>
               </RevealOnScroll>
@@ -329,28 +322,28 @@ export default function UtviklingPage() {
               <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {UTVIKLING_CASE_STUDIES.map((study) => (
                   <StaggerItem key={study.club}>
-                    <div className="w-card-dark h-full">
+                    <div className="w-card h-full bg-white">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
-                          <span className="text-lg font-bold text-white">{study.club.charAt(0)}</span>
+                        <div className="w-12 h-12 rounded-xl bg-grey-100 flex items-center justify-center">
+                          <span className="text-lg font-bold text-black">{study.club.charAt(0)}</span>
                         </div>
                         <div>
-                          <h4 className="font-display font-semibold text-white">{study.club}</h4>
-                          <p className="text-xs text-ink-50">{study.year}</p>
+                          <h4 className="font-display font-semibold text-black">{study.club}</h4>
+                          <p className="text-xs text-grey-500">{study.year}</p>
                         </div>
                       </div>
-                      <blockquote className="text-sm text-ink-30 leading-relaxed mb-4 italic">
+                      <blockquote className="text-sm text-grey-500 leading-relaxed mb-4 italic">
                         &quot;{study.quote}&quot;
                       </blockquote>
                       <div className="flex items-center justify-between">
                         <div className="flex gap-2">
                           {study.products.map((product) => (
-                            <span key={product} className="px-2 py-1 rounded-full bg-utvikling/20 text-utvikling text-xs">
+                            <span key={product} className="px-2 py-1 rounded-full bg-grey-100 text-grey-600 text-xs">
                               {product}
                             </span>
                           ))}
                         </div>
-                        <span className="text-sm font-semibold text-utvikling">{study.result}</span>
+                        <span className="text-sm font-semibold text-black">{study.result}</span>
                       </div>
                     </div>
                   </StaggerItem>
@@ -360,13 +353,13 @@ export default function UtviklingPage() {
           </section>
 
           {/* ─── Contact CTA ─── */}
-          <section className="w-section-lg bg-surface-warm">
+          <section className="w-section-lg bg-white">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="max-w-2xl mx-auto text-center">
                   <SectionLabel>{UTVIKLING_CTA.label}</SectionLabel>
                   <h2 className="w-heading-lg mt-4 mb-4">{UTVIKLING_CTA.heading}</h2>
-                  <p className="text-ink-50 leading-relaxed mb-8">
+                  <p className="text-grey-500 leading-relaxed mb-8">
                     {UTVIKLING_CTA.description}
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
@@ -383,13 +376,13 @@ export default function UtviklingPage() {
           </section>
 
           {/* ─── Application Form ─── */}
-          <section id="apply" className="w-section-lg bg-surface-cream">
+          <section id="apply" className="w-section-lg bg-grey-100">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center mb-12">
                   <SectionLabel>Ta kontakt</SectionLabel>
                   <h2 className="w-heading-lg mt-4 mb-4">Fortell oss om deres behov.</h2>
-                  <p className="text-ink-50 max-w-lg mx-auto">
+                  <p className="text-grey-500 max-w-lg mx-auto">
                     Fyll ut skjemaet under, sa tar vi kontakt for en uforpliktende samtale om deres muligheter.
                   </p>
                 </div>

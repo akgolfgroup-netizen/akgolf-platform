@@ -23,12 +23,12 @@ import {
   Dumbbell,
   X,
   ChevronRight,
-  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
 import type { PortalUser } from "@/lib/portal/auth";
 import { useSidebar } from "./sidebar-context";
+import { AKLogo } from "@/components/website/AKLogo";
 
 const navItems = [
   { href: "/portal", label: "Dashboard", icon: LayoutDashboard },
@@ -85,33 +85,33 @@ function NavLink({
           className={cn(
             "flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-all duration-200",
             active
-              ? "bg-gradient-to-r from-gold/20 to-gold/5 text-white"
-              : "text-[var(--portal-text-secondary)] hover:text-white hover:bg-white/5"
+              ? "bg-[#1D1D1F] text-white"
+              : "text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-[#F5F5F7]"
           )}
         >
           {/* Active indicator */}
           {active && (
             <motion.div
               layoutId="activeIndicator"
-              className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gold rounded-r-full"
+              className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[#1D1D1F] rounded-r-full"
               transition={{ type: "spring", stiffness: 500, damping: 30 }}
             />
           )}
 
           <div className={cn(
             "w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
-            active ? "bg-gold/20" : "bg-white/5 group-hover:bg-white/10"
+            active ? "bg-white/20" : "bg-[#E8E8ED] group-hover:bg-[#D2D2D7]"
           )}>
             <item.icon className={cn(
               "w-4 h-4 transition-colors",
-              active ? "text-gold" : "text-[var(--portal-text-muted)] group-hover:text-white"
+              active ? "text-white" : "text-[#86868B] group-hover:text-[#1D1D1F]"
             )} />
           </div>
 
           <span className="flex-1">{item.label}</span>
 
           {active && (
-            <ChevronRight className="w-4 h-4 text-gold/50" />
+            <ChevronRight className="w-4 h-4 text-white/50" />
           )}
         </motion.div>
       </Link>
@@ -122,7 +122,7 @@ function NavLink({
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
     <div className="px-6 pt-6 pb-2">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--portal-text-muted)]">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#86868B]">
         {children}
       </p>
     </div>
@@ -175,10 +175,10 @@ function SidebarContent({
               <motion.div
                 whileHover={{ x: 4 }}
                 transition={{ duration: 0.15 }}
-                className="flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium text-[var(--portal-text-secondary)] hover:text-white hover:bg-white/5 transition-all duration-200"
+                className="flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium text-[#6E6E73] hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-all duration-200"
               >
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/5 group-hover:bg-red-500/20 transition-colors">
-                  <LogOut className="w-4 h-4 text-[var(--portal-text-muted)] group-hover:text-red-400 transition-colors" />
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#E8E8ED] group-hover:bg-[#FF3B30]/20 transition-colors">
+                  <LogOut className="w-4 h-4 text-[#86868B] group-hover:text-[#FF3B30] transition-colors" />
                 </div>
                 <span>Logg ut</span>
               </motion.div>
@@ -200,31 +200,30 @@ function SidebarContent({
       </nav>
 
       {/* User footer */}
-      <div className="p-4 mx-3 mb-3 rounded-xl bg-gradient-to-br from-white/5 to-transparent border border-white/5">
+      <div className="p-4 mx-3 mb-3 rounded-xl bg-[#F5F5F7] border border-[#E8E8ED]">
         <div className="flex items-center gap-3">
           <div className="relative">
             {user.image ? (
               <img
                 src={user.image}
                 alt=""
-                className="w-10 h-10 rounded-full object-cover ring-2 ring-gold/20"
+                className="w-10 h-10 rounded-full object-cover ring-2 ring-[#E8E8ED]"
               />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold/30 to-gold/10 flex items-center justify-center ring-2 ring-gold/20">
-                <span className="text-sm font-semibold text-gold">
+              <div className="w-10 h-10 rounded-full bg-[#1D1D1F] flex items-center justify-center ring-2 ring-[#E8E8ED]">
+                <span className="text-sm font-semibold text-white">
                   {(user.name ?? "S")[0].toUpperCase()}
                 </span>
               </div>
             )}
             {/* Online indicator */}
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#0c1220]" />
+            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#34C759] rounded-full border-2 border-white" />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-white truncate">
+            <p className="text-sm font-medium text-[#1D1D1F] truncate">
               {user.name ?? "Spiller"}
             </p>
-            <p className="text-xs text-[var(--portal-text-muted)] truncate flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-gold" />
+            <p className="text-xs text-[#86868B] truncate">
               {user.subscriptionTier ?? "Academy"}
             </p>
           </div>
@@ -251,19 +250,16 @@ export function PremiumSidebar({ user }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-64 hidden lg:flex flex-col z-20 bg-[#0c1220] border-r border-white/5">
+      <aside className="fixed left-0 top-0 h-full w-64 hidden lg:flex flex-col z-20 bg-white border-r border-[#E8E8ED]">
         {/* Logo */}
-        <div className="px-6 py-5 border-b border-white/5">
+        <div className="px-6 py-5 border-b border-[#E8E8ED]">
           <Link href="/portal" className="flex items-center gap-3 group">
-            {/* Logo mark */}
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-gold to-amber-600 flex items-center justify-center shadow-lg shadow-gold/20">
-              <span className="text-lg font-bold text-white">K</span>
-            </div>
+            <AKLogo variant="black" size={36} />
             <div>
-              <span className="text-lg font-bold text-white group-hover:text-gold transition-colors">
+              <span className="text-lg font-bold text-[#1D1D1F] group-hover:text-[#86868B] transition-colors">
                 AK Golf
               </span>
-              <p className="text-[10px] text-[var(--portal-text-muted)] uppercase tracking-wider">
+              <p className="text-[10px] text-[#86868B] uppercase tracking-wider">
                 Academy
               </p>
             </div>
@@ -287,7 +283,7 @@ export function PremiumSidebar({ user }: SidebarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={close}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
             />
             {/* Drawer */}
             <motion.aside
@@ -295,19 +291,17 @@ export function PremiumSidebar({ user }: SidebarProps) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-[#0c1220] border-r border-white/5"
+              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-[#E8E8ED]"
             >
               {/* Close button */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-[#E8E8ED]">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-gold to-amber-600 flex items-center justify-center">
-                    <span className="text-lg font-bold text-white">K</span>
-                  </div>
-                  <span className="text-lg font-bold text-white">AK Golf</span>
+                  <AKLogo variant="black" size={36} />
+                  <span className="text-lg font-bold text-[#1D1D1F]">AK Golf</span>
                 </div>
                 <button
                   onClick={close}
-                  className="p-2 rounded-lg text-[var(--portal-text-muted)] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                  className="p-2 rounded-lg text-[#86868B] hover:text-[#1D1D1F] hover:bg-[#F5F5F7] transition-colors cursor-pointer"
                   aria-label="Lukk meny"
                 >
                   <X className="w-5 h-5" />

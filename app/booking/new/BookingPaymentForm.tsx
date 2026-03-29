@@ -56,8 +56,8 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
   const startDate = new Date(startTime);
   if (isNaN(startDate.getTime())) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-snow">
-        <p className="text-ink-50">Ugyldig tidspunkt.</p>
+      <div className="min-h-screen flex items-center justify-center bg-[#F5F5F7]">
+        <p className="text-[#86868B]">Ugyldig tidspunkt.</p>
       </div>
     );
   }
@@ -172,14 +172,14 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
-          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border bg-gold/10 border-gold/30"
+          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border bg-[#F5F5F7] border-[#E8E8ED]"
         >
-          <CreditCard size={28} className="text-gold" />
+          <CreditCard size={28} className="text-[#1D1D1F]" />
         </motion.div>
-        <h1 className="text-2xl font-semibold mb-2 text-navy">
+        <h1 className="text-2xl font-semibold mb-2 text-[#1D1D1F]">
           Bekreft og betal
         </h1>
-        <p className="text-ink-50">
+        <p className="text-[#86868B]">
           Gjennomgå detaljene og velg betalingsmetode
         </p>
       </div>
@@ -189,23 +189,23 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="rounded-3xl p-8 mb-6 border bg-white border-border shadow-md"
+        className="rounded-3xl p-8 mb-6 border bg-white border-[#E8E8ED] shadow-md"
       >
-        <h3 className="text-xs font-semibold uppercase tracking-widest mb-6 text-ink-40">
+        <h3 className="text-xs font-semibold uppercase tracking-widest mb-6 text-[#AEAEB2]">
           Bookingdetaljer
         </h3>
 
         <div className="space-y-5">
           {/* Service */}
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gold/10">
-              <CreditCard size={20} className="text-gold" />
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-[#F5F5F7]">
+              <CreditCard size={20} className="text-[#1D1D1F]" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide mb-1 text-ink-40">Tjeneste</p>
-              <p className="font-semibold text-navy">{serviceType.name}</p>
+              <p className="text-xs uppercase tracking-wide mb-1 text-[#AEAEB2]">Tjeneste</p>
+              <p className="font-semibold text-[#1D1D1F]">{serviceType.name}</p>
               {serviceType.description && (
-                <p className="text-sm mt-1 text-ink-50">
+                <p className="text-sm mt-1 text-[#86868B]">
                   {serviceType.description}
                 </p>
               )}
@@ -214,8 +214,8 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
 
           {/* Instructor */}
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gold/10">
-              <User size={20} className="text-gold" />
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-[#F5F5F7]">
+              <User size={20} className="text-[#1D1D1F]" />
             </div>
             <div className="flex items-center gap-3">
               {instructor.user.image && (
@@ -228,8 +228,8 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
                 />
               )}
               <div>
-                <p className="text-xs uppercase tracking-wide mb-1 text-ink-40">Instruktør</p>
-                <p className="font-semibold text-navy">
+                <p className="text-xs uppercase tracking-wide mb-1 text-[#AEAEB2]">Instruktør</p>
+                <p className="font-semibold text-[#1D1D1F]">
                   {instructor.user.name ?? "Ukjent instruktør"}
                 </p>
               </div>
@@ -238,12 +238,12 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
 
           {/* Date */}
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gold/10">
-              <Calendar size={20} className="text-gold" />
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-[#F5F5F7]">
+              <Calendar size={20} className="text-[#1D1D1F]" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide mb-1 text-ink-40">Dato og tid</p>
-              <p className="font-semibold text-navy">
+              <p className="text-xs uppercase tracking-wide mb-1 text-[#AEAEB2]">Dato og tid</p>
+              <p className="font-semibold text-[#1D1D1F]">
                 {capitalizedDate} kl. {formattedTime}
               </p>
             </div>
@@ -251,20 +251,20 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
 
           {/* Duration */}
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gold/10">
-              <Clock size={20} className="text-gold" />
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 bg-[#F5F5F7]">
+              <Clock size={20} className="text-[#1D1D1F]" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide mb-1 text-ink-40">Varighet</p>
-              <p className="font-semibold text-navy">{serviceType.duration} minutter</p>
+              <p className="text-xs uppercase tracking-wide mb-1 text-[#AEAEB2]">Varighet</p>
+              <p className="font-semibold text-[#1D1D1F]">{serviceType.duration} minutter</p>
             </div>
           </div>
         </div>
 
         {/* Price */}
-        <div className="mt-6 pt-6 flex items-center justify-between border-t border-border">
-          <span className="text-sm text-ink-50">Totalpris</span>
-          <span className="text-3xl font-semibold text-gold">
+        <div className="mt-6 pt-6 flex items-center justify-between border-t border-[#E8E8ED]">
+          <span className="text-sm text-[#86868B]">Totalpris</span>
+          <span className="text-3xl font-semibold text-[#1D1D1F]">
             {priceNok.toLocaleString("nb-NO", { style: "currency", currency: "NOK", minimumFractionDigits: 0, maximumFractionDigits: 0 })}
           </span>
         </div>
@@ -275,9 +275,9 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="rounded-3xl p-8 border bg-white border-border shadow-md"
+        className="rounded-3xl p-8 border bg-white border-[#E8E8ED] shadow-md"
       >
-        <p className="text-xs font-semibold uppercase tracking-widest mb-5 text-ink-40">
+        <p className="text-xs font-semibold uppercase tracking-widest mb-5 text-[#AEAEB2]">
           Velg betalingsmetode
         </p>
 
@@ -287,11 +287,8 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
             <motion.button
               onClick={handleStripe}
               disabled={isAnyLoading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50 text-white shadow-lg shadow-gold/30"
-              style={{
-                background: "linear-gradient(135deg, var(--color-gold), var(--color-gold-light))",
-              }}
-              whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(176,125,79,0.3)" }}
+              className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50 text-white bg-[#1D1D1F] shadow-lg shadow-black/15"
+              whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(29,29,31,0.25)" }}
               whileTap={{ scale: 0.99 }}
             >
               {loading === "stripe" ? (
@@ -350,8 +347,8 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
 
         {/* Security Note */}
         <div className="mt-6 flex items-center justify-center gap-2">
-          <ShieldCheck size={14} className="text-ink-40" />
-          <p className="text-xs text-ink-40">
+          <ShieldCheck size={14} className="text-[#AEAEB2]" />
+          <p className="text-xs text-[#AEAEB2]">
             Sikker betaling. AK Golf lagrer ikke kortinformasjon.
           </p>
         </div>

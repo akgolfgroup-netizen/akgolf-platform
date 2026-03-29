@@ -15,25 +15,25 @@ export function PricingCard({
 }) {
   return (
     <div
-      className={`rounded-2xl p-8 flex flex-col h-full transition-all duration-400 ${
+      className={`rounded-[20px] p-8 flex flex-col h-full transition-all duration-400 ${
         highlighted
-          ? "bg-ink-90 text-white border-2 border-gold/30 shadow-xl relative"
-          : "bg-white border border-ink-10 hover:border-ink-20 hover:shadow-lg"
+          ? "bg-black text-white border border-black shadow-xl relative"
+          : "bg-white border border-grey-200 hover:border-grey-300 hover:shadow-lg"
       }`}
     >
       {highlighted && (
-        <span className="absolute -top-3 left-8 bg-gold text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full">
+        <span className="absolute -top-3 left-8 bg-black text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full border border-grey-700">
           Mest populær
         </span>
       )}
 
-      <h3 className={`font-display text-xl font-semibold mb-1 ${highlighted ? "text-white" : "text-ink-90"}`}>
+      <h3 className={`font-display text-xl font-semibold mb-1 ${highlighted ? "text-white" : "text-black"}`}>
         {name}
       </h3>
-      <p className={`font-mono text-lg mb-3 ${highlighted ? "text-gold" : "text-gold-text"}`}>
+      <p className={`font-mono text-lg mb-3 ${highlighted ? "text-grey-300" : "text-black"}`}>
         {price}
       </p>
-      <p className={`text-sm leading-relaxed mb-6 ${highlighted ? "text-ink-30" : "text-ink-50"}`}>
+      <p className={`text-sm leading-relaxed mb-6 ${highlighted ? "text-grey-400" : "text-grey-500"}`}>
         {description}
       </p>
 
@@ -47,12 +47,12 @@ export function PricingCard({
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className="shrink-0 mt-0.5 text-gold"
+              className={`shrink-0 mt-0.5 ${highlighted ? "text-white" : "text-black"}`}
               aria-hidden="true"
             >
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            <span className={highlighted ? "text-ink-20" : "text-ink-60"}>
+            <span className={highlighted ? "text-grey-300" : "text-grey-500"}>
               {feature}
             </span>
           </li>
@@ -62,7 +62,7 @@ export function PricingCard({
       <Link
         href="/#apply"
         className={`w-btn text-center ${
-          highlighted ? "w-btn-gold" : "w-btn-primary"
+          highlighted ? "w-btn-secondary" : "w-btn-primary"
         }`}
       >
         Reserver din plass

@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CookieConsent } from "@/components/website/CookieConsent";
 import "./globals.css";
 
-const manrope = localFont({
-  src: "./fonts/ManropeVariable.woff2",
-  variable: "--font-manrope",
-  weight: "300 800",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="nb" className="h-full">
       <body
-        className={`${manrope.variable} h-full`}
+        className={`${inter.variable} h-full`}
       >
         <a href="#main-content" className="w-skip-link">
           Gå til hovedinnhold

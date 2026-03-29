@@ -52,12 +52,12 @@ export function NewsletterSignup() {
         name="email"
         required
         placeholder="din@epost.no"
-        className="w-input flex-1 bg-ink-90 border-ink-70 text-white placeholder:text-ink-50 focus:border-gold"
+        className="w-input flex-1 bg-white border-grey-200 text-black placeholder:text-grey-400 focus:border-black"
       />
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-btn w-btn-gold whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-btn w-btn-primary whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {status === "submitting" ? (
           <span className="flex items-center gap-2">
@@ -67,7 +67,7 @@ export function NewsletterSignup() {
         ) : "Meld meg på"}
       </button>
       {status === "error" && (
-        <p className="text-xs text-red-400 sm:absolute sm:mt-12">
+        <p className="text-xs text-red-500 sm:absolute sm:mt-12">
           Noe gikk galt. Prøv igjen.
         </p>
       )}

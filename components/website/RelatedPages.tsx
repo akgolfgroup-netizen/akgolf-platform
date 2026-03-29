@@ -6,17 +6,17 @@ const accentColors = {
   junior: "bg-junior",
   software: "bg-software",
   utvikling: "bg-utvikling",
-  gold: "bg-gold",
+  gold: "bg-black",
 } as const;
 
 export function RelatedPages({ exclude }: { exclude: string }) {
   const related = DIVISIONS.filter((d) => d.id !== exclude);
 
   return (
-    <section className="w-section bg-surface-warm">
+    <section className="w-section bg-grey-100">
       <div className="w-container">
         <div className="text-center mb-12">
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold-text">
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-grey-500">
             Mer fra AK Golf
           </span>
           <h2 className="w-heading-lg mt-4">Utforsk våre andre tilbud</h2>
@@ -29,13 +29,13 @@ export function RelatedPages({ exclude }: { exclude: string }) {
                 <div
                   className={`h-1 w-12 rounded-full ${accentColors[div.accent]} mb-6`}
                 />
-                <h3 className="w-heading-sm mb-3 group-hover:text-gold transition-colors duration-300">
+                <h3 className="w-heading-sm mb-3 group-hover:opacity-70 transition-opacity duration-300">
                   {div.title}
                 </h3>
-                <p className="text-sm text-ink-50 leading-relaxed mb-6 flex-1">
+                <p className="text-sm text-grey-500 leading-relaxed mb-6 flex-1">
                   {div.description}
                 </p>
-                <div className="flex items-center gap-2 text-sm font-medium text-ink-70 group-hover:text-ink-90 transition-colors duration-300">
+                <div className="flex items-center gap-2 text-sm font-medium text-grey-500 group-hover:text-black transition-colors duration-300">
                   Les mer
                   <svg
                     width="14"

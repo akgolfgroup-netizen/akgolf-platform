@@ -4,8 +4,7 @@ import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
-import { WebsiteNav } from "@/components/website/WebsiteNav";
-import { WebsiteFooter } from "@/components/website/WebsiteFooter";
+import { AKLogo } from "@/components/website/AKLogo";
 
 function LoginForm() {
   const searchParams = useSearchParams();
@@ -40,7 +39,7 @@ function LoginForm() {
   if (sent) {
     return (
       <div className="text-center max-w-md mx-auto">
-        <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className="w-16 h-16 bg-[#34C759]/10 rounded-full flex items-center justify-center mx-auto mb-6">
           <svg
             width="32"
             height="32"
@@ -48,18 +47,18 @@ function LoginForm() {
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
-            className="text-success"
+            className="text-[#34C759]"
           >
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
             <polyline points="22,6 12,13 2,6" />
           </svg>
         </div>
-        <h1 className="w-heading-md mb-4">Sjekk e-posten din</h1>
-        <p className="text-ink-50 mb-2">
+        <h1 className="text-2xl font-semibold text-[#1D1D1F] mb-4">Sjekk e-posten din</h1>
+        <p className="text-[#86868B] mb-2">
           Vi har sendt en innloggingslenke til
         </p>
-        <p className="font-semibold text-ink-90 mb-8">{email}</p>
-        <p className="text-sm text-ink-50">
+        <p className="font-semibold text-[#1D1D1F] mb-8">{email}</p>
+        <p className="text-sm text-[#86868B]">
           Klikk lenken i e-posten for a logge inn. Sjekk spam-mappen om du ikke
           finner den.
         </p>
@@ -68,16 +67,16 @@ function LoginForm() {
   }
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto w-full">
       <div className="text-center mb-8">
-        <h1 className="w-heading-md mb-3">Logg inn</h1>
-        <p className="text-ink-50">
+        <h1 className="text-2xl font-semibold text-[#1D1D1F] mb-3">Logg inn</h1>
+        <p className="text-[#86868B]">
           Logg inn for a se din treningsplan og folge utviklingen din.
         </p>
       </div>
 
-      <form onSubmit={handleLogin} className="w-card p-8">
-        <label htmlFor="email" className="w-label mb-1 block">
+      <form onSubmit={handleLogin} className="bg-[#F5F5F7] rounded-2xl p-8">
+        <label htmlFor="email" className="block text-sm font-medium text-[#1D1D1F] mb-2">
           E-post
         </label>
         <input
@@ -87,18 +86,18 @@ function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="din@epost.no"
           required
-          className="w-input w-full mb-6"
+          className="w-full px-4 py-3 bg-white border border-[#E8E8ED] rounded-xl text-[#1D1D1F] placeholder:text-[#86868B] focus:outline-none focus:ring-2 focus:ring-[#1D1D1F]/20 focus:border-[#1D1D1F] transition-all mb-6"
           autoFocus
         />
 
         {error && (
-          <p className="text-error text-sm mb-4">{error}</p>
+          <p className="text-[#FF3B30] text-sm mb-4">{error}</p>
         )}
 
         <button
           type="submit"
           disabled={loading || !email.includes("@")}
-          className="w-btn w-btn-gold w-full"
+          className="w-full bg-[#1D1D1F] text-white font-medium py-3 px-6 rounded-full hover:bg-[#1D1D1F]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
         >
           {loading ? (
             <span className="flex items-center justify-center gap-2">
@@ -128,7 +127,7 @@ function LoginForm() {
           )}
         </button>
 
-        <p className="text-xs text-ink-50 text-center mt-4">
+        <p className="text-xs text-[#86868B] text-center mt-4">
           Vi sender en sikker lenke til e-postadressen din. Ingen passord
           trengs.
         </p>
@@ -137,7 +136,7 @@ function LoginForm() {
       <div className="text-center mt-6">
         <Link
           href="/treningsplan"
-          className="text-sm text-ink-50 hover:text-gold transition-colors"
+          className="text-sm text-[#86868B] hover:text-[#1D1D1F] transition-colors"
         >
           Tilbake til treningsplan
         </Link>
@@ -148,22 +147,21 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <>
-      <WebsiteNav />
-      <main className="min-h-screen flex items-center justify-center pt-20 pb-16">
-        <div className="w-container">
-          <Suspense
-            fallback={
-              <div className="text-center">
-                <p className="text-ink-50">Laster...</p>
-              </div>
-            }
-          >
-            <LoginForm />
-          </Suspense>
+    <main className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-16">
+      <div className="w-full max-w-md">
+        <div className="flex justify-center mb-8">
+          <AKLogo variant="black" size={48} />
         </div>
-      </main>
-      <WebsiteFooter />
-    </>
+        <Suspense
+          fallback={
+            <div className="text-center">
+              <p className="text-[#86868B]">Laster...</p>
+            </div>
+          }
+        >
+          <LoginForm />
+        </Suspense>
+      </div>
+    </main>
   );
 }

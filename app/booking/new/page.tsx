@@ -26,12 +26,12 @@ export default async function BookingNewPage({ searchParams }: Props) {
 
   if (!serviceTypeId || !instructorId || !startTime) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-[var(--color-cloud)]">
-        <div className="rounded-3xl p-10 max-w-md w-full text-center border bg-white border-[var(--color-border)]">
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[var(--color-gold)]/15">
-            <Calendar className="w-8 h-8 text-[var(--color-gold)]" />
+      <div className="min-h-screen flex items-center justify-center px-4 bg-[#F5F5F7]">
+        <div className="rounded-3xl p-10 max-w-md w-full text-center border bg-white border-[#E8E8ED]">
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[#F5F5F7]">
+            <Calendar className="w-8 h-8 text-[#1D1D1F]" />
           </div>
-          <p className="text-[var(--color-ink-50)]">
+          <p className="text-[#86868B]">
             Mangler bookingdetaljer. Vennligst start på nytt fra booking-systemet.
           </p>
         </div>
@@ -63,15 +63,15 @@ export default async function BookingNewPage({ searchParams }: Props) {
 
   if (!serviceType || !instructor) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-[var(--color-cloud)]">
-        <div className="rounded-3xl p-10 max-w-md w-full text-center border bg-white border-[var(--color-border)]">
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[var(--color-gold)]/15">
-            <CreditCard className="w-8 h-8 text-[var(--color-gold)]" />
+      <div className="min-h-screen flex items-center justify-center px-4 bg-[#F5F5F7]">
+        <div className="rounded-3xl p-10 max-w-md w-full text-center border bg-white border-[#E8E8ED]">
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[#F5F5F7]">
+            <CreditCard className="w-8 h-8 text-[#1D1D1F]" />
           </div>
-          <h2 className="text-xl font-semibold mb-2 text-[var(--color-navy)]">
+          <h2 className="text-xl font-semibold mb-2 text-[#1D1D1F]">
             Kunne ikke finne bookingdetaljer
           </h2>
-          <p className="text-[var(--color-ink-50)]">
+          <p className="text-[#86868B]">
             Tjenesten eller instruktøren ble ikke funnet. Vennligst prøv igjen.
           </p>
         </div>
@@ -80,7 +80,7 @@ export default async function BookingNewPage({ searchParams }: Props) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[var(--color-cloud)]">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F5F5F7]">
       <BookingPaymentForm
         serviceType={serviceType}
         instructor={{
