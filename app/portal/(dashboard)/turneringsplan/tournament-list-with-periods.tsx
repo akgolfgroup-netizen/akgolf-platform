@@ -28,8 +28,8 @@ export function TournamentListWithPeriods({
   if (tournaments.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
-        <Trophy className="w-10 h-10 text-[var(--color-border)] mb-3" />
-        <p className="text-sm text-[var(--color-gold-muted)]">
+        <Trophy className="w-10 h-10 text-[var(--color-grey-200)] mb-3" />
+        <p className="text-sm text-[var(--color-grey-500)]">
           Ingen turneringer lagt inn ennå.
         </p>
       </div>

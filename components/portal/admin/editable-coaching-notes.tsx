@@ -106,15 +106,15 @@ export function EditableCoachingNotes({ session }: Props) {
           />
 
           {/* Sheet */}
-          <div className="fixed right-0 top-0 h-full w-full max-w-md bg-[var(--color-deep-ink)] shadow-xl z-50 flex flex-col border-l border-[rgba(15,41,80,0.4)]">
+          <div className="fixed right-0 top-0 h-full w-full max-w-md bg-[white] shadow-xl z-50 flex flex-col border-l border-[var(--color-grey-200)]">
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(15,41,80,0.4)]">
-              <h2 className="text-lg font-semibold text-[var(--color-snow)]">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)]">
+              <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
                 Rediger coaching-notater
               </h2>
               <button
                 onClick={handleClose}
-                className="p-1.5 rounded-lg hover:bg-[rgba(15,41,80,0.3)] transition-colors text-[var(--color-snow)]/70"
+                className="p-1.5 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors text-[var(--color-grey-500)]"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -124,15 +124,15 @@ export function EditableCoachingNotes({ session }: Props) {
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
               {/* Session info */}
               <div className="space-y-2">
-                <p className="text-sm text-[var(--color-snow)]">
-                  <span className="text-[var(--color-snow)]/50">Dato: </span>
+                <p className="text-sm text-[var(--color-grey-900)]">
+                  <span className="text-[var(--color-grey-400)]">Dato: </span>
                   {format(new Date(session.sessionDate), "EEEE d. MMMM yyyy", {
                     locale: nb,
                   })}
                 </p>
                 {session.primaryFocus && (
-                  <p className="text-sm text-[var(--color-snow)]">
-                    <span className="text-[var(--color-snow)]/50">Fokus: </span>
+                  <p className="text-sm text-[var(--color-grey-900)]">
+                    <span className="text-[var(--color-grey-400)]">Fokus: </span>
                     {session.primaryFocus}
                   </p>
                 )}
@@ -140,14 +140,14 @@ export function EditableCoachingNotes({ session }: Props) {
 
               {/* Notes textarea */}
               <div>
-                <label className="text-xs font-medium text-[var(--color-snow)]/50 mb-2 block">
+                <label className="text-xs font-medium text-[var(--color-grey-400)] mb-2 block">
                   Instruktor-notater
                 </label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   rows={10}
-                  className="w-full rounded-xl px-4 py-3 text-sm resize-none text-[var(--color-snow)] placeholder:text-[var(--color-snow)]/40 bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
+                  className="w-full rounded-xl px-4 py-3 text-sm resize-none text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/40"
                   placeholder="Skriv notater fra coaching-okten..."
                 />
               </div>
@@ -155,16 +155,16 @@ export function EditableCoachingNotes({ session }: Props) {
               {/* AI Key Points (read-only) */}
               {session.aiKeyPoints.length > 0 && (
                 <div>
-                  <label className="text-xs font-medium text-[var(--color-snow)]/50 mb-2 block">
+                  <label className="text-xs font-medium text-[var(--color-grey-400)] mb-2 block">
                     AI-genererte hovedpunkter
                   </label>
                   <ul className="space-y-1">
                     {session.aiKeyPoints.map((point, i) => (
                       <li
                         key={i}
-                        className="text-sm text-[var(--color-snow)]/70 flex gap-2"
+                        className="text-sm text-[var(--color-grey-500)] flex gap-2"
                       >
-                        <span className="text-[var(--color-gold)]">•</span>
+                        <span className="text-[var(--color-grey-900)]">•</span>
                         {point}
                       </li>
                     ))}
@@ -181,18 +181,18 @@ export function EditableCoachingNotes({ session }: Props) {
             </div>
 
             {/* Actions */}
-            <div className="border-t border-[rgba(15,41,80,0.4)] p-6 flex gap-3">
+            <div className="border-t border-[var(--color-grey-200)] p-6 flex gap-3">
               <button
                 onClick={handleClose}
                 disabled={saving}
-                className="flex-1 px-4 py-2.5 text-sm font-medium text-[var(--color-snow)]/70 bg-[rgba(15,41,80,0.3)] rounded-xl hover:bg-[rgba(15,41,80,0.4)] disabled:opacity-50 transition-colors"
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-[var(--color-grey-500)] bg-[var(--color-grey-100)] rounded-xl hover:bg-[var(--color-grey-100)] disabled:opacity-50 transition-colors"
               >
                 Avbryt
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-[var(--color-gold)] rounded-xl hover:bg-[var(--color-gold)]/90 disabled:opacity-50 transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-[var(--color-grey-900)] rounded-xl hover:bg-[var(--color-grey-900)]/90 disabled:opacity-50 transition-colors"
               >
                 {saving ? (
                   <>

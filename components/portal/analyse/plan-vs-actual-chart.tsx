@@ -24,7 +24,7 @@ interface PlanVsActualChartProps {
 export function PlanVsActualChart({ data }: PlanVsActualChartProps) {
   if (data.length === 0) {
     return (
-      <div className="flex items-center justify-center h-40 text-sm text-[var(--color-gold-muted)]">
+      <div className="flex items-center justify-center h-40 text-sm text-[var(--color-grey-500)]">
         Ingen plandata tilgjengelig.
       </div>
     );
@@ -39,33 +39,33 @@ export function PlanVsActualChart({ data }: PlanVsActualChartProps) {
   return (
     <ResponsiveContainer width="100%" height={200}>
       <BarChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(15,41,80,0.5)" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" vertical={false} />
         <XAxis
           dataKey="uke"
-          tick={{ fill: "var(--color-gold-muted)", fontSize: 10 }}
+          tick={{ fill: "var(--color-grey-500)", fontSize: 10 }}
           axisLine={false}
           tickLine={false}
         />
         <YAxis
           allowDecimals={false}
-          tick={{ fill: "var(--color-gold-muted)", fontSize: 10 }}
+          tick={{ fill: "var(--color-grey-500)", fontSize: 10 }}
           axisLine={false}
           tickLine={false}
         />
         <Tooltip
           contentStyle={{
             background: "#0A1929",
-            border: "1px solid rgba(15,41,80,0.9)",
+            border: "1px solid var(--color-grey-200)",
             borderRadius: "8px",
             fontSize: "12px",
-            color: "var(--color-snow)",
+            color: "white",
           }}
         />
         <Legend
-          wrapperStyle={{ fontSize: "10px", color: "var(--color-gold-muted)", paddingTop: "8px" }}
+          wrapperStyle={{ fontSize: "10px", color: "var(--color-grey-500)", paddingTop: "8px" }}
         />
-        <Bar dataKey="Planlagt" fill="rgba(15,41,80,0.8)" radius={[3, 3, 0, 0]} />
-        <Bar dataKey="Fullført" fill="var(--color-gold)" radius={[3, 3, 0, 0]} />
+        <Bar dataKey="Planlagt" fill="var(--color-grey-200)" radius={[3, 3, 0, 0]} />
+        <Bar dataKey="Fullført" fill="var(--color-grey-900)" radius={[3, 3, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   );

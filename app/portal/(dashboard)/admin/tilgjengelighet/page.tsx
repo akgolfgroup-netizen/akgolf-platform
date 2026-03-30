@@ -30,7 +30,7 @@ export default async function AvailabilityPage() {
               <h1 className="font-display text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em]">
                 Tilgjengelighet
               </h1>
-              <p className="text-[15px] text-[var(--apple-gray-500)] mt-1">
+              <p className="text-[15px] text-[var(--color-grey-500)] mt-1">
                 {ADMIN_CONTENT.kalender.setupGuide.description}
               </p>
             </div>

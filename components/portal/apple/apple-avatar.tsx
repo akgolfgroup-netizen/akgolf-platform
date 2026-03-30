@@ -51,12 +51,12 @@ export function AppleAvatar({
     <div
       className={cn(
         "relative rounded-full overflow-hidden flex-shrink-0",
-        "bg-gradient-to-br from-[var(--apple-gold-300)] to-[var(--apple-gold-500)]",
-        "flex items-center justify-center font-semibold text-white",
+        "bg-[var(--color-grey-200)]",
+        "flex items-center justify-center font-semibold text-[var(--color-grey-600)]",
         ring && [
-          "ring-[var(--apple-gold-200)]",
+          "ring-[var(--color-grey-300)]",
           ringMap[size],
-          "transition-all duration-300 hover:ring-[var(--apple-gold-300)]",
+          "transition-all duration-300 hover:ring-[var(--color-grey-400)]",
         ],
         sizeMap[size],
         className

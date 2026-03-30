@@ -17,10 +17,10 @@ export default async function KapasitetPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[var(--color-snow)]">
+        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">
           Kapasitet & Inntekt
         </h1>
-        <span className="text-xs text-[var(--color-ink-40)]">
+        <span className="text-xs text-[var(--color-grey-400)]">
           Uke {format(new Date(), "w", { locale: nb })} &middot; Oppdatert {format(new Date(), "HH:mm")}
         </span>
       </div>

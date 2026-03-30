@@ -18,7 +18,7 @@ interface StatsOverviewProps {
 }
 
 function TrendIcon({ trend, invertColor }: { trend: "up" | "down" | "flat"; invertColor?: boolean }) {
-  if (trend === "flat") return <Minus className="w-3 h-3 text-[var(--color-gold-muted)]" />;
+  if (trend === "flat") return <Minus className="w-3 h-3 text-[var(--color-grey-500)]" />;
   const isGood = invertColor ? trend === "down" : trend === "up";
   return trend === "up" ? (
     <TrendingUp className={`w-3 h-3 ${isGood ? "text-green-400" : "text-red-400"}`} />
@@ -42,19 +42,19 @@ function StatCard({
 }) {
   return (
     <div
-      className="rounded-xl p-4 border border-[var(--color-border)]"
+      className="rounded-xl p-4 border border-[var(--color-grey-200)]"
       style={{ background: "rgba(255,255,255,0.02)" }}
     >
       <div className="flex items-center justify-between mb-1">
-        <span className="text-[10px] font-semibold text-[var(--color-gold-dim)] uppercase tracking-widest">
+        <span className="text-[10px] font-semibold text-[var(--color-grey-400)] uppercase tracking-widest">
           {label}
         </span>
         {trend && <TrendIcon trend={trend} invertColor={invertTrendColor} />}
       </div>
-      <p className="text-xl font-bold text-[var(--color-snow)]">
+      <p className="text-xl font-bold text-[var(--color-grey-900)]">
         {value ?? "—"}
         {unit && value && (
-          <span className="text-xs font-normal text-[var(--color-gold-muted)] ml-1">{unit}</span>
+          <span className="text-xs font-normal text-[var(--color-grey-500)] ml-1">{unit}</span>
         )}
       </p>
     </div>

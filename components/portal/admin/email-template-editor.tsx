@@ -174,11 +174,11 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
         className="rounded-2xl p-4"
         style={{
           background: "var(--color-surface-warm)",
-          border: "1px solid var(--color-border-warm)",
+          border: "1px solid var(--color-grey-200)",
         }}
       >
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[11px] font-semibold text-[var(--color-ink-40)] uppercase tracking-widest">
+          <p className="text-[11px] font-semibold text-[var(--color-grey-400)] uppercase tracking-widest">
             Maler
           </p>
           <button
@@ -186,7 +186,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
             className="p-1.5 rounded-lg transition-colors hover:bg-white"
             title="Ny mal"
           >
-            <Plus className="w-4 h-4 text-[var(--color-gold)]" />
+            <Plus className="w-4 h-4 text-[var(--color-grey-900)]" />
           </button>
         </div>
         <ul className="space-y-1">
@@ -199,10 +199,10 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                   selected?.id === t.id
                     ? {
                         background:
-                          "linear-gradient(135deg, var(--color-gold), var(--color-gold-muted))",
+                          "linear-gradient(135deg, var(--color-grey-900), var(--color-grey-500))",
                         color: "white",
                       }
-                    : { color: "var(--color-ink-50)" }
+                    : { color: "var(--color-grey-500)" }
                 }
               >
                 <div className="flex items-center gap-2">
@@ -213,7 +213,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
             </li>
           ))}
           {templates.length === 0 && (
-            <p className="text-xs text-[var(--color-ink-40)] px-3 py-2">
+            <p className="text-xs text-[var(--color-grey-400)] px-3 py-2">
               Ingen maler opprettet enda
             </p>
           )}
@@ -225,26 +225,26 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
         className="rounded-2xl p-5"
         style={{
           background: "var(--color-surface-warm)",
-          border: "1px solid var(--color-border-warm)",
+          border: "1px solid var(--color-grey-200)",
         }}
       >
         {!selected && !isNew ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <FileText className="w-10 h-10 text-[var(--color-ink-40)] mb-3" />
-            <p className="text-sm text-[var(--color-ink-50)]">
+            <FileText className="w-10 h-10 text-[var(--color-grey-400)] mb-3" />
+            <p className="text-sm text-[var(--color-grey-500)]">
               Velg en mal fra listen eller opprett en ny
             </p>
           </div>
         ) : (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <p className="text-[11px] font-semibold text-[var(--color-ink-40)] uppercase tracking-widest">
+              <p className="text-[11px] font-semibold text-[var(--color-grey-400)] uppercase tracking-widest">
                 {isNew ? "Ny mal" : "Rediger mal"}
               </p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowPreview(!showPreview)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:bg-white text-[var(--color-ink-50)]"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:bg-white text-[var(--color-grey-500)]"
                 >
                   {showPreview ? (
                     <EyeOff className="w-3.5 h-3.5" />
@@ -258,7 +258,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
 
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-[var(--color-ink-90)] mb-1">
+              <label className="block text-sm font-medium text-[var(--color-grey-900)] mb-1">
                 Malnavn
               </label>
               <input
@@ -268,14 +268,14 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                   setDraft((d) => ({ ...d, name: e.target.value }))
                 }
                 placeholder="f.eks. bookingbekreftelse"
-                className="w-full px-4 py-2.5 rounded-xl text-sm bg-white text-[var(--color-ink-90)] placeholder:text-[var(--color-ink-40)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/50"
-                style={{ border: "1px solid var(--color-border-warm)" }}
+                className="w-full px-4 py-2.5 rounded-xl text-sm bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50"
+                style={{ border: "1px solid var(--color-grey-200)" }}
               />
             </div>
 
             {/* Subject */}
             <div>
-              <label className="block text-sm font-medium text-[var(--color-ink-90)] mb-1">
+              <label className="block text-sm font-medium text-[var(--color-grey-900)] mb-1">
                 Emne
               </label>
               <input
@@ -285,14 +285,14 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                   setDraft((d) => ({ ...d, subject: e.target.value }))
                 }
                 placeholder="Bookingbekreftelse - {{serviceName}}"
-                className="w-full px-4 py-2.5 rounded-xl text-sm bg-white text-[var(--color-ink-90)] placeholder:text-[var(--color-ink-40)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/50"
-                style={{ border: "1px solid var(--color-border-warm)" }}
+                className="w-full px-4 py-2.5 rounded-xl text-sm bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50"
+                style={{ border: "1px solid var(--color-grey-200)" }}
               />
             </div>
 
             {/* Variables */}
             <div>
-              <label className="block text-sm font-medium text-[var(--color-ink-90)] mb-1">
+              <label className="block text-sm font-medium text-[var(--color-grey-900)] mb-1">
                 <Variable className="w-3.5 h-3.5 inline mr-1" />
                 Variabler
               </label>
@@ -300,7 +300,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                 {draft.variables.map((v) => (
                   <span
                     key={v}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-[var(--color-gold)]/10 text-[var(--color-gold)]"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-[var(--color-grey-900)]/10 text-[var(--color-grey-900)]"
                   >
                     {"{{"}
                     {v}
@@ -321,15 +321,15 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                   onChange={(e) => setNewVariable(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addVariable()}
                   placeholder="Legg til variabel..."
-                  className="flex-1 px-4 py-2 rounded-xl text-sm bg-white text-[var(--color-ink-90)] placeholder:text-[var(--color-ink-40)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/50"
-                  style={{ border: "1px solid var(--color-border-warm)" }}
+                  className="flex-1 px-4 py-2 rounded-xl text-sm bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50"
+                  style={{ border: "1px solid var(--color-grey-200)" }}
                 />
                 <button
                   onClick={addVariable}
                   className="px-3 py-2 rounded-xl text-sm font-medium text-white transition-all duration-200"
                   style={{
                     background:
-                      "linear-gradient(135deg, var(--color-gold), var(--color-gold-muted))",
+                      "linear-gradient(135deg, var(--color-grey-900), var(--color-grey-500))",
                   }}
                 >
                   <Plus className="w-4 h-4" />
@@ -339,7 +339,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
 
             {/* HTML Content */}
             <div>
-              <label className="block text-sm font-medium text-[var(--color-ink-90)] mb-1">
+              <label className="block text-sm font-medium text-[var(--color-grey-900)] mb-1">
                 HTML-innhold
               </label>
               <textarea
@@ -349,25 +349,25 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                 }
                 placeholder="<h1>Hei {{playerName}}</h1><p>Din booking er bekreftet.</p>"
                 rows={12}
-                className="w-full px-4 py-3 rounded-xl text-sm font-mono bg-white text-[var(--color-ink-90)] placeholder:text-[var(--color-ink-40)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/50 resize-y"
-                style={{ border: "1px solid var(--color-border-warm)" }}
+                className="w-full px-4 py-3 rounded-xl text-sm font-mono bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50 resize-y"
+                style={{ border: "1px solid var(--color-grey-200)" }}
               />
             </div>
 
             {/* Preview */}
             {showPreview && (
               <div>
-                <label className="block text-sm font-medium text-[var(--color-ink-90)] mb-1">
+                <label className="block text-sm font-medium text-[var(--color-grey-900)] mb-1">
                   Forhåndsvisning
                 </label>
                 <div
                   className="rounded-xl bg-white p-4 text-sm"
-                  style={{ border: "1px solid var(--color-border-warm)" }}
+                  style={{ border: "1px solid var(--color-grey-200)" }}
                 >
                   <div className="border-b border-gray-100 pb-2 mb-3">
-                    <p className="text-xs text-[var(--color-ink-40)]">
+                    <p className="text-xs text-[var(--color-grey-400)]">
                       Emne:{" "}
-                      <span className="text-[var(--color-ink-90)] font-medium">
+                      <span className="text-[var(--color-grey-900)] font-medium">
                         {draft.subject}
                       </span>
                     </p>
@@ -388,7 +388,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 disabled:opacity-50"
                 style={{
                   background:
-                    "linear-gradient(135deg, var(--color-gold), var(--color-gold-muted))",
+                    "linear-gradient(135deg, var(--color-grey-900), var(--color-grey-500))",
                 }}
               >
                 {saving ? (

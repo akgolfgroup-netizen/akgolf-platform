@@ -17,9 +17,9 @@ export function StatsCard({
   trend,
 }: StatsCardProps) {
   return (
-    <div className="rounded-xl bg-ink-95 p-6 border border-ink-90">
+    <div className="rounded-xl bg-white p-6 border border-[var(--color-grey-200)]">
       <div className="flex items-center justify-between">
-        <div className="rounded-lg bg-ink-90 p-3">{icon}</div>
+        <div className="rounded-lg bg-[var(--color-grey-100)] p-3">{icon}</div>
         {trend && (
           <span
             className={`text-sm font-medium ${
@@ -32,9 +32,9 @@ export function StatsCard({
         )}
       </div>
       <div className="mt-4">
-        <p className="text-3xl font-bold text-white">{value}</p>
-        <p className="text-sm text-ink-40">{title}</p>
-        {subtitle && <p className="text-xs text-ink-50 mt-1">{subtitle}</p>}
+        <p className="text-3xl font-bold text-[var(--color-grey-900)]">{value}</p>
+        <p className="text-sm text-[var(--color-grey-400)]">{title}</p>
+        {subtitle && <p className="text-xs text-[var(--color-grey-500)] mt-1">{subtitle}</p>}
       </div>
     </div>
   );

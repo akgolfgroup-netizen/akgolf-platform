@@ -34,17 +34,17 @@ export function AISummaryBlock({
       initial="hidden"
       animate="show"
       variants={container}
-      className="bg-[var(--color-bg)] border border-[var(--color-gold)]/20 rounded-xl p-5 space-y-5"
+      className="bg-[var(--color-grey-100)] border border-[var(--color-grey-900)]/20 rounded-xl p-5 space-y-5"
     >
       <div className="flex items-center gap-2">
-        <div className="w-6 h-6 rounded-full bg-[var(--color-gold)]/20 flex items-center justify-center">
-          <Zap className="w-3.5 h-3.5 text-[var(--color-gold)]" />
+        <div className="w-6 h-6 rounded-full bg-[var(--color-grey-900)]/20 flex items-center justify-center">
+          <Zap className="w-3.5 h-3.5 text-[var(--color-grey-900)]" />
         </div>
-        <span className="text-xs font-semibold text-[var(--color-gold)] uppercase tracking-wider">
+        <span className="text-xs font-semibold text-[var(--color-grey-900)] uppercase tracking-wider">
           Oppsummering
         </span>
         {generatedAt && (
-          <span className="text-xs text-[var(--color-gold-muted)]/50 ml-auto">
+          <span className="text-xs text-[var(--color-grey-500)]/50 ml-auto">
             {new Date(generatedAt).toLocaleDateString("nb-NO")}
           </span>
         )}
@@ -53,14 +53,14 @@ export function AISummaryBlock({
       {/* Key Points */}
       {keyPoints.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold text-[var(--color-snow)]/60 uppercase tracking-wider mb-2">
+          <h4 className="text-xs font-semibold text-[var(--color-grey-900)]/60 uppercase tracking-wider mb-2">
             Nøkkelpunkter
           </h4>
           <motion.ul variants={container} className="space-y-1.5">
             {keyPoints.map((point, i) => (
               <motion.li key={i} variants={item} className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)] mt-1.5 flex-shrink-0" />
-                <span className="text-sm text-[var(--color-snow)]">{point}</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-grey-900)] mt-1.5 flex-shrink-0" />
+                <span className="text-sm text-[var(--color-grey-900)]">{point}</span>
               </motion.li>
             ))}
           </motion.ul>
@@ -70,7 +70,7 @@ export function AISummaryBlock({
       {/* Focus Areas */}
       {focusAreas.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold text-[var(--color-snow)]/60 uppercase tracking-wider mb-2">
+          <h4 className="text-xs font-semibold text-[var(--color-grey-900)]/60 uppercase tracking-wider mb-2">
             Fokusområder
           </h4>
           <motion.div variants={container} className="flex flex-wrap gap-2">
@@ -91,14 +91,14 @@ export function AISummaryBlock({
       {/* Action Items */}
       {actionItems.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold text-[var(--color-snow)]/60 uppercase tracking-wider mb-2">
+          <h4 className="text-xs font-semibold text-[var(--color-grey-900)]/60 uppercase tracking-wider mb-2">
             Treningsoppgaver
           </h4>
           <motion.ul variants={container} className="space-y-1.5">
             {actionItems.map((action, i) => (
               <motion.li key={i} variants={item} className="flex items-start gap-2">
                 <CheckSquare className="w-4 h-4 text-[var(--color-green)] mt-0.5 flex-shrink-0" />
-                <span className="text-sm text-[var(--color-snow)]">{action}</span>
+                <span className="text-sm text-[var(--color-grey-900)]">{action}</span>
               </motion.li>
             ))}
           </motion.ul>

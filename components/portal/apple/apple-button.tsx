@@ -6,7 +6,7 @@ import type { LucideIcon } from "lucide-react";
 
 interface AppleButtonProps extends Omit<HTMLMotionProps<"button">, "children"> {
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "ghost" | "gold";
+  variant?: "primary" | "secondary" | "ghost";
   size?: "sm" | "md" | "lg";
   icon?: LucideIcon;
   iconPosition?: "left" | "right";
@@ -15,10 +15,12 @@ interface AppleButtonProps extends Omit<HTMLMotionProps<"button">, "children"> {
 }
 
 const variantMap = {
-  primary: "bg-[var(--apple-gold-500)] text-white shadow-[var(--shadow-glow-gold)] hover:bg-[var(--apple-gold-600)] hover:shadow-[var(--shadow-glow-gold-hover)]",
-  secondary: "bg-[var(--apple-gray-100)] text-[var(--apple-gray-900)] hover:bg-[var(--apple-gray-200)]",
-  ghost: "bg-transparent text-[var(--apple-gray-600)] hover:bg-[var(--apple-gray-100)] hover:text-[var(--apple-gray-900)]",
-  gold: "bg-gradient-to-r from-[var(--apple-gold-400)] to-[var(--apple-gold-500)] text-white shadow-[var(--shadow-glow-gold)] hover:shadow-[var(--shadow-glow-gold-hover)]",
+  primary:
+    "bg-[var(--color-black)] text-white shadow-[var(--shadow-sm)] hover:bg-[var(--color-grey-800)] hover:shadow-[var(--shadow-md)]",
+  secondary:
+    "bg-[var(--color-grey-100)] text-[var(--color-grey-900)] hover:bg-[var(--color-grey-200)]",
+  ghost:
+    "bg-transparent text-[var(--color-grey-600)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)]",
 };
 
 const sizeMap = {
@@ -48,9 +50,9 @@ export function AppleButton({
   return (
     <motion.button
       className={cn(
-        "inline-flex items-center justify-center font-semibold rounded-xl border-none cursor-pointer",
+        "inline-flex items-center justify-center font-semibold rounded-[var(--radius-pill)] border-none cursor-pointer",
         "transition-all duration-300 ease-[var(--ease-apple)]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--apple-gold-500)] focus-visible:ring-offset-2",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-grey-400)] focus-visible:ring-offset-2",
         "disabled:opacity-50 disabled:cursor-not-allowed",
         variantMap[variant],
         sizeMap[size],
@@ -71,9 +73,13 @@ export function AppleButton({
         />
       ) : (
         <>
-          {Icon && iconPosition === "left" && <Icon className={iconSizeMap[size]} />}
+          {Icon && iconPosition === "left" && (
+            <Icon className={iconSizeMap[size]} />
+          )}
           {children}
-          {Icon && iconPosition === "right" && <Icon className={iconSizeMap[size]} />}
+          {Icon && iconPosition === "right" && (
+            <Icon className={iconSizeMap[size]} />
+          )}
         </>
       )}
     </motion.button>

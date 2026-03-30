@@ -103,7 +103,7 @@ export function HeroStats({
                   animate={{ height: `${Math.max(20, 100 - (val - 15) * 10)}%` }}
                   transition={{ delay: 0.5 + i * 0.1, duration: 0.4 }}
                   className={`flex-1 rounded-t ${
-                    i === 5 ? "bg-gold" : "bg-white/10"
+                    i === 5 ? "bg-gold" : "bg-[var(--color-grey-200)]"
                   }`}
                 />
               ))}
@@ -183,7 +183,7 @@ export function HeroStats({
             </div>
             {/* Progress to monthly goal */}
             <div className="mt-3">
-              <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${Math.min(100, (sessionsThisMonth / 12) * 100)}%` }}

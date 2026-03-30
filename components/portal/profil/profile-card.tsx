@@ -40,7 +40,7 @@ export function ProfileCard({ user }: { user: ProfileUser }) {
   }
 
   return (
-    <div className="bg-[var(--color-muted)] border border-[var(--color-border)] rounded-2xl p-6">
+    <div className="bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-2xl p-6">
       <div className="flex flex-col sm:flex-row gap-6">
         {/* Avatar */}
         <AvatarUpload currentImage={user.image} name={user.name} />
@@ -52,23 +52,23 @@ export function ProfileCard({ user }: { user: ProfileUser }) {
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="text-xl font-bold bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg px-3 py-1.5 text-[var(--color-snow)] outline-none focus:border-[var(--color-gold)] w-full max-w-xs"
+                className="text-xl font-bold bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-lg px-3 py-1.5 text-[var(--color-grey-900)] outline-none focus:border-[var(--color-grey-900)] w-full max-w-xs"
               />
             ) : (
-              <h2 className="text-xl font-bold text-[var(--color-snow)]">
+              <h2 className="text-xl font-bold text-[var(--color-grey-900)]">
                 {user.name ?? "—"}
               </h2>
             )}
-            <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-[var(--color-gold)]/10 text-[var(--color-gold)] border border-[var(--color-gold)]/20 whitespace-nowrap">
+            <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-[var(--color-grey-900)]/10 text-[var(--color-grey-900)] border border-[var(--color-grey-900)]/20 whitespace-nowrap">
               {roleLabelMap[user.role] ?? user.role}
             </span>
           </div>
 
           {user.instructorProfile?.title && (
-            <p className="text-sm text-[var(--color-gold-muted)] mb-3">
+            <p className="text-sm text-[var(--color-grey-500)] mb-3">
               {user.instructorProfile.title}
               {user.instructorProfile.specialization && (
-                <span className="ml-2 text-[var(--color-gold-muted)]/70">
+                <span className="ml-2 text-[var(--color-grey-500)]/70">
                   · {user.instructorProfile.specialization}
                 </span>
               )}
@@ -76,18 +76,18 @@ export function ProfileCard({ user }: { user: ProfileUser }) {
           )}
 
           <div className="space-y-2 mb-5">
-            <div className="flex items-center gap-2 text-sm text-[var(--color-gold-muted)]">
+            <div className="flex items-center gap-2 text-sm text-[var(--color-grey-500)]">
               <Mail className="w-4 h-4 flex-shrink-0" />
               <span>{user.email ?? "—"}</span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-[var(--color-gold-muted)]">
+            <div className="flex items-center gap-2 text-sm text-[var(--color-grey-500)]">
               <Phone className="w-4 h-4 flex-shrink-0" />
               {editing ? (
                 <input
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+47 xxx xx xxx"
-                  className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg px-3 py-1 text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+                  className="bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-lg px-3 py-1 text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
                 />
               ) : (
                 <span>{user.phone ?? "Ikke registrert"}</span>
@@ -101,13 +101,13 @@ export function ProfileCard({ user }: { user: ProfileUser }) {
                 <button
                   onClick={handleSave}
                   disabled={saving}
-                  className="px-4 py-2 rounded-lg bg-[var(--color-gold)] text-[var(--color-bg-deep)] text-sm font-medium hover:bg-[var(--color-gold-muted)] transition-colors disabled:opacity-50"
+                  className="px-4 py-2 rounded-lg bg-[var(--color-grey-900)] text-[var(--color-grey-900)] text-sm font-medium hover:bg-[var(--color-grey-500)] transition-colors disabled:opacity-50"
                 >
                   {saving ? "Lagrer..." : "Lagre"}
                 </button>
                 <button
                   onClick={() => setEditing(false)}
-                  className="px-4 py-2 rounded-lg border border-[var(--color-border)] text-[var(--color-snow)] text-sm hover:bg-[var(--color-border)] transition-colors"
+                  className="px-4 py-2 rounded-lg border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm hover:bg-[var(--color-grey-200)] transition-colors"
                 >
                   Avbryt
                 </button>
@@ -115,7 +115,7 @@ export function ProfileCard({ user }: { user: ProfileUser }) {
             ) : (
               <button
                 onClick={() => setEditing(true)}
-                className="px-4 py-2 rounded-lg border border-[var(--color-border)] text-[var(--color-snow)] text-sm hover:bg-[var(--color-border)] transition-colors"
+                className="px-4 py-2 rounded-lg border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm hover:bg-[var(--color-grey-200)] transition-colors"
               >
                 Rediger profil
               </button>

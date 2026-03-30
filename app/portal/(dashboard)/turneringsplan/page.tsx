@@ -23,14 +23,14 @@ export default async function TurneringsplanPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-[var(--color-snow)]">Turneringsplan</h1>
+      <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Turneringsplan</h1>
 
       <div className="max-w-2xl">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-[var(--color-snow)]">
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
             Kommende turneringer
           </h2>
-          <span className="text-xs text-[var(--color-ink-40)]">
+          <span className="text-xs text-[var(--color-grey-400)]">
             {tournaments.length} turneringer
           </span>
         </div>

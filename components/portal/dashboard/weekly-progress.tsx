@@ -80,7 +80,7 @@ export function WeeklyProgress({ days }: WeeklyProgressProps) {
           <Bar
             dataKey="training"
             stackId="a"
-            fill="var(--color-gold)"
+            fill="var(--color-grey-900)"
             radius={[4, 4, 0, 0]}
           >
             {data.map((entry, i) => (
@@ -90,7 +90,7 @@ export function WeeklyProgress({ days }: WeeklyProgressProps) {
           <Bar
             dataKey="habits"
             stackId="a"
-            fill="var(--color-ink-80)"
+            fill="var(--color-grey-200)"
             radius={[4, 4, 0, 0]}
           />
           <Tooltip

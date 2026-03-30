@@ -27,7 +27,7 @@ export function AddHandicapForm() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-1 text-[10px] text-[var(--color-gold-dim)]/60 hover:text-[var(--color-gold)] transition-colors"
+        className="flex items-center gap-1 text-[10px] text-[var(--color-grey-400)]/60 hover:text-[var(--color-grey-900)] transition-colors"
       >
         <Plus className="w-3 h-3" />
         Legg til handicap
@@ -41,7 +41,7 @@ export function AddHandicapForm() {
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="px-2 py-1 rounded-lg text-xs bg-transparent border outline-none text-[var(--color-snow)]"
+        className="px-2 py-1 rounded-lg text-xs bg-transparent border outline-none text-[var(--color-grey-900)]"
         style={{ borderColor: "rgba(30,53,85,0.8)" }}
       />
       <input
@@ -52,7 +52,7 @@ export function AddHandicapForm() {
         value={index}
         onChange={(e) => setIndex(e.target.value)}
         placeholder="Handicap"
-        className="w-24 px-2 py-1 rounded-lg text-xs bg-transparent border outline-none text-[var(--color-snow)] placeholder:text-[var(--color-gold-dim)]/30"
+        className="w-24 px-2 py-1 rounded-lg text-xs bg-transparent border outline-none text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)]/30"
         style={{ borderColor: "rgba(30,53,85,0.8)" }}
         required
       />
@@ -62,7 +62,7 @@ export function AddHandicapForm() {
         className="px-3 py-1 rounded-lg text-xs font-semibold"
         style={{
           background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
-          color: "#0a1929",
+          color: "var(--color-grey-900)",
           opacity: isPending ? 0.7 : 1,
         }}
       >
@@ -71,7 +71,7 @@ export function AddHandicapForm() {
       <button
         type="button"
         onClick={() => setOpen(false)}
-        className="text-xs text-[var(--color-gold-dim)]/40 hover:text-[var(--color-gold-dim)] transition-colors"
+        className="text-xs text-[var(--color-grey-400)]/40 hover:text-[var(--color-grey-400)] transition-colors"
       >
         Avbryt
       </button>

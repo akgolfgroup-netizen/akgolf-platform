@@ -48,7 +48,7 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--apple-gray-50)] via-white to-[var(--apple-gold-50)]/30 -m-6 p-6 lg:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--color-grey-100)] via-white to-[var(--color-grey-100)]/30 -m-6 p-6 lg:p-8">
       {/* Header */}
       <motion.div
         className="mb-8"
@@ -57,14 +57,14 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--apple-gold-400)] to-[var(--apple-gold-600)] flex items-center justify-center shadow-lg">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--color-grey-400)] to-[var(--color-grey-900)] flex items-center justify-center shadow-lg">
             <Calendar className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-br from-[var(--apple-gray-950)] to-[var(--apple-gray-700)] bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-br from-[var(--apple-gray-950)] to-[var(--color-grey-700)] bg-clip-text text-transparent">
               Denne uken
             </h1>
-            <p className="text-sm text-[var(--apple-gray-500)]">{weekStats.weekLabel}</p>
+            <p className="text-sm text-[var(--color-grey-500)]">{weekStats.weekLabel}</p>
           </div>
         </div>
       </motion.div>
@@ -81,8 +81,8 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
             label="Spillere"
             value={weekStats.totalPlayers}
             icon={Users}
-            iconColor="text-[var(--apple-gold-500)]"
-            iconBg="bg-[var(--apple-gold-50)]"
+            iconColor="text-[var(--color-grey-900)]"
+            iconBg="bg-[var(--color-grey-100)]"
             size="md"
           />
         </motion.div>
@@ -152,10 +152,10 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
         >
           {plans.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-[var(--apple-gray-100)] flex items-center justify-center mb-4">
-                <Trophy className="w-8 h-8 text-[var(--apple-gray-400)]" />
+              <div className="w-16 h-16 rounded-2xl bg-[var(--color-grey-100)] flex items-center justify-center mb-4">
+                <Trophy className="w-8 h-8 text-[var(--color-grey-400)]" />
               </div>
-              <p className="text-sm text-[var(--apple-gray-500)]">
+              <p className="text-sm text-[var(--color-grey-500)]">
                 Ingen spillere i turnering denne uken
               </p>
             </div>
@@ -169,15 +169,15 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
                   transition={{ duration: 0.4, delay: 0.1 * index }}
                 >
                   {/* Tournament Header */}
-                  <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[var(--apple-gray-200)]/50">
+                  <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[var(--color-grey-200)]/50">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
                       <Calendar className="w-5 h-5 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-[var(--apple-gray-900)] truncate">
+                      <h3 className="font-semibold text-[var(--color-grey-900)] truncate">
                         {tournament.name}
                       </h3>
-                      <p className="text-xs text-[var(--apple-gray-500)]">
+                      <p className="text-xs text-[var(--color-grey-500)]">
                         {format(new Date(tournament.startDate), "EEEE d. MMMM", { locale: nb })}
                       </p>
                     </div>
@@ -216,7 +216,7 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
                                 className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0 ring-2 ring-white shadow-md"
                                 style={{
                                   background:
-                                    "linear-gradient(135deg, var(--apple-gold-400) 0%, var(--apple-gold-600) 100%)",
+                                    "linear-gradient(135deg, var(--color-grey-400) 0%, var(--color-grey-900) 100%)",
                                 }}
                               >
                                 {plan.student.name?.charAt(0) ?? "?"}
@@ -225,11 +225,11 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
 
                             {/* Player Info */}
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-semibold text-[var(--apple-gray-900)] truncate">
+                              <p className="text-sm font-semibold text-[var(--color-grey-900)] truncate">
                                 {plan.student.name ?? "Ukjent spiller"}
                               </p>
                               {plan.notes && (
-                                <p className="text-xs text-[var(--apple-gray-500)] italic line-clamp-1 mt-0.5">
+                                <p className="text-xs text-[var(--color-grey-500)] italic line-clamp-1 mt-0.5">
                                   {plan.notes}
                                 </p>
                               )}
@@ -244,7 +244,7 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
                               >
                                 {plan.isRegistered ? "Pameldt" : "Ikke pameldt"}
                               </AppleBadge>
-                              <AppleBadge variant="gold" size="sm">
+                              <AppleBadge variant="dark" size="sm">
                                 {PLAN_LEVEL_CONFIG[plan.planLevel as PlanLevel]?.label}
                               </AppleBadge>
                               <GoalTypeBadge goalType={plan.goalType as GoalType} size="sm" />

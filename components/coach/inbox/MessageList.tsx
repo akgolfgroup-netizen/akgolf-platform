@@ -66,7 +66,7 @@ const statusBadges: Record<
   },
   SENT: {
     label: "Sendt",
-    className: "bg-[var(--color-ink-80)] text-[var(--color-ink-40)]",
+    className: "bg-[var(--color-grey-200)] text-[var(--color-grey-400)]",
     icon: <Check className="h-3 w-3" />,
   },
   FAILED: {
@@ -100,14 +100,14 @@ export function MessageList({
 }: MessageListProps) {
   if (messages.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 text-[var(--color-ink-50)]">
+      <div className="flex items-center justify-center h-64 text-[var(--color-grey-500)]">
         Ingen meldinger
       </div>
     );
   }
 
   return (
-    <div className="divide-y divide-[var(--color-ink-90)]">
+    <div className="divide-y divide-[var(--color-grey-200)]">
       {messages.map((message) => {
         const status = statusBadges[message.status];
         return (
@@ -118,34 +118,34 @@ export function MessageList({
               "p-4 cursor-pointer transition-colors border-l-4",
               channelColors[message.channel],
               selectedId === message.id
-                ? "bg-[var(--color-ink-90)]"
-                : "hover:bg-[var(--color-ink-95)]"
+                ? "bg-[var(--color-grey-100)]"
+                : "hover:bg-[var(--color-grey-100)]"
             )}
           >
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="text-[var(--color-ink-50)]">
+                  <span className="text-[var(--color-grey-500)]">
                     {channelIcons[message.channel]}
                   </span>
-                  <span className="font-medium text-white truncate">
+                  <span className="font-medium text-[var(--color-grey-900)] truncate">
                     {message.senderName}
                   </span>
-                  <span className="text-[var(--color-ink-50)] text-sm truncate">
+                  <span className="text-[var(--color-grey-500)] text-sm truncate">
                     {message.senderHandle}
                   </span>
                 </div>
                 {message.subject && (
-                  <p className="text-sm text-[var(--color-ink-30)] truncate mt-0.5">
+                  <p className="text-sm text-[var(--color-grey-300)] truncate mt-0.5">
                     {message.subject}
                   </p>
                 )}
-                <p className="text-sm text-[var(--color-ink-50)] truncate mt-1">
+                <p className="text-sm text-[var(--color-grey-500)] truncate mt-1">
                   {message.content}
                 </p>
               </div>
               <div className="flex flex-col items-end gap-2">
-                <span className="text-xs text-[var(--color-ink-50)] whitespace-nowrap">
+                <span className="text-xs text-[var(--color-grey-500)] whitespace-nowrap">
                   {formatDistanceToNow(new Date(message.receivedAt), {
                     addSuffix: true,
                     locale: nb,

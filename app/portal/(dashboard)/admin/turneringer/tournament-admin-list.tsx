@@ -113,21 +113,21 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
   return (
     <>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-base font-semibold text-[var(--color-snow)]">
+        <h3 className="text-base font-semibold text-[var(--color-grey-900)]">
           Alle turneringer ({filtered.length})
         </h3>
         <div className="flex items-center gap-2">
           <button
             onClick={handleSync}
             disabled={syncing}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[var(--color-gold)] text-[var(--color-bg-deep)] text-xs font-semibold hover:bg-[var(--color-gold-muted)] transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[var(--color-grey-900)] text-[var(--color-grey-900)] text-xs font-semibold hover:bg-[var(--color-grey-500)] transition-colors disabled:opacity-50"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${syncing ? "animate-spin" : ""}`} />
             Synkroniser
           </button>
           <button
             onClick={() => setImportOpen(true)}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl border border-[var(--color-gold)]/30 text-[var(--color-gold)] text-xs font-medium hover:bg-[var(--color-gold)]/10 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 rounded-xl border border-[var(--color-grey-900)]/30 text-[var(--color-grey-900)] text-xs font-medium hover:bg-[var(--color-grey-900)]/10 transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
             GolfBox
@@ -152,7 +152,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
           <button
             onClick={() => setFilterSeries("")}
             className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
-              !filterSeries ? "bg-[var(--color-gold)]/15 text-[var(--color-gold)]" : "text-[var(--color-gold-muted)] hover:text-[var(--color-snow)]"
+              !filterSeries ? "bg-[var(--color-grey-900)]/15 text-[var(--color-grey-900)]" : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
             }`}
           >
             Alle
@@ -162,7 +162,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
               key={s}
               onClick={() => setFilterSeries(s === filterSeries ? "" : s)}
               className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
-                filterSeries === s ? "bg-[var(--color-gold)]/15 text-[var(--color-gold)]" : "text-[var(--color-gold-muted)] hover:text-[var(--color-snow)]"
+                filterSeries === s ? "bg-[var(--color-grey-900)]/15 text-[var(--color-grey-900)]" : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
               }`}
             >
               {s}
@@ -176,23 +176,23 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
           const isExpanded = expandedId === t.id;
           return (
             <div key={t.id}>
-              <div className="flex items-center justify-between p-3 bg-[var(--color-muted)] border border-[var(--color-border)] rounded-xl">
+              <div className="flex items-center justify-between p-3 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl">
                 <button
                   onClick={() => setExpandedId(isExpanded ? null : t.id)}
                   className="flex items-center gap-2 flex-1 min-w-0 text-left"
                 >
                   {t._count.playerPlans > 0 ? (
                     isExpanded ? (
-                      <ChevronDown className="w-3.5 h-3.5 text-[var(--color-gold-muted)] flex-shrink-0" />
+                      <ChevronDown className="w-3.5 h-3.5 text-[var(--color-grey-500)] flex-shrink-0" />
                     ) : (
-                      <ChevronRight className="w-3.5 h-3.5 text-[var(--color-gold-muted)] flex-shrink-0" />
+                      <ChevronRight className="w-3.5 h-3.5 text-[var(--color-grey-500)] flex-shrink-0" />
                     )
                   ) : (
                     <span className="w-3.5 flex-shrink-0" />
                   )}
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-[var(--color-snow)] truncate">{t.name}</p>
-                    <p className="text-xs text-[var(--color-gold-muted)]">
+                    <p className="text-sm font-medium text-[var(--color-grey-900)] truncate">{t.name}</p>
+                    <p className="text-xs text-[var(--color-grey-500)]">
                       {new Date(t.startDate).toLocaleDateString("nb-NO")} · {t.level}
                       {t.source && ` · ${SOURCE_LABELS[t.source] ?? t.source}`}
                       {t.series && ` · ${t.series}`}
@@ -200,12 +200,12 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                   </div>
                 </button>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className="text-xs text-[var(--color-gold-muted)]">
+                  <span className="text-xs text-[var(--color-grey-500)]">
                     {t._count.playerPlans} planer
                   </span>
                   <button
                     onClick={() => setEditTournament(t)}
-                    className="p-1.5 rounded-lg hover:bg-[var(--color-border)] transition-colors text-[var(--color-gold-muted)]"
+                    className="p-1.5 rounded-lg hover:bg-[var(--color-grey-200)] transition-colors text-[var(--color-grey-500)]"
                     title="Rediger"
                   >
                     <Pencil className="w-3.5 h-3.5" />
@@ -213,7 +213,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                   <button
                     onClick={() => handleDelete(t)}
                     disabled={deletingId === t.id}
-                    className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors text-[var(--color-gold-muted)] hover:text-red-400"
+                    className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors text-[var(--color-grey-500)] hover:text-red-400"
                     title="Slett"
                   >
                     {deletingId === t.id ? (

@@ -13,14 +13,14 @@ export default async function SammenligningPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-[var(--color-snow)]">Sammenligning</h1>
+      <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Sammenligning</h1>
 
       <div className="max-w-4xl">
         <TierGate userTier={userTier} required={SubscriptionTier.PRO}>
           {!data ? (
-            <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-[rgba(15,41,80,0.3)] border border-[rgba(15,41,80,0.4)]">
-              <Users className="w-10 h-10 text-[var(--color-ink-40)] mb-3" />
-              <p className="text-sm text-[var(--color-ink-40)]">
+            <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]">
+              <Users className="w-10 h-10 text-[var(--color-grey-400)] mb-3" />
+              <p className="text-sm text-[var(--color-grey-400)]">
                 Registrer handicap og noen runder for å se sammenligning.
               </p>
             </div>

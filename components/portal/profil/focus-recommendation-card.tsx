@@ -36,11 +36,11 @@ export function FocusRecommendationCard() {
   return (
     <div
       className="rounded-2xl p-5"
-      style={{ background: "rgba(10,25,41,0.7)", border: "1px solid rgba(15,41,80,0.8)" }}
+      style={{ background: "var(--color-grey-100)", border: "1px solid var(--color-grey-200)" }}
     >
       <div className="flex items-center gap-2 mb-3">
-        <Compass className="w-4 h-4 text-[var(--color-gold)]" />
-        <h2 className="text-sm font-semibold text-[var(--color-snow)]">Anbefalt fokus</h2>
+        <Compass className="w-4 h-4 text-[var(--color-grey-900)]" />
+        <h2 className="text-sm font-semibold text-[var(--color-grey-900)]">Anbefalt fokus</h2>
       </div>
 
       <AnimatePresence mode="wait">
@@ -49,7 +49,7 @@ export function FocusRecommendationCard() {
             {error && (
               <p className="text-xs text-red-400 mb-2">{error}</p>
             )}
-            <p className="text-xs text-[var(--color-gold-muted)] mb-3">
+            <p className="text-xs text-[var(--color-grey-500)] mb-3">
               Få personlige anbefalinger basert på din treningshistorikk, runder og coachingøkter.
             </p>
             <button
@@ -57,13 +57,13 @@ export function FocusRecommendationCard() {
               className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold transition-opacity hover:opacity-90"
               style={{
                 background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
-                color: "#0a1929",
+                color: "var(--color-grey-900)",
               }}
             >
               <Compass className="w-3.5 h-3.5" />
               Generer anbefaling
             </button>
-            <p className="mt-2 text-[10px] text-[var(--color-gold-muted)]/40">
+            <p className="mt-2 text-[10px] text-[var(--color-grey-500)]/40">
               Drevet av AI-verktøy
             </p>
           </motion.div>
@@ -71,7 +71,7 @@ export function FocusRecommendationCard() {
 
         {loading && (
           <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="flex items-center gap-2 text-sm text-[var(--color-gold-muted)] py-4"
+            className="flex items-center gap-2 text-sm text-[var(--color-grey-500)] py-4"
           >
             <Loader2 className="w-4 h-4 animate-spin" />
             Analyserer data...
@@ -86,28 +86,28 @@ export function FocusRecommendationCard() {
                 .map((area, i) => (
                   <div
                     key={i}
-                    className="flex gap-3 p-3 rounded-xl border border-[var(--color-border)]"
+                    className="flex gap-3 p-3 rounded-xl border border-[var(--color-grey-200)]"
                     style={{ background: "rgba(255,255,255,0.02)" }}
                   >
                     <span
                       className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
                       style={{
-                        background: "rgba(176,125,79,0.15)",
-                        color: "var(--color-gold)",
+                        background: "var(--color-grey-200)",
+                        color: "var(--color-grey-900)",
                       }}
                     >
                       {area.priority}
                     </span>
                     <div>
-                      <p className="text-sm font-medium text-[var(--color-snow)]">{area.title}</p>
-                      <p className="text-xs text-[var(--color-gold-muted)] mt-0.5">{area.reason}</p>
+                      <p className="text-sm font-medium text-[var(--color-grey-900)]">{area.title}</p>
+                      <p className="text-xs text-[var(--color-grey-500)] mt-0.5">{area.reason}</p>
                     </div>
                   </div>
                 ))}
             </div>
             <button
               onClick={() => { setAreas(null); fetchRecommendation(); }}
-              className="flex items-center gap-1 text-[10px] text-[var(--color-gold-dim)]/50 hover:text-[var(--color-gold-dim)] mt-3 transition-colors"
+              className="flex items-center gap-1 text-[10px] text-[var(--color-grey-400)]/50 hover:text-[var(--color-grey-400)] mt-3 transition-colors"
             >
               <RefreshCw className="w-3 h-3" />
               Oppdater

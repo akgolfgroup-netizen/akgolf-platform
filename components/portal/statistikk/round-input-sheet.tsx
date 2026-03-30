@@ -60,7 +60,7 @@ export function RoundInputSheet({ onClose }: { onClose: () => void }) {
   function numField(label: string, key: string, placeholder?: string) {
     return (
       <div>
-        <label className="block text-[10px] font-medium text-[var(--color-gold-muted)] mb-1">
+        <label className="block text-[10px] font-medium text-[var(--color-grey-500)] mb-1">
           {label}
         </label>
         <input
@@ -69,7 +69,7 @@ export function RoundInputSheet({ onClose }: { onClose: () => void }) {
           value={(form as Record<string, string>)[key]}
           onChange={(e) => update(key, e.target.value)}
           placeholder={placeholder}
-          className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+          className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
         />
       </div>
     );
@@ -151,39 +151,39 @@ export function RoundInputSheet({ onClose }: { onClose: () => void }) {
     >
       <motion.form
         onSubmit={handleSubmit}
-        className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-t-2xl sm:rounded-2xl p-5 w-full max-w-lg max-h-[85vh] overflow-y-auto"
+        className="bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-t-2xl sm:rounded-2xl p-5 w-full max-w-lg max-h-[85vh] overflow-y-auto"
         initial={{ y: 40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 20, opacity: 0 }}
         transition={{ duration: 0.2 }}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-bold text-[var(--color-snow)]">Registrer runde</h2>
-          <button type="button" onClick={onClose} className="p-1 hover:bg-[var(--color-muted)] rounded">
-            <X className="w-4 h-4 text-[var(--color-gold-muted)]" />
+          <h2 className="font-bold text-[var(--color-grey-900)]">Registrer runde</h2>
+          <button type="button" onClick={onClose} className="p-1 hover:bg-[var(--color-grey-100)] rounded">
+            <X className="w-4 h-4 text-[var(--color-grey-500)]" />
           </button>
         </div>
 
         {/* Required fields */}
         <div className="grid grid-cols-2 gap-3 mb-4">
           <div>
-            <label className="block text-[10px] font-medium text-[var(--color-gold-muted)] mb-1">Dato *</label>
+            <label className="block text-[10px] font-medium text-[var(--color-grey-500)] mb-1">Dato *</label>
             <input
               type="date"
               value={form.date}
               onChange={(e) => update("date", e.target.value)}
               required
-              className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+              className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
             />
           </div>
           <div>
-            <label className="block text-[10px] font-medium text-[var(--color-gold-muted)] mb-1">Bane</label>
+            <label className="block text-[10px] font-medium text-[var(--color-grey-500)] mb-1">Bane</label>
             <input
               type="text"
               value={form.courseName}
               onChange={(e) => update("courseName", e.target.value)}
               placeholder="GFGK"
-              className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+              className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
             />
           </div>
         </div>
@@ -191,11 +191,11 @@ export function RoundInputSheet({ onClose }: { onClose: () => void }) {
         {/* Collapsible sections */}
         <div className="space-y-2">
           {SECTIONS.map((section) => (
-            <div key={section.key} className="border border-[var(--color-border)] rounded-xl overflow-hidden">
+            <div key={section.key} className="border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
               <button
                 type="button"
                 onClick={() => toggleSection(section.key)}
-                className="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold text-[var(--color-gold-muted)] hover:bg-[var(--color-muted)]/50 transition-colors"
+                className="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)]/50 transition-colors"
               >
                 {section.label}
                 {expandedSections.has(section.key) ? (
@@ -274,14 +274,14 @@ export function RoundInputSheet({ onClose }: { onClose: () => void }) {
                     <div className="col-span-2">
                       {numField("Mental prosessrating (1-10)", "mentalProcessRating")}
                       <div className="mt-2">
-                        <label className="block text-[10px] font-medium text-[var(--color-gold-muted)] mb-1">
+                        <label className="block text-[10px] font-medium text-[var(--color-grey-500)] mb-1">
                           Notater
                         </label>
                         <textarea
                           value={form.notes}
                           onChange={(e) => update("notes", e.target.value)}
                           rows={2}
-                          className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)] resize-none"
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)] resize-none"
                         />
                       </div>
                     </div>
@@ -295,7 +295,7 @@ export function RoundInputSheet({ onClose }: { onClose: () => void }) {
         <button
           type="submit"
           disabled={saving || !form.date}
-          className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-gold)] text-[var(--color-bg-deep)] font-semibold text-sm hover:bg-[var(--color-gold-muted)] transition-colors disabled:opacity-50"
+          className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-grey-900)] text-[var(--color-grey-900)] font-semibold text-sm hover:bg-[var(--color-grey-500)] transition-colors disabled:opacity-50"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
           Lagre runde

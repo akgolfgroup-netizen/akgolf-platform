@@ -38,15 +38,15 @@ export function SGRadarChart({ playerSG, benchmark }: SGRadarChartProps) {
     <div className="w-full h-[300px]">
       <ResponsiveContainer>
         <RadarChart data={data} cx="50%" cy="50%" outerRadius="70%">
-          <PolarGrid stroke="rgba(15,41,80,0.6)" />
+          <PolarGrid stroke="var(--color-grey-200)" />
           <PolarAngleAxis
             dataKey="category"
             tick={{ fill: "rgba(212,196,168,0.7)", fontSize: 11 }}
           />
           <Tooltip
             contentStyle={{
-              background: "#0a1929",
-              border: "1px solid rgba(15,41,80,0.8)",
+              background: "var(--color-grey-900)",
+              border: "1px solid var(--color-grey-200)",
               borderRadius: 8,
               fontSize: 12,
             }}

@@ -181,7 +181,7 @@ export default function DagbokPage() {
             <h1 className="text-[32px] font-bold text-[var(--apple-gray-950)] tracking-tight mb-1">
               Treningsdagbok
             </h1>
-            <p className="text-[15px] text-[var(--apple-gray-500)]">
+            <p className="text-[15px] text-[var(--color-grey-500)]">
               Hold oversikt over treningsaktiviteten din
             </p>
           </div>
@@ -239,11 +239,11 @@ export default function DagbokPage() {
             title="Mars 2026"
             action={
               <div className="flex gap-2">
-                <button className="w-8 h-8 rounded-lg border border-[var(--apple-gray-200)] bg-white flex items-center justify-center hover:bg-[var(--apple-gray-100)] transition-colors">
-                  <ChevronLeft className="w-4 h-4 text-[var(--apple-gray-600)]" />
+                <button className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:bg-[var(--color-grey-100)] transition-colors">
+                  <ChevronLeft className="w-4 h-4 text-[var(--color-grey-600)]" />
                 </button>
-                <button className="w-8 h-8 rounded-lg border border-[var(--apple-gray-200)] bg-white flex items-center justify-center hover:bg-[var(--apple-gray-100)] transition-colors">
-                  <ChevronRight className="w-4 h-4 text-[var(--apple-gray-600)]" />
+                <button className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:bg-[var(--color-grey-100)] transition-colors">
+                  <ChevronRight className="w-4 h-4 text-[var(--color-grey-600)]" />
                 </button>
               </div>
             }
@@ -252,7 +252,7 @@ export default function DagbokPage() {
               {weekDays.map((day) => (
                 <div
                   key={day}
-                  className="text-center text-[11px] font-semibold uppercase tracking-wider text-[var(--apple-gray-500)] py-2"
+                  className="text-center text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-500)] py-2"
                 >
                   {day}
                 </div>
@@ -264,17 +264,17 @@ export default function DagbokPage() {
                     "aspect-square flex flex-col items-center justify-center rounded-lg cursor-pointer transition-all duration-200",
                     day.otherMonth && "opacity-30",
                     day.today &&
-                      "bg-[var(--apple-gold-50)] border-2 border-[var(--apple-gold-400)]",
+                      "bg-[var(--color-grey-100)] border-2 border-[var(--color-grey-400)]",
                     day.hasLog && !day.today && "bg-green-50",
-                    !day.today && !day.hasLog && "hover:bg-[var(--apple-gray-100)]"
+                    !day.today && !day.hasLog && "hover:bg-[var(--color-grey-100)]"
                   )}
                 >
                   <span
                     className={cn(
                       "text-sm font-medium",
                       day.today
-                        ? "text-[var(--apple-gold-700)] font-semibold"
-                        : "text-[var(--apple-gray-900)]"
+                        ? "text-[var(--color-grey-900)] font-semibold"
+                        : "text-[var(--color-grey-900)]"
                     )}
                   >
                     {day.day}
@@ -292,7 +292,7 @@ export default function DagbokPage() {
             span={4}
             title="Siste okter"
             action={
-              <button className="text-[13px] font-medium text-[var(--apple-gold-600)] hover:text-[var(--apple-gold-700)] flex items-center gap-1">
+              <button className="text-[13px] font-medium text-[var(--color-grey-900)] hover:text-[var(--color-grey-900)] flex items-center gap-1">
                 Se alle
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
@@ -302,25 +302,25 @@ export default function DagbokPage() {
               {demoLogs.slice(0, 3).map((log) => (
                 <motion.div
                   key={log.id}
-                  className="flex gap-4 p-4 bg-[var(--apple-gray-50)] rounded-xl cursor-pointer hover:bg-[var(--apple-gray-100)] transition-colors"
+                  className="flex gap-4 p-4 bg-[var(--color-grey-100)] rounded-xl cursor-pointer hover:bg-[var(--color-grey-100)] transition-colors"
                   whileHover={{ scale: 1.01 }}
                 >
                   <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex flex-col items-center justify-center shrink-0">
-                    <span className="text-lg font-bold text-[var(--apple-gray-900)] leading-none">
+                    <span className="text-lg font-bold text-[var(--color-grey-900)] leading-none">
                       {log.day}
                     </span>
-                    <span className="text-[10px] font-semibold uppercase text-[var(--apple-gray-500)]">
+                    <span className="text-[10px] font-semibold uppercase text-[var(--color-grey-500)]">
                       {log.month}
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--apple-gold-600)]">
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-900)]">
                       {log.type.replace("_", " ")}
                     </span>
-                    <p className="text-sm font-medium text-[var(--apple-gray-900)] truncate">
+                    <p className="text-sm font-medium text-[var(--color-grey-900)] truncate">
                       {log.title}
                     </p>
-                    <div className="flex items-center gap-2 mt-1 text-xs text-[var(--apple-gray-500)]">
+                    <div className="flex items-center gap-2 mt-1 text-xs text-[var(--color-grey-500)]">
                       <Clock className="w-3 h-3" />
                       {log.duration}
                     </div>
@@ -336,7 +336,7 @@ export default function DagbokPage() {
               {categories.map((cat) => (
                 <div
                   key={cat.name}
-                  className="flex items-center gap-3 p-4 bg-[var(--apple-gray-50)] rounded-xl hover:bg-[var(--apple-gray-100)] transition-colors"
+                  className="flex items-center gap-3 p-4 bg-[var(--color-grey-100)] rounded-xl hover:bg-[var(--color-grey-100)] transition-colors"
                 >
                   <div
                     className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
@@ -345,13 +345,13 @@ export default function DagbokPage() {
                     <Target className="w-5 h-5" style={{ color: cat.color }} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-[var(--apple-gray-900)]">
+                    <p className="text-sm font-medium text-[var(--color-grey-900)]">
                       {cat.name}
                     </p>
-                    <p className="text-xs text-[var(--apple-gray-500)]">
+                    <p className="text-xs text-[var(--color-grey-500)]">
                       {cat.count}
                     </p>
-                    <div className="h-1 bg-[var(--apple-gray-200)] rounded-full mt-2 overflow-hidden">
+                    <div className="h-1 bg-[var(--color-grey-200)] rounded-full mt-2 overflow-hidden">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -369,14 +369,14 @@ export default function DagbokPage() {
           {/* Streak Card - 6 columns */}
           <BentoCard span={6} variant="gradient" title="Treningsstreak">
             <div className="flex items-center gap-6 mb-5">
-              <span className="text-7xl font-bold text-[var(--apple-gold-500)] leading-none">
+              <span className="text-7xl font-bold text-[var(--color-grey-900)] leading-none">
                 4
               </span>
               <div>
-                <h3 className="text-lg font-semibold text-[var(--apple-gray-900)] mb-1">
+                <h3 className="text-lg font-semibold text-[var(--color-grey-900)] mb-1">
                   dager pa rad
                 </h3>
-                <p className="text-sm text-[var(--apple-gray-500)]">
+                <p className="text-sm text-[var(--color-grey-500)]">
                   Fortsett den gode innsatsen!
                 </p>
               </div>
@@ -389,10 +389,10 @@ export default function DagbokPage() {
                     "w-9 h-9 rounded-lg flex items-center justify-center text-xs font-semibold",
                     d.active && "bg-green-100 text-green-600",
                     d.today &&
-                      "bg-[var(--apple-gold-100)] text-[var(--apple-gold-700)] border-2 border-[var(--apple-gold-400)]",
+                      "bg-[var(--color-grey-100)] text-[var(--color-grey-900)] border-2 border-[var(--color-grey-400)]",
                     !d.active &&
                       !d.today &&
-                      "bg-[var(--apple-gray-100)] text-[var(--apple-gray-400)]"
+                      "bg-[var(--color-grey-100)] text-[var(--color-grey-400)]"
                   )}
                 >
                   {d.day}
@@ -417,8 +417,8 @@ export default function DagbokPage() {
                 className={cn(
                   "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
                   activeFilter === filter
-                    ? "bg-white shadow-sm text-[var(--apple-gray-900)]"
-                    : "text-[var(--apple-gray-500)] hover:text-[var(--apple-gray-900)]"
+                    ? "bg-white shadow-sm text-[var(--color-grey-900)]"
+                    : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
                 )}
               >
                 {filter}
@@ -431,8 +431,8 @@ export default function DagbokPage() {
               className={cn(
                 "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200",
                 viewMode === "list"
-                  ? "bg-white border border-[var(--apple-gray-200)] text-[var(--apple-gray-900)] shadow-sm"
-                  : "text-[var(--apple-gray-500)] hover:bg-white/50"
+                  ? "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-900)] shadow-sm"
+                  : "text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)]0"
               )}
             >
               <List className="w-4 h-4" />
@@ -443,8 +443,8 @@ export default function DagbokPage() {
               className={cn(
                 "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200",
                 viewMode === "calendar"
-                  ? "bg-white border border-[var(--apple-gray-200)] text-[var(--apple-gray-900)] shadow-sm"
-                  : "text-[var(--apple-gray-500)] hover:bg-white/50"
+                  ? "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-900)] shadow-sm"
+                  : "text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)]0"
               )}
             >
               <Calendar className="w-4 h-4" />
@@ -465,10 +465,10 @@ export default function DagbokPage() {
               <AppleCard hover padding="md">
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <p className="text-xs text-[var(--apple-gray-500)] mb-0.5">
+                    <p className="text-xs text-[var(--color-grey-500)] mb-0.5">
                       {log.date}
                     </p>
-                    <p className="text-base font-semibold text-[var(--apple-gray-900)]">
+                    <p className="text-base font-semibold text-[var(--color-grey-900)]">
                       {log.title}
                     </p>
                   </div>
@@ -476,7 +476,7 @@ export default function DagbokPage() {
                     {log.status}
                   </AppleBadge>
                 </div>
-                <div className="flex gap-5 mb-3 text-xs text-[var(--apple-gray-500)]">
+                <div className="flex gap-5 mb-3 text-xs text-[var(--color-grey-500)]">
                   <span className="flex items-center gap-1.5">
                     <Clock className="w-3.5 h-3.5" />
                     {log.duration}
@@ -503,7 +503,7 @@ export default function DagbokPage() {
                     {log.mood === "good" ? "God folelse" : "Utfordrende"}
                   </span>
                 </div>
-                <p className="text-sm text-[var(--apple-gray-600)] leading-relaxed">
+                <p className="text-sm text-[var(--color-grey-600)] leading-relaxed">
                   {log.notes}
                 </p>
               </AppleCard>
@@ -515,11 +515,11 @@ export default function DagbokPage() {
         {demoLogs.length === 0 && (
           <AppleCard className="py-16">
             <div className="flex flex-col items-center justify-center text-center">
-              <NotebookPen className="w-12 h-12 text-[var(--apple-gray-300)] mb-4" />
-              <p className="text-base font-medium text-[var(--apple-gray-900)] mb-1">
+              <NotebookPen className="w-12 h-12 text-[var(--color-grey-300)] mb-4" />
+              <p className="text-base font-medium text-[var(--color-grey-900)] mb-1">
                 Ingen treningslogger enna
               </p>
-              <p className="text-sm text-[var(--apple-gray-500)]">
+              <p className="text-sm text-[var(--color-grey-500)]">
                 Logg din forste treningsokt for a komme i gang
               </p>
             </div>

@@ -70,36 +70,36 @@ export function MessageDetail({
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="p-4 border-b border-[var(--color-ink-90)]">
+      <div className="p-4 border-b border-[var(--color-grey-200)]">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-white">
+            <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
               {message.senderName}
             </h2>
-            <p className="text-sm text-[var(--color-ink-50)]">
+            <p className="text-sm text-[var(--color-grey-500)]">
               {message.senderHandle}
             </p>
           </div>
-          <span className="text-sm text-[var(--color-ink-50)]">
+          <span className="text-sm text-[var(--color-grey-500)]">
             {format(new Date(message.receivedAt), "d. MMMM yyyy 'kl.' HH:mm", {
               locale: nb,
             })}
           </span>
         </div>
         {message.subject && (
-          <p className="mt-2 text-[var(--color-ink-30)] font-medium">
+          <p className="mt-2 text-[var(--color-grey-300)] font-medium">
             {message.subject}
           </p>
         )}
       </div>
 
       {/* Original message */}
-      <div className="p-4 border-b border-[var(--color-ink-90)]">
-        <p className="text-sm text-[var(--color-ink-40)] mb-2">
+      <div className="p-4 border-b border-[var(--color-grey-200)]">
+        <p className="text-sm text-[var(--color-grey-400)] mb-2">
           Opprinnelig melding:
         </p>
-        <div className="bg-[var(--color-ink-90)] rounded-lg p-4">
-          <p className="text-white whitespace-pre-wrap">{message.content}</p>
+        <div className="bg-[var(--color-grey-100)] rounded-lg p-4">
+          <p className="text-[var(--color-grey-900)] whitespace-pre-wrap">{message.content}</p>
         </div>
       </div>
 
@@ -107,15 +107,15 @@ export function MessageDetail({
       {message.aiResponse && (
         <div className="flex-1 p-4 overflow-auto">
           <div className="flex items-center gap-2 mb-3">
-            <Bot className="h-5 w-5 text-[var(--color-gold)]" />
-            <span className="text-sm font-medium text-white">AI-forslag</span>
+            <Bot className="h-5 w-5 text-[var(--color-black)]" />
+            <span className="text-sm font-medium text-[var(--color-grey-900)]">AI-forslag</span>
             <span className={`text-xs ${confidenceColor}`}>
               {Math.round(message.aiResponse.confidence * 100)}% konfidensert
             </span>
-            <span className="text-xs bg-[var(--color-ink-90)] px-2 py-0.5 rounded text-[var(--color-ink-40)]">
+            <span className="text-xs bg-[var(--color-grey-100)] px-2 py-0.5 rounded text-[var(--color-grey-400)]">
               {message.aiResponse.category}
             </span>
-            <span className="text-xs text-[var(--color-ink-50)]">
+            <span className="text-xs text-[var(--color-grey-500)]">
               via {message.aiResponse.modelUsed}
             </span>
           </div>
@@ -124,12 +124,12 @@ export function MessageDetail({
             <textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
-              className="w-full h-48 bg-[var(--color-ink-90)] rounded-lg p-4 text-white resize-none focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]"
+              className="w-full h-48 bg-[var(--color-grey-100)] rounded-lg p-4 text-[var(--color-grey-900)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-400)]"
               placeholder="Skriv ditt svar her..."
             />
           ) : (
-            <div className="bg-[var(--color-ink-90)] rounded-lg p-4">
-              <p className="text-white whitespace-pre-wrap">{editedContent}</p>
+            <div className="bg-[var(--color-grey-100)] rounded-lg p-4">
+              <p className="text-[var(--color-grey-900)] whitespace-pre-wrap">{editedContent}</p>
             </div>
           )}
         </div>
@@ -139,8 +139,8 @@ export function MessageDetail({
       {!message.aiResponse && message.status === "PENDING" && (
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center">
-            <Bot className="h-12 w-12 text-[var(--color-ink-50)] mx-auto mb-3" />
-            <p className="text-[var(--color-ink-40)]">
+            <Bot className="h-12 w-12 text-[var(--color-grey-500)] mx-auto mb-3" />
+            <p className="text-[var(--color-grey-400)]">
               AI-svar genereres snart...
             </p>
           </div>
@@ -151,7 +151,7 @@ export function MessageDetail({
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center">
             <Bot className="h-12 w-12 text-blue-500 mx-auto mb-3 animate-pulse" />
-            <p className="text-[var(--color-ink-40)]">
+            <p className="text-[var(--color-grey-400)]">
               AI analyserer meldingen...
             </p>
           </div>
@@ -160,11 +160,11 @@ export function MessageDetail({
 
       {/* Actions */}
       {message.status === "AI_READY" && message.aiResponse && (
-        <div className="p-4 border-t border-[var(--color-ink-90)] flex items-center justify-between">
+        <div className="p-4 border-t border-[var(--color-grey-200)] flex items-center justify-between">
           <Button
             variant="ghost"
             onClick={() => setIsEditing(!isEditing)}
-            className="text-[var(--color-ink-40)]"
+            className="text-[var(--color-grey-400)]"
           >
             <Edit className="h-4 w-4 mr-2" />
             {isEditing ? "Ferdig redigering" : "Rediger"}
@@ -183,7 +183,7 @@ export function MessageDetail({
               onClick={handleApprove}
               disabled={isSending}
               isLoading={isSending}
-              className="bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] text-[var(--color-ink-100)]"
+              className="bg-[var(--color-black)] hover:bg-[var(--color-grey-900)] text-white"
             >
               <Send className="h-4 w-4 mr-2" />
               Godkjenn & Send
@@ -194,7 +194,7 @@ export function MessageDetail({
 
       {/* Already sent/approved */}
       {(message.status === "SENT" || message.status === "APPROVED") && (
-        <div className="p-4 border-t border-[var(--color-ink-90)]">
+        <div className="p-4 border-t border-[var(--color-grey-200)]">
           <p className="text-center text-green-500 text-sm">
             Denne meldingen er allerede besvart
           </p>
@@ -203,7 +203,7 @@ export function MessageDetail({
 
       {/* Failed */}
       {message.status === "FAILED" && (
-        <div className="p-4 border-t border-[var(--color-ink-90)]">
+        <div className="p-4 border-t border-[var(--color-grey-200)]">
           <p className="text-center text-red-500 text-sm">
             Denne meldingen ble forkastet
           </p>

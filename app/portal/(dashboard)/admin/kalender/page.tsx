@@ -28,7 +28,7 @@ export default async function AdminCalendarPage() {
               <h1 className="text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em]" style={{ fontFamily: "var(--font-display)" }}>
                 Kalender
               </h1>
-              <p className="text-[15px] text-[var(--apple-gray-500)]">
+              <p className="text-[15px] text-[var(--color-grey-500)]">
                 Oversikt over alle bookinger
               </p>
             </div>

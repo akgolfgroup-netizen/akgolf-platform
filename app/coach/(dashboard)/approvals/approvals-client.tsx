@@ -57,10 +57,10 @@ export function ApprovalsClient({ pendingItems }: ApprovalsClientProps) {
     return (
       <div className="text-center py-16">
         <CheckCircle className="h-16 w-16 mx-auto mb-4 text-green-500 opacity-50" />
-        <h2 className="text-xl font-semibold text-white mb-2">
+        <h2 className="text-xl font-semibold text-[var(--color-grey-900)] mb-2">
           Alt er godkjent!
         </h2>
-        <p className="text-[var(--color-ink-50)]">
+        <p className="text-[var(--color-grey-500)]">
           Du har ingen ventende godkjenninger
         </p>
       </div>
@@ -72,7 +72,7 @@ export function ApprovalsClient({ pendingItems }: ApprovalsClientProps) {
       {items.map((item) => (
         <div
           key={item.id}
-          className="bg-[var(--color-ink-90)] rounded-xl p-5"
+          className="bg-white border border-[var(--color-grey-200)] rounded-xl p-5"
         >
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
@@ -80,7 +80,7 @@ export function ApprovalsClient({ pendingItems }: ApprovalsClientProps) {
                 <span className="px-2 py-0.5 bg-yellow-500/20 text-yellow-500 rounded-full text-xs font-medium">
                   Venter
                 </span>
-                <span className="text-xs text-[var(--color-ink-50)]">
+                <span className="text-xs text-[var(--color-grey-500)]">
                   {format(new Date(item.createdAt), "d. MMM 'kl.' HH:mm", {
                     locale: nb,
                   })}
@@ -88,12 +88,12 @@ export function ApprovalsClient({ pendingItems }: ApprovalsClientProps) {
               </div>
 
               <div className="flex items-center gap-3 mb-3">
-                <div className="h-10 w-10 rounded-full bg-[var(--color-ink-80)] flex items-center justify-center">
-                  <User className="h-5 w-5 text-[var(--color-ink-50)]" />
+                <div className="h-10 w-10 rounded-full bg-[var(--color-grey-100)] flex items-center justify-center">
+                  <User className="h-5 w-5 text-[var(--color-grey-500)]" />
                 </div>
                 <div>
-                  <p className="font-semibold text-white">{item.studentName}</p>
-                  <p className="text-sm text-[var(--color-ink-50)]">
+                  <p className="font-semibold text-[var(--color-grey-900)]">{item.studentName}</p>
+                  <p className="text-sm text-[var(--color-grey-500)]">
                     {item.studentEmail}
                   </p>
                 </div>
@@ -101,26 +101,26 @@ export function ApprovalsClient({ pendingItems }: ApprovalsClientProps) {
 
               <div className="grid grid-cols-3 gap-4 text-sm">
                 <div>
-                  <p className="text-[var(--color-ink-50)] mb-1">Tjeneste</p>
-                  <p className="text-white">{item.serviceName}</p>
+                  <p className="text-[var(--color-grey-500)] mb-1">Tjeneste</p>
+                  <p className="text-[var(--color-grey-900)]">{item.serviceName}</p>
                 </div>
                 <div>
-                  <p className="text-[var(--color-ink-50)] mb-1 flex items-center gap-1">
+                  <p className="text-[var(--color-grey-500)] mb-1 flex items-center gap-1">
                     <Calendar className="h-3.5 w-3.5" />
                     Onsket tid
                   </p>
-                  <p className="text-white">
+                  <p className="text-[var(--color-grey-900)]">
                     {format(new Date(item.requestedTime), "d. MMM 'kl.' HH:mm", {
                       locale: nb,
                     })}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[var(--color-ink-50)] mb-1 flex items-center gap-1">
+                  <p className="text-[var(--color-grey-500)] mb-1 flex items-center gap-1">
                     <CreditCard className="h-3.5 w-3.5" />
                     Pris
                   </p>
-                  <p className="text-white">
+                  <p className="text-[var(--color-grey-900)]">
                     kr {item.price.toLocaleString("nb-NO")}
                   </p>
                 </div>
@@ -149,7 +149,7 @@ export function ApprovalsClient({ pendingItems }: ApprovalsClientProps) {
                 disabled={processingId === item.id}
                 className={cn(
                   "flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors",
-                  "bg-[var(--color-ink-80)] hover:bg-red-500/20 text-[var(--color-ink-40)] hover:text-red-500",
+                  "bg-[var(--color-grey-100)] hover:bg-red-500/20 text-[var(--color-grey-400)] hover:text-red-500",
                   "disabled:opacity-50 disabled:cursor-not-allowed"
                 )}
               >

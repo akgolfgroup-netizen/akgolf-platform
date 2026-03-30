@@ -92,7 +92,7 @@ export function AdminCalendar({ instructors }: Props) {
           <div className="flex items-center gap-1">
             <button
               onClick={navigateBack}
-              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--apple-gray-200)] bg-white text-[var(--apple-gray-500)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)] transition-all duration-200"
+              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)] transition-all duration-200"
             >
               <ChevronLeft className="w-[18px] h-[18px]" />
             </button>
@@ -104,26 +104,26 @@ export function AdminCalendar({ instructors }: Props) {
             </button>
             <button
               onClick={navigateForward}
-              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--apple-gray-200)] bg-white text-[var(--apple-gray-500)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)] transition-all duration-200"
+              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)] transition-all duration-200"
             >
               <ChevronRight className="w-[18px] h-[18px]" />
             </button>
           </div>
 
-          <span className="text-lg font-semibold text-[var(--apple-gray-900)] capitalize min-w-[200px]" style={{ fontFamily: "var(--font-display)" }}>
+          <span className="text-lg font-semibold text-[var(--color-grey-900)] capitalize min-w-[200px]" style={{ fontFamily: "var(--font-display)" }}>
             {dateLabel}
           </span>
         </div>
 
         <div className="flex items-center gap-3">
           {/* View toggle */}
-          <div className="flex bg-[var(--apple-gray-100)] rounded-xl p-1">
+          <div className="flex bg-[var(--color-grey-100)] rounded-xl p-1">
             <button
               onClick={() => switchView("day")}
               className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-200 ${
                 viewMode === "day"
                   ? "bg-[var(--apple-admin-accent)] text-white shadow-[0_4px_16px_rgba(99,102,241,0.4)]"
-                  : "text-[var(--apple-gray-500)] hover:text-[var(--apple-gray-900)]"
+                  : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
               }`}
             >
               Dag
@@ -133,7 +133,7 @@ export function AdminCalendar({ instructors }: Props) {
               className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-200 ${
                 viewMode === "week"
                   ? "bg-[var(--apple-admin-accent)] text-white shadow-[0_4px_16px_rgba(99,102,241,0.4)]"
-                  : "text-[var(--apple-gray-500)] hover:text-[var(--apple-gray-900)]"
+                  : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
               }`}
             >
               Uke
@@ -144,7 +144,7 @@ export function AdminCalendar({ instructors }: Props) {
           <select
             value={selectedInstructorId}
             onChange={(e) => filterByInstructor(e.target.value)}
-            className="text-sm font-medium rounded-xl px-4 py-2 text-[var(--apple-gray-700)] bg-white border border-[var(--apple-gray-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)] focus:border-transparent transition-all duration-200"
+            className="text-sm font-medium rounded-xl px-4 py-2 text-[var(--color-grey-700)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)] focus:border-transparent transition-all duration-200"
           >
             <option value="">Alle instruktorer</option>
             {instructors.map((inst) => (
@@ -158,7 +158,7 @@ export function AdminCalendar({ instructors }: Props) {
 
       {/* Calendar content */}
       {loading ? (
-        <div className="flex items-center justify-center py-20 text-[var(--apple-gray-400)]">
+        <div className="flex items-center justify-center py-20 text-[var(--color-grey-400)]">
           <CalendarIcon className="w-5 h-5 animate-pulse mr-2" />
           Laster...
         </div>

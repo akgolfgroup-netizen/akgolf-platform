@@ -64,9 +64,9 @@ export function InboxClient({
   };
 
   return (
-    <div className="flex flex-col h-full bg-[var(--color-ink-100)]">
+    <div className="flex flex-col h-full bg-[var(--color-grey-100)]">
       {/* Channel filter */}
-      <div className="p-4 border-b border-[var(--color-ink-90)]">
+      <div className="p-4 border-b border-[var(--color-grey-200)]">
         <ChannelFilter
           selected={selectedChannel}
           onChange={setSelectedChannel}
@@ -77,7 +77,7 @@ export function InboxClient({
       {/* Main content */}
       <div className="flex-1 flex min-h-0">
         {/* Message list */}
-        <div className="w-96 border-r border-[var(--color-ink-90)] overflow-auto">
+        <div className="w-96 border-r border-[var(--color-grey-200)] overflow-auto bg-white">
           <MessageList
             messages={filteredMessages}
             selectedId={selectedMessageId}
@@ -86,7 +86,7 @@ export function InboxClient({
         </div>
 
         {/* Message detail */}
-        <div className="flex-1 bg-[var(--color-ink-95)] overflow-hidden">
+        <div className="flex-1 bg-white overflow-hidden">
           {selectedMessage ? (
             <MessageDetail
               message={selectedMessage}
@@ -94,7 +94,7 @@ export function InboxClient({
               onReject={handleReject}
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-[var(--color-ink-50)]">
+            <div className="flex items-center justify-center h-full text-[var(--color-grey-500)]">
               <div className="text-center">
                 <p className="text-lg font-medium mb-1">
                   Velg en melding for å se detaljer

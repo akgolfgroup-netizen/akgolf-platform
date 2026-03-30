@@ -20,7 +20,7 @@ const roleLabelMap: Record<string, string> = {
 const tierConfig: Record<string, { label: string; color: string; bg: string; border: string }> = {
   FREE: { label: "Free", color: "#8a9bb0", bg: "rgba(138,155,176,0.1)", border: "rgba(138,155,176,0.2)" },
   PRO: { label: "Pro", color: "#38BDF8", bg: "rgba(56,189,248,0.1)", border: "rgba(56,189,248,0.25)" },
-  ELITE: { label: "Elite", color: "#B07D4F", bg: "rgba(176,125,79,0.12)", border: "rgba(176,125,79,0.3)" },
+  ELITE: { label: "Elite", color: "#B07D4F", bg: "var(--color-grey-200)", border: "var(--color-grey-200)" },
 };
 
 export function ProfileHero({ name, image, role, subscriptionTier, currentHandicap }: ProfileHeroProps) {
@@ -36,14 +36,14 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
       transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
       className="relative rounded-2xl p-6 overflow-hidden"
       style={{
-        background: "rgba(10,25,41,0.7)",
-        border: "1px solid rgba(15,41,80,0.8)",
+        background: "var(--color-grey-100)",
+        border: "1px solid var(--color-grey-200)",
       }}
     >
       {/* Subtle gold accent line top */}
       <div
         className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(176,125,79,0.5), transparent)" }}
+        style={{ background: "linear-gradient(90deg, transparent, var(--color-grey-200), transparent)" }}
       />
 
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
@@ -66,7 +66,7 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
           {/* Ring overlay on hover via parent */}
           <div
             className="absolute inset-0 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-            style={{ boxShadow: "0 0 0 2px rgba(176,125,79,0.6)" }}
+            style={{ boxShadow: "0 0 0 2px var(--color-grey-200)" }}
           />
         </motion.div>
 
@@ -76,7 +76,7 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
             {/* Role badge */}
             <span
               className="text-xs font-medium px-2.5 py-0.5 rounded-full"
-              style={{ background: "rgba(176,125,79,0.1)", color: "var(--color-gold)", border: "1px solid rgba(176,125,79,0.2)" }}
+              style={{ background: "var(--color-grey-200)", color: "var(--color-grey-900)", border: "1px solid var(--color-grey-200)" }}
             >
               {roleLabelMap[role] ?? role}
             </span>
@@ -89,7 +89,7 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
             </span>
           </div>
 
-          <h1 className="text-2xl font-bold text-[var(--color-snow)] leading-tight mt-1">
+          <h1 className="text-2xl font-bold text-[var(--color-grey-900)] leading-tight mt-1">
             {name ?? "—"}
           </h1>
         </div>
@@ -102,15 +102,15 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
             transition={{ delay: 0.15, duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             className="flex-shrink-0 flex flex-col items-center justify-center rounded-2xl px-6 py-4"
             style={{
-              background: "linear-gradient(135deg, rgba(176,125,79,0.15) 0%, rgba(176,125,79,0.08) 100%)",
-              border: "1px solid rgba(176,125,79,0.35)",
+              background: "linear-gradient(135deg, var(--color-grey-200) 0%, var(--color-grey-200) 100%)",
+              border: "1px solid var(--color-grey-200)",
               minWidth: "100px",
             }}
           >
-            <p className="text-[10px] font-semibold text-[var(--color-gold-dim)] uppercase tracking-widest mb-0.5">
+            <p className="text-[10px] font-semibold text-[var(--color-grey-400)] uppercase tracking-widest mb-0.5">
               Handicap
             </p>
-            <p className="text-3xl font-black" style={{ color: "var(--color-gold)" }}>
+            <p className="text-3xl font-black" style={{ color: "var(--color-grey-900)" }}>
               {currentHandicap.toFixed(1)}
             </p>
             <div className="mt-1">

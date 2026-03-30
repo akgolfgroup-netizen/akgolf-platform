@@ -101,14 +101,14 @@ export function AvailabilityManager({ instructors }: Props) {
       <div className="flex flex-wrap items-center gap-4">
         {/* Instructor selector - Apple style dropdown */}
         <div className="relative">
-          <div className="flex items-center gap-3 px-4 py-3 bg-white/80 backdrop-blur-xl rounded-xl border border-[var(--apple-gray-200)] shadow-sm">
+          <div className="flex items-center gap-3 px-4 py-3 bg-white/80 backdrop-blur-xl rounded-xl border border-[var(--color-grey-200)] shadow-sm">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--apple-admin-accent)] to-[var(--apple-admin-accent-dark)] flex items-center justify-center">
               <User className="w-4 h-4 text-white" />
             </div>
             <select
               value={selectedInstructorId}
               onChange={(e) => handleInstructorChange(e.target.value)}
-              className="bg-transparent text-sm font-medium text-[var(--apple-gray-900)] pr-6 appearance-none cursor-pointer focus:outline-none"
+              className="bg-transparent text-sm font-medium text-[var(--color-grey-900)] pr-6 appearance-none cursor-pointer focus:outline-none"
             >
               {instructors.map((inst) => (
                 <option key={inst.id} value={inst.id}>
@@ -116,18 +116,18 @@ export function AvailabilityManager({ instructors }: Props) {
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-4 h-4 text-[var(--apple-gray-400)] absolute right-4" />
+            <ChevronDown className="w-4 h-4 text-[var(--color-grey-400)] absolute right-4" />
           </div>
         </div>
 
         {/* Tab Pills - Apple segment control style */}
-        <div className="flex bg-[var(--apple-gray-100)] rounded-xl p-1">
+        <div className="flex bg-[var(--color-grey-100)] rounded-xl p-1">
           <button
             onClick={() => setActiveTab("schedule")}
             className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 ${
               activeTab === "schedule"
-                ? "bg-white text-[var(--apple-gray-900)] shadow-sm"
-                : "text-[var(--apple-gray-500)] hover:text-[var(--apple-gray-700)]"
+                ? "bg-white text-[var(--color-grey-900)] shadow-sm"
+                : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
             }`}
           >
             <Clock className="w-4 h-4" />
@@ -137,8 +137,8 @@ export function AvailabilityManager({ instructors }: Props) {
             onClick={() => setActiveTab("blocked")}
             className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 ${
               activeTab === "blocked"
-                ? "bg-white text-[var(--apple-gray-900)] shadow-sm"
-                : "text-[var(--apple-gray-500)] hover:text-[var(--apple-gray-700)]"
+                ? "bg-white text-[var(--color-grey-900)] shadow-sm"
+                : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
             }`}
           >
             <Ban className="w-4 h-4" />
@@ -167,7 +167,7 @@ export function AvailabilityManager({ instructors }: Props) {
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />
-            <p className="mt-4 text-sm text-[var(--apple-gray-500)]">Laster tilgjengelighet...</p>
+            <p className="mt-4 text-sm text-[var(--color-grey-500)]">Laster tilgjengelighet...</p>
           </motion.div>
         ) : activeTab === "schedule" ? (
           <motion.div
@@ -198,61 +198,61 @@ export function AvailabilityManager({ instructors }: Props) {
             />
 
             {/* Blocked time list - Apple style */}
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl border border-[var(--apple-gray-200)] shadow-[var(--shadow-card)] overflow-hidden">
-              <div className="px-6 py-4 border-b border-[var(--apple-gray-100)]">
-                <h3 className="text-sm font-semibold text-[var(--apple-gray-900)]">
+            <div className="rounded-2xl bg-white/80 backdrop-blur-xl border border-[var(--color-grey-200)] shadow-[var(--shadow-card)] overflow-hidden">
+              <div className="px-6 py-4 border-b border-[var(--color-grey-100)]">
+                <h3 className="text-sm font-semibold text-[var(--color-grey-900)]">
                   Planlagte fravær
                 </h3>
-                <p className="text-xs text-[var(--apple-gray-500)] mt-0.5">
+                <p className="text-xs text-[var(--color-grey-500)] mt-0.5">
                   Perioder hvor instruktøren ikke er tilgjengelig
                 </p>
               </div>
 
               {blockedTimes.length === 0 ? (
                 <div className="py-12 flex flex-col items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-[var(--apple-gray-100)] flex items-center justify-center mb-3">
-                    <Ban className="w-6 h-6 text-[var(--apple-gray-400)]" />
+                  <div className="w-12 h-12 rounded-full bg-[var(--color-grey-100)] flex items-center justify-center mb-3">
+                    <Ban className="w-6 h-6 text-[var(--color-grey-400)]" />
                   </div>
-                  <p className="text-sm text-[var(--apple-gray-500)]">
+                  <p className="text-sm text-[var(--color-grey-500)]">
                     Ingen blokkerte tider registrert
                   </p>
-                  <p className="text-xs text-[var(--apple-gray-400)] mt-1">
+                  <p className="text-xs text-[var(--color-grey-400)] mt-1">
                     Bruk skjemaet over for å legge til fravær
                   </p>
                 </div>
               ) : (
-                <ul className="divide-y divide-[var(--apple-gray-100)]">
+                <ul className="divide-y divide-[var(--color-grey-100)]">
                   {blockedTimes.map((bt, index) => (
                     <motion.li
                       key={bt.id}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="flex items-center justify-between px-6 py-4 hover:bg-[var(--apple-gray-50)] transition-colors"
+                      className="flex items-center justify-between px-6 py-4 hover:bg-[var(--color-grey-100)] transition-colors"
                     >
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
                           <Ban className="w-5 h-5 text-red-500" />
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-[var(--apple-gray-900)]">
+                          <p className="text-sm font-medium text-[var(--color-grey-900)]">
                             {format(new Date(bt.startTime), "d. MMMM yyyy", { locale: nb })}
                             {format(new Date(bt.startTime), "d. MMMM yyyy") !==
                              format(new Date(bt.endTime), "d. MMMM yyyy") && (
-                              <span className="text-[var(--apple-gray-400)]">
+                              <span className="text-[var(--color-grey-400)]">
                                 {" — "}
                                 {format(new Date(bt.endTime), "d. MMMM yyyy", { locale: nb })}
                               </span>
                             )}
                           </p>
                           <div className="flex items-center gap-2 mt-0.5">
-                            <span className="text-xs text-[var(--apple-gray-500)]">
+                            <span className="text-xs text-[var(--color-grey-500)]">
                               {format(new Date(bt.startTime), "HH:mm")} — {format(new Date(bt.endTime), "HH:mm")}
                             </span>
                             {bt.reason && (
                               <>
-                                <span className="text-[var(--apple-gray-300)]">·</span>
-                                <span className="text-xs text-[var(--apple-gray-500)]">{bt.reason}</span>
+                                <span className="text-[var(--color-grey-300)]">·</span>
+                                <span className="text-xs text-[var(--color-grey-500)]">{bt.reason}</span>
                               </>
                             )}
                           </div>
@@ -260,7 +260,7 @@ export function AvailabilityManager({ instructors }: Props) {
                       </div>
                       <motion.button
                         onClick={() => handleDeleteBlocked(bt.id)}
-                        className="p-2 rounded-lg hover:bg-red-50 text-[var(--apple-gray-400)] hover:text-red-500 transition-colors"
+                        className="p-2 rounded-lg hover:bg-red-50 text-[var(--color-grey-400)] hover:text-red-500 transition-colors"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >

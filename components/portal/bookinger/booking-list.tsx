@@ -45,12 +45,12 @@ export function BookingList({ bookings, emptyMessage = "Ingen bookinger" }: Book
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-[var(--apple-gray-100)]/50"
+        className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-[var(--color-grey-100)]/50"
       >
-        <div className="w-16 h-16 rounded-2xl bg-[var(--apple-gray-200)] flex items-center justify-center mb-4">
-          <Calendar className="w-8 h-8 text-[var(--apple-gray-400)]" />
+        <div className="w-16 h-16 rounded-2xl bg-[var(--color-grey-200)] flex items-center justify-center mb-4">
+          <Calendar className="w-8 h-8 text-[var(--color-grey-400)]" />
         </div>
-        <p className="text-[var(--apple-gray-500)] font-medium">{emptyMessage}</p>
+        <p className="text-[var(--color-grey-500)] font-medium">{emptyMessage}</p>
       </motion.div>
     );
   }
@@ -66,7 +66,7 @@ export function BookingList({ bookings, emptyMessage = "Ingen bookinger" }: Book
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: groupIndex * 0.1 }}
         >
-          <p className="text-xs font-semibold uppercase tracking-wider mb-3 capitalize text-[var(--apple-gold-600)]">
+          <p className="text-xs font-semibold uppercase tracking-wider mb-3 capitalize text-[var(--color-grey-900)]">
             {dateLabel(dateStr)}
           </p>
           <div className="space-y-3">

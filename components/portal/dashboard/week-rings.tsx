@@ -78,7 +78,7 @@ export function WeekRings({ days, weekStart }: WeekRingsProps) {
                       cy="24"
                       r="20"
                       fill="none"
-                      stroke={day.isRest ? "var(--portal-text-muted)" : day.hasCoaching ? "#3B82F6" : "var(--color-gold)"}
+                      stroke={day.isRest ? "var(--portal-text-muted)" : day.hasCoaching ? "#3B82F6" : "var(--color-grey-900)"}
                       strokeWidth="3"
                       strokeLinecap="round"
                       initial={{ strokeDasharray: "0 126" }}

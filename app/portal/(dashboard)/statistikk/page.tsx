@@ -26,7 +26,7 @@ export default function StatistikkPage() {
   };
 
   const focusAreas = [
-    { name: "Putting", percent: 35, color: "bg-[var(--apple-gold-500)]" },
+    { name: "Putting", percent: 35, color: "bg-[var(--color-grey-900)]" },
     { name: "Naerspill", percent: 28, color: "bg-blue-500" },
     { name: "Approach", percent: 22, color: "bg-green-500" },
     { name: "Tee Total", percent: 15, color: "bg-purple-500" },
@@ -47,7 +47,7 @@ export default function StatistikkPage() {
             <h1 className="text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em] mb-1">
               Statistikk
             </h1>
-            <p className="text-[15px] text-[var(--apple-gray-500)]">
+            <p className="text-[15px] text-[var(--color-grey-500)]">
               Folg utviklingen din over tid
             </p>
           </div>
@@ -60,8 +60,8 @@ export default function StatistikkPage() {
                 onClick={() => setSelectedPeriod(idx)}
                 className={`px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-200 ${
                   idx === selectedPeriod
-                    ? "bg-white text-[var(--apple-gray-900)] shadow-sm"
-                    : "text-[var(--apple-gray-500)] hover:text-[var(--apple-gray-700)]"
+                    ? "bg-white text-[var(--color-grey-900)] shadow-sm"
+                    : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
                 }`}
               >
                 {period}
@@ -79,8 +79,8 @@ export default function StatistikkPage() {
             value={currentHandicap.toFixed(1)}
             trend={handicapTrend}
             icon={Target}
-            iconColor="text-[var(--apple-gold-500)]"
-            iconBg="bg-[var(--apple-gold-50)]"
+            iconColor="text-[var(--color-grey-900)]"
+            iconBg="bg-[var(--color-grey-100)]"
           />
           <StatCard
             label="Runder"
@@ -126,8 +126,8 @@ export default function StatistikkPage() {
               </AppleBadge>
             }
           >
-            <div className="h-[200px] flex items-center justify-center rounded-xl bg-gradient-to-br from-[var(--apple-gray-50)] to-white border border-[var(--apple-gray-100)]">
-              <div className="text-center text-[var(--apple-gray-400)]">
+            <div className="h-[200px] flex items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-grey-100)] to-white border border-[var(--color-grey-100)]">
+              <div className="text-center text-[var(--color-grey-400)]">
                 <TrendingDown className="w-10 h-10 mx-auto mb-3 text-green-400" />
                 <p className="text-sm font-medium">Handicap-graf</p>
                 <p className="text-xs mt-1">Viser trend over valgt periode</p>
@@ -140,7 +140,7 @@ export default function StatistikkPage() {
             span={4}
             title="Siste runder"
             action={
-              <button className="text-[13px] font-medium text-[var(--apple-gold-600)] flex items-center gap-1 hover:text-[var(--apple-gold-700)] transition-colors">
+              <button className="text-[13px] font-medium text-[var(--color-grey-900)] flex items-center gap-1 hover:text-[var(--color-grey-900)] transition-colors">
                 Se alle
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -150,15 +150,15 @@ export default function StatistikkPage() {
               {recentRounds.map((round, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-3 p-3 rounded-xl bg-[var(--apple-gray-50)] hover:bg-[var(--apple-gray-100)] transition-colors cursor-pointer"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
                 >
                   <div className="w-11 h-11 bg-white rounded-xl flex flex-col items-center justify-center shadow-sm flex-shrink-0">
-                    <span className="text-[15px] font-bold text-[var(--apple-gray-900)] leading-none">{round.date}</span>
-                    <span className="text-[10px] font-semibold text-[var(--apple-gray-500)] uppercase">{round.month}</span>
+                    <span className="text-[15px] font-bold text-[var(--color-grey-900)] leading-none">{round.date}</span>
+                    <span className="text-[10px] font-semibold text-[var(--color-grey-500)] uppercase">{round.month}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13px] font-medium text-[var(--apple-gray-900)] truncate">{round.course}</p>
-                    <p className="text-[11px] text-[var(--apple-gray-500)]">Par {round.par}</p>
+                    <p className="text-[13px] font-medium text-[var(--color-grey-900)] truncate">{round.course}</p>
+                    <p className="text-[11px] text-[var(--color-grey-500)]">Par {round.par}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-lg font-bold text-[var(--apple-gray-950)]">{round.score}</p>
@@ -177,15 +177,15 @@ export default function StatistikkPage() {
             title="Strokes Gained"
             icon={Target}
             action={
-              <button className="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--apple-gray-400)] hover:bg-[var(--apple-gray-100)] transition-colors">
+              <button className="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--color-grey-400)] hover:bg-[var(--color-grey-100)] transition-colors">
                 <Info className="w-4 h-4" />
               </button>
             }
           >
             <div className="flex gap-6">
               {/* Radar placeholder */}
-              <div className="w-[160px] h-[160px] rounded-full bg-gradient-to-br from-[var(--apple-gray-50)] to-white border-2 border-[var(--apple-gray-100)] flex items-center justify-center flex-shrink-0">
-                <span className="text-xs text-[var(--apple-gray-400)]">SG Radar</span>
+              <div className="w-[160px] h-[160px] rounded-full bg-gradient-to-br from-[var(--color-grey-100)] to-white border-2 border-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
+                <span className="text-xs text-[var(--color-grey-400)]">SG Radar</span>
               </div>
 
               {/* SG Stats */}
@@ -198,9 +198,9 @@ export default function StatistikkPage() {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="p-3 rounded-xl bg-[var(--apple-gray-50)] text-center"
+                    className="p-3 rounded-xl bg-[var(--color-grey-100)] text-center"
                   >
-                    <p className="text-[11px] font-medium text-[var(--apple-gray-500)] mb-1">{stat.label}</p>
+                    <p className="text-[11px] font-medium text-[var(--color-grey-500)] mb-1">{stat.label}</p>
                     <p className={`text-lg font-bold ${
                       stat.positive ? "text-green-500" : "text-red-500"
                     }`}>
@@ -219,19 +219,19 @@ export default function StatistikkPage() {
             icon={BarChart3}
             iconColor="text-purple-500"
           >
-            <div className="h-[140px] flex items-center justify-center rounded-xl bg-gradient-to-br from-[var(--apple-gray-50)] to-white border border-[var(--apple-gray-100)] mb-4">
-              <div className="text-center text-[var(--apple-gray-400)]">
+            <div className="h-[140px] flex items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-grey-100)] to-white border border-[var(--color-grey-100)] mb-4">
+              <div className="text-center text-[var(--color-grey-400)]">
                 <BarChart3 className="w-8 h-8 mx-auto mb-2 text-purple-400" />
                 <p className="text-sm font-medium">Ukentlig treningsvolum</p>
               </div>
             </div>
-            <div className="flex justify-between pt-4 border-t border-[var(--apple-gray-100)]">
+            <div className="flex justify-between pt-4 border-t border-[var(--color-grey-100)]">
               <div>
-                <p className="text-[11px] font-medium text-[var(--apple-gray-500)]">Totalt denne mnd</p>
+                <p className="text-[11px] font-medium text-[var(--color-grey-500)]">Totalt denne mnd</p>
                 <p className="text-lg font-bold text-[var(--apple-gray-950)]">12 timer 30 min</p>
               </div>
               <div className="text-right">
-                <p className="text-[11px] font-medium text-[var(--apple-gray-500)]">Snitt per uke</p>
+                <p className="text-[11px] font-medium text-[var(--color-grey-500)]">Snitt per uke</p>
                 <p className="text-lg font-bold text-[var(--apple-gray-950)]">3 timer 8 min</p>
               </div>
             </div>
@@ -242,19 +242,19 @@ export default function StatistikkPage() {
             span={12}
             title="Fokusomrade-fordeling"
             icon={Target}
-            iconColor="text-[var(--apple-gold-500)]"
+            iconColor="text-[var(--color-grey-900)]"
           >
             <div className="grid grid-cols-4 gap-4 max-md:grid-cols-2">
               {focusAreas.map((area) => (
                 <div key={area.name} className="text-center">
-                  <div className="h-[100px] rounded-xl bg-[var(--apple-gray-50)] relative overflow-hidden mb-3">
+                  <div className="h-[100px] rounded-xl bg-[var(--color-grey-100)] relative overflow-hidden mb-3">
                     <div
                       className={`absolute bottom-0 left-0 right-0 ${area.color} transition-all duration-500 rounded-b-xl`}
                       style={{ height: `${area.percent}%` }}
                     />
                   </div>
-                  <p className="text-[13px] font-semibold text-[var(--apple-gray-900)]">{area.name}</p>
-                  <p className="text-xs text-[var(--apple-gray-500)]">{area.percent}%</p>
+                  <p className="text-[13px] font-semibold text-[var(--color-grey-900)]">{area.name}</p>
+                  <p className="text-xs text-[var(--color-grey-500)]">{area.percent}%</p>
                 </div>
               ))}
             </div>
@@ -279,23 +279,23 @@ export default function StatistikkPage() {
           <BentoCard span={12} variant="solid" hover={false}>
             <details className="group">
               <summary className="flex items-center gap-3 cursor-pointer list-none">
-                <div className="w-10 h-10 rounded-xl bg-[var(--apple-gold-50)] flex items-center justify-center">
-                  <Info className="w-5 h-5 text-[var(--apple-gold-500)]" />
+                <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center">
+                  <Info className="w-5 h-5 text-[var(--color-grey-900)]" />
                 </div>
-                <span className="text-[15px] font-semibold text-[var(--apple-gray-900)]">
+                <span className="text-[15px] font-semibold text-[var(--color-grey-900)]">
                   Hva er Strokes Gained?
                 </span>
-                <ChevronRight className="w-5 h-5 text-[var(--apple-gray-400)] ml-auto transition-transform group-open:rotate-90" />
+                <ChevronRight className="w-5 h-5 text-[var(--color-grey-400)] ml-auto transition-transform group-open:rotate-90" />
               </summary>
-              <div className="mt-4 pt-4 border-t border-[var(--apple-gray-100)]">
-                <p className="text-[14px] text-[var(--apple-gray-600)] mb-4 leading-relaxed">
+              <div className="mt-4 pt-4 border-t border-[var(--color-grey-100)]">
+                <p className="text-[14px] text-[var(--color-grey-600)] mb-4 leading-relaxed">
                   {PORTAL_CONTENT.statistikk.sgExplanation.intro}
                 </p>
                 <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
                   {PORTAL_CONTENT.statistikk.sgExplanation.categories.map((cat) => (
-                    <div key={cat.key} className="flex gap-3 p-3 rounded-xl bg-[var(--apple-gray-50)]">
-                      <AppleBadge variant="gold" size="sm">{cat.key}</AppleBadge>
-                      <span className="text-[13px] text-[var(--apple-gray-600)]">{cat.description}</span>
+                    <div key={cat.key} className="flex gap-3 p-3 rounded-xl bg-[var(--color-grey-100)]">
+                      <AppleBadge variant="dark" size="sm">{cat.key}</AppleBadge>
+                      <span className="text-[13px] text-[var(--color-grey-600)]">{cat.description}</span>
                     </div>
                   ))}
                 </div>

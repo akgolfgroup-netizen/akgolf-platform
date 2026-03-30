@@ -43,7 +43,7 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
   return (
     <motion.form
       onSubmit={handleSubmit}
-      className="rounded-2xl bg-white/80 backdrop-blur-xl border border-[var(--apple-gray-200)] shadow-[var(--shadow-card)] p-6"
+      className="rounded-2xl bg-white/80 backdrop-blur-xl border border-[var(--color-grey-200)] shadow-[var(--shadow-card)] p-6"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
     >
@@ -52,10 +52,10 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
           <Calendar className="w-5 h-5 text-red-500" />
         </div>
         <div>
-          <h3 className="text-sm font-semibold text-[var(--apple-gray-900)]">
+          <h3 className="text-sm font-semibold text-[var(--color-grey-900)]">
             Legg til fraver
           </h3>
-          <p className="text-xs text-[var(--apple-gray-500)]">
+          <p className="text-xs text-[var(--color-grey-500)]">
             Blokker en periode hvor instruktoren ikke er tilgjengelig
           </p>
         </div>
@@ -64,7 +64,7 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Start Time */}
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-[var(--apple-gray-600)] mb-2">
+          <label className="flex items-center gap-2 text-xs font-medium text-[var(--color-grey-600)] mb-2">
             <Clock className="w-3.5 h-3.5" />
             Fra
           </label>
@@ -72,14 +72,14 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
             type="datetime-local"
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
-            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--apple-gray-900)] bg-white border border-[var(--apple-gray-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)]/40 focus:border-[var(--apple-admin-accent)] transition-all"
+            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--color-grey-900)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)]/40 focus:border-[var(--apple-admin-accent)] transition-all"
             required
           />
         </div>
 
         {/* End Time */}
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-[var(--apple-gray-600)] mb-2">
+          <label className="flex items-center gap-2 text-xs font-medium text-[var(--color-grey-600)] mb-2">
             <Clock className="w-3.5 h-3.5" />
             Til
           </label>
@@ -87,14 +87,14 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
             type="datetime-local"
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
-            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--apple-gray-900)] bg-white border border-[var(--apple-gray-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)]/40 focus:border-[var(--apple-admin-accent)] transition-all"
+            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--color-grey-900)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)]/40 focus:border-[var(--apple-admin-accent)] transition-all"
             required
           />
         </div>
 
         {/* Reason */}
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-[var(--apple-gray-600)] mb-2">
+          <label className="flex items-center gap-2 text-xs font-medium text-[var(--color-grey-600)] mb-2">
             <MessageSquare className="w-3.5 h-3.5" />
             Arsak (valgfritt)
           </label>
@@ -102,7 +102,7 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
             type="text"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--apple-gray-900)] placeholder:text-[var(--apple-gray-400)] bg-white border border-[var(--apple-gray-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)]/40 focus:border-[var(--apple-admin-accent)] transition-all"
+            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)]/40 focus:border-[var(--apple-admin-accent)] transition-all"
             placeholder="F.eks. ferie, sykdom..."
           />
         </div>

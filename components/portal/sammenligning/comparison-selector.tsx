@@ -42,8 +42,8 @@ interface ComparisonSelectorProps {
 type Mode = "peer" | "tour" | "tier";
 
 const CARD_STYLE = {
-  background: "rgba(10,25,41,0.7)",
-  borderColor: "rgba(15,41,80,0.8)",
+  background: "var(--color-grey-100)",
+  borderColor: "var(--color-grey-200)",
 };
 
 export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProps) {
@@ -122,10 +122,10 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
             className={cn(
               "px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200",
               mode === tab.key
-                ? "bg-[var(--color-gold)] text-white shadow-[0_2px_8px_rgba(176,125,79,0.3)]"
+                ? "bg-[var(--color-grey-900)] text-white shadow-[0_2px_8px_var(--color-grey-200)]"
                 : tab.disabled
-                ? "bg-[var(--color-border)] text-[var(--color-text-tertiary)] cursor-not-allowed opacity-50"
-                : "bg-[var(--color-border)] text-[var(--color-text-secondary)] hover:bg-[var(--color-gold-muted)] hover:text-white"
+                ? "bg-[var(--color-grey-200)] text-[var(--color-grey-400)] cursor-not-allowed opacity-50"
+                : "bg-[var(--color-grey-200)] text-[var(--color-grey-500)] hover:bg-[var(--color-grey-500)] hover:text-white"
             )}
           >
             {tab.label}
@@ -140,7 +140,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
           style={CARD_STYLE}
         >
           {loadingPlayers ? (
-            <div className="flex items-center gap-2 text-xs text-[var(--color-gold-muted)]">
+            <div className="flex items-center gap-2 text-xs text-[var(--color-grey-500)]">
               <Loader2 className="w-4 h-4 animate-spin" />
               Henter spillere...
             </div>
@@ -156,12 +156,12 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Søk etter spiller..."
-                className="w-full px-3 py-1.5 rounded-lg bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+                className="w-full px-3 py-1.5 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
               />
               <select
                 value={selectedPlayerId ?? ""}
                 onChange={(e) => setSelectedPlayerId(Number(e.target.value))}
-                className="w-full px-3 py-1.5 rounded-lg bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+                className="w-full px-3 py-1.5 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
                 size={5}
               >
                 {filteredPlayers.map((p) => (
@@ -180,7 +180,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
           <select
             value={selectedTier}
             onChange={(e) => setSelectedTier(e.target.value)}
-            className="w-full px-3 py-1.5 rounded-lg bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+            className="w-full px-3 py-1.5 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
           >
             {SG_BENCHMARKS.map((b) => (
               <option key={b.category} value={b.category}>
@@ -205,11 +205,11 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
       {comparisonStats && (
         <div className="rounded-2xl p-5 border" style={CARD_STYLE}>
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[11px] font-semibold text-[var(--color-snow-dim)]/50 uppercase tracking-widest">
+            <p className="text-[11px] font-semibold text-[var(--color-grey-400)]/50 uppercase tracking-widest">
               SG Profil vs. {comparisonLabel}
             </p>
             {mode === "peer" && peerData && (
-              <p className="text-[10px] text-[var(--color-gold-muted)]">
+              <p className="text-[10px] text-[var(--color-grey-500)]">
                 Dine {peerData.myRoundCount} runder vs. {peerData.peerRoundCount} runder i gruppen
               </p>
             )}
@@ -226,10 +226,10 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
       {comparisonStats && (
         <div className="rounded-2xl p-5 border" style={CARD_STYLE}>
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[11px] font-semibold text-[var(--color-snow-dim)]/50 uppercase tracking-widest">
+            <p className="text-[11px] font-semibold text-[var(--color-grey-400)]/50 uppercase tracking-widest">
               Detaljert sammenligning
             </p>
-            <div className="flex gap-6 text-[10px] text-[var(--color-gold-muted)]">
+            <div className="flex gap-6 text-[10px] text-[var(--color-grey-500)]">
               <span>Du</span>
               <span>{comparisonLabel}</span>
             </div>
@@ -256,7 +256,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
       )}
 
       {!comparisonStats && mode === "tour" && !loadingPlayers && (
-        <p className="text-xs text-center text-[var(--color-gold-muted)] py-8">
+        <p className="text-xs text-center text-[var(--color-grey-500)] py-8">
           Velg en spiller for å se sammenligning
         </p>
       )}

@@ -19,8 +19,8 @@ const paddingMap = {
 
 const variantMap = {
   glass: "bg-white/70 backdrop-blur-xl border border-white/50",
-  solid: "bg-white border border-[var(--apple-gray-200)]",
-  dark: "bg-[var(--apple-gray-900)]/80 backdrop-blur-xl border border-white/10",
+  solid: "bg-white border border-[var(--color-grey-200)]",
+  dark: "bg-[var(--color-grey-900)]/80 backdrop-blur-xl border border-white/10",
 };
 
 export function AppleCard({

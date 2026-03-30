@@ -12,7 +12,7 @@ export function StatistikkClient() {
     <>
       <button
         onClick={() => setShowInput(true)}
-        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--color-gold)] text-[var(--color-bg-deep)] text-sm font-semibold hover:bg-[var(--color-gold-muted)] transition-colors"
+        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--color-grey-900)] text-[var(--color-grey-900)] text-sm font-semibold hover:bg-[var(--color-grey-500)] transition-colors"
       >
         <Plus className="w-4 h-4" />
         Legg til runde

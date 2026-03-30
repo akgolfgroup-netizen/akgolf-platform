@@ -22,12 +22,12 @@ export default async function AdminBookingsPage() {
             <h1 className="font-display text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em] mb-1">
               Bookinger
             </h1>
-            <p className="text-[15px] text-[var(--apple-gray-500)]">
+            <p className="text-[15px] text-[var(--color-grey-500)]">
               Administrer alle bookinger — filtrer, endre status og behandle betalinger
             </p>
           </div>
           <div className="flex gap-3">
-            <button className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-white text-[var(--apple-gray-700)] border border-[var(--apple-gray-200)] hover:bg-[var(--apple-gray-100)] hover:border-[var(--apple-gray-300)] transition-all duration-200">
+            <button className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-white text-[var(--color-grey-700)] border border-[var(--color-grey-200)] hover:bg-[var(--color-grey-100)] hover:border-[var(--color-grey-300)] transition-all duration-200">
               <Download className="w-[18px] h-[18px]" />
               Eksporter
             </button>

@@ -27,17 +27,17 @@ export default async function CoachDashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white">
+        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">
           God morgen, {user.name?.split(" ")[0] || "Coach"}
         </h1>
-        <p className="text-ink-40 mt-1">Her er oversikten din for i dag</p>
+        <p className="text-[var(--color-grey-400)] mt-1">Her er oversikten din for i dag</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
           title="Ventende meldinger"
           value={pendingCount}
-          icon={<Inbox className="h-5 w-5 text-bronze" />}
+          icon={<Inbox className="h-5 w-5 text-[var(--color-black)]" />}
         />
         <StatsCard
           title="Meldinger i dag"

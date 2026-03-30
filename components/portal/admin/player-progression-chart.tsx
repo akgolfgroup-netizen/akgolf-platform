@@ -165,7 +165,7 @@ export function PlayerProgressionChart({
             <Line
               type="monotone"
               dataKey="trend"
-              stroke="rgba(176,125,79,0.3)"
+              stroke="var(--color-grey-200)"
               strokeWidth={1.5}
               strokeDasharray="4 4"
               dot={false}

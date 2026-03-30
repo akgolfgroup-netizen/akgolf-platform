@@ -114,10 +114,10 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
       <div className="flex items-start gap-3 px-4 py-3 bg-blue-50/80 rounded-xl border border-blue-100">
         <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm text-[var(--apple-gray-700)]">
+          <p className="text-sm text-[var(--color-grey-700)]">
             Klikk på en celle for a legge til eller fjerne tilgjengelighet.
           </p>
-          <p className="text-xs text-[var(--apple-gray-500)] mt-0.5">
+          <p className="text-xs text-[var(--color-grey-500)] mt-0.5">
             Endringer lagres forst nar du klikker Lagre.
           </p>
         </div>
@@ -129,18 +129,18 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
       </div>
 
       {/* Week Grid */}
-      <div className="rounded-2xl bg-white/80 backdrop-blur-xl border border-[var(--apple-gray-200)] shadow-[var(--shadow-card)] overflow-hidden">
+      <div className="rounded-2xl bg-white/80 backdrop-blur-xl border border-[var(--color-grey-200)] shadow-[var(--shadow-card)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-[var(--apple-gray-50)]">
-                <th className="w-20 px-4 py-4 text-left text-xs font-semibold text-[var(--apple-gray-500)] uppercase tracking-wider">
+              <tr className="bg-[var(--color-grey-100)]">
+                <th className="w-20 px-4 py-4 text-left text-xs font-semibold text-[var(--color-grey-500)] uppercase tracking-wider">
                   Tid
                 </th>
                 {DAYS.map((day) => (
                   <th
                     key={day.value}
-                    className="px-2 py-4 text-center text-xs font-semibold text-[var(--apple-gray-500)] uppercase tracking-wider min-w-[80px]"
+                    className="px-2 py-4 text-center text-xs font-semibold text-[var(--color-grey-500)] uppercase tracking-wider min-w-[80px]"
                   >
                     {day.short}
                   </th>
@@ -151,9 +151,9 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
               {HOURS.map((hour, rowIndex) => (
                 <tr
                   key={hour}
-                  className={rowIndex % 2 === 0 ? "bg-white" : "bg-[var(--apple-gray-50)]/50"}
+                  className={rowIndex % 2 === 0 ? "bg-white" : "bg-[var(--color-grey-100)]/50"}
                 >
-                  <td className="px-4 py-0 text-xs font-medium text-[var(--apple-gray-500)] w-20 border-r border-[var(--apple-gray-100)]">
+                  <td className="px-4 py-0 text-xs font-medium text-[var(--color-grey-500)] w-20 border-r border-[var(--color-grey-100)]">
                     {String(hour).padStart(2, "0")}:00
                   </td>
                   {DAYS.map((day) => {
@@ -165,7 +165,7 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
                           className={`w-full h-10 rounded-lg transition-all duration-200 ${
                             active
                               ? "bg-gradient-to-br from-[var(--apple-admin-accent)] to-[var(--apple-admin-accent-dark)] shadow-sm"
-                              : "bg-[var(--apple-gray-100)] hover:bg-[var(--apple-gray-200)]"
+                              : "bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)]"
                           }`}
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
@@ -185,11 +185,11 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <div className="w-5 h-5 rounded bg-gradient-to-br from-[var(--apple-admin-accent)] to-[var(--apple-admin-accent-dark)]" />
-            <span className="text-xs text-[var(--apple-gray-600)]">Tilgjengelig</span>
+            <span className="text-xs text-[var(--color-grey-600)]">Tilgjengelig</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-[var(--apple-gray-100)]" />
-            <span className="text-xs text-[var(--apple-gray-600)]">Ikke tilgjengelig</span>
+            <div className="w-5 h-5 rounded bg-[var(--color-grey-100)]" />
+            <span className="text-xs text-[var(--color-grey-600)]">Ikke tilgjengelig</span>
           </div>
         </div>
 

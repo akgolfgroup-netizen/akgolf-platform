@@ -24,10 +24,10 @@ export function PeriodizationBand({ bands, year }: PeriodizationBandProps) {
 
   return (
     <div className="mb-6">
-      <p className="text-xs font-semibold uppercase tracking-wider mb-2 text-[var(--color-gold)]">
+      <p className="text-xs font-semibold uppercase tracking-wider mb-2 text-[var(--color-grey-900)]">
         Periodisering {year}
       </p>
-      <div className="relative h-8 rounded-xl overflow-hidden border bg-[rgba(15,41,80,0.3)] border-[rgba(15,41,80,0.4)]">
+      <div className="relative h-8 rounded-xl overflow-hidden border bg-[var(--color-grey-100)] border-[var(--color-grey-200)]">
         {bands.map((band, i) => {
           const left = Math.max(0, toPercent(new Date(band.startDate)));
           const right = Math.min(100, toPercent(new Date(band.endDate)));
@@ -64,7 +64,7 @@ export function PeriodizationBand({ bands, year }: PeriodizationBandProps) {
           return (
             <div
               key={i}
-              className="absolute top-0 bottom-0 border-l border-[rgba(15,41,80,0.4)] opacity-50"
+              className="absolute top-0 bottom-0 border-l border-[var(--color-grey-200)] opacity-50"
               style={{ left: `${pct}%` }}
             />
           );
@@ -78,7 +78,7 @@ export function PeriodizationBand({ bands, year }: PeriodizationBandProps) {
           return (
             <span
               key={m}
-              className="absolute text-[10px] transform -translate-x-1/2 text-[var(--color-snow)]/50"
+              className="absolute text-[10px] transform -translate-x-1/2 text-[var(--color-grey-400)]"
               style={{ left: `${pct}%` }}
             >
               {m}
