@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Inbox } from "lucide-react";
 import { ChannelFilter, type Channel } from "@/components/coach/inbox/ChannelFilter";
 import { MessageList, type Message, type MessageStatus } from "@/components/coach/inbox/MessageList";
 import { MessageDetail } from "@/components/coach/inbox/MessageDetail";
@@ -62,6 +63,18 @@ export function InboxClient({
       setSelectedMessageId(null);
     }
   };
+
+  if (messages.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-full text-[var(--color-grey-500)]">
+        <div className="text-center">
+          <Inbox className="w-12 h-12 mx-auto mb-3 opacity-50" />
+          <p className="text-lg font-medium mb-1">Ingen meldinger ennå</p>
+          <p className="text-sm">Nye meldinger fra spillere dukker opp her</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full bg-[var(--color-grey-100)]">

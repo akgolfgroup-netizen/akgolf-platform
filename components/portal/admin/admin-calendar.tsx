@@ -92,19 +92,19 @@ export function AdminCalendar({ instructors }: Props) {
           <div className="flex items-center gap-1">
             <button
               onClick={navigateBack}
-              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)] transition-all duration-200"
+              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-all duration-200"
             >
               <ChevronLeft className="w-[18px] h-[18px]" />
             </button>
             <button
               onClick={goToToday}
-              className="px-4 py-2 text-sm font-medium rounded-xl text-[var(--apple-admin-accent)] bg-[var(--apple-admin-accent-light)]/50 hover:bg-[var(--apple-admin-accent-light)] transition-all duration-200"
+              className="px-4 py-2 text-sm font-medium rounded-xl text-[var(--color-grey-900)] bg-[var(--color-grey-100)]/50 hover:bg-[var(--color-grey-100)] transition-all duration-200"
             >
               I dag
             </button>
             <button
               onClick={navigateForward}
-              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)] transition-all duration-200"
+              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-all duration-200"
             >
               <ChevronRight className="w-[18px] h-[18px]" />
             </button>
@@ -122,7 +122,7 @@ export function AdminCalendar({ instructors }: Props) {
               onClick={() => switchView("day")}
               className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-200 ${
                 viewMode === "day"
-                  ? "bg-[var(--apple-admin-accent)] text-white shadow-[0_4px_16px_rgba(99,102,241,0.4)]"
+                  ? "bg-[var(--color-grey-900)] text-white shadow-[var(--shadow-md)]"
                   : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
               }`}
             >
@@ -132,7 +132,7 @@ export function AdminCalendar({ instructors }: Props) {
               onClick={() => switchView("week")}
               className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-200 ${
                 viewMode === "week"
-                  ? "bg-[var(--apple-admin-accent)] text-white shadow-[0_4px_16px_rgba(99,102,241,0.4)]"
+                  ? "bg-[var(--color-grey-900)] text-white shadow-[var(--shadow-md)]"
                   : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
               }`}
             >
@@ -144,7 +144,7 @@ export function AdminCalendar({ instructors }: Props) {
           <select
             value={selectedInstructorId}
             onChange={(e) => filterByInstructor(e.target.value)}
-            className="text-sm font-medium rounded-xl px-4 py-2 text-[var(--color-grey-700)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)] focus:border-transparent transition-all duration-200"
+            className="text-sm font-medium rounded-xl px-4 py-2 text-[var(--color-grey-700)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-all duration-200"
           >
             <option value="">Alle instruktorer</option>
             {instructors.map((inst) => (

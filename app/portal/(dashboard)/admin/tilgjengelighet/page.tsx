@@ -23,7 +23,7 @@ export default async function AvailabilityPage() {
         {/* Header */}
         <div className="flex items-start justify-between mb-8">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--apple-admin-accent)] to-[var(--apple-admin-accent-dark)] flex items-center justify-center shadow-lg shadow-[var(--apple-admin-accent)]/20">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)] flex items-center justify-center shadow-lg shadow-[var(--color-grey-900)]/20">
               <Calendar className="w-7 h-7 text-white" />
             </div>
             <div>

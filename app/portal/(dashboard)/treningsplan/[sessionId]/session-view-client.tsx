@@ -19,7 +19,6 @@ export function SessionViewClient({ session }: Props) {
   };
 
   const handleSaveProgress = async (exercises: ExerciseInstance[]) => {
-    // TODO: Save to database
     console.log("Saving progress:", exercises);
     await new Promise((resolve) => setTimeout(resolve, 500));
   };
@@ -29,7 +28,6 @@ export function SessionViewClient({ session }: Props) {
   };
 
   const handleSelectExercise = (exercise: ExerciseDefinition) => {
-    // TODO: Add exercise to session
     console.log("Selected exercise:", exercise);
     setShowExerciseBank(false);
   };

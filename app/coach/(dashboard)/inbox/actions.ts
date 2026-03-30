@@ -1,42 +1,38 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-// TODO: Importer prisma når modellene er lagt til
-// import { prisma } from "@/lib/portal/prisma";
-// import { requirePortalUser } from "@/lib/portal/auth";
+import { prisma } from "@/lib/portal/prisma";
+import { requirePortalUser } from "@/lib/portal/auth";
 
 export async function approveMessage(
   messageId: string,
   finalContent: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    // TODO: Aktiver når Prisma-modellene er lagt til
-    // const user = await requirePortalUser();
-    //
-    // await prisma.$transaction([
-    //   prisma.aIResponse.update({
-    //     where: { messageId },
-    //     data: {
-    //       finalContent,
-    //       wasEdited: true,
-    //       approvedById: user.id,
-    //       approvedAt: new Date(),
-    //     },
-    //   }),
-    //   prisma.unifiedMessage.update({
-    //     where: { id: messageId },
-    //     data: { status: "APPROVED" },
-    //   }),
-    // ]);
-    //
-    // // TODO: Send melding via riktig kanal
-    //
-    // await prisma.unifiedMessage.update({
-    //   where: { id: messageId },
-    //   data: { status: "SENT" },
-    // });
+    const user = await requirePortalUser();
 
-    console.log(`[Mock] Approved message ${messageId} with content:`, finalContent);
+    await prisma.$transaction([
+      prisma.aIResponse.update({
+        where: { messageId },
+        data: {
+          finalContent,
+          wasEdited: true,
+          approvedById: user.id,
+          approvedAt: new Date(),
+        },
+      }),
+      prisma.unifiedMessage.update({
+        where: { id: messageId },
+        data: { status: "APPROVED" },
+      }),
+    ]);
+
+    // TODO: Send melding via riktig kanal
+
+    await prisma.unifiedMessage.update({
+      where: { id: messageId },
+      data: { status: "SENT" },
+    });
 
     revalidatePath("/coach/inbox");
 
@@ -54,15 +50,12 @@ export async function rejectMessage(
   messageId: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    // TODO: Aktiver når Prisma-modellene er lagt til
-    // await requirePortalUser();
-    //
-    // await prisma.unifiedMessage.update({
-    //   where: { id: messageId },
-    //   data: { status: "FAILED" },
-    // });
+    await requirePortalUser();
 
-    console.log(`[Mock] Rejected message ${messageId}`);
+    await prisma.unifiedMessage.update({
+      where: { id: messageId },
+      data: { status: "FAILED" },
+    });
 
     revalidatePath("/coach/inbox");
 
@@ -80,8 +73,14 @@ export async function regenerateAIResponse(
   messageId: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
+    await requirePortalUser();
+
     // TODO: Implementer AI-regenerering når AI-modulen er klar
-    console.log(`[Mock] Regenerating AI response for message ${messageId}`);
+    // For nå, sett status tilbake til AI_PROCESSING
+    await prisma.unifiedMessage.update({
+      where: { id: messageId },
+      data: { status: "AI_PROCESSING" },
+    });
 
     revalidatePath("/coach/inbox");
 

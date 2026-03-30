@@ -1,7 +1,69 @@
 import { CalendarSyncSettings } from "@/components/portal/kalender/calendar-sync-settings";
-import { addMonths } from "date-fns";
+import {
+  addMonths,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  eachDayOfInterval,
+  isSameMonth,
+  isSameDay,
+  format,
+} from "date-fns";
+import { nb } from "date-fns/locale";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { PORTAL_CONTENT } from "@/lib/website-constants";
+import { getCalendarEvents, getPeriodizationBands } from "./actions";
+import type { CalendarEvent } from "./actions";
+
+interface CalendarDay {
+  date: Date;
+  day: number;
+  isOtherMonth: boolean;
+  isToday: boolean;
+  events: CalendarEvent[];
+}
+
+function buildCalendarGrid(
+  currentDate: Date,
+  events: CalendarEvent[]
+): CalendarDay[] {
+  const today = new Date();
+  const monthStart = startOfMonth(currentDate);
+  const monthEnd = endOfMonth(currentDate);
+
+  // ISO weeks start on Monday
+  const gridStart = startOfWeek(monthStart, { weekStartsOn: 1 });
+  const gridEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
+
+  const days = eachDayOfInterval({ start: gridStart, end: gridEnd });
+
+  return days.map((date) => {
+    const dayEvents = events.filter((e) => isSameDay(e.startDate, date));
+    return {
+      date,
+      day: date.getDate(),
+      isOtherMonth: !isSameMonth(date, currentDate),
+      isToday: isSameDay(date, today),
+      events: dayEvents,
+    };
+  });
+}
+
+function eventStyle(type: CalendarEvent["type"]): string {
+  switch (type) {
+    case "coaching":
+      return "bg-[#E5E5E5] text-[#171717]";
+    case "training":
+      return "bg-[#D4D4D4] text-[#171717]";
+    case "tournament":
+      return "bg-[#171717] text-white";
+    case "booking":
+      return "bg-[#A3A3A3] text-white";
+    default:
+      return "bg-[#E5E5E5] text-[#171717]";
+  }
+}
 
 export default async function KalenderPage({
   searchParams,
@@ -9,62 +71,24 @@ export default async function KalenderPage({
   searchParams: Promise<{ view?: string; offset?: string }>;
 }) {
   const params = await searchParams;
-  const view = params.view === "uke" ? "uke" : params.view === "dag" ? "dag" : "maned";
+  const view =
+    params.view === "uke"
+      ? "uke"
+      : params.view === "dag"
+        ? "dag"
+        : "maned";
   const monthOffset = parseInt(params.offset ?? "0", 10);
 
   const baseDate = addMonths(new Date(), monthOffset);
+  const monthStart = startOfMonth(baseDate);
+  const monthEnd = endOfMonth(baseDate);
 
-  // Demo calendar data matching wireframe
-  const calendarDays = [
-    // Week 1 (prev month)
-    { day: 23, isOtherMonth: true },
-    { day: 24, isOtherMonth: true },
-    { day: 25, isOtherMonth: true },
-    { day: 26, isOtherMonth: true },
-    { day: 27, isOtherMonth: true },
-    { day: 28, isOtherMonth: true },
-    { day: 1 },
-    // Week 2
-    { day: 2 },
-    { day: 3 },
-    { day: 4 },
-    { day: 5, event: { type: "coaching", label: "Coaching" } },
-    { day: 6 },
-    { day: 7 },
-    { day: 8 },
-    // Week 3
-    { day: 9, event: { type: "training", label: "Putting" } },
-    { day: 10 },
-    { day: 11 },
-    { day: 12, event: { type: "coaching", label: "Coaching" } },
-    { day: 13 },
-    { day: 14, event: { type: "tournament", label: "Turnering" } },
-    { day: 15, event: { type: "tournament", label: "Turnering" } },
-    // Week 4
-    { day: 16, event: { type: "training", label: "Naerspill" } },
-    { day: 17 },
-    { day: 18 },
-    { day: 19, event: { type: "coaching", label: "Coaching" } },
-    { day: 20 },
-    { day: 21 },
-    { day: 22 },
-    // Week 5 (current)
-    { day: 23, event: { type: "training", label: "Putting" } },
-    { day: 24, isToday: true, event: { type: "training", label: "Naerspill" } },
-    { day: 25 },
-    { day: 26, event: { type: "coaching", label: "Coaching" } },
-    { day: 27, event: { type: "training", label: "Tee Total" } },
-    { day: 28 },
-    { day: 29 },
-    // Week 6
-    { day: 30 },
-    { day: 31 },
-    { day: 1, isOtherMonth: true },
-    { day: 2, isOtherMonth: true },
-    { day: 3, isOtherMonth: true },
-    { day: 4, isOtherMonth: true },
-    { day: 5, isOtherMonth: true },
-  ];
+  const [events, _bands] = await Promise.all([
+    getCalendarEvents(monthStart, monthEnd),
+    getPeriodizationBands(baseDate.getFullYear()),
+  ]);
+
+  const calendarDays = buildCalendarGrid(baseDate, events);
 
   return (
     <div className="space-y-6">
@@ -72,7 +96,7 @@ export default async function KalenderPage({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <h1 className="text-2xl font-bold text-white capitalize">
-            {baseDate.toLocaleDateString("nb-NO", { month: "long", year: "numeric" })}
+            {format(baseDate, "MMMM yyyy", { locale: nb })}
           </h1>
           <div className="flex gap-1">
             <a
@@ -126,16 +150,16 @@ export default async function KalenderPage({
         {/* Event Type Legend */}
         <div className="flex gap-4">
           {[
-            { color: "#DBEAFE", label: "Coaching" },
-            { color: "#DCFCE7", label: "Trening" },
-            { color: "#FEF3C7", label: "Turnering" },
-            { color: "#F3E8FF", label: "Runde" },
+            { className: "bg-[#E5E5E5]", label: "Coaching" },
+            { className: "bg-[#D4D4D4]", label: "Trening" },
+            { className: "bg-[#171717]", label: "Turnering" },
+            { className: "bg-[#A3A3A3]", label: "Booking" },
           ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2 text-xs text-white">
-              <div
-                className="w-3 h-3 rounded-sm"
-                style={{ background: item.color }}
-              />
+            <div
+              key={item.label}
+              className="flex items-center gap-2 text-xs text-white"
+            >
+              <div className={`w-3 h-3 rounded-sm ${item.className}`} />
               <span>{item.label}</span>
             </div>
           ))}
@@ -157,12 +181,12 @@ export default async function KalenderPage({
 
           {/* Days Grid */}
           <div className="grid grid-cols-7 gap-[1px] bg-[#E5E5E5]">
-            {calendarDays.map((item, idx) => (
+            {calendarDays.map((item) => (
               <div
-                key={idx}
+                key={item.date.toISOString()}
                 className={`min-h-[60px] p-2 bg-white ${
                   item.isToday ? "border-2 border-[#171717]" : ""
-                } ${item.event ? "bg-blue-50" : ""}`}
+                }`}
               >
                 <span
                   className={`text-sm ${
@@ -171,17 +195,21 @@ export default async function KalenderPage({
                 >
                   {item.day}
                 </span>
-                {item.event && (
-                  <div
-                    className={`mt-1 px-1 py-0.5 rounded text-[10px] truncate ${
-                      item.event.type === "coaching"
-                        ? "bg-blue-100 text-blue-700"
-                        : item.event.type === "training"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-yellow-100 text-yellow-700"
-                    }`}
-                  >
-                    {item.event.label}
+                {item.events.length > 0 && (
+                  <div className="mt-1 space-y-0.5">
+                    {item.events.slice(0, 2).map((event) => (
+                      <div
+                        key={event.id}
+                        className={`px-1 py-0.5 rounded text-[10px] truncate ${eventStyle(event.type)}`}
+                      >
+                        {event.title}
+                      </div>
+                    ))}
+                    {item.events.length > 2 && (
+                      <span className="text-[10px] text-[#737373]">
+                        +{item.events.length - 2} til
+                      </span>
+                    )}
                   </div>
                 )}
               </div>
@@ -189,15 +217,33 @@ export default async function KalenderPage({
           </div>
         </div>
 
+        {/* Empty state */}
+        {events.length === 0 && (
+          <div className="rounded-lg border border-[#E5E5E5] bg-white p-8 text-center">
+            <p className="text-sm text-[#737373]">
+              Ingen hendelser denne måneden.
+            </p>
+            <p className="mt-1 text-xs text-[#A3A3A3]">
+              Book en time eller legg til en treningsplan for å se hendelser her.
+            </p>
+          </div>
+        )}
+
         {/* iCal sync */}
         <CalendarSyncSettings />
 
         {/* Info section */}
         <details className="rounded-lg bg-white border border-[#E5E5E5] group">
           <summary className="flex items-center gap-2 px-4 py-3 cursor-pointer list-none hover:bg-[#F5F5F5]">
-            <span className="text-sm font-medium text-[#171717]">Kalender-info</span>
-            <span className="ml-auto text-xs text-[#737373] group-open:hidden">Vis mer</span>
-            <span className="ml-auto text-xs text-[#737373] hidden group-open:inline">Skjul</span>
+            <span className="text-sm font-medium text-[#171717]">
+              Kalender-info
+            </span>
+            <span className="ml-auto text-xs text-[#737373] group-open:hidden">
+              Vis mer
+            </span>
+            <span className="ml-auto text-xs text-[#737373] hidden group-open:inline">
+              Skjul
+            </span>
           </summary>
           <div className="px-4 pb-4 space-y-4 border-t border-[#E5E5E5]">
             {/* Color codes */}
@@ -213,10 +259,10 @@ export default async function KalenderPage({
                         item.color === "gold"
                           ? "bg-[#B07D4F]"
                           : item.color === "blue"
-                          ? "bg-blue-500"
-                          : item.color === "green"
-                          ? "bg-green-500"
-                          : "bg-gray-500"
+                            ? "bg-blue-500"
+                            : item.color === "green"
+                              ? "bg-green-500"
+                              : "bg-gray-500"
                       }`}
                     />
                     <span className="text-sm text-[#525252]">{item.label}</span>

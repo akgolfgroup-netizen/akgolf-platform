@@ -364,7 +364,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                   className="rounded-xl bg-white p-4 text-sm"
                   style={{ border: "1px solid var(--color-grey-200)" }}
                 >
-                  <div className="border-b border-gray-100 pb-2 mb-3">
+                  <div className="border-b border-[var(--color-grey-200)] pb-2 mb-3">
                     <p className="text-xs text-[var(--color-grey-400)]">
                       Emne:{" "}
                       <span className="text-[var(--color-grey-900)] font-medium">

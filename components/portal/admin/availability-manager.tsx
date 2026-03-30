@@ -102,7 +102,7 @@ export function AvailabilityManager({ instructors }: Props) {
         {/* Instructor selector - Apple style dropdown */}
         <div className="relative">
           <div className="flex items-center gap-3 px-4 py-3 bg-white/80 backdrop-blur-xl rounded-xl border border-[var(--color-grey-200)] shadow-sm">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--apple-admin-accent)] to-[var(--apple-admin-accent-dark)] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)] flex items-center justify-center">
               <User className="w-4 h-4 text-white" />
             </div>
             <select
@@ -163,7 +163,7 @@ export function AvailabilityManager({ instructors }: Props) {
             className="py-20 flex flex-col items-center justify-center"
           >
             <motion.div
-              className="w-8 h-8 border-3 border-[var(--apple-admin-accent)] border-t-transparent rounded-full"
+              className="w-8 h-8 border-3 border-[var(--color-grey-900)] border-t-transparent rounded-full"
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />

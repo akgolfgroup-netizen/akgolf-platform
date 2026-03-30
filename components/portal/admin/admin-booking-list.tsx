@@ -161,7 +161,7 @@ export function AdminBookingList() {
             className={`
               flex items-center gap-2 px-5 py-3 text-sm font-medium rounded-xl transition-all duration-200
               ${statusFilter === key
-                ? "bg-[var(--apple-admin-accent)] text-white"
+                ? "bg-[var(--color-grey-900)] text-white"
                 : "text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-700)]"
               }
             `}
@@ -183,7 +183,7 @@ export function AdminBookingList() {
       {/* Filter Bar */}
       <AppleCard variant="glass" padding="md" hover={false} className="flex items-center gap-4 flex-wrap">
         {/* Search */}
-        <div className="flex items-center gap-3 flex-1 min-w-[280px] px-4 py-3 bg-[var(--color-grey-100)] rounded-xl border border-transparent focus-within:bg-white focus-within:border-[var(--apple-admin-accent)] focus-within:shadow-[0_0_0_3px_var(--apple-admin-accent-light)] transition-all duration-200">
+        <div className="flex items-center gap-3 flex-1 min-w-[280px] px-4 py-3 bg-[var(--color-grey-100)] rounded-xl border border-transparent focus-within:bg-white focus-within:border-[var(--color-grey-900)] focus-within:shadow-[0_0_0_3px_var(--color-grey-200)] transition-all duration-200">
           <Search className="w-[18px] h-[18px] text-[var(--color-grey-400)]" />
           <input
             type="text"
@@ -207,7 +207,7 @@ export function AdminBookingList() {
         {/* Search Button */}
         <button
           onClick={handleSearch}
-          className="px-5 py-2.5 text-sm font-semibold bg-[var(--apple-admin-accent)] text-white rounded-xl hover:bg-[var(--apple-admin-accent-dark)] transition-all duration-200 shadow-[0_4px_16px_rgba(99,102,241,0.4)] hover:shadow-[0_6px_20px_rgba(99,102,241,0.5)] hover:-translate-y-0.5"
+          className="px-5 py-2.5 text-sm font-semibold bg-[var(--color-grey-900)] text-white rounded-xl hover:bg-[var(--color-grey-900)]/90 transition-all duration-200 shadow-[var(--shadow-md)] hover:-translate-y-0.5"
         >
           Sok
         </button>
@@ -215,7 +215,7 @@ export function AdminBookingList() {
 
       {/* Bulk Actions Bar */}
       {selectedBookings.size > 0 && (
-        <div className="flex items-center gap-4 px-5 py-4 bg-[var(--apple-admin-accent)] text-white rounded-2xl">
+        <div className="flex items-center gap-4 px-5 py-4 bg-[var(--color-grey-900)] text-white rounded-2xl">
           <span className="text-sm font-medium">
             <strong>{selectedBookings.size}</strong> valgt
           </span>
@@ -238,7 +238,7 @@ export function AdminBookingList() {
       <AppleCard variant="glass" padding="none" hover={false} className="overflow-hidden">
         {loading ? (
           <div className="py-16 text-center text-[var(--color-grey-500)]">
-            <div className="w-8 h-8 border-2 border-[var(--apple-admin-accent)] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <div className="w-8 h-8 border-2 border-[var(--color-grey-900)] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
             Laster bookinger...
           </div>
         ) : bookings.length === 0 ? (
@@ -255,8 +255,8 @@ export function AdminBookingList() {
                   className={`
                     w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200
                     ${selectedBookings.size === bookings.length
-                      ? "bg-[var(--apple-admin-accent)] border-[var(--apple-admin-accent)]"
-                      : "border-[var(--color-grey-300)] hover:border-[var(--apple-admin-accent)]"
+                      ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)]"
+                      : "border-[var(--color-grey-300)] hover:border-[var(--color-grey-900)]"
                     }
                   `}
                 >
@@ -267,7 +267,7 @@ export function AdminBookingList() {
                   )}
                 </button>
               </div>
-              <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-500)] cursor-pointer hover:text-[var(--apple-admin-accent)]">
+              <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-500)] cursor-pointer hover:text-[var(--color-grey-900)]">
                 Dato/tid
                 <ArrowUpDown className="w-3.5 h-3.5" />
               </span>
@@ -289,8 +289,8 @@ export function AdminBookingList() {
                     key={b.id}
                     className={`
                       grid grid-cols-[48px_140px_1fr_140px_120px_100px_120px] gap-4 px-5 py-4 items-center
-                      transition-all duration-200 hover:bg-[rgba(99,102,241,0.04)] hover:scale-[1.005]
-                      ${isSelected ? "bg-[var(--apple-admin-accent-light)]" : ""}
+                      transition-all duration-200 hover:bg-[var(--color-grey-100)] hover:scale-[1.005]
+                      ${isSelected ? "bg-[var(--color-grey-100)]" : ""}
                     `}
                   >
                     {/* Checkbox */}
@@ -300,8 +300,8 @@ export function AdminBookingList() {
                         className={`
                           w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200
                           ${isSelected
-                            ? "bg-[var(--apple-admin-accent)] border-[var(--apple-admin-accent)]"
-                            : "border-[var(--color-grey-300)] hover:border-[var(--apple-admin-accent)]"
+                            ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)]"
+                            : "border-[var(--color-grey-300)] hover:border-[var(--color-grey-900)]"
                           }
                         `}
                       >
@@ -338,7 +338,7 @@ export function AdminBookingList() {
 
                     {/* Service */}
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-[var(--apple-admin-accent-light)] text-[var(--apple-admin-accent)] flex items-center justify-center">
+                      <div className="w-7 h-7 rounded-lg bg-[var(--color-grey-100)] text-[var(--color-grey-700)] flex items-center justify-center">
                         <ServiceIcon className="w-3.5 h-3.5" />
                       </div>
                       <span className="text-[13px] text-[var(--color-grey-700)]">
@@ -398,7 +398,7 @@ export function AdminBookingList() {
                   <button
                     onClick={() => { setPage(page - 1); fetchBookings(query, statusFilter, page - 1); }}
                     disabled={page === 1}
-                    className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white flex items-center justify-center text-[var(--color-grey-700)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white flex items-center justify-center text-[var(--color-grey-700)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     <ChevronLeft className="w-[18px] h-[18px]" />
                   </button>
@@ -413,8 +413,8 @@ export function AdminBookingList() {
                         className={`
                           w-9 h-9 rounded-xl border text-sm font-medium flex items-center justify-center transition-colors
                           ${page === pageNum
-                            ? "bg-[var(--apple-admin-accent)] border-[var(--apple-admin-accent)] text-white"
-                            : "bg-white border-[var(--color-grey-200)] text-[var(--color-grey-700)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)]"
+                            ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)] text-white"
+                            : "bg-white border-[var(--color-grey-200)] text-[var(--color-grey-700)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)]"
                           }
                         `}
                       >
@@ -426,7 +426,7 @@ export function AdminBookingList() {
                   <button
                     onClick={() => { setPage(page + 1); fetchBookings(query, statusFilter, page + 1); }}
                     disabled={page >= totalPages}
-                    className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white flex items-center justify-center text-[var(--color-grey-700)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white flex items-center justify-center text-[var(--color-grey-700)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     <ChevronRight className="w-[18px] h-[18px]" />
                   </button>

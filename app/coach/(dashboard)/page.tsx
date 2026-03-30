@@ -1,28 +1,53 @@
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { StatsCard } from "@/components/coach/dashboard/StatsCard";
-import {
-  RecentMessages,
-  type Message,
-} from "@/components/coach/dashboard/RecentMessages";
-import { Inbox, CheckCircle, Clock, Users } from "lucide-react";
+import { RecentSessions } from "@/components/coach/dashboard/RecentSessions";
+import { CalendarCheck, Clock, Users, BookOpen } from "lucide-react";
+import { startOfDay, endOfDay } from "date-fns";
 
 export default async function CoachDashboardPage() {
   const user = await requirePortalUser();
 
-  // Hent statistikk
-  // TODO: Erstatt med UnifiedMessage queries når modellen er opprettet
-  const playerCount = await prisma.user.count({
-    where: { role: "STUDENT" },
+  // Finn instruktør-profilen knyttet til denne brukeren
+  const instructor = await prisma.instructor.findUnique({
+    where: { userId: user.id },
+    select: { id: true },
   });
 
-  // Placeholder-verdier til UnifiedMessage er implementert
-  const pendingCount = 0;
-  const todayCount = 0;
-  const avgResponseTime = 0;
+  const instructorId = instructor?.id;
+  const today = new Date();
 
-  // Placeholder for meldinger til UnifiedMessage er implementert
-  const recentMessages: Message[] = [];
+  const [playerCount, pendingCount, todayBookings, recentSessions] =
+    await Promise.all([
+      prisma.user.count({ where: { role: "STUDENT" } }),
+      instructorId
+        ? prisma.booking.count({
+            where: { instructorId, status: "PENDING" },
+          })
+        : Promise.resolve(0),
+      instructorId
+        ? prisma.booking.count({
+            where: {
+              instructorId,
+              startTime: {
+                gte: startOfDay(today),
+                lte: endOfDay(today),
+              },
+              status: { in: ["CONFIRMED", "COMPLETED"] },
+            },
+          })
+        : Promise.resolve(0),
+      instructorId
+        ? prisma.coachingSession.findMany({
+            where: { instructorId },
+            orderBy: { sessionDate: "desc" },
+            take: 5,
+            include: {
+              User: { select: { name: true } },
+            },
+          })
+        : Promise.resolve([]),
+    ]);
 
   return (
     <div className="space-y-6">
@@ -30,35 +55,45 @@ export default async function CoachDashboardPage() {
         <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">
           God morgen, {user.name?.split(" ")[0] || "Coach"}
         </h1>
-        <p className="text-[var(--color-grey-400)] mt-1">Her er oversikten din for i dag</p>
+        <p className="text-[var(--color-grey-400)] mt-1">
+          Her er oversikten din for i dag
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
-          title="Ventende meldinger"
+          title="Ventende bookinger"
           value={pendingCount}
-          icon={<Inbox className="h-5 w-5 text-[var(--color-black)]" />}
+          icon={
+            <Clock className="h-5 w-5 text-[var(--color-grey-500)]" />
+          }
         />
         <StatsCard
-          title="Meldinger i dag"
-          value={todayCount}
-          icon={<CheckCircle className="h-5 w-5 text-green-500" />}
+          title="Timer i dag"
+          value={todayBookings}
+          icon={
+            <CalendarCheck className="h-5 w-5 text-[var(--color-grey-500)]" />
+          }
         />
         <StatsCard
-          title="Avg. responstid"
-          value={avgResponseTime > 0 ? `${avgResponseTime} min` : "-"}
-          subtitle="Mal: < 60 min"
-          icon={<Clock className="h-5 w-5 text-blue-500" />}
+          title="Siste økter"
+          value={recentSessions.length}
+          subtitle="Siste 5 coaching-økter"
+          icon={
+            <BookOpen className="h-5 w-5 text-[var(--color-grey-500)]" />
+          }
         />
         <StatsCard
           title="Aktive spillere"
           value={playerCount}
-          icon={<Users className="h-5 w-5 text-purple-500" />}
+          icon={
+            <Users className="h-5 w-5 text-[var(--color-grey-500)]" />
+          }
         />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <RecentMessages messages={recentMessages} />
+        <RecentSessions sessions={recentSessions} />
       </div>
     </div>
   );

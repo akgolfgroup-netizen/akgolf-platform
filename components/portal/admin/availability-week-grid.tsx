@@ -164,7 +164,7 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
                           onClick={() => toggleCell(day.value, hour)}
                           className={`w-full h-10 rounded-lg transition-all duration-200 ${
                             active
-                              ? "bg-gradient-to-br from-[var(--apple-admin-accent)] to-[var(--apple-admin-accent-dark)] shadow-sm"
+                              ? "bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)] shadow-sm"
                               : "bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)]"
                           }`}
                           whileHover={{ scale: 1.02 }}
@@ -184,7 +184,7 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-gradient-to-br from-[var(--apple-admin-accent)] to-[var(--apple-admin-accent-dark)]" />
+            <div className="w-5 h-5 rounded bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)]" />
             <span className="text-xs text-[var(--color-grey-600)]">Tilgjengelig</span>
           </div>
           <div className="flex items-center gap-2">

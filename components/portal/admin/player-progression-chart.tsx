@@ -49,7 +49,7 @@ export function PlayerProgressionChart({
 }: PlayerProgressionChartProps) {
   if (handicapEntries.length === 0) {
     return (
-      <div className="flex items-center justify-center h-40 text-sm text-gray-400">
+      <div className="flex items-center justify-center h-40 text-sm text-[var(--color-grey-400)]">
         Ingen handicap-data registrert.
       </div>
     );
@@ -109,20 +109,20 @@ export function PlayerProgressionChart({
       {/* Summary stats */}
       <div className="flex items-center gap-6 mb-4">
         <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider">Nåværende</p>
-          <p className="text-2xl font-bold text-[#0A1929]">{lastHcp.toFixed(1)}</p>
+          <p className="text-xs text-[var(--color-grey-500)] uppercase tracking-wider">Nåværende</p>
+          <p className="text-2xl font-bold text-[var(--color-grey-900)]">{lastHcp.toFixed(1)}</p>
         </div>
         {improvement !== 0 && (
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wider">Endring</p>
+            <p className="text-xs text-[var(--color-grey-500)] uppercase tracking-wider">Endring</p>
             <p className={`text-lg font-semibold ${improvement > 0 ? "text-green-600" : "text-red-500"}`}>
               {improvement > 0 ? "-" : "+"}{Math.abs(improvement).toFixed(1)}
             </p>
           </div>
         )}
         <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider">Coaching-økter</p>
-          <p className="text-lg font-semibold text-[#B07D4F]">{coachingSessions.length}</p>
+          <p className="text-xs text-[var(--color-grey-500)] uppercase tracking-wider">Coaching-økter</p>
+          <p className="text-lg font-semibold text-[var(--color-grey-900)]">{coachingSessions.length}</p>
         </div>
       </div>
 
@@ -156,9 +156,9 @@ export function PlayerProgressionChart({
           <Line
             type="monotone"
             dataKey="handicap"
-            stroke="#B07D4F"
+            stroke="var(--color-grey-900)"
             strokeWidth={2}
-            dot={{ fill: "#B07D4F", r: 3, strokeWidth: 0 }}
+            dot={{ fill: "var(--color-grey-900)", r: 3, strokeWidth: 0 }}
             activeDot={{ r: 5 }}
           />
           {reg && (
@@ -178,7 +178,7 @@ export function PlayerProgressionChart({
               x={data[marker.x]?.date}
               y={marker.y}
               r={6}
-              fill="#38BDF8"
+              fill="var(--color-grey-700)"
               stroke="white"
               strokeWidth={2}
             />
@@ -187,18 +187,18 @@ export function PlayerProgressionChart({
       </ResponsiveContainer>
 
       {/* Legend */}
-      <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
+      <div className="flex items-center gap-4 mt-3 text-xs text-[var(--color-grey-500)]">
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-0.5 bg-[#B07D4F]" />
+          <div className="w-3 h-0.5 bg-[var(--color-grey-900)]" />
           <span>Handicap</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#38BDF8]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-grey-400)]" />
           <span>Coaching-økt</span>
         </div>
         {reg && (
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 bg-[#B07D4F]/30" style={{ backgroundImage: "repeating-linear-gradient(90deg, #B07D4F 0, #B07D4F 4px, transparent 4px, transparent 8px)" }} />
+            <div className="w-3 h-0.5 bg-[var(--color-grey-300)]" style={{ backgroundImage: "repeating-linear-gradient(90deg, var(--color-grey-500) 0, var(--color-grey-500) 4px, transparent 4px, transparent 8px)" }} />
             <span>Trend</span>
           </div>
         )}

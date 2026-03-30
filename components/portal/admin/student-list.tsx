@@ -243,7 +243,7 @@ export function StudentList() {
               <div
                 key={student.id}
                 className={cn(
-                  "grid grid-cols-[48px_1fr_120px_100px_140px_140px_100px] gap-4 px-5 py-4 items-center border-b border-[var(--color-grey-100)] last:border-b-0 transition-all duration-200 hover:bg-[rgba(99,102,241,0.04)] hover:scale-[1.005]",
+                  "grid grid-cols-[48px_1fr_120px_100px_140px_140px_100px] gap-4 px-5 py-4 items-center border-b border-[var(--color-grey-100)] last:border-b-0 transition-all duration-200 hover:bg-[var(--color-grey-100)] hover:scale-[1.005]",
                   isSelected && "bg-[var(--color-grey-100)]"
                 )}
               >

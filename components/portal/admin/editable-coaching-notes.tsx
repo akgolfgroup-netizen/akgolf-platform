@@ -52,22 +52,22 @@ export function EditableCoachingNotes({ session }: Props) {
   return (
     <>
       {/* Card */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4">
+      <div className="bg-white rounded-xl border border-[var(--color-grey-200)] p-4">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-sm font-medium text-gray-800">
+          <p className="text-sm font-medium text-[var(--color-grey-900)]">
             {format(new Date(session.sessionDate), "d. MMMM yyyy", {
               locale: nb,
             })}
           </p>
           <div className="flex items-center gap-2">
             {session.progressRating && (
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-[var(--color-grey-500)]">
                 Progresjon: {session.progressRating}/10
               </span>
             )}
             <button
               onClick={() => setIsOpen(true)}
-              className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-500 hover:text-[#B07D4F]"
+              className="p-1.5 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
               title="Rediger notater"
             >
               <Pencil className="w-4 h-4" />
@@ -75,20 +75,20 @@ export function EditableCoachingNotes({ session }: Props) {
           </div>
         </div>
         {session.primaryFocus && (
-          <p className="text-xs text-gray-500 mb-1">
+          <p className="text-xs text-[var(--color-grey-500)] mb-1">
             Fokus: {session.primaryFocus}
           </p>
         )}
         {session.instructorNotes && (
-          <p className="text-xs text-gray-600 mb-2 whitespace-pre-wrap">
+          <p className="text-xs text-[var(--color-grey-600)] mb-2 whitespace-pre-wrap">
             {session.instructorNotes}
           </p>
         )}
         {session.aiKeyPoints.length > 0 && (
           <ul className="mt-2 space-y-1">
             {session.aiKeyPoints.map((point, i) => (
-              <li key={i} className="text-xs text-gray-600 flex gap-1.5">
-                <span className="text-[#B07D4F]">•</span>
+              <li key={i} className="text-xs text-[var(--color-grey-600)] flex gap-1.5">
+                <span className="text-[var(--color-grey-900)]">•</span>
                 {point}
               </li>
             ))}
