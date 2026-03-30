@@ -1,11 +1,11 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { getActivePlan } from "./actions";
+import { getActivePlan, getCurrentWeekSessions } from "./actions";
+import { getLoggedSessionIds } from "../dagbok/actions";
 import { isStaff } from "@/lib/portal/rbac";
 import {
   Target,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
   Play,
   User,
   Wind,
@@ -14,7 +14,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { PORTAL_CONTENT } from "@/lib/website-constants";
-import { format, startOfISOWeek, addDays, isToday } from "date-fns";
+import { format, startOfISOWeek, addDays, isToday as checkIsToday } from "date-fns";
 import { nb } from "date-fns/locale";
 import Link from "next/link";
 import {
@@ -22,10 +22,11 @@ import {
   SessionIdDisplay,
   AreaCategoryBadge,
 } from "@/components/portal/treningsplan";
+import { GeneratePlanButton } from "@/components/portal/treningsplan/generate-plan-button";
 import type { PyramidLevel, TrainingArea } from "@/lib/portal/golf/ak-formula";
 
-// Demo session type
-interface DemoSession {
+// Session type for display
+interface DisplaySession {
   id: string;
   dayOfWeek: number;
   title: string;
@@ -42,91 +43,7 @@ interface DemoSession {
   exercises?: Array<{ name: string; details: string }>;
 }
 
-// Demo session data with AK-formelen
-const DEMO_SESSIONS: DemoSession[] = [
-  {
-    id: "putting-session",
-    dayOfWeek: 1,
-    title: "Putting",
-    durationMinutes: 45,
-    pyramid: "SLAG",
-    area: "PUTT3-6",
-    intensity: "medium",
-    completed: true,
-    exercises: [
-      { name: "Oppvarming - Korte putts", details: "10 min - 3 fot sirkel" },
-      { name: "Gate Drill", details: "15 min - Linje-trening" },
-      { name: "Klokke-drill", details: "15 min - Break fra alle retninger" },
-      { name: "Fartskontroll", details: "5 min - 40 fot putts" },
-    ],
-  },
-  {
-    id: "naerspill-session",
-    dayOfWeek: 2,
-    title: "Naerspill",
-    durationMinutes: 60,
-    pyramid: "SLAG",
-    area: "CHIP",
-    intensity: "medium",
-    isToday: true,
-    exercises: [
-      { name: "Oppvarming - Chipping", details: "10 min - 20 baller fra 10m" },
-      { name: "Gate Drill - Pitching", details: "15 min - 30m, 40m, 50m" },
-      { name: "Up-and-down Challenge", details: "15 min - 10 posisjoner" },
-      { name: "Bunkerslag", details: "5 min - Sand forst" },
-    ],
-  },
-  {
-    id: "hvile-1",
-    dayOfWeek: 3,
-    title: "Hvile",
-    isRest: true,
-  },
-  {
-    id: "coaching-session",
-    dayOfWeek: 4,
-    title: "Coaching",
-    durationMinutes: 60,
-    pyramid: "TEK",
-    area: "INN150",
-    intensity: "medium",
-    isCoaching: true,
-    coachName: "Anders",
-  },
-  {
-    id: "tee-session",
-    dayOfWeek: 5,
-    title: "Tee Total",
-    durationMinutes: 60,
-    pyramid: "SLAG",
-    area: "TEE",
-    intensity: "high",
-    exercises: [
-      { name: "Alignment Station", details: "10 min - Setup og sikting" },
-      { name: "Tempo Drill 3-1", details: "15 min - Svingrytme" },
-      { name: "Stock Shot Driver", details: "20 min - Konsistent draw" },
-      { name: "Simulator Challenge", details: "15 min - Fairway-treff" },
-    ],
-  },
-  {
-    id: "runde-session",
-    dayOfWeek: 6,
-    title: "Runde",
-    durationMinutes: 240,
-    pyramid: "SPILL",
-    area: "TEE",
-    intensity: "high",
-    isRound: true,
-  },
-  {
-    id: "hvile-2",
-    dayOfWeek: 7,
-    title: "Hvile",
-    isRest: true,
-  },
-];
-
-function getSessionIcon(session: DemoSession) {
+function getSessionIcon(session: DisplaySession) {
   if (session.isRest) return Bed;
   if (session.isCoaching) return User;
   if (session.isRound) return Flag;
@@ -134,7 +51,7 @@ function getSessionIcon(session: DemoSession) {
   return Target;
 }
 
-function getSessionIconColor(session: DemoSession) {
+function getSessionIconColor(session: DisplaySession) {
   if (session.completed) return "text-green-500";
   if (session.isRest) return "text-[#525252]";
   if (session.isCoaching) return "text-blue-500";
@@ -144,7 +61,11 @@ function getSessionIconColor(session: DemoSession) {
 
 export default async function TreningsplanPage() {
   const user = await requirePortalUser();
-  const plan = await getActivePlan();
+  const [plan, weekSessions, loggedSessionIds] = await Promise.all([
+    getActivePlan(),
+    getCurrentWeekSessions(),
+    getLoggedSessionIds(),
+  ]);
   const canGenerate = isStaff(user?.role);
 
   // Get current week dates
@@ -153,14 +74,41 @@ export default async function TreningsplanPage() {
   const weekNumber = format(now, "w");
   const weekDates = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 
-  // Map demo sessions to week dates
-  const weekDays = DEMO_SESSIONS.map((session, idx) => ({
-    ...session,
-    date: weekDates[idx],
-    dateNum: format(weekDates[idx], "d"),
-    dayName: format(weekDates[idx], "EEEE", { locale: nb }),
-    isToday: isToday(weekDates[idx]),
+  // Transform plan sessions to display format
+  const sessionsFromPlan: DisplaySession[] = weekSessions.map((s) => ({
+    id: s.id,
+    dayOfWeek: s.dayOfWeek,
+    title: s.title,
+    durationMinutes: s.durationMinutes ?? undefined,
+    focusArea: s.focusArea ?? undefined,
+    completed: loggedSessionIds.includes(s.id),
+    exercises: Array.isArray(s.exercises)
+      ? (s.exercises as Array<{ name: string; details: string }>)
+      : undefined,
   }));
+
+  // Create week days array - fill in rest days for days without sessions
+  const weekDays = weekDates.map((date, idx) => {
+    const dayOfWeek = idx + 1; // 1 = Monday
+    const session = sessionsFromPlan.find((s) => s.dayOfWeek === dayOfWeek);
+    const isRestDay = !session;
+
+    const dayData: DisplaySession & { date: Date; dateNum: string; dayName: string } = {
+      id: session?.id ?? `rest-${dayOfWeek}`,
+      dayOfWeek,
+      title: session?.title ?? "Hvile",
+      durationMinutes: session?.durationMinutes,
+      completed: session?.completed,
+      isRest: isRestDay,
+      exercises: session?.exercises,
+      date,
+      dateNum: format(date, "d"),
+      dayName: format(date, "EEEE", { locale: nb }),
+      isToday: checkIsToday(date),
+    };
+
+    return dayData;
+  });
 
   // Find today's session
   const todaySession = weekDays.find((d) => d.isToday);
@@ -186,10 +134,7 @@ export default async function TreningsplanPage() {
             <ChevronRight className="w-4 h-4" />
           </button>
           {canGenerate && (
-            <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-[#B07D4F] text-white hover:bg-[#A06D3F] transition-colors">
-              <Sparkles className="w-4 h-4" />
-              Generer ny plan
-            </button>
+            <GeneratePlanButton studentId={user.id} variant="primary" />
           )}
         </div>
       </div>
@@ -371,10 +316,7 @@ export default async function TreningsplanPage() {
                 : "Kontakt din coach for a fa en personlig treningsplan."}
             </p>
             {canGenerate && (
-              <button className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium bg-[#B07D4F] text-white hover:bg-[#A06D3F] transition-colors">
-                <Sparkles className="w-4 h-4" />
-                Generer treningsplan
-              </button>
+              <GeneratePlanButton studentId={user.id} variant="secondary" className="mt-6" />
             )}
           </div>
         )}

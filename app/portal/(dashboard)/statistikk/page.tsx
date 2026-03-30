@@ -1,28 +1,55 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { getStatsAggregates } from "./actions";
+import { getStatsAggregates, getTrainingAreaBreakdown } from "./actions";
 import { getHandicapHistory } from "@/app/portal/(dashboard)/profil/actions";
-import { BarChart3, Info, TrendingDown, Lightbulb } from "lucide-react";
+import { BarChart3, Info, TrendingDown, TrendingUp, Lightbulb } from "lucide-react";
 import { PORTAL_CONTENT } from "@/lib/website-constants";
 
 export default async function StatistikkPage() {
   await requirePortalUser();
 
-  const [aggregates, handicapHistory] = await Promise.all([
+  const [aggregates, handicapHistory, areaBreakdown] = await Promise.all([
     getStatsAggregates(),
     getHandicapHistory(12),
+    getTrainingAreaBreakdown(),
   ]);
 
   const currentHandicap = handicapHistory.length > 0
     ? handicapHistory[handicapHistory.length - 1].handicapIndex
     : null;
 
-  // Demo data for wireframe visualization
+  const previousHandicap = handicapHistory.length > 1
+    ? handicapHistory[0].handicapIndex
+    : currentHandicap;
+
+  const handicapChange = currentHandicap && previousHandicap
+    ? previousHandicap - currentHandicap
+    : 0;
+
+  // Use real data from aggregates, fallback to 0 if no data
   const sgData = {
-    teeTotal: aggregates?.avgSgOffTheTee ?? 0.8,
-    approach: aggregates?.avgSgApproach ?? -0.3,
-    naerspill: aggregates?.avgSgAroundTheGreen ?? 0.2,
-    putting: aggregates?.avgSgPutting ?? -0.1,
+    teeTotal: aggregates?.avgSgOffTheTee ?? 0,
+    approach: aggregates?.avgSgApproach ?? 0,
+    naerspill: aggregates?.avgSgAroundTheGreen ?? 0,
+    putting: aggregates?.avgSgPutting ?? 0,
   };
+
+  // Calculate total training minutes and focus area distribution
+  const totalMinutes = areaBreakdown.reduce((sum, a) => sum + a.minutes, 0);
+  const focusAreas = areaBreakdown
+    .map((a) => ({
+      name: a.area,
+      percent: totalMinutes > 0 ? Math.round((a.minutes / totalMinutes) * 100) : 0,
+    }))
+    .sort((a, b) => b.percent - a.percent)
+    .slice(0, 4);
+
+  // Identify weakest area for AI recommendation
+  const weakestArea = Object.entries(sgData)
+    .filter(([, v]) => v !== 0)
+    .sort((a, b) => a[1] - b[1])[0];
+  const weakestAreaName = weakestArea
+    ? { teeTotal: "Tee Total", approach: "Approach", naerspill: "Nærespill", putting: "Putting" }[weakestArea[0]] ?? "trening"
+    : null;
 
   return (
     <div className="space-y-6">
@@ -52,12 +79,14 @@ export default async function StatistikkPage() {
             <span className="text-sm font-semibold text-[var(--portal-text-primary)]">Handicap-utvikling</span>
             <div className="flex items-center gap-2">
               <span className="text-2xl font-bold text-[var(--portal-text-primary)]">
-                {currentHandicap?.toFixed(1) ?? "12.4"}
+                {currentHandicap?.toFixed(1) ?? "-"}
               </span>
-              <span className="text-xs font-medium text-green-500 flex items-center gap-1">
-                <TrendingDown className="w-3.5 h-3.5" />
-                -0.6
-              </span>
+              {handicapChange !== 0 && (
+                <span className={`text-xs font-medium flex items-center gap-1 ${handicapChange > 0 ? "text-green-500" : "text-red-500"}`}>
+                  {handicapChange > 0 ? <TrendingDown className="w-3.5 h-3.5" /> : <TrendingUp className="w-3.5 h-3.5" />}
+                  {handicapChange > 0 ? "-" : "+"}{Math.abs(handicapChange).toFixed(1)}
+                </span>
+              )}
             </div>
           </div>
           <div className="h-[200px] flex items-center justify-center rounded-lg border-2 border-dashed border-[var(--portal-card-border)] bg-[var(--portal-surface-sunken)]">
@@ -132,12 +161,15 @@ export default async function StatistikkPage() {
             <span className="text-sm font-semibold text-[var(--portal-text-primary)]">Fokusomrade-fordeling</span>
           </div>
           <div className="grid grid-cols-4 gap-3">
-            {[
-              { name: "Putting", percent: 35 },
-              { name: "Naerspill", percent: 28 },
-              { name: "Approach", percent: 22 },
-              { name: "Tee Total", percent: 15 },
-            ].map((area) => (
+            {(focusAreas.length > 0
+              ? focusAreas
+              : [
+                  { name: "Putting", percent: 0 },
+                  { name: "Nærespill", percent: 0 },
+                  { name: "Approach", percent: 0 },
+                  { name: "Tee Total", percent: 0 },
+                ]
+            ).map((area) => (
               <div key={area.name} className="text-center">
                 <div className="h-[100px] rounded-md bg-[var(--portal-surface-sunken)] relative overflow-hidden mb-2">
                   <div
@@ -150,14 +182,16 @@ export default async function StatistikkPage() {
               </div>
             ))}
           </div>
-          <div className="mt-4 p-3 rounded-md bg-yellow-500/10 border border-yellow-500/30">
-            <div className="flex items-center gap-2">
-              <Lightbulb className="w-4 h-4 text-yellow-400" />
-              <span className="text-xs text-yellow-300">
-                <strong>AI-anbefaling:</strong> Basert pa SG-data bor du oke fokus pa Approach-trening.
-              </span>
+          {weakestAreaName && (
+            <div className="mt-4 p-3 rounded-md bg-yellow-500/10 border border-yellow-500/30">
+              <div className="flex items-center gap-2">
+                <Lightbulb className="w-4 h-4 text-yellow-400" />
+                <span className="text-xs text-yellow-300">
+                  <strong>AI-anbefaling:</strong> Basert på SG-data bør du øke fokus på {weakestAreaName}-trening.
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* SG Explanation */}

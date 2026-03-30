@@ -2,7 +2,6 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { getTrainingLogs } from "./actions";
 import {
   NotebookPen,
-  Plus,
   List,
   Calendar,
   Clock,
@@ -13,61 +12,52 @@ import {
   Info,
 } from "lucide-react";
 import { PORTAL_CONTENT } from "@/lib/website-constants";
+import { format, isToday, isYesterday } from "date-fns";
+import { nb } from "date-fns/locale";
+import { DagbokActions } from "@/components/portal/dagbok/dagbok-actions";
+
+function formatLogDate(date: Date): string {
+  if (isToday(date)) {
+    return `I dag, ${format(date, "HH:mm")}`;
+  }
+  if (isYesterday(date)) {
+    return `I går, ${format(date, "HH:mm")}`;
+  }
+  return format(date, "d. MMMM, HH:mm", { locale: nb });
+}
+
+function getIntensityLabel(rating: number | null): string {
+  if (!rating) return "Middels";
+  if (rating >= 4) return "Høy";
+  if (rating >= 2) return "Middels";
+  return "Lav";
+}
 
 export default async function DagbokPage() {
   await requirePortalUser();
 
   const logs = await getTrainingLogs();
 
-  // Demo log entries matching wireframe
-  const demoLogs = [
-    {
-      id: "1",
-      date: "I dag, 09:30",
-      title: "Putting-trening",
-      status: "Fullfort",
-      statusColor: "green",
-      duration: "45 min",
-      intensity: "Middels",
-      focus: "Putting",
-      mood: "good",
-      notes: "Gate drill gikk veldig bra i dag. Traff 8/10 pa 2m putter. Avstandskontrollen pa lange putter trenger fortsatt arbeid.",
-    },
-    {
-      id: "2",
-      date: "I gar, 14:00",
-      title: "Coaching-økt med Anders",
-      status: "Coaching",
-      statusColor: "blue",
-      duration: "60 min",
-      intensity: "Hoy",
-      focus: "Naerspill",
-      mood: "challenging",
-      notes: "Jobbet med pitch-teknikk. Viktig a huske: hold vekten fremover, ikke sving for hardt. Bunkertrening var toff men nyttig.",
-    },
-    {
-      id: "3",
-      date: "22. mars, 10:00",
-      title: "Driver-trening",
-      status: "Fullfort",
-      statusColor: "green",
-      duration: "50 min",
-      intensity: "Hoy",
-      focus: "Tee Total",
-      mood: "good",
-      notes: "Fokuserte pa svingtempo. Fant et godt rytme-mantra: \"low and slow\". Carry okte med ca 5 meter.",
-    },
-  ];
+  // Transform logs to display format
+  const displayLogs = logs.map((log) => ({
+    id: log.id,
+    date: formatLogDate(log.date),
+    title: log.TrainingPlanSession?.title ?? log.focusArea ?? "Treningsøkt",
+    status: log.TrainingPlanSession ? "Coaching" : "Fullført",
+    statusColor: log.TrainingPlanSession ? "blue" : "green",
+    duration: log.durationMinutes ? `${log.durationMinutes} min` : "-",
+    intensity: getIntensityLabel(log.rating),
+    focus: log.focusArea ?? "Generell",
+    mood: (log.rating ?? 3) >= 3 ? "good" : "challenging",
+    notes: log.notes ?? "",
+  }));
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-white">Treningsdagbok</h1>
-        <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-[#171717] text-white border border-[#333] hover:bg-[#262626] transition-colors">
-          <Plus className="w-4 h-4" />
-          Logg ny økt
-        </button>
+        <DagbokActions />
       </div>
 
       <div className="max-w-3xl space-y-4">
@@ -119,7 +109,7 @@ export default async function DagbokPage() {
 
         {/* Log Entries */}
         <div className="space-y-3">
-          {demoLogs.map((log) => (
+          {displayLogs.map((log) => (
             <div key={log.id} className="rounded-lg p-4 bg-white border border-[#E5E5E5]">
               <div className="flex items-start justify-between mb-2">
                 <div>
@@ -160,7 +150,7 @@ export default async function DagbokPage() {
         </div>
 
         {/* Empty state */}
-        {logs.length === 0 && demoLogs.length === 0 && (
+        {displayLogs.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 text-center rounded-lg bg-white border border-[#E5E5E5]">
             <NotebookPen className="w-10 h-10 text-[#D4D4D4] mb-3" />
             <p className="text-sm font-medium text-[#171717] mb-1">

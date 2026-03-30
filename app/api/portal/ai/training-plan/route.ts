@@ -5,11 +5,23 @@ import { generateTrainingPlan } from "@/lib/portal/ai/training-plan";
 import { isStaff } from "@/lib/portal/rbac";
 import { addDays } from "date-fns";
 import { nanoid } from "nanoid";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
+
+export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   const user = await getPortalUser();
   if (!user || !isStaff(user.role)) {
     return NextResponse.json({ error: "Ikke autorisert" }, { status: 403 });
+  }
+
+  // Rate limiting per user
+  const rateLimit = checkRateLimit(`ai:${user.id}`, RATE_LIMITS.AI_ENDPOINTS);
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "For mange forespørsler. Vent litt og prøv igjen." },
+      { status: 429 }
+    );
   }
 
   const { studentId, goals, periodType, durationWeeks, startDate } =

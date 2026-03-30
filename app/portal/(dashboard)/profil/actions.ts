@@ -7,6 +7,12 @@ import { revalidatePath } from "next/cache";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { subDays, subMonths } from "date-fns";
+import { z } from "zod";
+
+const profileSchema = z.object({
+  name: z.string().min(2, "Navn må være minst 2 tegn").max(100, "Navn kan maks være 100 tegn").optional(),
+  phone: z.string().regex(/^(\+47)?[0-9\s]{8,15}$/, "Ugyldig telefonnummer").optional().or(z.literal("")),
+});
 
 export async function getMyProfile() {
   const user = await requirePortalUser();
@@ -36,11 +42,19 @@ export async function updateProfile(data: {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
+  // Validate input
+  const result = profileSchema.safeParse(data);
+  if (!result.success) {
+    throw new Error(result.error.issues[0]?.message ?? "Ugyldig data");
+  }
+
+  const validated = result.data;
+
   await prisma.user.update({
     where: { id: user.id },
     data: {
-      name: data.name,
-      phone: data.phone,
+      name: validated.name,
+      phone: validated.phone || null,
     },
   });
 

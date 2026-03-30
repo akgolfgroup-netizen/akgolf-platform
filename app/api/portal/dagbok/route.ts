@@ -87,9 +87,19 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
+  // Whitelist allowed fields to prevent mass assignment
+  const allowedFields = ["durationMinutes", "focusArea", "notes", "rating", "deviatedFromPlan", "deviationReason"];
+  const sanitizedData = Object.fromEntries(
+    Object.entries(data).filter(([key]) => allowedFields.includes(key))
+  );
+
+  if (Object.keys(sanitizedData).length === 0) {
+    return NextResponse.json({ error: "No valid fields to update" }, { status: 400 });
+  }
+
   const updated = await prisma.trainingLog.update({
     where: { id },
-    data,
+    data: sanitizedData,
   });
 
   return NextResponse.json(updated);

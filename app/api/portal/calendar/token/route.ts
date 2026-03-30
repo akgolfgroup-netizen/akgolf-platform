@@ -11,7 +11,7 @@ export async function POST() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const userTier = (user.subscriptionTier ?? "FREE") as SubscriptionTier;
+  const userTier = (user.subscriptionTier ?? "VISITOR") as SubscriptionTier;
   if (!hasTierAccess(userTier, SubscriptionTier.PRO)) {
     return NextResponse.json({ error: "Krever Pro-abonnement" }, { status: 403 });
   }

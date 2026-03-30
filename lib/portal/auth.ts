@@ -1,6 +1,7 @@
 import { createServerSupabase } from "@/lib/supabase/server";
 import { prisma } from "@/lib/portal/prisma";
 import { redirect } from "next/navigation";
+import { nanoid } from "nanoid";
 
 export type PortalUser = {
   id: string;
@@ -35,9 +36,19 @@ export async function getPortalUser(): Promise<PortalUser | null> {
   });
 
   if (!user) {
-    // First login — link Supabase identity to existing Prisma user by email
-    user = await prisma.user.findUnique({
+    // First login — upsert to handle both existing users and completely new users
+    user = await prisma.user.upsert({
       where: { email: supabaseUser.email },
+      update: { supabaseId: supabaseUser.id },
+      create: {
+        id: nanoid(),
+        email: supabaseUser.email!,
+        supabaseId: supabaseUser.id,
+        name: supabaseUser.user_metadata?.name || null,
+        role: "STUDENT",
+        subscriptionTier: "VISITOR",
+        updatedAt: new Date(),
+      },
       select: {
         id: true,
         name: true,
@@ -48,13 +59,6 @@ export async function getPortalUser(): Promise<PortalUser | null> {
         stripeCustomerId: true,
       },
     });
-
-    if (user) {
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { supabaseId: supabaseUser.id },
-      });
-    }
   }
 
   if (!user || !user.email) return null;
