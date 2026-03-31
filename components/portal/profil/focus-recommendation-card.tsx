@@ -19,7 +19,7 @@ export function FocusRecommendationCard() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/ai/focus-recommendation", { method: "POST" });
+      const res = await fetch("/api/portal/ai/focus-recommendation", { method: "POST" });
       if (!res.ok) {
         const err = await res.json();
         throw new Error(err.error ?? "Noe gikk galt");

@@ -216,7 +216,9 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
     where: { id: user.id },
     data: {
       stripeSubscriptionId: subscription.id,
-      subscriptionTier: tier === "PERFORMANCE_PRO" ? "PRO" : "ACADEMY",
+      subscriptionTier: tier === "PERFORMANCE_PRO" ? "PRO"
+                      : tier === "PERFORMANCE" ? "STARTER"
+                      : "ACADEMY",
       subscriptionSource: "STRIPE",
       subscriptionExpiresAt: periodEnd,
       activeCoachingCustomer: true,
@@ -250,7 +252,9 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   await prisma.user.update({
     where: { id: user.id },
     data: {
-      subscriptionTier: tier === "PERFORMANCE_PRO" ? "PRO" : "ACADEMY",
+      subscriptionTier: tier === "PERFORMANCE_PRO" ? "PRO"
+                      : tier === "PERFORMANCE" ? "STARTER"
+                      : "ACADEMY",
       subscriptionExpiresAt: periodEnd,
     },
   });

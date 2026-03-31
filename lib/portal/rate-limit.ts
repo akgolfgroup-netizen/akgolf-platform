@@ -93,7 +93,7 @@ export const RATE_LIMITS = {
   API_GENERAL: { limit: 100, windowSeconds: 60 },
   /** Contact form: 5 per minute per IP */
   CONTACT_FORM: { limit: 5, windowSeconds: 60 },
-  /** AI endpoints: 20 per minute per IP */
+  /** AI endpoints: 20 per minute per user (expensive operations) */
   AI_ENDPOINTS: { limit: 20, windowSeconds: 60 },
   /** Subscription management: 10 per minute per IP */
   SUBSCRIPTIONS: { limit: 10, windowSeconds: 60 },
