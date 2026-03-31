@@ -61,7 +61,7 @@ export function AddHandicapForm() {
         disabled={isPending}
         className="px-3 py-1 rounded-lg text-xs font-semibold"
         style={{
-          background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
+          background: "var(--color-black)",
           color: "var(--color-grey-900)",
           opacity: isPending ? 0.7 : 1,
         }}

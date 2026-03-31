@@ -40,7 +40,7 @@ export function PremiumChecklist({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ["#B07D4F", "#D4A76A", "#FFD700"],
+        colors: ["#1D1D1F", "#525252", "#A3A3A3"],
       });
       onComplete?.();
     }

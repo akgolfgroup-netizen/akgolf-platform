@@ -118,7 +118,7 @@ export async function getCalendarEvents(
       type: "coaching",
       title: c.primaryFocus ?? "Coachingsesjon",
       startDate: c.sessionDate,
-      color: "#B07D4F",
+      color: "#1D1D1F",
     });
   }
 
@@ -152,7 +152,7 @@ export async function getCalendarEvents(
       title: tp.Tournament.name,
       startDate: tp.Tournament.startDate,
       endDate: tp.Tournament.endDate ?? undefined,
-      color: goalConfig?.color ?? "#B07D4F",
+      color: goalConfig?.color ?? "#1D1D1F",
       allDay: true,
     });
   }

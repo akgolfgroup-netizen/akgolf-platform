@@ -45,7 +45,7 @@ export function ExerciseCard({
         exercise.completed
           ? "bg-green-500/5 border-green-500/30"
           : isActive
-          ? "bg-[#B07D4F]/5 border-[#B07D4F]/50 ring-1 ring-[#B07D4F]/30"
+          ? "bg-[var(--color-grey-900)]/5 border-[var(--color-grey-900)]/50 ring-1 ring-[var(--color-grey-900)]/30"
           : "bg-[#1a1a1a] border-[#333] hover:border-[#444]"
       }`}
     >
@@ -106,7 +106,7 @@ export function ExerciseCard({
                 e.stopPropagation();
                 onStart(exercise.id);
               }}
-              className="p-2 rounded-lg bg-[#B07D4F] text-white hover:bg-[#A06D3F] transition-colors"
+              className="p-2 rounded-lg bg-[var(--color-black)] text-white hover:bg-[var(--color-grey-900)] transition-colors"
             >
               <Play className="w-4 h-4" />
             </button>
@@ -167,8 +167,8 @@ export function ExerciseCard({
             {exercise.coachNotes && (
               <div className="p-2 rounded-lg bg-[#262626] border border-[#333]">
                 <div className="flex items-center gap-1 mb-1">
-                  <MessageSquare className="w-3 h-3 text-[#B07D4F]" />
-                  <span className="text-[11px] text-[#B07D4F] uppercase">Coach-notat</span>
+                  <MessageSquare className="w-3 h-3 text-[var(--color-grey-900)]" />
+                  <span className="text-[11px] text-[var(--color-grey-900)] uppercase">Coach-notat</span>
                 </div>
                 <p className="text-sm text-[#A3A3A3]">{exercise.coachNotes}</p>
               </div>
@@ -207,7 +207,7 @@ export function ExerciseCard({
                         onClick={() => setRating(r as 1 | 2 | 3 | 4 | 5)}
                         className={`w-8 h-8 rounded text-sm font-medium transition-colors ${
                           r === rating
-                            ? "bg-[#B07D4F] text-white"
+                            ? "bg-[var(--color-grey-900)] text-white"
                             : "bg-[#262626] text-[#737373] hover:bg-[#333]"
                         }`}
                       >

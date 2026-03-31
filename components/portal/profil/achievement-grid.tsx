@@ -105,7 +105,7 @@ export function AchievementGrid({ definitions, unlocked }: AchievementGridProps)
               <div className="absolute bottom-full mb-2 hidden group-hover:block z-10">
                 <div
                   className="px-3 py-2 rounded-lg text-xs max-w-[160px]"
-                  style={{ background: "#0A1929", border: "1px solid var(--color-grey-200)" }}
+                  style={{ background: "white", border: "1px solid var(--color-grey-200)" }}
                 >
                   <p className="font-semibold text-[var(--color-grey-900)] mb-0.5">{def.title}</p>
                   <p className="text-[var(--color-grey-500)]">{def.description}</p>

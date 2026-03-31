@@ -257,7 +257,7 @@ export default async function KalenderPage({
                     <span
                       className={`w-3 h-3 rounded-full ${
                         item.color === "gold"
-                          ? "bg-[#B07D4F]"
+                          ? "bg-[var(--color-grey-900)]"
                           : item.color === "blue"
                             ? "bg-blue-500"
                             : item.color === "green"

@@ -47,3 +47,4 @@ uploads/
 _archived/
 mcp-server/
 .env*.local
+.superpowers/

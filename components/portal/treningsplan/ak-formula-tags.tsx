@@ -181,7 +181,7 @@ export function FormulaBar({ sessionId, className = "" }: FormulaBarProps) {
     <div
       className={`inline-flex items-center px-3 py-1.5 rounded-lg bg-[#1a1a1a] border border-[#333] font-mono text-xs text-[#A3A3A3] ${className}`}
     >
-      <span className="text-[#B07D4F] mr-1">AK</span>
+      <span className="text-[var(--color-grey-900)] mr-1">AK</span>
       <span>{sessionId}</span>
     </div>
   );

@@ -120,28 +120,28 @@ export function ExerciseBankSheet({
       />
 
       {/* Sheet */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-[#0f0f0f] border-l border-[#333] z-50 flex flex-col">
+      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white border-l border-[var(--color-grey-200)] z-50 flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-[#333]">
-          <h2 className="text-lg font-semibold text-white">Ovelsebank</h2>
+        <div className="flex items-center justify-between p-4 border-b border-[var(--color-grey-200)]">
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">Ovelsebank</h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-[#262626] text-[#737373] hover:text-white transition-colors"
+            className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Search */}
-        <div className="p-4 border-b border-[#333]">
+        <div className="p-4 border-b border-[var(--color-grey-200)]">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#737373]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-500)]" />
             <input
               type="text"
               placeholder="Sok etter ovelser..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg bg-[#1a1a1a] border border-[#333] text-white placeholder-[#525252] focus:outline-none focus:border-[#B07D4F]"
+              className="w-full pl-10 pr-4 py-2 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] placeholder-[var(--color-grey-400)] focus:outline-none focus:border-[var(--color-grey-900)]"
             />
           </div>
 
@@ -153,8 +153,8 @@ export function ExerciseBankSheet({
                 onClick={() => setActiveTab(tab)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                   activeTab === tab
-                    ? "bg-[#B07D4F] text-white"
-                    : "bg-[#1a1a1a] text-[#737373] hover:text-white"
+                    ? "bg-[var(--color-grey-900)] text-white"
+                    : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
                 }`}
               >
                 {tab === "all" ? "Alle" : tab === "favorites" ? "Favoritter" : "Nylige"}
@@ -165,7 +165,7 @@ export function ExerciseBankSheet({
           {/* Filter toggle */}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 mt-3 text-sm text-[#737373] hover:text-white transition-colors"
+            className="flex items-center gap-2 mt-3 text-sm text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors"
           >
             <Filter className="w-4 h-4" />
             Filtrer
@@ -177,7 +177,7 @@ export function ExerciseBankSheet({
             <div className="mt-3 space-y-3">
               {/* Pyramid filter */}
               <div>
-                <p className="text-[11px] text-[#737373] uppercase mb-2">Pyramide-niva</p>
+                <p className="text-[11px] text-[var(--color-grey-500)] uppercase mb-2">Pyramide-niva</p>
                 <div className="flex flex-wrap gap-1">
                   {(Object.keys(PYRAMID_LEVELS) as PyramidLevel[]).map((level) => (
                     <button
@@ -186,7 +186,7 @@ export function ExerciseBankSheet({
                       className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
                         selectedPyramid === level
                           ? "text-white"
-                          : "bg-[#262626] text-[#737373] hover:text-white"
+                          : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
                       }`}
                       style={{
                         backgroundColor:
@@ -201,7 +201,7 @@ export function ExerciseBankSheet({
 
               {/* Category filter */}
               <div>
-                <p className="text-[11px] text-[#737373] uppercase mb-2">Kategori</p>
+                <p className="text-[11px] text-[var(--color-grey-500)] uppercase mb-2">Kategori</p>
                 <div className="flex flex-wrap gap-1">
                   {(["FULL_SWING", "SHORT_GAME", "PUTTING"] as const).map((cat) => (
                     <button
@@ -209,8 +209,8 @@ export function ExerciseBankSheet({
                       onClick={() => setSelectedCategory(selectedCategory === cat ? null : cat)}
                       className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
                         selectedCategory === cat
-                          ? "bg-[#B07D4F] text-white"
-                          : "bg-[#262626] text-[#737373] hover:text-white"
+                          ? "bg-[var(--color-grey-900)] text-white"
+                          : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
                       }`}
                     >
                       {categoryLabels[cat]}
@@ -226,7 +226,7 @@ export function ExerciseBankSheet({
         <div className="flex-1 overflow-y-auto p-4">
           {Object.entries(groupedExercises).map(([category, exercises]) => (
             <div key={category} className="mb-6">
-              <h3 className="text-sm font-medium text-[#737373] uppercase mb-2">
+              <h3 className="text-sm font-medium text-[var(--color-grey-500)] uppercase mb-2">
                 {categoryLabels[category] || category}
               </h3>
               <div className="space-y-2">
@@ -236,31 +236,31 @@ export function ExerciseBankSheet({
                     <button
                       key={exercise.id}
                       onClick={() => onSelectExercise(exercise)}
-                      className="w-full text-left p-3 rounded-lg bg-[#1a1a1a] border border-[#333] hover:border-[#B07D4F] transition-colors"
+                      className="w-full text-left p-3 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] hover:border-[var(--color-grey-900)] transition-colors"
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-sm font-medium text-white truncate">
+                            <span className="text-sm font-medium text-[var(--color-grey-900)] truncate">
                               {exercise.name}
                             </span>
                             {bankEntry?.isFavorite && (
                               <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
                             )}
                           </div>
-                          <p className="text-xs text-[#737373] line-clamp-2 mb-2">
+                          <p className="text-xs text-[var(--color-grey-500)] line-clamp-2 mb-2">
                             {exercise.description}
                           </p>
                           <div className="flex items-center gap-2">
                             <PyramidTag level={exercise.pyramid as PyramidLevel} />
                             <AreaTag area={exercise.area as TrainingArea} />
-                            <span className="text-[11px] text-[#525252] flex items-center gap-1">
+                            <span className="text-[11px] text-[var(--color-grey-400)] flex items-center gap-1">
                               <Clock className="w-3 h-3" />
                               {exercise.minDurationMinutes}-{exercise.maxDurationMinutes} min
                             </span>
                           </div>
                         </div>
-                        <Plus className="w-5 h-5 text-[#737373] flex-shrink-0" />
+                        <Plus className="w-5 h-5 text-[var(--color-grey-500)] flex-shrink-0" />
                       </div>
                     </button>
                   );
@@ -271,17 +271,17 @@ export function ExerciseBankSheet({
 
           {filteredExercises.length === 0 && (
             <div className="text-center py-8">
-              <p className="text-[#737373]">Ingen ovelser funnet</p>
+              <p className="text-[var(--color-grey-500)]">Ingen ovelser funnet</p>
             </div>
           )}
         </div>
 
         {/* Create new button */}
         {onCreateNew && (
-          <div className="p-4 border-t border-[#333]">
+          <div className="p-4 border-t border-[var(--color-grey-200)]">
             <button
               onClick={onCreateNew}
-              className="w-full py-3 rounded-lg border border-dashed border-[#333] text-[#737373] hover:border-[#B07D4F] hover:text-[#B07D4F] transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-lg border border-dashed border-[var(--color-grey-200)] text-[var(--color-grey-500)] hover:border-[var(--color-grey-900)] hover:text-[var(--color-grey-900)] transition-colors flex items-center justify-center gap-2"
             >
               <Plus className="w-4 h-4" />
               Opprett ny ovelse

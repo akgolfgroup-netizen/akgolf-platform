@@ -55,29 +55,29 @@ export default async function TesterPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">Trackman Tester</h1>
-        <p className="text-[#A3A3A3] mt-1">
+        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Trackman Tester</h1>
+        <p className="text-[var(--color-grey-500)] mt-1">
           100 standardiserte tester for å måle og utvikle ditt spill
         </p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-[#112240] rounded-lg p-4 border border-[#1E3A5F]">
-          <p className="text-3xl font-bold text-white">{protocols.length}</p>
-          <p className="text-sm text-[#A3A3A3]">Tester tilgjengelig</p>
+        <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
+          <p className="text-3xl font-bold text-[var(--color-grey-900)]">{protocols.length}</p>
+          <p className="text-sm text-[var(--color-grey-500)]">Tester tilgjengelig</p>
         </div>
-        <div className="bg-[#112240] rounded-lg p-4 border border-[#1E3A5F]">
-          <p className="text-3xl font-bold text-white">{categories.length}</p>
-          <p className="text-sm text-[#A3A3A3]">Kategorier</p>
+        <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
+          <p className="text-3xl font-bold text-[var(--color-grey-900)]">{categories.length}</p>
+          <p className="text-sm text-[var(--color-grey-500)]">Kategorier</p>
         </div>
-        <div className="bg-[#112240] rounded-lg p-4 border border-[#1E3A5F]">
-          <p className="text-3xl font-bold text-[#B07D4F]">0</p>
-          <p className="text-sm text-[#A3A3A3]">Fullførte tester</p>
+        <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
+          <p className="text-3xl font-bold text-[var(--color-grey-900)]">0</p>
+          <p className="text-sm text-[var(--color-grey-500)]">Fullførte tester</p>
         </div>
-        <div className="bg-[#112240] rounded-lg p-4 border border-[#1E3A5F]">
-          <p className="text-3xl font-bold text-[#22C55E]">-</p>
-          <p className="text-sm text-[#A3A3A3]">Siste test</p>
+        <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
+          <p className="text-3xl font-bold text-[var(--color-success)]">-</p>
+          <p className="text-sm text-[var(--color-grey-500)]">Siste test</p>
         </div>
       </div>
 

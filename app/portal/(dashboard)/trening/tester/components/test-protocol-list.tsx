@@ -6,7 +6,6 @@ import {
   Clock,
   Target,
   ChevronRight,
-  Filter,
   Search,
   Zap,
   Crosshair,
@@ -61,12 +60,12 @@ const categoryIcons: Record<string, React.ElementType> = {
 };
 
 const difficultyColors: Record<string, string> = {
-  nybegynner: "bg-green-500/20 text-green-400",
-  rekrutt: "bg-blue-500/20 text-blue-400",
-  klubb: "bg-yellow-500/20 text-yellow-400",
-  regional: "bg-orange-500/20 text-orange-400",
-  nasjonal: "bg-red-500/20 text-red-400",
-  elite: "bg-purple-500/20 text-purple-400",
+  nybegynner: "bg-[var(--color-grey-100)] text-[var(--color-success)]",
+  rekrutt: "bg-[var(--color-grey-100)] text-[var(--color-info)]",
+  klubb: "bg-[var(--color-grey-100)] text-[var(--color-warning)]",
+  regional: "bg-[var(--color-grey-100)] text-[var(--color-grey-700)]",
+  nasjonal: "bg-[var(--color-grey-100)] text-[var(--color-error)]",
+  elite: "bg-[var(--color-grey-100)] text-[var(--color-grey-900)]",
 };
 
 const difficultyLabels: Record<string, string> = {
@@ -85,7 +84,6 @@ export function TestProtocolList({ categories, grouped, userCategory }: Props) {
 
   const difficulties = ["nybegynner", "rekrutt", "klubb", "regional", "nasjonal", "elite"];
 
-  // Filter protocols
   const filteredCategories = categories.filter((cat) => {
     if (selectedCategory && cat.key !== selectedCategory) return false;
     return true;
@@ -111,23 +109,21 @@ export function TestProtocolList({ categories, grouped, userCategory }: Props) {
     <div className="space-y-6">
       {/* Filters */}
       <div className="flex flex-wrap gap-4">
-        {/* Search */}
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A3A3A3]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-400)]" />
           <input
             type="text"
-            placeholder="Søk etter test..."
+            placeholder="Sok etter test..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-[#112240] border border-[#1E3A5F] rounded-lg text-white placeholder-[#A3A3A3] focus:outline-none focus:border-[#B07D4F]"
+            className="w-full pl-10 pr-4 py-2 bg-white border border-[var(--color-grey-200)] rounded-[12px] text-[var(--color-grey-900)] placeholder-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-400)]"
           />
         </div>
 
-        {/* Category filter */}
         <select
           value={selectedCategory ?? ""}
           onChange={(e) => setSelectedCategory(e.target.value || null)}
-          className="px-4 py-2 bg-[#112240] border border-[#1E3A5F] rounded-lg text-white focus:outline-none focus:border-[#B07D4F]"
+          className="px-4 py-2 bg-white border border-[var(--color-grey-200)] rounded-[12px] text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-400)]"
         >
           <option value="">Alle kategorier</option>
           {categories.map((cat) => (
@@ -137,13 +133,12 @@ export function TestProtocolList({ categories, grouped, userCategory }: Props) {
           ))}
         </select>
 
-        {/* Difficulty filter */}
         <select
           value={selectedDifficulty ?? ""}
           onChange={(e) => setSelectedDifficulty(e.target.value || null)}
-          className="px-4 py-2 bg-[#112240] border border-[#1E3A5F] rounded-lg text-white focus:outline-none focus:border-[#B07D4F]"
+          className="px-4 py-2 bg-white border border-[var(--color-grey-200)] rounded-[12px] text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-400)]"
         >
-          <option value="">Alle nivåer</option>
+          <option value="">Alle nivaer</option>
           {difficulties.map((diff) => (
             <option key={diff} value={diff}>
               {difficultyLabels[diff]}
@@ -162,44 +157,42 @@ export function TestProtocolList({ categories, grouped, userCategory }: Props) {
 
           return (
             <div key={cat.key} className="space-y-4">
-              {/* Category header */}
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#B07D4F]/20 flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-[#B07D4F]" />
+                <div className="w-10 h-10 rounded-[12px] bg-[var(--color-grey-100)] flex items-center justify-center">
+                  <Icon className="w-5 h-5 text-[var(--color-grey-900)]" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-white">{cat.label}</h2>
-                  <p className="text-sm text-[#A3A3A3]">{cat.description}</p>
+                  <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">{cat.label}</h2>
+                  <p className="text-sm text-[var(--color-grey-500)]">{cat.description}</p>
                 </div>
-                <span className="ml-auto text-sm text-[#A3A3A3]">
+                <span className="ml-auto text-sm text-[var(--color-grey-400)]">
                   {protocols.length} tester
                 </span>
               </div>
 
-              {/* Test cards */}
               <div className="grid gap-3">
                 {protocols.map((protocol) => (
                   <Link
                     key={protocol.id}
                     href={`/portal/trening/tester/${protocol.id}`}
-                    className="group bg-[#112240] border border-[#1E3A5F] rounded-lg p-4 hover:border-[#B07D4F] transition-colors"
+                    className="group bg-white border border-[var(--color-grey-200)] rounded-[20px] p-4 hover:border-[var(--color-grey-400)] transition-colors"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-medium text-white group-hover:text-[#B07D4F] transition-colors">
+                          <h3 className="font-medium text-[var(--color-grey-900)] group-hover:text-[var(--color-grey-600)] transition-colors">
                             {protocol.name}
                           </h3>
                           {protocol.is_official && (
-                            <span className="px-2 py-0.5 text-xs bg-[#B07D4F]/20 text-[#B07D4F] rounded">
+                            <span className="px-2 py-0.5 text-xs bg-[var(--color-grey-100)] text-[var(--color-grey-900)] rounded-full">
                               Offisiell
                             </span>
                           )}
                         </div>
-                        <p className="text-sm text-[#A3A3A3] line-clamp-1">
+                        <p className="text-sm text-[var(--color-grey-500)] line-clamp-1">
                           {protocol.description}
                         </p>
-                        <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-[#737373]">
+                        <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-[var(--color-grey-400)]">
                           <span className="flex items-center gap-1">
                             <Clock className="w-3 h-3" />
                             {protocol.duration_minutes} min
@@ -216,13 +209,13 @@ export function TestProtocolList({ categories, grouped, userCategory }: Props) {
                       </div>
                       <div className="flex items-center gap-3">
                         <span
-                          className={`px-2 py-1 text-xs rounded ${
-                            difficultyColors[protocol.difficulty] ?? "bg-gray-500/20 text-gray-400"
+                          className={`px-2 py-1 text-xs rounded-full ${
+                            difficultyColors[protocol.difficulty] ?? "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]"
                           }`}
                         >
                           {difficultyLabels[protocol.difficulty] ?? protocol.difficulty}
                         </span>
-                        <ChevronRight className="w-5 h-5 text-[#737373] group-hover:text-[#B07D4F] transition-colors" />
+                        <ChevronRight className="w-5 h-5 text-[var(--color-grey-400)] group-hover:text-[var(--color-grey-600)] transition-colors" />
                       </div>
                     </div>
                   </Link>

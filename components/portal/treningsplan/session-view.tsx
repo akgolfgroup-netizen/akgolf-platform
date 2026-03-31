@@ -170,7 +170,7 @@ export function SessionView({
           {editable && onAddExercise && (
             <button
               onClick={onAddExercise}
-              className="mt-3 w-full py-3 rounded-lg border border-dashed border-[#333] text-[#737373] hover:border-[#B07D4F] hover:text-[#B07D4F] transition-colors flex items-center justify-center gap-2"
+              className="mt-3 w-full py-3 rounded-lg border border-dashed border-[#333] text-[#737373] hover:border-[var(--color-grey-900)] hover:text-[var(--color-grey-900)] transition-colors flex items-center justify-center gap-2"
             >
               <Plus className="w-4 h-4" />
               Legg til ovelse
@@ -230,7 +230,7 @@ export function SessionView({
               <button
                 onClick={() => onSaveProgress(exercises)}
                 disabled={isSaving}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#B07D4F] text-white font-medium hover:bg-[#A06D3F] transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-black)] text-white font-medium hover:bg-[var(--color-grey-900)] transition-colors disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
                 Lagre

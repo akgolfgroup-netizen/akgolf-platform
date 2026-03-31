@@ -65,7 +65,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
       <div
         className="relative w-full max-w-md rounded-t-2xl sm:rounded-2xl p-6"
         style={{
-          background: "linear-gradient(180deg, #0A1929 0%, #0A1929 100%)",
+          background: "white",
           border: "1px solid var(--color-grey-200)",
         }}
       >
@@ -198,7 +198,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
             disabled={isPending}
             className="w-full py-2.5 rounded-xl text-sm font-semibold transition-opacity"
             style={{
-              background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
+              background: "var(--color-black)",
               color: "var(--color-grey-900)",
               opacity: isPending ? 0.7 : 1,
             }}

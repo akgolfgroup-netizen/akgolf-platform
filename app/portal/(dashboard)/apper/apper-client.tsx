@@ -213,7 +213,7 @@ export function ApperClient({
                       className="px-4 py-2 rounded-xl text-xs font-semibold transition-colors"
                       style={{
                         background: isPremium
-                          ? "linear-gradient(135deg, #c9a96e, #B07D4F)"
+                          ? "var(--color-black)"
                           : "var(--color-grey-200)",
                         color: isPremium ? "var(--color-grey-900)" : "var(--color-grey-900)",
                       }}

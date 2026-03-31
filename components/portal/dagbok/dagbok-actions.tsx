@@ -13,7 +13,7 @@ export function DagbokActions() {
         onClick={() => setSheetOpen(true)}
         className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-opacity hover:opacity-90"
         style={{
-          background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
+          background: "var(--color-black)",
           color: "var(--color-grey-900)",
         }}
       >

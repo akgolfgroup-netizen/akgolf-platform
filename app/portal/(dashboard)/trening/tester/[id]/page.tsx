@@ -68,7 +68,7 @@ export default async function TestDetailPage({ params }: Props) {
       {/* Back link */}
       <Link
         href="/portal/trening/tester"
-        className="inline-flex items-center gap-2 text-[#A3A3A3] hover:text-white transition-colors"
+        className="inline-flex items-center gap-2 text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Tilbake til tester
@@ -79,10 +79,10 @@ export default async function TestDetailPage({ params }: Props) {
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="px-2 py-1 text-xs bg-[#1E3A5F] text-[#A3A3A3] rounded">
+              <span className="px-2 py-1 text-xs bg-[var(--color-grey-100)] text-[var(--color-grey-500)] rounded">
                 {categoryLabels[protocol.category] ?? protocol.category}
               </span>
-              <span className="px-2 py-1 text-xs bg-[#B07D4F]/20 text-[#B07D4F] rounded">
+              <span className="px-2 py-1 text-xs bg-[var(--color-grey-100)] text-[var(--color-grey-900)] rounded">
                 {difficultyLabels[protocol.difficulty] ?? protocol.difficulty}
               </span>
               {protocol.is_official && (
@@ -91,34 +91,34 @@ export default async function TestDetailPage({ params }: Props) {
                 </span>
               )}
             </div>
-            <h1 className="text-2xl font-bold text-white">{protocol.name}</h1>
-            <p className="text-[#A3A3A3] mt-2">{protocol.description}</p>
+            <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">{protocol.name}</h1>
+            <p className="text-[var(--color-grey-500)] mt-2">{protocol.description}</p>
           </div>
         </div>
 
         {/* Quick stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-[#112240] rounded-lg p-4 border border-[#1E3A5F]">
-            <Clock className="w-5 h-5 text-[#B07D4F] mb-2" />
-            <p className="text-xl font-bold text-white">{protocol.duration_minutes} min</p>
-            <p className="text-sm text-[#A3A3A3]">Varighet</p>
+          <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
+            <Clock className="w-5 h-5 text-[var(--color-grey-900)] mb-2" />
+            <p className="text-xl font-bold text-[var(--color-grey-900)]">{protocol.duration_minutes} min</p>
+            <p className="text-sm text-[var(--color-grey-500)]">Varighet</p>
           </div>
-          <div className="bg-[#112240] rounded-lg p-4 border border-[#1E3A5F]">
-            <Target className="w-5 h-5 text-[#B07D4F] mb-2" />
-            <p className="text-xl font-bold text-white">{protocol.shots_required}</p>
-            <p className="text-sm text-[#A3A3A3]">Slag</p>
+          <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
+            <Target className="w-5 h-5 text-[var(--color-grey-900)] mb-2" />
+            <p className="text-xl font-bold text-[var(--color-grey-900)]">{protocol.shots_required}</p>
+            <p className="text-sm text-[var(--color-grey-500)]">Slag</p>
           </div>
-          <div className="bg-[#112240] rounded-lg p-4 border border-[#1E3A5F]">
-            <Dumbbell className="w-5 h-5 text-[#B07D4F] mb-2" />
-            <p className="text-xl font-bold text-white">{protocol.clubs?.length ?? 0}</p>
-            <p className="text-sm text-[#A3A3A3]">Køller</p>
+          <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
+            <Dumbbell className="w-5 h-5 text-[var(--color-grey-900)] mb-2" />
+            <p className="text-xl font-bold text-[var(--color-grey-900)]">{protocol.clubs?.length ?? 0}</p>
+            <p className="text-sm text-[var(--color-grey-500)]">Køller</p>
           </div>
-          <div className="bg-[#112240] rounded-lg p-4 border border-[#1E3A5F]">
-            <CheckCircle2 className="w-5 h-5 text-[#B07D4F] mb-2" />
-            <p className="text-xl font-bold text-white">
+          <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
+            <CheckCircle2 className="w-5 h-5 text-[var(--color-grey-900)] mb-2" />
+            <p className="text-xl font-bold text-[var(--color-grey-900)]">
               {protocol.min_category}-{protocol.max_category}
             </p>
-            <p className="text-sm text-[#A3A3A3]">Kategorier</p>
+            <p className="text-sm text-[var(--color-grey-500)]">Kategorier</p>
           </div>
         </div>
       </div>
@@ -126,11 +126,11 @@ export default async function TestDetailPage({ params }: Props) {
       {/* Content grid */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Instructions */}
-        <div className="bg-[#112240] rounded-lg p-6 border border-[#1E3A5F]">
-          <h2 className="text-lg font-semibold text-white mb-4">Instruksjoner</h2>
+        <div className="bg-white rounded-[20px] p-6 border border-[var(--color-grey-200)]">
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-4">Instruksjoner</h2>
           <div className="space-y-3">
             {protocol.instructions?.split("\n").map((line: string, i: number) => (
-              <p key={i} className="text-[#A3A3A3] text-sm">
+              <p key={i} className="text-[var(--color-grey-500)] text-sm">
                 {line}
               </p>
             ))}
@@ -138,15 +138,15 @@ export default async function TestDetailPage({ params }: Props) {
         </div>
 
         {/* Tips */}
-        <div className="bg-[#112240] rounded-lg p-6 border border-[#1E3A5F]">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-[20px] p-6 border border-[var(--color-grey-200)]">
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
             <Lightbulb className="w-5 h-5 text-yellow-400" />
             Tips
           </h2>
           <ul className="space-y-2">
             {protocol.tips?.map((tip: string, i: number) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-[#A3A3A3]">
-                <span className="text-[#B07D4F]">•</span>
+              <li key={i} className="flex items-start gap-2 text-sm text-[var(--color-grey-500)]">
+                <span className="text-[var(--color-grey-900)]">•</span>
                 {tip}
               </li>
             ))}
@@ -154,24 +154,24 @@ export default async function TestDetailPage({ params }: Props) {
         </div>
 
         {/* Equipment */}
-        <div className="bg-[#112240] rounded-lg p-6 border border-[#1E3A5F]">
-          <h2 className="text-lg font-semibold text-white mb-4">Utstyr</h2>
+        <div className="bg-white rounded-[20px] p-6 border border-[var(--color-grey-200)]">
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-4">Utstyr</h2>
           <div className="flex flex-wrap gap-2">
             {protocol.equipment_required?.map((item: string, i: number) => (
               <span
                 key={i}
-                className="px-3 py-1 bg-[#1E3A5F] text-[#A3A3A3] rounded-full text-sm"
+                className="px-3 py-1 bg-[var(--color-grey-100)] text-[var(--color-grey-500)] rounded-full text-sm"
               >
                 {item}
               </span>
             ))}
           </div>
-          <h3 className="text-sm font-medium text-white mt-4 mb-2">Køller</h3>
+          <h3 className="text-sm font-medium text-[var(--color-grey-900)] mt-4 mb-2">Køller</h3>
           <div className="flex flex-wrap gap-2">
             {protocol.clubs?.map((club: string, i: number) => (
               <span
                 key={i}
-                className="px-3 py-1 bg-[#B07D4F]/20 text-[#B07D4F] rounded-full text-sm"
+                className="px-3 py-1 bg-[var(--color-grey-100)] text-[var(--color-grey-900)] rounded-full text-sm"
               >
                 {club}
               </span>
@@ -180,13 +180,13 @@ export default async function TestDetailPage({ params }: Props) {
         </div>
 
         {/* Metrics */}
-        <div className="bg-[#112240] rounded-lg p-6 border border-[#1E3A5F]">
-          <h2 className="text-lg font-semibold text-white mb-4">Metrikker som spores</h2>
+        <div className="bg-white rounded-[20px] p-6 border border-[var(--color-grey-200)]">
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-4">Metrikker som spores</h2>
           <div className="flex flex-wrap gap-2">
             {protocol.metrics_tracked?.map((metric: string, i: number) => (
               <span
                 key={i}
-                className="px-3 py-1 bg-[#22C55E]/20 text-[#22C55E] rounded-full text-sm"
+                className="px-3 py-1 bg-[var(--color-success)]/20 text-[var(--color-success)] rounded-full text-sm"
               >
                 {metric.replace(/_/g, " ")}
               </span>
@@ -195,13 +195,13 @@ export default async function TestDetailPage({ params }: Props) {
 
           {protocol.passing_criteria && Object.keys(protocol.passing_criteria).length > 0 && (
             <>
-              <h3 className="text-sm font-medium text-white mt-4 mb-2">Bestått-kriterier</h3>
-              <div className="space-y-1 text-sm text-[#A3A3A3]">
+              <h3 className="text-sm font-medium text-[var(--color-grey-900)] mt-4 mb-2">Bestått-kriterier</h3>
+              <div className="space-y-1 text-sm text-[var(--color-grey-500)]">
                 {Object.entries(protocol.passing_criteria).map(([key, value]: [string, unknown]) => {
                   const criteria = value as { min?: number; max?: number; target?: number };
                   return (
                     <p key={key}>
-                      <span className="text-white">{key.replace(/_/g, " ")}:</span>{" "}
+                      <span className="text-[var(--color-grey-900)]">{key.replace(/_/g, " ")}:</span>{" "}
                       {criteria.min !== undefined && `min ${criteria.min}`}
                       {criteria.max !== undefined && ` max ${criteria.max}`}
                       {criteria.target !== undefined && ` mål ${criteria.target}`}
@@ -217,7 +217,7 @@ export default async function TestDetailPage({ params }: Props) {
       {/* Start test button */}
       <div className="flex justify-center pt-4">
         <button
-          className="flex items-center gap-3 px-8 py-4 bg-[#B07D4F] hover:bg-[#8E6340] text-white font-semibold rounded-lg transition-colors"
+          className="flex items-center gap-3 px-8 py-4 bg-[var(--color-black)] hover:bg-[var(--color-grey-800)] text-white font-semibold rounded-[980px] transition-colors"
         >
           <Play className="w-5 h-5" />
           Start Test

@@ -85,7 +85,7 @@ export function HandicapChart({ entries }: HandicapChartProps) {
         />
         <Tooltip
           contentStyle={{
-            background: "#0A1929",
+            background: "white",
             border: "1px solid var(--color-grey-200)",
             borderRadius: "8px",
             fontSize: "12px",

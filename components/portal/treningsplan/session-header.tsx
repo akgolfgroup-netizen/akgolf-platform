@@ -64,7 +64,7 @@ export function SessionHeader({
         {onStartSession && !isActive && (
           <button
             onClick={onStartSession}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#B07D4F] text-white font-medium hover:bg-[#A06D3F] transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-black)] text-white font-medium hover:bg-[var(--color-grey-900)] transition-colors"
           >
             <Play className="w-4 h-4" />
             Start okt
@@ -83,7 +83,7 @@ export function SessionHeader({
               {progress === 100 ? (
                 <CheckCircle className="w-6 h-6 text-green-400" />
               ) : (
-                <span className="text-sm font-semibold text-[#B07D4F]">{Math.round(progress)}%</span>
+                <span className="text-sm font-semibold text-[var(--color-grey-900)]">{Math.round(progress)}%</span>
               )}
             </div>
           </div>
@@ -95,7 +95,7 @@ export function SessionHeader({
         {/* Objective */}
         <div className="col-span-2">
           <div className="flex items-center gap-2 mb-2">
-            <Target className="w-4 h-4 text-[#B07D4F]" />
+            <Target className="w-4 h-4 text-[var(--color-grey-900)]" />
             <span className="text-[11px] text-[#737373] uppercase font-medium">Malsetning</span>
           </div>
           <p className="text-sm text-white">{session.objective}</p>
@@ -116,7 +116,7 @@ export function SessionHeader({
         {/* Duration & Intensity */}
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Clock className="w-4 h-4 text-[#B07D4F]" />
+            <Clock className="w-4 h-4 text-[var(--color-grey-900)]" />
             <span className="text-[11px] text-[#737373] uppercase font-medium">Varighet</span>
           </div>
           <p className="text-sm text-white">{session.durationMinutes} minutter</p>
@@ -131,7 +131,7 @@ export function SessionHeader({
         {/* Equipment */}
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Wrench className="w-4 h-4 text-[#B07D4F]" />
+            <Wrench className="w-4 h-4 text-[var(--color-grey-900)]" />
             <span className="text-[11px] text-[#737373] uppercase font-medium">Hjelpemidler</span>
           </div>
           <div className="flex flex-wrap gap-1">
@@ -198,7 +198,7 @@ export function SessionHeader({
       {isActive && (
         <div className="h-1 bg-[#262626]">
           <div
-            className="h-full bg-[#B07D4F] transition-all duration-300"
+            className="h-full bg-[var(--color-grey-900)] transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>

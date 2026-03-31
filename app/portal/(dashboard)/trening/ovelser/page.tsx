@@ -84,7 +84,7 @@ export default async function OvelserPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">Øvelser</h1>
+        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Øvelser</h1>
         <p className="text-[#A3A3A3] mt-1">
           Øvelsebibliotek basert på AK Masterdokument — fra fysisk grunnlag til turneringsmental
         </p>
@@ -100,12 +100,12 @@ export default async function OvelserPage() {
           return (
             <div
               key={level}
-              className="bg-[#112240] rounded-lg p-4 border border-[#1E3A5F]"
+              className="bg-white rounded-lg p-4 border border-[var(--color-grey-200)]"
             >
               <div className={`w-8 h-8 rounded-lg ${config?.color.split(" ")[1]} flex items-center justify-center mb-2`}>
                 <Icon className={`w-4 h-4 ${config?.color.split(" ")[0]}`} />
               </div>
-              <p className="text-2xl font-bold text-white">{count}</p>
+              <p className="text-2xl font-bold text-[var(--color-grey-900)]">{count}</p>
               <p className="text-sm text-[#A3A3A3]">{config?.label ?? level}</p>
             </div>
           );
@@ -113,8 +113,8 @@ export default async function OvelserPage() {
       </div>
 
       {/* Pyramid visualization */}
-      <div className="bg-[#112240] rounded-lg p-6 border border-[#1E3A5F]">
-        <h2 className="text-lg font-semibold text-white mb-4">AK Treningspyramiden</h2>
+      <div className="bg-white rounded-lg p-6 border border-[var(--color-grey-200)]">
+        <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-4">AK Treningspyramiden</h2>
         <div className="flex flex-col items-center gap-1">
           {[...pyramidOrder].reverse().map((level, i) => {
             const config = pyramidLabels[level];
@@ -151,7 +151,7 @@ export default async function OvelserPage() {
                   <Icon className={`w-5 h-5 ${config?.color.split(" ")[0]}`} />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-white">{config?.label}</h2>
+                  <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">{config?.label}</h2>
                   <p className="text-sm text-[#A3A3A3]">{levelDrills.length} øvelser</p>
                 </div>
               </div>
@@ -161,12 +161,12 @@ export default async function OvelserPage() {
                 {levelDrills.map((drill) => (
                   <div
                     key={drill.id}
-                    className="group bg-[#112240] border border-[#1E3A5F] rounded-lg p-4 hover:border-[#B07D4F] transition-colors"
+                    className="group bg-white border border-[var(--color-grey-200)] rounded-lg p-4 hover:border-[var(--color-grey-900)] transition-colors"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-medium text-white group-hover:text-[#B07D4F] transition-colors">
+                          <h3 className="font-medium text-[var(--color-grey-900)] group-hover:text-[var(--color-grey-600)] transition-colors">
                             {drill.name}
                           </h3>
                         </div>

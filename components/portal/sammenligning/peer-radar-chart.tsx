@@ -71,11 +71,11 @@ export function PeerRadarChart({ myStats, peerStats, comparisonLabel = "Gruppe" 
           <Radar
             name="Du"
             dataKey="du"
-            stroke="#B07D4F"
-            fill="#B07D4F"
+            stroke="var(--color-grey-900)"
+            fill="var(--color-grey-900)"
             fillOpacity={0.2}
             strokeWidth={2}
-            dot={{ fill: "#B07D4F", r: 3 }}
+            dot={{ fill: "var(--color-grey-900)", r: 3 }}
           />
         </RadarChart>
       </ResponsiveContainer>

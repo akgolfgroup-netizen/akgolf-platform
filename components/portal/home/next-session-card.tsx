@@ -100,8 +100,8 @@ export function NextSessionCard({ session }: NextSessionCardProps) {
 
         {isUrgent && (
           <BorderBeam
-            colorFrom="#B07D4F"
-            colorTo="rgba(176, 125, 79, 0.3)"
+            colorFrom="var(--color-grey-900)"
+            colorTo="rgba(29, 29, 31, 0.3)"
             duration={4}
             size={200}
           />

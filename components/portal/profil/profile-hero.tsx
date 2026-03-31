@@ -20,7 +20,7 @@ const roleLabelMap: Record<string, string> = {
 const tierConfig: Record<string, { label: string; color: string; bg: string; border: string }> = {
   FREE: { label: "Free", color: "#8a9bb0", bg: "rgba(138,155,176,0.1)", border: "rgba(138,155,176,0.2)" },
   PRO: { label: "Pro", color: "#38BDF8", bg: "rgba(56,189,248,0.1)", border: "rgba(56,189,248,0.25)" },
-  ELITE: { label: "Elite", color: "#B07D4F", bg: "var(--color-grey-200)", border: "var(--color-grey-200)" },
+  ELITE: { label: "Elite", color: "var(--color-grey-900)", bg: "var(--color-grey-200)", border: "var(--color-grey-200)" },
 };
 
 export function ProfileHero({ name, image, role, subscriptionTier, currentHandicap }: ProfileHeroProps) {
@@ -55,7 +55,7 @@ export function ProfileHero({ name, image, role, subscriptionTier, currentHandic
         >
           <div
             className="w-24 h-24 rounded-2xl overflow-hidden flex items-center justify-center text-2xl font-black"
-            style={{ background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)", color: "#0A1929" }}
+            style={{ background: "var(--color-grey-200)", color: "var(--color-grey-900)" }}
           >
             {image ? (
               <img src={image} alt={name ?? ""} className="w-full h-full object-cover" />

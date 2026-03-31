@@ -44,7 +44,7 @@ export function StatsGrid({ trainingSessions, coachingSessions, tournaments, str
       sublabel: "planlagt",
       value: tournaments,
       icon: Trophy,
-      color: "#B07D4F",
+      color: "#F59E0B",
     },
     {
       label: "Streak",

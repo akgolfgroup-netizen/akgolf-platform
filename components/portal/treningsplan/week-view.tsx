@@ -37,7 +37,7 @@ const focusColors: Record<string, { bg: string; border: string; text: string; ic
     bg: "var(--color-grey-200)",
     border: "var(--color-grey-200)",
     text: "#E8D4B0",
-    icon: "#B07D4F"
+    icon: "var(--color-grey-600)"
   },
   putting: {
     bg: "rgba(34,197,94,0.15)",
