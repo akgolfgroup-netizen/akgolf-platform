@@ -255,26 +255,49 @@ Supabase Auth (ingen NextAuth/Auth.js):
 
 ## Styling & Design System
 
-### Colors (Brand System v5.0 Final — Monokrom + Signal)
+### Brand Guide 2026 — Apple Light (GJELDENDE)
 
-- **Ink-skala:** Nøytral grå fra `#F5F5F5` (05) til `#000000` (100)
-- **Primær:** `#000000` (svart bokstaver)
-- **Bronse (Academy):** `#B07D4F` (primær), `#F3EBE2` (light), `#8E6340` (dark)
-- **Sub-brand:** Academy=Bronse `#B07D4F`, Software=Blå `#38BDF8`, Utvikling=Grønn `#10B981`
-- **Overflater:** Snow `#F5F5F5`, Warm `#F3EBE2`
-- **Semantisk:** Success `#10B981`, Error `#EF4444`, Warning `#F59E0B`, Info `#38BDF8`
+**Offisiell kilde:** `Google Drive/AK Golf Group/ak-golf-academy/branding/2026/`
+- `design-tokens.css` — Offisielle CSS-tokens
+- `brand-guide.md` — Komplett brand guide
+
+### Colors — Monokrom (INGEN aksent-farger)
+
+| Token | Hex | Bruk |
+|-------|-----|------|
+| `--color-black` | `#1D1D1F` | Tekst, logo, primær-knapper |
+| `--color-white` | `#FFFFFF` | Bakgrunn |
+| `--color-grey-50` | `#FBFBFD` | Lyseste bakgrunn |
+| `--color-grey-100` | `#F5F5F7` | Sekundær bakgrunn |
+| `--color-grey-200` | `#E8E8ED` | Borders, dividers |
+| `--color-grey-300` | `#D2D2D7` | Inactive states |
+| `--color-grey-400` | `#86868B` | Muted text |
+| `--color-grey-500` | `#6E6E73` | Secondary text |
+| `--color-grey-900` | `#1D1D1F` | Primary text |
+
+**Semantisk:** Success `#34C759`, Error `#FF3B30`, Warning `#FF9500`, Info `#007AFF`
+
+**UTDATERT — ALDRI bruk:** `--color-gold`, `#B07D4F` (bronse), `--apple-gold-*`, `--color-ink-*` (dark theme)
 
 ### Typography
 
-- **Font:** Manrope (variabel, 300–700) via `next/font/local` i `layout.tsx`
-- Headings: `font-display` (= Manrope), weight 700, tracking -0.02em
-- Body: `font-sans` (= Manrope)
-- Alle font-variabler definert som CSS custom properties i `globals.css`
+- **Font:** Inter via `next/font/google` i `app/layout.tsx`
+- H1: 3.5-5rem, weight 700, tracking -0.03em
+- H2: 2.5rem, weight 700, tracking -0.025em
+- Body: 1rem, weight 400
+- Alle tokens definert i `globals.css` under `@theme inline`
+
+### Komponenter
+
+- **Knapper:** Pill-form (border-radius: 980px), svart bakgrunn, hvit tekst
+- **Cards:** Hvit bg, 1px border `#E8E8ED`, radius 20px, subtil skygge
+- **Header:** 48px, glassmorfisme (backdrop-filter: blur)
 
 ### Logo
 
 - Kalligrafisk AK-mark SVG i `components/website/AKLogo.tsx`
-- Svarte bokstaver + kontekstavhengig prikk-farge (bronse/blå/grønn)
+- Svart på lys bakgrunn, hvit på mørk bakgrunn
+- Aldri aksent-farger i lys modus
 
 ## Environment Variables
 

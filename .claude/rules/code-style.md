@@ -56,23 +56,37 @@ import { HERO_CONTENT } from "@/lib/website-constants";
 
 ## Styling
 
-### Design tokens (Brand System v5.0 Final)
-Definert i `globals.css` med `@theme inline`:
+### Design tokens (Brand Guide 2026 — Apple Light)
+
+**Offisiell kilde:** `Google Drive/AK Golf Group/ak-golf-academy/branding/2026/design-tokens.css`
+
+Monokrom Apple-inspirert design. **Ingen aksent-farger** (ingen bronse/gull):
 ```css
---color-navy: #000000;         /* Svart */
---color-gold: #B07D4F;         /* Bronse */
---color-ink-deep: #000000;     /* Svart */
+--color-black: #1D1D1F;       /* Tekst, logo, knapper */
+--color-white: #FFFFFF;        /* Bakgrunn */
+--color-grey-100: #F5F5F7;    /* Sekundær bakgrunn */
+--color-grey-200: #E8E8ED;    /* Borders, dividers */
+--color-grey-400: #86868B;    /* Muted text */
+--color-grey-500: #6E6E73;    /* Secondary text */
+--color-grey-900: #1D1D1F;    /* Primary text */
 ```
 
-### Sub-brand farger (Monokrom + Signal)
-| Side | Aksent |
-|------|--------|
-| Academy | Bronse #B07D4F |
-| Software | Blå #38BDF8 |
-| Utvikling | Grønn #10B981 |
+### Farger — KUN monokrom
+| Element | Farge |
+|---------|-------|
+| Primær tekst | `#1D1D1F` (svart) |
+| Sekundær tekst | `#6E6E73` (grey-500) |
+| Borders | `#E8E8ED` (grey-200) |
+| Bakgrunn | `#FFFFFF` (hvit) |
+| Sekundær bg | `#F5F5F7` (grey-100) |
+| Knapper primær | `#1D1D1F` bg, `#FFFFFF` tekst |
+| Success | `#34C759` |
+| Error | `#FF3B30` |
+
+**ALDRI bruk:** `--color-gold`, `--apple-gold-*`, `#B07D4F` (bronse), `--color-ink-*` (dark theme)
 
 ### Font
-Manrope via `next/font/local` — ALDRI importer fra Google Fonts direkte.
+Inter via `next/font/google` — definert i `app/layout.tsx`.
 
 ## Animasjoner
 

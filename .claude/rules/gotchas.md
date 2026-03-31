@@ -227,6 +227,29 @@ export async function GET(req: NextRequest) {
 
 **Fikset 2026-03-29:** 6 filer — booking-API-er, waitlist, XSS i feilmelding.
 
+## 20. Utdaterte design tokens — ALDRI bruk
+
+**Problem:** Kodebasen hadde 61+ referanser til `--apple-gold-*` tokens som ikke eksisterte i CSS, pluss `--color-gold: #B07D4F` (bronse) og `--color-ink-*` (dark theme).
+
+**Status:** Fikset 2026-03-30/31 — alle 150+ filer migrert til offisielle Brand Guide 2026 tokens.
+
+**Løsning:** Bruk KUN offisielle tokens fra `design-tokens.css`:
+```css
+/* RIKTIG — Offisielle 2026 tokens */
+--color-black: #1D1D1F;
+--color-grey-100: #F5F5F7;
+--color-grey-200: #E8E8ED;
+--color-grey-500: #6E6E73;
+
+/* FEIL — Utdaterte tokens som ALDRI skal brukes */
+--color-gold: #B07D4F;        /* Bronse — fjernet */
+--apple-gold-*;               /* Aldri definert — fjernet */
+--color-ink-*;                /* Dark theme — fjernet */
+#112240, #0A1929, #1E3A5F;   /* Navy dark — fjernet */
+```
+
+**Kilde:** `Google Drive/AK Golf Group/ak-golf-academy/branding/2026/design-tokens.css`
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer
