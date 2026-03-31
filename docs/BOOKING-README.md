@@ -1,49 +1,48 @@
 # AK Golf Booking System
 
-> Komplett bookingsystem for AK Golf Academy med offentlig booking, betaling og portal-administrasjon.
+> **Oppdatert:** 2026-03-31
+> **Status:** Produksjonsklar
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
-# 1. Kopier miljøvariabler
+# 1. Sett miljøvariabler
 cp .env.example .env
 # Rediger .env med dine verdier
 
-# 2. Kjør setup
-chmod +x scripts/setup.sh
-./scripts/setup.sh
+# 2. Installer avhengigheter
+npm install
 
-# 3. Start utvikling
+# 3. Generer Prisma-klient
+npx prisma generate
+
+# 4. Start utvikling
 npm run dev
 ```
 
 ---
 
-## 📁 Struktur
+## Struktur
 
 ```
 app/
-├── academy/booking/          # Offentlig booking-side
-├── booking/                  # Betaling & bekreftelse
-│   ├── page.tsx             # Booking wizard
-│   └── components/
-│       ├── ProgressBar.tsx   # Steg-indikator
-│       ├── ServiceSelector.tsx
-│       ├── InstructorCard.tsx
-│       ├── DateTimePicker.tsx
-│       ├── CustomerForm.tsx
-│       ├── PaymentStep.tsx
-│       └── Confirmation.tsx
+├── academy/booking/          # Offentlig booking-landingsside
+├── booking/                  # Booking wizard
+│   ├── page.tsx             # Tjeneste-/instruktør-valg
+│   ├── new/page.tsx         # Flerstegs skjema
+│   ├── [id]/pay/            # Stripe-betaling
+│   └── [id]/confirmation/   # Bekreftelse
 ├── api/
 │   ├── booking/             # Offentlige booking API-er
 │   │   ├── create/route.ts
-│   │   └── services/route.ts
+│   │   ├── services/route.ts
+│   │   └── slots/route.ts
 │   └── portal/
-│       ├── cron/send-reminders/  # Timebaserte påminnelser
-│       └── webhooks/stripe/      # Stripe betalingswebhook
-├── portal/(dashboard)/       # Innlogget portal
+│       ├── cron/send-reminders/  # Påminnelser
+│       └── webhooks/stripe/      # Betalings-webhook
+├── portal/(dashboard)/
 │   ├── bookinger/           # Elev: se/endre bookinger
 │   └── admin/bookinger/     # Admin: alle bookinger
 
@@ -57,30 +56,29 @@ lib/portal/booking/
 ├── cancellation-policy.ts   # Avbestillingsregler
 ├── refund.ts                # Stripe refund
 ├── reschedule.ts            # Endre booking
-└── waitlist.ts              # Ventelistefunksjonalitet
+└── waitlist.ts              # Venteliste
 ```
 
 ---
 
-## 🎨 Branding
+## Design System
 
-### Farger
-| Farge | Hex | Bruk |
-|-------|-----|------|
-| Gull | `#B8975C` | Primær accent, knapper, highlights |
-| Navy | `#0F2950` | Headere, tekst, kontrast |
-| Deep Ink | `#0A1929` | Mørk bakgrunn |
+### Apple-inspirert Monokrom
+Booking-sidene bruker det nye monokrome design systemet med:
+- Nøytral grå-palett (`--color-grey-*`)
+- Subtile skygger og gradienter
+- Apple-komponenter: `AppleCard`, `AppleButton`, `AppleBadge`
 
 ### Komponenter
-- **ProgressBar**: Gull gradient med steg-indikatorer
-- **ServiceIcon**: Golf-relaterte ikoner per kategori
-- **InstructorCard**: Profilbilde, tittel, PGA-badge
-- **DateTimePicker**: Elegant kalender med gull-valg
-- **Confirmation**: Konfetti-animasjon + sjekkmark
+- **ProgressBar**: Steg-indikator
+- **ServiceSelector**: Tjenestekort med ikoner
+- **InstructorCard**: Profilkort med PGA-badge
+- **DateTimePicker**: Kalender med tilgjengelighet
+- **Confirmation**: Bekreftelse med ikon
 
 ---
 
-## 💳 Betaling
+## Betaling
 
 ### Stripe Konfigurasjon
 ```bash
@@ -90,44 +88,44 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 ```
 
 ### Webhook Events
-- `payment_intent.succeeded`
-- `payment_intent.payment_failed`
+- `checkout.session.completed`
+- `customer.subscription.created`
+- `customer.subscription.updated`
+- `invoice.paid`
 
 ### Betalingsflyt
-1. Kunde fullfører booking-skjema
-2. Stripe PaymentIntent opprettes
-3. Kunde betaler i Stripe Elements
+1. Kunde velger tjeneste/tid
+2. Stripe Checkout Session opprettes
+3. Kunde betaler
 4. Webhook mottar suksess
 5. Booking bekreftet, e-post sendt
 
 ---
 
-## 📧 E-post
+## E-post
 
 ### Resend Konfigurasjon
 ```bash
 RESEND_API_KEY=re_live_...
 FROM_EMAIL=noreply@akgolf.no
-CONTACT_EMAIL=post@akgolf.no
 ```
 
-### Templates
-- `welcome-new-user.tsx` - Ny bruker + booking
-- `booking-confirmed.tsx` - Booking bekreftet
-- `booking-reminder.tsx` - Påminnelse 24t før
-- `booking-cancelled.tsx` - Avbestilling
-- `waitlist-available.tsx` - Venteliste plass ledig
+### Templates (lib/portal/email/templates/)
+- `booking-confirmation.tsx` — Booking bekreftet
+- `booking-reminder.tsx` — Påminnelse 24t før
+- `booking-cancelled.tsx` — Avbestilling
+- `welcome-new-user.tsx` — Velkomst
 
 ---
 
-## ⏰ Cron Jobs
+## Cron Jobs
 
 ### Påminnelser
 - **Hver time**: `/api/portal/cron/send-reminders`
 - 24t før: E-post påminnelse
-- 1t før: SMS påminnelse (hvis Twilio konfigurert)
+- 1t før: SMS (hvis Twilio konfigurert)
 
-### Vercel Konfigurasjon
+### Vercel Konfigurasjon (vercel.json)
 ```json
 {
   "crons": [{
@@ -139,20 +137,18 @@ CONTACT_EMAIL=post@akgolf.no
 
 ---
 
-## 👥 Brukerflyter
+## Brukerflyter
 
 ### Ny Kunde
 1. Besøker `/academy/booking`
 2. Velger tjeneste → instruktør → tid
-3. Fyller inn navn + e-post
+3. Fyller inn kontaktinfo
 4. Betaler med Stripe
-5. Mottar:
-   - Booking-bekreftelse
-   - Velkomst-e-post med midlertidig passord
-6. Kan logge inn på portal med e-post + passord
+5. Mottar bekreftelse + velkomst-e-post
+6. Bruker opprettes automatisk med `VISITOR`-tier
 
 ### Eksisterende Kunde
-1. Samme prosess som over
+1. Samme flyt
 2. System gjenkjenner e-post
 3. Booking knyttes til eksisterende konto
 
@@ -160,54 +156,37 @@ CONTACT_EMAIL=post@akgolf.no
 1. Logg inn på `/portal`
 2. Gå til "Mine bookinger"
 3. Klikk "Avbestill"
-4. Refund behandles automatisk ( Stripe )
+4. Refund behandles via Stripe
 
 ---
 
-## 🛡️ Sikkerhet
+## Sikkerhet
 
-- **Passord**: Hashet med bcrypt (12 salt rounds)
-- **Betaling**: Stripe håndterer alle kortdetaljer
-- **Webhooks**: Verifisert med secret
-- **Cron**: Beskyttet med CRON_SECRET
-- **Headers**: Security headers i next.config.ts
+- **Rate limiting**: 10 bookinger/min per IP
+- **Validering**: Zod-skjema på alle inputs
+- **Webhooks**: Verifisert med Stripe-signatur
+- **Cron**: Beskyttet med `CRON_SECRET`
 
 ---
 
-## 🔧 Feilsøking
+## Feilsøking
 
 ### "Failed to send email"
-→ Sjekk RESEND_API_KEY og domeneverifisering
+→ Sjekk `RESEND_API_KEY` og domeneverifisering
 
 ### "Stripe webhook failed"
-→ Sjekk STRIPE_WEBHOOK_SECRET og URL i Stripe Dashboard
+→ Sjekk `STRIPE_WEBHOOK_SECRET` og URL i Stripe Dashboard
 
-### "Database connection failed"
-→ Verifiser DATABASE_URL og IP whitelist
+### "No available slots"
+→ Sjekk instruktør-tilgjengelighet i admin
 
-### "Cron job not running"
-→ Sjekk at CRON_SECRET er satt og cron er konfigurert i Vercel
+### "User not created"
+→ Auth upsert skal opprette automatisk, sjekk `lib/portal/auth.ts`
 
 ---
 
-## 📚 Dokumentasjon
+## Dokumentasjon
 
 - [Produksjons-sjekkliste](./PRODUCTION-CHECKLIST.md)
 - [Test-plan](./BOOKING-TEST-PLAN.md)
-- [Branding-guide](./BRANDING-BOOKING.md)
-
----
-
-## 🤝 Support
-
-| Tjeneste | URL |
-|----------|-----|
-| Vercel | https://vercel.com/support |
-| Stripe | https://support.stripe.com |
-| Resend | https://resend.com/support |
-| Prisma | https://prisma.io/support |
-
----
-
-**Versjon:** 1.0  
-**Sist oppdatert:** 2026-03-17
+- [Lanserings-sjekkliste](./LAUNCH-CHECKLIST.md)

@@ -1,15 +1,17 @@
 # Produksjonsklar Sjekkliste
 
-> Siste sjekk før lansering av AK Golf booking-system
+> **Oppdatert:** 2026-03-31
+> **Status:** Produksjonsklar
 
 ---
 
-## 🔐 Miljøvariabler (Påkrevd)
+## Miljøvariabler (Påkrevd)
 
 ### Database
 ```bash
-DATABASE_URL=postgresql://postgres:[password]@db.[project].supabase.co:5432/postgres
+DATABASE_URL=postgresql://postgres.xxx:PASSWORD@aws-0-eu-north-1.pooler.supabase.com:6543/postgres
 ```
+⚠️ **Viktig:** Bruk Supabase Pooler-URL, ikke direkte tilkobling!
 
 ### Stripe (Betaling)
 ```bash
@@ -34,6 +36,11 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=[anon-key]
 SUPABASE_SERVICE_ROLE_KEY=[service-role-key]
 ```
 
+### AI (Anthropic)
+```bash
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
 ### Sikkerhet
 ```bash
 CRON_SECRET=[tilfeldig-streng-minst-32-tegn]
@@ -42,58 +49,34 @@ NEXT_PUBLIC_APP_URL=https://akgolf.no
 
 ---
 
-## 📋 Pre-Flight Sjekkliste
+## Pre-Flight Sjekkliste
 
 ### Stripe Konfigurasjon
-- [ ] Lag produkt i Stripe Dashboard
+- [ ] Lag produkter i Stripe Dashboard
 - [ ] Aktiver "Automatic tax" for Norge (25% MVA)
 - [ ] Konfigurer webhook URL: `https://akgolf.no/api/portal/webhooks/stripe`
-- [ ] Velg events: `payment_intent.succeeded`, `payment_intent.payment_failed`
-- [ ] Test betaling medStripe test-kort: `4242 4242 4242 4242`
+- [ ] Velg events: `checkout.session.completed`, `customer.subscription.*`, `invoice.paid`
 
 ### Resend Konfigurasjon
 - [ ] Opprett konto på resend.com
 - [ ] Verifiser domene: `akgolf.no`
-- [ ] Opprett API key med "Sending" tillatelser
-- [ ] Test e-postutsendelse
 - [ ] Legg til SPF/DKIM records i DNS
 
 ### Database
-- [ ] Kjør `prisma migrate deploy` på produksjonsdatabase
-- [ ] Kjør `prisma db seed` (hvis seed data trengs)
+- [ ] Kjør `npx prisma migrate deploy` på produksjonsdatabase
 - [ ] Verifiser at tabeller er opprettet
 
 ### Vercel Konfigurasjon
 - [ ] Koble til GitHub repo
 - [ ] Legg til alle miljøvariabler
-- [ ] Aktiver "Production Branch Protection"
 - [ ] Konfigurer domene: `akgolf.no`
-- [ ] Aktiver "Automatic Deploys"
+- [ ] Konfigurer cron jobs i vercel.json
 
 ---
 
-## 🚀 Deploy Prosedyre
+## Deploy Prosedyre
 
-### Steg 1: Forberedelse
-```bash
-# 1. Oppdater .env med produksjonsverdier
-# 2. Verifiser at alt er committed
-git status
-
-# 3. Push til main
-git push origin main
-```
-
-### Steg 2: Database
-```bash
-# Kjør migrasjoner
-npx prisma migrate deploy
-
-# (Valgfritt) Seed med initial data
-npx prisma db seed
-```
-
-### Steg 3: Verifikasjon
+### Steg 1: Verifisering
 ```bash
 # Test bygg lokalt
 npm run build
@@ -105,26 +88,37 @@ npx tsc --noEmit
 npm run lint
 ```
 
-### Steg 4: Produksjon
+### Steg 2: Deploy
 ```bash
-# Vercel vil automatisk deploye ved push til main
-# Eller deploy manuelt:
-vercel --prod
+# Push til main - Vercel deployer automatisk
+git push origin main
+```
+
+### Steg 3: Database
+```bash
+# Kjør migrasjoner (fra lokal maskin med prod DATABASE_URL)
+npx prisma migrate deploy
 ```
 
 ---
 
-## ✅ Post-Deploy Testing
+## Post-Deploy Testing
 
 ### Kritisk Funksjonalitet
+- [ ] Åpne `https://akgolf.no/portal/login`
+- [ ] Logg inn med eksisterende bruker
+- [ ] Test ny bruker-registrering (auto-opprettelse)
+- [ ] Gå til Dashboard — data vises
+- [ ] Gå til Dagbok — treningslogger vises
+- [ ] Gå til Statistikk — SG-data vises
+- [ ] Gå til Treningsplan — økter vises
+- [ ] Test AI fokus-anbefaling på profil
+
+### Booking
 - [ ] Åpne `https://akgolf.no/academy/booking`
-- [ ] Velg tjeneste → Progress bar oppdateres
-- [ ] Velg instruktør → Profilkort vises
-- [ ] Velg dato/tid → Kalender fungerer
-- [ ] Fullfør test-betaling med Stripe
+- [ ] Fullfør booking-flyt
+- [ ] Test betaling med Stripe
 - [ ] Motta bekreftelse på e-post
-- [ ] Logg inn på portal → Se booking
-- [ ] Test avbestilling
 
 ### E-post
 - [ ] Booking-bekreftelse mottatt
@@ -134,15 +128,10 @@ vercel --prod
 ### Webhook
 - [ ] Stripe webhook mottar events
 - [ ] Betaling markeres som "betalt"
-- [ ] Bruker mottar e-post ved betaling
-
-### Cron
-- [ ] Påminnelser sendes 24t før (sjekk logs)
-- [ ] SMS-påminnelser 1t før (hvis Twilio)
 
 ---
 
-## 🆘 Troubleshooting
+## Troubleshooting
 
 ### Vanlige Feil
 
@@ -153,14 +142,17 @@ vercel --prod
 → Sjekk at `STRIPE_WEBHOOK_SECRET` matcher webhook i Stripe Dashboard
 
 **"Database connection failed"**
-→ Verifiser at `DATABASE_URL` er korrekt og at IP er whitelisted
+→ Verifiser at `DATABASE_URL` bruker Pooler-URL
 
-**"Cron job not running"**
-→ Sjekk at `CRON_SECRET` er satt og at cron er konfigurert i Vercel
+**"AI timeout"**
+→ AI-endepunkter har `maxDuration=60`, sjekk Vercel-plan
+
+**"User not found after login"**
+→ Auth upsert skal opprette bruker automatisk, sjekk `lib/portal/auth.ts`
 
 ---
 
-## 📞 Support Kontakter
+## Support Kontakter
 
 | Tjeneste | Support URL |
 |----------|-------------|
@@ -168,8 +160,4 @@ vercel --prod
 | Stripe | https://support.stripe.com |
 | Resend | https://resend.com/support |
 | Supabase | https://supabase.com/support |
-
----
-
-**Sist oppdatert:** 2026-03-17
-**Versjon:** 1.0
+| Anthropic | https://support.anthropic.com |

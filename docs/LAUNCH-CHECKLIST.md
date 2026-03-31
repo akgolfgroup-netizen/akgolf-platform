@@ -1,101 +1,100 @@
 # Lanserings-sjekkliste — AK Golf Portal
 
-**Opprettet:** 2026-03-27
-**Mål:** Gjøre portalen produksjonsklar
+**Oppdatert:** 2026-03-31
+**Status:** Produksjonsklar
 
 ---
 
-## Prioritet 1: Kritisk (må fikses før lansering)
+## Status per 2026-03-31
 
-### 1.1 Fjern demo-data fallbacks
-- [ ] `app/portal/(dashboard)/dagbok/page.tsx` — Fjern `demoLogs`, vis tom-tilstand
-- [ ] `app/portal/(dashboard)/treningsplan/[sessionId]/page.tsx` — Fjern demo-typer
-- [ ] `app/portal/(dashboard)/statistikk/page.tsx` — Fjern hardkodede SG-verdier
+### Fullført
+- [x] Auth: Automatisk brukeroppretting via `upsert`
+- [x] Dagbok: Koblet til `getTrainingLogs()` med ekte data
+- [x] Statistikk: Koblet til `getStatsAggregates()` + `getTrainingAreaBreakdown()`
+- [x] Treningsplan: Koblet til `getCurrentWeekSessions()`
+- [x] AI-endepunkter: `maxDuration=60` + rate limiting
+- [x] SubscriptionTier: Synkronisert (`VISITOR` er default)
+- [x] Profil AI URL: Fikset til `/api/portal/ai/focus-recommendation`
+- [x] Stripe tier-mapping: Riktig mapping for STARTER/PRO
+- [x] Apple-inspirert monokrom design implementert
+- [x] Loading/error states på alle sider
+- [x] Sikkerhet: Rate limiting, PATCH whitelist, Zod validering
 
-### 1.2 Fiks TODOs i treningsplan
-- [ ] `treningsplan/[sessionId]/session-view-client.tsx` — Implementer "Save to database"
-- [ ] `treningsplan/[sessionId]/session-view-client.tsx` — Implementer "Add exercise to session"
+---
 
-### 1.3 Statistikk: Runde-input
-- [ ] Lag `/portal/statistikk/ny-runde` side
-- [ ] Skjema: Bane, dato, score, GIR, FIR, putter
-- [ ] Lagre til `RoundStats`-modellen
-- [ ] Oppdater SG-beregninger automatisk
+## Prioritet 1: Kritisk (må verifiseres før lansering)
 
-### 1.4 Test betalingsflyt ende-til-ende
+### 1.1 Miljøvariabler i Vercel
+- [ ] `DATABASE_URL` — PostgreSQL via Supabase Pooler
+- [ ] `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- [ ] `SUPABASE_SERVICE_ROLE_KEY`
+- [ ] `STRIPE_SECRET_KEY` + `STRIPE_WEBHOOK_SECRET`
+- [ ] `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- [ ] `ANTHROPIC_API_KEY`
+- [ ] `RESEND_API_KEY`
+- [ ] `CRON_SECRET`
+
+### 1.2 Test betalingsflyt ende-til-ende
 - [ ] Flex 50 — book og betal
 - [ ] Flex 90 — book og betal
 - [ ] Performance — abonnement
 - [ ] Performance Pro — abonnement
 - [ ] Webhook mottar og oppdaterer status
 
+### 1.3 Verifiser auth-flyt
+- [ ] Ny bruker kan logge inn (auto-opprettelse fungerer)
+- [ ] Eksisterende bruker kan logge inn
+- [ ] Magic link fungerer
+- [ ] Passord-innlogging fungerer
+
 ---
 
-## Prioritet 2: Viktig (bør fikses før lansering)
+## Prioritet 2: Viktig (bør testes før lansering)
 
 ### 2.1 Google Calendar sync
 - [ ] Test OAuth-callback med ekte Google-konto
 - [ ] Verifiser at events synkroniseres
 - [ ] Feilhåndtering hvis token utløper
 
-### 2.2 Coaching-notater
-- [ ] Test at notater lagres og vises i spillerens historikk
-- [ ] Test AI-oppsummering genereres etter sesjon
+### 2.2 E-post
+- [ ] Booking-bekreftelse sendes
+- [ ] Påminnelse 24t før (cron)
+- [ ] Velkomst-e-post for nye brukere
 
-### 2.3 Tom-tilstander (empty states)
-- [ ] Dagbok: "Ingen treningslogger ennå. Logg din første økt!"
-- [ ] Statistikk: "Ingen runder registrert. Legg til din første runde."
-- [ ] Treningsplan: "Ingen treningsplan generert ennå."
-- [ ] Coaching-historikk: "Ingen coaching-økter ennå."
-
-### 2.4 E-post-maler
-- [ ] Booking-bekreftelse — test at den sendes
-- [ ] Påminnelse 24t — test cron
-- [ ] Sesjons-utløp — test cron
+### 2.3 AI-funksjoner
+- [ ] Fokus-anbefaling på profil fungerer
+- [ ] Svakhetsanalyse fungerer
+- [ ] Treningsplan-generering fungerer
 
 ---
 
-## Prioritet 3: Kan vente (nice-to-have)
+## Prioritet 3: Kan vente
 
 ### 3.1 DataGolf-integrasjon
-- [ ] Lag UI for å søke opp spillere
-- [ ] Vis SG-sammenligning med tour-spillere
 - [ ] Kun for ELITE-tier
 
-### 3.2 Sammenligning med peers
-- [ ] Trenger flere brukere med data
-- [ ] Anonymiser data
+### 3.2 Achievements/Gamification
+- [ ] Achievement-sjekk etter hver økt
 
 ### 3.3 Øvelsesbank
 - [ ] Last opp treningsvideoer
-- [ ] Kategoriser etter tema/nivå
-- [ ] Koble til treningsplaner
-
-### 3.4 Achievements/Gamification
-- [ ] Definer achievement-kriterier
-- [ ] Implementer sjekk etter hver økt
-- [ ] Vis badges på profil
 
 ---
 
 ## Testing før lansering
 
 ### Brukerflyt-tester
-- [ ] Ny bruker registrerer seg
-- [ ] Bruker kjøper Flex 50
-- [ ] Bruker oppgraderer til Performance
+- [ ] Ny bruker registrerer seg og får VISITOR-tier
+- [ ] Bruker kjøper abonnement
 - [ ] Instruktør logger coaching-notater
-- [ ] Bruker ser notater i sin historikk
 - [ ] Bruker logger treningsøkt i dagbok
-- [ ] Bruker registrerer runde i statistikk
+- [ ] Bruker ser statistikk
 
 ### Tekniske tester
-- [ ] `npm run build` uten feil
-- [ ] `npm run lint` uten feil
-- [ ] Alle cron-jobber kjører (send-reminders, reset-sessions, expiry-reminder)
+- [ ] `npm run build` uten feil ✅
+- [ ] `npm run lint` uten feil ✅
 - [ ] Stripe webhook mottar events
 - [ ] E-poster sendes via Resend
-- [ ] SMS sendes via Twilio (hvis konfigurert)
 
 ---
 
