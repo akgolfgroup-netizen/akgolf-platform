@@ -1,7 +1,10 @@
+"use client";
+
 import { format, isToday, isTomorrow, isThisWeek } from "date-fns";
 import { nb } from "date-fns/locale";
 import { BookingCard } from "./booking-card";
 import { Calendar } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface Booking {
   id: string;
@@ -39,10 +42,16 @@ interface BookingListProps {
 export function BookingList({ bookings, emptyMessage = "Ingen bookinger" }: BookingListProps) {
   if (bookings.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl border border-[rgba(15,41,80,0.4)]">
-        <Calendar className="w-12 h-12 mb-4 text-[var(--color-snow)]/50" />
-        <p className="text-[var(--color-snow)]/70">{emptyMessage}</p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-[var(--apple-gray-100)]/50"
+      >
+        <div className="w-16 h-16 rounded-2xl bg-[var(--apple-gray-200)] flex items-center justify-center mb-4">
+          <Calendar className="w-8 h-8 text-[var(--apple-gray-400)]" />
+        </div>
+        <p className="text-[var(--apple-gray-500)] font-medium">{emptyMessage}</p>
+      </motion.div>
     );
   }
 
@@ -50,17 +59,29 @@ export function BookingList({ bookings, emptyMessage = "Ingen bookinger" }: Book
 
   return (
     <div className="space-y-6">
-      {groups.map(([dateStr, items]) => (
-        <div key={dateStr}>
-          <p className="text-xs font-semibold uppercase tracking-wider mb-3 capitalize text-[var(--color-gold)]">
+      {groups.map(([dateStr, items], groupIndex) => (
+        <motion.div
+          key={dateStr}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: groupIndex * 0.1 }}
+        >
+          <p className="text-xs font-semibold uppercase tracking-wider mb-3 capitalize text-[var(--apple-gold-600)]">
             {dateLabel(dateStr)}
           </p>
           <div className="space-y-3">
-            {items.map((b) => (
-              <BookingCard key={b.id} booking={b} />
+            {items.map((b, index) => (
+              <motion.div
+                key={b.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: groupIndex * 0.1 + index * 0.05 }}
+              >
+                <BookingCard booking={b} />
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );

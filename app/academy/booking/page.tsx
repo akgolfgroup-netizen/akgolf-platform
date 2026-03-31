@@ -36,21 +36,17 @@ interface ServiceType {
 type Step = "service" | "instructor" | "date" | "details" | "confirm";
 
 const THEME = {
-  bg: "#FAFBFC",
+  bg: "#F5F5F7",
   bgElevated: "#FFFFFF",
-  bgSubtle: "#F8F9FA",
-  gold: "#B07D4F",
-  goldLight: "#E8D4B0",
-  goldMuted: "#E8D4B0",
-  navy: "#0A1929",
-  navyLight: "#10456A",
-  text: "#02060D",
-  textMuted: "#64748B",
-  textLight: "#9CA3AF",
-  border: "#EBE5DA",
-  shadow: "0 4px 20px rgba(0,0,0,0.06)",
-  shadowHover: "0 8px 30px rgba(0,0,0,0.1)",
-  shadowGold: "0 4px 20px rgba(176,125,79,0.2)",
+  bgSubtle: "#FAFAFA",
+  primary: "#1D1D1F",
+  text: "#1D1D1F",
+  textMuted: "#86868B",
+  textLight: "#AEAEB2",
+  border: "#E8E8ED",
+  shadow: "0 4px 20px rgba(0,0,0,0.04)",
+  shadowHover: "0 8px 30px rgba(0,0,0,0.08)",
+  shadowPrimary: "0 4px 20px rgba(29,29,31,0.15)",
 };
 
 export default function AcademyBookingPage() {
@@ -213,7 +209,7 @@ export default function AcademyBookingPage() {
     return (
       <>
         <WebsiteNav />
-        <main className="min-h-screen bg-[#FAFBFC] flex items-center justify-center">
+        <main className="min-h-screen bg-[#F5F5F7] flex items-center justify-center">
           <div className="flex items-center gap-3" style={{ color: THEME.textMuted }}>
             <Loader2 className="w-6 h-6 animate-spin" />
             <span>Laster tilgjengelige tjenester...</span>
@@ -228,21 +224,21 @@ export default function AcademyBookingPage() {
     <>
       <WebsiteNav />
       
-      <main className="min-h-screen bg-[#FAFBFC]" id="main-content">
+      <main className="min-h-screen bg-[#F5F5F7]" id="main-content">
         <PageTransition>
           {/* Hero Section */}
-          <section className="bg-[#0A1929] py-20">
+          <section className="bg-white py-20 border-b border-[#E8E8ED]">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center">
-                  <span className="inline-block px-4 py-1.5 rounded-full bg-[#B07D4F]/20 text-[#B07D4F] text-sm font-medium mb-4">
+                  <span className="inline-block px-4 py-1.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] text-sm font-medium mb-4 border border-[#E8E8ED]">
                     AK Golf Academy
                   </span>
-                  <h1 className="text-4xl md:text-5xl font-semibold text-white mb-4">
+                  <h1 className="text-4xl md:text-5xl font-semibold text-[#1D1D1F] mb-4">
                     Book din coaching-time
                   </h1>
-                  <p className="text-white/70 max-w-lg mx-auto">
-                    Velg tjeneste, trener og tidspunkt. Ingen konto nødvendig — 
+                  <p className="text-[#86868B] max-w-lg mx-auto">
+                    Velg tjeneste, trener og tidspunkt. Ingen konto nødvendig —
                     hvis du har booket før, kobles timen automatisk til din profil.
                   </p>
                 </div>
@@ -271,21 +267,21 @@ export default function AcademyBookingPage() {
                             className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300"
                             style={{
                               background: isActive 
-                                ? THEME.gold 
+                                ? THEME.primary 
                                 : isCompleted 
-                                  ? `${THEME.gold}20`
+                                  ? `${THEME.primary}20`
                                   : THEME.bgSubtle,
                               color: isActive || isCompleted ? "#FFFFFF" : THEME.textMuted,
                               border: isActive 
                                 ? "none"
                                 : isCompleted
-                                  ? `2px solid ${THEME.gold}`
+                                  ? `2px solid ${THEME.primary}`
                                   : `2px solid ${THEME.border}`,
                             }}
                             whileHover={!isActive ? { scale: 1.05 } : {}}
                           >
                             {isCompleted && s !== step ? (
-                              <Check className="w-5 h-5" style={{ color: isActive ? "#FFF" : THEME.gold }} />
+                              <Check className="w-5 h-5" style={{ color: isActive ? "#FFF" : THEME.primary }} />
                             ) : (
                               index + 1
                             )}
@@ -293,7 +289,7 @@ export default function AcademyBookingPage() {
                           <span
                             className="text-xs mt-2 font-medium"
                             style={{
-                              color: isActive ? THEME.gold : THEME.textMuted,
+                              color: isActive ? THEME.primary : THEME.textMuted,
                             }}
                           >
                             {stepLabels[s]}
@@ -303,7 +299,7 @@ export default function AcademyBookingPage() {
                           <div 
                             className="w-16 h-0.5 mx-2"
                             style={{ 
-                              background: isCompleted ? THEME.gold : THEME.border,
+                              background: isCompleted ? THEME.primary : THEME.border,
                             }}
                           />
                         )}
@@ -326,7 +322,7 @@ export default function AcademyBookingPage() {
                     <div className="text-center mb-8">
                       <h2 
                         className="text-3xl font-semibold mb-3"
-                        style={{ color: THEME.navy }}
+                        style={{ color: THEME.text }}
                       >
                         Velg din treningsform
                       </h2>
@@ -356,7 +352,7 @@ export default function AcademyBookingPage() {
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.boxShadow = THEME.shadowHover;
-                              e.currentTarget.style.borderColor = THEME.goldMuted;
+                              e.currentTarget.style.borderColor = THEME.primary;
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.boxShadow = THEME.shadow;
@@ -368,11 +364,11 @@ export default function AcademyBookingPage() {
                                 <div className="flex items-center gap-3 mb-3">
                                   <div
                                     className="w-4 h-4 rounded-full"
-                                    style={{ backgroundColor: svc.color ?? THEME.gold }}
+                                    style={{ backgroundColor: svc.color ?? THEME.primary }}
                                   />
                                   <h3 
                                     className="text-lg font-semibold transition-colors"
-                                    style={{ color: THEME.navy }}
+                                    style={{ color: THEME.text }}
                                   >
                                     {svc.name}
                                   </h3>
@@ -390,14 +386,14 @@ export default function AcademyBookingPage() {
                                     className="flex items-center gap-2 text-sm"
                                     style={{ color: THEME.textMuted }}
                                   >
-                                    <Clock className="w-4 h-4" style={{ color: THEME.gold }} />
+                                    <Clock className="w-4 h-4" style={{ color: THEME.primary }} />
                                     {svc.duration} minutter
                                   </span>
                                   <span 
                                     className="flex items-center gap-2 text-sm"
                                     style={{ color: THEME.textMuted }}
                                   >
-                                    <User className="w-4 h-4" style={{ color: THEME.gold }} />
+                                    <User className="w-4 h-4" style={{ color: THEME.primary }} />
                                     {svc.maxStudents === 1 ? "Individuell" : `Gruppe (max ${svc.maxStudents})`}
                                   </span>
                                 </div>
@@ -405,13 +401,13 @@ export default function AcademyBookingPage() {
                               <div className="text-right">
                                 <span 
                                   className="text-2xl font-semibold"
-                                  style={{ color: THEME.gold }}
+                                  style={{ color: THEME.primary }}
                                 >
                                   {formatPrice(svc.price)}
                                 </span>
                                 <ChevronRight 
                                   className="w-5 h-5 mt-2 ml-auto opacity-0 group-hover:opacity-100 transition-opacity"
-                                  style={{ color: THEME.gold }}
+                                  style={{ color: THEME.primary }}
                                 />
                               </div>
                             </div>
@@ -442,7 +438,7 @@ export default function AcademyBookingPage() {
 
                     <h2 
                       className="text-3xl font-semibold mb-2"
-                      style={{ color: THEME.navy }}
+                      style={{ color: THEME.text }}
                     >
                       Velg instruktør
                     </h2>
@@ -470,7 +466,7 @@ export default function AcademyBookingPage() {
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.boxShadow = THEME.shadowHover;
-                              e.currentTarget.style.borderColor = THEME.goldMuted;
+                              e.currentTarget.style.borderColor = THEME.primary;
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.boxShadow = THEME.shadow;
@@ -488,7 +484,7 @@ export default function AcademyBookingPage() {
                               <div
                                 className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold"
                                 style={{ 
-                                  background: `linear-gradient(135deg, ${THEME.goldLight}, ${THEME.gold})`,
+                                  background: THEME.primary,
                                   color: "#FFFFFF",
                                 }}
                               >
@@ -498,7 +494,7 @@ export default function AcademyBookingPage() {
                             <div className="flex-1">
                               <h3 
                                 className="text-lg font-semibold mb-1"
-                                style={{ color: THEME.navy }}
+                                style={{ color: THEME.text }}
                               >
                                 {inst.user.name}
                               </h3>
@@ -508,7 +504,7 @@ export default function AcademyBookingPage() {
                             </div>
                             <ChevronRight 
                               className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all"
-                              style={{ color: THEME.gold }}
+                              style={{ color: THEME.primary }}
                             />
                           </div>
                         </motion.button>
@@ -546,7 +542,7 @@ export default function AcademyBookingPage() {
 
                     <h2 
                       className="text-3xl font-semibold mb-2"
-                      style={{ color: THEME.navy }}
+                      style={{ color: THEME.text }}
                     >
                       Velg dato og tid
                     </h2>
@@ -574,9 +570,9 @@ export default function AcademyBookingPage() {
                               disabled={isWeekend}
                               className="flex-shrink-0 rounded-2xl p-4 text-center min-w-[80px] transition-all duration-200"
                               style={{
-                                background: isSelected ? THEME.gold : THEME.bgElevated,
+                                background: isSelected ? THEME.primary : THEME.bgElevated,
                                 border: isSelected ? "none" : `1px solid ${THEME.border}`,
-                                boxShadow: isSelected ? THEME.shadowGold : THEME.shadow,
+                                boxShadow: isSelected ? THEME.shadowPrimary : THEME.shadow,
                                 opacity: isWeekend ? 0.4 : 1,
                               }}
                               whileHover={!isWeekend ? { scale: 1.02 } : {}}
@@ -590,7 +586,7 @@ export default function AcademyBookingPage() {
                               </p>
                               <p 
                                 className="text-2xl font-semibold mb-1"
-                                style={{ color: isSelected ? "#FFFFFF" : THEME.navy }}
+                                style={{ color: isSelected ? "#FFFFFF" : THEME.text }}
                               >
                                 {format(date, "d")}
                               </p>
@@ -654,13 +650,13 @@ export default function AcademyBookingPage() {
                                   style={{
                                     background: THEME.bgElevated,
                                     borderColor: THEME.border,
-                                    color: THEME.navy,
+                                    color: THEME.text,
                                     boxShadow: THEME.shadow,
                                   }}
                                   whileHover={{ 
                                     scale: 1.02,
                                     boxShadow: THEME.shadowHover,
-                                    borderColor: THEME.gold,
+                                    borderColor: THEME.primary,
                                   }}
                                   whileTap={{ scale: 0.98 }}
                                 >
@@ -695,7 +691,7 @@ export default function AcademyBookingPage() {
 
                     <h2 
                       className="text-3xl font-semibold mb-2"
-                      style={{ color: THEME.navy }}
+                      style={{ color: THEME.text }}
                     >
                       Dine opplysninger
                     </h2>
@@ -715,23 +711,23 @@ export default function AcademyBookingPage() {
                       <div className="flex items-center gap-3 mb-4">
                         <div
                           className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: selectedService.color ?? THEME.gold }}
+                          style={{ backgroundColor: selectedService.color ?? THEME.primary }}
                         />
-                        <h3 style={{ color: THEME.navy }} className="font-semibold">
+                        <h3 style={{ color: THEME.text }} className="font-semibold">
                           {selectedService.name}
                         </h3>
                       </div>
                       <div className="space-y-2 text-sm" style={{ color: THEME.textMuted }}>
                         <p className="flex items-center gap-2">
-                          <User className="w-4 h-4" style={{ color: THEME.gold }} />
+                          <User className="w-4 h-4" style={{ color: THEME.primary }} />
                           {selectedInstructor.user.name}
                         </p>
                         <p className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" style={{ color: THEME.gold }} />
+                          <Calendar className="w-4 h-4" style={{ color: THEME.primary }} />
                           {format(new Date(selectedSlot), "EEEE d. MMMM yyyy 'kl.' HH:mm", { locale: nb })}
                         </p>
                         <p className="flex items-center gap-2">
-                          <Clock className="w-4 h-4" style={{ color: THEME.gold }} />
+                          <Clock className="w-4 h-4" style={{ color: THEME.primary }} />
                           {selectedService.duration} minutter
                         </p>
                       </div>
@@ -757,7 +753,7 @@ export default function AcademyBookingPage() {
                             borderColor: THEME.border,
                             color: THEME.text,
                           }}
-                          onFocus={(e) => e.currentTarget.style.borderColor = THEME.gold}
+                          onFocus={(e) => e.currentTarget.style.borderColor = THEME.primary}
                           onBlur={(e) => e.currentTarget.style.borderColor = THEME.border}
                         />
                       </div>
@@ -772,7 +768,7 @@ export default function AcademyBookingPage() {
                         <div className="relative">
                           <Mail 
                             className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" 
-                            style={{ color: THEME.gold }} 
+                            style={{ color: THEME.primary }} 
                           />
                           <input
                             type="email"
@@ -785,7 +781,7 @@ export default function AcademyBookingPage() {
                               borderColor: THEME.border,
                               color: THEME.text,
                             }}
-                            onFocus={(e) => e.currentTarget.style.borderColor = THEME.gold}
+                            onFocus={(e) => e.currentTarget.style.borderColor = THEME.primary}
                             onBlur={(e) => e.currentTarget.style.borderColor = THEME.border}
                           />
                         </div>
@@ -804,7 +800,7 @@ export default function AcademyBookingPage() {
                         <div className="relative">
                           <Phone 
                             className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" 
-                            style={{ color: THEME.gold }} 
+                            style={{ color: THEME.primary }} 
                           />
                           <input
                             type="tel"
@@ -817,7 +813,7 @@ export default function AcademyBookingPage() {
                               borderColor: THEME.border,
                               color: THEME.text,
                             }}
-                            onFocus={(e) => e.currentTarget.style.borderColor = THEME.gold}
+                            onFocus={(e) => e.currentTarget.style.borderColor = THEME.primary}
                             onBlur={(e) => e.currentTarget.style.borderColor = THEME.border}
                           />
                         </div>
@@ -830,9 +826,9 @@ export default function AcademyBookingPage() {
                         disabled={!validateCustomerDetails()}
                         className="w-full py-4 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50"
                         style={{
-                          background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})`,
+                          background: THEME.primary,
                           color: "#FFFFFF",
-                          boxShadow: THEME.shadowGold,
+                          boxShadow: THEME.shadowPrimary,
                         }}
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
@@ -863,7 +859,7 @@ export default function AcademyBookingPage() {
 
                     <h2 
                       className="text-3xl font-semibold mb-2"
-                      style={{ color: THEME.navy }}
+                      style={{ color: THEME.text }}
                     >
                       Bekreft din booking
                     </h2>
@@ -887,11 +883,11 @@ export default function AcademyBookingPage() {
                       >
                         <div
                           className="w-4 h-4 rounded-full"
-                          style={{ backgroundColor: selectedService.color ?? THEME.gold }}
+                          style={{ backgroundColor: selectedService.color ?? THEME.primary }}
                         />
                         <h3 
                           className="text-xl font-semibold"
-                          style={{ color: THEME.navy }}
+                          style={{ color: THEME.text }}
                         >
                           {selectedService.name}
                         </h3>
@@ -902,26 +898,26 @@ export default function AcademyBookingPage() {
                         <div className="flex items-center gap-4">
                           <div 
                             className="w-10 h-10 rounded-xl flex items-center justify-center"
-                            style={{ background: `${THEME.gold}15` }}
+                            style={{ background: THEME.bgSubtle }}
                           >
-                            <User className="w-5 h-5" style={{ color: THEME.gold }} />
+                            <User className="w-5 h-5" style={{ color: THEME.primary }} />
                           </div>
                           <div>
                             <p className="text-xs uppercase tracking-wide" style={{ color: THEME.textLight }}>Instruktør</p>
-                            <p className="font-medium" style={{ color: THEME.navy }}>{selectedInstructor.user.name}</p>
+                            <p className="font-medium" style={{ color: THEME.text }}>{selectedInstructor.user.name}</p>
                           </div>
                         </div>
 
                         <div className="flex items-center gap-4">
                           <div 
                             className="w-10 h-10 rounded-xl flex items-center justify-center"
-                            style={{ background: `${THEME.gold}15` }}
+                            style={{ background: THEME.bgSubtle }}
                           >
-                            <Calendar className="w-5 h-5" style={{ color: THEME.gold }} />
+                            <Calendar className="w-5 h-5" style={{ color: THEME.primary }} />
                           </div>
                           <div>
                             <p className="text-xs uppercase tracking-wide" style={{ color: THEME.textLight }}>Dato og tid</p>
-                            <p className="font-medium" style={{ color: THEME.navy }}>
+                            <p className="font-medium" style={{ color: THEME.text }}>
                               {format(new Date(selectedSlot), "EEEE d. MMMM yyyy 'kl.' HH:mm", { locale: nb })}
                             </p>
                           </div>
@@ -930,26 +926,26 @@ export default function AcademyBookingPage() {
                         <div className="flex items-center gap-4">
                           <div 
                             className="w-10 h-10 rounded-xl flex items-center justify-center"
-                            style={{ background: `${THEME.gold}15` }}
+                            style={{ background: THEME.bgSubtle }}
                           >
-                            <Clock className="w-5 h-5" style={{ color: THEME.gold }} />
+                            <Clock className="w-5 h-5" style={{ color: THEME.primary }} />
                           </div>
                           <div>
                             <p className="text-xs uppercase tracking-wide" style={{ color: THEME.textLight }}>Varighet</p>
-                            <p className="font-medium" style={{ color: THEME.navy }}>{selectedService.duration} minutter</p>
+                            <p className="font-medium" style={{ color: THEME.text }}>{selectedService.duration} minutter</p>
                           </div>
                         </div>
 
                         <div className="flex items-center gap-4">
                           <div 
                             className="w-10 h-10 rounded-xl flex items-center justify-center"
-                            style={{ background: `${THEME.gold}15` }}
+                            style={{ background: THEME.bgSubtle }}
                           >
-                            <Mail className="w-5 h-5" style={{ color: THEME.gold }} />
+                            <Mail className="w-5 h-5" style={{ color: THEME.primary }} />
                           </div>
                           <div>
                             <p className="text-xs uppercase tracking-wide" style={{ color: THEME.textLight }}>Kunde</p>
-                            <p className="font-medium" style={{ color: THEME.navy }}>{customerName}</p>
+                            <p className="font-medium" style={{ color: THEME.text }}>{customerName}</p>
                             <p className="text-sm" style={{ color: THEME.textMuted }}>{customerEmail}</p>
                           </div>
                         </div>
@@ -963,7 +959,7 @@ export default function AcademyBookingPage() {
                         <span style={{ color: THEME.textMuted }}>Totalpris</span>
                         <span 
                           className="text-3xl font-semibold"
-                          style={{ color: THEME.gold }}
+                          style={{ color: THEME.primary }}
                         >
                           {formatPrice(selectedService.price)}
                         </span>
@@ -984,11 +980,11 @@ export default function AcademyBookingPage() {
                         disabled={booking}
                         className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50"
                         style={{
-                          background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})`,
+                          background: THEME.primary,
                           color: "#FFFFFF",
-                          boxShadow: THEME.shadowGold,
+                          boxShadow: THEME.shadowPrimary,
                         }}
-                        whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(176,125,79,0.3)" }}
+                        whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(29,29,31,0.25)" }}
                         whileTap={{ scale: 0.99 }}
                       >
                         {booking ? (
@@ -1055,11 +1051,11 @@ export default function AcademyBookingPage() {
                 <div>
                   <div 
                     className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4"
-                    style={{ background: `${THEME.gold}15` }}
+                    style={{ background: THEME.bgSubtle }}
                   >
-                    <Mail className="w-6 h-6" style={{ color: THEME.gold }} />
+                    <Mail className="w-6 h-6" style={{ color: THEME.primary }} />
                   </div>
-                  <h3 className="font-semibold mb-2" style={{ color: THEME.navy }}>Bekreftelse på e-post</h3>
+                  <h3 className="font-semibold mb-2" style={{ color: THEME.text }}>Bekreftelse på e-post</h3>
                   <p className="text-sm" style={{ color: THEME.textMuted }}>
                     Du mottar umiddelbar bekreftelse på bookingen
                   </p>
@@ -1067,11 +1063,11 @@ export default function AcademyBookingPage() {
                 <div>
                   <div 
                     className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4"
-                    style={{ background: `${THEME.gold}15` }}
+                    style={{ background: THEME.bgSubtle }}
                   >
-                    <User className="w-6 h-6" style={{ color: THEME.gold }} />
+                    <User className="w-6 h-6" style={{ color: THEME.primary }} />
                   </div>
-                  <h3 className="font-semibold mb-2" style={{ color: THEME.navy }}>Din profil</h3>
+                  <h3 className="font-semibold mb-2" style={{ color: THEME.text }}>Din profil</h3>
                   <p className="text-sm" style={{ color: THEME.textMuted }}>
                     Ved første booking opprettes en profil automatisk
                   </p>
@@ -1079,11 +1075,11 @@ export default function AcademyBookingPage() {
                 <div>
                   <div 
                     className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4"
-                    style={{ background: `${THEME.gold}15` }}
+                    style={{ background: THEME.bgSubtle }}
                   >
-                    <Calendar className="w-6 h-6" style={{ color: THEME.gold }} />
+                    <Calendar className="w-6 h-6" style={{ color: THEME.primary }} />
                   </div>
-                  <h3 className="font-semibold mb-2" style={{ color: THEME.navy }}>Enkel endring</h3>
+                  <h3 className="font-semibold mb-2" style={{ color: THEME.text }}>Enkel endring</h3>
                   <p className="text-sm" style={{ color: THEME.textMuted }}>
                     Endre eller avbestill enkelt via e-postlenken
                   </p>

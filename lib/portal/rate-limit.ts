@@ -91,6 +91,12 @@ export const RATE_LIMITS = {
   BOOKING_SLOTS: { limit: 30, windowSeconds: 60 },
   /** General API: 100 per minute per IP */
   API_GENERAL: { limit: 100, windowSeconds: 60 },
+  /** Contact form: 5 per minute per IP */
+  CONTACT_FORM: { limit: 5, windowSeconds: 60 },
   /** AI endpoints: 20 per minute per user (expensive operations) */
   AI_ENDPOINTS: { limit: 20, windowSeconds: 60 },
+  /** Subscription management: 10 per minute per IP */
+  SUBSCRIPTIONS: { limit: 10, windowSeconds: 60 },
+  /** Coaching booking: 10 per minute per IP */
+  COACHING_BOOK: { limit: 10, windowSeconds: 60 },
 } as const;

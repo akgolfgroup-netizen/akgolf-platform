@@ -1,0 +1,119 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { TrendingUp, TrendingDown } from "lucide-react";
+import { cn } from "@/lib/portal/utils/cn";
+import type { LucideIcon } from "lucide-react";
+
+interface StatCardProps {
+  label: string;
+  value: string | number;
+  trend?: number;
+  trendLabel?: string;
+  icon?: LucideIcon;
+  iconColor?: string;
+  iconBg?: string;
+  className?: string;
+  size?: "sm" | "md" | "lg";
+}
+
+const sizeMap = {
+  sm: {
+    value: "text-2xl",
+    label: "text-xs",
+    icon: "w-8 h-8",
+    iconInner: "w-4 h-4",
+  },
+  md: {
+    value: "text-4xl",
+    label: "text-sm",
+    icon: "w-10 h-10",
+    iconInner: "w-5 h-5",
+  },
+  lg: {
+    value: "text-5xl",
+    label: "text-base",
+    icon: "w-12 h-12",
+    iconInner: "w-6 h-6",
+  },
+};
+
+export function StatCard({
+  label,
+  value,
+  trend,
+  trendLabel,
+  icon: Icon,
+  iconColor = "text-[var(--apple-gold-500)]",
+  iconBg = "bg-[var(--apple-gold-50)]",
+  className,
+  size = "md",
+}: StatCardProps) {
+  const isPositive = trend && trend > 0;
+  const isNegative = trend && trend < 0;
+  const sizes = sizeMap[size];
+
+  return (
+    <motion.div
+      className={cn(
+        "rounded-2xl p-6 bg-white/70 backdrop-blur-xl border border-white/50 shadow-[var(--shadow-card)]",
+        "transition-all duration-300",
+        className
+      )}
+      whileHover={{
+        y: -4,
+        scale: 1.01,
+        boxShadow: "var(--shadow-card-hover)",
+      }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    >
+      <div className="flex items-center gap-3 mb-4">
+        {Icon && (
+          <div className={cn("rounded-xl flex items-center justify-center", iconBg, sizes.icon)}>
+            <Icon className={cn(iconColor, sizes.iconInner)} />
+          </div>
+        )}
+        <span className={cn("uppercase tracking-wider text-[var(--apple-gray-500)] font-medium", sizes.label)}>
+          {label}
+        </span>
+      </div>
+
+      <div className="flex items-end justify-between">
+        <motion.span
+          className={cn(
+            "font-light tracking-tight bg-gradient-to-br from-[var(--apple-gray-950)] to-[var(--apple-gray-700)]",
+            "bg-clip-text text-transparent",
+            sizes.value
+          )}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          {value}
+        </motion.span>
+
+        {trend !== undefined && (
+          <motion.div
+            className={cn(
+              "flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium",
+              isPositive && "bg-green-50 text-green-600",
+              isNegative && "bg-red-50 text-red-600",
+              !isPositive && !isNegative && "bg-[var(--apple-gray-100)] text-[var(--apple-gray-600)]"
+            )}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+          >
+            {isPositive && <TrendingUp className="w-3.5 h-3.5" />}
+            {isNegative && <TrendingDown className="w-3.5 h-3.5" />}
+            <span>
+              {isPositive && "+"}
+              {trend}
+              {trendLabel && ` ${trendLabel}`}
+            </span>
+          </motion.div>
+        )}
+      </div>
+    </motion.div>
+  );
+}

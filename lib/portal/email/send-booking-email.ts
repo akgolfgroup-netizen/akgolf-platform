@@ -56,14 +56,11 @@ export async function sendBookingConfirmation(data: BookingEmailData) {
         location: data.location,
       }),
     });
-    console.log(
-      `[Email] Confirmation sent to ${data.studentEmail} for booking ${data.bookingId}`
-    );
+    if (process.env.NODE_ENV !== "production") {
+      console.log(`[Email] Confirmation sent for booking ${data.bookingId}`);
+    }
   } catch (error) {
-    console.error(
-      `[Email] Failed to send confirmation to ${data.studentEmail}:`,
-      error
-    );
+    console.error(`[Email] Failed to send confirmation for booking ${data.bookingId}:`, error);
   }
 
   // Send to instructor
@@ -82,13 +79,10 @@ export async function sendBookingConfirmation(data: BookingEmailData) {
         duration: data.duration,
       }),
     });
-    console.log(
-      `[Email] Instructor notification sent to ${data.instructorEmail} for booking ${data.bookingId}`
-    );
+    if (process.env.NODE_ENV !== "production") {
+      console.log(`[Email] Instructor notification sent for booking ${data.bookingId}`);
+    }
   } catch (error) {
-    console.error(
-      `[Email] Failed to send instructor notification to ${data.instructorEmail}:`,
-      error
-    );
+    console.error(`[Email] Failed to send instructor notification for booking ${data.bookingId}:`, error);
   }
 }

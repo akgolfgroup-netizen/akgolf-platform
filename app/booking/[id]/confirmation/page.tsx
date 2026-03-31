@@ -6,14 +6,14 @@ import { ConfirmationView } from "./ConfirmationView";
 import { PublicConfirmationView } from "./PublicConfirmationView";
 import { Loader2, AlertCircle } from "lucide-react";
 
-// Warm Light Theme
+// Apple Light Theme 2026
 const THEME = {
-  bg: "#FAFBFC",
+  bg: "#F5F5F7",
   bgElevated: "#FFFFFF",
-  gold: "#B07D4F",
-  navy: "#0A1929",
-  textMuted: "#64748B",
-  border: "#EBE5DA",
+  primary: "#1D1D1F",
+  text: "#1D1D1F",
+  textMuted: "#86868B",
+  border: "#E8E8ED",
 };
 
 interface Props {
@@ -53,11 +53,11 @@ export default async function BookingConfirmationPage({ params }: Props) {
         >
           <div 
             className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"
-            style={{ background: `${THEME.gold}15` }}
+            style={{ background: THEME.bg }}
           >
-            <AlertCircle className="w-8 h-8" style={{ color: THEME.gold }} />
+            <AlertCircle className="w-8 h-8" style={{ color: THEME.primary }} />
           </div>
-          <h2 className="text-xl font-semibold mb-2" style={{ color: THEME.navy }}>
+          <h2 className="text-xl font-semibold mb-2" style={{ color: THEME.text }}>
             Booking ikke funnet
           </h2>
           <p style={{ color: THEME.textMuted }}>
@@ -84,11 +84,11 @@ export default async function BookingConfirmationPage({ params }: Props) {
         >
           <div 
             className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"
-            style={{ background: `${THEME.gold}15` }}
+            style={{ background: THEME.bg }}
           >
-            <Loader2 className="w-8 h-8 animate-spin" style={{ color: THEME.gold }} />
+            <Loader2 className="w-8 h-8 animate-spin" style={{ color: THEME.primary }} />
           </div>
-          <h2 className="text-xl font-semibold mb-2" style={{ color: THEME.navy }}>
+          <h2 className="text-xl font-semibold mb-2" style={{ color: THEME.text }}>
             Betaling pågår
           </h2>
           <p style={{ color: THEME.textMuted }}>

@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logg inn | AK Golf Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, sans-serif;
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F7;
+      --gray-200: #E8E8ED;
+      --gray-300: #D2D2D7;
+      --gray-400: #AEAEB2;
+      --gray-500: #8E8E93;
+      --gray-600: #636366;
+      --gray-700: #48484A;
+      --gray-800: #3A3A3C;
+      --gray-900: #2C2C2E;
+      --gray-950: #1D1D1F;
+
+      --gold-50: #FDF8F0;
+      --gold-100: #F8EDDB;
+      --gold-200: #F0D9B5;
+      --gold-400: #D4A35C;
+      --gold-500: #B8975C;
+      --gold-600: #9A7B47;
+      --gold-700: #7A6138;
+
+      --success: #34C759;
+      --error: #FF3B30;
+      --error-light: #FEE2E2;
+      --info: #007AFF;
+
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-xl: 0 16px 48px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.06);
+      --shadow-gold: 0 4px 24px rgba(184, 151, 92, 0.2);
+      /* Premium layered shadows */
+      --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.02);
+      --shadow-card-hover: 0 4px 8px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.08), 0 24px 48px rgba(0,0,0,0.04);
+      --shadow-glow-gold: 0 4px 16px rgba(184, 151, 92, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      --shadow-glow-gold-hover: 0 8px 24px rgba(184, 151, 92, 0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-full: 9999px;
+
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-system);
+      background: var(--gray-950);
+      color: white;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* === LAYOUT === */
+    .page {
+      flex: 1;
+      display: flex;
+    }
+
+    /* === LEFT SIDE - BRANDING === */
+    .brand-side {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-side::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(184, 151, 92, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-12);
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-mark {
+      width: 48px;
+      height: 48px;
+      background: var(--gold-500);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .brand-content {
+      max-width: 400px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-4);
+    }
+
+    .brand-title span {
+      color: var(--gold-400);
+    }
+
+    .brand-text {
+      font-size: 17px;
+      color: var(--gray-400);
+      line-height: 1.6;
+      margin-bottom: var(--space-10);
+    }
+
+    .brand-features {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .brand-feature {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .brand-feature-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(184, 151, 92, 0.15);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-feature-icon i {
+      width: 18px;
+      height: 18px;
+      color: var(--gold-400);
+    }
+
+    .brand-feature span {
+      font-size: 15px;
+      color: var(--gray-300);
+    }
+
+    /* === RIGHT SIDE - LOGIN FORM === */
+    .login-side {
+      width: 480px;
+      background: linear-gradient(135deg, #F8F8FC 0%, #F0F4F8 50%, #F5F5F7 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-12);
+      position: relative;
+    }
+
+    .login-side::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .login-container {
+      max-width: 360px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .login-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gray-950);
+      margin-bottom: var(--space-2);
+      letter-spacing: -0.01em;
+    }
+
+    .login-subtitle {
+      font-size: 15px;
+      color: var(--gray-500);
+    }
+
+    /* === LOGIN METHOD TABS === */
+    .login-tabs {
+      display: flex;
+      background: var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: var(--space-1);
+      margin-bottom: var(--space-6);
+    }
+
+    .login-tab {
+      flex: 1;
+      padding: var(--space-3);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-500);
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .login-tab:hover {
+      color: var(--gray-700);
+    }
+
+    .login-tab.active {
+      background: white;
+      color: var(--gray-950);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* === FORM === */
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    .form-input-wrapper {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: var(--space-4);
+      padding-left: var(--space-12);
+      font-family: var(--font-system);
+      font-size: 16px;
+      color: var(--gray-900);
+      background: var(--gray-100);
+      border: 2px solid transparent;
+      border-radius: var(--radius-md);
+      outline: none;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .form-input:focus {
+      background: white;
+      border-color: var(--gold-400);
+      box-shadow: 0 0 0 4px var(--gold-100);
+    }
+
+    .form-input::placeholder {
+      color: var(--gray-400);
+    }
+
+    .form-input-icon {
+      position: absolute;
+      left: var(--space-4);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: var(--gray-400);
+    }
+
+    .form-input-toggle {
+      position: absolute;
+      right: var(--space-4);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gray-400);
+      padding: var(--space-1);
+    }
+
+    .form-input-toggle:hover {
+      color: var(--gray-600);
+    }
+
+    .form-input-toggle i {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* === REMEMBER & FORGOT === */
+    .form-extras {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-checkbox {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      cursor: pointer;
+    }
+
+    .form-checkbox input {
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-sm);
+      accent-color: var(--gold-500);
+    }
+
+    .form-checkbox span {
+      font-size: 13px;
+      color: var(--gray-600);
+    }
+
+    .form-forgot {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gold-600);
+      text-decoration: none;
+    }
+
+    .form-forgot:hover {
+      text-decoration: underline;
+    }
+
+    /* === SUBMIT BUTTON === */
+    .btn-submit {
+      width: 100%;
+      padding: var(--space-4);
+      font-family: var(--font-system);
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      background: var(--gold-500);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-glow-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+    }
+
+    .btn-submit:hover {
+      background: var(--gold-600);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow-gold-hover);
+    }
+
+    .btn-submit i {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* === MAGIC LINK INFO === */
+    .magic-link-info {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      background: var(--gold-50);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    .magic-link-info i {
+      width: 18px;
+      height: 18px;
+      color: var(--gold-600);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .magic-link-info p {
+      font-size: 13px;
+      color: var(--gray-700);
+      line-height: 1.5;
+    }
+
+    /* === DIVIDER === */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin: var(--space-6) 0;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+
+    .divider-text {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* === SOCIAL LOGIN === */
+    .social-buttons {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .btn-social {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3);
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .btn-social:hover {
+      background: var(--gray-50);
+      border-color: var(--gray-300);
+    }
+
+    .btn-social img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .btn-social span {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    /* === SIGNUP LINK === */
+    .signup-link {
+      text-align: center;
+      margin-top: var(--space-8);
+      font-size: 14px;
+      color: var(--gray-500);
+    }
+
+    .signup-link a {
+      font-weight: 500;
+      color: var(--gold-600);
+      text-decoration: none;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* === FOOTER === */
+    .login-footer {
+      text-align: center;
+      margin-top: var(--space-10);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .login-footer a {
+      font-size: 13px;
+      color: var(--gray-500);
+      text-decoration: none;
+      margin: 0 var(--space-3);
+    }
+
+    .login-footer a:hover {
+      color: var(--gray-700);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 900px) {
+      .page {
+        flex-direction: column;
+      }
+
+      .brand-side {
+        padding: var(--space-8) var(--space-6);
+      }
+
+      .brand-content {
+        max-width: 100%;
+      }
+
+      .brand-features {
+        display: none;
+      }
+
+      .login-side {
+        width: 100%;
+        padding: var(--space-8) var(--space-6);
+      }
+
+      .brand-title {
+        font-size: 32px;
+      }
+    }
+  
+    /* Responsive fixes */
+    @media (max-width: 1400px) {
+      .main-inner { max-width: 100%; padding: var(--space-8) var(--space-6); }
+    }
+    @media (max-width: 1024px) {
+      .portal { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .bento-grid { grid-template-columns: repeat(6, 1fr); }
+      .bento-card { grid-column: span 6 !important; }
+    }
+    @media (max-width: 768px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card { grid-column: span 1 !important; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Left Side - Branding -->
+    <div class="brand-side">
+      <div class="brand-logo">
+        <div class="logo-mark">AK</div>
+        <span class="logo-text">AK Golf</span>
+      </div>
+
+      <div class="brand-content">
+        <h1 class="brand-title">
+          Din golf,<br><span>ditt potensial</span>
+        </h1>
+        <p class="brand-text">
+          Logg inn for å få tilgang til din personlige elevportal med treningsplaner, videoanalyser, bookinger og mer.
+        </p>
+
+        <div class="brand-features">
+          <div class="brand-feature">
+            <div class="brand-feature-icon">
+              <i data-lucide="bar-chart-2"></i>
+            </div>
+            <span>Spor fremgang og statistikk</span>
+          </div>
+          <div class="brand-feature">
+            <div class="brand-feature-icon">
+              <i data-lucide="video"></i>
+            </div>
+            <span>Se dine videoanalyser</span>
+          </div>
+          <div class="brand-feature">
+            <div class="brand-feature-icon">
+              <i data-lucide="calendar"></i>
+            </div>
+            <span>Book og administrer timer</span>
+          </div>
+          <div class="brand-feature">
+            <div class="brand-feature-icon">
+              <i data-lucide="brain"></i>
+            </div>
+            <span>AI-genererte treningsplaner</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="login-side">
+      <div class="login-container">
+        <div class="login-header">
+          <h2 class="login-title">Velkommen tilbake</h2>
+          <p class="login-subtitle">Logg inn på din elevportal</p>
+        </div>
+
+        <!-- Login Method Tabs -->
+        <div class="login-tabs">
+          <button class="login-tab active" data-tab="magic">Magic link</button>
+          <button class="login-tab" data-tab="password">Passord</button>
+        </div>
+
+        <!-- Magic Link Form -->
+        <form class="login-form" id="magic-form">
+          <div class="magic-link-info">
+            <i data-lucide="sparkles"></i>
+            <p>
+              Vi sender deg en innloggingslenke på e-post. Ingen passord nødvendig!
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">E-postadresse</label>
+            <div class="form-input-wrapper">
+              <i data-lucide="mail" class="form-input-icon"></i>
+              <input type="email" class="form-input" placeholder="din@epost.no">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <i data-lucide="send"></i>
+            <span>Send innloggingslenke</span>
+          </button>
+        </form>
+
+        <!-- Password Form (hidden by default) -->
+        <form class="login-form" id="password-form" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">E-postadresse</label>
+            <div class="form-input-wrapper">
+              <i data-lucide="mail" class="form-input-icon"></i>
+              <input type="email" class="form-input" placeholder="din@epost.no">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Passord</label>
+            <div class="form-input-wrapper">
+              <i data-lucide="lock" class="form-input-icon"></i>
+              <input type="password" class="form-input" placeholder="••••••••" style="padding-right: 48px;">
+              <button type="button" class="form-input-toggle">
+                <i data-lucide="eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-extras">
+            <label class="form-checkbox">
+              <input type="checkbox">
+              <span>Husk meg</span>
+            </label>
+            <a href="#" class="form-forgot">Glemt passord?</a>
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <span>Logg inn</span>
+            <i data-lucide="arrow-right"></i>
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="divider">
+          <div class="divider-line"></div>
+          <span class="divider-text">eller</span>
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- Social Login -->
+        <div class="social-buttons">
+          <button class="btn-social">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            <span>Google</span>
+          </button>
+          <button class="btn-social">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <path fill="#000" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+            <span>Apple</span>
+          </button>
+        </div>
+
+        <!-- Signup Link -->
+        <p class="signup-link">
+          Ny bruker? <a href="#">Kontakt oss for tilgang</a>
+        </p>
+
+        <!-- Footer -->
+        <div class="login-footer">
+          <a href="#">Personvern</a>
+          <a href="#">Vilkår</a>
+          <a href="#">Hjelp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Tab switching
+    const tabs = document.querySelectorAll('.login-tab');
+    const magicForm = document.getElementById('magic-form');
+    const passwordForm = document.getElementById('password-form');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        if (tab.dataset.tab === 'magic') {
+          magicForm.style.display = 'flex';
+          passwordForm.style.display = 'none';
+        } else {
+          magicForm.style.display = 'none';
+          passwordForm.style.display = 'flex';
+        }
+      });
+    });
+
+    // Password visibility toggle
+    const toggleBtn = document.querySelector('.form-input-toggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const input = toggleBtn.previousElementSibling;
+        const icon = toggleBtn.querySelector('i');
+
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.setAttribute('data-lucide', 'eye-off');
+        } else {
+          input.type = 'password';
+          icon.setAttribute('data-lucide', 'eye');
+        }
+        lucide.createIcons();
+      });
+    }
+  </script>
+</body>
+</html>

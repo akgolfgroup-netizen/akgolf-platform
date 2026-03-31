@@ -27,7 +27,7 @@ export function TeamSection() {
               <RevealOnScroll key={member.name} delay={i * 0.15}>
                 <div className="flex flex-col items-center text-center">
                   <div className="w-full max-w-xs mb-8">
-                    <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-ink-05">
+                    <div className="relative aspect-[3/4] rounded-[20px] overflow-hidden bg-grey-100">
                       {imageSrc ? (
                         <Image
                           src={imageSrc}
@@ -38,7 +38,7 @@ export function TeamSection() {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <span className="font-display text-6xl font-semibold text-ink-20">
+                          <span className="font-display text-6xl font-semibold text-grey-300">
                             {member.name.split(" ").map(n => n[0]).join("")}
                           </span>
                         </div>
@@ -46,18 +46,18 @@ export function TeamSection() {
                     </div>
                   </div>
 
-                  <h3 className="font-display text-2xl font-bold text-ink-90 mb-1">{member.name}</h3>
-                  <p className="text-xs font-mono text-gold-text uppercase tracking-wider mb-3">
+                  <h3 className="font-display text-2xl font-bold text-black mb-1">{member.name}</h3>
+                  <p className="text-xs font-mono text-grey-500 uppercase tracking-wider mb-3">
                     {member.role}
                   </p>
 
-                  <p className="text-ink-50 leading-relaxed max-w-sm mb-6">
+                  <p className="text-grey-500 leading-relaxed max-w-sm mb-6">
                     {member.bio}
                   </p>
 
                   <Link
                     href={`mailto:${member.contact.email}`}
-                    className="text-sm text-ink-40 hover:text-ink-70 transition-colors"
+                    className="text-sm text-grey-400 hover:text-black transition-colors"
                   >
                     {member.contact.email}
                   </Link>

@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Apple-Quality Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ============================================
+       APPLE-QUALITY DESIGN SYSTEM
+       AK Golf — Premium Golf Coaching Platform
+       ============================================ */
+
+    :root {
+      /* === TYPOGRAPHY — SF Pro-inspired === */
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+      /* === 8PT GRID SPACING === */
+      --space-0: 0;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+
+      /* === COLOR SYSTEM — Refined & Purposeful === */
+
+      /* Grayscale — Apple-inspired neutrals */
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F7;
+      --gray-200: #E8E8ED;
+      --gray-300: #D2D2D7;
+      --gray-400: #AEAEB2;
+      --gray-500: #8E8E93;
+      --gray-600: #636366;
+      --gray-700: #48484A;
+      --gray-800: #3A3A3C;
+      --gray-900: #2C2C2E;
+      --gray-950: #1D1D1F;
+
+      /* Brand Gold — Warm, Premium */
+      --gold-50: #FDF8F0;
+      --gold-100: #F8EDDB;
+      --gold-200: #F0D9B5;
+      --gold-300: #E5C089;
+      --gold-400: #D4A35C;
+      --gold-500: #B8975C;
+      --gold-600: #9A7B47;
+      --gold-700: #7A6138;
+      --gold-800: #5C492A;
+      --gold-900: #3D301C;
+
+      /* Semantic Colors */
+      --success-light: #D1FAE5;
+      --success: #34C759;
+      --success-dark: #248A3D;
+
+      --warning-light: #FEF3C7;
+      --warning: #FF9500;
+      --warning-dark: #C93400;
+
+      --error-light: #FEE2E2;
+      --error: #FF3B30;
+      --error-dark: #D70015;
+
+      --info-light: #DBEAFE;
+      --info: #007AFF;
+      --info-dark: #0055D4;
+
+      /* === ELEVATION — Layered Depth === */
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.06);
+      --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.16), 0 12px 24px rgba(0, 0, 0, 0.08);
+
+      /* Gold glow for premium elements */
+      --shadow-gold: 0 4px 24px rgba(184, 151, 92, 0.2);
+      --shadow-gold-lg: 0 8px 40px rgba(184, 151, 92, 0.25);
+
+      /* === BORDERS === */
+      --border-subtle: 1px solid rgba(0, 0, 0, 0.04);
+      --border-default: 1px solid rgba(0, 0, 0, 0.08);
+      --border-strong: 1px solid rgba(0, 0, 0, 0.12);
+      --border-focus: 2px solid var(--info);
+      --border-gold: 1px solid var(--gold-300);
+
+      /* === RADIUS — Generous & Consistent === */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-3xl: 32px;
+      --radius-full: 9999px;
+
+      /* === ANIMATION — Smooth & Purposeful === */
+      --ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+      --ease-in: cubic-bezier(0.42, 0, 1, 1);
+      --ease-out: cubic-bezier(0, 0, 0.58, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+      --duration-instant: 100ms;
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+      --duration-slow: 400ms;
+      --duration-slower: 600ms;
+
+      /* === Z-INDEX === */
+      --z-base: 0;
+      --z-elevated: 1;
+      --z-dropdown: 10;
+      --z-sticky: 20;
+      --z-overlay: 30;
+      --z-modal: 40;
+      --z-popover: 50;
+      --z-toast: 60;
+    }
+
+    /* === DARK MODE TOKENS === */
+    .dark {
+      --gray-50: #1D1D1F;
+      --gray-100: #2C2C2E;
+      --gray-200: #3A3A3C;
+      --gray-300: #48484A;
+      --gray-400: #636366;
+      --gray-500: #8E8E93;
+      --gray-600: #AEAEB2;
+      --gray-700: #D2D2D7;
+      --gray-800: #E8E8ED;
+      --gray-900: #F5F5F7;
+      --gray-950: #FAFAFA;
+
+      --border-subtle: 1px solid rgba(255, 255, 255, 0.06);
+      --border-default: 1px solid rgba(255, 255, 255, 0.1);
+      --border-strong: 1px solid rgba(255, 255, 255, 0.16);
+
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ============================================
+       BASE STYLES
+       ============================================ */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: var(--font-system);
+      background: var(--gray-50);
+      color: var(--gray-950);
+      line-height: 1.5;
+      letter-spacing: -0.011em;
+    }
+
+    /* ============================================
+       TYPOGRAPHY SYSTEM
+       ============================================ */
+
+    .display-large {
+      font-family: var(--font-display);
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .display-medium {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+    }
+
+    .display-small {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .headline-large {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+    }
+
+    .headline-medium {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .headline-small {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.008em;
+    }
+
+    .title-large {
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: -0.005em;
+    }
+
+    .title-medium {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.45;
+      letter-spacing: 0;
+    }
+
+    .title-small {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+    }
+
+    .body-large {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.55;
+      letter-spacing: -0.005em;
+    }
+
+    .body-medium {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    .body-small {
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.45;
+      letter-spacing: 0.01em;
+    }
+
+    .caption {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+    }
+
+    .overline {
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================
+       COMPONENT STYLES
+       ============================================ */
+
+    /* === CARDS === */
+    .card {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .card-elevated {
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-elevated:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-gold {
+      background: linear-gradient(135deg, var(--gold-50) 0%, white 50%);
+      border: var(--border-gold);
+    }
+
+    /* === BUTTONS === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      font-family: var(--font-system);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-primary {
+      background: var(--gold-500);
+      color: white;
+      box-shadow: var(--shadow-gold);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-600);
+      box-shadow: var(--shadow-gold-lg);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: var(--gray-100);
+      color: var(--gray-900);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-200);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--gray-700);
+    }
+
+    .btn-ghost:hover {
+      background: var(--gray-100);
+      color: var(--gray-900);
+    }
+
+    .btn-sm {
+      padding: var(--space-2) var(--space-3);
+      font-size: 13px;
+      border-radius: var(--radius-sm);
+    }
+
+    .btn-lg {
+      padding: var(--space-4) var(--space-6);
+      font-size: 17px;
+      border-radius: var(--radius-lg);
+    }
+
+    /* === INPUTS === */
+    .input {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      font-family: var(--font-system);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--gray-900);
+      background: var(--gray-100);
+      border: 2px solid transparent;
+      border-radius: var(--radius-md);
+      outline: none;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .input:focus {
+      background: white;
+      border-color: var(--gold-400);
+      box-shadow: 0 0 0 4px var(--gold-100);
+    }
+
+    .input::placeholder {
+      color: var(--gray-400);
+    }
+
+    /* === BADGES === */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-1) var(--space-3);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.4;
+      border-radius: var(--radius-full);
+    }
+
+    .badge-gold {
+      background: var(--gold-100);
+      color: var(--gold-700);
+    }
+
+    .badge-success {
+      background: var(--success-light);
+      color: var(--success-dark);
+    }
+
+    .badge-warning {
+      background: var(--warning-light);
+      color: var(--warning-dark);
+    }
+
+    .badge-error {
+      background: var(--error-light);
+      color: var(--error-dark);
+    }
+
+    .badge-info {
+      background: var(--info-light);
+      color: var(--info-dark);
+    }
+
+    /* === AVATARS === */
+    .avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--gold-200) 0%, var(--gold-400) 100%);
+      color: white;
+    }
+
+    .avatar-sm { width: 32px; height: 32px; font-size: 13px; }
+    .avatar-md { width: 40px; height: 40px; font-size: 15px; }
+    .avatar-lg { width: 48px; height: 48px; font-size: 17px; }
+    .avatar-xl { width: 64px; height: 64px; font-size: 20px; }
+
+    /* === STAT CARDS === */
+    .stat-card {
+      padding: var(--space-6);
+      background: white;
+      border-radius: var(--radius-xl);
+      border: var(--border-subtle);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-500);
+      margin-bottom: var(--space-2);
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gray-950);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      margin-top: var(--space-2);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .stat-trend.positive { color: var(--success); }
+    .stat-trend.negative { color: var(--error); }
+
+    /* ============================================
+       LAYOUT SHOWCASE
+       ============================================ */
+
+    .showcase-header {
+      background: linear-gradient(180deg, var(--gray-950) 0%, var(--gray-900) 100%);
+      color: white;
+      padding: var(--space-16) var(--space-8);
+      text-align: center;
+    }
+
+    .showcase-header h1 {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: var(--space-4);
+    }
+
+    .showcase-header p {
+      font-size: 17px;
+      color: var(--gray-400);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .showcase-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--gold-500);
+      color: white;
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: var(--space-6);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6);
+    }
+
+    .section {
+      margin-bottom: var(--space-16);
+    }
+
+    .section-header {
+      margin-bottom: var(--space-8);
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--gray-950);
+      margin-bottom: var(--space-2);
+    }
+
+    .section-subtitle {
+      font-size: 15px;
+      color: var(--gray-500);
+    }
+
+    /* === COLOR PALETTE === */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .color-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: var(--border-subtle);
+    }
+
+    .color-swatch {
+      height: 80px;
+    }
+
+    .color-info {
+      padding: var(--space-4);
+    }
+
+    .color-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: var(--space-1);
+    }
+
+    .color-hex {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    /* === TYPOGRAPHY SHOWCASE === */
+    .type-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .type-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-8);
+      align-items: baseline;
+      padding-bottom: var(--space-6);
+      border-bottom: var(--border-subtle);
+    }
+
+    .type-meta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .type-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    .type-specs {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+
+    /* === COMPONENT SHOWCASE === */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .component-demo {
+      background: var(--gray-100);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .component-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-500);
+    }
+
+    /* === STATS DEMO === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+
+    /* === PORTAL PREVIEW === */
+    .portal-preview {
+      background: var(--gray-950);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-2xl);
+    }
+
+    .portal-frame {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 600px;
+    }
+
+    .portal-sidebar {
+      background: var(--gray-900);
+      padding: var(--space-6);
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .portal-sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: var(--space-6);
+    }
+
+    .portal-logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--gold-500);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .portal-logo-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .portal-nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .portal-nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-400);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .portal-nav-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: white;
+    }
+
+    .portal-nav-item.active {
+      background: rgba(184, 151, 92, 0.12);
+      color: var(--gold-400);
+    }
+
+    .portal-main {
+      padding: var(--space-8);
+      background: var(--gray-50);
+    }
+
+    .portal-welcome {
+      margin-bottom: var(--space-8);
+    }
+
+    .portal-welcome h2 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--gray-950);
+      margin-bottom: var(--space-1);
+    }
+
+    .portal-welcome p {
+      font-size: 15px;
+      color: var(--gray-500);
+    }
+
+    .portal-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .portal-stat {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      border: var(--border-subtle);
+    }
+
+    .portal-stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-500);
+      margin-bottom: var(--space-2);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .portal-stat-value {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gray-950);
+      line-height: 1;
+    }
+
+    .portal-stat-unit {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-400);
+      margin-left: var(--space-1);
+    }
+
+    /* === ICON STYLE === */
+    .icon {
+      width: 20px;
+      height: 20px;
+      stroke-width: 1.75;
+    }
+
+    .icon-sm { width: 16px; height: 16px; }
+    .icon-lg { width: 24px; height: 24px; }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp var(--duration-slow) var(--ease-out) forwards;
+    }
+
+    .delay-1 { animation-delay: 100ms; }
+    .delay-2 { animation-delay: 200ms; }
+    .delay-3 { animation-delay: 300ms; }
+    .delay-4 { animation-delay: 400ms; }
+
+    /* ============================================
+       PREMIUM EFFECTS — Advanced Visual System
+       ============================================ */
+
+    /* === LAYERED SHADOWS (Enhanced) === */
+    :root {
+      --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.02);
+      --shadow-card-hover: 0 4px 8px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.08), 0 24px 48px rgba(0,0,0,0.04);
+      --shadow-glow-gold: 0 4px 16px rgba(184, 151, 92, 0.4);
+
+      /* Gradient Backgrounds */
+      --gradient-surface: linear-gradient(135deg, #F8F8FC 0%, #F0F4F8 50%, #F5F5F7 100%);
+      --gradient-sidebar: linear-gradient(180deg, #2C2C2E 0%, #1D1D1F 100%);
+      --gradient-hero: linear-gradient(135deg, #1D1D1F 0%, #2C2C2E 50%, #1D1D1F 100%);
+    }
+
+    /* === GLASSMORPHISM === */
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .glass-dark {
+      background: rgba(28, 28, 30, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* === HOVER TRANSFORMS === */
+    .hover-lift {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hover-lift:hover {
+      transform: translateY(-4px) scale(1.01);
+    }
+
+    .hover-glow {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hover-glow:hover {
+      box-shadow: var(--shadow-glow-gold);
+    }
+
+    /* === TEXT GRADIENTS === */
+    .text-gradient {
+      background: linear-gradient(135deg, var(--gray-950) 0%, var(--gray-700) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-gold {
+      background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-700) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* === SUBTLE PATTERNS === */
+    .pattern-dots {
+      background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    .pattern-grid {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* === GRADIENT BACKGROUNDS === */
+    .bg-gradient-surface {
+      background: var(--gradient-surface);
+    }
+
+    .bg-gradient-sidebar {
+      background: var(--gradient-sidebar);
+    }
+
+    .bg-gradient-hero {
+      background: var(--gradient-hero);
+    }
+
+    /* === PREMIUM EFFECTS SHOWCASE === */
+    .effect-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .effect-card {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .effect-demo {
+      padding: var(--space-8);
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .effect-info {
+      padding: var(--space-5);
+      background: white;
+      border-top: var(--border-subtle);
+    }
+
+    .effect-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: var(--space-1);
+    }
+
+    .effect-desc {
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+
+    .effect-code {
+      margin-top: var(--space-3);
+      padding: var(--space-3);
+      background: var(--gray-100);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gray-700);
+      overflow-x: auto;
+    }
+
+    /* Glass card demo */
+    .glass-demo-bg {
+      background: linear-gradient(135deg, var(--gold-200) 0%, var(--gold-400) 50%, var(--gold-300) 100%);
+      padding: var(--space-10);
+      position: relative;
+    }
+
+    .glass-demo-bg::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 30%;
+      width: 100px;
+      height: 100px;
+      background: var(--gold-500);
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.5;
+    }
+
+    .glass-demo-card {
+      padding: var(--space-6);
+      border-radius: var(--radius-lg);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Shadow demo card */
+    .shadow-demo-card {
+      background: white;
+      padding: var(--space-6);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .shadow-demo-card:hover {
+      box-shadow: var(--shadow-card-hover);
+      transform: translateY(-4px);
+    }
+
+    /* Glow demo */
+    .glow-demo-card {
+      background: white;
+      padding: var(--space-6);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--gold-200);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .glow-demo-card:hover {
+      box-shadow: var(--shadow-glow-gold);
+      border-color: var(--gold-400);
+    }
+  </style>
+</head>
+<body>
+  <header class="showcase-header">
+    <h1>Apple-Quality Design System</h1>
+    <p>Et raffinert designsystem for AK Golf med fokus på detaljer, luftighet og premium brukeropplevelse</p>
+    <span class="showcase-badge">
+      <i data-lucide="sparkles" class="icon-sm"></i>
+      Premium Quality
+    </span>
+  </header>
+
+  <div class="container">
+    <!-- Colors Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Fargepalett</h2>
+        <p class="section-subtitle">Raffinert og formålsdrevet — hver farge har sin rolle</p>
+      </div>
+
+      <h3 class="title-medium" style="margin-bottom: var(--space-4); color: var(--gray-600);">Brand Gold</h3>
+      <div class="color-grid" style="margin-bottom: var(--space-8);">
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gold-50);"></div>
+          <div class="color-info">
+            <div class="color-name">Gold 50</div>
+            <div class="color-hex">#FDF8F0</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gold-100);"></div>
+          <div class="color-info">
+            <div class="color-name">Gold 100</div>
+            <div class="color-hex">#F8EDDB</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gold-300);"></div>
+          <div class="color-info">
+            <div class="color-name">Gold 300</div>
+            <div class="color-hex">#E5C089</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gold-500);"></div>
+          <div class="color-info">
+            <div class="color-name">Gold 500</div>
+            <div class="color-hex">#B8975C</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gold-700);"></div>
+          <div class="color-info">
+            <div class="color-name">Gold 700</div>
+            <div class="color-hex">#7A6138</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="title-medium" style="margin-bottom: var(--space-4); color: var(--gray-600);">Grayscale</h3>
+      <div class="color-grid">
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gray-50);"></div>
+          <div class="color-info">
+            <div class="color-name">Gray 50</div>
+            <div class="color-hex">#FAFAFA</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gray-100);"></div>
+          <div class="color-info">
+            <div class="color-name">Gray 100</div>
+            <div class="color-hex">#F5F5F7</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gray-300);"></div>
+          <div class="color-info">
+            <div class="color-name">Gray 300</div>
+            <div class="color-hex">#D2D2D7</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gray-500);"></div>
+          <div class="color-info">
+            <div class="color-name">Gray 500</div>
+            <div class="color-hex">#8E8E93</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gray-700);"></div>
+          <div class="color-info">
+            <div class="color-name">Gray 700</div>
+            <div class="color-hex">#48484A</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: var(--gray-950);"></div>
+          <div class="color-info">
+            <div class="color-name">Gray 950</div>
+            <div class="color-hex">#1D1D1F</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Typografi</h2>
+        <p class="section-subtitle">SF Pro-inspirert typeskala med presise proportioner</p>
+      </div>
+
+      <div class="type-list">
+        <div class="type-item">
+          <div class="type-meta">
+            <span class="type-name">Display Large</span>
+            <span class="type-specs">64px / -3% / 700</span>
+          </div>
+          <div class="display-large">Handicap 12.4</div>
+        </div>
+        <div class="type-item">
+          <div class="type-meta">
+            <span class="type-name">Display Medium</span>
+            <span class="type-specs">48px / -2.5% / 700</span>
+          </div>
+          <div class="display-medium">Din utvikling</div>
+        </div>
+        <div class="type-item">
+          <div class="type-meta">
+            <span class="type-name">Headline Large</span>
+            <span class="type-specs">28px / -1.5% / 600</span>
+          </div>
+          <div class="headline-large">God morgen, Anders</div>
+        </div>
+        <div class="type-item">
+          <div class="type-meta">
+            <span class="type-name">Headline Medium</span>
+            <span class="type-specs">24px / -1% / 600</span>
+          </div>
+          <div class="headline-medium">Denne uken</div>
+        </div>
+        <div class="type-item">
+          <div class="type-meta">
+            <span class="type-name">Title Large</span>
+            <span class="type-specs">17px / -0.5% / 600</span>
+          </div>
+          <div class="title-large">Neste coaching-time</div>
+        </div>
+        <div class="type-item">
+          <div class="type-meta">
+            <span class="type-name">Body Large</span>
+            <span class="type-specs">17px / -0.5% / 400</span>
+          </div>
+          <div class="body-large">Spillere med HCP 10-15 sparer flest slag på putting og nærespill. Prioriter dette i treningsøktene.</div>
+        </div>
+        <div class="type-item">
+          <div class="type-meta">
+            <span class="type-name">Caption</span>
+            <span class="type-specs">12px / 2% / 500</span>
+          </div>
+          <div class="caption">Oppdatert for 2 timer siden</div>
+        </div>
+        <div class="type-item">
+          <div class="type-meta">
+            <span class="type-name">Overline</span>
+            <span class="type-specs">11px / 8% / 600 / CAPS</span>
+          </div>
+          <div class="overline">Handicap Index</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Komponenter</h2>
+        <p class="section-subtitle">Byggeklosser designet med presisjon og omtanke</p>
+      </div>
+
+      <div class="component-grid">
+        <div class="component-demo">
+          <span class="component-label">Knapper</span>
+          <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+            <button class="btn btn-primary btn-lg">
+              <i data-lucide="plus" class="icon-sm"></i>
+              Logg økt
+            </button>
+            <button class="btn btn-secondary btn-lg">Book time</button>
+            <button class="btn btn-ghost btn-lg">Avbryt</button>
+          </div>
+          <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+            <button class="btn btn-primary">Standard</button>
+            <button class="btn btn-primary btn-sm">Liten</button>
+          </div>
+        </div>
+
+        <div class="component-demo">
+          <span class="component-label">Badges</span>
+          <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+            <span class="badge badge-gold">Premium</span>
+            <span class="badge badge-success">Fullført</span>
+            <span class="badge badge-warning">Venter</span>
+            <span class="badge badge-error">Avlyst</span>
+            <span class="badge badge-info">Ny</span>
+          </div>
+        </div>
+
+        <div class="component-demo">
+          <span class="component-label">Avatarer</span>
+          <div style="display: flex; gap: var(--space-4); align-items: center;">
+            <div class="avatar avatar-sm">AK</div>
+            <div class="avatar avatar-md">AK</div>
+            <div class="avatar avatar-lg">AK</div>
+            <div class="avatar avatar-xl">AK</div>
+          </div>
+        </div>
+
+        <div class="component-demo">
+          <span class="component-label">Input</span>
+          <input type="text" class="input" placeholder="Søk etter elever...">
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Statistikk-kort</h2>
+        <p class="section-subtitle">Data presentert med klarhet og visuell tyngde</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">
+            <i data-lucide="target" class="icon-sm" style="color: var(--gold-500);"></i>
+            Handicap
+          </div>
+          <div class="stat-value">12.4</div>
+          <div class="stat-trend positive">
+            <i data-lucide="trending-down" class="icon-sm"></i>
+            -1.2 siste 30 dager
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            <i data-lucide="flame" class="icon-sm" style="color: var(--warning);"></i>
+            Streak
+          </div>
+          <div class="stat-value">7<span style="font-size: 16px; font-weight: 500; color: var(--gray-400); margin-left: 4px;">dager</span></div>
+          <div class="stat-trend positive">
+            <i data-lucide="trophy" class="icon-sm"></i>
+            Personlig rekord!
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            <i data-lucide="calendar" class="icon-sm" style="color: var(--info);"></i>
+            Denne måneden
+          </div>
+          <div class="stat-value">12<span style="font-size: 16px; font-weight: 500; color: var(--gray-400); margin-left: 4px;">økter</span></div>
+          <div class="stat-trend positive">
+            <i data-lucide="trending-up" class="icon-sm"></i>
+            +4 fra forrige mnd
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            <i data-lucide="award" class="icon-sm" style="color: var(--gold-500);"></i>
+            Achievements
+          </div>
+          <div class="stat-value">8<span style="font-size: 16px; font-weight: 500; color: var(--gray-400); margin-left: 4px;">/ 24</span></div>
+          <div class="stat-trend" style="color: var(--gray-500);">
+            <i data-lucide="lock" class="icon-sm"></i>
+            2 nesten låst opp
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Premium Effects Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Premium Effects</h2>
+        <p class="section-subtitle">Avanserte visuelle effekter for en eksklusiv opplevelse</p>
+      </div>
+
+      <div class="effect-grid">
+        <!-- Glassmorphism -->
+        <div class="effect-card">
+          <div class="effect-demo glass-demo-bg">
+            <div class="glass glass-demo-card">
+              <div class="title-medium" style="color: var(--gray-950); margin-bottom: var(--space-2);">Glassmorphism</div>
+              <div class="body-small" style="color: var(--gray-700);">Elegant frosted glass-effekt med backdrop-blur</div>
+            </div>
+          </div>
+          <div class="effect-info">
+            <div class="effect-title">Glassmorphism</div>
+            <div class="effect-desc">Skaper dybde med semi-transparent bakgrunn og blur</div>
+            <div class="effect-code">backdrop-filter: blur(20px);<br>background: rgba(255,255,255,0.7);</div>
+          </div>
+        </div>
+
+        <!-- Layered Shadows -->
+        <div class="effect-card" style="border: var(--border-subtle);">
+          <div class="effect-demo bg-gradient-surface pattern-dots" style="padding: var(--space-10);">
+            <div class="shadow-demo-card">
+              <div class="title-medium" style="color: var(--gray-950); margin-bottom: var(--space-2);">Layered Shadows</div>
+              <div class="body-small" style="color: var(--gray-500);">Hover meg for shadow-effekt</div>
+            </div>
+          </div>
+          <div class="effect-info">
+            <div class="effect-title">Layered Shadows</div>
+            <div class="effect-desc">Tre lag med skygger for naturlig dybde</div>
+            <div class="effect-code">--shadow-card: 0 1px 2px..., 0 4px 8px..., 0 8px 16px...;</div>
+          </div>
+        </div>
+
+        <!-- Gold Glow -->
+        <div class="effect-card" style="border: var(--border-subtle);">
+          <div class="effect-demo bg-gradient-surface" style="padding: var(--space-10);">
+            <div class="glow-demo-card">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                <i data-lucide="star" style="color: var(--gold-500); width: 20px; height: 20px;"></i>
+                <span class="title-medium" style="color: var(--gray-950);">Gold Glow</span>
+              </div>
+              <div class="body-small" style="color: var(--gray-500);">Hover for premium gull-effekt</div>
+            </div>
+          </div>
+          <div class="effect-info">
+            <div class="effect-title">Shadow Glow Gold</div>
+            <div class="effect-desc">Premium gull-glød for fremheving av viktige elementer</div>
+            <div class="effect-code">--shadow-glow-gold: 0 4px 16px rgba(184, 151, 92, 0.4);</div>
+          </div>
+        </div>
+
+        <!-- Text Gradients -->
+        <div class="effect-card" style="border: var(--border-subtle);">
+          <div class="effect-demo" style="background: white; flex-direction: column; gap: var(--space-4);">
+            <div class="display-medium text-gradient">Text Gradient</div>
+            <div class="headline-large text-gradient-gold">Gold Gradient</div>
+          </div>
+          <div class="effect-info">
+            <div class="effect-title">Text Gradients</div>
+            <div class="effect-desc">Gradient-fylt tekst for visuell tyngde</div>
+            <div class="effect-code">background: linear-gradient(...);<br>-webkit-background-clip: text;</div>
+          </div>
+        </div>
+
+        <!-- Hover Lift -->
+        <div class="effect-card" style="border: var(--border-subtle);">
+          <div class="effect-demo bg-gradient-surface" style="padding: var(--space-10);">
+            <div class="card hover-lift" style="padding: var(--space-6); cursor: pointer;">
+              <div class="title-medium" style="color: var(--gray-950); margin-bottom: var(--space-2);">Hover Lift</div>
+              <div class="body-small" style="color: var(--gray-500);">Hover meg for lift-effekt</div>
+            </div>
+          </div>
+          <div class="effect-info">
+            <div class="effect-title">Hover Transforms</div>
+            <div class="effect-desc">Subtil løft-animasjon med scale for interaktivitet</div>
+            <div class="effect-code">transform: translateY(-4px) scale(1.01);</div>
+          </div>
+        </div>
+
+        <!-- Patterns -->
+        <div class="effect-card" style="border: var(--border-subtle);">
+          <div class="effect-demo" style="background: white;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); width: 100%;">
+              <div class="pattern-dots" style="padding: var(--space-6); border-radius: var(--radius-md); border: var(--border-subtle);">
+                <div class="caption" style="color: var(--gray-600);">Dots Pattern</div>
+              </div>
+              <div class="pattern-grid" style="padding: var(--space-6); border-radius: var(--radius-md); border: var(--border-subtle);">
+                <div class="caption" style="color: var(--gray-600);">Grid Pattern</div>
+              </div>
+            </div>
+          </div>
+          <div class="effect-info">
+            <div class="effect-title">Subtle Patterns</div>
+            <div class="effect-desc">Diskrete bakgrunnsmønstre for tekstur</div>
+            <div class="effect-code">background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0);</div>
+          </div>
+        </div>
+
+        <!-- Gradient Backgrounds -->
+        <div class="effect-card" style="border: var(--border-subtle); grid-column: span 2;">
+          <div class="effect-demo" style="padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; min-height: 160px;">
+            <div class="bg-gradient-surface" style="padding: var(--space-6); display: flex; align-items: center; justify-content: center;">
+              <div class="caption" style="color: var(--gray-600);">Surface</div>
+            </div>
+            <div class="bg-gradient-sidebar" style="padding: var(--space-6); display: flex; align-items: center; justify-content: center;">
+              <div class="caption" style="color: var(--gray-300);">Sidebar</div>
+            </div>
+            <div class="bg-gradient-hero" style="padding: var(--space-6); display: flex; align-items: center; justify-content: center;">
+              <div class="caption" style="color: var(--gray-300);">Hero</div>
+            </div>
+          </div>
+          <div class="effect-info">
+            <div class="effect-title">Gradient Backgrounds</div>
+            <div class="effect-desc">Subtile gradienter for dybde og visuell interesse</div>
+            <div class="effect-code">--gradient-surface: linear-gradient(135deg, #F8F8FC 0%, #F0F4F8 50%, #F5F5F7 100%);</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portal Preview -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Portal Preview</h2>
+        <p class="section-subtitle">Komplett brukeropplevelse med Apple-kvalitet</p>
+      </div>
+
+      <div class="portal-preview">
+        <div class="portal-frame">
+          <aside class="portal-sidebar">
+            <div class="portal-sidebar-logo">
+              <div class="portal-logo-mark">K</div>
+              <span class="portal-logo-text">AK Golf</span>
+            </div>
+            <nav class="portal-nav">
+              <a class="portal-nav-item active">
+                <i data-lucide="layout-dashboard" class="icon"></i>
+                Dashboard
+              </a>
+              <a class="portal-nav-item">
+                <i data-lucide="calendar" class="icon"></i>
+                Bookinger
+              </a>
+              <a class="portal-nav-item">
+                <i data-lucide="book-open" class="icon"></i>
+                Treningsdagbok
+              </a>
+              <a class="portal-nav-item">
+                <i data-lucide="bar-chart-2" class="icon"></i>
+                Statistikk
+              </a>
+              <a class="portal-nav-item">
+                <i data-lucide="target" class="icon"></i>
+                Treningsplan
+              </a>
+              <a class="portal-nav-item">
+                <i data-lucide="trophy" class="icon"></i>
+                Achievements
+              </a>
+            </nav>
+          </aside>
+          <main class="portal-main">
+            <div class="portal-welcome animate-in">
+              <h2>God morgen, Anders</h2>
+              <p>Fredag 28. mars 2026</p>
+            </div>
+            <div class="portal-stats">
+              <div class="portal-stat animate-in delay-1">
+                <div class="portal-stat-label">
+                  <i data-lucide="target" class="icon-sm" style="color: var(--success);"></i>
+                  Handicap
+                </div>
+                <div class="portal-stat-value">12.4</div>
+              </div>
+              <div class="portal-stat animate-in delay-2">
+                <div class="portal-stat-label">
+                  <i data-lucide="flame" class="icon-sm" style="color: var(--warning);"></i>
+                  Streak
+                </div>
+                <div class="portal-stat-value">7<span class="portal-stat-unit">dager</span></div>
+              </div>
+              <div class="portal-stat animate-in delay-3">
+                <div class="portal-stat-label">
+                  <i data-lucide="calendar" class="icon-sm" style="color: var(--info);"></i>
+                  Mars
+                </div>
+                <div class="portal-stat-value">12<span class="portal-stat-unit">økter</span></div>
+              </div>
+              <div class="portal-stat animate-in delay-4">
+                <div class="portal-stat-label">
+                  <i data-lucide="award" class="icon-sm" style="color: var(--gold-500);"></i>
+                  Achievements
+                </div>
+                <div class="portal-stat-value">8<span class="portal-stat-unit">/ 24</span></div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

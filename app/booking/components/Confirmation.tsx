@@ -21,11 +21,11 @@ function AnimatedCheckmark() {
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ type: "spring", stiffness: 200, damping: 15 }}
-      className="w-20 h-20 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-6 relative"
+      className="w-20 h-20 rounded-full bg-[#34C759]/10 flex items-center justify-center mx-auto mb-6 relative"
     >
       {/* Outer ring animation */}
       <motion.div
-        className="absolute inset-0 rounded-full border-2 border-success/30"
+        className="absolute inset-0 rounded-full border-2 border-[#34C759]/30"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1.3, opacity: 0 }}
         transition={{ duration: 1.5, repeat: Infinity }}
@@ -43,7 +43,7 @@ function AnimatedCheckmark() {
       >
         <motion.path
           d="M5 13l4 4L19 7"
-          stroke="#10B981"
+          stroke="#34C759"
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -57,27 +57,28 @@ function AnimatedCheckmark() {
 }
 
 // Confetti particles with pre-generated values to avoid Math.random in render
+// Apple Light Theme: black, grey, green accents
 const CONFETTI_PARTICLES = [
-  { id: 0, color: "#B07D4F", left: 15, x: 45, duration: 2.5, delay: 0.1 },
-  { id: 1, color: "#0A1929", left: 28, x: -32, duration: 3.2, delay: 0.2 },
-  { id: 2, color: "#D4C4A8", left: 42, x: 18, duration: 2.8, delay: 0.05 },
-  { id: 3, color: "#10B981", left: 55, x: -65, duration: 3.5, delay: 0.3 },
-  { id: 4, color: "#B07D4F", left: 68, x: 28, duration: 2.2, delay: 0.15 },
-  { id: 5, color: "#0A1929", left: 82, x: -42, duration: 3.8, delay: 0.25 },
-  { id: 6, color: "#D4C4A8", left: 12, x: 55, duration: 2.6, delay: 0.35 },
-  { id: 7, color: "#10B981", left: 35, x: -15, duration: 3.0, delay: 0.08 },
-  { id: 8, color: "#B07D4F", left: 48, x: 72, duration: 2.4, delay: 0.22 },
-  { id: 9, color: "#0A1929", left: 62, x: -48, duration: 3.3, delay: 0.12 },
-  { id: 10, color: "#D4C4A8", left: 75, x: 38, duration: 2.7, delay: 0.4 },
-  { id: 11, color: "#10B981", left: 88, x: -25, duration: 3.6, delay: 0.18 },
-  { id: 12, color: "#B07D4F", left: 22, x: 62, duration: 2.3, delay: 0.28 },
-  { id: 13, color: "#0A1929", left: 38, x: -55, duration: 3.1, delay: 0.38 },
-  { id: 14, color: "#D4C4A8", left: 52, x: 35, duration: 2.9, delay: 0.02 },
-  { id: 15, color: "#10B981", left: 65, x: -72, duration: 3.4, delay: 0.32 },
-  { id: 16, color: "#B07D4F", left: 78, x: 22, duration: 2.1, delay: 0.42 },
-  { id: 17, color: "#0A1929", left: 92, x: -38, duration: 3.7, delay: 0.06 },
-  { id: 18, color: "#D4C4A8", left: 8, x: 48, duration: 2.5, delay: 0.16 },
-  { id: 19, color: "#10B981", left: 45, x: -62, duration: 3.9, delay: 0.26 },
+  { id: 0, color: "#1D1D1F", left: 15, x: 45, duration: 2.5, delay: 0.1 },
+  { id: 1, color: "#34C759", left: 28, x: -32, duration: 3.2, delay: 0.2 },
+  { id: 2, color: "#86868B", left: 42, x: 18, duration: 2.8, delay: 0.05 },
+  { id: 3, color: "#34C759", left: 55, x: -65, duration: 3.5, delay: 0.3 },
+  { id: 4, color: "#1D1D1F", left: 68, x: 28, duration: 2.2, delay: 0.15 },
+  { id: 5, color: "#D2D2D7", left: 82, x: -42, duration: 3.8, delay: 0.25 },
+  { id: 6, color: "#86868B", left: 12, x: 55, duration: 2.6, delay: 0.35 },
+  { id: 7, color: "#34C759", left: 35, x: -15, duration: 3.0, delay: 0.08 },
+  { id: 8, color: "#1D1D1F", left: 48, x: 72, duration: 2.4, delay: 0.22 },
+  { id: 9, color: "#34C759", left: 62, x: -48, duration: 3.3, delay: 0.12 },
+  { id: 10, color: "#D2D2D7", left: 75, x: 38, duration: 2.7, delay: 0.4 },
+  { id: 11, color: "#34C759", left: 88, x: -25, duration: 3.6, delay: 0.18 },
+  { id: 12, color: "#1D1D1F", left: 22, x: 62, duration: 2.3, delay: 0.28 },
+  { id: 13, color: "#86868B", left: 38, x: -55, duration: 3.1, delay: 0.38 },
+  { id: 14, color: "#D2D2D7", left: 52, x: 35, duration: 2.9, delay: 0.02 },
+  { id: 15, color: "#34C759", left: 65, x: -72, duration: 3.4, delay: 0.32 },
+  { id: 16, color: "#1D1D1F", left: 78, x: 22, duration: 2.1, delay: 0.42 },
+  { id: 17, color: "#86868B", left: 92, x: -38, duration: 3.7, delay: 0.06 },
+  { id: 18, color: "#D2D2D7", left: 8, x: 48, duration: 2.5, delay: 0.16 },
+  { id: 19, color: "#34C759", left: 45, x: -62, duration: 3.9, delay: 0.26 },
 ];
 
 function Confetti() {
@@ -202,7 +203,7 @@ export function Confirmation({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-2xl font-bold text-ink-90 mb-2"
+          className="text-2xl font-bold text-black mb-2"
         >
           Booking bekreftet!
         </motion.h2>
@@ -211,7 +212,7 @@ export function Confirmation({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-ink-50 mb-4"
+          className="text-grey-500 mb-4"
         >
           Vi har sendt en bekreftelse til din e-post
         </motion.p>
@@ -221,10 +222,10 @@ export function Confirmation({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45 }}
-            className="text-sm text-ink-50 mb-8"
+            className="text-sm text-grey-500 mb-8"
           >
             Referansenummer:{" "}
-            <span className="font-mono text-ink-90 bg-ink-5 px-2 py-1 rounded">
+            <span className="font-mono text-black bg-grey-100 px-2 py-1 rounded">
               {bookingRef}
             </span>
           </motion.p>
@@ -235,58 +236,58 @@ export function Confirmation({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-ink-5 rounded-xl p-6 text-left mb-6"
+          className="bg-grey-100 rounded-[20px] p-6 text-left mb-6"
         >
           <div className="space-y-4">
-            <div className="flex justify-between items-center py-2 border-b border-ink-10">
-              <span className="text-ink-50 flex items-center gap-2">
-                <Calendar size={16} className="text-gold" />
+            <div className="flex justify-between items-center py-2 border-b border-grey-200">
+              <span className="text-grey-500 flex items-center gap-2">
+                <Calendar size={16} className="text-black" />
                 Tjeneste
               </span>
-              <span className="font-medium text-ink-90">{serviceName}</span>
+              <span className="font-medium text-black">{serviceName}</span>
             </div>
 
-            <div className="flex justify-between items-center py-2 border-b border-ink-10">
-              <span className="text-ink-50 flex items-center gap-2">
-                <User size={16} className="text-gold" />
+            <div className="flex justify-between items-center py-2 border-b border-grey-200">
+              <span className="text-grey-500 flex items-center gap-2">
+                <User size={16} className="text-black" />
                 Instruktor
               </span>
-              <span className="font-medium text-ink-90">{instructorName}</span>
+              <span className="font-medium text-black">{instructorName}</span>
             </div>
 
-            <div className="flex justify-between items-center py-2 border-b border-ink-10">
-              <span className="text-ink-50 flex items-center gap-2">
-                <Calendar size={16} className="text-gold" />
+            <div className="flex justify-between items-center py-2 border-b border-grey-200">
+              <span className="text-grey-500 flex items-center gap-2">
+                <Calendar size={16} className="text-black" />
                 Dato
               </span>
-              <span className="font-medium text-ink-90 capitalize">{formattedDate}</span>
+              <span className="font-medium text-black capitalize">{formattedDate}</span>
             </div>
 
-            <div className="flex justify-between items-center py-2 border-b border-ink-10">
-              <span className="text-ink-50 flex items-center gap-2">
-                <Clock size={16} className="text-gold" />
+            <div className="flex justify-between items-center py-2 border-b border-grey-200">
+              <span className="text-grey-500 flex items-center gap-2">
+                <Clock size={16} className="text-black" />
                 Tid
               </span>
-              <span className="font-medium text-ink-90">
+              <span className="font-medium text-black">
                 {formattedTime} - {formattedEndTime}
               </span>
             </div>
 
-            <div className="flex justify-between items-center py-2 border-b border-ink-10">
-              <span className="text-ink-50 flex items-center gap-2">
-                <MapPin size={16} className="text-gold" />
+            <div className="flex justify-between items-center py-2 border-b border-grey-200">
+              <span className="text-grey-500 flex items-center gap-2">
+                <MapPin size={16} className="text-black" />
                 Sted
               </span>
-              <span className="font-medium text-ink-90">{location}</span>
+              <span className="font-medium text-black">{location}</span>
             </div>
 
             {price && (
               <div className="flex justify-between items-center py-2">
-                <span className="text-ink-50 flex items-center gap-2">
-                  <CreditCard size={16} className="text-gold" />
+                <span className="text-grey-500 flex items-center gap-2">
+                  <CreditCard size={16} className="text-[#34C759]" />
                   Betalt
                 </span>
-                <span className="font-medium text-ink-90">
+                <span className="font-medium text-black">
                   kr {price.toLocaleString("nb-NO")}
                 </span>
               </div>
@@ -301,7 +302,7 @@ export function Confirmation({
           transition={{ delay: 0.6 }}
           className="mb-6"
         >
-          <h4 className="text-sm font-semibold text-ink-90 mb-3">Legg til i kalender</h4>
+          <h4 className="text-sm font-semibold text-black mb-3">Legg til i kalender</h4>
           <div className="flex flex-wrap justify-center gap-2">
             <a
               href={googleUrl}
@@ -338,16 +339,16 @@ export function Confirmation({
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.7 }}
-            className="bg-gold/5 border border-gold/20 rounded-xl p-4 flex items-start gap-4 text-left mb-6"
+            className="bg-grey-100 border border-grey-200 rounded-[20px] p-4 flex items-start gap-4 text-left mb-6"
           >
-            <div className="w-10 h-10 rounded-lg bg-gold/20 flex items-center justify-center flex-shrink-0">
-              <Mail size={20} className="text-gold" />
+            <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center flex-shrink-0">
+              <Mail size={20} className="text-white" />
             </div>
             <div>
-              <p className="font-semibold text-ink-90 mb-1">Sjekk e-posten din</p>
-              <p className="text-sm text-ink-50 leading-relaxed">
+              <p className="font-semibold text-black mb-1">Sjekk e-posten din</p>
+              <p className="text-sm text-grey-500 leading-relaxed">
                 Vi har sendt deg en e-post med en lenke for a sette passord og logge inn pa{" "}
-                <span className="text-gold font-medium">AK Golf Portal</span>. Der kan du se
+                <span className="text-black font-medium">AK Golf Portal</span>. Der kan du se
                 bookinger, treningsplaner og coaching-notater.
               </p>
             </div>
@@ -359,18 +360,18 @@ export function Confirmation({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="pt-6 border-t border-ink-10 space-y-3"
+          className="pt-6 border-t border-grey-200 space-y-3"
         >
           <Link
             href="/portal/bookinger"
-            className="w-btn w-btn-gold w-full flex items-center justify-center gap-2"
+            className="w-btn w-btn-primary w-full flex items-center justify-center gap-2"
           >
             Ga til mine bookinger
             <ArrowRight size={18} />
           </Link>
           <Link
             href="/booking"
-            className="w-btn w-btn-ghost w-full flex items-center justify-center gap-2 text-ink-50"
+            className="w-btn w-btn-ghost w-full flex items-center justify-center gap-2 text-grey-500"
           >
             Book ny time
           </Link>

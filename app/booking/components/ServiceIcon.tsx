@@ -35,12 +35,7 @@ export function ServiceIcon({ category, size = 24, className = "" }: ServiceIcon
   const Icon = config.icon;
 
   return (
-    <div 
-      className={`flex items-center justify-center rounded-xl bg-gold/10 ${className}`}
-      style={{ width: size * 1.5, height: size * 1.5 }}
-    >
-      <Icon size={size} className="text-gold" />
-    </div>
+    <Icon size={size} className={className} />
   );
 }
 

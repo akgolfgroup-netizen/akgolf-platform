@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Admin Dashboard (Apple Quality)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      /* Typography */
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', monospace;
+
+      /* Spacing - 8pt grid */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+
+      /* Colors */
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F7;
+      --gray-200: #E8E8ED;
+      --gray-300: #D2D2D7;
+      --gray-400: #AEAEB2;
+      --gray-500: #8E8E93;
+      --gray-600: #636366;
+      --gray-700: #48484A;
+      --gray-800: #3A3A3C;
+      --gray-900: #2C2C2E;
+      --gray-950: #1D1D1F;
+
+      --gold-50: #FDF8F0;
+      --gold-100: #F8EDDB;
+      --gold-200: #F0D9B5;
+      --gold-300: #E5C089;
+      --gold-400: #D4A35C;
+      --gold-500: #B8975C;
+      --gold-600: #9A7B47;
+      --gold-700: #7A6138;
+
+      --success: #34C759;
+      --success-light: #D1FAE5;
+      --warning: #FF9500;
+      --warning-light: #FEF3C7;
+      --error: #FF3B30;
+      --error-light: #FEE2E2;
+      --info: #007AFF;
+      --info-light: #DBEAFE;
+
+      /* Admin accent - dark purple/indigo */
+      --admin-accent: #6366F1;
+      --admin-accent-light: #E0E7FF;
+      --admin-accent-dark: #4F46E5;
+
+      /* Elevation - Premium Layered Shadows */
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-gold: 0 4px 24px rgba(184, 151, 92, 0.2);
+      --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.02);
+      --shadow-card-hover: 0 20px 40px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.04);
+      --shadow-btn-glow: 0 4px 16px rgba(184, 151, 92, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+
+      /* Radius */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --radius-full: 9999px;
+
+      /* Animation */
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-system);
+      background: var(--gray-950);
+      color: var(--gray-50);
+      line-height: 1.5;
+    }
+
+    /* === LAYOUT === */
+    .portal {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    /* === SIDEBAR (ADMIN VERSION) === */
+    .sidebar {
+      background: linear-gradient(180deg, #2C2C2E 0%, #1D1D1F 100%);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      width: 280px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding-bottom: var(--space-6);
+      margin-bottom: var(--space-4);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: var(--gold-500);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .logo-text-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-text {
+      font-size: 17px;
+      font-weight: 600;
+      color: white;
+      letter-spacing: -0.01em;
+    }
+
+    .logo-mode {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--admin-accent);
+    }
+
+    /* Admin badge */
+    .admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background: var(--admin-accent);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-6);
+    }
+
+    .admin-badge i { width: 14px; height: 14px; }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-400);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.04);
+      color: white;
+    }
+
+    .nav-item.active {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--admin-accent);
+    }
+
+    .nav-item i { width: 20px; height: 20px; stroke-width: 1.75; }
+
+    .nav-item .badge {
+      margin-left: auto;
+      padding: 2px 8px;
+      background: var(--error);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+    }
+
+    .nav-section {
+      margin-top: var(--space-6);
+      padding-top: var(--space-6);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-600);
+      padding: 0 var(--space-4);
+      margin-bottom: var(--space-3);
+    }
+
+    /* Admin section highlight */
+    .nav-section.admin-section {
+      background: rgba(99, 102, 241, 0.05);
+      margin-left: calc(var(--space-6) * -1);
+      margin-right: calc(var(--space-6) * -1);
+      padding-left: var(--space-6);
+      padding-right: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-top: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .nav-section.admin-section .nav-section-label {
+      color: var(--admin-accent);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: var(--space-6);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background var(--duration-fast) var(--ease-smooth);
+    }
+
+    .user-card:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--admin-accent) 0%, var(--admin-accent-dark) 100%);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: white;
+    }
+
+    .user-info { flex: 1; }
+    .user-name { font-size: 14px; font-weight: 500; color: white; }
+    .user-role { font-size: 12px; color: var(--admin-accent); }
+
+    /* === MAIN === */
+    .main {
+      margin-left: 280px;
+      background: linear-gradient(135deg, #F8F8FC 0%, #F0F4F8 50%, #F5F5F7 100%);
+      min-height: 100vh;
+    }
+
+    .main-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-8);
+    }
+
+    /* === HEADER === */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--space-8);
+    }
+
+    .header-content h1 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gray-950);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-1);
+    }
+
+    .header-content p {
+      font-size: 15px;
+      color: var(--gray-500);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      font-family: var(--font-system);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .btn-primary {
+      background: var(--admin-accent);
+      color: white;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+
+    .btn-primary:hover {
+      background: var(--admin-accent-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--gray-700);
+      border: 1px solid var(--gray-200);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-100);
+      border-color: var(--gray-300);
+    }
+
+    .btn i { width: 18px; height: 18px; stroke-width: 2; }
+
+    /* === STATS GRID === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: var(--shadow-card);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .stat-card.admin-featured {
+      background: linear-gradient(135deg, var(--admin-accent-light) 0%, white 60%);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+
+    .stat-label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-500);
+    }
+
+    .stat-label i { width: 16px; height: 16px; stroke-width: 2; }
+
+    .stat-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-icon i { width: 18px; height: 18px; stroke-width: 2; }
+
+    .stat-icon.success { background: var(--success-light); color: #059669; }
+    .stat-icon.warning { background: var(--warning-light); color: #D97706; }
+    .stat-icon.info { background: var(--info-light); color: var(--info); }
+    .stat-icon.admin { background: var(--admin-accent-light); color: var(--admin-accent); }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gray-950);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-unit {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--gray-400);
+      margin-left: var(--space-1);
+    }
+
+    .stat-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      margin-top: var(--space-3);
+      font-size: 13px;
+      font-weight: 500;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+
+    .stat-trend.positive {
+      background: var(--success-light);
+      color: #059669;
+    }
+
+    .stat-trend.negative {
+      background: var(--error-light);
+      color: #DC2626;
+    }
+
+    .stat-trend i { width: 14px; height: 14px; }
+
+    /* === BENTO GRID === */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-4);
+    }
+
+    .bento-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .bento-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .bento-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-5) var(--space-6);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .bento-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .bento-card-action {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--admin-accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .bento-card-action:hover { color: var(--admin-accent-dark); }
+    .bento-card-action i { width: 14px; height: 14px; }
+
+    .bento-card-body {
+      padding: var(--space-6);
+    }
+
+    /* Today's Bookings - Large card */
+    .todays-bookings {
+      grid-column: span 8;
+    }
+
+    /* Mini table styling */
+    .mini-table {
+      width: 100%;
+    }
+
+    .mini-table-header {
+      display: grid;
+      grid-template-columns: 80px 1fr 140px 100px 100px;
+      gap: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gray-500);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .mini-table-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 140px 100px 100px;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      align-items: center;
+      border-bottom: 1px solid var(--gray-50);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mini-table-row:hover {
+      background: rgba(99, 102, 241, 0.04);
+      transform: scale(1.005);
+    }
+
+    .mini-table-row:last-child {
+      border-bottom: none;
+    }
+
+    .time-cell {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    .student-cell {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .student-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--gold-300) 0%, var(--gold-500) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .student-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-900);
+    }
+
+    .student-type {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    .service-cell {
+      font-size: 13px;
+      color: var(--gray-600);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-3);
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: var(--radius-full);
+    }
+
+    .status-badge.confirmed {
+      background: var(--success-light);
+      color: #059669;
+    }
+
+    .status-badge.pending {
+      background: var(--warning-light);
+      color: #D97706;
+    }
+
+    .status-badge.completed {
+      background: var(--info-light);
+      color: var(--info);
+    }
+
+    .status-badge.cancelled {
+      background: var(--error-light);
+      color: #DC2626;
+    }
+
+    .action-cell {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--gray-200);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .action-btn i { width: 16px; height: 16px; color: var(--gray-500); }
+
+    .action-btn:hover {
+      border-color: var(--admin-accent);
+      background: var(--admin-accent-light);
+    }
+
+    .action-btn:hover i { color: var(--admin-accent); }
+
+    /* Quick Stats Sidebar */
+    .quick-stats {
+      grid-column: span 4;
+    }
+
+    .quick-stat-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .quick-stat-item:last-child {
+      border-bottom: none;
+    }
+
+    .quick-stat-label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: 14px;
+      color: var(--gray-600);
+    }
+
+    .quick-stat-label i { width: 18px; height: 18px; color: var(--gray-400); }
+
+    .quick-stat-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    /* Week Overview */
+    .week-overview {
+      grid-column: span 12;
+    }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: var(--space-3);
+    }
+
+    .week-day-card {
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      text-align: center;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      cursor: pointer;
+    }
+
+    .week-day-card:hover {
+      background: var(--gray-100);
+    }
+
+    .week-day-card.today {
+      background: var(--admin-accent-light);
+      border: 2px solid var(--admin-accent);
+    }
+
+    .week-day-name {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gray-500);
+      margin-bottom: var(--space-1);
+    }
+
+    .week-day-card.today .week-day-name { color: var(--admin-accent); }
+
+    .week-day-date {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: var(--space-3);
+    }
+
+    .week-day-card.today .week-day-date { color: var(--admin-accent-dark); }
+
+    .week-day-bookings {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .week-booking-chip {
+      font-size: 11px;
+      font-weight: 500;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      background: white;
+      color: var(--gray-600);
+      border: 1px solid var(--gray-200);
+    }
+
+    .week-booking-count {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--admin-accent);
+    }
+
+    .week-booking-label {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    /* Student Stats */
+    .student-stats {
+      grid-column: span 6;
+    }
+
+    .student-ranking {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .student-rank-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      transition: background var(--duration-fast) var(--ease-smooth);
+    }
+
+    .student-rank-item:hover {
+      background: var(--gray-100);
+    }
+
+    .rank-number {
+      width: 24px;
+      height: 24px;
+      background: var(--admin-accent);
+      color: white;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .rank-student {
+      flex: 1;
+    }
+
+    .rank-student-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-900);
+    }
+
+    .rank-student-sessions {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    .rank-progress {
+      width: 80px;
+      height: 6px;
+      background: var(--gray-200);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .rank-progress-bar {
+      height: 100%;
+      background: var(--admin-accent);
+      border-radius: var(--radius-full);
+    }
+
+    /* Revenue Card */
+    .revenue-card {
+      grid-column: span 6;
+    }
+
+    .revenue-chart {
+      height: 160px;
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-3);
+      padding-top: var(--space-4);
+    }
+
+    .chart-bar {
+      flex: 1;
+      background: var(--gray-100);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      position: relative;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .chart-bar:hover {
+      background: var(--admin-accent-light);
+    }
+
+    .chart-bar-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--admin-accent);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+    .chart-label {
+      text-align: center;
+      font-size: 11px;
+      color: var(--gray-500);
+      margin-top: var(--space-2);
+    }
+
+    .revenue-summary {
+      display: flex;
+      justify-content: space-between;
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--gray-100);
+      margin-top: var(--space-4);
+    }
+
+    .revenue-item {
+      text-align: center;
+    }
+
+    .revenue-label {
+      font-size: 12px;
+      color: var(--gray-500);
+      margin-bottom: var(--space-1);
+    }
+
+    .revenue-value {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .revenue-value.positive { color: #059669; }
+
+    /* Initialization */
+    lucide.createIcons();
+  
+    /* Responsive fixes */
+    @media (max-width: 1400px) {
+      .main-inner { max-width: 100%; padding: var(--space-8) var(--space-6); }
+    }
+    @media (max-width: 1024px) {
+      .portal { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .bento-grid { grid-template-columns: repeat(6, 1fr); }
+      .bento-card { grid-column: span 6 !important; }
+    }
+    @media (max-width: 768px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card { grid-column: span 1 !important; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">AK</div>
+        <div class="logo-text-group">
+          <span class="logo-text">AK Golf</span>
+          <span class="logo-mode">Instruktor</span>
+        </div>
+      </div>
+
+      <div class="admin-badge">
+        <i data-lucide="shield-check"></i>
+        Administrator
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item">
+          <i data-lucide="layout-dashboard"></i>
+          Portal Dashboard
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="calendar"></i>
+          Min Kalender
+        </a>
+        <a href="#" class="nav-item">
+          <i data-lucide="message-square"></i>
+          Meldinger
+          <span class="badge">3</span>
+        </a>
+      </nav>
+
+      <div class="nav-section admin-section">
+        <div class="nav-section-label">Administrasjon</div>
+        <nav class="sidebar-nav">
+          <a href="#" class="nav-item active">
+            <i data-lucide="gauge"></i>
+            Admin Dashboard
+          </a>
+          <a href="apple-admin-elever.html" class="nav-item">
+            <i data-lucide="users"></i>
+            Elever
+          </a>
+          <a href="apple-admin-bookinger.html" class="nav-item">
+            <i data-lucide="calendar-check"></i>
+            Bookinger
+            <span class="badge">5</span>
+          </a>
+          <a href="apple-admin-tilgjengelighet.html" class="nav-item">
+            <i data-lucide="clock"></i>
+            Tilgjengelighet
+          </a>
+          <a href="apple-admin-kalender.html" class="nav-item">
+            <i data-lucide="calendar-days"></i>
+            Kalender
+          </a>
+          <a href="apple-admin-turneringer.html" class="nav-item">
+            <i data-lucide="trophy"></i>
+            Turneringer
+          </a>
+        </nav>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">System</div>
+        <nav class="sidebar-nav">
+          <a href="#" class="nav-item">
+            <i data-lucide="mail"></i>
+            E-postmaler
+          </a>
+          <a href="#" class="nav-item">
+            <i data-lucide="settings"></i>
+            Innstillinger
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">AK</div>
+          <div class="user-info">
+            <div class="user-name">Anders Kristiansen</div>
+            <div class="user-role">Instruktor / Admin</div>
+          </div>
+          <i data-lucide="chevron-down" style="width: 16px; height: 16px; color: var(--gray-500);"></i>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <div class="main-inner">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-content">
+            <h1>Admin Dashboard</h1>
+            <p>Fredag 28. mars 2026 — Oversikt over aktivitet og bookinger</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-secondary">
+              <i data-lucide="download"></i>
+              Eksporter
+            </button>
+            <button class="btn btn-primary">
+              <i data-lucide="plus"></i>
+              Ny Booking
+            </button>
+          </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card admin-featured">
+            <div class="stat-header">
+              <span class="stat-label">
+                <i data-lucide="calendar-check"></i>
+                Dagens bookinger
+              </span>
+              <div class="stat-icon admin">
+                <i data-lucide="calendar"></i>
+              </div>
+            </div>
+            <div class="stat-value">8</div>
+            <div class="stat-trend positive">
+              <i data-lucide="trending-up"></i>
+              +2 fra forrige fredag
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">
+                <i data-lucide="users"></i>
+                Aktive elever
+              </span>
+              <div class="stat-icon success">
+                <i data-lucide="users"></i>
+              </div>
+            </div>
+            <div class="stat-value">47</div>
+            <div class="stat-trend positive">
+              <i data-lucide="trending-up"></i>
+              +5 denne mnd
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">
+                <i data-lucide="clock"></i>
+                Ventende
+              </span>
+              <div class="stat-icon warning">
+                <i data-lucide="hourglass"></i>
+              </div>
+            </div>
+            <div class="stat-value">3</div>
+            <div class="stat-trend negative">
+              <i data-lucide="alert-circle"></i>
+              Krever handling
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">
+                <i data-lucide="credit-card"></i>
+                Inntekt denne mnd
+              </span>
+              <div class="stat-icon info">
+                <i data-lucide="banknote"></i>
+              </div>
+            </div>
+            <div class="stat-value">89<span class="stat-unit">k</span></div>
+            <div class="stat-trend positive">
+              <i data-lucide="trending-up"></i>
+              +12% vs forrige
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="bento-grid">
+          <!-- Today's Bookings -->
+          <div class="bento-card todays-bookings">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Dagens bookinger</span>
+              <a href="apple-admin-bookinger.html" class="bento-card-action">
+                Se alle
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+            <div class="bento-card-body" style="padding: 0;">
+              <div class="mini-table">
+                <div class="mini-table-header">
+                  <span>Tid</span>
+                  <span>Elev</span>
+                  <span>Type</span>
+                  <span>Status</span>
+                  <span>Handling</span>
+                </div>
+                <div class="mini-table-row">
+                  <span class="time-cell">09:00</span>
+                  <div class="student-cell">
+                    <div class="student-avatar">MH</div>
+                    <div>
+                      <div class="student-name">Marius Hansen</div>
+                      <div class="student-type">PRO-medlem</div>
+                    </div>
+                  </div>
+                  <span class="service-cell">Individuell time</span>
+                  <span class="status-badge completed">Fullfort</span>
+                  <div class="action-cell">
+                    <button class="action-btn"><i data-lucide="eye"></i></button>
+                    <button class="action-btn"><i data-lucide="edit-2"></i></button>
+                  </div>
+                </div>
+                <div class="mini-table-row">
+                  <span class="time-cell">10:30</span>
+                  <div class="student-cell">
+                    <div class="student-avatar">KL</div>
+                    <div>
+                      <div class="student-name">Kristine Larsen</div>
+                      <div class="student-type">ELITE-medlem</div>
+                    </div>
+                  </div>
+                  <span class="service-cell">Spilletime</span>
+                  <span class="status-badge confirmed">Bekreftet</span>
+                  <div class="action-cell">
+                    <button class="action-btn"><i data-lucide="eye"></i></button>
+                    <button class="action-btn"><i data-lucide="edit-2"></i></button>
+                  </div>
+                </div>
+                <div class="mini-table-row">
+                  <span class="time-cell">13:00</span>
+                  <div class="student-cell">
+                    <div class="student-avatar">OB</div>
+                    <div>
+                      <div class="student-name">Ole Berg</div>
+                      <div class="student-type">STARTER-medlem</div>
+                    </div>
+                  </div>
+                  <span class="service-cell">Gruppetrening</span>
+                  <span class="status-badge pending">Venter</span>
+                  <div class="action-cell">
+                    <button class="action-btn"><i data-lucide="eye"></i></button>
+                    <button class="action-btn"><i data-lucide="edit-2"></i></button>
+                  </div>
+                </div>
+                <div class="mini-table-row">
+                  <span class="time-cell">15:00</span>
+                  <div class="student-cell">
+                    <div class="student-avatar">ES</div>
+                    <div>
+                      <div class="student-name">Emma Solberg</div>
+                      <div class="student-type">PRO-medlem</div>
+                    </div>
+                  </div>
+                  <span class="service-cell">Individuell time</span>
+                  <span class="status-badge confirmed">Bekreftet</span>
+                  <div class="action-cell">
+                    <button class="action-btn"><i data-lucide="eye"></i></button>
+                    <button class="action-btn"><i data-lucide="edit-2"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="bento-card quick-stats">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Hurtigstatistikk</span>
+            </div>
+            <div class="bento-card-body" style="padding: 0;">
+              <div class="quick-stat-item">
+                <span class="quick-stat-label">
+                  <i data-lucide="check-circle"></i>
+                  Fullforte timer
+                </span>
+                <span class="quick-stat-value">156</span>
+              </div>
+              <div class="quick-stat-item">
+                <span class="quick-stat-label">
+                  <i data-lucide="x-circle"></i>
+                  Kanselleringer
+                </span>
+                <span class="quick-stat-value">4</span>
+              </div>
+              <div class="quick-stat-item">
+                <span class="quick-stat-label">
+                  <i data-lucide="star"></i>
+                  Snitt rating
+                </span>
+                <span class="quick-stat-value">4.9</span>
+              </div>
+              <div class="quick-stat-item">
+                <span class="quick-stat-label">
+                  <i data-lucide="repeat"></i>
+                  Rebooking-rate
+                </span>
+                <span class="quick-stat-value">87%</span>
+              </div>
+              <div class="quick-stat-item">
+                <span class="quick-stat-label">
+                  <i data-lucide="clock"></i>
+                  Snitt varighet
+                </span>
+                <span class="quick-stat-value">55m</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Week Overview -->
+          <div class="bento-card week-overview">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Denne uken</span>
+              <a href="apple-admin-kalender.html" class="bento-card-action">
+                Full kalender
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+            <div class="bento-card-body">
+              <div class="week-grid">
+                <div class="week-day-card">
+                  <div class="week-day-name">Man</div>
+                  <div class="week-day-date">24</div>
+                  <div class="week-booking-count">6</div>
+                  <div class="week-booking-label">bookinger</div>
+                </div>
+                <div class="week-day-card">
+                  <div class="week-day-name">Tir</div>
+                  <div class="week-day-date">25</div>
+                  <div class="week-booking-count">8</div>
+                  <div class="week-booking-label">bookinger</div>
+                </div>
+                <div class="week-day-card">
+                  <div class="week-day-name">Ons</div>
+                  <div class="week-day-date">26</div>
+                  <div class="week-booking-count">5</div>
+                  <div class="week-booking-label">bookinger</div>
+                </div>
+                <div class="week-day-card">
+                  <div class="week-day-name">Tor</div>
+                  <div class="week-day-date">27</div>
+                  <div class="week-booking-count">7</div>
+                  <div class="week-booking-label">bookinger</div>
+                </div>
+                <div class="week-day-card today">
+                  <div class="week-day-name">Fre</div>
+                  <div class="week-day-date">28</div>
+                  <div class="week-booking-count">8</div>
+                  <div class="week-booking-label">bookinger</div>
+                </div>
+                <div class="week-day-card">
+                  <div class="week-day-name">Lor</div>
+                  <div class="week-day-date">29</div>
+                  <div class="week-booking-count">4</div>
+                  <div class="week-booking-label">bookinger</div>
+                </div>
+                <div class="week-day-card">
+                  <div class="week-day-name">Son</div>
+                  <div class="week-day-date">30</div>
+                  <div class="week-booking-count">2</div>
+                  <div class="week-booking-label">bookinger</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Student Stats -->
+          <div class="bento-card student-stats">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Mest aktive elever</span>
+              <a href="apple-admin-elever.html" class="bento-card-action">
+                Alle elever
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+            <div class="bento-card-body">
+              <div class="student-ranking">
+                <div class="student-rank-item">
+                  <div class="rank-number">1</div>
+                  <div class="rank-student">
+                    <div class="rank-student-name">Kristine Larsen</div>
+                    <div class="rank-student-sessions">24 timer denne mnd</div>
+                  </div>
+                  <div class="rank-progress">
+                    <div class="rank-progress-bar" style="width: 100%;"></div>
+                  </div>
+                </div>
+                <div class="student-rank-item">
+                  <div class="rank-number">2</div>
+                  <div class="rank-student">
+                    <div class="rank-student-name">Marius Hansen</div>
+                    <div class="rank-student-sessions">18 timer denne mnd</div>
+                  </div>
+                  <div class="rank-progress">
+                    <div class="rank-progress-bar" style="width: 75%;"></div>
+                  </div>
+                </div>
+                <div class="student-rank-item">
+                  <div class="rank-number">3</div>
+                  <div class="rank-student">
+                    <div class="rank-student-name">Emma Solberg</div>
+                    <div class="rank-student-sessions">15 timer denne mnd</div>
+                  </div>
+                  <div class="rank-progress">
+                    <div class="rank-progress-bar" style="width: 62%;"></div>
+                  </div>
+                </div>
+                <div class="student-rank-item">
+                  <div class="rank-number">4</div>
+                  <div class="rank-student">
+                    <div class="rank-student-name">Thomas Nilsen</div>
+                    <div class="rank-student-sessions">12 timer denne mnd</div>
+                  </div>
+                  <div class="rank-progress">
+                    <div class="rank-progress-bar" style="width: 50%;"></div>
+                  </div>
+                </div>
+                <div class="student-rank-item">
+                  <div class="rank-number">5</div>
+                  <div class="rank-student">
+                    <div class="rank-student-name">Ingrid Dahl</div>
+                    <div class="rank-student-sessions">10 timer denne mnd</div>
+                  </div>
+                  <div class="rank-progress">
+                    <div class="rank-progress-bar" style="width: 42%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Revenue Card -->
+          <div class="bento-card revenue-card">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Inntekt denne mnd</span>
+              <a href="#" class="bento-card-action">
+                Rapport
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+            <div class="bento-card-body">
+              <div class="revenue-chart">
+                <div class="chart-bar" style="height: 100%;">
+                  <div class="chart-bar-fill" style="height: 65%;"></div>
+                </div>
+                <div class="chart-bar" style="height: 100%;">
+                  <div class="chart-bar-fill" style="height: 45%;"></div>
+                </div>
+                <div class="chart-bar" style="height: 100%;">
+                  <div class="chart-bar-fill" style="height: 80%;"></div>
+                </div>
+                <div class="chart-bar" style="height: 100%;">
+                  <div class="chart-bar-fill" style="height: 55%;"></div>
+                </div>
+                <div class="chart-bar" style="height: 100%;">
+                  <div class="chart-bar-fill" style="height: 90%;"></div>
+                </div>
+                <div class="chart-bar" style="height: 100%;">
+                  <div class="chart-bar-fill" style="height: 70%;"></div>
+                </div>
+                <div class="chart-bar" style="height: 100%;">
+                  <div class="chart-bar-fill" style="height: 40%;"></div>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-500); margin-top: var(--space-2);">
+                <span>Uke 1</span>
+                <span>Uke 2</span>
+                <span>Uke 3</span>
+                <span>Uke 4</span>
+              </div>
+              <div class="revenue-summary">
+                <div class="revenue-item">
+                  <div class="revenue-label">Total</div>
+                  <div class="revenue-value">kr 89,400</div>
+                </div>
+                <div class="revenue-item">
+                  <div class="revenue-label">vs forrige mnd</div>
+                  <div class="revenue-value positive">+12%</div>
+                </div>
+                <div class="revenue-item">
+                  <div class="revenue-label">Snitt per time</div>
+                  <div class="revenue-value">kr 995</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

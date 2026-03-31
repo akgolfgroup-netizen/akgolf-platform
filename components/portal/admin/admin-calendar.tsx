@@ -85,76 +85,80 @@ export function AdminCalendar({ instructors }: Props) {
 
   return (
     <div>
-      {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-3 mb-6">
-        {/* Navigation */}
-        <div className="flex items-center gap-1">
-          <button
-            onClick={navigateBack}
-            className="p-2 rounded-lg hover:bg-[rgba(15,41,80,0.3)] transition-colors text-[var(--color-snow)]"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            onClick={goToToday}
-            className="px-3 py-1.5 text-sm font-medium rounded-lg hover:bg-[rgba(15,41,80,0.3)] transition-colors text-[var(--color-snow)]"
-          >
-            I dag
-          </button>
-          <button
-            onClick={navigateForward}
-            className="p-2 rounded-lg hover:bg-[rgba(15,41,80,0.3)] transition-colors text-[var(--color-snow)]"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
+      {/* Toolbar - Apple glassmorphism style */}
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-6 p-4 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/50 shadow-[var(--shadow-sm)] transition-all duration-300 hover:shadow-[var(--shadow-md)]">
+        <div className="flex items-center gap-4">
+          {/* Navigation */}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={navigateBack}
+              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--apple-gray-200)] bg-white text-[var(--apple-gray-500)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)] transition-all duration-200"
+            >
+              <ChevronLeft className="w-[18px] h-[18px]" />
+            </button>
+            <button
+              onClick={goToToday}
+              className="px-4 py-2 text-sm font-medium rounded-xl text-[var(--apple-admin-accent)] bg-[var(--apple-admin-accent-light)]/50 hover:bg-[var(--apple-admin-accent-light)] transition-all duration-200"
+            >
+              I dag
+            </button>
+            <button
+              onClick={navigateForward}
+              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--apple-gray-200)] bg-white text-[var(--apple-gray-500)] hover:border-[var(--apple-admin-accent)] hover:bg-[var(--apple-admin-accent-light)] hover:text-[var(--apple-admin-accent)] transition-all duration-200"
+            >
+              <ChevronRight className="w-[18px] h-[18px]" />
+            </button>
+          </div>
+
+          <span className="text-lg font-semibold text-[var(--apple-gray-900)] capitalize min-w-[200px]" style={{ fontFamily: "var(--font-display)" }}>
+            {dateLabel}
+          </span>
         </div>
 
-        <span className="text-sm font-semibold text-[var(--color-snow)] capitalize min-w-[200px]">
-          {dateLabel}
-        </span>
+        <div className="flex items-center gap-3">
+          {/* View toggle */}
+          <div className="flex bg-[var(--apple-gray-100)] rounded-xl p-1">
+            <button
+              onClick={() => switchView("day")}
+              className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-200 ${
+                viewMode === "day"
+                  ? "bg-[var(--apple-admin-accent)] text-white shadow-[0_4px_16px_rgba(99,102,241,0.4)]"
+                  : "text-[var(--apple-gray-500)] hover:text-[var(--apple-gray-900)]"
+              }`}
+            >
+              Dag
+            </button>
+            <button
+              onClick={() => switchView("week")}
+              className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-200 ${
+                viewMode === "week"
+                  ? "bg-[var(--apple-admin-accent)] text-white shadow-[0_4px_16px_rgba(99,102,241,0.4)]"
+                  : "text-[var(--apple-gray-500)] hover:text-[var(--apple-gray-900)]"
+              }`}
+            >
+              Uke
+            </button>
+          </div>
 
-        {/* View toggle */}
-        <div className="flex bg-[rgba(15,41,80,0.3)] rounded-xl p-0.5 ml-auto">
-          <button
-            onClick={() => switchView("day")}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
-              viewMode === "day"
-                ? "bg-[var(--color-gold)] text-white"
-                : "text-[var(--color-snow)]/50 hover:text-[var(--color-snow)]"
-            }`}
+          {/* Instructor filter */}
+          <select
+            value={selectedInstructorId}
+            onChange={(e) => filterByInstructor(e.target.value)}
+            className="text-sm font-medium rounded-xl px-4 py-2 text-[var(--apple-gray-700)] bg-white border border-[var(--apple-gray-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)] focus:border-transparent transition-all duration-200"
           >
-            Dag
-          </button>
-          <button
-            onClick={() => switchView("week")}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
-              viewMode === "week"
-                ? "bg-[var(--color-gold)] text-white"
-                : "text-[var(--color-snow)]/50 hover:text-[var(--color-snow)]"
-            }`}
-          >
-            Uke
-          </button>
+            <option value="">Alle instruktorer</option>
+            {instructors.map((inst) => (
+              <option key={inst.id} value={inst.id}>
+                {inst.user.name ?? "Ukjent"}
+              </option>
+            ))}
+          </select>
         </div>
-
-        {/* Instructor filter */}
-        <select
-          value={selectedInstructorId}
-          onChange={(e) => filterByInstructor(e.target.value)}
-          className="text-sm rounded-xl px-3 py-1.5 text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)]"
-        >
-          <option value="">Alle instruktører</option>
-          {instructors.map((inst) => (
-            <option key={inst.id} value={inst.id}>
-              {inst.user.name ?? "Ukjent"}
-            </option>
-          ))}
-        </select>
       </div>
 
       {/* Calendar content */}
       {loading ? (
-        <div className="flex items-center justify-center py-20 text-[var(--color-snow)]/50">
+        <div className="flex items-center justify-center py-20 text-[var(--apple-gray-400)]">
           <CalendarIcon className="w-5 h-5 animate-pulse mr-2" />
           Laster...
         </div>

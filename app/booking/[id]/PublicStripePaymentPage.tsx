@@ -14,20 +14,18 @@ import { CreditCard, AlertCircle, Loader2, ShieldCheck, User, Mail } from "lucid
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-// Warm Light Theme
+// Apple Light Theme 2026
 const THEME = {
-  bg: "#FAFBFC",
+  bg: "#F5F5F7",
   bgElevated: "#FFFFFF",
-  gold: "#B07D4F",
-  goldLight: "#E8D4B0",
-  navy: "#0A1929",
-  text: "#02060D",
-  textMuted: "#64748B",
-  textLight: "#9CA3AF",
-  border: "#EBE5DA",
+  primary: "#1D1D1F",
+  text: "#1D1D1F",
+  textMuted: "#86868B",
+  textLight: "#AEAEB2",
+  border: "#E8E8ED",
   error: "#EF4444",
-  shadow: "0 4px 8px rgba(0,0,0,0.1)",
-  shadowGold: "0 4px 16px rgba(176,125,79,0.3)",
+  shadow: "0 4px 8px rgba(0,0,0,0.06)",
+  shadowPrimary: "0 4px 16px rgba(29,29,31,0.15)",
 };
 
 interface CheckoutFormProps {
@@ -71,30 +69,30 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Service Reminder */}
-      <div 
+      <div
         className="flex items-center gap-4 px-5 py-4 rounded-2xl border"
         style={{
-          background: `${THEME.gold}08`,
-          borderColor: `${THEME.gold}30`,
+          background: THEME.bg,
+          borderColor: THEME.border,
         }}
       >
-        <CreditCard size={20} style={{ color: THEME.gold }} />
-        <p className="font-medium" style={{ color: THEME.navy }}>{serviceName}</p>
+        <CreditCard size={20} style={{ color: THEME.primary }} />
+        <p className="font-medium" style={{ color: THEME.text }}>{serviceName}</p>
       </div>
 
       {/* Customer Info (read-only) */}
-      <div 
+      <div
         className="rounded-2xl p-5 border"
         style={{
-          background: `${THEME.gold}05`,
+          background: THEME.bg,
           borderColor: THEME.border,
         }}
       >
         <div className="flex items-center gap-3">
-          <Mail size={18} style={{ color: THEME.gold }} />
+          <Mail size={18} style={{ color: THEME.primary }} />
           <div>
             <p className="text-xs" style={{ color: THEME.textLight }}>Booking sendes til</p>
-            <p className="text-sm font-medium" style={{ color: THEME.navy }}>{customerEmail}</p>
+            <p className="text-sm font-medium" style={{ color: THEME.text }}>{customerEmail}</p>
           </div>
         </div>
       </div>
@@ -136,11 +134,11 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
         disabled={!stripe || !elements || loading}
         className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50"
         style={{
-          background: `linear-gradient(135deg, ${THEME.gold}, ${THEME.goldLight})`,
+          background: THEME.primary,
           color: "#FFFFFF",
-          boxShadow: THEME.shadowGold,
+          boxShadow: THEME.shadowPrimary,
         }}
-        whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(176,125,79,0.3)" }}
+        whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(29,29,31,0.25)" }}
         whileTap={{ scale: 0.99 }}
       >
         {loading ? (
@@ -210,15 +208,15 @@ export function PublicStripePaymentPage({
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
             className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border"
             style={{
-              background: `${THEME.gold}15`,
-              borderColor: `${THEME.gold}30`,
+              background: THEME.bg,
+              borderColor: THEME.border,
             }}
           >
-            <CreditCard size={28} style={{ color: THEME.gold }} />
+            <CreditCard size={28} style={{ color: THEME.primary }} />
           </motion.div>
-          <h1 
+          <h1
             className="text-2xl font-semibold mb-2"
-            style={{ color: THEME.navy }}
+            style={{ color: THEME.text }}
           >
             Fullfør betaling
           </h1>
@@ -234,12 +232,12 @@ export function PublicStripePaymentPage({
           transition={{ delay: 0.1 }}
           className="rounded-2xl p-6 mb-6 text-center border"
           style={{
-            background: `linear-gradient(135deg, ${THEME.navy}, #1a3a5c)`,
-            borderColor: `${THEME.gold}30`,
+            background: THEME.primary,
+            borderColor: THEME.border,
           }}
         >
           <p className="text-sm mb-1" style={{ color: "rgba(255,255,255,0.7)" }}>Total å betale</p>
-          <p className="text-4xl font-bold" style={{ color: THEME.gold }}>{priceNOK}</p>
+          <p className="text-4xl font-bold text-white">{priceNOK}</p>
         </motion.div>
 
         {/* Card */}
@@ -261,11 +259,11 @@ export function PublicStripePaymentPage({
               appearance: {
                 theme: "stripe",
                 variables: {
-                  colorPrimary: THEME.gold,
+                  colorPrimary: THEME.primary,
                   colorBackground: "#FFFFFF",
-                  colorText: THEME.navy,
+                  colorText: THEME.text,
                   colorDanger: THEME.error,
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "Manrope, sans-serif",
                   borderRadius: "12px",
                   spacingUnit: "4px",
                 },

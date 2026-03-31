@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf — Turneringer (Apple Quality)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      --font-display: 'DM Sans', -apple-system, sans-serif;
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px;
+      --gray-50: #FAFAFA; --gray-100: #F5F5F7; --gray-200: #E8E8ED; --gray-300: #D2D2D7;
+      --gray-400: #AEAEB2; --gray-500: #8E8E93; --gray-600: #636366; --gray-700: #48484A;
+      --gray-800: #3A3A3C; --gray-900: #2C2C2E; --gray-950: #1D1D1F;
+      --gold-50: #FDF8F0; --gold-100: #F8EDDB; --gold-200: #F0D9B5; --gold-300: #E5C089;
+      --gold-400: #D4A35C; --gold-500: #B8975C; --gold-600: #9A7B47; --gold-700: #7A6138;
+      --success: #34C759; --success-light: #D1FAE5; --warning: #FF9500; --warning-light: #FEF3C7;
+      --error: #FF3B30; --error-light: #FEE2E2; --info: #007AFF; --info-light: #DBEAFE;
+      --purple: #8B5CF6; --purple-light: #EDE9FE;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-gold: 0 4px 24px rgba(184, 151, 92, 0.2);
+      /* Premium layered shadows */
+      --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.02);
+      --shadow-card-hover: 0 4px 8px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.08), 0 24px 48px rgba(0,0,0,0.04);
+      --shadow-glow-gold: 0 4px 16px rgba(184, 151, 92, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      --shadow-glow-gold-hover: 0 8px 24px rgba(184, 151, 92, 0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+      --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 20px;
+      --radius-2xl: 24px; --radius-full: 9999px;
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration-fast: 150ms; --duration-normal: 250ms;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-system); background: var(--gray-950); color: var(--gray-50); line-height: 1.5; overflow-x: hidden; }
+
+    .portal { display: block; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      background: linear-gradient(180deg, #2C2C2E 0%, #1D1D1F 100%); border-right: 1px solid rgba(255,255,255,0.06);
+      padding: var(--space-6); display: flex; flex-direction: column;
+      position: fixed; width: 260px; height: 100vh; overflow-y: auto;
+    }
+    .sidebar-logo { display: flex; align-items: center; gap: var(--space-3); padding-bottom: var(--space-6); margin-bottom: var(--space-6); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .logo-mark { width: 40px; height: 40px; background: var(--gold-500); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 700; color: white; }
+    .logo-text { font-size: 17px; font-weight: 600; color: white; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: var(--space-1); }
+    .nav-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); font-size: 14px; font-weight: 500; color: var(--gray-400); cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth); text-decoration: none; position: relative; }
+    .nav-item::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gold-500); transition: all 0.3s ease; border-radius: 1px; }
+    .nav-item:hover::after { width: 80%; left: 10%; }
+    .nav-item:hover { background: rgba(255,255,255,0.04); color: white; }
+    .nav-item.active { background: rgba(184, 151, 92, 0.12); color: var(--gold-400); }
+    .nav-item i { width: 20px; height: 20px; stroke-width: 1.75; }
+    .nav-section { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid rgba(255,255,255,0.06); }
+    .nav-section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-600); padding: 0 var(--space-4); margin-bottom: var(--space-2); }
+    .sidebar-footer { margin-top: auto; padding-top: var(--space-6); border-top: 1px solid rgba(255,255,255,0.06); }
+    .user-card { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-md); cursor: pointer; }
+    .user-avatar { width: 40px; height: 40px; background: linear-gradient(135deg, var(--gold-300) 0%, var(--gold-500) 100%); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: white; box-shadow: 0 0 0 3px rgba(184, 151, 92, 0.2); transition: box-shadow 0.3s ease; }
+    .user-card:hover .user-avatar { box-shadow: 0 0 0 4px rgba(184, 151, 92, 0.3), 0 0 16px rgba(184, 151, 92, 0.2); }
+    .user-info { flex: 1; }
+    .user-name { font-size: 14px; font-weight: 500; color: white; }
+    .user-tier { font-size: 12px; color: var(--gold-400); }
+
+    /* Main */
+    .main { margin-left: 260px; background: linear-gradient(135deg, #F8F8FC 0%, #F0F4F8 50%, #F5F5F7 100%); min-height: 100vh; overflow-x: hidden; position: relative; }
+    .main::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0); background-size: 24px 24px; pointer-events: none; }
+    .main-inner { max-width: 1200px; margin: 0 auto; padding: var(--space-10) var(--space-8); min-width: 0; position: relative; z-index: 1; }
+
+    .header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--space-8); }
+    .header-content h1 { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--gray-950); letter-spacing: -0.02em; margin-bottom: var(--space-1); }
+    .header-content p { font-size: 15px; color: var(--gray-500); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-3) var(--space-5); font-family: var(--font-system); font-size: 15px; font-weight: 600; line-height: 1; border-radius: var(--radius-md); border: none; cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth); }
+    .btn-primary { background: var(--gold-500); color: white; box-shadow: var(--shadow-glow-gold); }
+    .btn-primary:hover { background: var(--gold-600); transform: translateY(-2px); box-shadow: var(--shadow-glow-gold-hover); }
+    .btn-secondary { background: white; color: var(--gray-700); border: 1px solid var(--gray-200); }
+    .btn-secondary:hover { background: var(--gray-100); }
+    .btn i { width: 18px; height: 18px; stroke-width: 2; }
+
+    /* Season Stats */
+    .season-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-8); }
+    .season-stat { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: var(--radius-xl); padding: var(--space-5); border: 1px solid rgba(255, 255, 255, 0.5); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: var(--shadow-card); }
+    .season-stat:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--shadow-card-hover); }
+    .season-stat.featured { background: linear-gradient(135deg, var(--gold-50) 0%, white 60%); border-color: var(--gold-200); }
+    .season-stat-icon { width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-3); }
+    .season-stat-icon.gold { background: var(--gold-100); }
+    .season-stat-icon.gold i { color: var(--gold-600); }
+    .season-stat-icon.blue { background: var(--info-light); }
+    .season-stat-icon.blue i { color: var(--info); }
+    .season-stat-icon.green { background: var(--success-light); }
+    .season-stat-icon.green i { color: var(--success); }
+    .season-stat-icon.purple { background: var(--purple-light); }
+    .season-stat-icon.purple i { color: var(--purple); }
+    .season-stat-icon i { width: 20px; height: 20px; }
+    .season-stat-value { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--gray-950); line-height: 1; margin-bottom: var(--space-1); }
+    .season-stat-label { font-size: 13px; color: var(--gray-500); }
+
+    /* Bento Grid */
+    .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--space-4); min-width: 0; }
+    .bento-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: var(--radius-xl); border: 1px solid rgba(255, 255, 255, 0.5); overflow: hidden; min-width: 0; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: var(--shadow-card); }
+    .bento-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--shadow-card-hover); }
+    .bento-card-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--gray-100); }
+    .bento-card-title { font-size: 15px; font-weight: 600; color: var(--gray-900); }
+    .bento-card-action { font-size: 13px; font-weight: 500; color: var(--gold-600); text-decoration: none; display: flex; align-items: center; gap: var(--space-1); cursor: pointer; background: none; border: none; }
+    .bento-card-action:hover { color: var(--gold-700); }
+    .bento-card-action i { width: 14px; height: 14px; }
+    .bento-card-body { padding: var(--space-6); }
+
+    /* Upcoming Tournaments */
+    .upcoming-card { grid-column: span 8; }
+    .tournament-list { display: flex; flex-direction: column; gap: var(--space-4); }
+    .tournament-item { display: flex; gap: var(--space-5); padding: var(--space-5); background: var(--gray-50); border-radius: var(--radius-lg); transition: all var(--duration-fast) var(--ease-smooth); cursor: pointer; }
+    .tournament-item:hover { background: var(--gray-100); }
+    .tournament-item.registered { border-left: 4px solid var(--success); }
+    .tournament-date { width: 64px; height: 64px; background: white; border-radius: var(--radius-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); flex-shrink: 0; }
+    .tournament-date-day { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--gray-950); line-height: 1; }
+    .tournament-date-month { font-size: 12px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; }
+    .tournament-info { flex: 1; }
+    .tournament-name { font-size: 17px; font-weight: 600; color: var(--gray-950); margin-bottom: var(--space-2); }
+    .tournament-meta { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+    .tournament-meta-item { display: flex; align-items: center; gap: var(--space-2); font-size: 13px; color: var(--gray-500); }
+    .tournament-meta-item i { width: 14px; height: 14px; color: var(--gray-400); }
+    .tournament-actions { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-2); }
+    .tournament-status { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); font-size: 12px; font-weight: 600; }
+    .tournament-status.registered { background: var(--success-light); color: #059669; }
+    .tournament-status.open { background: var(--info-light); color: var(--info); }
+    .tournament-status.closing { background: var(--warning-light); color: #D97706; }
+    .tournament-status i { width: 14px; height: 14px; }
+
+    /* Results */
+    .results-card { grid-column: span 4; }
+    .result-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .result-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-md); }
+    .result-position { width: 32px; height: 32px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+    .result-position.gold { background: linear-gradient(135deg, var(--gold-200) 0%, var(--gold-400) 100%); color: white; }
+    .result-position.silver { background: linear-gradient(135deg, var(--gray-200) 0%, var(--gray-400) 100%); color: white; }
+    .result-position.bronze { background: linear-gradient(135deg, #F0D9B5 0%, #CD7F32 100%); color: white; }
+    .result-position.other { background: var(--gray-200); color: var(--gray-600); }
+    .result-info { flex: 1; min-width: 0; }
+    .result-name { font-size: 14px; font-weight: 500; color: var(--gray-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .result-date { font-size: 12px; color: var(--gray-500); }
+    .result-score { font-size: 14px; font-weight: 600; color: var(--gray-700); }
+
+    /* Calendar View */
+    .calendar-card { grid-column: span 6; }
+    .calendar-months { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    .calendar-month { }
+    .calendar-month-name { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-2); }
+    .calendar-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+    .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gray-500); border-radius: var(--radius-sm); }
+    .calendar-day.tournament { background: var(--gold-100); color: var(--gold-700); font-weight: 600; }
+    .calendar-day.registered { background: var(--success-light); color: #059669; font-weight: 600; }
+
+    /* Goals */
+    .goals-card { grid-column: span 6; }
+    .goal-list { display: flex; flex-direction: column; gap: var(--space-4); }
+    .goal-item { }
+    .goal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2); }
+    .goal-title { font-size: 14px; font-weight: 500; color: var(--gray-900); }
+    .goal-progress { font-size: 14px; font-weight: 600; color: var(--gray-600); }
+    .goal-bar { height: 8px; background: var(--gray-200); border-radius: var(--radius-full); overflow: hidden; }
+    .goal-bar-fill { height: 100%; border-radius: var(--radius-full); transition: width 0.5s var(--ease-smooth); }
+    .goal-bar-fill.gold { background: var(--gold-500); }
+    .goal-bar-fill.green { background: var(--success); }
+    .goal-bar-fill.blue { background: var(--info); }
+
+    /* Leaderboard */
+    .leaderboard-card { grid-column: span 6; }
+    .leaderboard-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .leaderboard-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-md); transition: all var(--duration-fast) var(--ease-smooth); }
+    .leaderboard-item:hover { background: var(--gray-50); }
+    .leaderboard-item.you { background: var(--gold-50); }
+    .leaderboard-rank { width: 28px; font-size: 14px; font-weight: 600; color: var(--gray-500); }
+    .leaderboard-avatar { width: 36px; height: 36px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: white; flex-shrink: 0; }
+    .leaderboard-avatar.you { background: linear-gradient(135deg, var(--gold-300) 0%, var(--gold-500) 100%); }
+    .leaderboard-avatar.other { background: var(--gray-300); }
+    .leaderboard-name { flex: 1; font-size: 14px; font-weight: 500; color: var(--gray-900); }
+    .leaderboard-points { font-size: 14px; font-weight: 600; color: var(--gray-700); }
+
+    /* Prep Checklist */
+    .prep-card { grid-column: span 6; }
+    .prep-tournament { background: var(--gold-50); border: 1px solid var(--gold-200); border-radius: var(--radius-lg); padding: var(--space-4); margin-bottom: var(--space-4); }
+    .prep-tournament-name { font-size: 15px; font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-1); }
+    .prep-tournament-date { font-size: 13px; color: var(--gray-500); display: flex; align-items: center; gap: var(--space-2); }
+    .prep-tournament-date i { width: 14px; height: 14px; }
+    .prep-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .prep-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-md); }
+    .prep-checkbox { width: 22px; height: 22px; border-radius: var(--radius-full); border: 2px solid var(--gray-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .prep-item.completed .prep-checkbox { background: var(--success); border-color: var(--success); }
+    .prep-checkbox i { width: 14px; height: 14px; color: white; opacity: 0; }
+    .prep-item.completed .prep-checkbox i { opacity: 1; }
+    .prep-text { font-size: 14px; color: var(--gray-700); }
+    .prep-item.completed .prep-text { text-decoration: line-through; color: var(--gray-400); }
+
+    /* Animation */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate { animation: fadeInUp 0.5s cubic-bezier(0, 0, 0.2, 1) forwards; }
+    .delay-1 { animation-delay: 50ms; } .delay-2 { animation-delay: 100ms; }
+    .delay-3 { animation-delay: 150ms; } .delay-4 { animation-delay: 200ms; }
+    .delay-5 { animation-delay: 250ms; } .delay-6 { animation-delay: 300ms; }
+  
+    /* Responsive fixes */
+    @media (max-width: 1400px) {
+      .main-inner { max-width: 100%; padding: var(--space-8) var(--space-6); }
+    }
+    @media (max-width: 1024px) {
+      .portal { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .bento-grid { grid-template-columns: repeat(6, 1fr); }
+      .bento-card { grid-column: span 6 !important; }
+    }
+    @media (max-width: 768px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card { grid-column: span 1 !important; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">K</div>
+        <span class="logo-text">AK Golf</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+        <a class="nav-item"><i data-lucide="calendar"></i> Bookinger</a>
+        <a class="nav-item"><i data-lucide="book-open"></i> Treningsdagbok</a>
+        <a class="nav-item"><i data-lucide="bar-chart-2"></i> Statistikk</a>
+        <a class="nav-item"><i data-lucide="target"></i> Treningsplan</a>
+        <a class="nav-item"><i data-lucide="brain"></i> AI-analyse</a>
+        <div class="nav-section">
+          <div class="nav-section-label">Mer</div>
+          <a class="nav-item"><i data-lucide="user"></i> Profil</a>
+          <a class="nav-item"><i data-lucide="users"></i> Sammenligning</a>
+          <a class="nav-item active"><i data-lucide="trophy"></i> Turneringer</a>
+          <a class="nav-item"><i data-lucide="settings"></i> Innstillinger</a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">AK</div>
+          <div class="user-info">
+            <div class="user-name">Anders Kristiansen</div>
+            <div class="user-tier">Pro-medlem</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="main-inner">
+        <header class="header animate">
+          <div class="header-content">
+            <h1>Turneringer</h1>
+            <p>Turneringskalender og resultater for 2026-sesongen</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-secondary"><i data-lucide="calendar"></i> iCal-eksport</button>
+            <button class="btn btn-primary"><i data-lucide="search"></i> Finn turneringer</button>
+          </div>
+        </header>
+
+        <!-- Season Stats -->
+        <div class="season-stats animate delay-1">
+          <div class="season-stat featured">
+            <div class="season-stat-icon gold"><i data-lucide="trophy"></i></div>
+            <div class="season-stat-value">3</div>
+            <div class="season-stat-label">Turneringer spilt</div>
+          </div>
+          <div class="season-stat">
+            <div class="season-stat-icon blue"><i data-lucide="medal"></i></div>
+            <div class="season-stat-value">2</div>
+            <div class="season-stat-label">Topp 10-plasseringer</div>
+          </div>
+          <div class="season-stat">
+            <div class="season-stat-icon green"><i data-lucide="target"></i></div>
+            <div class="season-stat-value">78.3</div>
+            <div class="season-stat-label">Snittslag (turnering)</div>
+          </div>
+          <div class="season-stat">
+            <div class="season-stat-icon purple"><i data-lucide="star"></i></div>
+            <div class="season-stat-value">1,240</div>
+            <div class="season-stat-label">Ranking-poeng</div>
+          </div>
+        </div>
+
+        <div class="bento-grid">
+          <!-- Upcoming -->
+          <div class="bento-card upcoming-card animate delay-2">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Kommende turneringer</span>
+              <a href="#" class="bento-card-action">Se alle <i data-lucide="chevron-right"></i></a>
+            </div>
+            <div class="bento-card-body">
+              <div class="tournament-list">
+                <div class="tournament-item registered">
+                  <div class="tournament-date">
+                    <span class="tournament-date-day">5</span>
+                    <span class="tournament-date-month">apr</span>
+                  </div>
+                  <div class="tournament-info">
+                    <div class="tournament-name">Sarpsborg Open 2026</div>
+                    <div class="tournament-meta">
+                      <div class="tournament-meta-item"><i data-lucide="map-pin"></i> Sarpsborg GK</div>
+                      <div class="tournament-meta-item"><i data-lucide="users"></i> 72 deltakere</div>
+                      <div class="tournament-meta-item"><i data-lucide="flag"></i> 36 hull</div>
+                    </div>
+                  </div>
+                  <div class="tournament-actions">
+                    <div class="tournament-status registered"><i data-lucide="check-circle"></i> Pameldt</div>
+                  </div>
+                </div>
+                <div class="tournament-item">
+                  <div class="tournament-date">
+                    <span class="tournament-date-day">12</span>
+                    <span class="tournament-date-month">apr</span>
+                  </div>
+                  <div class="tournament-info">
+                    <div class="tournament-name">GFGK Klubbmesterskap</div>
+                    <div class="tournament-meta">
+                      <div class="tournament-meta-item"><i data-lucide="map-pin"></i> Gamle Fredrikstad GK</div>
+                      <div class="tournament-meta-item"><i data-lucide="users"></i> 48 deltakere</div>
+                      <div class="tournament-meta-item"><i data-lucide="flag"></i> 54 hull</div>
+                    </div>
+                  </div>
+                  <div class="tournament-actions">
+                    <div class="tournament-status closing"><i data-lucide="clock"></i> Stenger 8. apr</div>
+                  </div>
+                </div>
+                <div class="tournament-item">
+                  <div class="tournament-date">
+                    <span class="tournament-date-day">26</span>
+                    <span class="tournament-date-month">apr</span>
+                  </div>
+                  <div class="tournament-info">
+                    <div class="tournament-name">Ostfold Tour - Runde 2</div>
+                    <div class="tournament-meta">
+                      <div class="tournament-meta-item"><i data-lucide="map-pin"></i> Onsoy GK</div>
+                      <div class="tournament-meta-item"><i data-lucide="users"></i> 96 deltakere</div>
+                      <div class="tournament-meta-item"><i data-lucide="flag"></i> 18 hull</div>
+                    </div>
+                  </div>
+                  <div class="tournament-actions">
+                    <div class="tournament-status open"><i data-lucide="external-link"></i> Apent for pamelding</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Results -->
+          <div class="bento-card results-card animate delay-2">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Siste resultater</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="result-list">
+                <div class="result-item">
+                  <div class="result-position gold">1</div>
+                  <div class="result-info">
+                    <div class="result-name">Varmanen 2026</div>
+                    <div class="result-date">15. mars</div>
+                  </div>
+                  <div class="result-score">74 (-2)</div>
+                </div>
+                <div class="result-item">
+                  <div class="result-position other">7</div>
+                  <div class="result-info">
+                    <div class="result-name">Ostfold Tour - R1</div>
+                    <div class="result-date">8. mars</div>
+                  </div>
+                  <div class="result-score">79 (+7)</div>
+                </div>
+                <div class="result-item">
+                  <div class="result-position bronze">3</div>
+                  <div class="result-info">
+                    <div class="result-name">Sesongstart Open</div>
+                    <div class="result-date">1. mars</div>
+                  </div>
+                  <div class="result-score">76 (+4)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Season Calendar -->
+          <div class="bento-card calendar-card animate delay-3">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Sesongkalender</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="calendar-months">
+                <div class="calendar-month">
+                  <div class="calendar-month-name">April</div>
+                  <div class="calendar-days">
+                    <div class="calendar-day">1</div><div class="calendar-day">2</div><div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div><div class="calendar-day registered">5</div><div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div><div class="calendar-day">8</div><div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div><div class="calendar-day">11</div><div class="calendar-day tournament">12</div>
+                    <div class="calendar-day">13</div><div class="calendar-day">14</div><div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div><div class="calendar-day">17</div><div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div><div class="calendar-day">20</div><div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div><div class="calendar-day">23</div><div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div><div class="calendar-day tournament">26</div><div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div><div class="calendar-day">29</div><div class="calendar-day">30</div>
+                  </div>
+                </div>
+                <div class="calendar-month">
+                  <div class="calendar-month-name">Mai</div>
+                  <div class="calendar-days">
+                    <div class="calendar-day">1</div><div class="calendar-day">2</div><div class="calendar-day tournament">3</div>
+                    <div class="calendar-day">4</div><div class="calendar-day">5</div><div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div><div class="calendar-day">8</div><div class="calendar-day">9</div>
+                    <div class="calendar-day tournament">10</div><div class="calendar-day">11</div><div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div><div class="calendar-day">14</div><div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div><div class="calendar-day tournament">17</div><div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div><div class="calendar-day">20</div><div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div><div class="calendar-day">23</div><div class="calendar-day tournament">24</div>
+                    <div class="calendar-day">25</div><div class="calendar-day">26</div><div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div><div class="calendar-day">29</div><div class="calendar-day">30</div>
+                  </div>
+                </div>
+                <div class="calendar-month">
+                  <div class="calendar-month-name">Juni</div>
+                  <div class="calendar-days">
+                    <div class="calendar-day">1</div><div class="calendar-day">2</div><div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div><div class="calendar-day">5</div><div class="calendar-day">6</div>
+                    <div class="calendar-day tournament">7</div><div class="calendar-day">8</div><div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div><div class="calendar-day">11</div><div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div><div class="calendar-day tournament">14</div><div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div><div class="calendar-day">17</div><div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div><div class="calendar-day">20</div><div class="calendar-day tournament">21</div>
+                    <div class="calendar-day">22</div><div class="calendar-day">23</div><div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div><div class="calendar-day">26</div><div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div><div class="calendar-day">29</div><div class="calendar-day">30</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Goals -->
+          <div class="bento-card goals-card animate delay-3">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Sesongmal</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="goal-list">
+                <div class="goal-item">
+                  <div class="goal-header">
+                    <span class="goal-title">Spille 15 turneringer</span>
+                    <span class="goal-progress">3 / 15</span>
+                  </div>
+                  <div class="goal-bar"><div class="goal-bar-fill gold" style="width: 20%;"></div></div>
+                </div>
+                <div class="goal-item">
+                  <div class="goal-header">
+                    <span class="goal-title">5 topp-10 plasseringer</span>
+                    <span class="goal-progress">2 / 5</span>
+                  </div>
+                  <div class="goal-bar"><div class="goal-bar-fill green" style="width: 40%;"></div></div>
+                </div>
+                <div class="goal-item">
+                  <div class="goal-header">
+                    <span class="goal-title">Kvalifisere til NGF-ranking</span>
+                    <span class="goal-progress">1,240 / 2,000 poeng</span>
+                  </div>
+                  <div class="goal-bar"><div class="goal-bar-fill blue" style="width: 62%;"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leaderboard -->
+          <div class="bento-card leaderboard-card animate delay-4">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Ostfold Tour - Sammenlagt</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="leaderboard-list">
+                <div class="leaderboard-item">
+                  <span class="leaderboard-rank">1.</span>
+                  <div class="leaderboard-avatar other">EH</div>
+                  <span class="leaderboard-name">Erik Hansen</span>
+                  <span class="leaderboard-points">320 p</span>
+                </div>
+                <div class="leaderboard-item">
+                  <span class="leaderboard-rank">2.</span>
+                  <div class="leaderboard-avatar other">MN</div>
+                  <span class="leaderboard-name">Martin Nilsen</span>
+                  <span class="leaderboard-points">285 p</span>
+                </div>
+                <div class="leaderboard-item">
+                  <span class="leaderboard-rank">3.</span>
+                  <div class="leaderboard-avatar other">PS</div>
+                  <span class="leaderboard-name">Per Strand</span>
+                  <span class="leaderboard-points">270 p</span>
+                </div>
+                <div class="leaderboard-item you">
+                  <span class="leaderboard-rank">7.</span>
+                  <div class="leaderboard-avatar you">AK</div>
+                  <span class="leaderboard-name">Anders Kristiansen (deg)</span>
+                  <span class="leaderboard-points">185 p</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prep Checklist -->
+          <div class="bento-card prep-card animate delay-4">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Turneringsforberedelse</span>
+            </div>
+            <div class="bento-card-body">
+              <div class="prep-tournament">
+                <div class="prep-tournament-name">Sarpsborg Open 2026</div>
+                <div class="prep-tournament-date"><i data-lucide="calendar"></i> 5. april - om 8 dager</div>
+              </div>
+              <div class="prep-list">
+                <div class="prep-item completed">
+                  <div class="prep-checkbox"><i data-lucide="check"></i></div>
+                  <span class="prep-text">Bekreft pamelding</span>
+                </div>
+                <div class="prep-item completed">
+                  <div class="prep-checkbox"><i data-lucide="check"></i></div>
+                  <span class="prep-text">Sjekk baneinfo og lokale regler</span>
+                </div>
+                <div class="prep-item">
+                  <div class="prep-checkbox"><i data-lucide="check"></i></div>
+                  <span class="prep-text">Treningsrunde pa banen</span>
+                </div>
+                <div class="prep-item">
+                  <div class="prep-checkbox"><i data-lucide="check"></i></div>
+                  <span class="prep-text">Sjekk utstyr og baller</span>
+                </div>
+                <div class="prep-item">
+                  <div class="prep-checkbox"><i data-lucide="check"></i></div>
+                  <span class="prep-text">Plan for oppvarming</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

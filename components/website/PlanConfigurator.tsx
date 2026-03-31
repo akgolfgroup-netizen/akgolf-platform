@@ -92,7 +92,7 @@ export function PlanConfigurator() {
           <div
             key={s}
             className={`h-1 flex-1 transition-colors duration-300 ${
-              s <= step ? "bg-gold" : "bg-ink-10"
+              s <= step ? "bg-black" : "bg-grey-200"
             }`}
           />
         ))}
@@ -100,13 +100,13 @@ export function PlanConfigurator() {
 
       {/* Step indicator */}
       <div className="px-8 pt-6 pb-2 flex items-center justify-between">
-        <span className="font-mono text-xs text-ink-40 tracking-wider uppercase">
+        <span className="font-mono text-xs text-grey-500 tracking-wider uppercase">
           Steg {step} av 4
         </span>
         {step > 1 && (
           <button
             onClick={() => setStep((step - 1) as Step)}
-            className="text-sm text-ink-50 hover:text-ink-80 transition-colors"
+            className="text-sm text-grey-500 hover:text-black transition-colors"
           >
             Tilbake
           </button>
@@ -119,7 +119,7 @@ export function PlanConfigurator() {
           {step === 1 && (
             <StepWrapper key="step1">
               <h3 className="w-heading-md mb-2">Hva er ditt handicap?</h3>
-              <p className="text-sm text-ink-50 mb-8">
+              <p className="text-sm text-grey-500 mb-8">
                 Vi plasserer deg automatisk i riktig treningskategori basert på handicapet ditt.
               </p>
 
@@ -132,9 +132,9 @@ export function PlanConfigurator() {
                     step={0.1}
                     value={form.handicap}
                     onChange={(e) => setForm(prev => ({ ...prev, handicap: parseFloat(e.target.value) }))}
-                    className="w-full accent-gold h-2 rounded-full"
+                    className="w-full accent-black h-2 rounded-full"
                   />
-                  <div className="flex justify-between text-xs text-ink-40 mt-1">
+                  <div className="flex justify-between text-xs text-grey-500 mt-1">
                     <span>+5</span>
                     <span>54</span>
                   </div>
@@ -142,36 +142,36 @@ export function PlanConfigurator() {
 
                 <div className="flex items-center justify-center gap-6">
                   <div className="text-center">
-                    <div className="font-mono text-4xl font-bold text-ink-90">
+                    <div className="font-mono text-4xl font-bold text-black">
                       {form.handicap.toFixed(1)}
                     </div>
-                    <div className="text-xs text-ink-40 mt-1">Handicap</div>
+                    <div className="text-xs text-grey-500 mt-1">Handicap</div>
                   </div>
 
-                  <div className="w-px h-12 bg-ink-10" />
+                  <div className="w-px h-12 bg-grey-200" />
 
                   <div className="text-center">
-                    <div className="inline-flex items-center gap-2 bg-gold/10 text-gold-text px-4 py-2 rounded-lg">
+                    <div className="inline-flex items-center gap-2 bg-grey-100 text-black px-4 py-2 rounded-lg">
                       <span className="font-mono text-2xl font-bold">{category}</span>
                     </div>
-                    <div className="text-xs text-ink-40 mt-1">{categoryInfo.name}</div>
+                    <div className="text-xs text-grey-500 mt-1">{categoryInfo.name}</div>
                   </div>
                 </div>
 
                 {/* Mini pyramid preview */}
-                <div className="bg-surface-cream rounded-lg p-4">
-                  <div className="text-xs font-mono text-ink-40 mb-3 uppercase tracking-wider">Pyramidefordeling</div>
+                <div className="bg-grey-100 rounded-[20px] p-4">
+                  <div className="text-xs font-mono text-grey-500 mb-3 uppercase tracking-wider">Pyramidefordeling</div>
                   <div className="space-y-2">
                     {(["FYS", "TEK", "SLAG", "SPILL", "TURN"] as const).map((level) => (
                       <div key={level} className="flex items-center gap-3">
-                        <span className="font-mono text-xs text-ink-50 w-10">{level}</span>
-                        <div className="flex-1 h-2 bg-ink-10 rounded-full overflow-hidden">
+                        <span className="font-mono text-xs text-grey-500 w-10">{level}</span>
+                        <div className="flex-1 h-2 bg-grey-200 rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-gold rounded-full transition-all duration-500"
+                            className="h-full bg-black rounded-full transition-all duration-500"
                             style={{ width: `${pyramid[level]}%` }}
                           />
                         </div>
-                        <span className="font-mono text-xs text-ink-50 w-8 text-right">{pyramid[level]}%</span>
+                        <span className="font-mono text-xs text-grey-500 w-8 text-right">{pyramid[level]}%</span>
                       </div>
                     ))}
                   </div>
@@ -183,7 +183,7 @@ export function PlanConfigurator() {
           {step === 2 && (
             <StepWrapper key="step2">
               <h3 className="w-heading-md mb-2">Hvor mange økter per uke?</h3>
-              <p className="text-sm text-ink-50 mb-8">
+              <p className="text-sm text-grey-500 mb-8">
                 Vi tilpasser planen til din tilgjengelige tid. Hver økt er 90 minutter.
               </p>
 
@@ -192,10 +192,10 @@ export function PlanConfigurator() {
                   <button
                     key={n}
                     onClick={() => setForm(prev => ({ ...prev, sessionsPerWeek: n }))}
-                    className={`rounded-xl p-4 text-center transition-all duration-200 border ${
+                    className={`rounded-[20px] p-4 text-center transition-all duration-200 border ${
                       form.sessionsPerWeek === n
-                        ? "bg-gold/10 border-gold text-gold-text"
-                        : "bg-white border-ink-10 text-ink-60 hover:border-ink-30"
+                        ? "bg-black border-black text-white"
+                        : "bg-white border-grey-200 text-grey-500 hover:border-grey-300"
                     }`}
                   >
                     <div className="font-mono text-2xl font-bold">{n}</div>
@@ -204,10 +204,10 @@ export function PlanConfigurator() {
                 ))}
               </div>
 
-              <div className="bg-surface-cream rounded-lg p-4">
+              <div className="bg-grey-100 rounded-[20px] p-4">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-ink-50">Total treningstid per uke</span>
-                  <span className="font-mono font-semibold text-ink-90">
+                  <span className="text-grey-500">Total treningstid per uke</span>
+                  <span className="font-mono font-semibold text-black">
                     {form.sessionsPerWeek * 90} min ({(form.sessionsPerWeek * 1.5).toFixed(1)} timer)
                   </span>
                 </div>
@@ -218,7 +218,7 @@ export function PlanConfigurator() {
           {step === 3 && (
             <StepWrapper key="step3">
               <h3 className="w-heading-md mb-2">Fasiliteter og sesong</h3>
-              <p className="text-sm text-ink-50 mb-6">
+              <p className="text-sm text-grey-500 mb-6">
                 Velg fasilitetene du har tilgang til, og sesongen du vil trene i.
               </p>
 
@@ -230,16 +230,16 @@ export function PlanConfigurator() {
                       <button
                         key={f.value}
                         onClick={() => toggleFacility(f.value)}
-                        className={`flex items-start gap-3 rounded-lg p-3 text-left transition-all duration-200 border ${
+                        className={`flex items-start gap-3 rounded-[20px] p-3 text-left transition-all duration-200 border ${
                           form.facilities.includes(f.value)
-                            ? "bg-gold/10 border-gold"
-                            : "bg-white border-ink-10 hover:border-ink-30"
+                            ? "bg-grey-100 border-black"
+                            : "bg-white border-grey-200 hover:border-grey-300"
                         }`}
                       >
                         <div className={`w-5 h-5 rounded border-2 flex items-center justify-center mt-0.5 shrink-0 transition-colors ${
                           form.facilities.includes(f.value)
-                            ? "bg-gold border-gold"
-                            : "border-ink-30"
+                            ? "bg-black border-black"
+                            : "border-grey-300"
                         }`}>
                           {form.facilities.includes(f.value) && (
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
@@ -248,8 +248,8 @@ export function PlanConfigurator() {
                           )}
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-ink-80">{f.label}</div>
-                          <div className="text-xs text-ink-40">{f.description}</div>
+                          <div className="text-sm font-medium text-black">{f.label}</div>
+                          <div className="text-xs text-grey-500">{f.description}</div>
                         </div>
                       </button>
                     ))}
@@ -263,14 +263,14 @@ export function PlanConfigurator() {
                       <button
                         key={s.value}
                         onClick={() => setForm(prev => ({ ...prev, season: s.value }))}
-                        className={`rounded-lg p-3 text-center transition-all duration-200 border ${
+                        className={`rounded-[20px] p-3 text-center transition-all duration-200 border ${
                           form.season === s.value
-                            ? "bg-gold/10 border-gold text-gold-text"
-                            : "bg-white border-ink-10 text-ink-60 hover:border-ink-30"
+                            ? "bg-black border-black text-white"
+                            : "bg-white border-grey-200 text-grey-500 hover:border-grey-300"
                         }`}
                       >
                         <div className="text-sm font-medium">{s.label}</div>
-                        <div className="text-[10px] mt-0.5 text-ink-40">{s.months}</div>
+                        <div className={`text-[10px] mt-0.5 ${form.season === s.value ? "text-grey-300" : "text-grey-500"}`}>{s.months}</div>
                       </button>
                     ))}
                   </div>
@@ -282,7 +282,7 @@ export function PlanConfigurator() {
           {step === 4 && (
             <StepWrapper key="step4">
               <h3 className="w-heading-md mb-2">Siste steg</h3>
-              <p className="text-sm text-ink-50 mb-6">
+              <p className="text-sm text-grey-500 mb-6">
                 Legg til valgfrie mål og e-postadressen din for å motta planen.
               </p>
 
@@ -310,12 +310,12 @@ export function PlanConfigurator() {
                     className="w-input"
                     required
                   />
-                  <p className="text-xs text-ink-40 mt-1">Brukes for å sende planen din. Vi deler aldri e-posten din.</p>
+                  <p className="text-xs text-grey-500 mt-1">Brukes for å sende planen din. Vi deler aldri e-posten din.</p>
                 </div>
 
                 {/* Summary */}
-                <div className="bg-surface-cream rounded-lg p-4 space-y-2">
-                  <div className="text-xs font-mono text-ink-40 mb-2 uppercase tracking-wider">Oppsummering</div>
+                <div className="bg-grey-100 rounded-[20px] p-4 space-y-2">
+                  <div className="text-xs font-mono text-grey-500 mb-2 uppercase tracking-wider">Oppsummering</div>
                   <SummaryRow label="Handicap" value={`${form.handicap.toFixed(1)} (Kategori ${category})`} />
                   <SummaryRow label="Økter/uke" value={`${form.sessionsPerWeek} (${form.sessionsPerWeek * 90} min)`} />
                   <SummaryRow label="Fasiliteter" value={`${form.facilities.length} valgt`} />
@@ -328,7 +328,7 @@ export function PlanConfigurator() {
 
         {/* Error */}
         {error && (
-          <div className="mt-4 p-3 bg-error/10 text-error text-sm rounded-lg">
+          <div className="mt-4 p-3 bg-red-50 text-red-600 text-sm rounded-[20px]">
             {error}
           </div>
         )}
@@ -347,7 +347,7 @@ export function PlanConfigurator() {
             <button
               onClick={handleSubmit}
               disabled={!canProceed() || loading}
-              className="w-btn w-btn-gold w-full disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-btn w-btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
@@ -384,8 +384,8 @@ function StepWrapper({ children }: { children: React.ReactNode }) {
 function SummaryRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between text-sm">
-      <span className="text-ink-50">{label}</span>
-      <span className="font-mono text-ink-80">{value}</span>
+      <span className="text-grey-500">{label}</span>
+      <span className="font-mono text-black">{value}</span>
     </div>
   );
 }

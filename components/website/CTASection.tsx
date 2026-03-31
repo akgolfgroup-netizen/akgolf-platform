@@ -25,19 +25,19 @@ export function CTASection({
   secondaryExternal?: boolean;
 }) {
   return (
-    <section className="bg-ink-100 w-section">
+    <section className="bg-grey-100 w-section">
       <div className="w-container">
         <RevealOnScroll>
-          <div className="max-w-2xl mx-auto text-center rounded-2xl p-10 md:p-16 bg-ink-90">
+          <div className="max-w-2xl mx-auto text-center rounded-[20px] p-10 md:p-16 bg-white border border-grey-200">
             <SectionLabel>{eyebrow}</SectionLabel>
-            <h2 className="w-heading-lg text-white mt-4 mb-4">{heading}</h2>
-            <p className="text-ink-40 leading-relaxed mb-8">{description}</p>
+            <h2 className="w-heading-lg mt-4 mb-4">{heading}</h2>
+            <p className="text-grey-500 leading-relaxed mb-8">{description}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {external ? (
-                <a 
-                  href={ctaHref} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href={ctaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-btn w-btn-primary"
                 >
                   {ctaLabel}
@@ -49,10 +49,10 @@ export function CTASection({
               )}
               {secondaryCtaLabel && secondaryCtaHref && (
                 secondaryExternal ? (
-                  <a 
-                    href={secondaryCtaHref} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <a
+                    href={secondaryCtaHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-btn w-btn-secondary"
                   >
                     {secondaryCtaLabel}

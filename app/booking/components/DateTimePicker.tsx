@@ -221,18 +221,18 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
         <button
           onClick={() => navigateWeek(-1)}
           disabled={!canGoPrev}
-          className="w-9 h-9 border border-ink-10 rounded-lg bg-white flex items-center justify-center hover:bg-ink-5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-9 h-9 border border-grey-200 rounded-lg bg-white flex items-center justify-center hover:bg-grey-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
-          <ChevronLeft size={18} className="text-ink-70" />
+          <ChevronLeft size={18} className="text-grey-500" />
         </button>
-        <span className="font-semibold text-ink-90">
+        <span className="font-semibold text-black">
           {formatWeekRange(currentWeekStart)}
         </span>
         <button
           onClick={() => navigateWeek(1)}
-          className="w-9 h-9 border border-ink-10 rounded-lg bg-white flex items-center justify-center hover:bg-ink-5 transition-colors"
+          className="w-9 h-9 border border-grey-200 rounded-lg bg-white flex items-center justify-center hover:bg-grey-100 transition-colors"
         >
-          <ChevronRight size={18} className="text-ink-70" />
+          <ChevronRight size={18} className="text-grey-500" />
         </button>
       </div>
 
@@ -251,28 +251,28 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
               onClick={() => handleDaySelect(date)}
               disabled={isPast || isFull}
               className={cn(
-                "border-2 rounded-xl p-3 text-center transition-all",
-                isPast && "opacity-40 cursor-not-allowed border-ink-10",
-                isFull && !isPast && "opacity-40 cursor-not-allowed border-ink-10",
-                !isPast && !isFull && !isSelected && "border-ink-10 hover:border-ink-30 cursor-pointer",
-                isSelected && "border-ink-90 bg-ink-90 text-white"
+                "border-2 rounded-[20px] p-3 text-center transition-all",
+                isPast && "opacity-40 cursor-not-allowed border-grey-200",
+                isFull && !isPast && "opacity-40 cursor-not-allowed border-grey-200",
+                !isPast && !isFull && !isSelected && "border-grey-200 hover:border-grey-300 cursor-pointer",
+                isSelected && "border-black bg-black text-white"
               )}
             >
               <div className={cn(
                 "text-[11px] uppercase tracking-wide mb-1",
-                isSelected ? "text-white/70" : "text-ink-50"
+                isSelected ? "text-white/70" : "text-grey-500"
               )}>
                 {DAY_NAMES[i]}
               </div>
               <div className={cn(
                 "text-lg font-semibold",
-                isSelected ? "text-white" : "text-ink-90"
+                isSelected ? "text-white" : "text-black"
               )}>
                 {date.getDate()}
               </div>
               <div className={cn(
                 "text-[11px] mt-1",
-                isSelected ? "text-white/70" : "text-ink-50"
+                isSelected ? "text-white/70" : "text-grey-500"
               )}>
                 {isPast ? "" : isFull ? "Fullt" : `${slotCount} ledige`}
               </div>
@@ -289,13 +289,13 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-ink-5 rounded-xl p-8 text-center"
+            className="bg-grey-100 rounded-[20px] p-8 text-center"
           >
-            <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-4">
-              <CalendarDays size={28} className="text-gold" />
+            <div className="w-16 h-16 rounded-full bg-grey-200 flex items-center justify-center mx-auto mb-4">
+              <CalendarDays size={28} className="text-black" />
             </div>
-            <h4 className="font-medium text-ink-90 mb-2">Velg en dato</h4>
-            <p className="text-sm text-ink-50">
+            <h4 className="font-medium text-black mb-2">Velg en dato</h4>
+            <p className="text-sm text-grey-500">
               Klikk pa en dato ovenfor for a se ledige tider
             </p>
           </motion.div>
@@ -305,9 +305,9 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-ink-5 rounded-xl p-8 flex items-center justify-center"
+            className="bg-grey-100 rounded-[20px] p-8 flex items-center justify-center"
           >
-            <Loader2 size={32} className="animate-spin text-gold" />
+            <Loader2 size={32} className="animate-spin text-black" />
           </motion.div>
         ) : slots.length === 0 ? (
           <motion.div
@@ -315,13 +315,13 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-ink-5 rounded-xl p-8 text-center"
+            className="bg-grey-100 rounded-[20px] p-8 text-center"
           >
-            <div className="w-16 h-16 rounded-full bg-ink-10 flex items-center justify-center mx-auto mb-4">
-              <CalendarDays size={28} className="text-ink-50" />
+            <div className="w-16 h-16 rounded-full bg-grey-200 flex items-center justify-center mx-auto mb-4">
+              <CalendarDays size={28} className="text-grey-500" />
             </div>
-            <h4 className="font-medium text-ink-90 mb-2">Ingen ledige tider</h4>
-            <p className="text-sm text-ink-50">
+            <h4 className="font-medium text-black mb-2">Ingen ledige tider</h4>
+            <p className="text-sm text-grey-500">
               Prov en annen dato eller kontakt oss for assistanse
             </p>
           </motion.div>
@@ -334,7 +334,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
           >
             {/* Time slots header */}
             <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-              <span className="text-sm font-semibold text-ink-90">
+              <span className="text-sm font-semibold text-black">
                 Tilgjengelige tider -{" "}
                 {new Date(selectedDate).toLocaleDateString("nb-NO", {
                   weekday: "long",
@@ -350,8 +350,8 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
                     className={cn(
                       "px-3 py-1.5 rounded text-xs font-medium transition-colors",
                       timeFilter === filter.value
-                        ? "bg-ink-90 text-white"
-                        : "bg-ink-5 text-ink-70 hover:bg-ink-10"
+                        ? "bg-black text-white"
+                        : "bg-grey-100 text-grey-500 hover:bg-grey-200"
                     )}
                   >
                     {filter.label}
@@ -377,8 +377,8 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
                     className={cn(
                       "py-3 px-2 border-2 rounded-lg text-sm font-semibold text-center transition-all",
                       isSelected
-                        ? "border-ink-90 bg-ink-90 text-white"
-                        : "border-ink-10 text-ink-90 hover:border-ink-30"
+                        ? "border-black bg-black text-white"
+                        : "border-grey-200 text-black hover:border-grey-300"
                     )}
                   >
                     {timeStr}
@@ -388,7 +388,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
             </div>
 
             {filteredSlots.length === 0 && (
-              <p className="text-center text-sm text-ink-50 py-4">
+              <p className="text-center text-sm text-grey-500 py-4">
                 Ingen tider i valgt tidsrom. Prov et annet filter.
               </p>
             )}
@@ -397,11 +397,11 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
       </AnimatePresence>
 
       {/* Navigation */}
-      <div className="flex justify-end mt-8 pt-6 border-t border-ink-10">
+      <div className="flex justify-end mt-8 pt-6 border-t border-grey-200">
         <button
           onClick={handleContinue}
           disabled={!selectedTime}
-          className="w-btn w-btn-gold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="w-btn w-btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           Fortsett
           <ArrowRight size={18} />

@@ -50,59 +50,59 @@ export function BookingSidebar({ service, instructor, dateTime }: Props) {
     >
       <div className="w-card">
         {/* Header */}
-        <div className="text-xs font-semibold uppercase tracking-wider text-ink-50 pb-3 mb-4 border-b border-ink-10">
+        <div className="text-xs font-semibold uppercase tracking-wider text-grey-500 pb-3 mb-4 border-b border-grey-200">
           Din bestilling
         </div>
 
         {/* Summary items */}
         <div className="space-y-3">
           <div className="flex justify-between items-start text-sm">
-            <span className="text-ink-50">Tjeneste</span>
-            <span className="font-medium text-ink-90 text-right">
-              {service?.name || <span className="text-ink-30">Ikke valgt</span>}
+            <span className="text-grey-500">Tjeneste</span>
+            <span className="font-medium text-black text-right">
+              {service?.name || <span className="text-grey-400">Ikke valgt</span>}
             </span>
           </div>
 
           <div className="flex justify-between items-start text-sm">
-            <span className="text-ink-50">Varighet</span>
-            <span className="font-medium text-ink-90 text-right">
-              {service ? `${service.duration} minutter` : <span className="text-ink-30">Ikke valgt</span>}
+            <span className="text-grey-500">Varighet</span>
+            <span className="font-medium text-black text-right">
+              {service ? `${service.duration} minutter` : <span className="text-grey-400">Ikke valgt</span>}
             </span>
           </div>
 
           <div className="flex justify-between items-start text-sm">
-            <span className="text-ink-50">Instruktor</span>
-            <span className="font-medium text-ink-90 text-right">
-              {instructor?.user.name || <span className="text-ink-30">Ikke valgt</span>}
+            <span className="text-grey-500">Instruktor</span>
+            <span className="font-medium text-black text-right">
+              {instructor?.user.name || <span className="text-grey-400">Ikke valgt</span>}
             </span>
           </div>
 
           <div className="flex justify-between items-start text-sm">
-            <span className="text-ink-50">Dato & tid</span>
+            <span className="text-grey-500">Dato & tid</span>
             {formattedDateTime ? (
-              <span className="font-medium text-ink-90 text-right">
+              <span className="font-medium text-black text-right">
                 {formattedDateTime.date}
                 <br />
                 <span className="font-normal">{formattedDateTime.time}</span>
               </span>
             ) : (
-              <span className="text-ink-30">Ikke valgt</span>
+              <span className="text-grey-400">Ikke valgt</span>
             )}
           </div>
         </div>
 
         {/* Total */}
-        <div className="flex justify-between items-center pt-4 mt-4 border-t-2 border-ink-90">
-          <span className="font-semibold text-ink-90">Totalt</span>
-          <span className="text-lg font-bold text-gold">
+        <div className="flex justify-between items-center pt-4 mt-4 border-t-2 border-black">
+          <span className="font-semibold text-black">Totalt</span>
+          <span className="text-lg font-bold text-black">
             {service ? `kr ${formatPrice(service.price)}` : "kr 0"}
           </span>
         </div>
 
         {/* Cancellation notice */}
-        <div className="mt-4 pt-4 border-t border-ink-10">
-          <p className="text-xs text-ink-50 flex items-center gap-1.5">
-            <ShieldCheck size={14} className="text-success flex-shrink-0" />
+        <div className="mt-4 pt-4 border-t border-grey-200">
+          <p className="text-xs text-grey-500 flex items-center gap-1.5">
+            <ShieldCheck size={14} className="text-[#34C759] flex-shrink-0" />
             Gratis avbestilling inntil 24 timer for
           </p>
         </div>

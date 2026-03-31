@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { getUpcomingBookings, getPastBookings } from "./actions";
 import { BookingList } from "@/components/portal/bookinger/booking-list";
-import { Plus, Info } from "lucide-react";
+import { Plus, Info, Calendar, CalendarCheck } from "lucide-react";
 import { PORTAL_CONTENT } from "@/lib/website-constants";
+import { BentoGrid } from "@/components/portal/apple/bento-grid";
+import { BentoCard } from "@/components/portal/apple/bento-card";
+import { AppleButton } from "@/components/portal/apple/apple-button";
 
 export default async function BookingerPage() {
   const [upcoming, past] = await Promise.all([
@@ -11,56 +14,89 @@ export default async function BookingerPage() {
   ]);
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[var(--color-snow)]">Bookinger</h1>
-        <Link
-          href="/portal/bookinger/ny"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[var(--color-gold)] text-white hover:brightness-110 transition-all cursor-pointer"
-          style={{ boxShadow: "0 4px 12px rgba(176,125,79,0.25)" }}
-        >
-          <Plus className="w-4 h-4" />
-          Book coaching
-        </Link>
-      </div>
-
-      {/* Cancellation Rules */}
-      <div className="rounded-lg p-4 bg-[#1a1a1a] border border-[#333]">
-        <div className="flex items-start gap-3">
-          <Info className="w-5 h-5 text-[#B07D4F] mt-0.5" />
+    <main className="min-h-screen bg-[var(--apple-gray-50)] p-6 lg:p-8">
+      <div className="max-w-6xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <p className="text-sm font-medium text-white mb-2">Avbestillingsregler</p>
-            <div className="grid grid-cols-3 gap-4 text-xs">
-              {PORTAL_CONTENT.bookings.cancellationRules.map((rule) => (
-                <div key={rule.hours} className="text-[#A3A3A3]">
-                  <span className="font-medium text-white">{rule.hours} timer:</span>{" "}
-                  {rule.rule} ({rule.fee})
-                </div>
-              ))}
-            </div>
+            <h1 className="text-3xl font-bold text-[var(--apple-gray-900)] tracking-tight">
+              Mine bookinger
+            </h1>
+            <p className="text-[var(--apple-gray-500)] mt-1">
+              Administrer dine coaching-timer og treninger
+            </p>
           </div>
+          <Link href="/portal/bookinger/ny">
+            <AppleButton icon={Plus} variant="gold" size="md">
+              Book coaching
+            </AppleButton>
+          </Link>
         </div>
+
+        {/* Cancellation Rules - Glass Card */}
+        <BentoCard
+          variant="glass"
+          span={12}
+          icon={Info}
+          title="Avbestillingsregler"
+          subtitle="Viktig informasjon om endringer"
+          hover={false}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2">
+            {PORTAL_CONTENT.bookings.cancellationRules.map((rule) => (
+              <div
+                key={rule.hours}
+                className="flex flex-col p-3 rounded-xl bg-[var(--apple-gray-100)]/50"
+              >
+                <span className="text-sm font-semibold text-[var(--apple-gray-900)]">
+                  {rule.hours} timer
+                </span>
+                <span className="text-xs text-[var(--apple-gray-600)] mt-0.5">
+                  {rule.rule}
+                </span>
+                <span className="text-xs text-[var(--apple-gold-600)] font-medium mt-1">
+                  {rule.fee}
+                </span>
+              </div>
+            ))}
+          </div>
+        </BentoCard>
+
+        {/* Upcoming Bookings */}
+        <BentoGrid gap="lg">
+          <BentoCard
+            span={12}
+            variant="solid"
+            icon={CalendarCheck}
+            iconColor="text-green-500"
+            title="Kommende treninger"
+            subtitle={upcoming.length > 0 ? `${upcoming.length} planlagte` : "Ingen planlagte"}
+            hover={false}
+          >
+            <BookingList
+              bookings={upcoming}
+              emptyMessage={PORTAL_CONTENT.bookings.emptyState}
+            />
+          </BentoCard>
+        </BentoGrid>
+
+        {/* Past Bookings */}
+        {past.length > 0 && (
+          <BentoGrid gap="lg">
+            <BentoCard
+              span={12}
+              variant="solid"
+              icon={Calendar}
+              iconColor="text-[var(--apple-gray-400)]"
+              title="Tidligere treninger"
+              subtitle={`${past.length} fullførte`}
+              hover={false}
+            >
+              <BookingList bookings={past} emptyMessage="Ingen historikk ennå." />
+            </BentoCard>
+          </BentoGrid>
+        )}
       </div>
-
-      <section className="space-y-4">
-        <h2 className="text-lg font-semibold text-[var(--color-snow)]">
-          Kommende treninger
-        </h2>
-        <BookingList
-          bookings={upcoming}
-          emptyMessage={PORTAL_CONTENT.bookings.emptyState}
-        />
-      </section>
-
-      {past.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-semibold text-[var(--color-snow)]">
-            Tidligere treninger
-          </h2>
-          <BookingList bookings={past} emptyMessage="Ingen historikk ennå." />
-        </section>
-      )}
-    </div>
+    </main>
   );
 }

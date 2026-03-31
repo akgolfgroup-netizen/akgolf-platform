@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Calendar, Clock, MessageSquare } from "lucide-react";
 import { createBlockedTime } from "@/app/portal/(dashboard)/admin/tilgjengelighet/actions";
+import { AppleButton } from "@/components/portal/apple/apple-button";
+import { motion } from "framer-motion";
 
 interface Props {
   instructorId: string;
@@ -39,55 +41,85 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
   };
 
   return (
-    <form
+    <motion.form
       onSubmit={handleSubmit}
-      className="rounded-2xl border border-[rgba(15,41,80,0.4)] bg-[rgba(10,25,41,0.7)] backdrop-blur-md p-4"
+      className="rounded-2xl bg-white/80 backdrop-blur-xl border border-[var(--apple-gray-200)] shadow-[var(--shadow-card)] p-6"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
     >
-      <h3 className="text-sm font-semibold text-[var(--color-snow)] mb-3">
-        Legg til blokkert tid
-      </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
+          <Calendar className="w-5 h-5 text-red-500" />
+        </div>
         <div>
-          <label className="text-xs text-[var(--color-snow)]/50 mb-1 block">Fra</label>
+          <h3 className="text-sm font-semibold text-[var(--apple-gray-900)]">
+            Legg til fraver
+          </h3>
+          <p className="text-xs text-[var(--apple-gray-500)]">
+            Blokker en periode hvor instruktoren ikke er tilgjengelig
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Start Time */}
+        <div>
+          <label className="flex items-center gap-2 text-xs font-medium text-[var(--apple-gray-600)] mb-2">
+            <Clock className="w-3.5 h-3.5" />
+            Fra
+          </label>
           <input
             type="datetime-local"
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
-            className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
+            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--apple-gray-900)] bg-white border border-[var(--apple-gray-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)]/40 focus:border-[var(--apple-admin-accent)] transition-all"
             required
           />
         </div>
+
+        {/* End Time */}
         <div>
-          <label className="text-xs text-[var(--color-snow)]/50 mb-1 block">Til</label>
+          <label className="flex items-center gap-2 text-xs font-medium text-[var(--apple-gray-600)] mb-2">
+            <Clock className="w-3.5 h-3.5" />
+            Til
+          </label>
           <input
             type="datetime-local"
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
-            className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
+            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--apple-gray-900)] bg-white border border-[var(--apple-gray-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)]/40 focus:border-[var(--apple-admin-accent)] transition-all"
             required
           />
         </div>
+
+        {/* Reason */}
         <div>
-          <label className="text-xs text-[var(--color-snow)]/50 mb-1 block">
-            Årsak (valgfritt)
+          <label className="flex items-center gap-2 text-xs font-medium text-[var(--apple-gray-600)] mb-2">
+            <MessageSquare className="w-3.5 h-3.5" />
+            Arsak (valgfritt)
           </label>
           <input
             type="text"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            className="w-full rounded-xl px-3 py-2 text-sm text-[var(--color-snow)] placeholder:text-[var(--color-snow)]/40 bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
+            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--apple-gray-900)] placeholder:text-[var(--apple-gray-400)] bg-white border border-[var(--apple-gray-200)] focus:outline-none focus:ring-2 focus:ring-[var(--apple-admin-accent)]/40 focus:border-[var(--apple-admin-accent)] transition-all"
             placeholder="F.eks. ferie, sykdom..."
           />
         </div>
       </div>
-      <button
-        type="submit"
-        disabled={saving || !startTime || !endTime}
-        className="mt-3 flex items-center gap-1.5 px-4 py-2 text-xs font-medium bg-[var(--color-gold)] text-white rounded-xl hover:bg-[var(--color-gold)]/90 disabled:opacity-50 transition-colors"
-      >
-        <Plus className="w-3.5 h-3.5" />
-        {saving ? "Legger til..." : "Legg til"}
-      </button>
-    </form>
+
+      <div className="mt-6 flex justify-end">
+        <AppleButton
+          type="submit"
+          disabled={saving || !startTime || !endTime}
+          loading={saving}
+          icon={Plus}
+          variant="primary"
+          size="md"
+        >
+          {saving ? "Legger til..." : "Legg til fraver"}
+        </AppleButton>
+      </div>
+    </motion.form>
   );
 }

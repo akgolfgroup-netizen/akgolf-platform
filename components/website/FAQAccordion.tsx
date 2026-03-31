@@ -9,8 +9,8 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
 
   return (
     <div
-      className={`border-b border-ink-10 transition-all duration-300 ${
-        open ? "border-l-2 border-l-gold pl-4 -ml-4 bg-gold/[0.02]" : "border-l-2 border-l-transparent pl-4 -ml-4"
+      className={`border-b border-grey-200 transition-all duration-300 ${
+        open ? "border-l-2 border-l-black pl-4 -ml-4 bg-grey-100/50" : "border-l-2 border-l-transparent pl-4 -ml-4"
       }`}
     >
       <button
@@ -20,7 +20,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
         aria-controls={answerId}
       >
         <span className={`font-display text-base font-semibold pr-8 transition-colors ${
-          open ? "text-ink-90" : "text-ink-80 group-hover:text-ink-90"
+          open ? "text-black" : "text-grey-700 group-hover:text-black"
         }`}>
           {q}
         </span>
@@ -32,7 +32,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
-            className={`transition-all duration-300 ${open ? "rotate-45 text-gold" : "text-ink-40"}`}
+            className={`transition-all duration-300 ${open ? "rotate-45 text-black" : "text-grey-400"}`}
           >
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
@@ -49,7 +49,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
             transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="overflow-hidden"
           >
-            <p className="text-sm text-ink-50 leading-relaxed pb-5 pr-12">
+            <p className="text-sm text-grey-500 leading-relaxed pb-5 pr-12">
               {a}
             </p>
           </motion.div>

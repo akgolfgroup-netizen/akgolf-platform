@@ -87,22 +87,22 @@ function CheckoutForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Payment Summary */}
-      <div className="bg-ink-5 rounded-xl p-5">
+      <div className="bg-grey-100 rounded-[20px] p-5">
         <div className="flex justify-between items-center py-2 text-sm">
-          <span className="text-ink-70">
+          <span className="text-grey-500">
             {serviceName} ({duration} min)
           </span>
-          <span className="text-ink-90">kr {subtotal.toLocaleString("nb-NO")}</span>
+          <span className="text-black">kr {subtotal.toLocaleString("nb-NO")}</span>
         </div>
         {appliedDiscount && (
-          <div className="flex justify-between items-center py-2 text-sm text-success">
+          <div className="flex justify-between items-center py-2 text-sm text-[#34C759]">
             <span>Rabattkode: {appliedDiscount.code}</span>
             <span>-kr {appliedDiscount.amount.toLocaleString("nb-NO")}</span>
           </div>
         )}
-        <div className="flex justify-between items-center pt-4 mt-2 border-t-2 border-ink-20">
-          <span className="font-semibold text-ink-90 text-lg">Totalt a betale</span>
-          <span className="font-bold text-lg text-ink-90">
+        <div className="flex justify-between items-center pt-4 mt-2 border-t-2 border-black">
+          <span className="font-semibold text-black text-lg">Totalt a betale</span>
+          <span className="font-bold text-lg text-black">
             kr {totalNok.toLocaleString("nb-NO")}
           </span>
         </div>
@@ -110,7 +110,7 @@ function CheckoutForm({
 
       {/* Discount Code */}
       <div>
-        <label className="text-xs font-semibold uppercase tracking-wider text-ink-50 mb-2 block">
+        <label className="text-xs font-semibold uppercase tracking-wider text-grey-500 mb-2 block">
           Rabattkode
         </label>
         <div className="flex gap-2">
@@ -135,10 +135,10 @@ function CheckoutForm({
 
       {/* Payment form */}
       <div>
-        <label className="text-xs font-semibold uppercase tracking-wider text-ink-50 mb-2 block">
+        <label className="text-xs font-semibold uppercase tracking-wider text-grey-500 mb-2 block">
           Betalingsmetode
         </label>
-        <div className="border border-ink-10 rounded-xl p-4 bg-white">
+        <div className="border border-grey-200 rounded-[20px] p-4 bg-white">
           <PaymentElement
             options={{
               layout: "tabs",
@@ -148,7 +148,7 @@ function CheckoutForm({
       </div>
 
       {/* Security notice */}
-      <div className="flex items-center gap-2 text-xs text-ink-50">
+      <div className="flex items-center gap-2 text-xs text-grey-500">
         <Lock size={14} />
         <span>Sikker betaling via Stripe. Vi lagrer ikke kortinformasjonen din.</span>
       </div>
@@ -158,10 +158,10 @@ function CheckoutForm({
         <motion.div
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-start gap-2 px-4 py-3 rounded-lg bg-error/10 border border-error/20"
+          className="flex items-start gap-2 px-4 py-3 rounded-[12px] bg-[#FF3B30]/10 border border-[#FF3B30]/20"
         >
-          <AlertCircle size={16} className="text-error flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-error">{error}</p>
+          <AlertCircle size={16} className="text-[#FF3B30] flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-[#FF3B30]">{error}</p>
         </motion.div>
       )}
 
@@ -169,7 +169,7 @@ function CheckoutForm({
       <button
         type="submit"
         disabled={!stripe || !elements || loading}
-        className="w-btn w-btn-gold w-full text-base py-4 disabled:opacity-50 flex items-center justify-center gap-2"
+        className="w-btn w-btn-primary w-full text-base py-4 disabled:opacity-50 flex items-center justify-center gap-2"
       >
         {loading ? (
           <>
@@ -210,12 +210,12 @@ export function PaymentStep({
             appearance: {
               theme: "stripe",
               variables: {
-                colorPrimary: "#B07D4F",
+                colorPrimary: "#1D1D1F",
                 colorBackground: "#FFFFFF",
-                colorText: "#0A1929",
-                colorDanger: "#EF4444",
+                colorText: "#1D1D1F",
+                colorDanger: "#FF3B30",
                 fontFamily: "Inter, sans-serif",
-                borderRadius: "8px",
+                borderRadius: "12px",
                 spacingUnit: "4px",
               },
             },

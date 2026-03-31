@@ -24,26 +24,23 @@ export function ProgressBar({ currentStep, totalSteps, stepNames = STEP_NAMES }:
       {/* Progress indicator */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-gold">
+          <span className="text-sm font-medium text-black">
             Steg {currentStep}
           </span>
-          <span className="text-sm text-ink-50">
+          <span className="text-sm text-grey-500">
             av {totalSteps}
           </span>
         </div>
-        <span className="text-sm text-ink-50 hidden sm:block">
+        <span className="text-sm text-grey-500 hidden sm:block">
           {stepNames[currentStep - 1] || ""}
         </span>
       </div>
 
       {/* Progress bar background */}
-      <div className="h-2 bg-ink-10 rounded-full overflow-hidden">
+      <div className="h-2 bg-grey-200 rounded-full overflow-hidden">
         {/* Animated fill */}
         <motion.div
-          className="h-full rounded-full"
-          style={{
-            background: "linear-gradient(90deg, var(--color-gold) 0%, var(--color-gold-light) 100%)",
-          }}
+          className="h-full rounded-full bg-black"
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
@@ -65,10 +62,10 @@ export function ProgressBar({ currentStep, totalSteps, stepNames = STEP_NAMES }:
               <motion.div
                 className={`w-2.5 h-2.5 rounded-full transition-colors duration-300 ${
                   isCompleted
-                    ? "bg-gold"
+                    ? "bg-[#34C759]"
                     : isCurrent
-                    ? "bg-gold ring-2 ring-gold/30"
-                    : "bg-ink-20"
+                    ? "bg-black ring-2 ring-black/20"
+                    : "bg-grey-200"
                 }`}
                 initial={isCurrent ? { scale: 0.8 } : { scale: 1 }}
                 animate={isCurrent ? { scale: 1 } : { scale: 1 }}
@@ -76,9 +73,11 @@ export function ProgressBar({ currentStep, totalSteps, stepNames = STEP_NAMES }:
               />
               <span
                 className={`text-[10px] uppercase tracking-wider hidden sm:block ${
-                  isCompleted || isCurrent
-                    ? "text-gold font-medium"
-                    : "text-ink-50"
+                  isCompleted
+                    ? "text-[#34C759] font-medium"
+                    : isCurrent
+                    ? "text-black font-medium"
+                    : "text-grey-500"
                 }`}
               >
                 {stepNames[i] || `Steg ${stepNum}`}

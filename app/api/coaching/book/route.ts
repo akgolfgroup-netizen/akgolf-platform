@@ -4,6 +4,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { getPortalUser } from "@/lib/portal/auth";
 import { stripe } from "@/lib/portal/stripe";
 import { addMinutes, startOfMonth, endOfMonth, startOfWeek, endOfWeek } from "date-fns";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import {
   BookingStatus,
   PaymentMethod,
@@ -20,6 +21,17 @@ class ConflictError extends Error {
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limiting
+  const clientIp = getClientIp(req);
+  const rateLimit = checkRateLimit(`coaching:${clientIp}`, RATE_LIMITS.COACHING_BOOK);
+
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "For mange forsøk. Prøv igjen senere." },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rateLimit.resetAt - Date.now()) / 1000)) } }
+    );
+  }
+
   const user = await getPortalUser();
 
   let body: {

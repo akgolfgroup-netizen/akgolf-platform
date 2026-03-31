@@ -16,13 +16,13 @@ export function SubPageHero({
   accent?: Accent;
 }) {
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-      {/* Gradient mesh */}
+    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-white">
+      {/* Subtle gradient mesh */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className={`absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full ${ACCENT_COLORS[accent]} opacity-[0.08] blur-[80px]`} />
-        <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-gold opacity-[0.05] blur-[60px]" />
-        {/* Decorative gold line */}
-        <div className="absolute top-0 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-gold/10 to-transparent" />
+        <div className={`absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full ${ACCENT_COLORS[accent]} opacity-[0.05] blur-[100px]`} />
+        <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-grey-200 opacity-30 blur-[80px]" />
+        {/* Decorative line */}
+        <div className="absolute top-0 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-grey-200 to-transparent" />
       </div>
 
       <div className="w-container relative">
@@ -47,7 +47,7 @@ export function SubPageHero({
         </motion.h1>
 
         <motion.p
-          className="text-lg text-ink-50 max-w-2xl leading-relaxed"
+          className="text-lg text-grey-500 max-w-2xl leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [...EASE_ENTRANCE] }}
@@ -55,9 +55,9 @@ export function SubPageHero({
           {description}
         </motion.p>
 
-        {/* Horizontal gold accent */}
+        {/* Horizontal accent */}
         <motion.div
-          className="mt-12 w-16 h-px bg-gradient-to-r from-gold/40 to-transparent"
+          className="mt-12 w-16 h-px bg-gradient-to-r from-grey-300 to-transparent"
           initial={{ opacity: 0, scaleX: 0 }}
           animate={{ opacity: 1, scaleX: 1 }}
           transition={{ duration: 0.8, delay: 0.4, ease: [...EASE_ENTRANCE] }}

@@ -16,13 +16,13 @@ export function FeatureGrid({
       {features.map((feature) => (
         <StaggerItem key={feature.title}>
           <div className="w-card h-full">
-            <div className="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center mb-4">
-              <div className="w-2 h-2 rounded-full bg-gold" />
+            <div className="w-8 h-8 rounded-lg bg-grey-100 flex items-center justify-center mb-4">
+              <div className="w-2 h-2 rounded-full bg-black" />
             </div>
-            <h4 className="font-display text-base font-semibold text-ink-90 mb-2">
+            <h4 className="font-display text-base font-semibold text-black mb-2">
               {feature.title}
             </h4>
-            <p className="text-sm text-ink-50 leading-relaxed">
+            <p className="text-sm text-grey-500 leading-relaxed">
               {feature.description}
             </p>
           </div>

@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 // Vedlikeholdsmodus - les fra env, default til false (LIVE)
-const MAINTENANCE_MODE = true;
+const MAINTENANCE_MODE = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
 const BYPASS_KEY = process.env.MAINTENANCE_BYPASS_KEY;
 
 export async function proxy(request: NextRequest) {
@@ -80,6 +80,13 @@ export async function proxy(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/portal") &&
     !request.nextUrl.pathname.startsWith("/portal/login")
   ) {
+    if (!user) {
+      return NextResponse.redirect(new URL("/portal/login", request.url));
+    }
+  }
+
+  // Coach Hub requires authentication (instructor/admin only)
+  if (request.nextUrl.pathname.startsWith("/coach")) {
     if (!user) {
       return NextResponse.redirect(new URL("/portal/login", request.url));
     }

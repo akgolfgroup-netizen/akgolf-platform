@@ -102,18 +102,18 @@ export function CustomerForm({ onSubmit }: Props) {
           {/* First name */}
           <div>
             <label htmlFor="firstName" className="w-label">
-              Fornavn <span className="text-error">*</span>
+              Fornavn <span className="text-[#FF3B30]">*</span>
             </label>
             <input
               id="firstName"
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className={`w-input ${getError("firstName") ? "border-error" : ""}`}
+              className={`w-input ${getError("firstName") ? "border-[#FF3B30]" : ""}`}
               placeholder="Ola"
             />
             {getError("firstName") && (
-              <p className="text-xs text-error mt-1 flex items-center gap-1">
+              <p className="text-xs text-[#FF3B30] mt-1 flex items-center gap-1">
                 <AlertCircle size={12} />
                 {getError("firstName")}
               </p>
@@ -123,18 +123,18 @@ export function CustomerForm({ onSubmit }: Props) {
           {/* Last name */}
           <div>
             <label htmlFor="lastName" className="w-label">
-              Etternavn <span className="text-error">*</span>
+              Etternavn <span className="text-[#FF3B30]">*</span>
             </label>
             <input
               id="lastName"
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className={`w-input ${getError("lastName") ? "border-error" : ""}`}
+              className={`w-input ${getError("lastName") ? "border-[#FF3B30]" : ""}`}
               placeholder="Nordmann"
             />
             {getError("lastName") && (
-              <p className="text-xs text-error mt-1 flex items-center gap-1">
+              <p className="text-xs text-[#FF3B30] mt-1 flex items-center gap-1">
                 <AlertCircle size={12} />
                 {getError("lastName")}
               </p>
@@ -144,21 +144,21 @@ export function CustomerForm({ onSubmit }: Props) {
           {/* Email */}
           <div>
             <label htmlFor="email" className="w-label">
-              E-post <span className="text-error">*</span>
+              E-post <span className="text-[#FF3B30]">*</span>
             </label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-input ${getError("email") ? "border-error" : ""}`}
+              className={`w-input ${getError("email") ? "border-[#FF3B30]" : ""}`}
               placeholder="ola@eksempel.no"
             />
-            <p className="text-xs text-ink-50 mt-1">
+            <p className="text-xs text-grey-500 mt-1">
               Bekreftelse og paminnelser sendes hit
             </p>
             {getError("email") && (
-              <p className="text-xs text-error mt-1 flex items-center gap-1">
+              <p className="text-xs text-[#FF3B30] mt-1 flex items-center gap-1">
                 <AlertCircle size={12} />
                 {getError("email")}
               </p>
@@ -168,21 +168,21 @@ export function CustomerForm({ onSubmit }: Props) {
           {/* Phone */}
           <div>
             <label htmlFor="phone" className="w-label">
-              Mobilnummer <span className="text-error">*</span>
+              Mobilnummer <span className="text-[#FF3B30]">*</span>
             </label>
             <input
               id="phone"
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className={`w-input ${getError("phone") ? "border-error" : ""}`}
+              className={`w-input ${getError("phone") ? "border-[#FF3B30]" : ""}`}
               placeholder="+47 912 34 567"
             />
-            <p className="text-xs text-ink-50 mt-1">
+            <p className="text-xs text-grey-500 mt-1">
               For SMS-paminnelse dagen foer
             </p>
             {getError("phone") && (
-              <p className="text-xs text-error mt-1 flex items-center gap-1">
+              <p className="text-xs text-[#FF3B30] mt-1 flex items-center gap-1">
                 <AlertCircle size={12} />
                 {getError("phone")}
               </p>
@@ -202,7 +202,7 @@ export function CustomerForm({ onSubmit }: Props) {
               className="w-input"
               placeholder="f.eks. 18.4"
             />
-            <p className="text-xs text-ink-50 mt-1">
+            <p className="text-xs text-grey-500 mt-1">
               Valgfritt, men hjelper instruktoren a forberede
             </p>
           </div>
@@ -248,28 +248,28 @@ export function CustomerForm({ onSubmit }: Props) {
                 className={`
                   w-5 h-5 rounded flex-shrink-0 flex items-center justify-center border-2 transition-colors mt-0.5
                   ${acceptTerms
-                    ? "bg-navy border-navy"
+                    ? "bg-black border-black"
                     : getError("acceptTerms")
-                    ? "border-error"
-                    : "border-ink-20"
+                    ? "border-[#FF3B30]"
+                    : "border-grey-300"
                   }
                 `}
               >
                 {acceptTerms && <Check size={14} className="text-white" strokeWidth={3} />}
               </button>
-              <span className="text-sm text-ink-70">
+              <span className="text-sm text-grey-600">
                 Jeg godtar{" "}
-                <Link href="/vilkar" className="text-navy underline hover:no-underline">
+                <Link href="/vilkar" className="text-black underline hover:no-underline">
                   vilkarene
                 </Link>{" "}
                 og{" "}
-                <Link href="/personvern" className="text-navy underline hover:no-underline">
+                <Link href="/personvern" className="text-black underline hover:no-underline">
                   personvernerkleringen
                 </Link>
               </span>
             </label>
             {getError("acceptTerms") && (
-              <p className="text-xs text-error mt-2 flex items-center gap-1 ml-8">
+              <p className="text-xs text-[#FF3B30] mt-2 flex items-center gap-1 ml-8">
                 <AlertCircle size={12} />
                 {getError("acceptTerms")}
               </p>
@@ -284,12 +284,12 @@ export function CustomerForm({ onSubmit }: Props) {
                 onClick={() => setAcceptMarketing(!acceptMarketing)}
                 className={`
                   w-5 h-5 rounded flex-shrink-0 flex items-center justify-center border-2 transition-colors mt-0.5
-                  ${acceptMarketing ? "bg-navy border-navy" : "border-ink-20"}
+                  ${acceptMarketing ? "bg-black border-black" : "border-grey-300"}
                 `}
               >
                 {acceptMarketing && <Check size={14} className="text-white" strokeWidth={3} />}
               </button>
-              <span className="text-sm text-ink-70">
+              <span className="text-sm text-grey-600">
                 Ja, send meg tips og tilbud pa e-post (kan avmeldes nar som helst)
               </span>
             </label>
@@ -297,12 +297,12 @@ export function CustomerForm({ onSubmit }: Props) {
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-end mt-8 pt-6 border-t border-ink-10">
+        <div className="flex justify-end mt-8 pt-6 border-t border-grey-200">
           <motion.button
             type="submit"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-btn w-btn-gold flex items-center gap-2"
+            className="w-btn w-btn-primary flex items-center gap-2"
           >
             Ga til betaling
             <ArrowRight size={18} />

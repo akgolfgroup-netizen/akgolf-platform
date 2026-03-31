@@ -19,28 +19,18 @@ export function InstructorCard({ instructor, isSelected, onClick, index }: Instr
       transition={{ delay: index * 0.1, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
       className={`
-        relative w-full text-left rounded-2xl p-5 transition-all duration-300
-        ${isSelected 
-          ? "bg-navy text-white shadow-lg shadow-navy/20" 
-          : "bg-white hover:bg-gray-50 border border-ink-20 hover:border-gold/50"
+        relative w-full text-left rounded-[20px] p-5 transition-all duration-300 border-2
+        ${isSelected
+          ? "border-black bg-black text-white"
+          : "border-grey-200 bg-white hover:border-grey-300"
         }
       `}
     >
-      {/* Selection indicator */}
-      {isSelected && (
-        <motion.div
-          layoutId="selection"
-          className="absolute inset-0 border-2 border-gold rounded-2xl"
-          initial={false}
-          transition={{ duration: 0.3 }}
-        />
-      )}
-
       <div className="flex items-center gap-4">
         {/* Avatar */}
         <div className={`
           relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0
-          ${isSelected ? "ring-2 ring-gold" : "ring-2 ring-ink-10"}
+          ${isSelected ? "ring-2 ring-white" : "ring-2 ring-grey-200"}
         `}>
           {instructor.user.image ? (
             <img
@@ -51,7 +41,7 @@ export function InstructorCard({ instructor, isSelected, onClick, index }: Instr
           ) : (
             <div className={`
               w-full h-full flex items-center justify-center text-lg font-semibold
-              ${isSelected ? "bg-gold text-navy" : "bg-ink-10 text-ink-50"}
+              ${isSelected ? "bg-white text-black" : "bg-grey-100 text-grey-500"}
             `}>
               {(instructor.user.name?.[0] || "T").toUpperCase()}
             </div>
@@ -60,19 +50,19 @@ export function InstructorCard({ instructor, isSelected, onClick, index }: Instr
 
         {/* Info */}
         <div className="flex-1 min-w-0">
-          <h3 className={`font-semibold text-lg mb-0.5 ${isSelected ? "text-white" : "text-ink-90"}`}>
+          <h3 className={`font-semibold text-lg mb-0.5 ${isSelected ? "text-white" : "text-black"}`}>
             {instructor.user.name || "Trener"}
           </h3>
-          <p className={`text-sm ${isSelected ? "text-white/70" : "text-ink-50"}`}>
+          <p className={`text-sm ${isSelected ? "text-white/70" : "text-grey-500"}`}>
             {instructor.title || "Golfcoach"}
           </p>
-          
+
           {/* Badge */}
           <div className={`
             inline-flex items-center gap-1.5 mt-2 text-xs font-medium px-2.5 py-1 rounded-full
-            ${isSelected 
-              ? "bg-gold/20 text-gold" 
-              : "bg-navy/5 text-navy"
+            ${isSelected
+              ? "bg-white/20 text-white"
+              : "bg-grey-100 text-grey-600"
             }
           `}>
             <Award size={12} />
@@ -83,16 +73,16 @@ export function InstructorCard({ instructor, isSelected, onClick, index }: Instr
         {/* Selection circle */}
         <div className={`
           w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0
-          ${isSelected 
-            ? "border-gold bg-gold" 
-            : "border-ink-20"
+          ${isSelected
+            ? "border-white bg-white"
+            : "border-grey-300"
           }
         `}>
           {isSelected && (
             <motion.svg
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="w-3.5 h-3.5 text-navy"
+              className="w-3.5 h-3.5 text-black"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

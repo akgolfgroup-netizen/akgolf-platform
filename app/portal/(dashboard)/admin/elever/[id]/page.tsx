@@ -55,7 +55,7 @@ export default async function StudentProfilePage({ params }: Props) {
       {/* Header */}
       <div className="flex items-center gap-4">
         <Link
-          href="/admin/elever"
+          href="/portal/admin/elever"
           className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />

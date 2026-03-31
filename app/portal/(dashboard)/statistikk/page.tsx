@@ -1,16 +1,16 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { getStatsAggregates, getTrainingAreaBreakdown } from "./actions";
+import { getStatsAggregates, getTrainingAreaBreakdown, getRoundStats } from "./actions";
 import { getHandicapHistory } from "@/app/portal/(dashboard)/profil/actions";
-import { BarChart3, Info, TrendingDown, TrendingUp, Lightbulb } from "lucide-react";
-import { PORTAL_CONTENT } from "@/lib/website-constants";
+import { StatistikkClient } from "./statistikk-client";
 
 export default async function StatistikkPage() {
   await requirePortalUser();
 
-  const [aggregates, handicapHistory, areaBreakdown] = await Promise.all([
+  const [aggregates, handicapHistory, areaBreakdown, recentRounds] = await Promise.all([
     getStatsAggregates(),
     getHandicapHistory(12),
     getTrainingAreaBreakdown(),
+    getRoundStats(3),
   ]);
 
   const currentHandicap = handicapHistory.length > 0
@@ -21,7 +21,7 @@ export default async function StatistikkPage() {
     ? handicapHistory[0].handicapIndex
     : currentHandicap;
 
-  const handicapChange = currentHandicap && previousHandicap
+  const handicapTrend = currentHandicap && previousHandicap
     ? previousHandicap - currentHandicap
     : 0;
 
@@ -36,185 +36,68 @@ export default async function StatistikkPage() {
   // Calculate total training minutes and focus area distribution
   const totalMinutes = areaBreakdown.reduce((sum, a) => sum + a.minutes, 0);
   const focusAreas = areaBreakdown
-    .map((a) => ({
+    .map((a, idx) => ({
       name: a.area,
       percent: totalMinutes > 0 ? Math.round((a.minutes / totalMinutes) * 100) : 0,
+      color: idx === 0 ? "bg-[var(--apple-gold-500)]"
+           : idx === 1 ? "bg-blue-500"
+           : idx === 2 ? "bg-green-500"
+           : "bg-purple-500",
     }))
     .sort((a, b) => b.percent - a.percent)
     .slice(0, 4);
 
+  // Ensure we have 4 areas for display
+  while (focusAreas.length < 4) {
+    const defaultAreas = ["Putting", "Nærespill", "Approach", "Tee Total"];
+    const colors = ["bg-[var(--apple-gold-500)]", "bg-blue-500", "bg-green-500", "bg-purple-500"];
+    const existingNames = focusAreas.map(a => a.name);
+    for (const name of defaultAreas) {
+      if (!existingNames.includes(name) && focusAreas.length < 4) {
+        focusAreas.push({ name, percent: 0, color: colors[focusAreas.length] });
+      }
+    }
+  }
+
   // Identify weakest area for AI recommendation
-  const weakestArea = Object.entries(sgData)
-    .filter(([, v]) => v !== 0)
-    .sort((a, b) => a[1] - b[1])[0];
+  const nonZeroSg = Object.entries(sgData).filter(([, v]) => v !== 0);
+  const weakestArea = nonZeroSg.length > 0
+    ? nonZeroSg.sort((a, b) => a[1] - b[1])[0]
+    : null;
   const weakestAreaName = weakestArea
-    ? { teeTotal: "Tee Total", approach: "Approach", naerspill: "Nærespill", putting: "Putting" }[weakestArea[0]] ?? "trening"
+    ? { teeTotal: "Tee Total", approach: "Approach", naerspill: "Nærespill", putting: "Putting" }[weakestArea[0]] ?? null
     : null;
 
+  // Format recent rounds
+  const formattedRounds = recentRounds.map(round => {
+    const date = new Date(round.playedAt);
+    const diff = round.totalScore - (round.coursePar ?? 72);
+    return {
+      date: date.getDate().toString(),
+      month: date.toLocaleDateString("nb-NO", { month: "short" }).replace(".", ""),
+      course: round.courseName ?? "Ukjent bane",
+      par: round.coursePar ?? 72,
+      score: round.totalScore,
+      diff: diff >= 0 ? `+${diff}` : `${diff}`,
+    };
+  });
+
+  // Calculate stats
+  const roundsCount = aggregates?.roundCount ?? 0;
+  const bestScore = aggregates?.bestScore ?? null;
+  const totalHours = Math.round(totalMinutes / 60);
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[var(--portal-text-primary)]">Statistikk</h1>
-        <div className="flex gap-1 p-1 rounded-lg bg-[var(--portal-surface-sunken)]">
-          {["7 dager", "30 dager", "90 dager", "1 år"].map((period, idx) => (
-            <button
-              key={period}
-              className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${
-                idx === 1
-                  ? "bg-[var(--portal-card-bg-solid)] text-[var(--portal-text-primary)] shadow-sm"
-                  : "text-[var(--portal-text-muted)] hover:text-[var(--portal-text-primary)]"
-              }`}
-            >
-              {period}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="max-w-5xl space-y-4">
-        {/* Handicap Chart */}
-        <div className="portal-card rounded-lg p-4">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-semibold text-[var(--portal-text-primary)]">Handicap-utvikling</span>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-[var(--portal-text-primary)]">
-                {currentHandicap?.toFixed(1) ?? "-"}
-              </span>
-              {handicapChange !== 0 && (
-                <span className={`text-xs font-medium flex items-center gap-1 ${handicapChange > 0 ? "text-green-500" : "text-red-500"}`}>
-                  {handicapChange > 0 ? <TrendingDown className="w-3.5 h-3.5" /> : <TrendingUp className="w-3.5 h-3.5" />}
-                  {handicapChange > 0 ? "-" : "+"}{Math.abs(handicapChange).toFixed(1)}
-                </span>
-              )}
-            </div>
-          </div>
-          <div className="h-[200px] flex items-center justify-center rounded-lg border-2 border-dashed border-[var(--portal-card-border)] bg-[var(--portal-surface-sunken)]">
-            <div className="text-center text-[var(--portal-text-muted)]">
-              <TrendingDown className="w-8 h-8 mx-auto mb-2" />
-              <p className="text-sm">Handicap-graf</p>
-              <p className="text-[11px]">Viser trend over valgt periode</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Two column: SG Radar and Training Volume */}
-        <div className="grid grid-cols-2 gap-4">
-          {/* Strokes Gained Radar */}
-          <div className="portal-card rounded-lg p-4">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-semibold text-[var(--portal-text-primary)]">Strokes Gained</span>
-              <button className="w-6 h-6 rounded flex items-center justify-center text-[var(--portal-text-muted)] hover:bg-[var(--portal-surface-raised)]">
-                <Info className="w-3.5 h-3.5" />
-              </button>
-            </div>
-            <div className="h-[180px] w-[180px] mx-auto rounded-full border-2 border-dashed border-[var(--portal-card-border)] flex items-center justify-center bg-[var(--portal-surface-sunken)]">
-              <span className="text-xs text-[var(--portal-text-muted)]">SG Radar Chart</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2 mt-4">
-              <div className="p-2 rounded-md bg-[var(--portal-surface-raised)] text-center">
-                <p className="text-[11px] text-[var(--portal-text-muted)]">Tee Total</p>
-                <p className="font-semibold text-green-500">+{sgData.teeTotal.toFixed(1)}</p>
-              </div>
-              <div className="p-2 rounded-md bg-[var(--portal-surface-raised)] text-center">
-                <p className="text-[11px] text-[var(--portal-text-muted)]">Approach</p>
-                <p className="font-semibold text-red-500">{sgData.approach.toFixed(1)}</p>
-              </div>
-              <div className="p-2 rounded-md bg-[var(--portal-surface-raised)] text-center">
-                <p className="text-[11px] text-[var(--portal-text-muted)]">Naerspill</p>
-                <p className="font-semibold text-green-500">+{sgData.naerspill.toFixed(1)}</p>
-              </div>
-              <div className="p-2 rounded-md bg-[var(--portal-surface-raised)] text-center">
-                <p className="text-[11px] text-[var(--portal-text-muted)]">Putting</p>
-                <p className="font-semibold text-orange-500">{sgData.putting.toFixed(1)}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Training Volume */}
-          <div className="portal-card rounded-lg p-4">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-semibold text-[var(--portal-text-primary)]">Treningsvolum</span>
-            </div>
-            <div className="h-[180px] flex items-center justify-center rounded-lg border-2 border-dashed border-[var(--portal-card-border)] bg-[var(--portal-surface-sunken)]">
-              <div className="text-center text-[var(--portal-text-muted)]">
-                <BarChart3 className="w-8 h-8 mx-auto mb-2" />
-                <p className="text-sm">Ukentlig treningsvolum</p>
-              </div>
-            </div>
-            <div className="flex justify-between mt-4 pt-4 border-t border-[var(--portal-card-border)]">
-              <div>
-                <p className="text-[11px] text-[var(--portal-text-muted)]">Totalt denne mnd</p>
-                <p className="font-semibold text-[var(--portal-text-primary)]">12 timer 30 min</p>
-              </div>
-              <div className="text-right">
-                <p className="text-[11px] text-[var(--portal-text-muted)]">Snitt per uke</p>
-                <p className="font-semibold text-[var(--portal-text-primary)]">3 timer 8 min</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Focus Area Distribution */}
-        <div className="portal-card rounded-lg p-4">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-semibold text-[var(--portal-text-primary)]">Fokusomrade-fordeling</span>
-          </div>
-          <div className="grid grid-cols-4 gap-3">
-            {(focusAreas.length > 0
-              ? focusAreas
-              : [
-                  { name: "Putting", percent: 0 },
-                  { name: "Nærespill", percent: 0 },
-                  { name: "Approach", percent: 0 },
-                  { name: "Tee Total", percent: 0 },
-                ]
-            ).map((area) => (
-              <div key={area.name} className="text-center">
-                <div className="h-[100px] rounded-md bg-[var(--portal-surface-sunken)] relative overflow-hidden mb-2">
-                  <div
-                    className="absolute bottom-0 left-0 right-0 bg-[var(--portal-accent)] transition-all"
-                    style={{ height: `${area.percent}%` }}
-                  />
-                </div>
-                <p className="text-xs font-medium text-[var(--portal-text-primary)]">{area.name}</p>
-                <p className="text-xs text-[var(--portal-text-muted)]">{area.percent}%</p>
-              </div>
-            ))}
-          </div>
-          {weakestAreaName && (
-            <div className="mt-4 p-3 rounded-md bg-yellow-500/10 border border-yellow-500/30">
-              <div className="flex items-center gap-2">
-                <Lightbulb className="w-4 h-4 text-yellow-400" />
-                <span className="text-xs text-yellow-300">
-                  <strong>AI-anbefaling:</strong> Basert på SG-data bør du øke fokus på {weakestAreaName}-trening.
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* SG Explanation */}
-        <details className="portal-card rounded-lg overflow-hidden">
-          <summary className="flex items-center gap-2 px-4 py-3 cursor-pointer hover:bg-[var(--portal-surface-raised)] transition-colors">
-            <Info className="w-4 h-4 text-[var(--portal-accent)]" />
-            <span className="text-sm font-medium text-[var(--portal-text-primary)]">Hva er Strokes Gained?</span>
-          </summary>
-          <div className="px-4 pb-4 pt-2 border-t border-[var(--portal-card-border)]">
-            <p className="text-sm text-[var(--portal-text-secondary)] mb-4">
-              {PORTAL_CONTENT.statistikk.sgExplanation.intro}
-            </p>
-            <div className="space-y-2">
-              {PORTAL_CONTENT.statistikk.sgExplanation.categories.map((cat) => (
-                <div key={cat.key} className="flex gap-3">
-                  <span className="text-xs font-semibold text-[var(--portal-accent)] shrink-0 w-24">{cat.key}</span>
-                  <span className="text-xs text-[var(--portal-text-secondary)]">{cat.description}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </details>
-      </div>
-    </div>
+    <StatistikkClient
+      currentHandicap={currentHandicap}
+      handicapTrend={handicapTrend}
+      sgData={sgData}
+      focusAreas={focusAreas}
+      recentRounds={formattedRounds}
+      roundsCount={roundsCount}
+      bestScore={bestScore}
+      totalHours={totalHours}
+      weakestAreaName={weakestAreaName}
+    />
   );
 }

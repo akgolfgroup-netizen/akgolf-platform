@@ -3,7 +3,8 @@
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Calendar, Clock, MapPin, User } from "lucide-react";
-import { cn } from "@/lib/portal/utils/cn";
+import { AppleCard } from "@/components/portal/apple/apple-card";
+import { AppleBadge } from "@/components/portal/apple/apple-badge";
 
 interface BookingCardProps {
   booking: {
@@ -17,82 +18,88 @@ interface BookingCardProps {
   };
 }
 
-// Status colors using semantic tokens
-const statusConfig: Record<string, { label: string; bg: string; color: string }> = {
-  PENDING: { label: "Venter", bg: "color-mix(in srgb, var(--color-warning) 20%, transparent)", color: "var(--color-warning)" },
-  CONFIRMED: { label: "Bekreftet", bg: "color-mix(in srgb, var(--color-success) 20%, transparent)", color: "var(--color-success)" },
-  CANCELLED: { label: "Avlyst", bg: "color-mix(in srgb, var(--color-error) 20%, transparent)", color: "var(--color-error)" },
-  COMPLETED: { label: "Fullført", bg: "color-mix(in srgb, var(--color-ink-30) 20%, transparent)", color: "var(--color-ink-30)" },
-  NO_SHOW: { label: "Møtte ikke", bg: "color-mix(in srgb, var(--color-error) 20%, transparent)", color: "var(--color-error)" },
+const statusConfig: Record<string, { label: string; variant: "success" | "warning" | "error" | "neutral" }> = {
+  PENDING: { label: "Venter", variant: "warning" },
+  CONFIRMED: { label: "Bekreftet", variant: "success" },
+  CANCELLED: { label: "Avlyst", variant: "error" },
+  COMPLETED: { label: "Fullfort", variant: "neutral" },
+  NO_SHOW: { label: "Motte ikke", variant: "error" },
 };
 
 export function BookingCard({ booking }: BookingCardProps) {
   const status = statusConfig[booking.status] ?? statusConfig.PENDING;
-  const accent = booking.serviceType.color ?? "#B07D4F";
+  const accent = booking.serviceType.color ?? "var(--apple-gold-500)";
 
   return (
-    <div
-      className="rounded-2xl p-5 transition-all duration-200 hover:shadow-md bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)]"
-      style={{
-        borderLeftWidth: 4,
-        borderLeftColor: accent,
-      }}
-    >
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-base truncate mb-3 text-[var(--color-snow)]">
-            {booking.serviceType.name}
-          </h3>
+    <AppleCard variant="glass" padding="none" className="overflow-hidden">
+      {/* Accent bar */}
+      <div
+        className="h-1 w-full"
+        style={{ background: accent }}
+      />
 
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm text-[var(--color-snow)]/70">
-              <Calendar className="w-4 h-4 flex-shrink-0 text-[var(--color-gold)]" />
-              <span>
-                {format(new Date(booking.startTime), "EEEE d. MMMM yyyy", { locale: nb })}
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-[var(--color-snow)]/70">
-              <Clock className="w-4 h-4 flex-shrink-0 text-[var(--color-gold)]" />
-              <span>
-                {format(new Date(booking.startTime), "HH:mm")} –{" "}
-                {format(new Date(booking.endTime), "HH:mm")}
-                <span className="opacity-70">
-                  {" "}({booking.serviceType.duration} min)
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            {/* Service name */}
+            <h3 className="font-semibold text-base text-[var(--apple-gray-900)] truncate mb-3">
+              {booking.serviceType.name}
+            </h3>
+
+            {/* Details grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="flex items-center gap-2.5 text-sm text-[var(--apple-gray-600)]">
+                <div className="w-7 h-7 rounded-lg bg-[var(--apple-gray-100)] flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-3.5 h-3.5 text-[var(--apple-gold-500)]" />
+                </div>
+                <span className="truncate">
+                  {format(new Date(booking.startTime), "EEEE d. MMM", { locale: nb })}
                 </span>
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-[var(--color-snow)]/70">
-              <User className="w-4 h-4 flex-shrink-0 text-[var(--color-gold)]" />
-              <span>
-                {booking.instructor.user.name}
-                {booking.instructor.title && (
-                  <span className="opacity-70">
-                    {" · "}{booking.instructor.title}
-                  </span>
-                )}
-              </span>
-            </div>
-            {booking.location && (
-              <div className="flex items-center gap-2 text-sm text-[var(--color-snow)]/70">
-                <MapPin className="w-4 h-4 flex-shrink-0 text-[var(--color-gold)]" />
-                <span>{booking.location.name}</span>
               </div>
-            )}
-          </div>
-        </div>
 
-        <span
-          className={cn(
-            "text-xs font-medium px-3 py-1.5 rounded-full whitespace-nowrap"
-          )}
-          style={{
-            background: status.bg,
-            color: status.color,
-          }}
-        >
-          {status.label}
-        </span>
+              <div className="flex items-center gap-2.5 text-sm text-[var(--apple-gray-600)]">
+                <div className="w-7 h-7 rounded-lg bg-[var(--apple-gray-100)] flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-3.5 h-3.5 text-[var(--apple-gold-500)]" />
+                </div>
+                <span>
+                  {format(new Date(booking.startTime), "HH:mm")} - {format(new Date(booking.endTime), "HH:mm")}
+                  <span className="text-[var(--apple-gray-400)] ml-1">
+                    ({booking.serviceType.duration} min)
+                  </span>
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2.5 text-sm text-[var(--apple-gray-600)]">
+                <div className="w-7 h-7 rounded-lg bg-[var(--apple-gray-100)] flex items-center justify-center flex-shrink-0">
+                  <User className="w-3.5 h-3.5 text-[var(--apple-gold-500)]" />
+                </div>
+                <span className="truncate">
+                  {booking.instructor.user.name}
+                  {booking.instructor.title && (
+                    <span className="text-[var(--apple-gray-400)]">
+                      {" "}({booking.instructor.title})
+                    </span>
+                  )}
+                </span>
+              </div>
+
+              {booking.location && (
+                <div className="flex items-center gap-2.5 text-sm text-[var(--apple-gray-600)]">
+                  <div className="w-7 h-7 rounded-lg bg-[var(--apple-gray-100)] flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-3.5 h-3.5 text-[var(--apple-gold-500)]" />
+                  </div>
+                  <span className="truncate">{booking.location.name}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Status badge */}
+          <AppleBadge variant={status.variant} size="md" dot>
+            {status.label}
+          </AppleBadge>
+        </div>
       </div>
-    </div>
+    </AppleCard>
   );
 }

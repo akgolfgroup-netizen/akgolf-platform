@@ -45,24 +45,24 @@ export function ServiceSelector({ services, onSelect }: Props) {
               <button
                 onClick={() => setSelectedId(service.id)}
                 className={cn(
-                  "w-full text-left cursor-pointer group transition-all duration-300 p-5 rounded-xl border-2",
+                  "w-full text-left cursor-pointer group transition-all duration-300 p-5 rounded-[20px] border-2",
                   isSelected
-                    ? "border-gold bg-gold/5"
-                    : "border-ink-10 hover:border-gold/50 bg-white"
+                    ? "border-black bg-grey-100"
+                    : "border-grey-200 hover:border-grey-300 bg-white"
                 )}
               >
                 <div className="flex items-start gap-4">
                   {/* Icon */}
                   <div className={cn(
                     "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors",
-                    isSelected ? "bg-gold/20" : "bg-ink-5"
+                    isSelected ? "bg-black" : "bg-grey-100"
                   )}>
                     <ServiceIcon
                       category={service.category}
                       size={24}
                       className={cn(
                         "transition-transform duration-300",
-                        isSelected ? "text-gold" : "text-ink-50",
+                        isSelected ? "text-white" : "text-grey-500",
                         !isSelected && "group-hover:scale-105"
                       )}
                     />
@@ -74,34 +74,34 @@ export function ServiceSelector({ services, onSelect }: Props) {
                       <div>
                         <h3 className={cn(
                           "font-semibold transition-colors",
-                          isSelected ? "text-gold" : "text-ink-90 group-hover:text-gold"
+                          isSelected ? "text-black" : "text-black group-hover:opacity-80"
                         )}>
                           {service.name}
                         </h3>
-                        <span className="text-xs text-ink-50 uppercase tracking-wider">
+                        <span className="text-xs text-grey-500 uppercase tracking-wider">
                           {categoryLabel}
                         </span>
                       </div>
-                      <span className="text-lg font-bold text-gold whitespace-nowrap">
+                      <span className="text-lg font-bold text-black whitespace-nowrap">
                         {priceNok.toLocaleString("nb-NO")} kr
                       </span>
                     </div>
 
                     {/* Description */}
                     {service.description && (
-                      <p className="text-sm text-ink-50 mb-3 line-clamp-2">
+                      <p className="text-sm text-grey-500 mb-3 line-clamp-2">
                         {service.description}
                       </p>
                     )}
 
                     {/* Meta info */}
-                    <div className="flex items-center gap-4 text-xs text-ink-50">
+                    <div className="flex items-center gap-4 text-xs text-grey-500">
                       <span className="flex items-center gap-1.5">
-                        <Clock size={14} className="text-gold" />
+                        <Clock size={14} className="text-black" />
                         {service.duration} min
                       </span>
                       <span className="flex items-center gap-1.5">
-                        <Users size={14} className="text-gold" />
+                        <Users size={14} className="text-black" />
                         {service.instructors.length}{" "}
                         {service.instructors.length === 1 ? "trener" : "trenere"}
                       </span>
@@ -112,7 +112,7 @@ export function ServiceSelector({ services, onSelect }: Props) {
                   <div
                     className={cn(
                       "w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors",
-                      isSelected ? "border-gold bg-gold" : "border-ink-20"
+                      isSelected ? "border-black bg-black" : "border-grey-300"
                     )}
                   >
                     {isSelected && (
@@ -132,11 +132,11 @@ export function ServiceSelector({ services, onSelect }: Props) {
       </StaggerContainer>
 
       {/* Navigation */}
-      <div className="flex justify-end mt-8 pt-6 border-t border-ink-10">
+      <div className="flex justify-end mt-8 pt-6 border-t border-grey-200">
         <button
           onClick={handleContinue}
           disabled={!selectedService}
-          className="w-btn w-btn-gold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="w-btn w-btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           Velg instruktor
           <ArrowRight size={18} />
