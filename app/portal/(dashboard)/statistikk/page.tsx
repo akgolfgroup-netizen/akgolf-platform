@@ -70,21 +70,23 @@ export default async function StatistikkPage() {
 
   // Format recent rounds
   const formattedRounds = recentRounds.map(round => {
-    const date = new Date(round.playedAt);
-    const diff = round.totalScore - (round.coursePar ?? 72);
+    const roundDate = new Date(round.date);
+    const diff = round.scoreToPar ?? (round.totalScore ? round.totalScore - 72 : 0);
     return {
-      date: date.getDate().toString(),
-      month: date.toLocaleDateString("nb-NO", { month: "short" }).replace(".", ""),
+      date: roundDate.getDate().toString(),
+      month: roundDate.toLocaleDateString("nb-NO", { month: "short" }).replace(".", ""),
       course: round.courseName ?? "Ukjent bane",
-      par: round.coursePar ?? 72,
-      score: round.totalScore,
+      par: 72,
+      score: round.totalScore ?? 0,
       diff: diff >= 0 ? `+${diff}` : `${diff}`,
     };
   });
 
   // Calculate stats
   const roundsCount = aggregates?.roundCount ?? 0;
-  const bestScore = aggregates?.bestScore ?? null;
+  const bestScore = recentRounds.length > 0
+    ? Math.min(...recentRounds.filter(r => r.totalScore !== null).map(r => r.totalScore!))
+    : null;
   const totalHours = Math.round(totalMinutes / 60);
 
   return (
