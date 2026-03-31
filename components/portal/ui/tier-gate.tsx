@@ -35,21 +35,21 @@ export function TierGate({ userTier, required, children }: TierGateProps) {
         <div
           className="rounded-2xl p-6 text-center max-w-xs mx-auto"
           style={{
-            background: "linear-gradient(135deg, rgba(13,34,68,0.95) 0%, rgba(10,25,41,0.98) 100%)",
-            border: "1px solid rgba(176,125,79,0.3)",
+            background: "linear-gradient(135deg, var(--color-grey-100) 0%, var(--color-grey-100) 100%)",
+            border: "1px solid var(--color-grey-200)",
             backdropFilter: "blur(8px)",
           }}
         >
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-3"
-            style={{ background: "rgba(176,125,79,0.15)" }}
+            style={{ background: "var(--color-grey-200)" }}
           >
-            <Lock className="w-5 h-5 text-[var(--color-gold)]" />
+            <Lock className="w-5 h-5 text-[var(--color-grey-900)]" />
           </div>
-          <p className="text-sm font-semibold text-[var(--color-snow)] mb-1">
+          <p className="text-sm font-semibold text-[var(--color-grey-900)] mb-1">
             Krever {TIER_LABELS[required]}-abonnement
           </p>
-          <p className="text-xs text-[var(--color-gold-muted)] mb-4">
+          <p className="text-xs text-[var(--color-grey-500)] mb-4">
             Denne funksjonen er tilgjengelig for {TIER_LABELS[required]}- og{" "}
             {required === SubscriptionTier.PRO ? "Elite" : ""}-abonnenter.
           </p>
@@ -57,7 +57,7 @@ export function TierGate({ userTier, required, children }: TierGateProps) {
             className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold"
             style={{
               background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
-              color: "#0a1929",
+              color: "var(--color-grey-900)",
             }}
           >
             <Sparkles className="w-3.5 h-3.5" />

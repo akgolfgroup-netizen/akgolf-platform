@@ -27,10 +27,10 @@ export default async function AdminNewBookingPage() {
   return (
     <div className="max-w-xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#0A1929]">
+        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">
           Opprett booking
         </h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-sm text-[var(--color-grey-500)] mt-1">
           Book pa vegne av en kunde
         </p>
       </div>

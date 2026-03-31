@@ -23,14 +23,14 @@ export default async function AvailabilityPage() {
         {/* Header */}
         <div className="flex items-start justify-between mb-8">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--apple-admin-accent)] to-[var(--apple-admin-accent-dark)] flex items-center justify-center shadow-lg shadow-[var(--apple-admin-accent)]/20">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)] flex items-center justify-center shadow-lg shadow-[var(--color-grey-900)]/20">
               <Calendar className="w-7 h-7 text-white" />
             </div>
             <div>
               <h1 className="font-display text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em]">
                 Tilgjengelighet
               </h1>
-              <p className="text-[15px] text-[var(--apple-gray-500)] mt-1">
+              <p className="text-[15px] text-[var(--color-grey-500)] mt-1">
                 {ADMIN_CONTENT.kalender.setupGuide.description}
               </p>
             </div>

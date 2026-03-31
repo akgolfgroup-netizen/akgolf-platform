@@ -39,7 +39,7 @@ function linearRegression(data: { x: number; y: number }[]) {
 export function HandicapChart({ entries }: HandicapChartProps) {
   if (entries.length === 0) {
     return (
-      <div className="flex items-center justify-center h-40 text-sm text-[var(--color-gold-muted)]">
+      <div className="flex items-center justify-center h-40 text-sm text-[var(--color-grey-500)]">
         Ingen handicap-data registrert ennå.
       </div>
     );
@@ -68,17 +68,17 @@ export function HandicapChart({ entries }: HandicapChartProps) {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <LineChart data={dataWithTrend} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(15,41,80,0.5)" />
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" />
         <XAxis
           dataKey="date"
-          tick={{ fill: "var(--color-gold-muted)", fontSize: 10 }}
+          tick={{ fill: "var(--color-grey-500)", fontSize: 10 }}
           axisLine={false}
           tickLine={false}
           interval="preserveStartEnd"
         />
         <YAxis
           domain={[min - padding, max + padding]}
-          tick={{ fill: "var(--color-gold-muted)", fontSize: 10 }}
+          tick={{ fill: "var(--color-grey-500)", fontSize: 10 }}
           axisLine={false}
           tickLine={false}
           reversed
@@ -86,10 +86,10 @@ export function HandicapChart({ entries }: HandicapChartProps) {
         <Tooltip
           contentStyle={{
             background: "#0A1929",
-            border: "1px solid rgba(15,41,80,0.9)",
+            border: "1px solid var(--color-grey-200)",
             borderRadius: "8px",
             fontSize: "12px",
-            color: "var(--color-snow)",
+            color: "white",
           }}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           formatter={(value: any) => [typeof value === "number" ? value.toFixed(1) : value, "Handicap"]}
@@ -97,9 +97,9 @@ export function HandicapChart({ entries }: HandicapChartProps) {
         <Line
           type="monotone"
           dataKey="handicap"
-          stroke="var(--color-gold)"
+          stroke="var(--color-grey-900)"
           strokeWidth={2}
-          dot={{ fill: "var(--color-gold)", r: 3, strokeWidth: 0 }}
+          dot={{ fill: "var(--color-grey-900)", r: 3, strokeWidth: 0 }}
           activeDot={{ r: 5 }}
           name="Handicap"
         />
@@ -107,7 +107,7 @@ export function HandicapChart({ entries }: HandicapChartProps) {
           <Line
             type="monotone"
             dataKey="trend"
-            stroke="rgba(176,125,79,0.4)"
+            stroke="var(--color-grey-200)"
             strokeWidth={1.5}
             strokeDasharray="4 4"
             dot={false}

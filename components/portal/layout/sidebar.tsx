@@ -57,16 +57,16 @@ const staffItems = [
   { href: "/portal/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
 ];
 
-// Dark theme using CSS variables (globals.css)
+// Light sidebar theme (Brand System 2026)
 const THEME = {
-  bg: "var(--color-ink-80)",           // #171717
-  bgHover: "var(--color-ink-70)",      // #262626
-  bgActive: "var(--color-ink-70)",     // #262626
-  gold: "var(--color-gold)",           // #B07D4F
-  white: "var(--color-white)",         // #FFFFFF
-  textMuted: "var(--color-ink-30)",    // #A3A3A3
-  textDim: "var(--color-ink-40)",      // #737373
-  border: "var(--color-ink-60)",       // ~#333
+  bg: "white",
+  bgHover: "var(--color-grey-100)",
+  bgActive: "var(--color-grey-100)",
+  gold: "var(--color-grey-900)",
+  white: "var(--color-grey-900)",
+  textMuted: "var(--color-grey-400)",
+  textDim: "var(--color-grey-500)",
+  border: "var(--color-grey-200)",
 };
 
 interface SidebarProps {
@@ -94,8 +94,8 @@ function NavLink({
         className={cn(
           "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
           active
-            ? "text-white border-l-[3px] border-white"
-            : "text-[var(--portal-text-secondary)] hover:text-white hover:bg-[var(--portal-surface-raised)]"
+            ? "text-[var(--color-grey-900)] border-l-[3px] border-[var(--color-grey-900)]"
+            : "text-[var(--portal-text-secondary)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)]"
         )}
         style={active ? { background: THEME.bgActive } : undefined}
       >
@@ -160,7 +160,7 @@ function SidebarContent({
                   onSignOut();
                   onNavClick?.();
                 }}
-                className="w-full flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150 text-[var(--portal-text-secondary)] hover:text-white hover:bg-[var(--portal-surface-raised)] cursor-pointer"
+                className="w-full flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150 text-[var(--portal-text-secondary)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] cursor-pointer"
               >
                 <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
                 <span>Logg ut</span>
@@ -207,7 +207,7 @@ function SidebarContent({
           )}
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-white truncate">
+          <p className="text-sm font-medium text-[var(--color-grey-900)] truncate">
             {user.name ?? "Spiller"}
           </p>
           <p className="text-xs text-[var(--portal-text-muted)] truncate">
@@ -245,7 +245,7 @@ export function Sidebar({ user }: SidebarProps) {
           className="px-5 py-5"
           style={{ borderBottom: `1px solid ${THEME.border}` }}
         >
-          <span className="text-lg font-bold text-white">AK Golf</span>
+          <span className="text-lg font-bold text-[var(--color-grey-900)]">AK Golf</span>
         </div>
 
         <SidebarContent
@@ -281,10 +281,10 @@ export function Sidebar({ user }: SidebarProps) {
                 className="flex items-center justify-between px-5 py-4"
                 style={{ borderBottom: `1px solid ${THEME.border}` }}
               >
-                <span className="text-lg font-bold text-white">AK Golf</span>
+                <span className="text-lg font-bold text-[var(--color-grey-900)]">AK Golf</span>
                 <button
                   onClick={close}
-                  className="p-1 rounded-lg text-[var(--portal-text-muted)] hover:text-white transition-colors cursor-pointer"
+                  className="p-1 rounded-lg text-[var(--portal-text-muted)] hover:text-[var(--color-grey-900)] transition-colors cursor-pointer"
                   aria-label="Lukk meny"
                 >
                   <X className="w-5 h-5" />

@@ -35,33 +35,33 @@ export function AddTournamentForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[var(--color-muted)] border border-[var(--color-border)] rounded-2xl p-5 space-y-4">
+    <form onSubmit={handleSubmit} className="bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-2xl p-5 space-y-4">
       <div className="grid grid-cols-2 gap-3">
         <div className="col-span-2">
-          <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1.5">Turneringsnavn *</label>
+          <label className="block text-xs font-medium text-[var(--color-grey-500)] mb-1.5">Turneringsnavn *</label>
           <input
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+            className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1.5">Startdato *</label>
+          <label className="block text-xs font-medium text-[var(--color-grey-500)] mb-1.5">Startdato *</label>
           <input
             type="date"
             required
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+            className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1.5">Nivå</label>
+          <label className="block text-xs font-medium text-[var(--color-grey-500)] mb-1.5">Nivå</label>
           <select
             value={level}
             onChange={(e) => setLevel(e.target.value as typeof level)}
-            className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+            className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
           >
             {LEVELS.map((l) => (
               <option key={l} value={l}>{l.charAt(0).toUpperCase() + l.slice(1)}</option>
@@ -69,28 +69,28 @@ export function AddTournamentForm() {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1.5">Sted/bane</label>
+          <label className="block text-xs font-medium text-[var(--color-grey-500)] mb-1.5">Sted/bane</label>
           <input
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+            className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1.5">Ekstern URL</label>
+          <label className="block text-xs font-medium text-[var(--color-grey-500)] mb-1.5">Ekstern URL</label>
           <input
             type="url"
             value={externalUrl}
             onChange={(e) => setExternalUrl(e.target.value)}
             placeholder="https://..."
-            className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+            className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
           />
         </div>
       </div>
       <button
         type="submit"
         disabled={saving}
-        className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--color-gold)] text-[var(--color-bg-deep)] font-semibold text-sm hover:bg-[var(--color-gold-muted)] transition-colors disabled:opacity-50"
+        className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--color-grey-900)] text-[var(--color-grey-900)] font-semibold text-sm hover:bg-[var(--color-grey-500)] transition-colors disabled:opacity-50"
       >
         {saving && <Loader2 className="w-4 h-4 animate-spin" />}
         Legg til turnering

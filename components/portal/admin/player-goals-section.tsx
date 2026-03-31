@@ -27,7 +27,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; icon: typeof
 export function PlayerGoalsSection({ goals }: PlayerGoalsSectionProps) {
   if (goals.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-400 text-sm">
+      <div className="text-center py-8 text-[var(--color-grey-400)] text-sm">
         Ingen mål satt av spilleren ennå.
       </div>
     );
@@ -45,20 +45,20 @@ export function PlayerGoalsSection({ goals }: PlayerGoalsSectionProps) {
         return (
           <div
             key={goal.id}
-            className="bg-gray-50 rounded-xl p-4 border border-gray-100"
+            className="bg-[var(--color-grey-100)] rounded-xl p-4 border border-[var(--color-grey-200)]"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-start gap-3 flex-1">
-                <div className="p-2 rounded-lg bg-white border border-gray-200">
-                  <Icon className="w-4 h-4 text-[#B07D4F]" />
+                <div className="p-2 rounded-lg bg-white border border-[var(--color-grey-200)]">
+                  <Icon className="w-4 h-4 text-[var(--color-grey-900)]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-800 text-sm">{goal.title}</p>
+                  <p className="font-medium text-[var(--color-grey-900)] text-sm">{goal.title}</p>
                   {goal.description && (
-                    <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{goal.description}</p>
+                    <p className="text-xs text-[var(--color-grey-500)] mt-0.5 line-clamp-2">{goal.description}</p>
                   )}
                   {goal.targetDate && (
-                    <p className="text-xs text-gray-400 mt-1">
+                    <p className="text-xs text-[var(--color-grey-400)] mt-1">
                       Mål: {format(new Date(goal.targetDate), "d. MMM yyyy", { locale: nb })}
                     </p>
                   )}
@@ -71,19 +71,19 @@ export function PlayerGoalsSection({ goals }: PlayerGoalsSectionProps) {
 
             {/* Progress bar if applicable */}
             {progress !== null && (
-              <div className="mt-3 pt-3 border-t border-gray-200">
+              <div className="mt-3 pt-3 border-t border-[var(--color-grey-200)]">
                 <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className="text-gray-500 flex items-center gap-1">
+                  <span className="text-[var(--color-grey-500)] flex items-center gap-1">
                     <TrendingUp className="w-3 h-3" />
                     Fremgang
                   </span>
-                  <span className="font-medium text-gray-700">
+                  <span className="font-medium text-[var(--color-grey-700)]">
                     {goal.currentValue} / {goal.targetValue}
                   </span>
                 </div>
-                <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                <div className="h-1.5 bg-[var(--color-grey-200)] rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-[#B07D4F] rounded-full transition-all"
+                    className="h-full bg-[var(--color-grey-900)] rounded-full transition-all"
                     style={{ width: `${progress}%` }}
                   />
                 </div>

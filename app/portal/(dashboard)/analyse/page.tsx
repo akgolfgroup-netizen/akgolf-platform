@@ -21,10 +21,10 @@ function Card({ title, icon: Icon, children }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl p-5 bg-[rgba(15,41,80,0.3)] border border-[rgba(15,41,80,0.4)]">
+    <div className="rounded-2xl p-5 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]">
       <div className="flex items-center gap-2 mb-4">
-        <Icon className="w-4 h-4 text-[var(--color-gold)]" />
-        <h2 className="text-sm font-semibold text-[var(--color-snow)]">{title}</h2>
+        <Icon className="w-4 h-4 text-[var(--color-grey-900)]" />
+        <h2 className="text-sm font-semibold text-[var(--color-grey-900)]">{title}</h2>
       </div>
       {children}
     </div>
@@ -44,36 +44,36 @@ export default async function AnalysePage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-[var(--color-snow)]">Analyse</h1>
+      <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Analyse</h1>
 
       <div className="max-w-4xl">
         <TierGate userTier={userTier} required={SubscriptionTier.PRO}>
           <div className="space-y-6">
             {/* AI-analyse info */}
-            <details className="rounded-2xl bg-[rgba(15,41,80,0.3)] border border-[rgba(15,41,80,0.4)] group">
+            <details className="rounded-2xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] group">
               <summary className="flex items-center gap-2 px-5 py-4 cursor-pointer list-none">
-                <Info className="w-4 h-4 text-[var(--color-gold)]" />
-                <span className="text-sm font-medium text-[var(--color-snow)]">Om AI-analyse</span>
-                <span className="ml-auto text-xs text-[var(--color-ink-40)] group-open:hidden">Vis mer</span>
-                <span className="ml-auto text-xs text-[var(--color-ink-40)] hidden group-open:inline">Skjul</span>
+                <Info className="w-4 h-4 text-[var(--color-grey-900)]" />
+                <span className="text-sm font-medium text-[var(--color-grey-900)]">Om AI-analyse</span>
+                <span className="ml-auto text-xs text-[var(--color-grey-400)] group-open:hidden">Vis mer</span>
+                <span className="ml-auto text-xs text-[var(--color-grey-400)] hidden group-open:inline">Skjul</span>
               </summary>
               <div className="px-5 pb-5 space-y-3">
-                <p className="text-sm text-[var(--color-ink-40)]">
+                <p className="text-sm text-[var(--color-grey-400)]">
                   {PORTAL_CONTENT.analyse.aiIntro}
                 </p>
-                <div className="pt-2 border-t border-[rgba(15,41,80,0.4)]">
-                  <p className="text-xs font-semibold text-[var(--color-ink-40)] uppercase tracking-widest mb-1">
+                <div className="pt-2 border-t border-[var(--color-grey-200)]">
+                  <p className="text-xs font-semibold text-[var(--color-grey-400)] uppercase tracking-widest mb-1">
                     Svakhetsanalyse
                   </p>
-                  <p className="text-sm text-[var(--color-ink-40)]">
+                  <p className="text-sm text-[var(--color-grey-400)]">
                     {PORTAL_CONTENT.analyse.weaknessExplanation}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-[var(--color-ink-40)] uppercase tracking-widest mb-1">
+                  <p className="text-xs font-semibold text-[var(--color-grey-400)] uppercase tracking-widest mb-1">
                     Fokusanbefaling
                   </p>
-                  <p className="text-sm text-[var(--color-ink-40)]">
+                  <p className="text-sm text-[var(--color-grey-400)]">
                     {PORTAL_CONTENT.analyse.focusRecommendation}
                   </p>
                 </div>
@@ -82,7 +82,7 @@ export default async function AnalysePage() {
             {/* Handicap trend */}
             <Card title="Handicap-fremgang" icon={TrendingDown}>
               <div className="flex items-center justify-between mb-3">
-                <p className="text-xs text-[var(--color-ink-40)]">
+                <p className="text-xs text-[var(--color-grey-400)]">
                   {handicapEntries.length} registrerte målinger
                 </p>
                 <AddHandicapForm />
@@ -97,7 +97,7 @@ export default async function AnalysePage() {
 
             {/* Plan vs actual */}
             <Card title="Plan vs. faktisk" icon={BarChart2}>
-              <p className="text-xs text-[var(--color-ink-40)] mb-3">
+              <p className="text-xs text-[var(--color-grey-400)] mb-3">
                 Siste 8 uker
               </p>
               <PlanVsActualChart data={planVsActual} />
@@ -110,7 +110,7 @@ export default async function AnalysePage() {
               ) : (
                 <TierGate userTier={userTier} required={SubscriptionTier.ELITE}>
                   <Card title="Svakhetsanalyse" icon={Sparkles}>
-                    <p className="text-xs text-[var(--color-ink-40)]">
+                    <p className="text-xs text-[var(--color-grey-400)]">
                       Krever Elite-abonnement
                     </p>
                   </Card>

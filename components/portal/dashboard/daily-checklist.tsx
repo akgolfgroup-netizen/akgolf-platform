@@ -69,7 +69,7 @@ export function DailyChecklist({
               cx="24"
               cy="24"
               r={radius}
-              stroke="var(--color-gold)"
+              stroke="var(--color-grey-900)"
               strokeWidth={4}
               fill="none"
               strokeLinecap="round"

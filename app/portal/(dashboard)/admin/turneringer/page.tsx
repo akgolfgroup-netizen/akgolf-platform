@@ -32,13 +32,13 @@ export default async function AdminTuringeringerPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-[var(--color-snow)]">Administrer turneringer</h1>
+      <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Administrer turneringer</h1>
 
       <div className="max-w-2xl space-y-10">
         <TournamentAdminList tournaments={tournaments} />
 
         <div>
-          <h2 className="text-lg font-semibold text-[var(--color-snow)] mb-6">
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-6">
             Legg til turnering
           </h2>
           <AddTournamentForm />

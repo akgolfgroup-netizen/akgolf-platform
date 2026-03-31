@@ -29,9 +29,9 @@ const STATUS_LABELS: Record<string, string> = {
 const STATUS_COLORS: Record<string, string> = {
   CONFIRMED: "bg-green-100 text-green-700",
   PENDING: "bg-amber-100 text-amber-700",
-  COMPLETED: "bg-gray-100 text-gray-600",
+  COMPLETED: "bg-[var(--color-grey-100)] text-[var(--color-grey-600)]",
   NO_SHOW: "bg-red-100 text-red-700",
-  CANCELLED: "bg-gray-100 text-gray-500",
+  CANCELLED: "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]",
 };
 
 export default async function StudentProfilePage({ params }: Props) {
@@ -56,15 +56,15 @@ export default async function StudentProfilePage({ params }: Props) {
       <div className="flex items-center gap-4">
         <Link
           href="/portal/admin/elever"
-          className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-[#0A1929]">
+          <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">
             {student.name ?? "Ukjent"}
           </h1>
-          <div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
+          <div className="flex items-center gap-4 mt-1 text-sm text-[var(--color-grey-500)]">
             {student.email && (
               <span className="flex items-center gap-1">
                 <Mail className="w-3.5 h-3.5" />
@@ -84,7 +84,7 @@ export default async function StudentProfilePage({ params }: Props) {
             href={`https://notion.so/${student.notionPageId.replace(/-/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--color-grey-700)] bg-[var(--color-grey-100)] rounded-lg hover:bg-[var(--color-grey-200)] transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             Notion-profil
@@ -117,11 +117,11 @@ export default async function StudentProfilePage({ params }: Props) {
       {/* Handicap Progression */}
       {student.HandicapEntry && student.HandicapEntry.length > 0 && (
         <div>
-          <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
-            <TrendingDown className="w-5 h-5 text-[#B07D4F]" />
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-3 flex items-center gap-2">
+            <TrendingDown className="w-5 h-5 text-[var(--color-grey-700)]" />
             Handicap-utvikling
           </h2>
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="bg-white rounded-xl border border-[var(--color-grey-200)] p-5">
             <PlayerProgressionChart
               handicapEntries={student.HandicapEntry}
               coachingSessions={student.CoachingSession}
@@ -133,11 +133,11 @@ export default async function StudentProfilePage({ params }: Props) {
       {/* Player Goals */}
       {student.Goal && student.Goal.length > 0 && (
         <div>
-          <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
-            <Target className="w-5 h-5 text-[#B07D4F]" />
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-3 flex items-center gap-2">
+            <Target className="w-5 h-5 text-[var(--color-grey-700)]" />
             Spillerens mål
           </h2>
-          <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <div className="bg-white rounded-xl border border-[var(--color-grey-200)] p-4">
             <PlayerGoalsSection goals={student.Goal} />
           </div>
         </div>
@@ -145,41 +145,41 @@ export default async function StudentProfilePage({ params }: Props) {
 
       {/* Booking history */}
       <div>
-        <h2 className="text-lg font-semibold text-[#0A1929] mb-3">
+        <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-3">
           Bookinghistorikk
         </h2>
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-xl border border-[var(--color-grey-200)] overflow-hidden">
           {student.Booking.length === 0 ? (
-            <p className="text-sm text-gray-400 p-6 text-center">
+            <p className="text-sm text-[var(--color-grey-400)] p-6 text-center">
               Ingen bookinger
             </p>
           ) : (
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-[var(--color-grey-100)] border-b border-[var(--color-grey-200)]">
                 <tr>
-                  <th className="text-left px-4 py-2 text-xs font-medium text-gray-500 uppercase">Dato</th>
-                  <th className="text-left px-4 py-2 text-xs font-medium text-gray-500 uppercase">Tjeneste</th>
-                  <th className="text-left px-4 py-2 text-xs font-medium text-gray-500 uppercase">Instruktor</th>
-                  <th className="text-left px-4 py-2 text-xs font-medium text-gray-500 uppercase">Status</th>
-                  <th className="text-right px-4 py-2 text-xs font-medium text-gray-500 uppercase">Belop</th>
+                  <th className="text-left px-4 py-2 text-xs font-medium text-[var(--color-grey-500)] uppercase">Dato</th>
+                  <th className="text-left px-4 py-2 text-xs font-medium text-[var(--color-grey-500)] uppercase">Tjeneste</th>
+                  <th className="text-left px-4 py-2 text-xs font-medium text-[var(--color-grey-500)] uppercase">Instruktor</th>
+                  <th className="text-left px-4 py-2 text-xs font-medium text-[var(--color-grey-500)] uppercase">Status</th>
+                  <th className="text-right px-4 py-2 text-xs font-medium text-[var(--color-grey-500)] uppercase">Belop</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-[var(--color-grey-100)]">
                 {student.Booking.map((b) => (
-                  <tr key={b.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-2 text-sm text-gray-700">
+                  <tr key={b.id} className="hover:bg-[var(--color-grey-100)]">
+                    <td className="px-4 py-2 text-sm text-[var(--color-grey-700)]">
                       {format(new Date(b.startTime), "d. MMM yyyy HH:mm", { locale: nb })}
                     </td>
-                    <td className="px-4 py-2 text-sm text-gray-700">{b.ServiceType.name}</td>
-                    <td className="px-4 py-2 text-sm text-gray-700">
+                    <td className="px-4 py-2 text-sm text-[var(--color-grey-700)]">{b.ServiceType.name}</td>
+                    <td className="px-4 py-2 text-sm text-[var(--color-grey-700)]">
                       {b.Instructor.User.name ?? "—"}
                     </td>
                     <td className="px-4 py-2">
-                      <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[b.status] ?? "bg-gray-100"}`}>
+                      <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[b.status] ?? "bg-[var(--color-grey-100)]"}`}>
                         {STATUS_LABELS[b.status] ?? b.status}
                       </span>
                     </td>
-                    <td className="px-4 py-2 text-sm text-gray-700 text-right">
+                    <td className="px-4 py-2 text-sm text-[var(--color-grey-700)] text-right">
                       kr {b.amount.toLocaleString("nb-NO")}
                     </td>
                   </tr>
@@ -192,12 +192,12 @@ export default async function StudentProfilePage({ params }: Props) {
 
       {/* Coaching sessions */}
       <div>
-        <h2 className="text-lg font-semibold text-[#0A1929] mb-3">
+        <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-3">
           Coaching-økter
         </h2>
         <div className="space-y-3">
           {student.CoachingSession.length === 0 ? (
-            <p className="text-sm text-gray-400 bg-white rounded-xl border border-gray-200 p-6 text-center">
+            <p className="text-sm text-[var(--color-grey-400)] bg-white rounded-xl border border-[var(--color-grey-200)] p-6 text-center">
               Ingen coaching-økter registrert
             </p>
           ) : (
@@ -210,11 +210,11 @@ export default async function StudentProfilePage({ params }: Props) {
 
       {/* Communication log */}
       <div>
-        <h2 className="text-lg font-semibold text-[#0A1929] mb-3 flex items-center gap-2">
-          <MessageCircle className="w-5 h-5 text-[#B07D4F]" />
+        <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-3 flex items-center gap-2">
+          <MessageCircle className="w-5 h-5 text-[var(--color-grey-700)]" />
           Kommunikasjonslogg
         </h2>
-        <div className="bg-white rounded-xl border border-gray-200 p-4">
+        <div className="bg-white rounded-xl border border-[var(--color-grey-200)] p-4">
           <CommunicationLog
             studentId={id}
             initialLogs={communicationLogs}
@@ -235,12 +235,12 @@ function StatCard({
   icon?: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-4">
-      <div className="flex items-center gap-2 text-gray-400 mb-1">
+    <div className="bg-white rounded-xl border border-[var(--color-grey-200)] p-4">
+      <div className="flex items-center gap-2 text-[var(--color-grey-400)] mb-1">
         {icon}
         <span className="text-xs font-medium uppercase">{label}</span>
       </div>
-      <p className="text-lg font-semibold text-[#0A1929]">{value}</p>
+      <p className="text-lg font-semibold text-[var(--color-grey-900)]">{value}</p>
     </div>
   );
 }

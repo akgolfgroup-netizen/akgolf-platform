@@ -25,24 +25,24 @@ export function StatComparisonRow({
       : null;
 
   return (
-    <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl border border-[var(--color-border)]">
-      <span className="text-xs text-[var(--color-gold-muted)] flex-1">{label}</span>
+    <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl border border-[var(--color-grey-200)]">
+      <span className="text-xs text-[var(--color-grey-500)] flex-1">{label}</span>
       <span
         className={`text-sm font-bold w-16 text-right ${
           isBetter === true
             ? "text-green-400"
             : isBetter === false
             ? "text-red-400"
-            : "text-[var(--color-snow)]"
+            : "text-[var(--color-grey-900)]"
         }`}
       >
         {myValue !== null ? format(myValue) : "—"}
         {unit && myValue !== null && (
-          <span className="text-[10px] font-normal text-[var(--color-gold-muted)]">{unit}</span>
+          <span className="text-[10px] font-normal text-[var(--color-grey-500)]">{unit}</span>
         )}
       </span>
-      <span className="text-xs text-[var(--color-gold-muted)]/50 w-px h-4 bg-[var(--color-border)]" />
-      <span className="text-xs text-[var(--color-gold-muted)] w-16 text-right">
+      <span className="text-xs text-[var(--color-grey-500)]/50 w-px h-4 bg-[var(--color-grey-200)]" />
+      <span className="text-xs text-[var(--color-grey-500)] w-16 text-right">
         {peerValue !== null ? format(peerValue) : "—"}
         {unit && peerValue !== null && (
           <span className="text-[10px]">{unit}</span>

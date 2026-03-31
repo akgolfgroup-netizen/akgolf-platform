@@ -49,9 +49,9 @@ export function QuickCompleteButton({
       {done ? (
         <CheckCircle2 className="w-3 h-3 text-green-400" />
       ) : (
-        <Circle className="w-3 h-3 text-[var(--color-gold-dim)]/40 hover:text-green-400" />
+        <Circle className="w-3 h-3 text-[var(--color-grey-400)]/40 hover:text-green-400" />
       )}
-      <span className={done ? "text-green-400" : "text-[var(--color-gold-dim)]/40"}>
+      <span className={done ? "text-green-400" : "text-[var(--color-grey-400)]/40"}>
         {done ? "Fullført" : "Fullfør"}
       </span>
     </button>

@@ -93,7 +93,7 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
   return (
     <div className="space-y-6">
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-[var(--color-ink-80)] pb-4">
+      <div className="flex gap-2 border-b border-[var(--color-grey-200)] pb-4">
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -101,8 +101,8 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
             className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
               activeTab === tab.id
-                ? "bg-[var(--color-gold)] text-[var(--color-ink-100)]"
-                : "bg-[var(--color-ink-90)] text-[var(--color-ink-40)] hover:text-white"
+                ? "bg-[var(--color-black)] text-white"
+                : "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)]"
             )}
           >
             <tab.icon className="h-4 w-4" />
@@ -114,55 +114,55 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
       {/* Profile */}
       {activeTab === "profile" && (
         <div className="space-y-6">
-          <div className="bg-[var(--color-ink-90)] rounded-xl p-6 space-y-4">
+          <div className="bg-white border border-[var(--color-grey-200)] rounded-xl p-6 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-[var(--color-ink-40)] mb-2">
+              <label className="block text-sm font-medium text-[var(--color-grey-400)] mb-2">
                 Navn
               </label>
               <input
                 type="text"
                 value={settings.profile.name}
                 onChange={(e) => handleProfileChange("name", e.target.value)}
-                className="w-full px-4 py-3 bg-[var(--color-ink-80)] border border-[var(--color-ink-70)] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]"
+                className="w-full px-4 py-3 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-lg text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-400)]"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[var(--color-ink-40)] mb-2">
+              <label className="block text-sm font-medium text-[var(--color-grey-400)] mb-2">
                 E-post
               </label>
               <input
                 type="email"
                 value={settings.profile.email}
                 disabled
-                className="w-full px-4 py-3 bg-[var(--color-ink-80)] border border-[var(--color-ink-70)] rounded-lg text-[var(--color-ink-50)] cursor-not-allowed"
+                className="w-full px-4 py-3 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-lg text-[var(--color-grey-500)] cursor-not-allowed"
               />
-              <p className="text-xs text-[var(--color-ink-50)] mt-1">
+              <p className="text-xs text-[var(--color-grey-500)] mt-1">
                 E-post kan ikke endres
               </p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[var(--color-ink-40)] mb-2">
+              <label className="block text-sm font-medium text-[var(--color-grey-400)] mb-2">
                 Telefon
               </label>
               <input
                 type="tel"
                 value={settings.profile.phone}
                 onChange={(e) => handleProfileChange("phone", e.target.value)}
-                className="w-full px-4 py-3 bg-[var(--color-ink-80)] border border-[var(--color-ink-70)] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]"
+                className="w-full px-4 py-3 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-lg text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-400)]"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[var(--color-ink-40)] mb-2">
+              <label className="block text-sm font-medium text-[var(--color-grey-400)] mb-2">
                 Bio
               </label>
               <textarea
                 value={settings.profile.bio}
                 onChange={(e) => handleProfileChange("bio", e.target.value)}
                 rows={4}
-                className="w-full px-4 py-3 bg-[var(--color-ink-80)] border border-[var(--color-ink-70)] rounded-lg text-white resize-none focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]"
+                className="w-full px-4 py-3 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-lg text-[var(--color-grey-900)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-400)]"
                 placeholder="Kort beskrivelse av deg selv..."
               />
             </div>
@@ -171,7 +171,7 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
           <button
             onClick={handleSaveProfile}
             disabled={isSaving}
-            className="flex items-center gap-2 px-6 py-3 bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] disabled:opacity-50 rounded-lg font-medium text-[var(--color-ink-100)] transition-colors"
+            className="flex items-center gap-2 px-6 py-3 bg-[var(--color-black)] hover:bg-[var(--color-grey-900)] disabled:opacity-50 rounded-lg font-medium text-white transition-colors"
           >
             {isSaving ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -190,8 +190,8 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
       {/* Notifications */}
       {activeTab === "notifications" && (
         <div className="space-y-6">
-          <div className="bg-[var(--color-ink-90)] rounded-xl p-6 space-y-4">
-            <h3 className="font-semibold text-white flex items-center gap-2">
+          <div className="bg-white border border-[var(--color-grey-200)] rounded-xl p-6 space-y-4">
+            <h3 className="font-semibold text-[var(--color-grey-900)] flex items-center gap-2">
               <Mail className="h-5 w-5" />
               E-postvarsler
             </h3>
@@ -218,8 +218,8 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
             </div>
           </div>
 
-          <div className="bg-[var(--color-ink-90)] rounded-xl p-6 space-y-4">
-            <h3 className="font-semibold text-white flex items-center gap-2">
+          <div className="bg-white border border-[var(--color-grey-200)] rounded-xl p-6 space-y-4">
+            <h3 className="font-semibold text-[var(--color-grey-900)] flex items-center gap-2">
               <Smartphone className="h-5 w-5" />
               Push-varsler
             </h3>
@@ -235,7 +235,7 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
           <button
             onClick={handleSaveNotifications}
             disabled={isSaving}
-            className="flex items-center gap-2 px-6 py-3 bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] disabled:opacity-50 rounded-lg font-medium text-[var(--color-ink-100)] transition-colors"
+            className="flex items-center gap-2 px-6 py-3 bg-[var(--color-black)] hover:bg-[var(--color-grey-900)] disabled:opacity-50 rounded-lg font-medium text-white transition-colors"
           >
             {isSaving ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -254,14 +254,14 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
       {/* Integrations */}
       {activeTab === "integrations" && (
         <div className="space-y-6">
-          <div className="bg-[var(--color-ink-90)] rounded-xl p-6 space-y-4">
-            <h3 className="font-semibold text-white flex items-center gap-2">
+          <div className="bg-white border border-[var(--color-grey-200)] rounded-xl p-6 space-y-4">
+            <h3 className="font-semibold text-[var(--color-grey-900)] flex items-center gap-2">
               <Calendar className="h-5 w-5" />
               Kalender-synkronisering
             </h3>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-[var(--color-ink-80)] rounded-lg">
+              <div className="flex items-center justify-between p-4 bg-[var(--color-grey-100)] rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-lg bg-white flex items-center justify-center">
                     <svg className="h-6 w-6" viewBox="0 0 24 24">
@@ -284,22 +284,22 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-medium text-white">Google Kalender</p>
-                    <p className="text-sm text-[var(--color-ink-50)]">
+                    <p className="font-medium text-[var(--color-grey-900)]">Google Kalender</p>
+                    <p className="text-sm text-[var(--color-grey-500)]">
                       {settings.integrations.googleCalendar
                         ? "Tilkoblet"
                         : "Ikke tilkoblet"}
                     </p>
                   </div>
                 </div>
-                <button className="px-4 py-2 bg-[var(--color-ink-70)] hover:bg-[var(--color-ink-60)] rounded-lg text-sm font-medium text-white transition-colors">
+                <button className="px-4 py-2 bg-[var(--color-grey-200)] hover:bg-[var(--color-grey-300)] rounded-lg text-sm font-medium text-[var(--color-grey-900)] transition-colors">
                   {settings.integrations.googleCalendar
                     ? "Koble fra"
                     : "Koble til"}
                 </button>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-[var(--color-ink-80)] rounded-lg">
+              <div className="flex items-center justify-between p-4 bg-[var(--color-grey-100)] rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-lg bg-[#0078D4] flex items-center justify-center">
                     <svg
@@ -311,15 +311,15 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-medium text-white">Outlook</p>
-                    <p className="text-sm text-[var(--color-ink-50)]">
+                    <p className="font-medium text-[var(--color-grey-900)]">Outlook</p>
+                    <p className="text-sm text-[var(--color-grey-500)]">
                       {settings.integrations.outlook
                         ? "Tilkoblet"
                         : "Ikke tilkoblet"}
                     </p>
                   </div>
                 </div>
-                <button className="px-4 py-2 bg-[var(--color-ink-70)] hover:bg-[var(--color-ink-60)] rounded-lg text-sm font-medium text-white transition-colors">
+                <button className="px-4 py-2 bg-[var(--color-grey-200)] hover:bg-[var(--color-grey-300)] rounded-lg text-sm font-medium text-[var(--color-grey-900)] transition-colors">
                   {settings.integrations.outlook ? "Koble fra" : "Koble til"}
                 </button>
               </div>
@@ -345,14 +345,14 @@ function ToggleItem({
   return (
     <div className="flex items-center justify-between">
       <div>
-        <p className="font-medium text-white">{label}</p>
-        <p className="text-sm text-[var(--color-ink-50)]">{description}</p>
+        <p className="font-medium text-[var(--color-grey-900)]">{label}</p>
+        <p className="text-sm text-[var(--color-grey-500)]">{description}</p>
       </div>
       <button
         onClick={onChange}
         className={cn(
           "relative w-12 h-6 rounded-full transition-colors",
-          checked ? "bg-[var(--color-gold)]" : "bg-[var(--color-ink-70)]"
+          checked ? "bg-[var(--color-black)]" : "bg-[var(--color-grey-200)]"
         )}
       >
         <span

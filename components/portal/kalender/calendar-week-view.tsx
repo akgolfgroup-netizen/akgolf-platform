@@ -30,20 +30,20 @@ export function CalendarWeekView({ events, weekStart }: CalendarWeekViewProps) {
             <div
               className={`text-center py-3 mb-3 rounded-xl border ${
                 isTodayFlag
-                  ? "bg-[rgba(176,125,79,0.15)] border-[rgba(176,125,79,0.4)]"
-                  : "bg-transparent border-[rgba(15,41,80,0.4)]"
+                  ? "bg-[var(--color-grey-100)] border-[var(--color-grey-200)]"
+                  : "bg-transparent border-[var(--color-grey-200)]"
               }`}
             >
               <p
                 className={`text-xs font-medium uppercase tracking-wider ${
-                  isTodayFlag ? "text-[var(--color-gold)]" : "text-[var(--color-snow)]/50"
+                  isTodayFlag ? "text-[var(--color-grey-900)]" : "text-[var(--color-grey-400)]"
                 }`}
               >
                 {format(day, "EEE", { locale: nb })}
               </p>
               <p
                 className={`text-xl font-semibold mt-1 ${
-                  isTodayFlag ? "text-[var(--color-snow)]" : "text-[var(--color-snow)]"
+                  isTodayFlag ? "text-[var(--color-grey-900)]" : "text-[var(--color-grey-900)]"
                 }`}
               >
                 {format(day, "d")}
@@ -53,8 +53,8 @@ export function CalendarWeekView({ events, weekStart }: CalendarWeekViewProps) {
             {/* Events */}
             <div className="space-y-2 flex-1 min-h-[100px]">
               {dayEvents.length === 0 ? (
-                <div className="h-16 rounded-xl flex items-center justify-center bg-transparent border border-dashed border-[rgba(15,41,80,0.4)]">
-                  <span className="text-[var(--color-snow)]/50">–</span>
+                <div className="h-16 rounded-xl flex items-center justify-center bg-transparent border border-dashed border-[var(--color-grey-200)]">
+                  <span className="text-[var(--color-grey-400)]">–</span>
                 </div>
               ) : (
                 dayEvents.map((e) => (

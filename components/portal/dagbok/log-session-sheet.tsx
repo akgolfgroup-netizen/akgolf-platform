@@ -66,19 +66,19 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
         className="relative w-full max-w-md rounded-t-2xl sm:rounded-2xl p-6"
         style={{
           background: "linear-gradient(180deg, #0A1929 0%, #0A1929 100%)",
-          border: "1px solid rgba(15,41,80,0.9)",
+          border: "1px solid var(--color-grey-200)",
         }}
       >
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
-            <NotebookPen className="w-4 h-4 text-[var(--color-gold)]" />
-            <h2 className="text-sm font-semibold text-[var(--color-snow)]">
+            <NotebookPen className="w-4 h-4 text-[var(--color-grey-900)]" />
+            <h2 className="text-sm font-semibold text-[var(--color-grey-900)]">
               {prefill?.title ? `Logg: ${prefill.title}` : "Logg økt"}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="text-[var(--color-gold-dim)]/50 hover:text-[var(--color-snow)] transition-colors"
+            className="text-[var(--color-grey-400)]/50 hover:text-[var(--color-grey-900)] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -87,7 +87,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Rating */}
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-gold-dim)] mb-1.5">
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-grey-400)] mb-1.5">
               Opplevelse
             </label>
             <div className="flex gap-1.5">
@@ -101,8 +101,8 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
                   <Star
                     className="w-6 h-6"
                     style={{
-                      color: n <= rating ? "var(--color-gold)" : "rgba(176,125,79,0.2)",
-                      fill: n <= rating ? "var(--color-gold)" : "transparent",
+                      color: n <= rating ? "var(--color-grey-900)" : "var(--color-grey-200)",
+                      fill: n <= rating ? "var(--color-grey-900)" : "transparent",
                     }}
                   />
                 </button>
@@ -112,7 +112,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
 
           {/* Focus area */}
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-gold-dim)] mb-1.5">
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-grey-400)] mb-1.5">
               Fokusområde
             </label>
             <div className="flex flex-wrap gap-1.5">
@@ -123,9 +123,9 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
                   onClick={() => setFocusArea(opt.value)}
                   className="px-3 py-1 rounded-full text-xs font-medium border transition-colors"
                   style={{
-                    background: focusArea === opt.value ? "rgba(176,125,79,0.15)" : "transparent",
-                    borderColor: focusArea === opt.value ? "var(--color-gold)" : "rgba(15,41,80,0.8)",
-                    color: focusArea === opt.value ? "var(--color-gold)" : "var(--color-gold-muted)",
+                    background: focusArea === opt.value ? "var(--color-grey-200)" : "transparent",
+                    borderColor: focusArea === opt.value ? "var(--color-grey-900)" : "var(--color-grey-200)",
+                    color: focusArea === opt.value ? "var(--color-grey-900)" : "var(--color-grey-500)",
                   }}
                 >
                   {opt.label}
@@ -136,7 +136,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
 
           {/* Duration */}
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-gold-dim)] mb-1.5">
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-grey-400)] mb-1.5">
               Varighet (min)
             </label>
             <input
@@ -146,14 +146,14 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
               placeholder="60"
               min={5}
               max={480}
-              className="w-full px-3 py-2 rounded-lg text-sm bg-transparent border outline-none text-[var(--color-snow)] placeholder:text-[var(--color-gold-dim)]/30"
-              style={{ borderColor: "rgba(15,41,80,0.8)" }}
+              className="w-full px-3 py-2 rounded-lg text-sm bg-transparent border outline-none text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)]/30"
+              style={{ borderColor: "var(--color-grey-200)" }}
             />
           </div>
 
           {/* Notes */}
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-gold-dim)] mb-1.5">
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-grey-400)] mb-1.5">
               Notater
             </label>
             <textarea
@@ -161,8 +161,8 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
               placeholder="Hva gikk bra? Hva skal forbedres?"
-              className="w-full px-3 py-2 rounded-lg text-sm bg-transparent border outline-none resize-none text-[var(--color-snow)] placeholder:text-[var(--color-gold-dim)]/30"
-              style={{ borderColor: "rgba(15,41,80,0.8)" }}
+              className="w-full px-3 py-2 rounded-lg text-sm bg-transparent border outline-none resize-none text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)]/30"
+              style={{ borderColor: "var(--color-grey-200)" }}
             />
           </div>
 
@@ -174,9 +174,9 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
                   type="checkbox"
                   checked={deviatedFromPlan}
                   onChange={(e) => setDeviatedFromPlan(e.target.checked)}
-                  className="w-3.5 h-3.5 rounded accent-[var(--color-gold)]"
+                  className="w-3.5 h-3.5 rounded accent-[var(--color-grey-900)]"
                 />
-                <span className="text-xs text-[var(--color-gold-muted)]">
+                <span className="text-xs text-[var(--color-grey-500)]">
                   Avvik fra plan
                 </span>
               </label>
@@ -186,8 +186,8 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
                   value={deviationReason}
                   onChange={(e) => setDeviationReason(e.target.value)}
                   placeholder="Årsak til avvik..."
-                  className="mt-2 w-full px-3 py-2 rounded-lg text-sm bg-transparent border outline-none text-[var(--color-snow)] placeholder:text-[var(--color-gold-dim)]/30"
-                  style={{ borderColor: "rgba(15,41,80,0.8)" }}
+                  className="mt-2 w-full px-3 py-2 rounded-lg text-sm bg-transparent border outline-none text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)]/30"
+                  style={{ borderColor: "var(--color-grey-200)" }}
                 />
               )}
             </div>
@@ -199,7 +199,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
             className="w-full py-2.5 rounded-xl text-sm font-semibold transition-opacity"
             style={{
               background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
-              color: "#0a1929",
+              color: "var(--color-grey-900)",
               opacity: isPending ? 0.7 : 1,
             }}
           >

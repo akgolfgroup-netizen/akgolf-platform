@@ -22,11 +22,11 @@ export default async function CoachingHistorikkPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[var(--color-snow)]">Coachinghistorikk</h1>
+        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Coachinghistorikk</h1>
         <Link
           href="/portal/bookinger/ny"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[var(--color-gold)] text-white hover:brightness-110 transition-all cursor-pointer"
-          style={{ boxShadow: "0 4px 12px rgba(176,125,79,0.25)" }}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[var(--color-grey-900)] text-white hover:brightness-110 transition-all cursor-pointer"
+          style={{ boxShadow: "0 4px 12px var(--color-grey-200)" }}
         >
           <Plus className="w-4 h-4" />
           Book coaching
@@ -35,18 +35,18 @@ export default async function CoachingHistorikkPage() {
 
       <div className="max-w-2xl">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-[var(--color-snow)]">
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
             Alle sesjoner
           </h2>
-          <span className="text-xs text-[var(--color-ink-40)]">
+          <span className="text-xs text-[var(--color-grey-400)]">
             {sessions.length} sesjoner
           </span>
         </div>
 
         {sessions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-[rgba(15,41,80,0.3)] border border-[rgba(15,41,80,0.4)]">
-            <BookOpen className="w-10 h-10 text-[var(--color-ink-40)] mb-3" />
-            <p className="text-sm text-[var(--color-ink-40)]">
+          <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]">
+            <BookOpen className="w-10 h-10 text-[var(--color-grey-400)] mb-3" />
+            <p className="text-sm text-[var(--color-grey-400)]">
               Ingen coachingsesjoner ennå.
             </p>
           </div>

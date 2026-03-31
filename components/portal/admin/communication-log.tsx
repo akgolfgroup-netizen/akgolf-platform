@@ -143,14 +143,14 @@ function NyLoggForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-gray-50 border border-gray-200 rounded-xl p-4 space-y-3"
+      className="bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl p-4 space-y-3"
     >
       <div className="flex items-center justify-between">
-        <p className="text-sm font-medium text-gray-800">Ny loggoppforing</p>
+        <p className="text-sm font-medium text-[var(--color-grey-900)]">Ny loggoppforing</p>
         <button
           type="button"
           onClick={onCancel}
-          className="text-gray-400 hover:text-gray-600 transition-colors"
+          className="text-[var(--color-grey-400)] hover:text-[var(--color-grey-700)] transition-colors"
           aria-label="Lukk skjema"
         >
           <X className="w-4 h-4" />
@@ -162,7 +162,7 @@ function NyLoggForm({
         <select
           value={type}
           onChange={(e) => setType(e.target.value as CommunicationType)}
-          className="w-full appearance-none pl-3 pr-8 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#0A1929]/20 focus:border-[#0A1929]"
+          className="w-full appearance-none pl-3 pr-8 py-2 text-sm border border-[var(--color-grey-200)] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)]"
         >
           {TYPE_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -170,7 +170,7 @@ function NyLoggForm({
             </option>
           ))}
         </select>
-        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--color-grey-400)]" />
       </div>
 
       {/* Emne (valgfritt) */}
@@ -179,7 +179,7 @@ function NyLoggForm({
         placeholder="Emne (valgfritt)"
         value={subject}
         onChange={(e) => setSubject(e.target.value)}
-        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0A1929]/20 focus:border-[#0A1929]"
+        className="w-full px-3 py-2 text-sm border border-[var(--color-grey-200)] rounded-lg bg-white placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)]"
       />
 
       {/* Innhold */}
@@ -189,7 +189,7 @@ function NyLoggForm({
         value={content}
         onChange={(e) => setContent(e.target.value)}
         rows={4}
-        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-[#0A1929]/20 focus:border-[#0A1929]"
+        className="w-full px-3 py-2 text-sm border border-[var(--color-grey-200)] rounded-lg bg-white placeholder:text-[var(--color-grey-400)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)]"
       />
 
       {feil && (
@@ -200,7 +200,7 @@ function NyLoggForm({
         <button
           type="submit"
           disabled={isPending || !content.trim()}
-          className="px-4 py-2 text-sm font-medium text-white bg-[#0A1929] rounded-lg hover:bg-[#0A1929]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 text-sm font-medium text-white bg-[var(--color-grey-900)] rounded-lg hover:bg-[var(--color-grey-900)]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isPending ? "Lagrer..." : "Lagre"}
         </button>
@@ -229,7 +229,7 @@ export function CommunicationLog({
     <div className="space-y-4">
       {/* Header med knapp */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-[var(--color-grey-500)]">
           {logs.length === 0
             ? "Ingen loggoppforinger enda"
             : `${logs.length} oppforing${logs.length !== 1 ? "er" : ""}`}
@@ -237,7 +237,7 @@ export function CommunicationLog({
         {!visSkjema && (
           <button
             onClick={() => setVisSkjema(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#0A1929] border border-[#0A1929]/30 rounded-lg hover:bg-[#0A1929]/5 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--color-grey-900)] border border-[var(--color-grey-300)] rounded-lg hover:bg-[var(--color-grey-100)] transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             Ny oppforing
@@ -257,7 +257,7 @@ export function CommunicationLog({
       {/* Liste */}
       {logs.length === 0 && !visSkjema ? (
         <div className="text-center py-8">
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-[var(--color-grey-400)]">
             Ingen kommunikasjon registrert for denne eleven enda.
           </p>
         </div>
@@ -268,7 +268,7 @@ export function CommunicationLog({
             return (
               <div
                 key={log.id}
-                className="bg-white rounded-xl border border-gray-200 p-4"
+                className="bg-white rounded-xl border border-[var(--color-grey-200)] p-4"
               >
                 <div className="flex items-start gap-3">
                   {/* Type-ikon */}
@@ -286,13 +286,13 @@ export function CommunicationLog({
                       >
                         {config.label}
                       </span>
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-[var(--color-grey-400)]">
                         {format(new Date(log.sentAt), "d. MMM yyyy HH:mm", {
                           locale: nb,
                         })}
                       </span>
                       {log.instructor.User.name && (
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-[var(--color-grey-400)]">
                           av {log.instructor.User.name}
                         </span>
                       )}
@@ -300,13 +300,13 @@ export function CommunicationLog({
 
                     {/* Emne */}
                     {log.subject && (
-                      <p className="text-sm font-medium text-gray-800 mb-1">
+                      <p className="text-sm font-medium text-[var(--color-grey-900)] mb-1">
                         {log.subject}
                       </p>
                     )}
 
                     {/* Innhold */}
-                    <p className="text-sm text-gray-600 whitespace-pre-wrap">
+                    <p className="text-sm text-[var(--color-grey-600)] whitespace-pre-wrap">
                       {log.content}
                     </p>
                   </div>

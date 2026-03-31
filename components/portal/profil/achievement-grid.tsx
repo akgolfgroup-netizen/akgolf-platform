@@ -50,12 +50,12 @@ export function AchievementGrid({ definitions, unlocked }: AchievementGridProps)
   return (
     <div
       className="rounded-2xl p-5"
-      style={{ background: "rgba(10,25,41,0.7)", border: "1px solid rgba(15,41,80,0.8)" }}
+      style={{ background: "var(--color-grey-100)", border: "1px solid var(--color-grey-200)" }}
     >
       <div className="flex items-center gap-2 mb-4">
-        <Trophy className="w-4 h-4 text-[var(--color-gold)]" />
-        <h2 className="text-sm font-semibold text-[var(--color-snow)]">Prestasjoner</h2>
-        <span className="text-xs text-[var(--color-gold-muted)] ml-auto">
+        <Trophy className="w-4 h-4 text-[var(--color-grey-900)]" />
+        <h2 className="text-sm font-semibold text-[var(--color-grey-900)]">Prestasjoner</h2>
+        <span className="text-xs text-[var(--color-grey-500)] ml-auto">
           {unlocked.length}/{definitions.length}
         </span>
       </div>
@@ -82,20 +82,20 @@ export function AchievementGrid({ definitions, unlocked }: AchievementGridProps)
                 }`}
                 style={{
                   background: isUnlocked
-                    ? "linear-gradient(135deg, rgba(176,125,79,0.25) 0%, rgba(176,125,79,0.1) 100%)"
-                    : "rgba(15,41,80,0.4)",
+                    ? "linear-gradient(135deg, var(--color-grey-200) 0%, var(--color-grey-200) 100%)"
+                    : "var(--color-grey-200)",
                   border: isUnlocked
-                    ? "1px solid rgba(176,125,79,0.5)"
-                    : "1px solid rgba(15,41,80,0.6)",
+                    ? "1px solid var(--color-grey-200)"
+                    : "1px solid var(--color-grey-200)",
                 }}
               >
                 <Icon
-                  className={`w-5 h-5 ${isUnlocked ? "text-[var(--color-gold)]" : "text-[var(--color-gold-muted)]"}`}
+                  className={`w-5 h-5 ${isUnlocked ? "text-[var(--color-grey-900)]" : "text-[var(--color-grey-500)]"}`}
                 />
               </div>
               <span
                 className={`text-[10px] leading-tight ${
-                  isUnlocked ? "text-[var(--color-snow)]" : "text-[var(--color-gold-muted)]/50"
+                  isUnlocked ? "text-[var(--color-grey-900)]" : "text-[var(--color-grey-500)]/50"
                 }`}
               >
                 {def.title}
@@ -105,10 +105,10 @@ export function AchievementGrid({ definitions, unlocked }: AchievementGridProps)
               <div className="absolute bottom-full mb-2 hidden group-hover:block z-10">
                 <div
                   className="px-3 py-2 rounded-lg text-xs max-w-[160px]"
-                  style={{ background: "#0A1929", border: "1px solid rgba(15,41,80,0.8)" }}
+                  style={{ background: "#0A1929", border: "1px solid var(--color-grey-200)" }}
                 >
-                  <p className="font-semibold text-[var(--color-snow)] mb-0.5">{def.title}</p>
-                  <p className="text-[var(--color-gold-muted)]">{def.description}</p>
+                  <p className="font-semibold text-[var(--color-grey-900)] mb-0.5">{def.title}</p>
+                  <p className="text-[var(--color-grey-500)]">{def.description}</p>
                 </div>
               </div>
             </motion.div>

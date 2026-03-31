@@ -83,7 +83,7 @@ export function PremiumChecklist({
         </div>
 
         {/* Progress bar */}
-        <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+        <div className="h-2 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-gradient-to-r from-gold to-amber-400 rounded-full"
             initial={{ width: 0 }}
@@ -110,7 +110,7 @@ export function PremiumChecklist({
                 className={`group relative flex items-center gap-4 p-4 rounded-xl transition-all duration-200 ${
                   item.completed
                     ? "bg-emerald-500/5"
-                    : "hover:bg-white/5 cursor-pointer"
+                    : "hover:bg-[var(--color-grey-100)] cursor-pointer"
                 }`}
               >
                 {/* Checkbox */}

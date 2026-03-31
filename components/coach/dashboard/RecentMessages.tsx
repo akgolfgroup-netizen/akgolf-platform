@@ -37,27 +37,27 @@ interface RecentMessagesProps {
 export function RecentMessages({ messages }: RecentMessagesProps) {
   if (messages.length === 0) {
     return (
-      <div className="rounded-xl bg-ink-95 border border-ink-90">
-        <div className="p-4 border-b border-ink-90">
-          <h3 className="font-semibold text-white">Nylige meldinger</h3>
+      <div className="rounded-xl bg-white border border-[var(--color-grey-200)]">
+        <div className="p-4 border-b border-[var(--color-grey-200)]">
+          <h3 className="font-semibold text-[var(--color-grey-900)]">Nylige meldinger</h3>
         </div>
         <div className="p-8 text-center">
-          <p className="text-ink-40">Ingen meldinger enda</p>
+          <p className="text-[var(--color-grey-400)]">Ingen meldinger enda</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="rounded-xl bg-ink-95 border border-ink-90">
-      <div className="p-4 border-b border-ink-90">
-        <h3 className="font-semibold text-white">Nylige meldinger</h3>
+    <div className="rounded-xl bg-white border border-[var(--color-grey-200)]">
+      <div className="p-4 border-b border-[var(--color-grey-200)]">
+        <h3 className="font-semibold text-[var(--color-grey-900)]">Nylige meldinger</h3>
       </div>
-      <div className="divide-y divide-ink-90">
+      <div className="divide-y divide-[var(--color-grey-200)]">
         {messages.map((message) => (
           <div
             key={message.id}
-            className="p-4 hover:bg-ink-90 transition-colors cursor-pointer"
+            className="p-4 hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
           >
             <div className="flex items-start gap-3">
               <div
@@ -67,17 +67,17 @@ export function RecentMessages({ messages }: RecentMessagesProps) {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
-                  <p className="font-medium text-white truncate">
+                  <p className="font-medium text-[var(--color-grey-900)] truncate">
                     {message.senderName}
                   </p>
-                  <span className="text-xs text-ink-50">
+                  <span className="text-xs text-[var(--color-grey-500)]">
                     {formatDistanceToNow(message.receivedAt, {
                       addSuffix: true,
                       locale: nb,
                     })}
                   </span>
                 </div>
-                <p className="text-sm text-ink-40 truncate mt-1">
+                <p className="text-sm text-[var(--color-grey-400)] truncate mt-1">
                   {message.content}
                 </p>
               </div>

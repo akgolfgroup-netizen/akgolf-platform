@@ -88,26 +88,26 @@ function ToastContainer({
             transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
             className={cn(
               "flex items-start gap-3 p-4 rounded-xl border backdrop-blur-sm",
-              "bg-[var(--color-bg-deep)]/95 shadow-lg",
+              "bg-[white]/95 shadow-lg",
               toastStyles[toast.type]
             )}
           >
             <div className="shrink-0 mt-0.5">{toastIcons[toast.type]}</div>
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-[var(--color-snow)] text-sm">
+              <p className="font-medium text-[var(--color-grey-900)] text-sm">
                 {toast.title}
               </p>
               {toast.description && (
-                <p className="text-xs text-[var(--color-ink-40)] mt-1">
+                <p className="text-xs text-[var(--color-grey-400)] mt-1">
                   {toast.description}
                 </p>
               )}
             </div>
             <button
               onClick={() => removeToast(toast.id)}
-              className="shrink-0 p-1 rounded-lg hover:bg-white/10 transition-colors"
+              className="shrink-0 p-1 rounded-lg hover:bg-[var(--color-grey-200)] transition-colors"
             >
-              <X className="w-4 h-4 text-[var(--color-ink-40)]" />
+              <X className="w-4 h-4 text-[var(--color-grey-400)]" />
             </button>
           </motion.div>
         ))}

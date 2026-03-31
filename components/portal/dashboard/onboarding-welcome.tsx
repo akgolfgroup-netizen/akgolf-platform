@@ -157,7 +157,7 @@ export function OnboardingWelcome({
 
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
+            className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
           >
             <motion.div
               animate={{ rotate: isExpanded ? 90 : 0 }}
@@ -174,7 +174,7 @@ export function OnboardingWelcome({
             <span>{completedCount} av {steps.length} fullfort</span>
             <span>{Math.round(progress)}%</span>
           </div>
-          <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+          <div className="h-2 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-gradient-to-r from-gold to-amber-400 rounded-full"
               initial={{ width: 0 }}
@@ -210,7 +210,7 @@ export function OnboardingWelcome({
                         ? "bg-emerald-500/5 border border-emerald-500/20"
                         : isActive
                         ? "bg-gold/5 border border-gold/20"
-                        : "bg-white/[0.02] border border-white/5 hover:bg-white/5"
+                        : "bg-white/[0.02] border border-white/5 hover:bg-[var(--color-grey-100)]"
                     }`}
                     onMouseEnter={() => !step.completed && setCurrentStep(idx)}
                   >
@@ -222,7 +222,7 @@ export function OnboardingWelcome({
                             ? "bg-emerald-500"
                             : isActive
                             ? "bg-gradient-to-br from-gold/20 to-amber-500/10"
-                            : "bg-white/5"
+                            : "bg-[var(--color-grey-100)]"
                         }`}
                       >
                         {step.completed ? (
@@ -259,7 +259,7 @@ export function OnboardingWelcome({
                           className={`flex-shrink-0 px-4 py-2 rounded-lg text-xs font-medium transition-all ${
                             isActive
                               ? "bg-gold text-black hover:bg-gold/90"
-                              : "bg-white/5 text-white hover:bg-white/10"
+                              : "bg-[var(--color-grey-100)] text-white hover:bg-[var(--color-grey-200)]"
                           }`}
                         >
                           <span className="flex items-center gap-1.5">

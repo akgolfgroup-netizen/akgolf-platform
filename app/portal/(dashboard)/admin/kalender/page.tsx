@@ -21,14 +21,14 @@ export default async function AdminCalendarPage() {
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--apple-admin-accent)] to-[var(--apple-admin-accent-dark)] flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)] flex items-center justify-center shadow-lg">
               <Calendar className="w-6 h-6 text-white" />
             </div>
             <div>
               <h1 className="text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em]" style={{ fontFamily: "var(--font-display)" }}>
                 Kalender
               </h1>
-              <p className="text-[15px] text-[var(--apple-gray-500)]">
+              <p className="text-[15px] text-[var(--color-grey-500)]">
                 Oversikt over alle bookinger
               </p>
             </div>

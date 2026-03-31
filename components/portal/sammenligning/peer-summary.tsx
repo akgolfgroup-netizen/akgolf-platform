@@ -10,16 +10,16 @@ interface PeerSummaryProps {
 export function PeerSummary({ skillLevelLabel, peerCount, aboveAverageCount, totalCategories }: PeerSummaryProps) {
   return (
     <div
-      className="rounded-xl p-4 border border-[var(--color-gold)]/20"
-      style={{ background: "rgba(176,125,79,0.05)" }}
+      className="rounded-xl p-4 border border-[var(--color-grey-900)]/20"
+      style={{ background: "var(--color-grey-200)" }}
     >
-      <p className="text-sm text-[var(--color-snow)]">
+      <p className="text-sm text-[var(--color-grey-900)]">
         Du er over snittet i{" "}
-        <span className="font-bold text-[var(--color-gold)]">
+        <span className="font-bold text-[var(--color-grey-900)]">
           {aboveAverageCount}/{totalCategories}
         </span>{" "}
         SG-kategorier sammenlignet med{" "}
-        <span className="font-bold text-[var(--color-gold)]">{peerCount}</span>{" "}
+        <span className="font-bold text-[var(--color-grey-900)]">{peerCount}</span>{" "}
         spillere på nivå {skillLevelLabel}.
       </p>
     </div>

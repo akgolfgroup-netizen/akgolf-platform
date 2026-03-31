@@ -37,7 +37,12 @@ export async function getCurrentWeekSessions(studentId?: string) {
         where: {
           weekStart: { lte: weekEnd },
         },
-        include: { TrainingPlanSession: { orderBy: { dayOfWeek: "asc" } } },
+        include: {
+          TrainingPlanSession: {
+            orderBy: { dayOfWeek: "asc" },
+            include: { TrainingLog: { select: { id: true } } },
+          },
+        },
         orderBy: { weekNumber: "asc" },
       },
     },

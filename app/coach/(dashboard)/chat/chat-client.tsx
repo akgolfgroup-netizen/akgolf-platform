@@ -72,7 +72,7 @@ export function ChatClient() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[var(--color-ink-95)] rounded-xl overflow-hidden">
+    <div className="flex-1 flex flex-col bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
       {/* Messages */}
       <div className="flex-1 overflow-auto p-4 space-y-4">
         {messages.map((message) => (
@@ -84,34 +84,34 @@ export function ChatClient() {
             )}
           >
             {message.role === "assistant" && (
-              <div className="h-8 w-8 rounded-full bg-[var(--color-gold)]/20 flex items-center justify-center flex-shrink-0">
-                <Bot className="h-4 w-4 text-[var(--color-gold)]" />
+              <div className="h-8 w-8 rounded-full bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
+                <Bot className="h-4 w-4 text-[var(--color-black)]" />
               </div>
             )}
             <div
               className={cn(
                 "max-w-[70%] rounded-2xl px-4 py-3",
                 message.role === "user"
-                  ? "bg-[var(--color-gold)] text-[var(--color-ink-100)]"
-                  : "bg-[var(--color-ink-90)] text-white"
+                  ? "bg-[var(--color-black)] text-white"
+                  : "bg-[var(--color-grey-100)] text-[var(--color-grey-900)]"
               )}
             >
               <p className="whitespace-pre-wrap">{message.content}</p>
             </div>
             {message.role === "user" && (
-              <div className="h-8 w-8 rounded-full bg-[var(--color-ink-80)] flex items-center justify-center flex-shrink-0">
-                <User className="h-4 w-4 text-[var(--color-ink-40)]" />
+              <div className="h-8 w-8 rounded-full bg-[var(--color-grey-200)] flex items-center justify-center flex-shrink-0">
+                <User className="h-4 w-4 text-[var(--color-grey-400)]" />
               </div>
             )}
           </div>
         ))}
         {isLoading && (
           <div className="flex gap-3">
-            <div className="h-8 w-8 rounded-full bg-[var(--color-gold)]/20 flex items-center justify-center">
-              <Bot className="h-4 w-4 text-[var(--color-gold)]" />
+            <div className="h-8 w-8 rounded-full bg-[var(--color-grey-100)] flex items-center justify-center">
+              <Bot className="h-4 w-4 text-[var(--color-black)]" />
             </div>
-            <div className="bg-[var(--color-ink-90)] rounded-2xl px-4 py-3">
-              <Loader2 className="h-5 w-5 animate-spin text-[var(--color-ink-50)]" />
+            <div className="bg-[var(--color-grey-100)] rounded-2xl px-4 py-3">
+              <Loader2 className="h-5 w-5 animate-spin text-[var(--color-grey-500)]" />
             </div>
           </div>
         )}
@@ -121,7 +121,7 @@ export function ChatClient() {
       {/* Suggestions */}
       {messages.length === 1 && (
         <div className="px-4 pb-4">
-          <div className="flex items-center gap-2 mb-2 text-sm text-[var(--color-ink-50)]">
+          <div className="flex items-center gap-2 mb-2 text-sm text-[var(--color-grey-500)]">
             <Sparkles className="h-4 w-4" />
             <span>Forslag</span>
           </div>
@@ -130,7 +130,7 @@ export function ChatClient() {
               <button
                 key={suggestion}
                 onClick={() => handleSuggestion(suggestion)}
-                className="px-3 py-1.5 bg-[var(--color-ink-90)] hover:bg-[var(--color-ink-80)] rounded-full text-sm text-[var(--color-ink-40)] hover:text-white transition-colors"
+                className="px-3 py-1.5 bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)] rounded-full text-sm text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-colors"
               >
                 {suggestion}
               </button>
@@ -140,7 +140,7 @@ export function ChatClient() {
       )}
 
       {/* Input */}
-      <div className="p-4 border-t border-[var(--color-ink-90)]">
+      <div className="p-4 border-t border-[var(--color-grey-200)]">
         <div className="flex gap-2">
           <input
             type="text"
@@ -148,14 +148,14 @@ export function ChatClient() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
             placeholder="Skriv en melding..."
-            className="flex-1 px-4 py-3 bg-[var(--color-ink-90)] border border-[var(--color-ink-80)] rounded-xl text-white placeholder:text-[var(--color-ink-50)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]"
+            className="flex-1 px-4 py-3 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-500)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-400)]"
           />
           <button
             onClick={handleSend}
             disabled={!input.trim() || isLoading}
-            className="px-4 py-3 bg-[var(--color-gold)] hover:bg-[var(--color-gold-dark)] disabled:opacity-50 disabled:cursor-not-allowed rounded-xl transition-colors"
+            className="px-4 py-3 bg-[var(--color-black)] hover:bg-[var(--color-grey-900)] disabled:opacity-50 disabled:cursor-not-allowed rounded-xl transition-colors"
           >
-            <Send className="h-5 w-5 text-[var(--color-ink-100)]" />
+            <Send className="h-5 w-5 text-white" />
           </button>
         </div>
       </div>

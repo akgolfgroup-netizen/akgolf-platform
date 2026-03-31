@@ -37,7 +37,7 @@ const AREA_COLORS: Record<string, string> = {
 export function TrainingAreaBreakdown({ data }: TrainingAreaBreakdownProps) {
   if (data.length === 0) {
     return (
-      <p className="text-xs text-[var(--color-gold-muted)] text-center py-4">
+      <p className="text-xs text-[var(--color-grey-500)] text-center py-4">
         Ingen treningsdata ennå
       </p>
     );
@@ -48,7 +48,7 @@ export function TrainingAreaBreakdown({ data }: TrainingAreaBreakdownProps) {
 
   return (
     <div className="space-y-3">
-      <p className="text-[11px] font-semibold text-[var(--color-snow-dim)]/50 uppercase tracking-widest">
+      <p className="text-[11px] font-semibold text-[var(--color-grey-400)]/50 uppercase tracking-widest">
         Treningsfordeling
       </p>
       <div className="space-y-2">
@@ -59,10 +59,10 @@ export function TrainingAreaBreakdown({ data }: TrainingAreaBreakdownProps) {
 
           return (
             <div key={item.area} className="flex items-center gap-3">
-              <span className="text-xs text-[var(--color-gold-muted)] w-20 flex-shrink-0 truncate">
+              <span className="text-xs text-[var(--color-grey-500)] w-20 flex-shrink-0 truncate">
                 {label}
               </span>
-              <div className="flex-1 h-2 rounded-full bg-[var(--color-border)] overflow-hidden">
+              <div className="flex-1 h-2 rounded-full bg-[var(--color-grey-200)] overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${pct}%` }}
@@ -71,14 +71,14 @@ export function TrainingAreaBreakdown({ data }: TrainingAreaBreakdownProps) {
                   style={{ background: color }}
                 />
               </div>
-              <span className="text-[10px] text-[var(--color-gold-muted)] w-12 text-right flex-shrink-0">
+              <span className="text-[10px] text-[var(--color-grey-500)] w-12 text-right flex-shrink-0">
                 {pct}% · {item.sessions}
               </span>
             </div>
           );
         })}
       </div>
-      <p className="text-[10px] text-[var(--color-gold-muted)]/50 text-right">
+      <p className="text-[10px] text-[var(--color-grey-500)]/50 text-right">
         Totalt: {Math.round(totalMinutes / 60)}t {totalMinutes % 60}min
       </p>
     </div>

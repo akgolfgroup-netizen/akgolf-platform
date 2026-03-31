@@ -49,24 +49,24 @@ export function ConsistencyHeatmap({ trainedDates }: ConsistencyHeatmapProps) {
       {/* Stats row */}
       <div className="flex items-center gap-6 mb-4">
         <div>
-          <p className="text-2xl font-bold text-[var(--color-gold)]">{streak}</p>
-          <p className="text-[10px] text-[var(--color-gold-muted)] uppercase tracking-wider">
+          <p className="text-2xl font-bold text-[var(--color-grey-900)]">{streak}</p>
+          <p className="text-[10px] text-[var(--color-grey-500)] uppercase tracking-wider">
             Dager streak
           </p>
         </div>
         <div>
-          <p className="text-2xl font-bold text-[var(--color-gold)]">
+          <p className="text-2xl font-bold text-[var(--color-grey-900)]">
             {Math.round(avgWeeklyRate * 10) / 10}
           </p>
-          <p className="text-[10px] text-[var(--color-gold-muted)] uppercase tracking-wider">
+          <p className="text-[10px] text-[var(--color-grey-500)] uppercase tracking-wider">
             Snitt per uke
           </p>
         </div>
         <div>
-          <p className="text-2xl font-bold text-[var(--color-gold)]">
+          <p className="text-2xl font-bold text-[var(--color-grey-900)]">
             {trainedDates.length}
           </p>
-          <p className="text-[10px] text-[var(--color-gold-muted)] uppercase tracking-wider">
+          <p className="text-[10px] text-[var(--color-grey-500)] uppercase tracking-wider">
             Økter (12 uker)
           </p>
         </div>
@@ -80,7 +80,7 @@ export function ConsistencyHeatmap({ trainedDates }: ConsistencyHeatmapProps) {
             {DAY_LABELS.map((d) => (
               <div
                 key={d}
-                className="text-[9px] text-[var(--color-gold-dim)]/50 h-4 flex items-center"
+                className="text-[9px] text-[var(--color-grey-400)]/50 h-4 flex items-center"
               >
                 {d}
               </div>
@@ -90,7 +90,7 @@ export function ConsistencyHeatmap({ trainedDates }: ConsistencyHeatmapProps) {
           {/* Weeks */}
           {weeks.map((weekStart) => (
             <div key={weekStart.toISOString()} className="flex flex-col gap-1">
-              <p className="text-[9px] text-[var(--color-gold-dim)]/40 h-4 text-center">
+              <p className="text-[9px] text-[var(--color-grey-400)]/40 h-4 text-center">
                 {format(weekStart, "d/M", { locale: nb })}
               </p>
               {[0, 1, 2, 3, 4, 5, 6].map((dayOffset) => {
@@ -109,8 +109,8 @@ export function ConsistencyHeatmap({ trainedDates }: ConsistencyHeatmapProps) {
                       background: isFuture
                         ? "transparent"
                         : isTraining
-                        ? "var(--color-gold)"
-                        : "rgba(15,41,80,0.5)",
+                        ? "var(--color-grey-900)"
+                        : "var(--color-grey-200)",
                       opacity: isFuture ? 0.15 : 1,
                     }}
                   />

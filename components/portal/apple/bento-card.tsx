@@ -35,9 +35,9 @@ const rowSpanMap = {
 
 const variantMap = {
   glass: "bg-white/70 backdrop-blur-xl border border-white/50",
-  solid: "bg-white border border-[var(--apple-gray-200)]",
-  gradient: "bg-gradient-to-br from-[var(--apple-gold-50)] to-white border border-[var(--apple-gold-200)]/30",
-  dark: "bg-[var(--apple-gray-900)]/80 backdrop-blur-xl border border-white/10",
+  solid: "bg-white border border-[var(--color-grey-200)]",
+  gradient: "bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]",
+  dark: "bg-[var(--color-grey-900)]/80 backdrop-blur-xl border border-white/10",
 };
 
 export function BentoCard({
@@ -49,7 +49,7 @@ export function BentoCard({
   title,
   subtitle,
   icon: Icon,
-  iconColor = "text-[var(--apple-gold-500)]",
+  iconColor = "text-[var(--color-grey-900)]",
   action,
   hover = true,
 }: BentoCardProps) {
@@ -74,18 +74,18 @@ export function BentoCard({
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
             {Icon && (
-              <div className="w-10 h-10 rounded-xl bg-[var(--apple-gray-100)] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center">
                 <Icon className={cn("w-5 h-5", iconColor)} />
               </div>
             )}
             <div>
               {title && (
-                <h3 className="text-sm font-semibold text-[var(--apple-gray-900)]">
+                <h3 className="text-sm font-semibold text-[var(--color-grey-900)]">
                   {title}
                 </h3>
               )}
               {subtitle && (
-                <p className="text-xs text-[var(--apple-gray-500)]">{subtitle}</p>
+                <p className="text-xs text-[var(--color-grey-500)]">{subtitle}</p>
               )}
             </div>
           </div>

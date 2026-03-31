@@ -28,7 +28,7 @@ const channels: {
     value: "ALL",
     label: "Alle",
     icon: <Inbox className="h-4 w-4" />,
-    color: "bg-[var(--color-ink-80)]",
+    color: "bg-[var(--color-grey-200)]",
   },
   {
     value: "EMAIL",
@@ -82,8 +82,8 @@ export function ChannelFilter({
           className={cn(
             "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
             selected === channel.value
-              ? "bg-[var(--color-gold)] text-[var(--color-ink-100)]"
-              : "bg-[var(--color-ink-90)] text-[var(--color-ink-40)] hover:bg-[var(--color-ink-80)] hover:text-white"
+              ? "bg-[var(--color-black)] text-white"
+              : "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-400)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)]"
           )}
         >
           <span className={cn("rounded p-1 text-white", channel.color)}>

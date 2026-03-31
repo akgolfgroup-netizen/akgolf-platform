@@ -20,7 +20,7 @@ interface Goal {
 }
 
 const CATEGORY_CONFIG: Record<GoalCategory, { label: string; color: string }> = {
-  SCORE: { label: "Score", color: "var(--color-gold)" },
+  SCORE: { label: "Score", color: "var(--color-grey-900)" },
   PHYSICAL: { label: "Fysisk", color: "#10B981" },
   MENTAL: { label: "Mental", color: "#8B5CF6" },
   TOURNAMENT: { label: "Turnering", color: "#38BDF8" },
@@ -61,19 +61,19 @@ export function GoalList({ goals, canCreate }: { goals: Goal[]; canCreate: boole
     <div
       className="rounded-2xl p-5"
       style={{
-        background: "rgba(10,25,41,0.7)",
-        border: "1px solid rgba(15,41,80,0.8)",
+        background: "var(--color-grey-100)",
+        border: "1px solid var(--color-grey-200)",
       }}
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Target className="w-4 h-4 text-[var(--color-gold)]" />
-          <h2 className="text-sm font-semibold text-[var(--color-snow)]">Mine mål</h2>
+          <Target className="w-4 h-4 text-[var(--color-grey-900)]" />
+          <h2 className="text-sm font-semibold text-[var(--color-grey-900)]">Mine mål</h2>
         </div>
         {canCreate && (
           <button
             onClick={() => { setEditingGoal(null); setShowModal(true); }}
-            className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-[var(--color-gold)] text-[var(--color-bg-deep)] font-medium hover:bg-[var(--color-gold-muted)] transition-colors"
+            className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-[var(--color-grey-900)] text-[var(--color-grey-900)] font-medium hover:bg-[var(--color-grey-500)] transition-colors"
           >
             <Plus className="w-3 h-3" />
             Nytt mål
@@ -82,7 +82,7 @@ export function GoalList({ goals, canCreate }: { goals: Goal[]; canCreate: boole
       </div>
 
       {goals.length === 0 ? (
-        <p className="text-xs text-[var(--color-gold-muted)] text-center py-6">
+        <p className="text-xs text-[var(--color-grey-500)] text-center py-6">
           {canCreate
             ? "Ingen mål ennå. Sett ditt første mål!"
             : "Ingen mål ennå. Oppgrader til Pro for å sette mål."}
@@ -101,7 +101,7 @@ export function GoalList({ goals, canCreate }: { goals: Goal[]; canCreate: boole
           ))}
           {completedGoals.length > 0 && (
             <div className="pt-2">
-              <p className="text-[10px] font-semibold text-[var(--color-gold-dim)] uppercase tracking-widest mb-2">
+              <p className="text-[10px] font-semibold text-[var(--color-grey-400)] uppercase tracking-widest mb-2">
                 Fullført
               </p>
               {completedGoals.map((goal) => (
@@ -150,14 +150,14 @@ function GoalCard({
   return (
     <motion.div
       variants={item}
-      className="group flex items-start gap-3 p-3 rounded-xl border border-[var(--color-border)] hover:border-[var(--color-gold)]/20 transition-colors"
+      className="group flex items-start gap-3 p-3 rounded-xl border border-[var(--color-grey-200)] hover:border-[var(--color-grey-900)]/20 transition-colors"
       style={{ background: isCompleted ? "rgba(255,255,255,0.01)" : "rgba(255,255,255,0.02)" }}
     >
       <button
         onClick={onToggle}
         className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-md border flex items-center justify-center transition-colors"
         style={{
-          borderColor: isCompleted ? "#10B981" : "rgba(176,125,79,0.3)",
+          borderColor: isCompleted ? "#10B981" : "var(--color-grey-200)",
           background: isCompleted ? "rgba(34,197,94,0.15)" : "transparent",
         }}
       >
@@ -167,7 +167,7 @@ function GoalCard({
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-0.5">
           <span
-            className={`text-sm font-medium ${isCompleted ? "line-through text-[var(--color-gold-muted)]/50" : "text-[var(--color-snow)]"}`}
+            className={`text-sm font-medium ${isCompleted ? "line-through text-[var(--color-grey-500)]/50" : "text-[var(--color-grey-900)]"}`}
           >
             {goal.title}
           </span>
@@ -180,27 +180,27 @@ function GoalCard({
         </div>
 
         {goal.description && (
-          <p className="text-xs text-[var(--color-gold-muted)] mb-1.5 line-clamp-1">
+          <p className="text-xs text-[var(--color-grey-500)] mb-1.5 line-clamp-1">
             {goal.description}
           </p>
         )}
 
         {progress !== null && !isCompleted && (
           <div className="flex items-center gap-2 mt-1.5">
-            <div className="flex-1 h-1.5 rounded-full bg-[var(--color-border)]">
+            <div className="flex-1 h-1.5 rounded-full bg-[var(--color-grey-200)]">
               <div
                 className="h-1.5 rounded-full transition-all duration-500"
                 style={{ width: `${progress}%`, background: config.color }}
               />
             </div>
-            <span className="text-[10px] text-[var(--color-gold-muted)] flex-shrink-0">
+            <span className="text-[10px] text-[var(--color-grey-500)] flex-shrink-0">
               {goal.currentValue} / {goal.targetValue} {goal.unit}
             </span>
           </div>
         )}
 
         {goal.targetDate && !isCompleted && (
-          <p className="text-[10px] text-[var(--color-gold-muted)]/50 mt-1">
+          <p className="text-[10px] text-[var(--color-grey-500)]/50 mt-1">
             Mål: {new Date(goal.targetDate).toLocaleDateString("nb-NO")}
           </p>
         )}
@@ -208,13 +208,13 @@ function GoalCard({
 
       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
         {onEdit && !isCompleted && (
-          <button onClick={onEdit} className="p-1 rounded hover:bg-[var(--color-border)] transition-colors">
-            <Pencil className="w-3 h-3 text-[var(--color-gold-muted)]" />
+          <button onClick={onEdit} className="p-1 rounded hover:bg-[var(--color-grey-200)] transition-colors">
+            <Pencil className="w-3 h-3 text-[var(--color-grey-500)]" />
           </button>
         )}
         {onPause && !isCompleted && (
-          <button onClick={onPause} className="p-1 rounded hover:bg-[var(--color-border)] transition-colors">
-            <Pause className="w-3 h-3 text-[var(--color-gold-muted)]" />
+          <button onClick={onPause} className="p-1 rounded hover:bg-[var(--color-grey-200)] transition-colors">
+            <Pause className="w-3 h-3 text-[var(--color-grey-500)]" />
           </button>
         )}
         <button onClick={onDelete} className="p-1 rounded hover:bg-red-500/10 transition-colors">

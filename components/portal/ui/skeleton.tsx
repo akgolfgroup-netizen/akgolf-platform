@@ -10,7 +10,7 @@ export function Skeleton({ className }: SkeletonProps) {
   return (
     <div
       className={cn(
-        "animate-pulse rounded-lg bg-[var(--color-muted)]",
+        "animate-pulse rounded-lg bg-[var(--color-grey-100)]",
         className
       )}
     />
@@ -30,7 +30,7 @@ export function SkeletonCard({ className }: SkeletonProps) {
   return (
     <div
       className={cn(
-        "rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-deep)] p-6",
+        "rounded-2xl border border-[var(--color-grey-200)] bg-[white] p-6",
         className
       )}
     >
@@ -54,7 +54,7 @@ export function SkeletonChart({ className }: SkeletonProps) {
   return (
     <div
       className={cn(
-        "rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-deep)] p-6",
+        "rounded-2xl border border-[var(--color-grey-200)] bg-[white] p-6",
         className
       )}
     >
@@ -76,7 +76,7 @@ export function SkeletonTable({ rows = 5, className }: SkeletonProps & { rows?: 
   return (
     <div className={cn("space-y-3", className)}>
       {/* Header */}
-      <div className="flex gap-4 pb-2 border-b border-[var(--color-border)]">
+      <div className="flex gap-4 pb-2 border-b border-[var(--color-grey-200)]">
         <Skeleton className="h-4 w-1/4" />
         <Skeleton className="h-4 w-1/4" />
         <Skeleton className="h-4 w-1/4" />
@@ -99,7 +99,7 @@ export function SkeletonStatCard({ className }: SkeletonProps) {
   return (
     <div
       className={cn(
-        "rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-deep)] p-4",
+        "rounded-xl border border-[var(--color-grey-200)] bg-[white] p-4",
         className
       )}
     >

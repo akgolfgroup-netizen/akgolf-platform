@@ -185,7 +185,7 @@ export function GolfWeather({ weather }: GolfWeatherProps) {
       <div className="px-5 pb-4">
         <div className="grid grid-cols-4 gap-3">
           {/* Wind */}
-          <div className="p-3 rounded-xl bg-white/5">
+          <div className="p-3 rounded-xl bg-[var(--color-grey-100)]">
             <div className="flex items-center gap-1.5 text-[var(--portal-text-muted)] mb-1">
               <Wind className="w-3.5 h-3.5" />
               <span className="text-[10px] uppercase tracking-wider">Vind</span>
@@ -199,7 +199,7 @@ export function GolfWeather({ weather }: GolfWeatherProps) {
           </div>
 
           {/* Humidity */}
-          <div className="p-3 rounded-xl bg-white/5">
+          <div className="p-3 rounded-xl bg-[var(--color-grey-100)]">
             <div className="flex items-center gap-1.5 text-[var(--portal-text-muted)] mb-1">
               <Droplets className="w-3.5 h-3.5" />
               <span className="text-[10px] uppercase tracking-wider">Fukt</span>
@@ -208,7 +208,7 @@ export function GolfWeather({ weather }: GolfWeatherProps) {
           </div>
 
           {/* Rain probability */}
-          <div className="p-3 rounded-xl bg-white/5">
+          <div className="p-3 rounded-xl bg-[var(--color-grey-100)]">
             <div className="flex items-center gap-1.5 text-[var(--portal-text-muted)] mb-1">
               <CloudRain className="w-3.5 h-3.5" />
               <span className="text-[10px] uppercase tracking-wider">Regn</span>
@@ -219,7 +219,7 @@ export function GolfWeather({ weather }: GolfWeatherProps) {
           </div>
 
           {/* Feels like */}
-          <div className="p-3 rounded-xl bg-white/5">
+          <div className="p-3 rounded-xl bg-[var(--color-grey-100)]">
             <div className="flex items-center gap-1.5 text-[var(--portal-text-muted)] mb-1">
               <Thermometer className="w-3.5 h-3.5" />
               <span className="text-[10px] uppercase tracking-wider">Foles</span>

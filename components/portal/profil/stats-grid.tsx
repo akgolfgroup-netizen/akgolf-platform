@@ -67,8 +67,8 @@ export function StatsGrid({ trainingSessions, coachingSessions, tournaments, str
           <div
             className="relative rounded-2xl p-4 overflow-hidden"
             style={{
-              background: "rgba(10,25,41,0.7)",
-              border: "1px solid rgba(15,41,80,0.8)",
+              background: "var(--color-grey-100)",
+              border: "1px solid var(--color-grey-200)",
             }}
           >
             {/* Top accent line */}
@@ -78,7 +78,7 @@ export function StatsGrid({ trainingSessions, coachingSessions, tournaments, str
             />
 
             <div className="flex items-start justify-between mb-3">
-              <p className="text-[10px] font-semibold text-[var(--color-snow-dim)]/50 uppercase tracking-widest leading-tight">
+              <p className="text-[10px] font-semibold text-[var(--color-grey-400)]/50 uppercase tracking-widest leading-tight">
                 {stat.label}
               </p>
               <stat.icon
@@ -87,10 +87,10 @@ export function StatsGrid({ trainingSessions, coachingSessions, tournaments, str
               />
             </div>
 
-            <p className="text-2xl font-black text-[var(--color-snow)]">
+            <p className="text-2xl font-black text-[var(--color-grey-900)]">
               {stat.value}
             </p>
-            <p className="text-[11px] text-[var(--color-snow-dim)]/40 mt-0.5">
+            <p className="text-[11px] text-[var(--color-grey-400)]/40 mt-0.5">
               {stat.sublabel}
             </p>
           </div>

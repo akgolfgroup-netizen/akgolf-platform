@@ -14,20 +14,20 @@ export default async function BookingerPage() {
   ]);
 
   return (
-    <main className="min-h-screen bg-[var(--apple-gray-50)] p-6 lg:p-8">
+    <main className="min-h-screen bg-[var(--color-grey-100)] p-6 lg:p-8">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--apple-gray-900)] tracking-tight">
+            <h1 className="text-3xl font-bold text-[var(--color-grey-900)] tracking-tight">
               Mine bookinger
             </h1>
-            <p className="text-[var(--apple-gray-500)] mt-1">
+            <p className="text-[var(--color-grey-500)] mt-1">
               Administrer dine coaching-timer og treninger
             </p>
           </div>
           <Link href="/portal/bookinger/ny">
-            <AppleButton icon={Plus} variant="gold" size="md">
+            <AppleButton icon={Plus} variant="primary" size="md">
               Book coaching
             </AppleButton>
           </Link>
@@ -46,15 +46,15 @@ export default async function BookingerPage() {
             {PORTAL_CONTENT.bookings.cancellationRules.map((rule) => (
               <div
                 key={rule.hours}
-                className="flex flex-col p-3 rounded-xl bg-[var(--apple-gray-100)]/50"
+                className="flex flex-col p-3 rounded-xl bg-[var(--color-grey-100)]/50"
               >
-                <span className="text-sm font-semibold text-[var(--apple-gray-900)]">
+                <span className="text-sm font-semibold text-[var(--color-grey-900)]">
                   {rule.hours} timer
                 </span>
-                <span className="text-xs text-[var(--apple-gray-600)] mt-0.5">
+                <span className="text-xs text-[var(--color-grey-600)] mt-0.5">
                   {rule.rule}
                 </span>
-                <span className="text-xs text-[var(--apple-gold-600)] font-medium mt-1">
+                <span className="text-xs text-[var(--color-grey-900)] font-medium mt-1">
                   {rule.fee}
                 </span>
               </div>
@@ -87,7 +87,7 @@ export default async function BookingerPage() {
               span={12}
               variant="solid"
               icon={Calendar}
-              iconColor="text-[var(--apple-gray-400)]"
+              iconColor="text-[var(--color-grey-400)]"
               title="Tidligere treninger"
               subtitle={`${past.length} fullførte`}
               hover={false}

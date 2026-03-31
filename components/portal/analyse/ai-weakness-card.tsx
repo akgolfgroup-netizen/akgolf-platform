@@ -47,16 +47,16 @@ export function AIWeaknessCard() {
     <div
       className="rounded-xl border p-5"
       style={{
-        background: "linear-gradient(135deg, rgba(13,34,68,0.6) 0%, rgba(10,25,41,0.8) 100%)",
-        borderColor: "rgba(176,125,79,0.3)",
+        background: "linear-gradient(135deg, var(--color-grey-100) 0%, var(--color-grey-100) 100%)",
+        borderColor: "var(--color-grey-200)",
       }}
     >
       <div className="flex items-center gap-2 mb-3">
-        <Sparkles className="w-4 h-4 text-[var(--color-gold)]" />
-        <h3 className="text-sm font-semibold text-[var(--color-snow)]">Svakhetsanalyse</h3>
+        <Sparkles className="w-4 h-4 text-[var(--color-grey-900)]" />
+        <h3 className="text-sm font-semibold text-[var(--color-grey-900)]">Svakhetsanalyse</h3>
         <span
           className="ml-auto text-[10px] px-2 py-0.5 rounded-full font-medium"
-          style={{ background: "rgba(176,125,79,0.15)", color: "var(--color-gold)" }}
+          style={{ background: "var(--color-grey-200)", color: "var(--color-grey-900)" }}
         >
           Elite
         </span>
@@ -76,7 +76,7 @@ export function AIWeaknessCard() {
                 {error}
               </div>
             )}
-            <p className="text-xs text-[var(--color-gold-muted)] mb-4">
+            <p className="text-xs text-[var(--color-grey-500)] mb-4">
               Analyserer dine siste 30 dager med treningslogg og coaching-historikk for å
               identifisere ditt primære forbedringsområde.
             </p>
@@ -85,7 +85,7 @@ export function AIWeaknessCard() {
               className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold transition-opacity hover:opacity-90"
               style={{
                 background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
-                color: "#0a1929",
+                color: "var(--color-grey-900)",
               }}
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -100,7 +100,7 @@ export function AIWeaknessCard() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex items-center gap-2 text-sm text-[var(--color-gold-muted)]"
+            className="flex items-center gap-2 text-sm text-[var(--color-grey-500)]"
           >
             <Loader2 className="w-4 h-4 animate-spin" />
             Analyserer treningsdata...
@@ -118,25 +118,25 @@ export function AIWeaknessCard() {
             {/* Primary weakness */}
             <div
               className="rounded-lg p-3"
-              style={{ background: "rgba(176,125,79,0.08)", border: "1px solid rgba(176,125,79,0.15)" }}
+              style={{ background: "var(--color-grey-200)", border: "1px solid var(--color-grey-200)" }}
             >
-              <p className="text-[10px] uppercase tracking-widest text-[var(--color-gold-dim)] mb-1">
+              <p className="text-[10px] uppercase tracking-widest text-[var(--color-grey-400)] mb-1">
                 Primær svakhet
               </p>
-              <p className="text-sm font-semibold text-[var(--color-snow)]">
+              <p className="text-sm font-semibold text-[var(--color-grey-900)]">
                 {analysis.primaryWeakness}
               </p>
             </div>
 
             {/* Supporting evidence */}
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-[var(--color-gold-dim)] mb-2">
+              <p className="text-[10px] uppercase tracking-widest text-[var(--color-grey-400)] mb-2">
                 Grunnlag
               </p>
               <ul className="space-y-1">
                 {analysis.supportingEvidence.map((e, i) => (
-                  <li key={i} className="flex items-start gap-1.5 text-xs text-[var(--color-gold-muted)]">
-                    <ChevronRight className="w-3 h-3 mt-0.5 text-[var(--color-gold)] flex-shrink-0" />
+                  <li key={i} className="flex items-start gap-1.5 text-xs text-[var(--color-grey-500)]">
+                    <ChevronRight className="w-3 h-3 mt-0.5 text-[var(--color-grey-900)] flex-shrink-0" />
                     {e}
                   </li>
                 ))}
@@ -151,12 +151,12 @@ export function AIWeaknessCard() {
               <p className="text-[10px] uppercase tracking-widest text-green-400/60 mb-1">
                 Anbefaling
               </p>
-              <p className="text-xs text-[var(--color-snow)]/80">{analysis.recommendation}</p>
+              <p className="text-xs text-[var(--color-grey-500)]">{analysis.recommendation}</p>
             </div>
 
             {/* Focus area breakdown */}
             <div>
-              <p className="text-[10px] uppercase tracking-widest text-[var(--color-gold-dim)] mb-2">
+              <p className="text-[10px] uppercase tracking-widest text-[var(--color-grey-400)] mb-2">
                 Treningsfordeling (siste 30 dager)
               </p>
               <div className="space-y-1.5">
@@ -164,19 +164,19 @@ export function AIWeaknessCard() {
                   .sort((a, b) => b[1] - a[1])
                   .map(([area, pct]) => (
                     <div key={area} className="flex items-center gap-2">
-                      <span className="text-[10px] text-[var(--color-gold-muted)] w-20 flex-shrink-0">
+                      <span className="text-[10px] text-[var(--color-grey-500)] w-20 flex-shrink-0">
                         {AREA_LABELS[area] ?? area}
                       </span>
-                      <div className="flex-1 h-1.5 rounded-full bg-[var(--color-border)]">
+                      <div className="flex-1 h-1.5 rounded-full bg-[var(--color-grey-200)]">
                         <div
                           className="h-1.5 rounded-full"
                           style={{
                             width: `${pct}%`,
-                            background: "var(--color-gold)",
+                            background: "var(--color-grey-900)",
                           }}
                         />
                       </div>
-                      <span className="text-[10px] text-[var(--color-gold-muted)] w-8 text-right">
+                      <span className="text-[10px] text-[var(--color-grey-500)] w-8 text-right">
                         {pct}%
                       </span>
                     </div>
@@ -186,7 +186,7 @@ export function AIWeaknessCard() {
 
             <button
               onClick={() => setAnalysis(null)}
-              className="text-[10px] text-[var(--color-gold-dim)]/50 hover:text-[var(--color-gold-dim)] transition-colors"
+              className="text-[10px] text-[var(--color-grey-400)]/50 hover:text-[var(--color-grey-400)] transition-colors"
             >
               Analyser på nytt
             </button>

@@ -91,16 +91,16 @@ const roleLabelMap: Record<string, string> = {
   STUDENT: "Spiller",
 };
 
-const tierConfig: Record<string, { label: string; variant: "gold" | "info" | "neutral" }> = {
+const tierConfig: Record<string, { label: string; variant: "dark" | "info" | "neutral" }> = {
   VISITOR: { label: "Visitor", variant: "neutral" },
   ACADEMY: { label: "Academy", variant: "neutral" },
   STARTER: { label: "Starter", variant: "neutral" },
   PRO: { label: "Pro", variant: "info" },
-  ELITE: { label: "Elite", variant: "gold" },
+  ELITE: { label: "Elite", variant: "dark" },
 };
 
 const CATEGORY_CONFIG: Record<GoalCategory, { label: string; color: string }> = {
-  SCORE: { label: "Score", color: "var(--apple-gold-500)" },
+  SCORE: { label: "Score", color: "var(--color-grey-900)" },
   PHYSICAL: { label: "Fysisk", color: "#10B981" },
   MENTAL: { label: "Mental", color: "#8B5CF6" },
   TOURNAMENT: { label: "Turnering", color: "#38BDF8" },
@@ -174,8 +174,8 @@ export default function ProfilPage() {
 
   if (loading || !user || !stats) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[var(--apple-gray-50)] via-[#F0F4F8] to-[var(--apple-gray-100)] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[var(--apple-gold-500)]" />
+      <div className="min-h-screen bg-gradient-to-br from-[var(--color-grey-100)] via-[#F0F4F8] to-[var(--color-grey-100)] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[var(--color-grey-900)]" />
       </div>
     );
   }
@@ -233,7 +233,7 @@ export default function ProfilPage() {
   const completedGoals = goals.filter((g) => g.status === "COMPLETED");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--apple-gray-50)] via-[#F0F4F8] to-[var(--apple-gray-100)] relative">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--color-grey-100)] via-[#F0F4F8] to-[var(--color-grey-100)] relative">
       {/* Subtle pattern overlay */}
       <div
         className="absolute inset-0 pointer-events-none opacity-30"
@@ -254,7 +254,7 @@ export default function ProfilPage() {
           <h1 className="text-3xl font-bold text-[var(--apple-gray-950)] tracking-tight">
             Min profil
           </h1>
-          <p className="text-[var(--apple-gray-500)] mt-1">
+          <p className="text-[var(--color-grey-500)] mt-1">
             Administrer din profil, mål og prestasjoner
           </p>
         </motion.div>
@@ -278,7 +278,7 @@ export default function ProfilPage() {
               </h2>
 
               <div className="flex items-center justify-center gap-2 mb-4">
-                <AppleBadge variant="gold" icon={Crown}>
+                <AppleBadge variant="dark" icon={Crown}>
                   {roleLabelMap[user.role] ?? user.role}
                 </AppleBadge>
                 <AppleBadge variant={tier.variant}>
@@ -288,11 +288,11 @@ export default function ProfilPage() {
 
               {/* Handicap display */}
               {stats.currentHandicap !== null && (
-                <div className="bg-gradient-to-br from-[var(--apple-gold-50)] to-[var(--apple-gold-100)]/50 rounded-2xl p-4 border border-[var(--apple-gold-200)]/30 mt-4">
-                  <p className="text-[10px] font-semibold text-[var(--apple-gold-600)] uppercase tracking-widest mb-1">
+                <div className="bg-gradient-to-br from-[var(--color-grey-100)] to-[var(--color-grey-100)]/50 rounded-2xl p-4 border border-[var(--color-grey-200)]/30 mt-4">
+                  <p className="text-[10px] font-semibold text-[var(--color-grey-900)] uppercase tracking-widest mb-1">
                     Handicap
                   </p>
-                  <p className="text-4xl font-black text-[var(--apple-gold-600)]">
+                  <p className="text-4xl font-black text-[var(--color-grey-900)]">
                     {stats.currentHandicap.toFixed(1)}
                   </p>
                   <div className="mt-2">
@@ -302,18 +302,18 @@ export default function ProfilPage() {
               )}
 
               {/* Quick stats */}
-              <div className="grid grid-cols-3 gap-3 mt-6 pt-6 border-t border-[var(--apple-gray-200)]/50">
+              <div className="grid grid-cols-3 gap-3 mt-6 pt-6 border-t border-[var(--color-grey-200)]/50">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-[var(--apple-gray-900)]">{stats.trainingSessions}</p>
-                  <p className="text-[10px] text-[var(--apple-gray-500)] uppercase tracking-wide">Trening</p>
+                  <p className="text-2xl font-bold text-[var(--color-grey-900)]">{stats.trainingSessions}</p>
+                  <p className="text-[10px] text-[var(--color-grey-500)] uppercase tracking-wide">Trening</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-[var(--apple-gray-900)]">{stats.coachingSessions}</p>
-                  <p className="text-[10px] text-[var(--apple-gray-500)] uppercase tracking-wide">Coaching</p>
+                  <p className="text-2xl font-bold text-[var(--color-grey-900)]">{stats.coachingSessions}</p>
+                  <p className="text-[10px] text-[var(--color-grey-500)] uppercase tracking-wide">Coaching</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-[var(--apple-gray-900)]">{stats.tournaments}</p>
-                  <p className="text-[10px] text-[var(--apple-gray-500)] uppercase tracking-wide">Turneringer</p>
+                  <p className="text-2xl font-bold text-[var(--color-grey-900)]">{stats.tournaments}</p>
+                  <p className="text-[10px] text-[var(--color-grey-500)] uppercase tracking-wide">Turneringer</p>
                 </div>
               </div>
             </div>
@@ -324,7 +324,7 @@ export default function ProfilPage() {
             canCreateGoals && (
               <button
                 onClick={() => { setEditingGoal(null); setShowGoalModal(true); }}
-                className="flex items-center gap-1 text-xs font-medium text-[var(--apple-gold-600)] hover:text-[var(--apple-gold-700)]"
+                className="flex items-center gap-1 text-xs font-medium text-[var(--color-grey-900)] hover:text-[var(--color-grey-900)]"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Nytt mål
@@ -332,7 +332,7 @@ export default function ProfilPage() {
             )
           }>
             {goals.length === 0 ? (
-              <p className="text-sm text-[var(--apple-gray-500)] text-center py-8">
+              <p className="text-sm text-[var(--color-grey-500)] text-center py-8">
                 {canCreateGoals
                   ? "Ingen mål ennå. Sett ditt første mål!"
                   : "Oppgrader til Pro for å sette mål."}
@@ -351,7 +351,7 @@ export default function ProfilPage() {
                 ))}
                 {completedGoals.length > 0 && (
                   <div className="pt-3">
-                    <p className="text-[10px] font-semibold text-[var(--apple-gray-500)] uppercase tracking-widest mb-2">
+                    <p className="text-[10px] font-semibold text-[var(--color-grey-500)] uppercase tracking-widest mb-2">
                       Fullfort
                     </p>
                     {completedGoals.slice(0, 3).map((goal) => (
@@ -372,37 +372,37 @@ export default function ProfilPage() {
           <BentoCard span={3}>
             <div className="flex items-center justify-between mb-3">
               <Activity className="w-5 h-5 text-green-500" />
-              <span className="text-[10px] font-medium text-[var(--apple-gray-500)] uppercase">Siste 30 dager</span>
+              <span className="text-[10px] font-medium text-[var(--color-grey-500)] uppercase">Siste 30 dager</span>
             </div>
-            <p className="text-3xl font-bold text-[var(--apple-gray-900)]">{stats.trainingSessions}</p>
-            <p className="text-sm text-[var(--apple-gray-500)]">Treningsoekter</p>
+            <p className="text-3xl font-bold text-[var(--color-grey-900)]">{stats.trainingSessions}</p>
+            <p className="text-sm text-[var(--color-grey-500)]">Treningsoekter</p>
           </BentoCard>
 
           <BentoCard span={3}>
             <div className="flex items-center justify-between mb-3">
               <BookOpen className="w-5 h-5 text-blue-500" />
-              <span className="text-[10px] font-medium text-[var(--apple-gray-500)] uppercase">Totalt</span>
+              <span className="text-[10px] font-medium text-[var(--color-grey-500)] uppercase">Totalt</span>
             </div>
-            <p className="text-3xl font-bold text-[var(--apple-gray-900)]">{stats.coachingSessions}</p>
-            <p className="text-sm text-[var(--apple-gray-500)]">Coaching-oekter</p>
+            <p className="text-3xl font-bold text-[var(--color-grey-900)]">{stats.coachingSessions}</p>
+            <p className="text-sm text-[var(--color-grey-500)]">Coaching-oekter</p>
           </BentoCard>
 
           <BentoCard span={3}>
             <div className="flex items-center justify-between mb-3">
-              <Trophy className="w-5 h-5 text-[var(--apple-gold-500)]" />
-              <span className="text-[10px] font-medium text-[var(--apple-gray-500)] uppercase">Planlagt</span>
+              <Trophy className="w-5 h-5 text-[var(--color-grey-900)]" />
+              <span className="text-[10px] font-medium text-[var(--color-grey-500)] uppercase">Planlagt</span>
             </div>
-            <p className="text-3xl font-bold text-[var(--apple-gray-900)]">{stats.tournaments}</p>
-            <p className="text-sm text-[var(--apple-gray-500)]">Turneringer</p>
+            <p className="text-3xl font-bold text-[var(--color-grey-900)]">{stats.tournaments}</p>
+            <p className="text-sm text-[var(--color-grey-500)]">Turneringer</p>
           </BentoCard>
 
           <BentoCard span={3}>
             <div className="flex items-center justify-between mb-3">
               <Flame className="w-5 h-5 text-orange-500" />
-              <span className="text-[10px] font-medium text-[var(--apple-gray-500)] uppercase">{stats.streak === 1 ? "Dag" : "Dager"}</span>
+              <span className="text-[10px] font-medium text-[var(--color-grey-500)] uppercase">{stats.streak === 1 ? "Dag" : "Dager"}</span>
             </div>
-            <p className="text-3xl font-bold text-[var(--apple-gray-900)]">{stats.streak}</p>
-            <p className="text-sm text-[var(--apple-gray-500)]">Streak</p>
+            <p className="text-3xl font-bold text-[var(--color-grey-900)]">{stats.streak}</p>
+            <p className="text-sm text-[var(--color-grey-500)]">Streak</p>
           </BentoCard>
 
           {/* Achievements Card */}
@@ -429,20 +429,20 @@ export default function ProfilPage() {
                       >
                         <div
                           className={`w-12 h-12 rounded-xl flex items-center justify-center mb-1.5 transition-all ${
-                            isUnlocked ? "bg-gradient-to-br from-[var(--apple-gold-100)] to-[var(--apple-gold-200)] shadow-md" : "bg-[var(--apple-gray-100)] opacity-40"
+                            isUnlocked ? "bg-gradient-to-br from-[var(--color-grey-100)] to-[var(--color-grey-200)] shadow-md" : "bg-[var(--color-grey-100)] opacity-40"
                           }`}
                         >
-                          <Icon className={`w-5 h-5 ${isUnlocked ? "text-[var(--apple-gold-600)]" : "text-[var(--apple-gray-400)]"}`} />
+                          <Icon className={`w-5 h-5 ${isUnlocked ? "text-[var(--color-grey-900)]" : "text-[var(--color-grey-400)]"}`} />
                         </div>
-                        <span className={`text-[10px] leading-tight ${isUnlocked ? "text-[var(--apple-gray-900)]" : "text-[var(--apple-gray-400)]"}`}>
+                        <span className={`text-[10px] leading-tight ${isUnlocked ? "text-[var(--color-grey-900)]" : "text-[var(--color-grey-400)]"}`}>
                           {def.title}
                         </span>
 
                         {/* Tooltip */}
                         <div className="absolute bottom-full mb-2 hidden group-hover:block z-20">
-                          <div className="px-3 py-2 rounded-xl text-xs bg-white shadow-lg border border-[var(--apple-gray-200)] max-w-[160px]">
-                            <p className="font-semibold text-[var(--apple-gray-900)] mb-0.5">{def.title}</p>
-                            <p className="text-[var(--apple-gray-500)]">{def.description}</p>
+                          <div className="px-3 py-2 rounded-xl text-xs bg-white shadow-lg border border-[var(--color-grey-200)] max-w-[160px]">
+                            <p className="font-semibold text-[var(--color-grey-900)] mb-0.5">{def.title}</p>
+                            <p className="text-[var(--color-grey-500)]">{def.description}</p>
                           </div>
                         </div>
                       </motion.div>
@@ -458,18 +458,18 @@ export default function ProfilPage() {
               {!focusAreas && !focusLoading && (
                 <div>
                   {focusError && <p className="text-xs text-red-500 mb-2">{focusError}</p>}
-                  <p className="text-sm text-[var(--apple-gray-600)] mb-4">
+                  <p className="text-sm text-[var(--color-grey-600)] mb-4">
                     Fa personlige anbefalinger basert pa din treningshistorikk, runder og coachingøkter.
                   </p>
                   <AppleButton onClick={fetchFocusRecommendation} icon={Compass} size="sm">
                     Generer anbefaling
                   </AppleButton>
-                  <p className="mt-3 text-[10px] text-[var(--apple-gray-400)]">Drevet av AI</p>
+                  <p className="mt-3 text-[10px] text-[var(--color-grey-400)]">Drevet av AI</p>
                 </div>
               )}
 
               {focusLoading && (
-                <div className="flex items-center gap-2 py-6 text-[var(--apple-gray-500)]">
+                <div className="flex items-center gap-2 py-6 text-[var(--color-grey-500)]">
                   <Loader2 className="w-4 h-4 animate-spin" />
                   <span className="text-sm">Analyserer data...</span>
                 </div>
@@ -478,19 +478,19 @@ export default function ProfilPage() {
               {focusAreas && (
                 <div className="space-y-2">
                   {focusAreas.sort((a, b) => a.priority - b.priority).map((area, i) => (
-                    <div key={i} className="flex gap-3 p-3 rounded-xl bg-white/50 border border-[var(--apple-gray-200)]/50">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold bg-[var(--apple-gold-100)] text-[var(--apple-gold-600)]">
+                    <div key={i} className="flex gap-3 p-3 rounded-xl bg-[var(--color-grey-100)]0 border border-[var(--color-grey-200)]/50">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold bg-[var(--color-grey-100)] text-[var(--color-grey-900)]">
                         {area.priority}
                       </span>
                       <div>
-                        <p className="text-sm font-medium text-[var(--apple-gray-900)]">{area.title}</p>
-                        <p className="text-xs text-[var(--apple-gray-500)] mt-0.5">{area.reason}</p>
+                        <p className="text-sm font-medium text-[var(--color-grey-900)]">{area.title}</p>
+                        <p className="text-xs text-[var(--color-grey-500)] mt-0.5">{area.reason}</p>
                       </div>
                     </div>
                   ))}
                   <button
                     onClick={() => { setFocusAreas(null); fetchFocusRecommendation(); }}
-                    className="flex items-center gap-1 text-[10px] text-[var(--apple-gray-400)] hover:text-[var(--apple-gray-600)] mt-2"
+                    className="flex items-center gap-1 text-[10px] text-[var(--color-grey-400)] hover:text-[var(--color-grey-600)] mt-2"
                   >
                     <RefreshCw className="w-3 h-3" />
                     Oppdater
@@ -513,25 +513,25 @@ export default function ProfilPage() {
           <BentoCard span={6} variant="solid">
             <details className="group">
               <summary className="flex items-center gap-2 cursor-pointer list-none">
-                <Info className="w-4 h-4 text-[var(--apple-gold-500)]" />
-                <span className="text-sm font-medium text-[var(--apple-gray-900)]">Slik setter du gode mal</span>
-                <ChevronRight className="w-4 h-4 text-[var(--apple-gray-400)] ml-auto transition-transform group-open:rotate-90" />
+                <Info className="w-4 h-4 text-[var(--color-grey-900)]" />
+                <span className="text-sm font-medium text-[var(--color-grey-900)]">Slik setter du gode mal</span>
+                <ChevronRight className="w-4 h-4 text-[var(--color-grey-400)] ml-auto transition-transform group-open:rotate-90" />
               </summary>
               <div className="mt-4 space-y-4">
-                <p className="text-sm text-[var(--apple-gray-600)]">
+                <p className="text-sm text-[var(--color-grey-600)]">
                   {PORTAL_CONTENT.profil.goalSetting.intro}
                 </p>
                 <div>
-                  <p className="text-xs font-semibold text-[var(--apple-gray-500)] uppercase tracking-widest mb-2">
+                  <p className="text-xs font-semibold text-[var(--color-grey-500)] uppercase tracking-widest mb-2">
                     Eksempler pa mal
                   </p>
                   <div className="space-y-2">
                     {PORTAL_CONTENT.profil.goalSetting.examples.map((example) => (
                       <div key={example.type} className="flex items-start gap-3">
-                        <span className="text-xs font-medium text-[var(--apple-gold-600)] min-w-[70px]">
+                        <span className="text-xs font-medium text-[var(--color-grey-900)] min-w-[70px]">
                           {example.type}
                         </span>
-                        <span className="text-sm text-[var(--apple-gray-600)]">
+                        <span className="text-sm text-[var(--color-grey-600)]">
                           {example.example}
                         </span>
                       </div>
@@ -551,20 +551,20 @@ export default function ProfilPage() {
                 {editingProfile ? (
                   <>
                     <div>
-                      <label className="text-xs font-medium text-[var(--apple-gray-500)] uppercase tracking-wide">Navn</label>
+                      <label className="text-xs font-medium text-[var(--color-grey-500)] uppercase tracking-wide">Navn</label>
                       <input
                         value={profileName}
                         onChange={(e) => setProfileName(e.target.value)}
-                        className="mt-1 w-full px-3 py-2 rounded-lg border border-[var(--apple-gray-200)] bg-white text-[var(--apple-gray-900)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--apple-gold-500)] focus:border-transparent"
+                        className="mt-1 w-full px-3 py-2 rounded-lg border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent"
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-[var(--apple-gray-500)] uppercase tracking-wide">Telefon</label>
+                      <label className="text-xs font-medium text-[var(--color-grey-500)] uppercase tracking-wide">Telefon</label>
                       <input
                         value={profilePhone}
                         onChange={(e) => setProfilePhone(e.target.value)}
                         placeholder="+47 xxx xx xxx"
-                        className="mt-1 w-full px-3 py-2 rounded-lg border border-[var(--apple-gray-200)] bg-white text-[var(--apple-gray-900)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--apple-gold-500)] focus:border-transparent"
+                        className="mt-1 w-full px-3 py-2 rounded-lg border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent"
                       />
                     </div>
                     <div className="flex gap-2 pt-2">
@@ -578,12 +578,12 @@ export default function ProfilPage() {
                   </>
                 ) : (
                   <>
-                    <div className="flex items-center gap-2 text-sm text-[var(--apple-gray-600)]">
-                      <Mail className="w-4 h-4 text-[var(--apple-gray-400)]" />
+                    <div className="flex items-center gap-2 text-sm text-[var(--color-grey-600)]">
+                      <Mail className="w-4 h-4 text-[var(--color-grey-400)]" />
                       <span>{user.email ?? "Ingen e-post"}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-[var(--apple-gray-600)]">
-                      <Phone className="w-4 h-4 text-[var(--apple-gray-400)]" />
+                    <div className="flex items-center gap-2 text-sm text-[var(--color-grey-600)]">
+                      <Phone className="w-4 h-4 text-[var(--color-grey-400)]" />
                       <span>{user.phone ?? "Ikke registrert"}</span>
                     </div>
                     <AppleButton onClick={() => setEditingProfile(true)} variant="secondary" size="sm">
@@ -631,13 +631,13 @@ function GoalCard({
   return (
     <motion.div
       variants={itemVariants}
-      className="group flex items-start gap-3 p-3 rounded-xl bg-white/50 border border-[var(--apple-gray-200)]/50 hover:border-[var(--apple-gold-300)]/50 transition-colors"
+      className="group flex items-start gap-3 p-3 rounded-xl bg-[var(--color-grey-100)]0 border border-[var(--color-grey-200)]/50 hover:border-[var(--color-grey-300)]/50 transition-colors"
     >
       <button
         onClick={onToggle}
         className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-md border flex items-center justify-center transition-colors"
         style={{
-          borderColor: isCompleted ? "#10B981" : "var(--apple-gray-300)",
+          borderColor: isCompleted ? "#10B981" : "var(--color-grey-300)",
           background: isCompleted ? "rgba(16,185,129,0.1)" : "white",
         }}
       >
@@ -646,7 +646,7 @@ function GoalCard({
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-0.5">
-          <span className={`text-sm font-medium ${isCompleted ? "line-through text-[var(--apple-gray-400)]" : "text-[var(--apple-gray-900)]"}`}>
+          <span className={`text-sm font-medium ${isCompleted ? "line-through text-[var(--color-grey-400)]" : "text-[var(--color-grey-900)]"}`}>
             {goal.title}
           </span>
           <span
@@ -658,25 +658,25 @@ function GoalCard({
         </div>
 
         {goal.description && (
-          <p className="text-xs text-[var(--apple-gray-500)] mb-1.5 line-clamp-1">{goal.description}</p>
+          <p className="text-xs text-[var(--color-grey-500)] mb-1.5 line-clamp-1">{goal.description}</p>
         )}
 
         {progress !== null && !isCompleted && (
           <div className="flex items-center gap-2 mt-1.5">
-            <div className="flex-1 h-1.5 rounded-full bg-[var(--apple-gray-200)]">
+            <div className="flex-1 h-1.5 rounded-full bg-[var(--color-grey-200)]">
               <div
                 className="h-1.5 rounded-full transition-all duration-500"
                 style={{ width: `${progress}%`, background: config.color }}
               />
             </div>
-            <span className="text-[10px] text-[var(--apple-gray-500)] flex-shrink-0">
+            <span className="text-[10px] text-[var(--color-grey-500)] flex-shrink-0">
               {goal.currentValue} / {goal.targetValue} {goal.unit}
             </span>
           </div>
         )}
 
         {goal.targetDate && !isCompleted && (
-          <p className="text-[10px] text-[var(--apple-gray-400)] mt-1">
+          <p className="text-[10px] text-[var(--color-grey-400)] mt-1">
             Mal: {new Date(goal.targetDate).toLocaleDateString("nb-NO")}
           </p>
         )}
@@ -684,13 +684,13 @@ function GoalCard({
 
       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
         {onEdit && !isCompleted && (
-          <button onClick={onEdit} className="p-1 rounded hover:bg-[var(--apple-gray-100)] transition-colors">
-            <Pencil className="w-3 h-3 text-[var(--apple-gray-500)]" />
+          <button onClick={onEdit} className="p-1 rounded hover:bg-[var(--color-grey-100)] transition-colors">
+            <Pencil className="w-3 h-3 text-[var(--color-grey-500)]" />
           </button>
         )}
         {onPause && !isCompleted && (
-          <button onClick={onPause} className="p-1 rounded hover:bg-[var(--apple-gray-100)] transition-colors">
-            <Pause className="w-3 h-3 text-[var(--apple-gray-500)]" />
+          <button onClick={onPause} className="p-1 rounded hover:bg-[var(--color-grey-100)] transition-colors">
+            <Pause className="w-3 h-3 text-[var(--color-grey-500)]" />
           </button>
         )}
         <button onClick={onDelete} className="p-1 rounded hover:bg-red-50 transition-colors">

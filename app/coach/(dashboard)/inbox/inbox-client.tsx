@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Inbox } from "lucide-react";
 import { ChannelFilter, type Channel } from "@/components/coach/inbox/ChannelFilter";
 import { MessageList, type Message, type MessageStatus } from "@/components/coach/inbox/MessageList";
 import { MessageDetail } from "@/components/coach/inbox/MessageDetail";
@@ -63,10 +64,22 @@ export function InboxClient({
     }
   };
 
+  if (messages.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-full text-[var(--color-grey-500)]">
+        <div className="text-center">
+          <Inbox className="w-12 h-12 mx-auto mb-3 opacity-50" />
+          <p className="text-lg font-medium mb-1">Ingen meldinger ennå</p>
+          <p className="text-sm">Nye meldinger fra spillere dukker opp her</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col h-full bg-[var(--color-ink-100)]">
+    <div className="flex flex-col h-full bg-[var(--color-grey-100)]">
       {/* Channel filter */}
-      <div className="p-4 border-b border-[var(--color-ink-90)]">
+      <div className="p-4 border-b border-[var(--color-grey-200)]">
         <ChannelFilter
           selected={selectedChannel}
           onChange={setSelectedChannel}
@@ -77,7 +90,7 @@ export function InboxClient({
       {/* Main content */}
       <div className="flex-1 flex min-h-0">
         {/* Message list */}
-        <div className="w-96 border-r border-[var(--color-ink-90)] overflow-auto">
+        <div className="w-96 border-r border-[var(--color-grey-200)] overflow-auto bg-white">
           <MessageList
             messages={filteredMessages}
             selectedId={selectedMessageId}
@@ -86,7 +99,7 @@ export function InboxClient({
         </div>
 
         {/* Message detail */}
-        <div className="flex-1 bg-[var(--color-ink-95)] overflow-hidden">
+        <div className="flex-1 bg-white overflow-hidden">
           {selectedMessage ? (
             <MessageDetail
               message={selectedMessage}
@@ -94,7 +107,7 @@ export function InboxClient({
               onReject={handleReject}
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-[var(--color-ink-50)]">
+            <div className="flex items-center justify-center h-full text-[var(--color-grey-500)]">
               <div className="text-center">
                 <p className="text-lg font-medium mb-1">
                   Velg en melding for å se detaljer

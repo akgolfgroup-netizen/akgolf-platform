@@ -20,7 +20,7 @@ export default async function EmailTemplatesPage() {
         <h1 className="text-2xl font-bold text-[var(--color-navy)]">
           E-postmaler
         </h1>
-        <p className="text-sm text-[var(--color-ink-50)] mt-1">
+        <p className="text-sm text-[var(--color-grey-500)] mt-1">
           Opprett og rediger e-postmaler med dynamiske variabler
         </p>
       </div>

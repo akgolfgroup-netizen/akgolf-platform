@@ -37,25 +37,25 @@ export function AdminCalendarWeek({ date, bookings, onSelectBooking }: Props) {
   const days = Array.from({ length: DAYS }, (_, i) => addDays(weekStart, i));
 
   return (
-    <div className="rounded-2xl border border-[rgba(15,41,80,0.4)] bg-[rgba(10,25,41,0.7)] backdrop-blur-md overflow-hidden">
+    <div className="rounded-2xl border border-[var(--color-grey-200)] bg-white backdrop-blur-md overflow-hidden">
       {/* Day headers */}
-      <div className="grid border-b border-[rgba(15,41,80,0.4)]" style={{ gridTemplateColumns: "56px repeat(7, 1fr)" }}>
+      <div className="grid border-b border-[var(--color-grey-200)]" style={{ gridTemplateColumns: "56px repeat(7, 1fr)" }}>
         <div /> {/* spacer for time column */}
         {days.map((day) => (
           <div
             key={day.toISOString()}
-            className={`text-center py-3 border-l border-[rgba(15,41,80,0.4)] ${
-              isToday(day) ? "bg-[var(--color-gold)]/10" : ""
+            className={`text-center py-3 border-l border-[var(--color-grey-200)] ${
+              isToday(day) ? "bg-[var(--color-grey-900)]/10" : ""
             }`}
           >
-            <p className="text-[10px] uppercase text-[var(--color-snow)]/50 font-medium">
+            <p className="text-[10px] uppercase text-[var(--color-grey-400)] font-medium">
               {format(day, "EEE", { locale: nb })}
             </p>
             <p
               className={`text-sm font-semibold mt-0.5 ${
                 isToday(day)
-                  ? "bg-[var(--color-gold)] text-white w-7 h-7 rounded-full flex items-center justify-center mx-auto"
-                  : "text-[var(--color-snow)]"
+                  ? "bg-[var(--color-grey-900)] text-white w-7 h-7 rounded-full flex items-center justify-center mx-auto"
+                  : "text-[var(--color-grey-900)]"
               }`}
             >
               {format(day, "d")}
@@ -80,7 +80,7 @@ export function AdminCalendarWeek({ date, bookings, onSelectBooking }: Props) {
               className="absolute left-0 right-0"
               style={{ top: (hour - 8) * SLOT_HEIGHT }}
             >
-              <span className="text-[10px] text-[var(--color-snow)]/50 px-2 -translate-y-1/2 block">
+              <span className="text-[10px] text-[var(--color-grey-400)] px-2 -translate-y-1/2 block">
                 {String(hour).padStart(2, "0")}:00
               </span>
             </div>
@@ -96,8 +96,8 @@ export function AdminCalendarWeek({ date, bookings, onSelectBooking }: Props) {
           return (
             <div
               key={day.toISOString()}
-              className={`relative border-l border-[rgba(15,41,80,0.4)] ${
-                isToday(day) ? "bg-[var(--color-gold)]/5" : ""
+              className={`relative border-l border-[var(--color-grey-200)] ${
+                isToday(day) ? "bg-[var(--color-grey-900)]/5" : ""
               }`}
               style={{ height: HOURS.length * SLOT_HEIGHT }}
             >
@@ -105,7 +105,7 @@ export function AdminCalendarWeek({ date, bookings, onSelectBooking }: Props) {
               {HOURS.map((hour) => (
                 <div
                   key={hour}
-                  className="absolute left-0 right-0 border-t border-[rgba(15,41,80,0.2)]"
+                  className="absolute left-0 right-0 border-t border-[var(--color-grey-200)]"
                   style={{ top: (hour - 8) * SLOT_HEIGHT }}
                 />
               ))}
@@ -133,10 +133,10 @@ export function AdminCalendarWeek({ date, bookings, onSelectBooking }: Props) {
                       borderLeft: `2px solid ${color}`,
                     }}
                   >
-                    <p className="font-semibold text-[var(--color-snow)] truncate">
+                    <p className="font-semibold text-[var(--color-grey-900)] truncate">
                       {booking.student.name ?? "—"}
                     </p>
-                    <p className="text-[var(--color-snow)]/70 truncate">
+                    <p className="text-[var(--color-grey-500)] truncate">
                       {format(start, "HH:mm")} {booking.serviceType.name}
                     </p>
                   </button>
@@ -152,7 +152,7 @@ export function AdminCalendarWeek({ date, bookings, onSelectBooking }: Props) {
                   if (nowHours < 8 || nowHours > 22) return null;
                   return (
                     <div
-                      className="absolute left-0 right-0 border-t-2 border-[var(--color-gold)] z-10 pointer-events-none"
+                      className="absolute left-0 right-0 border-t-2 border-[var(--color-grey-900)] z-10 pointer-events-none"
                       style={{ top: (nowHours - 8) * SLOT_HEIGHT }}
                     />
                   );

@@ -44,8 +44,8 @@ export function StatCard({
   trend,
   trendLabel,
   icon: Icon,
-  iconColor = "text-[var(--apple-gold-500)]",
-  iconBg = "bg-[var(--apple-gold-50)]",
+  iconColor = "text-[var(--color-grey-900)]",
+  iconBg = "bg-[var(--color-grey-100)]",
   className,
   size = "md",
 }: StatCardProps) {
@@ -73,7 +73,7 @@ export function StatCard({
             <Icon className={cn(iconColor, sizes.iconInner)} />
           </div>
         )}
-        <span className={cn("uppercase tracking-wider text-[var(--apple-gray-500)] font-medium", sizes.label)}>
+        <span className={cn("uppercase tracking-wider text-[var(--color-grey-500)] font-medium", sizes.label)}>
           {label}
         </span>
       </div>
@@ -81,7 +81,7 @@ export function StatCard({
       <div className="flex items-end justify-between">
         <motion.span
           className={cn(
-            "font-light tracking-tight bg-gradient-to-br from-[var(--apple-gray-950)] to-[var(--apple-gray-700)]",
+            "font-light tracking-tight bg-gradient-to-br from-[var(--apple-gray-950)] to-[var(--color-grey-700)]",
             "bg-clip-text text-transparent",
             sizes.value
           )}
@@ -98,7 +98,7 @@ export function StatCard({
               "flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium",
               isPositive && "bg-green-50 text-green-600",
               isNegative && "bg-red-50 text-red-600",
-              !isPositive && !isNegative && "bg-[var(--apple-gray-100)] text-[var(--apple-gray-600)]"
+              !isPositive && !isNegative && "bg-[var(--color-grey-100)] text-[var(--color-grey-600)]"
             )}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}

@@ -150,7 +150,7 @@ function AchievementCard({
               cy="32"
               r="28"
               fill="none"
-              stroke="var(--color-gold)"
+              stroke="var(--color-grey-900)"
               strokeWidth="2"
               strokeLinecap="round"
               initial={{ strokeDasharray: "0 176" }}
@@ -224,7 +224,7 @@ export function AchievementShowcase({
               <span>{(unlockedCount % 3) * 100} / 300 XP</span>
               <span>Neste level</span>
             </div>
-            <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+            <div className="h-1.5 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
               <motion.div
                 className="h-full bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full"
                 initial={{ width: 0 }}
@@ -304,7 +304,7 @@ export function AchievementShowcase({
                       className={`inline-block px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider mb-2 ${
                         isUnlocked
                           ? `bg-gradient-to-r ${rarity.gradient} text-white`
-                          : "bg-white/10 text-[var(--portal-text-muted)]"
+                          : "bg-[var(--color-grey-200)] text-[var(--portal-text-muted)]"
                       }`}
                     >
                       {rarity.label}
@@ -323,7 +323,7 @@ export function AchievementShowcase({
                       </p>
                     ) : (
                       <div className="mt-4">
-                        <div className="h-2 bg-white/5 rounded-full overflow-hidden mb-2">
+                        <div className="h-2 bg-[var(--color-grey-100)] rounded-full overflow-hidden mb-2">
                           <motion.div
                             className="h-full bg-gold rounded-full"
                             initial={{ width: 0 }}
@@ -340,7 +340,7 @@ export function AchievementShowcase({
 
                     <button
                       onClick={() => setSelectedAchievement(null)}
-                      className="mt-6 px-6 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-sm font-medium text-white transition-colors cursor-pointer"
+                      className="mt-6 px-6 py-2 rounded-lg bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)] text-sm font-medium text-white transition-colors cursor-pointer"
                     >
                       Lukk
                     </button>

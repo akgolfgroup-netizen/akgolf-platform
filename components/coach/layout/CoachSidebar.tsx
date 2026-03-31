@@ -31,9 +31,9 @@ export function CoachSidebar() {
   };
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-50 w-64 bg-[var(--color-ink-90)] border-r border-[var(--color-ink-80)]">
-      <div className="flex h-16 items-center px-6 border-b border-[var(--color-ink-80)]">
-        <Link href="/coach" className="text-xl font-bold text-white">
+    <aside className="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-[var(--color-grey-200)]">
+      <div className="flex h-16 items-center px-6 border-b border-[var(--color-grey-200)]">
+        <Link href="/coach" className="text-xl font-bold text-[var(--color-grey-900)]">
           Coach Hub
         </Link>
       </div>
@@ -47,8 +47,8 @@ export function CoachSidebar() {
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 active
-                  ? "bg-[var(--color-gold)] text-[var(--color-ink-100)]"
-                  : "text-[var(--color-ink-40)] hover:bg-[var(--color-ink-80)] hover:text-white"
+                  ? "bg-[var(--color-black)] text-white"
+                  : "text-[var(--color-grey-400)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)]"
               )}
             >
               <item.icon className="h-5 w-5" />
@@ -63,8 +63,8 @@ export function CoachSidebar() {
           className={cn(
             "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
             pathname.startsWith("/coach/settings")
-              ? "bg-[var(--color-gold)] text-[var(--color-ink-100)]"
-              : "text-[var(--color-ink-40)] hover:bg-[var(--color-ink-80)] hover:text-white"
+              ? "bg-[var(--color-black)] text-white"
+              : "text-[var(--color-grey-400)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)]"
           )}
         >
           <Settings className="h-5 w-5" />
@@ -72,7 +72,7 @@ export function CoachSidebar() {
         </Link>
         <Link
           href="/portal"
-          className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-ink-50)] hover:bg-[var(--color-ink-80)] hover:text-white transition-colors"
+          className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors"
         >
           <span className="text-xs">Tilbake til Portal</span>
         </Link>

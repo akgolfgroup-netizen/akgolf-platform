@@ -29,9 +29,9 @@ const TYPE_LABELS: Record<string, string> = {
 export function CalendarListView({ events }: CalendarListViewProps) {
   if (events.length === 0) {
     return (
-      <div className="text-center py-16 rounded-2xl border border-[rgba(15,41,80,0.4)]">
-        <Calendar className="w-12 h-12 mx-auto mb-4 text-[var(--color-snow)]/50" />
-        <p className="text-[var(--color-snow)]/70">
+      <div className="text-center py-16 rounded-2xl border border-[var(--color-grey-200)]">
+        <Calendar className="w-12 h-12 mx-auto mb-4 text-[var(--color-grey-400)]" />
+        <p className="text-[var(--color-grey-500)]">
           Ingen hendelser i denne perioden.
         </p>
       </div>
@@ -45,11 +45,11 @@ export function CalendarListView({ events }: CalendarListViewProps) {
       {weeks.map(({ weekStart, events: weekEvents }) => (
         <div key={format(weekStart, "yyyy-'W'II")}>
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-sm font-semibold uppercase tracking-wider text-[var(--color-gold)]">
+            <span className="text-sm font-semibold uppercase tracking-wider text-[var(--color-grey-900)]">
               Uke {format(weekStart, "I", { locale: nb })} · {format(weekStart, "d. MMMM", { locale: nb })}
             </span>
             {isSameWeek(weekStart, new Date(), { weekStartsOn: 1 }) && (
-              <span className="text-xs px-3 py-1 rounded-full font-medium bg-[rgba(176,125,79,0.15)] text-[var(--color-gold)] border border-[rgba(176,125,79,0.3)]">
+              <span className="text-xs px-3 py-1 rounded-full font-medium bg-[var(--color-grey-100)] text-[var(--color-grey-900)] border border-[var(--color-grey-200)]">
                 Denne uken
               </span>
             )}
@@ -62,13 +62,13 @@ export function CalendarListView({ events }: CalendarListViewProps) {
                   <p
                     className={`text-sm font-medium ${
                       isToday(new Date(e.startDate))
-                        ? "text-[var(--color-gold)]"
-                        : "text-[var(--color-snow)]"
+                        ? "text-[var(--color-grey-900)]"
+                        : "text-[var(--color-grey-900)]"
                     }`}
                   >
                     {format(new Date(e.startDate), "EEE d.", { locale: nb })}
                   </p>
-                  <p className="text-[var(--color-snow)]/50">
+                  <p className="text-[var(--color-grey-400)]">
                     {TYPE_LABELS[e.type]}
                   </p>
                 </div>

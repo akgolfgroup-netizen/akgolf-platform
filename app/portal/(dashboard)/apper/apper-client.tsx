@@ -147,7 +147,7 @@ export function ApperClient({
 
       {/* Bundles */}
       <div className="space-y-4">
-        <p className="text-[11px] font-semibold text-[var(--color-snow-dim)]/50 uppercase tracking-widest">
+        <p className="text-[11px] font-semibold text-[var(--color-grey-400)]/50 uppercase tracking-widest">
           Pakker
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -161,22 +161,22 @@ export function ApperClient({
                 className="rounded-2xl p-6 border relative overflow-hidden"
                 style={{
                   background: isPremium
-                    ? "linear-gradient(135deg, rgba(184,151,92,0.15) 0%, rgba(10,25,41,0.9) 100%)"
-                    : "rgba(10,25,41,0.7)",
+                    ? "linear-gradient(135deg, var(--color-grey-200) 0%, var(--color-grey-100) 100%)"
+                    : "var(--color-grey-100)",
                   borderColor: isPremium
-                    ? "rgba(184,151,92,0.4)"
-                    : "rgba(15,41,80,0.8)",
+                    ? "var(--color-grey-200)"
+                    : "var(--color-grey-200)",
                 }}
               >
                 {isPremium && (
                   <div className="absolute top-3 right-3">
-                    <Crown className="w-5 h-5 text-[var(--color-gold)]" />
+                    <Crown className="w-5 h-5 text-[var(--color-grey-900)]" />
                   </div>
                 )}
-                <h3 className="text-lg font-bold text-[var(--color-snow)] mb-1">
+                <h3 className="text-lg font-bold text-[var(--color-grey-900)] mb-1">
                   {bundle.name}
                 </h3>
-                <p className="text-xs text-[var(--color-gold-muted)] mb-3">
+                <p className="text-xs text-[var(--color-grey-500)] mb-3">
                   {bundle.description}
                 </p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
@@ -185,8 +185,8 @@ export function ApperClient({
                       key={item.module.slug}
                       className="text-[10px] px-2 py-0.5 rounded-full border"
                       style={{
-                        borderColor: "rgba(184,151,92,0.3)",
-                        color: "var(--color-gold-muted)",
+                        borderColor: "var(--color-grey-200)",
+                        color: "var(--color-grey-500)",
                       }}
                     >
                       {item.module.name}
@@ -195,10 +195,10 @@ export function ApperClient({
                 </div>
                 <div className="flex items-end justify-between">
                   <div>
-                    <span className="text-2xl font-bold text-[var(--color-snow)]">
+                    <span className="text-2xl font-bold text-[var(--color-grey-900)]">
                       {bundle.monthlyPriceNok / 100}
                     </span>
-                    <span className="text-sm text-[var(--color-gold-muted)] ml-1">
+                    <span className="text-sm text-[var(--color-grey-500)] ml-1">
                       kr/mnd
                     </span>
                   </div>
@@ -214,8 +214,8 @@ export function ApperClient({
                       style={{
                         background: isPremium
                           ? "linear-gradient(135deg, #c9a96e, #B07D4F)"
-                          : "rgba(184,151,92,0.2)",
-                        color: isPremium ? "#0a1929" : "var(--color-gold)",
+                          : "var(--color-grey-200)",
+                        color: isPremium ? "var(--color-grey-900)" : "var(--color-grey-900)",
                       }}
                     >
                       {loading === bundle.slug ? (
@@ -234,7 +234,7 @@ export function ApperClient({
 
       {/* Individual modules */}
       <div className="space-y-4">
-        <p className="text-[11px] font-semibold text-[var(--color-snow-dim)]/50 uppercase tracking-widest">
+        <p className="text-[11px] font-semibold text-[var(--color-grey-400)]/50 uppercase tracking-widest">
           Enkeltapper
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -247,18 +247,18 @@ export function ApperClient({
                 key={mod.id}
                 className="rounded-2xl p-5 border transition-colors"
                 style={{
-                  background: "rgba(10,25,41,0.7)",
+                  background: "var(--color-grey-100)",
                   borderColor: active
                     ? "rgba(34,197,94,0.4)"
-                    : "rgba(15,41,80,0.8)",
+                    : "var(--color-grey-200)",
                 }}
               >
                 <div className="flex items-start justify-between mb-3">
                   <div
                     className="w-9 h-9 rounded-xl flex items-center justify-center"
-                    style={{ background: "rgba(184,151,92,0.15)" }}
+                    style={{ background: "var(--color-grey-200)" }}
                   >
-                    <Icon className="w-4.5 h-4.5 text-[var(--color-gold)]" />
+                    <Icon className="w-4.5 h-4.5 text-[var(--color-grey-900)]" />
                   </div>
                   {active && (
                     <span className="text-[10px] font-medium text-green-400 flex items-center gap-1">
@@ -266,20 +266,20 @@ export function ApperClient({
                     </span>
                   )}
                 </div>
-                <h4 className="text-sm font-semibold text-[var(--color-snow)] mb-1">
+                <h4 className="text-sm font-semibold text-[var(--color-grey-900)] mb-1">
                   {mod.name}
                 </h4>
-                <p className="text-xs text-[var(--color-gold-muted)] mb-4 line-clamp-2">
+                <p className="text-xs text-[var(--color-grey-500)] mb-4 line-clamp-2">
                   {mod.description}
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-[var(--color-snow)]">
+                  <span className="text-sm font-bold text-[var(--color-grey-900)]">
                     {mod.monthlyPriceNok === 0 ? (
                       "Gratis"
                     ) : (
                       <>
                         {mod.monthlyPriceNok / 100}
-                        <span className="text-xs font-normal text-[var(--color-gold-muted)] ml-0.5">
+                        <span className="text-xs font-normal text-[var(--color-grey-500)] ml-0.5">
                           kr/mnd
                         </span>
                       </>
@@ -307,8 +307,8 @@ export function ApperClient({
                       disabled={loading !== null}
                       className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors"
                       style={{
-                        background: "rgba(184,151,92,0.2)",
-                        color: "var(--color-gold)",
+                        background: "var(--color-grey-200)",
+                        color: "var(--color-grey-900)",
                       }}
                     >
                       {loading === mod.slug ? (
@@ -331,7 +331,7 @@ export function ApperClient({
           <button
             onClick={handlePortal}
             disabled={loading === "portal"}
-            className="flex items-center gap-2 text-sm text-[var(--color-gold-muted)] hover:text-[var(--color-gold)] transition-colors"
+            className="flex items-center gap-2 text-sm text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors"
           >
             <Settings className="w-4 h-4" />
             {loading === "portal" ? "Åpner..." : "Administrer abonnementer"}

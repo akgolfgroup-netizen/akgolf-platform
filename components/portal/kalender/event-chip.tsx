@@ -20,11 +20,11 @@ export function EventChip({ event }: EventChipProps) {
         className="w-2 h-2 rounded-full flex-shrink-0"
         style={{ backgroundColor: event.color }}
       />
-      <span className="truncate font-medium text-[var(--color-snow)]">
+      <span className="truncate font-medium text-[var(--color-grey-900)]">
         {event.title}
       </span>
       {!event.allDay && (
-        <span className="flex-shrink-0 text-xs text-[var(--color-snow)]/70">
+        <span className="flex-shrink-0 text-xs text-[var(--color-grey-500)]">
           {format(new Date(event.startDate), "HH:mm")}
         </span>
       )}

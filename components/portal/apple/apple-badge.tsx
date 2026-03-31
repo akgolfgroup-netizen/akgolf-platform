@@ -5,7 +5,7 @@ import type { LucideIcon } from "lucide-react";
 
 interface AppleBadgeProps {
   children: React.ReactNode;
-  variant?: "success" | "warning" | "error" | "info" | "gold" | "neutral";
+  variant?: "success" | "warning" | "error" | "info" | "dark" | "neutral";
   size?: "sm" | "md" | "lg";
   icon?: LucideIcon;
   dot?: boolean;
@@ -17,8 +17,8 @@ const variantMap = {
   warning: "bg-amber-50 text-amber-600 border-amber-100",
   error: "bg-red-50 text-red-600 border-red-100",
   info: "bg-blue-50 text-blue-600 border-blue-100",
-  gold: "bg-[var(--apple-gold-50)] text-[var(--apple-gold-600)] border-[var(--apple-gold-100)]",
-  neutral: "bg-[var(--apple-gray-100)] text-[var(--apple-gray-600)] border-[var(--apple-gray-200)]",
+  dark: "bg-[var(--color-grey-100)] text-[var(--color-grey-900)] border-[var(--color-grey-200)]",
+  neutral: "bg-[var(--color-grey-100)] text-[var(--color-grey-600)] border-[var(--color-grey-200)]",
 };
 
 const dotColorMap = {
@@ -26,8 +26,8 @@ const dotColorMap = {
   warning: "bg-amber-500",
   error: "bg-red-500",
   info: "bg-blue-500",
-  gold: "bg-[var(--apple-gold-500)]",
-  neutral: "bg-[var(--apple-gray-500)]",
+  dark: "bg-[var(--color-grey-900)]",
+  neutral: "bg-[var(--color-grey-500)]",
 };
 
 const sizeMap = {

@@ -28,7 +28,7 @@ const statusConfig: Record<string, { label: string; variant: "success" | "warnin
 
 export function BookingCard({ booking }: BookingCardProps) {
   const status = statusConfig[booking.status] ?? statusConfig.PENDING;
-  const accent = booking.serviceType.color ?? "var(--apple-gold-500)";
+  const accent = booking.serviceType.color ?? "var(--color-grey-900)";
 
   return (
     <AppleCard variant="glass" padding="none" className="overflow-hidden">
@@ -42,41 +42,41 @@ export function BookingCard({ booking }: BookingCardProps) {
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
             {/* Service name */}
-            <h3 className="font-semibold text-base text-[var(--apple-gray-900)] truncate mb-3">
+            <h3 className="font-semibold text-base text-[var(--color-grey-900)] truncate mb-3">
               {booking.serviceType.name}
             </h3>
 
             {/* Details grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <div className="flex items-center gap-2.5 text-sm text-[var(--apple-gray-600)]">
-                <div className="w-7 h-7 rounded-lg bg-[var(--apple-gray-100)] flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-3.5 h-3.5 text-[var(--apple-gold-500)]" />
+              <div className="flex items-center gap-2.5 text-sm text-[var(--color-grey-600)]">
+                <div className="w-7 h-7 rounded-lg bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-3.5 h-3.5 text-[var(--color-grey-900)]" />
                 </div>
                 <span className="truncate">
                   {format(new Date(booking.startTime), "EEEE d. MMM", { locale: nb })}
                 </span>
               </div>
 
-              <div className="flex items-center gap-2.5 text-sm text-[var(--apple-gray-600)]">
-                <div className="w-7 h-7 rounded-lg bg-[var(--apple-gray-100)] flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-3.5 h-3.5 text-[var(--apple-gold-500)]" />
+              <div className="flex items-center gap-2.5 text-sm text-[var(--color-grey-600)]">
+                <div className="w-7 h-7 rounded-lg bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-3.5 h-3.5 text-[var(--color-grey-900)]" />
                 </div>
                 <span>
                   {format(new Date(booking.startTime), "HH:mm")} - {format(new Date(booking.endTime), "HH:mm")}
-                  <span className="text-[var(--apple-gray-400)] ml-1">
+                  <span className="text-[var(--color-grey-400)] ml-1">
                     ({booking.serviceType.duration} min)
                   </span>
                 </span>
               </div>
 
-              <div className="flex items-center gap-2.5 text-sm text-[var(--apple-gray-600)]">
-                <div className="w-7 h-7 rounded-lg bg-[var(--apple-gray-100)] flex items-center justify-center flex-shrink-0">
-                  <User className="w-3.5 h-3.5 text-[var(--apple-gold-500)]" />
+              <div className="flex items-center gap-2.5 text-sm text-[var(--color-grey-600)]">
+                <div className="w-7 h-7 rounded-lg bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
+                  <User className="w-3.5 h-3.5 text-[var(--color-grey-900)]" />
                 </div>
                 <span className="truncate">
                   {booking.instructor.user.name}
                   {booking.instructor.title && (
-                    <span className="text-[var(--apple-gray-400)]">
+                    <span className="text-[var(--color-grey-400)]">
                       {" "}({booking.instructor.title})
                     </span>
                   )}
@@ -84,9 +84,9 @@ export function BookingCard({ booking }: BookingCardProps) {
               </div>
 
               {booking.location && (
-                <div className="flex items-center gap-2.5 text-sm text-[var(--apple-gray-600)]">
-                  <div className="w-7 h-7 rounded-lg bg-[var(--apple-gray-100)] flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-3.5 h-3.5 text-[var(--apple-gold-500)]" />
+                <div className="flex items-center gap-2.5 text-sm text-[var(--color-grey-600)]">
+                  <div className="w-7 h-7 rounded-lg bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-3.5 h-3.5 text-[var(--color-grey-900)]" />
                   </div>
                   <span className="truncate">{booking.location.name}</span>
                 </div>

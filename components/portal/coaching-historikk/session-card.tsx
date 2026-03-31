@@ -51,24 +51,24 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
   }
 
   return (
-    <div className="bg-[var(--color-muted)] border border-[var(--color-border)] rounded-xl overflow-hidden">
+    <div className="bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
       {/* Header */}
       <div className="p-4 flex items-start gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-medium text-[var(--color-gold)]">
+            <span className="text-xs font-medium text-[var(--color-grey-900)]">
               {format(new Date(session.sessionDate), "d. MMMM yyyy", { locale: nb })}
             </span>
             {hasAI && (
-              <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-[var(--color-gold)]/10 text-[var(--color-gold)] border border-[var(--color-gold)]/20">
+              <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-[var(--color-grey-900)]/10 text-[var(--color-grey-900)] border border-[var(--color-grey-900)]/20">
                 <Zap className="w-2.5 h-2.5" /> Oppsummert
               </span>
             )}
           </div>
-          <h3 className="font-medium text-[var(--color-snow)] text-sm">
+          <h3 className="font-medium text-[var(--color-grey-900)] text-sm">
             {session.primaryFocus ?? "Coachingsesjon"}
           </h3>
-          <p className="text-xs text-[var(--color-gold-muted)] mt-0.5">
+          <p className="text-xs text-[var(--color-grey-500)] mt-0.5">
             {session.student.name} · Coach: {session.instructor.user.name}
           </p>
         </div>
@@ -78,7 +78,7 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
             <button
               onClick={handleGenerateAI}
               disabled={generating}
-              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-[var(--color-gold)] text-[var(--color-bg-deep)] font-medium hover:bg-[var(--color-gold-muted)] transition-colors disabled:opacity-50"
+              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-[var(--color-grey-900)] text-[var(--color-grey-900)] font-medium hover:bg-[var(--color-grey-500)] transition-colors disabled:opacity-50"
             >
               {generating ? (
                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -90,7 +90,7 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
           )}
           <button
             onClick={() => setExpanded(!expanded)}
-            className="p-1.5 rounded-lg hover:bg-[var(--color-border)] transition-colors text-[var(--color-gold-muted)]"
+            className="p-1.5 rounded-lg hover:bg-[var(--color-grey-200)] transition-colors text-[var(--color-grey-500)]"
           >
             {expanded ? (
               <ChevronUp className="w-4 h-4" />
@@ -103,13 +103,13 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
 
       {/* Expanded */}
       {expanded && (
-        <div className="px-4 pb-4 space-y-3 border-t border-[var(--color-border)] pt-3">
+        <div className="px-4 pb-4 space-y-3 border-t border-[var(--color-grey-200)] pt-3">
           {session.studentNotes && (
             <div>
-              <p className="text-xs font-semibold text-[var(--color-gold-muted)] uppercase tracking-wider mb-1">
+              <p className="text-xs font-semibold text-[var(--color-grey-500)] uppercase tracking-wider mb-1">
                 Notater
               </p>
-              <p className="text-sm text-[var(--color-snow)]/80 whitespace-pre-wrap">
+              <p className="text-sm text-[var(--color-grey-500)] whitespace-pre-wrap">
                 {session.studentNotes}
               </p>
             </div>

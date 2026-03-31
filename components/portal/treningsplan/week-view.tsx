@@ -34,8 +34,8 @@ const focusColors: Record<string, { bg: string; border: string; text: string; ic
     icon: "#38BDF8"
   },
   naerspill: {
-    bg: "rgba(176,125,79,0.15)",
-    border: "rgba(176,125,79,0.4)",
+    bg: "var(--color-grey-200)",
+    border: "var(--color-grey-200)",
     text: "#E8D4B0",
     icon: "#B07D4F"
   },
@@ -110,20 +110,20 @@ export function WeekView({
       {/* Week Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-lg bg-[var(--color-gold)] text-white">
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-lg bg-[var(--color-grey-900)] text-white">
             {week.weekNumber}
           </div>
           <div>
-            <h3 className="font-semibold text-lg text-[var(--color-snow)]">
+            <h3 className="font-semibold text-lg text-[var(--color-grey-900)]">
               Uke {week.weekNumber}
             </h3>
             {week.focus && (
-              <p className="text-[var(--color-snow)]/70">{week.focus}</p>
+              <p className="text-[var(--color-grey-500)]">{week.focus}</p>
             )}
           </div>
         </div>
         {week.volumeLabel && (
-          <span className="text-sm px-4 py-2 rounded-full font-medium bg-[rgba(15,41,80,0.3)] text-[var(--color-snow)]/70 border border-[rgba(15,41,80,0.4)]">
+          <span className="text-sm px-4 py-2 rounded-full font-medium bg-[var(--color-grey-100)] text-[var(--color-grey-500)] border border-[var(--color-grey-200)]">
             {week.volumeLabel}
           </span>
         )}
@@ -144,20 +144,20 @@ export function WeekView({
               <div
                 className={`text-center py-3 rounded-xl mb-3 ${
                   isToday
-                    ? "bg-[rgba(176,125,79,0.15)] border border-[rgba(176,125,79,0.4)]"
+                    ? "bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]"
                     : "bg-transparent border border-transparent"
                 }`}
               >
                 <p
                   className={`text-xs font-medium uppercase tracking-wide ${
-                    isToday ? "text-[var(--color-gold)]" : "text-[var(--color-snow)]/50"
+                    isToday ? "text-[var(--color-grey-900)]" : "text-[var(--color-grey-400)]"
                   }`}
                 >
                   {dayName}
                 </p>
                 <p
                   className={`text-xl font-semibold mt-1 ${
-                    isToday ? "text-[var(--color-snow)]" : "text-[var(--color-snow)]"
+                    isToday ? "text-[var(--color-grey-900)]" : "text-[var(--color-grey-900)]"
                   }`}
                 >
                   {dateNum}
@@ -167,8 +167,8 @@ export function WeekView({
               {/* Sessions for this day */}
               <div className="flex flex-col gap-2 min-h-[100px]">
                 {sessions.length === 0 ? (
-                  <div className="flex-1 rounded-xl flex items-center justify-center min-h-[80px] bg-transparent border border-dashed border-[rgba(15,41,80,0.4)]">
-                    <span className="text-[var(--color-snow)]/50">–</span>
+                  <div className="flex-1 rounded-xl flex items-center justify-center min-h-[80px] bg-transparent border border-dashed border-[var(--color-grey-200)]">
+                    <span className="text-[var(--color-grey-400)]">–</span>
                   </div>
                 ) : (
                   sessions.map((s) => {
@@ -199,13 +199,13 @@ export function WeekView({
                         </div>
 
                         {/* Title */}
-                        <p className="text-xs font-semibold leading-tight mb-2 text-[var(--color-snow)]">
+                        <p className="text-xs font-semibold leading-tight mb-2 text-[var(--color-grey-900)]">
                           {s.title}
                         </p>
 
                         {/* Duration */}
                         {s.durationMinutes && (
-                          <p className="text-[10px] flex items-center gap-1 mb-2 text-[var(--color-snow)]/70">
+                          <p className="text-[10px] flex items-center gap-1 mb-2 text-[var(--color-grey-500)]">
                             <Clock className="w-3 h-3" />
                             {s.durationMinutes} min
                           </p>

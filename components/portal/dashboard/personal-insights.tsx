@@ -191,7 +191,7 @@ export function PersonalInsights({
         {insights.length > 1 && (
           <button
             onClick={handleRefresh}
-            className="p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
+            className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
             aria-label="Neste innsikt"
           >
             <motion.div

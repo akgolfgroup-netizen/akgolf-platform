@@ -24,9 +24,9 @@ const STATUS_LABELS: Record<string, string> = {
 const STATUS_COLORS: Record<string, string> = {
   CONFIRMED: "bg-[rgba(34,197,94,0.15)] text-[#86EFAC]",
   PENDING: "bg-[rgba(245,158,11,0.15)] text-[#FCD34D]",
-  COMPLETED: "bg-[rgba(15,41,80,0.3)] text-[var(--color-snow)]/70",
+  COMPLETED: "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]",
   NO_SHOW: "bg-[rgba(239,68,68,0.15)] text-[#FCA5A5]",
-  CANCELLED: "bg-[rgba(15,41,80,0.3)] text-[var(--color-snow)]/50",
+  CANCELLED: "bg-[var(--color-grey-100)] text-[var(--color-grey-400)]",
 };
 
 export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
@@ -72,15 +72,15 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
       />
 
       {/* Sheet */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-[var(--color-deep-ink)] shadow-xl z-50 flex flex-col border-l border-[rgba(15,41,80,0.4)]">
+      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-[white] shadow-xl z-50 flex flex-col border-l border-[var(--color-grey-200)]">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(15,41,80,0.4)]">
-          <h2 className="text-lg font-semibold text-[var(--color-snow)]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)]">
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
             Bookingdetaljer
           </h2>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-[rgba(15,41,80,0.3)] transition-colors text-[var(--color-snow)]/70"
+            className="p-1.5 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors text-[var(--color-grey-500)]"
           >
             <X className="w-4 h-4" />
           </button>
@@ -92,7 +92,7 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
           <div>
             <span
               className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${
-                STATUS_COLORS[booking.status] ?? "bg-[rgba(15,41,80,0.3)] text-[var(--color-snow)]/70"
+                STATUS_COLORS[booking.status] ?? "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]"
               }`}
             >
               {STATUS_LABELS[booking.status] ?? booking.status}
@@ -127,7 +127,7 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
 
           {/* Admin note */}
           <div>
-            <label className="text-xs font-medium text-[var(--color-snow)]/50 flex items-center gap-1.5 mb-2">
+            <label className="text-xs font-medium text-[var(--color-grey-400)] flex items-center gap-1.5 mb-2">
               <StickyNote className="w-3.5 h-3.5" />
               Admin-notat
             </label>
@@ -135,13 +135,13 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
               value={note}
               onChange={(e) => setNote(e.target.value)}
               rows={3}
-              className="w-full rounded-xl px-3 py-2 text-sm resize-none text-[var(--color-snow)] placeholder:text-[var(--color-snow)]/40 bg-[rgba(10,25,41,0.7)] border border-[rgba(15,41,80,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)]/40"
+              className="w-full rounded-xl px-3 py-2 text-sm resize-none text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/40"
               placeholder="Legg til et notat..."
             />
             <button
               onClick={handleSaveNote}
               disabled={saving}
-              className="mt-2 px-4 py-1.5 text-xs font-medium bg-[var(--color-gold)] text-white rounded-lg hover:bg-[var(--color-gold)]/90 disabled:opacity-50 transition-colors"
+              className="mt-2 px-4 py-1.5 text-xs font-medium bg-[var(--color-grey-900)] text-white rounded-lg hover:bg-[var(--color-grey-900)]/90 disabled:opacity-50 transition-colors"
             >
               {saving ? "Lagrer..." : "Lagre notat"}
             </button>
@@ -149,7 +149,7 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
         </div>
 
         {/* Actions */}
-        <div className="border-t border-[rgba(15,41,80,0.4)] p-6 space-y-2">
+        <div className="border-t border-[var(--color-grey-200)] p-6 space-y-2">
           {(booking.status === "CONFIRMED" || booking.status === "PENDING") && (
             <button
               onClick={handleMarkNoShow}
@@ -169,8 +169,8 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between text-sm">
-      <span className="text-[var(--color-snow)]/50">{label}</span>
-      <span className="font-medium text-[var(--color-snow)] text-right">{value}</span>
+      <span className="text-[var(--color-grey-400)]">{label}</span>
+      <span className="font-medium text-[var(--color-grey-900)] text-right">{value}</span>
     </div>
   );
 }

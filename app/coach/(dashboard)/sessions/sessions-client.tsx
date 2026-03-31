@@ -54,14 +54,14 @@ export function SessionsClient({
   return (
     <div className="space-y-6">
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-[var(--color-ink-80)] pb-4">
+      <div className="flex gap-2 border-b border-[var(--color-grey-200)] pb-4">
         <button
           onClick={() => setActiveTab("upcoming")}
           className={cn(
             "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
             activeTab === "upcoming"
-              ? "bg-[var(--color-gold)] text-[var(--color-ink-100)]"
-              : "bg-[var(--color-ink-90)] text-[var(--color-ink-40)] hover:text-white"
+              ? "bg-[var(--color-black)] text-white"
+              : "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)]"
           )}
         >
           Kommende ({upcomingSessions.length})
@@ -71,8 +71,8 @@ export function SessionsClient({
           className={cn(
             "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
             activeTab === "recent"
-              ? "bg-[var(--color-gold)] text-[var(--color-ink-100)]"
-              : "bg-[var(--color-ink-90)] text-[var(--color-ink-40)] hover:text-white"
+              ? "bg-[var(--color-black)] text-white"
+              : "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)]"
           )}
         >
           Fullforte ({recentSessions.length})
@@ -83,7 +83,7 @@ export function SessionsClient({
       {activeTab === "upcoming" && (
         <div className="space-y-4">
           {upcomingSessions.length === 0 ? (
-            <div className="text-center py-12 text-[var(--color-ink-50)]">
+            <div className="text-center py-12 text-[var(--color-grey-500)]">
               <Calendar className="h-12 w-12 mx-auto mb-3 opacity-50" />
               <p>Ingen kommende okter</p>
             </div>
@@ -91,11 +91,11 @@ export function SessionsClient({
             upcomingSessions.map((session) => (
               <div
                 key={session.id}
-                className="bg-[var(--color-ink-90)] rounded-xl p-4"
+                className="bg-white border border-[var(--color-grey-200)] rounded-xl p-4"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 text-sm text-[var(--color-gold)] mb-1">
+                    <div className="flex items-center gap-2 text-sm text-[var(--color-black)] mb-1">
                       <Calendar className="h-4 w-4" />
                       <span className="capitalize">
                         {formatSessionDate(session.startTime)}
@@ -105,18 +105,18 @@ export function SessionsClient({
                     <div className="flex items-center gap-3">
                       <Link
                         href={`/portal/admin/elever/${session.studentId}`}
-                        className="font-semibold text-white hover:text-[var(--color-gold)] transition-colors"
+                        className="font-semibold text-[var(--color-grey-900)] hover:text-[var(--color-black)] transition-colors"
                       >
                         {session.studentName}
                       </Link>
                       {session.studentHandicap !== null && (
-                        <span className="flex items-center gap-1 text-sm text-[var(--color-ink-50)]">
+                        <span className="flex items-center gap-1 text-sm text-[var(--color-grey-500)]">
                           <Trophy className="h-3.5 w-3.5" />
                           HCP {session.studentHandicap}
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-4 mt-2 text-sm text-[var(--color-ink-50)]">
+                    <div className="flex items-center gap-4 mt-2 text-sm text-[var(--color-grey-500)]">
                       <span>{session.serviceName}</span>
                       <span className="flex items-center gap-1">
                         <Clock className="h-3.5 w-3.5" />
@@ -126,9 +126,9 @@ export function SessionsClient({
                   </div>
                   <Link
                     href={`/portal/admin/bookinger?id=${session.id}`}
-                    className="p-2 rounded-lg bg-[var(--color-ink-80)] hover:bg-[var(--color-ink-70)] transition-colors"
+                    className="p-2 rounded-lg bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)] transition-colors"
                   >
-                    <ChevronRight className="h-5 w-5 text-[var(--color-ink-40)]" />
+                    <ChevronRight className="h-5 w-5 text-[var(--color-grey-400)]" />
                   </Link>
                 </div>
               </div>
@@ -141,7 +141,7 @@ export function SessionsClient({
       {activeTab === "recent" && (
         <div className="space-y-4">
           {recentSessions.length === 0 ? (
-            <div className="text-center py-12 text-[var(--color-ink-50)]">
+            <div className="text-center py-12 text-[var(--color-grey-500)]">
               <CheckCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
               <p>Ingen fullforte okter enna</p>
             </div>
@@ -149,7 +149,7 @@ export function SessionsClient({
             recentSessions.map((session) => (
               <div
                 key={session.id}
-                className="bg-[var(--color-ink-90)] rounded-xl p-4"
+                className="bg-white border border-[var(--color-grey-200)] rounded-xl p-4"
               >
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
@@ -159,16 +159,16 @@ export function SessionsClient({
                     <div>
                       <Link
                         href={`/portal/admin/elever/${session.studentId}`}
-                        className="font-medium text-white hover:text-[var(--color-gold)] transition-colors"
+                        className="font-medium text-[var(--color-grey-900)] hover:text-[var(--color-black)] transition-colors"
                       >
                         {session.studentName}
                       </Link>
-                      <p className="text-sm text-[var(--color-ink-50)]">
+                      <p className="text-sm text-[var(--color-grey-500)]">
                         {session.serviceName}
                       </p>
                     </div>
                   </div>
-                  <p className="text-sm text-[var(--color-ink-50)]">
+                  <p className="text-sm text-[var(--color-grey-500)]">
                     {format(new Date(session.completedAt), "d. MMM yyyy", {
                       locale: nb,
                     })}

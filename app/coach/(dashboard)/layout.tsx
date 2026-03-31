@@ -16,7 +16,7 @@ export default async function CoachDashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-ink-100)]">
+    <div className="min-h-screen bg-[var(--color-grey-100)]">
       <CoachSidebar />
       <div className="pl-64">
         <CoachTopbar userName={user.name || user.email} />

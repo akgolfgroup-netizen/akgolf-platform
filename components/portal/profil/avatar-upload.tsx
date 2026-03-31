@@ -51,11 +51,11 @@ export function AvatarUpload({ currentImage, name }: AvatarUploadProps) {
       className="relative w-24 h-24 flex-shrink-0 cursor-pointer group"
     >
       <input {...getInputProps()} />
-      <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 border-[var(--color-border)] group-hover:border-[var(--color-gold)] transition-colors">
+      <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 border-[var(--color-grey-200)] group-hover:border-[var(--color-grey-900)] transition-colors">
         {preview ? (
           <img src={preview} alt="" className="w-full h-full object-cover" />
         ) : (
-          <div className="w-full h-full bg-[var(--color-bg)] flex items-center justify-center text-2xl font-bold text-[var(--color-gold)]">
+          <div className="w-full h-full bg-[var(--color-grey-100)] flex items-center justify-center text-2xl font-bold text-[var(--color-grey-900)]">
             {initials}
           </div>
         )}
@@ -71,8 +71,8 @@ export function AvatarUpload({ currentImage, name }: AvatarUploadProps) {
       </div>
 
       {isDragActive && (
-        <div className="absolute inset-0 rounded-2xl border-2 border-[var(--color-gold)] bg-[var(--color-gold)]/10 flex items-center justify-center">
-          <Camera className="w-5 h-5 text-[var(--color-gold)]" />
+        <div className="absolute inset-0 rounded-2xl border-2 border-[var(--color-grey-900)] bg-[var(--color-grey-900)]/10 flex items-center justify-center">
+          <Camera className="w-5 h-5 text-[var(--color-grey-900)]" />
         </div>
       )}
     </div>
