@@ -250,6 +250,18 @@ export async function GET(req: NextRequest) {
 
 **Kilde:** `Google Drive/AK Golf Group/ak-golf-academy/branding/2026/design-tokens.css`
 
+## 21. Alltid pull main før ny branch
+
+**Problem:** Når en PR squash-merges, oppdateres `origin/main` men lokal `main` henger etter. Nye brancher fra lokal main mangler da siste endringer.
+
+**Løsning:** Kjør alltid dette mellom PRer:
+```bash
+git checkout main && git pull origin main --rebase
+git checkout -b feat/ny-branch
+```
+
+**Regel:** Aldri lag ny branch uten å oppdatere main først.
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer
