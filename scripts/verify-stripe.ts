@@ -1,5 +1,6 @@
 // scripts/verify-stripe.ts
-import "dotenv/config";
+import { config } from "dotenv";
+config({ path: ".env.local" });
 import Stripe from "stripe";
 import { prisma } from "../lib/portal/prisma";
 
