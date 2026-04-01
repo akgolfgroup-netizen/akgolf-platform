@@ -113,6 +113,18 @@ app/
 │       ├── treningsplan/    # AI-genererte treningsplaner
 │       └── turneringsplan/  # Turneringsplanlegging
 │
+├── coach/                   # Coach Hub (interndashboard for instruktører)
+│   ├── layout.tsx           # Coach root layout
+│   └── (dashboard)/         # Route group med sidebar
+│       ├── page.tsx         # Coach dashboard-hjem
+│       ├── layout.tsx       # Dashboard layout med CoachSidebar
+│       ├── players/         # Spilleroversikt
+│       ├── sessions/        # Coaching-økter
+│       ├── chat/            # AI Coach-assistent
+│       ├── inbox/           # Unified inbox (UnifiedMessage)
+│       ├── approvals/       # Booking-godkjenninger
+│       └── settings/        # Profil, varsler, integrasjoner
+│
 └── api/                     # API-ruter
     ├── auth/logout/         # Utlogging
     ├── contact/             # Kontaktskjema → Resend
@@ -163,6 +175,10 @@ components/
 │   ├── treningsplan/      # AI-generate-button, week-view
 │   ├── ui/                # Fancy UI: 3d-card, shimmer-button, magic-card, tier-gate
 │   └── providers.tsx      # React context providers
+├── coach/                 # Coach Hub-komponenter
+│   ├── layout/            # CoachSidebar, CoachTopbar
+│   ├── dashboard/         # StatsCard, RecentSessions
+│   └── inbox/             # ChannelFilter, MessageList, MessageDetail
 ├── motion/                # Framer Motion wrappers: FadeIn, StaggerContainer, SlideUp, ScaleOnHover
 └── ui/                    # Base UI: badge, button, card, input, section
 
