@@ -1,10 +1,11 @@
 # Booking System Test Plan
 
+> **Oppdatert:** 2026-04-01
 > Ende-til-ende testing av AK Golf booking-flyten
 
 ---
 
-## Test Senerier
+## Test Scenarier
 
 ### 1. Offentlig Booking (Ny Kunde)
 
@@ -52,7 +53,7 @@
 
 ```bash
 # Kjør TypeScript sjekk
-npm run type-check
+npx tsc --noEmit
 
 # Kjør lint
 npm run lint
@@ -63,15 +64,25 @@ npm run build
 
 ## Manuell Test Sjekkliste
 
-- [ ] Progress bar viser gull gradient
+### Design (Brand Guide 2026)
+- [ ] Monokrom fargepalett (svart/hvit/grå)
+- [ ] Inter font brukes konsekvent
+- [ ] Pill-knapper med `border-radius: 980px`
+- [ ] Hvite kort med subtil border (`#E8E8ED`)
+
+### Booking-flyt
+- [ ] Progress bar viser riktig steg
 - [ ] Service-ikoner vises korrekt
 - [ ] Instruktør-profilkort med bilde/bio
-- [ ] Kalender med gull-valg av dato
+- [ ] Kalender med svart markering av valgt dato
 - [ ] Tidsslot-knapper med hover-effekter
-- [ ] Bekreftelse-side med konfetti-animasjon
+- [ ] Bekreftelse-side med checkmark-ikon
+
+### Funksjonalitet
 - [ ] E-post bekreftelse sendt (hvis Resend konfigurert)
 - [ ] Stripe betaling fungerer
 - [ ] Avbestilling fungerer
+- [ ] Bruker opprettes automatisk (VISITOR-tier)
 
 ---
 
@@ -79,7 +90,7 @@ npm run build
 
 1. **E-post**: Krever RESEND_API_KEY for å sende bekreftelser
 2. **SMS**: Krever Twilio-oppsett for påminnelser
-3. **Cron**: Krever Vercel Cron eller lignende for påminnelser
+3. **Cron**: Krever Vercel Cron for påminnelser
 4. **Bilder**: Instruktør-profilbilder må lastes opp
 
 ---
@@ -92,4 +103,19 @@ DATABASE_URL=postgresql://...
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_SECRET_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
+
+# For e-post
+RESEND_API_KEY=re_...
+FROM_EMAIL=noreply@akgolf.no
 ```
+
+---
+
+## Feilsøking
+
+| Problem | Løsning |
+|---------|---------|
+| Booking feiler | Sjekk Stripe-nøkler og webhook |
+| E-post sendes ikke | Sjekk RESEND_API_KEY |
+| Bruker opprettes ikke | Sjekk auth upsert i `lib/portal/auth.ts` |
+| Kalender tom | Sjekk instruktør-tilgjengelighet |

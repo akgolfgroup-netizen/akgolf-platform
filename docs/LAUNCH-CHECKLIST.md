@@ -1,11 +1,11 @@
 # Lanserings-sjekkliste — AK Golf Portal
 
-**Oppdatert:** 2026-03-31
+**Oppdatert:** 2026-04-01
 **Status:** Produksjonsklar
 
 ---
 
-## Status per 2026-03-31
+## Status per 2026-04-01
 
 ### Fullført
 - [x] Auth: Automatisk brukeroppretting via `upsert`

@@ -1,7 +1,7 @@
 # Implementeringsplan: Portal Redesign — FULLFØRT
 
 > **Versjon:** 2.0
-> **Oppdatert:** 2026-03-31
+> **Oppdatert:** 2026-04-01
 > **Status:** ✅ Implementert
 
 ---
@@ -77,19 +77,24 @@ components/portal/apple/
 └── apple-avatar.tsx        # Avatar
 ```
 
-### CSS Tokens
+### CSS Tokens (Brand Guide 2026)
 ```css
-/* Monokrom palett */
---color-grey-100: #F8F8FC;
+/* Monokrom palett — Apple Light */
+--color-black: #1D1D1F;
+--color-white: #FFFFFF;
+--color-grey-50: #FBFBFD;
+--color-grey-100: #F5F5F7;
 --color-grey-200: #E8E8ED;
---color-grey-300: #D1D1D6;
---color-grey-400: #A1A1A6;
---color-grey-500: #8E8E93;
---color-grey-600: #636366;
---color-grey-700: #48484A;
---color-grey-800: #3A3A3C;
---color-grey-900: #2C2C2E;
---color-grey-950: #1C1C1E;
+--color-grey-300: #D2D2D7;
+--color-grey-400: #86868B;
+--color-grey-500: #6E6E73;
+--color-grey-900: #1D1D1F;
+
+/* Semantisk */
+--color-success: #34C759;
+--color-error: #FF3B30;
+--color-warning: #FF9500;
+--color-info: #007AFF;
 ```
 
 ---

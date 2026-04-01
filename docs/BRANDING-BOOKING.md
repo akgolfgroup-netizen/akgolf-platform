@@ -1,17 +1,20 @@
 # AK Golf Branding i Booking-systemet
 
-> Plan for integrasjon av AK Golf visuell identitet i booking-flyten
+> **Oppdatert:** 2026-04-01
+> **Brand Guide:** Apple Light 2026 (Monokrom)
 
 ---
 
 ## 1. Overordnet Brand-Strategi
 
-### Primære Brand-Elementer
+### Brand Guide 2026 — Apple Light
 | Element | Verdi | Bruk i Booking |
 |---------|-------|----------------|
-| **Gull** | `#B8975C` | Knapper, highlights, aksenter |
-| **Navy** | `#0F2950` | Headere, viktig tekst, kontrast |
-| **Deep Ink** | `#0A1929` | Bakgrunn (hvis mørk modus) |
+| **Svart** | `#1D1D1F` | Primær-knapper, tekst, logo |
+| **Hvit** | `#FFFFFF` | Bakgrunn |
+| **Grey-100** | `#F5F5F7` | Sekundær bakgrunn |
+| **Grey-200** | `#E8E8ED` | Borders, dividers |
+| **Grey-500** | `#6E6E73` | Sekundær tekst |
 | **Font** | Inter | All tekst i booking-flyten |
 
 ### Tone of Voice
@@ -21,187 +24,112 @@
 
 ---
 
-## 2. Stedvis Branding-Integrasjon
+## 2. Design Prinsipper
+
+### Apple-inspirert Monokrom
+- **Ingen aksent-farger** — kun svart/hvit/grå
+- **Pill-knapper** — `border-radius: 980px`
+- **Subtile skygger** — `shadow-sm` til `shadow-md`
+- **Glassmorfisme** — `backdrop-blur` på header
+
+### Komponenter
+```
+components/portal/apple/
+├── apple-button.tsx      # Pill-knapper, svart/hvit
+├── apple-card.tsx        # Hvit bg, subtil border
+├── apple-badge.tsx       # Status-badges
+└── bento-grid.tsx        # 12-kolonne grid
+```
+
+---
+
+## 3. Booking-flyt Design
 
 ### Steg 1: Tjeneste-valg
-```
-Current: Generiske kort
-Target:  Tjenestekort med:
-         - Navy header (#0F2950)
-         - Gull pris-tag (#B8975C)
-         - Ikon fra Lucide (ikke custom)
-         - Subtile hover-animasjoner
-```
-
-**Endringer nødvendig:**
-- [ ] Oppdatere `ServiceSelector.tsx`
-- [ ] Legge til tjeneste-ikoner (golf, simulator, gruppe)
-- [ ] Gull aksent på valgt tjeneste
+- **Kort-design:** Hvit bakgrunn, 1px border `#E8E8ED`
+- **Valgt tilstand:** Svart border, subtil skygge
+- **Ikoner:** Lucide icons, svart
+- **Pris:** Sekundær tekst (`#6E6E73`)
 
 ### Steg 2: Instruktør-valg
-```
-Current: Tekst-liste
-Target:  Profilkort med:
-         - Sirkulært profilbilde
-         - Navn + tittel
-         - Kort bio (2 linjer)
-         - Gull border på hover
-```
-
-**Endringer nødvendig:**
-- [ ] Hente profilbilder fra instruktører
-- [ ] Oppdatere `InstructorSelector.tsx`
-- [ ] Legge til bio-felt i database
+- **Profilkort:** Sirkulært bilde, navn, tittel
+- **Bio:** Maks 2 linjer, sekundær tekst
+- **Valgt tilstand:** Svart border
 
 ### Steg 3: Dato/Tid-valg
-```
-Current: Standard kalender
-Target:  Elegant kalender med:
-         - Gull på valgt dato
-         - Navy på dagens dato
-         - Smooth transitions
-         - "Ledige tider" header i Navy
-```
-
-**Endringer nødvendig:**
-- [ ] Oppdatere `DateTimePicker.tsx`
-- [ ] Custom kalender-komponent
-- [ ] Tids-slot design med gull hover
+- **Kalender:** Ren design, svart på valgt dato
+- **Ledige tider:** Pill-knapper
+- **Opptatt:** Grå, disabled
 
 ### Steg 4: Kundeopplysninger
-```
-Current: Grå standard-skjema
-Target:  Rent skjema med:
-         - Navy labels
-         - Gull focus-states
-         - Hjelpetekst i secondary gray
-         - Progress indicator øverst
-```
+- **Input-felter:** Hvit bakgrunn, grå border
+- **Focus-state:** Svart border
+- **Labels:** Svart tekst
+- **Hjelpetekst:** Sekundær grå
 
-**Endringer nødvendig:**
-- [ ] Oppdatere `CustomerForm.tsx`
-- [ ] Custom input-felter med brand-farger
-- [ ] Progress-bar med gull fill
-
-### Steg 5: Betaling
-```
-Current: Stripe default + Vipps (fjernet)
-Target:  Stripe themed med:
-         - Gull primary color
-         - Navy tekst
-         - AK Golf logo over betalingsfelt
-         - "Sikker betaling" badge
-```
-
-**Allerede implementert:** ✅
-- Stripe theme med brand-farger
-- Sikker betaling-badge
-
-### Bekreftelse
-```
-Current: Standard success
-Target:  Premium success med:
-         - Animasjon (checkmark)
-         - Gull konfetti (subtil)
-         - E-post preview
-         - CTA: "Gå til min side"
-```
-
-**Endringer nødvendig:**
-- [ ] Oppdatere `Confirmation.tsx`
-- [ ] Lottie/smil animasjon
-- [ ] E-post preview-komponent
+### Steg 5: Bekreftelse
+- **Suksess-ikon:** Checkmark i sirkel
+- **Booking-detaljer:** Rent oppsett
+- **CTA:** "Gå til mine bookinger"
 
 ---
 
-## 3. Komponent-Struktur
+## 4. Farge-Variabler
 
-```
-app/booking/
-├── page.tsx                    # Hovedwizard (allerede brandet)
-├── layout.tsx                  # Brand-spesifikk layout
-├── components/
-│   ├── ServiceSelector.tsx     # + Brand styling
-│   ├── InstructorSelector.tsx  # + Profilkort
-│   ├── DateTimePicker.tsx      # + Custom kalender
-│   ├── CustomerForm.tsx        # + Brand inputs
-│   ├── PaymentStep.tsx         # ✅ Allerede brandet
-│   ├── Confirmation.tsx        # + Premium success
-│   └── ProgressBar.tsx         # NY: Gull progress
-└── branding/
-    ├── BookingHeader.tsx       # NY: Logo + tittel
-    ├── BrandDivider.tsx        # NY: Gull divider
-    └── ServiceIcon.tsx         # NY: Tjeneste-ikoner
-```
+```css
+/* Brand Guide 2026 — Apple Light */
+--color-black: #1D1D1F;
+--color-white: #FFFFFF;
+--color-grey-50: #FBFBFD;
+--color-grey-100: #F5F5F7;
+--color-grey-200: #E8E8ED;
+--color-grey-300: #D2D2D7;
+--color-grey-400: #86868B;
+--color-grey-500: #6E6E73;
+--color-grey-900: #1D1D1F;
 
----
-
-## 4. Tekniske Detaljer
-
-### Farge-Variabler (Tailwind)
-```javascript
-// tailwind.config.ts eller globals.css
-const brandColors = {
-  gold: '#B8975C',
-  navy: '#0F2950',
-  'deep-ink': '#0A1929',
-  'ink-90': '#1a2d3d',
-  'ink-50': '#64748B',
-  'ink-20': '#EBE5DA',
-}
+/* Semantisk */
+--color-success: #34C759;
+--color-error: #FF3B30;
+--color-warning: #FF9500;
+--color-info: #007AFF;
 ```
 
-### Stripe Theme (Allerede implementert)
+### Stripe Theme
 ```javascript
 const STRIPE_THEME = {
-  colorPrimary: '#B8975C',    // Gull
+  colorPrimary: '#1D1D1F',     // Svart
   colorBackground: '#FFFFFF',
-  colorText: '#0F2950',       // Navy
-  colorDanger: '#EF4444',
+  colorText: '#1D1D1F',
+  colorDanger: '#FF3B30',
 }
 ```
 
 ---
 
-## 5. MVP vs Full Branding
+## 5. Implementert Status
 
-### MVP (Rask implementering)
-- [x] Stripe theme med brand-farger ✅
-- [x] Gull knapper ✅
-- [x] Navy tekst ✅
-- [ ] Progress bar med gull
-- [ ] Service-ikoner
-
-### Full Branding (Komplett opplevelse)
-- [ ] Custom kalender-komponent
-- [ ] Instruktør-profilkort
-- [ ] Lottie-animasjoner
-- [ ] Micro-interactions
-- [ ] E-post templates i brand
+### Fullført ✅
+- [x] Monokrom design system
+- [x] Apple-komponenter (AppleCard, AppleButton, etc.)
+- [x] Stripe theme med brand-farger
+- [x] Progress bar
+- [x] Service-ikoner
+- [x] Instruktør-profilkort
+- [x] Kalender-design
+- [x] Bekreftelse-side
 
 ---
 
-## 6. Implementerings-Prioritering
-
-| # | Oppgave | Estimat | Impact |
-|---|---------|---------|--------|
-| 1 | Progress bar med gull | 1t | Medium |
-| 2 | Service-ikoner | 2t | Medium |
-| 3 | Instruktør profilkort | 3t | Høy |
-| 4 | Kalender redesign | 4t | Høy |
-| 5 | Bekreftelse-animasjon | 2t | Medium |
-
----
-
-## 7. Testing & QA
+## 6. Testing & QA
 
 ### Visuell QA
-- [ ] Farger matcher Brand Guide
-- [ ] Kontrast tilfredsstiller WCAG AA
-- [ ] Mobil: Touch targets > 44px
-- [ ] Desktop: Hover-states fungerer
+- [x] Farger matcher Brand Guide 2026
+- [x] Kontrast tilfredsstiller WCAG AA
+- [x] Mobil: Touch targets > 44px
+- [x] Desktop: Hover-states fungerer
 
 ### Funksjonell QA
-- [ ] Alle steg fungerer som før
-- [ ] Stripe betaling ikke påvirket
-- [ ] Responsiv design fungerer
+- [x] Alle steg fungerer
+- [x] Stripe betaling fungerer
+- [x] Responsiv design fungerer
