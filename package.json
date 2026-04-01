@@ -9,8 +9,10 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "tsx prisma/seed-simple.ts",
+    "seed:prod": "tsx prisma/seed-prod.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "verify:stripe": "tsx scripts/verify-stripe.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed-simple.ts"

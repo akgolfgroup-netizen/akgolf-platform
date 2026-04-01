@@ -124,6 +124,7 @@ model CoachingSession {
 
   @@index([retentionStatus])
   @@index([studentId])
+  @@index([studentId, sessionDate])
 }
 
 model CustomerPaymentPreference {
@@ -215,6 +216,7 @@ model InstructorAvailability {
   Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 
   @@unique([instructorId, dayOfWeek, startTime])
+  @@index([instructorId, dayOfWeek])
 }
 
 model Location {
@@ -247,6 +249,7 @@ model PaymentTransaction {
   @@index([paidAt])
   @@index([paymentMethod])
   @@index([status])
+  @@index([bookingId, status])
 }
 
 model PeriodizationPeriod {
@@ -919,6 +922,7 @@ model Notification {
   user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, read])
+  @@index([userId, read, createdAt])
 }
 
 model AppModule {

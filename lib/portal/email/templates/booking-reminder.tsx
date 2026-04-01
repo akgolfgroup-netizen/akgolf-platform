@@ -97,7 +97,7 @@ const container = {
 };
 
 const heading = {
-  color: "#0F2942",
+  color: "#1D1D1F",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
@@ -138,7 +138,7 @@ const detailRow = {
 };
 
 const button = {
-  backgroundColor: "#B07D4F",
+  backgroundColor: "#1D1D1F",
   borderRadius: "6px",
   color: "#ffffff",
   fontSize: "14px",

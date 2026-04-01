@@ -1,20 +1,19 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Sparkles, X, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Sparkles, X, Loader2 } from "lucide-react";
 
 interface GeneratePlanButtonProps {
-  studentId: string;
   variant?: "primary" | "secondary";
   className?: string;
 }
 
 const PERIOD_TYPES = [
-  { value: "PREPARATION", label: "Forberedelse" },
-  { value: "COMPETITION", label: "Konkurranse" },
-  { value: "RECOVERY", label: "Restitusjon" },
-  { value: "OFF_SEASON", label: "Off-season" },
+  { value: "general", label: "Generell" },
+  { value: "competition", label: "Konkurranse" },
+  { value: "off_season", label: "Utesesong" },
+  { value: "pre_season", label: "Forsesong" },
 ];
 
 const DURATION_OPTIONS = [
@@ -23,54 +22,50 @@ const DURATION_OPTIONS = [
   { value: 12, label: "12 uker" },
 ];
 
-export function GeneratePlanButton({ studentId, variant = "primary", className }: GeneratePlanButtonProps) {
+export function GeneratePlanButton({
+  variant = "secondary",
+  className,
+}: GeneratePlanButtonProps) {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
   const [showModal, setShowModal] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  // Form state
   const [goals, setGoals] = useState("");
-  const [periodType, setPeriodType] = useState("PREPARATION");
+  const [periodType, setPeriodType] = useState("general");
   const [durationWeeks, setDurationWeeks] = useState(8);
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   async function handleGenerate() {
     if (!goals.trim()) {
-      setError("Vennligst fyll inn mål for perioden");
+      setError("Du ma fylle inn mal for perioden");
       return;
     }
-
     setError(null);
+
     startTransition(async () => {
       try {
         const res = await fetch("/api/portal/ai/training-plan", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            studentId,
-            goals: goals.trim(),
-            periodType,
-            durationWeeks,
-            startDate: new Date().toISOString(),
-          }),
+          body: JSON.stringify({ goals, periodType, durationWeeks }),
         });
 
         if (!res.ok) {
           const data = await res.json();
-          throw new Error(data.error ?? "Kunne ikke generere plan");
+          setError(data.error || "Noe gikk galt");
+          return;
         }
 
         setShowModal(false);
         router.refresh();
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Noe gikk galt");
+      } catch {
+        setError("Kunne ikke generere plan. Prov igjen.");
       }
     });
   }
 
   const buttonClass = variant === "primary"
-    ? "inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-[#B07D4F] text-white hover:bg-[#A06D3F] transition-colors"
-    : "inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium bg-[#B07D4F] text-white hover:bg-[#A06D3F] transition-colors";
+    ? "inline-flex items-center gap-2 px-4 py-2.5 rounded-[980px] text-sm font-medium bg-[var(--color-black)] text-white hover:bg-[var(--color-grey-800)] transition-colors"
+    : "inline-flex items-center gap-2 px-6 py-3 rounded-[980px] text-sm font-medium bg-[var(--color-black)] text-white hover:bg-[var(--color-grey-800)] transition-colors";
 
   return (
     <>
@@ -81,28 +76,22 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
 
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => !isPending && setShowModal(false)}
           />
 
-          {/* Modal */}
           <div
-            className="relative w-full max-w-md rounded-2xl p-6"
-            style={{
-              background: "linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%)",
-              border: "1px solid #333",
-            }}
+            className="relative w-full max-w-md rounded-[20px] p-6 bg-white border border-[var(--color-grey-200)]"
           >
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#B07D4F]" />
-                <h2 className="text-sm font-semibold text-white">Generer treningsplan</h2>
+                <Sparkles className="w-4 h-4 text-[var(--color-grey-900)]" />
+                <h2 className="text-sm font-semibold text-[var(--color-grey-900)]">Generer treningsplan</h2>
               </div>
               <button
                 onClick={() => !isPending && setShowModal(false)}
-                className="text-[#737373] hover:text-white transition-colors"
+                className="text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-colors"
                 disabled={isPending}
               >
                 <X className="w-4 h-4" />
@@ -110,24 +99,22 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
             </div>
 
             <div className="space-y-4">
-              {/* Goals */}
               <div>
-                <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#737373] mb-1.5">
-                  Mål for perioden *
+                <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-grey-400)] mb-1.5">
+                  Mal for perioden *
                 </label>
                 <textarea
                   value={goals}
                   onChange={(e) => setGoals(e.target.value)}
                   rows={3}
-                  placeholder="F.eks: Senke handicap fra 12 til 10, forbedre putting på 2-3 meter, øke konsistens på approach..."
-                  className="w-full px-3 py-2 rounded-lg text-sm bg-transparent border border-[#333] outline-none resize-none text-white placeholder:text-[#525252] focus:border-[#B07D4F]"
+                  placeholder="F.eks: Senke handicap fra 12 til 10, forbedre putting pa 2-3 meter..."
+                  className="w-full px-3 py-2 rounded-[12px] text-sm bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] outline-none resize-none text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:border-[var(--color-grey-400)]"
                   disabled={isPending}
                 />
               </div>
 
-              {/* Period Type */}
               <div>
-                <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#737373] mb-1.5">
+                <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-grey-400)] mb-1.5">
                   Periodetype
                 </label>
                 <div className="flex flex-wrap gap-1.5">
@@ -139,9 +126,9 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
                       disabled={isPending}
                       className="px-3 py-1.5 rounded-full text-xs font-medium border transition-colors"
                       style={{
-                        background: periodType === type.value ? "rgba(176,125,79,0.15)" : "transparent",
-                        borderColor: periodType === type.value ? "#B07D4F" : "#333",
-                        color: periodType === type.value ? "#B07D4F" : "#A3A3A3",
+                        background: periodType === type.value ? "var(--color-grey-100)" : "transparent",
+                        borderColor: periodType === type.value ? "var(--color-grey-900)" : "var(--color-grey-200)",
+                        color: periodType === type.value ? "var(--color-grey-900)" : "var(--color-grey-400)",
                       }}
                     >
                       {type.label}
@@ -150,9 +137,8 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
                 </div>
               </div>
 
-              {/* Duration */}
               <div>
-                <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#737373] mb-1.5">
+                <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--color-grey-400)] mb-1.5">
                   Varighet
                 </label>
                 <div className="flex gap-2">
@@ -162,11 +148,11 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
                       type="button"
                       onClick={() => setDurationWeeks(opt.value)}
                       disabled={isPending}
-                      className="flex-1 px-3 py-2 rounded-lg text-xs font-medium border transition-colors"
+                      className="flex-1 px-3 py-2 rounded-[12px] text-xs font-medium border transition-colors"
                       style={{
-                        background: durationWeeks === opt.value ? "rgba(176,125,79,0.15)" : "transparent",
-                        borderColor: durationWeeks === opt.value ? "#B07D4F" : "#333",
-                        color: durationWeeks === opt.value ? "#B07D4F" : "#A3A3A3",
+                        background: durationWeeks === opt.value ? "var(--color-grey-100)" : "transparent",
+                        borderColor: durationWeeks === opt.value ? "var(--color-grey-900)" : "var(--color-grey-200)",
+                        color: durationWeeks === opt.value ? "var(--color-grey-900)" : "var(--color-grey-400)",
                       }}
                     >
                       {opt.label}
@@ -175,21 +161,15 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
                 </div>
               </div>
 
-              {/* Error */}
               {error && (
-                <p className="text-xs text-red-400 bg-red-500/10 px-3 py-2 rounded-lg">{error}</p>
+                <p className="text-xs text-[var(--color-error)] bg-[#FF3B3010] px-3 py-2 rounded-[12px]">{error}</p>
               )}
 
-              {/* Submit */}
               <button
                 onClick={handleGenerate}
                 disabled={isPending}
-                className="w-full py-2.5 rounded-xl text-sm font-semibold transition-opacity flex items-center justify-center gap-2"
-                style={{
-                  background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)",
-                  color: "#0a1929",
-                  opacity: isPending ? 0.7 : 1,
-                }}
+                className="w-full py-2.5 rounded-[980px] text-sm font-semibold transition-opacity flex items-center justify-center gap-2 bg-[var(--color-black)] text-white"
+                style={{ opacity: isPending ? 0.7 : 1 }}
               >
                 {isPending ? (
                   <>
@@ -203,10 +183,6 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
                   </>
                 )}
               </button>
-
-              <p className="text-[10px] text-[#525252] text-center">
-                AI genererer en personlig treningsplan basert på dine mål
-              </p>
             </div>
           </div>
         </div>

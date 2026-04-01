@@ -60,17 +60,17 @@ export function PrepChecklistComponent({ checklist, onChange }: PrepChecklistPro
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold text-[var(--color-gold-muted)] uppercase tracking-wider">
+        <span className="text-xs font-semibold text-[var(--color-grey-400)] uppercase tracking-wider">
           Sjekkliste
         </span>
-        <span className="text-xs text-[var(--color-gold-muted)]">
+        <span className="text-xs text-[var(--color-grey-400)]">
           {checkedItems}/{totalItems}
         </span>
       </div>
 
       {(Object.keys(SECTION_LABELS) as (keyof PrepChecklistType)[]).map((section) => (
         <div key={section}>
-          <p className="text-[10px] font-semibold text-[var(--color-gold-dim)] uppercase tracking-widest mb-1.5">
+          <p className="text-[10px] font-semibold text-[var(--color-grey-400)] uppercase tracking-widest mb-1.5">
             {SECTION_LABELS[section]}
           </p>
           <div className="space-y-1">
@@ -78,19 +78,19 @@ export function PrepChecklistComponent({ checklist, onChange }: PrepChecklistPro
               <button
                 key={i}
                 onClick={() => toggle(section, i)}
-                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left hover:bg-[var(--color-muted)]/50 transition-colors"
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left hover:bg-[var(--color-grey-100)]/50 transition-colors"
               >
                 <span
                   className="w-4 h-4 rounded flex items-center justify-center flex-shrink-0 border transition-colors"
                   style={{
-                    borderColor: item.checked ? "#22C55E" : "rgba(176,125,79,0.3)",
+                    borderColor: item.checked ? "#22C55E" : "rgba(156,163,175,0.3)",
                     background: item.checked ? "rgba(34,197,94,0.15)" : "transparent",
                   }}
                 >
                   {item.checked && <Check className="w-2.5 h-2.5 text-green-400" />}
                 </span>
                 <span
-                  className={`text-xs ${item.checked ? "line-through text-[var(--color-gold-muted)]/50" : "text-[var(--color-snow)]"}`}
+                  className={`text-xs ${item.checked ? "line-through text-[var(--color-grey-400)]/50" : "text-[var(--color-grey-900)]"}`}
                 >
                   {item.label}
                 </span>

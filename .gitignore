@@ -48,3 +48,4 @@ _archived/
 mcp-server/
 .env*.local
 .superpowers/
+backups/

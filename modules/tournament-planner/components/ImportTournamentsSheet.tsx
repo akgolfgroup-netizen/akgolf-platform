@@ -112,19 +112,19 @@ export function ImportTournamentsSheet({ open, onClose }: ImportTournamentsSheet
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60">
-      <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-2xl w-full max-w-2xl max-h-[80vh] flex flex-col">
+      <div className="bg-[var(--color-bg)] border border-[var(--color-grey-200)] rounded-2xl w-full max-w-2xl max-h-[80vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--color-border)]">
+        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--color-grey-200)]">
           <div>
-            <h2 className="font-bold text-[var(--color-snow)] text-sm">
+            <h2 className="font-bold text-[var(--color-grey-900)] text-sm">
               Importer fra GolfBox
             </h2>
-            <p className="text-xs text-[var(--color-gold-muted)]">
+            <p className="text-xs text-[var(--color-grey-400)]">
               Lim inn en norskgolf.no terminliste-URL
             </p>
           </div>
-          <button onClick={onClose} className="p-1.5 hover:bg-[var(--color-muted)] rounded-lg">
-            <X className="w-4 h-4 text-[var(--color-gold-muted)]" />
+          <button onClick={onClose} className="p-1.5 hover:bg-[var(--color-grey-100)] rounded-lg">
+            <X className="w-4 h-4 text-[var(--color-grey-400)]" />
           </button>
         </div>
 
@@ -135,12 +135,12 @@ export function ImportTournamentsSheet({ open, onClose }: ImportTournamentsSheet
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://www.norskgolf.no/terminlister#/customer/18/schedule/2026/7671"
-              className="flex-1 px-3 py-2.5 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)] placeholder:text-[var(--color-gold-muted)]/40"
+              className="flex-1 px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)]/40"
             />
             <button
               onClick={handleFetch}
               disabled={loading || !url}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--color-gold)] text-[var(--color-bg-deep)] font-semibold text-sm hover:bg-[var(--color-gold-muted)] transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--color-black)] text-white font-semibold text-sm hover:bg-[var(--color-grey-400)] transition-colors disabled:opacity-50"
             >
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
               Hent
@@ -167,22 +167,22 @@ export function ImportTournamentsSheet({ open, onClose }: ImportTournamentsSheet
           {competitions.length > 0 && !result && (
             <>
               <div className="flex items-center justify-between">
-                <p className="text-xs font-medium text-[var(--color-snow)]">
+                <p className="text-xs font-medium text-[var(--color-grey-900)]">
                   {categoryName} — {competitions.length} turneringer
                 </p>
                 <div className="flex items-center gap-3">
-                  <label className="flex items-center gap-1.5 text-xs text-[var(--color-gold-muted)] cursor-pointer">
+                  <label className="flex items-center gap-1.5 text-xs text-[var(--color-grey-400)] cursor-pointer">
                     <input
                       type="checkbox"
                       checked={selectedCount === competitions.length}
                       onChange={(e) => toggleAll(e.target.checked)}
-                      className="accent-[var(--color-gold)]"
+                      className="accent-[var(--color-grey-900)]"
                     />
                     Velg alle
                   </label>
                   <select
                     onChange={(e) => setBulkLevel(e.target.value)}
-                    className="px-2 py-1 rounded-lg bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-xs"
+                    className="px-2 py-1 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-xs"
                     defaultValue=""
                   >
                     <option value="" disabled>Sett nivå (bulk)</option>
@@ -201,8 +201,8 @@ export function ImportTournamentsSheet({ open, onClose }: ImportTournamentsSheet
                     key={comp.golfboxId}
                     className={`flex items-center gap-3 p-3 rounded-xl border transition-colors ${
                       comp.selected
-                        ? "border-[var(--color-gold)]/20 bg-[var(--color-gold)]/5"
-                        : "border-[var(--color-border)] opacity-50"
+                        ? "border-[var(--color-grey-900)]/20 bg-[var(--color-grey-900)]/5"
+                        : "border-[var(--color-grey-200)] opacity-50"
                     }`}
                   >
                     <input
@@ -215,13 +215,13 @@ export function ImportTournamentsSheet({ open, onClose }: ImportTournamentsSheet
                           )
                         );
                       }}
-                      className="accent-[var(--color-gold)] flex-shrink-0"
+                      className="accent-[var(--color-grey-900)] flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[var(--color-snow)] truncate">
+                      <p className="text-sm font-medium text-[var(--color-grey-900)] truncate">
                         {comp.name}
                       </p>
-                      <p className="text-xs text-[var(--color-gold-muted)]">
+                      <p className="text-xs text-[var(--color-grey-400)]">
                         {new Date(comp.startDate).toLocaleDateString("nb-NO")}
                         {comp.venue && ` · ${comp.venue}`}
                       </p>
@@ -235,7 +235,7 @@ export function ImportTournamentsSheet({ open, onClose }: ImportTournamentsSheet
                           )
                         );
                       }}
-                      className="px-2 py-1 rounded-lg bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-xs flex-shrink-0"
+                      className="px-2 py-1 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-xs flex-shrink-0"
                     >
                       {LEVELS.map((l) => (
                         <option key={l} value={l}>
@@ -252,11 +252,11 @@ export function ImportTournamentsSheet({ open, onClose }: ImportTournamentsSheet
 
         {/* Footer */}
         {competitions.length > 0 && !result && (
-          <div className="px-5 py-4 border-t border-[var(--color-border)]">
+          <div className="px-5 py-4 border-t border-[var(--color-grey-200)]">
             <button
               onClick={handleConfirm}
               disabled={confirming || selectedCount === 0}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-gold)] text-[var(--color-bg-deep)] font-semibold text-sm hover:bg-[var(--color-gold-muted)] transition-colors disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-black)] text-white font-semibold text-sm hover:bg-[var(--color-grey-400)] transition-colors disabled:opacity-50"
             >
               {confirming ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

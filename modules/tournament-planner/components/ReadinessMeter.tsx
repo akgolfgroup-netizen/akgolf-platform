@@ -15,16 +15,16 @@ export function ReadinessMeter({ score, onChange }: ReadinessMeterProps) {
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-semibold text-[var(--color-gold-muted)] uppercase tracking-wider">
+        <span className="text-xs font-semibold text-[var(--color-grey-400)] uppercase tracking-wider">
           Beredskap
         </span>
         <span className="text-2xl font-black" style={{ color }}>
           {value}
-          <span className="text-xs font-normal text-[var(--color-gold-muted)]">/10</span>
+          <span className="text-xs font-normal text-[var(--color-grey-400)]">/10</span>
         </span>
       </div>
 
-      <div className="relative h-3 rounded-full bg-[var(--color-border)] overflow-hidden">
+      <div className="relative h-3 rounded-full bg-[var(--color-grey-200)] overflow-hidden">
         <div
           className="absolute inset-y-0 left-0 rounded-full transition-all duration-300"
           style={{ width: `${pct}%`, background: color }}
@@ -37,7 +37,7 @@ export function ReadinessMeter({ score, onChange }: ReadinessMeterProps) {
         max={10}
         value={value}
         onChange={(e) => onChange(parseInt(e.target.value))}
-        className="w-full mt-2 accent-[var(--color-gold)]"
+        className="w-full mt-2 accent-[var(--color-grey-900)]"
       />
     </div>
   );

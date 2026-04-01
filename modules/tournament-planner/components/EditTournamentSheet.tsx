@@ -68,51 +68,51 @@ export function EditTournamentSheet({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60">
-      <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-2xl w-full max-w-sm">
-        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--color-border)]">
-          <h2 className="font-bold text-[var(--color-snow)] text-sm">Rediger turnering</h2>
-          <button onClick={onClose} className="p-1.5 hover:bg-[var(--color-muted)] rounded-lg">
-            <X className="w-4 h-4 text-[var(--color-gold-muted)]" />
+      <div className="bg-[var(--color-bg)] border border-[var(--color-grey-200)] rounded-2xl w-full max-w-sm">
+        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--color-grey-200)]">
+          <h2 className="font-bold text-[var(--color-grey-900)] text-sm">Rediger turnering</h2>
+          <button onClick={onClose} className="p-1.5 hover:bg-[var(--color-grey-100)] rounded-lg">
+            <X className="w-4 h-4 text-[var(--color-grey-400)]" />
           </button>
         </div>
 
         <form onSubmit={handleSave} className="p-5 space-y-3">
           <div>
-            <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1">Navn *</label>
+            <label className="block text-xs font-medium text-[var(--color-grey-400)] mb-1">Navn *</label>
             <input
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+              className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
             />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1">Startdato *</label>
+              <label className="block text-xs font-medium text-[var(--color-grey-400)] mb-1">Startdato *</label>
               <input
                 type="date"
                 required
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+                className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1">Sluttdato</label>
+              <label className="block text-xs font-medium text-[var(--color-grey-400)] mb-1">Sluttdato</label>
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+                className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1">Nivå</label>
+            <label className="block text-xs font-medium text-[var(--color-grey-400)] mb-1">Nivå</label>
             <select
               value={level}
               onChange={(e) => setLevel(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+              className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
             >
               {LEVELS.map((l) => (
                 <option key={l} value={l}>{l.charAt(0).toUpperCase() + l.slice(1)}</option>
@@ -121,37 +121,37 @@ export function EditTournamentSheet({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1">Bane</label>
+              <label className="block text-xs font-medium text-[var(--color-grey-400)] mb-1">Bane</label>
               <input
                 value={course}
                 onChange={(e) => setCourse(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+                className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1">Sted</label>
+              <label className="block text-xs font-medium text-[var(--color-grey-400)] mb-1">Sted</label>
               <input
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+                className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1">Ekstern URL</label>
+            <label className="block text-xs font-medium text-[var(--color-grey-400)] mb-1">Ekstern URL</label>
             <input
               type="url"
               value={externalUrl}
               onChange={(e) => setExternalUrl(e.target.value)}
               placeholder="https://..."
-              className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)]"
+              className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
             />
           </div>
 
           <button
             type="submit"
             disabled={saving}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-gold)] text-[var(--color-bg-deep)] font-semibold text-sm hover:bg-[var(--color-gold-muted)] transition-colors disabled:opacity-50 mt-2"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-black)] text-white font-semibold text-sm hover:bg-[var(--color-grey-400)] transition-colors disabled:opacity-50 mt-2"
           >
             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Lagre endringer"}
           </button>

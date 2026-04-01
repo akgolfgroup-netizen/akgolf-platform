@@ -108,7 +108,7 @@ const container = {
 };
 
 const heading = {
-  color: "#0F2942",
+  color: "#1D1D1F",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
@@ -147,7 +147,7 @@ const hr = {
 };
 
 const link = {
-  color: "#B07D4F",
+  color: "#1D1D1F",
   textDecoration: "underline",
 };
 

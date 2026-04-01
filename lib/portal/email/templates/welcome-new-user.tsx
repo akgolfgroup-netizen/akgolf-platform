@@ -133,14 +133,14 @@ const container = {
 };
 
 const heading = {
-  color: "#0F2942",
+  color: "#1D1D1F",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
 };
 
 const subHeading = {
-  color: "#0F2942",
+  color: "#1D1D1F",
   fontSize: "18px",
   fontWeight: "600" as const,
   margin: "0 0 12px",
@@ -167,7 +167,7 @@ const smallText = {
 };
 
 const credentialsBox = {
-  backgroundColor: "#0F2942",
+  backgroundColor: "#1D1D1F",
   borderRadius: "6px",
   padding: "16px",
   margin: "0 0 16px",
@@ -189,7 +189,7 @@ const detailRow = {
 };
 
 const button = {
-  backgroundColor: "#B07D4F",
+  backgroundColor: "#1D1D1F",
   borderRadius: "6px",
   color: "#ffffff",
   fontSize: "14px",
@@ -207,7 +207,7 @@ const hr = {
 };
 
 const link = {
-  color: "#B07D4F",
+  color: "#1D1D1F",
   textDecoration: "underline",
 };
 

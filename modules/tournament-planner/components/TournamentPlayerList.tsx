@@ -24,7 +24,7 @@ export function TournamentPlayerList({ plans }: TournamentPlayerListProps) {
       {plans.map((plan) => (
         <div
           key={plan.id}
-          className="flex items-center gap-3 p-2.5 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg"
+          className="flex items-center gap-3 p-2.5 bg-[var(--color-bg)] border border-[var(--color-grey-200)] rounded-lg"
         >
           {plan.student.image ? (
             <img
@@ -34,26 +34,26 @@ export function TournamentPlayerList({ plans }: TournamentPlayerListProps) {
             />
           ) : (
             <div
-              className="w-7 h-7 rounded-md flex items-center justify-center text-[10px] font-bold text-[var(--color-bg-deep)] flex-shrink-0"
-              style={{ background: "linear-gradient(135deg, #c9a96e 0%, #B07D4F 100%)" }}
+              className="w-7 h-7 rounded-md flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
+              style={{ background: "linear-gradient(135deg, #6B7280 0%, #374151 100%)" }}
             >
               {plan.student.name?.charAt(0) ?? "?"}
             </div>
           )}
 
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium text-[var(--color-snow)] truncate">
+            <p className="text-xs font-medium text-[var(--color-grey-900)] truncate">
               {plan.student.name ?? "Ukjent"}
             </p>
             {plan.notes && (
-              <p className="text-[10px] text-[var(--color-gold-muted)] italic line-clamp-1">
+              <p className="text-[10px] text-[var(--color-grey-400)] italic line-clamp-1">
                 {plan.notes}
               </p>
             )}
           </div>
 
           <div className="flex items-center gap-1.5 flex-shrink-0">
-            <span className="text-[10px] font-medium text-[var(--color-gold)]">
+            <span className="text-[10px] font-medium text-[var(--color-grey-900)]">
               {PLAN_LEVEL_CONFIG[plan.planLevel as PlanLevel]?.label}
             </span>
             <GoalTypeBadge goalType={plan.goalType as GoalType} size="sm" />

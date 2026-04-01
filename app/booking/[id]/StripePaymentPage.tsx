@@ -163,7 +163,7 @@ export function StripePaymentPage({
                   colorBackground: "#FFFFFF",
                   colorText: "#1D1D1F",
                   colorDanger: "#EF4444",
-                  fontFamily: "Manrope, sans-serif",
+                  fontFamily: "Inter, system-ui, -apple-system, sans-serif",
                   borderRadius: "12px",
                   spacingUnit: "4px",
                 },

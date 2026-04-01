@@ -5,7 +5,7 @@ export const GOAL_TYPE_CONFIG: Record<
   { color: string; label: string; tooltip: string }
 > = {
   prestasjon: {
-    color: "#B07D4F",
+    color: "#111827",
     label: "Prestasjon",
     tooltip:
       "Beste mulige resultat. Full konkurransemodus. Ikke tid for eksperimentering.",

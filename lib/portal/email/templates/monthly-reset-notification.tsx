@@ -97,7 +97,7 @@ const container = {
 };
 
 const heading = {
-  color: "#0F2942",
+  color: "#1D1D1F",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
@@ -117,14 +117,14 @@ const text = {
 };
 
 const warningText = {
-  color: "#b45309",
+  color: "#1D1D1F",
   fontSize: "14px",
   lineHeight: "1.6",
   margin: "0 0 16px",
-  backgroundColor: "#fffbeb",
+  backgroundColor: "#F5F5F7",
   padding: "12px",
   borderRadius: "6px",
-  border: "1px solid #fde68a",
+  border: "1px solid #E8E8ED",
 };
 
 const detailsBox = {
@@ -142,7 +142,7 @@ const detailRow = {
 };
 
 const button = {
-  backgroundColor: "#B8975C",
+  backgroundColor: "#1D1D1F",
   borderRadius: "6px",
   color: "#ffffff",
   fontSize: "14px",

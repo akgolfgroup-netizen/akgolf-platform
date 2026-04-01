@@ -92,7 +92,7 @@ const container = {
 };
 
 const heading = {
-  color: "#0F2942",
+  color: "#1D1D1F",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
@@ -139,7 +139,7 @@ const button = {
 };
 
 const warningBox = {
-  backgroundColor: "#fef3c7",
+  backgroundColor: "#F5F5F7",
   borderRadius: "6px",
   padding: "12px 16px",
   margin: "0 0 16px",

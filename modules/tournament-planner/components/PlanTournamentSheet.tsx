@@ -63,19 +63,19 @@ export function PlanTournamentSheet({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/60">
-      <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-2xl w-full max-w-sm">
+      <div className="bg-[var(--color-bg)] border border-[var(--color-grey-200)] rounded-2xl w-full max-w-sm">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--color-border)]">
+        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--color-grey-200)]">
           <div>
-            <h2 className="font-bold text-[var(--color-snow)] text-sm">
+            <h2 className="font-bold text-[var(--color-grey-900)] text-sm">
               {step === 1 ? "Velg plan-nivå" : "Velg måltype"}
             </h2>
-            <p className="text-xs text-[var(--color-gold-muted)] truncate max-w-[200px]">
+            <p className="text-xs text-[var(--color-grey-400)] truncate max-w-[200px]">
               {tournament.name}
             </p>
           </div>
-          <button onClick={onClose} className="p-1.5 hover:bg-[var(--color-muted)] rounded-lg">
-            <X className="w-4 h-4 text-[var(--color-gold-muted)]" />
+          <button onClick={onClose} className="p-1.5 hover:bg-[var(--color-grey-100)] rounded-lg">
+            <X className="w-4 h-4 text-[var(--color-grey-400)]" />
           </button>
         </div>
 
@@ -89,15 +89,15 @@ export function PlanTournamentSheet({
                     onClick={() => { setPlanLevel(level); setStep(2); }}
                     className={`w-full flex items-center justify-between p-4 rounded-xl border text-left transition-colors ${
                       planLevel === level
-                        ? "border-[var(--color-gold)] bg-[var(--color-gold)]/5"
-                        : "border-[var(--color-border)] hover:border-[var(--color-gold)]/30"
+                        ? "border-[var(--color-grey-900)] bg-[var(--color-grey-900)]/5"
+                        : "border-[var(--color-grey-200)] hover:border-[var(--color-grey-900)]/30"
                     }`}
                   >
                     <div>
-                      <p className="font-semibold text-[var(--color-snow)] text-sm">{config.label}</p>
-                      <p className="text-xs text-[var(--color-gold-muted)]">{config.description}</p>
+                      <p className="font-semibold text-[var(--color-grey-900)] text-sm">{config.label}</p>
+                      <p className="text-xs text-[var(--color-grey-400)]">{config.description}</p>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-[var(--color-gold-muted)]" />
+                    <ChevronRight className="w-4 h-4 text-[var(--color-grey-400)]" />
                   </button>
                 )
               )}
@@ -106,7 +106,7 @@ export function PlanTournamentSheet({
             <div className="space-y-2">
               <button
                 onClick={() => setStep(1)}
-                className="flex items-center gap-2 text-xs text-[var(--color-gold-muted)] hover:text-[var(--color-snow)] mb-3"
+                className="flex items-center gap-2 text-xs text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] mb-3"
               >
                 ← Plan {planLevel} valgt
               </button>
@@ -117,8 +117,8 @@ export function PlanTournamentSheet({
                     key={type}
                     className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${
                       goalType === type
-                        ? "border-[var(--color-gold)] bg-[var(--color-gold)]/5"
-                        : "border-[var(--color-border)] hover:border-[var(--color-gold)]/30"
+                        ? "border-[var(--color-grey-900)] bg-[var(--color-grey-900)]/5"
+                        : "border-[var(--color-grey-200)] hover:border-[var(--color-grey-900)]/30"
                     }`}
                   >
                     <input
@@ -127,7 +127,7 @@ export function PlanTournamentSheet({
                       value={type}
                       checked={goalType === type}
                       onChange={() => setGoalType(type)}
-                      className="mt-0.5 accent-[var(--color-gold)]"
+                      className="mt-0.5 accent-[var(--color-grey-900)]"
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
@@ -136,7 +136,7 @@ export function PlanTournamentSheet({
                         </span>
                         <GoalTypeTooltip goalType={type} />
                       </div>
-                      <p className="text-xs text-[var(--color-gold-muted)] mt-0.5">
+                      <p className="text-xs text-[var(--color-grey-400)] mt-0.5">
                         {config.tooltip}
                       </p>
                     </div>
@@ -145,14 +145,14 @@ export function PlanTournamentSheet({
               )}
 
               {currentPeriod && (
-                <div className="mt-2 px-3 py-2 rounded-lg bg-[var(--color-border)]/30 text-xs text-[var(--color-gold-muted)]">
-                  <span className="inline-block w-2 h-2 rounded-full bg-[var(--color-gold)] mr-1.5 align-middle" />
+                <div className="mt-2 px-3 py-2 rounded-lg bg-[var(--color-grey-200)]/30 text-xs text-[var(--color-grey-400)]">
+                  <span className="inline-block w-2 h-2 rounded-full bg-[var(--color-grey-900)] mr-1.5 align-middle" />
                   {currentPeriod} — {suggestedGoalType ?? "prestasjon"} anbefalt
                 </div>
               )}
 
               <div className="mt-3">
-                <label className="block text-xs font-medium text-[var(--color-gold-muted)] mb-1.5">
+                <label className="block text-xs font-medium text-[var(--color-grey-400)] mb-1.5">
                   Notater (valgfritt)
                 </label>
                 <textarea
@@ -160,11 +160,11 @@ export function PlanTournamentSheet({
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Mål, forberedelse, fokus..."
                   rows={3}
-                  className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-snow)] text-sm outline-none focus:border-[var(--color-gold)] resize-none placeholder:text-[var(--color-gold-muted)]/40"
+                  className="w-full px-3 py-2.5 rounded-xl bg-[var(--color-bg)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)] resize-none placeholder:text-[var(--color-grey-400)]/40"
                 />
               </div>
 
-              <label className="mt-3 flex items-center gap-3 p-3 rounded-xl border border-[var(--color-border)] cursor-pointer hover:border-[var(--color-gold)]/30 transition-colors">
+              <label className="mt-3 flex items-center gap-3 p-3 rounded-xl border border-[var(--color-grey-200)] cursor-pointer hover:border-[var(--color-grey-900)]/30 transition-colors">
                 <input
                   type="checkbox"
                   checked={isRegistered}
@@ -172,15 +172,15 @@ export function PlanTournamentSheet({
                   className="accent-[#22C55E] w-4 h-4"
                 />
                 <div>
-                  <p className="text-sm font-medium text-[var(--color-snow)]">Jeg er påmeldt</p>
-                  <p className="text-[10px] text-[var(--color-gold-muted)]">Å lage en plan betyr ikke at du er påmeldt</p>
+                  <p className="text-sm font-medium text-[var(--color-grey-900)]">Jeg er påmeldt</p>
+                  <p className="text-[10px] text-[var(--color-grey-400)]">Å lage en plan betyr ikke at du er påmeldt</p>
                 </div>
               </label>
 
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="mt-3 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-gold)] text-[var(--color-bg-deep)] font-semibold text-sm hover:bg-[var(--color-gold-muted)] transition-colors disabled:opacity-50"
+                className="mt-3 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-black)] text-white font-semibold text-sm hover:bg-[var(--color-grey-400)] transition-colors disabled:opacity-50"
               >
                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Lagre plan"}
               </button>

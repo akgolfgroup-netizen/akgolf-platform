@@ -30,11 +30,11 @@ export function TournamentCard({
 
   return (
     <>
-      <div className="bg-[var(--color-muted)] border border-[var(--color-border)] rounded-xl p-4 hover:border-[var(--color-gold)]/30 transition-colors">
+      <div className="bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl p-4 hover:border-[var(--color-grey-900)]/30 transition-colors">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[var(--color-border)] text-[var(--color-gold-muted)]">
+              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[var(--color-grey-200)] text-[var(--color-grey-400)]">
                 {levelConfig?.label ?? tournament.level}
               </span>
               {plan && <GoalTypeBadge goalType={plan.goalType as "prestasjon" | "utvikling" | "trening"} size="sm" />}
@@ -42,24 +42,24 @@ export function TournamentCard({
                 <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
                   plan.isRegistered
                     ? "bg-green-500/15 text-green-400 border border-green-500/30"
-                    : "bg-[var(--color-border)] text-[var(--color-gold-muted)]"
+                    : "bg-[var(--color-grey-200)] text-[var(--color-grey-400)]"
                 }`}>
                   {plan.isRegistered ? "Påmeldt" : "Ikke påmeldt"}
                 </span>
               )}
               {tournament.series && (
-                <span className="text-[10px] text-[var(--color-gold-muted)]/60">
+                <span className="text-[10px] text-[var(--color-grey-400)]/60">
                   {tournament.series}
                 </span>
               )}
             </div>
 
-            <h3 className="font-semibold text-[var(--color-snow)] text-sm truncate">
+            <h3 className="font-semibold text-[var(--color-grey-900)] text-sm truncate">
               {tournament.name}
             </h3>
 
             <div className="mt-2 space-y-1">
-              <div className="flex items-center gap-2 text-xs text-[var(--color-gold-muted)]">
+              <div className="flex items-center gap-2 text-xs text-[var(--color-grey-400)]">
                 <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>
                   {format(new Date(tournament.startDate), "d. MMMM yyyy", { locale: nb })}
@@ -67,20 +67,20 @@ export function TournamentCard({
                     ` – ${format(new Date(tournament.endDate), "d. MMMM", { locale: nb })}`}
                 </span>
                 {periodLabel && (
-                  <span className="inline-flex items-center gap-1 text-[10px] text-[var(--color-gold-muted)]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]" />
+                  <span className="inline-flex items-center gap-1 text-[10px] text-[var(--color-grey-400)]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-grey-900)]" />
                     {periodLabel}
                   </span>
                 )}
               </div>
               {(tournament.course || tournament.location) && (
-                <div className="flex items-center gap-2 text-xs text-[var(--color-gold-muted)]">
+                <div className="flex items-center gap-2 text-xs text-[var(--color-grey-400)]">
                   <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                   <span>{tournament.course ?? tournament.location}</span>
                 </div>
               )}
               {plan?.notes && (
-                <p className="text-xs text-[var(--color-gold-muted)] italic line-clamp-2 mt-1">
+                <p className="text-xs text-[var(--color-grey-400)] italic line-clamp-2 mt-1">
                   {plan.notes}
                 </p>
               )}
@@ -93,7 +93,7 @@ export function TournamentCard({
                 href={tournament.externalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-lg hover:bg-[var(--color-border)] transition-colors text-[var(--color-gold-muted)]"
+                className="p-1.5 rounded-lg hover:bg-[var(--color-grey-200)] transition-colors text-[var(--color-grey-400)]"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
@@ -101,12 +101,12 @@ export function TournamentCard({
 
             {plan ? (
               <div className="text-right">
-                <p className="text-xs font-medium text-[var(--color-gold)]">
+                <p className="text-xs font-medium text-[var(--color-grey-900)]">
                   {PLAN_LEVEL_CONFIG[plan.planLevel as "A" | "B" | "C"].label}
                 </p>
                 <button
                   onClick={() => setSheetOpen(true)}
-                  className="text-[10px] text-[var(--color-gold-muted)] hover:text-[var(--color-snow)] mt-0.5"
+                  className="text-[10px] text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] mt-0.5"
                 >
                   Endre
                 </button>
@@ -114,7 +114,7 @@ export function TournamentCard({
             ) : (
               <button
                 onClick={() => setSheetOpen(true)}
-                className="text-xs px-3 py-1.5 rounded-lg border border-[var(--color-gold)]/30 text-[var(--color-gold)] hover:bg-[var(--color-gold)]/10 transition-colors"
+                className="text-xs px-3 py-1.5 rounded-lg border border-[var(--color-grey-900)]/30 text-[var(--color-grey-900)] hover:bg-[var(--color-grey-900)]/10 transition-colors"
               >
                 Min plan
               </button>
