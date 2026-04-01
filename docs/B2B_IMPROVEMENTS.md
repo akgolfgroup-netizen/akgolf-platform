@@ -1,11 +1,13 @@
 # Forbedringsforslag: B2B-segmentering og Testimonials
 
+> **Oppdatert:** 2026-04-01
+
 ## 1. B2B-segmentering på /utvikling
 
 ### Nåværende situasjon
 `/utvikling` blander to helt ulike produkter:
-- **Software** (lilla): Digitale verktøy for trenere og klubber
-- **Klubbtrening** (grønn): Rådgiving og sportsplaner for klubber
+- **Software**: Digitale verktøy for trenere og klubber
+- **Klubbtrening**: Rådgiving og sportsplaner for klubber
 
 ### Problem
 - Ulike målgrupper med ulike behov
@@ -17,25 +19,25 @@
 #### Visuelle endringer:
 ```tsx
 // Forbedret CTA-seksjon med to tydelige valg
-<section className="w-section-lg bg-surface-warm">
-  <div className="w-container">
+<section className="py-24 bg-grey-50">
+  <div className="container mx-auto px-6">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       {/* Software CTA */}
-      <div className="w-card border-t-[3px] border-t-software">
-        <SectionLabel>AK Golf Software</SectionLabel>
-        <h3 className="w-heading-md mt-2 mb-4">Digitale verktøy</h3>
-        <p className="text-ink-50 mb-6">Prøv vår programvare med en gratis demo.</p>
-        <Link href="#apply-software" className="w-btn w-btn-software">
+      <div className="bg-white rounded-2xl p-8 border border-grey-200">
+        <span className="text-sm text-grey-500">AK Golf Software</span>
+        <h3 className="text-2xl font-bold mt-2 mb-4">Digitale verktøy</h3>
+        <p className="text-grey-500 mb-6">Prøv vår programvare med en gratis demo.</p>
+        <Link href="#apply-software" className="inline-flex px-6 py-3 bg-black text-white rounded-full">
           Bestill demo
         </Link>
       </div>
-      
+
       {/* Klubb CTA */}
-      <div className="w-card border-t-[3px] border-t-utvikling">
-        <SectionLabel>Klubbtrening</SectionLabel>
-        <h3 className="w-heading-md mt-2 mb-4">Rådgiving</h3>
-        <p className="text-ink-50 mb-6">Book et uforpliktende møte.</p>
-        <Link href="#apply-klubb" className="w-btn w-btn-utvikling">
+      <div className="bg-white rounded-2xl p-8 border border-grey-200">
+        <span className="text-sm text-grey-500">Klubbtrening</span>
+        <h3 className="text-2xl font-bold mt-2 mb-4">Rådgiving</h3>
+        <p className="text-grey-500 mb-6">Book et uforpliktende møte.</p>
+        <Link href="#apply-klubb" className="inline-flex px-6 py-3 bg-black text-white rounded-full">
           Book møte
         </Link>
       </div>
@@ -115,8 +117,8 @@ E-postmal til eksisterende kunder:
 
 "Hei [Navn],
 
-Vi jobber med å forbedre nettsiden vår og vil gjerne vise frem 
-noen av våre fornøyde kunder. 
+Vi jobber med å forbedre nettsiden vår og vil gjerne vise frem
+noen av våre fornøyde kunder.
 
 Vi tenkte å bruke din tilbakemelding:
 "[Quote]"
@@ -147,7 +149,7 @@ Anders"
 ## 3. Oppsummering: Hva bør gjøres først?
 
 ### Denne uken (raskt):
-1. ✅ Resend-oppsett (ferdig dokumentert)
+1. ✅ Resend-oppsett (ferdig)
 2. 🔄 Legg til klubbtilhørighet i testimonials
 3. 🔄 Send e-post til kunder om tillatelse
 
