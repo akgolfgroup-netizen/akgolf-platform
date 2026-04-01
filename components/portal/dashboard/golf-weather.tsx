@@ -151,7 +151,7 @@ export function GolfWeather({ weather }: GolfWeatherProps) {
                       ? "text-amber-400"
                       : weather.condition === "rainy"
                       ? "text-blue-400"
-                      : "text-slate-400"
+                      : "text-[var(--color-grey-400)]"
                   }`}
                 />
               </motion.div>

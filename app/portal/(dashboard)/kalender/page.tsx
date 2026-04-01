@@ -101,19 +101,19 @@ export default async function KalenderPage({
           <div className="flex gap-1">
             <a
               href={`?view=${view}&offset=${monthOffset - 1}`}
-              className="w-8 h-8 rounded-lg flex items-center justify-center border border-[#333] bg-white text-[#171717] hover:bg-gray-100 transition-colors"
+              className="w-8 h-8 rounded-lg flex items-center justify-center border border-[#333] bg-white text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
             </a>
             <a
               href={`?view=${view}&offset=0`}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium border border-[#333] bg-white text-[#171717] hover:bg-gray-100 transition-colors"
+              className="px-3 py-1.5 rounded-lg text-xs font-medium border border-[#333] bg-white text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors"
             >
               I dag
             </a>
             <a
               href={`?view=${view}&offset=${monthOffset + 1}`}
-              className="w-8 h-8 rounded-lg flex items-center justify-center border border-[#333] bg-white text-[#171717] hover:bg-gray-100 transition-colors"
+              className="w-8 h-8 rounded-lg flex items-center justify-center border border-[#333] bg-white text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors"
             >
               <ChevronRight className="w-4 h-4" />
             </a>

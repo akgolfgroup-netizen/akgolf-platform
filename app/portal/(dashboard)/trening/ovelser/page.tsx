@@ -192,7 +192,7 @@ export default async function OvelserPage() {
                       <div className="flex items-center gap-3">
                         <span
                           className={`px-2 py-1 text-xs rounded ${
-                            difficultyColors[drill.difficulty] ?? "bg-gray-500/20 text-gray-400"
+                            difficultyColors[drill.difficulty] ?? "bg-[var(--color-grey-400)]/20 text-[var(--color-grey-400)]"
                           }`}
                         >
                           {drill.difficulty}

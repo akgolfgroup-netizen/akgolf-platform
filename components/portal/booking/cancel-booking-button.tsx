@@ -79,7 +79,7 @@ export function CancelBookingButton({
                   <span className="text-green-600 text-xl">✓</span>
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Avbestilt</h3>
-                <p className="text-gray-600 mb-2">{result.message}</p>
+                <p className="text-[var(--color-grey-600)] mb-2">{result.message}</p>
                 {result.refundPercent > 0 && (
                   <p className="text-sm text-green-600">
                     {result.refundPercent}% refusjon behandlet
@@ -96,7 +96,7 @@ export function CancelBookingButton({
                     <h3 className="font-semibold text-lg mb-1">
                       Bekreft avbestilling
                     </h3>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-[var(--color-grey-600)] text-sm">
                       Er du sikker på at du vil avbestille denne timen?
                       Avbestillingsregler gjelder.
                     </p>
@@ -109,7 +109,7 @@ export function CancelBookingButton({
                   </div>
                 )}
 
-                <div className="bg-gray-50 rounded-lg p-4 mb-4 text-sm text-gray-600">
+                <div className="bg-[var(--color-grey-100)] rounded-lg p-4 mb-4 text-sm text-[var(--color-grey-600)]">
                   <p className="font-medium mb-2">Avbestillingsregler:</p>
                   <ul className="space-y-1 text-xs">
                     <li>• Mer enn 24 timer før: Full refusjon</li>
@@ -121,7 +121,7 @@ export function CancelBookingButton({
                 <div className="flex gap-3">
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                    className="flex-1 px-4 py-2 text-sm font-medium text-[var(--color-grey-700)] bg-[var(--color-grey-100)] rounded-lg hover:bg-[var(--color-grey-100)] transition-colors"
                     disabled={loading}
                   >
                     Avbryt

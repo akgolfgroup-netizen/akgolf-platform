@@ -124,7 +124,7 @@ export function RescheduleForm({
     <div className="space-y-6">
       {/* Date selector */}
       <div>
-        <h3 className="text-sm font-medium text-gray-700 mb-2">Velg dato</h3>
+        <h3 className="text-sm font-medium text-[var(--color-grey-700)] mb-2">Velg dato</h3>
         <div className="flex gap-2 overflow-x-auto pb-2">
           {dates.map((date) => {
             const d = new Date(date);
@@ -136,7 +136,7 @@ export function RescheduleForm({
                 className={`flex-shrink-0 px-3 py-2 rounded-lg text-center transition-colors ${
                   isSelected
                     ? "bg-[var(--color-grey-900)] text-white"
-                    : "bg-gray-50 hover:bg-gray-100 text-gray-700"
+                    : "bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-100)] text-[var(--color-grey-700)]"
                 }`}
               >
                 <p className="text-[10px] uppercase">
@@ -154,16 +154,16 @@ export function RescheduleForm({
 
       {/* Time slots */}
       <div>
-        <h3 className="text-sm font-medium text-gray-700 mb-2">
+        <h3 className="text-sm font-medium text-[var(--color-grey-700)] mb-2">
           Ledige tider
         </h3>
         {loading ? (
-          <div className="py-8 text-center text-gray-400">
+          <div className="py-8 text-center text-[var(--color-grey-400)]">
             <Clock className="w-5 h-5 animate-pulse mx-auto mb-2" />
             Laster tider...
           </div>
         ) : slots.length === 0 ? (
-          <p className="py-8 text-center text-gray-400 text-sm">
+          <p className="py-8 text-center text-[var(--color-grey-400)] text-sm">
             Ingen ledige tider denne dagen
           </p>
         ) : (
@@ -178,7 +178,7 @@ export function RescheduleForm({
                   className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isSelected
                       ? "bg-[var(--color-grey-900)] text-white"
-                      : "bg-gray-50 hover:bg-gray-100 text-gray-700"
+                      : "bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-100)] text-[var(--color-grey-700)]"
                   }`}
                 >
                   {format(t, "HH:mm")}

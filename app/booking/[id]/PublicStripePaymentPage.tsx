@@ -263,7 +263,7 @@ export function PublicStripePaymentPage({
                   colorBackground: "#FFFFFF",
                   colorText: THEME.text,
                   colorDanger: THEME.error,
-                  fontFamily: "Manrope, sans-serif",
+                  fontFamily: "Inter, system-ui, -apple-system, sans-serif",
                   borderRadius: "12px",
                   spacingUnit: "4px",
                 },

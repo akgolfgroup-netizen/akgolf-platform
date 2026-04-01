@@ -104,7 +104,7 @@ const heading = {
 };
 
 const greeting = {
-  color: "#333",
+  color: "#1D1D1F",
   fontSize: "16px",
   margin: "0 0 8px",
 };
@@ -135,7 +135,7 @@ const detailsBox = {
 };
 
 const detailRow = {
-  color: "#333",
+  color: "#1D1D1F",
   fontSize: "14px",
   margin: "0 0 6px",
   lineHeight: "1.5",
