@@ -43,11 +43,11 @@ const manrope = localFont({
 });
 ```
 
-## 5. Booking-redirect
+## 5. Booking-side (OPPDATERT 2026-04-01)
 
-**Problem:** `/booking` skal gå til `/academy/booking`.
+**Status:** `/booking` er nå en egen landingsside med tjenester og instruktører. Redirect til `/academy/booking` er **fjernet**.
 
-**Løsning:** Redirect konfigurert i `next.config.ts`. Ikke lag egen `/booking/page.tsx`.
+**Løsning:** `app/booking/page.tsx` er en server component som henter ServiceTypes og Instructors fra Prisma. `/academy/booking` er en separat booking-side for Academy-pakker.
 
 ## 6. Portal auth uten middleware
 

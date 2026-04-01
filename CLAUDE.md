@@ -358,4 +358,4 @@ Se `.env.example` for komplett liste. Nøkkelvariabler:
 - **Prisma-klient:** Singleton i `lib/portal/prisma.ts`
 - **E-postmaler:** React Email-komponenter i `lib/portal/email/templates/`
 - **UI-base:** `components/ui/` for shadcn-lignende base-komponenter, `components/portal/ui/` for fancy portal-effekter
-- **Redirect:** `next.config.ts` redirecter `/booking` → `/academy/booking`
+- **Booking:** `/booking` er nå en egen landingsside med tjenester og instruktører (redirect til `/academy/booking` er fjernet)
