@@ -6,6 +6,7 @@ import { addMinutes } from "date-fns";
 import { BookingStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
 import { autoCreateUser } from "@/lib/portal/booking/auto-create-user";
 import { sendWelcomeEmail } from "@/lib/portal/email/send-welcome-email";
+import { checkUserQuota, checkBookingWindow, useSession } from "@/lib/portal/booking/subscription-quota";
 import { nanoid } from "nanoid";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
@@ -207,6 +208,30 @@ export async function POST(req: NextRequest) {
       (serviceType.price * serviceType.vatRate) / 100
     );
 
+    // Check subscription quota for authenticated premium users
+    if (studentId) {
+      const quotaUser = await prisma.user.findUnique({
+        where: { id: studentId },
+        select: { subscriptionTier: true },
+      });
+      if (quotaUser && quotaUser.subscriptionTier !== "VISITOR") {
+        const quota = await checkUserQuota(studentId);
+        if (!quota.hasQuota) {
+          return NextResponse.json(
+            { error: quota.reason },
+            { status: 403 }
+          );
+        }
+        const windowCheck = await checkBookingWindow(studentId, start);
+        if (!windowCheck.canBook) {
+          return NextResponse.json(
+            { error: windowCheck.reason },
+            { status: 400 }
+          );
+        }
+      }
+    }
+
     // Sjekk for duplikat-booking (samme bruker, samme tid)
     const existingUserBooking = await prisma.booking.findFirst({
       where: {
@@ -278,6 +303,17 @@ export async function POST(req: NextRequest) {
       },
       { isolationLevel: "Serializable" }
     );
+
+    // Decrement quota for premium users
+    if (studentId) {
+      const quotaUser = await prisma.user.findUnique({
+        where: { id: studentId },
+        select: { subscriptionTier: true },
+      });
+      if (quotaUser && quotaUser.subscriptionTier !== "VISITOR") {
+        await useSession(studentId).catch(console.error);
+      }
+    }
 
     // Send welcome email for new users (non-blocking)
     if (isNewUser && tempPassword) {

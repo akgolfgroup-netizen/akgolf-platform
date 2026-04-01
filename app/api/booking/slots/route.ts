@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
       await Promise.all([
         prisma.serviceType.findUnique({
           where: { id: serviceTypeId },
-          select: { duration: true, bufferAfter: true, minNoticeHours: true },
+          select: { duration: true, bufferAfter: true, bufferBefore: true, minNoticeHours: true },
         }),
         prisma.instructorAvailability.findMany({
           where: { instructorId, dayOfWeek },
@@ -88,6 +88,7 @@ export async function GET(req: NextRequest) {
         availEnd: window.endTime,
         duration: serviceType.duration,
         bufferAfter: serviceType.bufferAfter,
+        bufferBefore: serviceType.bufferBefore,
         date,
         existingBookings,
         blockedTimes,

@@ -35,13 +35,7 @@ const nextConfig: NextConfig = {
   },
   // Redirects for old URLs
   async redirects() {
-    return [
-      {
-        source: "/booking",
-        destination: "/academy/booking",
-        permanent: true,
-      },
-    ];
+    return [];
   },
   // Webpack optimization
   webpack: (config, { isServer }) => {

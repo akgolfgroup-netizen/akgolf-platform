@@ -305,8 +305,8 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
             </motion.button>
           )}
 
-          {/* Vipps */}
-          {serviceType.allowVipps && (
+          {/* Vipps — temporarily disabled until integration is ready */}
+          {false && serviceType.allowVipps && (
             <motion.button
               onClick={handleVipps}
               disabled={isAnyLoading}

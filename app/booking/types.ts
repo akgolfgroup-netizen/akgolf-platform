@@ -13,7 +13,7 @@ export interface ServiceType {
   description: string | null;
   category: string;
   duration: number;
-  price: number; // øre
+  price: number; // kroner
   color: string | null;
   minNoticeHours: number;
   maxAdvanceDays: number;

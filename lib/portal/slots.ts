@@ -5,6 +5,7 @@ export function generateSlots({
   availEnd,
   duration,
   bufferAfter,
+  bufferBefore = 0,
   date,
   existingBookings,
   blockedTimes,
@@ -14,6 +15,7 @@ export function generateSlots({
   availEnd: string; // "HH:MM"
   duration: number; // minutter
   bufferAfter: number; // minutter
+  bufferBefore?: number; // minutter
   date: Date; // midnatt UTC for valgt dato
   existingBookings: { startTime: Date; endTime: Date }[];
   blockedTimes: { startTime: Date; endTime: Date }[];
@@ -37,11 +39,12 @@ export function generateSlots({
     if (isAfter(slotEnd, windowEnd)) break;
 
     if (!isBefore(current, earliest)) {
+      const slotStartWithBuffer = addMinutes(current, -bufferBefore);
       const hasBookingConflict = existingBookings.some(
-        (b) => isBefore(current, b.endTime) && isAfter(slotEnd, b.startTime)
+        (b) => isBefore(slotStartWithBuffer, b.endTime) && isAfter(slotEnd, b.startTime)
       );
       const hasBlockedConflict = blockedTimes.some(
-        (b) => isBefore(current, b.endTime) && isAfter(slotEnd, b.startTime)
+        (b) => isBefore(slotStartWithBuffer, b.endTime) && isAfter(slotEnd, b.startTime)
       );
       if (!hasBookingConflict && !hasBlockedConflict) {
         slots.push(new Date(current).toISOString());

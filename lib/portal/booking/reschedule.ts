@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { prisma } from "@/lib/portal/prisma";
 import { BookingStatus } from "@prisma/client";
 import { addMinutes } from "date-fns";
+import { sendRescheduleNotification } from "@/lib/portal/email/send-booking-email";
 
 interface RescheduleResult {
   success: boolean;
@@ -24,12 +25,16 @@ export async function rescheduleBooking(
     include: {
       ServiceType: {
         select: {
+          name: true,
           duration: true,
           bufferBefore: true,
           bufferAfter: true,
           minNoticeHours: true,
           maxAdvanceDays: true,
         },
+      },
+      User: {
+        select: { name: true, email: true },
       },
     },
   });
@@ -60,6 +65,14 @@ export async function rescheduleBooking(
     return {
       success: false,
       error: `Krever minst ${booking.ServiceType.minNoticeHours} timers varsel`,
+    };
+  }
+
+  const maxAdvanceMs = booking.ServiceType.maxAdvanceDays * 24 * 60 * 60 * 1000;
+  if (newStartTime.getTime() - Date.now() > maxAdvanceMs) {
+    return {
+      success: false,
+      error: `Kan ikke bestille mer enn ${booking.ServiceType.maxAdvanceDays} dager frem i tid`,
     };
   }
 
@@ -145,6 +158,19 @@ export async function rescheduleBooking(
       },
       { isolationLevel: "Serializable" }
     );
+
+    // Send reschedule notification (non-blocking)
+    if (booking.User.email) {
+      sendRescheduleNotification(
+        booking.User.email,
+        booking.User.name ?? "Elev",
+        booking.ServiceType.name,
+        booking.startTime,
+        newStartTime,
+      ).catch((err) => {
+        console.error(`[Reschedule] Email notification failed:`, err);
+      });
+    }
 
     return { success: true, newBookingId: newBooking.id };
   } catch (error) {

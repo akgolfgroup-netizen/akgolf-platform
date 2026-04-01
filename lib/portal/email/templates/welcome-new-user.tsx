@@ -67,7 +67,7 @@ export function WelcomeNewUserEmail({
             </Text>
           </Section>
 
-          <Button style={button} href="https://akgolf.no/portal">
+          <Button style={button} href="https://akgolf.no/portal/login">
             Logg inn på spillerportalen
           </Button>
 
@@ -190,7 +190,7 @@ const detailRow = {
 
 const button = {
   backgroundColor: "#1D1D1F",
-  borderRadius: "6px",
+  borderRadius: "980px",
   color: "#ffffff",
   fontSize: "14px",
   fontWeight: "600" as const,

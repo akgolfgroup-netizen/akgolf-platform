@@ -5,6 +5,7 @@ import { BookingStatus, PaymentStatus } from "@prisma/client";
 import { evaluateCancellationPolicy } from "@/lib/portal/booking/cancellation-policy";
 import { processRefund } from "@/lib/portal/booking/refund";
 import { notifyNextOnWaitlist } from "@/lib/portal/booking/waitlist";
+import { sendBookingCancellation } from "@/lib/portal/email/send-booking-email";
 
 export async function POST(req: NextRequest) {
   const user = await getPortalUser();
@@ -38,6 +39,7 @@ export async function POST(req: NextRequest) {
       include: {
         ServiceType: { select: { name: true } },
         Instructor: { select: { User: { select: { name: true } } } },
+        User: { select: { name: true, email: true } },
       },
     });
 
@@ -96,6 +98,21 @@ export async function POST(req: NextRequest) {
           : {}),
       },
     });
+
+    // Send cancellation email (non-blocking)
+    if (booking.User.email) {
+      sendBookingCancellation(
+        booking.User.email,
+        booking.User.name ?? "Elev",
+        booking.ServiceType.name,
+        booking.Instructor.User.name ?? "Instruktør",
+        booking.startTime,
+        reason || cancellation.reason,
+        cancellation.refundPercent,
+      ).catch((err) => {
+        console.error(`[Cancel] Cancellation email failed:`, err);
+      });
+    }
 
     // Notify waitlist if applicable
     await notifyNextOnWaitlist(
