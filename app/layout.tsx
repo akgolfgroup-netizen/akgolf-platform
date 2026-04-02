@@ -67,7 +67,6 @@ export default function RootLayout({
               contactPoint: {
                 "@type": "ContactPoint",
                 email: "post@akgolf.no",
-                telephone: "+47-900-00-000",
                 contactType: "customer service",
                 availableLanguage: "Norwegian",
               },

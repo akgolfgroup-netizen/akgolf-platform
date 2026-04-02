@@ -910,10 +910,10 @@ export const FOOTER_LINKS = {
 } as const;
 
 // ─── Booking ───
-export const BOOKING_URL = "https://book.akgolf.no";
+export const BOOKING_URL = "/booking";
 
 // ─── Portal ───
-export const PORTAL_URL = "https://portal.akgolf.no";
+export const PORTAL_URL = "/portal";
 
 // ─── Portal Empty States ───
 export const PORTAL_EMPTY_STATES = {
