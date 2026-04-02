@@ -342,6 +342,21 @@ import { BarChart3 } from "lucide-react";
 
 **Kilde:** `docs/coaching-pakker.md` for komplett oversikt.
 
+## 28. Booking tids-grid må være responsiv (2026-04-02)
+
+**Problem:** `grid-cols-4` og `grid-cols-7` er uleselig på mobil.
+
+**Løsning:** Bruk alltid responsive breakpoints:
+- Tider: `grid-cols-2 sm:grid-cols-3 md:grid-cols-4`
+- Dager: `flex overflow-x-auto` eller `grid-cols-4 sm:grid-cols-7`
+- Sidebar: Vis som slide-in drawer på mobil, sticky på desktop
+
+**Filer:**
+- `app/booking/components/DateTimePicker.tsx` — responsiv dag/tid-velger
+- `app/booking/components/BookingSidebar.tsx` — mobile drawer
+
+**Regel:** Aldri bruk faste grid-kolonner uten responsive breakpoints i booking-flyt.
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer

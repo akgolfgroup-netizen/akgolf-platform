@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award } from "lucide-react";
 import type { Instructor } from "../types";
 
 interface InstructorCardProps {
@@ -56,18 +55,6 @@ export function InstructorCard({ instructor, isSelected, onClick, index }: Instr
           <p className={`text-sm ${isSelected ? "text-white/70" : "text-grey-500"}`}>
             {instructor.title || "Golfcoach"}
           </p>
-
-          {/* Badge */}
-          <div className={`
-            inline-flex items-center gap-1.5 mt-2 text-xs font-medium px-2.5 py-1 rounded-full
-            ${isSelected
-              ? "bg-white/20 text-white"
-              : "bg-grey-100 text-grey-600"
-            }
-          `}>
-            <Award size={12} />
-            <span>PGA-sertifisert</span>
-          </div>
         </div>
 
         {/* Selection circle */}

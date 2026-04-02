@@ -10,14 +10,13 @@ import {
   MapPin,
   Clock,
   ArrowRight,
-  Award,
 } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Book coaching | AK Golf",
   description:
-    "Velg type coaching og book time med en av våre PGA-sertifiserte trenere.",
+    "Velg type coaching og book tid med en av våre erfarne golfcoacher.",
 };
 
 const CATEGORY_CONFIG: Record<
@@ -186,7 +185,7 @@ export default async function BookingPage() {
                 Våre trenere
               </h2>
               <p className="text-[#1D1D1F]/60 mb-10">
-                Erfarne og PGA-sertifiserte golfcoacher
+                Erfarne golfcoacher klare til å hjelpe deg
               </p>
 
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -221,10 +220,6 @@ export default async function BookingPage() {
                             {instructor.title}
                           </p>
                         )}
-                        <div className="inline-flex items-center gap-1.5 mt-2 text-xs font-medium text-[#1D1D1F]/50">
-                          <Award size={12} />
-                          <span>PGA-sertifisert</span>
-                        </div>
                       </div>
                     </div>
 

@@ -236,8 +236,8 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
         </button>
       </div>
 
-      {/* Day Selector */}
-      <div className="grid grid-cols-7 gap-2 mb-6">
+      {/* Day Selector - horizontal scroll on mobile */}
+      <div className="flex sm:grid sm:grid-cols-7 gap-2 mb-6 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible">
         {weekDates.map((date, i) => {
           const dateKey = formatDateKey(date);
           const isPast = date < today;
@@ -251,7 +251,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
               onClick={() => handleDaySelect(date)}
               disabled={isPast || isFull}
               className={cn(
-                "border-2 rounded-[20px] p-3 text-center transition-all",
+                "border-2 rounded-[20px] p-3 text-center transition-all min-w-[70px] flex-shrink-0 sm:min-w-0 sm:flex-shrink",
                 isPast && "opacity-40 cursor-not-allowed border-grey-200",
                 isFull && !isPast && "opacity-40 cursor-not-allowed border-grey-200",
                 !isPast && !isFull && !isSelected && "border-grey-200 hover:border-grey-300 cursor-pointer",
@@ -360,8 +360,8 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
               </div>
             </div>
 
-            {/* Time grid */}
-            <div className="grid grid-cols-4 gap-2">
+            {/* Time grid - responsive columns */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
               {filteredSlots.map((slot) => {
                 const time = new Date(slot);
                 const timeStr = time.toLocaleTimeString("nb-NO", {
