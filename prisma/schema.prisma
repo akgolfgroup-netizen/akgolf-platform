@@ -589,6 +589,16 @@ model User {
   subscriptionExpiresAt                       DateTime?
   subscriptionSource                          SubscriptionSource?
   subscriptionTier                            SubscriptionTier           @default(VISITOR)
+  // Portal usage tracking (freemium)
+  portalMonthlyLogCount                       Int                        @default(0)
+  portalMonthlyAiCount                        Int                        @default(0)
+  portalUsageResetDate                        DateTime                   @default(now())
+  portalOnboardingCompleted                   Boolean                    @default(false)
+  // Portal engagement & retention
+  lastActiveAt                                DateTime?
+  onboardingGoals                             Json?
+  weeklyEmailSentAt                           DateTime?
+  winBackEmailStep                            Int                        @default(0)
   Account                                     Account[]
   Booking                                     Booking[]
   CoachingSession                             CoachingSession[]

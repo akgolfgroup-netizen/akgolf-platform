@@ -11,6 +11,9 @@ export type PortalUser = {
   role: string;
   subscriptionTier: string;
   stripeCustomerId: string | null;
+  subscriptionStatus: string | null;
+  subscriptionExpiresAt: Date | null;
+  portalMonthlyLogCount: number;
 };
 
 export async function getPortalUser(): Promise<PortalUser | null> {
@@ -32,6 +35,13 @@ export async function getPortalUser(): Promise<PortalUser | null> {
       role: true,
       subscriptionTier: true,
       stripeCustomerId: true,
+      subscriptionExpiresAt: true,
+      portalMonthlyLogCount: true,
+      UserSubscription: {
+        where: { status: "TRIALING" },
+        select: { status: true, billingPeriodEnd: true },
+        take: 1,
+      },
     },
   });
 
@@ -57,11 +67,21 @@ export async function getPortalUser(): Promise<PortalUser | null> {
         role: true,
         subscriptionTier: true,
         stripeCustomerId: true,
+        subscriptionExpiresAt: true,
+        portalMonthlyLogCount: true,
+        UserSubscription: {
+          where: { status: "TRIALING" },
+          select: { status: true, billingPeriodEnd: true },
+          take: 1,
+        },
       },
     });
   }
 
   if (!user || !user.email) return null;
+
+  // Get trial subscription info
+  const trialSub = user.UserSubscription?.[0];
 
   return {
     id: user.id,
@@ -71,6 +91,9 @@ export async function getPortalUser(): Promise<PortalUser | null> {
     role: user.role,
     subscriptionTier: user.subscriptionTier,
     stripeCustomerId: user.stripeCustomerId,
+    subscriptionStatus: trialSub?.status ?? null,
+    subscriptionExpiresAt: trialSub?.billingPeriodEnd ?? user.subscriptionExpiresAt,
+    portalMonthlyLogCount: user.portalMonthlyLogCount,
   };
 }
 

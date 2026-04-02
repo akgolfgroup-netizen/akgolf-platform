@@ -2,11 +2,18 @@ import { randomUUID } from "crypto";
 import { prisma } from "@/lib/portal/prisma";
 import { ACHIEVEMENT_DEFINITIONS } from "./definitions";
 
+export interface UnlockedAchievement {
+  key: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
 /**
  * Idempotent achievement check — call after any action that might unlock achievements.
- * Returns list of newly unlocked achievement keys.
+ * Returns list of newly unlocked achievements with details.
  */
-export async function checkAchievements(userId: string): Promise<string[]> {
+export async function checkAchievements(userId: string): Promise<UnlockedAchievement[]> {
   // Ensure all definitions exist in DB
   for (const def of ACHIEVEMENT_DEFINITIONS) {
     await prisma.achievementDefinition.upsert({
@@ -36,7 +43,7 @@ export async function checkAchievements(userId: string): Promise<string[]> {
   ]);
 
   const existingIds = new Set(existing.map((e) => e.achievementDefinitionId));
-  const newlyUnlocked: string[] = [];
+  const newlyUnlocked: UnlockedAchievement[] = [];
 
   // Gather player data for checks
   const [trainingCount, coachingCount, tournamentPlanCount, goalCount, roundCount, streak, handicap, underParRound] =
@@ -80,7 +87,12 @@ export async function checkAchievements(userId: string): Promise<string[]> {
       await prisma.playerAchievement.create({
         data: { id: randomUUID(), userId, achievementDefinitionId: def.id },
       });
-      newlyUnlocked.push(def.key);
+      newlyUnlocked.push({
+        key: def.key,
+        title: def.title,
+        description: def.description,
+        icon: def.icon,
+      });
     }
   }
 

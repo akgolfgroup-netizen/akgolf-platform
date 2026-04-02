@@ -126,3 +126,67 @@ export async function getLoggedSessionIds() {
 
   return logs.map((l) => l.planSessionId!);
 }
+
+// Quick-log: Repeat last session
+export async function repeatLastSession() {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Unauthorized");
+
+  // Get the most recent log
+  const lastLog = await prisma.trainingLog.findFirst({
+    where: { userId: user.id },
+    orderBy: { date: "desc" },
+    select: {
+      focusArea: true,
+      durationMinutes: true,
+      exercises: true,
+    },
+  });
+
+  if (!lastLog) {
+    throw new Error("Ingen tidligere okter funnet");
+  }
+
+  // Create new log with same details
+  await prisma.trainingLog.create({
+    data: {
+      id: nanoid(),
+      updatedAt: new Date(),
+      userId: user.id,
+      date: new Date(),
+      focusArea: lastLog.focusArea,
+      durationMinutes: lastLog.durationMinutes,
+      exercises: lastLog.exercises ?? [],
+      notes: null,
+      rating: null,
+      deviatedFromPlan: false,
+      deviationReason: null,
+    },
+  });
+
+  revalidatePath("/dagbok");
+  revalidatePath("/treningsplan");
+  revalidatePath("/analyse");
+
+  // Check achievements in background
+  checkAchievements(user.id).catch(() => {});
+
+  return { success: true, focusArea: lastLog.focusArea };
+}
+
+// Get last session for preview
+export async function getLastSession() {
+  const user = await requirePortalUser();
+  if (!user?.id) return null;
+
+  const lastLog = await prisma.trainingLog.findFirst({
+    where: { userId: user.id },
+    orderBy: { date: "desc" },
+    select: {
+      focusArea: true,
+      durationMinutes: true,
+    },
+  });
+
+  return lastLog;
+}

@@ -1,24 +1,39 @@
 "use client";
 
-import { Lock, Sparkles } from "lucide-react";
+import { Lock, Zap } from "lucide-react";
 import { SubscriptionTier } from "@prisma/client";
 import { hasTierAccess } from "@/lib/portal/rbac";
+import Link from "next/link";
 
 const TIER_LABELS: Record<SubscriptionTier, string> = {
   VISITOR: "Gratis",
   ACADEMY: "Academy",
   STARTER: "Starter",
   PRO: "Pro",
-  ELITE: "Elite",
+  ELITE: "Pro+",
+};
+
+const TIER_PRICES: Record<SubscriptionTier, string> = {
+  VISITOR: "0 kr",
+  ACADEMY: "Inkludert",
+  STARTER: "Inkludert",
+  PRO: "199 kr/mnd",
+  ELITE: "299 kr/mnd",
 };
 
 interface TierGateProps {
   userTier: SubscriptionTier;
   required: SubscriptionTier;
   children: React.ReactNode;
+  featureName?: string;
 }
 
-export function TierGate({ userTier, required, children }: TierGateProps) {
+export function TierGate({
+  userTier,
+  required,
+  children,
+  featureName,
+}: TierGateProps) {
   if (hasTierAccess(userTier, required)) {
     return <>{children}</>;
   }
@@ -35,34 +50,35 @@ export function TierGate({ userTier, required, children }: TierGateProps) {
         <div
           className="rounded-2xl p-6 text-center max-w-xs mx-auto"
           style={{
-            background: "linear-gradient(135deg, var(--color-grey-100) 0%, var(--color-grey-100) 100%)",
+            background: "rgba(255, 255, 255, 0.95)",
             border: "1px solid var(--color-grey-200)",
-            backdropFilter: "blur(8px)",
+            boxShadow: "0 4px 24px rgba(0, 0, 0, 0.08)",
           }}
         >
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-3"
-            style={{ background: "var(--color-grey-200)" }}
+            style={{ background: "var(--color-grey-100)" }}
           >
-            <Lock className="w-5 h-5 text-[var(--color-grey-900)]" />
+            <Lock className="w-5 h-5 text-[var(--color-grey-500)]" />
           </div>
           <p className="text-sm font-semibold text-[var(--color-grey-900)] mb-1">
-            Krever {TIER_LABELS[required]}-abonnement
+            {featureName || "Denne funksjonen"} krever{" "}
+            {TIER_LABELS[required]}
           </p>
           <p className="text-xs text-[var(--color-grey-500)] mb-4">
-            Denne funksjonen er tilgjengelig for {TIER_LABELS[required]}- og{" "}
-            {required === SubscriptionTier.PRO ? "Elite" : ""}-abonnenter.
+            Oppgrader for {TIER_PRICES[required]} for å få tilgang.
           </p>
-          <div
-            className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold"
+          <Link
+            href="/portal/oppgrader"
+            className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-semibold transition-transform hover:scale-105"
             style={{
-              background: "var(--color-black)",
-              color: "var(--color-grey-900)",
+              background: "#16a34a",
+              color: "white",
             }}
           >
-            <Sparkles className="w-3.5 h-3.5" />
-            Kontakt oss for å oppgradere
-          </div>
+            <Zap className="w-4 h-4" />
+            Oppgrader til {TIER_LABELS[required]}
+          </Link>
         </div>
       </div>
     </div>

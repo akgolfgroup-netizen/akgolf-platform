@@ -15,6 +15,14 @@
     {
       "path": "/api/portal/cron/session-expiry-reminder",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/portal/cron/weekly-summary",
+      "schedule": "0 18 * * 0"
+    },
+    {
+      "path": "/api/portal/cron/win-back",
+      "schedule": "0 9 * * *"
     }
   ],
   "env": {

@@ -1,13 +1,20 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { getTrainingLogs, getLoggedSessionIds } from "./actions";
+import { getTrainingLogs, getLoggedSessionIds, getLastSession } from "./actions";
 import { DagbokClient } from "./dagbok-client";
 
 export default async function DagbokPage() {
-  const user = await requirePortalUser();
-  const [logs, loggedIds] = await Promise.all([
+  await requirePortalUser();
+  const [logs, loggedIds, lastSession] = await Promise.all([
     getTrainingLogs(),
     getLoggedSessionIds(),
+    getLastSession(),
   ]);
 
-  return <DagbokClient initialLogs={logs} loggedSessionIds={loggedIds} />;
+  return (
+    <DagbokClient
+      initialLogs={logs}
+      loggedSessionIds={loggedIds}
+      lastSession={lastSession}
+    />
+  );
 }

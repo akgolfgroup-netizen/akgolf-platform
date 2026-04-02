@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useTransition } from "react";
 import {
   NotebookPen,
   Plus,
@@ -12,13 +12,17 @@ import {
   ChevronLeft,
   ChevronRight,
   Flame,
+  RotateCcw,
+  Loader2,
 } from "lucide-react";
+import { repeatLastSession } from "./actions";
 import { BentoGrid } from "@/components/portal/apple/bento-grid";
 import { BentoCard } from "@/components/portal/apple/bento-card";
 import { StatCard } from "@/components/portal/apple/stat-card";
 import { AppleButton } from "@/components/portal/apple/apple-button";
 import { AppleBadge } from "@/components/portal/apple/apple-badge";
 import { AppleCard } from "@/components/portal/apple/apple-card";
+import { StreakMilestone } from "@/components/portal/gamification/streak-milestone";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import {
@@ -60,6 +64,7 @@ interface TrainingLogEntry {
 interface DagbokClientProps {
   initialLogs: TrainingLogEntry[];
   loggedSessionIds: string[];
+  lastSession?: { focusArea: string | null; durationMinutes: number | null } | null;
 }
 
 const weekDays = ["M", "T", "O", "T", "F", "L", "S"];
@@ -143,12 +148,26 @@ function buildCategories(logs: TrainingLogEntry[]) {
   }));
 }
 
-export function DagbokClient({ initialLogs, loggedSessionIds }: DagbokClientProps) {
+export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: DagbokClientProps) {
   const [activeFilter, setActiveFilter] = useState("Alle");
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [calendarMonth, setCalendarMonth] = useState(new Date());
+  const [isPending, startTransition] = useTransition();
+  const [quickLogSuccess, setQuickLogSuccess] = useState(false);
 
   const logs = initialLogs;
+
+  const handleQuickLog = () => {
+    startTransition(async () => {
+      try {
+        await repeatLastSession();
+        setQuickLogSuccess(true);
+        setTimeout(() => setQuickLogSuccess(false), 3000);
+      } catch {
+        // Handle error silently
+      }
+    });
+  };
 
   // Compute stats
   const streak = useMemo(() => calculateStreak(logs), [logs]);
@@ -236,10 +255,34 @@ export function DagbokClient({ initialLogs, loggedSessionIds }: DagbokClientProp
               Hold oversikt over treningsaktiviteten din
             </p>
           </div>
-          <AppleButton variant="primary" icon={Plus}>
-            Logg ny okt
-          </AppleButton>
+          <div className="flex gap-2">
+            {lastSession && (
+              <AppleButton
+                variant="secondary"
+                icon={isPending ? Loader2 : RotateCcw}
+                onClick={handleQuickLog}
+                disabled={isPending}
+              >
+                {isPending ? "Logger..." : "Gjenta siste"}
+              </AppleButton>
+            )}
+            <AppleButton variant="primary" icon={Plus}>
+              Logg ny okt
+            </AppleButton>
+          </div>
         </motion.div>
+
+        {/* Quick-log success toast */}
+        {quickLogSuccess && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="fixed top-4 right-4 z-50 px-4 py-3 rounded-xl bg-[#16a34a] text-white text-sm font-medium shadow-lg"
+          >
+            Okt logget!
+          </motion.div>
+        )}
 
         {/* Empty State */}
         {isEmpty && (
@@ -485,7 +528,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds }: DagbokClientProp
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 mb-4">
                   {streakDays.map((d, idx) => (
                     <div
                       key={idx}
@@ -505,6 +548,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds }: DagbokClientProp
                     </div>
                   ))}
                 </div>
+                {streak > 0 && <StreakMilestone currentStreak={streak} />}
               </BentoCard>
             </BentoGrid>
 
