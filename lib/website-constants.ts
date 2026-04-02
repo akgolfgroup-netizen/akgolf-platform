@@ -734,12 +734,9 @@ export const JUNIOR_PROGRAMS = [
 ] as const;
 
 export const JUNIOR_FAQ = [
-  { q: "Hva er minimumsnivå for å delta?", a: "Vi tar imot juniorer fra nybegynnernivå, men de må ha grønt kort eller tilsvarende grunnopplæring. Det viktigste er motivasjon og treningsvilje." },
-  { q: "Hvor mange juniorer er det i hver gruppe?", a: "Maksimalt 6 juniorer per gruppe for å sikre individuell oppfølging. Noen økter er 1:1 eller i enda mindre grupper." },
-  { q: "Hva koster juniorprogrammet?", a: "Prisene varierer etter aldersgruppe og program. Kontakt oss for en detaljert oversikt og muligheter for stønad/stipend." },
-  { q: "Hvordan følger dere opp foreldrene?", a: "Vi har kvartalsvise foreldremøter, månedlige fremgangsrapporter og en åpen kommunikasjonskanal. Foreldreinvolvering er viktig for oss." },
-  { q: "Tilbyr dere sommercamps?", a: "Ja, vi arrangerer intensive sommercamps i juni og juli med fokus på konkurranse, teknikk og det sosiale." },
-  { q: "Hjelper dere med college-golf i USA?", a: "Absolutt. For Pre-elite-nivået tilbyr vi veiledning om college-prosessen, inkludert kontakt med universiteter og stipendsøknad." },
+  { q: "Hva koster det?", a: "AK Golf Junior Academy koster 3 500 kr/mnd. GFGK Junior har egen treningsavgift gjennom klubben." },
+  { q: "Hvor trener dere?", a: "På Gamle Fredrikstad Golfklubb." },
+  { q: "Hvordan kommer jeg i gang?", a: "Ta kontakt så avtaler vi en samtale." },
 ] as const;
 
 // ─── Utvikling Page ───
@@ -981,7 +978,7 @@ export const ACADEMY_CTA = {
 // ─── Academy Hero ───
 export const ACADEMY_HERO = {
   eyebrow: "AK Golf Academy",
-  heading: "Din sving. Din plan. Dine resultater.",
+  heading: "Ditt spill. Din plan. Dine resultater.",
   description: "Individuell coaching og skreddersydde utviklingsplaner for voksne spillere som vil ta spillet til neste nivå. Evidensbasert, personlig og med dokumenterte resultater.",
 } as const;
 
@@ -1048,23 +1045,7 @@ export const JUNIOR_CTA = {
   primaryCta: "Kontakt oss",
 } as const;
 
-// ─── Junior Partners ───
-export const JUNIOR_PARTNERS = [
-  {
-    name: "Gamle Fredrikstad Golfklubb",
-    shortName: "GFGK",
-    logo: "/images/partners/gfgk-logo.svg",
-    url: "https://gfrg.no",
-  },
-  {
-    name: "WANG Toppidrett Fredrikstad",
-    shortName: "WANG",
-    logo: "/images/partners/wang-logo.svg",
-    url: "https://wang.no/fredrikstad",
-  },
-] as const;
-
-// ─── GFGK Junior Grupper (i samarbeid med Gamle Fredrikstad Golfklubb) ───
+// ─── GFGK Junior Grupper ───
 export const GFGK_JUNIOR_GROUPS = [
   {
     ageGroup: "U10",
@@ -1106,7 +1087,6 @@ export const GFGK_JUNIOR_GROUPS = [
 
 export const GFGK_JUNIOR_INFO = {
   heading: "GFGK Junior",
-  subheading: "I samarbeid med Gamle Fredrikstad Golfklubb",
   description: "Treningsgrupper for alle juniorer i klubben. Årlig treningsavgift gjennom GFGK.",
   link: "https://gfgk-junior.vercel.app",
   linkText: "Se alle grupper og påmelding",
@@ -1202,27 +1182,9 @@ export const JUNIOR_CAMP = {
 // ─── AK Golf Junior Academy (Premium satsningsprogram) ───
 export const JUNIOR_ACADEMY_INFO = {
   heading: "AK Golf Junior Academy",
-  subheading: "For de som satser",
-  intro: "AK Golf Junior Academy er et ekstra tilbud til spillere som ønsker å satse utover GFGK Junior-treningen. Begrenset antall plasser.",
+  intro: "Satsningsprogram i samarbeid med GFGK. Begrenset antall plasser.",
   price: "3 500",
   priceUnit: "kr/mnd",
-  benefits: [
-    "Ukentlig 1:1 coaching (90 min)",
-    "Fellestrening 2x per uke",
-    "TrackMan-analyse i hver sesjon",
-    "Full tilgang til spillerportalen",
-    "Komplett sesongplan med periodisering",
-    "I samarbeid med GFGK"
-  ],
-  note: "Krever medlemskap i GFGK Junior",
-  pathway: {
-    heading: "Spillerreisen",
-    steps: [
-      { name: "GFGK Junior", note: "klubbtrening" },
-      { name: "AK Golf Junior Academy", note: "3 500 kr/mnd" },
-      { name: "WANG Toppidrett", note: "videregående" }
-    ],
-  },
 } as const;
 
 // ─── Junior Parent Info ───

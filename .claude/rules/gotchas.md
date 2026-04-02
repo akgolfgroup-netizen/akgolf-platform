@@ -285,6 +285,63 @@ git checkout -b feat/ny-branch
 
 **Regel:** All instruktør-funksjonalitet ligger i Portal Admin. Ikke opprett separate dashboards.
 
+## 24. ALDRI bruk emojier (2026-04-02)
+
+**Problem:** Emojier gir uprofesjonelt inntrykk og er inkonsistent pa tvers av plattformer.
+
+**Losning:** Bruk SVG-ikoner fra Lucide eller egendefinerte ikoner i stedet.
+
+```typescript
+// FEIL
+<div>📊 TrackMan-analyse</div>
+
+// RIKTIG
+import { BarChart3 } from "lucide-react";
+<div><BarChart3 className="h-5 w-5" /> TrackMan-analyse</div>
+```
+
+**Regel:** Soek gjennom kode for emoji-tegn for publisering. Erstatt med Lucide-ikoner.
+
+## 25. Ikke nevn MVA pa landingssider
+
+**Problem:** MVA-informasjon er irrelevant for kunder og skaper forvirring.
+
+**Losning:** Fjern all MVA-tekst fra kundevendte sider:
+- "MVA-fritatt"
+- "eks. mva"
+- "inkl. mva"
+
+**Regel:** Priser vises som rene tall uten MVA-referanse. Intern MVA-haandtering skjer i backend.
+
+## 26. Tjeneste-struktur (2026-04-02)
+
+**3 hovedsider:**
+1. **Coaching** (`/coaching`) — Voksne amatorer + bedrift
+2. **Junior Academy** (`/junior`) — Barn/ungdom + foreldre
+3. **Utvikling** (`/utvikling`) — B2B for klubber
+
+**Eksplisitt utelatt (lanseres senere):**
+- Digital coaching (Pro, Pro+Coaching, Elite, Junior Digital)
+- Junior Prospect
+- NGF/WANG samarbeid
+
+**Bedriftstrening** (After Work, Bedriftsgolf) ligger under Coaching, ikke egen seksjon.
+
+## 27. Coaching-pakker — gjeldende priser
+
+| Pakke | Pris | Okter | Booking-vindu |
+|-------|------|-------|---------------|
+| Performance | 1 600 kr/mnd | 2 x 20 min | 7 dager |
+| Performance Pro | 2 000 kr/mnd | 4 x 20 min | 14 dager |
+
+**Inkludert i begge:**
+- TrackMan-analyse hver okt
+- Personlig treningsplan
+- Full tilgang til spillerportal
+- Ingen binding
+
+**Kilde:** `docs/coaching-pakker.md` for komplett oversikt.
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer

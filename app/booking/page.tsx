@@ -60,27 +60,36 @@ export default async function BookingPage() {
     <>
       <WebsiteNav />
 
-      <main className="min-h-screen bg-[#F5F5F7]">
+      <main className="min-h-screen bg-white">
         {/* Hero */}
-        <section className="bg-[#1D1D1F] text-white pt-32 pb-20 px-6">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Book coaching
+        <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+          <div className="w-container relative">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-2 h-2 rounded-full bg-black" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-grey-400 font-medium">
+                Booking
+              </span>
+            </div>
+
+            <h1 className="w-heading-xl max-w-3xl mb-6">
+              Book coaching.
             </h1>
-            <p className="text-lg md:text-xl text-white/70 max-w-xl mx-auto">
-              Velg type coaching og book tid med en av våre
-              PGA-sertifiserte trenere.
+
+            <p className="text-lg text-grey-500 max-w-2xl leading-relaxed">
+              Velg type coaching og book tid med en av våre trenere.
             </p>
+
+            <div className="mt-12 w-16 h-px bg-gradient-to-r from-black/50 to-transparent" />
           </div>
         </section>
 
         {/* Services */}
-        <section className="px-6 py-16 md:py-24">
-          <div className="mx-auto max-w-5xl">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#1D1D1F] mb-2">
+        <section className="py-16 md:py-24 bg-grey-100">
+          <div className="w-container">
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
               Våre tjenester
             </h2>
-            <p className="text-[#1D1D1F]/60 mb-10">
+            <p className="text-grey-500 mb-10">
               Velg tjenesten som passer dine behov
             </p>
 

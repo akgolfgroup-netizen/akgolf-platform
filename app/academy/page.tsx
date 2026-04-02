@@ -58,10 +58,10 @@ export default function AcademyPage() {
             {/* Hero image background */}
             <div className="absolute inset-0 pointer-events-none">
               <Image
-                src="/images/academy/AK-Golf-Academy-42.jpg"
-                alt="Coach og elev gjennomgår data på laptop"
+                src="/images/hero/hero-main.jpg"
+                alt="Coaching med TrackMan-analyse"
                 fill
-                className="object-cover object-[center_30%]"
+                className="object-cover object-[80%_center]"
                 priority
                 sizes="100vw"
               />

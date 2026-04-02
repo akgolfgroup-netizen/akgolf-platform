@@ -50,10 +50,10 @@ export default function UtviklingPage() {
             {/* Hero image background */}
             <div className="absolute inset-0 pointer-events-none">
               <Image
-                src="/images/academy/AK-Golf-Academy-28.jpg"
-                alt="Golfer på vei fremover mot målet"
+                src="/images/academy/AK-Golf-Academy-42.jpg"
+                alt="Coach og elev gjennomgår data på laptop"
                 fill
-                className="object-cover object-center"
+                className="object-cover object-[center_40%]"
                 priority
                 sizes="100vw"
               />

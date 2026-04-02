@@ -71,47 +71,42 @@ export default function HomePage() {
 
           <div className="w-container relative w-full">
             <div className="max-w-2xl">
-              <motion.p
-                className="text-xs font-mono uppercase tracking-[0.2em] text-grey-500 mb-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
               >
-                {HERO.eyebrow}
-              </motion.p>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-black" />
+                  <SectionLabel>{HERO.eyebrow}</SectionLabel>
+                </div>
+              </motion.div>
 
               <motion.h1
-                className="w-heading-xl mb-6"
-                initial={{ opacity: 0, y: 40 }}
+                className="w-heading-xl max-w-3xl mb-6"
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                transition={{ duration: 0.9, delay: 0.4 }}
               >
                 {HERO.heading}
               </motion.h1>
 
               <motion.p
-                className="text-lg md:text-xl text-grey-500 max-w-lg leading-relaxed mb-10"
+                className="text-lg text-grey-500 max-w-2xl leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.6 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
               >
                 {HERO.subheading}
               </motion.p>
 
               <motion.div
-                className="flex flex-wrap gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.8 }}
-              >
-                <Link href="/#packages" className="w-btn w-btn-primary">
-                  Se pakker og priser
-                </Link>
-                <Link href="/#apply" className="w-btn w-btn-secondary">
-                  Kontakt oss
-                </Link>
-              </motion.div>
-
+                className="mt-12 w-16 h-px bg-gradient-to-r from-black/50 to-transparent"
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={{ opacity: 1, scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                style={{ transformOrigin: "left" }}
+              />
             </div>
           </div>
 

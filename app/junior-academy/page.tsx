@@ -49,7 +49,7 @@ export default function JuniorPage() {
               src="/images/academy/AK-Golf-Academy-30.jpg"
               alt="Coach og spiller på vei ut på banen"
               fill
-              className="object-cover object-center"
+              className="object-cover object-[center_60%]"
               priority
               sizes="100vw"
             />
