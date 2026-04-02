@@ -6,6 +6,7 @@ datasource db {
   provider = "postgresql"
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Account {
   id                String  @id
   userId            String
@@ -24,6 +25,7 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model AchievementDefinition {
   id                String              @id
   key               String              @unique
@@ -38,6 +40,103 @@ model AchievementDefinition {
   PlayerAchievement PlayerAchievement[]
 }
 
+model Agent {
+  id          String      @id
+  name        String      @unique
+  displayName String
+  description String
+  team        AgentTeam
+  model       String
+  tools       String[]
+  skills      String[]    @default([])
+  avatarPath  String
+  status      AgentStatus @default(ACTIVE)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime
+  AgentLog    AgentLog[]
+
+  @@index([status])
+  @@index([team])
+}
+
+model AgentLog {
+  id        String   @id
+  agentType String
+  model     String
+  status    String   @default("running")
+  duration  Int?
+  cost      Float?
+  input     String?
+  output    String?
+  error     String?
+  createdAt DateTime @default(now())
+  agentId   String?
+  Agent     Agent?   @relation(fields: [agentId], references: [id])
+
+  @@index([agentId])
+  @@index([agentType])
+  @@index([createdAt])
+  @@index([status])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model AppBundle {
+  id                  String            @id
+  slug                String            @unique
+  name                String
+  description         String?
+  monthlyPriceNok     Int               @default(0)
+  yearlyPriceNok      Int?
+  stripePriceId       String?
+  stripeYearlyPriceId String?
+  isActive            Boolean           @default(true)
+  sortOrder           Int               @default(0)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime
+  AppSubscription     AppSubscription[]
+  BundleItem          BundleItem[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model AppModule {
+  id                  String            @id
+  slug                String            @unique
+  name                String
+  description         String?
+  icon                String?
+  monthlyPriceNok     Int               @default(0)
+  yearlyPriceNok      Int?
+  stripePriceId       String?
+  stripeYearlyPriceId String?
+  isActive            Boolean           @default(true)
+  sortOrder           Int               @default(0)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime
+  AppSubscription     AppSubscription[]
+  BundleItem          BundleItem[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model AppSubscription {
+  id                   String     @id
+  userId               String
+  moduleId             String?
+  bundleId             String?
+  stripeSubscriptionId String?    @unique
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  cancelAtPeriodEnd    Boolean    @default(false)
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime
+  status               String     @default("ACTIVE")
+  AppBundle            AppBundle? @relation(fields: [bundleId], references: [id])
+  AppModule            AppModule? @relation(fields: [moduleId], references: [id])
+  User                 User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model BlockedTime {
   id           String   @id
   instructorId String?
@@ -48,6 +147,7 @@ model BlockedTime {
   createdAt    DateTime @default(now())
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Booking {
   id                 String               @id
   studentId          String
@@ -90,6 +190,65 @@ model Booking {
   @@index([studentId])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model BundleItem {
+  id        String    @id
+  bundleId  String
+  moduleId  String
+  AppBundle AppBundle @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+  AppModule AppModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([bundleId, moduleId])
+}
+
+model CategoryRequirement {
+  id          String @id @default(dbgenerated("(gen_random_uuid())::text"))
+  testNumber  Int
+  category    String
+  gender      String
+  requirement Float
+
+  @@unique([testNumber, category, gender])
+}
+
+model CoachingAvailability {
+  id          String   @id
+  dayOfWeek   Int
+  startTime   String
+  endTime     String
+  isActive    Boolean  @default(true)
+  reservedFor String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+
+  @@index([dayOfWeek, isActive])
+}
+
+model CoachingPackage {
+  id                 String              @id
+  name               String
+  slug               String              @unique
+  priceNok           Int
+  billingType        BillingType
+  bookingType        CoachingBookingType
+  sessionsPerMonth   Int?
+  sessionDurationMin Int                 @default(20)
+  bookingWindowDays  Int?
+  bookingWindowHours Int?
+  maxPlayersPerSlot  Int                 @default(1)
+  maxBookingsPerWeek Int?
+  slotsRequired      Int                 @default(1)
+  isActive           Boolean             @default(true)
+  sortOrder          Int                 @default(0)
+  description        String?
+  features           String[]            @default([])
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime
+  vatRate            Int                 @default(25)
+  UserSubscription   UserSubscription[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model CoachingSession {
   id                String          @id
   bookingId         String          @unique
@@ -124,9 +283,66 @@ model CoachingSession {
 
   @@index([retentionStatus])
   @@index([studentId])
-  @@index([studentId, sessionDate])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model CommunicationLog {
+  id           String            @id
+  studentId    String?
+  instructorId String?
+  type         CommunicationType @default(NOTE)
+  subject      String?
+  content      String?
+  sentAt       DateTime          @default(now())
+  body         String?
+  channel      String?
+  direction    String?
+  metadata     Json?
+  sentBy       String?
+  status       String?
+  Instructor   Instructor?       @relation(fields: [instructorId], references: [id])
+  User         User?             @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ContentItem {
+  id           String        @id
+  type         ContentType
+  status       ContentStatus @default(DRAFT)
+  title        String
+  slug         String?       @unique
+  body         String
+  bodyHtml     String?
+  excerpt      String?
+  platform     String?
+  hashtags     String[]
+  imageUrl     String?
+  scheduledAt  DateTime?
+  publishedAt  DateTime?
+  aiGenerated  Boolean       @default(false)
+  aiModel      String?
+  notionPageId String?       @unique
+  segment      String?
+  createdBy    String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime
+
+  @@index([scheduledAt])
+  @@index([slug])
+  @@index([type, status])
+}
+
+model Conversation {
+  id        String    @id
+  createdAt DateTime  @default(now())
+  updatedAt DateTime
+  Message   Message[]
+  User      User[]    @relation("ConversationParticipants")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model CustomerPaymentPreference {
   id              String        @id
   userId          String        @unique
@@ -141,6 +357,87 @@ model CustomerPaymentPreference {
   User            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model DashboardAccess {
+  id        String        @id
+  email     String        @unique
+  role      DashboardRole
+  name      String?
+  active    Boolean       @default(true)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime
+}
+
+model DataGolfApproachSkill {
+  id         String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  dgId       Int
+  distance   String
+  proxToHole Float
+  sgApp      Float
+  updatedAt  DateTime @default(now())
+
+  @@unique([dgId, distance])
+}
+
+model DataGolfCache {
+  id         String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  dgId       Int      @unique
+  playerName String
+  sgTotal    Float
+  sgOtt      Float
+  sgApp      Float
+  sgArg      Float
+  sgPutt     Float
+  dgRank     Int?
+  owgrRank   Int?
+  updatedAt  DateTime @default(now())
+
+  @@index([dgRank])
+}
+
+model EmailSequence {
+  id                String              @id
+  name              String
+  description       String?
+  trigger           String
+  isActive          Boolean             @default(true)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime
+  EmailSequenceStep EmailSequenceStep[]
+}
+
+model EmailSequenceExec {
+  id                String            @id
+  stepId            String
+  studentId         String
+  status            String            @default("pending")
+  sentAt            DateTime?
+  errorMsg          String?
+  createdAt         DateTime          @default(now())
+  EmailSequenceStep EmailSequenceStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+
+  @@unique([stepId, studentId])
+  @@index([status])
+  @@index([studentId])
+}
+
+model EmailSequenceStep {
+  id                String              @id
+  sequenceId        String
+  stepOrder         Int
+  delayHours        Int                 @default(0)
+  subject           String
+  body              String
+  bodyHtml          String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime
+  EmailSequenceExec EmailSequenceExec[]
+  EmailSequence     EmailSequence       @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+
+  @@index([sequenceId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model EmailTemplate {
   id          String   @id
   name        String   @unique
@@ -151,6 +448,55 @@ model EmailTemplate {
   updatedAt   DateTime
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ExerciseDefinition {
+  id                 String             @id
+  name               String
+  description        String?
+  instructions       String?
+  videoUrl           String?
+  imageUrl           String?
+  pyramid            String
+  area               String
+  lPhase             String?
+  pPositionStart     String?
+  pPositionEnd       String?
+  equipment          String[]
+  minDurationMinutes Int                @default(5)
+  maxDurationMinutes Int                @default(30)
+  difficulty         Int                @default(2)
+  isPublic           Boolean            @default(false)
+  isSystemDrill      Boolean            @default(false)
+  createdById        String?
+  tags               String[]
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime
+  User               User?              @relation(fields: [createdById], references: [id])
+  UserExerciseBank   UserExerciseBank[]
+
+  @@index([area])
+  @@index([isPublic])
+  @@index([pyramid])
+}
+
+model GapOffer {
+  id            String         @id
+  instructorId  String
+  serviceTypeId String
+  startTime     DateTime
+  endTime       DateTime
+  discountPct   Int            @default(20)
+  status        GapOfferStatus
+  claimedBy     String?
+  expiresAt     DateTime
+  createdAt     DateTime       @default(now())
+
+  @@index([expiresAt])
+  @@index([instructorId])
+  @@index([status])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Goal {
   id           String       @id
   userId       String
@@ -169,6 +515,7 @@ model Goal {
   @@index([userId, status])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model GroupParticipant {
   id        String   @id
   bookingId String
@@ -179,6 +526,7 @@ model GroupParticipant {
   Booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model HandicapEntry {
   id            String   @id
   userId        String
@@ -191,22 +539,25 @@ model HandicapEntry {
   @@index([userId, date])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Instructor {
-  id                     String                   @id
-  userId                 String                   @unique
-  bio                    String?
-  specialization         String?
-  title                  String?
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime
-  Booking                Booking[]
-  CoachingSession        CoachingSession[]
-  User                   User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  InstructorAvailability InstructorAvailability[]
-  ServiceType            ServiceType[]
-  CommunicationLog       CommunicationLog[]
+  id                         String                       @id
+  userId                     String                       @unique
+  bio                        String?
+  specialization             String?
+  title                      String?
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime
+  Booking                    Booking[]
+  CoachingSession            CoachingSession[]
+  CommunicationLog           CommunicationLog[]
+  User                       User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  InstructorAvailability     InstructorAvailability[]
+  InstructorDateAvailability InstructorDateAvailability[]
+  ServiceType                ServiceType[]
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model InstructorAvailability {
   id           String     @id
   instructorId String
@@ -216,19 +567,63 @@ model InstructorAvailability {
   Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 
   @@unique([instructorId, dayOfWeek, startTime])
-  @@index([instructorId, dayOfWeek])
 }
 
+model InstructorDateAvailability {
+  id           String     @id
+  instructorId String
+  date         DateTime
+  startTime    String
+  endTime      String
+  locationId   String?
+  createdAt    DateTime   @default(now())
+  Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  Location     Location?  @relation(fields: [locationId], references: [id])
+
+  @@index([instructorId, date])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Location {
-  id        String     @id
-  name      String
-  address   String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime
-  Booking   Booking[]
-  Resource  Resource[]
+  id                         String                       @id
+  name                       String
+  address                    String?
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime
+  Booking                    Booking[]
+  InstructorDateAvailability InstructorDateAvailability[]
+  Resource                   Resource[]
 }
 
+model Message {
+  id             String       @id
+  conversationId String
+  senderId       String
+  content        String
+  readAt         DateTime?
+  createdAt      DateTime     @default(now())
+  Conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  User           User         @relation(fields: [senderId], references: [id])
+
+  @@index([conversationId])
+  @@index([senderId])
+}
+
+model Notification {
+  id        String           @id
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  read      Boolean          @default(false)
+  linkUrl   String?
+  createdAt DateTime         @default(now())
+  User      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model PaymentTransaction {
   id            String        @id
   bookingId     String
@@ -249,9 +644,9 @@ model PaymentTransaction {
   @@index([paidAt])
   @@index([paymentMethod])
   @@index([status])
-  @@index([bookingId, status])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model PeriodizationPeriod {
   id          String   @id
   studentId   String?
@@ -266,6 +661,7 @@ model PeriodizationPeriod {
   @@index([studentId])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model PlayerAchievement {
   id                      String                @id
   userId                  String
@@ -278,6 +674,7 @@ model PlayerAchievement {
   @@index([userId])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model PlayerTournamentPlan {
   id           String     @id
   studentId    String
@@ -295,6 +692,80 @@ model PlayerTournamentPlan {
   @@index([studentId])
 }
 
+model PricingRule {
+  id            String          @id
+  name          String
+  ruleType      PricingRuleType
+  adjustmentPct Int
+  conditions    Json
+  priority      Int             @default(0)
+  isActive      Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime
+
+  @@index([isActive])
+}
+
+model PromoCode {
+  id             String           @id
+  code           String           @unique
+  discountType   DiscountType
+  discountValue  Int
+  maxUses        Int?
+  usedCount      Int              @default(0)
+  validFrom      DateTime?
+  validUntil     DateTime?
+  serviceTypeIds String[]
+  isActive       Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  PromoCodeUsage PromoCodeUsage[]
+}
+
+model PromoCodeUsage {
+  id             String    @id
+  promoCodeId    String
+  userId         String
+  bookingId      String
+  discountAmount Int
+  createdAt      DateTime  @default(now())
+  PromoCode      PromoCode @relation(fields: [promoCodeId], references: [id], onDelete: Cascade)
+
+  @@unique([promoCodeId, userId])
+  @@index([bookingId])
+}
+
+model PushSubscription {
+  id        String   @id
+  userId    String
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model RecurringBooking {
+  id             String         @id
+  studentId      String
+  instructorId   String
+  serviceTypeId  String
+  dayOfWeek      Int
+  startTime      String
+  recurrenceType RecurrenceType
+  startDate      DateTime       @db.Date
+  endDate        DateTime?      @db.Date
+  isActive       Boolean        @default(true)
+  autoCharge     Boolean        @default(true)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime
+
+  @@index([instructorId])
+  @@index([isActive])
+  @@index([studentId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Resource {
   id         String    @id
   locationId String
@@ -306,6 +777,7 @@ model Resource {
   Location   Location  @relation(fields: [locationId], references: [id], onDelete: Cascade)
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model RoundStats {
   id                  String      @id
   userId              String
@@ -361,6 +833,7 @@ model RoundStats {
   @@index([userId, date])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model ServiceType {
   id             String          @id
   name           String
@@ -388,6 +861,7 @@ model ServiceType {
   Instructor     Instructor[]
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Session {
   id           String   @id
   sessionToken String   @unique
@@ -396,40 +870,70 @@ model Session {
   User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model TestDefinition {
-  id           String       @id
-  key          String       @unique
-  name         String
-  category     String
-  skillLevel   String?
-  description  String?
-  instructions String?
-  unit         String
-  benchmarks   Json?
-  sortOrder    Int          @default(0)
-  isActive     Boolean      @default(true)
-  createdAt    DateTime     @default(now())
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model SubscriptionQuota {
+  id                String                   @id
+  userId            String                   @unique
+  subscriptionId    String?
+  tier              CoachingSubscriptionTier
+  sessionsAllowed   Int
+  sessionsUsed      Int                      @default(0)
+  periodStart       DateTime
+  periodEnd         DateTime
+  bookingWindowDays Int                      @default(7)
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime
+  minutesAllowed    Int                      @default(40)
+  minutesUsed       Int                      @default(0)
+  User              User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SwingVideo {
+  id           String   @id
+  userId       String
+  url          String
+  thumbnailUrl String?
+  fileSize     BigInt
+  title        String?
+  coachNotes   String?
+  aiAnalysis   Json?
+  sessionId    String?
+  createdAt    DateTime @default(now())
   updatedAt    DateTime
-  TestResult   TestResult[]
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model TestDefinition {
+  id         String       @id @default(dbgenerated("(gen_random_uuid())::text"))
+  testNumber Int          @unique
+  name       String
+  category   String
+  unit       String
+  formula    String
+  inputCount Int
+  comparison String
+  TestResult TestResult[]
 }
 
 model TestResult {
-  id               String         @id
-  userId           String
-  testDefinitionId String
-  value            Float
-  rawData          Json?
-  date             DateTime       @default(now())
-  notes            String?
-  assessedBy       String?
-  createdAt        DateTime       @default(now())
-  TestDefinition   TestDefinition @relation(fields: [testDefinitionId], references: [id], onDelete: Cascade)
-  User             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String         @id @default(dbgenerated("(gen_random_uuid())::text"))
+  userId         String
+  testNumber     Int
+  value          Float
+  rawInput       Json
+  metadata       Json?
+  passed         Boolean
+  categoryReq    Float
+  createdAt      DateTime       @default(now())
+  TestDefinition TestDefinition @relation(fields: [testNumber], references: [testNumber], onDelete: NoAction, onUpdate: NoAction)
+  User           User           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([userId, date])
-  @@index([userId, testDefinitionId, date])
+  @@index([userId, testNumber])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Tournament {
   id                   String                 @id
   name                 String
@@ -457,6 +961,7 @@ model Tournament {
   @@index([startDate])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model TournamentPrep {
   id              String     @id
   tournamentId    String
@@ -475,28 +980,51 @@ model TournamentPrep {
   @@index([userId])
 }
 
+model TrackmanSession {
+  id          String   @id
+  userId      String
+  sessionDate DateTime
+  club        String
+  shots       Json
+  averages    Json
+  createdAt   DateTime @default(now())
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([sessionDate])
+  @@index([userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model TrainingLog {
-  id                  String               @id
-  userId              String
-  planSessionId       String?
-  date                DateTime
-  completedAt         DateTime             @default(now())
-  durationMinutes     Int?
-  focusArea           String?
-  exercises           Json                 @default("[]")
-  notes               String?
-  rating              Int?
-  deviatedFromPlan    Boolean              @default(false)
-  deviationReason     String?
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime
-  TrainingPlanSession TrainingPlanSession? @relation(fields: [planSessionId], references: [id])
-  User                User                 @relation(fields: [userId], references: [id])
+  id                   String                @id
+  userId               String
+  planSessionId        String?
+  date                 DateTime
+  completedAt          DateTime              @default(now())
+  durationMinutes      Int?
+  focusArea            String?
+  exercises            Json                  @default("[]")
+  notes                String?
+  rating               Int?
+  deviatedFromPlan     Boolean               @default(false)
+  deviationReason      String?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime
+  // New fields for training diary
+  primaryLPhase        String?
+  primaryEnvironment   Int?
+  primaryPressLevel    Int?
+  coachFeedback        String?
+  coachId              String?
+  TrainingPlanSession  TrainingPlanSession?  @relation(fields: [planSessionId], references: [id])
+  User                 User                  @relation(fields: [userId], references: [id])
+  TrainingLogExercises TrainingLogExercise[]
 
   @@index([planSessionId])
   @@index([userId, date])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model TrainingPlan {
   id                                  String             @id
   studentId                           String
@@ -518,6 +1046,7 @@ model TrainingPlan {
   @@index([studentId])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model TrainingPlanSession {
   id               String           @id
   weekId           String
@@ -535,6 +1064,7 @@ model TrainingPlanSession {
   @@index([weekId])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model TrainingPlanWeek {
   id                  String                @id
   planId              String
@@ -564,6 +1094,7 @@ model TrainingSubscription {
   User                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model User {
   id                                          String                     @id
   supabaseId                                  String?                    @unique
@@ -580,63 +1111,98 @@ model User {
   notionPageId                                String?
   createdAt                                   DateTime                   @default(now())
   updatedAt                                   DateTime
-  isActive                                    Boolean                    @default(true)
   activeCoachingCustomer                      Boolean                    @default(false)
-  videoStorageUsed                            BigInt                     @default(0)
-  videoStorageLimit                           BigInt                     @default(2147483648)
   stripeCustomerId                            String?                    @unique
   stripeSubscriptionId                        String?
   subscriptionExpiresAt                       DateTime?
   subscriptionSource                          SubscriptionSource?
   subscriptionTier                            SubscriptionTier           @default(VISITOR)
-  // Portal usage tracking (freemium)
-  portalMonthlyLogCount                       Int                        @default(0)
-  portalMonthlyAiCount                        Int                        @default(0)
-  portalUsageResetDate                        DateTime                   @default(now())
-  portalOnboardingCompleted                   Boolean                    @default(false)
-  // Portal engagement & retention
+  isActive                                    Boolean                    @default(true)
+  videoStorageLimit                           BigInt                     @default(2147483648)
+  videoStorageUsed                            BigInt                     @default(0)
+  noShowCount                                 Int                        @default(0)
+  noShowBlockedUntil                          DateTime?
+  defaultPaymentMethodId                      String?
+  smsOptIn                                    Boolean                    @default(false)
   lastActiveAt                                DateTime?
   onboardingGoals                             Json?
   weeklyEmailSentAt                           DateTime?
   winBackEmailStep                            Int                        @default(0)
+  onboardingCompletedAt                       DateTime?
+  welcomeEmailStep                            Int                        @default(0)
+  checkoutAbandonedAt                         DateTime?
   Account                                     Account[]
+  AppSubscription                             AppSubscription[]
   Booking                                     Booking[]
   CoachingSession                             CoachingSession[]
+  CommunicationLog                            CommunicationLog[]
   CustomerPaymentPreference                   CustomerPaymentPreference?
+  ExerciseDefinition                          ExerciseDefinition[]
   Goal                                        Goal[]
   HandicapEntry                               HandicapEntry[]
   Instructor                                  Instructor?
+  Message                                     Message[]
+  Notification                                Notification[]
   PeriodizationPeriod                         PeriodizationPeriod[]
   PlayerAchievement                           PlayerAchievement[]
   PlayerTournamentPlan                        PlayerTournamentPlan[]
   RoundStats                                  RoundStats[]
   Session                                     Session[]
+  SubscriptionQuota                           SubscriptionQuota?
+  SwingVideo                                  SwingVideo[]
   TestResult                                  TestResult[]
   Tournament                                  Tournament[]
   TournamentPrep                              TournamentPrep[]
+  TrackmanSession                             TrackmanSession[]
   TrainingLog                                 TrainingLog[]
   TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
   TrainingSubscription                        TrainingSubscription?
-  WaitlistEntry                               WaitlistEntry[]
-  UserSubscription                            UserSubscription[]
-  CommunicationLog                            CommunicationLog[]
-  Notification                                Notification[]
-  AppSubscription                             AppSubscription[]
-  SubscriptionQuota                           SubscriptionQuota?
-  ExerciseDefinition                          ExerciseDefinition[]
-  Message                                     Message[]
-  SwingVideo                                  SwingVideo[]
-  TrackmanSession                             TrackmanSession[]
   UserExerciseBank                            UserExerciseBank[]
+  UserSubscription                            UserSubscription[]
+  WaitlistEntry                               WaitlistEntry[]
   Conversation                                Conversation[]             @relation("ConversationParticipants")
-  // Coach Hub relations
-  assignedMessages                            UnifiedMessage[]           @relation("AssignedMessages")
-  approvedResponses                           AIResponse[]               @relation("ApprovedResponses")
-  learnings                                   AILearning[]               @relation("UserLearnings")
-  pushSubscriptions                           PushSubscription[]         @relation("PushSubscriptions")
+  // Training diary relations
+  ShotTypeLPhase                              ShotTypeLPhase[]
+  DegradationTracking                         DegradationTracking[]
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model UserExerciseBank {
+  id                 String             @id
+  userId             String
+  exerciseId         String
+  isFavorite         Boolean            @default(false)
+  usageCount         Int                @default(0)
+  lastUsedAt         DateTime?
+  personalNotes      String?
+  createdAt          DateTime           @default(now())
+  ExerciseDefinition ExerciseDefinition @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  User               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, exerciseId])
+  @@index([userId])
+}
+
+model UserSubscription {
+  id                    String             @id
+  userId                String
+  packageId             String
+  stripeSubscriptionId  String?            @unique
+  status                SubscriptionStatus @default(ACTIVE)
+  sessionsUsedThisMonth Int                @default(0)
+  billingPeriodStart    DateTime?
+  billingPeriodEnd      DateTime?
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime
+  CoachingPackage       CoachingPackage    @relation(fields: [packageId], references: [id])
+  User                  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model VerificationToken {
   identifier String
   token      String   @unique
@@ -645,6 +1211,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model WaitlistEntry {
   id         String         @id
   bookingId  String
@@ -662,6 +1229,81 @@ model WaitlistEntry {
   @@index([status])
 }
 
+// Training diary models
+model ShotTypeLPhase {
+  id       String   @id @default(cuid())
+  userId   String
+  shotType String   // DRIVER, IRON, WEDGE, PUTT
+  lPhase   String   // KROPP, ARM, KØLLE, BALL, AUTO
+  setAt    DateTime @default(now())
+  setBy    String?  // coachId or "SELF"
+  notes    String?
+  User     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, shotType])
+}
+
+model TrainingLogExercise {
+  id            String      @id @default(cuid())
+  trainingLogId String
+  exerciseId    String?
+  name          String
+  plannedSets   Int?
+  plannedReps   Int?
+  actualSets    Int?
+  actualReps    Int?
+  lPhase        String?
+  clubSpeed     Int?        // 0-100
+  environment   Int?        // M 0-5
+  pressLevel    Int?        // PR 1-5
+  successRate   Float?
+  score         Int?        // 1-10
+  notes         String?
+  coachFeedback String?
+  sortOrder     Int         @default(0)
+  TrainingLog   TrainingLog @relation(fields: [trainingLogId], references: [id], onDelete: Cascade)
+
+  @@index([trainingLogId])
+}
+
+model DegradationTracking {
+  id              String   @id @default(cuid())
+  userId          String
+  shotType        String
+  technicalChange String
+  tekScore        Float?
+  slagScore       Float?
+  spillScore      Float?
+  m0Score         Float?
+  m1Score         Float?
+  m2Score         Float?
+  m3Score         Float?
+  startedAt       DateTime @default(now())
+  lastUpdated     DateTime @updatedAt
+  User            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, shotType])
+}
+
+enum AgentStatus {
+  ACTIVE
+  INACTIVE
+  DEPRECATED
+}
+
+enum AgentTeam {
+  LEADERSHIP
+  DEV
+  OPS
+  COACHING
+  CONTENT
+}
+
+enum BillingType {
+  RECURRING
+  ONE_TIME
+}
+
 enum BookingStatus {
   PENDING
   CONFIRMED
@@ -670,9 +1312,60 @@ enum BookingStatus {
   COMPLETED
 }
 
+enum CoachingBookingType {
+  FIXED
+  SELF_BOOK
+  DROP_IN
+}
+
+enum CoachingSubscriptionTier {
+  PERFORMANCE_PRO
+  PERFORMANCE
+  START
+}
+
+enum CommunicationType {
+  EMAIL
+  SMS
+  NOTE
+  CALL
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContentType {
+  SOME_POST
+  NEWSLETTER
+  ARTICLE
+}
+
 enum CustomerType {
   PRIVATE
   BUSINESS
+}
+
+enum DashboardRole {
+  ADMIN
+  INSTRUCTOR
+  VOLUNTEER
+  CLUB_REP
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+}
+
+enum GapOfferStatus {
+  OPEN
+  CLAIMED
+  EXPIRED
 }
 
 enum GoalCategory {
@@ -689,6 +1382,19 @@ enum GoalStatus {
   PAUSED
 }
 
+enum NotificationType {
+  BOOKING_CONFIRMED
+  BOOKING_CANCELLED
+  PLAN_READY
+  TOURNAMENT_REMINDER
+  COACHING_SUMMARY
+  TRAINING_REMINDER
+  ACHIEVEMENT_UNLOCKED
+  GENERAL
+  BOOKING_REMINDER
+  PLAN_GENERATED
+}
+
 enum PaymentMethod {
   STRIPE
   VIPPS
@@ -702,6 +1408,19 @@ enum PaymentStatus {
   REFUNDED
   PARTIALLY_REFUNDED
   FAILED
+}
+
+enum PricingRuleType {
+  LAST_MINUTE
+  PEAK_HOURS
+  SEASONAL
+  GAP_FILLER
+}
+
+enum RecurrenceType {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
 }
 
 enum RetentionStatus {
@@ -730,6 +1449,16 @@ enum SubscriptionSource {
   MANUAL
 }
 
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+  TRIALING
+  CANCELLED
+  EXPIRED
+}
+
 enum SubscriptionTier {
   VISITOR
   ACADEMY
@@ -750,479 +1479,4 @@ enum WaitlistStatus {
   CONFIRMED
   EXPIRED
   CANCELLED
-}
-
-// ============================================================
-// Nye enums for coaching, apper og kommunikasjon
-// ============================================================
-
-enum BillingType {
-  RECURRING
-  ONE_TIME
-}
-
-enum CoachingBookingType {
-  SELF_BOOK
-  DROP_IN
-  FIXED
-}
-
-enum SubscriptionStatus {
-  ACTIVE
-  TRIALING
-  CANCELLED
-  EXPIRED
-  PAST_DUE
-  CANCELED
-  INCOMPLETE
-}
-
-enum CommunicationType {
-  EMAIL
-  SMS
-  NOTE
-  CALL
-}
-
-enum NotificationType {
-  BOOKING_CONFIRMED
-  BOOKING_CANCELLED
-  BOOKING_REMINDER
-  PLAN_GENERATED
-  PLAN_READY
-  ACHIEVEMENT_UNLOCKED
-  TOURNAMENT_REMINDER
-  COACHING_SUMMARY
-  TRAINING_REMINDER
-  GENERAL
-}
-
-enum CoachingSubscriptionTier {
-  PERFORMANCE
-  PERFORMANCE_PRO
-  START
-}
-
-enum DashboardRole {
-  ADMIN
-  INSTRUCTOR
-  VOLUNTEER
-  CLUB_REP
-}
-
-enum ContentStatus {
-  DRAFT
-  REVIEW
-  APPROVED
-  PUBLISHED
-  ARCHIVED
-}
-
-enum ContentType {
-  SOME_POST
-  NEWSLETTER
-  ARTICLE
-}
-
-// Coach Hub enums
-enum Channel {
-  EMAIL
-  INSTAGRAM
-  MESSENGER
-  WHATSAPP
-  IMESSAGE
-}
-
-enum MessageStatus {
-  PENDING
-  AI_PROCESSING
-  AI_READY
-  APPROVED
-  SENT
-  FAILED
-}
-
-enum Direction {
-  INBOUND
-  OUTBOUND
-}
-
-// ============================================================
-// Nye modeller for coaching, apper og kommunikasjon
-// ============================================================
-
-model CoachingPackage {
-  id                 String              @id @default(cuid())
-  name               String
-  slug               String              @unique
-  priceNok           Int
-  vatRate            Int                 @default(25)
-  billingType        BillingType
-  bookingType        CoachingBookingType
-  sessionsPerMonth   Int?
-  sessionDurationMin Int                 @default(20)
-  bookingWindowDays  Int?
-  bookingWindowHours Int?
-  maxBookingsPerWeek Int?
-  slotsRequired      Int                 @default(1)
-  description        String?
-  features           String[]            @default([])
-  sortOrder          Int                 @default(0)
-  maxPlayersPerSlot  Int                 @default(1)
-  isActive           Boolean             @default(true)
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
-  UserSubscription   UserSubscription[]
-}
-
-model UserSubscription {
-  id                    String             @id @default(cuid())
-  userId                String
-  packageId             String
-  status                SubscriptionStatus @default(ACTIVE)
-  sessionsUsedThisMonth Int                @default(0)
-  billingPeriodStart    DateTime?
-  billingPeriodEnd      DateTime?
-  stripeSubscriptionId  String?            @unique
-  createdAt             DateTime           @default(now())
-  updatedAt             DateTime           @updatedAt
-  user                  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  package               CoachingPackage    @relation(fields: [packageId], references: [id])
-
-  @@index([userId])
-  @@index([status])
-}
-
-model CoachingAvailability {
-  id          String   @id @default(cuid())
-  dayOfWeek   Int
-  startTime   String
-  endTime     String
-  isActive    Boolean  @default(true)
-  reservedFor String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@index([dayOfWeek, isActive])
-}
-
-model CommunicationLog {
-  id           String            @id @default(cuid())
-  studentId    String
-  instructorId String
-  type         CommunicationType
-  subject      String?
-  content      String
-  sentAt       DateTime          @default(now())
-  student      User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  instructor   Instructor        @relation(fields: [instructorId], references: [id])
-
-  @@index([studentId])
-}
-
-model Notification {
-  id        String           @id @default(cuid())
-  userId    String
-  type      NotificationType
-  title     String
-  message   String
-  linkUrl   String?
-  read      Boolean          @default(false)
-  createdAt DateTime         @default(now())
-  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId, read])
-  @@index([userId, read, createdAt])
-}
-
-model AppModule {
-  id                  String            @id @default(cuid())
-  slug                String            @unique
-  name                String
-  description         String?
-  icon                String?
-  monthlyPriceNok     Int               @default(0)
-  yearlyPriceNok      Int?
-  stripePriceId       String?
-  stripeYearlyPriceId String?
-  isActive            Boolean           @default(true)
-  sortOrder           Int               @default(0)
-  createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
-  BundleItem          BundleItem[]
-  AppSubscription     AppSubscription[]
-}
-
-model AppBundle {
-  id                  String            @id @default(cuid())
-  slug                String            @unique
-  name                String
-  description         String?
-  monthlyPriceNok     Int               @default(0)
-  yearlyPriceNok      Int?
-  stripePriceId       String?
-  stripeYearlyPriceId String?
-  isActive            Boolean           @default(true)
-  sortOrder           Int               @default(0)
-  createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
-  items               BundleItem[]
-  AppSubscription     AppSubscription[]
-}
-
-model BundleItem {
-  id       String    @id @default(cuid())
-  bundleId String
-  moduleId String
-  bundle   AppBundle @relation(fields: [bundleId], references: [id], onDelete: Cascade)
-  module   AppModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
-
-  @@unique([bundleId, moduleId])
-}
-
-model AppSubscription {
-  id                   String     @id @default(cuid())
-  userId               String
-  moduleId             String?
-  bundleId             String?
-  status               String     @default("ACTIVE")
-  stripeSubscriptionId String?    @unique
-  cancelAtPeriodEnd    Boolean    @default(false)
-  currentPeriodStart   DateTime
-  currentPeriodEnd     DateTime
-  createdAt            DateTime   @default(now())
-  updatedAt            DateTime   @updatedAt
-  user                 User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  module               AppModule? @relation(fields: [moduleId], references: [id])
-  bundle               AppBundle? @relation(fields: [bundleId], references: [id])
-
-  @@index([userId])
-}
-
-model DashboardAccess {
-  id        String        @id @default(cuid())
-  email     String        @unique
-  role      DashboardRole
-  name      String?
-  active    Boolean       @default(true)
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-}
-
-model SubscriptionQuota {
-  id                String                   @id @default(cuid())
-  userId            String                   @unique
-  subscriptionId    String?
-  tier              CoachingSubscriptionTier
-  sessionsAllowed   Int
-  sessionsUsed      Int                      @default(0)
-  periodStart       DateTime
-  periodEnd         DateTime
-  bookingWindowDays Int                      @default(7)
-  createdAt         DateTime                 @default(now())
-  updatedAt         DateTime                 @updatedAt
-  user              User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model ContentItem {
-  id           String        @id @default(cuid())
-  type         ContentType
-  status       ContentStatus @default(DRAFT)
-  title        String
-  slug         String?       @unique
-  body         String
-  bodyHtml     String?
-  excerpt      String?
-  platform     String?
-  hashtags     String[]
-  imageUrl     String?
-  scheduledAt  DateTime?
-  publishedAt  DateTime?
-  aiGenerated  Boolean       @default(false)
-  aiModel      String?
-  notionPageId String?       @unique
-  segment      String?
-  createdBy    String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-
-  @@index([scheduledAt])
-  @@index([slug])
-  @@index([type, status])
-}
-
-model Conversation {
-  id           String    @id @default(cuid())
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  Message      Message[]
-  participants User[]    @relation("ConversationParticipants")
-}
-
-model Message {
-  id             String       @id @default(cuid())
-  conversationId String
-  senderId       String
-  content        String
-  readAt         DateTime?
-  createdAt      DateTime     @default(now())
-  Conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  User           User         @relation(fields: [senderId], references: [id])
-
-  @@index([conversationId])
-  @@index([senderId])
-}
-
-model ExerciseDefinition {
-  id                 String             @id @default(cuid())
-  name               String
-  description        String?
-  instructions       String?
-  videoUrl           String?
-  imageUrl           String?
-  pyramid            String
-  area               String
-  lPhase             String?
-  pPositionStart     String?
-  pPositionEnd       String?
-  equipment          String[]
-  minDurationMinutes Int                @default(5)
-  maxDurationMinutes Int                @default(30)
-  difficulty         Int                @default(2)
-  isPublic           Boolean            @default(false)
-  isSystemDrill      Boolean            @default(false)
-  createdById        String?
-  tags               String[]
-  createdAt          DateTime           @default(now())
-  updatedAt          DateTime           @updatedAt
-  User               User?              @relation(fields: [createdById], references: [id])
-  UserExerciseBank   UserExerciseBank[]
-
-  @@index([area])
-  @@index([isPublic])
-  @@index([pyramid])
-}
-
-model SwingVideo {
-  id           String   @id @default(cuid())
-  userId       String
-  url          String
-  thumbnailUrl String?
-  fileSize     BigInt
-  title        String?
-  coachNotes   String?
-  aiAnalysis   Json?
-  sessionId    String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-}
-
-model TrackmanSession {
-  id          String   @id @default(cuid())
-  userId      String
-  sessionDate DateTime
-  club        String
-  shots       Json
-  averages    Json
-  createdAt   DateTime @default(now())
-  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([sessionDate])
-  @@index([userId])
-}
-
-model UserExerciseBank {
-  id                 String             @id @default(cuid())
-  userId             String
-  exerciseId         String
-  isFavorite         Boolean            @default(false)
-  usageCount         Int                @default(0)
-  lastUsedAt         DateTime?
-  personalNotes      String?
-  createdAt          DateTime           @default(now())
-  ExerciseDefinition ExerciseDefinition @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
-  User               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, exerciseId])
-  @@index([userId])
-}
-
-// ============================================================================
-// Coach Hub Models — Unified Inbox med AI-assistent
-// ============================================================================
-
-model UnifiedMessage {
-  id           String        @id @default(cuid())
-  channel      Channel
-  direction    Direction
-  externalId   String
-  senderName   String
-  senderHandle String
-  subject      String?
-  content      String        @db.Text
-  receivedAt   DateTime
-  status       MessageStatus @default(PENDING)
-  assignedToId String?
-  assignedTo   User?         @relation("AssignedMessages", fields: [assignedToId], references: [id])
-  threadId     String?
-  aiResponse   AIResponse?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-
-  @@index([channel])
-  @@index([status])
-  @@index([assignedToId])
-  @@index([receivedAt])
-}
-
-model AIResponse {
-  id           String         @id @default(cuid())
-  messageId    String         @unique
-  message      UnifiedMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
-  draftContent String         @db.Text
-  finalContent String?        @db.Text
-  confidence   Float
-  category     String
-  modelUsed    String
-  autoSent     Boolean        @default(false)
-  wasEdited    Boolean        @default(false)
-  editDiff     String?        @db.Text
-  approvedById String?
-  approvedBy   User?          @relation("ApprovedResponses", fields: [approvedById], references: [id])
-  approvedAt   DateTime?
-  createdAt    DateTime       @default(now())
-}
-
-model AILearning {
-  id          String    @id @default(cuid())
-  userId      String
-  user        User      @relation("UserLearnings", fields: [userId], references: [id], onDelete: Cascade)
-  category    String
-  pattern     String    @db.Text
-  response    String    @db.Text
-  confidence  Float     @default(0.5)
-  usageCount  Int       @default(0)
-  lastUsed    DateTime?
-  corrections Json?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@index([userId])
-  @@index([category])
-}
-
-model PushSubscription {
-  id         String   @id @default(cuid())
-  userId     String
-  user       User     @relation("PushSubscriptions", fields: [userId], references: [id], onDelete: Cascade)
-  endpoint   String   @unique
-  p256dh     String
-  auth       String
-  deviceType String
-  createdAt  DateTime @default(now())
-
-  @@index([userId])
 }
