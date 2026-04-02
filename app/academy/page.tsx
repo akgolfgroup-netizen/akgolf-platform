@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
@@ -52,87 +53,63 @@ export default function AcademyPage() {
           }}
         />
         <PageTransition>
-          {/* ─── 1. Hero ─── */}
-          <section className="w-section-lg bg-gradient-to-b from-grey-100 via-grey-100 to-white pt-28">
-            <div className="w-container">
-              <div className="max-w-2xl mx-auto text-center">
-                {/* Status Badge */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-grey-200 rounded-full text-xs font-medium text-grey-600 mb-8"
-                >
-                  <span className="w-2 h-2 rounded-full bg-black" />
-                  Academy — Coaching for resultater
-                </motion.div>
+          {/* ─── 1. Hero with Image ─── */}
+          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden">
+            {/* Hero image background */}
+            <div className="absolute inset-0 pointer-events-none">
+              <Image
+                src="/images/academy/AK-Golf-Academy-42.jpg"
+                alt="Coach og elev gjennomgår data på laptop"
+                fill
+                className="object-cover object-[center_30%]"
+                priority
+                sizes="100vw"
+              />
+              {/* Gradient overlay for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/30" />
+              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+            </div>
 
-                {/* Headline */}
-                <motion.h1
-                  className="w-heading-xl mb-6"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                  {ACADEMY_HERO.heading}
-                </motion.h1>
+            <div className="w-container relative">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-black" />
+                  <SectionLabel>Coaching</SectionLabel>
+                </div>
+              </motion.div>
 
-                {/* Subtitle */}
-                <motion.p
-                  className="text-lg md:text-xl text-grey-500 max-w-xl mx-auto leading-relaxed mb-10"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  {ACADEMY_HERO.description}
-                </motion.p>
+              <motion.h1
+                className="w-heading-xl max-w-3xl mb-6"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.1 }}
+              >
+                {ACADEMY_HERO.heading}
+              </motion.h1>
 
-                {/* CTA Buttons */}
-                <motion.div
-                  className="flex flex-wrap gap-4 justify-center mb-12"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                >
-                  <Link href="#packages" className="w-btn w-btn-primary w-btn-lg">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-2">
-                      <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-                      <line x1="16" x2="16" y1="2" y2="6" />
-                      <line x1="8" x2="8" y1="2" y2="6" />
-                      <line x1="3" x2="21" y1="10" y2="10" />
-                    </svg>
-                    Se pakker og priser
-                  </Link>
-                  <Link href="#how-it-works" className="w-btn w-btn-secondary w-btn-lg">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-2">
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="M12 16v-4" />
-                      <path d="M12 8h.01" />
-                    </svg>
-                    Slik fungerer det
-                  </Link>
-                </motion.div>
+              <motion.p
+                className="text-lg text-grey-500 max-w-2xl leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                {ACADEMY_HERO.description}
+              </motion.p>
 
-                {/* Trust Bar */}
-                <motion.div
-                  className="flex flex-wrap items-center justify-center gap-8 p-6 bg-white rounded-xl border border-grey-200"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                >
-                  {ACADEMY_CTA.valueProps.map((item) => (
-                    <div key={item} className="flex items-center gap-2 text-sm text-grey-500">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-black">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                        <polyline points="22 4 12 14.01 9 11.01" />
-                      </svg>
-                      <span className="font-medium text-grey-700">{item}</span>
-                    </div>
-                  ))}
-                </motion.div>
-              </div>
+              <motion.div
+                className="mt-12 w-16 h-px bg-gradient-to-r from-black/50 to-transparent"
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={{ opacity: 1, scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                style={{ transformOrigin: "left" }}
+              />
             </div>
           </section>
+
 
           {/* ─── 2. Slik fungerer det ─── */}
           <section id="how-it-works" className="w-section-lg bg-white">

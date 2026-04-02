@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SectionLabel } from "@/components/website/SectionLabel";
@@ -40,13 +41,21 @@ export default function JuniorPage() {
           }}
         />
         <PageTransition>
-        {/* ─── Hero Section with Badge ─── */}
-        <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-          {/* Gradient mesh — light theme */}
+        {/* ─── Hero Section with Image ─── */}
+        <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden">
+          {/* Hero image background */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-24 right-[10%] w-[400px] h-[400px] rounded-full bg-grey-200 opacity-50 blur-[80px]" />
-            <div className="absolute bottom-0 left-[20%] w-[300px] h-[300px] rounded-full bg-grey-300 opacity-30 blur-[60px]" />
-            <div className="absolute top-0 left-[10%] w-px h-[30vh] bg-gradient-to-b from-transparent via-grey-300 to-transparent" />
+            <Image
+              src="/images/academy/AK-Golf-Academy-30.jpg"
+              alt="Coach og spiller på vei ut på banen"
+              fill
+              className="object-cover object-center"
+              priority
+              sizes="100vw"
+            />
+            {/* Gradient overlay for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/30" />
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
           </div>
 
           <div className="w-container relative">
@@ -205,35 +214,6 @@ export default function JuniorPage() {
 
             <RevealOnScroll delay={0.2}>
               <ApplicationForm />
-            </RevealOnScroll>
-          </div>
-        </section>
-
-        {/* ─── Partners ─── */}
-        <section className="py-20 md:py-28 bg-grey-100">
-          <div className="w-container">
-            <RevealOnScroll>
-              <div className="text-center">
-                <SectionLabel>I samarbeid med</SectionLabel>
-                <div className="flex flex-wrap justify-center items-center gap-12 mt-8">
-                  <a
-                    href="https://gfrg.no"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-grey-500 hover:text-black transition-colors"
-                  >
-                    <span className="text-lg font-semibold">Gamle Fredrikstad Golfklubb</span>
-                  </a>
-                  <a
-                    href="https://wang.no/fredrikstad"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-grey-500 hover:text-black transition-colors"
-                  >
-                    <span className="text-lg font-semibold">WANG Toppidrett Fredrikstad</span>
-                  </a>
-                </div>
-              </div>
             </RevealOnScroll>
           </div>
         </section>

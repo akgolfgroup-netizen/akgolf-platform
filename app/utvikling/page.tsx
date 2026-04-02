@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SectionLabel } from "@/components/website/SectionLabel";
@@ -44,30 +45,32 @@ export default function UtviklingPage() {
           }}
         />
         <PageTransition>
-          {/* ─── Hero with Badge ─── */}
-          <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-white">
+          {/* ─── Hero with Image ─── */}
+          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden">
+            {/* Hero image background */}
+            <div className="absolute inset-0 pointer-events-none">
+              <Image
+                src="/images/academy/AK-Golf-Academy-28.jpg"
+                alt="Golfer på vei fremover mot målet"
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="100vw"
+              />
+              {/* Gradient overlay for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/30" />
+              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+            </div>
+
             <div className="w-container relative">
-              {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [...EASE_ENTRANCE] }}
-                className="mb-8"
-              >
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-grey-100 border border-grey-200">
-                  <span className="w-2 h-2 rounded-full bg-black" />
-                  <span className="text-sm font-medium text-grey-600">Utvikling — For klubber og forbund</span>
-                </span>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1, ease: [...EASE_ENTRANCE] }}
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-2 h-2 rounded-full bg-black" />
-                  <SectionLabel>{UTVIKLING_HERO.eyebrow}</SectionLabel>
+                  <SectionLabel>Utvikling</SectionLabel>
                 </div>
               </motion.div>
 
