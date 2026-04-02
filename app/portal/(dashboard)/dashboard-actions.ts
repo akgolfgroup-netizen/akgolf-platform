@@ -91,3 +91,40 @@ export async function getCoachInsight(userId: string) {
     date: session.sessionDate,
   };
 }
+
+interface WeeklyInsight {
+  summary: string;
+  strengths: string[];
+  improvements: string[];
+  focusTip: string;
+  generatedAt: string | Date;
+}
+
+export async function getLatestAiInsight(userId: string): Promise<WeeklyInsight | null> {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      latestAiInsight: true,
+      aiInsightGeneratedAt: true,
+    },
+  });
+
+  if (!user?.latestAiInsight || !user.aiInsightGeneratedAt) {
+    return null;
+  }
+
+  const insight = user.latestAiInsight as {
+    summary?: string;
+    strengths?: string[];
+    improvements?: string[];
+    focusTip?: string;
+  };
+
+  return {
+    summary: insight.summary ?? "",
+    strengths: insight.strengths ?? [],
+    improvements: insight.improvements ?? [],
+    focusTip: insight.focusTip ?? "",
+    generatedAt: user.aiInsightGeneratedAt,
+  };
+}

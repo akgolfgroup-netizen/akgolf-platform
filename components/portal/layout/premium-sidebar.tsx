@@ -23,6 +23,7 @@ import {
   Dumbbell,
   X,
   ChevronRight,
+  TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
@@ -55,6 +56,7 @@ const staffItems = [
   { href: "/portal/admin/elever", label: "Elever", icon: UsersIcon },
   { href: "/portal/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
   { href: "/portal/admin/kapasitet", label: "Kapasitet", icon: BarChart3 },
+  { href: "/portal/admin/analytics", label: "Analyse", icon: TrendingUp },
   { href: "/portal/admin/denne-uken", label: "Denne uken", icon: CalendarCheck },
   { href: "/portal/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
 ];

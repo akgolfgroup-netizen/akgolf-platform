@@ -4,6 +4,15 @@ import Link from "next/link";
 import { format, isToday, isTomorrow } from "date-fns";
 import { nb } from "date-fns/locale";
 import { BookOpen, BarChart3, Calendar, Lightbulb } from "lucide-react";
+import { AiInsightCard } from "@/components/portal/dashboard/ai-insight-card";
+
+interface WeeklyInsight {
+  summary: string;
+  strengths: string[];
+  improvements: string[];
+  focusTip: string;
+  generatedAt: string | Date;
+}
 
 interface DashboardProps {
   userName: string | null;
@@ -22,6 +31,7 @@ interface DashboardProps {
     summary: string | null;
     date: Date;
   } | null;
+  aiInsight: WeeklyInsight | null;
 }
 
 export function DashboardClient({
@@ -30,6 +40,7 @@ export function DashboardClient({
   handicap,
   nextBooking,
   coachInsight,
+  aiInsight,
 }: DashboardProps) {
   const hasData = stats.sessionsCount > 0 || handicap.current !== null;
 
@@ -134,6 +145,9 @@ export function DashboardClient({
           </p>
         </div>
       )}
+
+      {/* AI Insight */}
+      <AiInsightCard insight={aiInsight} />
     </div>
   );
 }

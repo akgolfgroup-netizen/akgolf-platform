@@ -19,7 +19,8 @@ import { SkillLevelBadge } from "@/components/portal/statistikk/skill-level-badg
 import { HandicapChart } from "@/components/portal/analyse/handicap-chart";
 import { GoalModal } from "@/components/portal/profil/goal-modal";
 import { AvatarUpload } from "@/components/portal/profil/avatar-upload";
-import { getMyProfile, getPlayerStats, getHandicapHistory, getAchievements, updateProfile } from "./actions";
+import { getMyProfile, getPlayerStats, getHandicapHistory, getAchievements, updateProfile, getPlayerSGData } from "./actions";
+import { TourComparison } from "@/components/portal/profil/tour-comparison";
 import { getGoals, updateGoal, deleteGoal } from "./goal-actions";
 import { hasTierAccess } from "@/lib/portal/rbac";
 import { SubscriptionTier } from "@prisma/client";
@@ -125,12 +126,22 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 };
 
+interface PlayerSGData {
+  sgTotal: number | null;
+  sgOffTheTee: number | null;
+  sgApproach: number | null;
+  sgAroundTheGreen: number | null;
+  sgPutting: number | null;
+  roundCount: number;
+}
+
 export default function ProfilPage() {
   const [user, setUser] = useState<ProfileUser | null>(null);
   const [stats, setStats] = useState<PlayerStats | null>(null);
   const [goals, setGoals] = useState<Goal[]>([]);
   const [achievements, setAchievements] = useState<{ definitions: Achievement[]; unlocked: PlayerAchievement[] }>({ definitions: [], unlocked: [] });
   const [handicapHistory, setHandicapHistory] = useState<HandicapEntry[]>([]);
+  const [playerSG, setPlayerSG] = useState<PlayerSGData | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Goal modal state
@@ -150,12 +161,13 @@ export default function ProfilPage() {
 
   useEffect(() => {
     async function loadData() {
-      const [userData, statsData, goalsData, achievementsData, handicapData] = await Promise.all([
+      const [userData, statsData, goalsData, achievementsData, handicapData, sgData] = await Promise.all([
         getMyProfile(),
         getPlayerStats(),
         getGoals(),
         getAchievements(),
         getHandicapHistory(6),
+        getPlayerSGData(),
       ]);
 
       if (userData) {
@@ -167,6 +179,7 @@ export default function ProfilPage() {
       setGoals(goalsData);
       setAchievements(achievementsData);
       setHandicapHistory(handicapData);
+      setPlayerSG(sgData);
       setLoading(false);
     }
     loadData();
@@ -508,6 +521,19 @@ export default function ProfilPage() {
               </div>
             </BentoCard>
           )}
+
+          {/* Tour Comparison Card */}
+          <BentoCard span={6} hover={false}>
+            <TourComparison
+              playerSG={{
+                sgTotal: playerSG?.sgTotal ?? null,
+                sgOffTheTee: playerSG?.sgOffTheTee ?? null,
+                sgApproach: playerSG?.sgApproach ?? null,
+                sgAroundTheGreen: playerSG?.sgAroundTheGreen ?? null,
+                sgPutting: playerSG?.sgPutting ?? null,
+              }}
+            />
+          </BentoCard>
 
           {/* Goal Setting Info */}
           <BentoCard span={6} variant="solid">

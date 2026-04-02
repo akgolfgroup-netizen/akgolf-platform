@@ -6,6 +6,7 @@ import {
   getHandicapData,
   getNextBooking,
   getCoachInsight,
+  getLatestAiInsight,
 } from "./dashboard-actions";
 import { DashboardClient } from "./dashboard-client";
 
@@ -26,11 +27,12 @@ export default async function DashboardPage() {
     redirect("/portal/onboarding");
   }
 
-  const [stats, handicap, nextBooking, coachInsight] = await Promise.all([
+  const [stats, handicap, nextBooking, coachInsight, aiInsight] = await Promise.all([
     getDashboardStats(user.id),
     getHandicapData(user.id),
     getNextBooking(user.id),
     getCoachInsight(user.id),
+    getLatestAiInsight(user.id),
   ]);
 
   return (
@@ -40,6 +42,7 @@ export default async function DashboardPage() {
       handicap={handicap}
       nextBooking={nextBooking}
       coachInsight={coachInsight}
+      aiInsight={aiInsight}
     />
   );
 }

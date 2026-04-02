@@ -1136,6 +1136,8 @@ model User {
   portalMonthlyLogCount                       Int                        @default(0)
   portalMonthlyAiCount                        Int                        @default(0)
   portalUsageResetDate                        DateTime?
+  latestAiInsight                             Json?
+  aiInsightGeneratedAt                        DateTime?
   Account                                     Account[]
   AppSubscription                             AppSubscription[]
   Booking                                     Booking[]
@@ -1463,6 +1465,7 @@ enum NotificationType {
   GENERAL
   BOOKING_REMINDER
   PLAN_GENERATED
+  AI_INSIGHT
 }
 
 enum PaymentMethod {

@@ -183,3 +183,48 @@ export async function uploadAvatar(formData: FormData) {
   revalidatePath("/profil");
   return imageUrl;
 }
+
+/**
+ * Get average Strokes Gained data for Tour Comparison
+ * Requires at least 3 rounds with SG data
+ */
+export async function getPlayerSGData() {
+  const user = await requirePortalUser();
+  if (!user?.id) return null;
+
+  const rounds = await prisma.roundStats.findMany({
+    where: {
+      userId: user.id,
+      sgTotal: { not: null },
+    },
+    orderBy: { date: "desc" },
+    take: 10, // Use last 10 rounds for average
+    select: {
+      sgTotal: true,
+      sgOffTheTee: true,
+      sgApproach: true,
+      sgAroundTheGreen: true,
+      sgPutting: true,
+    },
+  });
+
+  // Need at least 3 rounds
+  if (rounds.length < 3) {
+    return null;
+  }
+
+  // Calculate averages
+  const avg = (values: (number | null)[]) => {
+    const valid = values.filter((v): v is number => v !== null);
+    return valid.length > 0 ? valid.reduce((a, b) => a + b, 0) / valid.length : null;
+  };
+
+  return {
+    sgTotal: avg(rounds.map((r) => r.sgTotal)),
+    sgOffTheTee: avg(rounds.map((r) => r.sgOffTheTee)),
+    sgApproach: avg(rounds.map((r) => r.sgApproach)),
+    sgAroundTheGreen: avg(rounds.map((r) => r.sgAroundTheGreen)),
+    sgPutting: avg(rounds.map((r) => r.sgPutting)),
+    roundCount: rounds.length,
+  };
+}
