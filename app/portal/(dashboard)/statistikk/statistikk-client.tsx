@@ -18,6 +18,9 @@ import { BentoGrid } from "@/components/portal/apple/bento-grid";
 import { BentoCard } from "@/components/portal/apple/bento-card";
 import { StatCard } from "@/components/portal/apple/stat-card";
 import { AppleBadge } from "@/components/portal/apple/apple-badge";
+import { ScoreTrendChart } from "@/components/portal/statistikk/score-trend-chart";
+import { SGRadarChart } from "@/components/portal/statistikk/sg-radar-chart";
+import { getBenchmarkByHandicap } from "@/lib/portal/golf/sg-benchmarks";
 import type { RoundStats } from "@prisma/client";
 
 // ── Types from actions ──
@@ -49,6 +52,7 @@ interface StatistikkClientProps {
   rounds: RoundStats[];
   aggregates: StatsAggregates | null;
   breakdown: TrainingAreaBreakdown[];
+  handicap?: number | null;
 }
 
 // ── Helpers ──
@@ -129,6 +133,7 @@ export function StatistikkClient({
   rounds,
   aggregates,
   breakdown,
+  handicap,
 }: StatistikkClientProps) {
   const [selectedPeriod, setSelectedPeriod] = useState(1);
   const periods = ["7 dager", "30 dager", "90 dager", "1 ar"];
@@ -301,17 +306,14 @@ export function StatistikkClient({
               ) : null
             }
           >
-            <div className="h-[200px] flex items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-grey-100)] to-white border border-[var(--color-grey-100)]">
-              <div className="text-center text-[var(--color-grey-400)]">
-                <TrendingDown className="w-10 h-10 mx-auto mb-3 text-[var(--color-grey-300)]" />
-                <p className="text-sm font-medium">Score-graf</p>
-                <p className="text-xs mt-1">
-                  {aggregates?.roundCount
-                    ? `Basert pa ${aggregates.roundCount} runder`
-                    : "Viser trend over valgt periode"}
-                </p>
-              </div>
-            </div>
+            <ScoreTrendChart
+              rounds={rounds.map((r) => ({
+                date: r.date,
+                score: r.totalScore ?? 0,
+                scoreToPar: r.scoreToPar ?? 0,
+              }))}
+              handicap={handicap ?? undefined}
+            />
           </BentoCard>
 
           {/* Recent Rounds - Narrow */}
@@ -383,35 +385,16 @@ export function StatistikkClient({
           >
             {aggregates?.avgSgTotal !== null &&
             aggregates?.avgSgTotal !== undefined ? (
-              <div className="flex gap-6">
-                {/* Radar placeholder */}
-                <div className="w-[160px] h-[160px] rounded-full bg-gradient-to-br from-[var(--color-grey-100)] to-white border-2 border-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                  <span className="text-xs text-[var(--color-grey-400)]">
-                    SG Radar
-                  </span>
-                </div>
-
-                {/* SG Stats */}
-                <div className="flex-1 grid grid-cols-2 gap-3">
-                  {sgAreas.map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="p-3 rounded-xl bg-[var(--color-grey-100)] text-center"
-                    >
-                      <p className="text-[11px] font-medium text-[var(--color-grey-500)] mb-1">
-                        {stat.label}
-                      </p>
-                      <p
-                        className={`text-lg font-bold ${getSgColor(stat.value)}`}
-                      >
-                        {stat.value !== null
-                          ? `${stat.value >= 0 ? "+" : ""}${stat.value.toFixed(1)}`
-                          : "-"}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <SGRadarChart
+                playerSG={{
+                  offTheTee: aggregates?.avgSgOffTheTee ?? null,
+                  approach: aggregates?.avgSgApproach ?? null,
+                  aroundTheGreen: aggregates?.avgSgAroundTheGreen ?? null,
+                  putting: aggregates?.avgSgPutting ?? null,
+                }}
+                benchmark={handicap ? getBenchmarkByHandicap(handicap) : null}
+                showLegend={false}
+              />
             ) : (
               <div className="h-[160px] flex items-center justify-center rounded-xl bg-[var(--color-grey-100)]">
                 <p className="text-sm text-[var(--color-grey-400)]">

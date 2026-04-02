@@ -213,3 +213,16 @@ export async function getTrainingAreaBreakdown() {
     sessions: data.sessions,
   }));
 }
+
+export async function getLatestHandicap() {
+  const user = await requirePortalUser();
+  if (!user?.id) return null;
+
+  const entry = await prisma.handicapEntry.findFirst({
+    where: { userId: user.id },
+    orderBy: { date: "desc" },
+    select: { handicapIndex: true },
+  });
+
+  return entry?.handicapIndex ?? null;
+}

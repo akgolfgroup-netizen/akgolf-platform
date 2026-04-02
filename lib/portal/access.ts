@@ -157,9 +157,9 @@ export async function incrementAiCount(userId: string): Promise<void> {
 export async function hasCompletedOnboarding(userId: string): Promise<boolean> {
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { portalOnboardingCompleted: true },
+    select: { onboardingCompletedAt: true },
   });
-  return user?.portalOnboardingCompleted ?? false;
+  return !!user?.onboardingCompletedAt;
 }
 
 /**
@@ -168,7 +168,7 @@ export async function hasCompletedOnboarding(userId: string): Promise<boolean> {
 export async function completeOnboarding(userId: string): Promise<void> {
   await prisma.user.update({
     where: { id: userId },
-    data: { portalOnboardingCompleted: true },
+    data: { onboardingCompletedAt: new Date() },
   });
 }
 

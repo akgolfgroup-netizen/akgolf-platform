@@ -108,6 +108,7 @@ export async function getPeerComparisonData() {
 
   return {
     skillLevel,
+    handicap: latestHandicap.handicapIndex,
     peerCount: peerUserIds.length,
     myStats,
     peerStats,
