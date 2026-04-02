@@ -60,3 +60,45 @@ Website og Dashboard deler database. Etter schema-endring:
 ```bash
 npx prisma generate  # I BEGGE prosjekter
 ```
+
+## KRITISK: Prisma-relasjoner bruker PascalCase
+
+Prisma genererer relasjoner med PascalCase-navn. Bruk ALLTID disse i include/select:
+
+```typescript
+// FEIL
+include: { user: true, package: true }
+
+// RIKTIG
+include: { User: true, CoachingPackage: true }
+```
+
+### Vanlige relasjonsnavn
+
+| Feil (lowercase) | Riktig (PascalCase) |
+|------------------|---------------------|
+| user | User |
+| package | CoachingPackage |
+| module | AppModule |
+| bundle | AppBundle |
+| items | BundleItem |
+| instructor | Instructor |
+| aiResponse | AIResponses |
+
+## KRITISK: Create krever id og updatedAt
+
+Mange modeller har ikke autoincrement på `id` eller `@updatedAt`. Legg alltid til:
+
+```typescript
+import { nanoid } from "nanoid";
+
+await prisma.notification.create({
+  data: {
+    id: nanoid(),
+    updatedAt: new Date(),
+    // ... andre felter
+  }
+});
+```
+
+**Modeller som krever dette:** Notification, CommunicationLog, AppSubscription, SubscriptionQuota, PushSubscription, CoachingPackage, CoachingAvailability, AppModule, AppBundle, BundleItem

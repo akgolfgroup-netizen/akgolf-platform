@@ -357,6 +357,131 @@ import { BarChart3 } from "lucide-react";
 
 **Regel:** Aldri bruk faste grid-kolonner uten responsive breakpoints i booking-flyt.
 
+## 29. Prisma-relasjoner bruker PascalCase (2026-04-02)
+
+**Problem:** Kode bruker lowercase (`user`, `package`, `module`) men Prisma genererer PascalCase (`User`, `CoachingPackage`, `AppModule`).
+
+**Løsning:** ALLTID bruk PascalCase i include/select:
+```typescript
+// FEIL
+include: { user: true, package: true }
+sub.user.email
+sub.package.sessionsPerMonth
+
+// RIKTIG
+include: { User: true, CoachingPackage: true }
+sub.User.email
+sub.CoachingPackage.sessionsPerMonth
+```
+
+**Vanlige mappinger:**
+| Lowercase | PascalCase |
+|-----------|------------|
+| user | User |
+| package | CoachingPackage |
+| module | AppModule |
+| bundle | AppBundle |
+| items | BundleItem |
+| instructor | Instructor |
+
+**Regel:** Sjekk alltid `prisma/schema.prisma` for korrekt relasjonsnavn.
+
+## 30. Prisma create krever id og updatedAt (2026-04-02)
+
+**Problem:** Mange modeller har `id` og `updatedAt` som required uten default, så create feiler uten disse.
+
+**Løsning:** Legg alltid til `id: nanoid()` og `updatedAt: new Date()` i create-kall:
+```typescript
+import { nanoid } from "nanoid";
+
+// FEIL
+await prisma.notification.create({
+  data: { userId, type, title, message }
+});
+
+// RIKTIG
+await prisma.notification.create({
+  data: {
+    id: nanoid(),
+    updatedAt: new Date(),
+    userId, type, title, message
+  }
+});
+```
+
+**Modeller som krever dette:** Notification, CommunicationLog, AppSubscription, SubscriptionQuota, PushSubscription, CoachingPackage, CoachingAvailability, AppModule, AppBundle, BundleItem
+
+**Unntak:** Modeller med `@default(cuid())` eller `@default(now())` trenger ikke dette.
+
+## 31. Client components kan ikke motta funksjoner som props (2026-04-02)
+
+**Problem:** React Server Components kan ikke sende funksjoner (inkludert React components som Lucide icons) til client components.
+
+**Feilmelding:** `Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with "use server".`
+
+**Løsning:** Send primitive verdier og la client component velge riktig komponent:
+```typescript
+// FEIL — lib/config.ts
+import { User, Calendar } from "lucide-react";
+export const ITEMS = [
+  { name: "Bruker", icon: User },  // Funksjon!
+];
+
+// RIKTIG — lib/config.ts
+export type IconName = "user" | "calendar";
+export const ITEMS = [
+  { name: "Bruker", iconName: "user" as IconName },
+];
+
+// Client component
+const ICON_MAP = { user: User, calendar: Calendar };
+const Icon = ICON_MAP[item.iconName];
+```
+
+## 32. Server-only imports i client components (2026-04-02)
+
+**Problem:** Client component importerer fra en fil som bruker Prisma/Node.js-moduler, og build feiler med `Can't resolve 'tls'` eller `Can't resolve 'dns'`.
+
+**Løsning:** Splitt til to filer:
+1. `*-types.ts` — Kun typer og konstanter (client-safe)
+2. `*-service.ts` — Database-logikk (server-only)
+
+```typescript
+// lib/training/l-phase-types.ts (client-safe)
+export const L_PHASES = ["KROPP", "ARM", "KØLLE"] as const;
+export type LPhase = (typeof L_PHASES)[number];
+
+// lib/training/l-phase-service.ts (server-only)
+import { prisma } from "@/lib/portal/prisma";
+export { L_PHASES, type LPhase } from "./l-phase-types";
+// ... database functions
+
+// Client component
+import { L_PHASES } from "@/lib/training/l-phase-types";  // OK!
+```
+
+**Regel:** Client components skal ALDRI importere filer som inneholder `import { prisma }`.
+
+## 33. Coach Hub-modeller (2026-04-02)
+
+**Nye Prisma-modeller for unified inbox og AI-læring:**
+
+| Modell | Beskrivelse |
+|--------|-------------|
+| UnifiedMessage | Meldinger fra alle kanaler (EMAIL, SMS, INSTAGRAM, etc.) |
+| AIResponse | AI-genererte svar på meldinger |
+| AILearning | AI-læringsmønstre basert på brukerinteraksjoner |
+
+**Nye User-felter:**
+- `portalMonthlyLogCount` — Antall loggede økter denne måneden
+- `portalMonthlyAiCount` — Antall AI-kall denne måneden
+- `portalUsageResetDate` — Dato for reset av månedlige tellere
+
+**Nye User-relasjoner:**
+- `AssignedMessages` — Meldinger tildelt brukeren
+- `ApprovedResponses` — AI-svar godkjent av brukeren
+- `AILearning` — Brukerens AI-læringsdata
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer

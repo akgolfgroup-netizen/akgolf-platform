@@ -225,7 +225,7 @@ content/
 
 PostgreSQL via Prisma med `@prisma/adapter-pg`. Nøkkelmodeller:
 
-- **User** — Rolle: STUDENT, INSTRUCTOR, ADMIN. Tier: VISITOR/ACADEMY/STARTER/PRO/ELITE
+- **User** — Rolle: STUDENT, INSTRUCTOR, ADMIN. Tier: VISITOR/ACADEMY/STARTER/PRO/ELITE. Inkluderer `portalMonthlyLogCount`, `portalMonthlyAiCount`, `portalUsageResetDate` for usage tracking.
 - **Instructor** + **InstructorAvailability** — Instruktørprofiler og ukentlig tilgjengelighet
 - **ServiceType** — INDIVIDUAL, GROUP, VTG_COURSE, SIMULATOR, PLAYING_LESSON
 - **Booking** — Status: PENDING → CONFIRMED → COMPLETED/CANCELLED/NO_SHOW
@@ -245,6 +245,12 @@ PostgreSQL via Prisma med `@prisma/adapter-pg`. Nøkkelmodeller:
 - **Conversation** + **Message** — In-app meldingssystem
 - **SwingVideo** — Videoanalyse med kvote-tracking
 - **TrackmanSession** — Trackman CSV-import data
+- **UnifiedMessage** — Unified inbox (EMAIL, SMS, INSTAGRAM, etc.) med status og AI-responses
+- **AIResponse** — AI-genererte svar på meldinger med confidence, category, approval tracking
+- **AILearning** — AI-læringsmønstre per bruker (category, pattern, response, usageCount)
+- **PushSubscription** — Web push notifications med `deviceType`
+
+**VIKTIG:** Prisma-relasjoner bruker PascalCase (f.eks. `User`, `CoachingPackage`, ikke `user`, `package`). Se gotchas.md #29.
 
 ## Authentication
 
