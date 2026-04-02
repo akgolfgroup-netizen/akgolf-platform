@@ -4,11 +4,13 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Loader2, CalendarDays, ArrowRight } from "lucide-react";
 import { StepHeader } from "./StepHeader";
+import { InstructorTabs } from "./InstructorTabs";
 import { cn } from "@/lib/portal/utils/cn";
 
 interface Props {
   serviceTypeId: string;
   instructorId: string;
+  instructors?: Array<{ id: string; name: string }>;
   onSelect: (startTime: string) => void;
 }
 
@@ -86,7 +88,7 @@ function filterSlotsByTime(slots: string[], filter: TimeFilter): string[] {
   });
 }
 
-export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props) {
+export function DateTimePicker({ serviceTypeId, instructorId, instructors, onSelect }: Props) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -101,6 +103,8 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
   const [loading, setLoading] = useState(false);
   const [loadingWeek, setLoadingWeek] = useState(false);
   const [timeFilter, setTimeFilter] = useState<TimeFilter>("all");
+  const [selectedInstructorId, setSelectedInstructorId] = useState<string | null>(instructorId);
+  const activeInstructorId = selectedInstructorId ?? instructorId;
 
   const weekDates = getWeekDates(currentWeekStart);
 
@@ -121,7 +125,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
           try {
             const params = new URLSearchParams({
               serviceTypeId,
-              instructorId,
+              instructorId: activeInstructorId,
               date: dateKey,
             });
             const res = await fetch(`/api/portal/public/slots?${params}`);
@@ -140,11 +144,11 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
     } finally {
       setLoadingWeek(false);
     }
-  }, [serviceTypeId, instructorId, weekDates, today]);
+  }, [serviceTypeId, activeInstructorId, weekDates, today]);
 
   useEffect(() => {
     fetchWeekSlots();
-  }, [currentWeekStart, serviceTypeId, instructorId]);
+  }, [currentWeekStart, serviceTypeId, activeInstructorId]);
 
   // Fetch slots for selected day
   const fetchDaySlots = useCallback(async (dateKey: string) => {
@@ -153,7 +157,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
     try {
       const params = new URLSearchParams({
         serviceTypeId,
-        instructorId,
+        instructorId: activeInstructorId,
         date: dateKey,
       });
       const res = await fetch(`/api/portal/public/slots?${params}`);
@@ -166,7 +170,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
     } finally {
       setLoading(false);
     }
-  }, [serviceTypeId, instructorId]);
+  }, [serviceTypeId, activeInstructorId]);
 
   useEffect(() => {
     if (selectedDate) {
@@ -175,6 +179,12 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
       setTimeFilter("all");
     }
   }, [selectedDate, fetchDaySlots]);
+
+  useEffect(() => {
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setSlots([]);
+  }, [selectedInstructorId]);
 
   function navigateWeek(direction: -1 | 1) {
     setCurrentWeekStart((prev) => {
@@ -215,6 +225,15 @@ export function DateTimePicker({ serviceTypeId, instructorId, onSelect }: Props)
         heading="Velg dato og tid"
         description="Velg nar du oensker a trene"
       />
+
+      {/* Instructor Tabs */}
+      {instructors && instructors.length > 1 && (
+        <InstructorTabs
+          instructors={instructors}
+          selectedId={selectedInstructorId}
+          onSelect={setSelectedInstructorId}
+        />
+      )}
 
       {/* Week Navigator */}
       <div className="flex items-center justify-between mb-5">
