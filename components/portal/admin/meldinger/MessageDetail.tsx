@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import { Send, Edit, X, Bot } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Channel } from "./ChannelFilter";
 import type { MessageStatus } from "./MessageList";
 
@@ -42,6 +42,12 @@ export function MessageDetail({
   const [isEditing, setIsEditing] = useState(false);
   const [isSending, setIsSending] = useState(false);
 
+  // Reset state when message changes
+  useEffect(() => {
+    setEditedContent(message.aiResponse?.draftContent || "");
+    setIsEditing(false);
+  }, [message.id, message.aiResponse?.draftContent]);
+
   const handleApprove = async () => {
     setIsSending(true);
     try {
@@ -62,13 +68,13 @@ export function MessageDetail({
 
   const confidenceColor =
     message.aiResponse && message.aiResponse.confidence >= 0.8
-      ? "text-green-500"
+      ? "text-green-600"
       : message.aiResponse && message.aiResponse.confidence >= 0.5
-        ? "text-yellow-500"
-        : "text-red-500";
+        ? "text-yellow-600"
+        : "text-red-600";
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-white">
       {/* Header */}
       <div className="p-4 border-b border-[var(--color-grey-200)]">
         <div className="flex items-center justify-between">
@@ -87,7 +93,7 @@ export function MessageDetail({
           </span>
         </div>
         {message.subject && (
-          <p className="mt-2 text-[var(--color-grey-300)] font-medium">
+          <p className="mt-2 text-[var(--color-grey-400)] font-medium">
             {message.subject}
           </p>
         )}
@@ -99,7 +105,9 @@ export function MessageDetail({
           Opprinnelig melding:
         </p>
         <div className="bg-[var(--color-grey-100)] rounded-lg p-4">
-          <p className="text-[var(--color-grey-900)] whitespace-pre-wrap">{message.content}</p>
+          <p className="text-[var(--color-grey-900)] whitespace-pre-wrap">
+            {message.content}
+          </p>
         </div>
       </div>
 
@@ -108,11 +116,13 @@ export function MessageDetail({
         <div className="flex-1 p-4 overflow-auto">
           <div className="flex items-center gap-2 mb-3">
             <Bot className="h-5 w-5 text-[var(--color-black)]" />
-            <span className="text-sm font-medium text-[var(--color-grey-900)]">AI-forslag</span>
+            <span className="text-sm font-medium text-[var(--color-grey-900)]">
+              AI-forslag
+            </span>
             <span className={`text-xs ${confidenceColor}`}>
               {Math.round(message.aiResponse.confidence * 100)}% konfidensert
             </span>
-            <span className="text-xs bg-[var(--color-grey-100)] px-2 py-0.5 rounded text-[var(--color-grey-400)]">
+            <span className="text-xs bg-[var(--color-grey-100)] px-2 py-0.5 rounded text-[var(--color-grey-500)]">
               {message.aiResponse.category}
             </span>
             <span className="text-xs text-[var(--color-grey-500)]">
@@ -124,12 +134,14 @@ export function MessageDetail({
             <textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
-              className="w-full h-48 bg-[var(--color-grey-100)] rounded-lg p-4 text-[var(--color-grey-900)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-400)]"
+              className="w-full h-48 bg-[var(--color-grey-100)] rounded-lg p-4 text-[var(--color-grey-900)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-300)] border border-[var(--color-grey-200)]"
               placeholder="Skriv ditt svar her..."
             />
           ) : (
             <div className="bg-[var(--color-grey-100)] rounded-lg p-4">
-              <p className="text-[var(--color-grey-900)] whitespace-pre-wrap">{editedContent}</p>
+              <p className="text-[var(--color-grey-900)] whitespace-pre-wrap">
+                {editedContent}
+              </p>
             </div>
           )}
         </div>
@@ -139,8 +151,8 @@ export function MessageDetail({
       {!message.aiResponse && message.status === "PENDING" && (
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center">
-            <Bot className="h-12 w-12 text-[var(--color-grey-500)] mx-auto mb-3" />
-            <p className="text-[var(--color-grey-400)]">
+            <Bot className="h-12 w-12 text-[var(--color-grey-400)] mx-auto mb-3" />
+            <p className="text-[var(--color-grey-500)]">
               AI-svar genereres snart...
             </p>
           </div>
@@ -151,7 +163,7 @@ export function MessageDetail({
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center">
             <Bot className="h-12 w-12 text-blue-500 mx-auto mb-3 animate-pulse" />
-            <p className="text-[var(--color-grey-400)]">
+            <p className="text-[var(--color-grey-500)]">
               AI analyserer meldingen...
             </p>
           </div>
@@ -160,11 +172,11 @@ export function MessageDetail({
 
       {/* Actions */}
       {message.status === "AI_READY" && message.aiResponse && (
-        <div className="p-4 border-t border-[var(--color-grey-200)] flex items-center justify-between">
+        <div className="p-4 border-t border-[var(--color-grey-200)] flex items-center justify-between bg-white">
           <Button
             variant="ghost"
             onClick={() => setIsEditing(!isEditing)}
-            className="text-[var(--color-grey-400)]"
+            className="text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
           >
             <Edit className="h-4 w-4 mr-2" />
             {isEditing ? "Ferdig redigering" : "Rediger"}
@@ -174,7 +186,7 @@ export function MessageDetail({
               variant="ghost"
               onClick={handleReject}
               disabled={isSending}
-              className="text-red-500 hover:text-red-400"
+              className="text-red-500 hover:text-red-600"
             >
               <X className="h-4 w-4 mr-2" />
               Forkast
@@ -182,11 +194,10 @@ export function MessageDetail({
             <Button
               onClick={handleApprove}
               disabled={isSending}
-              isLoading={isSending}
               className="bg-[var(--color-black)] hover:bg-[var(--color-grey-900)] text-white"
             >
               <Send className="h-4 w-4 mr-2" />
-              Godkjenn & Send
+              {isSending ? "Sender..." : "Godkjenn & Send"}
             </Button>
           </div>
         </div>
@@ -195,7 +206,7 @@ export function MessageDetail({
       {/* Already sent/approved */}
       {(message.status === "SENT" || message.status === "APPROVED") && (
         <div className="p-4 border-t border-[var(--color-grey-200)]">
-          <p className="text-center text-green-500 text-sm">
+          <p className="text-center text-green-600 text-sm">
             Denne meldingen er allerede besvart
           </p>
         </div>

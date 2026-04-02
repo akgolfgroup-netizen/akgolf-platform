@@ -1,18 +1,24 @@
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
-import { SessionsClient } from "./sessions-client";
+import { isStaff } from "@/lib/portal/rbac";
+import { redirect } from "next/navigation";
+import { OkterClient } from "./okter-client";
 import { startOfDay, endOfDay, addDays } from "date-fns";
 
-export default async function SessionsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function OkterPage() {
   const user = await requirePortalUser();
+  if (!user?.id || !isStaff(user.role)) {
+    redirect("/");
+  }
 
   const today = startOfDay(new Date());
   const nextWeek = endOfDay(addDays(today, 7));
 
-  // Hent kommende bookinger
+  // Hent kommende bookinger (for staff: alle instruktørers bookinger)
   const upcomingBookings = await prisma.booking.findMany({
     where: {
-      instructorId: user.id,
       startTime: {
         gte: today,
         lte: nextWeek,
@@ -44,7 +50,6 @@ export default async function SessionsPage() {
   // Hent nylig fullforte okter
   const recentSessions = await prisma.booking.findMany({
     where: {
-      instructorId: user.id,
       status: "COMPLETED",
     },
     include: {
@@ -85,14 +90,17 @@ export default async function SessionsPage() {
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">Coaching-okter</h1>
-        <p className="text-[var(--color-ink-40)] mt-1">
-          Administrer dine coaching-okter
+        <h1 className="text-[32px] font-bold text-[var(--color-grey-900)] tracking-[-0.02em]">
+          Coaching-okter
+        </h1>
+        <p className="text-[15px] text-[var(--color-grey-500)] mt-1">
+          Administrer alle coaching-okter
         </p>
       </div>
 
-      <SessionsClient
+      <OkterClient
         upcomingSessions={formattedUpcoming}
         recentSessions={formattedRecent}
       />

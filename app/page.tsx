@@ -112,20 +112,6 @@ export default function HomePage() {
                 </Link>
               </motion.div>
 
-              {/* Trust strip */}
-              <motion.div
-                className="flex flex-wrap gap-x-6 gap-y-2 mt-14"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 1.2 }}
-              >
-                {["PGA Professional", "Trackman Certified", "TPI Certified", "10+ års erfaring"].map((item) => (
-                  <span key={item} className="flex items-center gap-2 text-[11px] text-grey-400 font-medium tracking-wide">
-                    <span className="w-1 h-1 rounded-full bg-black" />
-                    {item}
-                  </span>
-                ))}
-              </motion.div>
             </div>
           </div>
 

@@ -22,6 +22,9 @@ import {
   ClipboardCheck,
   Dumbbell,
   X,
+  CheckCircle,
+  MessageSquare,
+  Bot,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
@@ -50,11 +53,15 @@ const accountItems = [
 const staffItems = [
   { href: "/portal/admin/kalender", label: "Kalender", icon: CalendarDays },
   { href: "/portal/admin/bookinger", label: "Bookinger", icon: CalendarPlus },
+  { href: "/portal/admin/godkjenninger", label: "Godkjenninger", icon: CheckCircle },
   { href: "/portal/admin/elever", label: "Elever", icon: UsersIcon },
   { href: "/portal/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
   { href: "/portal/admin/kapasitet", label: "Kapasitet", icon: BarChart3 },
   { href: "/portal/admin/denne-uken", label: "Denne uken", icon: CalendarCheck },
+  { href: "/portal/admin/okter", label: "Økter", icon: BookOpen },
   { href: "/portal/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
+  { href: "/portal/admin/meldinger", label: "Meldinger", icon: MessageSquare },
+  { href: "/portal/admin/ai-assistent", label: "AI-assistent", icon: Bot },
 ];
 
 // Light sidebar theme (Brand System 2026)

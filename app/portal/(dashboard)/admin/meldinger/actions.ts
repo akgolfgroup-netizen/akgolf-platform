@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
+import { isStaff } from "@/lib/portal/rbac";
+import { redirect } from "next/navigation";
 
 export async function approveMessage(
   messageId: string,
@@ -10,6 +12,7 @@ export async function approveMessage(
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const user = await requirePortalUser();
+    if (!isStaff(user.role)) redirect("/");
 
     await prisma.$transaction([
       prisma.aIResponse.update({
@@ -27,14 +30,9 @@ export async function approveMessage(
       }),
     ]);
 
-    // TODO: Send melding via riktig kanal
+    // TODO: Send melding via riktig kanal — sett status til SENT når faktisk sendt
 
-    await prisma.unifiedMessage.update({
-      where: { id: messageId },
-      data: { status: "SENT" },
-    });
-
-    revalidatePath("/coach/inbox");
+    revalidatePath("/portal/admin/meldinger");
 
     return { success: true };
   } catch (error) {
@@ -50,14 +48,15 @@ export async function rejectMessage(
   messageId: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    await requirePortalUser();
+    const user = await requirePortalUser();
+    if (!isStaff(user.role)) redirect("/");
 
     await prisma.unifiedMessage.update({
       where: { id: messageId },
       data: { status: "FAILED" },
     });
 
-    revalidatePath("/coach/inbox");
+    revalidatePath("/portal/admin/meldinger");
 
     return { success: true };
   } catch (error) {
@@ -73,16 +72,16 @@ export async function regenerateAIResponse(
   messageId: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    await requirePortalUser();
+    const user = await requirePortalUser();
+    if (!isStaff(user.role)) redirect("/");
 
     // TODO: Implementer AI-regenerering når AI-modulen er klar
-    // For nå, sett status tilbake til AI_PROCESSING
     await prisma.unifiedMessage.update({
       where: { id: messageId },
       data: { status: "AI_PROCESSING" },
     });
 
-    revalidatePath("/coach/inbox");
+    revalidatePath("/portal/admin/meldinger");
 
     return { success: true };
   } catch (error) {

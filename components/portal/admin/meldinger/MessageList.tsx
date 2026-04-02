@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import type { Channel } from "./ChannelFilter";
 
-// Midlertidig type til Prisma-modeller er lagt til
 export type MessageStatus =
   | "PENDING"
   | "AI_PROCESSING"
@@ -46,32 +45,32 @@ const statusBadges: Record<
 > = {
   PENDING: {
     label: "Venter",
-    className: "bg-yellow-500/20 text-yellow-500",
+    className: "bg-yellow-500/20 text-yellow-600",
     icon: <Clock className="h-3 w-3" />,
   },
   AI_PROCESSING: {
     label: "AI jobber",
-    className: "bg-blue-500/20 text-blue-500",
+    className: "bg-blue-500/20 text-blue-600",
     icon: <Bot className="h-3 w-3 animate-pulse" />,
   },
   AI_READY: {
     label: "AI klar",
-    className: "bg-green-500/20 text-green-500",
+    className: "bg-green-500/20 text-green-600",
     icon: <Bot className="h-3 w-3" />,
   },
   APPROVED: {
     label: "Godkjent",
-    className: "bg-purple-500/20 text-purple-500",
+    className: "bg-purple-500/20 text-purple-600",
     icon: <Check className="h-3 w-3" />,
   },
   SENT: {
     label: "Sendt",
-    className: "bg-[var(--color-grey-200)] text-[var(--color-grey-400)]",
+    className: "bg-[var(--color-grey-200)] text-[var(--color-grey-500)]",
     icon: <Check className="h-3 w-3" />,
   },
   FAILED: {
     label: "Feilet",
-    className: "bg-red-500/20 text-red-500",
+    className: "bg-red-500/20 text-red-600",
     icon: <Clock className="h-3 w-3" />,
   },
 };
@@ -119,7 +118,7 @@ export function MessageList({
               channelColors[message.channel],
               selectedId === message.id
                 ? "bg-[var(--color-grey-100)]"
-                : "hover:bg-[var(--color-grey-100)]"
+                : "hover:bg-[var(--color-grey-50)]"
             )}
           >
             <div className="flex items-start justify-between gap-2">
@@ -136,7 +135,7 @@ export function MessageList({
                   </span>
                 </div>
                 {message.subject && (
-                  <p className="text-sm text-[var(--color-grey-300)] truncate mt-0.5">
+                  <p className="text-sm text-[var(--color-grey-400)] truncate mt-0.5">
                     {message.subject}
                   </p>
                 )}

@@ -3,18 +3,22 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
+import { isStaff } from "@/lib/portal/rbac";
+import { redirect } from "next/navigation";
 
 export async function approveBooking(
   bookingId: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const user = await requirePortalUser();
+    if (!user?.id || !isStaff(user.role)) {
+      redirect("/");
+    }
 
-    // Verifiser at bookingen tilhorer denne instruktoren
+    // Verifiser at bookingen tilhorer en av denne instructorens elever
     const booking = await prisma.booking.findFirst({
       where: {
         id: bookingId,
-        instructorId: user.id,
         status: "PENDING",
       },
     });
@@ -30,8 +34,8 @@ export async function approveBooking(
 
     // TODO: Send bekreftelse til student via e-post
 
-    revalidatePath("/coach/approvals");
-    revalidatePath("/coach");
+    revalidatePath("/portal/admin/godkjenninger");
+    revalidatePath("/portal/admin");
 
     return { success: true };
   } catch (error) {
@@ -48,11 +52,13 @@ export async function rejectBooking(
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const user = await requirePortalUser();
+    if (!user?.id || !isStaff(user.role)) {
+      redirect("/");
+    }
 
     const booking = await prisma.booking.findFirst({
       where: {
         id: bookingId,
-        instructorId: user.id,
         status: "PENDING",
       },
     });
@@ -68,8 +74,8 @@ export async function rejectBooking(
 
     // TODO: Send avvisning til student via e-post med begrunnelse
 
-    revalidatePath("/coach/approvals");
-    revalidatePath("/coach");
+    revalidatePath("/portal/admin/godkjenninger");
+    revalidatePath("/portal/admin");
 
     return { success: true };
   } catch (error) {

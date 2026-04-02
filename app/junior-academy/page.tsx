@@ -20,7 +20,7 @@ import {
   JUNIOR_INTAKE,
   TEAM,
   TESTIMONIALS,
-  JUNIOR_AGE_GROUPS,
+  JUNIOR_PROGRAMS,
   JUNIOR_SEASON_PROGRAM,
   JUNIOR_PACKAGES,
   JUNIOR_PARENT_INFO,
@@ -119,26 +119,25 @@ export default function JuniorPage() {
           </div>
         </section>
 
-        {/* ─── Age Groups & Levels ─── */}
+        {/* ─── Levels ─── */}
         <section className="py-28 md:py-40 bg-grey-100">
           <div className="w-container">
             <RevealOnScroll>
-              <SectionLabel>Aldersgrupper og nivaer</SectionLabel>
-              <h2 className="w-heading-lg mt-4 mb-4">Riktig trening til riktig tid.</h2>
+              <SectionLabel>Nivaer</SectionLabel>
+              <h2 className="w-heading-lg mt-4 mb-4">Riktig trening til riktig niva.</h2>
               <p className="text-grey-500 max-w-2xl leading-relaxed mb-12">
-                Vår progresjon er designet for å bygge ferdigheter systematisk, med økende intensitet og spesialisering etter hvert som junioren modnes.
+                Var progresjon er designet for a bygge ferdigheter systematisk, med okende intensitet og spesialisering etter hvert som junioren utvikler seg.
               </p>
             </RevealOnScroll>
 
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {JUNIOR_AGE_GROUPS.map((program) => (
-                <StaggerItem key={program.ageGroup}>
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {JUNIOR_PROGRAMS.map((program) => (
+                <StaggerItem key={program.level}>
                   <div className="bg-white rounded-[20px] p-7 border border-grey-200 h-full flex flex-col">
                     <div className="flex items-center justify-between mb-4">
                       <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/10 text-black text-xs font-mono font-medium">
-                        {program.ageGroup}
+                        {program.level}
                       </span>
-                      <span className="text-xs text-grey-400">{program.sessionsPerWeek}x/uke</span>
                     </div>
                     <h3 className="font-display text-lg font-semibold text-black mb-2">{program.title}</h3>
                     <p className="text-sm text-grey-500 leading-relaxed mb-4 flex-1">{program.description}</p>

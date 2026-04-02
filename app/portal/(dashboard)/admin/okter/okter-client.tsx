@@ -7,7 +7,6 @@ import { nb } from "date-fns/locale";
 import {
   Calendar,
   Clock,
-  User,
   Trophy,
   CheckCircle,
   ChevronRight,
@@ -33,15 +32,15 @@ interface RecentSession {
   completedAt: Date;
 }
 
-interface SessionsClientProps {
+interface OkterClientProps {
   upcomingSessions: UpcomingSession[];
   recentSessions: RecentSession[];
 }
 
-export function SessionsClient({
+export function OkterClient({
   upcomingSessions,
   recentSessions,
-}: SessionsClientProps) {
+}: OkterClientProps) {
   const [activeTab, setActiveTab] = useState<"upcoming" | "recent">("upcoming");
 
   const formatSessionDate = (date: Date) => {
@@ -79,7 +78,7 @@ export function SessionsClient({
         </button>
       </div>
 
-      {/* Upcoming sessions */}
+      {/* Kommende okter */}
       {activeTab === "upcoming" && (
         <div className="space-y-4">
           {upcomingSessions.length === 0 ? (
@@ -95,12 +94,14 @@ export function SessionsClient({
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 text-sm text-[var(--color-black)] mb-1">
+                    <div className="flex items-center gap-2 text-sm text-[var(--color-grey-900)] mb-1">
                       <Calendar className="h-4 w-4" />
                       <span className="capitalize">
                         {formatSessionDate(session.startTime)}
                       </span>
-                      <span>kl. {format(new Date(session.startTime), "HH:mm")}</span>
+                      <span>
+                        kl. {format(new Date(session.startTime), "HH:mm")}
+                      </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Link
@@ -137,7 +138,7 @@ export function SessionsClient({
         </div>
       )}
 
-      {/* Recent sessions */}
+      {/* Fullforte okter */}
       {activeTab === "recent" && (
         <div className="space-y-4">
           {recentSessions.length === 0 ? (
@@ -153,8 +154,8 @@ export function SessionsClient({
               >
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="h-10 w-10 rounded-full bg-green-500/20 flex items-center justify-center">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
+                    <div className="h-10 w-10 rounded-full bg-[var(--color-grey-100)] flex items-center justify-center">
+                      <CheckCircle className="h-5 w-5 text-[var(--color-grey-500)]" />
                     </div>
                     <div>
                       <Link

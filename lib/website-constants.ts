@@ -1,7 +1,7 @@
 // ─── Navigation ───
 export const NAV_LINKS = [
   { label: "Coaching", href: "/academy" },
-  { label: "Junior Academy", href: "/junior" },
+  { label: "Junior Academy", href: "/junior-academy" },
   { label: "Utvikling", href: "/utvikling" },
 ] as const;
 
@@ -72,7 +72,6 @@ export const TEAM = [
     division: "AK Golf Academy",
     image: "/images/team/anders-kristiansen.jpg",
     bio: "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse. Hver spiller får en individuell utviklingsplan — ikke bare data, men konkret retning.",
-    certifications: ["PGA Professional", "TPI Certified", "TrackMan Certified"],
     contact: { email: "anders@akgolf.no", phone: "+47 909 67 995" },
   },
   {
@@ -81,7 +80,6 @@ export const TEAM = [
     division: "AK Golf Academy",
     image: null,
     bio: "College-golf fra USA. Spesialisert på gruppetrening, banecoaching og nybegynneropplæring. Kjører 9 Hull, After Work, Første Sesong og banecoaching på korthullsbanen. 20 min individuell coaching: 300 kr.",
-    certifications: [],
     contact: { email: "markus@akgolf.no", phone: "+47 905 86 097" },
   },
 ] as const;
@@ -101,7 +99,7 @@ export const DIVISIONS = [
     title: "Junior Academy",
     description: "Strukturert golftrening for unge spillere — fra første turnering til nasjonalt nivå.",
     features: ["Nivåtilpasset trening", "Konkurranseveiledning", "Periodisering", "Foreldresamarbeid"],
-    href: "/junior",
+    href: "/junior-academy",
     accent: "junior" as const,
   },
   {
@@ -624,8 +622,6 @@ export const FOUNDER = {
     "Hver spiller får en individuell utviklingsplan som oppdateres etter hver sesjon — ikke bare data fra TrackMan, men konkret retning og nøyaktig hva du skal jobbe med til neste gang.",
     "Min filosofi er enkel: coaching-sesjonen er kontaktpunktet, spillerportalen er motoren. Alt henger sammen — trening mellom sesjoner, statistikk, og progresjon over tid.",
   ],
-  certifications: ["PGA Professional", "TPI Certified", "TrackMan Certified"],
-  experience: "15+",
 } as const;
 
 // ─── Testimonials ───
@@ -674,7 +670,6 @@ export const JUNIOR_INTAKE = {
   heading: "Retningslinjer for opptak",
   description: "Junior Academy er åpent for unge spillere med motivasjon og treningsvilje. Her er hva vi ser etter:",
   criteria: [
-    { title: "Alder", description: "13–19 år ved oppstart." },
     { title: "Grønt kort", description: "Spilleren må ha grønt kort eller tilsvarende grunnopplæring." },
     { title: "Motivasjon", description: "Vi ser etter spillere som vil utvikle seg, uavhengig av nåværende nivå." },
     { title: "Treningsvilje", description: "Vilje til å følge treningsprogram og delta jevnlig på økter." },
@@ -683,7 +678,7 @@ export const JUNIOR_INTAKE = {
     { step: "01", title: "Ta kontakt", description: "Send oss en melding eller ring — vi setter opp et uforpliktende møte." },
     { step: "02", title: "Møte", description: "Vi møtes for en uforpliktende prat om juniorens mål, nivå og ambisjoner." },
     { step: "03", title: "Vurdering", description: "Vi ser på hvordan junioren passer inn i gruppen og anbefaler riktig program." },
-    { step: "04", title: "Oppstart", description: "Junioren starter i riktig aldersgruppe med en individuell plan." },
+    { step: "04", title: "Oppstart", description: "Junioren starter i riktig nivågruppe med en individuell plan." },
   ],
 } as const;
 
@@ -719,19 +714,19 @@ export const ACADEMY_FAQ = [
 // ─── Junior Page ───
 export const JUNIOR_PROGRAMS = [
   {
-    ageGroup: "13–15 år",
+    level: "Nivå 1",
     title: "Grunnlag",
     description: "Bygge solide tekniske ferdigheter, spilleforståelse og treningsvaner.",
     features: ["2 gruppeøkter/uke", "Individuell teknikk", "Introduksjon til konkurranse", "Sesongplan"],
   },
   {
-    ageGroup: "16–17 år",
+    level: "Nivå 2",
     title: "Utvikling",
     description: "Spisse ferdigheter, konkurrere regelmessig og utvikle eget spill.",
     features: ["3 økter/uke", "Individuell IUP", "Turneringsplan", "Mental trening", "Videoanalyse"],
   },
   {
-    ageGroup: "18–19 år",
+    level: "Nivå 3",
     title: "Pre-elite",
     description: "Forberedelse til elite- eller college-golf med full profesjonell støtte.",
     features: ["4-5 økter/uke", "Full IUP + mental", "Nasjonal/internasjonal konkurranse", "Fysisk trening", "Kursmanagement", "Stipend-veiledning"],
@@ -744,7 +739,7 @@ export const JUNIOR_FAQ = [
   { q: "Hva koster juniorprogrammet?", a: "Prisene varierer etter aldersgruppe og program. Kontakt oss for en detaljert oversikt og muligheter for stønad/stipend." },
   { q: "Hvordan følger dere opp foreldrene?", a: "Vi har kvartalsvise foreldremøter, månedlige fremgangsrapporter og en åpen kommunikasjonskanal. Foreldreinvolvering er viktig for oss." },
   { q: "Tilbyr dere sommercamps?", a: "Ja, vi arrangerer intensive sommercamps i juni og juli med fokus på konkurranse, teknikk og det sosiale." },
-  { q: "Hjelper dere med college-golf i USA?", a: "Absolutt. For 18-19-årsprogrammet tilbyr vi veiledning om college-prosessen, inkludert kontakt med universiteter og stipendsøknad." },
+  { q: "Hjelper dere med college-golf i USA?", a: "Absolutt. For Pre-elite-nivået tilbyr vi veiledning om college-prosessen, inkludert kontakt med universiteter og stipendsøknad." },
 ] as const;
 
 // ─── Utvikling Page ───
@@ -877,19 +872,11 @@ export const MERKEVARE_FEATURES = [
   { icon: "📐", title: "Figma Komponenter", description: "Basis-komponentbibliotek i Figma med knapper, skjemaelementer og typografistiler tilpasset merkevaren." },
 ] as const;
 
-// ─── Credentials ───
-export const CREDENTIALS = [
-  { label: "PGA Professional" },
-  { label: "TPI Certified" },
-  { label: "Mental Coach" },
-  { label: "Trackman Certified" },
-] as const;
-
 // ─── Footer ───
 export const FOOTER_LINKS = {
   divisions: [
     { label: "Coaching", href: "/academy" },
-    { label: "Junior Academy", href: "/junior" },
+    { label: "Junior Academy", href: "/junior-academy" },
     { label: "Utvikling", href: "/utvikling" },
   ],
   company: [
@@ -1056,47 +1043,74 @@ export const JUNIOR_TRAINING_WEEK = [
 
 // ─── Junior CTA ───
 export const JUNIOR_CTA = {
-  eyebrow: "Neste generasjon starter nå",
-  heading: "Avtal et møte om Junior Academy.",
-  description: "Gi din junior en strukturert vei mot sine golfmål. Vi tar kontakt for en uforpliktende samtale.",
-  primaryCta: "Avtal et møte",
+  heading: "Ta kontakt for en samtale.",
+  description: "Vi forteller gjerne mer om programmet.",
+  primaryCta: "Kontakt oss",
 } as const;
 
-// ─── Junior Age Groups (komplett med alle aldersgrupper) ───
-export const JUNIOR_AGE_GROUPS = [
+// ─── Junior Partners ───
+export const JUNIOR_PARTNERS = [
   {
-    ageGroup: "6–9 år",
-    title: "Minis",
-    description: "Lek og grunnleggende motorikk. Golf som gøy, ikke prestasjon.",
-    features: ["Lekbasert trening", "Grunnleggende grep og sving", "Sosiale aktiviteter", "Korte økter (30 min)"],
-    sessionsPerWeek: 1,
-    price: "990",
+    name: "Gamle Fredrikstad Golfklubb",
+    shortName: "GFGK",
+    logo: "/images/partners/gfgk-logo.svg",
+    url: "https://gfrg.no",
   },
   {
-    ageGroup: "10–12 år",
-    title: "Aspiranter",
-    description: "Teknikkbygging og regelforståelse. Overgangen til strukturert trening.",
-    features: ["Teknikkfokus", "Introduksjon til regler", "Første turneringer", "Treningsdagbok"],
-    sessionsPerWeek: 2,
-    price: "1 490",
-  },
-  {
-    ageGroup: "13–15 år",
-    title: "Utviklere",
-    description: "Konkurransetrening og mental styrke. Seriøs satsing begynner.",
-    features: ["Periodisert trening", "Konkurranseprogram", "Mental trening intro", "Videoanalyse"],
-    sessionsPerWeek: 3,
-    price: "1 990",
-  },
-  {
-    ageGroup: "16–18 år",
-    title: "Elite",
-    description: "Systematisk prestasjonsfokus. Forberedelse til elite- eller college-golf.",
-    features: ["Full IUP", "Nasjonal/internasjonal konkurranse", "Fysisk trening", "Stipend-veiledning"],
-    sessionsPerWeek: 4,
-    price: "2 490",
+    name: "WANG Toppidrett Fredrikstad",
+    shortName: "WANG",
+    logo: "/images/partners/wang-logo.svg",
+    url: "https://wang.no/fredrikstad",
   },
 ] as const;
+
+// ─── GFGK Junior Grupper (i samarbeid med Gamle Fredrikstad Golfklubb) ───
+export const GFGK_JUNIOR_GROUPS = [
+  {
+    ageGroup: "U10",
+    ageRange: "6–10 år",
+    title: "Junior Mini",
+    description: "Introduksjon til golf gjennom lek, bevegelse og mestringsfølelse.",
+    features: ["Lekbasert trening", "Grunnleggende motorikk", "Sosiale aktiviteter", "Korte økter"],
+    sessionsPerWeek: 1,
+    price: null, // Pris kommer
+  },
+  {
+    ageGroup: "U13",
+    ageRange: "11–13 år",
+    title: "Junior Basis",
+    description: "Bred motorisk utvikling, teknisk grunnlag og spilleglede.",
+    features: ["Teknikkfokus", "Introduksjon til regler", "Første turneringer", "Treningsdagbok"],
+    sessionsPerWeek: 1,
+    price: null, // Pris kommer
+  },
+  {
+    ageGroup: "U15",
+    ageRange: "14–16 år",
+    title: "Junior Utvikling",
+    description: "Målrettet trening med vekt på spesialisering, konkurranseerfaring og mental styrke.",
+    features: ["Periodisert trening", "Konkurranseprogram", "Mental trening", "Videoanalyse"],
+    sessionsPerWeek: 2,
+    price: null, // Pris kommer
+  },
+  {
+    ageGroup: "U19",
+    ageRange: "17–19 år",
+    title: "Junior Elite",
+    description: "Helhetlig satsing for spillere med ambisjoner om elite- og collegegolf.",
+    features: ["Full treningsplan", "Nasjonal/internasjonal konkurranse", "Fysisk trening", "Stipend-veiledning"],
+    sessionsPerWeek: 2,
+    price: null, // Pris kommer
+  },
+] as const;
+
+export const GFGK_JUNIOR_INFO = {
+  heading: "GFGK Junior",
+  subheading: "I samarbeid med Gamle Fredrikstad Golfklubb",
+  description: "Treningsgrupper for alle juniorer i klubben. Årlig treningsavgift gjennom GFGK.",
+  link: "https://gfgk-junior.vercel.app",
+  linkText: "Se alle grupper og påmelding",
+} as const;
 
 // ─── Junior Season Program ───
 export const JUNIOR_SEASON_PROGRAM = {
@@ -1185,24 +1199,27 @@ export const JUNIOR_CAMP = {
   },
 } as const;
 
-// ─── Junior Academy Info ───
+// ─── AK Golf Junior Academy (Premium satsningsprogram) ───
 export const JUNIOR_ACADEMY_INFO = {
-  heading: "AK Golf Junior Academy — For de som satser",
-  intro: "AK Golf Junior Academy er et privat satsningslag for utvalgte juniorer som vil utvikle seg mot konkurransegolf. Dette er ikke et tilbud for alle — det er for spillere som er villige til å legge ned arbeidet.",
+  heading: "AK Golf Junior Academy",
+  subheading: "For de som satser",
+  intro: "AK Golf Junior Academy er et ekstra tilbud til spillere som ønsker å satse utover GFGK Junior-treningen. Begrenset antall plasser.",
+  price: "3 500",
+  priceUnit: "kr/mnd",
   benefits: [
-    "Individuell oppfølging med 15-minutters sesjoner flere ganger i uken",
+    "Ukentlig 1:1 coaching (90 min)",
+    "Fellestrening 2x per uke",
     "TrackMan-analyse i hver sesjon",
-    "Fellestrening onsdager",
+    "Full tilgang til spillerportalen",
     "Komplett sesongplan med periodisering",
-    "Mentaltrening, fysisk trening, custom fitting og treningsleir (sponsorfinansiert)"
+    "I samarbeid med GFGK"
   ],
+  note: "Krever medlemskap i GFGK Junior",
   pathway: {
     heading: "Spillerreisen",
     steps: [
-      { name: "CIS Fredrikstad", note: "gratis, skoletid" },
-      { name: "GFGK Junior", note: "klubbmedlemskap" },
-      { name: "Junior Camp", note: "kontakt oss for pris" },
-      { name: "AK Golf Junior Academy", note: "kontakt oss for pris" },
+      { name: "GFGK Junior", note: "klubbtrening" },
+      { name: "AK Golf Junior Academy", note: "3 500 kr/mnd" },
       { name: "WANG Toppidrett", note: "videregående" }
     ],
   },

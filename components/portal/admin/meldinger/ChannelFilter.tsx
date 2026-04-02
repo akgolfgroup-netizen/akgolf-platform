@@ -10,7 +10,6 @@ import {
   Inbox,
 } from "lucide-react";
 
-// Midlertidige typer til Prisma-modeller er lagt til
 export type Channel =
   | "EMAIL"
   | "INSTAGRAM"

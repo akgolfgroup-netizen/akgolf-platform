@@ -85,13 +85,6 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // Coach Hub requires authentication (instructor/admin only)
-  if (request.nextUrl.pathname.startsWith("/coach")) {
-    if (!user) {
-      return NextResponse.redirect(new URL("/portal/login", request.url));
-    }
-  }
-
   // Already logged-in users on login pages → redirect
   if (request.nextUrl.pathname === "/auth/login" && user) {
     return NextResponse.redirect(

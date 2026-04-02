@@ -1,10 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Inbox } from "lucide-react";
-import { ChannelFilter, type Channel } from "@/components/coach/inbox/ChannelFilter";
-import { MessageList, type Message, type MessageStatus } from "@/components/coach/inbox/MessageList";
-import { MessageDetail } from "@/components/coach/inbox/MessageDetail";
+import { Inbox, AlertCircle, X } from "lucide-react";
+import {
+  ChannelFilter,
+  type Channel,
+} from "@/components/portal/admin/meldinger/ChannelFilter";
+import {
+  MessageList,
+  type Message,
+  type MessageStatus,
+} from "@/components/portal/admin/meldinger/MessageList";
+import { MessageDetail } from "@/components/portal/admin/meldinger/MessageDetail";
 import { approveMessage, rejectMessage } from "./actions";
 
 interface AIResponse {
@@ -18,20 +25,23 @@ interface MessageWithAI extends Message {
   aiResponse: AIResponse | null;
 }
 
-interface InboxClientProps {
+interface MeldingerClientProps {
   initialMessages: MessageWithAI[];
   channelCounts: Record<string, number>;
 }
 
-export function InboxClient({
+export function MeldingerClient({
   initialMessages,
   channelCounts,
-}: InboxClientProps) {
-  const [selectedChannel, setSelectedChannel] = useState<Channel | "ALL">("ALL");
+}: MeldingerClientProps) {
+  const [selectedChannel, setSelectedChannel] = useState<Channel | "ALL">(
+    "ALL"
+  );
   const [selectedMessageId, setSelectedMessageId] = useState<string | null>(
     null
   );
   const [messages, setMessages] = useState(initialMessages);
+  const [error, setError] = useState<string | null>(null);
 
   const filteredMessages =
     selectedChannel === "ALL"
@@ -41,18 +51,24 @@ export function InboxClient({
   const selectedMessage = messages.find((m) => m.id === selectedMessageId);
 
   const handleApprove = async (messageId: string, content: string) => {
+    setError(null);
     const result = await approveMessage(messageId, content);
     if (result.success) {
       setMessages((prev) =>
         prev.map((m) =>
-          m.id === messageId ? { ...m, status: "SENT" as MessageStatus } : m
+          m.id === messageId
+            ? { ...m, status: "APPROVED" as MessageStatus }
+            : m
         )
       );
       setSelectedMessageId(null);
+    } else {
+      setError(result.error || "Kunne ikke godkjenne meldingen");
     }
   };
 
   const handleReject = async (messageId: string) => {
+    setError(null);
     const result = await rejectMessage(messageId);
     if (result.success) {
       setMessages((prev) =>
@@ -61,6 +77,8 @@ export function InboxClient({
         )
       );
       setSelectedMessageId(null);
+    } else {
+      setError(result.error || "Kunne ikke forkaste meldingen");
     }
   };
 
@@ -68,8 +86,10 @@ export function InboxClient({
     return (
       <div className="flex items-center justify-center h-full text-[var(--color-grey-500)]">
         <div className="text-center">
-          <Inbox className="w-12 h-12 mx-auto mb-3 opacity-50" />
-          <p className="text-lg font-medium mb-1">Ingen meldinger ennå</p>
+          <Inbox className="w-12 h-12 mx-auto mb-3 opacity-40" />
+          <p className="text-lg font-medium mb-1 text-[var(--color-grey-900)]">
+            Ingen meldinger ennå
+          </p>
           <p className="text-sm">Nye meldinger fra spillere dukker opp her</p>
         </div>
       </div>
@@ -77,9 +97,25 @@ export function InboxClient({
   }
 
   return (
-    <div className="flex flex-col h-full bg-[var(--color-grey-100)]">
+    <div className="flex flex-col h-full bg-[var(--color-grey-50)] rounded-2xl border border-[var(--color-grey-200)] overflow-hidden">
+      {/* Error banner */}
+      {error && (
+        <div className="flex items-center justify-between gap-3 px-4 py-3 bg-red-50 border-b border-red-200">
+          <div className="flex items-center gap-2 text-red-600">
+            <AlertCircle className="h-4 w-4 flex-shrink-0" />
+            <span className="text-sm">{error}</span>
+          </div>
+          <button
+            onClick={() => setError(null)}
+            className="text-red-400 hover:text-red-600"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+
       {/* Channel filter */}
-      <div className="p-4 border-b border-[var(--color-grey-200)]">
+      <div className="p-4 border-b border-[var(--color-grey-200)] bg-white">
         <ChannelFilter
           selected={selectedChannel}
           onChange={setSelectedChannel}
@@ -109,7 +145,7 @@ export function InboxClient({
           ) : (
             <div className="flex items-center justify-center h-full text-[var(--color-grey-500)]">
               <div className="text-center">
-                <p className="text-lg font-medium mb-1">
+                <p className="text-lg font-medium mb-1 text-[var(--color-grey-900)]">
                   Velg en melding for å se detaljer
                 </p>
                 <p className="text-sm">
