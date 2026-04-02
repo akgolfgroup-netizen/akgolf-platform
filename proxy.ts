@@ -33,6 +33,12 @@ export async function proxy(request: NextRequest) {
       !pathname.startsWith("/portal") &&
       !pathname.startsWith("/portal-preview") &&
       !pathname.startsWith("/auth") &&
+      !pathname.startsWith("/booking") &&
+      pathname !== "/" &&
+      pathname !== "/coaching" &&
+      pathname !== "/junior-academy" &&
+      pathname !== "/utvikling" &&
+      pathname !== "/personvern" &&
       pathname !== "/maintenance"
     ) {
       return NextResponse.rewrite(new URL("/maintenance", request.url));
