@@ -75,10 +75,11 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // Portal requires authentication (except login page)
+  // Portal requires authentication (except login and preview pages)
   if (
     request.nextUrl.pathname.startsWith("/portal") &&
-    !request.nextUrl.pathname.startsWith("/portal/login")
+    !request.nextUrl.pathname.startsWith("/portal/login") &&
+    !request.nextUrl.pathname.startsWith("/portal-preview")
   ) {
     if (!user) {
       return NextResponse.redirect(new URL("/portal/login", request.url));
