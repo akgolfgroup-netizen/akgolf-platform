@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { nanoid } from "nanoid";
 import { prisma } from "../lib/portal/prisma";
 
 const MODULES = [
@@ -53,7 +54,7 @@ async function main() {
     await prisma.appModule.upsert({
       where: { slug: mod.slug },
       update: { name: mod.name, description: mod.description, icon: mod.icon, monthlyPriceNok: mod.monthlyPriceNok, sortOrder: mod.sortOrder },
-      create: mod,
+      create: { id: nanoid(), updatedAt: new Date(), ...mod },
     });
     console.log(`  Module: ${mod.name} (${mod.monthlyPriceNok / 100} kr/mnd)`);
   }
@@ -65,7 +66,7 @@ async function main() {
     const created = await prisma.appBundle.upsert({
       where: { slug: bundle.slug },
       update: { name: bundleData.name, description: bundleData.description, monthlyPriceNok: bundleData.monthlyPriceNok, sortOrder: bundleData.sortOrder },
-      create: bundleData,
+      create: { id: nanoid(), updatedAt: new Date(), ...bundleData },
     });
 
     // Link modules to bundle
@@ -76,7 +77,7 @@ async function main() {
       await prisma.bundleItem.upsert({
         where: { bundleId_moduleId: { bundleId: created.id, moduleId: mod.id } },
         update: {},
-        create: { bundleId: created.id, moduleId: mod.id },
+        create: { id: nanoid(), bundleId: created.id, moduleId: mod.id },
       });
     }
     console.log(`  Bundle: ${bundle.name} (${bundle.monthlyPriceNok / 100} kr/mnd) → [${moduleSlugs.join(", ")}]`);

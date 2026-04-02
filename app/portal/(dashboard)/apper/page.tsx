@@ -17,7 +17,7 @@ export default async function ApperPage() {
       where: { isActive: true },
       orderBy: { sortOrder: "asc" },
       include: {
-        BundleItems: {
+        BundleItem: {
           include: { AppModule: { select: { slug: true, name: true } } },
         },
       },
@@ -51,7 +51,7 @@ export default async function ApperPage() {
   // Transform Prisma data to match client component interfaces
   const transformedBundles = bundles.map((b) => ({
     ...b,
-    items: b.BundleItems.map((item) => ({
+    items: b.BundleItem.map((item) => ({
       module: item.AppModule,
     })),
   }));

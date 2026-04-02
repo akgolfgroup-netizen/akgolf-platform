@@ -5,6 +5,8 @@ import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { Inbox } from "lucide-react";
+import type { Channel } from "@/components/portal/admin/meldinger/ChannelFilter";
+import type { MessageStatus } from "@/components/portal/admin/meldinger/MessageList";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +18,7 @@ async function getMessages(userId: string) {
     orderBy: { receivedAt: "desc" },
     take: 50,
     include: {
-      aiResponse: true,
+      AIResponses: true,
     },
   });
 }
@@ -43,10 +45,31 @@ export default async function MeldingerPage() {
     redirect("/");
   }
 
-  const [messages, counts] = await Promise.all([
+  const [rawMessages, counts] = await Promise.all([
     getMessages(user.id),
     getChannelCounts(),
   ]);
+
+  // Transform messages to match client component interface
+  const messages = rawMessages.map((msg) => ({
+    id: msg.id,
+    channel: msg.channel as Channel,
+    senderName: msg.senderName ?? "",
+    senderHandle: msg.senderHandle ?? "",
+    subject: msg.subject,
+    content: msg.content,
+    receivedAt: msg.receivedAt,
+    status: msg.status as MessageStatus,
+    aiResponse:
+      msg.AIResponses.length > 0
+        ? {
+            draftContent: msg.AIResponses[0].draftContent,
+            confidence: msg.AIResponses[0].confidence ?? 0,
+            category: msg.AIResponses[0].category ?? "",
+            modelUsed: msg.AIResponses[0].modelUsed ?? "",
+          }
+        : null,
+  }));
 
   return (
     <div className="space-y-6">

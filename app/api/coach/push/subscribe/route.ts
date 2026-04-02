@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { nanoid } from "nanoid";
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
 
@@ -15,6 +16,7 @@ export async function POST(request: NextRequest) {
         deviceType,
       },
       create: {
+        id: nanoid(),
         userId: user.id,
         endpoint: subscription.endpoint,
         p256dh: subscription.keys.p256dh,

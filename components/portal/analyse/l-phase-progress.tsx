@@ -7,7 +7,7 @@ import {
   type LPhase,
   type ShotType,
   SHOT_TYPES,
-} from "@/lib/portal/training/l-phase-service";
+} from "@/lib/portal/training/l-phase-types";
 
 // =============================================================================
 // TYPES

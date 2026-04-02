@@ -11,12 +11,12 @@ export async function GET() {
   const subscriptions = await prisma.appSubscription.findMany({
     where: { userId: user.id },
     include: {
-      module: { select: { slug: true, name: true, icon: true } },
-      bundle: {
+      AppModule: { select: { slug: true, name: true, icon: true } },
+      AppBundle: {
         select: {
           slug: true,
           name: true,
-          items: { include: { module: { select: { slug: true, name: true } } } },
+          BundleItem: { include: { AppModule: { select: { slug: true, name: true } } } },
         },
       },
     },

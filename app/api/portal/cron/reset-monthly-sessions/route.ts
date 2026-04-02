@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
         billingPeriodEnd: { lt: now },
       },
       include: {
-        package: { select: { sessionsPerMonth: true } },
+        CoachingPackage: { select: { sessionsPerMonth: true } },
       },
     });
 

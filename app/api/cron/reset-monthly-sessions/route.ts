@@ -33,8 +33,8 @@ export async function GET(request: NextRequest) {
         billingPeriodEnd: { lte: now },
       },
       include: {
-        user: { select: { id: true, name: true, email: true } },
-        package: { select: { name: true, sessionsPerMonth: true } },
+        User: { select: { id: true, name: true, email: true } },
+        CoachingPackage: { select: { name: true, sessionsPerMonth: true } },
       },
     });
 
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
         if (!sub.billingPeriodEnd) continue;
 
         const sessionsUsed = sub.sessionsUsedThisMonth ?? 0;
-        const sessionsTotal = sub.package?.sessionsPerMonth ?? 0;
+        const sessionsTotal = sub.CoachingPackage?.sessionsPerMonth ?? 0;
         const unusedSessions = Math.max(0, sessionsTotal - sessionsUsed);
 
         // Beregn ny faktureringsperiode (en maned frem)
@@ -76,12 +76,12 @@ export async function GET(request: NextRequest) {
         results.reset++;
 
         // Send e-post om ubrukte økter
-        if (unusedSessions > 0 && sub.user?.email) {
+        if (unusedSessions > 0 && sub.User?.email) {
           try {
             await sendMonthlyResetEmail({
-              studentName: sub.user.name ?? "Elev",
-              studentEmail: sub.user.email,
-              packageName: sub.package?.name ?? "Coaching-pakke",
+              studentName: sub.User.name ?? "Elev",
+              studentEmail: sub.User.email,
+              packageName: sub.CoachingPackage?.name ?? "Coaching-pakke",
               sessionsUsed: sessionsUsed,
               sessionsTotal: sessionsTotal,
               unusedSessions: unusedSessions,
@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
             results.notified++;
           } catch (emailErr) {
             console.error(
-              `[cron/reset] Feil ved sending av e-post til ${sub.user.email}:`,
+              `[cron/reset] Feil ved sending av e-post til ${sub.User.email}:`,
               emailErr
             );
             // Ikke telle dette som kritisk feil — reset er allerede gjort

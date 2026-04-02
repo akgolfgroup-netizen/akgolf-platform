@@ -1,18 +1,10 @@
 import { prisma } from "@/lib/portal/prisma";
 import type { ShotTypeLPhase } from "@prisma/client";
 
-/**
- * Valid L-phases in The Foundation Method learning progression.
- * KROPP → ARM → KØLLE → BALL → AUTO
- */
-export const L_PHASES = ["KROPP", "ARM", "KØLLE", "BALL", "AUTO"] as const;
-export type LPhase = (typeof L_PHASES)[number];
-
-/**
- * Valid shot types for L-phase tracking.
- */
-export const SHOT_TYPES = ["DRIVER", "IRON", "WEDGE", "PUTT"] as const;
-export type ShotType = (typeof SHOT_TYPES)[number];
+// Re-export client-safe types from types file
+export { L_PHASES, SHOT_TYPES } from "./l-phase-types";
+export type { LPhase, ShotType } from "./l-phase-types";
+import type { ShotType, LPhase } from "./l-phase-types";
 
 /**
  * Get current L-phase for a specific shot type.

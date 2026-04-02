@@ -14,16 +14,25 @@ export async function approveMessage(
     const user = await requirePortalUser();
     if (!isStaff(user.role)) redirect("/");
 
+    // Find the AI response for this message
+    const aiResponse = await prisma.aIResponse.findFirst({
+      where: { messageId },
+    });
+
     await prisma.$transaction([
-      prisma.aIResponse.update({
-        where: { messageId },
-        data: {
-          finalContent,
-          wasEdited: true,
-          approvedById: user.id,
-          approvedAt: new Date(),
-        },
-      }),
+      ...(aiResponse
+        ? [
+            prisma.aIResponse.update({
+              where: { id: aiResponse.id },
+              data: {
+                finalContent,
+                wasEdited: true,
+                approvedById: user.id,
+                approvedAt: new Date(),
+              },
+            }),
+          ]
+        : []),
       prisma.unifiedMessage.update({
         where: { id: messageId },
         data: { status: "APPROVED" },

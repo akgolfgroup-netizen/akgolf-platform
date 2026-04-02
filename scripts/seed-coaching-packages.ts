@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { nanoid } from "nanoid";
 import { prisma } from "../lib/portal/prisma";
 
 const COACHING_PACKAGES = [
@@ -148,7 +149,11 @@ async function main() {
     } else {
       // Opprett ny
       await prisma.coachingPackage.create({
-        data: pkg,
+        data: {
+          id: nanoid(),
+          updatedAt: new Date(),
+          ...pkg,
+        },
       });
       console.log(`  ✅ Opprettet: ${pkg.name}`);
     }

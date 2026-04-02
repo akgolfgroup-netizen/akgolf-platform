@@ -9,6 +9,7 @@
  */
 
 import { prisma } from "@/lib/portal/prisma";
+import { nanoid } from "nanoid";
 import { CoachingSubscriptionTier } from "@prisma/client";
 
 export interface QuotaCheckResult {
@@ -188,6 +189,8 @@ export async function resetQuotaForNewPeriod(
   await prisma.subscriptionQuota.upsert({
     where: { userId },
     create: {
+      id: nanoid(),
+      updatedAt: new Date(),
       userId,
       subscriptionId: stripeSubscriptionId,
       tier,
@@ -225,6 +228,8 @@ export async function createQuotaForNewSubscription(
   await prisma.subscriptionQuota.upsert({
     where: { userId },
     create: {
+      id: nanoid(),
+      updatedAt: new Date(),
       userId,
       subscriptionId: stripeSubscriptionId,
       tier,
@@ -264,7 +269,7 @@ export async function getQuotaStatus(userId: string) {
   const quota = await prisma.subscriptionQuota.findUnique({
     where: { userId },
     include: {
-      user: {
+      User: {
         select: {
           name: true,
           email: true,

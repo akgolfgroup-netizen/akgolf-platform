@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { nanoid } from "nanoid";
 import { prisma } from "../lib/portal/prisma";
 
 // Ukedager: 0=søndag, 1=mandag, 2=tirsdag, 3=onsdag, 4=torsdag, 5=fredag, 6=lørdag
@@ -22,10 +23,13 @@ const JUNIOR_ELITE_RANGES = [
 ];
 
 interface Slot {
+  id: string;
+  updatedAt: Date;
   dayOfWeek: number;
   startTime: string;
   endTime: string;
   reservedFor: string | null;
+  isActive: boolean;
 }
 
 function generateSlots(
@@ -50,10 +54,13 @@ function generateSlots(
     const endMin = endM % 60;
 
     slots.push({
+      id: nanoid(),
+      updatedAt: new Date(),
       dayOfWeek,
       startTime: `${String(startH).padStart(2, "0")}:${String(startM).padStart(2, "0")}`,
       endTime: `${String(endH).padStart(2, "0")}:${String(endMin).padStart(2, "0")}`,
       reservedFor,
+      isActive: true,
     });
 
     currentMinutes += interval;

@@ -3,6 +3,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { isStaff } from "@/lib/portal/rbac";
+import { nanoid } from "nanoid";
 import { CommunicationType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
@@ -20,7 +21,7 @@ export async function getCommunicationLogs(studentId: string) {
       subject: true,
       content: true,
       sentAt: true,
-      instructor: {
+      Instructor: {
         select: {
           User: {
             select: { name: true },
@@ -59,6 +60,7 @@ export async function addCommunicationLog(
 
   await prisma.communicationLog.create({
     data: {
+      id: nanoid(),
       studentId,
       instructorId: instructor.id,
       type,

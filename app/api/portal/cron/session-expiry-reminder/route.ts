@@ -37,8 +37,8 @@ export async function GET(req: NextRequest) {
         },
       },
       include: {
-        user: { select: { name: true, email: true } },
-        package: { select: { name: true, sessionsPerMonth: true } },
+        User: { select: { name: true, email: true } },
+        CoachingPackage: { select: { name: true, sessionsPerMonth: true } },
       },
     });
 
@@ -49,10 +49,10 @@ export async function GET(req: NextRequest) {
     }
 
     for (const sub of subscriptions) {
-      if (!sub.user.email) continue;
-      if (!sub.package.sessionsPerMonth) continue;
+      if (!sub.User.email) continue;
+      if (!sub.CoachingPackage.sessionsPerMonth) continue;
 
-      const unusedSessions = sub.package.sessionsPerMonth - sub.sessionsUsedThisMonth;
+      const unusedSessions = sub.CoachingPackage.sessionsPerMonth - sub.sessionsUsedThisMonth;
       if (unusedSessions <= 0) continue;
 
       const expiryDate = format(sub.billingPeriodEnd!, "d. MMMM", { locale: nb });
@@ -60,13 +60,13 @@ export async function GET(req: NextRequest) {
       try {
         await resend.emails.send({
           from: FROM_EMAIL,
-          to: sub.user.email,
+          to: sub.User.email,
           subject: `${unusedSessions} ubrukte coaching-sesjoner utloper ${expiryDate}`,
           html: `
             <div style="font-family: sans-serif; max-width: 500px; margin: 0 auto;">
-              <h2 style="color: #1D1D1F;">Hei${sub.user.name ? ` ${sub.user.name.split(" ")[0]}` : ""}!</h2>
+              <h2 style="color: #1D1D1F;">Hei${sub.User.name ? ` ${sub.User.name.split(" ")[0]}` : ""}!</h2>
               <p style="color: #374151; line-height: 1.6;">
-                Du har <strong>${unusedSessions} ubrukte coaching-sesjoner</strong> i ${sub.package.name}-pakken din.
+                Du har <strong>${unusedSessions} ubrukte coaching-sesjoner</strong> i ${sub.CoachingPackage.name}-pakken din.
               </p>
               <p style="color: #374151; line-height: 1.6;">
                 Disse utloper <strong>${expiryDate}</strong> og kan ikke overføres til neste måned.
@@ -86,7 +86,7 @@ export async function GET(req: NextRequest) {
 
         remindersSent++;
       } catch (error) {
-        console.error(`[Cron] Failed to send expiry reminder to ${sub.user.email}:`, error);
+        console.error(`[Cron] Failed to send expiry reminder to ${sub.User.email}:`, error);
       }
     }
 

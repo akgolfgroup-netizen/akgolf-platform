@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { nanoid } from "nanoid";
 import { getPortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 
@@ -59,6 +60,8 @@ export async function POST(req: Request) {
   // Create subscription for free module
   await prisma.appSubscription.create({
     data: {
+      id: nanoid(),
+      updatedAt: new Date(),
       userId: user.id,
       moduleId: mod.id,
       status: "ACTIVE",

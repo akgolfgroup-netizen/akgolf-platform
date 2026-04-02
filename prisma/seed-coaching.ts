@@ -18,6 +18,7 @@
  * Kjør med: npx tsx prisma/seed-coaching.ts
  */
 import "dotenv/config";
+import { nanoid } from "nanoid";
 import { prisma } from "../lib/portal/prisma";
 import { BillingType, CoachingBookingType } from "@prisma/client";
 
@@ -100,7 +101,13 @@ async function main() {
       });
     } else {
       console.log(`  ✅ Oppretter ${pkg.name} (${pkg.priceNok} kr/mnd)`);
-      await prisma.coachingPackage.create({ data: pkg });
+      await prisma.coachingPackage.create({
+        data: {
+          id: nanoid(),
+          updatedAt: new Date(),
+          ...pkg,
+        },
+      });
     }
   }
 
@@ -197,6 +204,8 @@ async function main() {
   // Opprett alle slots
   await prisma.coachingAvailability.createMany({
     data: slots.map((slot) => ({
+      id: nanoid(),
+      updatedAt: new Date(),
       ...slot,
       isActive: true,
       reservedFor: null,

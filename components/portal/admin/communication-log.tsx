@@ -23,13 +23,13 @@ interface CommunicationEntry {
   id: string;
   type: CommunicationType;
   subject: string | null;
-  content: string;
+  content: string | null;
   sentAt: Date;
-  instructor: {
+  Instructor: {
     User: {
       name: string | null;
     };
-  };
+  } | null;
 }
 
 interface CommunicationLogProps {
@@ -131,7 +131,7 @@ function NyLoggForm({
         subject: subject || null,
         content,
         sentAt: new Date(),
-        instructor: { User: { name: "Deg" } },
+        Instructor: { User: { name: "Deg" } },
       });
 
       setSubject("");
@@ -291,9 +291,9 @@ export function CommunicationLog({
                           locale: nb,
                         })}
                       </span>
-                      {log.instructor.User.name && (
+                      {log.Instructor?.User?.name && (
                         <span className="text-xs text-[var(--color-grey-400)]">
-                          av {log.instructor.User.name}
+                          av {log.Instructor.User.name}
                         </span>
                       )}
                     </div>
@@ -306,9 +306,11 @@ export function CommunicationLog({
                     )}
 
                     {/* Innhold */}
-                    <p className="text-sm text-[var(--color-grey-600)] whitespace-pre-wrap">
-                      {log.content}
-                    </p>
+                    {log.content && (
+                      <p className="text-sm text-[var(--color-grey-600)] whitespace-pre-wrap">
+                        {log.content}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

@@ -206,7 +206,7 @@ export async function hasModuleAccess(
   const directSub = await prisma.appSubscription.findFirst({
     where: {
       userId,
-      module: { slug: moduleSlug },
+      AppModule: { slug: moduleSlug },
       status: { in: ACTIVE_STATUSES },
       currentPeriodEnd: { gte: new Date() },
     },
@@ -220,8 +220,8 @@ export async function hasModuleAccess(
       bundleId: { not: null },
       status: { in: ACTIVE_STATUSES },
       currentPeriodEnd: { gte: new Date() },
-      bundle: {
-        items: { some: { module: { slug: moduleSlug } } },
+      AppBundle: {
+        BundleItem: { some: { AppModule: { slug: moduleSlug } } },
       },
     },
   });
@@ -255,10 +255,10 @@ export async function getUserModuleSlugs(userId: string): Promise<string[]> {
       status: { in: ACTIVE_STATUSES },
       currentPeriodEnd: { gte: new Date() },
     },
-    include: { module: { select: { slug: true } } },
+    include: { AppModule: { select: { slug: true } } },
   });
   for (const sub of directSubs) {
-    if (sub.module?.slug) slugs.add(sub.module.slug);
+    if (sub.AppModule?.slug) slugs.add(sub.AppModule.slug);
   }
 
   // 2. Bundle subscriptions
@@ -270,14 +270,14 @@ export async function getUserModuleSlugs(userId: string): Promise<string[]> {
       currentPeriodEnd: { gte: new Date() },
     },
     include: {
-      bundle: {
-        include: { items: { include: { module: { select: { slug: true } } } } },
+      AppBundle: {
+        include: { BundleItem: { include: { AppModule: { select: { slug: true } } } } },
       },
     },
   });
   for (const sub of bundleSubs) {
-    for (const item of sub.bundle?.items ?? []) {
-      if (item.module?.slug) slugs.add(item.module.slug);
+    for (const item of sub.AppBundle?.BundleItem ?? []) {
+      if (item.AppModule?.slug) slugs.add(item.AppModule.slug);
     }
   }
 
