@@ -2,6 +2,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import Link from "next/link";
+import Image from "next/image";
 import {
   User,
   Users,
@@ -198,10 +199,13 @@ export default async function BookingPage() {
                       {/* Avatar */}
                       <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 bg-[#F5F5F7]">
                         {instructor.User.image ? (
-                          <img
+                          <Image
                             src={instructor.User.image}
                             alt={instructor.User.name || "Trener"}
+                            width={56}
+                            height={56}
                             className="w-full h-full object-cover"
+                            sizes="56px"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-lg font-semibold text-[#1D1D1F]/40">

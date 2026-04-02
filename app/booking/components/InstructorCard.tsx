@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import type { Instructor } from "../types";
 
 interface InstructorCardProps {
@@ -32,10 +33,13 @@ export function InstructorCard({ instructor, isSelected, onClick, index }: Instr
           ${isSelected ? "ring-2 ring-white" : "ring-2 ring-grey-200"}
         `}>
           {instructor.user.image ? (
-            <img
+            <Image
               src={instructor.user.image}
               alt={instructor.user.name || "Trener"}
+              width={64}
+              height={64}
               className="w-full h-full object-cover"
+              sizes="64px"
             />
           ) : (
             <div className={`
