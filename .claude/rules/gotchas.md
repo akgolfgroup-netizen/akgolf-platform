@@ -183,8 +183,8 @@ const vatAmount = Math.round((price * vatRate) / 100);
 
 **Løsning:** ALLTID legg til auth-sjekk i `proxy.ts` for nye beskyttede ruter:
 ```typescript
-// Coach Hub requires authentication
-if (request.nextUrl.pathname.startsWith("/coach")) {
+// Portal admin requires authentication
+if (request.nextUrl.pathname.startsWith("/portal/admin")) {
   if (!user) {
     return NextResponse.redirect(new URL("/portal/login", request.url));
   }
@@ -261,6 +261,29 @@ git checkout -b feat/ny-branch
 ```
 
 **Regel:** Aldri lag ny branch uten å oppdatere main først.
+
+## 22. Aldri vis trenersertifiseringer
+
+**Problem:** "PGA Professional", "TrackMan Certified", "TPI Certified", "X års erfaring" osv. skal ALDRI vises på nettsiden.
+
+**Løsning:** Sertifiseringer er fjernet fra:
+- `lib/website-constants.ts` (TEAM, FOUNDER, CREDENTIALS)
+- `app/page.tsx` (trust strip)
+- `components/website/CredentialsStrip.tsx` (slettet)
+
+**Regel:** Aldri legg til sertifiseringer eller credentials på noen sider. Fokus er på metodikk og resultater, ikke titler.
+
+## 23. Coach Hub er fjernet (2026-04-02)
+
+**Status:** Coach Hub (`/coach/`) er konsolidert inn i Portal Admin (`/portal/admin/`).
+
+**Nye admin-sider:**
+- `/admin/meldinger` — Unified inbox
+- `/admin/ai-assistent` — AI Coach
+- `/admin/okter` — Coaching-økter
+- `/admin/godkjenninger` — Booking-godkjenninger
+
+**Regel:** All instruktør-funksjonalitet ligger i Portal Admin. Ikke opprett separate dashboards.
 
 ---
 

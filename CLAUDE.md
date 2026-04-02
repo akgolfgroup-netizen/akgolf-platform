@@ -94,14 +94,18 @@ app/
 │   └── (dashboard)/         # Route group med sidebar
 │       ├── page.tsx         # Dashboard-hjem
 │       ├── layout.tsx       # Dashboard layout med sidebar
-│       ├── admin/           # Admin-seksjon
+│       ├── admin/           # Admin-seksjon (all instruktør-funksjonalitet)
 │       │   ├── denne-uken/  # Ukesoversikt
 │       │   ├── bookinger/   # Booking-håndtering (+ny)
 │       │   ├── elever/      # Elevliste + [id]-detaljer
 │       │   ├── kalender/    # Kalenderstyring
 │       │   ├── tilgjengelighet/ # Tilgjengelighetsstyring
 │       │   ├── turneringer/ # Turneringsstyring
-│       │   └── e-postmaler/ # Admin e-postmal-editor
+│       │   ├── e-postmaler/ # Admin e-postmal-editor
+│       │   ├── meldinger/   # Unified inbox
+│       │   ├── ai-assistent/ # AI Coach
+│       │   ├── okter/       # Coaching-økter
+│       │   └── godkjenninger/ # Booking-godkjenninger
 │       ├── analyse/         # Statistikk & AI-analyse
 │       ├── bookinger/       # Elevens bookinger (+ny, [id]/endre)
 │       ├── coaching-historikk/ # Coaching-historikk
@@ -112,18 +116,6 @@ app/
 │       ├── statistikk/      # Strokes Gained-statistikk
 │       ├── treningsplan/    # AI-genererte treningsplaner
 │       └── turneringsplan/  # Turneringsplanlegging
-│
-├── coach/                   # Coach Hub (interndashboard for instruktører)
-│   ├── layout.tsx           # Coach root layout
-│   └── (dashboard)/         # Route group med sidebar
-│       ├── page.tsx         # Coach dashboard-hjem
-│       ├── layout.tsx       # Dashboard layout med CoachSidebar
-│       ├── players/         # Spilleroversikt
-│       ├── sessions/        # Coaching-økter
-│       ├── chat/            # AI Coach-assistent
-│       ├── inbox/           # Unified inbox (UnifiedMessage)
-│       ├── approvals/       # Booking-godkjenninger
-│       └── settings/        # Profil, varsler, integrasjoner
 │
 └── api/                     # API-ruter
     ├── auth/logout/         # Utlogging
@@ -175,10 +167,6 @@ components/
 │   ├── treningsplan/      # AI-generate-button, week-view
 │   ├── ui/                # Fancy UI: 3d-card, shimmer-button, magic-card, tier-gate
 │   └── providers.tsx      # React context providers
-├── coach/                 # Coach Hub-komponenter
-│   ├── layout/            # CoachSidebar, CoachTopbar
-│   ├── dashboard/         # StatsCard, RecentSessions
-│   └── inbox/             # ChannelFilter, MessageList, MessageDetail
 ├── motion/                # Framer Motion wrappers: FadeIn, StaggerContainer, SlideUp, ScaleOnHover
 └── ui/                    # Base UI: badge, button, card, input, section
 
