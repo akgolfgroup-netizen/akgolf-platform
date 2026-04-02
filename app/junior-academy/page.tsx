@@ -35,7 +35,7 @@ export default function JuniorPage() {
               "@type": "BreadcrumbList",
               itemListElement: [
                 { "@type": "ListItem", position: 1, name: "Hjem", item: "https://akgolf.no" },
-                { "@type": "ListItem", position: 2, name: "Junior Academy", item: "https://akgolf.no/junior" },
+                { "@type": "ListItem", position: 2, name: "Junior Academy", item: "https://akgolf.no/junior-academy" },
               ],
             }),
           }}
@@ -113,12 +113,44 @@ export default function JuniorPage() {
             </RevealOnScroll>
 
             <div className="max-w-xl mx-auto">
-              {/* Top: Junior Academy (satsning) */}
+              {/* Top: GFGK Junior (klubbtrening) — startpunkt */}
               <RevealOnScroll delay={0.1}>
+                <div className="bg-white border border-grey-200 rounded-2xl p-8 text-center">
+                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-grey-100 text-xs font-medium text-grey-600 tracking-wide mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-grey-400" />
+                    Klubbtrening
+                  </span>
+                  <h3 className="text-2xl font-bold text-black mb-3">GFGK Junior</h3>
+                  <p className="text-grey-500 text-sm leading-relaxed mb-6">
+                    Treningsgrupper for alle juniorer i klubben. Aldersbaserte grupper med fokus på lek, læring og mestring.
+                  </p>
+                  <a
+                    href="https://gfgk-junior.vercel.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-6 py-3 rounded-full border border-grey-200 text-black font-medium text-sm hover:bg-grey-50 transition-colors"
+                  >
+                    Se grupper og påmelding
+                  </a>
+                </div>
+              </RevealOnScroll>
+
+              {/* Arrow connector — peker nedover (visuell progresjon) */}
+              <RevealOnScroll delay={0.2}>
+                <div className="flex flex-col items-center py-4">
+                  <svg className="w-4 h-4 text-grey-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                  <div className="w-px h-8 bg-grey-300" />
+                </div>
+              </RevealOnScroll>
+
+              {/* Bottom: Junior Academy (satsning) — neste nivå */}
+              <RevealOnScroll delay={0.3}>
                 <div className="bg-black text-white rounded-2xl p-8 text-center relative z-10">
                   <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-medium tracking-wide mb-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-white" />
-                    Satsning
+                    Neste nivå
                   </span>
                   <h3 className="text-2xl font-bold mb-3">{JUNIOR_ACADEMY_INFO.heading}</h3>
                   <p className="text-white/70 text-sm leading-relaxed mb-6">
@@ -135,38 +167,6 @@ export default function JuniorPage() {
                   </div>
                 </div>
               </RevealOnScroll>
-
-              {/* Arrow connector */}
-              <RevealOnScroll delay={0.2}>
-                <div className="flex flex-col items-center py-4">
-                  <div className="w-px h-8 bg-grey-300" />
-                  <svg className="w-4 h-4 text-grey-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                </div>
-              </RevealOnScroll>
-
-              {/* Bottom: GFGK Junior (klubbtrening) */}
-              <RevealOnScroll delay={0.3}>
-                <div className="bg-white border border-grey-200 rounded-2xl p-8 text-center">
-                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-grey-100 text-xs font-medium text-grey-600 tracking-wide mb-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-grey-400" />
-                    Klubbtrening
-                  </span>
-                  <h3 className="text-2xl font-bold text-black mb-3">GFGK Junior</h3>
-                  <p className="text-grey-500 text-sm leading-relaxed mb-6">
-                    Treningsgrupper for alle juniorer i Gamle Fredrikstad Golfklubb. Aldersbaserte grupper med fokus på lek, læring og mestring.
-                  </p>
-                  <a
-                    href="https://gfgk-junior.vercel.app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-full border border-grey-200 text-black font-medium text-sm hover:bg-grey-50 transition-colors"
-                  >
-                    Se grupper og påmelding
-                  </a>
-                </div>
-              </RevealOnScroll>
             </div>
           </div>
         </section>
@@ -177,9 +177,9 @@ export default function JuniorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               <RevealOnScroll>
                 <div className="lg:sticky lg:top-24">
-                  <SectionLabel>Sporsmal & svar</SectionLabel>
+                  <SectionLabel>Spørsmål & svar</SectionLabel>
                   <h2 className="w-heading-lg mt-4">
-                    Ofte stilte<br />sporsmal.
+                    Ofte stilte<br />spørsmål.
                   </h2>
                 </div>
               </RevealOnScroll>
@@ -196,7 +196,7 @@ export default function JuniorPage() {
           heading={JUNIOR_CTA.heading}
           description={JUNIOR_CTA.description}
           ctaLabel={JUNIOR_CTA.primaryCta}
-          ctaHref="#contact"
+          ctaHref="#apply"
         />
 
         {/* ─── Application Form ─── */}
@@ -205,9 +205,9 @@ export default function JuniorPage() {
             <RevealOnScroll>
               <div className="text-center mb-12">
                 <SectionLabel>Ta kontakt</SectionLabel>
-                <h2 className="w-heading-lg mt-4 mb-4">Start med et uforpliktende mote.</h2>
+                <h2 className="w-heading-lg mt-4 mb-4">Start med et uforpliktende møte.</h2>
                 <p className="text-grey-500 max-w-lg mx-auto">
-                  Fyll ut skjemaet under, sa tar vi kontakt innen 48 timer for a avtale et mote.
+                  Fyll ut skjemaet under, så tar vi kontakt innen 48 timer for å avtale et møte.
                 </p>
               </div>
             </RevealOnScroll>

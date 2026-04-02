@@ -1016,7 +1016,7 @@ export const ACADEMY_METHOD_PILLARS = [
 export const JUNIOR_HERO = {
   eyebrow: "Junior Academy",
   heading: "Neste generasjon golfere starter her.",
-  description: "Strukturert golftrening for unge spillere — fra første turnering til nasjonalt nivå. Faste tider, TrackMan-analyse og personlig treningsplan i spillerportalen.",
+  description: "Ekstra satsning for juniorer som vil ta golfen til neste nivå.",
 } as const;
 
 // ─── Junior Philosophy Section ───
@@ -1182,7 +1182,7 @@ export const JUNIOR_CAMP = {
 // ─── AK Golf Junior Academy (Premium satsningsprogram) ───
 export const JUNIOR_ACADEMY_INFO = {
   heading: "AK Golf Junior Academy",
-  intro: "Satsningsprogram i samarbeid med GFGK. Begrenset antall plasser.",
+  intro: "Ekstra satsning for juniorer som vil ta golfen til neste nivå.",
   price: "3 500",
   priceUnit: "kr/mnd",
 } as const;
