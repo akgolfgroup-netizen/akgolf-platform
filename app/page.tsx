@@ -7,6 +7,7 @@ import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SectionLabel } from "@/components/website/SectionLabel";
 import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/website/RevealOnScroll";
+import { DeviceMockup } from "@/components/website/DeviceMockup";
 import { TeamSection } from "@/components/website/TeamSection";
 import { ApplicationForm } from "@/components/website/ApplicationForm";
 import { FAQAccordion } from "@/components/website/FAQAccordion";
@@ -409,25 +410,44 @@ export default function HomePage() {
                   Tren smartere mellom øktene.
                 </h2>
                 <p className="text-grey-500 max-w-lg mx-auto mt-4 text-lg">
-                  Alle coaching-pakker inkluderer full tilgang til spillerportalen med treningsplan, statistikk og øvelsesbank.
+                  Alle coaching-pakker inkluderer full tilgang til spillerportalen.
                 </p>
               </div>
             </RevealOnScroll>
 
-            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {PORTAL_FEATURES.map((feature) => (
-                <StaggerItem key={feature.title}>
-                  <div className="bg-grey-100 border border-grey-200 rounded-[20px] p-7 hover:bg-grey-200/50 hover:border-grey-300 transition-all duration-300">
-                    <h3 className="font-display text-base font-semibold text-black mb-2">
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm text-grey-500 leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              {/* Mockup */}
+              <RevealOnScroll direction="left">
+                <DeviceMockup
+                  imageSrc="/images/portal-preview/dashboard.png"
+                  alt="AK Golf spillerportal"
+                />
+              </RevealOnScroll>
+
+              {/* Features */}
+              <RevealOnScroll direction="right" delay={0.1}>
+                <div className="space-y-5">
+                  {PORTAL_FEATURES.slice(0, 5).map((feature) => (
+                    <div key={feature.title} className="flex gap-4">
+                      <div className="w-2 h-2 rounded-full bg-black mt-2 shrink-0" />
+                      <div>
+                        <h3 className="font-semibold text-black mb-1">{feature.title}</h3>
+                        <p className="text-sm text-grey-500">{feature.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                  <Link
+                    href="/portal-preview"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-black hover:text-grey-600 mt-4"
+                  >
+                    Se alle funksjoner
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </RevealOnScroll>
+            </div>
           </div>
         </section>
 

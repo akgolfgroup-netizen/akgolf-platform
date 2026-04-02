@@ -554,6 +554,50 @@ export const PORTAL_FEATURES = [
   { title: "Benchmarking", description: "Sammenlign deg med spillere på ditt nivå. Se hvor du ligger." },
 ] as const;
 
+// ─── Portal Preview Screens ───
+export const PORTAL_PREVIEW_SCREENS = [
+  {
+    id: "dashboard",
+    title: "Dashboard",
+    image: "/images/portal-preview/dashboard.png",
+    features: [
+      "Se neste booking og kommende økter",
+      "Følg handicap-utvikling over tid",
+      "Få personlige coach-anbefalinger",
+    ],
+  },
+  {
+    id: "treningsplan",
+    title: "Treningsplan",
+    image: "/images/portal-preview/treningsplan.png",
+    features: [
+      "AI-generert ukeplan tilpasset deg",
+      "Konkrete øvelser med instruksjoner",
+      "Marker økter som fullført",
+    ],
+  },
+  {
+    id: "statistikk",
+    title: "Statistikk",
+    image: "/images/portal-preview/statistikk.png",
+    features: [
+      "Strokes Gained-analyse",
+      "Score-utvikling over tid",
+      "Identifiser styrker og svakheter",
+    ],
+  },
+  {
+    id: "coaching",
+    title: "Coaching-historikk",
+    image: "/images/portal-preview/coaching-historikk.png",
+    features: [
+      "AI-oppsummering av hver økt",
+      "Full historikk med notater",
+      "TrackMan-data fra sesjonene",
+    ],
+  },
+] as const;
+
 // ─── Drop-in vs Abonnement ───
 export const DROPIN_VS_SUBSCRIPTION = {
   heading: "Trenger du binding? Nei. Men det lønner seg.",
