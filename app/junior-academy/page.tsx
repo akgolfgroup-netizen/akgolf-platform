@@ -50,21 +50,6 @@ export default function JuniorPage() {
           </div>
 
           <div className="w-container relative">
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [...EASE_ENTRANCE] }}
-              className="mb-8"
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-grey-200 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
-                <span className="text-xs font-medium text-grey-600 tracking-wide">
-                  Junior Academy — Neste generasjon golfere
-                </span>
-              </span>
-            </motion.div>
-
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
