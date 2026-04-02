@@ -31,6 +31,7 @@ export async function proxy(request: NextRequest) {
       !pathname.startsWith("/favicon") &&
       !pathname.startsWith("/icon") &&
       !pathname.startsWith("/portal") &&
+      !pathname.startsWith("/portal-preview") &&
       !pathname.startsWith("/auth") &&
       pathname !== "/maintenance"
     ) {
