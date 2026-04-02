@@ -2,8 +2,15 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import type { CategoryConfig } from "@/lib/booking-config";
+import { ArrowRight, User, Users, Calendar, MapPin } from "lucide-react";
+import type { CategoryConfig, IconName } from "@/lib/booking-config";
+
+const ICON_MAP: Record<IconName, typeof User> = {
+  user: User,
+  users: Users,
+  calendar: Calendar,
+  "map-pin": MapPin,
+};
 
 interface Props {
   category: CategoryConfig;
@@ -11,7 +18,7 @@ interface Props {
 }
 
 export function CategoryCard({ category, index }: Props) {
-  const Icon = category.icon;
+  const Icon = ICON_MAP[category.iconName];
 
   return (
     <motion.div

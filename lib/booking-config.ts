@@ -1,13 +1,13 @@
-import { User, Users, Calendar, MapPin } from "lucide-react";
-
 export type BookingCategory = "individuell" | "gruppe" | "abonnement" | "bane";
+
+export type IconName = "user" | "users" | "calendar" | "map-pin";
 
 export interface CategoryConfig {
   slug: BookingCategory;
   name: string;
   description: string;
   priceRange: string;
-  icon: typeof User;
+  iconName: IconName;
   serviceCategories: string[]; // Maps to Prisma ServiceCategory enum
 }
 
@@ -17,7 +17,7 @@ export const CATEGORIES: CategoryConfig[] = [
     name: "Abonnement",
     description: "Faste økter hver måned",
     priceRange: "Fra 1 600 kr/mnd",
-    icon: Calendar,
+    iconName: "calendar",
     serviceCategories: ["SUBSCRIPTION"],
   },
   {
@@ -25,7 +25,7 @@ export const CATEGORIES: CategoryConfig[] = [
     name: "Individuell",
     description: "En-til-en coaching",
     priceRange: "995 - 2 500 kr",
-    icon: User,
+    iconName: "user",
     serviceCategories: ["INDIVIDUAL"],
   },
   {
@@ -33,7 +33,7 @@ export const CATEGORIES: CategoryConfig[] = [
     name: "Gruppe",
     description: "Tren sammen med andre",
     priceRange: "250 - 1 700 kr",
-    icon: Users,
+    iconName: "users",
     serviceCategories: ["GROUP"],
   },
   {
@@ -41,7 +41,7 @@ export const CATEGORIES: CategoryConfig[] = [
     name: "Banecoaching",
     description: "Coaching på banen",
     priceRange: "500 - 3 000 kr",
-    icon: MapPin,
+    iconName: "map-pin",
     serviceCategories: ["PLAYING_LESSON"],
   },
 ];
