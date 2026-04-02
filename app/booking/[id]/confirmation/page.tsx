@@ -129,6 +129,7 @@ export default async function BookingConfirmationPage({ params }: Props) {
         paymentMethod={booking.paymentMethod}
         studentEmail={booking.User.email ?? ""}
         bookingId={booking.id}
+        bookingPrice={booking.ServiceType.price}
       />
     );
   }
@@ -141,6 +142,8 @@ export default async function BookingConfirmationPage({ params }: Props) {
       duration={booking.ServiceType.duration}
       priceNOK={priceNOK}
       paymentMethod={booking.paymentMethod}
+      userName={user.name}
+      bookingPrice={booking.ServiceType.price}
     />
   );
 }

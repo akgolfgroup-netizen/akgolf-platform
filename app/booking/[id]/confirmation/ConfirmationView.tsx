@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, Clock, Calendar, User, CreditCard } from "lucide-react";
 import Link from "next/link";
+import { BookingUpsellCard } from "@/components/portal/booking/upsell-card";
 
 interface ConfirmationViewProps {
   serviceName: string;
@@ -11,6 +12,8 @@ interface ConfirmationViewProps {
   duration: number;
   priceNOK: string;
   paymentMethod: string;
+  userName?: string | null;
+  bookingPrice: number;
 }
 
 // Apple Light Theme 2026
@@ -34,6 +37,8 @@ export function ConfirmationView({
   duration,
   priceNOK,
   paymentMethod,
+  userName,
+  bookingPrice,
 }: ConfirmationViewProps) {
   return (
     <div 
@@ -217,12 +222,19 @@ export function ConfirmationView({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="text-sm text-center mb-8"
+          className="text-sm text-center mb-6"
           style={{ color: THEME.textMuted }}
         >
           En bekreftelse er sendt til din e-post.<br/>
           Du kan administrere bookingen fra &quot;Bookinger&quot; i menyen.
         </motion.p>
+
+        {/* Upsell Card */}
+        <BookingUpsellCard
+          userName={userName}
+          bookingPrice={bookingPrice}
+          isLoggedIn={true}
+        />
 
         {/* CTA Button */}
         <motion.div

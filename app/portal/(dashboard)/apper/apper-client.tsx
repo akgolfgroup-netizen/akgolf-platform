@@ -15,6 +15,7 @@ import {
   ScanSearch,
   Trophy,
 } from "lucide-react";
+import { PricingTable } from "@/components/portal/pricing/pricing-table";
 
 interface AppModule {
   id: string;
@@ -48,6 +49,7 @@ interface ApperClientProps {
   userModules: string[];
   subscriptions: Subscription[];
   hasStripeCustomer: boolean;
+  currentTier: "VISITOR" | "PRO" | "ELITE";
 }
 
 const ICON_MAP: Record<string, React.ElementType> = {
@@ -66,11 +68,35 @@ export function ApperClient({
   userModules,
   subscriptions,
   hasStripeCustomer,
+  currentTier,
 }: ApperClientProps) {
   const [loading, setLoading] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
   const isSuccess = searchParams.get("success") === "true";
+
+  async function handlePlanSelect(
+    plan: "PRO" | "ELITE",
+    interval: "month" | "year"
+  ) {
+    setLoading(plan);
+    try {
+      // Map to bundle slug
+      const bundleSlug =
+        plan === "PRO" ? "pro-bundle" : "premium-bundle";
+      const res = await fetch("/api/portal/subscriptions/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bundleSlug, interval }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        router.push(data.url);
+      }
+    } catch {
+      setLoading(null);
+    }
+  }
 
   async function handleCheckout(moduleSlug?: string, bundleSlug?: string) {
     const key = moduleSlug ?? bundleSlug ?? "";
@@ -131,7 +157,7 @@ export function ApperClient({
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Success message */}
       {isSuccess && (
         <div
@@ -140,10 +166,27 @@ export function ApperClient({
         >
           <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
           <p className="text-sm text-green-400 font-medium">
-            Abonnementet ditt er aktivert! Din 7-dagers prøveperiode har startet.
+            Abonnementet ditt er aktivert! Din 14-dagers proveperiode har startet.
           </p>
         </div>
       )}
+
+      {/* Pricing Table */}
+      <div className="space-y-4">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-[var(--color-grey-900)] mb-2">
+            Velg ditt abonnement
+          </h2>
+          <p className="text-[var(--color-grey-500)]">
+            Fa tilgang til avanserte verktoy for a forbedre golfen din
+          </p>
+        </div>
+        <PricingTable
+          currentTier={currentTier}
+          onSelectPlan={handlePlanSelect}
+          loading={loading}
+        />
+      </div>
 
       {/* Bundles */}
       <div className="space-y-4">

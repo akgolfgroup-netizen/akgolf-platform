@@ -211,7 +211,7 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
   const periodEnd = new Date(periodEndTimestamp * 1000);
   await createQuotaForNewSubscription(user.id, subscription.id, tier, periodEnd);
 
-  // Update user subscription info
+  // Update user subscription info and clear abandoned checkout flag
   await prisma.user.update({
     where: { id: user.id },
     data: {
@@ -222,6 +222,9 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
       subscriptionSource: "STRIPE",
       subscriptionExpiresAt: periodEnd,
       activeCoachingCustomer: true,
+      // Clear abandoned checkout tracking
+      checkoutAbandonedAt: null,
+      lastCheckoutSessionId: null,
     },
   });
 

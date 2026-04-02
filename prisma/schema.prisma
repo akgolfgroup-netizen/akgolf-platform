@@ -735,12 +735,13 @@ model PromoCodeUsage {
 }
 
 model PushSubscription {
-  id        String   @id
-  userId    String
-  endpoint  String   @unique
-  p256dh    String
-  auth      String
-  createdAt DateTime @default(now())
+  id         String   @id
+  userId     String
+  endpoint   String   @unique
+  p256dh     String
+  auth       String
+  deviceType String?
+  createdAt  DateTime @default(now())
 
   @@index([userId])
 }
@@ -1131,6 +1132,10 @@ model User {
   onboardingCompletedAt                       DateTime?
   welcomeEmailStep                            Int                        @default(0)
   checkoutAbandonedAt                         DateTime?
+  lastCheckoutSessionId                       String?
+  portalMonthlyLogCount                       Int                        @default(0)
+  portalMonthlyAiCount                        Int                        @default(0)
+  portalUsageResetDate                        DateTime?
   Account                                     Account[]
   AppSubscription                             AppSubscription[]
   Booking                                     Booking[]
@@ -1165,6 +1170,10 @@ model User {
   // Training diary relations
   ShotTypeLPhase                              ShotTypeLPhase[]
   DegradationTracking                         DegradationTracking[]
+  // Coach Hub relations
+  AssignedMessages                            UnifiedMessage[]           @relation("AssignedMessages")
+  ApprovedResponses                           AIResponse[]               @relation("ApprovedResponses")
+  AILearning                                  AILearning[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1283,6 +1292,67 @@ model DegradationTracking {
   User            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, shotType])
+}
+
+/// Coach Hub: Unified inbox for all communication channels
+model UnifiedMessage {
+  id           String       @id @default(cuid())
+  channel      String       // EMAIL, SMS, INSTAGRAM, etc.
+  direction    String       // INBOUND, OUTBOUND
+  externalId   String?
+  senderName   String?
+  senderHandle String?
+  subject      String?
+  content      String
+  receivedAt   DateTime     @default(now())
+  threadId     String?
+  assignedToId String?
+  status       String       @default("PENDING") // PENDING, AI_PROCESSING, APPROVED, SENT, FAILED
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  AssignedTo   User?        @relation("AssignedMessages", fields: [assignedToId], references: [id])
+  AIResponses  AIResponse[]
+
+  @@index([status])
+  @@index([assignedToId])
+}
+
+/// Coach Hub: AI-generated responses for unified inbox
+model AIResponse {
+  id           String          @id @default(cuid())
+  messageId    String
+  draftContent String
+  finalContent String?
+  confidence   Float?
+  category     String?
+  modelUsed    String?
+  autoSent     Boolean         @default(false)
+  wasEdited    Boolean         @default(false)
+  approvedById String?
+  approvedAt   DateTime?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  Message      UnifiedMessage  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  ApprovedBy   User?           @relation("ApprovedResponses", fields: [approvedById], references: [id])
+
+  @@index([messageId])
+}
+
+/// Coach Hub: AI learning patterns from user interactions
+model AILearning {
+  id         String    @id @default(cuid())
+  userId     String
+  category   String
+  pattern    String
+  response   String
+  confidence Float     @default(0.5)
+  usageCount Int       @default(0)
+  lastUsed   DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  User       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, category])
 }
 
 enum AgentStatus {

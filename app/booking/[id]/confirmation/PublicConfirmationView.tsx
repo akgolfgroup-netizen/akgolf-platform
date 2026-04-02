@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Check, Mail, Calendar, Clock, CreditCard, User, LogIn } from "lucide-react";
+import { BookingUpsellCard } from "@/components/portal/booking/upsell-card";
 
 // Apple Light Theme 2026
 const THEME = {
@@ -23,6 +24,7 @@ interface Props {
   paymentMethod: string;
   studentEmail: string;
   bookingId: string;
+  bookingPrice: number;
 }
 
 export function PublicConfirmationView({
@@ -34,6 +36,7 @@ export function PublicConfirmationView({
   paymentMethod,
   studentEmail,
   bookingId,
+  bookingPrice,
 }: Props) {
   return (
     <div className="min-h-screen py-12 px-4" style={{ background: THEME.bg }}>
@@ -136,8 +139,8 @@ export function PublicConfirmationView({
         </div>
 
         {/* Email Notice */}
-        <div 
-          className="rounded-2xl p-6 mb-8 border"
+        <div
+          className="rounded-2xl p-6 mb-6 border"
           style={{
             background: THEME.bg,
             borderColor: THEME.border,
@@ -150,11 +153,20 @@ export function PublicConfirmationView({
                 Bekreftelse sendt
               </h3>
               <p className="text-sm" style={{ color: THEME.textMuted }}>
-                En detaljert bekreftelse er sendt til <strong>{studentEmail}</strong>. 
+                En detaljert bekreftelse er sendt til <strong>{studentEmail}</strong>.
                 Sjekk innboksen din (og spam-mappen) for mer informasjon om timen.
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Upsell Card */}
+        <div className="mb-8">
+          <BookingUpsellCard
+            userName={null}
+            bookingPrice={bookingPrice}
+            isLoggedIn={false}
+          />
         </div>
 
         {/* Login CTA */}

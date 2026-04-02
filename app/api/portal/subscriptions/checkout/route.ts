@@ -84,7 +84,7 @@ export async function POST(req: Request) {
     line_items: [{ price: stripePriceId, quantity: 1 }],
     ...(isEligibleForTrial && {
       subscription_data: {
-        trial_period_days: 7,
+        trial_period_days: 14,
       },
     }),
     payment_method_collection: "always",
@@ -94,6 +94,15 @@ export async function POST(req: Request) {
       userId: user.id,
       moduleSlug: moduleSlug ?? "",
       bundleSlug: bundleSlug ?? "",
+    },
+  });
+
+  // Track checkout start for abandoned cart recovery
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      checkoutAbandonedAt: new Date(),
+      lastCheckoutSessionId: session.id,
     },
   });
 
