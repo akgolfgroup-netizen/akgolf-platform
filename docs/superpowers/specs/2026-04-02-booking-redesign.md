@@ -107,23 +107,39 @@ Coaching på banen med kursmanagement.
 3-spørsmåls quiz som leder til personlig anbefaling.
 
 ### Spørsmål 1: Hva er målet ditt?
-- 🎯 Bli bedre på kort sikt → Individuell
-- 📈 Systematisk utvikling over tid → Abonnement
-- 🌱 Jeg er helt ny til golf → Foundation Test
-- 🏢 Bedriftsevent / sosialt → Gruppe/Bedrift
+- 🎯 **kort-sikt**: Bli bedre på kort sikt
+- 📈 **langsiktig**: Systematisk utvikling over tid
+- 🌱 **nybegynner**: Jeg er helt ny til golf → **AVSLUTT → Foundation Test**
+- 🏢 **bedrift**: Bedriftsevent / sosialt → **AVSLUTT → Gruppe-side**
 
-### Spørsmål 2: Hvor ofte vil du trene?
-- Ukentlig → Abonnement
-- Av og til → Flex (drop-in)
-- Én gang → Enkelttime
+### Spørsmål 2: Hvor ofte vil du trene? (vises kun for kort-sikt/langsiktig)
+- **ukentlig**: Ukentlig
+- **sporadisk**: Av og til
+- **engang**: Én gang
 
-### Spørsmål 3: Alene eller med andre?
-- Alene → Solo-tjenester
-- Med én venn → Duo-tjenester
-- Gruppe → Gruppetjenester
+### Spørsmål 3: Alene eller med andre? (vises kun for sporadisk/engang)
+- **alene**: Alene
+- **duo**: Med én venn
+- **gruppe**: Gruppe
 
-### Resultat
-Quiz-logikk matcher svar til kategori + tjeneste, viser anbefaling med "Book nå"-knapp.
+### Quiz-resultatmatrise
+
+| Spm 1 | Spm 2 | Spm 3 | Resultat |
+|-------|-------|-------|----------|
+| nybegynner | - | - | Foundation Test |
+| bedrift | - | - | Gruppe-side |
+| langsiktig | ukentlig | - | Performance Pro |
+| langsiktig | sporadisk | - | Performance |
+| langsiktig | engang | - | Foundation Test |
+| kort-sikt | ukentlig | - | Performance |
+| kort-sikt | sporadisk | alene | Flex 50 Solo |
+| kort-sikt | sporadisk | duo | Flex 50 Duo |
+| kort-sikt | sporadisk | gruppe | 9 Hull Social |
+| kort-sikt | engang | alene | Flex 50 Solo |
+| kort-sikt | engang | duo | Flex 50 Duo |
+| kort-sikt | engang | gruppe | On-Course Par 3 |
+
+**Logikk:** Noen svar avslutter tidlig (nybegynner, bedrift). Langsiktig + ukentlig trenger ikke spm 3. Spørsmål 3 vises kun når relevant.
 
 ## Trenervalg
 
@@ -153,10 +169,19 @@ app/booking/
 ```
 
 ### Database
-Ingen schema-endringer. Bruker eksisterende:
+Bruker eksisterende felter:
 - `ServiceType.category` for gruppering
 - `ServiceType.sortOrder` for rekkefølge
-- Ny: `ServiceType.isRecommended` (boolean) for anbefalt-markering
+
+**Anbefalt-markering:** Hardkodet i `lib/booking-config.ts` (ikke database) for enkel endring:
+```typescript
+export const RECOMMENDED_SERVICES: Record<string, string> = {
+  INDIVIDUAL: "foundation-test",      // serviceType.id
+  GROUP: "flex-50-duo",
+  SUBSCRIPTION: "performance",
+  PLAYING_LESSON: "on-course-par3",
+};
+```
 
 ### Ruting
 | URL | Innhold |
