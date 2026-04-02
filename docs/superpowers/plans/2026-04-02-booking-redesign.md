@@ -349,7 +349,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Book coaching | AK Golf",
-  description: "Velg type coaching og book tid med en av vare erfarne golfcoacher.",
+  description: "Velg type coaching og book tid med en av våre erfarne golfcoacher.",
 };
 
 export default function BookingPage() {
@@ -371,7 +371,7 @@ export default function BookingPage() {
             <h1 className="w-heading-xl max-w-3xl mb-6">Book coaching.</h1>
 
             <p className="text-lg text-grey-500 max-w-2xl leading-relaxed">
-              Velg type coaching og book tid med en av vare trenere.
+              Velg type coaching og book tid med en av våre trenere.
             </p>
 
             <div className="mt-12 w-16 h-px bg-gradient-to-r from-black/50 to-transparent" />
@@ -384,7 +384,7 @@ export default function BookingPage() {
             <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
               Hva passer for deg?
             </h2>
-            <p className="text-grey-500 mb-10">Velg en kategori for a se tilgjengelige tjenester</p>
+            <p className="text-grey-500 mb-10">Velg en kategori for å se tilgjengelige tjenester</p>
 
             <div className="grid gap-5 sm:grid-cols-2">
               {CATEGORIES.map((category, index) => (
@@ -1118,6 +1118,224 @@ git commit -m "feat(booking): add instructor tabs to DateTimePicker"
 
 ---
 
+## Task 7B: Update Booking New Page for Multi-Step Flow
+
+**Files:**
+- Modify: `app/booking/new/page.tsx`
+- Create: `app/booking/new/BookingStepManager.tsx`
+
+- [ ] **Step 1: Create BookingStepManager component**
+
+This component handles the multi-step flow when only serviceTypeId is provided:
+
+```typescript
+// app/booking/new/BookingStepManager.tsx
+"use client";
+
+import { useState } from "react";
+import { DateTimePicker } from "../components/DateTimePicker";
+import { BookingPaymentForm } from "./BookingPaymentForm";
+
+interface ServiceType {
+  id: string;
+  name: string;
+  duration: number;
+  price: number;
+  description: string | null;
+  allowStripe: boolean;
+  allowVipps: boolean;
+}
+
+interface Instructor {
+  id: string;
+  user: { name: string; image: string | null };
+}
+
+interface Props {
+  serviceType: ServiceType;
+  instructors: Instructor[];
+  studentId: string;
+}
+
+export function BookingStepManager({ serviceType, instructors, studentId }: Props) {
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [selectedInstructor, setSelectedInstructor] = useState<Instructor | null>(
+    instructors.length === 1 ? instructors[0] : null
+  );
+
+  // If time is selected, show payment form
+  if (selectedTime && selectedInstructor) {
+    return (
+      <BookingPaymentForm
+        serviceType={serviceType}
+        instructor={{
+          id: selectedInstructor.id,
+          user: selectedInstructor.user,
+        }}
+        startTime={selectedTime}
+        studentId={studentId}
+      />
+    );
+  }
+
+  // Show date/time picker with instructor tabs
+  return (
+    <div className="rounded-3xl p-8 max-w-2xl w-full border bg-white border-[#E8E8ED]">
+      <DateTimePicker
+        serviceTypeId={serviceType.id}
+        instructorId={instructors[0]?.id ?? ""}
+        instructors={instructors.map((i) => ({ id: i.id, name: i.user.name }))}
+        onSelect={(startTime) => {
+          // Find which instructor was selected (from DateTimePicker state)
+          // For now, use first instructor or the one from the slot
+          setSelectedTime(startTime);
+          if (!selectedInstructor && instructors.length === 1) {
+            setSelectedInstructor(instructors[0]);
+          }
+        }}
+      />
+    </div>
+  );
+}
+```
+
+- [ ] **Step 2: Update booking/new/page.tsx to handle partial params**
+
+```typescript
+// app/booking/new/page.tsx
+import { getPortalUser } from "@/lib/portal/auth";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/portal/prisma";
+import { BookingPaymentForm } from "./BookingPaymentForm";
+import { BookingStepManager } from "./BookingStepManager";
+import { Calendar, CreditCard } from "lucide-react";
+
+interface Props {
+  searchParams: Promise<{
+    serviceTypeId?: string;
+    instructorId?: string;
+    startTime?: string;
+  }>;
+}
+
+export default async function BookingNewPage({ searchParams }: Props) {
+  const params = await searchParams;
+  const { serviceTypeId, instructorId, startTime } = params;
+
+  const user = await getPortalUser();
+  if (!user?.id) {
+    const callbackUrl = encodeURIComponent(
+      `/booking/new?serviceTypeId=${serviceTypeId ?? ""}&instructorId=${instructorId ?? ""}&startTime=${startTime ?? ""}`
+    );
+    redirect(`/portal/login?callbackUrl=${callbackUrl}`);
+  }
+
+  // Need at least serviceTypeId
+  if (!serviceTypeId) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4 bg-[#F5F5F7]">
+        <div className="rounded-3xl p-10 max-w-md w-full text-center border bg-white border-[#E8E8ED]">
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[#F5F5F7]">
+            <Calendar className="w-8 h-8 text-[#1D1D1F]" />
+          </div>
+          <p className="text-[#86868B]">
+            Mangler bookingdetaljer. Vennligst start på nytt fra booking-systemet.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Fetch service type and instructors
+  const serviceType = await prisma.serviceType.findFirst({
+    where: { id: serviceTypeId, isPublic: true, isActive: true },
+    select: {
+      id: true,
+      name: true,
+      duration: true,
+      price: true,
+      description: true,
+      allowStripe: true,
+      allowVipps: true,
+    },
+  });
+
+  if (!serviceType) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4 bg-[#F5F5F7]">
+        <div className="rounded-3xl p-10 max-w-md w-full text-center border bg-white border-[#E8E8ED]">
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[#F5F5F7]">
+            <CreditCard className="w-8 h-8 text-[#1D1D1F]" />
+          </div>
+          <h2 className="text-xl font-semibold mb-2 text-[#1D1D1F]">
+            Kunne ikke finne tjenesten
+          </h2>
+          <p className="text-[#86868B]">
+            Tjenesten ble ikke funnet. Vennligst prøv igjen.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Fetch instructors for this service
+  const instructors = await prisma.instructor.findMany({
+    where: {
+      ServiceType: { some: { id: serviceTypeId } },
+    },
+    include: { User: { select: { name: true, image: true } } },
+  });
+
+  // If all params provided, show payment form directly
+  if (instructorId && startTime) {
+    const instructor = instructors.find((i) => i.id === instructorId);
+    if (instructor) {
+      return (
+        <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F5F5F7]">
+          <BookingPaymentForm
+            serviceType={serviceType}
+            instructor={{
+              id: instructor.id,
+              user: { name: instructor.User.name, image: instructor.User.image },
+            }}
+            startTime={startTime}
+            studentId={user.id}
+          />
+        </div>
+      );
+    }
+  }
+
+  // Show step manager for instructor/time selection
+  return (
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F5F5F7]">
+      <BookingStepManager
+        serviceType={serviceType}
+        instructors={instructors.map((i) => ({
+          id: i.id,
+          user: { name: i.User.name, image: i.User.image },
+        }))}
+        studentId={user.id}
+      />
+    </div>
+  );
+}
+```
+
+- [ ] **Step 3: Run TypeScript check**
+
+Run: `npx tsc --noEmit 2>&1 | grep -E "booking/new|error" | head -10`
+Expected: No errors
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add app/booking/new/page.tsx app/booking/new/BookingStepManager.tsx
+git commit -m "feat(booking): support multi-step flow with instructor selection"
+```
+
+---
+
 ## Task 8: Create QuizWizard Component
 
 **Files:**
@@ -1131,8 +1349,9 @@ git commit -m "feat(booking): add instructor tabs to DateTimePicker"
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Target, TrendingUp, Sprout, Building2, Calendar, RefreshCw, CircleDot, User, Users, UsersRound, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
+import type { LucideIcon } from "lucide-react";
 
 type Answer1 = "kort-sikt" | "langsiktig" | "nybegynner" | "bedrift";
 type Answer2 = "ukentlig" | "sporadisk" | "engang";
@@ -1145,30 +1364,36 @@ interface QuizState {
   answer3: Answer3 | null;
 }
 
-const QUESTIONS = {
+interface QuestionOption {
+  value: string;
+  label: string;
+  icon: LucideIcon;
+}
+
+const QUESTIONS: Record<1 | 2 | 3, { title: string; options: QuestionOption[] }> = {
   1: {
-    title: "Hva er malet ditt?",
+    title: "Hva er målet ditt?",
     options: [
-      { value: "kort-sikt", label: "Bli bedre pa kort sikt", emoji: "🎯" },
-      { value: "langsiktig", label: "Systematisk utvikling over tid", emoji: "📈" },
-      { value: "nybegynner", label: "Jeg er helt ny til golf", emoji: "🌱" },
-      { value: "bedrift", label: "Bedriftsevent / sosialt", emoji: "🏢" },
+      { value: "kort-sikt", label: "Bli bedre på kort sikt", icon: Target },
+      { value: "langsiktig", label: "Systematisk utvikling over tid", icon: TrendingUp },
+      { value: "nybegynner", label: "Jeg er helt ny til golf", icon: Sprout },
+      { value: "bedrift", label: "Bedriftsevent / sosialt", icon: Building2 },
     ],
   },
   2: {
     title: "Hvor ofte vil du trene?",
     options: [
-      { value: "ukentlig", label: "Ukentlig", emoji: "📅" },
-      { value: "sporadisk", label: "Av og til", emoji: "🔄" },
-      { value: "engang", label: "En gang", emoji: "1️⃣" },
+      { value: "ukentlig", label: "Ukentlig", icon: Calendar },
+      { value: "sporadisk", label: "Av og til", icon: RefreshCw },
+      { value: "engang", label: "Én gang", icon: CircleDot },
     ],
   },
   3: {
     title: "Alene eller med andre?",
     options: [
-      { value: "alene", label: "Alene", emoji: "👤" },
-      { value: "duo", label: "Med en venn", emoji: "👥" },
-      { value: "gruppe", label: "Gruppe", emoji: "👨‍👩‍👧‍👦" },
+      { value: "alene", label: "Alene", icon: User },
+      { value: "duo", label: "Med en venn", icon: Users },
+      { value: "gruppe", label: "Gruppe", icon: UsersRound },
     ],
   },
 };
@@ -1281,16 +1506,21 @@ export function QuizWizard() {
             </h2>
 
             <div className="space-y-3">
-              {QUESTIONS[state.step].options.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => handleAnswer(option.value)}
-                  className="w-full flex items-center gap-4 p-4 bg-grey-100 rounded-[16px] hover:bg-grey-200 transition-colors text-left"
-                >
-                  <span className="text-2xl">{option.emoji}</span>
-                  <span className="font-medium text-black">{option.label}</span>
-                </button>
-              ))}
+              {QUESTIONS[state.step].options.map((option) => {
+                const Icon = option.icon;
+                return (
+                  <button
+                    key={option.value}
+                    onClick={() => handleAnswer(option.value)}
+                    className="w-full flex items-center gap-4 p-4 bg-grey-100 rounded-[16px] hover:bg-grey-200 transition-colors text-left"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-grey-200 flex items-center justify-center">
+                      <Icon size={20} className="text-black" />
+                    </div>
+                    <span className="font-medium text-black">{option.label}</span>
+                  </button>
+                );
+              })}
             </div>
           </motion.div>
         ) : (
@@ -1301,7 +1531,7 @@ export function QuizWizard() {
             className="text-center"
           >
             <div className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center mx-auto mb-6">
-              <span className="text-2xl">✓</span>
+              <Check size={32} strokeWidth={3} />
             </div>
 
             <h2 className="text-2xl font-bold mb-2">Vi anbefaler</h2>
@@ -1365,7 +1595,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Finn riktig coaching | AK Golf",
-  description: "Svar pa noen enkle sporsmal og finn coaching som passer for deg.",
+  description: "Svar på noen enkle spørsmål og finn coaching som passer for deg.",
 };
 
 export default function VeilederPage() {
@@ -1461,6 +1691,7 @@ git push origin main
 | 5 | Category Page | `app/booking/[category]/page.tsx` |
 | 6 | InstructorTabs | `app/booking/components/InstructorTabs.tsx` |
 | 7 | DateTimePicker Update | `app/booking/components/DateTimePicker.tsx` |
+| 7B | Booking New Multi-Step | `app/booking/new/page.tsx`, `app/booking/new/BookingStepManager.tsx` |
 | 8 | QuizWizard | `app/booking/components/QuizWizard.tsx` |
 | 9 | Veileder Page | `app/booking/veileder/page.tsx` |
 | 10 | Integration | All files |

@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { X, Star, NotebookPen, Plus, MessageSquare } from "lucide-react";
-import { logSession } from "@/app/portal/(dashboard)/dagbok/actions";
+import { logSessionWithExercises } from "@/app/portal/(dashboard)/dagbok/actions";
 import { ExerciseLogRow, type ExerciseLogData } from "./exercise-log-row";
 import {
   L_PHASES,
@@ -100,11 +100,24 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     startTransition(async () => {
-      // TODO: Replace with logSessionWithExercises when server action is ready
-      // The new action should accept:
-      // - exercises: ExerciseLogData[]
-      // - primaryLPhase, primaryEnvironment, primaryPressLevel
-      await logSession({
+      // Map ExerciseLogData to ExerciseInput format
+      const mappedExercises = exercises.map((ex, idx) => ({
+        exerciseId: ex.id,
+        name: ex.exerciseName,
+        plannedSets: ex.plannedSets,
+        plannedReps: ex.plannedReps,
+        actualSets: ex.actualSets,
+        actualReps: ex.actualReps,
+        lPhase: ex.lPhase,
+        clubSpeed: ex.clubSpeed,
+        environment: ex.mEnvironment,
+        pressLevel: ex.prLevel,
+        score: ex.score,
+        notes: ex.notes,
+        sortOrder: idx,
+      }));
+
+      await logSessionWithExercises({
         planSessionId: prefill?.planSessionId,
         date: prefill?.date ?? new Date().toISOString(),
         durationMinutes: duration ? Number(duration) : undefined,
@@ -113,11 +126,10 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
         rating: rating || undefined,
         deviatedFromPlan,
         deviationReason: deviatedFromPlan ? deviationReason : undefined,
-        // TODO: Add these fields when logSessionWithExercises is implemented
-        // exercises,
-        // primaryLPhase,
-        // primaryEnvironment,
-        // primaryPressLevel,
+        primaryLPhase: primaryLPhase || undefined,
+        primaryEnvironment: primaryEnvironment ?? undefined,
+        primaryPressLevel: primaryPressLevel ?? undefined,
+        exercises: mappedExercises,
       });
       onClose();
     });

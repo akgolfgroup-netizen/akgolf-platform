@@ -1,11 +1,12 @@
 import { getPortalUser } from "@/lib/portal/auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {
   calculateDegradation,
   getTekSlagSpillGap,
   getEnvironmentDistribution,
 } from "@/lib/portal/training/degradation-service";
 import { getAllLPhasesForUser, SHOT_TYPES, type ShotType } from "@/lib/portal/training/l-phase-service";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 /**
  * GET /api/portal/training/analysis
@@ -16,8 +17,14 @@ import { getAllLPhasesForUser, SHOT_TYPES, type ShotType } from "@/lib/portal/tr
  * - distribution: M-environment distribution (where the player trains)
  * - lPhases: Current L-phase per shot type
  */
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    // Rate limiting
+    const rateLimit = checkRateLimit(`training-analysis:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+    if (!rateLimit.allowed) {
+      return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+    }
+
     const user = await getPortalUser();
     if (!user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
