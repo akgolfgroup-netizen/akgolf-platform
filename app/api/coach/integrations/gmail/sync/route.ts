@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { processIncomingEmail, routeEmailToUser } from "@/lib/coach/integrations/gmail";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 interface IncomingGmailMessage {
   id: string;
@@ -25,6 +26,11 @@ interface IncomingGmailMessage {
  * Body: Array av GmailMessage-objekter
  */
 export async function POST(request: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(request)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   try {
     // Valider autentisering
     const authHeader = request.headers.get("authorization");

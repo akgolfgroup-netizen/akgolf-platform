@@ -5,8 +5,15 @@ import {
   getAvailabilityForDate,
 } from "@/lib/portal/slots";
 import { BookingStatus } from "@prisma/client";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+
+export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
+  const rateLimit = checkRateLimit(`public:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
   const corsOrigin =
     process.env.WEBSITE_URL ?? "http://localhost:3000";
 

@@ -5,11 +5,17 @@ import { prisma } from "@/lib/portal/prisma";
 import { generateCoachingSummary } from "@/lib/portal/ai/coaching-summary";
 import { isStaff } from "@/lib/portal/rbac";
 import { appendCoachingSessionToProfile } from "@/lib/portal/notion/player-profiles";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function POST(req: NextRequest) {
   const user = await getPortalUser();
   if (!user || !isStaff(user.role)) {
     return NextResponse.json({ error: "Ikke autorisert" }, { status: 403 });
+  }
+
+  const rateLimit = checkRateLimit(`ai:${user.id}`, RATE_LIMITS.AI_ENDPOINTS);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange AI-forespørsler" }, { status: 429 });
   }
 
   const { sessionId, notes } = await req.json();

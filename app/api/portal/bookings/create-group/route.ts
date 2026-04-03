@@ -4,6 +4,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { BookingStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
 import { addMinutes } from "date-fns";
 import { nanoid } from "nanoid";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 interface Participant {
   name: string;
@@ -12,6 +13,11 @@ interface Participant {
 }
 
 export async function POST(req: NextRequest) {
+  const rateLimit = checkRateLimit(`booking:${getClientIp(req)}`, RATE_LIMITS.BOOKING_CREATE);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   try {
     const user = await requirePortalUser();
     if (!user?.id) {

@@ -1,9 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isAdmin } from "@/lib/portal/rbac";
 import { prisma } from "@/lib/portal/prisma";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(request)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   try {
     const user = await requirePortalUser();
     if (!isAdmin(user.role)) {

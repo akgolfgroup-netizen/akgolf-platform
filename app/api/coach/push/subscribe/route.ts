@@ -3,8 +3,14 @@ import { logger } from "@/lib/logger";
 import { nanoid } from "nanoid";
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function POST(request: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(request)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   try {
     const user = await requirePortalUser();
     const { subscription, deviceType } = await request.json();
@@ -37,6 +43,11 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(request)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   try {
     const user = await requirePortalUser();
     const { endpoint } = await request.json();

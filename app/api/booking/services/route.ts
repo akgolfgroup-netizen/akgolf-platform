@@ -1,13 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { logger } from "@/lib/logger";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 /**
  * GET /api/booking/services
  * Returns active, public services with instructors.
  * Reads directly from the database (same monorepo as portal).
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const rateLimit = checkRateLimit(`booking:${getClientIp(request)}`, RATE_LIMITS.BOOKING_CREATE);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   try {
     const types = await prisma.serviceType.findMany({
       where: { isPublic: true, isActive: true },

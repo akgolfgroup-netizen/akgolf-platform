@@ -7,8 +7,14 @@ import { evaluateCancellationPolicy } from "@/lib/portal/booking/cancellation-po
 import { processRefund } from "@/lib/portal/booking/refund";
 import { notifyNextOnWaitlist } from "@/lib/portal/booking/waitlist";
 import { sendBookingCancellation } from "@/lib/portal/email/send-booking-email";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function POST(req: NextRequest) {
+  const rateLimit = checkRateLimit(`booking:${getClientIp(req)}`, RATE_LIMITS.BOOKING_CREATE);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await getPortalUser();
   if (!user?.id) {
     return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });

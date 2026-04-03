@@ -1,11 +1,17 @@
 import { getPortalUser } from "@/lib/portal/auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { randomBytes } from "crypto";
 import { hasTierAccess } from "@/lib/portal/rbac";
 import { SubscriptionTier } from "@prisma/client";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
-export async function POST() {
+export async function POST(request: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(request)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await getPortalUser();
   if (!user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -29,7 +35,12 @@ export async function POST() {
   return NextResponse.json({ feedUrl });
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(request)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await getPortalUser();
   if (!user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

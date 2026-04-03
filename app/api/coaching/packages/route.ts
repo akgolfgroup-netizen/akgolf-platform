@@ -1,8 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const rateLimit = checkRateLimit(`coaching:${getClientIp(request)}`, RATE_LIMITS.COACHING_BOOK);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   try {
     const packages = await prisma.coachingPackage.findMany({
       where: { isActive: true },

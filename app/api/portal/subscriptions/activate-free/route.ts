@@ -1,14 +1,20 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { nanoid } from "nanoid";
 import { getPortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 const ActivateFreeSchema = z.object({
   moduleSlug: z.string().min(1),
 });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  const rateLimit = checkRateLimit(`subscription:${getClientIp(req)}`, RATE_LIMITS.SUBSCRIPTIONS);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await getPortalUser();
   if (!user?.id) {
     return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });

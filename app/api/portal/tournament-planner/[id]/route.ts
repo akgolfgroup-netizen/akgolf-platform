@@ -3,11 +3,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { isStaff } from "@/lib/portal/rbac";
 import { updateTournament, deleteTournament } from "@/modules/tournament-planner/actions";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await getPortalUser();
   if (!user || !isStaff(user.role)) {
     return NextResponse.json({ error: "Ikke autorisert" }, { status: 403 });
@@ -30,9 +36,14 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await getPortalUser();
   if (!user || !isStaff(user.role)) {
     return NextResponse.json({ error: "Ikke autorisert" }, { status: 403 });

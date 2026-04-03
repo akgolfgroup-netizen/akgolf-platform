@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { isStaff } from "@/lib/portal/rbac";
 import { nanoid } from "nanoid";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 interface ImportCompetition {
   golfboxId: number;
@@ -14,6 +15,11 @@ interface ImportCompetition {
 }
 
 export async function POST(req: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await getPortalUser();
   if (!user || !isStaff(user.role)) {
     return NextResponse.json({ error: "Ikke autorisert" }, { status: 403 });

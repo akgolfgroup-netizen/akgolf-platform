@@ -3,6 +3,7 @@ import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { BookingStatus } from "@prisma/client";
 import { addHours, addDays, isBefore, isAfter } from "date-fns";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 interface AvailabilitySlot {
   startTime: string; // "HH:MM"
@@ -17,6 +18,11 @@ interface TimeSlot {
 }
 
 export async function GET(req: NextRequest) {
+  const rateLimit = checkRateLimit(`coaching:${getClientIp(req)}`, RATE_LIMITS.COACHING_BOOK);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const { searchParams } = new URL(req.url);
   const dateStr = searchParams.get("date"); // YYYY-MM-DD
   const packageSlug = searchParams.get("packageSlug");

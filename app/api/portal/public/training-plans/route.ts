@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 const corsOrigin = () => process.env.WEBSITE_URL ?? "http://localhost:3003";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
+  const rateLimit = checkRateLimit(`public:${getClientIp(request)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
   const group = request.nextUrl.searchParams.get("group");
 
   try {

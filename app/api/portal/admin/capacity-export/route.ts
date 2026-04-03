@@ -3,6 +3,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { startOfWeek, endOfWeek, format, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { BookingStatus } from "@prisma/client";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 /**
  * API-endepunkt for kapasitetseksport til Google Sheets
@@ -11,6 +12,11 @@ import { BookingStatus } from "@prisma/client";
  * Authorization: Bearer {CRON_SECRET}
  */
 export async function GET(req: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   // Sjekk autorisasjon via CRON_SECRET
   const authHeader = req.headers.get("authorization");
   const expectedToken = process.env.CRON_SECRET;

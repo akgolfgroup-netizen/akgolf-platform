@@ -6,6 +6,7 @@ import { generateCoachingSummary } from "@/lib/portal/ai/coaching-summary";
 import { transcribeAudio } from "@/lib/portal/ai/transcribe-audio";
 import { isStaff } from "@/lib/portal/rbac";
 import { appendCoachingSessionToProfile } from "@/lib/portal/notion/player-profiles";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 const ALLOWED_EXTENSIONS = [".m4a", ".mp3", ".wav", ".webm", ".mp4", ".ogg"];
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
@@ -16,6 +17,11 @@ export async function POST(req: NextRequest) {
   const user = await getPortalUser();
   if (!user || !isStaff(user.role)) {
     return NextResponse.json({ error: "Ikke autorisert" }, { status: 403 });
+  }
+
+  const rateLimit = checkRateLimit(`ai:${user.id}`, RATE_LIMITS.AI_ENDPOINTS);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange AI-forespørsler" }, { status: 429 });
   }
 
   const formData = await req.formData();
