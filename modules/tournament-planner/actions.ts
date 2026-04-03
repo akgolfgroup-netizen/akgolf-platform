@@ -111,7 +111,9 @@ export async function getThisWeekTournamentPlans(
 ): Promise<TournamentPlanWithStudent[]> {
   const where: Record<string, unknown> = {};
   if (options?.from || options?.to) {
-    where.tournament = {
+    // VIKTIG: Prisma-relasjoner bruker PascalCase (Tournament, ikke tournament)
+    // Se gotchas.md #29 for detaljer
+    where.Tournament = {
       startDate: {
         ...(options.from ? { gte: options.from } : {}),
         ...(options.to ? { lte: options.to } : {}),

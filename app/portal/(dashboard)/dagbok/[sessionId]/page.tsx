@@ -89,7 +89,7 @@ export default async function SessionDetailPage({ params }: Props) {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--color-grey-100)] via-[var(--color-grey-050)] to-[var(--color-grey-100)]">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--color-grey-100)] via-white to-[var(--color-grey-100)]">
       <div className="max-w-[900px] mx-auto px-6 py-8 space-y-6">
         {/* Header with back button */}
         <div className="flex items-center gap-4">

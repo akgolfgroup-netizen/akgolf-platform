@@ -36,7 +36,7 @@ interface Props {
 }
 
 export function FacilityCalendar({ initialFacilities }: Props) {
-  const [viewMode, setViewMode] = useState<ViewMode>("week");
+  const [viewMode, setViewMode] = useState<ViewMode>("day");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedFacilityId, setSelectedFacilityId] = useState<string>("");
   const [events, setEvents] = useState<CalendarEvent[]>([]);

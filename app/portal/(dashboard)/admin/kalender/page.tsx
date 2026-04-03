@@ -25,7 +25,7 @@ export default async function AdminCalendarPage() {
               <Calendar className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em]" style={{ fontFamily: "var(--font-display)" }}>
+              <h1 className="text-[32px] font-bold text-[var(--color-grey-900)] tracking-[-0.02em]" style={{ fontFamily: "var(--font-display)" }}>
                 Kalender
               </h1>
               <p className="text-[15px] text-[var(--color-grey-500)]">

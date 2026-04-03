@@ -19,7 +19,7 @@ export default async function AdminBookingsPage() {
         {/* Header */}
         <header className="flex items-start justify-between mb-6">
           <div>
-            <h1 className="font-display text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em] mb-1">
+            <h1 className="font-display text-[32px] font-bold text-[var(--color-grey-900)] tracking-[-0.02em] mb-1">
               Bookinger
             </h1>
             <p className="text-[15px] text-[var(--color-grey-500)]">

@@ -20,7 +20,11 @@ async function getTestProtocols() {
     .order("difficulty");
 
   if (error) {
-    console.error("Error fetching protocols:", error);
+    // Table may not exist yet - return empty array silently
+    if (error.code === "42P01" || error.message?.includes("does not exist")) {
+      return [];
+    }
+    console.error("Error fetching protocols:", error.message ?? error);
     return [];
   }
 

@@ -197,6 +197,38 @@
     from { opacity: 0; transform: translate(-72%, -62%) scale(0.5); }
     to { opacity: 1; transform: translate(-50%, -40%) scale(1); }
   }
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* MISSION CONTROL — Admin Dashboard Tokens                                    */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* Division Colors */
+  --mc-color-coaching: #1D1D1F;
+  --mc-color-junior: #007AFF;
+  --mc-color-gfgk: #34C759;
+  --mc-color-ai: #AF52DE;
+
+  /* Layout */
+  --mc-sidebar-width: 220px;
+  --mc-topbar-height: 56px;
+
+  /* Semantic Backgrounds */
+  --mc-success-bg: #DCFCE7;
+  --mc-success-text: #166534;
+  --mc-warning-bg: #FEF3C7;
+  --mc-warning-text: #92400E;
+  --mc-error-bg: #FEE2E2;
+  --mc-error-text: #991B1B;
+  --mc-info-bg: #DBEAFE;
+  --mc-info-text: #1E40AF;
+
+  /* Mission Control Spacing */
+  --mc-spacing-xs: 4px;
+  --mc-spacing-sm: 8px;
+  --mc-spacing-md: 12px;
+  --mc-spacing-lg: 16px;
+  --mc-spacing-xl: 20px;
+  --mc-spacing-2xl: 24px;
 }
 
 /* ─── Base ─── */

@@ -41,22 +41,40 @@ model AchievementDefinition {
 }
 
 model Agent {
-  id          String      @id
-  name        String      @unique
+  id          String        @id
+  name        String        @unique
   displayName String
   description String
   team        AgentTeam
   model       String
   tools       String[]
-  skills      String[]    @default([])
+  skills      String[]      @default([])
   avatarPath  String
-  status      AgentStatus @default(ACTIVE)
-  createdAt   DateTime    @default(now())
+  status      AgentStatus   @default(ACTIVE)
+  createdAt   DateTime      @default(now())
   updatedAt   DateTime
   AgentLog    AgentLog[]
+  AgentConfig AgentConfig[]
 
   @@index([status])
   @@index([team])
+}
+
+model AgentConfig {
+  id        String   @id @default(cuid())
+  userId    String
+  agentId   String
+  isActive  Boolean  @default(true)
+  scope     String[] @default([])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, agentId])
+  @@index([userId])
+  @@index([agentId])
 }
 
 model AgentLog {
@@ -1186,6 +1204,8 @@ model User {
   // Facility Manager relations
   FacilityActivityCreatedBy                   FacilityActivity[]         @relation("FacilityActivityCreatedBy")
   FacilityActivityApprovedBy                  FacilityActivity[]         @relation("FacilityActivityApprovedBy")
+  // Mission Control relations
+  AgentConfig                                 AgentConfig[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1553,6 +1573,7 @@ enum SubscriptionTier {
 enum UserRole {
   ADMIN
   INSTRUCTOR
+  INVITED
   STUDENT
 }
 

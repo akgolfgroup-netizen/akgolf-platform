@@ -2,12 +2,23 @@
 
 import { cn } from "@/lib/portal/utils/cn";
 import type { LucideIcon } from "lucide-react";
+import { ICON_MAP, type IconName } from "./icon-map";
 
+/**
+ * AppleBadge Props
+ *
+ * For ikoner, bruk EN av disse:
+ * - `icon`: Lucide icon-komponent (kun i Client Components)
+ * - `iconName`: String-basert icon-navn (fungerer i Server Components)
+ */
 interface AppleBadgeProps {
   children: React.ReactNode;
   variant?: "success" | "warning" | "error" | "info" | "dark" | "neutral";
   size?: "sm" | "md" | "lg";
+  /** @deprecated i Server Components — bruk iconName i stedet */
   icon?: LucideIcon;
+  /** Bruk dette i Server Components i stedet for icon */
+  iconName?: IconName;
   dot?: boolean;
   className?: string;
 }
@@ -46,10 +57,14 @@ export function AppleBadge({
   children,
   variant = "neutral",
   size = "md",
-  icon: Icon,
+  icon,
+  iconName,
   dot = false,
   className,
 }: AppleBadgeProps) {
+  // Resolve icon: prioriter direkte icon prop, fall tilbake til iconName lookup
+  const Icon = icon ?? (iconName ? ICON_MAP[iconName] : undefined);
+
   return (
     <span
       className={cn(

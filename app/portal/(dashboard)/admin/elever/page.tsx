@@ -3,8 +3,9 @@ import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { StudentList } from "@/components/portal/admin/student-list";
 import { ADMIN_CONTENT } from "@/lib/website-constants";
-import { Info, UserPlus, Download, ChevronDown } from "lucide-react";
+import { Info, ChevronDown } from "lucide-react";
 import { AppleButton } from "@/components/portal/apple";
+// MERK: UserPlus og Download brukes via iconName for å unngå Server→Client boundary-feil
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +20,7 @@ export default async function StudentsPage() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em] font-[family-name:var(--font-display)]">
+          <h1 className="text-[32px] font-bold text-[var(--color-grey-900)] tracking-[-0.02em] font-[family-name:var(--font-display)]">
             Elever
           </h1>
           <p className="text-[15px] text-[var(--color-grey-500)] mt-1">
@@ -27,10 +28,10 @@ export default async function StudentsPage() {
           </p>
         </div>
         <div className="flex gap-3">
-          <AppleButton variant="secondary" size="sm" icon={Download}>
+          <AppleButton variant="secondary" size="sm" iconName="download">
             Eksporter
           </AppleButton>
-          <AppleButton variant="primary" size="sm" icon={UserPlus}>
+          <AppleButton variant="primary" size="sm" iconName="userPlus">
             Ny elev
           </AppleButton>
         </div>

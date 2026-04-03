@@ -1,6 +1,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getActivePlan, getCurrentWeekSessions } from "./actions";
 import { isStaff } from "@/lib/portal/rbac";
+// Kun ikoner som brukes DIREKTE i JSX (ikke som props til client components)
 import {
   Target,
   ChevronLeft,
@@ -10,10 +11,9 @@ import {
   Bed,
   Calendar,
   Clock,
-  Zap,
-  TrendingUp,
-  MessageSquare,
 } from "lucide-react";
+// MERK: Ikoner til AppleButton/AppleBadge/BentoCard bruker iconName i stedet
+// for å unngå Server→Client Component boundary-feil
 import { PORTAL_CONTENT } from "@/lib/website-constants";
 import { format, startOfISOWeek, addDays, isToday } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -114,7 +114,7 @@ export default async function TreningsplanPage() {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-[32px] font-bold text-[var(--apple-gray-950)] tracking-tight mb-1">
+            <h1 className="text-[32px] font-bold text-[var(--color-grey-900)] tracking-tight mb-1">
               Treningsplan
             </h1>
             <p className="text-[15px] text-[var(--color-grey-500)]" suppressHydrationWarning>
@@ -134,7 +134,7 @@ export default async function TreningsplanPage() {
               </AppleButton>
             </div>
             {canGenerate && (
-              <AppleButton variant="primary" size="sm" icon={Sparkles}>
+              <AppleButton variant="primary" size="sm" iconName="sparkles">
                 Generer ny plan
               </AppleButton>
             )}
@@ -248,7 +248,7 @@ export default async function TreningsplanPage() {
                           <AppleBadge
                             variant="neutral"
                             size="sm"
-                            icon={Zap}
+                            iconName="zap"
                           >
                             Planlagt okt
                           </AppleBadge>
@@ -256,7 +256,7 @@ export default async function TreningsplanPage() {
                       </div>
                     </div>
                     <Link href={`/portal/treningsplan/${todaySession.id}`}>
-                      <AppleButton variant="primary" icon={Play}>
+                      <AppleButton variant="primary" iconName="play">
                         Start okt
                       </AppleButton>
                     </Link>
@@ -300,15 +300,15 @@ export default async function TreningsplanPage() {
                 variant="glass"
                 title="Ukens statistikk"
                 subtitle="Progresjon denne uken"
-                icon={TrendingUp}
+                iconName="trendingUp"
               >
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-4 bg-[var(--color-grey-100)] rounded-xl">
-                    <p className="text-3xl font-bold text-[var(--apple-gray-950)]">{completedSessions}/{totalSessions}</p>
+                    <p className="text-3xl font-bold text-[var(--color-grey-900)]">{completedSessions}/{totalSessions}</p>
                     <p className="text-xs text-[var(--color-grey-500)] mt-1">Okter fullfort</p>
                   </div>
                   <div className="text-center p-4 bg-[var(--color-grey-100)] rounded-xl">
-                    <p className="text-3xl font-bold text-[var(--apple-gray-950)]">{Math.round(totalMinutes / 60)}t</p>
+                    <p className="text-3xl font-bold text-[var(--color-grey-900)]">{Math.round(totalMinutes / 60)}t</p>
                     <p className="text-xs text-[var(--color-grey-500)] mt-1">Total treningstid</p>
                   </div>
                   <div className="text-center p-4 bg-[var(--color-grey-100)] rounded-xl col-span-2">
@@ -376,7 +376,7 @@ export default async function TreningsplanPage() {
                   : "Kontakt din coach for å få en personlig treningsplan."}
               </p>
               {canGenerate && (
-                <AppleButton variant="primary" size="lg" icon={Sparkles}>
+                <AppleButton variant="primary" size="lg" iconName="sparkles">
                   Generer treningsplan
                 </AppleButton>
               )}

@@ -3,12 +3,29 @@
 import { motion, type HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import type { LucideIcon } from "lucide-react";
+import { ICON_MAP, type IconName } from "./icon-map";
 
+/**
+ * AppleButton Props
+ *
+ * For ikoner, bruk EN av disse:
+ * - `icon`: Lucide icon-komponent (kun i Client Components)
+ * - `iconName`: String-basert icon-navn (fungerer i Server Components)
+ *
+ * Eksempel Server Component:
+ *   <AppleButton iconName="plus">Ny</AppleButton>
+ *
+ * Eksempel Client Component:
+ *   <AppleButton icon={Plus}>Ny</AppleButton>
+ */
 interface AppleButtonProps extends Omit<HTMLMotionProps<"button">, "children"> {
   children: React.ReactNode;
   variant?: "primary" | "secondary" | "ghost";
   size?: "sm" | "md" | "lg";
+  /** @deprecated i Server Components — bruk iconName i stedet */
   icon?: LucideIcon;
+  /** Bruk dette i Server Components i stedet for icon */
+  iconName?: IconName;
   iconPosition?: "left" | "right";
   loading?: boolean;
   fullWidth?: boolean;
@@ -40,13 +57,17 @@ export function AppleButton({
   className,
   variant = "primary",
   size = "md",
-  icon: Icon,
+  icon,
+  iconName,
   iconPosition = "left",
   loading = false,
   fullWidth = false,
   disabled,
   ...props
 }: AppleButtonProps) {
+  // Resolve icon: prioriter direkte icon prop, fall tilbake til iconName lookup
+  const Icon = icon ?? (iconName ? ICON_MAP[iconName] : undefined);
+
   return (
     <motion.button
       className={cn(

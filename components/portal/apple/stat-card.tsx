@@ -4,13 +4,24 @@ import { motion } from "framer-motion";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import type { LucideIcon } from "lucide-react";
+import { ICON_MAP, type IconName } from "./icon-map";
 
+/**
+ * StatCard Props
+ *
+ * For ikoner, bruk EN av disse:
+ * - `icon`: Lucide icon-komponent (kun i Client Components)
+ * - `iconName`: String-basert icon-navn (fungerer i Server Components)
+ */
 interface StatCardProps {
   label: string;
   value: string | number;
   trend?: number;
   trendLabel?: string;
+  /** @deprecated i Server Components — bruk iconName i stedet */
   icon?: LucideIcon;
+  /** Bruk dette i Server Components i stedet for icon */
+  iconName?: IconName;
   iconColor?: string;
   iconBg?: string;
   className?: string;
@@ -43,12 +54,15 @@ export function StatCard({
   value,
   trend,
   trendLabel,
-  icon: Icon,
+  icon,
+  iconName,
   iconColor = "text-[var(--color-grey-900)]",
   iconBg = "bg-[var(--color-grey-100)]",
   className,
   size = "md",
 }: StatCardProps) {
+  // Resolve icon: prioriter direkte icon prop, fall tilbake til iconName lookup
+  const Icon = icon ?? (iconName ? ICON_MAP[iconName] : undefined);
   const isPositive = trend && trend > 0;
   const isNegative = trend && trend < 0;
   const sizes = sizeMap[size];
@@ -81,7 +95,7 @@ export function StatCard({
       <div className="flex items-end justify-between">
         <motion.span
           className={cn(
-            "font-light tracking-tight bg-gradient-to-br from-[var(--apple-gray-950)] to-[var(--color-grey-700)]",
+            "font-light tracking-tight bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)]",
             "bg-clip-text text-transparent",
             sizes.value
           )}

@@ -264,7 +264,7 @@ export default function ProfilPage() {
           transition={{ duration: 0.4 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-[var(--apple-gray-950)] tracking-tight">
+          <h1 className="text-3xl font-bold text-[var(--color-grey-900)] tracking-tight">
             Min profil
           </h1>
           <p className="text-[var(--color-grey-500)] mt-1">
@@ -286,7 +286,7 @@ export default function ProfilPage() {
                 />
               </div>
 
-              <h2 className="text-xl font-bold text-[var(--apple-gray-950)] mb-2">
+              <h2 className="text-xl font-bold text-[var(--color-grey-900)] mb-2">
                 {user.name ?? "Ukjent"}
               </h2>
 

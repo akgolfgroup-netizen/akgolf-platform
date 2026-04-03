@@ -27,7 +27,7 @@ export default async function AvailabilityPage() {
               <Calendar className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h1 className="font-display text-[32px] font-bold text-[var(--apple-gray-950)] tracking-[-0.02em]">
+              <h1 className="font-display text-[32px] font-bold text-[var(--color-grey-900)] tracking-[-0.02em]">
                 Tilgjengelighet
               </h1>
               <p className="text-[15px] text-[var(--color-grey-500)] mt-1">

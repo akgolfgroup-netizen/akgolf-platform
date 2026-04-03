@@ -8,12 +8,82 @@ export function isInstructor(role?: string): boolean {
   return role === UserRole.INSTRUCTOR || role === UserRole.ADMIN;
 }
 
+export function isInvited(role?: string): boolean {
+  return role === UserRole.INVITED;
+}
+
 export function isStudent(role?: string): boolean {
   return role === UserRole.STUDENT;
 }
 
 export function isStaff(role?: string): boolean {
   return role === UserRole.ADMIN || role === UserRole.INSTRUCTOR;
+}
+
+/**
+ * Check if user can access Mission Control admin dashboard
+ * ADMIN, INSTRUCTOR, and INVITED roles all have access
+ */
+export function canAccessMissionControl(role?: string): boolean {
+  return (
+    role === UserRole.ADMIN ||
+    role === UserRole.INSTRUCTOR ||
+    role === UserRole.INVITED
+  );
+}
+
+/**
+ * Mission Control page access matrix
+ * Returns true if the role can access the specified page
+ */
+export function canAccessMCPage(
+  role: string | undefined,
+  page:
+    | "hub"
+    | "focus"
+    | "kalender"
+    | "fasiliteter"
+    | "bookinger"
+    | "elever"
+    | "meldinger"
+    | "godkjenninger"
+    | "ai-assistent"
+    | "okter"
+    | "turneringer"
+    | "agenter"
+    | "okonomi"
+    | "rapporter"
+    | "e-postmaler"
+): boolean {
+  if (!role) return false;
+
+  // Pages accessible to all MC users (ADMIN, INSTRUCTOR, INVITED)
+  const publicPages = ["hub", "focus", "kalender", "fasiliteter"];
+  if (publicPages.includes(page)) {
+    return canAccessMissionControl(role);
+  }
+
+  // Pages accessible only to ADMIN and INSTRUCTOR
+  const staffPages = [
+    "bookinger",
+    "elever",
+    "meldinger",
+    "godkjenninger",
+    "ai-assistent",
+    "okter",
+    "turneringer",
+  ];
+  if (staffPages.includes(page)) {
+    return isStaff(role);
+  }
+
+  // Pages accessible only to ADMIN
+  const adminPages = ["agenter", "okonomi", "rapporter", "e-postmaler"];
+  if (adminPages.includes(page)) {
+    return isAdmin(role);
+  }
+
+  return false;
 }
 
 const TIER_RANK: Record<SubscriptionTier, number> = {

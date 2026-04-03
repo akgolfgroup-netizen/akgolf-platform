@@ -3,7 +3,21 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import type { LucideIcon } from "lucide-react";
+import { ICON_MAP, type IconName } from "./icon-map";
 
+/**
+ * BentoCard Props
+ *
+ * For ikoner, bruk EN av disse:
+ * - `icon`: Lucide icon-komponent (kun i Client Components)
+ * - `iconName`: String-basert icon-navn (fungerer i Server Components)
+ *
+ * Eksempel Server Component:
+ *   <BentoCard iconName="info" title="Info" />
+ *
+ * Eksempel Client Component:
+ *   <BentoCard icon={Info} title="Info" />
+ */
 interface BentoCardProps {
   children: React.ReactNode;
   className?: string;
@@ -12,7 +26,10 @@ interface BentoCardProps {
   variant?: "glass" | "solid" | "gradient" | "dark";
   title?: string;
   subtitle?: string;
+  /** @deprecated i Server Components — bruk iconName i stedet */
   icon?: LucideIcon;
+  /** Bruk dette i Server Components i stedet for icon */
+  iconName?: IconName;
   iconColor?: string;
   action?: React.ReactNode;
   hover?: boolean;
@@ -48,11 +65,15 @@ export function BentoCard({
   variant = "glass",
   title,
   subtitle,
-  icon: Icon,
+  icon,
+  iconName,
   iconColor = "text-[var(--color-grey-900)]",
   action,
   hover = true,
 }: BentoCardProps) {
+  // Resolve icon: prioriter direkte icon prop, fall tilbake til iconName lookup
+  const Icon = icon ?? (iconName ? ICON_MAP[iconName] : undefined);
+
   return (
     <motion.div
       className={cn(

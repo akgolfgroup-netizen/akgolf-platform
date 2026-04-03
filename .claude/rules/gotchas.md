@@ -527,6 +527,109 @@ if (validStatuses.includes(booking.status)) { }
 
 **Regel:** Unnga inline enum-arrays med includes(). Bruk helper-funksjoner eller eksplisitt typing.
 
+## 36. CSS-tokens som ikke eksisterer (2026-04-03)
+
+**Problem:** Kode refererer til CSS-variabler som ikke er definert i `globals.css`, f.eks. `--color-grey-050` eller `--color-grey-50`.
+
+**Feilmelding:** Ingen feilmelding — CSS fallback til transparent/inherit, som gir uventet visuell oppførsel (faded/usynlig innhold).
+
+**Kjente manglende tokens:**
+| Brukt i kode | Eksisterer | Løsning |
+|--------------|------------|---------|
+| `--color-grey-050` | NEI | Bruk `white` eller `--color-grey-100` |
+| `--color-grey-50` | NEI | Bruk `white` eller `--color-grey-100` |
+| `--apple-gray-950` | NEI | Bruk `--color-grey-900` |
+
+**Offisiell grey-skala i globals.css:**
+```css
+--color-grey-100: #F5F5F7;  /* Lyseste grå */
+--color-grey-200: #E8E8ED;
+--color-grey-300: #D2D2D7;
+--color-grey-400: #86868B;
+--color-grey-500: #6E6E73;
+--color-grey-600: #48484A;
+--color-grey-700: #3A3A3C;
+--color-grey-800: #2C2C2E;
+--color-grey-900: #1D1D1F;  /* Mørkeste grå / svart */
+```
+
+**Regel:** Alltid verifiser at CSS-variabler eksisterer i `globals.css` før bruk. Hvis du trenger en lysere tone enn `--color-grey-100`, bruk `white` eller `--color-white`.
+
+## 37. Lucide icons i Server Components — utvidet (2026-04-03)
+
+**Problem:** Lucide icons med `forwardRef` kan ikke sendes fra Server Components til Client Components som props.
+
+**Symptom:** Feilmelding `{$typeof: ..., render: function IconName}` eller `Functions cannot be passed directly to Client Components`.
+
+**Berørte komponenter:**
+- `BentoCard` — `icon` prop
+- `AppleButton` — `icon` prop
+- `StatCard` — `icon` prop
+- `AppleBadge` — `icon` prop
+
+**Løsning A — String-basert icon-map (anbefalt for disse komponentene):**
+```typescript
+// components/portal/apple/icon-map.ts
+import { Info, Plus, Calendar, Target, Sparkles, Download } from "lucide-react";
+export const ICON_MAP = { info: Info, plus: Plus, calendar: Calendar, target: Target, sparkles: Sparkles, download: Download } as const;
+export type IconName = keyof typeof ICON_MAP;
+
+// I BentoCard/AppleButton:
+interface Props {
+  icon?: LucideIcon;      // For client-side bruk
+  iconName?: IconName;    // For server-side bruk
+}
+const ResolvedIcon = iconName ? ICON_MAP[iconName] : icon;
+```
+
+**Løsning B — Gjør parent til client component:**
+```typescript
+// Legg til øverst i filen:
+"use client";
+```
+
+**Regel:** Når du bruker BentoCard/AppleButton/StatCard i Server Components, bruk `iconName="info"` i stedet for `icon={Info}`.
+
+## 38. Mission Control admin dashboard (2026-04-03)
+
+**Status:** `/portal/admin/` bruker nå Mission Control-design med egen layout, sidebar og komponenter.
+
+**Nye roller:**
+- `INVITED` — Ny UserRole for inviterte brukere (driftsselskap, klubbansatte) med begrenset tilgang
+
+**Nye modeller:**
+- `AgentConfig` — Bruker-spesifikke agent-innstillinger (aktiv/inaktiv, scope)
+
+**RBAC-funksjoner:**
+```typescript
+import { canAccessMissionControl, canAccessMCPage, isInvited } from "@/lib/portal/rbac";
+
+// Sjekk om bruker kan se Mission Control
+if (canAccessMissionControl(user.role)) { }
+
+// Sjekk tilgang til spesifikk side
+if (canAccessMCPage(user.role, "agenter")) { }
+```
+
+**Tilgangsnivåer:**
+| Side | ADMIN | INSTRUCTOR | INVITED |
+|------|-------|------------|---------|
+| Hub, Kalender, Fasiliteter | ✓ | ✓ | ✓ |
+| Bookinger, Elever, Meldinger, Okter | ✓ | ✓ | ✗ |
+| Agenter, Okonomi, Rapporter | ✓ | ✗ | ✗ |
+
+**Komponenter:**
+```
+components/portal/mission-control/
+├── mc-layout.tsx       # App wrapper med sidebar context
+├── mc-sidebar.tsx      # Navigasjonsmeny
+├── mc-topbar.tsx       # Topbar med sok og notifikasjoner
+├── ui/                 # UI-komponenter (MCCard, MCBadge, etc.)
+└── hub/                # Hub-spesifikke komponenter
+```
+
+**CSS-tokens:** MC-tokens er definert i `globals.css` under `/* MISSION CONTROL */` seksjonen.
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer

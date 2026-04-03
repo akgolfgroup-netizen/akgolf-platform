@@ -228,7 +228,9 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
   const isEmpty = logs.length === 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--color-grey-100)] via-[var(--color-grey-050)] to-[var(--color-grey-100)] relative">
+    // MERK: Bruker white i stedet for --color-grey-050 som ikke eksisterer
+    // Se gotchas.md #36 for liste over gyldige CSS-tokens
+    <div className="min-h-screen bg-gradient-to-br from-[var(--color-grey-100)] via-white to-[var(--color-grey-100)] relative">
       {/* Subtle grid pattern */}
       <div
         className="absolute inset-0 pointer-events-none"

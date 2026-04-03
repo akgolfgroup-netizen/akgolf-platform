@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { getUpcomingBookings, getPastBookings } from "./actions";
 import { BookingList } from "@/components/portal/bookinger/booking-list";
-import { Plus, Info, Calendar, CalendarCheck } from "lucide-react";
 import { PORTAL_CONTENT } from "@/lib/website-constants";
 import { BentoGrid } from "@/components/portal/apple/bento-grid";
 import { BentoCard } from "@/components/portal/apple/bento-card";
 import { AppleButton } from "@/components/portal/apple/apple-button";
+// MERK: Lucide icons importeres IKKE her — vi bruker iconName i stedet
+// for å unngå Server→Client Component boundary-feil
 
 export default async function BookingerPage() {
   const [upcoming, past] = await Promise.all([
@@ -27,7 +28,7 @@ export default async function BookingerPage() {
             </p>
           </div>
           <Link href="/portal/bookinger/ny">
-            <AppleButton icon={Plus} variant="primary" size="md">
+            <AppleButton iconName="plus" variant="primary" size="md">
               Book coaching
             </AppleButton>
           </Link>
@@ -37,7 +38,7 @@ export default async function BookingerPage() {
         <BentoCard
           variant="glass"
           span={12}
-          icon={Info}
+          iconName="info"
           title="Avbestillingsregler"
           subtitle="Viktig informasjon om endringer"
           hover={false}
@@ -67,7 +68,7 @@ export default async function BookingerPage() {
           <BentoCard
             span={12}
             variant="solid"
-            icon={CalendarCheck}
+            iconName="calendarCheck"
             iconColor="text-green-500"
             title="Kommende treninger"
             subtitle={upcoming.length > 0 ? `${upcoming.length} planlagte` : "Ingen planlagte"}
@@ -86,7 +87,7 @@ export default async function BookingerPage() {
             <BentoCard
               span={12}
               variant="solid"
-              icon={Calendar}
+              iconName="calendar"
               iconColor="text-[var(--color-grey-400)]"
               title="Tidligere treninger"
               subtitle={`${past.length} fullførte`}

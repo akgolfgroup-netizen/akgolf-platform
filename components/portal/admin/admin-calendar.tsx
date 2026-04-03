@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function AdminCalendar({ instructors }: Props) {
-  const [viewMode, setViewMode] = useState<ViewMode>("week");
+  const [viewMode, setViewMode] = useState<ViewMode>("day");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedInstructorId, setSelectedInstructorId] = useState<string>("");
   const [bookings, setBookings] = useState<CalendarBooking[]>([]);

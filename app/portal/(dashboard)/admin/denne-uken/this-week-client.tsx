@@ -61,7 +61,7 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
             <Calendar className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-br from-[var(--apple-gray-950)] to-[var(--color-grey-700)] bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)] bg-clip-text text-transparent">
               Denne uken
             </h1>
             <p className="text-sm text-[var(--color-grey-500)]">{weekStats.weekLabel}</p>
