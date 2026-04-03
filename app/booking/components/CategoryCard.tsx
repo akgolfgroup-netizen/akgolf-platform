@@ -27,7 +27,7 @@ export function CategoryCard({ category, index }: Props) {
       transition={{ delay: index * 0.1, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link
-        href={`/booking/${category.slug}`}
+        href={`/booking/kategori/${category.slug}`}
         className="group flex flex-col h-full bg-white rounded-[20px] p-6 border border-grey-200 hover:border-grey-300 hover:shadow-lg transition-all duration-300"
       >
         <div className="w-12 h-12 rounded-xl bg-grey-100 flex items-center justify-center mb-4 group-hover:bg-black transition-colors">
