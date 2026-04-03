@@ -91,7 +91,7 @@ function CoachCapacityCard({ coach }: { coach: CapacityData["coaches"][0] }) {
       {/* Progress bar */}
       <div className="h-2 bg-[var(--color-grey-200)] rounded-full overflow-hidden">
         <div
-          className="h-full rounded-full transition-all duration-500"
+          className="h-full rounded-full transition-[width] duration-500"
           style={{
             width: `${Math.min(coach.occupancy * 100, 100)}%`,
             background: occupancyColor

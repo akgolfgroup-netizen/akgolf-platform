@@ -3,6 +3,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { BookingStatus } from "@prisma/client";
 import { addMinutes } from "date-fns";
 import { sendRescheduleNotification } from "@/lib/portal/email/send-booking-email";
+import { logger } from "@/lib/logger";
 
 interface RescheduleResult {
   success: boolean;
@@ -168,7 +169,7 @@ export async function rescheduleBooking(
         booking.startTime,
         newStartTime,
       ).catch((err) => {
-        console.error(`[Reschedule] Email notification failed:`, err);
+        logger.error("[Reschedule] Email notification failed:", err);
       });
     }
 

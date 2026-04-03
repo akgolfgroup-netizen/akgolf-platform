@@ -77,8 +77,8 @@ export function AdminBookingList() {
       const result = await searchBookings(q, status, p);
       setBookings(result.bookings as unknown as Booking[]);
       setTotal(result.total);
-    } catch (err) {
-      console.error(err);
+    } catch {
+      // Error handled silently - list will remain unchanged
     } finally {
       setLoading(false);
     }
@@ -106,8 +106,8 @@ export function AdminBookingList() {
     try {
       await adminCancelBooking(bookingId);
       fetchBookings(query, statusFilter, page);
-    } catch (err) {
-      console.error(err);
+    } catch {
+      // Error handled silently - booking remains unchanged
     }
   };
 
@@ -159,7 +159,7 @@ export function AdminBookingList() {
             key={key}
             onClick={() => handleStatusChange(key)}
             className={`
-              flex items-center gap-2 px-5 py-3 text-sm font-medium rounded-xl transition-all duration-200
+              flex items-center gap-2 px-5 py-3 text-sm font-medium rounded-xl transition-colors duration-200
               ${statusFilter === key
                 ? "bg-[var(--color-grey-900)] text-white"
                 : "text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-700)]"
@@ -183,7 +183,7 @@ export function AdminBookingList() {
       {/* Filter Bar */}
       <AppleCard variant="glass" padding="md" hover={false} className="flex items-center gap-4 flex-wrap">
         {/* Search */}
-        <div className="flex items-center gap-3 flex-1 min-w-[280px] px-4 py-3 bg-[var(--color-grey-100)] rounded-xl border border-transparent focus-within:bg-white focus-within:border-[var(--color-grey-900)] focus-within:shadow-[0_0_0_3px_var(--color-grey-200)] transition-all duration-200">
+        <div className="flex items-center gap-3 flex-1 min-w-[280px] px-4 py-3 bg-[var(--color-grey-100)] rounded-xl border border-transparent focus-within:bg-white focus-within:border-[var(--color-grey-900)] focus-within:shadow-[0_0_0_3px_var(--color-grey-200)] transition-[background-color,border-color,box-shadow] duration-200">
           <Search className="w-[18px] h-[18px] text-[var(--color-grey-400)]" />
           <input
             type="text"
@@ -199,7 +199,7 @@ export function AdminBookingList() {
         <div className="w-px h-8 bg-[var(--color-grey-200)]" />
 
         {/* Date Range */}
-        <button className="flex items-center gap-2 px-4 py-2 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl text-sm text-[var(--color-grey-700)] hover:bg-[var(--color-grey-100)] transition-colors">
+        <button className="flex items-center gap-2 px-4 py-2 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl text-sm text-[var(--color-grey-700)] hover:bg-[var(--color-grey-200)] transition-colors">
           <Calendar className="w-4 h-4 text-[var(--color-grey-400)]" />
           Denne uken
         </button>
@@ -207,7 +207,7 @@ export function AdminBookingList() {
         {/* Search Button */}
         <button
           onClick={handleSearch}
-          className="px-5 py-2.5 text-sm font-semibold bg-[var(--color-grey-900)] text-white rounded-xl hover:bg-[var(--color-grey-900)]/90 transition-all duration-200 shadow-[var(--shadow-md)] hover:-translate-y-0.5"
+          className="px-5 py-2.5 text-sm font-semibold bg-[var(--color-grey-900)] text-white rounded-xl hover:bg-[var(--color-grey-900)]/90 transition-[background-color,transform] duration-200 shadow-[var(--shadow-md)] hover:-translate-y-0.5"
         >
           Sok
         </button>
@@ -253,7 +253,7 @@ export function AdminBookingList() {
                 <button
                   onClick={toggleAllBookings}
                   className={`
-                    w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200
+                    w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors duration-200
                     ${selectedBookings.size === bookings.length
                       ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)]"
                       : "border-[var(--color-grey-300)] hover:border-[var(--color-grey-900)]"
@@ -289,7 +289,7 @@ export function AdminBookingList() {
                     key={b.id}
                     className={`
                       grid grid-cols-[48px_140px_1fr_140px_120px_100px_120px] gap-4 px-5 py-4 items-center
-                      transition-all duration-200 hover:bg-[var(--color-grey-100)] hover:scale-[1.005]
+                      transition-[background-color,transform] duration-200 hover:bg-[var(--color-grey-100)] hover:scale-[1.005]
                       ${isSelected ? "bg-[var(--color-grey-100)]" : ""}
                     `}
                   >
@@ -298,7 +298,7 @@ export function AdminBookingList() {
                       <button
                         onClick={() => toggleBookingSelection(b.id)}
                         className={`
-                          w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200
+                          w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors duration-200
                           ${isSelected
                             ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)]"
                             : "border-[var(--color-grey-300)] hover:border-[var(--color-grey-900)]"

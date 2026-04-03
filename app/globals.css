@@ -809,6 +809,34 @@
     border-color: var(--portal-card-border-hover);
   }
 
+  /* Portal heading hierarchy */
+  .portal-h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--portal-text-primary);
+  }
+
+  .portal-h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--portal-text-primary);
+  }
+
+  .portal-h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--portal-text-primary);
+  }
+
+  .portal-h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--portal-text-secondary);
+  }
+
   /* Portal input */
   .portal-input {
     display: block;
@@ -991,4 +1019,16 @@
   --sidebar-accent-foreground: oklch(0.145 0 0);
   --sidebar-border: oklch(0.91 0 0);
   --sidebar-ring: oklch(0.145 0 0);
+}
+
+/* ─── Accessibility: Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

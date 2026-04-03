@@ -77,8 +77,7 @@ export default function AcademyBookingPage() {
         setServiceTypes(Array.isArray(data) ? data : []);
         setLoadingServices(false);
       })
-      .catch(err => {
-        console.error("Failed to load services:", err);
+      .catch(() => {
         setLoadingServices(false);
       });
   }, []);
@@ -264,7 +263,7 @@ export default function AcademyBookingPage() {
                       <div key={s} className="flex items-center">
                         <div className="flex flex-col items-center">
                           <motion.div
-                            className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300"
+                            className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-[background-color,color,border-color] duration-300"
                             style={{
                               background: isActive 
                                 ? THEME.primary 
@@ -344,7 +343,7 @@ export default function AcademyBookingPage() {
                           whileTap={{ scale: 0.98 }}
                         >
                           <div
-                            className="rounded-2xl p-6 transition-all duration-300 border"
+                            className="rounded-2xl p-6 transition-[border-color,box-shadow] duration-300 border"
                             style={{
                               background: THEME.bgElevated,
                               borderColor: THEME.border,
@@ -458,7 +457,7 @@ export default function AcademyBookingPage() {
                           whileHover={{ x: 4 }}
                         >
                           <div
-                            className="rounded-2xl p-5 flex items-center gap-5 transition-all duration-300 border"
+                            className="rounded-2xl p-5 flex items-center gap-5 transition-[border-color,box-shadow] duration-300 border"
                             style={{
                               background: THEME.bgElevated,
                               borderColor: THEME.border,
@@ -503,7 +502,7 @@ export default function AcademyBookingPage() {
                               )}
                             </div>
                             <ChevronRight 
-                              className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all"
+                              className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity"
                               style={{ color: THEME.primary }}
                             />
                           </div>
@@ -568,7 +567,7 @@ export default function AcademyBookingPage() {
                               key={date.toISOString()}
                               onClick={() => !isWeekend && handleSelectDate(date)}
                               disabled={isWeekend}
-                              className="flex-shrink-0 rounded-2xl p-4 text-center min-w-[80px] transition-all duration-200"
+                              className="flex-shrink-0 rounded-2xl p-4 text-center min-w-[80px] transition-[background-color,border-color,box-shadow,opacity] duration-200"
                               style={{
                                 background: isSelected ? THEME.primary : THEME.bgElevated,
                                 border: isSelected ? "none" : `1px solid ${THEME.border}`,
@@ -646,7 +645,7 @@ export default function AcademyBookingPage() {
                                 <motion.button
                                   key={slot}
                                   onClick={() => handleSelectSlot(slot)}
-                                  className="rounded-xl py-4 text-sm font-medium transition-all duration-200 border"
+                                  className="rounded-xl py-4 text-sm font-medium transition-[transform,border-color,box-shadow] duration-200 border"
                                   style={{
                                     background: THEME.bgElevated,
                                     borderColor: THEME.border,
@@ -747,7 +746,7 @@ export default function AcademyBookingPage() {
                           value={customerName}
                           onChange={(e) => setCustomerName(e.target.value)}
                           placeholder="Ditt navn"
-                          className="w-full px-4 py-3 rounded-xl border transition-all duration-200"
+                          className="w-full px-4 py-3 rounded-xl border transition-[border-color] duration-200"
                           style={{
                             background: THEME.bgElevated,
                             borderColor: THEME.border,
@@ -775,7 +774,7 @@ export default function AcademyBookingPage() {
                             value={customerEmail}
                             onChange={(e) => setCustomerEmail(e.target.value)}
                             placeholder="din@epost.no"
-                            className="w-full pl-12 pr-4 py-3 rounded-xl border transition-all duration-200"
+                            className="w-full pl-12 pr-4 py-3 rounded-xl border transition-[border-color] duration-200"
                             style={{
                               background: THEME.bgElevated,
                               borderColor: THEME.border,
@@ -807,7 +806,7 @@ export default function AcademyBookingPage() {
                             value={customerPhone}
                             onChange={(e) => setCustomerPhone(e.target.value)}
                             placeholder="+47 000 00 000"
-                            className="w-full pl-12 pr-4 py-3 rounded-xl border transition-all duration-200"
+                            className="w-full pl-12 pr-4 py-3 rounded-xl border transition-[border-color] duration-200"
                             style={{
                               background: THEME.bgElevated,
                               borderColor: THEME.border,
@@ -824,7 +823,7 @@ export default function AcademyBookingPage() {
                       <motion.button
                         onClick={() => validateCustomerDetails() && setStep("confirm")}
                         disabled={!validateCustomerDetails()}
-                        className="w-full py-4 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50"
+                        className="w-full py-4 rounded-2xl text-base font-semibold transition-[opacity,transform,box-shadow] duration-300 disabled:opacity-50"
                         style={{
                           background: THEME.primary,
                           color: "#FFFFFF",
@@ -978,7 +977,7 @@ export default function AcademyBookingPage() {
                       <motion.button
                         onClick={() => handleBook("STRIPE")}
                         disabled={booking}
-                        className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50"
+                        className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-[opacity,transform,box-shadow] duration-300 disabled:opacity-50"
                         style={{
                           background: THEME.primary,
                           color: "#FFFFFF",
@@ -1003,7 +1002,7 @@ export default function AcademyBookingPage() {
                       <motion.button
                         onClick={() => handleBook("VIPPS")}
                         disabled={booking}
-                        className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 border-2"
+                        className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-[opacity,transform,background-color,color] duration-300 disabled:opacity-50 border-2"
                         style={{
                           background: "transparent",
                           color: "#FF5B24",

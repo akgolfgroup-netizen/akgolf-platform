@@ -33,7 +33,7 @@ export function ContextActions({
         description: "Fullfør din daglige økt",
         href: "/portal/dagbok",
         icon: Plus,
-        gradient: "from-gold via-amber-500 to-gold",
+        gradient: "from-[var(--color-grey-900)] via-[var(--color-grey-700)] to-[var(--color-grey-900)]",
         priority: true,
       }
     : hasUpcomingSession
@@ -50,7 +50,7 @@ export function ContextActions({
         description: "Fortsett utviklingen",
         href: "/portal/bookinger/ny",
         icon: Calendar,
-        gradient: "from-gold via-amber-500 to-gold",
+        gradient: "from-[var(--color-grey-900)] via-[var(--color-grey-700)] to-[var(--color-grey-900)]",
         priority: true,
       };
 
@@ -88,7 +88,7 @@ export function ContextActions({
         className="col-span-12 md:col-span-5"
       >
         <Link href={primaryAction.href} className="group block">
-          <div className="relative overflow-hidden rounded-2xl p-6 bg-gradient-to-r from-[var(--portal-card-bg-solid)] to-[var(--portal-surface-raised)] border border-[var(--portal-card-border)] hover:border-gold/30 transition-all duration-300">
+          <div className="relative overflow-hidden rounded-2xl p-6 bg-gradient-to-r from-[var(--portal-card-bg-solid)] to-[var(--portal-surface-raised)] border border-[var(--portal-card-border)] hover:border-[var(--color-grey-200)] transition-[border-color] duration-300">
             {/* Animated gradient border effect */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               <div className={`absolute inset-0 bg-gradient-to-r ${primaryAction.gradient} opacity-5`} />
@@ -98,12 +98,12 @@ export function ContextActions({
               <div className="flex items-center gap-4">
                 <motion.div
                   whileHover={{ scale: 1.05, rotate: 5 }}
-                  className={`w-14 h-14 rounded-xl bg-gradient-to-br ${primaryAction.gradient} flex items-center justify-center shadow-lg shadow-gold/20`}
+                  className={`w-14 h-14 rounded-xl bg-gradient-to-br ${primaryAction.gradient} flex items-center justify-center shadow-sm`}
                 >
                   <primaryAction.icon className="w-6 h-6 text-white" />
                 </motion.div>
                 <div>
-                  <h3 className="text-lg font-semibold text-[var(--portal-text-primary)] group-hover:text-gold transition-colors">
+                  <h3 className="text-lg font-semibold text-[var(--portal-text-primary)] group-hover:text-[var(--color-grey-500)] transition-colors">
                     {primaryAction.label}
                   </h3>
                   <p className="text-sm text-[var(--portal-text-muted)]">
@@ -116,7 +116,7 @@ export function ContextActions({
                 whileHover={{ x: 5 }}
                 className="w-10 h-10 rounded-full bg-[var(--portal-surface-sunken)] flex items-center justify-center"
               >
-                <ChevronRight className="w-5 h-5 text-[var(--portal-text-muted)] group-hover:text-gold transition-colors" />
+                <ChevronRight className="w-5 h-5 text-[var(--portal-text-muted)] group-hover:text-[var(--color-grey-500)] transition-colors" />
               </motion.div>
             </div>
           </div>
@@ -133,7 +133,7 @@ export function ContextActions({
             transition={{ duration: 0.4, delay: 0.1 + i * 0.1 }}
           >
             <Link href={action.href} className="group block">
-              <div className="flex flex-col items-center gap-3 p-5 rounded-xl border border-[var(--portal-card-border)] bg-[var(--portal-card-bg-solid)] hover:border-white/10 hover:bg-[var(--portal-surface-raised)] transition-all duration-200">
+              <div className="flex flex-col items-center gap-3 p-5 rounded-xl border border-[var(--portal-card-border)] bg-[var(--portal-card-bg-solid)] hover:border-white/10 hover:bg-[var(--portal-surface-raised)] transition-[border-color,background-color] duration-200">
                 <motion.div
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}

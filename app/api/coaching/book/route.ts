@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { randomUUID } from "crypto";
 import { prisma } from "@/lib/portal/prisma";
 import { getPortalUser } from "@/lib/portal/auth";
@@ -310,7 +311,7 @@ export async function POST(req: NextRequest) {
     if (error instanceof ConflictError) {
       return NextResponse.json({ error: error.message }, { status: 409 });
     }
-    console.error("[coaching/book] Error:", error);
+    logger.error("[coaching/book] Error:", error);
     return NextResponse.json({ error: "Intern feil" }, { status: 500 });
   }
 }

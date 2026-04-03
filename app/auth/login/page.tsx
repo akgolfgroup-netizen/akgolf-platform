@@ -39,7 +39,7 @@ function LoginForm() {
   if (sent) {
     return (
       <div className="text-center max-w-md mx-auto">
-        <div className="w-16 h-16 bg-[#34C759]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className="w-16 h-16 bg-[var(--color-success)]/10 rounded-full flex items-center justify-center mx-auto mb-6">
           <svg
             width="32"
             height="32"
@@ -47,18 +47,18 @@ function LoginForm() {
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
-            className="text-[#34C759]"
+            className="text-[var(--color-success)]"
           >
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
             <polyline points="22,6 12,13 2,6" />
           </svg>
         </div>
-        <h1 className="text-2xl font-semibold text-[#1D1D1F] mb-4">Sjekk e-posten din</h1>
-        <p className="text-[#86868B] mb-2">
+        <h1 className="text-2xl font-semibold text-[var(--color-grey-900)] mb-4">Sjekk e-posten din</h1>
+        <p className="text-[var(--color-grey-400)] mb-2">
           Vi har sendt en innloggingslenke til
         </p>
-        <p className="font-semibold text-[#1D1D1F] mb-8">{email}</p>
-        <p className="text-sm text-[#86868B]">
+        <p className="font-semibold text-[var(--color-grey-900)] mb-8">{email}</p>
+        <p className="text-sm text-[var(--color-grey-400)]">
           Klikk lenken i e-posten for a logge inn. Sjekk spam-mappen om du ikke
           finner den.
         </p>
@@ -69,14 +69,14 @@ function LoginForm() {
   return (
     <div className="max-w-md mx-auto w-full">
       <div className="text-center mb-8">
-        <h1 className="text-2xl font-semibold text-[#1D1D1F] mb-3">Logg inn</h1>
-        <p className="text-[#86868B]">
+        <h1 className="text-2xl font-semibold text-[var(--color-grey-900)] mb-3">Logg inn</h1>
+        <p className="text-[var(--color-grey-400)]">
           Logg inn for a se din treningsplan og folge utviklingen din.
         </p>
       </div>
 
-      <form onSubmit={handleLogin} className="bg-[#F5F5F7] rounded-2xl p-8">
-        <label htmlFor="email" className="block text-sm font-medium text-[#1D1D1F] mb-2">
+      <form onSubmit={handleLogin} className="bg-[var(--color-grey-100)] rounded-2xl p-8">
+        <label htmlFor="email" className="block text-sm font-medium text-[var(--color-grey-900)] mb-2">
           E-post
         </label>
         <input
@@ -86,18 +86,20 @@ function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="din@epost.no"
           required
-          className="w-full px-4 py-3 bg-white border border-[#E8E8ED] rounded-xl text-[#1D1D1F] placeholder:text-[#86868B] focus:outline-none focus:ring-2 focus:ring-[#1D1D1F]/20 focus:border-[#1D1D1F] transition-all mb-6"
+          autoComplete="email"
+          spellCheck={false}
+          className="w-full px-4 py-3 bg-white border border-[var(--color-grey-200)] rounded-xl text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)] transition-[border-color,box-shadow] mb-6"
           autoFocus
         />
 
         {error && (
-          <p className="text-[#FF3B30] text-sm mb-4">{error}</p>
+          <p className="text-[var(--color-error)] text-sm mb-4" role="alert" aria-live="assertive">{error}</p>
         )}
 
         <button
           type="submit"
           disabled={loading || !email.includes("@")}
-          className="w-full bg-[#1D1D1F] text-white font-medium py-3 px-6 rounded-full hover:bg-[#1D1D1F]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          className="w-full bg-[var(--color-grey-900)] text-white font-medium py-3 px-6 rounded-full hover:bg-[var(--color-grey-900)]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-[background-color,opacity]"
         >
           {loading ? (
             <span className="flex items-center justify-center gap-2">
@@ -105,6 +107,7 @@ function LoginForm() {
                 className="animate-spin h-4 w-4"
                 viewBox="0 0 24 24"
                 fill="none"
+                aria-hidden="true"
               >
                 <circle
                   className="opacity-25"
@@ -127,7 +130,7 @@ function LoginForm() {
           )}
         </button>
 
-        <p className="text-xs text-[#86868B] text-center mt-4">
+        <p className="text-xs text-[var(--color-grey-400)] text-center mt-4">
           Vi sender en sikker lenke til e-postadressen din. Ingen passord
           trengs.
         </p>
@@ -136,7 +139,7 @@ function LoginForm() {
       <div className="text-center mt-6">
         <Link
           href="/treningsplan"
-          className="text-sm text-[#86868B] hover:text-[#1D1D1F] transition-colors"
+          className="text-sm text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-colors"
         >
           Tilbake til treningsplan
         </Link>
@@ -147,7 +150,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <main className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-16">
+    <main className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-16" id="main-content">
       <div className="w-full max-w-md">
         <div className="flex justify-center mb-8">
           <AKLogo variant="black" size={48} />
@@ -155,7 +158,7 @@ export default function LoginPage() {
         <Suspense
           fallback={
             <div className="text-center">
-              <p className="text-[#86868B]">Laster...</p>
+              <p className="text-[var(--color-grey-400)]">Laster...</p>
             </div>
           }
         >

@@ -66,7 +66,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
           {[1, 2, 3].map((s) => (
             <div
               key={s}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
+              className={`h-1.5 rounded-full transition-[width,background-color] duration-300 ${
                 s === step ? "w-8" : "w-2"
               }`}
               style={{
@@ -102,7 +102,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                   <button
                     key={goal.id}
                     onClick={() => toggleGoal(goal.id)}
-                    className={`p-4 rounded-xl text-left transition-all ${
+                    className={`p-4 rounded-xl text-left transition-[background-color,border-color] ${
                       isSelected ? "ring-2 ring-[#16a34a]" : ""
                     }`}
                     style={{
@@ -144,7 +144,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
             <button
               onClick={handleNext}
               disabled={selectedGoals.length === 0}
-              className="w-full py-3 rounded-full font-semibold text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 rounded-full font-semibold text-sm flex items-center justify-center gap-2 transition-[background-color,color,opacity] disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 background:
                   selectedGoals.length > 0
@@ -187,7 +187,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                   <button
                     key={freq.id}
                     onClick={() => setFrequency(freq.id)}
-                    className={`w-full p-4 rounded-xl text-left transition-all ${
+                    className={`w-full p-4 rounded-xl text-left transition-[background-color,border-color] ${
                       isSelected ? "ring-2 ring-[#16a34a]" : ""
                     }`}
                     style={{
@@ -234,7 +234,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
             <button
               onClick={handleNext}
               disabled={!frequency}
-              className="w-full py-3 rounded-full font-semibold text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 rounded-full font-semibold text-sm flex items-center justify-center gap-2 transition-[background-color,color,opacity] disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 background: frequency
                   ? "var(--color-grey-900)"

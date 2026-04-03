@@ -64,8 +64,7 @@ export async function GET(request: NextRequest) {
         },
       }
     );
-  } catch (error) {
-    console.error("[training-plans] DB error:", error);
+  } catch {
     return NextResponse.json(
       { error: "Service unavailable" },
       { status: 503, headers: { "Access-Control-Allow-Origin": corsOrigin() } }

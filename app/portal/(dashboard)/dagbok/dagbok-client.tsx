@@ -386,7 +386,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
                     <div
                       key={idx}
                       className={cn(
-                        "aspect-square flex flex-col items-center justify-center rounded-lg cursor-pointer transition-all duration-200",
+                        "aspect-square flex flex-col items-center justify-center rounded-lg cursor-pointer transition-colors duration-200",
                         day.otherMonth && "opacity-30",
                         day.today &&
                           "bg-[var(--color-grey-100)] border-2 border-[var(--color-grey-400)]",
@@ -567,7 +567,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
                     key={filter}
                     onClick={() => setActiveFilter(filter)}
                     className={cn(
-                      "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                      "px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200",
                       activeFilter === filter
                         ? "bg-white shadow-sm text-[var(--color-grey-900)]"
                         : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
@@ -581,7 +581,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
                 <button
                   onClick={() => setViewMode("list")}
                   className={cn(
-                    "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200",
+                    "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-[background-color,border-color,color,box-shadow] duration-200",
                     viewMode === "list"
                       ? "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-900)] shadow-sm"
                       : "text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)]"
@@ -593,7 +593,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
                 <button
                   onClick={() => setViewMode("calendar")}
                   className={cn(
-                    "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200",
+                    "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-[background-color,border-color,color,box-shadow] duration-200",
                     viewMode === "calendar"
                       ? "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-900)] shadow-sm"
                       : "text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)]"

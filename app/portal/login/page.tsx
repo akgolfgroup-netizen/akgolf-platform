@@ -125,7 +125,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => setMode("password")}
-              className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all cursor-pointer ${
+              className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-[background-color,color,border-color] cursor-pointer ${
                 mode === "password"
                   ? "bg-[var(--portal-card-bg-solid)] text-[var(--portal-text-primary)] border border-[var(--portal-card-border)]"
                   : "bg-transparent text-[var(--portal-text-muted)] border border-transparent"
@@ -136,7 +136,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => setMode("magic")}
-              className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all cursor-pointer ${
+              className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-[background-color,color,border-color] cursor-pointer ${
                 mode === "magic"
                   ? "bg-[var(--portal-card-bg-solid)] text-[var(--portal-text-primary)] border border-[var(--portal-card-border)]"
                   : "bg-transparent text-[var(--portal-text-muted)] border border-transparent"
@@ -152,17 +152,20 @@ export default function LoginPage() {
           >
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium mb-1.5 text-[var(--portal-text-primary)]">
+              <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-[var(--portal-text-primary)]">
                 E-postadresse
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--portal-text-muted)]" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--portal-text-muted)]" aria-hidden="true" />
                 <input
+                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="navn@eksempel.no"
                   required
+                  autoComplete="email"
+                  spellCheck={false}
                   className="portal-input w-full pl-10 pr-4 py-2.5 rounded-lg text-sm"
                 />
               </div>
@@ -171,28 +174,31 @@ export default function LoginPage() {
             {/* Password (only in password mode) */}
             {mode === "password" && (
               <div>
-                <label className="block text-sm font-medium mb-1.5 text-[var(--portal-text-primary)]">
+                <label htmlFor="password" className="block text-sm font-medium mb-1.5 text-[var(--portal-text-primary)]">
                   Passord
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--portal-text-muted)]" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--portal-text-muted)]" aria-hidden="true" />
                   <input
+                    id="password"
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
                     required
+                    autoComplete="current-password"
                     className="portal-input w-full pl-10 pr-10 py-2.5 rounded-lg text-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? "Skjul passord" : "Vis passord"}
                     className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer bg-transparent border-none text-[var(--portal-text-muted)] hover:text-[var(--portal-text-primary)]"
                   >
                     {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
+                      <EyeOff className="w-4 h-4" aria-hidden="true" />
                     ) : (
-                      <Eye className="w-4 h-4" />
+                      <Eye className="w-4 h-4" aria-hidden="true" />
                     )}
                   </button>
                 </div>
@@ -200,7 +206,7 @@ export default function LoginPage() {
             )}
 
             {error && (
-              <p className="text-xs text-red-400">
+              <p className="text-xs text-red-400" role="alert" aria-live="assertive">
                 {error}
               </p>
             )}

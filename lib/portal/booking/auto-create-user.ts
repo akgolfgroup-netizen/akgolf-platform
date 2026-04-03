@@ -2,6 +2,7 @@ import { randomBytes, randomUUID } from "crypto";
 import bcrypt from "bcrypt";
 import { prisma } from "@/lib/portal/prisma";
 import { createPlayerProfile } from "@/lib/portal/notion/player-profiles";
+import { logger } from "@/lib/logger";
 
 interface AutoCreateResult {
   userId: string;
@@ -56,10 +57,7 @@ export async function autoCreateUser(
       startDate: new Date(),
     });
   } catch (error) {
-    console.error(
-      `[AutoCreate] Notion profile creation failed for ${email}:`,
-      error
-    );
+    logger.error(`[AutoCreate] Notion profile creation failed for ${email}:`, error);
   }
 
   // Update user with Notion page ID if created

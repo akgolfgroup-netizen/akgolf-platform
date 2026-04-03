@@ -19,8 +19,7 @@ export async function GET() {
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       },
     });
-  } catch (error) {
-    console.error("[instructors] DB error:", error);
+  } catch {
     return NextResponse.json(
       { error: "Service unavailable" },
       { status: 503, headers: { "Access-Control-Allow-Origin": process.env.WEBSITE_URL ?? "http://localhost:3003" } }

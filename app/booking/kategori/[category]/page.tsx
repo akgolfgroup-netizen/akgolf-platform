@@ -66,7 +66,7 @@ export default async function CategoryPage({ params }: Props) {
     <>
       <WebsiteNav />
 
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen bg-white" id="main-content">
         {/* Header */}
         <section className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="w-container">

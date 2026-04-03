@@ -83,7 +83,7 @@ export function PlayerGoalsSection({ goals }: PlayerGoalsSectionProps) {
                 </div>
                 <div className="h-1.5 bg-[var(--color-grey-200)] rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-[var(--color-grey-900)] rounded-full transition-all"
+                    className="h-full bg-[var(--color-grey-900)] rounded-full transition-[width]"
                     style={{ width: `${progress}%` }}
                   />
                 </div>

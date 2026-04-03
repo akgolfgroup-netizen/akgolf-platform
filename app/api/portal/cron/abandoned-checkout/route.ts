@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
@@ -120,7 +121,7 @@ export async function GET(request: NextRequest) {
       errors: results.errors.length > 0 ? results.errors : undefined,
     });
   } catch (error) {
-    console.error("Abandoned checkout cron error:", error);
+    logger.error("Abandoned checkout cron error:", error);
     return NextResponse.json(
       { error: "Failed to process abandoned checkouts" },
       { status: 500 }

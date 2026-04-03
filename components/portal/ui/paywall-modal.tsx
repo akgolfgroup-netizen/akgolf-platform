@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -91,6 +91,20 @@ export function PaywallModal({
   onUpgrade,
 }: PaywallModalProps) {
   const [selectedTier, setSelectedTier] = useState<SubscriptionTier>(requiredTier);
+  const titleId = useId();
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isOpen, onClose]);
 
   const handleUpgrade = () => {
     onUpgrade?.(selectedTier);
@@ -109,6 +123,8 @@ export function PaywallModal({
             exit={{ opacity: 0 }}
             onClick={onClose}
             className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+            aria-hidden="true"
+            role="presentation"
           />
 
           {/* Modal */}
@@ -119,7 +135,10 @@ export function PaywallModal({
             className="fixed inset-4 z-50 flex items-center justify-center pointer-events-none"
           >
             <div
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl p-6 pointer-events-auto"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={titleId}
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto overscroll-contain rounded-2xl p-6 pointer-events-auto"
               style={{
                 background: "white",
                 boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
@@ -128,9 +147,10 @@ export function PaywallModal({
               {/* Close button */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors"
+                aria-label="Lukk dialog"
+                className="absolute top-4 right-4 p-2 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
               >
-                <X className="w-5 h-5 text-[var(--color-grey-500)]" />
+                <X className="w-5 h-5 text-[var(--color-grey-500)]" aria-hidden="true" />
               </button>
 
               {/* Header */}
@@ -139,9 +159,9 @@ export function PaywallModal({
                   className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                   style={{ background: "rgba(22, 163, 74, 0.1)" }}
                 >
-                  <Crown className="w-6 h-6 text-[#16a34a]" />
+                  <Crown className="w-6 h-6 text-[#16a34a]" aria-hidden="true" />
                 </div>
-                <h2 className="text-2xl font-bold text-[var(--color-grey-900)] mb-2">
+                <h2 id={titleId} className="text-2xl font-bold text-[var(--color-grey-900)] mb-2">
                   {featureName
                     ? `${featureName} krever oppgradering`
                     : "Velg din plan"}
@@ -158,7 +178,7 @@ export function PaywallModal({
                     key={tier.tier}
                     whileHover={{ scale: tier.disabled ? 1 : 1.02 }}
                     onClick={() => !tier.disabled && setSelectedTier(tier.tier)}
-                    className={`relative rounded-xl p-5 cursor-pointer transition-all ${
+                    className={`relative rounded-xl p-5 cursor-pointer transition-[opacity,box-shadow] ${
                       tier.disabled ? "opacity-60 cursor-not-allowed" : ""
                     } ${
                       selectedTier === tier.tier && !tier.disabled
@@ -210,9 +230,9 @@ export function PaywallModal({
                           className="flex items-center gap-2 text-sm"
                         >
                           {feature.included ? (
-                            <Check className="w-4 h-4 text-[#16a34a] flex-shrink-0" />
+                            <Check className="w-4 h-4 text-[#16a34a] flex-shrink-0" aria-hidden="true" />
                           ) : (
-                            <X className="w-4 h-4 text-[var(--color-grey-300)] flex-shrink-0" />
+                            <X className="w-4 h-4 text-[var(--color-grey-300)] flex-shrink-0" aria-hidden="true" />
                           )}
                           <span
                             className={
@@ -229,7 +249,7 @@ export function PaywallModal({
 
                     <button
                       disabled={tier.disabled}
-                      className={`w-full py-2.5 rounded-full text-sm font-semibold transition-all ${
+                      className={`w-full py-2.5 rounded-full text-sm font-semibold transition-[background-color] focus-visible:outline-2 focus-visible:outline-offset-2 ${
                         tier.disabled
                           ? "bg-[var(--color-grey-200)] text-[var(--color-grey-500)] cursor-not-allowed"
                           : tier.highlight
@@ -246,15 +266,15 @@ export function PaywallModal({
               {/* Trust badges */}
               <div className="flex items-center justify-center gap-6 pt-4 border-t border-[var(--color-grey-200)]">
                 <div className="flex items-center gap-2 text-xs text-[var(--color-grey-500)]">
-                  <Check className="w-4 h-4 text-[#16a34a]" />
+                  <Check className="w-4 h-4 text-[#16a34a]" aria-hidden="true" />
                   14 dagers gratis provperiode
                 </div>
                 <div className="flex items-center gap-2 text-xs text-[var(--color-grey-500)]">
-                  <Check className="w-4 h-4 text-[#16a34a]" />
+                  <Check className="w-4 h-4 text-[#16a34a]" aria-hidden="true" />
                   Avbryt nar som helst
                 </div>
                 <div className="flex items-center gap-2 text-xs text-[var(--color-grey-500)]">
-                  <Check className="w-4 h-4 text-[#16a34a]" />
+                  <Check className="w-4 h-4 text-[#16a34a]" aria-hidden="true" />
                   Sikker betaling med Stripe
                 </div>
               </div>
@@ -264,13 +284,13 @@ export function PaywallModal({
                 <div className="mt-6 text-center">
                   <button
                     onClick={handleUpgrade}
-                    className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full text-sm font-semibold transition-transform hover:scale-105"
+                    className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full text-sm font-semibold transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2"
                     style={{
                       background: "#16a34a",
                       color: "white",
                     }}
                   >
-                    <Zap className="w-4 h-4" />
+                    <Zap className="w-4 h-4" aria-hidden="true" />
                     Start gratis provperiode
                   </button>
                 </div>

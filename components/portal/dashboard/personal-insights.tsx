@@ -229,7 +229,7 @@ export function PersonalInsights({
                 {currentInsight.action && (
                   <Link
                     href={currentInsight.action.href}
-                    className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-gold hover:text-gold/80 transition-colors"
+                    className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-[var(--color-grey-900)] hover:text-[var(--color-grey-500)] transition-colors"
                   >
                     {currentInsight.action.label}
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -247,9 +247,9 @@ export function PersonalInsights({
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
-                className={`w-1.5 h-1.5 rounded-full transition-all cursor-pointer ${
+                className={`w-1.5 h-1.5 rounded-full transition-[width,background-color] cursor-pointer ${
                   idx === currentIndex
-                    ? "w-4 bg-gold"
+                    ? "w-4 bg-[var(--color-grey-900)]"
                     : "bg-white/20 hover:bg-white/40"
                 }`}
                 aria-label={`Innsikt ${idx + 1}`}

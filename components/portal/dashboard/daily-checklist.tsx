@@ -104,7 +104,7 @@ export function DailyChecklist({
               className={`flex items-center gap-3 p-3 rounded-lg border transition-colors ${
                 item.completed
                   ? "border-green-500/30 bg-green-500/10"
-                  : "border-[var(--portal-card-border)] hover:border-gold/30"
+                  : "border-[var(--portal-card-border)] hover:border-[var(--color-grey-300)]"
               }`}
             >
               {item.completed ? (

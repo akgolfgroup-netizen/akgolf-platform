@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export interface CardProps {
-  variant?: "default" | "elevated" | "bordered" | "gold";
+  variant?: "default" | "elevated" | "bordered" | "featured";
   isHoverable?: boolean;
   isAnimated?: boolean;
   className?: string;
@@ -12,10 +12,10 @@ export interface CardProps {
 }
 
 const variants = {
-  default: "bg-white border border-ink-20",
-  elevated: "bg-white shadow-lg border border-ink-10",
-  bordered: "bg-transparent border-2 border-ink-20",
-  gold: "bg-white border border-gold/30 shadow-gold",
+  default: "bg-white border border-[var(--color-grey-200)]",
+  elevated: "bg-white shadow-lg border border-[var(--color-grey-200)]",
+  bordered: "bg-transparent border-2 border-[var(--color-grey-200)]",
+  featured: "bg-white border border-[var(--color-grey-200)] shadow-lg",
 };
 
 export function Card({
@@ -28,7 +28,7 @@ export function Card({
   const baseClasses = cn(
     "rounded-2xl overflow-hidden",
     variants[variant],
-    isHoverable && "transition-all duration-300 hover:shadow-xl hover:border-gold/30 hover:-translate-y-1",
+    isHoverable && "transition-[box-shadow,border-color,transform] duration-300 hover:shadow-xl hover:border-[var(--color-grey-300)] hover:-translate-y-1",
     className
   );
 
@@ -57,5 +57,5 @@ export function CardContent({ className, children }: { className?: string; child
 }
 
 export function CardFooter({ className, children }: { className?: string; children?: React.ReactNode }) {
-  return <div className={cn("px-6 py-4 bg-ink-05 border-t border-ink-10", className)}>{children}</div>;
+  return <div className={cn("px-6 py-4 bg-[var(--color-grey-100)] border-t border-[var(--color-grey-200)]", className)}>{children}</div>;
 }

@@ -41,7 +41,7 @@ export function AgentCard({
   return (
     <div
       className={cn(
-        "bg-white rounded-xl border border-[#E8E8ED] p-4 relative transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md",
+        "bg-white rounded-xl border border-[#E8E8ED] p-4 relative transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md",
         className
       )}
     >

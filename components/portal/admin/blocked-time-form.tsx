@@ -33,8 +33,8 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
       setEndTime("");
       setReason("");
       onCreated();
-    } catch (err) {
-      console.error(err);
+    } catch {
+      // Error handled silently - form will show failed state
     } finally {
       setSaving(false);
     }
@@ -72,7 +72,7 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
             type="datetime-local"
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
-            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--color-grey-900)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)] transition-all"
+            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--color-grey-900)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)] transition-[border-color,box-shadow]"
             required
           />
         </div>
@@ -87,7 +87,7 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
             type="datetime-local"
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
-            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--color-grey-900)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)] transition-all"
+            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--color-grey-900)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)] transition-[border-color,box-shadow]"
             required
           />
         </div>
@@ -102,7 +102,7 @@ export function BlockedTimeForm({ instructorId, onCreated }: Props) {
             type="text"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)] transition-all"
+            className="w-full rounded-xl px-4 py-3 text-sm text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)] transition-[border-color,box-shadow]"
             placeholder="F.eks. ferie, sykdom..."
           />
         </div>

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { generateSlots } from "@/lib/portal/slots";
 import { BookingStatus } from "@prisma/client";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { logger } from "@/lib/logger";
 
 export async function GET(req: NextRequest) {
   // Rate limiting
@@ -105,7 +106,7 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("[booking/slots] DB error:", error);
+    logger.error("[booking/slots] DB error:", error);
     return NextResponse.json(
       { error: "Tjeneste utilgjengelig" },
       { status: 503 }

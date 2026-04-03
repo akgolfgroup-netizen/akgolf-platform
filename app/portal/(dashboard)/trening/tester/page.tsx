@@ -24,7 +24,6 @@ async function getTestProtocols() {
     if (error.code === "42P01" || error.message?.includes("does not exist")) {
       return [];
     }
-    console.error("Error fetching protocols:", error.message ?? error);
     return [];
   }
 

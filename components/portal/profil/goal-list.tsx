@@ -189,7 +189,7 @@ function GoalCard({
           <div className="flex items-center gap-2 mt-1.5">
             <div className="flex-1 h-1.5 rounded-full bg-[var(--color-grey-200)]">
               <div
-                className="h-1.5 rounded-full transition-all duration-500"
+                className="h-1.5 rounded-full transition-[width] duration-500"
                 style={{ width: `${progress}%`, background: config.color }}
               />
             </div>

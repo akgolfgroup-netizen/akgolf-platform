@@ -37,7 +37,7 @@ export function AppleCard({
         "rounded-2xl shadow-[var(--shadow-card)]",
         variantMap[variant],
         paddingMap[padding],
-        hover && "transition-all duration-300 ease-[var(--ease-apple)]",
+        hover && "transition-[transform,box-shadow] duration-300 ease-[var(--ease-apple)]",
         className
       )}
       whileHover={hover ? {

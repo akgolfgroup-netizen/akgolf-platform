@@ -5,6 +5,7 @@ import { BookingStatus, PaymentStatus } from "@prisma/client";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
 import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { logger } from "@/lib/logger";
 
 export async function POST(req: NextRequest) {
   // Rate limiting to prevent abuse
@@ -102,7 +103,7 @@ export async function POST(req: NextRequest) {
         vatAmount: booking.vatAmount,
         location: "Gamle Fredrikstad Golfklubb",
       }).catch((err: unknown) =>
-        console.error("[confirm-payment] Email failed:", err)
+        logger.error("[confirm-payment] Email failed:", err)
       );
     }
 
@@ -116,13 +117,13 @@ export async function POST(req: NextRequest) {
         startTime: booking.startTime,
         duration: booking.ServiceType.duration,
       }).catch((err: unknown) =>
-        console.error("[confirm-payment] SMS failed:", err)
+        logger.error("[confirm-payment] SMS failed:", err)
       );
     }
 
     return NextResponse.json({ success: true, status: "CONFIRMED" });
   } catch (error) {
-    console.error("[confirm-payment] Error:", error);
+    logger.error("[confirm-payment] Error:", error);
     return NextResponse.json({ error: "Intern feil" }, { status: 500 });
   }
 }

@@ -80,7 +80,7 @@ export function AnalyticsClient() {
               <button
                 key={option.value}
                 onClick={() => setPeriod(option.value)}
-                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all ${
+                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-[background-color,color,box-shadow] ${
                   period === option.value
                     ? "bg-white text-[var(--color-grey-900)] shadow-sm"
                     : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"

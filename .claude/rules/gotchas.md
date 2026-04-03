@@ -29,19 +29,23 @@ const nextConfig: NextConfig = {
 
 **Løsning:** Bruk `OR: [{ supabaseId }, { id }]` for brukeroppslag.
 
-## 4. Font-fil må være ekte woff2
+## 4. Font — Inter via next/font/google
 
-**Problem:** Korrupt font-fil (f.eks. HTML i stedet for woff2) gir kryptisk Turbopack-feil: `Can't resolve 'next/font/local/target.css'`
-
-**Løsning:** Sjekk font-filen med `file app/fonts/ManropeVariable.woff2` — skal vise "Web Open Font Format", ikke "HTML document".
+**Status:** Prosjektet bruker **Inter** via `next/font/google` (ikke lokal font-fil).
 
 ```typescript
 // app/layout.tsx
-const manrope = localFont({
-  src: "./fonts/ManropeVariable.woff2",
-  variable: "--font-manrope",
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 ```
+
+**Merk:** `app/fonts/ManropeVariable.woff2` er ubrukt og kan slettes.
 
 ## 5. Booking-side (OPPDATERT 2026-04-01)
 
@@ -163,11 +167,11 @@ const vatAmount = Math.round((price * vatRate) / 100);
 
 ## 16. Aldri lag separat globals.css for portal
 
-**Problem:** Portal hadde egen `app/portal/globals.css` som importerte Tailwind dobbelt, overskrev font (Inter i stedet for Manrope), og kolliderte med rot-CSS-ens `--portal-*` variabler.
+**Problem:** Portal hadde egen `app/portal/globals.css` som importerte Tailwind dobbelt og kolliderte med rot-CSS-ens `--portal-*` variabler.
 
 **Løsning:** Én enkelt `app/globals.css` for hele appen. Portal-tokens (`--portal-*`), shadcn-variabler, bento-grid og alle utilities ligger i root CSS. Portal-layout importerer IKKE egen CSS.
 
-**Regel:** Aldri lag `globals.css` i undermapper. Alt portal-spesifikt CSS legges i `app/globals.css` under seksjonen "Portal Dark Theme Tokens".
+**Regel:** Aldri lag `globals.css` i undermapper. Alt portal-spesifikt CSS legges i `app/globals.css` under seksjonen "Portal Light Theme".
 
 ## 17. Next.js 16: proxy.ts, ikke middleware.ts
 

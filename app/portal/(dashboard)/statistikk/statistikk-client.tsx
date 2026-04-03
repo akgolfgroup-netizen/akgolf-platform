@@ -205,7 +205,7 @@ export function StatistikkClient({
               <button
                 key={period}
                 onClick={() => setSelectedPeriod(idx)}
-                className={`px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-200 ${
+                className={`px-4 py-2 rounded-lg text-[13px] font-medium transition-[background-color,color,box-shadow] duration-200 ${
                   idx === selectedPeriod
                     ? "bg-white text-[var(--color-grey-900)] shadow-sm"
                     : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
@@ -468,7 +468,7 @@ export function StatistikkClient({
                   <div key={area.name} className="text-center">
                     <div className="h-[100px] rounded-xl bg-[var(--color-grey-100)] relative overflow-hidden mb-3">
                       <div
-                        className="absolute bottom-0 left-0 right-0 bg-[var(--color-grey-900)] transition-all duration-500 rounded-b-xl"
+                        className="absolute bottom-0 left-0 right-0 bg-[var(--color-grey-900)] transition-[height] duration-500 rounded-b-xl"
                         style={{ height: `${area.percent}%` }}
                       />
                     </div>

@@ -20,7 +20,7 @@ export function InstructorTabs({ instructors, selectedId, onSelect }: Props) {
       <button
         onClick={() => onSelect(null)}
         className={cn(
-          "flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-medium transition-all",
+          "flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-medium transition-[background-color,color]",
           selectedId === null
             ? "bg-black text-white"
             : "bg-grey-100 text-grey-600 hover:bg-grey-200"
@@ -33,7 +33,7 @@ export function InstructorTabs({ instructors, selectedId, onSelect }: Props) {
           key={instructor.id}
           onClick={() => onSelect(instructor.id)}
           className={cn(
-            "flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-medium transition-all",
+            "flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-medium transition-[background-color,color]",
             selectedId === instructor.id
               ? "bg-black text-white"
               : "bg-grey-100 text-grey-600 hover:bg-grey-200"

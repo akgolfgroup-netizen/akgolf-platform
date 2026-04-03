@@ -87,7 +87,7 @@ function NavLink({
           whileHover={{ x: 4 }}
           transition={{ duration: 0.15 }}
           className={cn(
-            "flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-all duration-200",
+            "flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-[background-color,color] duration-200",
             active
               ? "bg-[#1D1D1F] text-white"
               : "text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-[#F5F5F7]"
@@ -179,7 +179,7 @@ function SidebarContent({
               <motion.div
                 whileHover={{ x: 4 }}
                 transition={{ duration: 0.15 }}
-                className="flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium text-[#6E6E73] hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-all duration-200"
+                className="flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium text-[#6E6E73] hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-[background-color,color] duration-200"
               >
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#E8E8ED] group-hover:bg-[#FF3B30]/20 transition-colors">
                   <LogOut className="w-4 h-4 text-[#86868B] group-hover:text-[#FF3B30] transition-colors" />

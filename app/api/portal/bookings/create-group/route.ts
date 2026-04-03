@@ -153,7 +153,6 @@ export async function POST(req: NextRequest) {
         { status: 409 }
       );
     }
-    console.error("[create-group] Error:", error);
     return NextResponse.json(
       { error: "Noe gikk galt. Prøv igjen." },
       { status: 500 }

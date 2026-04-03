@@ -26,7 +26,7 @@ export function ReadinessMeter({ score, onChange }: ReadinessMeterProps) {
 
       <div className="relative h-3 rounded-full bg-[var(--color-grey-200)] overflow-hidden">
         <div
-          className="absolute inset-y-0 left-0 rounded-full transition-all duration-300"
+          className="absolute inset-y-0 left-0 rounded-full transition-[width] duration-300"
           style={{ width: `${pct}%`, background: color }}
         />
       </div>

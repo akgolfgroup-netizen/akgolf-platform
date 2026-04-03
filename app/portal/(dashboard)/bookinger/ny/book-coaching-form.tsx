@@ -143,7 +143,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               <div key={s} className="flex items-center">
                 <div className="flex flex-col items-center">
                   <motion.div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-[background-color,border-color,color] duration-300 ${
                       isActive
                         ? "bg-[var(--color-grey-900)] text-white border-none"
                         : isCompleted
@@ -210,7 +210,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="rounded-2xl p-6 transition-all duration-300 border bg-white border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]">
+                  <div className="rounded-2xl p-6 transition-[border-color] duration-300 border bg-white border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]">
                     <div className="flex items-start justify-between gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
@@ -287,7 +287,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   className="w-full text-left group"
                   whileHover={{ x: 4 }}
                 >
-                  <div className="rounded-2xl p-5 flex items-center gap-5 transition-all duration-300 border bg-white border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]">
+                  <div className="rounded-2xl p-5 flex items-center gap-5 transition-[border-color] duration-300 border bg-white border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]">
                     {inst.user.image ? (
                       <img
                         src={inst.user.image}
@@ -307,7 +307,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                         <p className="text-[var(--color-grey-500)]">{inst.title}</p>
                       )}
                     </div>
-                    <ChevronRight className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all text-[var(--color-grey-900)]" />
+                    <ChevronRight className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--color-grey-900)]" />
                   </div>
                 </motion.button>
               ))}
@@ -363,7 +363,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                       key={date.toISOString()}
                       onClick={() => !isWeekend && handleSelectDate(date)}
                       disabled={isWeekend}
-                      className={`flex-shrink-0 rounded-2xl p-4 text-center min-w-[80px] transition-all duration-200 ${
+                      className={`flex-shrink-0 rounded-2xl p-4 text-center min-w-[80px] transition-[background-color,border-color] duration-200 ${
                         isSelected
                           ? "bg-[var(--color-grey-900)] border-none"
                           : "bg-white border border-[var(--color-grey-200)]"
@@ -425,7 +425,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                             setSelectedSlot(slot);
                             setStep("confirm");
                           }}
-                          className="rounded-xl py-4 text-sm font-medium transition-all duration-200 border bg-white border-[var(--color-grey-200)] text-[var(--color-grey-900)] hover:border-[var(--color-grey-900)]"
+                          className="rounded-xl py-4 text-sm font-medium transition-[border-color] duration-200 border bg-white border-[var(--color-grey-200)] text-[var(--color-grey-900)] hover:border-[var(--color-grey-900)]"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
@@ -530,7 +530,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               <motion.button
                 onClick={() => handleBook("STRIPE")}
                 disabled={booking}
-                className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 bg-gradient-to-r from-[var(--color-grey-900)] to-[var(--color-grey-600)] text-white"
+                className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-opacity duration-300 disabled:opacity-50 bg-gradient-to-r from-[var(--color-grey-900)] to-[var(--color-grey-600)] text-white"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
@@ -550,7 +550,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               <motion.button
                 onClick={() => handleBook("VIPPS")}
                 disabled={booking}
-                className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 border-2 bg-transparent text-[#FF5B24] border-[#FF5B24] hover:bg-[#FF5B24] hover:text-white"
+                className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-[background-color,color,opacity] duration-300 disabled:opacity-50 border-2 bg-transparent text-[#FF5B24] border-[#FF5B24] hover:bg-[#FF5B24] hover:text-white"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >

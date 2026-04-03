@@ -9,6 +9,7 @@ import { sendWelcomeEmail } from "@/lib/portal/email/send-welcome-email";
 import { checkUserQuota, checkBookingWindow, useSession } from "@/lib/portal/booking/subscription-quota";
 import { nanoid } from "nanoid";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { logger } from "@/lib/logger";
 
 class ConflictError extends Error {
   constructor(message: string) {
@@ -90,7 +91,7 @@ export async function POST(req: NextRequest) {
       isNewUser = result.isNewUser;
       tempPassword = result.tempPassword;
     } catch (error) {
-      console.error("[booking/create] Auto-create user failed:", error);
+      logger.error("[booking/create] Auto-create user failed:", error);
       return NextResponse.json(
         { error: "Kunne ikke opprette brukerkonto" },
         { status: 500 }
@@ -311,7 +312,7 @@ export async function POST(req: NextRequest) {
         select: { subscriptionTier: true },
       });
       if (quotaUser && quotaUser.subscriptionTier !== "VISITOR") {
-        await useSession(studentId).catch(console.error);
+        await useSession(studentId).catch((err) => logger.error("[booking/create] useSession failed:", err));
       }
     }
 
@@ -328,7 +329,7 @@ export async function POST(req: NextRequest) {
         amount: serviceType.price,
         location: "Gamle Fredrikstad Golfklubb",
       }).catch((err) =>
-        console.error("[booking/create] Welcome email failed:", err)
+        logger.error("[booking/create] Welcome email failed:", err)
       );
     }
 
@@ -351,7 +352,7 @@ export async function POST(req: NextRequest) {
           where: { id: booking.id },
           data: { status: BookingStatus.CANCELLED },
         });
-        console.error("[booking/create] Stripe error:", stripeError);
+        logger.error("[booking/create] Stripe error:", stripeError);
         return NextResponse.json(
           { error: "Kunne ikke opprette betaling" },
           { status: 500 }
@@ -385,7 +386,7 @@ export async function POST(req: NextRequest) {
     if (error instanceof ConflictError) {
       return NextResponse.json({ error: error.message }, { status: 409 });
     }
-    console.error("[booking/create] Error:", error);
+    logger.error("[booking/create] Error:", error);
     return NextResponse.json({ error: "Intern feil" }, { status: 500 });
   }
 }

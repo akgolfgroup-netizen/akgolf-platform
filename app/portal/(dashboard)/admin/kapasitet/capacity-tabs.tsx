@@ -38,7 +38,7 @@ export function CapacityTabs({ activeTab, data }: CapacityTabsProps) {
             <button
               key={tab.id}
               onClick={() => handleTabChange(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-[background-color,color,box-shadow] ${
                 isActive
                   ? "bg-white text-[var(--color-grey-900)] shadow-sm"
                   : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"

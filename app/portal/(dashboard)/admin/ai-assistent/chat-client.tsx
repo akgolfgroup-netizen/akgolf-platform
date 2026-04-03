@@ -150,7 +150,7 @@ export function ChatClient() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
             placeholder="Skriv en melding..."
-            className="flex-1 px-4 py-3 bg-white border border-[var(--color-grey-200)] rounded-xl text-[15px] text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-300)] focus:border-[var(--color-grey-300)] transition-all"
+            className="flex-1 px-4 py-3 bg-white border border-[var(--color-grey-200)] rounded-xl text-[15px] text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-300)] focus:border-[var(--color-grey-300)] transition-[border-color,box-shadow]"
           />
           <button
             onClick={handleSend}

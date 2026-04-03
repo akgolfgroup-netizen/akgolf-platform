@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 
 /**
@@ -64,15 +65,7 @@ export async function generateInvoice(
   const seq = Math.floor(Math.random() * 9000) + 1000;
   const invoiceId = `INV-${dateStr}-${seq}`;
 
-  console.log(`[Invoice] Generating invoice ${invoiceId} for booking ${booking.id}`);
-  console.log(`[Invoice] Customer: ${customer.customerType}`, {
-    companyName: customer.companyName,
-    orgNumber: customer.orgNumber,
-    invoiceEmail: customer.invoiceEmail,
-  });
-  console.log(
-    `[Invoice] Amount: ${booking.amount} oere (VAT: ${booking.vatAmount} oere, rate: ${booking.serviceType.vatRate}%)`
-  );
+  logger.info(`[Invoice] Generating invoice ${invoiceId} for booking ${booking.id}`);
 
   // Create PaymentTransaction record
   const transaction = await prisma.paymentTransaction.create({
@@ -100,9 +93,7 @@ export async function generateInvoice(
     },
   });
 
-  console.log(
-    `[Invoice] Invoice ${invoiceId} created — transaction ${transaction.id}`
-  );
+  logger.info(`[Invoice] Invoice ${invoiceId} created — transaction ${transaction.id}`);
 
   // TODO: In production, generate PDF and/or send to accounting system
   // TODO: Send invoice email to customer.invoiceEmail or booking.student.email

@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { getTwilioClient } from "./twilio";
+import { logger } from "@/lib/logger";
 
 interface ReminderSmsData {
   phone: string;
@@ -13,7 +14,7 @@ interface ReminderSmsData {
 export async function sendReminderSms(data: ReminderSmsData): Promise<boolean> {
   const client = getTwilioClient();
   if (!client) {
-    console.log("[SMS] Twilio not configured — skipping reminder");
+    logger.info("[SMS] Twilio not configured — skipping reminder");
     return false;
   }
 
@@ -34,7 +35,7 @@ export async function sendReminderSms(data: ReminderSmsData): Promise<boolean> {
 
   const result = await client.sendSms(phone, message);
   if (result.success) {
-    console.log(`[SMS] Reminder sent to ${phone}`);
+    logger.info(`[SMS] Reminder sent to ${phone}`);
   }
   return result.success;
 }

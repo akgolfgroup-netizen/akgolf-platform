@@ -15,7 +15,7 @@ export default function VeilederPage() {
     <>
       <WebsiteNav />
 
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen bg-white" id="main-content">
         <section className="pt-32 pb-24 md:pt-40 md:pb-32">
           <div className="w-container">
             <Link

@@ -153,7 +153,7 @@ export function FacilityCalendarDay({
                   <button
                     key={event.id}
                     onClick={() => onSelectEvent(event)}
-                    className={`absolute left-1 right-1 rounded-lg px-2 py-1 text-left hover:ring-2 hover:ring-offset-1 transition-all cursor-pointer overflow-hidden shadow-sm ${
+                    className={`absolute left-1 right-1 rounded-lg px-2 py-1 text-left hover:ring-2 hover:ring-offset-1 transition-[box-shadow] cursor-pointer overflow-hidden shadow-sm ${
                       isPending ? "ring-2 ring-[#FF9500] ring-offset-1" : ""
                     }`}
                     style={{

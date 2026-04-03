@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useId } from "react";
 import {
   X,
   Search,
@@ -35,7 +35,22 @@ export function ExerciseBankSheet({
   onCreateNew,
   userBank = [],
 }: ExerciseBankSheetProps) {
+  const titleId = useId();
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Handle Escape key to close sheet
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
   const [selectedPyramid, setSelectedPyramid] = useState<PyramidLevel | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<"FULL_SWING" | "SHORT_GAME" | "PUTTING" | null>(null);
   const [showFilters, setShowFilters] = useState(false);
@@ -117,25 +132,33 @@ export function ExerciseBankSheet({
       <div
         className="fixed inset-0 bg-black/50 z-40"
         onClick={onClose}
+        aria-hidden="true"
+        role="presentation"
       />
 
       {/* Sheet */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white border-l border-[var(--color-grey-200)] z-50 flex flex-col">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        className="fixed right-0 top-0 h-full w-full max-w-md bg-white border-l border-[var(--color-grey-200)] z-50 flex flex-col"
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[var(--color-grey-200)]">
-          <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">Ovelsebank</h2>
+          <h2 id={titleId} className="text-lg font-semibold text-[var(--color-grey-900)]">Ovelsebank</h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors"
+            aria-label="Lukk øvelsebank"
+            className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
         {/* Search */}
         <div className="p-4 border-b border-[var(--color-grey-200)]">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-500)]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-500)]" aria-hidden="true" />
             <input
               type="text"
               placeholder="Sok etter ovelser..."
@@ -151,7 +174,7 @@ export function ExerciseBankSheet({
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 ${
                   activeTab === tab
                     ? "bg-[var(--color-grey-900)] text-white"
                     : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
@@ -165,11 +188,11 @@ export function ExerciseBankSheet({
           {/* Filter toggle */}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 mt-3 text-sm text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors"
+            className="flex items-center gap-2 mt-3 text-sm text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
           >
-            <Filter className="w-4 h-4" />
+            <Filter className="w-4 h-4" aria-hidden="true" />
             Filtrer
-            <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? "rotate-180" : ""}`} />
+            <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? "rotate-180" : ""}`} aria-hidden="true" />
           </button>
 
           {/* Filters */}
@@ -183,7 +206,7 @@ export function ExerciseBankSheet({
                     <button
                       key={level}
                       onClick={() => setSelectedPyramid(selectedPyramid === level ? null : level)}
-                      className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                      className={`px-2 py-1 rounded text-xs font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 ${
                         selectedPyramid === level
                           ? "text-white"
                           : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
@@ -207,7 +230,7 @@ export function ExerciseBankSheet({
                     <button
                       key={cat}
                       onClick={() => setSelectedCategory(selectedCategory === cat ? null : cat)}
-                      className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                      className={`px-2 py-1 rounded text-xs font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 ${
                         selectedCategory === cat
                           ? "bg-[var(--color-grey-900)] text-white"
                           : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
@@ -223,7 +246,7 @@ export function ExerciseBankSheet({
         </div>
 
         {/* Exercise list */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto overscroll-contain p-4">
           {Object.entries(groupedExercises).map(([category, exercises]) => (
             <div key={category} className="mb-6">
               <h3 className="text-sm font-medium text-[var(--color-grey-500)] uppercase mb-2">
@@ -245,7 +268,7 @@ export function ExerciseBankSheet({
                               {exercise.name}
                             </span>
                             {bankEntry?.isFavorite && (
-                              <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                              <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" aria-hidden="true" />
                             )}
                           </div>
                           <p className="text-xs text-[var(--color-grey-500)] line-clamp-2 mb-2">
@@ -255,12 +278,12 @@ export function ExerciseBankSheet({
                             <PyramidTag level={exercise.pyramid as PyramidLevel} />
                             <AreaTag area={exercise.area as TrainingArea} />
                             <span className="text-[11px] text-[var(--color-grey-400)] flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
+                              <Clock className="w-3 h-3" aria-hidden="true" />
                               {exercise.minDurationMinutes}-{exercise.maxDurationMinutes} min
                             </span>
                           </div>
                         </div>
-                        <Plus className="w-5 h-5 text-[var(--color-grey-500)] flex-shrink-0" />
+                        <Plus className="w-5 h-5 text-[var(--color-grey-500)] flex-shrink-0" aria-hidden="true" />
                       </div>
                     </button>
                   );
@@ -281,9 +304,9 @@ export function ExerciseBankSheet({
           <div className="p-4 border-t border-[var(--color-grey-200)]">
             <button
               onClick={onCreateNew}
-              className="w-full py-3 rounded-lg border border-dashed border-[var(--color-grey-200)] text-[var(--color-grey-500)] hover:border-[var(--color-grey-900)] hover:text-[var(--color-grey-900)] transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-lg border border-dashed border-[var(--color-grey-200)] text-[var(--color-grey-500)] hover:border-[var(--color-grey-900)] hover:text-[var(--color-grey-900)] transition-colors flex items-center justify-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-4 h-4" aria-hidden="true" />
               Opprett ny ovelse
             </button>
           </div>

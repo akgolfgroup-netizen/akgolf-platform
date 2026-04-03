@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useId } from "react";
 import { AlertTriangle, X, CheckCircle2, XCircle } from "lucide-react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -30,6 +30,20 @@ export function ConflictApprovalDialog({
   onCancel,
 }: Props) {
   const [note, setNote] = useState("");
+  const titleId = useId();
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onCancel();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onCancel]);
 
   if (!isOpen) return null;
 
@@ -43,11 +57,16 @@ export function ConflictApprovalDialog({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onCancel}
+            aria-hidden="true"
+            role="presentation"
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
           />
 
           {/* Dialog */}
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -57,17 +76,18 @@ export function ConflictApprovalDialog({
             <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)] bg-[#FF9500]/5">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-[#FF9500]/20 flex items-center justify-center">
-                  <AlertTriangle className="w-5 h-5 text-[#FF9500]" />
+                  <AlertTriangle className="w-5 h-5 text-[#FF9500]" aria-hidden="true" />
                 </div>
-                <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
+                <h2 id={titleId} className="text-lg font-semibold text-[var(--color-grey-900)]">
                   Konflikt oppdaget
                 </h2>
               </div>
               <button
                 onClick={onCancel}
-                className="p-2 rounded-lg text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors"
+                aria-label="Lukk dialog"
+                className="p-2 rounded-lg text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 
@@ -80,7 +100,7 @@ export function ConflictApprovalDialog({
               </p>
 
               {/* Conflict list */}
-              <div className="max-h-48 overflow-y-auto space-y-2">
+              <div className="max-h-48 overflow-y-auto overscroll-contain space-y-2">
                 {conflicts.map((conflict) => {
                   const start = new Date(conflict.startTime);
                   const end = new Date(conflict.endTime);
@@ -121,7 +141,7 @@ export function ConflictApprovalDialog({
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="Legg til en forklaring på hvorfor konflikten godkjennes..."
                   rows={2}
-                  className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-[border-color,box-shadow] resize-none"
                 />
               </div>
             </div>
@@ -130,16 +150,16 @@ export function ConflictApprovalDialog({
             <div className="flex gap-3 px-6 py-4 border-t border-[var(--color-grey-200)] bg-[var(--color-grey-50)]">
               <button
                 onClick={onCancel}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-[var(--color-grey-200)] text-[var(--color-grey-700)] font-medium hover:bg-white transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-[var(--color-grey-200)] text-[var(--color-grey-700)] font-medium hover:bg-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
               >
-                <XCircle className="w-4 h-4" />
+                <XCircle className="w-4 h-4" aria-hidden="true" />
                 Avbryt
               </button>
               <button
                 onClick={() => onConfirm(note || undefined)}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#FF9500] text-white font-medium hover:bg-[#E88800] transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#FF9500] text-white font-medium hover:bg-[#E88800] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
               >
-                <CheckCircle2 className="w-4 h-4" />
+                <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
                 Godkjenn likevel
               </button>
             </div>

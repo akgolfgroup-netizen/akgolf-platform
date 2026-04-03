@@ -35,8 +35,7 @@ export function EditableCoachingNotes({ session }: Props) {
         return;
       }
       setIsOpen(false);
-    } catch (err) {
-      console.error(err);
+    } catch {
       setError("Noe gikk galt");
     } finally {
       setSaving(false);

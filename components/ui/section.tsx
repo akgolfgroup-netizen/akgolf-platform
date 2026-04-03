@@ -85,7 +85,7 @@ export function SectionHeader({
   return (
     <div className={cn("mb-12 md:mb-16", alignClasses[align], className)}>
       {eyebrow && (
-        <span className="inline-block text-xs font-semibold tracking-widest uppercase text-gold mb-4">
+        <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[var(--color-grey-500)] mb-4">
           {eyebrow}
         </span>
       )}
@@ -93,10 +93,10 @@ export function SectionHeader({
         {title}
       </h2>
       {description && (
-        <p className="text-lg text-ink-50 max-w-2xl mx-auto">{description}</p>
+        <p className="text-lg text-[var(--color-grey-500)] max-w-2xl mx-auto">{description}</p>
       )}
       <div className={cn("mt-6", align === "center" ? "mx-auto" : align === "right" ? "ml-auto" : "")}>
-        <div className="w-12 h-1 bg-gold rounded-full" />
+        <div className="w-12 h-1 bg-[var(--color-grey-900)] rounded-full" />
       </div>
     </div>
   );

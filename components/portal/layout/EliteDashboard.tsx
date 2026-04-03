@@ -106,7 +106,7 @@ export function EliteDashboard({ children, user }: EliteDashboardProps) {
                 href={item.href}
                 className={`
                   relative flex items-center gap-3 px-3 py-2.5 rounded-xl
-                  text-sm font-medium transition-all duration-200
+                  text-sm font-medium transition-colors duration-200
                   min-h-[44px] cursor-pointer
                   ${isActive
                     ? "bg-[var(--color-grey-100)] text-[var(--color-grey-900)]"
@@ -146,7 +146,7 @@ export function EliteDashboard({ children, user }: EliteDashboardProps) {
                     href={item.href}
                     className={`
                       relative flex items-center gap-3 px-3 py-2.5 rounded-xl
-                      text-sm font-medium transition-all duration-200
+                      text-sm font-medium transition-colors duration-200
                       min-h-[44px] cursor-pointer
                       ${isActive
                         ? "bg-[var(--color-blue)]/10 text-[var(--color-blue)]"
@@ -170,7 +170,7 @@ export function EliteDashboard({ children, user }: EliteDashboardProps) {
         <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-[var(--color-grey-200)]">
           <Link
             href="/portal/apper"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-all cursor-pointer min-h-[44px]"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors cursor-pointer min-h-[44px]"
           >
             <CreditCard className="w-5 h-5" />
             <span>Apper</span>
@@ -178,7 +178,7 @@ export function EliteDashboard({ children, user }: EliteDashboardProps) {
 
           <Link
             href="/portal/profil"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-all cursor-pointer min-h-[44px]"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors cursor-pointer min-h-[44px]"
           >
             <Settings className="w-5 h-5" />
             <span>Innstillinger</span>

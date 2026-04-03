@@ -58,7 +58,7 @@ export default async function FasiliteterPage() {
           {/* Settings link */}
           <Link
             href="/portal/admin/fasiliteter/innstillinger"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-[var(--color-grey-200)] text-[var(--color-grey-600)] text-sm font-medium hover:border-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-all"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-[var(--color-grey-200)] text-[var(--color-grey-600)] text-sm font-medium hover:border-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-[border-color,color]"
           >
             <Settings className="w-4 h-4" />
             Innstillinger

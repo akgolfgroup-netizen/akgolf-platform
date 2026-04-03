@@ -83,7 +83,7 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
       <motion.button
         type="submit"
         disabled={!stripe || !elements || loading}
-        className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50 text-white bg-[#1D1D1F] shadow-lg shadow-black/15"
+        className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-[opacity,transform,box-shadow] duration-300 disabled:opacity-50 text-white bg-[#1D1D1F] shadow-lg shadow-black/15"
         whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(29,29,31,0.25)" }}
         whileTap={{ scale: 0.99 }}
       >

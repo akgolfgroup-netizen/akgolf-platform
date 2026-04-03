@@ -1,6 +1,7 @@
 // lib/coach/ai/generate-response.ts
 
 import Anthropic from "@anthropic-ai/sdk";
+import { logger } from "@/lib/logger";
 import { routeToModel, categorizeMessage, type AIModel, type MessageCategory } from "./model-router";
 import { findSimilarResponses } from "./learning";
 
@@ -66,7 +67,7 @@ async function callAIModel(
 
   if (model === "kimi") {
     // Kimi er ikke implementert ennå — fall tilbake til Claude Sonnet
-    console.info("Kimi not implemented, falling back to Claude Sonnet");
+    logger.info("Kimi not implemented, falling back to Claude Sonnet");
     return callClaudeModel("claude-sonnet-4-6", systemPrompt, messageContent, senderName);
   }
 
@@ -115,14 +116,14 @@ async function callOllama(systemPrompt: string, messageContent: string, senderNa
     });
 
     if (!response.ok) {
-      console.warn(`Ollama returned ${response.status}, falling back to Claude Haiku`);
+      logger.warn(`Ollama returned ${response.status}, falling back to Claude Haiku`);
       return callClaudeModel("claude-haiku-4-5-20251001", systemPrompt, messageContent, senderName);
     }
 
     const data = (await response.json()) as { response: string };
     return data.response;
-  } catch (error) {
-    console.warn("Ollama not available, falling back to Claude Haiku:", error);
+  } catch {
+    logger.warn("Ollama not available, falling back to Claude Haiku");
     return callClaudeModel("claude-haiku-4-5-20251001", systemPrompt, messageContent, senderName);
   }
 }

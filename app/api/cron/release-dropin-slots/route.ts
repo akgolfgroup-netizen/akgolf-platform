@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { verifyCronAuth } from "@/lib/cron-auth";
 import { prisma } from "@/lib/portal/prisma";
 import { BookingStatus } from "@prisma/client";
@@ -52,7 +53,7 @@ export async function GET(request: NextRequest) {
     const totalOpenSlots = openSlots.length;
     const totalBookings = upcomingBookings.length;
 
-    console.log(
+    logger.info(
       `[cron/dropin] Status: ${totalOpenSlots} åpne slots totalt, ${totalBookings} bookinger neste 48t`
     );
 
@@ -64,7 +65,7 @@ export async function GET(request: NextRequest) {
       bookingsNext48h: totalBookings,
     });
   } catch (error) {
-    console.error("[cron/dropin] Uventet feil:", error);
+    logger.error("[cron/dropin] Uventet feil:", error);
     return NextResponse.json(
       { error: "Intern feil i drop-in-cron" },
       { status: 500 }

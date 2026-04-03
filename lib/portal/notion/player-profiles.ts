@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { getNotionClient, notionRetry } from "./client";
 
 const DB_ID = process.env.NOTION_DB_PLAYER_PROFILES;
@@ -17,9 +18,7 @@ export async function createPlayerProfile(
   input: CreatePlayerProfileInput
 ): Promise<string> {
   if (!DB_ID) {
-    console.log(
-      "[Notion] NOTION_DB_PLAYER_PROFILES not configured — skipping profile creation"
-    );
+    logger.info("[Notion] NOTION_DB_PLAYER_PROFILES not configured — skipping profile creation");
     return "";
   }
 
@@ -53,9 +52,7 @@ export async function createPlayerProfile(
     } as any)
   );
 
-  console.log(
-    `[Notion] Player profile created for ${input.email}: ${page.id}`
-  );
+  logger.info(`[Notion] Player profile created for ${input.email}: ${page.id}`);
   return page.id;
 }
 
@@ -150,5 +147,5 @@ export async function appendCoachingSessionToProfile(
     } as any)
   );
 
-  console.log(`[Notion] Coaching session appended to profile ${notionPageId}`);
+  logger.info(`[Notion] Coaching session appended to profile ${notionPageId}`);
 }

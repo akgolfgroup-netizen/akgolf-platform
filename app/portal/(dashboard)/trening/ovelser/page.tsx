@@ -29,7 +29,6 @@ async function getDrills() {
     .order("name");
 
   if (error) {
-    console.error("Error fetching drills:", error);
     return [];
   }
 

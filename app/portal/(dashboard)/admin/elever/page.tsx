@@ -38,7 +38,7 @@ export default async function StudentsPage() {
       </div>
 
       {/* Player Categories - Apple Glassmorphism */}
-      <details className="group rounded-2xl bg-white/70 backdrop-blur-xl border border-white/50 shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-card-hover)]">
+      <details className="group rounded-2xl bg-white/70 backdrop-blur-xl border border-white/50 shadow-[var(--shadow-card)] transition-shadow duration-300 hover:shadow-[var(--shadow-card-hover)]">
         <summary className="flex items-center gap-3 px-5 py-4 cursor-pointer list-none select-none">
           <div className="w-9 h-9 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center">
             <Info className="w-[18px] h-[18px] text-[var(--color-grey-900)]" />

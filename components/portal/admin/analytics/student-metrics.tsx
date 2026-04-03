@@ -112,7 +112,7 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
           </div>
           <div className="h-3 bg-[var(--color-grey-100)] rounded-full overflow-hidden flex">
             <div
-              className="bg-blue-500 transition-all duration-500"
+              className="bg-blue-500 transition-[width] duration-500"
               style={{
                 width: `${
                   data.activeStudents + data.churnedStudents > 0
@@ -124,7 +124,7 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
               }}
             />
             <div
-              className="bg-red-400 transition-all duration-500"
+              className="bg-red-400 transition-[width] duration-500"
               style={{
                 width: `${
                   data.activeStudents + data.churnedStudents > 0

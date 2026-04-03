@@ -19,7 +19,7 @@ export function InstructorCard({ instructor, isSelected, onClick, index }: Instr
       transition={{ delay: index * 0.1, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
       className={`
-        relative w-full text-left rounded-[20px] p-5 transition-all duration-300 border-2
+        relative w-full text-left rounded-[20px] p-5 transition-[border-color,background-color,color] duration-300 border-2
         ${isSelected
           ? "border-black bg-black text-white"
           : "border-grey-200 bg-white hover:border-grey-300"

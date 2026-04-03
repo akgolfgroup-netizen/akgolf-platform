@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -12,29 +12,44 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, helperText, leftIcon, rightIcon, ...props }, ref) => {
+  ({ className, label, error, helperText, leftIcon, rightIcon, id, ...props }, ref) => {
+    const generatedId = useId();
+    const inputId = id ?? generatedId;
+    const errorId = `${inputId}-error`;
+    const helperId = `${inputId}-helper`;
+    const hasError = Boolean(error);
+    const hasHelper = Boolean(helperText);
+
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-ink-70 mb-2">
+          <label
+            htmlFor={inputId}
+            className="block text-sm font-medium text-[var(--color-grey-700)] mb-2"
+          >
             {label}
           </label>
         )}
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gold">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-grey-500)]" aria-hidden="true">
               {leftIcon}
             </div>
           )}
           <input
             ref={ref}
+            id={inputId}
+            aria-invalid={hasError}
+            aria-describedby={
+              hasError ? errorId : hasHelper ? helperId : undefined
+            }
             className={cn(
               "w-full px-4 py-3 rounded-xl border bg-white",
-              "text-ink-90 placeholder:text-ink-40",
-              "transition-all duration-200",
-              "focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold",
+              "text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)]",
+              "transition-[border-color,box-shadow] duration-200",
+              "focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-400)]/50 focus:border-[var(--color-grey-900)]",
               "disabled:opacity-50 disabled:cursor-not-allowed",
-              error && "border-error focus:ring-error/50 focus:border-error",
+              hasError && "border-[var(--color-error)] focus:ring-[var(--color-error)]/50 focus:border-[var(--color-error)]",
               leftIcon && "pl-12",
               rightIcon && "pr-12",
               className
@@ -42,14 +57,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightIcon && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gold">
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-grey-500)]" aria-hidden="true">
               {rightIcon}
             </div>
           )}
         </div>
-        {(error || helperText) && (
-          <p className={cn("mt-1.5 text-sm", error ? "text-error" : "text-ink-50")}>
-            {error || helperText}
+        {hasError && (
+          <p id={errorId} className="mt-1.5 text-sm text-[var(--color-error)]" role="alert">
+            {error}
+          </p>
+        )}
+        {!hasError && hasHelper && (
+          <p id={helperId} className="mt-1.5 text-sm text-[var(--color-grey-500)]">
+            {helperText}
           </p>
         )}
       </div>

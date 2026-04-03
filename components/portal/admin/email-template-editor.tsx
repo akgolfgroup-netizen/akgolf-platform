@@ -194,7 +194,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
             <li key={t.id}>
               <button
                 onClick={() => handleSelect(t)}
-                className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200"
+                className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-200"
                 style={
                   selected?.id === t.id
                     ? {
@@ -268,7 +268,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                   setDraft((d) => ({ ...d, name: e.target.value }))
                 }
                 placeholder="f.eks. bookingbekreftelse"
-                className="w-full px-4 py-2.5 rounded-xl text-sm bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50"
+                className="w-full px-4 py-2.5 rounded-xl text-sm bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-[box-shadow] duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50"
                 style={{ border: "1px solid var(--color-grey-200)" }}
               />
             </div>
@@ -285,7 +285,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                   setDraft((d) => ({ ...d, subject: e.target.value }))
                 }
                 placeholder="Bookingbekreftelse - {{serviceName}}"
-                className="w-full px-4 py-2.5 rounded-xl text-sm bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50"
+                className="w-full px-4 py-2.5 rounded-xl text-sm bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-[box-shadow] duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50"
                 style={{ border: "1px solid var(--color-grey-200)" }}
               />
             </div>
@@ -321,12 +321,12 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                   onChange={(e) => setNewVariable(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addVariable()}
                   placeholder="Legg til variabel..."
-                  className="flex-1 px-4 py-2 rounded-xl text-sm bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50"
+                  className="flex-1 px-4 py-2 rounded-xl text-sm bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-[box-shadow] duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50"
                   style={{ border: "1px solid var(--color-grey-200)" }}
                 />
                 <button
                   onClick={addVariable}
-                  className="px-3 py-2 rounded-xl text-sm font-medium text-white transition-all duration-200"
+                  className="px-3 py-2 rounded-xl text-sm font-medium text-white"
                   style={{
                     background:
                       "linear-gradient(135deg, var(--color-grey-900), var(--color-grey-500))",
@@ -349,7 +349,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                 }
                 placeholder="<h1>Hei {{playerName}}</h1><p>Din booking er bekreftet.</p>"
                 rows={12}
-                className="w-full px-4 py-3 rounded-xl text-sm font-mono bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50 resize-y"
+                className="w-full px-4 py-3 rounded-xl text-sm font-mono bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] transition-[box-shadow] duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/50 resize-y"
                 style={{ border: "1px solid var(--color-grey-200)" }}
               />
             </div>
@@ -385,7 +385,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 disabled:opacity-50"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-opacity duration-200 disabled:opacity-50"
                 style={{
                   background:
                     "linear-gradient(135deg, var(--color-grey-900), var(--color-grey-500))",
@@ -403,7 +403,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                 <button
                   onClick={handleDelete}
                   disabled={deleting}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-red-500 transition-all duration-200 hover:bg-red-50 disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-red-500 transition-[background-color,opacity] duration-200 hover:bg-red-50 disabled:opacity-50"
                 >
                   <Trash2 className="w-4 h-4" />
                   {deleting ? "Sletter..." : "Slett"}

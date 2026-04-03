@@ -29,8 +29,7 @@ export async function GET() {
       .sort((a, b) => a.name.localeCompare(b.name));
 
     return NextResponse.json({ players });
-  } catch (err) {
-    console.error("DataGolf API error:", err);
+  } catch {
     return NextResponse.json({ error: "Kunne ikke hente spillerdata" }, { status: 500 });
   }
 }

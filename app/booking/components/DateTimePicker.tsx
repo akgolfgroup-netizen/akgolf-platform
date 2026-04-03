@@ -166,7 +166,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, instructors, onSel
         setSlots(Array.isArray(data) ? data : []);
       }
     } catch {
-      console.error("Failed to fetch slots");
+      // Slots fetch failed - user will see empty state
     } finally {
       setLoading(false);
     }
@@ -270,7 +270,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, instructors, onSel
               onClick={() => handleDaySelect(date)}
               disabled={isPast || isFull}
               className={cn(
-                "border-2 rounded-[20px] p-3 text-center transition-all min-w-[70px] flex-shrink-0 sm:min-w-0 sm:flex-shrink",
+                "border-2 rounded-[20px] p-3 text-center transition-[border-color,background-color,color] min-w-[70px] flex-shrink-0 sm:min-w-0 sm:flex-shrink",
                 isPast && "opacity-40 cursor-not-allowed border-grey-200",
                 isFull && !isPast && "opacity-40 cursor-not-allowed border-grey-200",
                 !isPast && !isFull && !isSelected && "border-grey-200 hover:border-grey-300 cursor-pointer",
@@ -394,7 +394,7 @@ export function DateTimePicker({ serviceTypeId, instructorId, instructors, onSel
                     key={slot}
                     onClick={() => handleTimeSelect(slot)}
                     className={cn(
-                      "py-3 px-2 border-2 rounded-lg text-sm font-semibold text-center transition-all",
+                      "py-3 px-2 border-2 rounded-lg text-sm font-semibold text-center transition-[border-color,background-color,color]",
                       isSelected
                         ? "border-black bg-black text-white"
                         : "border-grey-200 text-black hover:border-grey-300"

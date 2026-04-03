@@ -16,8 +16,8 @@ const emptyStates = {
     description: "Book din neste coaching-sesjon for a fortsette utviklingen",
     cta: "Book time",
     href: "/portal/bookinger/ny",
-    gradient: "from-gold/20 to-gold/5",
-    iconColor: "text-gold",
+    gradient: "from-[var(--color-grey-200)] to-[var(--color-grey-100)]",
+    iconColor: "text-[var(--color-grey-900)]",
   },
   training: {
     icon: Target,
@@ -66,7 +66,7 @@ export function EmptyState({ type, compact = false }: EmptyStateProps) {
         </div>
         <Link
           href={config.href}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium bg-gold/10 text-gold hover:bg-gold/20 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium bg-[var(--color-grey-100)] text-[var(--color-grey-900)] hover:bg-[var(--color-grey-200)] transition-colors"
         >
           {config.cta}
           <ArrowRight className="w-3.5 h-3.5" />
@@ -102,7 +102,7 @@ export function EmptyState({ type, compact = false }: EmptyStateProps) {
 
       <Link
         href={config.href}
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-gold text-white hover:bg-gold/90 transition-colors shadow-lg shadow-gold/20"
+        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[var(--color-grey-900)] text-white hover:bg-[var(--color-grey-800)] transition-colors shadow-sm"
       >
         <Plus className="w-4 h-4" />
         {config.cta}

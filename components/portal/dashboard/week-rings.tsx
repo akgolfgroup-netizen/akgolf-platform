@@ -105,7 +105,7 @@ export function WeekRings({ days, weekStart }: WeekRingsProps) {
                       animate={{ scale: [1, 1.1, 1] }}
                       transition={{ repeat: Infinity, duration: 2 }}
                     >
-                      <Target className="w-4 h-4 text-gold" />
+                      <Target className="w-4 h-4 text-[var(--color-grey-900)]" />
                     </motion.div>
                   ) : (
                     <span className="text-sm font-semibold text-[var(--portal-text-primary)]">
@@ -119,7 +119,7 @@ export function WeekRings({ days, weekStart }: WeekRingsProps) {
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-gold"
+                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[var(--color-grey-900)]"
                   />
                 )}
               </div>
@@ -138,8 +138,8 @@ export function WeekRings({ days, weekStart }: WeekRingsProps) {
         <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-[var(--portal-surface-sunken)] to-transparent border border-white/5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center">
-                <Flame className="w-5 h-5 text-gold" />
+              <div className="w-10 h-10 rounded-lg bg-[var(--color-grey-100)] flex items-center justify-center">
+                <Flame className="w-5 h-5 text-[var(--color-grey-900)]" />
               </div>
               <div>
                 <p className="text-sm font-medium text-white">
@@ -160,7 +160,7 @@ export function WeekRings({ days, weekStart }: WeekRingsProps) {
             </div>
             <Link
               href="/portal/dagbok"
-              className="px-4 py-2 rounded-lg text-sm font-medium bg-gold/10 text-gold hover:bg-gold/20 transition-colors"
+              className="px-4 py-2 rounded-lg text-sm font-medium bg-[var(--color-grey-100)] text-[var(--color-grey-900)] hover:bg-[var(--color-grey-200)] transition-colors"
             >
               Logg økt
             </Link>

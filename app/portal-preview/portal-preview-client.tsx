@@ -86,7 +86,7 @@ export function PortalPreviewClient() {
                     <button
                       key={screen.id}
                       onClick={() => setActiveScreen(screen.id)}
-                      className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+                      className={`px-5 py-2.5 rounded-full text-sm font-medium transition-[background-color,color] ${
                         activeScreen === screen.id
                           ? "bg-black text-white"
                           : "bg-grey-100 text-grey-600 hover:bg-grey-200"

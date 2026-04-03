@@ -198,7 +198,7 @@ export function SessionHeader({
       {isActive && (
         <div className="h-1 bg-[#262626]">
           <div
-            className="h-full bg-[var(--color-grey-900)] transition-all duration-300"
+            className="h-full bg-[var(--color-grey-900)] transition-[width] duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -224,7 +224,7 @@ export function SessionCardCompact({
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left p-4 rounded-lg border transition-all ${
+      className={`w-full text-left p-4 rounded-lg border transition-[border-color,background-color] ${
         isCompleted
           ? "bg-green-500/5 border-green-500/30"
           : "bg-[#1a1a1a] border-[#333] hover:border-[#444]"

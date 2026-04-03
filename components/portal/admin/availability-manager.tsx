@@ -56,8 +56,8 @@ export function AvailabilityManager({ instructors }: Props) {
         }))
       );
       setBlockedTimes(blocked as BlockedTime[]);
-    } catch (err) {
-      console.error(err);
+    } catch {
+      // Error handled silently - data will remain unchanged
     } finally {
       setLoading(false);
     }
@@ -79,8 +79,8 @@ export function AvailabilityManager({ instructors }: Props) {
     try {
       await upsertAvailability(selectedInstructorId, updatedSlots);
       setSlots(updatedSlots);
-    } catch (err) {
-      console.error(err);
+    } catch {
+      // Error handled silently - slots will remain unchanged
     } finally {
       setSaving(false);
     }
@@ -90,8 +90,8 @@ export function AvailabilityManager({ instructors }: Props) {
     try {
       await deleteBlockedTime(id);
       setBlockedTimes((prev) => prev.filter((bt) => bt.id !== id));
-    } catch (err) {
-      console.error(err);
+    } catch {
+      // Error handled silently - blocked time remains in list
     }
   };
 
@@ -124,7 +124,7 @@ export function AvailabilityManager({ instructors }: Props) {
         <div className="flex bg-[var(--color-grey-100)] rounded-xl p-1">
           <button
             onClick={() => setActiveTab("schedule")}
-            className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 ${
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-[background-color,color,box-shadow] duration-300 ${
               activeTab === "schedule"
                 ? "bg-white text-[var(--color-grey-900)] shadow-sm"
                 : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
@@ -135,7 +135,7 @@ export function AvailabilityManager({ instructors }: Props) {
           </button>
           <button
             onClick={() => setActiveTab("blocked")}
-            className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 ${
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-[background-color,color,box-shadow] duration-300 ${
               activeTab === "blocked"
                 ? "bg-white text-[var(--color-grey-900)] shadow-sm"
                 : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"

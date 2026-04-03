@@ -3,6 +3,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { stripe } from "@/lib/portal/stripe";
 import { getPortalUser } from "@/lib/portal/auth";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { logger } from "@/lib/logger";
 
 export async function GET(
   req: NextRequest,
@@ -96,7 +97,7 @@ export async function GET(
 
     return NextResponse.json(safeBooking);
   } catch (error) {
-    console.error("[booking/get] Error:", error);
+    logger.error("[booking/get] Error:", error);
     return NextResponse.json({ error: "Intern feil" }, { status: 500 });
   }
 }

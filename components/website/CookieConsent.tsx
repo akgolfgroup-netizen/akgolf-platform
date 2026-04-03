@@ -30,7 +30,7 @@ export function CookieConsent() {
         Vi bruker informasjonskapsler for å forbedre din opplevelse.
       </p>
       <div className="flex items-center gap-3">
-        <button onClick={handleAccept} className="w-btn w-btn-primary text-sm !py-2 !px-5">
+        <button onClick={handleAccept} className="w-btn w-btn-primary text-sm !py-2 !px-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
           Godta
         </button>
         <Link href="/personvern" className="text-sm text-grey-500 hover:text-black transition-colors">

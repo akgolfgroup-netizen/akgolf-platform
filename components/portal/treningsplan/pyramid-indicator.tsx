@@ -76,7 +76,7 @@ export function PyramidStack({ activeLevel, compact = false }: PyramidStackProps
         return (
           <div
             key={level}
-            className={`h-6 rounded flex items-center justify-center text-[10px] font-medium transition-all ${
+            className={`h-6 rounded flex items-center justify-center text-[10px] font-medium transition-[opacity,box-shadow] ${
               isActive
                 ? "text-white ring-2 ring-white/50"
                 : isBelow

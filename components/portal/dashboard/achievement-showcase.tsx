@@ -91,7 +91,7 @@ function AchievementCard({
       whileHover={{ scale: 1.05, y: -4 }}
       whileTap={{ scale: 0.98 }}
       onClick={onSelect}
-      className={`relative flex flex-col items-center p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+      className={`relative flex flex-col items-center p-4 rounded-xl border transition-[opacity,background] duration-300 cursor-pointer ${
         isUnlocked
           ? `${rarity.border} bg-gradient-to-b from-white/5 to-transparent hover:from-white/10`
           : "border-white/5 bg-white/[0.02] opacity-60 hover:opacity-80"
@@ -250,7 +250,7 @@ export function AchievementShowcase({
 
           {/* View all link */}
           {totalAchievements > 8 && (
-            <button className="w-full mt-4 py-2 text-xs font-medium text-[var(--portal-text-muted)] hover:text-gold transition-colors cursor-pointer">
+            <button className="w-full mt-4 py-2 text-xs font-medium text-[var(--portal-text-muted)] hover:text-[var(--color-grey-500)] transition-colors cursor-pointer">
               Se alle {totalAchievements} achievements
             </button>
           )}
@@ -325,7 +325,7 @@ export function AchievementShowcase({
                       <div className="mt-4">
                         <div className="h-2 bg-[var(--color-grey-100)] rounded-full overflow-hidden mb-2">
                           <motion.div
-                            className="h-full bg-gold rounded-full"
+                            className="h-full bg-[var(--color-grey-900)] rounded-full"
                             initial={{ width: 0 }}
                             animate={{
                               width: `${selectedAchievement.progress ?? 0}%`,

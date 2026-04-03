@@ -99,7 +99,6 @@ export async function POST(req: NextRequest) {
     });
 
     if (error) {
-      console.error("Resend error:", error);
       return NextResponse.json(
         { error: "Kunne ikke sende e-post" },
         { status: 500 }
@@ -107,8 +106,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ success: true, id: data?.id });
-  } catch (error) {
-    console.error("Contact form error:", error);
+  } catch {
     return NextResponse.json(
       { error: "Noe gikk galt" },
       { status: 500 }

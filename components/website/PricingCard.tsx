@@ -15,7 +15,7 @@ export function PricingCard({
 }) {
   return (
     <div
-      className={`rounded-[20px] p-8 flex flex-col h-full transition-all duration-400 ${
+      className={`rounded-[20px] p-8 flex flex-col h-full transition-[border-color,box-shadow] duration-400 ${
         highlighted
           ? "bg-black text-white border border-black shadow-xl relative"
           : "bg-white border border-grey-200 hover:border-grey-300 hover:shadow-lg"

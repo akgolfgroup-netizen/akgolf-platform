@@ -23,7 +23,7 @@ export function WebsiteNav() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
           scrolled
             ? "bg-white/90 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06)]"
             : "bg-white/70 backdrop-blur-md"
@@ -66,7 +66,7 @@ export function WebsiteNav() {
             </Link>
             <a
               href={BOOKING_URL}
-              className="text-[13px] font-medium px-5 py-2 rounded-full bg-black text-white transition-all duration-300 hover:opacity-85"
+              className="text-[13px] font-medium px-5 py-2 rounded-full bg-black text-white transition-opacity duration-300 hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
             >
               Book coaching
             </a>
@@ -79,17 +79,17 @@ export function WebsiteNav() {
             aria-label={mobileOpen ? "Lukk meny" : "Apne meny"}
           >
             <span
-              className={`block h-[1.5px] w-5 transition-all duration-300 bg-black ${
+              className={`block h-[1.5px] w-5 transition-[transform,opacity] duration-300 bg-black ${
                 mobileOpen ? "rotate-45 translate-y-[6.5px]" : ""
               }`}
             />
             <span
-              className={`block h-[1.5px] w-5 transition-all duration-300 bg-black ${
+              className={`block h-[1.5px] w-5 transition-[transform,opacity] duration-300 bg-black ${
                 mobileOpen ? "opacity-0" : ""
               }`}
             />
             <span
-              className={`block h-[1.5px] w-5 transition-all duration-300 bg-black ${
+              className={`block h-[1.5px] w-5 transition-[transform,opacity] duration-300 bg-black ${
                 mobileOpen ? "-rotate-45 -translate-y-[6.5px]" : ""
               }`}
             />

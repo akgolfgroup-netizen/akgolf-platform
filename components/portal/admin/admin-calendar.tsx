@@ -86,25 +86,25 @@ export function AdminCalendar({ instructors }: Props) {
   return (
     <div>
       {/* Toolbar - Apple glassmorphism style */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6 p-4 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/50 shadow-[var(--shadow-sm)] transition-all duration-300 hover:shadow-[var(--shadow-md)]">
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-6 p-4 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/50 shadow-[var(--shadow-sm)] transition-[box-shadow] duration-300 hover:shadow-[var(--shadow-md)]">
         <div className="flex items-center gap-4">
           {/* Navigation */}
           <div className="flex items-center gap-1">
             <button
               onClick={navigateBack}
-              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-all duration-200"
+              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-[background-color,border-color,color] duration-200"
             >
               <ChevronLeft className="w-[18px] h-[18px]" />
             </button>
             <button
               onClick={goToToday}
-              className="px-4 py-2 text-sm font-medium rounded-xl text-[var(--color-grey-900)] bg-[var(--color-grey-100)]/50 hover:bg-[var(--color-grey-100)] transition-all duration-200"
+              className="px-4 py-2 text-sm font-medium rounded-xl text-[var(--color-grey-900)] bg-[var(--color-grey-100)]/50 hover:bg-[var(--color-grey-100)] transition-[background-color] duration-200"
             >
               I dag
             </button>
             <button
               onClick={navigateForward}
-              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-all duration-200"
+              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-[background-color,border-color,color] duration-200"
             >
               <ChevronRight className="w-[18px] h-[18px]" />
             </button>
@@ -120,7 +120,7 @@ export function AdminCalendar({ instructors }: Props) {
           <div className="flex bg-[var(--color-grey-100)] rounded-xl p-1">
             <button
               onClick={() => switchView("day")}
-              className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-200 ${
+              className={`px-4 py-2 text-xs font-semibold rounded-lg transition-[background-color,color,box-shadow] duration-200 ${
                 viewMode === "day"
                   ? "bg-[var(--color-grey-900)] text-white shadow-[var(--shadow-md)]"
                   : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
@@ -130,7 +130,7 @@ export function AdminCalendar({ instructors }: Props) {
             </button>
             <button
               onClick={() => switchView("week")}
-              className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-200 ${
+              className={`px-4 py-2 text-xs font-semibold rounded-lg transition-[background-color,color,box-shadow] duration-200 ${
                 viewMode === "week"
                   ? "bg-[var(--color-grey-900)] text-white shadow-[var(--shadow-md)]"
                   : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
@@ -144,7 +144,7 @@ export function AdminCalendar({ instructors }: Props) {
           <select
             value={selectedInstructorId}
             onChange={(e) => filterByInstructor(e.target.value)}
-            className="text-sm font-medium rounded-xl px-4 py-2 text-[var(--color-grey-700)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-all duration-200"
+            className="text-sm font-medium rounded-xl px-4 py-2 text-[var(--color-grey-700)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-[border-color,box-shadow] duration-200"
           >
             <option value="">Alle instruktorer</option>
             {instructors.map((inst) => (

@@ -162,7 +162,7 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
                       <td key={day.value} className="px-1 py-0.5">
                         <motion.button
                           onClick={() => toggleCell(day.value, hour)}
-                          className={`w-full h-10 rounded-lg transition-all duration-200 ${
+                          className={`w-full h-10 rounded-lg transition-colors duration-200 ${
                             active
                               ? "bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)] shadow-sm"
                               : "bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)]"

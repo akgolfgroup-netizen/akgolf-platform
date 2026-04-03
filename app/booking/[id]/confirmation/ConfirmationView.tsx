@@ -244,7 +244,7 @@ export function ConfirmationView({
         >
           <Link
             href="/portal/bookinger"
-            className="flex items-center justify-center w-full px-6 py-4 rounded-2xl text-base font-semibold transition-all duration-300"
+            className="flex items-center justify-center w-full px-6 py-4 rounded-2xl text-base font-semibold transition-opacity duration-300"
             style={{
               background: `linear-gradient(135deg, ${THEME.primary}, ${THEME.primary})`,
               color: "#FFFFFF",

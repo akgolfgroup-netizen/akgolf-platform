@@ -22,8 +22,7 @@ export async function updateCoachingNotes(
 
     revalidatePath("/admin/elever");
     return { success: true };
-  } catch (error) {
-    console.error("Failed to update coaching notes:", error);
+  } catch {
     return { success: false, error: "Kunne ikke oppdatere notater" };
   }
 }

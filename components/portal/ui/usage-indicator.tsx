@@ -73,7 +73,7 @@ export function UsageIndicator({
             style={{ background: "var(--color-grey-200)" }}
           >
             <div
-              className="h-full rounded-full transition-all duration-300"
+              className="h-full rounded-full transition-[width] duration-300"
               style={{
                 width: `${logPercentage}%`,
                 background: isLogNearLimit ? "#FF9500" : "#16a34a",
@@ -101,7 +101,7 @@ export function UsageIndicator({
             style={{ background: "var(--color-grey-200)" }}
           >
             <div
-              className="h-full rounded-full transition-all duration-300"
+              className="h-full rounded-full transition-[width] duration-300"
               style={{
                 width: `${aiPercentage}%`,
                 background: isAiNearLimit ? "#FF9500" : "#16a34a",

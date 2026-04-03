@@ -396,8 +396,7 @@ export default function DemoPage() {
 
         {showOnboarding && (
           <OnboardingWizard
-            onComplete={(data) => {
-              console.log("Onboarding completed:", data);
+            onComplete={() => {
               setShowOnboarding(false);
             }}
             onSkip={() => setShowOnboarding(false)}

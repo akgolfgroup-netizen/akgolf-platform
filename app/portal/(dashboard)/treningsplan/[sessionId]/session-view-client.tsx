@@ -18,8 +18,7 @@ export function SessionViewClient({ session }: Props) {
     router.push("/portal/treningsplan");
   };
 
-  const handleSaveProgress = async (exercises: ExerciseInstance[]) => {
-    console.log("Saving progress:", exercises);
+  const handleSaveProgress = async (_exercises: ExerciseInstance[]) => {
     await new Promise((resolve) => setTimeout(resolve, 500));
   };
 
@@ -27,8 +26,7 @@ export function SessionViewClient({ session }: Props) {
     setShowExerciseBank(true);
   };
 
-  const handleSelectExercise = (exercise: ExerciseDefinition) => {
-    console.log("Selected exercise:", exercise);
+  const handleSelectExercise = (_exercise: ExerciseDefinition) => {
     setShowExerciseBank(false);
   };
 

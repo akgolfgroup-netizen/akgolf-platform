@@ -48,7 +48,7 @@ export function InstructorSelector({ service, instructors, onSelect }: Props) {
           transition={{ delay: 0, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           onClick={() => handleSelect("no-preference")}
           className={`
-            relative w-full text-left rounded-[20px] p-5 transition-all duration-300 border-2 border-dashed
+            relative w-full text-left rounded-[20px] p-5 transition-[border-color,background-color] duration-300 border-2 border-dashed
             ${selectedId === "no-preference"
               ? "border-black bg-grey-100"
               : "border-grey-300 hover:border-grey-400 bg-grey-100"

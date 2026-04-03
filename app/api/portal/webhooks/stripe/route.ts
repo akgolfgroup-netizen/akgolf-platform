@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { logger } from "@/lib/logger";
 import { stripe } from "@/lib/portal/stripe";
 import { prisma } from "@/lib/portal/prisma";
 import {
@@ -21,7 +22,7 @@ export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!webhookSecret) {
-    console.error("[Stripe Webhook] STRIPE_WEBHOOK_SECRET is not configured");
+    logger.error("[Stripe Webhook] STRIPE_WEBHOOK_SECRET is not configured");
     return NextResponse.json(
       { error: "Server misconfiguration" },
       { status: 500 }
@@ -43,7 +44,7 @@ export async function POST(req: Request) {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
-    console.error(`[Stripe Webhook] Signature verification failed: ${message}`);
+    logger.error(`[Stripe Webhook] Signature verification failed: ${message}`);
     // Return generic message — never expose SDK internals to the response
     return NextResponse.json(
       { error: "Webhook signature verification failed" },
@@ -78,9 +79,7 @@ export async function POST(req: Request) {
     });
 
     if (!booking) {
-      console.log(
-        `[Stripe Webhook] Already processed or not found: ${paymentIntentId}`
-      );
+      logger.info(`[Stripe Webhook] Already processed or not found: ${paymentIntentId}`);
     } else {
       const vatRate = booking.ServiceType?.vatRate ?? 25;
       const netAmount = booking.amount - booking.vatAmount;
@@ -110,7 +109,7 @@ export async function POST(req: Request) {
           },
         }),
       ]);
-      console.log(`[Stripe Webhook] Booking ${booking.id} confirmed`);
+      logger.info(`[Stripe Webhook] Booking ${booking.id} confirmed`);
 
       // Send confirmation emails (non-blocking — don't fail the webhook)
       sendBookingConfirmation({
@@ -125,9 +124,7 @@ export async function POST(req: Request) {
         amount: booking.amount,
         vatAmount: booking.vatAmount,
         location: booking.Location?.name ?? "Gamle Fredrikstad Golfklubb",
-      }).catch((err) =>
-        console.error("[Stripe Webhook] Email send failed:", err)
-      );
+      }).catch((err) => logger.error("[Stripe Webhook] Email send failed", err));
     }
   } else if (event.type === "payment_intent.payment_failed") {
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
@@ -139,9 +136,7 @@ export async function POST(req: Request) {
       },
       data: { paymentStatus: PaymentStatus.FAILED },
     });
-    console.log(
-      `[Stripe Webhook] Payment failed for PaymentIntent: ${paymentIntent.id}`
-    );
+    logger.info(`[Stripe Webhook] Payment failed for PaymentIntent: ${paymentIntent.id}`);
   }
 
   // ─── Subscription Events ───
@@ -184,13 +179,13 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
   const priceId = subscription.items.data[0]?.price.id;
 
   if (!priceId) {
-    console.log("[Stripe Webhook] No price ID found in subscription");
+    logger.info("[Stripe Webhook] No price ID found in subscription");
     return;
   }
 
   const tier = mapPriceToTier(priceId);
   if (!tier) {
-    console.log(`[Stripe Webhook] Unknown price ID: ${priceId}`);
+    logger.info(`[Stripe Webhook] Unknown price ID: ${priceId}`);
     return;
   }
 
@@ -200,7 +195,7 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
   });
 
   if (!user) {
-    console.log(`[Stripe Webhook] No user found for customer: ${customerId}`);
+    logger.info(`[Stripe Webhook] No user found for customer: ${customerId}`);
     return;
   }
 
@@ -228,7 +223,7 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
     },
   });
 
-  console.log(`[Stripe Webhook] Subscription created for user ${user.id}, tier: ${tier}`);
+  logger.info(`[Stripe Webhook] Subscription created for user ${user.id}, tier: ${tier}`);
 }
 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
@@ -262,7 +257,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
     },
   });
 
-  console.log(`[Stripe Webhook] Subscription updated for user ${user.id}, tier: ${tier}`);
+  logger.info(`[Stripe Webhook] Subscription updated for user ${user.id}, tier: ${tier}`);
 }
 
 async function handleSubscriptionCanceled(subscription: Stripe.Subscription) {
@@ -288,7 +283,7 @@ async function handleSubscriptionCanceled(subscription: Stripe.Subscription) {
     },
   });
 
-  console.log(`[Stripe Webhook] Subscription canceled for user ${user.id}`);
+  logger.info(`[Stripe Webhook] Subscription canceled for user ${user.id}`);
 }
 
 async function handleInvoicePaid(invoice: Stripe.Invoice) {
@@ -316,5 +311,5 @@ async function handleInvoicePaid(invoice: Stripe.Invoice) {
   // Reset quota for new billing period
   await resetQuotaForNewPeriod(user.id, subscriptionId, tier);
 
-  console.log(`[Stripe Webhook] Quota reset for user ${user.id} (invoice paid)`);
+  logger.info(`[Stripe Webhook] Quota reset for user ${user.id} (invoice paid)`);
 }

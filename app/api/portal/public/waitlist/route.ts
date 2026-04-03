@@ -63,8 +63,7 @@ export async function POST(req: NextRequest) {
       success: true,
       position: result.position,
     });
-  } catch (error) {
-    console.error("[waitlist] Error:", error);
+  } catch {
     return NextResponse.json(
       { error: "Intern feil" },
       { status: 500 }

@@ -52,17 +52,17 @@ export function PremiumChecklist({
       <div className="p-5 pb-4 border-b border-white/5">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--color-grey-200)] to-[var(--color-grey-100)] flex items-center justify-center">
               {allComplete ? (
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", stiffness: 200 }}
                 >
-                  <Sparkles className="w-5 h-5 text-gold" />
+                  <Sparkles className="w-5 h-5 text-[var(--color-grey-900)]" />
                 </motion.div>
               ) : (
-                <span className="text-lg font-bold text-gold">{completedCount}</span>
+                <span className="text-lg font-bold text-[var(--color-grey-900)]">{completedCount}</span>
               )}
             </div>
             <div>
@@ -75,9 +75,9 @@ export function PremiumChecklist({
 
           {/* Reward indicator */}
           {!allComplete && (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/20">
-              <Gift className="w-3.5 h-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">+50 XP</span>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]">
+              <Gift className="w-3.5 h-3.5 text-[var(--color-grey-900)]" />
+              <span className="text-xs font-medium text-[var(--color-grey-900)]">+50 XP</span>
             </div>
           )}
         </div>
@@ -85,7 +85,7 @@ export function PremiumChecklist({
         {/* Progress bar */}
         <div className="h-2 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-gold to-amber-400 rounded-full"
+            className="h-full bg-gradient-to-r from-[var(--color-grey-900)] to-[var(--color-grey-700)] rounded-full"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.5, ease: "easeOut" }}
@@ -107,7 +107,7 @@ export function PremiumChecklist({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ delay: idx * 0.05, duration: 0.3 }}
-                className={`group relative flex items-center gap-4 p-4 rounded-xl transition-all duration-200 ${
+                className={`group relative flex items-center gap-4 p-4 rounded-xl transition-[background-color] duration-200 ${
                   item.completed
                     ? "bg-emerald-500/5"
                     : "hover:bg-[var(--color-grey-100)] cursor-pointer"
@@ -126,8 +126,8 @@ export function PremiumChecklist({
                       </div>
                     </motion.div>
                   ) : (
-                    <div className="w-6 h-6 rounded-full border-2 border-[var(--portal-card-border)] group-hover:border-gold/50 transition-colors flex items-center justify-center">
-                      <Circle className="w-3 h-3 text-transparent group-hover:text-gold/30 transition-colors" />
+                    <div className="w-6 h-6 rounded-full border-2 border-[var(--portal-card-border)] group-hover:border-[var(--color-grey-400)] transition-colors flex items-center justify-center">
+                      <Circle className="w-3 h-3 text-transparent group-hover:text-[var(--color-grey-300)] transition-colors" />
                     </div>
                   )}
 
@@ -148,7 +148,7 @@ export function PremiumChecklist({
                     className={`text-sm font-medium transition-colors ${
                       item.completed
                         ? "text-[var(--portal-text-muted)] line-through"
-                        : "text-white group-hover:text-gold"
+                        : "text-white group-hover:text-[var(--color-grey-300)]"
                     }`}
                   >
                     {item.label}
@@ -162,14 +162,14 @@ export function PremiumChecklist({
 
                 {/* Points badge */}
                 {item.points && !item.completed && (
-                  <div className="flex-shrink-0 px-2 py-1 rounded-md bg-gold/10 text-[11px] font-medium text-gold">
+                  <div className="flex-shrink-0 px-2 py-1 rounded-md bg-[var(--color-grey-100)] text-[11px] font-medium text-[var(--color-grey-900)]">
                     +{item.points} XP
                   </div>
                 )}
 
                 {/* Arrow for incomplete items */}
                 {!item.completed && item.href && (
-                  <ChevronRight className="w-4 h-4 text-[var(--portal-text-muted)] group-hover:text-gold transition-colors flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-[var(--portal-text-muted)] group-hover:text-[var(--color-grey-500)] transition-colors flex-shrink-0" />
                 )}
               </motion.div>
             );
@@ -196,10 +196,10 @@ export function PremiumChecklist({
             exit={{ opacity: 0, height: 0 }}
             className="px-5 pb-5"
           >
-            <div className="p-4 rounded-xl bg-gradient-to-r from-gold/10 to-amber-500/5 border border-gold/20">
+            <div className="p-4 rounded-xl bg-gradient-to-r from-[var(--color-grey-100)] to-transparent border border-[var(--color-grey-200)]">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-gold" />
+                <div className="w-10 h-10 rounded-full bg-[var(--color-grey-200)] flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-[var(--color-grey-900)]" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">Fantastisk innsats!</p>

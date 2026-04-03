@@ -5,6 +5,7 @@ import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { WaitlistAvailableEmail } from "@/lib/portal/email/templates/waitlist-available";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import { logger } from "@/lib/logger";
 
 /**
  * Check waitlist entries when a booking is cancelled.
@@ -62,11 +63,9 @@ export async function notifyNextOnWaitlist(
         expiresAt: format(expiresAt, "EEEE d. MMMM HH:mm", { locale: nb }),
       }),
     });
-    console.log(
-      `[Waitlist] Notified ${nextEntry.User.email} for booking ${bookingId}`
-    );
+    logger.info(`[Waitlist] Notified ${nextEntry.User.email} for booking ${bookingId}`);
   } catch (error) {
-    console.error("[Waitlist] Failed to send notification:", error);
+    logger.error("[Waitlist] Failed to send notification:", error);
   }
 }
 

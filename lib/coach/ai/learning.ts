@@ -1,5 +1,6 @@
 // lib/coach/ai/learning.ts
 
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import type { MessageCategory } from "./model-router";
 
@@ -53,7 +54,7 @@ export async function findSimilarResponses(
       }));
   } catch {
     // AILearning-tabellen eksisterer ikke ennå
-    console.warn("AILearning table not found - learning system not yet migrated");
+    logger.warn("AILearning table not found - learning system not yet migrated");
     return [];
   }
 }
@@ -106,6 +107,6 @@ export async function learnFromApproval(
     }
   } catch {
     // AILearning-tabellen eksisterer ikke ennå
-    console.warn("AILearning table not found - learning system not yet migrated");
+    logger.warn("AILearning table not found - learning system not yet migrated");
   }
 }

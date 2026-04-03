@@ -174,7 +174,7 @@ export default async function TreningsplanPage() {
                   <Link
                     key={day.id}
                     href={day.isRest ? "#" : `/portal/treningsplan/${day.id}`}
-                    className={`group text-center p-4 rounded-2xl border transition-all duration-300 ${
+                    className={`group text-center p-4 rounded-2xl border transition-[border-color,box-shadow] duration-300 ${
                       day.isToday
                         ? "border-[var(--color-grey-400)] border-2 bg-gradient-to-br from-[var(--color-grey-100)] to-white shadow-[var(--shadow-md)]"
                         : day.completed
@@ -330,7 +330,7 @@ export default async function TreningsplanPage() {
                       <Link
                         key={day.id}
                         href={`/portal/treningsplan/${day.id}`}
-                        className="p-4 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-100)] hover:border-[var(--color-grey-300)] hover:bg-white transition-all duration-200"
+                        className="p-4 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-100)] hover:border-[var(--color-grey-300)] hover:bg-white transition-[border-color,background-color] duration-200"
                       >
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm font-semibold text-[var(--color-grey-900)]">

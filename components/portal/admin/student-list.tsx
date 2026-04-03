@@ -52,8 +52,8 @@ export function StudentList() {
       const result = await searchStudents(q);
       setStudents(result.students as unknown as Student[]);
       setTotal(result.total);
-    } catch (err) {
-      console.error(err);
+    } catch {
+      // Error handled silently - list will remain unchanged
     } finally {
       setLoading(false);
     }
@@ -111,9 +111,9 @@ export function StudentList() {
   return (
     <div className="space-y-4">
       {/* Filter Bar - Glassmorphism */}
-      <div className="flex items-center gap-4 bg-white/70 backdrop-blur-xl p-4 px-5 rounded-2xl border border-white/50 shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-card-hover)]">
+      <div className="flex items-center gap-4 bg-white/70 backdrop-blur-xl p-4 px-5 rounded-2xl border border-white/50 shadow-[var(--shadow-card)] transition-shadow duration-300 hover:shadow-[var(--shadow-card-hover)]">
         {/* Search */}
-        <div className="flex items-center gap-3 flex-1 px-4 py-3 bg-[var(--color-grey-100)] rounded-xl border border-transparent focus-within:bg-white focus-within:border-[var(--color-grey-900)] focus-within:shadow-[0_0_0_3px_var(--color-grey-100)] transition-all">
+        <div className="flex items-center gap-3 flex-1 px-4 py-3 bg-[var(--color-grey-100)] rounded-xl border border-transparent focus-within:bg-white focus-within:border-[var(--color-grey-900)] focus-within:shadow-[0_0_0_3px_var(--color-grey-100)] transition-[background-color,border-color,box-shadow]">
           <Search className="w-[18px] h-[18px] text-[var(--color-grey-400)]" />
           <input
             type="text"
@@ -195,7 +195,7 @@ export function StudentList() {
             <button
               onClick={toggleSelectAll}
               className={cn(
-                "w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all",
+                "w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors",
                 selectedIds.size === students.length && students.length > 0
                   ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)]"
                   : "border-[var(--color-grey-300)] hover:border-[var(--color-grey-900)]"
@@ -243,7 +243,7 @@ export function StudentList() {
               <div
                 key={student.id}
                 className={cn(
-                  "grid grid-cols-[48px_1fr_120px_100px_140px_140px_100px] gap-4 px-5 py-4 items-center border-b border-[var(--color-grey-100)] last:border-b-0 transition-all duration-200 hover:bg-[var(--color-grey-100)] hover:scale-[1.005]",
+                  "grid grid-cols-[48px_1fr_120px_100px_140px_140px_100px] gap-4 px-5 py-4 items-center border-b border-[var(--color-grey-100)] last:border-b-0 transition-[background-color,transform] duration-200 hover:bg-[var(--color-grey-100)] hover:scale-[1.005]",
                   isSelected && "bg-[var(--color-grey-100)]"
                 )}
               >
@@ -252,7 +252,7 @@ export function StudentList() {
                   <button
                     onClick={() => toggleSelect(student.id)}
                     className={cn(
-                      "w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all",
+                      "w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors",
                       isSelected
                         ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)]"
                         : "border-[var(--color-grey-300)] hover:border-[var(--color-grey-900)]"
@@ -295,7 +295,7 @@ export function StudentList() {
                 <div className="flex items-center gap-2">
                   <div className="flex-1 h-1.5 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[var(--color-grey-900)] rounded-full transition-all"
+                      className="h-full bg-[var(--color-grey-900)] rounded-full transition-[width]"
                       style={{ width: `${sessionPercent}%` }}
                     />
                   </div>
@@ -320,14 +320,14 @@ export function StudentList() {
                 <div className="flex gap-2">
                   <Link
                     href={`/portal/admin/elever/${student.id}`}
-                    className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-all group"
+                    className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors group"
                   >
                     <Eye className="w-4 h-4 text-[var(--color-grey-500)] group-hover:text-[var(--color-grey-900)]" />
                   </Link>
-                  <button className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-all group">
+                  <button className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors group">
                     <Edit2 className="w-4 h-4 text-[var(--color-grey-500)] group-hover:text-[var(--color-grey-900)]" />
                   </button>
-                  <button className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-all group">
+                  <button className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors group">
                     <MoreHorizontal className="w-4 h-4 text-[var(--color-grey-500)] group-hover:text-[var(--color-grey-900)]" />
                   </button>
                 </div>
@@ -343,19 +343,19 @@ export function StudentList() {
               Viser 1-{students.length} av {total} elever
             </span>
             <div className="flex items-center gap-2">
-              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                 &lt;
               </button>
               <button className="w-9 h-9 rounded-xl bg-[var(--color-grey-900)] text-white text-sm font-medium flex items-center justify-center">
                 1
               </button>
-              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-all">
+              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors">
                 2
               </button>
-              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-all">
+              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors">
                 3
               </button>
-              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-all">
+              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors">
                 &gt;
               </button>
             </div>

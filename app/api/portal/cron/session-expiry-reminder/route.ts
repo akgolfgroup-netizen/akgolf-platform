@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { SubscriptionStatus } from "@prisma/client";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
@@ -44,7 +45,7 @@ export async function GET(req: NextRequest) {
 
     const resend = getResend();
     if (!resend) {
-      console.warn("[Cron] Resend not configured, skipping email reminders");
+      logger.warn("[Cron] Resend not configured, skipping email reminders");
       return NextResponse.json({ ok: true, remindersSent: 0, skipped: true });
     }
 
@@ -86,11 +87,11 @@ export async function GET(req: NextRequest) {
 
         remindersSent++;
       } catch (error) {
-        console.error(`[Cron] Failed to send expiry reminder to ${sub.User.email}:`, error);
+        logger.error(`[Cron] Failed to send expiry reminder to ${sub.User.email}:`, error);
       }
     }
 
-    console.log(`[Cron] Sent ${remindersSent} session expiry reminders`);
+    logger.info(`[Cron] Sent ${remindersSent} session expiry reminders`);
 
     return NextResponse.json({
       ok: true,
@@ -98,7 +99,7 @@ export async function GET(req: NextRequest) {
       timestamp: now.toISOString(),
     });
   } catch (error) {
-    console.error("[Cron] Session expiry reminder failed:", error);
+    logger.error("[Cron] Session expiry reminder failed:", error);
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }

@@ -138,7 +138,7 @@ export function FacilityCalendarWeek({
                   <button
                     key={event.id}
                     onClick={() => onSelectEvent(event)}
-                    className={`absolute left-0.5 right-0.5 rounded-md px-1.5 py-0.5 text-left text-[10px] hover:opacity-90 transition-all cursor-pointer overflow-hidden ${
+                    className={`absolute left-0.5 right-0.5 rounded-md px-1.5 py-0.5 text-left text-[10px] hover:opacity-90 transition-opacity cursor-pointer overflow-hidden ${
                       isPending ? "animate-pulse" : ""
                     }`}
                     style={{

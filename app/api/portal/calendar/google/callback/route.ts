@@ -19,7 +19,6 @@ export async function GET(request: Request) {
   const error = searchParams.get("error");
 
   if (error) {
-    console.error(`[Google Calendar Callback] OAuth error: ${error}`);
     return NextResponse.redirect(
       `${BASE_URL}/portal/kalender?google=error&reason=${encodeURIComponent(error)}`
     );
@@ -41,8 +40,7 @@ export async function GET(request: Request) {
     return NextResponse.redirect(
       `${BASE_URL}/portal/kalender?google=connected`
     );
-  } catch (e) {
-    console.error("[Google Calendar Callback]", e);
+  } catch {
     return NextResponse.redirect(
       `${BASE_URL}/portal/kalender?google=error`
     );

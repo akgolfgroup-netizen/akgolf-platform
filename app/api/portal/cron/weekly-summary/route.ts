@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { WeeklySummaryEmail } from "@/lib/portal/email/templates/weekly-summary";
@@ -120,12 +121,12 @@ export async function GET(req: NextRequest) {
 
       sent++;
     } catch (error) {
-      console.error(`[Cron] Weekly summary failed for user ${user.id}:`, error);
+      logger.error(`[Cron] Weekly summary failed for user ${user.id}:`, error);
       errors++;
     }
   }
 
-  console.log(`[Cron] Weekly summaries sent: ${sent}, errors: ${errors}`);
+  logger.info(`[Cron] Weekly summaries sent: ${sent}, errors: ${errors}`);
 
   return NextResponse.json({
     ok: true,

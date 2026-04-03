@@ -28,7 +28,7 @@ export function CategoryCard({ category, index }: Props) {
     >
       <Link
         href={`/booking/kategori/${category.slug}`}
-        className="group flex flex-col h-full bg-white rounded-[20px] p-6 border border-grey-200 hover:border-grey-300 hover:shadow-lg transition-all duration-300"
+        className="group flex flex-col h-full bg-white rounded-[20px] p-6 border border-grey-200 hover:border-grey-300 hover:shadow-lg transition-[border-color,box-shadow] duration-300"
       >
         <div className="w-12 h-12 rounded-xl bg-grey-100 flex items-center justify-center mb-4 group-hover:bg-black transition-colors">
           <Icon
@@ -49,7 +49,7 @@ export function CategoryCard({ category, index }: Props) {
           <span className="text-sm font-medium text-grey-400">
             {category.priceRange}
           </span>
-          <span className="inline-flex items-center gap-1 text-sm font-medium text-black group-hover:gap-2 transition-all">
+          <span className="inline-flex items-center gap-1 text-sm font-medium text-black group-hover:gap-2 transition-[gap]">
             Velg
             <ArrowRight size={16} />
           </span>

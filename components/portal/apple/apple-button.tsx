@@ -72,7 +72,7 @@ export function AppleButton({
     <motion.button
       className={cn(
         "inline-flex items-center justify-center font-semibold rounded-[var(--radius-pill)] border-none cursor-pointer",
-        "transition-all duration-300 ease-[var(--ease-apple)]",
+        "transition-[transform,opacity,background-color,box-shadow,color] duration-300 ease-[var(--ease-apple)]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-grey-400)] focus-visible:ring-offset-2",
         "disabled:opacity-50 disabled:cursor-not-allowed",
         variantMap[variant],

@@ -99,7 +99,7 @@ function NavLink({
         href={item.href}
         onClick={onClick}
         className={cn(
-          "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150",
+          "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-colors duration-150",
           active
             ? "text-[var(--color-grey-900)] border-l-[3px] border-[var(--color-grey-900)]"
             : "text-[var(--portal-text-secondary)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)]"
@@ -167,7 +167,7 @@ function SidebarContent({
                   onSignOut();
                   onNavClick?.();
                 }}
-                className="w-full flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all duration-150 text-[var(--portal-text-secondary)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] cursor-pointer"
+                className="w-full flex items-center gap-3 px-5 py-3 text-sm font-medium transition-colors duration-150 text-[var(--portal-text-secondary)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] cursor-pointer"
               >
                 <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
                 <span>Logg ut</span>

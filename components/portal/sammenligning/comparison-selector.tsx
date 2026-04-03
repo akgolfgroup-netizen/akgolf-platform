@@ -120,7 +120,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
             onClick={() => !tab.disabled && setMode(tab.key)}
             disabled={tab.disabled}
             className={cn(
-              "px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200",
+              "px-4 py-1.5 rounded-full text-xs font-semibold transition-[background-color,color,box-shadow] duration-200",
               mode === tab.key
                 ? "bg-[var(--color-grey-900)] text-white shadow-[0_2px_8px_var(--color-grey-200)]"
                 : tab.disabled

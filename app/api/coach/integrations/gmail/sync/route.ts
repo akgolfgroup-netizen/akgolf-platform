@@ -1,6 +1,7 @@
 // app/api/coach/integrations/gmail/sync/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { processIncomingEmail, routeEmailToUser } from "@/lib/coach/integrations/gmail";
 
 interface IncomingGmailMessage {
@@ -30,7 +31,7 @@ export async function POST(request: NextRequest) {
     const expectedToken = `Bearer ${process.env.INTEGRATION_SECRET}`;
 
     if (!process.env.INTEGRATION_SECRET) {
-      console.error("INTEGRATION_SECRET is not configured");
+      logger.error("INTEGRATION_SECRET is not configured");
       return NextResponse.json(
         { error: "Server configuration error" },
         { status: 500 }
@@ -88,7 +89,7 @@ export async function POST(request: NextRequest) {
 
         results.push({ id: message.id, success: true });
       } catch (error) {
-        console.error(`Failed to process message ${message.id}:`, error);
+        logger.error(`Failed to process message ${message.id}:`, error);
         results.push({
           id: message.id,
           success: false,
@@ -107,7 +108,7 @@ export async function POST(request: NextRequest) {
       results,
     });
   } catch (error) {
-    console.error("Gmail sync error:", error);
+    logger.error("Gmail sync error:", error);
     return NextResponse.json(
       { error: "Sync failed", details: error instanceof Error ? error.message : "Unknown error" },
       { status: 500 }

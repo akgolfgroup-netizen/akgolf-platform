@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect, useId } from "react";
 import { X, Star, NotebookPen, Plus, MessageSquare } from "lucide-react";
 import { logSessionWithExercises } from "@/app/portal/(dashboard)/dagbok/actions";
 import { ExerciseLogRow, type ExerciseLogData } from "./exercise-log-row";
@@ -42,6 +42,7 @@ const FOCUS_OPTIONS = [
 ];
 
 export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps) {
+  const titleId = useId();
   const [isPending, startTransition] = useTransition();
   const [rating, setRating] = useState<number>(0);
   const [focusArea, setFocusArea] = useState(prefill?.focusArea ?? "");
@@ -71,6 +72,20 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
   // New exercise input
   const [showAddExercise, setShowAddExercise] = useState(false);
   const [newExerciseName, setNewExerciseName] = useState("");
+
+  // Escape key handler
+  useEffect(() => {
+    if (!open) return;
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open, onClose]);
 
   if (!open) return null;
 
@@ -141,11 +156,16 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
+        aria-hidden="true"
+        role="presentation"
       />
 
       {/* Sheet */}
       <div
-        className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl p-6"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto overscroll-contain rounded-t-2xl sm:rounded-2xl p-6"
         style={{
           background: "white",
           border: "1px solid var(--color-grey-200)",
@@ -153,16 +173,17 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
       >
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
-            <NotebookPen className="w-4 h-4 text-[var(--color-grey-900)]" />
-            <h2 className="text-sm font-semibold text-[var(--color-grey-900)]">
+            <NotebookPen className="w-4 h-4 text-[var(--color-grey-900)]" aria-hidden="true" />
+            <h2 id={titleId} className="text-sm font-semibold text-[var(--color-grey-900)]">
               {prefill?.title ? `Logg: ${prefill.title}` : "Logg økt"}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="text-[var(--color-grey-400)]/50 hover:text-[var(--color-grey-900)] transition-colors"
+            aria-label="Lukk skjema"
+            className="text-[var(--color-grey-400)]/50 hover:text-[var(--color-grey-900)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
 
@@ -178,10 +199,11 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
                   key={n}
                   type="button"
                   onClick={() => setRating(n)}
-                  className="transition-transform hover:scale-110"
+                  className="transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
                   <Star
                     className="w-6 h-6"
+                    aria-hidden="true"
                     style={{
                       color: n <= rating ? "var(--color-grey-900)" : "var(--color-grey-200)",
                       fill: n <= rating ? "var(--color-grey-900)" : "transparent",
@@ -327,10 +349,10 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
               <button
                 type="button"
                 onClick={() => setShowAddExercise(true)}
-                className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium transition-colors hover:bg-[var(--color-grey-100)]"
+                className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium transition-colors hover:bg-[var(--color-grey-100)] focus-visible:outline-2 focus-visible:outline-offset-2"
                 style={{ color: "var(--color-grey-500)" }}
               >
-                <Plus className="w-3 h-3" />
+                <Plus className="w-3 h-3" aria-hidden="true" />
                 Legg til øvelse
               </button>
             </div>
@@ -381,9 +403,9 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
                     setShowAddExercise(false);
                     setNewExerciseName("");
                   }}
-                  className="p-2 rounded-lg text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-colors"
+                  className="p-2 rounded-lg text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
             )}
@@ -432,7 +454,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
               }}
             >
               <div className="flex items-center gap-2 mb-2">
-                <MessageSquare className="w-4 h-4 text-[var(--color-grey-500)]" />
+                <MessageSquare className="w-4 h-4 text-[var(--color-grey-500)]" aria-hidden="true" />
                 <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--color-grey-400)]">
                   Tilbakemelding fra coach
                 </span>
@@ -473,7 +495,7 @@ export function LogSessionSheet({ open, onClose, prefill }: LogSessionSheetProps
           <button
             type="submit"
             disabled={isPending}
-            className="w-full py-2.5 rounded-xl text-sm font-semibold transition-opacity"
+            className="w-full py-2.5 rounded-xl text-sm font-semibold transition-opacity focus-visible:outline-2 focus-visible:outline-offset-2"
             style={{
               background: "var(--color-black)",
               color: "white",

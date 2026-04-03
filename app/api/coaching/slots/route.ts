@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { BookingStatus } from "@prisma/client";
 import { addHours, addDays, isBefore, isAfter } from "date-fns";
@@ -211,7 +212,7 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("[coaching/slots] DB error:", error);
+    logger.error("[coaching/slots] DB error:", error);
     return NextResponse.json(
       { error: "Tjeneste utilgjengelig" },
       { status: 503 }

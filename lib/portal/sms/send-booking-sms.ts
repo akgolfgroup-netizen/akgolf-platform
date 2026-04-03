@@ -1,6 +1,7 @@
 import { getTwilioClient } from "./twilio";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import { logger } from "@/lib/logger";
 
 interface BookingSmsParams {
   instructorPhone: string;
@@ -26,7 +27,7 @@ export async function sendBookingConfirmationSms(
 
   const client = getTwilioClient();
   if (!client) {
-    console.warn("[SMS] Twilio not configured, skipping SMS");
+    logger.warn("[SMS] Twilio not configured, skipping SMS");
     return { sent: false, error: "Twilio ikke konfigurert" };
   }
 
@@ -42,13 +43,13 @@ export async function sendBookingConfirmationSms(
   try {
     const result = await client.sendSms(formattedPhone, message);
     if (result.success) {
-      console.log(`[SMS] Sent to ${instructorName}: ${result.sid}`);
+      logger.info(`[SMS] Sent to ${instructorName}: ${result.sid}`);
       return { sent: true };
     } else {
       return { sent: false, error: "SMS sending failed" };
     }
   } catch (error) {
-    console.error("[SMS] Error:", error);
+    logger.error("[SMS] Error:", error);
     return { sent: false, error: String(error) };
   }
 }

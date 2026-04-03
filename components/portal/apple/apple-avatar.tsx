@@ -56,7 +56,7 @@ export function AppleAvatar({
         ring && [
           "ring-[var(--color-grey-300)]",
           ringMap[size],
-          "transition-all duration-300 hover:ring-[var(--color-grey-400)]",
+          "transition-[ring-color] duration-300 hover:ring-[var(--color-grey-400)]",
         ],
         sizeMap[size],
         className

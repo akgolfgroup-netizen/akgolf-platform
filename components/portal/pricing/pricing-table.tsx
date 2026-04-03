@@ -94,7 +94,7 @@ export function PricingTable({
       <div className="flex items-center justify-center gap-3">
         <button
           onClick={() => setInterval("month")}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-[background-color,color] ${
             interval === "month"
               ? "bg-black text-white"
               : "bg-grey-100 text-grey-600 hover:bg-grey-200"
@@ -104,7 +104,7 @@ export function PricingTable({
         </button>
         <button
           onClick={() => setInterval("year")}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-[background-color,color] flex items-center gap-2 ${
             interval === "year"
               ? "bg-black text-white"
               : "bg-grey-100 text-grey-600 hover:bg-grey-200"
@@ -213,7 +213,7 @@ export function PricingTable({
                     onSelectPlan(tierKey as "PRO" | "ELITE", interval)
                   }
                   disabled={loading !== null}
-                  className={`w-full py-3 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+                  className={`w-full py-3 rounded-xl text-sm font-semibold transition-[background-color,color] flex items-center justify-center gap-2 ${
                     tier.highlight
                       ? "bg-black text-white hover:bg-grey-800"
                       : "bg-grey-200 text-grey-900 hover:bg-grey-300"

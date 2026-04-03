@@ -40,7 +40,6 @@ export async function approveBooking(
 
     return { success: true };
   } catch (error) {
-    console.error("Failed to approve booking:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Ukjent feil",
@@ -80,7 +79,6 @@ export async function rejectBooking(
 
     return { success: true };
   } catch (error) {
-    console.error("Failed to reject booking:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Ukjent feil",
@@ -122,7 +120,6 @@ export async function approveActivity(
 
     return { success: true };
   } catch (error) {
-    console.error("Failed to approve activity:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Ukjent feil",
@@ -160,7 +157,6 @@ export async function rejectActivity(
 
     return { success: true };
   } catch (error) {
-    console.error("Failed to reject activity:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Ukjent feil",

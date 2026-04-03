@@ -8,11 +8,11 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variants = {
-  default: "bg-ink-10 text-ink-70",
-  gold: "bg-gold/10 text-gold-text border border-gold/20",
-  navy: "bg-navy text-white",
-  subtle: "bg-ink-05 text-ink-50",
-  outline: "bg-transparent border border-ink-20 text-ink-60",
+  default: "bg-[var(--color-grey-100)] text-[var(--color-grey-700)]",
+  gold: "bg-[var(--color-grey-100)] text-[var(--color-grey-900)] border border-[var(--color-grey-200)]",
+  navy: "bg-[var(--color-grey-900)] text-white",
+  subtle: "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]",
+  outline: "bg-transparent border border-[var(--color-grey-200)] text-[var(--color-grey-600)]",
 };
 
 const sizes = {

@@ -30,7 +30,7 @@ export function FacilitySelector({
       <select
         value={selectedFacilityId}
         onChange={(e) => onChange(e.target.value)}
-        className="appearance-none w-full text-sm font-medium rounded-xl px-4 py-2.5 pr-10 text-[var(--color-grey-700)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-all duration-200 cursor-pointer"
+        className="appearance-none w-full text-sm font-medium rounded-xl px-4 py-2.5 pr-10 text-[var(--color-grey-700)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-[border-color,box-shadow] duration-200 cursor-pointer"
       >
         {showAll && <option value="">Alle fasiliteter</option>}
         {facilities.map((facility) => (
@@ -59,7 +59,7 @@ export function FacilityChip({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
+      className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-[background-color,color] duration-200 ${
         isSelected
           ? "bg-[var(--color-grey-900)] text-white"
           : "bg-[var(--color-grey-100)] text-[var(--color-grey-600)] hover:bg-[var(--color-grey-200)]"

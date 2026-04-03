@@ -9,7 +9,7 @@ const actions = [
     label: "Logg trening",
     href: "/portal/dagbok",
     icon: PlusCircle,
-    gradient: "from-gold to-[#D4A76A]",
+    gradient: "from-[var(--color-grey-900)] to-[var(--color-grey-700)]",
   },
   {
     label: "Se statistikk",
@@ -60,7 +60,7 @@ export function QuickActions() {
         <motion.div key={action.href} variants={itemVariants}>
           <Link
             href={action.href}
-            className="flex flex-col items-center gap-2 p-4 rounded-xl border border-[var(--portal-card-border)] bg-[var(--portal-card-bg-solid)] hover:border-gold/50 transition-colors"
+            className="flex flex-col items-center gap-2 p-4 rounded-xl border border-[var(--portal-card-border)] bg-[var(--portal-card-bg-solid)] hover:border-[var(--color-grey-200)] transition-colors"
           >
             <motion.div
               whileTap={{ scale: 0.95 }}

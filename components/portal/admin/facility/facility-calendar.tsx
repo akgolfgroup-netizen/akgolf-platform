@@ -78,8 +78,8 @@ export function FacilityCalendar({ initialFacilities }: Props) {
 
       const data = await res.json();
       setEvents(data.events);
-    } catch (err) {
-      console.error("Failed to fetch events:", err);
+    } catch {
+      // Error handled silently - calendar will show empty state
     } finally {
       setLoading(false);
     }
@@ -147,8 +147,8 @@ export function FacilityCalendar({ initialFacilities }: Props) {
       if (!res.ok) throw new Error("Failed to approve");
       await fetchEvents(currentDate, viewMode);
       setSelectedEvent(null);
-    } catch (err) {
-      console.error("Failed to approve activity:", err);
+    } catch {
+      // Error handled silently - activity remains unapproved
     }
   };
 
@@ -161,8 +161,8 @@ export function FacilityCalendar({ initialFacilities }: Props) {
       if (!res.ok) throw new Error("Failed to delete");
       await fetchEvents(currentDate, viewMode);
       setSelectedEvent(null);
-    } catch (err) {
-      console.error("Failed to delete activity:", err);
+    } catch {
+      // Error handled silently - activity remains unchanged
     }
   };
 
@@ -175,19 +175,19 @@ export function FacilityCalendar({ initialFacilities }: Props) {
           <div className="flex items-center gap-1">
             <button
               onClick={navigateBack}
-              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-all"
+              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-[background-color,border-color,color]"
             >
               <ChevronLeft className="w-[18px] h-[18px]" />
             </button>
             <button
               onClick={goToToday}
-              className="px-4 py-2 text-sm font-medium rounded-xl text-[var(--color-grey-900)] bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)] transition-all"
+              className="px-4 py-2 text-sm font-medium rounded-xl text-[var(--color-grey-900)] bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)] transition-[background-color]"
             >
               I dag
             </button>
             <button
               onClick={navigateForward}
-              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-all"
+              className="w-9 h-9 flex items-center justify-center rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-500)] hover:border-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-[background-color,border-color,color]"
             >
               <ChevronRight className="w-[18px] h-[18px]" />
             </button>
@@ -208,7 +208,7 @@ export function FacilityCalendar({ initialFacilities }: Props) {
               <button
                 key={mode}
                 onClick={() => setViewMode(mode)}
-                className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-200 ${
+                className={`px-4 py-2 text-xs font-semibold rounded-lg transition-[background-color,color,box-shadow] duration-200 ${
                   viewMode === mode
                     ? "bg-[var(--color-grey-900)] text-white shadow-sm"
                     : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"

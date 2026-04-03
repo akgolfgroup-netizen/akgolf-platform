@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useId } from "react";
 import { X, Check, Zap, Crown, Users, TrendingDown } from "lucide-react";
 import { SubscriptionTier } from "@prisma/client";
 
@@ -60,6 +60,20 @@ export function UpgradeModal({
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">(
     "monthly"
   );
+  const titleId = useId();
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -87,11 +101,16 @@ export function UpgradeModal({
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
+        aria-hidden="true"
+        role="presentation"
       />
 
       {/* Modal */}
       <div
-        className="relative w-full max-w-2xl rounded-2xl p-6 md:p-8"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        className="relative w-full max-w-2xl rounded-2xl p-6 md:p-8 overscroll-contain"
         style={{
           background: "white",
           boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
@@ -100,14 +119,15 @@ export function UpgradeModal({
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full hover:bg-[var(--color-grey-100)] transition-colors"
+          aria-label="Lukk dialog"
+          className="absolute top-4 right-4 p-2 rounded-full hover:bg-[var(--color-grey-100)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)]"
         >
-          <X className="w-5 h-5 text-[var(--color-grey-500)]" />
+          <X className="w-5 h-5 text-[var(--color-grey-500)]" aria-hidden="true" />
         </button>
 
         {/* Header */}
         <div className="text-center mb-6">
-          <h2 className="text-xl md:text-2xl font-bold text-[var(--color-grey-900)] mb-1">
+          <h2 id={titleId} className="text-xl md:text-2xl font-bold text-[var(--color-grey-900)] mb-1">
             {message.title}
           </h2>
           <p className="text-sm text-[var(--color-grey-500)]">
@@ -128,7 +148,7 @@ export function UpgradeModal({
           >
             <button
               onClick={() => setBillingPeriod("monthly")}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)] ${
                 billingPeriod === "monthly"
                   ? "bg-white text-[var(--color-grey-900)] shadow-sm"
                   : "text-[var(--color-grey-500)]"
@@ -138,7 +158,7 @@ export function UpgradeModal({
             </button>
             <button
               onClick={() => setBillingPeriod("annual")}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)] ${
                 billingPeriod === "annual"
                   ? "bg-white text-[var(--color-grey-900)] shadow-sm"
                   : "text-[var(--color-grey-500)]"
@@ -157,7 +177,7 @@ export function UpgradeModal({
             style={{ borderColor: "var(--color-grey-200)" }}
           >
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-[#16a34a]" />
+              <Zap className="w-5 h-5 text-[#16a34a]" aria-hidden="true" />
               <h3 className="font-semibold text-[var(--color-grey-900)]">Pro</h3>
             </div>
             <div className="mb-4">
@@ -184,14 +204,14 @@ export function UpgradeModal({
                   key={feature}
                   className="flex items-start gap-2 text-sm text-[var(--color-grey-600)]"
                 >
-                  <Check className="w-4 h-4 text-[#16a34a] mt-0.5 shrink-0" />
+                  <Check className="w-4 h-4 text-[#16a34a] mt-0.5 shrink-0" aria-hidden="true" />
                   {feature}
                 </li>
               ))}
             </ul>
             <button
               onClick={() => handleUpgrade("PRO")}
-              className="w-full py-2.5 rounded-full font-semibold text-sm transition-transform hover:scale-[1.02]"
+              className="w-full py-2.5 rounded-full font-semibold text-sm transition-transform hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)]"
               style={{
                 background: "var(--color-grey-900)",
                 color: "white",
@@ -213,7 +233,7 @@ export function UpgradeModal({
               Mest populær
             </div>
             <div className="flex items-center gap-2 mb-3">
-              <Crown className="w-5 h-5 text-[#16a34a]" />
+              <Crown className="w-5 h-5 text-[#16a34a]" aria-hidden="true" />
               <h3 className="font-semibold text-[var(--color-grey-900)]">
                 Pro+
               </h3>
@@ -242,14 +262,14 @@ export function UpgradeModal({
                   key={feature}
                   className="flex items-start gap-2 text-sm text-[var(--color-grey-600)]"
                 >
-                  <Check className="w-4 h-4 text-[#16a34a] mt-0.5 shrink-0" />
+                  <Check className="w-4 h-4 text-[#16a34a] mt-0.5 shrink-0" aria-hidden="true" />
                   {feature}
                 </li>
               ))}
             </ul>
             <button
               onClick={() => handleUpgrade("ELITE")}
-              className="w-full py-2.5 rounded-full font-semibold text-sm transition-transform hover:scale-[1.02]"
+              className="w-full py-2.5 rounded-full font-semibold text-sm transition-transform hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)]"
               style={{
                 background: "#16a34a",
                 color: "white",
@@ -263,11 +283,11 @@ export function UpgradeModal({
         {/* Social proof */}
         <div className="flex items-center justify-center gap-6 mt-6 pt-4 border-t border-[var(--color-grey-200)]">
           <div className="flex items-center gap-2 text-sm text-[var(--color-grey-600)]">
-            <Users className="w-4 h-4 text-[#16a34a]" />
+            <Users className="w-4 h-4 text-[#16a34a]" aria-hidden="true" />
             <span>127 spillere oppgraderte denne maneden</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-[var(--color-grey-600)]">
-            <TrendingDown className="w-4 h-4 text-[#16a34a]" />
+            <TrendingDown className="w-4 h-4 text-[#16a34a]" aria-hidden="true" />
             <span>Snitt HCP-forbedring: 2.3 slag</span>
           </div>
         </div>

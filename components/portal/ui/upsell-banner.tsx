@@ -123,7 +123,7 @@ export function UpsellBanner({
               </p>
               <button
                 onClick={() => setShowPaywall(true)}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all hover:scale-105"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-[transform,background-color] hover:scale-105"
                 style={{
                   background: "#16a34a",
                   color: "white",
@@ -174,7 +174,7 @@ export function UpsellBanner({
         </div>
         <button
           onClick={() => setShowPaywall(true)}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-full text-[10px] font-semibold transition-all hover:scale-105"
+          className="flex items-center gap-1 px-3 py-1.5 rounded-full text-[10px] font-semibold transition-[transform,background-color] hover:scale-105"
           style={{
             background: "#16a34a",
             color: "white",

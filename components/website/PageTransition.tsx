@@ -2,8 +2,16 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function PageTransition({ children }: { children: ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+
+  // When reduced motion is preferred, render children directly (instant transition)
+  if (prefersReducedMotion) {
+    return <>{children}</>;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}

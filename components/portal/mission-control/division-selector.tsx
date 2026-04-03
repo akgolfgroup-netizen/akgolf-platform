@@ -21,7 +21,7 @@ export function DivisionSelector({
           key={division.id}
           onClick={() => onChange(division.id)}
           className={cn(
-            "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer",
+            "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-[background-color,border-color,color] duration-150 cursor-pointer",
             selected === division.id
               ? "bg-[#1D1D1F] text-white"
               : "bg-white border border-[#E8E8ED] text-[#6E6E73] hover:bg-[#F5F5F7] hover:text-[#1D1D1F]"

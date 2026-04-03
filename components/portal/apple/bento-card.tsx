@@ -81,7 +81,7 @@ export function BentoCard({
         variantMap[variant],
         spanMap[span],
         rowSpanMap[rowSpan],
-        hover && "transition-all duration-300",
+        hover && "transition-[transform,box-shadow] duration-300",
         className
       )}
       whileHover={hover ? {

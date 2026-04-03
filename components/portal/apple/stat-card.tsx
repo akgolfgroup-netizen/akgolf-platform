@@ -71,7 +71,7 @@ export function StatCard({
     <motion.div
       className={cn(
         "rounded-2xl p-6 bg-white/70 backdrop-blur-xl border border-white/50 shadow-[var(--shadow-card)]",
-        "transition-all duration-300",
+        "transition-[transform,box-shadow] duration-300",
         className
       )}
       whileHover={{
@@ -118,8 +118,8 @@ export function StatCard({
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: 0.2 }}
           >
-            {isPositive && <TrendingUp className="w-3.5 h-3.5" />}
-            {isNegative && <TrendingDown className="w-3.5 h-3.5" />}
+            {isPositive && <TrendingUp className="w-3.5 h-3.5" aria-hidden="true" />}
+            {isNegative && <TrendingDown className="w-3.5 h-3.5" aria-hidden="true" />}
             <span>
               {isPositive && "+"}
               {trend}

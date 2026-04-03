@@ -1,3 +1,5 @@
+import { logger } from "@/lib/logger";
+
 let _twilioClient: TwilioClient | null = null;
 
 interface TwilioClient {
@@ -37,14 +39,14 @@ export function getTwilioClient(): TwilioClient | null {
 
           if (!res.ok) {
             const errorBody = await res.text();
-            console.error("[Twilio] SMS failed:", res.status, errorBody);
+            logger.error(`[Twilio] SMS failed: ${res.status} ${errorBody}`);
             return { success: false };
           }
 
           const data = await res.json();
           return { success: true, sid: data.sid };
         } catch (error) {
-          console.error("[Twilio] SMS error:", error);
+          logger.error("[Twilio] SMS error:", error);
           return { success: false };
         }
       },

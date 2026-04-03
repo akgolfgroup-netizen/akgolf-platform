@@ -1,7 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { BookingStatus, PaymentStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -141,10 +141,7 @@ export async function cancelBooking(
     refundedAmount = refundResult.refundedAmount;
 
     if (!refundResult.success) {
-      console.error(
-        `[cancelBooking] Refund failed for booking ${id}:`,
-        refundResult.error
-      );
+      logger.error(`[cancelBooking] Refund failed for booking ${id}`, refundResult.error);
     }
   }
 
@@ -196,9 +193,7 @@ export async function cancelBooking(
     time: timeStr,
     refundInfo,
     policyReason: policy.reason,
-  }).catch((err) =>
-    console.error("[cancelBooking] Email send failed:", err)
-  );
+  }).catch((err) => logger.error("[cancelBooking] Email send failed", err));
 
   // Notify next person on waitlist (non-blocking)
   notifyNextOnWaitlist(
@@ -206,9 +201,7 @@ export async function cancelBooking(
     booking.ServiceType.name,
     booking.Instructor.User.name ?? "Instruktør",
     booking.startTime
-  ).catch((err) =>
-    console.error("[cancelBooking] Waitlist notification failed:", err)
-  );
+  ).catch((err) => logger.error("[cancelBooking] Waitlist notification failed", err));
 
   revalidatePath("/bookinger");
 

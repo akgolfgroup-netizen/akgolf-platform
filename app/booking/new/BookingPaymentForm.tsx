@@ -287,7 +287,7 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
             <motion.button
               onClick={handleStripe}
               disabled={isAnyLoading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50 text-white bg-[#1D1D1F] shadow-lg shadow-black/15"
+              className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-[opacity,transform,box-shadow] duration-300 disabled:opacity-50 text-white bg-[#1D1D1F] shadow-lg shadow-black/15"
               whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(29,29,31,0.25)" }}
               whileTap={{ scale: 0.99 }}
             >
@@ -310,7 +310,7 @@ export function BookingPaymentForm({ serviceType, instructor, startTime, student
             <motion.button
               onClick={handleVipps}
               disabled={isAnyLoading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50 border-2 bg-transparent text-[#FF5B24] border-[#FF5B24]"
+              className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-[opacity,transform,background-color,color] duration-300 disabled:opacity-50 border-2 bg-transparent text-[#FF5B24] border-[#FF5B24]"
               whileHover={{
                 scale: 1.01,
                 background: "#FF5B24",

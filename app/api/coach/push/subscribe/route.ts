@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { nanoid } from "nanoid";
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Push subscription error:", error);
+    logger.error("Push subscription error:", error);
     return NextResponse.json(
       { error: "Failed to subscribe" },
       { status: 500 }
@@ -49,7 +50,7 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Push unsubscribe error:", error);
+    logger.error("Push unsubscribe error:", error);
     return NextResponse.json(
       { error: "Failed to unsubscribe" },
       { status: 500 }

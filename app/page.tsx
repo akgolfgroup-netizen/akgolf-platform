@@ -306,7 +306,7 @@ export default function HomePage() {
               {COACHING_PACKAGES.map((pkg) => (
                 <StaggerItem key={pkg.name}>
                   <div
-                    className={`rounded-[20px] flex flex-col h-full transition-all duration-300 ${
+                    className={`rounded-[20px] flex flex-col h-full transition-[box-shadow,border-color,transform] duration-300 ${
                       pkg.highlighted
                         ? "bg-black text-white relative shadow-lg hover:shadow-xl hover:-translate-y-1"
                         : "bg-white border border-grey-200 hover:border-grey-300 hover:shadow-lg hover:-translate-y-1"

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export interface StaggerContainerProps {
   children: ReactNode;
@@ -16,6 +17,13 @@ export function StaggerContainer({
   staggerDelay = 0.1,
   delayChildren = 0.2,
 }: StaggerContainerProps) {
+  const prefersReducedMotion = useReducedMotion();
+
+  // When reduced motion is preferred, render children directly without stagger
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       initial="hidden"
@@ -43,6 +51,13 @@ interface StaggerItemProps {
 }
 
 export function StaggerItem({ children, className }: StaggerItemProps) {
+  const prefersReducedMotion = useReducedMotion();
+
+  // When reduced motion is preferred, render children directly
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       variants={{

@@ -8,7 +8,7 @@ interface EventChipProps {
 export function EventChip({ event }: EventChipProps) {
   return (
     <div
-      className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm truncate transition-all hover:shadow-sm"
+      className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm truncate transition-shadow hover:shadow-sm"
       style={{
         backgroundColor: `${event.color}15`,
         border: `1px solid ${event.color}30`,

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const defaultVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -19,6 +20,13 @@ export function RevealOnScroll({
   delay?: number;
   direction?: "up" | "left" | "right" | "none";
 }) {
+  const prefersReducedMotion = useReducedMotion();
+
+  // When reduced motion is preferred, render children directly
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   const directionMap = {
     up: { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } },
     left: { hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0 } },
@@ -53,6 +61,13 @@ export function StaggerContainer({
   className?: string;
   staggerDelay?: number;
 }) {
+  const prefersReducedMotion = useReducedMotion();
+
+  // When reduced motion is preferred, render children directly
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}
@@ -73,6 +88,13 @@ export function StaggerItem({
   children: ReactNode;
   className?: string;
 }) {
+  const prefersReducedMotion = useReducedMotion();
+
+  // When reduced motion is preferred, render children directly
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}

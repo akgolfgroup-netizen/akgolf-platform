@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/portal/prisma";
 import { createHmac } from "crypto";
+import { logger } from "@/lib/logger";
 
 /**
  * Google Calendar integration for AK Golf Portal.
@@ -204,9 +205,7 @@ export async function handleCallback(
     data: { googleCalendarTokens: tokens as object },
   });
 
-  if (process.env.NODE_ENV !== "production") {
-    console.log("[Google Calendar] Tokens saved successfully");
-  }
+  logger.info("[Google Calendar] Tokens saved successfully");
 }
 
 /**
@@ -316,9 +315,7 @@ export async function syncBookingToCalendar(
     eventId = data.id;
   }
 
-  console.log(
-    `[Google Calendar] Synced booking ${booking.id} → event ${eventId}`
-  );
+  logger.info(`[Google Calendar] Synced booking ${booking.id} → event ${eventId}`);
   return eventId;
 }
 
@@ -359,5 +356,5 @@ export async function removeFromCalendar(
     );
   }
 
-  console.log(`[Google Calendar] Removed event ${eventId} for user ${userId}`);
+  logger.info(`[Google Calendar] Removed event ${eventId} for user ${userId}`);
 }

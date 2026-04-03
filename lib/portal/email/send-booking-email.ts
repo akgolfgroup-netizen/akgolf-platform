@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import { logger } from "@/lib/logger";
 import { getResend, FROM_EMAIL } from "./resend";
 import { BookingConfirmedEmail } from "./templates/booking-confirmed";
 import { InstructorNewBookingEmail } from "./templates/instructor-new-booking";
@@ -30,9 +31,7 @@ function formatNOK(amount: number): string {
 export async function sendBookingConfirmation(data: BookingEmailData) {
   const resend = getResend();
   if (!resend) {
-    console.log(
-      `[Email] Resend not configured — skipping confirmation for booking ${data.bookingId}`
-    );
+    logger.info(`[Email] Resend not configured — skipping confirmation for booking ${data.bookingId}`);
     return;
   }
 
@@ -57,11 +56,9 @@ export async function sendBookingConfirmation(data: BookingEmailData) {
         location: data.location,
       }),
     });
-    if (process.env.NODE_ENV !== "production") {
-      console.log(`[Email] Confirmation sent for booking ${data.bookingId}`);
-    }
+    logger.info(`[Email] Confirmation sent for booking ${data.bookingId}`);
   } catch (error) {
-    console.error(`[Email] Failed to send confirmation for booking ${data.bookingId}:`, error);
+    logger.error(`[Email] Failed to send confirmation for booking ${data.bookingId}`, error);
   }
 
   // Send to instructor
@@ -80,11 +77,9 @@ export async function sendBookingConfirmation(data: BookingEmailData) {
         duration: data.duration,
       }),
     });
-    if (process.env.NODE_ENV !== "production") {
-      console.log(`[Email] Instructor notification sent for booking ${data.bookingId}`);
-    }
+    logger.info(`[Email] Instructor notification sent for booking ${data.bookingId}`);
   } catch (error) {
-    console.error(`[Email] Failed to send instructor notification for booking ${data.bookingId}:`, error);
+    logger.error(`[Email] Failed to send instructor notification for booking ${data.bookingId}`, error);
   }
 }
 
@@ -99,7 +94,7 @@ export async function sendBookingCancellation(
 ) {
   const resend = getResend();
   if (!resend) {
-    console.log("[Email] Resend not configured — skipping cancellation email");
+    logger.info("[Email] Resend not configured — skipping cancellation email");
     return;
   }
 
@@ -128,11 +123,9 @@ export async function sendBookingCancellation(
         policyReason: cancelReason,
       }),
     });
-    if (process.env.NODE_ENV !== "production") {
-      console.log(`[Email] Cancellation sent to ${studentEmail}`);
-    }
+    logger.info(`[Email] Cancellation sent to ${studentEmail}`);
   } catch (error) {
-    console.error(`[Email] Failed to send cancellation to ${studentEmail}:`, error);
+    logger.error(`[Email] Failed to send cancellation to ${studentEmail}`, error);
   }
 }
 
@@ -145,7 +138,7 @@ export async function sendRescheduleNotification(
 ) {
   const resend = getResend();
   if (!resend) {
-    console.log("[Email] Resend not configured — skipping reschedule email");
+    logger.info("[Email] Resend not configured — skipping reschedule email");
     return;
   }
 
@@ -179,10 +172,8 @@ export async function sendRescheduleNotification(
         </div>
       `,
     });
-    if (process.env.NODE_ENV !== "production") {
-      console.log(`[Email] Reschedule notification sent to ${studentEmail}`);
-    }
+    logger.info(`[Email] Reschedule notification sent to ${studentEmail}`);
   } catch (error) {
-    console.error(`[Email] Failed to send reschedule notification to ${studentEmail}:`, error);
+    logger.error(`[Email] Failed to send reschedule notification to ${studentEmail}`, error);
   }
 }

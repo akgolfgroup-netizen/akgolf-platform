@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
+import { logger } from "@/lib/logger";
 
 /**
  * GET /api/booking/services
@@ -39,7 +40,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("[booking/services] DB error:", error);
+    logger.error("[booking/services] DB error:", error);
     return NextResponse.json(
       { error: "Tjenester er midlertidig utilgjengelige" },
       { status: 503 }

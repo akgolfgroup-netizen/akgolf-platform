@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { getPortalUser } from "@/lib/portal/auth";
 import { BookingStatus, PaymentStatus } from "@prisma/client";
@@ -79,10 +80,7 @@ export async function POST(req: NextRequest) {
 
       if (!refundResult.success) {
         // Log but continue - manual refund may be needed
-        console.error(
-          `[Cancel] Refund failed for booking ${bookingId}:`,
-          refundResult.error
-        );
+        logger.error(`[Cancel] Refund failed for booking ${bookingId}`, refundResult.error);
       }
     }
 
@@ -109,9 +107,7 @@ export async function POST(req: NextRequest) {
         booking.startTime,
         reason || cancellation.reason,
         cancellation.refundPercent,
-      ).catch((err) => {
-        console.error(`[Cancel] Cancellation email failed:`, err);
-      });
+      ).catch((err) => logger.error("[Cancel] Cancellation email failed", err));
     }
 
     // Notify waitlist if applicable
@@ -120,9 +116,7 @@ export async function POST(req: NextRequest) {
       booking.ServiceType.name,
       booking.Instructor.User.name ?? "Instruktør",
       booking.startTime
-    ).catch((err) => {
-      console.error(`[Cancel] Waitlist notification failed:`, err);
-    });
+    ).catch((err) => logger.error("[Cancel] Waitlist notification failed", err));
 
     return NextResponse.json({
       success: true,
@@ -133,8 +127,7 @@ export async function POST(req: NextRequest) {
         refundedAmount: refundResult?.refundedAmount ?? 0,
       },
     });
-  } catch (error) {
-    console.error("[Cancel] Error:", error);
+  } catch {
     return NextResponse.json(
       { error: "Intern feil ved avbestilling" },
       { status: 500 }

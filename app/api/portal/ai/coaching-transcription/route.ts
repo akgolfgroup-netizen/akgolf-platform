@@ -1,5 +1,6 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { generateCoachingSummary } from "@/lib/portal/ai/coaching-summary";
 import { transcribeAudio } from "@/lib/portal/ai/transcribe-audio";
@@ -105,10 +106,7 @@ export async function POST(req: NextRequest) {
       focusAreas: summary.focusAreas,
       actionItems: summary.actionItems,
     }).catch((err) =>
-      console.error(
-        `[coaching-transcription] Notion sync failed for ${student.name}:`,
-        err
-      )
+      logger.error(`[coaching-transcription] Notion sync failed for ${student.name}`, err)
     );
   }
 

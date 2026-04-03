@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { BookingStatus } from "@prisma/client";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
@@ -78,10 +79,7 @@ export async function GET(req: NextRequest) {
 
       emailsSent++;
     } catch (error) {
-      console.error(
-        `[Cron] Email reminder failed for booking ${booking.id}:`,
-        error
-      );
+      logger.error(`[Cron] Email reminder failed for booking ${booking.id}`, error);
     }
   }
 
@@ -122,14 +120,14 @@ export async function GET(req: NextRequest) {
         smsSent++;
       }
     } catch (error) {
-      console.error(
+      logger.error(
         `[Cron] SMS reminder failed for booking ${booking.id}:`,
         error
       );
     }
   }
 
-  console.log(
+  logger.info(
     `[Cron] Reminders sent: ${emailsSent} emails, ${smsSent} SMS`
   );
 

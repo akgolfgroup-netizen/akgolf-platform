@@ -267,8 +267,7 @@ export async function saveWeekOverride(data: {
     revalidatePath("/portal/admin/kapasitet");
 
     return { success: true };
-  } catch (error) {
-    console.error("[saveWeekOverride] Error:", error);
+  } catch {
     return { success: false, error: "Kunne ikke lagre override" };
   }
 }
@@ -299,8 +298,7 @@ export async function deleteWeekOverride(
     revalidatePath("/portal/admin/kapasitet");
 
     return { success: true };
-  } catch (error) {
-    console.error("[deleteWeekOverride] Error:", error);
+  } catch {
     return { success: false, error: "Kunne ikke slette override" };
   }
 }

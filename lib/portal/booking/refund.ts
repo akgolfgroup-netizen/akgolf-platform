@@ -1,5 +1,6 @@
 import { stripe } from "@/lib/portal/stripe";
 import { PaymentMethod } from "@prisma/client";
+import { logger } from "@/lib/logger";
 
 interface RefundResult {
   success: boolean;
@@ -60,7 +61,7 @@ async function refundStripe(
       providerRefundId: refund.id,
     };
   } catch (error) {
-    console.error("[Refund] Stripe refund failed:", error);
+    logger.error("[Refund] Stripe refund failed:", error);
     return {
       success: false,
       refundedAmount: 0,

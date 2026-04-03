@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 
 export async function GET() {
@@ -31,7 +32,7 @@ export async function GET() {
     });
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
-    console.error("[coaching/packages] Error:", msg);
+    logger.error("[coaching/packages] Error:", msg);
     return NextResponse.json(
       { error: "Kunne ikke hente pakker", detail: msg },
       { status: 503 }

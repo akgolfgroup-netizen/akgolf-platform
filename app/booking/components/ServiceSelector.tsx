@@ -45,7 +45,7 @@ export function ServiceSelector({ services, onSelect }: Props) {
               <button
                 onClick={() => setSelectedId(service.id)}
                 className={cn(
-                  "w-full text-left cursor-pointer group transition-all duration-300 p-5 rounded-[20px] border-2",
+                  "w-full text-left cursor-pointer group transition-[border-color,background-color] duration-300 p-5 rounded-[20px] border-2",
                   isSelected
                     ? "border-black bg-grey-100"
                     : "border-grey-200 hover:border-grey-300 bg-white"

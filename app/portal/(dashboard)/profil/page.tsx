@@ -441,7 +441,7 @@ export default function ProfilPage() {
                         className="group relative flex flex-col items-center text-center"
                       >
                         <div
-                          className={`w-12 h-12 rounded-xl flex items-center justify-center mb-1.5 transition-all ${
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center mb-1.5 transition-[background-color,box-shadow] ${
                             isUnlocked ? "bg-gradient-to-br from-[var(--color-grey-100)] to-[var(--color-grey-200)] shadow-md" : "bg-[var(--color-grey-100)] opacity-40"
                           }`}
                         >
@@ -585,8 +585,11 @@ export default function ProfilPage() {
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-[var(--color-grey-500)] uppercase tracking-wide">Telefon</label>
+                      <label htmlFor="profile-phone" className="text-xs font-medium text-[var(--color-grey-500)] uppercase tracking-wide">Telefon</label>
                       <input
+                        id="profile-phone"
+                        type="tel"
+                        autoComplete="tel"
                         value={profilePhone}
                         onChange={(e) => setProfilePhone(e.target.value)}
                         placeholder="+47 xxx xx xxx"
@@ -657,11 +660,11 @@ function GoalCard({
   return (
     <motion.div
       variants={itemVariants}
-      className="group flex items-start gap-3 p-3 rounded-xl bg-[var(--color-grey-100)]0 border border-[var(--color-grey-200)]/50 hover:border-[var(--color-grey-300)]/50 transition-colors"
+      className="group flex items-start gap-3 p-3 rounded-xl bg-[var(--color-grey-100)]0 border border-[var(--color-grey-200)]/50 hover:border-[var(--color-grey-300)]/50 transition-[border-color]"
     >
       <button
         onClick={onToggle}
-        className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-md border flex items-center justify-center transition-colors"
+        className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-md border flex items-center justify-center transition-[border-color,background-color]"
         style={{
           borderColor: isCompleted ? "#10B981" : "var(--color-grey-300)",
           background: isCompleted ? "rgba(16,185,129,0.1)" : "white",
@@ -691,7 +694,7 @@ function GoalCard({
           <div className="flex items-center gap-2 mt-1.5">
             <div className="flex-1 h-1.5 rounded-full bg-[var(--color-grey-200)]">
               <div
-                className="h-1.5 rounded-full transition-all duration-500"
+                className="h-1.5 rounded-full transition-[width] duration-500"
                 style={{ width: `${progress}%`, background: config.color }}
               />
             </div>

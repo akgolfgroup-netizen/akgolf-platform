@@ -45,7 +45,6 @@ export async function approveMessage(
 
     return { success: true };
   } catch (error) {
-    console.error("Failed to approve message:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Ukjent feil",
@@ -69,7 +68,6 @@ export async function rejectMessage(
 
     return { success: true };
   } catch (error) {
-    console.error("Failed to reject message:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Ukjent feil",
@@ -94,7 +92,6 @@ export async function regenerateAIResponse(
 
     return { success: true };
   } catch (error) {
-    console.error("Failed to regenerate AI response:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Ukjent feil",

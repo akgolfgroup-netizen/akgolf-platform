@@ -77,7 +77,7 @@ export function AchievementGrid({ definitions, unlocked }: AchievementGridProps)
               className="group relative flex flex-col items-center text-center"
             >
               <div
-                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-1.5 transition-all ${
+                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-1.5 transition-[box-shadow,opacity,filter] ${
                   isUnlocked ? "shadow-lg" : "opacity-30 grayscale"
                 }`}
                 style={{

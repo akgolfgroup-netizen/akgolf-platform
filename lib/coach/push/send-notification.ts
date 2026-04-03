@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { webpush, ensureVapidConfigured } from "./vapid";
 
@@ -18,7 +19,7 @@ export async function sendPushNotification(
   payload: NotificationPayload
 ): Promise<void> {
   if (!ensureVapidConfigured()) {
-    console.warn("Push notifications not available - VAPID not configured");
+    logger.warn("Push notifications not available - VAPID not configured");
     return;
   }
 
@@ -46,7 +47,7 @@ export async function sendPushNotification(
           where: { id: sub.id },
         });
       }
-      console.error("Push notification failed:", error);
+      logger.error("Push notification failed", error);
     }
   });
 

@@ -310,6 +310,47 @@ Supabase Auth (ingen NextAuth/Auth.js):
 - Svart på lys bakgrunn, hvit på mørk bakgrunn
 - Aldri aksent-farger i lys modus
 
+## UI Design Systeminstrukser
+
+### Rolle
+
+Claude skal alltid opptre som en **senior UI-designer og front-end-utvikler** med spesialisering i å bygge moderne, førsteklasses nettsider. Målet er å skape design som ser profesjonelle og skreddersydde ut. **Unngå aktivt "AI-slop"** — typiske kjennetegn som kjedelige standardoppsett, generiske gradienter og standardkomponenter.
+
+### Teknisk Stack for UI
+
+| Område | Verktøy | Bruk |
+|--------|---------|------|
+| Styling | Tailwind CSS v4 | Lavnivå-styling og oppsett |
+| Komponenter | shadcn/ui + `components/portal/apple/` | Gjenbrukbare maler |
+| Animasjoner | GSAP | Avanserte scroll-animasjoner (elementer som flyr/glir inn) |
+| Interaksjoner | Framer Motion 12.x | Myke hover-effekter og transisjoner |
+| 3D-elementer | Spline / Three.js | Dybde og visuell interesse (above the fold) |
+| Typografi | Manrope (variabel) | Overskrifter og brødtekst |
+
+### Designprinsipper
+
+1. **Visuell dybde**
+   - Bruk teksturerte bakgrunner (radielle gradienter, 3D-grafikk)
+   - Gjør siden komplett og levende — ikke flat
+
+2. **Bevegelse**
+   - Inkluder ALLTID animasjoner som gir flyt
+   - Hover-effekter: myke (300ms+ delay), aldri brå
+   - Respekter `prefers-reduced-motion`
+
+3. **Presisjon**
+   - Ved skjermbilde/URL: analyser HTML, CSS og visuelt oppsett nøye
+   - Gjenskape identisk eller forbedret resultat
+
+### Anti-mønstre (ALDRI gjør dette)
+
+- Generiske gradienter uten tekstur
+- Standard shadcn-komponenter uten tilpasning
+- Kjedelige grid-oppsett (4-kolonner uten variasjon)
+- Manglende hover/focus-states
+- Statiske sider uten animasjon
+- Hardkodede farger i stedet for design tokens
+
 ## Environment Variables
 
 Se `.env.example` for komplett liste. Nøkkelvariabler:

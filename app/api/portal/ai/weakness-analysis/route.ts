@@ -33,8 +33,7 @@ export async function POST() {
   try {
     const analysis = await analyzeWeakness(user.id);
     return NextResponse.json(analysis);
-  } catch (e) {
-    console.error("Weakness analysis error:", e);
+  } catch {
     return NextResponse.json({ error: "Analysefeil" }, { status: 500 });
   }
 }

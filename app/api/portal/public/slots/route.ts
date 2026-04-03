@@ -105,8 +105,7 @@ export async function GET(req: NextRequest) {
     allSlots.sort();
 
     return NextResponse.json(allSlots, { headers: corsHeaders });
-  } catch (error) {
-    console.error("[slots] DB error:", error);
+  } catch {
     return NextResponse.json(
       { error: "Service unavailable" },
       {

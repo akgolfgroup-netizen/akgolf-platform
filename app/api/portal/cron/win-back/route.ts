@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { WinBackDay3Email } from "@/lib/portal/email/templates/win-back-day3";
@@ -86,7 +87,7 @@ export async function GET(req: NextRequest) {
 
       sent++;
     } catch (error) {
-      console.error(`[Cron] Win-back day 3 failed for user ${user.id}:`, error);
+      logger.error(`[Cron] Win-back day 3 failed for user ${user.id}:`, error);
       errors++;
     }
   }
@@ -132,7 +133,7 @@ export async function GET(req: NextRequest) {
 
       sent++;
     } catch (error) {
-      console.error(`[Cron] Win-back day 7 failed for user ${user.id}:`, error);
+      logger.error(`[Cron] Win-back day 7 failed for user ${user.id}:`, error);
       errors++;
     }
   }
@@ -176,7 +177,7 @@ export async function GET(req: NextRequest) {
 
       sent++;
     } catch (error) {
-      console.error(`[Cron] Win-back day 14 failed for user ${user.id}:`, error);
+      logger.error(`[Cron] Win-back day 14 failed for user ${user.id}:`, error);
       errors++;
     }
   }
@@ -190,7 +191,7 @@ export async function GET(req: NextRequest) {
     data: { winBackEmailStep: 0 },
   });
 
-  console.log(
+  logger.info(
     `[Cron] Win-back: ${sent} emails sent, ${errors} errors, ${activeAgain.count} users reset`
   );
 

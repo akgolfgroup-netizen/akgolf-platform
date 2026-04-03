@@ -189,7 +189,7 @@ export function PublicConfirmationView({
               </p>
               <Link
                 href="/portal/login"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity duration-300"
                 style={{
                   background: THEME.primary,
                   color: "#FFFFFF",

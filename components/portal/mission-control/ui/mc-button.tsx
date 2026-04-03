@@ -46,7 +46,7 @@ export function MCButton({
       disabled={disabled}
       onClick={onClick}
       className={cn(
-        "inline-flex items-center justify-center gap-1 rounded-md font-medium transition-all duration-150 cursor-pointer",
+        "inline-flex items-center justify-center gap-1 rounded-md font-medium transition-[background-color,border-color,color,opacity] duration-150 cursor-pointer",
         variantStyles[variant],
         sizeStyles[size],
         disabled && "opacity-50 cursor-not-allowed",

@@ -9,7 +9,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
 
   return (
     <div
-      className={`border-b border-grey-200 transition-all duration-300 ${
+      className={`border-b border-grey-200 transition-[border-color,background-color] duration-300 ${
         open ? "border-l-2 border-l-black pl-4 -ml-4 bg-grey-100/50" : "border-l-2 border-l-transparent pl-4 -ml-4"
       }`}
     >
@@ -32,7 +32,8 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
-            className={`transition-all duration-300 ${open ? "rotate-45 text-black" : "text-grey-400"}`}
+            className={`transition-[transform,color] duration-300 ${open ? "rotate-45 text-black" : "text-grey-400"}`}
+            aria-hidden="true"
           >
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />

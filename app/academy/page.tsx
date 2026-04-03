@@ -36,6 +36,12 @@ function CheckIcon({ className }: { className?: string }) {
 export default function AcademyPage() {
   return (
     <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--color-grey-900)] focus:text-white focus:rounded-lg"
+      >
+        Hopp til hovedinnhold
+      </a>
       <WebsiteNav />
 
       <main id="main-content">
@@ -158,7 +164,7 @@ export default function AcademyPage() {
                 {COACHING_PACKAGES.map((pkg) => (
                   <StaggerItem key={pkg.name}>
                     <div
-                      className={`rounded-2xl overflow-hidden flex flex-col h-full transition-all duration-300 ${
+                      className={`rounded-2xl overflow-hidden flex flex-col h-full transition-[box-shadow,border-color] duration-300 ${
                         pkg.highlighted
                           ? "bg-black shadow-xl relative ring-2 ring-grey-300 md:scale-[1.03] md:-my-2"
                           : "bg-white border border-grey-200 hover:border-grey-300 hover:shadow-xl"
@@ -267,7 +273,7 @@ export default function AcademyPage() {
               <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
                 {FLEX_PACKAGES.map((pkg) => (
                   <StaggerItem key={pkg.name}>
-                    <div className="bg-white rounded-xl border border-grey-200 p-6 text-center hover:border-grey-300 hover:shadow-lg transition-all group">
+                    <div className="bg-white rounded-xl border border-grey-200 p-6 text-center hover:border-grey-300 hover:shadow-lg transition-[box-shadow,border-color] group">
                       <h4 className="font-semibold text-sm text-grey-700 mb-1 group-hover:text-black transition-colors">{pkg.name}</h4>
                       <p className="font-mono text-2xl font-bold text-black mb-1">
                         {pkg.price} <span className="text-sm font-normal text-grey-500">{pkg.period}</span>
@@ -297,7 +303,7 @@ export default function AcademyPage() {
               <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                 {BANECOACHING.map((item) => (
                   <StaggerItem key={item.name}>
-                    <div className="bg-white rounded-2xl border border-grey-200 p-8 h-full hover:border-grey-300 hover:shadow-lg transition-all">
+                    <div className="bg-white rounded-2xl border border-grey-200 p-8 h-full hover:border-grey-300 hover:shadow-lg transition-[box-shadow,border-color]">
                       <div className="flex items-center justify-between mb-4">
                         <span className="inline-block px-2 py-1 bg-black text-white text-xs font-mono uppercase tracking-wider rounded">
                           {item.coach}

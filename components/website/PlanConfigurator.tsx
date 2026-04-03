@@ -133,6 +133,10 @@ export function PlanConfigurator() {
                     value={form.handicap}
                     onChange={(e) => setForm(prev => ({ ...prev, handicap: parseFloat(e.target.value) }))}
                     className="w-full accent-black h-2 rounded-full"
+                    aria-label={`Handicap: ${form.handicap.toFixed(1)}`}
+                    aria-valuemin={-5}
+                    aria-valuemax={54}
+                    aria-valuenow={form.handicap}
                   />
                   <div className="flex justify-between text-xs text-grey-500 mt-1">
                     <span>+5</span>
@@ -167,7 +171,7 @@ export function PlanConfigurator() {
                         <span className="font-mono text-xs text-grey-500 w-10">{level}</span>
                         <div className="flex-1 h-2 bg-grey-200 rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-black rounded-full transition-all duration-500"
+                            className="h-full bg-black rounded-full transition-[width] duration-500"
                             style={{ width: `${pyramid[level]}%` }}
                           />
                         </div>
@@ -192,7 +196,7 @@ export function PlanConfigurator() {
                   <button
                     key={n}
                     onClick={() => setForm(prev => ({ ...prev, sessionsPerWeek: n }))}
-                    className={`rounded-[20px] p-4 text-center transition-all duration-200 border ${
+                    className={`rounded-[20px] p-4 text-center transition-[border-color,background-color,color] duration-200 border ${
                       form.sessionsPerWeek === n
                         ? "bg-black border-black text-white"
                         : "bg-white border-grey-200 text-grey-500 hover:border-grey-300"
@@ -230,7 +234,7 @@ export function PlanConfigurator() {
                       <button
                         key={f.value}
                         onClick={() => toggleFacility(f.value)}
-                        className={`flex items-start gap-3 rounded-[20px] p-3 text-left transition-all duration-200 border ${
+                        className={`flex items-start gap-3 rounded-[20px] p-3 text-left transition-[border-color,background-color,color] duration-200 border ${
                           form.facilities.includes(f.value)
                             ? "bg-grey-100 border-black"
                             : "bg-white border-grey-200 hover:border-grey-300"
@@ -263,7 +267,7 @@ export function PlanConfigurator() {
                       <button
                         key={s.value}
                         onClick={() => setForm(prev => ({ ...prev, season: s.value }))}
-                        className={`rounded-[20px] p-3 text-center transition-all duration-200 border ${
+                        className={`rounded-[20px] p-3 text-center transition-[border-color,background-color,color] duration-200 border ${
                           form.season === s.value
                             ? "bg-black border-black text-white"
                             : "bg-white border-grey-200 text-grey-500 hover:border-grey-300"
@@ -306,9 +310,11 @@ export function PlanConfigurator() {
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm(prev => ({ ...prev, email: e.target.value }))}
-                    placeholder="din@epost.no"
+                    placeholder="din@epost.no…"
                     className="w-input"
                     required
+                    autoComplete="email"
+                    spellCheck={false}
                   />
                   <p className="text-xs text-grey-500 mt-1">Brukes for å sende planen din. Vi deler aldri e-posten din.</p>
                 </div>
@@ -351,7 +357,7 @@ export function PlanConfigurator() {
             >
               {loading ? (
                 <span className="flex items-center gap-2">
-                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" />
                     <path d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" fill="currentColor" className="opacity-75" />
                   </svg>

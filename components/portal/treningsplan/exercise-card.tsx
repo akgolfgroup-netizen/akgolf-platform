@@ -41,7 +41,7 @@ export function ExerciseCard({
 
   return (
     <div
-      className={`rounded-lg border transition-all ${
+      className={`rounded-lg border transition-[border-color,background-color,box-shadow] ${
         exercise.completed
           ? "bg-green-500/5 border-green-500/30"
           : isActive

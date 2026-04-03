@@ -27,13 +27,13 @@ export default async function AdminBookingsPage() {
             </p>
           </div>
           <div className="flex gap-3">
-            <button className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-white text-[var(--color-grey-700)] border border-[var(--color-grey-200)] hover:bg-[var(--color-grey-100)] hover:border-[var(--color-grey-300)] transition-all duration-200">
+            <button className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-white text-[var(--color-grey-700)] border border-[var(--color-grey-200)] hover:bg-[var(--color-grey-100)] hover:border-[var(--color-grey-300)] transition-[background-color,border-color] duration-200">
               <Download className="w-[18px] h-[18px]" />
               Eksporter
             </button>
             <Link
               href="/portal/admin/bookinger/ny"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-[var(--color-grey-900)] text-white hover:bg-[var(--color-grey-900)]/90 transition-all duration-200 shadow-[var(--shadow-md)] hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-[var(--color-grey-900)] text-white hover:bg-[var(--color-grey-900)]/90 transition-[background-color,transform] duration-200 shadow-[var(--shadow-md)] hover:-translate-y-0.5"
             >
               <Plus className="w-[18px] h-[18px]" />
               Ny Booking

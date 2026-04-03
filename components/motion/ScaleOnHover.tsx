@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export interface ScaleOnHoverProps {
   children: ReactNode;
@@ -14,6 +15,13 @@ export function ScaleOnHover({
   className,
   scale = 1.02,
 }: ScaleOnHoverProps) {
+  const prefersReducedMotion = useReducedMotion();
+
+  // When reduced motion is preferred, render children directly without scale effect
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       whileHover={{ scale }}

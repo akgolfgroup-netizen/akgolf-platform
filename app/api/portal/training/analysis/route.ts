@@ -72,8 +72,7 @@ export async function GET(req: NextRequest) {
       distribution,
       lPhases,
     });
-  } catch (error) {
-    console.error("Training analysis error:", error);
+  } catch {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

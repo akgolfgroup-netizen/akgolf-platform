@@ -32,7 +32,7 @@ export function HeroStats({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="col-span-12 md:col-span-5 relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0c1220] via-[#0f1729] to-[#0c1220] border border-[var(--portal-card-border)] p-6"
+        className="col-span-12 md:col-span-5 relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--color-grey-100)] via-white to-[var(--color-grey-100)] border border-[var(--portal-card-border)] p-6"
       >
         {/* Subtle golf pattern overlay */}
         <div
@@ -79,8 +79,8 @@ export function HeroStats({
                 )}
               </div>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center">
-              <Target className="w-6 h-6 text-gold" />
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-grey-200)] to-[var(--color-grey-100)] flex items-center justify-center">
+              <Target className="w-6 h-6 text-[var(--color-grey-900)]" />
             </div>
           </div>
 
@@ -90,7 +90,7 @@ export function HeroStats({
               <span>Siste 6 runder</span>
               <Link
                 href="/portal/statistikk"
-                className="text-gold hover:text-gold/80 transition-colors"
+                className="text-[var(--color-grey-400)] hover:text-[var(--color-grey-500)] transition-colors"
               >
                 Se utvikling
               </Link>
@@ -103,7 +103,7 @@ export function HeroStats({
                   animate={{ height: `${Math.max(20, 100 - (val - 15) * 10)}%` }}
                   transition={{ delay: 0.5 + i * 0.1, duration: 0.4 }}
                   className={`flex-1 rounded-t ${
-                    i === 5 ? "bg-gold" : "bg-[var(--color-grey-200)]"
+                    i === 5 ? "bg-[var(--color-grey-900)]" : "bg-[var(--color-grey-200)]"
                   }`}
                 />
               ))}

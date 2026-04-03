@@ -39,7 +39,7 @@ function NavLink({
       href={item.href}
       onClick={onClick}
       className={cn(
-        "flex items-center gap-2 px-5 py-2 text-xs transition-all duration-150 border-l-[3px] -ml-px",
+        "flex items-center gap-2 px-5 py-2 text-xs transition-[background-color,border-color,color] duration-150 border-l-[3px] -ml-px",
         isActive
           ? "bg-[#F5F5F7] border-l-[#1D1D1F] text-[#1D1D1F] font-semibold"
           : "border-l-transparent text-[#6E6E73] hover:bg-[#F5F5F7] hover:text-[#1D1D1F]"

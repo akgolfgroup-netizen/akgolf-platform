@@ -132,7 +132,7 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
       <motion.button
         type="submit"
         disabled={!stripe || !elements || loading}
-        className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 disabled:opacity-50"
+        className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-[opacity,transform,box-shadow] duration-300 disabled:opacity-50"
         style={{
           background: THEME.primary,
           color: "#FFFFFF",

@@ -51,7 +51,7 @@ export function ApplicationForm() {
             className="text-center py-8"
           >
             <div className="w-12 h-12 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-4">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-success">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-success" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
@@ -75,8 +75,9 @@ export function ApplicationForm() {
                   id="name"
                   name="name"
                   required
+                  autoComplete="name"
                   className="w-input"
-                  placeholder="Ditt fulle navn"
+                  placeholder="Ditt fulle navn…"
                 />
               </div>
 
@@ -87,8 +88,10 @@ export function ApplicationForm() {
                   id="email"
                   name="email"
                   required
+                  autoComplete="email"
+                  spellCheck={false}
                   className="w-input"
-                  placeholder="din@epost.no"
+                  placeholder="din@epost.no…"
                 />
               </div>
 
@@ -109,6 +112,8 @@ export function ApplicationForm() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="text-sm text-error"
+                role="alert"
+                aria-live="assertive"
               >
                 Noe gikk galt. Prøv igjen eller send e-post til post@akgolf.no.
               </motion.p>
@@ -121,7 +126,7 @@ export function ApplicationForm() {
             >
               {status === "submitting" ? (
                 <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { verifyCronAuth } from "@/lib/cron-auth";
 import { prisma } from "@/lib/portal/prisma";
 import { sendMonthlyResetEmail } from "@/lib/portal/email/send-monthly-reset-email";
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest) {
     });
 
     if (expiredSubs.length === 0) {
-      console.log("[cron/reset] Ingen abonnementer a nullstille");
+      logger.info("[cron/reset] Ingen abonnementer a nullstille");
       return NextResponse.json({
         success: true,
         timestamp: now.toISOString(),
@@ -90,7 +91,7 @@ export async function GET(request: NextRequest) {
             });
             results.notified++;
           } catch (emailErr) {
-            console.error(
+            logger.error(
               `[cron/reset] Feil ved sending av e-post til ${sub.User.email}:`,
               emailErr
             );
@@ -98,7 +99,7 @@ export async function GET(request: NextRequest) {
           }
         }
       } catch (subError) {
-        console.error(
+        logger.error(
           `[cron/reset] Uventet feil for sub ${sub.id}:`,
           subError
         );
@@ -106,7 +107,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    console.log(
+    logger.info(
       `[cron/reset] Fullfort: ${results.reset} nullstilt, ${results.notified} varslet, ${results.errors} feil`
     );
 
@@ -116,7 +117,7 @@ export async function GET(request: NextRequest) {
       ...results,
     });
   } catch (error) {
-    console.error("[cron/reset] Uventet feil:", error);
+    logger.error("[cron/reset] Uventet feil:", error);
     return NextResponse.json(
       { error: "Intern feil i manedlig reset-cron" },
       { status: 500 }

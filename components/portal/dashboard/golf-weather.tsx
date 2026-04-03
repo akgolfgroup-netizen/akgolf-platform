@@ -231,10 +231,10 @@ export function GolfWeather({ weather }: GolfWeatherProps) {
 
       {/* Best time to play */}
       <div className="px-5 pb-5">
-        <div className="p-3 rounded-xl bg-gradient-to-r from-gold/10 to-transparent border border-gold/20">
+        <div className="p-3 rounded-xl bg-gradient-to-r from-[var(--color-grey-100)] to-transparent border border-[var(--color-grey-200)]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gold/20 flex items-center justify-center">
-              <Clock className="w-4 h-4 text-gold" />
+            <div className="w-8 h-8 rounded-lg bg-[var(--color-grey-200)] flex items-center justify-center">
+              <Clock className="w-4 h-4 text-[var(--color-grey-900)]" />
             </div>
             <div>
               <p className="text-xs text-[var(--portal-text-muted)]">Beste tid a spille</p>

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { createNotification } from "@/lib/portal/notifications";
 import {
@@ -93,15 +94,12 @@ export async function GET(req: NextRequest) {
       });
 
       generated++;
-    } catch (error) {
-      console.error(`[AI Insights] Failed for user ${user.id}:`, error);
+    } catch {
       errors++;
     }
   }
 
-  console.log(
-    `[AI Insights] Generated: ${generated}, Skipped: ${skipped}, Errors: ${errors}`
-  );
+  logger.info(`[AI Insights] Generated: ${generated}, Skipped: ${skipped}, Errors: ${errors}`);
 
   return NextResponse.json({
     ok: true,

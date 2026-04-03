@@ -53,13 +53,13 @@ export function NextSessionCard({ session }: NextSessionCardProps) {
       <motion.div
         className={`relative overflow-hidden p-5 rounded-xl border ${
           isUrgent
-            ? "border-gold ring-2 ring-gold/20"
+            ? "border-[var(--color-grey-900)] ring-2 ring-[var(--color-grey-200)]"
             : "border-[var(--portal-card-border)]"
-        } bg-[var(--portal-card-bg)] hover:border-[var(--portal-card-border-hover)] transition-all`}
+        } bg-[var(--portal-card-bg)] hover:border-[var(--portal-card-border-hover)] transition-[border-color]`}
         whileHover={{ scale: 1.01 }}
         transition={{ duration: 0.2 }}
       >
-        <p className="text-xs font-semibold text-gold uppercase mb-2">
+        <p className="text-xs font-semibold text-[var(--color-grey-500)] uppercase mb-2">
           Neste okt
         </p>
         <h3 className="text-lg font-bold text-[var(--portal-text-primary)]">{session.title}</h3>

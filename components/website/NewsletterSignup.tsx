@@ -51,7 +51,9 @@ export function NewsletterSignup() {
         type="email"
         name="email"
         required
-        placeholder="din@epost.no"
+        autoComplete="email"
+        spellCheck={false}
+        placeholder="din@epost.no…"
         className="w-input flex-1 bg-white border-grey-200 text-black placeholder:text-grey-400 focus:border-black"
       />
       <button
@@ -61,13 +63,13 @@ export function NewsletterSignup() {
       >
         {status === "submitting" ? (
           <span className="flex items-center gap-2">
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
             Sender...
           </span>
         ) : "Meld meg på"}
       </button>
       {status === "error" && (
-        <p className="text-xs text-red-500 sm:absolute sm:mt-12">
+        <p className="text-xs text-red-500 sm:absolute sm:mt-12" role="alert" aria-live="assertive">
           Noe gikk galt. Prøv igjen.
         </p>
       )}

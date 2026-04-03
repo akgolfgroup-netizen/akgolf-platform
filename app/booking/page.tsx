@@ -14,9 +14,15 @@ export const metadata: Metadata = {
 export default function BookingPage() {
   return (
     <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--color-grey-900)] focus:text-white focus:rounded-lg"
+      >
+        Hopp til hovedinnhold
+      </a>
       <WebsiteNav />
 
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen bg-white" id="main-content">
         {/* Hero */}
         <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
           <div className="w-container relative">

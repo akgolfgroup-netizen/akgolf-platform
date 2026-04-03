@@ -91,7 +91,7 @@ export function OnboardingWelcome({
       >
         <div className="relative p-8 text-center">
           {/* Celebration background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gold/10 via-amber-500/5 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-grey-200)] via-[var(--color-grey-100)] to-transparent" />
 
           <motion.div
             initial={{ scale: 0 }}
@@ -99,7 +99,7 @@ export function OnboardingWelcome({
             transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
             className="relative inline-flex mb-4"
           >
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-gold to-amber-500 flex items-center justify-center shadow-lg shadow-gold/30">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)] flex items-center justify-center shadow-lg">
               <Sparkles className="w-10 h-10 text-white" />
             </div>
           </motion.div>
@@ -115,7 +115,7 @@ export function OnboardingWelcome({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onDismiss}
-            className="relative px-6 py-3 rounded-xl bg-gradient-to-r from-gold to-amber-500 text-white font-medium shadow-lg shadow-gold/20 cursor-pointer"
+            className="relative px-6 py-3 rounded-xl bg-[var(--color-grey-900)] text-white font-medium shadow-sm cursor-pointer"
           >
             La oss begynne
           </motion.button>
@@ -133,7 +133,7 @@ export function OnboardingWelcome({
       {/* Header */}
       <div className="relative p-5 pb-4 border-b border-white/5">
         {/* Gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-gold/5 via-amber-500/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-grey-100)] via-[var(--color-grey-100)]/50 to-transparent" />
 
         <div className="relative flex items-start justify-between">
           <div className="flex items-center gap-4">
@@ -141,9 +141,9 @@ export function OnboardingWelcome({
               initial={{ rotate: -180, scale: 0 }}
               animate={{ rotate: 0, scale: 1 }}
               transition={{ type: "spring", stiffness: 200 }}
-              className="w-12 h-12 rounded-xl bg-gradient-to-br from-gold/20 to-amber-500/10 flex items-center justify-center"
+              className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-grey-200)] to-[var(--color-grey-100)] flex items-center justify-center"
             >
-              <Play className="w-6 h-6 text-gold" />
+              <Play className="w-6 h-6 text-[var(--color-grey-900)]" />
             </motion.div>
             <div>
               <h2 className="text-lg font-semibold text-white">
@@ -176,7 +176,7 @@ export function OnboardingWelcome({
           </div>
           <div className="h-2 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-gradient-to-r from-gold to-amber-400 rounded-full"
+              className="h-full bg-gradient-to-r from-[var(--color-grey-900)] to-[var(--color-grey-700)] rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -205,11 +205,11 @@ export function OnboardingWelcome({
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.1 }}
-                    className={`relative p-4 rounded-xl transition-all duration-300 ${
+                    className={`relative p-4 rounded-xl transition-[background-color,border-color] duration-300 ${
                       step.completed
                         ? "bg-emerald-500/5 border border-emerald-500/20"
                         : isActive
-                        ? "bg-gold/5 border border-gold/20"
+                        ? "bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]"
                         : "bg-white/[0.02] border border-white/5 hover:bg-[var(--color-grey-100)]"
                     }`}
                     onMouseEnter={() => !step.completed && setCurrentStep(idx)}
@@ -221,7 +221,7 @@ export function OnboardingWelcome({
                           step.completed
                             ? "bg-emerald-500"
                             : isActive
-                            ? "bg-gradient-to-br from-gold/20 to-amber-500/10"
+                            ? "bg-gradient-to-br from-[var(--color-grey-200)] to-[var(--color-grey-100)]"
                             : "bg-[var(--color-grey-100)]"
                         }`}
                       >
@@ -230,7 +230,7 @@ export function OnboardingWelcome({
                         ) : (
                           <Icon
                             className={`w-5 h-5 ${
-                              isActive ? "text-gold" : "text-[var(--portal-text-muted)]"
+                              isActive ? "text-[var(--color-grey-900)]" : "text-[var(--portal-text-muted)]"
                             }`}
                           />
                         )}
@@ -256,9 +256,9 @@ export function OnboardingWelcome({
                       {!step.completed && (
                         <Link
                           href={step.action.href}
-                          className={`flex-shrink-0 px-4 py-2 rounded-lg text-xs font-medium transition-all ${
+                          className={`flex-shrink-0 px-4 py-2 rounded-lg text-xs font-medium transition-[background-color] ${
                             isActive
-                              ? "bg-gold text-black hover:bg-gold/90"
+                              ? "bg-[var(--color-grey-900)] text-white hover:bg-[var(--color-grey-800)]"
                               : "bg-[var(--color-grey-100)] text-white hover:bg-[var(--color-grey-200)]"
                           }`}
                         >

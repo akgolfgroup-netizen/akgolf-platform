@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useId } from "react";
 import { X, Loader2 } from "lucide-react";
 import { createGoal, updateGoal } from "@/app/portal/(dashboard)/profil/goal-actions";
 import type { GoalCategory } from "@prisma/client";
@@ -29,6 +29,7 @@ interface GoalModalProps {
 
 export function GoalModal({ goal, onClose }: GoalModalProps) {
   const isEditing = !!goal;
+  const titleId = useId();
   const [title, setTitle] = useState(goal?.title ?? "");
   const [description, setDescription] = useState(goal?.description ?? "");
   const [category, setCategory] = useState<GoalCategory>(goal?.category ?? "SCORE");
@@ -39,6 +40,17 @@ export function GoalModal({ goal, onClose }: GoalModalProps) {
     goal?.targetDate ? new Date(goal.targetDate).toISOString().split("T")[0] : ""
   );
   const [saving, setSaving] = useState(false);
+
+  // Escape key handler
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -72,16 +84,26 @@ export function GoalModal({ goal, onClose }: GoalModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0"
+        onClick={onClose}
+        role="presentation"
+        aria-hidden="true"
+      />
       <form
         onSubmit={handleSubmit}
-        className="bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-2xl p-6 w-full max-w-md"
+        className="relative bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-2xl p-6 w-full max-w-md overscroll-contain"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
       >
         <div className="flex items-center justify-between mb-5">
-          <h2 className="font-bold text-[var(--color-grey-900)]">
+          <h2 id={titleId} className="font-bold text-[var(--color-grey-900)]">
             {isEditing ? "Rediger mål" : "Nytt mål"}
           </h2>
-          <button type="button" onClick={onClose} className="p-1 hover:bg-[var(--color-grey-100)] rounded">
-            <X className="w-4 h-4 text-[var(--color-grey-500)]" />
+          <button type="button" onClick={onClose} className="p-1 hover:bg-[var(--color-grey-100)] rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)]" aria-label="Lukk dialog">
+            <X className="w-4 h-4 text-[var(--color-grey-500)]" aria-hidden="true" />
           </button>
         </div>
 
@@ -194,10 +216,10 @@ export function GoalModal({ goal, onClose }: GoalModalProps) {
         <button
           type="submit"
           disabled={saving || !title.trim()}
-          className="mt-6 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-grey-900)] text-[var(--color-grey-900)] font-semibold text-sm hover:bg-[var(--color-grey-500)] transition-colors disabled:opacity-50"
+          className="mt-6 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-grey-900)] text-white font-semibold text-sm hover:bg-[var(--color-grey-700)] transition-colors disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)]"
         >
           {saving ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
           ) : isEditing ? (
             "Lagre endringer"
           ) : (

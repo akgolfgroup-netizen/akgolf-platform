@@ -55,7 +55,7 @@ export function ServiceCard({ service, isRecommended, index }: Props) {
               <div className="text-xl font-bold">
                 {service.price.toLocaleString("nb-NO")} kr
               </div>
-              <div className="inline-flex items-center gap-1 mt-2 text-sm text-white/70 group-hover:gap-2 transition-all">
+              <div className="inline-flex items-center gap-1 mt-2 text-sm text-white/70 group-hover:gap-2 transition-[gap]">
                 Velg
                 <ArrowRight size={14} />
               </div>

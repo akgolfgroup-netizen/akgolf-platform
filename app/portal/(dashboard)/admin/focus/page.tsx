@@ -134,7 +134,7 @@ export default function FocusPage() {
                   {/* Progress bar */}
                   <div className="h-1.5 bg-[#E8E8ED] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[#34C759] rounded-full transition-all"
+                      className="h-full bg-[#34C759] rounded-full transition-[width]"
                       style={{ width: `${project.progress}%` }}
                     />
                   </div>

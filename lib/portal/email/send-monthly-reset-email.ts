@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import { logger } from "@/lib/logger";
 import { getResend, FROM_EMAIL } from "./resend";
 import { MonthlyResetNotificationEmail } from "./templates/monthly-reset-notification";
 
@@ -17,16 +18,12 @@ interface MonthlyResetEmailData {
 export async function sendMonthlyResetEmail(data: MonthlyResetEmailData) {
   const resend = getResend();
   if (!resend) {
-    console.log(
-      `[Email] Resend ikke konfigurert — hopper over månedlig reset-varsel for ${data.studentEmail}`
-    );
+    logger.info(`[Email] Resend ikke konfigurert — hopper over månedlig reset-varsel for ${data.studentEmail}`);
     return;
   }
 
   if (!data.studentEmail) {
-    console.warn(
-      `[Email] Mangler e-post for elev "${data.studentName}" — hopper over reset-varsel`
-    );
+    logger.warn(`[Email] Mangler e-post for elev "${data.studentName}" — hopper over reset-varsel`);
     return;
   }
 
@@ -48,14 +45,9 @@ export async function sendMonthlyResetEmail(data: MonthlyResetEmailData) {
         newPeriodEnd: periodEnd,
       }),
     });
-    console.log(
-      `[Email] Månedlig reset-varsel sendt til ${data.studentEmail}`
-    );
+    logger.info(`[Email] Månedlig reset-varsel sendt til ${data.studentEmail}`);
   } catch (error) {
-    console.error(
-      `[Email] Feil ved sending av reset-varsel til ${data.studentEmail}:`,
-      error
-    );
+    logger.error(`[Email] Feil ved sending av reset-varsel til ${data.studentEmail}`, error);
     throw error;
   }
 }

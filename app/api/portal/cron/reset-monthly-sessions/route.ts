@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { SubscriptionStatus } from "@prisma/client";
 
@@ -50,15 +51,14 @@ export async function GET(req: NextRequest) {
       resetCount++;
     }
 
-    console.log(`[Cron] Reset ${resetCount} subscription periods`);
+    logger.info(`[Cron] Reset ${resetCount} subscription periods`);
 
     return NextResponse.json({
       ok: true,
       resetCount,
       timestamp: now.toISOString(),
     });
-  } catch (error) {
-    console.error("[Cron] Reset monthly sessions failed:", error);
+  } catch {
     return NextResponse.json(
       { error: "Internal error" },
       { status: 500 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useId } from "react";
 import { X, Loader2, ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { addRoundStats } from "@/app/portal/(dashboard)/statistikk/actions";
@@ -16,7 +16,18 @@ const SECTIONS = [
 ] as const;
 
 export function RoundInputSheet({ onClose }: { onClose: () => void }) {
+  const titleId = useId();
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["scoring"]));
   const [form, setForm] = useState({
     date: new Date().toISOString().split("T")[0],
@@ -148,6 +159,7 @@ export function RoundInputSheet({ onClose }: { onClose: () => void }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      aria-hidden="true"
     >
       <motion.form
         onSubmit={handleSubmit}
@@ -156,11 +168,14 @@ export function RoundInputSheet({ onClose }: { onClose: () => void }) {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 20, opacity: 0 }}
         transition={{ duration: 0.2 }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-bold text-[var(--color-grey-900)]">Registrer runde</h2>
-          <button type="button" onClick={onClose} className="p-1 hover:bg-[var(--color-grey-100)] rounded">
-            <X className="w-4 h-4 text-[var(--color-grey-500)]" />
+          <h2 id={titleId} className="font-bold text-[var(--color-grey-900)]">Registrer runde</h2>
+          <button type="button" onClick={onClose} aria-label="Lukk skjema" className="p-1 hover:bg-[var(--color-grey-100)] rounded focus-visible:outline-2 focus-visible:outline-offset-2">
+            <X className="w-4 h-4 text-[var(--color-grey-500)]" aria-hidden="true" />
           </button>
         </div>
 
@@ -195,13 +210,13 @@ export function RoundInputSheet({ onClose }: { onClose: () => void }) {
               <button
                 type="button"
                 onClick={() => toggleSection(section.key)}
-                className="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)]/50 transition-colors"
+                className="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)]/50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 {section.label}
                 {expandedSections.has(section.key) ? (
-                  <ChevronUp className="w-3.5 h-3.5" />
+                  <ChevronUp className="w-3.5 h-3.5" aria-hidden="true" />
                 ) : (
-                  <ChevronDown className="w-3.5 h-3.5" />
+                  <ChevronDown className="w-3.5 h-3.5" aria-hidden="true" />
                 )}
               </button>
               {expandedSections.has(section.key) && (
@@ -295,9 +310,9 @@ export function RoundInputSheet({ onClose }: { onClose: () => void }) {
         <button
           type="submit"
           disabled={saving || !form.date}
-          className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-grey-900)] text-[var(--color-grey-900)] font-semibold text-sm hover:bg-[var(--color-grey-500)] transition-colors disabled:opacity-50"
+          className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-grey-900)] text-white font-semibold text-sm hover:bg-[var(--color-grey-500)] transition-colors disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2"
         >
-          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+          {saving ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" /> : <Plus className="w-4 h-4" aria-hidden="true" />}
           Lagre runde
         </button>
       </motion.form>

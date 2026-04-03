@@ -94,7 +94,7 @@ export function ActivityForm({
         <select
           value={formData.facilityId}
           onChange={(e) => setFormData({ ...formData, facilityId: e.target.value })}
-          className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-all"
+          className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-[border-color,box-shadow]"
           required
         >
           {facilities.map((f) => (
@@ -116,7 +116,7 @@ export function ActivityForm({
               key={type.value}
               type="button"
               onClick={() => setFormData({ ...formData, activityType: type.value })}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-[background-color,border-color,box-shadow] ${
                 formData.activityType === type.value
                   ? "ring-2 ring-[var(--color-grey-900)] bg-[var(--color-grey-100)]"
                   : "border border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]"
@@ -142,7 +142,7 @@ export function ActivityForm({
           value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
           placeholder={`F.eks. "${selectedType?.label ?? "Aktivitet"}"`}
-          className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-all"
+          className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-[border-color,box-shadow]"
           required
         />
       </div>
@@ -156,7 +156,7 @@ export function ActivityForm({
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           rows={3}
-          className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-all resize-none"
+          className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-[border-color,box-shadow] resize-none"
         />
       </div>
 
@@ -171,7 +171,7 @@ export function ActivityForm({
             type="date"
             value={formData.startDate}
             onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-[border-color,box-shadow]"
             required
           />
         </div>
@@ -184,7 +184,7 @@ export function ActivityForm({
             type="time"
             value={formData.startTime}
             onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-[border-color,box-shadow]"
             required
           />
         </div>
@@ -196,7 +196,7 @@ export function ActivityForm({
             type="time"
             value={formData.endTime}
             onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)] focus:border-transparent transition-[border-color,box-shadow]"
             required
           />
         </div>

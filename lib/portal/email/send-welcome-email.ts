@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import { logger } from "@/lib/logger";
 import { getResend, FROM_EMAIL } from "./resend";
 import { WelcomeNewUserEmail } from "./templates/welcome-new-user";
 
@@ -26,9 +27,7 @@ function formatNOK(amount: number): string {
 export async function sendWelcomeEmail(data: WelcomeEmailData) {
   const resend = getResend();
   if (!resend) {
-    console.log(
-      `[Email] Resend not configured — skipping welcome email for ${data.email}`
-    );
+    logger.info(`[Email] Resend not configured — skipping welcome email for ${data.email}`);
     return;
   }
 
@@ -53,11 +52,8 @@ export async function sendWelcomeEmail(data: WelcomeEmailData) {
         location: data.location,
       }),
     });
-    console.log(`[Email] Welcome email sent to ${data.email}`);
+    logger.info(`[Email] Welcome email sent to ${data.email}`);
   } catch (error) {
-    console.error(
-      `[Email] Failed to send welcome email to ${data.email}:`,
-      error
-    );
+    logger.error(`[Email] Failed to send welcome email to ${data.email}`, error);
   }
 }

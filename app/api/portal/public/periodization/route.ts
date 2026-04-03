@@ -34,8 +34,7 @@ export async function GET() {
         },
       }
     );
-  } catch (error) {
-    console.error("[periodization] DB error:", error);
+  } catch {
     return NextResponse.json(
       { error: "Service unavailable" },
       { status: 503, headers: { "Access-Control-Allow-Origin": corsOrigin() } }

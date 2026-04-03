@@ -25,7 +25,7 @@ export default async function CoachingHistorikkPage() {
         <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Coachinghistorikk</h1>
         <Link
           href="/portal/bookinger/ny"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[var(--color-grey-900)] text-white hover:brightness-110 transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[var(--color-grey-900)] text-white hover:brightness-110 transition-[filter] cursor-pointer"
           style={{ boxShadow: "0 4px 12px var(--color-grey-200)" }}
         >
           <Plus className="w-4 h-4" />
