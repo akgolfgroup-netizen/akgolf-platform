@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
-import { generateSlots } from "@/lib/portal/slots";
+import {
+  generateSlots,
+  getAvailabilityForDate,
+} from "@/lib/portal/slots";
 import { BookingStatus } from "@prisma/client";
 
 export async function GET(req: NextRequest) {
@@ -30,19 +33,18 @@ export async function GET(req: NextRequest) {
   // Parse dato som UTC midnatt
   const [year, month, day] = dateStr.split("-").map(Number);
   const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
-  const dayOfWeek = date.getUTCDay();
   const nextDay = new Date(Date.UTC(year, month - 1, day + 1, 0, 0, 0, 0));
 
   try {
+    // Hent tilgjengelighet med støtte for date-overrides
     const [serviceType, availabilityWindows, existingBookings, blockedTimes] =
       await Promise.all([
         prisma.serviceType.findUnique({
           where: { id: serviceTypeId },
           select: { duration: true, bufferAfter: true, minNoticeHours: true },
         }),
-        prisma.instructorAvailability.findMany({
-          where: { instructorId, dayOfWeek },
-        }),
+        // Bruker getAvailabilityForDate som sjekker InstructorDateAvailability først
+        getAvailabilityForDate(instructorId, date),
         prisma.booking.findMany({
           where: {
             instructorId,

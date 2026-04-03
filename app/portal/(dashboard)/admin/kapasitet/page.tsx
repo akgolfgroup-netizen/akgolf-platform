@@ -1,16 +1,22 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { startOfWeek, endOfWeek, format } from "date-fns";
+import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { BookingStatus } from "@prisma/client";
 import { CapacityOverview } from "./capacity-overview";
 import { getCapacityData } from "./actions";
+import { CapacityTabs } from "./capacity-tabs";
 
-export default async function KapasitetPage() {
+export default async function KapasitetPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>;
+}) {
   const user = await requirePortalUser();
   if (!user || !isStaff(user.role)) redirect("/");
+
+  const params = await searchParams;
+  const activeTab = params.tab ?? "oversikt";
 
   const data = await getCapacityData();
 
@@ -18,14 +24,15 @@ export default async function KapasitetPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">
-          Kapasitet & Inntekt
+          Coach HQ - Kapasitet
         </h1>
         <span className="text-xs text-[var(--color-grey-400)]">
-          Uke {format(new Date(), "w", { locale: nb })} &middot; Oppdatert {format(new Date(), "HH:mm")}
+          Uke {format(new Date(), "w", { locale: nb })} &middot; Oppdatert{" "}
+          {format(new Date(), "HH:mm")}
         </span>
       </div>
 
-      <CapacityOverview data={data} />
+      <CapacityTabs activeTab={activeTab} data={data} />
     </div>
   );
 }

@@ -11,19 +11,24 @@ import {
   CreditCard,
   Loader2,
   CheckCircle,
+  MapPin,
+  AlertTriangle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { approveBooking, rejectBooking } from "./actions";
+import { approveBooking, rejectBooking, approveActivity, rejectActivity } from "./actions";
 
 interface PendingItem {
   id: string;
-  type: "booking" | "plan";
+  type: "booking" | "plan" | "activity";
   studentName: string;
   studentEmail: string;
   serviceName: string;
   price: number;
   requestedTime: Date;
   createdAt: Date;
+  facilityName?: string;
+  activityType?: string;
+  conflictNote?: string | null;
 }
 
 interface GodkjenningerClientProps {
@@ -34,18 +39,22 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
   const [items, setItems] = useState(pendingItems);
   const [processingId, setProcessingId] = useState<string | null>(null);
 
-  const handleApprove = async (id: string) => {
+  const handleApprove = async (id: string, type: string) => {
     setProcessingId(id);
-    const result = await approveBooking(id);
+    const result = type === "activity"
+      ? await approveActivity(id)
+      : await approveBooking(id);
     if (result.success) {
       setItems((prev) => prev.filter((item) => item.id !== id));
     }
     setProcessingId(null);
   };
 
-  const handleReject = async (id: string) => {
+  const handleReject = async (id: string, type: string) => {
     setProcessingId(id);
-    const result = await rejectBooking(id);
+    const result = type === "activity"
+      ? await rejectActivity(id)
+      : await rejectBooking(id);
     if (result.success) {
       setItems((prev) => prev.filter((item) => item.id !== id));
     }
@@ -76,8 +85,13 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <span className="px-2 py-0.5 bg-[#FF9500]/10 text-[#FF9500] rounded-full text-xs font-medium">
-                  Venter
+                <span className={cn(
+                  "px-2 py-0.5 rounded-full text-xs font-medium",
+                  item.type === "activity"
+                    ? "bg-[#007AFF]/10 text-[#007AFF]"
+                    : "bg-[#FF9500]/10 text-[#FF9500]"
+                )}>
+                  {item.type === "activity" ? "Aktivitet" : "Booking"}
                 </span>
                 <span className="text-xs text-[var(--color-grey-500)]">
                   {format(new Date(item.createdAt), "d. MMM 'kl.' HH:mm", {
@@ -87,50 +101,97 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
               </div>
 
               <div className="flex items-center gap-3 mb-3">
-                <div className="h-10 w-10 rounded-full bg-[var(--color-grey-100)] flex items-center justify-center">
-                  <User className="h-5 w-5 text-[var(--color-grey-500)]" />
+                <div className={cn(
+                  "h-10 w-10 rounded-full flex items-center justify-center",
+                  item.type === "activity" ? "bg-[#007AFF]/10" : "bg-[var(--color-grey-100)]"
+                )}>
+                  {item.type === "activity" ? (
+                    <MapPin className="h-5 w-5 text-[#007AFF]" />
+                  ) : (
+                    <User className="h-5 w-5 text-[var(--color-grey-500)]" />
+                  )}
                 </div>
                 <div>
                   <p className="font-semibold text-[var(--color-grey-900)]">
-                    {item.studentName}
+                    {item.type === "activity" ? item.serviceName : item.studentName}
                   </p>
                   <p className="text-sm text-[var(--color-grey-500)]">
-                    {item.studentEmail}
+                    {item.type === "activity"
+                      ? `Opprettet av ${item.studentName}`
+                      : item.studentEmail}
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 text-sm">
-                <div>
-                  <p className="text-[var(--color-grey-500)] mb-1">Tjeneste</p>
-                  <p className="text-[var(--color-grey-900)]">{item.serviceName}</p>
+              {/* Conflict note for activities */}
+              {item.type === "activity" && item.conflictNote && (
+                <div className="flex items-center gap-2 mb-3 px-3 py-2 rounded-lg bg-[#FF9500]/10 text-[#FF9500] text-sm">
+                  <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+                  {item.conflictNote}
                 </div>
-                <div>
-                  <p className="text-[var(--color-grey-500)] mb-1 flex items-center gap-1">
-                    <Calendar className="h-3.5 w-3.5" />
-                    Onsket tid
-                  </p>
-                  <p className="text-[var(--color-grey-900)]">
-                    {format(new Date(item.requestedTime), "d. MMM 'kl.' HH:mm", {
-                      locale: nb,
-                    })}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[var(--color-grey-500)] mb-1 flex items-center gap-1">
-                    <CreditCard className="h-3.5 w-3.5" />
-                    Pris
-                  </p>
-                  <p className="text-[var(--color-grey-900)]">
-                    kr {item.price.toLocaleString("nb-NO")}
-                  </p>
-                </div>
+              )}
+
+              <div className={cn(
+                "grid gap-4 text-sm",
+                item.type === "activity" ? "grid-cols-2" : "grid-cols-3"
+              )}>
+                {item.type === "activity" ? (
+                  <>
+                    <div>
+                      <p className="text-[var(--color-grey-500)] mb-1 flex items-center gap-1">
+                        <MapPin className="h-3.5 w-3.5" />
+                        Fasilitet
+                      </p>
+                      <p className="text-[var(--color-grey-900)]">
+                        {item.facilityName ?? "Ukjent"}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[var(--color-grey-500)] mb-1 flex items-center gap-1">
+                        <Calendar className="h-3.5 w-3.5" />
+                        Tidspunkt
+                      </p>
+                      <p className="text-[var(--color-grey-900)]">
+                        {format(new Date(item.requestedTime), "d. MMM 'kl.' HH:mm", {
+                          locale: nb,
+                        })}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <p className="text-[var(--color-grey-500)] mb-1">Tjeneste</p>
+                      <p className="text-[var(--color-grey-900)]">{item.serviceName}</p>
+                    </div>
+                    <div>
+                      <p className="text-[var(--color-grey-500)] mb-1 flex items-center gap-1">
+                        <Calendar className="h-3.5 w-3.5" />
+                        Onsket tid
+                      </p>
+                      <p className="text-[var(--color-grey-900)]">
+                        {format(new Date(item.requestedTime), "d. MMM 'kl.' HH:mm", {
+                          locale: nb,
+                        })}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[var(--color-grey-500)] mb-1 flex items-center gap-1">
+                        <CreditCard className="h-3.5 w-3.5" />
+                        Pris
+                      </p>
+                      <p className="text-[var(--color-grey-900)]">
+                        kr {item.price.toLocaleString("nb-NO")}
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
               <button
-                onClick={() => handleApprove(item.id)}
+                onClick={() => handleApprove(item.id, item.type)}
                 disabled={processingId === item.id}
                 className={cn(
                   "flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors text-sm",
@@ -146,7 +207,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
                 Godkjenn
               </button>
               <button
-                onClick={() => handleReject(item.id)}
+                onClick={() => handleReject(item.id, item.type)}
                 disabled={processingId === item.id}
                 className={cn(
                   "flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors text-sm",

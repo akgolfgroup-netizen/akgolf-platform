@@ -24,6 +24,7 @@ import {
   X,
   ChevronRight,
   TrendingUp,
+  MapPin,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
@@ -53,6 +54,7 @@ const accountItems = [
 const staffItems = [
   { href: "/portal/admin/kalender", label: "Kalender", icon: CalendarDays },
   { href: "/portal/admin/bookinger", label: "Bookinger", icon: CalendarPlus },
+  { href: "/portal/admin/fasiliteter", label: "Fasiliteter", icon: MapPin },
   { href: "/portal/admin/elever", label: "Elever", icon: UsersIcon },
   { href: "/portal/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
   { href: "/portal/admin/kapasitet", label: "Kapasitet", icon: BarChart3 },

@@ -1,4 +1,5 @@
-import { addMinutes, addHours, isBefore, isAfter } from "date-fns";
+import { addMinutes, addHours, isBefore, isAfter, startOfDay } from "date-fns";
+import { prisma } from "@/lib/portal/prisma";
 
 export function generateSlots({
   availStart,
@@ -55,4 +56,112 @@ export function generateSlots({
   }
 
   return slots;
+}
+
+/**
+ * Henter tilgjengelighet for en instruktør på en gitt dato.
+ * Prioritet:
+ * 1. InstructorDateAvailability (dato-spesifikk override)
+ * 2. InstructorAvailability (fast ukeplan)
+ */
+export async function getAvailabilityForDate(
+  instructorId: string,
+  date: Date
+): Promise<{ startTime: string; endTime: string }[]> {
+  const dayStart = startOfDay(date);
+  const dayOfWeek = date.getUTCDay();
+
+  // Sjekk for dato-spesifikk override først
+  const override = await prisma.instructorDateAvailability.findFirst({
+    where: {
+      instructorId,
+      date: dayStart,
+    },
+  });
+
+  if (override) {
+    return [{ startTime: override.startTime, endTime: override.endTime }];
+  }
+
+  // Fall tilbake til fast tilgjengelighet
+  const regularAvailability = await prisma.instructorAvailability.findMany({
+    where: {
+      instructorId,
+      dayOfWeek,
+    },
+  });
+
+  return regularAvailability.map((a) => ({
+    startTime: a.startTime,
+    endTime: a.endTime,
+  }));
+}
+
+/**
+ * Genererer slots med støtte for dato-overrides.
+ * Brukes av booking-API for å vise korrekte ledige tider.
+ */
+export async function generateSlotsWithOverrides({
+  instructorId,
+  date,
+  duration,
+  bufferAfter,
+  bufferBefore = 0,
+  minNoticeHours,
+}: {
+  instructorId: string;
+  date: Date;
+  duration: number;
+  bufferAfter: number;
+  bufferBefore?: number;
+  minNoticeHours: number;
+}): Promise<string[]> {
+  const nextDay = new Date(date);
+  nextDay.setUTCDate(nextDay.getUTCDate() + 1);
+
+  // Hent tilgjengelighet (override eller fast)
+  const availabilityWindows = await getAvailabilityForDate(instructorId, date);
+
+  if (availabilityWindows.length === 0) {
+    return [];
+  }
+
+  // Hent eksisterende bookinger og blokkerte tider
+  const [existingBookings, blockedTimes] = await Promise.all([
+    prisma.booking.findMany({
+      where: {
+        instructorId,
+        startTime: { gte: date, lt: nextDay },
+        status: { in: ["PENDING", "CONFIRMED"] },
+      },
+      select: { startTime: true, endTime: true },
+    }),
+    prisma.blockedTime.findMany({
+      where: {
+        OR: [{ instructorId }, { instructorId: null }],
+        startTime: { lt: nextDay },
+        endTime: { gt: date },
+      },
+      select: { startTime: true, endTime: true },
+    }),
+  ]);
+
+  // Generer slots for hvert tilgjengelighetsvindu
+  const allSlots: string[] = [];
+  for (const window of availabilityWindows) {
+    const windowSlots = generateSlots({
+      availStart: window.startTime,
+      availEnd: window.endTime,
+      duration,
+      bufferAfter,
+      bufferBefore,
+      date,
+      existingBookings,
+      blockedTimes,
+      minNoticeHours,
+    });
+    allSlots.push(...windowSlots);
+  }
+
+  return allSlots.sort();
 }

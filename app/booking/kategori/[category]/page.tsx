@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/lib/portal/prisma";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
-import { ServiceCard } from "../components/ServiceCard";
+import { ServiceCard } from "../../components/ServiceCard";
 import { getCategoryBySlug, isRecommended, type BookingCategory } from "@/lib/booking-config";
 import { ServiceCategory } from "@prisma/client";
 import type { Metadata } from "next";

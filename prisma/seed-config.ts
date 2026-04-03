@@ -362,6 +362,100 @@ export const JUNIOR_ACADEMY = {
 };
 
 // -----------------------------------------------------------------------------
+// 9. FASILITETER (GFGK)
+// -----------------------------------------------------------------------------
+
+export const FACILITIES = [
+  {
+    slug: "driving-range-1",
+    name: "Driving Range 1. etg",
+    locationSlug: "gfgk",
+    description: "Nedre etasje driving range med 10 utslagsplasser",
+    capacity: 10,
+    sortOrder: 1,
+  },
+  {
+    slug: "driving-range-2",
+    name: "Driving Range 2. etg",
+    locationSlug: "gfgk",
+    description: "Øvre etasje driving range med 10 utslagsplasser",
+    capacity: 10,
+    sortOrder: 2,
+  },
+  {
+    slug: "short-game",
+    name: "Nærspillsområde",
+    locationSlug: "gfgk",
+    description: "Chipping og pitching area med bunkere",
+    capacity: 8,
+    sortOrder: 3,
+  },
+  {
+    slug: "putting-green",
+    name: "Putting green",
+    locationSlug: "gfgk",
+    description: "Stor putting green",
+    capacity: 12,
+    sortOrder: 4,
+  },
+  {
+    slug: "par3-course",
+    name: "Korthullsbane",
+    locationSlug: "gfgk",
+    description: "9 hull par 3 bane",
+    capacity: 16,
+    sortOrder: 5,
+  },
+  {
+    slug: "back-range",
+    name: "Bakside range",
+    locationSlug: "gfgk",
+    description: "Utendørs range bak klubbhuset",
+    capacity: 6,
+    sortOrder: 6,
+  },
+  {
+    slug: "performance-studio",
+    name: "Performance Studio",
+    locationSlug: "gfgk",
+    description: "TrackMan studio med videoanalyse",
+    capacity: 2,
+    sortOrder: 7,
+  },
+  {
+    slug: "outdoor-range",
+    name: "Uteplass driving range",
+    locationSlug: "gfgk",
+    description: "Utendørs utslagsplasser foran driving range",
+    capacity: 20,
+    sortOrder: 8,
+  },
+];
+
+// -----------------------------------------------------------------------------
+// 10. INSTRUKTØR-FASILITET DEFAULTS
+// -----------------------------------------------------------------------------
+
+export const INSTRUCTOR_FACILITY_DEFAULTS = [
+  {
+    instructorSlug: "anders",
+    facilitySlug: "performance-studio",
+    priority: 10,
+  },
+  {
+    instructorSlug: "markus",
+    facilitySlug: "driving-range-1",
+    serviceTypeSlug: "markus20",
+    priority: 10,
+  },
+  {
+    instructorSlug: "markus",
+    facilitySlug: "performance-studio",
+    priority: 5,
+  },
+];
+
+// -----------------------------------------------------------------------------
 // INSTRUKSJONER
 // -----------------------------------------------------------------------------
 //
