@@ -71,7 +71,7 @@ function formatScoreDiff(scoreToPar: number | null): string {
   return scoreToPar > 0 ? `+${scoreToPar}` : `${scoreToPar}`;
 }
 
-function getSgColor(value: number | null): string {
+function _getSgColor(value: number | null): string {
   if (value === null) return "text-[var(--color-grey-500)]";
   return value >= 0
     ? "text-[var(--color-grey-900)]"

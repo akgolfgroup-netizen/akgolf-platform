@@ -32,7 +32,19 @@ export function AnalyticsClient() {
   }
 
   useEffect(() => {
-    loadData();
+    let cancelled = false;
+
+    (async () => {
+      setLoading(true);
+      const result = await getAnalyticsData(period);
+      if (!cancelled) {
+        setData(result);
+        setLoading(false);
+      }
+    })();
+
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
 
   if (loading) {

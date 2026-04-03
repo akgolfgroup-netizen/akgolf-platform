@@ -123,7 +123,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function OPTIONS(req: NextRequest) {
+export async function OPTIONS(_req: NextRequest) {
   const corsOrigin = process.env.WEBSITE_URL ?? "http://localhost:3000";
   return new NextResponse(null, {
     headers: {

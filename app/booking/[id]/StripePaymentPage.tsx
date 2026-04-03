@@ -22,7 +22,7 @@ interface CheckoutFormProps {
 function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
-  const router = useRouter();
+  const _router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

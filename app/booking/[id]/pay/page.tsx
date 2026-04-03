@@ -3,7 +3,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { stripe } from "@/lib/portal/stripe";
 import { StripePaymentPage } from "../StripePaymentPage";
 import { PublicStripePaymentPage } from "../PublicStripePaymentPage";
-import { AlertCircle, CreditCard, ShieldCheck, Loader2 } from "lucide-react";
+import { AlertCircle, CreditCard, ShieldCheck } from "lucide-react";
 import { BookingStatus } from "@prisma/client";
 
 // Apple Light Theme 2026

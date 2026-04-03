@@ -2,8 +2,14 @@ import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { roundStatsToCsv } from "@/lib/portal/export/csv-stats";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function GET(req: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await getPortalUser();
   if (!user?.id) {
     return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });

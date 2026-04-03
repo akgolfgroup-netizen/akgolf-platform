@@ -294,7 +294,7 @@ export async function POST(req: NextRequest) {
 
     // For subscription users: booking confirmed directly
     // Get session count info for response
-    const monthStart = startOfMonth(new Date());
+    const _monthStart = startOfMonth(new Date());
     const monthEnd = endOfMonth(new Date());
 
     const sessionsThisMonth = subscription

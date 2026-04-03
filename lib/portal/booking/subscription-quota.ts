@@ -130,9 +130,10 @@ export async function checkBookingWindow(
 }
 
 /**
- * Use a session from user's quota (called after successful booking)
+ * Consume a session from user's quota (called after successful booking).
+ * Returns true if a session was successfully consumed.
  */
-export async function useSession(userId: string): Promise<boolean> {
+export async function consumeSession(userId: string): Promise<boolean> {
   try {
     const result = await prisma.subscriptionQuota.updateMany({
       where: {

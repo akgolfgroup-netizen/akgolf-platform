@@ -3,7 +3,6 @@ import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { CapacityOverview } from "./capacity-overview";
 import { getCapacityData } from "./actions";
 import { CapacityTabs } from "./capacity-tabs";
 

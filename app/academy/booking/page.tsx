@@ -14,7 +14,6 @@ import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
 import { RevealOnScroll } from "@/components/website/RevealOnScroll";
-import { SectionLabel } from "@/components/website/SectionLabel";
 import Link from "next/link";
 
 interface ServiceType {

@@ -4,12 +4,18 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff, isAdmin } from "@/lib/portal/rbac";
 import { checkFacilityConflicts } from "@/lib/portal/facility/conflict-check";
 import { FacilityActivityStatus, FacilityActivityType } from "@prisma/client";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 /**
  * GET /api/portal/facility-activities
  * Henter aktiviteter med filter
  */
 export async function GET(req: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await requirePortalUser();
   if (!isStaff(user.role)) {
     return NextResponse.json({ error: "Ikke tilgang" }, { status: 403 });
@@ -79,6 +85,11 @@ export async function GET(req: NextRequest) {
  * Opprett ny aktivitet
  */
 export async function POST(req: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await requirePortalUser();
   if (!isStaff(user.role)) {
     return NextResponse.json({ error: "Ikke tilgang" }, { status: 403 });

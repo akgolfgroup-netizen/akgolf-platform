@@ -3,6 +3,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { BookingStatus, FacilityActivityStatus } from "@prisma/client";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 // Farger for aktivitetstyper (Brand Guide 2026 - Apple Light)
 const ACTIVITY_COLORS: Record<string, string> = {
@@ -40,6 +41,11 @@ interface CalendarEvent {
  * Henter aggregert kalenderdata for alle fasiliteter
  */
 export async function GET(req: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await requirePortalUser();
   if (!isStaff(user.role)) {
     return NextResponse.json({ error: "Ikke tilgang" }, { status: 403 });

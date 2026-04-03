@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { CreditCard, AlertCircle, Loader2, ShieldCheck, User, Mail } from "lucide-react";
+import { CreditCard, AlertCircle, Loader2, ShieldCheck, Mail } from "lucide-react";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 

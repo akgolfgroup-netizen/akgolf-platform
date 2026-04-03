@@ -3,6 +3,7 @@ import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isAdmin } from "@/lib/portal/rbac";
 import { FacilityActivityStatus } from "@prisma/client";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -13,6 +14,11 @@ interface RouteParams {
  * Godkjenn en aktivitet med konflikt (kun admin)
  */
 export async function POST(req: NextRequest, { params }: RouteParams) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await requirePortalUser();
   if (!isAdmin(user.role)) {
     return NextResponse.json(

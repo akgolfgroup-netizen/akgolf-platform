@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import { createTournament } from "@/modules/tournament-planner";
-import { prisma } from "@/lib/portal/prisma";
 
 const LEVELS = ["nasjonal", "regional", "lokal", "internasjonal"] as const;
 

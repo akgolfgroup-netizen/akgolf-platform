@@ -6,7 +6,7 @@ import { addMinutes } from "date-fns";
 import { BookingStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
 import { autoCreateUser } from "@/lib/portal/booking/auto-create-user";
 import { sendWelcomeEmail } from "@/lib/portal/email/send-welcome-email";
-import { checkUserQuota, checkBookingWindow, useSession } from "@/lib/portal/booking/subscription-quota";
+import { checkUserQuota, checkBookingWindow, consumeSession } from "@/lib/portal/booking/subscription-quota";
 import { nanoid } from "nanoid";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { logger } from "@/lib/logger";
@@ -312,7 +312,7 @@ export async function POST(req: NextRequest) {
         select: { subscriptionTier: true },
       });
       if (quotaUser && quotaUser.subscriptionTier !== "VISITOR") {
-        await useSession(studentId).catch((err) => logger.error("[booking/create] useSession failed:", err));
+        await consumeSession(studentId).catch((err) => logger.error("[booking/create] consumeSession failed:", err));
       }
     }
 

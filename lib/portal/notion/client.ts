@@ -13,7 +13,7 @@ export function getNotionClient(): Client {
 }
 
 // Notion v5 SDK compatibility: use REST API directly for database queries
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 export async function queryDatabase(params: {
   database_id: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

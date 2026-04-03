@@ -5,7 +5,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { isStaff } from "@/lib/portal/rbac";
 import { BookingStatus } from "@prisma/client";
-import { startOfDay, endOfDay, startOfWeek, endOfWeek, addDays } from "date-fns";
+import { startOfDay, endOfDay, startOfWeek, endOfWeek } from "date-fns";
 
 export interface CalendarBooking {
   id: string;

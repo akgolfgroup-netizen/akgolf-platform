@@ -28,7 +28,7 @@ interface Props {
 }
 
 export function PublicConfirmationView({
-  serviceName,
+  serviceName: _serviceName,
   instructorName,
   formattedDate,
   duration,

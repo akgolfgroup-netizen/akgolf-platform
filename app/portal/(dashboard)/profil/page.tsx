@@ -7,7 +7,6 @@ import { BentoCard } from "@/components/portal/apple/bento-card";
 import { AppleAvatar } from "@/components/portal/apple/apple-avatar";
 import { AppleBadge } from "@/components/portal/apple/apple-badge";
 import { AppleButton } from "@/components/portal/apple/apple-button";
-import { AppleCard } from "@/components/portal/apple/apple-card";
 import {
   User, Target, Trophy, Activity, BookOpen, Flame,
   TrendingDown, ChevronRight, Info, Crown, Compass,

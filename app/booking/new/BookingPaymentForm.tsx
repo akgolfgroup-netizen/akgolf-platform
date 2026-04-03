@@ -48,7 +48,7 @@ function VippsIcon() {
   );
 }
 
-export function BookingPaymentForm({ serviceType, instructor, startTime, studentId }: Props) {
+export function BookingPaymentForm({ serviceType, instructor, startTime, studentId: _studentId }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState<"stripe" | "vipps" | null>(null);
   const [error, setError] = useState<string | null>(null);

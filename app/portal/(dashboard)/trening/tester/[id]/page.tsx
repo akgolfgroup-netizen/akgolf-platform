@@ -56,7 +56,7 @@ const categoryLabels: Record<string, string> = {
 
 export default async function TestDetailPage({ params }: Props) {
   const { id } = await params;
-  const user = await requirePortalUser();
+  const _user = await requirePortalUser();
   const protocol = await getTestProtocol(id);
 
   if (!protocol) {

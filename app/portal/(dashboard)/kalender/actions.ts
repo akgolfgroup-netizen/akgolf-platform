@@ -7,7 +7,6 @@ import { BookingStatus } from "@prisma/client";
 import { GOAL_TYPE_CONFIG } from "@/modules/tournament-planner";
 import {
   startOfISOWeek,
-  endOfISOWeek,
   isWithinInterval,
   addDays,
 } from "date-fns";

@@ -3,8 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { z } from "zod";
 import { validateRequest } from "@/lib/api/validation";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function GET(req: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await getPortalUser();
   if (!user?.id) {
     return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });
@@ -34,6 +40,11 @@ const markReadSchema = z.object({
 });
 
 export async function PATCH(req: NextRequest) {
+  const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
+  }
+
   const user = await getPortalUser();
   if (!user?.id) {
     return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });
