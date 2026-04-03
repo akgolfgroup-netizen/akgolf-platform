@@ -95,6 +95,7 @@ app/
 │       ├── page.tsx         # Dashboard-hjem
 │       ├── layout.tsx       # Dashboard layout med sidebar
 │       ├── admin/           # Admin-seksjon (all instruktør-funksjonalitet)
+│       │   ├── analytics/   # Coach Analytics Dashboard (KPI, revenue, elevmetrikk)
 │       │   ├── denne-uken/  # Ukesoversikt
 │       │   ├── bookinger/   # Booking-håndtering (+ny)
 │       │   ├── elever/      # Elevliste + [id]-detaljer
@@ -122,7 +123,7 @@ app/
     ├── contact/             # Kontaktskjema → Resend
     ├── booking/             # [bookingId], confirm-payment, create, list, reschedule, services, slots
     ├── coaching/            # book, packages, slots (fra akgolf-booking)
-    ├── cron/                # release-dropin-slots, reset-monthly-sessions
+    ├── cron/                # release-dropin-slots, reset-monthly-sessions, ai-insights (mandager 06:00)
     └── portal/
         ├── public/          # Åpne endepunkter (slots, instructors, service-types, resources, etc.)
         ├── ai/              # coaching-summary, coaching-transcription, focus, weakness, training-plan
@@ -182,7 +183,7 @@ lib/
 ├── notion.ts              # Notion API-integrasjon
 ├── cron-auth.ts           # Cron-autentisering
 ├── supabase-admin.ts      # Supabase admin client
-├── ai/                    # AI: system-prompt, generate-plan, plan-schema, category-engine
+├── ai/                    # AI: system-prompt, generate-plan, plan-schema, category-engine, weekly-insights
 ├── api/                   # validation.ts (Zod request validation)
 ├── pdf/                   # PDF-generering
 ├── stripe/                # Stripe-produktdefinisjoner
@@ -199,7 +200,7 @@ lib/
     ├── ai/                # coaching-summary, coaching-transcription, focus, weakness, training-plan
     ├── booking/           # auto-create-user, cancellation-policy, refund, reschedule, waitlist
     ├── calendar/          # ical.ts, google-calendar.ts (Google Calendar OAuth)
-    ├── datagolf/          # DataGolf API-klient
+    ├── datagolf/          # DataGolf API-klient, tour-benchmarks (PGA Tour percentiler)
     ├── email/             # Resend + e-postmaler (templates/)
     ├── export/            # csv-stats.ts (statistikk-eksport)
     ├── golf/              # expected-strokes, skill-levels, sg-benchmarks, training-areas
@@ -225,7 +226,7 @@ content/
 
 PostgreSQL via Prisma med `@prisma/adapter-pg`. Nøkkelmodeller:
 
-- **User** — Rolle: STUDENT, INSTRUCTOR, ADMIN. Tier: VISITOR/ACADEMY/STARTER/PRO/ELITE. Inkluderer `portalMonthlyLogCount`, `portalMonthlyAiCount`, `portalUsageResetDate` for usage tracking.
+- **User** — Rolle: STUDENT, INSTRUCTOR, ADMIN. Tier: VISITOR/ACADEMY/STARTER/PRO/ELITE. Inkluderer `portalMonthlyLogCount`, `portalMonthlyAiCount`, `portalUsageResetDate` for usage tracking, og `latestAiInsight`, `aiInsightGeneratedAt` for ukentlige AI-innsikter.
 - **Instructor** + **InstructorAvailability** — Instruktørprofiler og ukentlig tilgjengelighet
 - **ServiceType** — INDIVIDUAL, GROUP, VTG_COURSE, SIMULATOR, PLAYING_LESSON
 - **Booking** — Status: PENDING → CONFIRMED → COMPLETED/CANCELLED/NO_SHOW

@@ -134,7 +134,7 @@ fileSize          BigInt
 
 **Nye modeller (alle i schema.prisma):** CoachingPackage, UserSubscription, CoachingAvailability, CommunicationLog, Notification, AppModule, AppBundle, BundleItem, AppSubscription, SubscriptionQuota, DashboardAccess, ContentItem, Conversation, Message, ExerciseDefinition, SwingVideo, TrackmanSession, UserExerciseBank
 
-**Nye enums:** BillingType, CoachingBookingType, SubscriptionStatus, CommunicationType, NotificationType, CoachingSubscriptionTier, DashboardRole, ContentStatus, ContentType
+**Nye enums:** BillingType, CoachingBookingType, SubscriptionStatus, CommunicationType, NotificationType (inkl. AI_INSIGHT), CoachingSubscriptionTier, DashboardRole, ContentStatus, ContentType
 
 **Nye API-er:** `/api/coaching/*`, `/api/cron/*`, `/api/portal/admin/email-templates`, `/api/portal/notifications`, `/api/portal/subscriptions/*`
 
@@ -481,6 +481,51 @@ import { L_PHASES } from "@/lib/training/l-phase-types";  // OK!
 - `AssignedMessages` — Meldinger tildelt brukeren
 - `ApprovedResponses` — AI-svar godkjent av brukeren
 - `AILearning` — Brukerens AI-læringsdata
+
+## 34. Lucide icons med dynamisk farge (2026-04-03)
+
+**Problem:** Lucide-ikoner aksepterer ikke `style`-prop uten eksplisitt typing. TypeScript klager: `Property 'style' does not exist on type`.
+
+**Losning:** Definer interface som inkluderer `style`:
+```typescript
+// FEIL
+interface Props {
+  icon: React.ComponentType<{ className?: string }>;
+}
+<Icon className="h-5 w-5" style={{ color: iconColor }} />
+
+// RIKTIG
+interface Props {
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+}
+<Icon className="h-5 w-5" style={{ color: iconColor }} />
+```
+
+**Regel:** Inkluder alltid `style?: React.CSSProperties` i icon-prop interfaces.
+
+## 35. TypeScript enum array includes() (2026-04-03)
+
+**Problem:** `[EnumValue.A, EnumValue.B].includes(status)` feiler fordi TypeScript ikke kan verifisere at `status` er av samme type.
+
+**Feilmelding:** `Argument of type 'BookingStatus' is not assignable to parameter of type 'never'.`
+
+**Losning:** Bruk en helper-funksjon i stedet for inline array:
+```typescript
+// FEIL
+if ([BookingStatus.CONFIRMED, BookingStatus.PENDING].includes(booking.status)) { }
+
+// RIKTIG — bruk helper
+function isValidStatus(status: BookingStatus): boolean {
+  return status === BookingStatus.CONFIRMED || status === BookingStatus.PENDING;
+}
+if (isValidStatus(booking.status)) { }
+
+// ALTERNATIV — cast array
+const validStatuses: BookingStatus[] = [BookingStatus.CONFIRMED, BookingStatus.PENDING];
+if (validStatuses.includes(booking.status)) { }
+```
+
+**Regel:** Unnga inline enum-arrays med includes(). Bruk helper-funksjoner eller eksplisitt typing.
 
 ---
 
