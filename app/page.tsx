@@ -13,7 +13,7 @@ import { BackToTop } from "@/components/website/BackToTop";
 import { BentoFeatures } from "@/components/website/BentoFeatures";
 import { ParallaxImage } from "@/components/website/ParallaxImage";
 import { CoachingOfferGrid } from "@/components/website/CoachingOfferGrid";
-import { TestimonialBlock } from "@/components/website/TestimonialBlock";
+// import { TestimonialBlock } from "@/components/website/TestimonialBlock";
 import { ApplicationForm } from "@/components/website/ApplicationForm";
 import {
   HERO,
@@ -136,30 +136,99 @@ export default function HomePage() {
         />
 
         {/* ================================================================= */}
-        {/* 4. SPILLERPORTAL                                                   */}
+        {/* 4. SPILLERPORTAL — Split layout with iPhone mockup               */}
         {/* ================================================================= */}
-        <section className="py-[120px] md:py-[160px] bg-white">
+        <section className="py-[120px] md:py-[160px] bg-white overflow-hidden">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="max-w-2xl mx-auto text-center">
-                <SectionLabel>Spillerportalen</SectionLabel>
-                <h2 className="font-display text-3xl md:text-[48px] font-extrabold tracking-tight text-[#1D1D1F] mt-5 mb-4">
-                  Din treningspartner — alltid tilgjengelig.
-                </h2>
-                <p className="text-[#48484A] text-lg leading-relaxed mb-4">
-                  Spillerportalen gir deg full oversikt over spillet ditt.
-                  Treningsplaner, Strokes Gained-analyse, coaching-notater
-                  og AI-drevne anbefalinger — alt samlet pa ett sted.
-                </p>
-                <p className="text-[#6E6E73] text-sm mb-10">
-                  Inkludert i alle coaching-abonnement. Fristaende tilgang: 299 kr/mnd.
-                </p>
-                <Link
-                  href="/portal"
-                  className="inline-flex px-8 py-4 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
-                >
-                  Prov Spillerportalen
-                </Link>
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
+                {/* Text */}
+                <div className="max-w-xl">
+                  <SectionLabel>Spillerportalen</SectionLabel>
+                  <h2 className="font-display text-3xl md:text-[48px] font-extrabold tracking-tight text-[#1D1D1F] mt-5 mb-4">
+                    Din treningspartner — alltid tilgjengelig.
+                  </h2>
+                  <p className="text-[#48484A] text-lg leading-relaxed mb-4">
+                    Spillerportalen gir deg full oversikt over spillet ditt.
+                    Treningsplaner, Strokes Gained-analyse, coaching-notater
+                    og AI-drevne anbefalinger — alt samlet pa ett sted.
+                  </p>
+                  <p className="text-[#6E6E73] text-sm mb-10">
+                    Inkludert i alle coaching-abonnement. Fristaende tilgang: 299 kr/mnd.
+                  </p>
+                  <Link
+                    href="/portal"
+                    className="inline-flex px-8 py-4 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
+                  >
+                    Prov Spillerportalen
+                  </Link>
+                </div>
+
+                {/* iPhone Mockup */}
+                <div className="flex justify-center lg:justify-end">
+                  <motion.div
+                    className="relative"
+                    style={{ perspective: "1200px" }}
+                    animate={reducedMotion ? {} : { y: [0, -8, 0] }}
+                    transition={reducedMotion ? undefined : { duration: 4, ease: "easeInOut", repeat: Infinity }}
+                  >
+                    <div className="relative w-[280px] h-[560px] rounded-[48px] border-[8px] border-[#1D1D1F] bg-[#F5F5F7] overflow-hidden shadow-2xl">
+                      {/* Notch */}
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[28px] bg-[#1D1D1F] rounded-b-2xl z-10" />
+
+                      {/* Screen content — mini dashboard */}
+                      <div className="pt-10 px-5 space-y-4">
+                        {/* Status bar */}
+                        <div className="flex justify-between items-center text-[9px] text-[#6E6E73] font-medium px-1">
+                          <span>09:41</span>
+                          <div className="flex gap-1 items-center">
+                            <div className="w-4 h-2 rounded-sm border border-[#6E6E73]">
+                              <div className="w-2.5 h-full bg-[#2D6A4F] rounded-sm" />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Handicap card */}
+                        <div className="bg-white rounded-2xl p-4 shadow-sm">
+                          <p className="text-[9px] font-medium text-[#6E6E73] uppercase tracking-wider">Handicap</p>
+                          <p className="text-[28px] font-bold text-[#1D1D1F] leading-tight">12.4</p>
+                          <div className="flex items-center gap-1 mt-0.5">
+                            <div className="w-0 h-0 border-l-[3px] border-l-transparent border-r-[3px] border-r-transparent border-b-[5px] border-b-[#2D6A4F]" />
+                            <span className="text-[9px] font-medium text-[#2D6A4F]">-1.2 siste 3 mnd</span>
+                          </div>
+                        </div>
+
+                        {/* Streak card */}
+                        <div className="bg-white rounded-2xl p-4 shadow-sm">
+                          <p className="text-[9px] font-medium text-[#6E6E73] uppercase tracking-wider">Treningsstreak</p>
+                          <div className="flex items-baseline gap-1 mt-1">
+                            <span className="text-[22px] font-bold text-[#1D1D1F]">12</span>
+                            <span className="text-[10px] text-[#6E6E73]">dager</span>
+                          </div>
+                          <div className="flex gap-1 mt-2">
+                            {[1, 1, 1, 1, 1, 0, 0].map((active, i) => (
+                              <div
+                                key={i}
+                                className={`h-1.5 flex-1 rounded-full ${active ? "bg-[#2D6A4F]" : "bg-[#E8E8ED]"}`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Mini radar placeholder */}
+                        <div className="bg-white rounded-2xl p-4 shadow-sm">
+                          <p className="text-[9px] font-medium text-[#6E6E73] uppercase tracking-wider">Strokes Gained</p>
+                          <div className="flex justify-center mt-2">
+                            <svg width="80" height="80" viewBox="0 0 100 100" fill="none" className="text-[#2D6A4F]">
+                              <polygon points="50,15 85,35 75,80 25,80 15,35" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.2" />
+                              <polygon points="50,25 72,38 65,70 35,70 28,38" stroke="currentColor" strokeWidth="1.5" fill="currentColor" fillOpacity="0.1" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
               </div>
             </RevealOnScroll>
           </div>
@@ -173,7 +242,8 @@ export default function HomePage() {
         {/* ================================================================= */}
         {/* 7. TESTIMONIAL                                                     */}
         {/* ================================================================= */}
-        <TestimonialBlock />
+        {/* TODO: Aktiver nar ekte testimonials er klare */}
+        {/* <TestimonialBlock /> */}
 
         {/* ================================================================= */}
         {/* 8. COACH — Bio section                                             */}
@@ -228,8 +298,8 @@ export default function HomePage() {
         <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center py-20 overflow-hidden grain-overlay">
           <div className="absolute inset-0">
             <Image
-              src="/images/branding/ak-golf-academy-31.jpg"
-              alt="To figurer på fairway"
+              src="/images/branding/ak-golf-academy-35.jpg"
+              alt="Golfbane i kveldslys"
               fill
               className="object-cover"
               style={{ objectPosition: "center 30%" }}

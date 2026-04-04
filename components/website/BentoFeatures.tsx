@@ -1,35 +1,30 @@
 "use client";
 
-import { RevealOnScroll, StaggerContainer, StaggerItem } from "./RevealOnScroll";
+import { motion } from "framer-motion";
+import {
+  Radar,
+  RadarChart,
+  PolarGrid,
+  ResponsiveContainer,
+} from "recharts";
+import { StaggerContainer, StaggerItem } from "./RevealOnScroll";
 import { SectionLabel } from "./SectionLabel";
 import { Target, Sparkles, Crosshair } from "lucide-react";
+import { RevealOnScroll } from "./RevealOnScroll";
 
-const features = [
-  {
-    title: "Strokes Gained-analyse",
-    description: "Identifiser nøyaktig hvor du taper og vinner slag sammenlignet med ditt handicap-nivå. Data-drevet beslutninger for treningen din.",
-    icon: Target,
-    span: "md:col-span-2 md:row-span-2",
-    bg: "bg-white",
-  },
-  {
-    title: "AI-drevet treningsplan",
-    description: "Personlig treningsplan som oppdateres etter hver økt basert på dine data.",
-    icon: Sparkles,
-    span: "md:col-span-1",
-    bg: "bg-[var(--color-brand-light)]",
-    iconColor: "text-[var(--color-brand)]",
-  },
-  {
-    title: "TrackMan-integrasjon",
-    description: "Hver økt inkluderer fullstendig TrackMan-analyse med balldata og klubbdata.",
-    icon: Crosshair,
-    span: "md:col-span-1",
-    bg: "bg-[#1D1D1F]",
-    textColor: "text-white",
-    descColor: "text-[#86868B]",
-  },
-] as const;
+const sgData = [
+  { subject: "OtT", normalized: 1.8 },
+  { subject: "App", normalized: 0.7 },
+  { subject: "NS", normalized: 1.1 },
+  { subject: "Putt", normalized: 1.4 },
+];
+
+const trainingDays = [
+  { day: "Ma", done: true },
+  { day: "Ti", done: true },
+  { day: "On", done: true },
+  { day: "To", done: false },
+];
 
 export function BentoFeatures() {
   return (
@@ -40,42 +35,119 @@ export function BentoFeatures() {
             <SectionLabel>Metodikk</SectionLabel>
             <h2 className="w-heading-lg mt-5">Data-drevet coaching</h2>
             <p className="text-[#6E6E73] max-w-xl mx-auto mt-5 text-lg leading-relaxed">
-              Kombinasjonen av TrackMan-data, Strokes Gained-analyse og individuell oppfølging gir deg en klar retning.
+              Kombinasjonen av TrackMan-data, Strokes Gained-analyse og
+              individuell oppfolging gir deg en klar retning.
             </p>
           </div>
         </RevealOnScroll>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {features.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <StaggerItem key={feature.title} className={feature.span}>
-                <div className={`${feature.bg} rounded-[20px] ${feature.span.includes("row-span-2") ? "p-10 md:p-12" : "p-8"} h-full border border-[#E8E8ED] ${feature.bg === "bg-[#1D1D1F]" ? "border-transparent" : ""} transition-transform duration-300 hover:-translate-y-1 relative overflow-hidden`}>
-                  {feature.span.includes("row-span-2") && (
-                    <svg className="absolute right-6 bottom-6 w-40 h-40 opacity-[0.07] text-current" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="0.5">
-                      <polygon points="50,5 95,35 80,90 20,90 5,35" />
-                      <polygon points="50,20 78,40 70,78 30,78 22,40" />
-                      <polygon points="50,35 65,47 60,67 40,67 35,47" />
-                      <line x1="50" y1="5" x2="50" y2="50" />
-                      <line x1="95" y1="35" x2="50" y2="50" />
-                      <line x1="80" y1="90" x2="50" y2="50" />
-                      <line x1="20" y1="90" x2="50" y2="50" />
-                      <line x1="5" y1="35" x2="50" y2="50" />
-                    </svg>
-                  )}
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-5 ${feature.bg === "bg-[#1D1D1F]" ? "bg-white/10" : feature.bg === "bg-[var(--color-brand-light)]" ? "bg-[var(--color-brand)]/10" : "bg-[#F5F5F7]"}`}>
-                    <Icon className={`w-5 h-5 ${"iconColor" in feature && feature.iconColor ? feature.iconColor : (feature.bg === "bg-[#1D1D1F]" ? "text-white" : "text-[#1D1D1F]")}`} />
+        <StaggerContainer
+          className="grid grid-cols-1 md:grid-cols-3 gap-5"
+          staggerDelay={0.12}
+        >
+          {/* ── SG Card (large 2x2) ── */}
+          <StaggerItem className="md:col-span-2 md:row-span-2">
+            <div className="bg-white rounded-[20px] p-10 md:p-12 h-full border border-[#E8E8ED] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] relative overflow-hidden">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 bg-[#F5F5F7]">
+                <Target className="w-5 h-5 text-[#1D1D1F]" />
+              </div>
+              <h3 className="font-display text-xl md:text-2xl font-bold mb-3 text-[#1D1D1F]">
+                Strokes Gained-analyse
+              </h3>
+              <p className="text-sm leading-relaxed text-[#6E6E73] max-w-md">
+                Identifiser noyaktig hvor du taper og vinner slag sammenlignet
+                med ditt handicap-niva. Data-drevet beslutninger for treningen
+                din.
+              </p>
+
+              {/* Animated Recharts Radar */}
+              <motion.div
+                className="absolute right-4 bottom-4 w-44 h-44 md:w-56 md:h-56"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart data={sgData} cx="50%" cy="50%" outerRadius="75%">
+                    <PolarGrid stroke="#E8E8ED" strokeWidth={0.5} />
+                    <Radar
+                      dataKey="normalized"
+                      stroke="#2D6A4F"
+                      fill="#2D6A4F"
+                      fillOpacity={0.1}
+                      strokeWidth={2}
+                      animationDuration={1200}
+                    />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </motion.div>
+            </div>
+          </StaggerItem>
+
+          {/* ── AI Card (small) ── */}
+          <StaggerItem className="md:col-span-1">
+            <div className="bg-[var(--color-brand-light)] rounded-[20px] p-8 h-full border border-[#E8E8ED] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 bg-[var(--color-brand)]/10">
+                <Sparkles className="w-5 h-5 text-[var(--color-brand)]" />
+              </div>
+              <h3 className="font-display text-xl font-bold mb-3 text-[#1D1D1F]">
+                AI-drevet treningsplan
+              </h3>
+              <p className="text-sm leading-relaxed text-[#6E6E73]">
+                Personlig treningsplan som oppdateres etter hver okt basert pa
+                dine data.
+              </p>
+
+              {/* Mini training plan preview */}
+              <div className="mt-5 flex gap-2">
+                {trainingDays.map((d) => (
+                  <div key={d.day} className="flex flex-col items-center gap-1.5">
+                    <div
+                      className={`w-10 h-10 rounded-lg ${
+                        d.done ? "bg-[#2D6A4F]" : "bg-[#E8E8ED]"
+                      }`}
+                    />
+                    <span className="text-[10px] font-medium text-[#6E6E73]">
+                      {d.day}
+                    </span>
                   </div>
-                  <h3 className={`font-display ${feature.span.includes("row-span-2") ? "text-xl md:text-2xl" : "text-xl"} font-bold mb-3 ${"textColor" in feature && feature.textColor ? feature.textColor : "text-[#1D1D1F]"}`}>
-                    {feature.title}
-                  </h3>
-                  <p className={`text-sm leading-relaxed ${"descColor" in feature && feature.descColor ? feature.descColor : "text-[#6E6E73]"}`}>
-                    {feature.description}
-                  </p>
+                ))}
+              </div>
+            </div>
+          </StaggerItem>
+
+          {/* ── TrackMan Card (small, dark) ── */}
+          <StaggerItem className="md:col-span-1">
+            <div className="bg-[#1D1D1F] rounded-[20px] p-8 h-full border border-transparent transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 bg-white/10">
+                <Crosshair className="w-5 h-5 text-white" />
+              </div>
+              <h3 className="font-display text-xl font-bold mb-3 text-white">
+                TrackMan-integrasjon
+              </h3>
+              <p className="text-sm leading-relaxed text-[#86868B]">
+                Hver okt inkluderer fullstendig TrackMan-analyse med balldata og
+                klubbdata.
+              </p>
+
+              {/* TrackMan data preview */}
+              <div className="mt-5 space-y-1.5 font-mono text-xs tabular-nums text-white/60">
+                <div className="flex justify-between">
+                  <span>Klubbhastighet</span>
+                  <span>98 mph</span>
                 </div>
-              </StaggerItem>
-            );
-          })}
+                <div className="flex justify-between">
+                  <span>Ballhastighet</span>
+                  <span>145 mph</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Carry</span>
+                  <span>245 m</span>
+                </div>
+              </div>
+            </div>
+          </StaggerItem>
         </StaggerContainer>
       </div>
     </section>
