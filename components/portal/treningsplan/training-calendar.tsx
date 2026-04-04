@@ -86,10 +86,10 @@ export function TrainingCalendar({
             {periodLabel && (
               <span className="text-[#1D1D1F] font-medium">{periodLabel}</span>
             )}
-            {periodLabel && " \u00B7 "}
+            {periodLabel && " · "}
             {weekLabel}
             {periodWeeksRemaining != null && periodWeeksRemaining > 0 && (
-              <span> \u00B7 {periodWeeksRemaining} uker igjen</span>
+              <span> · {periodWeeksRemaining} uker igjen</span>
             )}
           </p>
         </div>
