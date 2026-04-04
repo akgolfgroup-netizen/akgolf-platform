@@ -212,17 +212,26 @@ export default function JuniorPage() {
                   <h2 className="w-heading-lg text-white mt-4 mb-6">
                     {JUNIOR_WANG_V2.heading}
                   </h2>
+                  <div className="flex justify-center mb-8">
+                    <Image
+                      src="/images/partners/wang-logo-white.svg"
+                      alt="WANG Toppidrett"
+                      width={120}
+                      height={80}
+                      className="opacity-80"
+                    />
+                  </div>
                   <p className="text-white/60 leading-relaxed mb-10">
                     {JUNIOR_WANG_V2.description}
                   </p>
-                  {/* TODO: Legg til WANG-logo nar tilgjengelig */}
-                  {/* TODO: Legg til lenker til WANG UNG/Toppidrett med korrekte URLer */}
-                  <Link
-                    href="/utvikling"
+                  <a
+                    href="https://wang.no/toppidrett/fredrikstad"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
                   >
                     {JUNIOR_WANG_V2.ctaLabel} &rarr;
-                  </Link>
+                  </a>
                 </div>
               </RevealOnScroll>
             </div>
