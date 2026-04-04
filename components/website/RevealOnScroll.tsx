@@ -18,7 +18,7 @@ export function RevealOnScroll({
   children: ReactNode;
   className?: string;
   delay?: number;
-  direction?: "up" | "left" | "right" | "none";
+  direction?: "up" | "left" | "right" | "none" | "blur";
 }) {
   const prefersReducedMotion = useReducedMotion();
 
@@ -32,6 +32,7 @@ export function RevealOnScroll({
     left: { hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0 } },
     right: { hidden: { opacity: 0, x: 30 }, visible: { opacity: 1, x: 0 } },
     none: { hidden: { opacity: 0 }, visible: { opacity: 1 } },
+    blur: { hidden: { opacity: 0, y: 30, filter: "blur(8px)" }, visible: { opacity: 1, y: 0, filter: "blur(0px)" } },
   };
 
   return (
