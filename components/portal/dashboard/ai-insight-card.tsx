@@ -64,8 +64,8 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
       <div className="p-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-purple-600" />
+            <div className="w-10 h-10 rounded-xl bg-[#EDF5F0] flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-[#2D6A4F]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -73,7 +73,7 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
                   Ukentlig innsikt
                 </h3>
                 {isNew && (
-                  <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-purple-100 text-purple-700 rounded-full">
+                  <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-[#EDF5F0] text-[#2D6A4F] rounded-full">
                     Ny
                   </span>
                 )}
@@ -95,7 +95,7 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
         </p>
 
         {/* Focus tip */}
-        <div className="flex items-start gap-3 mt-4 p-3 rounded-xl bg-[var(--color-grey-50)] border border-[var(--color-grey-100)]">
+        <div className="flex items-start gap-3 mt-4 p-3 rounded-xl bg-[#F5F5F7] border border-[#E8E8ED]">
           <Lightbulb className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-xs font-semibold text-[var(--color-grey-700)] uppercase tracking-wide mb-1">

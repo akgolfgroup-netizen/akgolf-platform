@@ -16,9 +16,9 @@ interface MCStatCardProps {
 
 const valueColors: Record<StatVariant, string> = {
   default: "text-[#1D1D1F]",
-  success: "text-[#34C759]",
-  warning: "text-[#FF9500]",
-  error: "text-[#FF3B30]",
+  success: "text-[#2D6A4F]",
+  warning: "text-[#E89C30]",
+  error: "text-[#D14343]",
 };
 
 export function MCStatCard({
@@ -57,8 +57,8 @@ export function MCStatCard({
 // Mini sparkline SVG
 function Sparkline({ direction }: { direction: "up" | "down" | "neutral" }) {
   const colors = {
-    up: "#34C759",
-    down: "#FF3B30",
+    up: "#2D6A4F",
+    down: "#D14343",
     neutral: "#86868B",
   };
 

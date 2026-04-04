@@ -22,7 +22,7 @@ export default async function DashboardLayout({
         <div className="min-h-screen flex bg-[#F5F5F7]">
           <PremiumSidebar user={user} />
           <MobileHeader />
-          <main className="flex-1 lg:ml-64 min-h-screen p-4 lg:p-8 pt-18 lg:pt-8 max-w-[1400px]">
+          <main className="flex-1 lg:ml-[220px] min-h-screen p-4 lg:p-8 pt-18 lg:pt-8 max-w-[1400px]">
             <TrialBannerWrapper
               subscriptionStatus={user.subscriptionStatus as SubscriptionStatus | null}
               subscriptionTier={user.subscriptionTier as SubscriptionTier}

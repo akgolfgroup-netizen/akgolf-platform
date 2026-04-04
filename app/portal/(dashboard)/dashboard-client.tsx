@@ -3,8 +3,12 @@
 import Link from "next/link";
 import { format, isToday, isTomorrow } from "date-fns";
 import { nb } from "date-fns/locale";
-import { BookOpen, BarChart3, Calendar, Lightbulb } from "lucide-react";
-import { AiInsightCard } from "@/components/portal/dashboard/ai-insight-card";
+import { BookOpen, BarChart3, Calendar } from "lucide-react";
+import { Sparkline } from "@/components/portal/dashboard/sparkline";
+import { StreakCard } from "@/components/portal/dashboard/streak-card";
+import { SGOverviewCard } from "@/components/portal/dashboard/sg-overview-card";
+import { AIRecommendationCard } from "@/components/portal/dashboard/ai-recommendation-card";
+import { WeeklyPlanCard } from "@/components/portal/dashboard/weekly-plan-card";
 
 interface WeeklyInsight {
   summary: string;
@@ -43,6 +47,9 @@ export function DashboardClient({
   aiInsight,
 }: DashboardProps) {
   const hasData = stats.sessionsCount > 0 || handicap.current !== null;
+  const now = new Date();
+  const greeting = now.getHours() < 12 ? "God morgen" : now.getHours() < 18 ? "God ettermiddag" : "God kveld";
+  const firstName = userName?.split(" ")[0];
 
   if (!hasData) {
     return <OnboardingView userName={userName} />;
@@ -50,125 +57,96 @@ export function DashboardClient({
 
   return (
     <div className="space-y-6">
-      {/* Stat row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatBox
-          label="HCP"
-          value={
-            handicap.current !== null
-              ? handicap.current.toFixed(1)
-              : "\u2014"
-          }
-        />
-        <StatBox
-          label="30 dager"
-          value={
-            handicap.trend !== null
-              ? `${handicap.trend > 0 ? "+" : ""}${handicap.trend.toFixed(1)}`
-              : "\u2014"
-          }
-          valueColor={
-            handicap.trend !== null && handicap.trend < 0
-              ? "text-[var(--color-success)]"
-              : undefined
-          }
-        />
-        <StatBox label="Økter" value={String(stats.sessionsCount)} />
-        <StatBox label="Runder" value={String(stats.roundsCount)} />
+      {/* Greeting */}
+      <div>
+        <h1 className="text-[22px] font-bold text-[#1D1D1F]">
+          {greeting}{firstName ? `, ${firstName}` : ""}
+        </h1>
+        <p className="text-xs text-[#86868B] mt-1">
+          {format(now, "EEEE d. MMMM yyyy", { locale: nb })}
+        </p>
       </div>
 
-      {/* Next session + Quick actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="bg-white rounded-[20px] border border-[var(--color-grey-200)] p-5">
-          <p className="text-sm text-[var(--color-grey-400)] mb-2">
-            Neste på programmet
-          </p>
+      {/* 4 stat cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Handicap */}
+        <div className="bg-white border border-[#E8E8ED] rounded-[14px] p-4">
+          <span className="text-[10px] uppercase tracking-[1px] text-[#86868B] font-medium">HCP</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-[26px] font-extrabold text-[#1D1D1F] tabular-nums">
+              {handicap.current !== null ? handicap.current.toFixed(1) : "\u2014"}
+            </span>
+            {handicap.trend !== null && (
+              <span className={`text-[11px] font-semibold ${handicap.trend < 0 ? "text-[#2D6A4F]" : handicap.trend > 0 ? "text-[#D14343]" : "text-[#86868B]"}`}>
+                {handicap.trend > 0 ? "+" : ""}{handicap.trend.toFixed(1)}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Okter med sparkline */}
+        <div className="bg-white border border-[#E8E8ED] rounded-[14px] p-4">
+          <span className="text-[10px] uppercase tracking-[1px] text-[#86868B] font-medium">Okter</span>
+          <div className="flex items-end justify-between mt-1">
+            <span className="text-[26px] font-extrabold text-[#1D1D1F] tabular-nums">{stats.sessionsCount}</span>
+            <Sparkline />
+          </div>
+        </div>
+
+        {/* Neste coaching */}
+        <div className="bg-white border border-[#E8E8ED] rounded-[14px] p-4">
+          <span className="text-[10px] uppercase tracking-[1px] text-[#86868B] font-medium">Neste coaching</span>
           {nextBooking ? (
-            <div>
-              <p className="text-lg font-semibold text-[var(--color-grey-900)]">
-                {nextBooking.serviceName}
-              </p>
-              <p className="text-sm text-[var(--color-grey-500)]">
-                m/ {nextBooking.instructorName}
-              </p>
-              <p className="text-sm font-medium text-[var(--color-grey-900)] mt-2">
-                {formatBookingDate(new Date(nextBooking.startTime))} kl.{" "}
-                {format(new Date(nextBooking.startTime), "HH:mm")}
+            <div className="mt-1">
+              <span className="text-sm font-semibold text-[#1D1D1F]">
+                {formatBookingDate(new Date(nextBooking.startTime))}
+              </span>
+              <p className="text-xs text-[#86868B] mt-0.5">
+                kl. {format(new Date(nextBooking.startTime), "HH:mm")} m/ {nextBooking.instructorName}
               </p>
             </div>
           ) : (
-            <div>
-              <p className="text-[var(--color-grey-500)]">
-                Ingen kommende økter
-              </p>
-              <Link
-                href="/portal/bookinger/ny"
-                className="inline-block mt-3 px-5 py-2.5 bg-[var(--color-black)] text-white rounded-[980px] text-sm font-semibold hover:bg-[var(--color-grey-800)] transition-colors"
-              >
-                Book time
-              </Link>
-            </div>
+            <p className="text-sm text-[#D2D2D7] mt-1">Ingen planlagt</p>
           )}
         </div>
 
-        <div className="flex flex-col gap-3">
-          <Link
-            href="/portal/dagbok"
-            className="flex items-center gap-3 px-5 py-4 bg-[var(--color-black)] text-white rounded-[20px] font-semibold hover:bg-[var(--color-grey-800)] transition-colors"
-          >
-            <BookOpen className="w-5 h-5" />
-            Logg trening
-          </Link>
-          <Link
-            href="/portal/statistikk/ny-runde"
-            className="flex items-center gap-3 px-5 py-4 bg-white text-[var(--color-grey-900)] border border-[var(--color-grey-200)] rounded-[20px] font-semibold hover:bg-[var(--color-grey-100)] transition-colors"
-          >
-            <BarChart3 className="w-5 h-5" />
-            Ny runde
-          </Link>
-        </div>
+        {/* Streak */}
+        <StreakCard days={stats.sessionsCount > 0 ? Math.min(stats.sessionsCount, 7) : 0} />
       </div>
 
-      {/* Coach insight */}
-      {coachInsight && (
-        <div className="bg-[var(--color-grey-100)] rounded-[20px] p-5">
-          <div className="flex items-center gap-2 mb-2">
-            <Lightbulb className="w-4 h-4 text-[var(--color-grey-900)]" />
-            <p className="text-sm font-semibold text-[var(--color-grey-900)]">
-              Coach-innsikt
-            </p>
-          </div>
-          <p className="text-sm text-[var(--color-grey-600)]">
-            {coachInsight.primaryFocus
-              ? `Fokusområde: ${coachInsight.primaryFocus}`
-              : coachInsight.summary || "Ingen anbefalinger ennå"}
-          </p>
-        </div>
-      )}
+      {/* SG + AI row */}
+      <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4">
+        <SGOverviewCard />
+        <AIRecommendationCard recommendation={aiInsight?.focusTip || coachInsight?.summary} />
+      </div>
 
-      {/* AI Insight */}
-      <AiInsightCard insight={aiInsight} />
-    </div>
-  );
-}
+      {/* Weekly plan */}
+      <WeeklyPlanCard />
 
-function StatBox({
-  label,
-  value,
-  valueColor,
-}: {
-  label: string;
-  value: string;
-  valueColor?: string;
-}) {
-  return (
-    <div className="bg-white rounded-[20px] border border-[var(--color-grey-200)] p-4 text-center">
-      <p
-        className={`text-2xl font-bold ${valueColor || "text-[var(--color-grey-900)]"}`}
-      >
-        {value}
-      </p>
-      <p className="text-xs text-[var(--color-grey-400)] mt-1">{label}</p>
+      {/* Quick actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <Link
+          href="/portal/statistikk/ny-runde"
+          className="flex items-center gap-3 px-5 py-4 bg-[#1D1D1F] text-white rounded-[14px] font-semibold text-sm hover:bg-[#3A3A3C] transition-colors"
+        >
+          <BarChart3 className="w-5 h-5" />
+          Logg runde
+        </Link>
+        <Link
+          href="/portal/dagbok"
+          className="flex items-center gap-3 px-5 py-4 bg-white text-[#1D1D1F] border border-[#E8E8ED] rounded-[14px] font-semibold text-sm hover:bg-[#F5F5F7] transition-colors"
+        >
+          <BookOpen className="w-5 h-5" />
+          Logg okt
+        </Link>
+        <Link
+          href="/portal/bookinger/ny"
+          className="flex items-center gap-3 px-5 py-4 bg-[#2D6A4F] text-white rounded-[14px] font-semibold text-sm hover:bg-[#1B4332] transition-colors"
+        >
+          <Calendar className="w-5 h-5" />
+          Book coaching
+        </Link>
+      </div>
     </div>
   );
 }
@@ -176,44 +154,71 @@ function StatBox({
 function OnboardingView({ userName }: { userName: string | null }) {
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-[20px] border border-[var(--color-grey-200)] p-8 text-center">
-        <h1 className="text-2xl font-bold text-[var(--color-grey-900)] mb-2">
+      <div>
+        <h1 className="text-[22px] font-bold text-[#1D1D1F]">
           Velkommen{userName ? `, ${userName.split(" ")[0]}` : ""}!
         </h1>
-        <p className="text-[var(--color-grey-500)] mb-6">
-          Her er 3 ting du kan gjøre for å komme i gang:
+        <p className="text-sm text-[#86868B] mt-1">
+          Her er 3 ting du kan gjore for a komme i gang:
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <OnboardingCard
-            href="/portal/bookinger/ny"
-            icon={Calendar}
-            title="Book en time"
-            description="Start med en coaching-økt"
-          />
-          <OnboardingCard
-            href="/portal/statistikk/ny-runde"
-            icon={BarChart3}
-            title="Registrer en runde"
-            description="Logg din første golfrunde"
-          />
-          <OnboardingCard
-            href="/portal/profil"
-            icon={BookOpen}
-            title="Sett mål"
-            description="Definer dine golfmål"
-          />
+      </div>
+
+      {/* Mocked preview cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 opacity-40 pointer-events-none">
+        <div className="bg-white border border-[#E8E8ED] rounded-[14px] p-4">
+          <span className="text-[10px] uppercase tracking-[1px] text-[#86868B] font-medium">HCP</span>
+          <span className="block text-[26px] font-extrabold text-[#D2D2D7] tabular-nums mt-1">18.4</span>
         </div>
+        <div className="bg-white border border-[#E8E8ED] rounded-[14px] p-4">
+          <span className="text-[10px] uppercase tracking-[1px] text-[#86868B] font-medium">Okter</span>
+          <span className="block text-[26px] font-extrabold text-[#D2D2D7] tabular-nums mt-1">0</span>
+        </div>
+        <div className="bg-white border border-[#E8E8ED] rounded-[14px] p-4">
+          <span className="text-[10px] uppercase tracking-[1px] text-[#86868B] font-medium">Neste coaching</span>
+          <span className="block text-sm text-[#D2D2D7] mt-1">Ingen planlagt</span>
+        </div>
+        <div className="bg-[#FFFBF5] border border-[#F5E6CC] rounded-[14px] p-4">
+          <span className="text-[10px] uppercase tracking-[1px] text-[#86868B] font-medium">Streak</span>
+          <span className="block text-[26px] font-extrabold text-[#D2D2D7] tabular-nums mt-1">0</span>
+        </div>
+      </div>
+
+      {/* Onboarding steps */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <OnboardingCard
+          step={1}
+          href="/portal/bookinger/ny"
+          icon={Calendar}
+          title="Book en time"
+          description="Start med en coaching-okt for a fa din forste analyse"
+        />
+        <OnboardingCard
+          step={2}
+          href="/portal/statistikk/ny-runde"
+          icon={BarChart3}
+          title="Registrer en runde"
+          description="Logg din forste golfrunde for a spore fremgangen"
+        />
+        <OnboardingCard
+          step={3}
+          href="/portal/profil"
+          icon={BookOpen}
+          title="Sett mal"
+          description="Definer dine golfmal for a fa personlige anbefalinger"
+        />
       </div>
     </div>
   );
 }
 
 function OnboardingCard({
+  step,
   href,
   icon: Icon,
   title,
   description,
 }: {
+  step: number;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   title: string;
@@ -222,11 +227,16 @@ function OnboardingCard({
   return (
     <Link
       href={href}
-      className="block p-5 rounded-[12px] bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)] transition-colors"
+      className="block p-5 rounded-[14px] bg-white border border-[#E8E8ED] hover:border-[#2D6A4F]/30 hover:shadow-sm transition-all"
     >
-      <Icon className="w-6 h-6 text-[var(--color-grey-900)] mb-3" />
-      <p className="font-semibold text-[var(--color-grey-900)]">{title}</p>
-      <p className="text-sm text-[var(--color-grey-500)] mt-1">{description}</p>
+      <div className="flex items-center gap-3 mb-3">
+        <span className="w-6 h-6 rounded-full bg-[#2D6A4F] text-white text-xs font-bold flex items-center justify-center">
+          {step}
+        </span>
+        <Icon className="w-5 h-5 text-[#86868B]" />
+      </div>
+      <p className="font-semibold text-[#1D1D1F] text-sm">{title}</p>
+      <p className="text-xs text-[#86868B] mt-1">{description}</p>
     </Link>
   );
 }

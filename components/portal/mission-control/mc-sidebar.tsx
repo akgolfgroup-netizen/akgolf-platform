@@ -123,7 +123,7 @@ function SidebarContent({
             <div className="text-[11px] font-semibold text-[#1D1D1F] truncate">
               {user.name ?? "Bruker"}
             </div>
-            <div className="text-[9px] text-[#86868B]">
+            <div className={`text-[9px] ${isAdmin(user.role) ? "text-[#1D1D1F] font-semibold" : "text-[#86868B]"}`}>
               {isAdmin(user.role) ? "Admin" : isStaff(user.role) ? "Instruktor" : "Invitert"}
             </div>
           </div>
@@ -159,10 +159,11 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
       <aside className="fixed left-0 top-0 h-full w-[220px] hidden lg:flex flex-col z-20 bg-white border-r border-[#E8E8ED]">
         {/* Header */}
         <div className="px-5 py-4 border-b border-[#E8E8ED] flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#1D1D1F] rounded-lg flex items-center justify-center">
-            <AKLogo variant="white" size={20} />
+          <AKLogo variant="neutral" size={32} />
+          <div>
+            <span className="text-[14px] font-bold text-[#1D1D1F]">AK Golf</span>
+            <p className="text-[9px] text-[#86868B] uppercase tracking-wider font-bold">Mission Control</p>
           </div>
-          <span className="text-sm font-bold text-[#1D1D1F]">Mission Control</span>
         </div>
 
         <SidebarContent user={user} pathname={pathname} onSignOut={handleSignOut} />
@@ -192,10 +193,11 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
               {/* Header with close button */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-[#E8E8ED]">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-[#1D1D1F] rounded-lg flex items-center justify-center">
-                    <AKLogo variant="white" size={20} />
+                  <AKLogo variant="neutral" size={32} />
+                  <div>
+                    <span className="text-[14px] font-bold text-[#1D1D1F]">AK Golf</span>
+                    <p className="text-[9px] text-[#86868B] uppercase tracking-wider font-bold">Mission Control</p>
                   </div>
-                  <span className="text-sm font-bold text-[#1D1D1F]">Mission Control</span>
                 </div>
                 <button
                   onClick={onClose}

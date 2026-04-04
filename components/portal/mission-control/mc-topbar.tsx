@@ -1,8 +1,10 @@
 "use client";
 
-import { Search, Bell, Menu } from "lucide-react";
+import { Search, Bell, Menu, Plus } from "lucide-react";
 import { useState } from "react";
+import { getWeek } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
 
 interface MCTopbarProps {
   title: string;
@@ -42,7 +44,11 @@ export function MCTopbar({
 
         <div>
           <h1 className="text-base font-bold text-[#1D1D1F]">{title}</h1>
-          {subtitle && <p className="text-[10px] text-[#86868B]">{subtitle}</p>}
+          {subtitle && (
+            <p className="text-[10px] text-[#86868B]">
+              {subtitle} <span className="text-[#D2D2D7] mx-1">|</span> Uke {getWeek(new Date(), { weekStartsOn: 1 })}
+            </p>
+          )}
         </div>
 
         {/* Optional children (mode toggle, etc.) */}
@@ -65,6 +71,15 @@ export function MCTopbar({
 
       {/* Right Section */}
       <div className="flex items-center gap-3">
+        {/* New booking button */}
+        <Link
+          href="/portal/admin/bookinger/ny"
+          className="hidden md:flex items-center gap-1.5 px-3.5 py-1.5 rounded-[980px] bg-[#1D1D1F] text-white text-[11px] font-semibold hover:bg-[#3A3A3C] transition-colors"
+        >
+          <Plus className="w-3.5 h-3.5" />
+          Ny booking
+        </Link>
+
         {/* Mobile search button */}
         <button
           className="md:hidden p-2 rounded-lg text-[#86868B] hover:text-[#1D1D1F] hover:bg-[#F5F5F7] transition-colors cursor-pointer"

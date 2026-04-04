@@ -84,39 +84,26 @@ function NavLink({
     <li>
       <Link href={item.href} onClick={onClick} className="block relative group">
         <motion.div
-          whileHover={{ x: 4 }}
+          whileHover={{ x: 2 }}
           transition={{ duration: 0.15 }}
           className={cn(
-            "flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-[background-color,color] duration-200",
+            "flex items-center gap-3 px-4 py-2 mx-3 rounded-lg text-[13px] font-medium transition-[background-color,color] duration-200",
             active
-              ? "bg-[#1D1D1F] text-white"
+              ? "bg-[#F5F5F7] text-[#1D1D1F] font-semibold"
               : "text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-[#F5F5F7]"
           )}
         >
-          {/* Active indicator */}
-          {active && (
-            <motion.div
-              layoutId="activeIndicator"
-              className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[#1D1D1F] rounded-r-full"
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            />
-          )}
-
           <div className={cn(
-            "w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
-            active ? "bg-white/20" : "bg-[#E8E8ED] group-hover:bg-[#D2D2D7]"
+            "w-[18px] h-[18px] rounded-[5px] flex items-center justify-center transition-colors shrink-0",
+            active ? "bg-[#1D1D1F]" : ""
           )}>
             <item.icon className={cn(
-              "w-4 h-4 transition-colors",
+              "w-3.5 h-3.5 transition-colors",
               active ? "text-white" : "text-[#86868B] group-hover:text-[#1D1D1F]"
             )} />
           </div>
 
           <span className="flex-1">{item.label}</span>
-
-          {active && (
-            <ChevronRight className="w-4 h-4 text-white/50" />
-          )}
         </motion.div>
       </Link>
     </li>
@@ -126,7 +113,7 @@ function NavLink({
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
     <div className="px-6 pt-6 pb-2">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#86868B]">
+      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D2D2D7]">
         {children}
       </p>
     </div>
@@ -211,23 +198,21 @@ function SidebarContent({
               <img
                 src={user.image}
                 alt=""
-                className="w-10 h-10 rounded-full object-cover ring-2 ring-[#E8E8ED]"
+                className="w-10 h-10 rounded-full object-cover"
               />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-[#1D1D1F] flex items-center justify-center ring-2 ring-[#E8E8ED]">
+              <div className="w-10 h-10 rounded-full bg-[#1D1D1F] flex items-center justify-center">
                 <span className="text-sm font-semibold text-white">
                   {(user.name ?? "S")[0].toUpperCase()}
                 </span>
               </div>
             )}
-            {/* Online indicator */}
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#34C759] rounded-full border-2 border-white" />
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-sm font-medium text-[#1D1D1F] truncate">
               {user.name ?? "Spiller"}
             </p>
-            <p className="text-xs text-[#86868B] truncate">
+            <p className="text-xs font-medium text-[#2D6A4F] truncate">
               {user.subscriptionTier ?? "Academy"}
             </p>
           </div>
@@ -254,16 +239,16 @@ export function PremiumSidebar({ user }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-64 hidden lg:flex flex-col z-20 bg-white border-r border-[#E8E8ED]">
+      <aside className="fixed left-0 top-0 h-full w-[220px] hidden lg:flex flex-col z-20 bg-white border-r border-[#E8E8ED]">
         {/* Logo */}
-        <div className="px-6 py-5 border-b border-[#E8E8ED]">
+        <div className="px-5 py-4 border-b border-[#E8E8ED]">
           <Link href="/portal" className="flex items-center gap-3 group">
-            <AKLogo variant="black" size={36} />
+            <AKLogo variant="black" size={32} />
             <div>
-              <span className="text-lg font-bold text-[#1D1D1F] group-hover:text-[#86868B] transition-colors">
+              <span className="text-[14px] font-bold text-[#1D1D1F] group-hover:text-[#86868B] transition-colors">
                 AK Golf
               </span>
-              <p className="text-[10px] text-[#86868B] uppercase tracking-wider">
+              <p className="text-[9px] text-[#86868B] uppercase tracking-wider font-bold">
                 Academy
               </p>
             </div>
@@ -298,10 +283,13 @@ export function PremiumSidebar({ user }: SidebarProps) {
               className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-[#E8E8ED]"
             >
               {/* Close button */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-[#E8E8ED]">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-[#E8E8ED]">
                 <div className="flex items-center gap-3">
-                  <AKLogo variant="black" size={36} />
-                  <span className="text-lg font-bold text-[#1D1D1F]">AK Golf</span>
+                  <AKLogo variant="black" size={32} />
+                  <div>
+                    <span className="text-[14px] font-bold text-[#1D1D1F]">AK Golf</span>
+                    <p className="text-[9px] text-[#86868B] uppercase tracking-wider font-bold">Academy</p>
+                  </div>
                 </div>
                 <button
                   onClick={close}

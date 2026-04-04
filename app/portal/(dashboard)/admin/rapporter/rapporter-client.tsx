@@ -49,7 +49,7 @@ const tierColors: Record<string, string> = {
   ACADEMY: "#007AFF",
   STARTER: "#34C759",
   PRO: "#FF9500",
-  ELITE: "#AF52DE",
+  ELITE: "#2D6A4F",
 };
 
 export function RapporterClient({ data }: RapporterClientProps) {

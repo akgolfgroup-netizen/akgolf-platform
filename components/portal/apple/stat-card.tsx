@@ -70,24 +70,23 @@ export function StatCard({
   return (
     <motion.div
       className={cn(
-        "rounded-2xl p-6 bg-white/70 backdrop-blur-xl border border-white/50 shadow-[var(--shadow-card)]",
+        "rounded-[14px] p-4 bg-white border border-[#E8E8ED]",
         "transition-[transform,box-shadow] duration-300",
         className
       )}
       whileHover={{
-        y: -4,
-        scale: 1.01,
-        boxShadow: "var(--shadow-card-hover)",
+        y: -2,
+        scale: 1.005,
       }}
       transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
     >
-      <div className="flex items-center gap-3 mb-4">
+      <div className="flex items-center gap-3 mb-3">
         {Icon && (
           <div className={cn("rounded-xl flex items-center justify-center", iconBg, sizes.icon)}>
             <Icon className={cn(iconColor, sizes.iconInner)} />
           </div>
         )}
-        <span className={cn("uppercase tracking-wider text-[var(--color-grey-500)] font-medium", sizes.label)}>
+        <span className="text-[10px] uppercase tracking-[1px] text-[#86868B] font-medium">
           {label}
         </span>
       </div>
@@ -95,9 +94,7 @@ export function StatCard({
       <div className="flex items-end justify-between">
         <motion.span
           className={cn(
-            "font-light tracking-tight bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)]",
-            "bg-clip-text text-transparent",
-            sizes.value
+            "text-[26px] font-extrabold text-[#1D1D1F] tabular-nums"
           )}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -109,10 +106,10 @@ export function StatCard({
         {trend !== undefined && (
           <motion.div
             className={cn(
-              "flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium",
-              isPositive && "bg-green-50 text-green-600",
-              isNegative && "bg-red-50 text-red-600",
-              !isPositive && !isNegative && "bg-[var(--color-grey-100)] text-[var(--color-grey-600)]"
+              "flex items-center gap-1 text-[11px] font-semibold",
+              isPositive && "text-[#2D6A4F]",
+              isNegative && "text-[#D14343]",
+              !isPositive && !isNegative && "text-[#86868B]"
             )}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}

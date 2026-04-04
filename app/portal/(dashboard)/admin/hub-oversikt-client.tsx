@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import {
   MCTopbar,
   MCModeToggle,
-  MCKPIStrip,
-  DivisionColumn,
+  MCStatCard,
   useMCSidebar,
 } from "@/components/portal/mission-control";
+import { TodaySchedule } from "@/components/portal/mission-control/hub/today-schedule";
+import { ActivityFeed } from "@/components/portal/mission-control/hub/activity-feed";
+import { StudentAlerts } from "@/components/portal/mission-control/hub/student-alerts";
 
 interface Session {
   id: string;
@@ -83,10 +85,51 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
     return amount.toString();
   };
 
+  // Build schedule items from divisions
+  const scheduleItems = [
+    ...data.divisions.coaching.sessions.map((s) => ({
+      time: s.time,
+      name: s.name,
+      type: "individual" as const,
+    })),
+    ...data.divisions.junior.sessions.map((s) => ({
+      time: s.time,
+      name: s.name,
+      type: "junior" as const,
+    })),
+    ...data.divisions.gfgk.sessions.map((s) => ({
+      time: s.time,
+      name: s.name,
+      type: "gruppe" as const,
+    })),
+  ].sort((a, b) => a.time.localeCompare(b.time));
+
+  // Build activity feed from action items
+  const activityItems = [
+    ...data.divisions.coaching.actionItems.map((a) => ({
+      type: (a.variant === "error" ? "cancel" : a.variant === "warning" ? "note" : "booking") as "cancel" | "note" | "booking",
+      text: a.text,
+      time: "I dag",
+    })),
+    ...data.divisions.junior.actionItems.map((a) => ({
+      type: (a.variant === "error" ? "cancel" : "signup") as "cancel" | "signup",
+      text: a.text,
+      time: "I dag",
+    })),
+  ];
+
+  // Build student alerts
+  const studentAlerts = data.alerts.map((a) => ({
+    name: a.label,
+    initials: a.label.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase(),
+    info: a.variant === "warning" ? "Ikke logget okt pa 7+ dager" : a.variant === "error" ? "Booking kansellert" : "Alt OK",
+    status: (a.variant === "error" ? "risk" : a.variant === "warning" ? "warn" : "ok") as "risk" | "warn" | "ok",
+  }));
+
   return (
     <>
       <MCTopbar
-        title="Hub — Oversikt"
+        title="Hub -- Oversikt"
         subtitle={dateString.charAt(0).toUpperCase() + dateString.slice(1)}
         onMenuClick={toggle}
         user={user}
@@ -104,60 +147,37 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
         </Link>
       </MCTopbar>
 
-      {/* KPI Strip */}
-      <MCKPIStrip
-        items={[
-          {
-            value: data.kpis.sessionsToday,
-            label: "OKTER",
-            sublabel: "I DAG",
-          },
-          {
-            value: data.kpis.activeStudents,
-            label: "AKTIVE",
-            sublabel: "ELEVER",
-          },
-          {
-            value: `${Math.round((data.kpis.activeStudents / 150) * 100)}%`,
-            label: "KAPASITET",
-            sublabel: "DENNE UKE",
-            variant: "success",
-          },
-          {
-            value: formatRevenue(data.kpis.mtdRevenue),
-            label: "OMSETNING",
-            sublabel: "MTD",
-            trend: { value: 12, direction: "up" },
-          },
-        ]}
-        alerts={data.alerts}
-      />
-
-      {/* Division Columns */}
-      <div className="p-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <DivisionColumn
-            division="coaching"
-            label="Coaching"
-            studentCount={data.divisions.coaching.studentCount}
-            sessions={data.divisions.coaching.sessions}
-            actionItems={data.divisions.coaching.actionItems}
+      <div className="p-5 space-y-4">
+        {/* 4 stat cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <MCStatCard
+            label="Okter i dag"
+            value={data.kpis.sessionsToday}
           />
-          <DivisionColumn
-            division="junior"
-            label="Junior Academy"
-            studentCount={data.divisions.junior.studentCount}
-            sessions={data.divisions.junior.sessions}
-            actionItems={data.divisions.junior.actionItems}
+          <MCStatCard
+            label="Aktive elever"
+            value={data.kpis.activeStudents}
           />
-          <DivisionColumn
-            division="gfgk"
-            label="GFGK Junior"
-            studentCount={data.divisions.gfgk.studentCount}
-            sessions={data.divisions.gfgk.sessions}
-            nextWeekItems={data.divisions.gfgk.nextWeekItems}
+          <MCStatCard
+            label="Kapasitet"
+            value={`${Math.round((data.kpis.activeStudents / 150) * 100)}%`}
+            variant="success"
+          />
+          <MCStatCard
+            label="Omsetning MTD"
+            value={formatRevenue(data.kpis.mtdRevenue)}
+            trend={{ value: 12, direction: "up" }}
           />
         </div>
+
+        {/* Timeplan + aktivitetsfeed */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <TodaySchedule items={scheduleItems} />
+          <ActivityFeed items={activityItems} />
+        </div>
+
+        {/* Elev-varsler */}
+        <StudentAlerts alerts={studentAlerts} />
       </div>
     </>
   );

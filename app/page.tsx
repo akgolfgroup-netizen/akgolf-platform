@@ -6,43 +6,22 @@ import { motion } from "framer-motion";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SectionLabel } from "@/components/website/SectionLabel";
-import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/website/RevealOnScroll";
-import { DeviceMockup } from "@/components/website/DeviceMockup";
-import { TeamSection } from "@/components/website/TeamSection";
-import { ApplicationForm } from "@/components/website/ApplicationForm";
+import { RevealOnScroll } from "@/components/website/RevealOnScroll";
 import { FAQAccordion } from "@/components/website/FAQAccordion";
 import { BackToTop } from "@/components/website/BackToTop";
+import { SocialProofBar } from "@/components/website/SocialProofBar";
+import { BentoFeatures } from "@/components/website/BentoFeatures";
+import { ParallaxImage } from "@/components/website/ParallaxImage";
+import { DarkStats } from "@/components/website/DarkStats";
+import { CoachingOfferGrid } from "@/components/website/CoachingOfferGrid";
+import { TestimonialBlock } from "@/components/website/TestimonialBlock";
+import { ApplicationForm } from "@/components/website/ApplicationForm";
 import {
   HERO,
-  HOW_IT_WORKS,
-  COACHING_PACKAGES,
-  FLEX_PACKAGES,
-  PORTAL_FEATURES,
   COACHING_FAQ,
   BOOKING_URL,
-  FOUNDATION_TEST,
+  COACH_BIO,
 } from "@/lib/website-constants";
-
-/* ─── Ikoner ─── */
-
-function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className={className}>
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}
-
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  );
-}
-
-/* ─── Animasjons-variants ─── */
 
 export default function HomePage() {
   return (
@@ -51,26 +30,29 @@ export default function HomePage() {
 
       <main id="main-content">
 
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        {/* 1. HERO — Apple Light Theme with image                            */}
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        <section className="relative min-h-[100svh] flex items-center pt-[48px]">
-          {/* Background */}
-          <div className="absolute inset-0 pointer-events-none">
+        {/* ================================================================= */}
+        {/* 1. HERO — Dark cinematic with Ken Burns image                     */}
+        {/* ================================================================= */}
+        <section className="relative min-h-[100svh] flex items-end pb-20 md:pb-28 overflow-hidden">
+          {/* Background with Ken Burns */}
+          <motion.div
+            className="absolute inset-0"
+            animate={{ scale: [1, 1.05] }}
+            transition={{ duration: 15, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
+          >
             <Image
-              src="/images/hero/hero-main.jpg"
-              alt=""
+              src="/images/branding/ak-golf-academy-18.jpg"
+              alt="Golf coaching pa fairway i kveldslys"
               fill
-              className="object-cover object-[75%_center] md:object-center"
+              className="object-cover"
               priority
               sizes="100vw"
             />
-            {/* White gradient overlay from left for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 to-white/20" />
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
-          </div>
+          </motion.div>
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />
 
-          <div className="w-container relative w-full">
+          <div className="w-container relative z-10 w-full">
             <div className="max-w-2xl">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -78,22 +60,25 @@ export default function HomePage() {
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-2 h-2 rounded-full bg-black" />
-                  <SectionLabel>{HERO.eyebrow}</SectionLabel>
+                  <div className="w-2 h-2 rounded-full bg-[#2D6A4F]" />
+                  <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#40916C]">
+                    {HERO.eyebrow}
+                  </span>
                 </div>
               </motion.div>
 
               <motion.h1
-                className="w-heading-xl max-w-3xl mb-6"
+                className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.4 }}
               >
-                {HERO.heading}
+                Presisjon i hvert{" "}
+                <span className="text-[#40916C]">slag.</span>
               </motion.h1>
 
               <motion.p
-                className="text-lg text-grey-500 max-w-2xl leading-relaxed"
+                className="text-lg text-white/70 max-w-xl leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
@@ -102,12 +87,24 @@ export default function HomePage() {
               </motion.p>
 
               <motion.div
-                className="mt-12 w-16 h-px bg-gradient-to-r from-black/50 to-transparent"
-                initial={{ opacity: 0, scaleX: 0 }}
-                animate={{ opacity: 1, scaleX: 1 }}
+                className="flex flex-wrap gap-4 mt-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.7 }}
-                style={{ transformOrigin: "left" }}
-              />
+              >
+                <a
+                  href="#packages"
+                  className="px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
+                >
+                  {HERO.ctaPrimary}
+                </a>
+                <a
+                  href={BOOKING_URL}
+                  className="px-7 py-3.5 rounded-[980px] border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
+                >
+                  {HERO.ctaSecondary}
+                </a>
+              </motion.div>
             </div>
           </div>
 
@@ -118,348 +115,82 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.5 }}
           >
-            <span className="text-[10px] font-mono uppercase tracking-widest text-grey-400">Scroll</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-black w-scroll-indicator">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-white/50">Scroll</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/50">
               <path d="M12 5v14M5 12l7 7 7-7" />
             </svg>
           </motion.div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        {/* 2. SLIK FUNGERER DET — 3 steg                                     */}
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        <section className="py-28 md:py-40 bg-grey-100">
-          <div className="w-container">
-            <RevealOnScroll>
-              <div className="text-center mb-20">
-                <SectionLabel>{HOW_IT_WORKS.eyebrow}</SectionLabel>
-                <h2 className="w-heading-lg mt-5">{HOW_IT_WORKS.heading}</h2>
-                <p className="text-grey-500 max-w-xl mx-auto mt-5 text-lg leading-relaxed">
-                  {HOW_IT_WORKS.description}
-                </p>
-              </div>
-            </RevealOnScroll>
+        {/* ================================================================= */}
+        {/* 2. SOCIAL PROOF BAR                                                */}
+        {/* ================================================================= */}
+        <SocialProofBar />
 
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 max-w-4xl mx-auto">
-              {HOW_IT_WORKS.steps.map((step) => (
-                <StaggerItem key={step.number}>
-                  <div className="text-center">
-                    <span className="inline-block font-display text-5xl md:text-6xl font-bold text-grey-200 mb-5">
-                      {step.number}
-                    </span>
-                    <h3 className="font-display text-lg font-semibold text-black mb-3">{step.title}</h3>
-                    <p className="text-sm text-grey-500 leading-relaxed max-w-xs mx-auto">{step.description}</p>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
+        {/* ================================================================= */}
+        {/* 3. BENTO FEATURES — SG-radar + AI + TrackMan                      */}
+        {/* ================================================================= */}
+        <BentoFeatures />
 
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        {/* 3. FOUNDATION TEST — Light theme                                  */}
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        <section id="start" className="relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
-            {/* Bilde */}
-            <div className="relative h-72 lg:h-auto">
-              <Image
-                src="/images/sections/instruksjon.jpg"
-                alt="Golf coaching session"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
+        {/* ================================================================= */}
+        {/* 4. PARALLAX IMAGE                                                  */}
+        {/* ================================================================= */}
+        <ParallaxImage
+          src="/images/branding/ak-golf-academy-06.jpg"
+          alt="Putting green sett ovenfra"
+        />
 
-            {/* Innhold — Light theme */}
-            <div className="bg-grey-100 flex items-center p-10 md:p-16 lg:p-20">
-              <RevealOnScroll>
-                <div className="max-w-lg">
-                  <span className="inline-block bg-black/10 text-black text-[10px] font-mono uppercase tracking-[0.15em] px-4 py-1.5 rounded-full mb-6">
-                    {FOUNDATION_TEST.tagline}
-                  </span>
-                  <h2 className="font-display text-3xl md:text-4xl font-bold text-black mb-4 tracking-tight">
-                    {FOUNDATION_TEST.name}
-                  </h2>
-                  <p className="text-grey-500 text-lg leading-relaxed mb-8">{FOUNDATION_TEST.description}</p>
+        {/* ================================================================= */}
+        {/* 5. DARK STATS                                                      */}
+        {/* ================================================================= */}
+        <DarkStats />
 
-                  <div className="grid grid-cols-2 gap-3 mb-10">
-                    {FOUNDATION_TEST.includes.map((item) => (
-                      <div key={item} className="flex items-center gap-2.5">
-                        <CheckIcon className="text-black shrink-0" />
-                        <span className="text-sm text-grey-600">{item}</span>
-                      </div>
-                    ))}
-                  </div>
+        {/* ================================================================= */}
+        {/* 6. COACHING OFFERS                                                 */}
+        {/* ================================================================= */}
+        <CoachingOfferGrid />
 
-                  <div className="flex items-end gap-6">
-                    <div>
-                      <span className="font-display text-4xl font-bold text-black">{FOUNDATION_TEST.price} kr</span>
-                      <p className="text-xs text-grey-400 mt-1">{FOUNDATION_TEST.refundNote}</p>
-                    </div>
-                    <a href={BOOKING_URL} className="w-btn w-btn-primary shrink-0">
-                      Book nå
-                    </a>
-                  </div>
-                </div>
-              </RevealOnScroll>
-            </div>
-          </div>
-        </section>
+        {/* ================================================================= */}
+        {/* 7. TESTIMONIAL                                                     */}
+        {/* ================================================================= */}
+        <TestimonialBlock />
 
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        {/* 4. PRIS-SAMMENLIGNING — Light theme                               */}
-        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* ================================================================= */}
+        {/* 8. COACH — Bio section                                             */}
+        {/* ================================================================= */}
         <section className="py-28 md:py-40 bg-white">
           <div className="w-container">
             <RevealOnScroll>
-              <div className="text-center mb-16">
-                <SectionLabel>Sammenligning</SectionLabel>
-                <h2 className="w-heading-lg mt-5">Enkelttime eller abonnement?</h2>
-                <p className="text-grey-500 max-w-lg mx-auto mt-4 text-lg">
-                  De fleste sparer over 60% med abonnement sammenlignet med enkelttimer.
-                </p>
-              </div>
-            </RevealOnScroll>
-
-            <RevealOnScroll delay={0.1}>
-              <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Flex */}
-                <div className="bg-white rounded-[20px] p-8 border border-grey-200">
-                  <p className="text-xs font-mono uppercase tracking-wider text-grey-400 mb-4">Enkeltsesjoner</p>
-                  <h3 className="font-display text-xl font-semibold text-black mb-2">AK Flex</h3>
-                  <p className="font-display text-3xl font-bold text-black mb-6">
-                    fra 1 500 <span className="text-base font-normal text-grey-400">kr/time</span>
-                  </p>
-                  <ul className="space-y-3">
-                    {[
-                      { ok: true, text: "Ingen binding" },
-                      { ok: true, text: "50 eller 90 min per sesjon" },
-                      { ok: true, text: "Coaching-notater etterpå" },
-                      { ok: false, text: "Ingen spillerportal" },
-                      { ok: false, text: "Ingen treningsplan" },
-                      { ok: false, text: "Ingen selvbooking" },
-                    ].map((item) => (
-                      <li key={item.text} className="flex items-start gap-2.5 text-sm">
-                        {item.ok ? (
-                          <CheckIcon className="shrink-0 mt-0.5 text-grey-400" />
-                        ) : (
-                          <XIcon className="shrink-0 mt-0.5 text-grey-300" />
-                        )}
-                        <span className={item.ok ? "text-grey-600" : "text-grey-400"}>{item.text}</span>
-                      </li>
-                    ))}
-                  </ul>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-5xl mx-auto">
+                <div className="relative aspect-[4/5] rounded-[20px] overflow-hidden">
+                  <Image
+                    src={COACH_BIO.image}
+                    alt={COACH_BIO.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
                 </div>
-
-                {/* Abonnement — Featured */}
-                <div className="bg-black rounded-[20px] p-8 relative">
-                  <div className="absolute -top-3 right-8">
-                    <span className="bg-white text-black text-[10px] font-mono uppercase tracking-wider px-3 py-1 rounded-full font-semibold">
-                      Spar 67%
-                    </span>
-                  </div>
-                  <p className="text-xs font-mono uppercase tracking-wider text-grey-400 mb-4">Abonnement</p>
-                  <h3 className="font-display text-xl font-semibold text-white mb-2">AK Performance</h3>
-                  <p className="font-display text-3xl font-bold text-white mb-1">
-                    fra 500 <span className="text-base font-normal text-grey-400">kr/økt</span>
-                  </p>
-                  <p className="text-xs text-grey-500 mb-6">Performance Pro: 4 økter/mnd = 2 000 kr</p>
-                  <ul className="space-y-3">
-                    {[
-                      "Ingen binding — si opp når som helst",
-                      "Jevnlig coaching med fast frekvens",
-                      "Full spillerportal med treningsplan",
-                      "TrackMan-data i din profil",
-                      "Selvbooking via appen",
-                      "AI-analyse og øvelsesbank",
-                    ].map((text) => (
-                      <li key={text} className="flex items-start gap-2.5 text-sm">
-                        <CheckIcon className="shrink-0 mt-0.5 text-white" />
-                        <span className="text-grey-300">{text}</span>
-                      </li>
-                    ))}
-                  </ul>
+                <div>
+                  <SectionLabel>Din coach</SectionLabel>
+                  <h2 className="w-heading-lg mt-5 mb-4">{COACH_BIO.name}</h2>
+                  <p className="text-[#6E6E73] text-sm uppercase tracking-wider mb-6">{COACH_BIO.title}</p>
+                  <p className="text-[#48484A] text-lg leading-relaxed">{COACH_BIO.description}</p>
                 </div>
               </div>
             </RevealOnScroll>
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        {/* 5. COACHING-PAKKER — Light theme                                  */}
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        <section id="packages" className="py-28 md:py-40 bg-grey-100">
+        {/* ================================================================= */}
+        {/* 9. FAQ                                                             */}
+        {/* ================================================================= */}
+        <section id="faq" className="py-28 md:py-40 bg-[#F5F5F7]">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-16">
-                <SectionLabel>Velg din pakke</SectionLabel>
-                <h2 className="w-heading-lg mt-5">To nivåer. Ingen bindingstid.</h2>
-                <p className="text-grey-500 max-w-xl mx-auto mt-4">
-                  Begge inkluderer full spillerportal, treningsplan og TrackMan-data. Oppgrader eller si opp når som helst.
-                </p>
-              </div>
-            </RevealOnScroll>
-
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-              {COACHING_PACKAGES.map((pkg) => (
-                <StaggerItem key={pkg.name}>
-                  <div
-                    className={`rounded-[20px] flex flex-col h-full transition-[box-shadow,border-color,transform] duration-300 ${
-                      pkg.highlighted
-                        ? "bg-black text-white relative shadow-lg hover:shadow-xl hover:-translate-y-1"
-                        : "bg-white border border-grey-200 hover:border-grey-300 hover:shadow-lg hover:-translate-y-1"
-                    }`}
-                  >
-                    {pkg.highlighted && (
-                      <div className="absolute -top-3 left-8">
-                        <span className="bg-white text-black text-[10px] font-mono uppercase tracking-wider px-4 py-1 rounded-full font-semibold">
-                          Mest populær
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="p-10 flex flex-col flex-1">
-                      <h3 className={`font-display text-2xl font-bold mb-2 ${pkg.highlighted ? "text-white" : "text-black"}`}>
-                        {pkg.name}
-                      </h3>
-
-                      <div className="mb-2">
-                        <span className={`font-display text-4xl font-bold ${pkg.highlighted ? "text-white" : "text-black"}`}>
-                          {pkg.price}
-                        </span>
-                        <span className={`text-sm ml-1 ${pkg.highlighted ? "text-grey-400" : "text-grey-500"}`}>
-                          {pkg.period}
-                        </span>
-                      </div>
-
-                      {/* Pris per økt beregning */}
-                      <p className={`text-xs font-mono mb-6 ${pkg.highlighted ? "text-grey-400" : "text-grey-400"}`}>
-                        = {pkg.highlighted ? "500" : "800"} kr per økt
-                      </p>
-
-                      <p className={`text-sm leading-relaxed mb-8 ${pkg.highlighted ? "text-grey-300" : "text-grey-500"}`}>
-                        {pkg.description}
-                      </p>
-
-                      <ul className="space-y-3 mb-8 flex-1">
-                        {pkg.features.map((feature) => (
-                          <li key={feature} className="flex items-start gap-2.5 text-sm">
-                            <CheckIcon className={`shrink-0 mt-0.5 ${pkg.highlighted ? "text-white" : "text-black"}`} />
-                            <span className={pkg.highlighted ? "text-grey-200" : "text-grey-600"}>
-                              {feature}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <a
-                        href={BOOKING_URL}
-                        className={`w-btn text-center ${pkg.highlighted ? "bg-white text-black hover:opacity-90" : "w-btn-primary"}`}
-                        style={pkg.highlighted ? { borderRadius: '980px', padding: '0.875rem 2rem' } : undefined}
-                      >
-                        Kom i gang
-                      </a>
-                    </div>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-
-            {/* Flex alternativ */}
-            <RevealOnScroll>
-              <div className="text-center mt-20 mb-10">
-                <h3 className="font-display text-xl font-semibold text-black">Ikke klar for abonnement?</h3>
-                <p className="text-grey-500 mt-2">Prøv en enkeltsesjon uten binding.</p>
-              </div>
-            </RevealOnScroll>
-
-            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-              {FLEX_PACKAGES.map((pkg) => (
-                <StaggerItem key={pkg.name}>
-                  <div className="bg-white rounded-[20px] p-6 border border-grey-200 hover:border-grey-300 transition-colors">
-                    <div className="flex items-baseline justify-between mb-1">
-                      <h4 className="font-display text-base font-semibold text-black">{pkg.name}</h4>
-                      <span className="text-xs text-grey-400 font-mono">{pkg.duration}</span>
-                    </div>
-                    <p className="font-display text-xl font-bold text-black mb-2">
-                      {pkg.price}
-                      <span className="text-sm font-normal text-grey-400 ml-1">{pkg.period}</span>
-                    </p>
-                    <p className="text-sm text-grey-500 leading-relaxed mb-4">{pkg.description}</p>
-                    <a href={BOOKING_URL} className="w-btn w-btn-secondary text-center w-full text-sm">
-                      Book nå
-                    </a>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        {/* 6. SPILLERPORTALEN — Light theme                                  */}
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        <section className="py-28 md:py-40 bg-white">
-          <div className="w-container">
-            <RevealOnScroll>
-              <div className="text-center mb-16">
-                <SectionLabel>Spillerportalen</SectionLabel>
-                <h2 className="w-heading-lg mt-5">
-                  Tren smartere mellom øktene.
-                </h2>
-                <p className="text-grey-500 max-w-lg mx-auto mt-4 text-lg">
-                  Alle coaching-pakker inkluderer full tilgang til spillerportalen.
-                </p>
-              </div>
-            </RevealOnScroll>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              {/* Mockup */}
-              <RevealOnScroll direction="left">
-                <DeviceMockup
-                  imageSrc="/images/portal-preview/dashboard.png"
-                  alt="AK Golf spillerportal"
-                />
-              </RevealOnScroll>
-
-              {/* Features */}
-              <RevealOnScroll direction="right" delay={0.1}>
-                <div className="space-y-5">
-                  {PORTAL_FEATURES.slice(0, 5).map((feature) => (
-                    <div key={feature.title} className="flex gap-4">
-                      <div className="w-2 h-2 rounded-full bg-black mt-2 shrink-0" />
-                      <div>
-                        <h3 className="font-semibold text-black mb-1">{feature.title}</h3>
-                        <p className="text-sm text-grey-500">{feature.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                  <Link
-                    href="/portal-preview"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-black hover:text-grey-600 mt-4"
-                  >
-                    Se alle funksjoner
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
-              </RevealOnScroll>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        {/* 7. FAQ                                                            */}
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        <section id="faq" className="py-28 md:py-40 bg-grey-100">
-          <div className="w-container">
-            <RevealOnScroll>
-              <div className="text-center mb-16">
-                <SectionLabel>Spørsmål og svar</SectionLabel>
-                <h2 className="w-heading-lg mt-5">Ofte stilte spørsmål</h2>
+                <SectionLabel>Sporsmal og svar</SectionLabel>
+                <h2 className="w-heading-lg mt-5">Ofte stilte sporsmal</h2>
               </div>
             </RevealOnScroll>
 
@@ -471,22 +202,60 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        {/* 8. TEAM                                                           */}
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        <TeamSection />
+        {/* ================================================================= */}
+        {/* 10. CTA — Dark with background image                               */}
+        {/* ================================================================= */}
+        <section className="relative py-28 md:py-40 overflow-hidden">
+          <div className="absolute inset-0">
+            <Image
+              src="/images/branding/ak-golf-academy-31.jpg"
+              alt="To figurer pa fairway"
+              fill
+              className="object-cover"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-black/60" />
+          </div>
 
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        {/* 9. KONTAKT / CTA                                                  */}
-        {/* ═══════════════════════════════════════════════════════════════════ */}
-        <section id="apply" className="py-28 md:py-40 bg-grey-100">
+          <div className="w-container relative z-10">
+            <RevealOnScroll>
+              <div className="text-center max-w-xl mx-auto">
+                <h2 className="font-display text-3xl md:text-5xl font-bold text-white tracking-tight mb-6">
+                  Klar for a ta spillet ditt videre?
+                </h2>
+                <p className="text-lg text-white/70 mb-10">
+                  Start med en coaching-sesjon og fa en tydelig plan for utviklingen din.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <a
+                    href={BOOKING_URL}
+                    className="px-8 py-4 rounded-[980px] bg-[#2D6A4F] text-white text-sm font-semibold hover:bg-[#1B4332] transition-colors"
+                  >
+                    Book coaching
+                  </a>
+                  <Link
+                    href="/#apply"
+                    className="px-8 py-4 rounded-[980px] border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
+                  >
+                    Ta kontakt
+                  </Link>
+                </div>
+              </div>
+            </RevealOnScroll>
+          </div>
+        </section>
+
+        {/* ================================================================= */}
+        {/* 11. KONTAKT / APPLY                                                */}
+        {/* ================================================================= */}
+        <section id="apply" className="py-28 md:py-40 bg-[#F5F5F7]">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-16">
                 <SectionLabel>Ta kontakt</SectionLabel>
-                <h2 className="w-heading-lg mt-5 mb-4">Klar for å starte?</h2>
-                <p className="text-grey-500 max-w-md mx-auto text-lg">
-                  Fortell oss om dine mål, så finner vi ut hvordan vi kan hjelpe deg videre.
+                <h2 className="w-heading-lg mt-5 mb-4">Klar for a starte?</h2>
+                <p className="text-[#6E6E73] max-w-md mx-auto text-lg">
+                  Fortell oss om dine mal, sa finner vi ut hvordan vi kan hjelpe deg videre.
                 </p>
               </div>
             </RevealOnScroll>

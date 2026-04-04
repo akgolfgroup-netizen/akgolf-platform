@@ -27,33 +27,30 @@
   --color-grey-800: #2C2C2E;
   --color-grey-900: #1D1D1F;
 
-  /* Legacy compatibility mappings */
-  --color-ink-05: #FFFFFF;
-  --color-ink-10: #F5F5F7;
-  --color-ink-20: #E8E8ED;
-  --color-ink-30: #D2D2D7;
-  --color-ink-40: #86868B;
-  --color-ink-50: #6E6E73;
-  --color-ink-60: #48484A;
-  --color-ink-70: #3A3A3C;
-  --color-ink-80: #2C2C2E;
-  --color-ink-90: #1D1D1F;
-  --color-ink-100: #1D1D1F;
-
   /* Surfaces */
   --color-surface-warm: #FFFFFF;
   --color-surface-secondary: #F5F5F7;
   --color-snow: #FFFFFF;
 
   /* Semantic colors */
-  --color-success: #34C759;
-  --color-error: #FF3B30;
-  --color-warning: #FF9500;
+  --color-success: #2D6A4F;
+  --color-error: #D14343;
+  --color-warning: #E89C30;
   --color-info: #007AFF;
 
   /* Accent (subtle, not primary) */
   --color-accent: #1D1D1F;
   --color-accent-light: #6E6E73;
+
+  /* AK Green palette */
+  --color-green: #2D6A4F;
+  --color-green-dark: #1B4332;
+  --color-green-bright: #40916C;
+  --color-green-light: #EDF5F0;
+  --color-coaching: #2563EB;
+  --color-coaching-light: #EFF6FF;
+  --color-streak-bg: #FFFBF5;
+  --color-streak-border: #F5E6CC;
 
   /* External brand */
   --color-vipps: #FF5B24;
@@ -206,15 +203,15 @@
   --mc-color-coaching: #1D1D1F;
   --mc-color-junior: #007AFF;
   --mc-color-gfgk: #34C759;
-  --mc-color-ai: #AF52DE;
+  --mc-color-ai: #2D6A4F;
 
   /* Layout */
   --mc-sidebar-width: 220px;
   --mc-topbar-height: 56px;
 
   /* Semantic Backgrounds */
-  --mc-success-bg: #DCFCE7;
-  --mc-success-text: #166534;
+  --mc-success-bg: #EDF5F0;
+  --mc-success-text: #2D6A4F;
   --mc-warning-bg: #FEF3C7;
   --mc-warning-text: #92400E;
   --mc-error-bg: #FEE2E2;
