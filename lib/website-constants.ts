@@ -1647,3 +1647,193 @@ export const COACHING_OFFERS = [
 export const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ID
   ? `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_ID}`
   : "";
+
+// ─── Academy Page v2 (dark hero rewrite) ───
+export const ACADEMY_HERO_V2 = {
+  label: "AK GOLF ACADEMY",
+  heading: "Coaching som\ngir resultater.",
+  description: "Individuell coaching med TrackMan-data, video-analyse og personlig treningsplan.",
+  ctaPrimary: "Book coaching",
+  ctaSecondary: "Se priser",
+  heroImage: "/images/academy/AK-Golf-Academy-20.jpg",
+} as const;
+
+export const ACADEMY_METHOD_V2 = {
+  label: "V\u00c5R TILN\u00c6RMING",
+  heading: "Tre steg til bedre golf.",
+  steps: [
+    {
+      number: "01",
+      title: "Analyse",
+      description: "Vi kartlegger spillet ditt med TrackMan og Strokes Gained. Ingen gjetning \u2014 bare data.",
+    },
+    {
+      number: "02",
+      title: "Plan",
+      description: "Basert p\u00e5 analysen lager vi en treningsplan som fokuserer p\u00e5 dine svakeste omr\u00e5der.",
+    },
+    {
+      number: "03",
+      title: "Oppf\u00f8lging",
+      description: "Ukentlig oppf\u00f8lging gjennom portalen. Vi justerer planen basert p\u00e5 fremgangen din.",
+    },
+  ],
+} as const;
+
+export const ACADEMY_PRICES_V2 = {
+  label: "PRISER",
+  heading: "Velg ditt format.",
+  packages: [
+    {
+      name: "Individuell",
+      price: "1 200",
+      unit: "kr/time",
+      features: [
+        "TrackMan-data",
+        "Video-analyse",
+        "Personlig treningsplan",
+        "Oppf\u00f8lging mellom timer",
+      ],
+      highlighted: false,
+      badge: null as string | null,
+    },
+    {
+      name: "5-pakke",
+      price: "5 000",
+      unit: "kr / 5 timer",
+      perSession: "1 000 kr/t",
+      savings: "Spar 1 000 kr",
+      features: [
+        "TrackMan-data",
+        "Video-analyse",
+        "Personlig treningsplan",
+        "Oppf\u00f8lging mellom timer",
+      ],
+      highlighted: true,
+      badge: "MEST POPUL\u00c6R" as string | null,
+    },
+    {
+      name: "Gruppe",
+      price: "495",
+      unit: "kr/\u00f8kt",
+      note: "Maks 6 per gruppe",
+      features: [
+        "TrackMan-data",
+        "Gruppedynamikk",
+        "Fokuserte \u00f8kter",
+      ],
+      highlighted: false,
+      badge: null as string | null,
+    },
+  ],
+} as const;
+
+export const ACADEMY_CTA_V2 = {
+  heading: "Klar for neste niv\u00e5?",
+  description: "Book din f\u00f8rste time og f\u00e5 en komplett analyse.",
+  ctaLabel: "Book coaching",
+  heroImage: "/images/academy/AK-Golf-Academy-18.jpg",
+} as const;
+
+// ─── Junior Academy Page v2 (dark hero rewrite) ───
+export const JUNIOR_HERO_V2 = {
+  label: "JUNIOR ACADEMY",
+  heading: "Morgendagens\ngolfspillere.",
+  description: "Alderstilpasset coaching for barn og ungdom 6\u201318 \u00e5r. Moro, mestring og utvikling.",
+  ctaPrimary: "Meld p\u00e5",
+  ctaSecondary: "Les mer",
+  heroImage: "/images/academy/AK-Golf-Academy-29.jpg",
+} as const;
+
+export const JUNIOR_AGE_GROUPS_V2 = {
+  label: "ALDERSGRUPPER",
+  heading: "Tilpasset hvert niv\u00e5.",
+  groups: [
+    {
+      ageRange: "6\u20139 \u00c5R",
+      name: "Golflek",
+      description: "Introduksjon gjennom lek og moro.",
+      schedule: "Onsdager 16:00\u201317:00",
+      maxParticipants: "Maks 12 barn",
+    },
+    {
+      ageRange: "10\u201314 \u00c5R",
+      name: "Utviklingsgruppe",
+      description: "Strukturert trening.",
+      schedule: "Tirsdager og torsdager 16:00\u201317:30",
+      maxParticipants: "Maks 8",
+    },
+    {
+      ageRange: "15\u201318 \u00c5R",
+      name: "Prestasjonsgruppe",
+      description: "TrackMan-data, mental trening.",
+      schedule: "Mandager og onsdager 16:00\u201318:00",
+      maxParticipants: "Maks 6",
+    },
+  ],
+} as const;
+
+export const JUNIOR_WANG_V2 = {
+  label: "TOPPIDRETT",
+  heading: "WANG Toppidrett Fredrikstad",
+  description: "Golf som toppidrettsfag p\u00e5 videreg\u00e5ende skole. Elevene f\u00e5r daglig trening med kvalifiserte trenere, tilgang til TrackMan og et helhetlig utviklingsmilj\u00f8. AK Golf Academy st\u00e5r for det sportslige innholdet i samarbeid med WANG Toppidrett.",
+  ctaLabel: "Les mer om WANG",
+} as const;
+
+export const JUNIOR_CTA_V2 = {
+  heading: "Vil barnet ditt pr\u00f8ve golf?",
+  description: "F\u00f8rste trenings\u00f8kt er gratis. Ingen forpliktelser.",
+  ctaLabel: "Meld p\u00e5 gratis pr\u00f8vetime",
+} as const;
+
+// ─── Utvikling Page v2 (dark hero, bento grid) ───
+export const UTVIKLING_HERO_V2 = {
+  label: "UTVIKLING",
+  heading: "Vi bygger bedre\ngolfklubber.",
+  description: "Sportslige planer, driftssystemer og QR-skilt. Skreddersydd for norske golfklubber.",
+  ctaLabel: "Ta kontakt",
+} as const;
+
+export const UTVIKLING_SERVICES_V2 = {
+  label: "TJENESTER",
+  heading: "Alt klubben trenger.",
+  items: [
+    {
+      id: "sportsplan",
+      label: "SPORTSLIG PLAN",
+      title: "Komplett sportslig plan",
+      description: "Vi utarbeider en helhetlig sportslig plan tilpasset klubbens st\u00f8rrelse, ambisjoner og ressurser. Fra juniorutvikling til elitesatsing, med konkrete m\u00e5l og handlingsplaner.",
+      span: "large" as const,
+      theme: "light" as const,
+    },
+    {
+      id: "programvare",
+      label: "PROGRAMVARE",
+      title: "Spillerportalen",
+      description: "Booking, coaching-notater, treningsplaner og progresjonslogging i \u00e9n plattform. Brukes av alle v\u00e5re spillere i dag.",
+      span: "small" as const,
+      theme: "light" as const,
+    },
+    {
+      id: "skilting",
+      label: "SKILTING",
+      title: "QR-skilt konsept",
+      description: "Digitale treningsskilt med QR-koder p\u00e5 rangen. Spillerne scanner og f\u00e5r tilgang til \u00f8velser og videoer direkte p\u00e5 telefonen.",
+      span: "small" as const,
+      theme: "dark" as const,
+    },
+  ],
+} as const;
+
+export const UTVIKLING_REFERENCES_V2 = {
+  label: "SAMARBEID",
+  heading: "Klubber vi jobber med.",
+  clubs: ["Gamle Fredrikstad Golfklubb"],
+} as const;
+
+export const UTVIKLING_CTA_V2 = {
+  heading: "Trenger klubben din en sportslig plan?",
+  description: "Ta kontakt for en uforpliktende samtale om hvordan vi kan hjelpe klubben din.",
+  ctaPrimary: "Ta kontakt",
+  ctaSecondary: "Ring: 909 67 995",
+} as const;
