@@ -1,34 +1,41 @@
 "use client";
 
+import { AreaChart, Area, ResponsiveContainer } from "recharts";
+
 interface SparklineProps {
   data?: number[];
   color?: string;
   height?: number;
 }
 
-export function Sparkline({ data = [3, 5, 4, 7, 6, 8, 9], color = "#34C759", height = 32 }: SparklineProps) {
-  const max = Math.max(...data);
-  const barWidth = 4;
-  const gap = 3;
-  const totalWidth = data.length * (barWidth + gap) - gap;
+export function Sparkline({
+  data = [3, 5, 4, 7, 6, 8, 9, 7, 10, 8, 11],
+  color = "#2D6A4F",
+  height = 40,
+}: SparklineProps) {
+  const chartData = data.map((v, i) => ({ i, v }));
 
   return (
-    <svg width={totalWidth} height={height} viewBox={`0 0 ${totalWidth} ${height}`}>
-      {data.map((value, i) => {
-        const barHeight = (value / max) * height;
-        const isLast = i === data.length - 1;
-        return (
-          <rect
-            key={i}
-            x={i * (barWidth + gap)}
-            y={height - barHeight}
-            width={barWidth}
-            height={barHeight}
-            rx={2}
-            fill={isLast ? color : "#E8E8ED"}
+    <div style={{ width: "100%", height }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+          <defs>
+            <linearGradient id={`sparkGrad-${color.replace("#", "")}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={color} stopOpacity={0.12} />
+              <stop offset="100%" stopColor={color} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <Area
+            type="monotone"
+            dataKey="v"
+            stroke={color}
+            strokeWidth={2}
+            fill={`url(#sparkGrad-${color.replace("#", "")})`}
+            animationDuration={1000}
+            dot={false}
           />
-        );
-      })}
-    </svg>
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
