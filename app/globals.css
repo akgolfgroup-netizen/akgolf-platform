@@ -32,11 +32,24 @@
   --color-surface-secondary: #F5F5F7;
   --color-snow: #FFFFFF;
 
-  /* Semantic colors */
+  /* Brand — AK Green */
+  --color-brand: #2D6A4F;
+  --color-brand-dark: #1B4332;
+  --color-brand-light: #EDF5F0;
+
+  /* Semantic colors (portal + admin) */
   --color-success: #2D6A4F;
+  --color-success-light: #EDF5F0;
+  --color-success-text: #1B4332;
   --color-error: #D14343;
+  --color-error-light: #FEF2F2;
+  --color-error-text: #991B1B;
   --color-warning: #E89C30;
+  --color-warning-light: #FFFBEB;
+  --color-warning-text: #92400E;
   --color-info: #007AFF;
+  --color-info-light: #EFF6FF;
+  --color-info-text: #1E40AF;
 
   /* Accent (subtle, not primary) */
   --color-accent: #1D1D1F;
@@ -202,7 +215,7 @@
   /* Division Colors */
   --mc-color-coaching: #1D1D1F;
   --mc-color-junior: #007AFF;
-  --mc-color-gfgk: #34C759;
+  --mc-color-gfgk: #2D6A4F;
   --mc-color-ai: #2D6A4F;
 
   /* Layout */
@@ -753,8 +766,8 @@
     --portal-text-muted: #86868B;
     --portal-accent: #1D1D1F;
     --portal-accent-glow: rgba(29, 29, 31, 0.1);
-    --portal-success: #34C759;
-    --portal-error: #FF3B30;
+    --portal-success: #2D6A4F;
+    --portal-error: #D14343;
 
     /* Apple grey scale */
     --apple-gray-50: #FAFAFA;
@@ -931,18 +944,18 @@
   }
 
   .apple-badge-success {
-    background: rgba(52, 199, 89, 0.12);
-    color: #34C759;
+    background: rgba(45, 106, 79, 0.12);
+    color: #2D6A4F;
   }
 
   .apple-badge-warning {
-    background: rgba(255, 149, 0, 0.12);
-    color: #FF9500;
+    background: rgba(232, 156, 48, 0.12);
+    color: #E89C30;
   }
 
   .apple-badge-error {
-    background: rgba(255, 59, 48, 0.12);
-    color: #FF3B30;
+    background: rgba(209, 67, 67, 0.12);
+    color: #D14343;
   }
 
   .apple-badge-info {
