@@ -58,7 +58,7 @@ export default function JuniorPage() {
         />
         <PageTransition>
           {/* ─── 1. Hero (dark, half height) ─── */}
-          <section className="relative min-h-[60svh] flex items-center pt-[48px] overflow-hidden bg-[#1D1D1F]">
+          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-[#1D1D1F] grain-overlay">
             <div className="absolute inset-0 pointer-events-none">
               <Image
                 src={JUNIOR_HERO_V2.heroImage}

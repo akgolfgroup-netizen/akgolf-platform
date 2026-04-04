@@ -53,7 +53,7 @@ export default function UtviklingPage() {
         />
         <PageTransition>
           {/* ─── 1. Hero (dark, no image) ─── */}
-          <section className="relative min-h-[60svh] flex items-center pt-[48px] overflow-hidden bg-[#1D1D1F]">
+          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-[#1D1D1F] grain-overlay">
             <div className="w-container relative">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

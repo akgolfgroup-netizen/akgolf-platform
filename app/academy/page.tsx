@@ -58,7 +58,7 @@ export default function AcademyPage() {
         />
         <PageTransition>
           {/* ─── 1. Hero (dark, half height) ─── */}
-          <section className="relative min-h-[60svh] flex items-center pt-[48px] overflow-hidden bg-[#1D1D1F]">
+          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-[#1D1D1F] grain-overlay">
             <div className="absolute inset-0 pointer-events-none">
               <Image
                 src={ACADEMY_HERO_V2.heroImage}
@@ -215,7 +215,7 @@ export default function AcademyPage() {
                         {pkg.name}
                       </h3>
                       <div className="mb-4">
-                        <span className="text-4xl font-bold text-[#1D1D1F]">
+                        <span className="text-[48px] font-bold text-[#1D1D1F]">
                           {pkg.price}
                         </span>
                         <span className="text-sm text-grey-500 ml-2">
