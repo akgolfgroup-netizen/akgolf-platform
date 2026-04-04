@@ -76,8 +76,7 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.4 }}
               >
-                Presisjon i hvert{" "}
-                <span className="text-[#40916C]">slag.</span>
+                Presisjon i hvert slag.
               </motion.h1>
 
               <motion.p

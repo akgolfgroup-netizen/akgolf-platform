@@ -100,6 +100,14 @@ export function WebsiteFooter() {
             <ul className="space-y-2 text-xs text-[#6E6E73]">
               <li>
                 <a
+                  href="tel:+4790967995"
+                  className="hover:text-white transition-colors"
+                >
+                  909 67 995
+                </a>
+              </li>
+              <li>
+                <a
                   href={`mailto:${FOOTER_LINKS.contact.email}`}
                   className="hover:text-white transition-colors"
                 >

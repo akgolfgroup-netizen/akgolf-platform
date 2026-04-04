@@ -22,7 +22,7 @@ export const HERO = {
   ],
   stats: [
     { value: "500+", label: "Spillere utviklet" },
-    { value: "15+", label: "Års erfaring" },
+    { value: "12+", label: "Års erfaring" },
     { value: "Tour-nivå", label: "Metodikk" },
   ],
 } as const;
@@ -31,7 +31,7 @@ export const HERO = {
 export const FOUNDATION_METHOD = {
   eyebrow: "Vår metodikk",
   heading: "The Foundation Method",
-  description: "Vår metodikk er bygget på 15 års erfaring og hundrevis av spillere. Fem faser som tar deg fra grunnmur til prestasjon.",
+  description: "Vår metodikk er bygget på 12 års erfaring og hundrevis av spillere. Fem faser som tar deg fra grunnmur til prestasjon.",
   phases: [
     {
       id: "BUILD",
@@ -73,7 +73,7 @@ export const TEAM = [
     role: "Hovedcoach",
     division: "AK Golf Academy",
     image: "/images/team/anders-kristiansen.jpg",
-    bio: "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse. Hver spiller får en individuell utviklingsplan — ikke bare data, men konkret retning.",
+    bio: "Grunnlegger av AK Golf Group og fagansvarlig for golf på WANG Toppidrett Fredrikstad. Kombinerer teknisk veiledning etter plan med TrackMan-analyse. Hver spiller får en individuell utviklingsplan — ikke bare data, men konkret retning.",
     contact: { email: "anders@akgolf.no", phone: "+47 909 67 995" },
   },
   {

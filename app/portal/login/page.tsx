@@ -114,7 +114,7 @@ export default function LoginPage() {
             Spillerportal
           </h1>
           <p className="text-sm mt-1 text-[var(--portal-text-muted)]">
-            Logg inn for a fortsette
+            Logg inn for å fortsette
           </p>
         </div>
 
