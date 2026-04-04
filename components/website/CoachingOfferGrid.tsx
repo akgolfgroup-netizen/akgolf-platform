@@ -24,7 +24,7 @@ export function CoachingOfferGrid() {
             <StaggerItem key={offer.title}>
               <a
                 href={offer.href}
-                className="group block bg-white rounded-[20px] border border-[#E8E8ED] overflow-hidden transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-lg h-full"
+                className="group block bg-white rounded-[20px] border border-[#E8E8ED] overflow-hidden transition-[transform,box-shadow] duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] h-full"
               >
                 <div className="relative h-48 overflow-hidden">
                   <Image
@@ -36,7 +36,7 @@ export function CoachingOfferGrid() {
                   />
                   {"highlighted" in offer && offer.highlighted && (
                     <div className="absolute top-4 right-4">
-                      <span className="bg-[#2D6A4F] text-white text-[10px] font-mono uppercase tracking-wider px-3 py-1 rounded-full font-semibold">
+                      <span className="bg-[#2D6A4F] text-white text-[11px] font-mono uppercase tracking-wider px-3 py-1 rounded-full font-semibold shadow-sm">
                         Mest populær
                       </span>
                     </div>
@@ -46,7 +46,7 @@ export function CoachingOfferGrid() {
                   <h3 className="font-display text-lg font-semibold text-[#1D1D1F] mb-2">{offer.title}</h3>
                   <p className="text-sm text-[#6E6E73] leading-relaxed mb-4">{offer.description}</p>
                   <div className="flex items-baseline gap-1">
-                    <span className="font-display text-2xl font-bold text-[#1D1D1F]">{offer.price}</span>
+                    <span className="font-display text-3xl font-bold text-[#1D1D1F]">{offer.price}</span>
                     <span className="text-sm text-[#86868B]">{offer.period}</span>
                   </div>
                 </div>

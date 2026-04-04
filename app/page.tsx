@@ -164,7 +164,7 @@ export default function HomePage() {
           <div className="w-container">
             <RevealOnScroll>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-5xl mx-auto">
-                <div className="relative aspect-[4/5] rounded-[20px] overflow-hidden">
+                <div className="relative aspect-[3/4] rounded-[20px] overflow-hidden">
                   <Image
                     src={COACH_BIO.image}
                     alt={COACH_BIO.name}
@@ -175,9 +175,23 @@ export default function HomePage() {
                 </div>
                 <div>
                   <SectionLabel>Din coach</SectionLabel>
-                  <h2 className="w-heading-lg mt-5 mb-4">{COACH_BIO.name}</h2>
+                  <h2 className="font-display text-3xl md:text-[48px] font-extrabold tracking-tight text-[#1D1D1F] mt-5 mb-4">{COACH_BIO.name}</h2>
                   <p className="text-[#6E6E73] text-sm uppercase tracking-wider mb-6">{COACH_BIO.title}</p>
                   <p className="text-[#48484A] text-lg leading-relaxed">{COACH_BIO.description}</p>
+                  <div className="mt-8 pt-6 border-t border-[#E8E8ED] flex gap-8">
+                    <div>
+                      <span className="font-display text-2xl font-bold text-[#1D1D1F]">15+</span>
+                      <p className="text-[13px] text-[#6E6E73] mt-0.5">ars erfaring</p>
+                    </div>
+                    <div>
+                      <span className="font-display text-2xl font-bold text-[#1D1D1F]">500+</span>
+                      <p className="text-[13px] text-[#6E6E73] mt-0.5">spillere coachet</p>
+                    </div>
+                    <div>
+                      <span className="font-display text-2xl font-bold text-[#1D1D1F]">8</span>
+                      <p className="text-[13px] text-[#6E6E73] mt-0.5">tour-spillere</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </RevealOnScroll>
