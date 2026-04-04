@@ -182,7 +182,7 @@ export default async function SessionDetailPage({ params }: Props) {
                 </span>
               )}
               {log.primaryEnvironment !== null && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#2D6A4F]/5 text-[#2D6A4F] text-sm font-medium">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-brand)]/5 text-[var(--color-brand)] text-sm font-medium">
                   <Target className="w-3.5 h-3.5" />
                   M: {getMEnvironmentLabel(log.primaryEnvironment)}
                 </span>
@@ -281,7 +281,7 @@ export default async function SessionDetailPage({ params }: Props) {
                       </span>
                     )}
                     {exercise.environment !== null && (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#2D6A4F]/5 text-[#2D6A4F] text-xs font-medium">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--color-brand)]/5 text-[var(--color-brand)] text-xs font-medium">
                         M: {getMEnvironmentLabel(exercise.environment)}
                       </span>
                     )}
@@ -346,7 +346,7 @@ export default async function SessionDetailPage({ params }: Props) {
         {log.TrainingPlanSession && (
           <div className="bg-[var(--color-grey-100)] rounded-2xl p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <CheckCircle2 className="w-5 h-5 text-[#2D6A4F]" />
+              <CheckCircle2 className="w-5 h-5 text-[var(--color-success)]" />
               <div>
                 <p className="text-xs text-[var(--color-grey-500)]">
                   Koblet til treningsplan

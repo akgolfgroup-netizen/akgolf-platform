@@ -74,8 +74,8 @@ export default function NyAktivitetPage() {
   if (success) {
     return (
       <div className="max-w-xl mx-auto py-20 text-center">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#2D6A4F]/10 flex items-center justify-center">
-          <CheckCircle2 className="w-8 h-8 text-[#2D6A4F]" />
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[var(--color-success)]/10 flex items-center justify-center">
+          <CheckCircle2 className="w-8 h-8 text-[var(--color-success)]" />
         </div>
         <h2 className="text-xl font-semibold text-[var(--color-grey-900)]">
           Aktivitet opprettet!

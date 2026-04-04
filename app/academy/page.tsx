@@ -202,7 +202,7 @@ export default function AcademyPage() {
                     <div
                       className={`rounded-[20px] p-8 h-full flex flex-col relative ${
                         pkg.highlighted
-                          ? "bg-white border-2 border-[#2D6A4F]"
+                          ? "bg-white border-2 border-[var(--color-brand)]"
                           : "bg-white border border-[#E8E8ED]"
                       }`}
                     >
@@ -223,7 +223,7 @@ export default function AcademyPage() {
                         </span>
                       </div>
                       {"perSession" in pkg && pkg.perSession && (
-                        <p className="text-sm text-[#2D6A4F] font-medium mb-1">
+                        <p className="text-sm text-[var(--color-brand)] font-medium mb-1">
                           {pkg.perSession}
                         </p>
                       )}

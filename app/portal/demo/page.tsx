@@ -155,7 +155,7 @@ export default function DemoPage() {
               </h3>
               <button
                 onClick={() => setShowUpgradeModal(true)}
-                className="w-full px-4 py-3 rounded-xl text-sm font-medium bg-[#2D6A4F] text-white hover:bg-[#1B4332] transition-colors"
+                className="w-full px-4 py-3 rounded-xl text-sm font-medium bg-[var(--color-brand)] text-white hover:bg-[var(--color-brand)]/90 transition-colors"
               >
                 Apne Upgrade Modal
               </button>
@@ -193,7 +193,7 @@ export default function DemoPage() {
               >
                 <div className="p-4 rounded-xl bg-[var(--color-grey-50)] border border-[var(--color-grey-200)]">
                   <div className="flex items-center gap-3">
-                    <Brain className="w-5 h-5 text-[#2D6A4F]" />
+                    <Brain className="w-5 h-5 text-[var(--color-ai)]" />
                     <span className="font-medium">AI Treningsplan</span>
                   </div>
                 </div>
@@ -315,7 +315,7 @@ export default function DemoPage() {
                 <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">11</span>
                 Win-back Dag 14 (med rabattkode)
               </h3>
-              <div className="p-4 rounded-lg bg-gradient-to-r from-[#2D6A4F] to-[#1B4332] text-white">
+              <div className="p-4 rounded-lg bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-brand)]/80 text-white">
                 <Mail className="w-5 h-5 mb-2" />
                 <p className="text-sm font-bold">20% rabatt pa Pro!</p>
                 <p className="text-xs mt-1 opacity-90">Kode: WINBACK-XXXXXXXX • Gyldig 7 dager</p>

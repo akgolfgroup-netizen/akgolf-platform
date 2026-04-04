@@ -86,7 +86,7 @@ export default async function TestDetailPage({ params }: Props) {
                 {difficultyLabels[protocol.difficulty] ?? protocol.difficulty}
               </span>
               {protocol.is_official && (
-                <span className="px-2 py-1 text-xs bg-[#2D6A4F]/20 text-[#2D6A4F] rounded">
+                <span className="px-2 py-1 text-xs bg-[var(--color-brand)]/20 text-[var(--color-brand)] rounded">
                   Offisiell AK Test
                 </span>
               )}

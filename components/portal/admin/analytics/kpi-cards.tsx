@@ -63,9 +63,9 @@ function KPICard({
           <div
             className={`flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${
               isPositive
-                ? "bg-[#2D6A4F]/5 text-[#2D6A4F]"
+                ? "bg-[var(--color-success)]/5 text-[var(--color-success)]"
                 : isNegative
-                  ? "bg-[#D14343]/5 text-[#D14343]"
+                  ? "bg-[var(--color-error)]/5 text-[var(--color-error)]"
                   : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]"
             }`}
           >
@@ -107,7 +107,7 @@ export function KPICards({ data }: KPICardsProps) {
         title="Nye elever"
         value={data.newStudents}
         icon={UserPlus}
-        iconColor="#2D6A4F"
+        iconColor="#34C759"
         delay={0}
       />
 

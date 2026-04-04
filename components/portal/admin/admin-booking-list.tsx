@@ -222,7 +222,7 @@ export function AdminBookingList() {
           <button className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 text-white text-[13px] font-medium rounded-lg hover:bg-white/25 transition-colors">
             Send påminnelse
           </button>
-          <button className="inline-flex items-center gap-2 px-4 py-2 bg-[#D14343]/30 text-white text-[13px] font-medium rounded-lg hover:bg-[#D14343]/50/50 transition-colors">
+          <button className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-error)]/30 text-white text-[13px] font-medium rounded-lg hover:bg-[var(--color-error)]/50 transition-colors">
             Avbestill
           </button>
           <button
@@ -362,10 +362,10 @@ export function AdminBookingList() {
                       </span>
                       <span className={`text-[11px] ${
                         b.paymentStatus === "PAID"
-                          ? "text-[#2D6A4F]"
+                          ? "text-[var(--color-success)]"
                           : b.paymentStatus === "REFUNDED"
                             ? "text-amber-500"
-                            : "text-[#D14343]"
+                            : "text-[var(--color-error)]"
                       }`}>
                         {PAYMENT_STATUS_LABELS[b.paymentStatus] || b.paymentStatus}
                       </span>
@@ -376,7 +376,7 @@ export function AdminBookingList() {
                       {(b.status === "CONFIRMED" || b.status === "PENDING") && (
                         <button
                           onClick={() => handleCancel(b.id)}
-                          className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center text-[var(--color-grey-500)] hover:border-[#D14343]/40 hover:bg-[#D14343]/5 hover:text-[#D14343] transition-colors"
+                          className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center text-[var(--color-grey-500)] hover:border-[var(--color-error)]/40 hover:bg-[var(--color-error)]/5 hover:text-[var(--color-error)] transition-colors"
                           title="Avbestill"
                         >
                           <XCircle className="w-4 h-4" />

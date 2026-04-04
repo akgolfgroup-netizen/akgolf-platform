@@ -2,9 +2,9 @@
 
 // Farger for aktivitetstyper (Brand Guide 2026 - Apple Light)
 export const ACTIVITY_TYPE_COLORS: Record<string, { color: string; label: string }> = {
-  TOURNAMENT_CLUB: { color: "#D14343", label: "Klubbturnering" },
-  TOURNAMENT_REGION: { color: "#D14343", label: "Regionturnering" },
-  TOURNAMENT_JUNIOR: { color: "#D14343", label: "Juniorturnering" },
+  TOURNAMENT_CLUB: { color: "#FF3B30", label: "Klubbturnering" },
+  TOURNAMENT_REGION: { color: "#FF3B30", label: "Regionturnering" },
+  TOURNAMENT_JUNIOR: { color: "#FF3B30", label: "Juniorturnering" },
   VTG_COURSE: { color: "#FF9500", label: "VTG-kurs" },
   GFGK_JUNIOR: { color: "#2D6A4F", label: "GFGK Junior" },
   AK_GOLF: { color: "#007AFF", label: "AK Golf" },
@@ -38,7 +38,7 @@ export function FacilityLegend() {
 
 export function FacilityLegendCompact() {
   const items = [
-    { color: "#D14343", label: "Turnering" },
+    { color: "#FF3B30", label: "Turnering" },
     { color: "#FF9500", label: "VTG" },
     { color: "#2D6A4F", label: "GFGK Junior" },
     { color: "#007AFF", label: "AK Golf" },

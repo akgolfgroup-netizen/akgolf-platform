@@ -307,7 +307,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                     {"}}"}
                     <button
                       onClick={() => removeVariable(v)}
-                      className="hover:text-[#D14343] transition-colors"
+                      className="hover:text-[var(--color-error)] transition-colors"
                     >
                       <X className="w-3 h-3" />
                     </button>
@@ -403,7 +403,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
                 <button
                   onClick={handleDelete}
                   disabled={deleting}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-[#D14343] transition-[background-color,opacity] duration-200 hover:bg-[#D14343]/5 disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-[var(--color-error)] transition-[background-color,opacity] duration-200 hover:bg-[var(--color-error)]/5 disabled:opacity-50"
                 >
                   <Trash2 className="w-4 h-4" />
                   {deleting ? "Sletter..." : "Slett"}
@@ -415,8 +415,8 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
               <p
                 className={`text-sm ${
                   message.type === "success"
-                    ? "text-[#2D6A4F]"
-                    : "text-[#D14343]"
+                    ? "text-[var(--color-success)]"
+                    : "text-[var(--color-error)]"
                 }`}
               >
                 {message.text}

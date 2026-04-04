@@ -177,7 +177,7 @@ export function UpgradeModal({
             style={{ borderColor: "var(--color-grey-200)" }}
           >
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-[#2D6A4F]" aria-hidden="true" />
+              <Zap className="w-5 h-5 text-[var(--color-brand)]" aria-hidden="true" />
               <h3 className="font-semibold text-[var(--color-grey-900)]">Pro</h3>
             </div>
             <div className="mb-4">
@@ -193,7 +193,7 @@ export function UpgradeModal({
                   : proPrices.annual.period}
               </span>
               {billingPeriod === "annual" && (
-                <p className="text-xs text-[#2D6A4F] mt-1">
+                <p className="text-xs text-[var(--color-brand)] mt-1">
                   Spar {proPrices.annual.savings} kr/år
                 </p>
               )}
@@ -204,7 +204,7 @@ export function UpgradeModal({
                   key={feature}
                   className="flex items-start gap-2 text-sm text-[var(--color-grey-600)]"
                 >
-                  <Check className="w-4 h-4 text-[#2D6A4F] mt-0.5 shrink-0" aria-hidden="true" />
+                  <Check className="w-4 h-4 text-[var(--color-brand)] mt-0.5 shrink-0" aria-hidden="true" />
                   {feature}
                 </li>
               ))}
@@ -224,16 +224,16 @@ export function UpgradeModal({
           {/* Pro+ */}
           <div
             className="rounded-xl p-5 border-2 relative"
-            style={{ borderColor: "#2D6A4F" }}
+            style={{ borderColor: "var(--color-brand)" }}
           >
             <div
               className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full text-xs font-semibold"
-              style={{ background: "#2D6A4F", color: "white" }}
+              style={{ background: "var(--color-brand)", color: "white" }}
             >
               Mest populær
             </div>
             <div className="flex items-center gap-2 mb-3">
-              <Crown className="w-5 h-5 text-[#2D6A4F]" aria-hidden="true" />
+              <Crown className="w-5 h-5 text-[var(--color-brand)]" aria-hidden="true" />
               <h3 className="font-semibold text-[var(--color-grey-900)]">
                 Pro+
               </h3>
@@ -251,7 +251,7 @@ export function UpgradeModal({
                   : proPlusPrices.annual.period}
               </span>
               {billingPeriod === "annual" && (
-                <p className="text-xs text-[#2D6A4F] mt-1">
+                <p className="text-xs text-[var(--color-brand)] mt-1">
                   Spar {proPlusPrices.annual.savings} kr/år
                 </p>
               )}
@@ -262,7 +262,7 @@ export function UpgradeModal({
                   key={feature}
                   className="flex items-start gap-2 text-sm text-[var(--color-grey-600)]"
                 >
-                  <Check className="w-4 h-4 text-[#2D6A4F] mt-0.5 shrink-0" aria-hidden="true" />
+                  <Check className="w-4 h-4 text-[var(--color-brand)] mt-0.5 shrink-0" aria-hidden="true" />
                   {feature}
                 </li>
               ))}
@@ -271,7 +271,7 @@ export function UpgradeModal({
               onClick={() => handleUpgrade("ELITE")}
               className="w-full py-2.5 rounded-full font-semibold text-sm transition-transform hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)]"
               style={{
-                background: "#2D6A4F",
+                background: "var(--color-brand)",
                 color: "white",
               }}
             >
@@ -283,11 +283,11 @@ export function UpgradeModal({
         {/* Social proof */}
         <div className="flex items-center justify-center gap-6 mt-6 pt-4 border-t border-[var(--color-grey-200)]">
           <div className="flex items-center gap-2 text-sm text-[var(--color-grey-600)]">
-            <Users className="w-4 h-4 text-[#2D6A4F]" aria-hidden="true" />
+            <Users className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
             <span>127 spillere oppgraderte denne maneden</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-[var(--color-grey-600)]">
-            <TrendingDown className="w-4 h-4 text-[#2D6A4F]" aria-hidden="true" />
+            <TrendingDown className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
             <span>Snitt HCP-forbedring: 2.3 slag</span>
           </div>
         </div>

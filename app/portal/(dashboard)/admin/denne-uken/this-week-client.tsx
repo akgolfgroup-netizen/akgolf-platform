@@ -113,8 +113,8 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
             label="Pameldt"
             value={weekStats.registered}
             icon={CheckCircle2}
-            iconColor="text-[#2D6A4F]"
-            iconBg="bg-[#2D6A4F]/5"
+            iconColor="text-[var(--color-success)]"
+            iconBg="bg-[var(--color-success)]/5"
             size="md"
           />
         </motion.div>

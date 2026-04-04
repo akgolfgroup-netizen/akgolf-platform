@@ -62,7 +62,7 @@ export function EmptyState({ type, compact = false }: EmptyStateProps) {
         </div>
         <Link
           href={config.href}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium bg-[#2D6A4F] text-white hover:bg-[#1B4332] transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium bg-[var(--color-brand)] text-white hover:bg-[var(--color-brand-dark)] transition-colors"
         >
           {config.cta}
           <ArrowRight className="w-3.5 h-3.5" />
@@ -97,7 +97,7 @@ export function EmptyState({ type, compact = false }: EmptyStateProps) {
 
         <Link
           href={config.href}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[980px] text-sm font-semibold bg-[#2D6A4F] text-white hover:bg-[#1B4332] transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[980px] text-sm font-semibold bg-[var(--color-brand)] text-white hover:bg-[var(--color-brand-dark)] transition-colors"
         >
           <Plus className="w-4 h-4" />
           {config.cta}

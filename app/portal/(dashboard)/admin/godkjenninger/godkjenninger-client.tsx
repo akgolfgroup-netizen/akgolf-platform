@@ -64,7 +64,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
   if (items.length === 0) {
     return (
       <div className="text-center py-16">
-        <CheckCircle className="h-16 w-16 mx-auto mb-4 text-[#2D6A4F] opacity-50" />
+        <CheckCircle className="h-16 w-16 mx-auto mb-4 text-[var(--color-success)] opacity-50" />
         <h2 className="text-xl font-semibold text-[var(--color-grey-900)] mb-2">
           Alt er godkjent!
         </h2>
@@ -211,7 +211,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
                 disabled={processingId === item.id}
                 className={cn(
                   "flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors text-sm",
-                  "bg-[var(--color-grey-100)] hover:bg-[#D14343]/10 text-[var(--color-grey-500)] hover:text-[#D14343]",
+                  "bg-[var(--color-grey-100)] hover:bg-[var(--color-error)]/10 text-[var(--color-grey-500)] hover:text-[var(--color-error)]",
                   "disabled:opacity-50 disabled:cursor-not-allowed"
                 )}
               >

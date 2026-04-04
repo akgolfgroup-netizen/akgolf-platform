@@ -14,7 +14,7 @@ const severityStyles = {
   warning:
     "bg-amber-50 border-amber-200 text-amber-800",
   critical:
-    "bg-[#D14343]/5 border-[#D14343]/20 text-[#D14343]",
+    "bg-[var(--color-error)]/5 border-[var(--color-error)]/20 text-[var(--color-error)]",
 };
 
 interface TrendAlertsProps {

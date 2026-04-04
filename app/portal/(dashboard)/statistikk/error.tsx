@@ -12,7 +12,7 @@ export default function Error({
   return (
     <div className="flex items-center justify-center min-h-[50vh]">
       <div className="text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#D1434310] mb-4">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[var(--color-error)]/10 mb-4">
           <AlertCircle className="w-6 h-6 text-[var(--color-error)]" />
         </div>
         <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-2">

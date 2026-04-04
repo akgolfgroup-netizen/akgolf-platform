@@ -11,8 +11,8 @@ interface ActivityFeedProps {
 }
 
 const dotColors = {
-  booking: "bg-[#2D6A4F]",
-  cancel: "bg-[#D14343]",
+  booking: "bg-[var(--color-brand)]",
+  cancel: "bg-[var(--color-error)]",
   signup: "bg-[#2563EB]",
   payment: "bg-[#E89C30]",
   note: "bg-[#86868B]",

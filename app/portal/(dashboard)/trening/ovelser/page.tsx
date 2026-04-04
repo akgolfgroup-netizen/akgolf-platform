@@ -36,19 +36,19 @@ async function getDrills() {
 }
 
 const pyramidLabels: Record<string, { label: string; icon: React.ElementType; color: string }> = {
-  FYS: { label: "Fysisk", icon: Dumbbell, color: "text-[#D14343] bg-[#D14343]/20" },
+  FYS: { label: "Fysisk", icon: Dumbbell, color: "text-[var(--color-error)] bg-[var(--color-error)]/20" },
   TEK: { label: "Teknikk", icon: Target, color: "text-blue-400 bg-blue-500/20" },
   SLAG: { label: "Slag", icon: Zap, color: "text-yellow-400 bg-yellow-500/20" },
-  SPILL: { label: "Spill", icon: Mountain, color: "text-[#2D6A4F] bg-[#2D6A4F]/20" },
+  SPILL: { label: "Spill", icon: Mountain, color: "text-[var(--color-brand)] bg-[var(--color-brand)]/20" },
   TURN: { label: "Turnering", icon: Trophy, color: "text-purple-400 bg-purple-500/20" },
 };
 
 const difficultyColors: Record<string, string> = {
-  nybegynner: "bg-[#2D6A4F]/20 text-[#2D6A4F]",
+  nybegynner: "bg-[var(--color-success)]/20 text-[var(--color-success)]",
   rekrutt: "bg-blue-500/20 text-blue-400",
   klubb: "bg-yellow-500/20 text-yellow-400",
   regional: "bg-orange-500/20 text-orange-400",
-  nasjonal: "bg-[#D14343]/20 text-[#D14343]",
+  nasjonal: "bg-[var(--color-error)]/20 text-[var(--color-error)]",
   elite: "bg-purple-500/20 text-purple-400",
 };
 

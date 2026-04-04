@@ -31,15 +31,15 @@ export function useToast() {
 }
 
 const toastIcons: Record<ToastType, ReactNode> = {
-  success: <CheckCircle className="w-5 h-5 text-[#2D6A4F]" />,
-  error: <AlertCircle className="w-5 h-5 text-[#D14343]" />,
+  success: <CheckCircle className="w-5 h-5 text-[var(--color-success)]" />,
+  error: <AlertCircle className="w-5 h-5 text-[var(--color-error)]" />,
   warning: <AlertTriangle className="w-5 h-5 text-amber-400" />,
   info: <Info className="w-5 h-5 text-blue-400" />,
 };
 
 const toastStyles: Record<ToastType, string> = {
-  success: "border-[#2D6A4F]/30 bg-[#2D6A4F]/10",
-  error: "border-[#D14343]/30 bg-[#D14343]/10",
+  success: "border-[var(--color-success)]/30 bg-[var(--color-success)]/10",
+  error: "border-[var(--color-error)]/30 bg-[var(--color-error)]/10",
   warning: "border-amber-500/30 bg-amber-500/10",
   info: "border-blue-500/30 bg-blue-500/10",
 };

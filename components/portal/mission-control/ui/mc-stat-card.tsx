@@ -16,9 +16,9 @@ interface MCStatCardProps {
 
 const valueColors: Record<StatVariant, string> = {
   default: "text-[#1D1D1F]",
-  success: "text-[#2D6A4F]",
+  success: "text-[var(--color-success)]",
   warning: "text-[#E89C30]",
-  error: "text-[#D14343]",
+  error: "text-[var(--color-error)]",
 };
 
 export function MCStatCard({
@@ -57,8 +57,8 @@ export function MCStatCard({
 // Mini sparkline SVG
 function Sparkline({ direction }: { direction: "up" | "down" | "neutral" }) {
   const colors = {
-    up: "#2D6A4F",
-    down: "#D14343",
+    up: "#34C759",
+    down: "#FF3B30",
     neutral: "#86868B",
   };
 
@@ -129,7 +129,7 @@ export function MCKPIStrip({ items, alerts, className }: MCKPIStripProps) {
           <div className="ml-auto flex gap-2">
             {alerts.map((alert) => {
               const alertColors = {
-                success: "bg-[#EDF5F0] text-[#2D6A4F]",
+                success: "bg-[var(--mc-success-bg)] text-[var(--mc-success-text)]",
                 warning: "bg-[#FEF3C7] text-[#92400E]",
                 error: "bg-[#FEE2E2] text-[#991B1B]",
                 info: "bg-[#DBEAFE] text-[#1E40AF]",

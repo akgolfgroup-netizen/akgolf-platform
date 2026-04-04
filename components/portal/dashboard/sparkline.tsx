@@ -6,7 +6,7 @@ interface SparklineProps {
   height?: number;
 }
 
-export function Sparkline({ data = [3, 5, 4, 7, 6, 8, 9], color = "#2D6A4F", height = 32 }: SparklineProps) {
+export function Sparkline({ data = [3, 5, 4, 7, 6, 8, 9], color = "#34C759", height = 32 }: SparklineProps) {
   const max = Math.max(...data);
   const barWidth = 4;
   const gap = 3;

@@ -36,7 +36,7 @@ export function CoachingOfferGrid() {
                   />
                   {"highlighted" in offer && offer.highlighted && (
                     <div className="absolute top-4 right-4">
-                      <span className="bg-[#2D6A4F] text-white text-[11px] font-mono uppercase tracking-wider px-3 py-1 rounded-full font-semibold shadow-sm">
+                      <span className="bg-[var(--color-brand)] text-white text-[11px] font-mono uppercase tracking-wider px-3 py-1 rounded-full font-semibold shadow-sm">
                         Mest populær
                       </span>
                     </div>

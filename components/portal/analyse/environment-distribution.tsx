@@ -194,9 +194,9 @@ export function EnvironmentDistribution({
           {warnings.map((warning, idx) => (
             <div
               key={idx}
-              className="flex items-start gap-2 p-3 rounded-lg bg-[#FF9500]/10 border border-[#FF9500]/20"
+              className="flex items-start gap-2 p-3 rounded-lg bg-[var(--color-warning)]/10 border border-[var(--color-warning)]/20"
             >
-              <AlertTriangle className="w-4 h-4 text-[#FF9500] flex-shrink-0 mt-0.5" />
+              <AlertTriangle className="w-4 h-4 text-[var(--color-warning)] flex-shrink-0 mt-0.5" />
               <p className="text-xs text-[var(--color-grey-700)]">
                 {warning.message}
               </p>

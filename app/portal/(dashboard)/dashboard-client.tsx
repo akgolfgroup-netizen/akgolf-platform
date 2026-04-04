@@ -77,7 +77,7 @@ export function DashboardClient({
               {handicap.current !== null ? handicap.current.toFixed(1) : "\u2014"}
             </span>
             {handicap.trend !== null && (
-              <span className={`text-[11px] font-semibold ${handicap.trend < 0 ? "text-[#2D6A4F]" : handicap.trend > 0 ? "text-[#D14343]" : "text-[#86868B]"}`}>
+              <span className={`text-[11px] font-semibold ${handicap.trend < 0 ? "text-[var(--color-success)]" : handicap.trend > 0 ? "text-[var(--color-error)]" : "text-[#86868B]"}`}>
                 {handicap.trend > 0 ? "+" : ""}{handicap.trend.toFixed(1)}
               </span>
             )}
@@ -141,7 +141,7 @@ export function DashboardClient({
         </Link>
         <Link
           href="/portal/bookinger/ny"
-          className="flex items-center gap-3 px-5 py-4 bg-[#2D6A4F] text-white rounded-[14px] font-semibold text-sm hover:bg-[#1B4332] transition-colors"
+          className="flex items-center gap-3 px-5 py-4 bg-[var(--color-brand)] text-white rounded-[14px] font-semibold text-sm hover:bg-[var(--color-brand)]/90 transition-colors"
         >
           <Calendar className="w-5 h-5" />
           Book coaching
@@ -227,10 +227,10 @@ function OnboardingCard({
   return (
     <Link
       href={href}
-      className="block p-5 rounded-[14px] bg-white border border-[#E8E8ED] hover:border-[#2D6A4F]/30 hover:shadow-sm transition-[border-color,box-shadow]"
+      className="block p-5 rounded-[14px] bg-white border border-[#E8E8ED] hover:border-[var(--color-brand)]/30 hover:shadow-sm transition-[border-color,box-shadow]"
     >
       <div className="flex items-center gap-3 mb-3">
-        <span className="w-6 h-6 rounded-full bg-[#2D6A4F] text-white text-xs font-bold flex items-center justify-center">
+        <span className="w-6 h-6 rounded-full bg-[var(--color-brand)] text-white text-xs font-bold flex items-center justify-center">
           {step}
         </span>
         <Icon className="w-5 h-5 text-[#86868B]" />

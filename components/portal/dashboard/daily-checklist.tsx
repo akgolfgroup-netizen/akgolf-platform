@@ -103,7 +103,7 @@ export function DailyChecklist({
               variants={itemVariants}
               className={`flex items-center gap-3 p-3 rounded-lg border transition-colors ${
                 item.completed
-                  ? "border-[#2D6A4F]/30 bg-[#2D6A4F]/10"
+                  ? "border-[var(--color-success)]/30 bg-[var(--color-success)]/10"
                   : "border-[var(--portal-card-border)] hover:border-[var(--color-grey-300)]"
               }`}
             >
@@ -113,7 +113,7 @@ export function DailyChecklist({
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 400, damping: 15 }}
                 >
-                  <CheckCircle2 className="h-5 w-5 text-[#2D6A4F]" />
+                  <CheckCircle2 className="h-5 w-5 text-[var(--color-success)]" />
                 </motion.div>
               ) : (
                 <Circle className="h-5 w-5 text-[var(--portal-text-muted)]" />

@@ -17,8 +17,8 @@ const features = [
     description: "Personlig treningsplan som oppdateres etter hver økt basert på dine data.",
     icon: Sparkles,
     span: "md:col-span-1",
-    bg: "bg-[#EDF5F0]",
-    iconColor: "text-[#2D6A4F]",
+    bg: "bg-[var(--color-brand-light)]",
+    iconColor: "text-[var(--color-brand)]",
   },
   {
     title: "TrackMan-integrasjon",
@@ -63,7 +63,7 @@ export function BentoFeatures() {
                       <line x1="5" y1="35" x2="50" y2="50" />
                     </svg>
                   )}
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-5 ${feature.bg === "bg-[#1D1D1F]" ? "bg-white/10" : feature.bg === "bg-[#EDF5F0]" ? "bg-[#2D6A4F]/10" : "bg-[#F5F5F7]"}`}>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-5 ${feature.bg === "bg-[#1D1D1F]" ? "bg-white/10" : feature.bg === "bg-[var(--color-brand-light)]" ? "bg-[var(--color-brand)]/10" : "bg-[#F5F5F7]"}`}>
                     <Icon className={`w-5 h-5 ${"iconColor" in feature && feature.iconColor ? feature.iconColor : (feature.bg === "bg-[#1D1D1F]" ? "text-white" : "text-[#1D1D1F]")}`} />
                   </div>
                   <h3 className={`font-display ${feature.span.includes("row-span-2") ? "text-xl md:text-2xl" : "text-xl"} font-bold mb-3 ${"textColor" in feature && feature.textColor ? feature.textColor : "text-[#1D1D1F]"}`}>

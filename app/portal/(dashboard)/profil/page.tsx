@@ -383,7 +383,7 @@ export default function ProfilPage() {
           {/* Stats Cards */}
           <BentoCard span={3}>
             <div className="flex items-center justify-between mb-3">
-              <Activity className="w-5 h-5 text-[#2D6A4F]" />
+              <Activity className="w-5 h-5 text-[var(--color-brand)]" />
               <span className="text-[10px] font-medium text-[var(--color-grey-500)] uppercase">Siste 30 dager</span>
             </div>
             <p className="text-3xl font-bold text-[var(--color-grey-900)]">{stats.trainingSessions}</p>
@@ -469,7 +469,7 @@ export default function ProfilPage() {
             <BentoCard span={6} title="Anbefalt fokus" icon={Compass} variant="gradient">
               {!focusAreas && !focusLoading && (
                 <div>
-                  {focusError && <p className="text-xs text-[#D14343] mb-2">{focusError}</p>}
+                  {focusError && <p className="text-xs text-[var(--color-error)] mb-2">{focusError}</p>}
                   <p className="text-sm text-[var(--color-grey-600)] mb-4">
                     Fa personlige anbefalinger basert pa din treningshistorikk, runder og coachingøkter.
                   </p>
@@ -669,7 +669,7 @@ function GoalCard({
           background: isCompleted ? "rgba(16,185,129,0.1)" : "white",
         }}
       >
-        {isCompleted && <Check className="w-3 h-3 text-[#2D6A4F]" />}
+        {isCompleted && <Check className="w-3 h-3 text-[var(--color-success)]" />}
       </button>
 
       <div className="flex-1 min-w-0">
@@ -721,8 +721,8 @@ function GoalCard({
             <Pause className="w-3 h-3 text-[var(--color-grey-500)]" />
           </button>
         )}
-        <button onClick={onDelete} className="p-1 rounded hover:bg-[#D14343]/5 transition-colors">
-          <Trash2 className="w-3 h-3 text-[#D14343] hover:text-[#D14343]" />
+        <button onClick={onDelete} className="p-1 rounded hover:bg-[var(--color-error)]/5 transition-colors">
+          <Trash2 className="w-3 h-3 text-[var(--color-error)] hover:text-[var(--color-error)]" />
         </button>
       </div>
     </motion.div>

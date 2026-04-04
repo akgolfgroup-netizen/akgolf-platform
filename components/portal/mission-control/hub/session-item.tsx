@@ -14,7 +14,7 @@ interface SessionItemProps {
 const divisionBorders: Record<Division, string> = {
   coaching: "border-l-[#1D1D1F]",
   junior: "border-l-[#007AFF]",
-  gfgk: "border-l-[#2D6A4F]",
+  gfgk: "border-l-[var(--color-brand)]",
 };
 
 export function SessionItem({

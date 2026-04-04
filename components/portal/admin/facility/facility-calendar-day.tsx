@@ -197,7 +197,7 @@ export function FacilityCalendarDay({
                       className="absolute left-0 right-0 z-10 pointer-events-none"
                       style={{ top }}
                     >
-                      <div className="w-full h-0.5 bg-[#D14343]" />
+                      <div className="w-full h-0.5 bg-[var(--color-error)]" />
                     </div>
                   );
                 })()}

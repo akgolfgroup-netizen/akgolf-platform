@@ -27,7 +27,7 @@ export function WebsiteFooter() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 text-[#86868B] hover:bg-[#2D6A4F] hover:text-white transition-colors duration-300"
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 text-[#86868B] hover:bg-[var(--color-brand)] hover:text-white transition-colors duration-300"
                   aria-label={social.label}
                 >
                   {social.icon === "instagram" && (

@@ -65,7 +65,7 @@ export default function AgenterPage() {
               <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
                 Aktive
               </div>
-              <div className="text-2xl font-bold text-[#2D6A4F]">
+              <div className="text-2xl font-bold text-[var(--color-success)]">
                 {Object.values(enabledAgents).filter(Boolean).length}
               </div>
             </MCCardBody>

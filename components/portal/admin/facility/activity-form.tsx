@@ -80,7 +80,7 @@ export function ActivityForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {error && (
-        <div className="px-4 py-3 rounded-xl bg-[#D14343]/10 text-[#D14343] text-sm">
+        <div className="px-4 py-3 rounded-xl bg-[var(--color-error)]/10 text-[var(--color-error)] text-sm">
           {error}
         </div>
       )}

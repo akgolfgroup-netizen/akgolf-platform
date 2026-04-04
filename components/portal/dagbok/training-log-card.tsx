@@ -106,7 +106,7 @@ export function TrainingLogCard({ log }: { log: TrainingLog }) {
         <button
           onClick={handleDelete}
           disabled={deleting}
-          className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded text-[#D14343]/50 hover:text-[#D14343]"
+          className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded text-[var(--color-error)]/50 hover:text-[var(--color-error)]"
         >
           <Trash2 className="w-3.5 h-3.5" />
         </button>

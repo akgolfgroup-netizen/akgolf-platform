@@ -59,8 +59,8 @@ export function ContextActions({
       label: "Statistikk",
       href: "/portal/statistikk",
       icon: BarChart3,
-      color: "text-[#2D6A4F]",
-      bg: "bg-[#2D6A4F]/10",
+      color: "text-[var(--color-success)]",
+      bg: "bg-[var(--color-success)]/10",
     },
     {
       label: "Kalender",

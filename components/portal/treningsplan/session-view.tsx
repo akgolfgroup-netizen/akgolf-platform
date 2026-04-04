@@ -221,7 +221,7 @@ export function SessionView({
             )}
 
             {completedCount === totalExercises && (
-              <div className="flex items-center gap-2 text-[#2D6A4F]">
+              <div className="flex items-center gap-2 text-[var(--color-success)]">
                 <span className="text-sm font-medium">Okt fullfort!</span>
               </div>
             )}

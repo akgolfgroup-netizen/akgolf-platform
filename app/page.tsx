@@ -63,8 +63,8 @@ export default function HomePage() {
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-2 h-2 rounded-full bg-[#2D6A4F]" />
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#40916C]">
+                  <div className="w-2 h-2 rounded-full bg-[var(--color-brand)]" />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--color-brand)]">
                     {HERO.eyebrow}
                   </span>
                 </div>

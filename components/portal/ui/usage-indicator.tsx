@@ -46,7 +46,7 @@ export function UsageIndicator({
         {onUpgradeClick && (
           <button
             onClick={onUpgradeClick}
-            className="text-xs font-medium text-[#2D6A4F] hover:underline"
+            className="text-xs font-medium text-[var(--color-brand)] hover:underline"
           >
             Oppgrader
           </button>
@@ -61,7 +61,7 @@ export function UsageIndicator({
             <span
               className={
                 isLogNearLimit
-                  ? "text-[#FF9500] font-medium"
+                  ? "text-[var(--color-warning)] font-medium"
                   : "text-[var(--color-grey-600)]"
               }
             >
@@ -76,7 +76,7 @@ export function UsageIndicator({
               className="h-full rounded-full transition-[width] duration-300"
               style={{
                 width: `${logPercentage}%`,
-                background: isLogNearLimit ? "#FF9500" : "#2D6A4F",
+                background: isLogNearLimit ? "var(--color-warning)" : "var(--color-brand)",
               }}
             />
           </div>
@@ -89,7 +89,7 @@ export function UsageIndicator({
             <span
               className={
                 isAiNearLimit
-                  ? "text-[#FF9500] font-medium"
+                  ? "text-[var(--color-warning)] font-medium"
                   : "text-[var(--color-grey-600)]"
               }
             >
@@ -104,7 +104,7 @@ export function UsageIndicator({
               className="h-full rounded-full transition-[width] duration-300"
               style={{
                 width: `${aiPercentage}%`,
-                background: isAiNearLimit ? "#FF9500" : "#2D6A4F",
+                background: isAiNearLimit ? "var(--color-warning)" : "var(--color-brand)",
               }}
             />
           </div>

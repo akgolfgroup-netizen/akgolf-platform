@@ -12,9 +12,9 @@ interface StudentAlertsProps {
 }
 
 const statusStyles = {
-  risk: { bg: "bg-[#D14343]/10", text: "text-[#D14343]", label: "Risiko" },
+  risk: { bg: "bg-[var(--color-error)]/10", text: "text-[var(--color-error)]", label: "Risiko" },
   warn: { bg: "bg-[#E89C30]/10", text: "text-[#E89C30]", label: "Advarsel" },
-  ok: { bg: "bg-[#EDF5F0]", text: "text-[#2D6A4F]", label: "OK" },
+  ok: { bg: "bg-[var(--mc-success-bg)]", text: "text-[var(--mc-success-text)]", label: "OK" },
 };
 
 export function StudentAlerts({ alerts = [] }: StudentAlertsProps) {

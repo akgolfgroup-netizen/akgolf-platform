@@ -159,7 +159,7 @@ export function PaywallModal({
                   className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                   style={{ background: "rgba(22, 163, 74, 0.1)" }}
                 >
-                  <Crown className="w-6 h-6 text-[#2D6A4F]" aria-hidden="true" />
+                  <Crown className="w-6 h-6 text-[var(--color-brand)]" aria-hidden="true" />
                 </div>
                 <h2 id={titleId} className="text-2xl font-bold text-[var(--color-grey-900)] mb-2">
                   {featureName
@@ -182,7 +182,7 @@ export function PaywallModal({
                       tier.disabled ? "opacity-60 cursor-not-allowed" : ""
                     } ${
                       selectedTier === tier.tier && !tier.disabled
-                        ? "ring-2 ring-[#2D6A4F]"
+                        ? "ring-2 ring-[var(--color-brand)]"
                         : ""
                     }`}
                     style={{
@@ -191,7 +191,7 @@ export function PaywallModal({
                         : "var(--color-grey-50)",
                       border: `1px solid ${
                         selectedTier === tier.tier && !tier.disabled
-                          ? "#2D6A4F"
+                          ? "var(--color-brand)"
                           : "var(--color-grey-200)"
                       }`,
                     }}
@@ -200,7 +200,7 @@ export function PaywallModal({
                       <div
                         className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-semibold"
                         style={{
-                          background: "#2D6A4F",
+                          background: "var(--color-brand)",
                           color: "white",
                         }}
                       >
@@ -230,7 +230,7 @@ export function PaywallModal({
                           className="flex items-center gap-2 text-sm"
                         >
                           {feature.included ? (
-                            <Check className="w-4 h-4 text-[#2D6A4F] flex-shrink-0" aria-hidden="true" />
+                            <Check className="w-4 h-4 text-[var(--color-brand)] flex-shrink-0" aria-hidden="true" />
                           ) : (
                             <X className="w-4 h-4 text-[var(--color-grey-300)] flex-shrink-0" aria-hidden="true" />
                           )}
@@ -253,7 +253,7 @@ export function PaywallModal({
                         tier.disabled
                           ? "bg-[var(--color-grey-200)] text-[var(--color-grey-500)] cursor-not-allowed"
                           : tier.highlight
-                            ? "bg-[#2D6A4F] text-white hover:bg-[#1B4332]"
+                            ? "bg-[var(--color-brand)] text-white hover:bg-[var(--color-brand-dark)]"
                             : "bg-[var(--color-grey-900)] text-white hover:bg-[var(--color-grey-800)]"
                       }`}
                     >
@@ -266,15 +266,15 @@ export function PaywallModal({
               {/* Trust badges */}
               <div className="flex items-center justify-center gap-6 pt-4 border-t border-[var(--color-grey-200)]">
                 <div className="flex items-center gap-2 text-xs text-[var(--color-grey-500)]">
-                  <Check className="w-4 h-4 text-[#2D6A4F]" aria-hidden="true" />
+                  <Check className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
                   14 dagers gratis provperiode
                 </div>
                 <div className="flex items-center gap-2 text-xs text-[var(--color-grey-500)]">
-                  <Check className="w-4 h-4 text-[#2D6A4F]" aria-hidden="true" />
+                  <Check className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
                   Avbryt nar som helst
                 </div>
                 <div className="flex items-center gap-2 text-xs text-[var(--color-grey-500)]">
-                  <Check className="w-4 h-4 text-[#2D6A4F]" aria-hidden="true" />
+                  <Check className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
                   Sikker betaling med Stripe
                 </div>
               </div>
@@ -286,7 +286,7 @@ export function PaywallModal({
                     onClick={handleUpgrade}
                     className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full text-sm font-semibold transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2"
                     style={{
-                      background: "#2D6A4F",
+                      background: "var(--color-brand)",
                       color: "white",
                     }}
                   >

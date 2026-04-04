@@ -166,10 +166,10 @@ function SidebarContent({
               <motion.div
                 whileHover={{ x: 4 }}
                 transition={{ duration: 0.15 }}
-                className="flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium text-[#6E6E73] hover:text-[#D14343] hover:bg-[#D14343]/10 transition-[background-color,color] duration-200"
+                className="flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium text-[#6E6E73] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10 transition-[background-color,color] duration-200"
               >
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#E8E8ED] group-hover:bg-[#D14343]/20 transition-colors">
-                  <LogOut className="w-4 h-4 text-[#86868B] group-hover:text-[#D14343] transition-colors" />
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#E8E8ED] group-hover:bg-[var(--color-error)]/20 transition-colors">
+                  <LogOut className="w-4 h-4 text-[#86868B] group-hover:text-[var(--color-error)] transition-colors" />
                 </div>
                 <span>Logg ut</span>
               </motion.div>
@@ -212,7 +212,7 @@ function SidebarContent({
             <p className="text-sm font-medium text-[#1D1D1F] truncate">
               {user.name ?? "Spiller"}
             </p>
-            <p className="text-xs font-medium text-[#2D6A4F] truncate">
+            <p className="text-xs font-medium text-[var(--color-brand)] truncate">
               {user.subscriptionTier ?? "Academy"}
             </p>
           </div>

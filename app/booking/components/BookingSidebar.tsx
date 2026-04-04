@@ -97,7 +97,7 @@ function SidebarContent({ service, instructor, dateTime }: Props) {
       {/* Cancellation notice */}
       <div className="mt-4 pt-4 border-t border-grey-200">
         <p className="text-xs text-grey-500 flex items-center gap-1.5">
-          <ShieldCheck size={14} className="text-[#2D6A4F] flex-shrink-0" />
+          <ShieldCheck size={14} className="text-[var(--color-brand)] flex-shrink-0" />
           Gratis avbestilling inntil 24 timer for
         </p>
       </div>

@@ -21,8 +21,8 @@ const defaultDays: DayPlan[] = [
 ];
 
 const statusStyles = {
-  done: "bg-[#EDF5F0] text-[#2D6A4F]",
-  today: "bg-[#2D6A4F] text-white",
+  done: "bg-[var(--color-success-light)] text-[var(--color-success)]",
+  today: "bg-[var(--color-brand)] text-white",
   upcoming: "bg-[#F5F5F7] text-[#6E6E73]",
   rest: "bg-transparent text-[#D2D2D7]",
 };

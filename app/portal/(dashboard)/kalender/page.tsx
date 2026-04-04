@@ -59,7 +59,7 @@ function eventStyle(type: CalendarEvent["type"]): string {
     case "coaching":
       return "bg-blue-100 text-blue-800 border-l-2 border-blue-500";
     case "training":
-      return "bg-[#2D6A4F]/10 text-[#2D6A4F] border-l-2 border-[#2D6A4F]";
+      return "bg-[var(--color-brand)]/10 text-[var(--color-brand)] border-l-2 border-[var(--color-brand)]";
     case "tournament":
       return "bg-purple-100 text-purple-800 border-l-2 border-purple-500";
     case "booking":
@@ -171,7 +171,7 @@ export default async function KalenderPage({
         <div className="flex flex-wrap gap-4">
           {[
             { className: "bg-blue-500", label: "Coaching" },
-            { className: "bg-[#2D6A4F]", label: "Trening" },
+            { className: "bg-[var(--color-brand)]", label: "Trening" },
             { className: "bg-purple-500", label: "Turnering" },
             { className: "bg-amber-500", label: "Booking" },
           ].map((item) => (

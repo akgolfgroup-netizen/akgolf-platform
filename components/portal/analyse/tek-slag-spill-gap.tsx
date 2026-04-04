@@ -280,7 +280,7 @@ export function TekSlagSpillGap({ data }: TekSlagSpillGapProps) {
                   key={`cell-${index}`}
                   fill={
                     isHighlighted
-                      ? "#FF9500" // Warning orange for biggest gap
+                      ? "var(--color-warning)" // Warning orange for biggest gap
                       : "var(--color-grey-900)"
                   }
                 />
@@ -298,9 +298,9 @@ export function TekSlagSpillGap({ data }: TekSlagSpillGapProps) {
               <span
                 className={`font-medium ${
                   point.gap < -0.5
-                    ? "text-[#FF9500]"
+                    ? "text-[var(--color-warning)]"
                     : point.gap > 0.5
-                    ? "text-[#2D6A4F]"
+                    ? "text-[var(--color-success)]"
                     : "text-[var(--color-grey-500)]"
                 }`}
               >
@@ -315,18 +315,18 @@ export function TekSlagSpillGap({ data }: TekSlagSpillGapProps) {
       <div
         className={`flex items-start gap-3 p-3 rounded-lg ${
           recommendation.type === "good"
-            ? "bg-[#2D6A4F]/10"
+            ? "bg-[var(--color-success)]/10"
             : recommendation.type === "focus"
-            ? "bg-[#FF9500]/10"
+            ? "bg-[var(--color-warning)]/10"
             : "bg-[var(--color-grey-100)]"
         }`}
       >
         <recommendation.icon
           className={`h-4 w-4 mt-0.5 flex-shrink-0 ${
             recommendation.type === "good"
-              ? "text-[#2D6A4F]"
+              ? "text-[var(--color-success)]"
               : recommendation.type === "focus"
-              ? "text-[#FF9500]"
+              ? "text-[var(--color-warning)]"
               : "text-[var(--color-grey-400)]"
           }`}
         />
@@ -399,9 +399,9 @@ function CustomTooltip({
         <div
           className={`mt-1 ${
             data.gap < -0.5
-              ? "text-[#FF9500]"
+              ? "text-[var(--color-warning)]"
               : data.gap > 0.5
-              ? "text-[#2D6A4F]"
+              ? "text-[var(--color-success)]"
               : "text-[var(--color-grey-400)]"
           }`}
         >

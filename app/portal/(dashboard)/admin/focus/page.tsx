@@ -67,9 +67,9 @@ const MOCK_SESSIONS = {
 };
 
 const priorityColors = {
-  urgent: "bg-[#D14343] text-white",
+  urgent: "bg-[var(--color-error)] text-white",
   important: "bg-[#FF9500] text-white",
-  normal: "bg-[#2D6A4F] text-white",
+  normal: "bg-[var(--color-brand)] text-white",
 };
 
 export default function FocusPage() {
@@ -134,7 +134,7 @@ export default function FocusPage() {
                   {/* Progress bar */}
                   <div className="h-1.5 bg-[#E8E8ED] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[#2D6A4F] rounded-full transition-[width]"
+                      className="h-full bg-[var(--color-brand)] rounded-full transition-[width]"
                       style={{ width: `${project.progress}%` }}
                     />
                   </div>

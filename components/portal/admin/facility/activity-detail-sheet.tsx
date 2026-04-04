@@ -184,7 +184,7 @@ export function ActivityDetailSheet({ event, onClose, onApprove, onDelete }: Pro
                   {isPending && onApprove && (
                     <button
                       onClick={() => onApprove(event.id)}
-                      className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#2D6A4F] text-white font-medium hover:bg-[#245A42] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+                      className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--color-brand)] text-white font-medium hover:bg-[var(--color-brand)]/90 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
                     >
                       <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
                       Godkjenn aktivitet
@@ -193,7 +193,7 @@ export function ActivityDetailSheet({ event, onClose, onApprove, onDelete }: Pro
                   {onDelete && (
                     <button
                       onClick={() => onDelete(event.id)}
-                      className="w-full px-4 py-3 rounded-xl border border-[#D14343] text-[#D14343] font-medium hover:bg-[#D14343]/10 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+                      className="w-full px-4 py-3 rounded-xl border border-[var(--color-error)] text-[var(--color-error)] font-medium hover:bg-[var(--color-error)]/10 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
                     >
                       Kanseller aktivitet
                     </button>

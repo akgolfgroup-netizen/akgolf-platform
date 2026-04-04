@@ -21,11 +21,11 @@ function AnimatedCheckmark() {
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ type: "spring", stiffness: 200, damping: 15 }}
-      className="w-20 h-20 rounded-full bg-[#2D6A4F]/10 flex items-center justify-center mx-auto mb-6 relative"
+      className="w-20 h-20 rounded-full bg-[var(--color-success)]/10 flex items-center justify-center mx-auto mb-6 relative"
     >
       {/* Outer ring animation */}
       <motion.div
-        className="absolute inset-0 rounded-full border-2 border-[#2D6A4F]/30"
+        className="absolute inset-0 rounded-full border-2 border-[var(--color-success)]/30"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1.3, opacity: 0 }}
         transition={{ duration: 1.5, repeat: Infinity }}
@@ -43,7 +43,7 @@ function AnimatedCheckmark() {
       >
         <motion.path
           d="M5 13l4 4L19 7"
-          stroke="#2D6A4F"
+          stroke="var(--color-success)"
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -60,25 +60,25 @@ function AnimatedCheckmark() {
 // Apple Light Theme: black, grey, green accents
 const CONFETTI_PARTICLES = [
   { id: 0, color: "#1D1D1F", left: 15, x: 45, duration: 2.5, delay: 0.1 },
-  { id: 1, color: "#2D6A4F", left: 28, x: -32, duration: 3.2, delay: 0.2 },
+  { id: 1, color: "var(--color-success)", left: 28, x: -32, duration: 3.2, delay: 0.2 },
   { id: 2, color: "#86868B", left: 42, x: 18, duration: 2.8, delay: 0.05 },
-  { id: 3, color: "#2D6A4F", left: 55, x: -65, duration: 3.5, delay: 0.3 },
+  { id: 3, color: "var(--color-success)", left: 55, x: -65, duration: 3.5, delay: 0.3 },
   { id: 4, color: "#1D1D1F", left: 68, x: 28, duration: 2.2, delay: 0.15 },
   { id: 5, color: "#D2D2D7", left: 82, x: -42, duration: 3.8, delay: 0.25 },
   { id: 6, color: "#86868B", left: 12, x: 55, duration: 2.6, delay: 0.35 },
-  { id: 7, color: "#2D6A4F", left: 35, x: -15, duration: 3.0, delay: 0.08 },
+  { id: 7, color: "var(--color-success)", left: 35, x: -15, duration: 3.0, delay: 0.08 },
   { id: 8, color: "#1D1D1F", left: 48, x: 72, duration: 2.4, delay: 0.22 },
-  { id: 9, color: "#2D6A4F", left: 62, x: -48, duration: 3.3, delay: 0.12 },
+  { id: 9, color: "var(--color-success)", left: 62, x: -48, duration: 3.3, delay: 0.12 },
   { id: 10, color: "#D2D2D7", left: 75, x: 38, duration: 2.7, delay: 0.4 },
-  { id: 11, color: "#2D6A4F", left: 88, x: -25, duration: 3.6, delay: 0.18 },
+  { id: 11, color: "var(--color-success)", left: 88, x: -25, duration: 3.6, delay: 0.18 },
   { id: 12, color: "#1D1D1F", left: 22, x: 62, duration: 2.3, delay: 0.28 },
   { id: 13, color: "#86868B", left: 38, x: -55, duration: 3.1, delay: 0.38 },
   { id: 14, color: "#D2D2D7", left: 52, x: 35, duration: 2.9, delay: 0.02 },
-  { id: 15, color: "#2D6A4F", left: 65, x: -72, duration: 3.4, delay: 0.32 },
+  { id: 15, color: "var(--color-success)", left: 65, x: -72, duration: 3.4, delay: 0.32 },
   { id: 16, color: "#1D1D1F", left: 78, x: 22, duration: 2.1, delay: 0.42 },
   { id: 17, color: "#86868B", left: 92, x: -38, duration: 3.7, delay: 0.06 },
   { id: 18, color: "#D2D2D7", left: 8, x: 48, duration: 2.5, delay: 0.16 },
-  { id: 19, color: "#2D6A4F", left: 45, x: -62, duration: 3.9, delay: 0.26 },
+  { id: 19, color: "var(--color-success)", left: 45, x: -62, duration: 3.9, delay: 0.26 },
 ];
 
 function Confetti() {
@@ -284,7 +284,7 @@ export function Confirmation({
             {price && (
               <div className="flex justify-between items-center py-2">
                 <span className="text-grey-500 flex items-center gap-2">
-                  <CreditCard size={16} className="text-[#2D6A4F]" />
+                  <CreditCard size={16} className="text-[var(--color-success)]" />
                   Betalt
                 </span>
                 <span className="font-medium text-black">

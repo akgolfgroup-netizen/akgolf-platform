@@ -46,7 +46,7 @@ interface AgentCardProps {
 }
 
 const statusStyles: Record<AgentStatus, string> = {
-  active: "bg-[#2D6A4F]",
+  active: "bg-[var(--color-success)]",
   busy: "bg-[#FF9500]",
   inactive: "bg-[#86868B]",
 };
@@ -133,7 +133,7 @@ export function AgentCard({
         <Switch
           checked={isEnabled}
           onCheckedChange={onToggle}
-          className="data-[state=checked]:bg-[#2D6A4F]"
+          className="data-[state=checked]:bg-[var(--color-brand)]"
         />
       </div>
     </div>

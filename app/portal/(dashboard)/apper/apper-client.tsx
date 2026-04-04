@@ -164,8 +164,8 @@ export function ApperClient({
           className="rounded-2xl p-4 border flex items-center gap-3"
           style={{ background: "rgba(34,197,94,0.1)", borderColor: "rgba(34,197,94,0.3)" }}
         >
-          <Check className="w-5 h-5 text-[#2D6A4F] flex-shrink-0" />
-          <p className="text-sm text-[#2D6A4F] font-medium">
+          <Check className="w-5 h-5 text-[var(--color-success)] flex-shrink-0" />
+          <p className="text-sm text-[var(--color-success)] font-medium">
             Abonnementet ditt er aktivert! Din 14-dagers proveperiode har startet.
           </p>
         </div>
@@ -246,7 +246,7 @@ export function ApperClient({
                     </span>
                   </div>
                   {active ? (
-                    <span className="text-xs font-medium text-[#2D6A4F] flex items-center gap-1">
+                    <span className="text-xs font-medium text-[var(--color-success)] flex items-center gap-1">
                       <Check className="w-3.5 h-3.5" /> Aktiv
                     </span>
                   ) : (
@@ -304,7 +304,7 @@ export function ApperClient({
                     <Icon className="w-4.5 h-4.5 text-[var(--color-grey-900)]" />
                   </div>
                   {active && (
-                    <span className="text-[10px] font-medium text-[#2D6A4F] flex items-center gap-1">
+                    <span className="text-[10px] font-medium text-[var(--color-success)] flex items-center gap-1">
                       <Check className="w-3 h-3" /> Aktiv
                     </span>
                   )}

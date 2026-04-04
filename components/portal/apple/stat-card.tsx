@@ -107,8 +107,8 @@ export function StatCard({
           <motion.div
             className={cn(
               "flex items-center gap-1 text-[11px] font-semibold",
-              isPositive && "text-[#2D6A4F]",
-              isNegative && "text-[#D14343]",
+              isPositive && "text-[var(--color-success)]",
+              isNegative && "text-[var(--color-error)]",
               !isPositive && !isNegative && "text-[#86868B]"
             )}
             initial={{ opacity: 0, scale: 0.9 }}

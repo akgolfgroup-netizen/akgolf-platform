@@ -102,18 +102,18 @@ export function CustomerForm({ onSubmit }: Props) {
           {/* First name */}
           <div>
             <label htmlFor="firstName" className="w-label">
-              Fornavn <span className="text-[#D14343]">*</span>
+              Fornavn <span className="text-[var(--color-error)]">*</span>
             </label>
             <input
               id="firstName"
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className={`w-input ${getError("firstName") ? "border-[#D14343]" : ""}`}
+              className={`w-input ${getError("firstName") ? "border-[var(--color-error)]" : ""}`}
               placeholder="Ola"
             />
             {getError("firstName") && (
-              <p className="text-xs text-[#D14343] mt-1 flex items-center gap-1">
+              <p className="text-xs text-[var(--color-error)] mt-1 flex items-center gap-1">
                 <AlertCircle size={12} />
                 {getError("firstName")}
               </p>
@@ -123,18 +123,18 @@ export function CustomerForm({ onSubmit }: Props) {
           {/* Last name */}
           <div>
             <label htmlFor="lastName" className="w-label">
-              Etternavn <span className="text-[#D14343]">*</span>
+              Etternavn <span className="text-[var(--color-error)]">*</span>
             </label>
             <input
               id="lastName"
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className={`w-input ${getError("lastName") ? "border-[#D14343]" : ""}`}
+              className={`w-input ${getError("lastName") ? "border-[var(--color-error)]" : ""}`}
               placeholder="Nordmann"
             />
             {getError("lastName") && (
-              <p className="text-xs text-[#D14343] mt-1 flex items-center gap-1">
+              <p className="text-xs text-[var(--color-error)] mt-1 flex items-center gap-1">
                 <AlertCircle size={12} />
                 {getError("lastName")}
               </p>
@@ -144,21 +144,21 @@ export function CustomerForm({ onSubmit }: Props) {
           {/* Email */}
           <div>
             <label htmlFor="email" className="w-label">
-              E-post <span className="text-[#D14343]">*</span>
+              E-post <span className="text-[var(--color-error)]">*</span>
             </label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-input ${getError("email") ? "border-[#D14343]" : ""}`}
+              className={`w-input ${getError("email") ? "border-[var(--color-error)]" : ""}`}
               placeholder="ola@eksempel.no"
             />
             <p className="text-xs text-grey-500 mt-1">
               Bekreftelse og paminnelser sendes hit
             </p>
             {getError("email") && (
-              <p className="text-xs text-[#D14343] mt-1 flex items-center gap-1">
+              <p className="text-xs text-[var(--color-error)] mt-1 flex items-center gap-1">
                 <AlertCircle size={12} />
                 {getError("email")}
               </p>
@@ -168,21 +168,21 @@ export function CustomerForm({ onSubmit }: Props) {
           {/* Phone */}
           <div>
             <label htmlFor="phone" className="w-label">
-              Mobilnummer <span className="text-[#D14343]">*</span>
+              Mobilnummer <span className="text-[var(--color-error)]">*</span>
             </label>
             <input
               id="phone"
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className={`w-input ${getError("phone") ? "border-[#D14343]" : ""}`}
+              className={`w-input ${getError("phone") ? "border-[var(--color-error)]" : ""}`}
               placeholder="+47 912 34 567"
             />
             <p className="text-xs text-grey-500 mt-1">
               For SMS-paminnelse dagen foer
             </p>
             {getError("phone") && (
-              <p className="text-xs text-[#D14343] mt-1 flex items-center gap-1">
+              <p className="text-xs text-[var(--color-error)] mt-1 flex items-center gap-1">
                 <AlertCircle size={12} />
                 {getError("phone")}
               </p>
@@ -250,7 +250,7 @@ export function CustomerForm({ onSubmit }: Props) {
                   ${acceptTerms
                     ? "bg-black border-black"
                     : getError("acceptTerms")
-                    ? "border-[#D14343]"
+                    ? "border-[var(--color-error)]"
                     : "border-grey-300"
                   }
                 `}
@@ -269,7 +269,7 @@ export function CustomerForm({ onSubmit }: Props) {
               </span>
             </label>
             {getError("acceptTerms") && (
-              <p className="text-xs text-[#D14343] mt-2 flex items-center gap-1 ml-8">
+              <p className="text-xs text-[var(--color-error)] mt-2 flex items-center gap-1 ml-8">
                 <AlertCircle size={12} />
                 {getError("acceptTerms")}
               </p>

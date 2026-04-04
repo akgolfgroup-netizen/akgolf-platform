@@ -130,7 +130,7 @@ function SidebarContent({
         </div>
         <button
           onClick={onSignOut}
-          className="w-full flex items-center gap-2 px-2 py-2 mt-2 text-[11px] text-[#6E6E73] hover:text-[#D14343] hover:bg-[#D14343]/10 rounded-lg transition-colors cursor-pointer"
+          className="w-full flex items-center gap-2 px-2 py-2 mt-2 text-[11px] text-[#6E6E73] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10 rounded-lg transition-colors cursor-pointer"
         >
           <LogOut className="w-4 h-4" />
           <span>Logg ut</span>

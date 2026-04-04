@@ -30,7 +30,7 @@ export function SGOverviewCard({ categories = defaultCategories }: SGOverviewCar
             </span>
             <div className="mt-1">
               {cat.value !== null ? (
-                <span className={`text-lg font-bold tabular-nums ${cat.value >= 0 ? "text-[#2D6A4F]" : "text-[#D14343]"}`}>
+                <span className={`text-lg font-bold tabular-nums ${cat.value >= 0 ? "text-[var(--color-success)]" : "text-[var(--color-error)]"}`}>
                   {cat.value > 0 ? "+" : ""}{cat.value.toFixed(1)}
                 </span>
               ) : (

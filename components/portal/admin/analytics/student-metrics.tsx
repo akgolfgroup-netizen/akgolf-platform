@@ -31,8 +31,8 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
         className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6"
       >
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-[#2D6A4F]/5 flex items-center justify-center">
-            <Trophy className="w-5 h-5 text-[#2D6A4F]" />
+          <div className="w-10 h-10 rounded-xl bg-[var(--color-success)]/5 flex items-center justify-center">
+            <Trophy className="w-5 h-5 text-[var(--color-success)]" />
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[var(--color-grey-900)]">
@@ -67,7 +67,7 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
                     {player.name}
                   </span>
                 </div>
-                <div className="flex items-center gap-1 text-[#2D6A4F]">
+                <div className="flex items-center gap-1 text-[var(--color-success)]">
                   <TrendingDown className="w-4 h-4" />
                   <span className="text-sm font-semibold">
                     -{player.hcpChange.toFixed(1)}
@@ -124,7 +124,7 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
               }}
             />
             <div
-              className="bg-[#D14343] transition-[width] duration-500"
+              className="bg-[var(--color-error)] transition-[width] duration-500"
               style={{
                 width: `${
                   data.activeStudents + data.churnedStudents > 0
@@ -140,13 +140,13 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
 
         {/* No-show warning */}
         {isHighNoShow && (
-          <div className="flex items-start gap-3 p-3 rounded-xl bg-[#D14343]/5 border border-[#D14343]/15">
-            <AlertTriangle className="w-5 h-5 text-[#D14343] flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-3 p-3 rounded-xl bg-[var(--color-error)]/5 border border-[var(--color-error)]/15">
+            <AlertTriangle className="w-5 h-5 text-[var(--color-error)] flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-[#D14343]">
+              <p className="text-sm font-medium text-[var(--color-error)]">
                 Hoy no-show rate: {noShowRate.toFixed(1)}%
               </p>
-              <p className="text-xs text-[#D14343] mt-0.5">
+              <p className="text-xs text-[var(--color-error)] mt-0.5">
                 Vurder a sende paminnelser eller justere avbestillingsregler
               </p>
             </div>
@@ -154,17 +154,17 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
         )}
 
         {!isHighNoShow && (
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-[#2D6A4F]/5 border border-[#2D6A4F]/15">
-            <div className="w-8 h-8 rounded-full bg-[#2D6A4F]/10 flex items-center justify-center">
-              <span className="text-sm font-bold text-[#2D6A4F]">
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-success)]/5 border border-[var(--color-success)]/15">
+            <div className="w-8 h-8 rounded-full bg-[var(--color-success)]/10 flex items-center justify-center">
+              <span className="text-sm font-bold text-[var(--color-success)]">
                 {noShowRate.toFixed(0)}%
               </span>
             </div>
             <div>
-              <p className="text-sm font-medium text-[#2D6A4F]">
+              <p className="text-sm font-medium text-[var(--color-success)]">
                 No-show rate under kontroll
               </p>
-              <p className="text-xs text-[#2D6A4F]">
+              <p className="text-xs text-[var(--color-success)]">
                 {data.noShowCount} av {data.totalBookings} bookinger
               </p>
             </div>

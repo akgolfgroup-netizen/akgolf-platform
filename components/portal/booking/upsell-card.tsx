@@ -42,7 +42,7 @@ export function BookingUpsellCard({
             <h3 className="text-lg font-semibold text-grey-900">
               Spar {savingsPercent}% med Performance
             </h3>
-            <span className="px-2 py-0.5 bg-[#2D6A4F]/10 text-[#2D6A4F] text-xs font-medium rounded-full">
+            <span className="px-2 py-0.5 bg-[var(--color-brand)]/10 text-[var(--color-brand)] text-xs font-medium rounded-full">
               Populaert
             </span>
           </div>
@@ -53,19 +53,19 @@ export function BookingUpsellCard({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
             <div className="flex items-center gap-2 text-sm text-grey-600">
-              <Check className="h-4 w-4 text-[#2D6A4F] flex-shrink-0" />
+              <Check className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>2 x 20 min okter/mnd</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-grey-600">
-              <Check className="h-4 w-4 text-[#2D6A4F] flex-shrink-0" />
+              <Check className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>TrackMan-analyse hver okt</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-grey-600">
-              <Check className="h-4 w-4 text-[#2D6A4F] flex-shrink-0" />
+              <Check className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>Personlig treningsplan</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-grey-600">
-              <Check className="h-4 w-4 text-[#2D6A4F] flex-shrink-0" />
+              <Check className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>Full portal-tilgang</span>
             </div>
           </div>

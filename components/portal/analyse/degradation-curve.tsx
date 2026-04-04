@@ -209,13 +209,13 @@ function TrendIndicator({
       case "stable":
         return {
           label: "Stabil",
-          color: "text-[#2D6A4F]",
+          color: "text-[var(--color-success)]",
           description: "Teknikken holder seg godt under press",
         };
       case "degrading":
         return {
           label: "Degraderer",
-          color: "text-[#FF9500]",
+          color: "text-[var(--color-warning)]",
           description: "Teknikken faller under press",
         };
       case "improving":

@@ -91,21 +91,21 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
                   </div>
                   <div className="flex items-center gap-1 mt-1">
                     {isPositiveChange ? (
-                      <TrendingUp className="w-3 h-3 text-[#2D6A4F]" />
+                      <TrendingUp className="w-3 h-3 text-[var(--color-success)]" />
                     ) : (
-                      <TrendingDown className="w-3 h-3 text-[#D14343]" />
+                      <TrendingDown className="w-3 h-3 text-[var(--color-error)]" />
                     )}
                     <span
                       className={`text-[10px] ${
-                        isPositiveChange ? "text-[#2D6A4F]" : "text-[#D14343]"
+                        isPositiveChange ? "text-[var(--color-success)]" : "text-[var(--color-error)]"
                       }`}
                     >
                       {Math.abs(revenueChange).toFixed(1)}% vs forrige mnd
                     </span>
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-lg bg-[#EDF5F0] flex items-center justify-center">
-                  <Wallet className="w-5 h-5 text-[#2D6A4F]" />
+                <div className="w-10 h-10 rounded-lg bg-[var(--color-success-light)] flex items-center justify-center">
+                  <Wallet className="w-5 h-5 text-[var(--color-success)]" />
                 </div>
               </div>
             </MCCardBody>

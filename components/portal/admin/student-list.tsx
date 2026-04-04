@@ -309,7 +309,7 @@ export function StudentList() {
                   className={cn(
                     "text-[13px]",
                     isRecentlyActive(student.lastActiveAt)
-                      ? "text-[#2D6A4F] font-medium"
+                      ? "text-[var(--color-success)] font-medium"
                       : "text-[var(--color-grey-500)]"
                   )}
                 >

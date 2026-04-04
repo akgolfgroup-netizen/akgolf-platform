@@ -96,12 +96,12 @@ export function RapporterClient({ data }: RapporterClientProps) {
                     <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
                       Nye (30d)
                     </div>
-                    <div className="text-2xl font-bold text-[#2D6A4F] mt-1">
+                    <div className="text-2xl font-bold text-[var(--color-success)] mt-1">
                       +{data.newStudents}
                     </div>
                   </div>
-                  <div className="w-10 h-10 rounded-lg bg-[#EDF5F0] flex items-center justify-center">
-                    <UserPlus className="w-5 h-5 text-[#2D6A4F]" />
+                  <div className="w-10 h-10 rounded-lg bg-[var(--color-success-light)] flex items-center justify-center">
+                    <UserPlus className="w-5 h-5 text-[var(--color-success)]" />
                   </div>
                 </div>
               </MCCardBody>
@@ -156,12 +156,12 @@ export function RapporterClient({ data }: RapporterClientProps) {
                     <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
                       Fullforte
                     </div>
-                    <div className="text-2xl font-bold text-[#2D6A4F] mt-1">
+                    <div className="text-2xl font-bold text-[var(--color-success)] mt-1">
                       {data.completedSessions}
                     </div>
                   </div>
-                  <div className="w-10 h-10 rounded-lg bg-[#EDF5F0] flex items-center justify-center">
-                    <CalendarCheck className="w-5 h-5 text-[#2D6A4F]" />
+                  <div className="w-10 h-10 rounded-lg bg-[var(--color-success-light)] flex items-center justify-center">
+                    <CalendarCheck className="w-5 h-5 text-[var(--color-success)]" />
                   </div>
                 </div>
               </MCCardBody>
@@ -174,12 +174,12 @@ export function RapporterClient({ data }: RapporterClientProps) {
                     <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
                       Kansellerte
                     </div>
-                    <div className="text-2xl font-bold text-[#D14343] mt-1">
+                    <div className="text-2xl font-bold text-[var(--color-error)] mt-1">
                       {data.cancelledSessions}
                     </div>
                   </div>
                   <div className="w-10 h-10 rounded-lg bg-[#FEE2E2] flex items-center justify-center">
-                    <XCircle className="w-5 h-5 text-[#D14343]" />
+                    <XCircle className="w-5 h-5 text-[var(--color-error)]" />
                   </div>
                 </div>
               </MCCardBody>
@@ -210,7 +210,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
                     <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
                       HCP-forbedring
                     </div>
-                    <div className="text-2xl font-bold text-[#2D6A4F] mt-1">
+                    <div className="text-2xl font-bold text-[var(--color-success)] mt-1">
                       {data.handicapImprovement}
                     </div>
                   </div>

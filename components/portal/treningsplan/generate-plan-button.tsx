@@ -173,7 +173,7 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
 
               {/* Error */}
               {error && (
-                <p className="text-xs text-[#D14343] bg-[#D14343]/10 px-3 py-2 rounded-lg">{error}</p>
+                <p className="text-xs text-[var(--color-error)] bg-[var(--color-error)]/10 px-3 py-2 rounded-lg">{error}</p>
               )}
 
               {/* Submit */}
