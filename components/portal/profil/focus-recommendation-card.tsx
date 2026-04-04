@@ -47,7 +47,7 @@ export function FocusRecommendationCard() {
         {!areas && !loading && (
           <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {error && (
-              <p className="text-xs text-red-400 mb-2">{error}</p>
+              <p className="text-xs text-[#D14343] mb-2">{error}</p>
             )}
             <p className="text-xs text-[var(--color-grey-500)] mb-3">
               Få personlige anbefalinger basert på din treningshistorikk, runder og coachingøkter.

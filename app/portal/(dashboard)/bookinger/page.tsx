@@ -69,7 +69,7 @@ export default async function BookingerPage() {
             span={12}
             variant="solid"
             iconName="calendarCheck"
-            iconColor="text-green-500"
+            iconColor="text-[#2D6A4F]"
             title="Kommende treninger"
             subtitle={upcoming.length > 0 ? `${upcoming.length} planlagte` : "Ingen planlagte"}
             hover={false}

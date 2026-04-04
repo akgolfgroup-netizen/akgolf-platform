@@ -61,8 +61,8 @@ const TYPE_CONFIG: Record<
   SMS: {
     label: "SMS",
     icon: <MessageSquare className="w-3.5 h-3.5" />,
-    bg: "bg-green-50",
-    text: "text-green-700",
+    bg: "bg-[#2D6A4F]/5",
+    text: "text-[#2D6A4F]",
     border: "border-green-200",
   },
   NOTE: {
@@ -193,7 +193,7 @@ function NyLoggForm({
       />
 
       {feil && (
-        <p className="text-xs text-red-600">{feil}</p>
+        <p className="text-xs text-[#D14343]">{feil}</p>
       )}
 
       <div className="flex justify-end">

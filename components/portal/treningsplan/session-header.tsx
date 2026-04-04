@@ -81,7 +81,7 @@ export function SessionHeader({
             </div>
             <div className="w-12 h-12 rounded-full bg-[#262626] flex items-center justify-center">
               {progress === 100 ? (
-                <CheckCircle className="w-6 h-6 text-green-400" />
+                <CheckCircle className="w-6 h-6 text-[#2D6A4F]" />
               ) : (
                 <span className="text-sm font-semibold text-[var(--color-grey-900)]">{Math.round(progress)}%</span>
               )}
@@ -226,15 +226,15 @@ export function SessionCardCompact({
       onClick={onClick}
       className={`w-full text-left p-4 rounded-lg border transition-[border-color,background-color] ${
         isCompleted
-          ? "bg-green-500/5 border-green-500/30"
+          ? "bg-[#2D6A4F]/5 border-[#2D6A4F]/30"
           : "bg-[#1a1a1a] border-[#333] hover:border-[#444]"
       }`}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           {isCompleted ? (
-            <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-green-400" />
+            <div className="w-10 h-10 rounded-lg bg-[#2D6A4F]/20 flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-[#2D6A4F]" />
             </div>
           ) : (
             <div

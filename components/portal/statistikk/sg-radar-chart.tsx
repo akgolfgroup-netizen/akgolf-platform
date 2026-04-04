@@ -120,7 +120,7 @@ export function SGRadarChart({ playerSG, benchmark, showLegend = true }: SGRadar
               {diff !== null && (
                 <p
                   className={`text-[10px] font-medium ${
-                    isPositive ? "text-green-600" : "text-red-600"
+                    isPositive ? "text-[#2D6A4F]" : "text-[#D14343]"
                   }`}
                 >
                   {isPositive ? "+" : ""}

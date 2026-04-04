@@ -279,7 +279,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="fixed top-4 right-4 z-50 px-4 py-3 rounded-xl bg-[#16a34a] text-white text-sm font-medium shadow-lg"
+            className="fixed top-4 right-4 z-50 px-4 py-3 rounded-xl bg-[#2D6A4F] text-white text-sm font-medium shadow-lg"
           >
             Okt logget!
           </motion.div>

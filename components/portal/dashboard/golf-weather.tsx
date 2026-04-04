@@ -80,8 +80,8 @@ function calculatePlayability(weather: WeatherData): PlayabilityScore {
 const playabilityConfig: Record<PlayabilityScore, { label: string; color: string; bg: string; icon: React.ComponentType<{ className?: string }> }> = {
   excellent: {
     label: "Perfekt golfvar!",
-    color: "text-emerald-400",
-    bg: "bg-emerald-500/10",
+    color: "text-[#2D6A4F]",
+    bg: "bg-[#2D6A4F]/10",
     icon: CheckCircle,
   },
   good: {
@@ -98,8 +98,8 @@ const playabilityConfig: Record<PlayabilityScore, { label: string; color: string
   },
   poor: {
     label: "Krevende forhold",
-    color: "text-red-400",
-    bg: "bg-red-500/10",
+    color: "text-[#D14343]",
+    bg: "bg-[#D14343]/10",
     icon: XCircle,
   },
 };

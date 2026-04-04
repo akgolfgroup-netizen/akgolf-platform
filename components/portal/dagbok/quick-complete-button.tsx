@@ -47,11 +47,11 @@ export function QuickCompleteButton({
       style={{ opacity: loading ? 0.5 : 1 }}
     >
       {done ? (
-        <CheckCircle2 className="w-3 h-3 text-green-400" />
+        <CheckCircle2 className="w-3 h-3 text-[#2D6A4F]" />
       ) : (
-        <Circle className="w-3 h-3 text-[var(--color-grey-400)]/40 hover:text-green-400" />
+        <Circle className="w-3 h-3 text-[var(--color-grey-400)]/40 hover:text-[#2D6A4F]" />
       )}
-      <span className={done ? "text-green-400" : "text-[var(--color-grey-400)]/40"}>
+      <span className={done ? "text-[#2D6A4F]" : "text-[var(--color-grey-400)]/40"}>
         {done ? "Fullført" : "Fullfør"}
       </span>
     </button>

@@ -161,7 +161,7 @@ function GoalCard({
           background: isCompleted ? "rgba(34,197,94,0.15)" : "transparent",
         }}
       >
-        {isCompleted && <Check className="w-3 h-3 text-green-400" />}
+        {isCompleted && <Check className="w-3 h-3 text-[#2D6A4F]" />}
       </button>
 
       <div className="flex-1 min-w-0">
@@ -217,8 +217,8 @@ function GoalCard({
             <Pause className="w-3 h-3 text-[var(--color-grey-500)]" />
           </button>
         )}
-        <button onClick={onDelete} className="p-1 rounded hover:bg-red-500/10 transition-colors">
-          <Trash2 className="w-3 h-3 text-red-400/50 hover:text-red-400" />
+        <button onClick={onDelete} className="p-1 rounded hover:bg-[#D14343]/10 transition-colors">
+          <Trash2 className="w-3 h-3 text-[#D14343]/50 hover:text-[#D14343]" />
         </button>
       </div>
     </motion.div>

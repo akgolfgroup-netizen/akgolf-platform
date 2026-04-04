@@ -60,10 +60,10 @@ export function LPhaseTag({ phase, className = "" }: TagProps & { phase: LPhase 
 
 export function ClubSpeedTag({ cs, className = "" }: TagProps & { cs: number }) {
   const getColor = () => {
-    if (cs <= 40) return "bg-green-500/20 text-green-400";
+    if (cs <= 40) return "bg-[#2D6A4F]/20 text-[#2D6A4F]";
     if (cs <= 60) return "bg-yellow-500/20 text-yellow-400";
     if (cs <= 80) return "bg-orange-500/20 text-orange-400";
-    return "bg-red-500/20 text-red-400";
+    return "bg-[#D14343]/20 text-[#D14343]";
   };
 
   return (
@@ -91,9 +91,9 @@ export function EnvironmentTag({ env, className = "" }: TagProps & { env: MEnvir
 export function PressTag({ press, className = "" }: TagProps & { press: PRLevel }) {
   const pressData = PR_LEVELS[press];
   const getColor = () => {
-    if (press <= 2) return "bg-green-500/20 text-green-400";
+    if (press <= 2) return "bg-[#2D6A4F]/20 text-[#2D6A4F]";
     if (press === 3) return "bg-yellow-500/20 text-yellow-400";
-    return "bg-red-500/20 text-red-400";
+    return "bg-[#D14343]/20 text-[#D14343]";
   };
 
   return (
@@ -199,7 +199,7 @@ interface AreaCategoryBadgeProps {
 export function AreaCategoryBadge({ category, className = "" }: AreaCategoryBadgeProps) {
   const config = {
     FULL_SWING: { label: "Full Swing", color: "bg-blue-500/20 text-blue-400" },
-    SHORT_GAME: { label: "Naerspill", color: "bg-green-500/20 text-green-400" },
+    SHORT_GAME: { label: "Naerspill", color: "bg-[#2D6A4F]/20 text-[#2D6A4F]" },
     PUTTING: { label: "Putting", color: "bg-purple-500/20 text-purple-400" },
   };
 

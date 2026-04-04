@@ -55,7 +55,7 @@ const statusBadges: Record<
   },
   AI_READY: {
     label: "AI klar",
-    className: "bg-green-500/20 text-green-600",
+    className: "bg-[#2D6A4F]/20 text-[#2D6A4F]",
     icon: <Bot className="h-3 w-3" />,
   },
   APPROVED: {
@@ -70,7 +70,7 @@ const statusBadges: Record<
   },
   FAILED: {
     label: "Feilet",
-    className: "bg-red-500/20 text-red-600",
+    className: "bg-[#D14343]/20 text-[#D14343]",
     icon: <Clock className="h-3 w-3" />,
   },
 };

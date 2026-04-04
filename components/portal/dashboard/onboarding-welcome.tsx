@@ -207,7 +207,7 @@ export function OnboardingWelcome({
                     transition={{ delay: idx * 0.1 }}
                     className={`relative p-4 rounded-xl transition-[background-color,border-color] duration-300 ${
                       step.completed
-                        ? "bg-emerald-500/5 border border-emerald-500/20"
+                        ? "bg-[#2D6A4F]/5 border border-[#2D6A4F]/20"
                         : isActive
                         ? "bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]"
                         : "bg-white/[0.02] border border-white/5 hover:bg-[var(--color-grey-100)]"
@@ -219,7 +219,7 @@ export function OnboardingWelcome({
                       <div
                         className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
                           step.completed
-                            ? "bg-emerald-500"
+                            ? "bg-[#2D6A4F]"
                             : isActive
                             ? "bg-gradient-to-br from-[var(--color-grey-200)] to-[var(--color-grey-100)]"
                             : "bg-[var(--color-grey-100)]"
@@ -241,7 +241,7 @@ export function OnboardingWelcome({
                         <p
                           className={`text-sm font-medium ${
                             step.completed
-                              ? "text-emerald-400 line-through"
+                              ? "text-[#2D6A4F] line-through"
                               : "text-white"
                           }`}
                         >

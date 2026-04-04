@@ -27,10 +27,10 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  CONFIRMED: "bg-green-100 text-green-700",
+  CONFIRMED: "bg-[#2D6A4F]/10 text-[#2D6A4F]",
   PENDING: "bg-amber-100 text-amber-700",
   COMPLETED: "bg-[var(--color-grey-100)] text-[var(--color-grey-600)]",
-  NO_SHOW: "bg-red-100 text-red-700",
+  NO_SHOW: "bg-[#D14343]/10 text-[#D14343]",
   CANCELLED: "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]",
 };
 

@@ -30,9 +30,9 @@ export function StatComparisonRow({
       <span
         className={`text-sm font-bold w-16 text-right ${
           isBetter === true
-            ? "text-green-400"
+            ? "text-[#2D6A4F]"
             : isBetter === false
-            ? "text-red-400"
+            ? "text-[#D14343]"
             : "text-[var(--color-grey-900)]"
         }`}
       >

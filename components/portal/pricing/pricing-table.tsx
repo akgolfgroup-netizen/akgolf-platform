@@ -111,7 +111,7 @@ export function PricingTable({
           }`}
         >
           Arlig
-          <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full">
+          <span className="px-2 py-0.5 bg-[#2D6A4F]/10 text-[#2D6A4F] text-xs rounded-full">
             Spar opptil 17%
           </span>
         </button>
@@ -175,7 +175,7 @@ export function PricingTable({
                   )}
                 </div>
                 {interval === "year" && savingsPercent > 0 && (
-                  <p className="text-xs text-green-600 mt-1">
+                  <p className="text-xs text-[#2D6A4F] mt-1">
                     Spar {savingsPercent}% vs. manedlig
                   </p>
                 )}
@@ -191,7 +191,7 @@ export function PricingTable({
                     }`}
                   >
                     {feature.included ? (
-                      <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                      <Check className="h-4 w-4 text-[#2D6A4F] flex-shrink-0" />
                     ) : (
                       <X className="h-4 w-4 text-grey-300 flex-shrink-0" />
                     )}

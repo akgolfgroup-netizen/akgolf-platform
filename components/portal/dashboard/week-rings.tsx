@@ -32,8 +32,8 @@ export function WeekRings({ days, weekStart }: WeekRingsProps) {
           <p className="text-xs text-[var(--portal-text-muted)] mt-0.5">{weekStart}</p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-            <span className="text-xs font-medium text-emerald-400">
+          <div className="px-3 py-1 rounded-full bg-[#2D6A4F]/10 border border-[#2D6A4F]/20">
+            <span className="text-xs font-medium text-[#2D6A4F]">
               {completedDays}/{days.length} dager
             </span>
           </div>
@@ -98,7 +98,7 @@ export function WeekRings({ days, weekStart }: WeekRingsProps) {
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.5 + idx * 0.05, type: "spring" }}
                     >
-                      <Check className="w-5 h-5 text-emerald-400" />
+                      <Check className="w-5 h-5 text-[#2D6A4F]" />
                     </motion.div>
                   ) : day.isToday ? (
                     <motion.div

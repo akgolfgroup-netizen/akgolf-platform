@@ -102,9 +102,9 @@ export function ScoreTrendChart({
           <p
             className={`text-xl font-bold ${
               trend < 0
-                ? "text-green-600"
+                ? "text-[#2D6A4F]"
                 : trend > 0
-                  ? "text-red-600"
+                  ? "text-[#D14343]"
                   : "text-[var(--color-grey-900)]"
             }`}
           >
@@ -176,7 +176,7 @@ export function ScoreTrendChart({
               <Line
                 type="monotone"
                 dataKey="movingAvg"
-                stroke="#16a34a"
+                stroke="#2D6A4F"
                 strokeWidth={2}
                 strokeDasharray="5 5"
                 dot={false}

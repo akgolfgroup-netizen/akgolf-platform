@@ -33,7 +33,7 @@ const channels: {
     value: "EMAIL",
     label: "E-post",
     icon: <Mail className="h-4 w-4" />,
-    color: "bg-red-500",
+    color: "bg-[#D14343]",
   },
   {
     value: "INSTAGRAM",
@@ -51,13 +51,13 @@ const channels: {
     value: "WHATSAPP",
     label: "WhatsApp",
     icon: <Phone className="h-4 w-4" />,
-    color: "bg-green-500",
+    color: "bg-[#2D6A4F]",
   },
   {
     value: "IMESSAGE",
     label: "iMessage",
     icon: <MessageSquare className="h-4 w-4" />,
-    color: "bg-emerald-500",
+    color: "bg-[#2D6A4F]",
   },
 ];
 
@@ -90,7 +90,7 @@ export function ChannelFilter({
           </span>
           {channel.label}
           {counts[channel.value] > 0 && (
-            <span className="ml-1 rounded-full bg-red-500 px-2 py-0.5 text-xs text-white">
+            <span className="ml-1 rounded-full bg-[#D14343] px-2 py-0.5 text-xs text-white">
               {counts[channel.value]}
             </span>
           )}

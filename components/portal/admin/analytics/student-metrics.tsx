@@ -31,8 +31,8 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
         className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6"
       >
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
-            <Trophy className="w-5 h-5 text-green-600" />
+          <div className="w-10 h-10 rounded-xl bg-[#2D6A4F]/5 flex items-center justify-center">
+            <Trophy className="w-5 h-5 text-[#2D6A4F]" />
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[var(--color-grey-900)]">
@@ -67,7 +67,7 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
                     {player.name}
                   </span>
                 </div>
-                <div className="flex items-center gap-1 text-green-600">
+                <div className="flex items-center gap-1 text-[#2D6A4F]">
                   <TrendingDown className="w-4 h-4" />
                   <span className="text-sm font-semibold">
                     -{player.hcpChange.toFixed(1)}
@@ -124,7 +124,7 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
               }}
             />
             <div
-              className="bg-red-400 transition-[width] duration-500"
+              className="bg-[#D14343] transition-[width] duration-500"
               style={{
                 width: `${
                   data.activeStudents + data.churnedStudents > 0
@@ -140,13 +140,13 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
 
         {/* No-show warning */}
         {isHighNoShow && (
-          <div className="flex items-start gap-3 p-3 rounded-xl bg-red-50 border border-red-100">
-            <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-3 p-3 rounded-xl bg-[#D14343]/5 border border-red-100">
+            <AlertTriangle className="w-5 h-5 text-[#D14343] flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-medium text-red-800">
                 Hoy no-show rate: {noShowRate.toFixed(1)}%
               </p>
-              <p className="text-xs text-red-600 mt-0.5">
+              <p className="text-xs text-[#D14343] mt-0.5">
                 Vurder a sende paminnelser eller justere avbestillingsregler
               </p>
             </div>
@@ -154,17 +154,17 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
         )}
 
         {!isHighNoShow && (
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-green-50 border border-green-100">
-            <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-              <span className="text-sm font-bold text-green-700">
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-[#2D6A4F]/5 border border-green-100">
+            <div className="w-8 h-8 rounded-full bg-[#2D6A4F]/10 flex items-center justify-center">
+              <span className="text-sm font-bold text-[#2D6A4F]">
                 {noShowRate.toFixed(0)}%
               </span>
             </div>
             <div>
-              <p className="text-sm font-medium text-green-800">
+              <p className="text-sm font-medium text-[#2D6A4F]">
                 No-show rate under kontroll
               </p>
-              <p className="text-xs text-green-600">
+              <p className="text-xs text-[#2D6A4F]">
                 {data.noShowCount} av {data.totalBookings} bookinger
               </p>
             </div>

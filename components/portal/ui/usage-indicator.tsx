@@ -46,7 +46,7 @@ export function UsageIndicator({
         {onUpgradeClick && (
           <button
             onClick={onUpgradeClick}
-            className="text-xs font-medium text-[#16a34a] hover:underline"
+            className="text-xs font-medium text-[#2D6A4F] hover:underline"
           >
             Oppgrader
           </button>
@@ -76,7 +76,7 @@ export function UsageIndicator({
               className="h-full rounded-full transition-[width] duration-300"
               style={{
                 width: `${logPercentage}%`,
-                background: isLogNearLimit ? "#FF9500" : "#16a34a",
+                background: isLogNearLimit ? "#FF9500" : "#2D6A4F",
               }}
             />
           </div>
@@ -104,7 +104,7 @@ export function UsageIndicator({
               className="h-full rounded-full transition-[width] duration-300"
               style={{
                 width: `${aiPercentage}%`,
-                background: isAiNearLimit ? "#FF9500" : "#16a34a",
+                background: isAiNearLimit ? "#FF9500" : "#2D6A4F",
               }}
             />
           </div>

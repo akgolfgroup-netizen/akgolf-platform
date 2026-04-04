@@ -65,8 +65,8 @@ export function HeroStats({
                     transition={{ delay: 0.4 }}
                     className={`flex items-center gap-1 px-2 py-1 rounded-full text-sm font-semibold ${
                       isImproving
-                        ? "bg-emerald-500/20 text-emerald-400"
-                        : "bg-red-500/20 text-red-400"
+                        ? "bg-[#2D6A4F]/20 text-[#2D6A4F]"
+                        : "bg-[#D14343]/20 text-[#D14343]"
                     }`}
                   >
                     {isImproving ? (

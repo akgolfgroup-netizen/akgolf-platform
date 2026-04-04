@@ -68,10 +68,10 @@ export function MessageDetail({
 
   const confidenceColor =
     message.aiResponse && message.aiResponse.confidence >= 0.8
-      ? "text-green-600"
+      ? "text-[#2D6A4F]"
       : message.aiResponse && message.aiResponse.confidence >= 0.5
         ? "text-yellow-600"
-        : "text-red-600";
+        : "text-[#D14343]";
 
   return (
     <div className="flex flex-col h-full bg-white">
@@ -186,7 +186,7 @@ export function MessageDetail({
               variant="ghost"
               onClick={handleReject}
               disabled={isSending}
-              className="text-red-500 hover:text-red-600"
+              className="text-[#D14343] hover:text-[#D14343]"
             >
               <X className="h-4 w-4 mr-2" />
               Forkast
@@ -206,7 +206,7 @@ export function MessageDetail({
       {/* Already sent/approved */}
       {(message.status === "SENT" || message.status === "APPROVED") && (
         <div className="p-4 border-t border-[var(--color-grey-200)]">
-          <p className="text-center text-green-600 text-sm">
+          <p className="text-center text-[#2D6A4F] text-sm">
             Denne meldingen er allerede besvart
           </p>
         </div>
@@ -215,7 +215,7 @@ export function MessageDetail({
       {/* Failed */}
       {message.status === "FAILED" && (
         <div className="p-4 border-t border-[var(--color-grey-200)]">
-          <p className="text-center text-red-500 text-sm">
+          <p className="text-center text-[#D14343] text-sm">
             Denne meldingen ble forkastet
           </p>
         </div>

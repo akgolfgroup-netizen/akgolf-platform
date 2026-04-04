@@ -72,7 +72,7 @@ export function TierGate({
             href="/portal/oppgrader"
             className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-semibold transition-transform hover:scale-105"
             style={{
-              background: "#16a34a",
+              background: "#2D6A4F",
               color: "white",
             }}
           >

@@ -115,7 +115,7 @@ export function PlayerProgressionChart({
         {improvement !== 0 && (
           <div>
             <p className="text-xs text-[var(--color-grey-500)] uppercase tracking-wider">Endring</p>
-            <p className={`text-lg font-semibold ${improvement > 0 ? "text-green-600" : "text-red-500"}`}>
+            <p className={`text-lg font-semibold ${improvement > 0 ? "text-[#2D6A4F]" : "text-[#D14343]"}`}>
               {improvement > 0 ? "-" : "+"}{Math.abs(improvement).toFixed(1)}
             </p>
           </div>

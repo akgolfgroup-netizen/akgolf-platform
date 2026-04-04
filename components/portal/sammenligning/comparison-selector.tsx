@@ -145,7 +145,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
               Henter spillere...
             </div>
           ) : playerError ? (
-            <div className="flex items-center gap-2 text-xs text-red-400">
+            <div className="flex items-center gap-2 text-xs text-[#D14343]">
               <AlertCircle className="w-4 h-4" />
               {playerError}
             </div>

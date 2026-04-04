@@ -43,7 +43,7 @@ export function ExerciseCard({
     <div
       className={`rounded-lg border transition-[border-color,background-color,box-shadow] ${
         exercise.completed
-          ? "bg-green-500/5 border-green-500/30"
+          ? "bg-[#2D6A4F]/5 border-[#2D6A4F]/30"
           : isActive
           ? "bg-[var(--color-grey-900)]/5 border-[var(--color-grey-900)]/50 ring-1 ring-[var(--color-grey-900)]/30"
           : "bg-[#1a1a1a] border-[#333] hover:border-[#444]"
@@ -57,8 +57,8 @@ export function ExerciseCard({
         {/* Index / Checkbox */}
         <div className="flex-shrink-0">
           {exercise.completed ? (
-            <div className="w-7 h-7 rounded-full bg-green-500/20 flex items-center justify-center">
-              <Check className="w-4 h-4 text-green-400" />
+            <div className="w-7 h-7 rounded-full bg-[#2D6A4F]/20 flex items-center justify-center">
+              <Check className="w-4 h-4 text-[#2D6A4F]" />
             </div>
           ) : (
             <div className="w-7 h-7 rounded-full bg-[#262626] flex items-center justify-center text-sm font-medium text-[#737373]">
@@ -220,7 +220,7 @@ export function ExerciseCard({
                 {/* Complete button */}
                 <button
                   onClick={handleComplete}
-                  className="w-full py-2 rounded-lg bg-green-500/20 text-green-400 font-medium hover:bg-green-500/30 transition-colors"
+                  className="w-full py-2 rounded-lg bg-[#2D6A4F]/20 text-[#2D6A4F] font-medium hover:bg-[#2D6A4F]/30 transition-colors"
                 >
                   Marker som fullfort
                 </button>

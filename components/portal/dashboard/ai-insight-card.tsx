@@ -142,7 +142,7 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
               {/* Strengths */}
               {insight.strengths.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold text-green-700 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                  <p className="text-xs font-semibold text-[#2D6A4F] uppercase tracking-wide mb-2 flex items-center gap-1.5">
                     <CheckCircle className="w-3.5 h-3.5" />
                     Styrker
                   </p>
@@ -152,7 +152,7 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
                         key={i}
                         className="text-sm text-[var(--color-grey-600)] flex items-start gap-2"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#2D6A4F] mt-1.5 flex-shrink-0" />
                         {strength}
                       </li>
                     ))}

@@ -17,8 +17,8 @@ interface PeerBenchmarkCardProps {
 }
 
 function getTrendIcon(diff: number) {
-  if (diff > 0.1) return <TrendingUp className="w-4 h-4 text-green-500" />;
-  if (diff < -0.1) return <TrendingDown className="w-4 h-4 text-red-500" />;
+  if (diff > 0.1) return <TrendingUp className="w-4 h-4 text-[#2D6A4F]" />;
+  if (diff < -0.1) return <TrendingDown className="w-4 h-4 text-[#D14343]" />;
   return <Minus className="w-4 h-4 text-[var(--color-grey-400)]" />;
 }
 
@@ -157,7 +157,7 @@ export function PeerBenchmarkCard({ handicap, playerSG, avgScore }: PeerBenchmar
               {diff !== null && (
                 <p
                   className={`text-xs mt-1 font-medium ${
-                    diff > 0 ? "text-green-600" : diff < 0 ? "text-red-600" : "text-[var(--color-grey-500)]"
+                    diff > 0 ? "text-[#2D6A4F]" : diff < 0 ? "text-[#D14343]" : "text-[var(--color-grey-500)]"
                   }`}
                 >
                   {diff > 0 ? "+" : ""}
@@ -188,9 +188,9 @@ export function PeerBenchmarkCard({ handicap, playerSG, avgScore }: PeerBenchmar
             <p
               className={`text-xs font-medium ${
                 avgScore < benchmark.averageScore
-                  ? "text-green-600"
+                  ? "text-[#2D6A4F]"
                   : avgScore > benchmark.averageScore
-                    ? "text-red-600"
+                    ? "text-[#D14343]"
                     : "text-[var(--color-grey-500)]"
               }`}
             >

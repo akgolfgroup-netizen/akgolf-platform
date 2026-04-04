@@ -47,7 +47,7 @@ export function UpsellBanner({
           <div
             className="rounded-2xl p-4 shadow-lg"
             style={{
-              background: "linear-gradient(135deg, #16a34a 0%, #15803d 100%)",
+              background: "linear-gradient(135deg, #2D6A4F 0%, #1B4332 100%)",
             }}
           >
             {dismissible && (
@@ -69,7 +69,7 @@ export function UpsellBanner({
                 <p className="text-xs text-white/80 mb-3">{description}</p>
                 <button
                   onClick={() => setShowPaywall(true)}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold bg-white text-[#16a34a] hover:bg-white/90 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold bg-white text-[#2D6A4F] hover:bg-white/90 transition-colors"
                 >
                   <Zap className="w-3.5 h-3.5" />
                   Oppgrader til {tierLabel}
@@ -102,7 +102,7 @@ export function UpsellBanner({
           {dismissible && (
             <button
               onClick={handleDismiss}
-              className="absolute top-3 right-3 p-1.5 rounded-lg hover:bg-[#16a34a]/10 transition-colors"
+              className="absolute top-3 right-3 p-1.5 rounded-lg hover:bg-[#2D6A4F]/10 transition-colors"
             >
               <X className="w-4 h-4 text-[var(--color-grey-400)]" />
             </button>
@@ -112,7 +112,7 @@ export function UpsellBanner({
               className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
               style={{ background: "rgba(22, 163, 74, 0.15)" }}
             >
-              <Sparkles className="w-6 h-6 text-[#16a34a]" />
+              <Sparkles className="w-6 h-6 text-[#2D6A4F]" />
             </div>
             <div className="flex-1">
               <p className="text-sm font-semibold text-[var(--color-grey-900)] mb-1">
@@ -125,7 +125,7 @@ export function UpsellBanner({
                 onClick={() => setShowPaywall(true)}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-[transform,background-color] hover:scale-105"
                 style={{
-                  background: "#16a34a",
+                  background: "#2D6A4F",
                   color: "white",
                 }}
               >
@@ -161,7 +161,7 @@ export function UpsellBanner({
             className="w-8 h-8 rounded-lg flex items-center justify-center"
             style={{ background: "rgba(22, 163, 74, 0.15)" }}
           >
-            <Sparkles className="w-4 h-4 text-[#16a34a]" />
+            <Sparkles className="w-4 h-4 text-[#2D6A4F]" />
           </div>
           <div>
             <p className="text-xs font-medium text-[var(--color-grey-900)]">
@@ -176,7 +176,7 @@ export function UpsellBanner({
           onClick={() => setShowPaywall(true)}
           className="flex items-center gap-1 px-3 py-1.5 rounded-full text-[10px] font-semibold transition-[transform,background-color] hover:scale-105"
           style={{
-            background: "#16a34a",
+            background: "#2D6A4F",
             color: "white",
           }}
         >
@@ -186,7 +186,7 @@ export function UpsellBanner({
         {dismissible && (
           <button
             onClick={handleDismiss}
-            className="ml-2 p-1 rounded-lg hover:bg-[#16a34a]/10 transition-colors"
+            className="ml-2 p-1 rounded-lg hover:bg-[#2D6A4F]/10 transition-colors"
           >
             <X className="w-3.5 h-3.5 text-[var(--color-grey-400)]" />
           </button>

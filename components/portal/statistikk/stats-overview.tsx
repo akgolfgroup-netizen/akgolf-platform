@@ -21,9 +21,9 @@ function TrendIcon({ trend, invertColor }: { trend: "up" | "down" | "flat"; inve
   if (trend === "flat") return <Minus className="w-3 h-3 text-[var(--color-grey-500)]" />;
   const isGood = invertColor ? trend === "down" : trend === "up";
   return trend === "up" ? (
-    <TrendingUp className={`w-3 h-3 ${isGood ? "text-green-400" : "text-red-400"}`} />
+    <TrendingUp className={`w-3 h-3 ${isGood ? "text-[#2D6A4F]" : "text-[#D14343]"}`} />
   ) : (
-    <TrendingDown className={`w-3 h-3 ${isGood ? "text-green-400" : "text-red-400"}`} />
+    <TrendingDown className={`w-3 h-3 ${isGood ? "text-[#2D6A4F]" : "text-[#D14343]"}`} />
   );
 }
 

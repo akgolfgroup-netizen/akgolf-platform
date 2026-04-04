@@ -109,7 +109,7 @@ export function PremiumChecklist({
                 transition={{ delay: idx * 0.05, duration: 0.3 }}
                 className={`group relative flex items-center gap-4 p-4 rounded-xl transition-[background-color] duration-200 ${
                   item.completed
-                    ? "bg-emerald-500/5"
+                    ? "bg-[#2D6A4F]/5"
                     : "hover:bg-[var(--color-grey-100)] cursor-pointer"
                 }`}
               >
@@ -121,7 +121,7 @@ export function PremiumChecklist({
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 500, damping: 15 }}
                     >
-                      <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center">
+                      <div className="w-6 h-6 rounded-full bg-[#2D6A4F] flex items-center justify-center">
                         <CheckCircle2 className="w-4 h-4 text-white" />
                       </div>
                     </motion.div>
@@ -137,7 +137,7 @@ export function PremiumChecklist({
                       initial={{ scale: 1, opacity: 0.5 }}
                       animate={{ scale: 2.5, opacity: 0 }}
                       transition={{ duration: 0.5 }}
-                      className="absolute inset-0 rounded-full bg-emerald-500"
+                      className="absolute inset-0 rounded-full bg-[#2D6A4F]"
                     />
                   )}
                 </div>

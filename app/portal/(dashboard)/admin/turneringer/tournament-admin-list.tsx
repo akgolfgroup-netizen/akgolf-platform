@@ -136,13 +136,13 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
       </div>
 
       {syncError && (
-        <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+        <div className="mb-4 p-3 rounded-xl bg-[#D14343]/10 border border-[#D14343]/20 text-[#D14343] text-xs">
           {syncError}
         </div>
       )}
 
       {syncResult && (
-        <div className="mb-4 p-3 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400 text-xs">
+        <div className="mb-4 p-3 rounded-xl bg-[#2D6A4F]/10 border border-[#2D6A4F]/20 text-[#2D6A4F] text-xs">
           {syncResult.created} opprettet, {syncResult.updated} oppdatert fra {syncResult.sources.join(", ")}
         </div>
       )}
@@ -213,7 +213,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                   <button
                     onClick={() => handleDelete(t)}
                     disabled={deletingId === t.id}
-                    className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors text-[var(--color-grey-500)] hover:text-red-400"
+                    className="p-1.5 rounded-lg hover:bg-[#D14343]/10 transition-colors text-[var(--color-grey-500)] hover:text-[#D14343]"
                     title="Slett"
                   >
                     {deletingId === t.id ? (

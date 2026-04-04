@@ -111,7 +111,7 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
                   <div
                     className={cn(
                       "shrink-0 w-10 h-10 rounded-full flex items-center justify-center",
-                      dialog.variant === "danger" && "bg-red-500/20",
+                      dialog.variant === "danger" && "bg-[#D14343]/20",
                       dialog.variant === "warning" && "bg-amber-500/20",
                       (!dialog.variant || dialog.variant === "default") && "bg-[var(--color-grey-900)]/20"
                     )}
@@ -120,7 +120,7 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
                       aria-hidden="true"
                       className={cn(
                         "w-5 h-5",
-                        dialog.variant === "danger" && "text-red-400",
+                        dialog.variant === "danger" && "text-[#D14343]",
                         dialog.variant === "warning" && "text-amber-400",
                         (!dialog.variant || dialog.variant === "default") && "text-[var(--color-grey-900)]"
                       )}
@@ -159,7 +159,7 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
                     className={cn(
                       "px-4 py-2.5 rounded-xl text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
                       dialog.variant === "danger" &&
-                        "bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-400",
+                        "bg-[#D14343] text-white hover:bg-[#D14343] focus-visible:ring-[#D14343]",
                       dialog.variant === "warning" &&
                         "bg-amber-500 text-white hover:bg-amber-600 focus-visible:ring-amber-400",
                       (!dialog.variant || dialog.variant === "default") &&

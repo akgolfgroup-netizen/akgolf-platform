@@ -24,18 +24,18 @@ interface AppleBadgeProps {
 }
 
 const variantMap = {
-  success: "bg-green-50 text-green-600 border-green-100",
+  success: "bg-[#2D6A4F]/5 text-[#2D6A4F] border-green-100",
   warning: "bg-amber-50 text-amber-600 border-amber-100",
-  error: "bg-red-50 text-red-600 border-red-100",
+  error: "bg-[#D14343]/5 text-[#D14343] border-red-100",
   info: "bg-blue-50 text-blue-600 border-blue-100",
   dark: "bg-[var(--color-grey-100)] text-[var(--color-grey-900)] border-[var(--color-grey-200)]",
   neutral: "bg-[var(--color-grey-100)] text-[var(--color-grey-600)] border-[var(--color-grey-200)]",
 };
 
 const dotColorMap = {
-  success: "bg-green-500",
+  success: "bg-[#2D6A4F]",
   warning: "bg-amber-500",
-  error: "bg-red-500",
+  error: "bg-[#D14343]",
   info: "bg-blue-500",
   dark: "bg-[var(--color-grey-900)]",
   neutral: "bg-[var(--color-grey-500)]",

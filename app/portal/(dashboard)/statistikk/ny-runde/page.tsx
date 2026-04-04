@@ -233,8 +233,8 @@ export default function NyRundePage() {
 
         {/* Feilmelding */}
         {error && (
-          <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-            <p className="text-sm text-red-400">{error}</p>
+          <div className="p-3 rounded-lg bg-[#D14343]/10 border border-[#D14343]/30">
+            <p className="text-sm text-[#D14343]">{error}</p>
           </div>
         )}
 

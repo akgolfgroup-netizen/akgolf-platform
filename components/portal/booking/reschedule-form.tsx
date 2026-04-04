@@ -104,10 +104,10 @@ export function RescheduleForm({
 
   if (success) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
-        <Check className="w-8 h-8 text-green-500 mx-auto mb-3" />
-        <p className="text-green-800 font-semibold">Tidspunktet er endret!</p>
-        <p className="text-green-600 text-sm mt-1">
+      <div className="bg-[#2D6A4F]/5 border border-green-200 rounded-xl p-8 text-center">
+        <Check className="w-8 h-8 text-[#2D6A4F] mx-auto mb-3" />
+        <p className="text-[#2D6A4F] font-semibold">Tidspunktet er endret!</p>
+        <p className="text-[#2D6A4F] text-sm mt-1">
           Du sendes tilbake til bookingene dine...
         </p>
       </div>
@@ -190,7 +190,7 @@ export function RescheduleForm({
       </div>
 
       {error && (
-        <p className="text-sm text-red-600 bg-red-50 rounded-lg px-4 py-2">
+        <p className="text-sm text-[#D14343] bg-[#D14343]/5 rounded-lg px-4 py-2">
           {error}
         </p>
       )}

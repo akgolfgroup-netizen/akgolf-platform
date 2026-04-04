@@ -80,7 +80,7 @@ export function CalendarSyncSettings() {
               title="Kopier URL"
             >
               {copied ? (
-                <Check className="w-3.5 h-3.5 text-green-400" />
+                <Check className="w-3.5 h-3.5 text-[#2D6A4F]" />
               ) : (
                 <Copy className="w-3.5 h-3.5" />
               )}

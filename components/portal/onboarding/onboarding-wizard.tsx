@@ -71,7 +71,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
               }`}
               style={{
                 background:
-                  s <= step ? "#16a34a" : "var(--color-grey-200)",
+                  s <= step ? "#2D6A4F" : "var(--color-grey-200)",
               }}
             />
           ))}
@@ -103,20 +103,20 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                     key={goal.id}
                     onClick={() => toggleGoal(goal.id)}
                     className={`p-4 rounded-xl text-left transition-[background-color,border-color] ${
-                      isSelected ? "ring-2 ring-[#16a34a]" : ""
+                      isSelected ? "ring-2 ring-[#2D6A4F]" : ""
                     }`}
                     style={{
                       background: isSelected
                         ? "rgba(22, 163, 74, 0.05)"
                         : "var(--color-grey-50)",
-                      border: `1px solid ${isSelected ? "#16a34a" : "var(--color-grey-200)"}`,
+                      border: `1px solid ${isSelected ? "#2D6A4F" : "var(--color-grey-200)"}`,
                     }}
                   >
                     <div className="flex items-center gap-3">
                       {isSelected ? (
                         <div
                           className="w-5 h-5 rounded-full flex items-center justify-center"
-                          style={{ background: "#16a34a" }}
+                          style={{ background: "#2D6A4F" }}
                         >
                           <Check className="w-3 h-3 text-white" />
                         </div>
@@ -129,7 +129,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                       <span
                         className={`text-sm font-medium ${
                           isSelected
-                            ? "text-[#16a34a]"
+                            ? "text-[#2D6A4F]"
                             : "text-[var(--color-grey-700)]"
                         }`}
                       >
@@ -188,13 +188,13 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                     key={freq.id}
                     onClick={() => setFrequency(freq.id)}
                     className={`w-full p-4 rounded-xl text-left transition-[background-color,border-color] ${
-                      isSelected ? "ring-2 ring-[#16a34a]" : ""
+                      isSelected ? "ring-2 ring-[#2D6A4F]" : ""
                     }`}
                     style={{
                       background: isSelected
                         ? "rgba(22, 163, 74, 0.05)"
                         : "var(--color-grey-50)",
-                      border: `1px solid ${isSelected ? "#16a34a" : "var(--color-grey-200)"}`,
+                      border: `1px solid ${isSelected ? "#2D6A4F" : "var(--color-grey-200)"}`,
                     }}
                   >
                     <div className="flex items-center justify-between">
@@ -202,7 +202,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                         <p
                           className={`font-medium ${
                             isSelected
-                              ? "text-[#16a34a]"
+                              ? "text-[#2D6A4F]"
                               : "text-[var(--color-grey-900)]"
                           }`}
                         >
@@ -215,7 +215,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                       {isSelected ? (
                         <div
                           className="w-5 h-5 rounded-full flex items-center justify-center"
-                          style={{ background: "#16a34a" }}
+                          style={{ background: "#2D6A4F" }}
                         >
                           <Check className="w-3 h-3 text-white" />
                         </div>
@@ -256,7 +256,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{ background: "rgba(22, 163, 74, 0.1)" }}
               >
-                <PenLine className="w-6 h-6 text-[#16a34a]" />
+                <PenLine className="w-6 h-6 text-[#2D6A4F]" />
               </div>
               <h1 className="text-2xl font-bold text-[var(--color-grey-900)] mb-2">
                 Du er klar!
@@ -320,7 +320,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
               onClick={handleComplete}
               className="w-full py-3 rounded-full font-semibold text-sm flex items-center justify-center gap-2 transition-transform hover:scale-[1.02]"
               style={{
-                background: "#16a34a",
+                background: "#2D6A4F",
                 color: "white",
               }}
             >

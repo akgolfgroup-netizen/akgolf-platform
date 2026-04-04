@@ -63,9 +63,9 @@ function KPICard({
           <div
             className={`flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${
               isPositive
-                ? "bg-green-50 text-green-600"
+                ? "bg-[#2D6A4F]/5 text-[#2D6A4F]"
                 : isNegative
-                  ? "bg-red-50 text-red-600"
+                  ? "bg-[#D14343]/5 text-[#D14343]"
                   : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]"
             }`}
           >

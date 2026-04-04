@@ -40,7 +40,7 @@ interface PersonalInsightsProps {
 
 const typeConfig: Record<InsightType, { icon: React.ComponentType<{ className?: string }>; color: string; bg: string }> = {
   tip: { icon: Lightbulb, color: "text-amber-500", bg: "bg-amber-500/10" },
-  trend: { icon: TrendingUp, color: "text-emerald-500", bg: "bg-emerald-500/10" },
+  trend: { icon: TrendingUp, color: "text-[#2D6A4F]", bg: "bg-[#2D6A4F]/10" },
   suggestion: { icon: Target, color: "text-blue-500", bg: "bg-blue-500/10" },
   achievement: { icon: Flame, color: "text-orange-500", bg: "bg-orange-500/10" },
   reminder: { icon: Calendar, color: "text-purple-500", bg: "bg-purple-500/10" },
