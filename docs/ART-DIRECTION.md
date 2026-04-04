@@ -77,13 +77,13 @@ Alt AI-generert bruker:
 - Label: "AI-DREVET" eller "AI-ANBEFALING" i uppercase, var(--color-ai-text)
 - Knapp: bg var(--color-ai), text hvit, rounded-[980px]
 
-### Logo-prikk — gra som default (NYTT)
+### Logo-prikk — groenn som default
 
 | Variant | Monogram | Prikk | Kontekst |
 |---------|----------|-------|----------|
-| Primary | Sort (#1D1D1F) | Gra (#D2D2D7) | Lys bakgrunn — HOVEDLOGO |
+| Primary | Sort (#1D1D1F) | Groenn (#2D6A4F) | Lys bakgrunn — HOVEDLOGO |
 | Inverted | Hvit (#FFFFFF) | Groenn (#40916C) | Moerk bakgrunn (hero, footer) |
-| Neutral | Sort (#1D1D1F) | Gra (#D2D2D7) | Diskre (faktura, kontrakt) |
+| Neutral | Sort (#1D1D1F) | Gra (#D2D2D7) | Diskre (faktura, kontrakt, admin) |
 
 ### WCAG kontrast-notat
 

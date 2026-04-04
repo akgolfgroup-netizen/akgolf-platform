@@ -271,7 +271,7 @@ Supabase Auth (ingen NextAuth/Auth.js):
 - **Farger:** "Sort. Hvit. En gronn." — #1D1D1F base + AK Green #2D6A4F (brand).
 - **Semantikk:** Success=#34C759, Error=#FF3B30, Warning=#FF9500 (Apple-standard).
 - **AI-elementer:** Lilla (#AF52DE / #FAF5FF / #6B21A8), ALDRI gronn for AI.
-- **Logo:** AK-monogram SVG med GRA signalprikk (#D2D2D7) som default. Gronn kun pa moerk bg (inverted).
+- **Logo:** AK-monogram SVG med GRONN signalprikk (#2D6A4F). Inverted (#40916C) pa moerk bg. Gra (#D2D2D7) kun for admin/neutral.
 - **Font:** Inter med dramatisk storrelsevariasjon (11px til 72px).
 - **Komposisjon:** Bento-grid med varierende kortstorrelser. Aldri identisk grid.
 - **Data:** Alltid med sparkline, trend og kontekst. Aldri bare et tall.
