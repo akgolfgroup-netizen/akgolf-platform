@@ -71,7 +71,7 @@ export function AIWeaknessCard() {
             exit={{ opacity: 0 }}
           >
             {error && (
-              <div className="flex items-center gap-2 text-xs text-[#D14343] mb-3">
+              <div className="flex items-center gap-2 text-xs text-[var(--color-error)] mb-3">
                 <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
                 {error}
               </div>
@@ -146,9 +146,9 @@ export function AIWeaknessCard() {
             {/* Recommendation */}
             <div
               className="rounded-lg p-3"
-              style={{ background: "rgba(34,197,94,0.05)", border: "1px solid rgba(34,197,94,0.15)" }}
+              style={{ background: "rgba(175,82,222,0.05)", border: "1px solid rgba(175,82,222,0.15)" }}
             >
-              <p className="text-[10px] uppercase tracking-widest text-[#2D6A4F]/60 mb-1">
+              <p className="text-[10px] uppercase tracking-widest text-[var(--color-ai)]/60 mb-1">
                 Anbefaling
               </p>
               <p className="text-xs text-[var(--color-grey-500)]">{analysis.recommendation}</p>

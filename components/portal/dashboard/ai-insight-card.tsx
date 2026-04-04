@@ -64,8 +64,8 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
       <div className="p-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#EDF5F0] flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-[#2D6A4F]" />
+            <div className="w-10 h-10 rounded-xl bg-[var(--color-ai-light)] flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-[var(--color-ai)]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -73,7 +73,7 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
                   Ukentlig innsikt
                 </h3>
                 {isNew && (
-                  <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-[#EDF5F0] text-[#2D6A4F] rounded-full">
+                  <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-[var(--color-ai-light)] text-[var(--color-ai)] rounded-full">
                     Ny
                   </span>
                 )}
@@ -142,7 +142,7 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
               {/* Strengths */}
               {insight.strengths.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold text-[#2D6A4F] uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                  <p className="text-xs font-semibold text-[var(--color-success)] uppercase tracking-wide mb-2 flex items-center gap-1.5">
                     <CheckCircle className="w-3.5 h-3.5" />
                     Styrker
                   </p>
@@ -152,7 +152,7 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
                         key={i}
                         className="text-sm text-[var(--color-grey-600)] flex items-start gap-2"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#2D6A4F] mt-1.5 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)] mt-1.5 flex-shrink-0" />
                         {strength}
                       </li>
                     ))}
