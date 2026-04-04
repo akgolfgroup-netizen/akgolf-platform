@@ -803,42 +803,142 @@
     --apple-gray-800: #2C2C2E;
     --apple-gray-900: #1D1D1F;
 
+    /* Brand accent (coaching context) */
+    --portal-brand: #2D6A4F;
+    --portal-brand-light: #EDF5F0;
+    --portal-brand-dark: #1B4332;
+
+    /* Pyramide-farger (treningsplanlegger) */
+    --pyramid-fys: #FF9500;
+    --pyramid-fys-light: #FFFBEB;
+    --pyramid-fys-text: #92400E;
+    --pyramid-tek: #007AFF;
+    --pyramid-tek-light: #EFF6FF;
+    --pyramid-tek-text: #1E40AF;
+    --pyramid-slag: #2D6A4F;
+    --pyramid-slag-light: #EDF5F0;
+    --pyramid-slag-text: #1B4332;
+    --pyramid-spill: #AF52DE;
+    --pyramid-spill-light: #FAF5FF;
+    --pyramid-spill-text: #6B21A8;
+    --pyramid-turn: #1D1D1F;
+    --pyramid-turn-light: #F5F5F7;
+    --pyramid-turn-text: #1D1D1F;
+
+    /* AI */
+    --portal-ai: #AF52DE;
+    --portal-ai-light: #FAF5FF;
+    --portal-ai-text: #6B21A8;
+    --portal-ai-border: #E9D5FF;
+
+    /* Info */
+    --portal-info: #007AFF;
+    --portal-info-light: #EFF6FF;
+    --portal-warning: #FF9500;
+    --portal-warning-light: #FFFBEB;
+
     /* Glassmorphism for light theme */
     --glass-bg: rgba(255, 255, 255, 0.8);
     --glass-border: rgba(0, 0, 0, 0.06);
     --glass-blur: 20px;
 
-    /* Shadows */
-    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.02);
-    --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.04);
+    /* Shadows — OrbitAI-inspired depth */
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.02);
+    --shadow-card-hover: 0 16px 48px rgba(0, 0, 0, 0.06);
+    --shadow-depth: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.02);
 
-    /* Motion */
+    /* Motion — OrbitAI-inspired */
     --ease-apple: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-entrance: cubic-bezier(0.22, 1, 0.36, 1);
     --duration-hover: 300ms;
+    --duration-entrance: 700ms;
+    --stagger-delay: 120ms;
   }
 
-  /* Portal card utility */
+  /* Portal card utility — OrbitAI-inspired */
   .portal-card {
     background: var(--portal-card-bg);
-    border: 1px solid var(--portal-card-border);
-    border-radius: var(--radius-card);
-    transition: border-color var(--duration-hover), box-shadow var(--duration-hover);
+    border: 0.5px solid var(--portal-card-border);
+    border-radius: 20px;
+    padding: 24px;
+    transition: transform 400ms var(--ease-entrance),
+                box-shadow 400ms var(--ease-entrance),
+                border-color var(--duration-hover);
   }
 
   .portal-card:hover {
+    transform: translateY(-4px);
     border-color: var(--portal-card-border-hover);
     box-shadow: var(--shadow-card-hover);
   }
 
   .portal-card-solid {
     background: var(--portal-card-bg-solid);
-    border: 1px solid var(--portal-card-border);
-    border-radius: var(--radius-card);
+    border: 0.5px solid var(--portal-card-border);
+    border-radius: 20px;
+    padding: 24px;
     transition: border-color var(--duration-hover), box-shadow var(--duration-hover);
   }
 
   .portal-card-solid:hover {
     border-color: var(--portal-card-border-hover);
+  }
+
+  /* Stat card (compact) */
+  .portal-stat-card {
+    background: var(--portal-card-bg);
+    border: 0.5px solid var(--portal-card-border);
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 400ms var(--ease-entrance),
+                box-shadow 400ms var(--ease-entrance);
+  }
+
+  .portal-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* AI card */
+  .portal-ai-card {
+    background: var(--portal-ai-light);
+    border: 0.5px solid var(--portal-ai-border);
+    border-radius: 20px;
+    padding: 24px;
+  }
+
+  /* Pyramide kort */
+  .portal-pyramid-card {
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    border-left-width: 3px;
+    border-left-style: solid;
+  }
+
+  .portal-pyramid-card[data-level="fys"] { background: var(--pyramid-fys-light); border-left-color: var(--pyramid-fys); }
+  .portal-pyramid-card[data-level="tek"] { background: var(--pyramid-tek-light); border-left-color: var(--pyramid-tek); }
+  .portal-pyramid-card[data-level="slag"] { background: var(--pyramid-slag-light); border-left-color: var(--pyramid-slag); }
+  .portal-pyramid-card[data-level="spill"] { background: var(--pyramid-spill-light); border-left-color: var(--pyramid-spill); }
+  .portal-pyramid-card[data-level="turn"] { background: var(--pyramid-turn-light); border-left-color: var(--pyramid-turn); }
+
+  /* Atmosfaerisk dybde — subtil radial glow */
+  .portal-atmosphere {
+    background: radial-gradient(
+      ellipse 600px 400px at 30% 20%,
+      rgba(45, 106, 79, 0.03),
+      transparent
+    );
+  }
+
+  /* Portal label (uppercase micro) */
+  .portal-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--portal-text-muted);
   }
 
   /* Portal heading hierarchy */
