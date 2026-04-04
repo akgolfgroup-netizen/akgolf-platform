@@ -6,7 +6,7 @@ import { TESTIMONIAL } from "@/lib/website-constants";
 
 export function TestimonialBlock() {
   return (
-    <section className="py-28 md:py-40 bg-[#F5F5F7]">
+    <section className="py-[120px] md:py-[160px] bg-[#F5F5F7]">
       <div className="w-container">
         <RevealOnScroll>
           <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_240px] gap-12 items-center">

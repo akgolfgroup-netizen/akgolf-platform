@@ -71,10 +71,10 @@ export default function HomePage() {
               </motion.div>
 
               <motion.h1
-                className="font-display text-4xl md:text-6xl lg:text-[80px] font-bold text-white tracking-[-0.035em] mb-6"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.4 }}
+                className="font-display text-[48px] md:text-6xl lg:text-[80px] font-bold text-white tracking-[-0.035em] mb-6"
+                initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
               >
                 Presisjon i hvert slag.
               </motion.h1>
@@ -160,7 +160,7 @@ export default function HomePage() {
         {/* ================================================================= */}
         {/* 8. COACH — Bio section                                             */}
         {/* ================================================================= */}
-        <section className="py-28 md:py-40 bg-white">
+        <section className="py-[120px] md:py-[160px] bg-white">
           <div className="w-container">
             <RevealOnScroll>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-5xl mx-auto">
@@ -180,7 +180,7 @@ export default function HomePage() {
                   <p className="text-[#48484A] text-lg leading-relaxed">{COACH_BIO.description}</p>
                   <div className="mt-8 pt-6 border-t border-[#E8E8ED] flex gap-8">
                     <div>
-                      <span className="font-display text-2xl font-bold text-[#1D1D1F]">15+</span>
+                      <span className="font-display text-2xl font-bold text-[#1D1D1F]">12</span>
                       <p className="text-[13px] text-[#6E6E73] mt-0.5">ars erfaring</p>
                     </div>
                     <div>

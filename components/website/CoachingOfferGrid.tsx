@@ -7,7 +7,7 @@ import { COACHING_OFFERS } from "@/lib/website-constants";
 
 export function CoachingOfferGrid() {
   return (
-    <section id="packages" className="py-28 md:py-40 bg-white">
+    <section id="packages" className="py-[120px] md:py-[160px] bg-white">
       <div className="w-container">
         <RevealOnScroll>
           <div className="text-center mb-16">

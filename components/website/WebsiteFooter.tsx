@@ -5,7 +5,7 @@ import { AKLogo } from "./AKLogo";
 export function WebsiteFooter() {
   return (
     <footer className="relative bg-[#1D1D1F] text-white overflow-hidden">
-      <div className="w-container relative py-10 md:py-16">
+      <div className="w-container relative py-16 md:py-20">
         {/* Links grid — 2 cols on mobile, 4 on desktop */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {/* Brand */}

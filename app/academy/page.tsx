@@ -152,7 +152,7 @@ export default function AcademyPage() {
                 {ACADEMY_METHOD_V2.steps.map((step) => (
                   <StaggerItem key={step.number}>
                     <div className="bg-[#F5F5F7] rounded-[20px] border border-[#E8E8ED] p-8 h-full">
-                      <span className="block text-[64px] font-extrabold leading-none text-[#E8E8ED] mb-4">
+                      <span className="block text-[80px] font-[900] leading-none text-[#E8E8ED] mb-4">
                         {step.number}
                       </span>
                       <h3 className="text-xl font-semibold text-[#1D1D1F] mb-3">
@@ -207,7 +207,7 @@ export default function AcademyPage() {
                       }`}
                     >
                       {pkg.badge && (
-                        <span className="absolute -top-3 left-8 px-3 py-1 bg-[#2D6A4F] text-white text-[10px] font-mono uppercase tracking-[0.12em] rounded-full font-semibold">
+                        <span className="absolute -top-3 left-8 px-3 py-1 bg-[#1D1D1F] text-white text-[10px] font-mono uppercase tracking-[0.12em] rounded-full font-semibold">
                           {pkg.badge}
                         </span>
                       )}
