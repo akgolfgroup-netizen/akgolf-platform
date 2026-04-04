@@ -201,7 +201,7 @@ export default function HomePage() {
         {/* ================================================================= */}
         {/* 9. FAQ                                                             */}
         {/* ================================================================= */}
-        <section id="faq" className="py-28 md:py-40 bg-[#F5F5F7]">
+        <section id="faq" className="py-[120px] md:py-[160px] bg-[#F5F5F7]">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-16">
@@ -221,7 +221,7 @@ export default function HomePage() {
         {/* ================================================================= */}
         {/* 10. CTA — Dark with background image                               */}
         {/* ================================================================= */}
-        <section className="relative py-28 md:py-40 overflow-hidden">
+        <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center py-20 overflow-hidden grain-overlay">
           <div className="absolute inset-0">
             <Image
               src="/images/branding/ak-golf-academy-31.jpg"
@@ -230,13 +230,13 @@ export default function HomePage() {
               className="object-cover"
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/70 to-black/80" />
           </div>
 
           <div className="w-container relative z-10">
             <RevealOnScroll>
               <div className="text-center max-w-xl mx-auto">
-                <h2 className="font-display text-3xl md:text-5xl font-bold text-white tracking-tight mb-6">
+                <h2 className="font-display text-3xl md:text-5xl lg:text-[56px] font-bold text-white tracking-tight mb-6">
                   Klar for å bli bedre?
                 </h2>
                 <p className="text-lg text-white/60 mb-10">
@@ -245,13 +245,13 @@ export default function HomePage() {
                 <div className="flex flex-wrap justify-center gap-4">
                   <a
                     href={BOOKING_URL}
-                    className="px-8 py-4 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
+                    className="px-10 py-5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
                   >
                     Book coaching
                   </a>
                   <Link
                     href="/#apply"
-                    className="px-8 py-4 rounded-[980px] border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
+                    className="px-10 py-5 rounded-[980px] border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
                   >
                     Ta kontakt
                   </Link>
@@ -264,7 +264,7 @@ export default function HomePage() {
         {/* ================================================================= */}
         {/* 11. KONTAKT / APPLY                                                */}
         {/* ================================================================= */}
-        <section id="apply" className="py-28 md:py-40 bg-[#F5F5F7]">
+        <section id="apply" className="py-[120px] md:py-[160px] bg-[#F5F5F7]">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-16">

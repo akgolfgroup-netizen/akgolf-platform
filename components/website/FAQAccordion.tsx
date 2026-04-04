@@ -9,13 +9,13 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
 
   return (
     <div
-      className={`border-b border-grey-200 transition-[border-color,background-color] duration-300 ${
+      className={`border-b border-grey-200 transition-[border-color,background-color] duration-300 rounded-xl hover:bg-[#F5F5F7]/50 ${
         open ? "border-l-2 border-l-black pl-4 -ml-4 bg-grey-100/50" : "border-l-2 border-l-transparent pl-4 -ml-4"
       }`}
     >
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center justify-between w-full py-5 text-left group"
+        className="flex items-center justify-between w-full py-6 text-left group"
         aria-expanded={open}
         aria-controls={answerId}
       >
@@ -47,7 +47,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="overflow-hidden"
           >
             <p className="text-sm text-grey-500 leading-relaxed pb-5 pr-12">
