@@ -32,7 +32,7 @@ import type { PortalUser } from "@/lib/portal/auth";
 import { useSidebar } from "./sidebar-context";
 
 const navItems = [
-  { href: "/portal", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/portal", label: "Oversikt", icon: LayoutDashboard },
   { href: "/portal/bookinger", label: "Mine Bookinger", icon: CalendarCheck },
   { href: "/portal/treningsplan", label: "Treningsplan", icon: Target },
   { href: "/portal/dagbok", label: "Treningsdagbok", icon: BookOpen },

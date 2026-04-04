@@ -11,7 +11,7 @@ const VARIANTS = {
   neutral:   { path: "#1D1D1F", dot: "#D2D2D7" },
   // Legacy compatibility
   academy:   { path: "#1D1D1F", dot: "#2D6A4F" },
-  software:  { path: "#1D1D1F", dot: "#007AFF" },
+  software:  { path: "#1D1D1F", dot: "#2D6A4F" },
   utvikling: { path: "#1D1D1F", dot: "#2D6A4F" },
   midnight:  { path: "#1D1D1F", dot: "#2D6A4F" },
   gold:      { path: "#1D1D1F", dot: "#2D6A4F" },

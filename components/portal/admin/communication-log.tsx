@@ -63,7 +63,7 @@ const TYPE_CONFIG: Record<
     icon: <MessageSquare className="w-3.5 h-3.5" />,
     bg: "bg-[#2D6A4F]/5",
     text: "text-[#2D6A4F]",
-    border: "border-green-200",
+    border: "border-[#2D6A4F]/20",
   },
   NOTE: {
     label: "Notat",

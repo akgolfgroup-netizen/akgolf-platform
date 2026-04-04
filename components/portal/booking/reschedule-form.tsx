@@ -104,7 +104,7 @@ export function RescheduleForm({
 
   if (success) {
     return (
-      <div className="bg-[#2D6A4F]/5 border border-green-200 rounded-xl p-8 text-center">
+      <div className="bg-[#2D6A4F]/5 border border-[#2D6A4F]/20 rounded-xl p-8 text-center">
         <Check className="w-8 h-8 text-[#2D6A4F] mx-auto mb-3" />
         <p className="text-[#2D6A4F] font-semibold">Tidspunktet er endret!</p>
         <p className="text-[#2D6A4F] text-sm mt-1">

@@ -24,9 +24,9 @@ interface AppleBadgeProps {
 }
 
 const variantMap = {
-  success: "bg-[#2D6A4F]/5 text-[#2D6A4F] border-green-100",
+  success: "bg-[#2D6A4F]/5 text-[#2D6A4F] border-[#2D6A4F]/15",
   warning: "bg-amber-50 text-amber-600 border-amber-100",
-  error: "bg-[#D14343]/5 text-[#D14343] border-red-100",
+  error: "bg-[#D14343]/5 text-[#D14343] border-[#D14343]/15",
   info: "bg-blue-50 text-blue-600 border-blue-100",
   dark: "bg-[var(--color-grey-100)] text-[var(--color-grey-900)] border-[var(--color-grey-200)]",
   neutral: "bg-[var(--color-grey-100)] text-[var(--color-grey-600)] border-[var(--color-grey-200)]",

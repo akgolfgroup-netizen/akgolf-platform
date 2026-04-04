@@ -100,7 +100,7 @@ export function MeldingerClient({
     <div className="flex flex-col h-full bg-[var(--color-grey-50)] rounded-2xl border border-[var(--color-grey-200)] overflow-hidden">
       {/* Error banner */}
       {error && (
-        <div className="flex items-center justify-between gap-3 px-4 py-3 bg-[#D14343]/5 border-b border-red-200">
+        <div className="flex items-center justify-between gap-3 px-4 py-3 bg-[#D14343]/5 border-b border-[#D14343]/20">
           <div className="flex items-center gap-2 text-[#D14343]">
             <AlertCircle className="h-4 w-4 flex-shrink-0" />
             <span className="text-sm">{error}</span>

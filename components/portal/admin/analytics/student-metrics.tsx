@@ -140,10 +140,10 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
 
         {/* No-show warning */}
         {isHighNoShow && (
-          <div className="flex items-start gap-3 p-3 rounded-xl bg-[#D14343]/5 border border-red-100">
+          <div className="flex items-start gap-3 p-3 rounded-xl bg-[#D14343]/5 border border-[#D14343]/15">
             <AlertTriangle className="w-5 h-5 text-[#D14343] flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-red-800">
+              <p className="text-sm font-medium text-[#D14343]">
                 Hoy no-show rate: {noShowRate.toFixed(1)}%
               </p>
               <p className="text-xs text-[#D14343] mt-0.5">
@@ -154,7 +154,7 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
         )}
 
         {!isHighNoShow && (
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-[#2D6A4F]/5 border border-green-100">
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-[#2D6A4F]/5 border border-[#2D6A4F]/15">
             <div className="w-8 h-8 rounded-full bg-[#2D6A4F]/10 flex items-center justify-center">
               <span className="text-sm font-bold text-[#2D6A4F]">
                 {noShowRate.toFixed(0)}%
