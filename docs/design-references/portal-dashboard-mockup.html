@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK Golf — Spillerportal Dashboard Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --black: #1D1D1F; --white: #FFFFFF;
+    --grey-100: #F5F5F7; --grey-200: #E8E8ED; --grey-300: #D2D2D7;
+    --grey-400: #86868B; --grey-500: #6E6E73; --grey-600: #48484A;
+    --brand: #2D6A4F; --brand-light: #EDF5F0;
+    --success: #34C759; --success-light: #F0FDF4; --success-text: #166534;
+    --error: #FF3B30; --error-light: #FEF2F2;
+    --warning: #FF9500; --warning-light: #FFFBEB;
+    --ai: #AF52DE; --ai-light: #FAF5FF; --ai-text: #6B21A8;
+    --coaching: #2563EB; --coaching-light: #EFF6FF;
+    --streak-bg: #FFFBF5; --streak-border: #F5E6CC;
+  }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--grey-100); color: var(--black); -webkit-font-smoothing: antialiased; }
+
+  /* ─── LAYOUT ─── */
+  .app { display: flex; min-height: 100vh; }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: 220px; background: var(--white); border-right: 1px solid var(--grey-200);
+    padding: 20px 0; display: flex; flex-direction: column; position: fixed; top: 0; bottom: 0;
+  }
+  .sidebar-logo {
+    padding: 0 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 10px;
+  }
+  .sidebar-logo-mark { font-size: 18px; font-weight: 800; }
+  .sidebar-logo-mark .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--brand); }
+  .sidebar-logo-text { display: flex; flex-direction: column; }
+  .sidebar-logo-text .name { font-size: 13px; font-weight: 700; }
+  .sidebar-logo-text .sub { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--grey-400); }
+
+  .sidebar-section { margin-bottom: 24px; }
+  .sidebar-section-label {
+    padding: 0 20px; font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--grey-300); margin-bottom: 6px;
+  }
+  .sidebar-item {
+    display: flex; align-items: center; gap: 10px; padding: 8px 20px;
+    font-size: 13px; font-weight: 500; color: var(--grey-500); cursor: pointer;
+    transition: all 0.15s; text-decoration: none;
+  }
+  .sidebar-item:hover { color: var(--black); background: var(--grey-100); }
+  .sidebar-item.active {
+    color: var(--black); font-weight: 600; background: var(--grey-100);
+  }
+  .sidebar-item .icon {
+    width: 18px; height: 18px; border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sidebar-item.active .icon { background: var(--black); }
+  .sidebar-item.active .icon svg { color: white; }
+  .sidebar-item svg { width: 14px; height: 14px; }
+
+  .sidebar-user {
+    margin-top: auto; padding: 16px 20px; border-top: 1px solid var(--grey-200);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sidebar-avatar {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--black);
+    color: white; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+  }
+  .sidebar-user-info .user-name { font-size: 13px; font-weight: 600; }
+  .sidebar-user-info .user-tier { font-size: 10px; font-weight: 600; color: var(--brand); }
+
+  /* ─── MAIN ─── */
+  .main { margin-left: 220px; flex: 1; padding: 24px 32px; }
+
+  /* ─── TOPBAR ─── */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px;
+  }
+  .greeting h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+  .greeting p { font-size: 13px; color: var(--grey-500); margin-top: 2px; }
+  .topbar-actions { display: flex; gap: 8px; }
+  .topbar-btn {
+    padding: 8px 16px; border-radius: 980px; font-size: 12px; font-weight: 600;
+    border: 1px solid var(--grey-200); background: var(--white); color: var(--black);
+    cursor: pointer; display: flex; align-items: center; gap: 6px;
+  }
+  .topbar-btn-primary { background: var(--black); color: white; border-color: var(--black); }
+
+  /* ─── STAT CARDS ROW ─── */
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px;
+    padding: 16px; position: relative; overflow: hidden;
+  }
+  .stat-label {
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--grey-400); margin-bottom: 8px;
+  }
+  .stat-value {
+    font-size: 28px; font-weight: 800; letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .stat-trend {
+    display: inline-flex; align-items: center; gap: 3px; margin-top: 6px;
+    font-size: 11px; font-weight: 600; padding: 2px 8px;
+    border-radius: 100px;
+  }
+  .stat-trend.positive { background: var(--success-light); color: var(--success-text); }
+  .stat-trend.negative { background: var(--error-light); color: var(--error); }
+
+  /* Sparkline */
+  .sparkline {
+    position: absolute; bottom: 0; right: 0; display: flex; align-items: flex-end;
+    gap: 2px; padding: 12px; opacity: 0.7;
+  }
+  .sparkline-bar {
+    width: 4px; border-radius: 2px; background: var(--grey-200);
+  }
+  .sparkline-bar:last-child { background: var(--success); }
+
+  /* Streak card variant */
+  .stat-card.streak {
+    background: var(--streak-bg); border-color: var(--streak-border);
+  }
+
+  /* ─── BENTO GRID ─── */
+  .bento { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; margin-bottom: 20px; }
+
+  /* ─── SG CARD ─── */
+  .sg-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 20px;
+  }
+  .sg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .sg-title { font-size: 14px; font-weight: 700; }
+  .sg-period {
+    display: flex; gap: 4px;
+  }
+  .sg-period-btn {
+    padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 500;
+    background: transparent; border: none; color: var(--grey-400); cursor: pointer;
+  }
+  .sg-period-btn.active { background: var(--black); color: white; }
+
+  .sg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sg-item {
+    background: var(--grey-100); border-radius: 10px; padding: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .sg-item-label { font-size: 12px; font-weight: 600; color: var(--grey-600); }
+  .sg-item-value { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .sg-item-value.positive { color: var(--success); }
+  .sg-item-value.negative { color: var(--error); }
+
+  /* Radar placeholder */
+  .sg-radar {
+    width: 100%; height: 140px; margin-top: 12px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .radar-svg { width: 140px; height: 140px; }
+
+  /* ─── AI CARD ─── */
+  .ai-card {
+    background: var(--ai-light); border: 1px solid rgba(175,82,222,0.12);
+    border-radius: 14px; padding: 20px;
+  }
+  .ai-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .ai-card-icon {
+    width: 32px; height: 32px; border-radius: 8px; background: var(--ai);
+    display: flex; align-items: center; justify-content: center; color: white;
+  }
+  .ai-card-badge {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--ai-text);
+  }
+  .ai-card p { font-size: 13px; color: var(--grey-600); line-height: 1.5; }
+  .ai-card p strong { color: var(--black); }
+  .ai-card-action {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+    padding: 8px 16px; border-radius: 980px; background: var(--ai); color: white;
+    font-size: 12px; font-weight: 600; border: none; cursor: pointer;
+  }
+
+  /* ─── WEEK PLAN ─── */
+  .week-plan {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px;
+    padding: 20px; grid-column: 1 / -1;
+  }
+  .week-plan-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .week-plan-title { font-size: 14px; font-weight: 700; }
+
+  .week-table { width: 100%; }
+  .week-row {
+    display: flex; align-items: center; padding: 10px 12px; border-radius: 10px;
+    gap: 16px;
+  }
+  .week-row:nth-child(odd) { background: var(--grey-100); }
+  .week-row.today { background: var(--success-light); }
+  .week-day {
+    font-size: 11px; font-weight: 600; width: 36px; flex-shrink: 0;
+    color: var(--grey-400);
+  }
+  .week-row.today .week-day { color: var(--success-text); font-weight: 700; }
+  .week-activity { flex: 1; font-size: 13px; color: var(--grey-600); }
+  .week-tag {
+    font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 100px;
+  }
+  .tag-done { background: var(--success-light); color: var(--success-text); }
+  .tag-today { background: var(--success); color: white; }
+  .tag-planned { background: var(--grey-100); color: var(--grey-400); }
+  .tag-coaching { background: var(--coaching-light); color: var(--coaching); }
+
+  /* ─── PROGRESS RINGS ─── */
+  .rings-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 20px;
+  }
+  .rings-title { font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+  .rings-container { display: flex; justify-content: center; position: relative; height: 140px; }
+  .ring-wrapper { position: relative; display: flex; align-items: center; justify-content: center; }
+  .ring-center {
+    position: absolute; text-align: center;
+  }
+  .ring-center-value { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .ring-center-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--grey-400); }
+  .rings-legend { display: flex; gap: 16px; justify-content: center; margin-top: 12px; }
+  .ring-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--grey-500); font-weight: 500; }
+  .ring-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ─── QUICK ACTIONS ─── */
+  .quick-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .quick-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px;
+    padding: 16px; cursor: pointer; transition: all 0.2s; text-align: center;
+  }
+  .quick-card:hover { border-color: var(--grey-300); box-shadow: 0 4px 12px rgba(0,0,0,0.06); transform: translateY(-1px); }
+  .quick-icon {
+    width: 40px; height: 40px; border-radius: 12px; background: var(--grey-100);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;
+  }
+  .quick-icon svg { width: 18px; height: 18px; color: var(--grey-500); }
+  .quick-card:hover .quick-icon { background: var(--black); }
+  .quick-card:hover .quick-icon svg { color: white; }
+  .quick-label { font-size: 12px; font-weight: 600; }
+  .quick-desc { font-size: 10px; color: var(--grey-400); margin-top: 2px; }
+
+  /* ─── COACHING HISTORY (mini) ─── */
+  .history-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 20px;
+  }
+  .history-title { font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+  .history-item {
+    display: flex; align-items: center; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid var(--grey-100);
+  }
+  .history-item:last-child { border-bottom: none; }
+  .history-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .history-dot.coaching { background: var(--coaching); }
+  .history-dot.data { background: var(--success); }
+  .history-dot.ai { background: var(--ai); }
+  .history-info { flex: 1; }
+  .history-info-title { font-size: 13px; font-weight: 600; }
+  .history-info-meta { font-size: 11px; color: var(--grey-400); }
+  .history-time { font-size: 10px; color: var(--grey-300); }
+
+  /* ─── HEATMAP ─── */
+  .heatmap-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 20px;
+  }
+  .heatmap-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .heatmap-subtitle { font-size: 11px; color: var(--grey-400); margin-bottom: 12px; }
+  .heatmap-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px;
+  }
+  .heatmap-cell {
+    aspect-ratio: 1; border-radius: 3px; background: var(--grey-100);
+  }
+  .heatmap-cell.l1 { background: #dcfce7; }
+  .heatmap-cell.l2 { background: #86efac; }
+  .heatmap-cell.l3 { background: var(--success); }
+  .heatmap-cell.l4 { background: #15803d; }
+  .heatmap-day-labels {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 4px;
+  }
+  .heatmap-day-label { font-size: 8px; font-weight: 600; color: var(--grey-400); text-align: center; text-transform: uppercase; }
+
+  /* ─── CHART AREA ─── */
+  .chart-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 20px;
+  }
+  .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .chart-title { font-size: 14px; font-weight: 700; }
+  .chart-area {
+    height: 120px; position: relative; display: flex; align-items: flex-end; gap: 2px;
+  }
+  .chart-bar {
+    flex: 1; border-radius: 3px 3px 0 0; background: var(--grey-200); min-height: 4px;
+    transition: background 0.2s;
+  }
+  .chart-bar:hover { background: var(--grey-300); }
+  .chart-bar.highlight { background: var(--success); }
+  .chart-bar.highlight:hover { background: #2ea84d; }
+  .chart-labels {
+    display: flex; justify-content: space-between; margin-top: 6px;
+  }
+  .chart-label { font-size: 9px; color: var(--grey-400); font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="sidebar-logo-mark">AK<span class="dot"></span></span>
+      <span class="sidebar-logo-text">
+        <span class="name">AK Golf</span>
+        <span class="sub">Academy</span>
+      </span>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Oversikt</div>
+      <a class="sidebar-item active" href="#">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span>
+        Dashboard
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+        Kalender
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></span>
+        Treningsplan
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Analyse</div>
+      <a class="sidebar-item" href="#">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+        Statistikk
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg></span>
+        Analyse
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+        Dagbok
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Coaching</div>
+      <a class="sidebar-item" href="#">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg></span>
+        Bookinger
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></span>
+        Historikk
+      </a>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="sidebar-avatar">MH</div>
+      <div class="sidebar-user-info">
+        <div class="user-name">Martin Hansen</div>
+        <div class="user-tier">Performance Pro</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="greeting">
+        <h1>Hei, Martin</h1>
+        <p>Fredag 4. april 2026 — Uke 14</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          3
+        </button>
+        <button class="topbar-btn topbar-btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Book okt
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-label">Handicap</div>
+        <div class="stat-value">12.4</div>
+        <div class="stat-trend positive">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/></svg>
+          -0.3
+        </div>
+        <div class="sparkline">
+          <div class="sparkline-bar" style="height:20px"></div>
+          <div class="sparkline-bar" style="height:28px"></div>
+          <div class="sparkline-bar" style="height:22px"></div>
+          <div class="sparkline-bar" style="height:18px"></div>
+          <div class="sparkline-bar" style="height:30px"></div>
+          <div class="sparkline-bar" style="height:24px"></div>
+          <div class="sparkline-bar" style="height:36px"></div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Treningsokter</div>
+        <div class="stat-value">18</div>
+        <div class="stat-trend positive">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/></svg>
+          +4 denne mnd
+        </div>
+        <div class="sparkline">
+          <div class="sparkline-bar" style="height:14px"></div>
+          <div class="sparkline-bar" style="height:22px"></div>
+          <div class="sparkline-bar" style="height:18px"></div>
+          <div class="sparkline-bar" style="height:26px"></div>
+          <div class="sparkline-bar" style="height:20px"></div>
+          <div class="sparkline-bar" style="height:32px"></div>
+          <div class="sparkline-bar" style="height:38px"></div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Neste coaching</div>
+        <div class="stat-value" style="font-size: 20px; margin-top: 4px;">Fre 11:00</div>
+        <div style="font-size: 11px; color: var(--grey-400); margin-top: 6px;">Foundation Test — Anders K.</div>
+      </div>
+
+      <div class="stat-card streak">
+        <div class="stat-label">Streak</div>
+        <div class="stat-value" style="display: flex; align-items: baseline; gap: 4px;">
+          14
+          <span style="font-size: 14px; font-weight: 600; color: var(--warning);">
+            <svg viewBox="0 0 24 24" fill="var(--warning)" width="16" height="16"><path d="M12 23c-3.6 0-8-3.1-8-8.5C4 9 12 1 12 1s8 8 8 13.5c0 5.4-4.4 8.5-8 8.5z"/></svg>
+          </span>
+        </div>
+        <div style="font-size: 11px; color: var(--grey-400); margin-top: 6px;">dager pa rad</div>
+      </div>
+    </div>
+
+    <!-- Bento: SG + AI -->
+    <div class="bento">
+      <!-- Strokes Gained -->
+      <div class="sg-card">
+        <div class="sg-header">
+          <div class="sg-title">Strokes Gained</div>
+          <div class="sg-period">
+            <button class="sg-period-btn active">7d</button>
+            <button class="sg-period-btn">30d</button>
+            <button class="sg-period-btn">3m</button>
+          </div>
+        </div>
+        <div class="sg-grid">
+          <div class="sg-item">
+            <span class="sg-item-label">Off the Tee</span>
+            <span class="sg-item-value positive">+0.42</span>
+          </div>
+          <div class="sg-item">
+            <span class="sg-item-label">Approach</span>
+            <span class="sg-item-value positive">+0.18</span>
+          </div>
+          <div class="sg-item">
+            <span class="sg-item-label">Naerspill</span>
+            <span class="sg-item-value negative">-0.31</span>
+          </div>
+          <div class="sg-item">
+            <span class="sg-item-label">Putting</span>
+            <span class="sg-item-value negative">-0.12</span>
+          </div>
+        </div>
+        <!-- Radar chart placeholder -->
+        <div class="sg-radar">
+          <svg class="radar-svg" viewBox="0 0 200 200">
+            <!-- Grid -->
+            <polygon points="100,20 180,100 100,180 20,100" fill="none" stroke="var(--grey-200)" stroke-width="1"/>
+            <polygon points="100,40 160,100 100,160 40,100" fill="none" stroke="var(--grey-200)" stroke-width="0.5"/>
+            <polygon points="100,60 140,100 100,140 60,100" fill="none" stroke="var(--grey-200)" stroke-width="0.5"/>
+            <!-- Data -->
+            <polygon points="100,35 155,92 100,155 55,110" fill="rgba(52,199,89,0.15)" stroke="var(--success)" stroke-width="2"/>
+            <!-- Labels -->
+            <text x="100" y="12" text-anchor="middle" font-size="9" font-weight="600" fill="var(--grey-500)">Tee</text>
+            <text x="190" y="103" text-anchor="start" font-size="9" font-weight="600" fill="var(--grey-500)">App</text>
+            <text x="100" y="198" text-anchor="middle" font-size="9" font-weight="600" fill="var(--grey-500)">Putt</text>
+            <text x="10" y="103" text-anchor="end" font-size="9" font-weight="600" fill="var(--grey-500)">Naer</text>
+            <!-- Dots -->
+            <circle cx="100" cy="35" r="3" fill="var(--success)"/>
+            <circle cx="155" cy="92" r="3" fill="var(--success)"/>
+            <circle cx="100" cy="155" r="3" fill="var(--error)"/>
+            <circle cx="55" cy="110" r="3" fill="var(--error)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <!-- AI Card -->
+        <div class="ai-card">
+          <div class="ai-card-header">
+            <div class="ai-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/></svg>
+            </div>
+            <div class="ai-card-badge">AI-anbefaling</div>
+          </div>
+          <p><strong>Naerspillet</strong> er ditt stoerste forbedringspotensial. Med -0.31 SG taper du mest slag rundt green. Fokuser pa pitch-shots fra 30-50 meter denne uken.</p>
+          <button class="ai-card-action">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/></svg>
+            Se treningsplan
+          </button>
+        </div>
+
+        <!-- Progress Rings -->
+        <div class="rings-card">
+          <div class="rings-title">Ukens mal</div>
+          <div class="rings-container">
+            <div class="ring-wrapper">
+              <svg width="140" height="140" viewBox="0 0 140 140">
+                <!-- Outer ring: Okter -->
+                <circle cx="70" cy="70" r="62" fill="none" stroke="var(--grey-200)" stroke-width="8"/>
+                <circle cx="70" cy="70" r="62" fill="none" stroke="var(--success)" stroke-width="8"
+                  stroke-dasharray="390" stroke-dashoffset="117" stroke-linecap="round"
+                  transform="rotate(-90 70 70)"/>
+                <!-- Middle ring: Runder -->
+                <circle cx="70" cy="70" r="50" fill="none" stroke="var(--grey-200)" stroke-width="8"/>
+                <circle cx="70" cy="70" r="50" fill="none" stroke="var(--coaching)" stroke-width="8"
+                  stroke-dasharray="314" stroke-dashoffset="157" stroke-linecap="round"
+                  transform="rotate(-90 70 70)"/>
+                <!-- Inner ring: Dagbok -->
+                <circle cx="70" cy="70" r="38" fill="none" stroke="var(--grey-200)" stroke-width="8"/>
+                <circle cx="70" cy="70" r="38" fill="none" stroke="var(--warning)" stroke-width="8"
+                  stroke-dasharray="239" stroke-dashoffset="60" stroke-linecap="round"
+                  transform="rotate(-90 70 70)"/>
+              </svg>
+              <div class="ring-center">
+                <div class="ring-center-value">72%</div>
+                <div class="ring-center-label">Fullfort</div>
+              </div>
+            </div>
+          </div>
+          <div class="rings-legend">
+            <div class="ring-legend-item"><div class="ring-legend-dot" style="background:var(--success)"></div> Okter 3/4</div>
+            <div class="ring-legend-item"><div class="ring-legend-dot" style="background:var(--coaching)"></div> Runder 1/2</div>
+            <div class="ring-legend-item"><div class="ring-legend-dot" style="background:var(--warning)"></div> Dagbok 5/7</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week Plan (full width) -->
+    <div class="week-plan">
+      <div class="week-plan-header">
+        <div class="week-plan-title">Ukens plan</div>
+        <div class="sg-period">
+          <button class="sg-period-btn active">Denne uken</button>
+          <button class="sg-period-btn">Neste uke</button>
+        </div>
+      </div>
+      <div class="week-table">
+        <div class="week-row">
+          <span class="week-day">Man</span>
+          <span class="week-activity">Range — Driving + approach</span>
+          <span class="week-tag tag-done">Fullfort</span>
+        </div>
+        <div class="week-row">
+          <span class="week-day">Tir</span>
+          <span class="week-activity">Naerspill — Pitching 30-50m</span>
+          <span class="week-tag tag-done">Fullfort</span>
+        </div>
+        <div class="week-row">
+          <span class="week-day">Ons</span>
+          <span class="week-activity">Putting — Speed control</span>
+          <span class="week-tag tag-done">Fullfort</span>
+        </div>
+        <div class="week-row today">
+          <span class="week-day">Tor</span>
+          <span class="week-activity">Bane — 9 hull</span>
+          <span class="week-tag tag-today">I dag</span>
+        </div>
+        <div class="week-row">
+          <span class="week-day">Fre</span>
+          <span class="week-activity">Coaching — Foundation Test</span>
+          <span class="week-tag tag-coaching">Coaching</span>
+        </div>
+        <div class="week-row">
+          <span class="week-day">Lor</span>
+          <span class="week-activity">Range — Fritrening</span>
+          <span class="week-tag tag-planned">Planlagt</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div style="margin-top: 20px;">
+      <div class="section-label" style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--grey-400); margin-bottom:10px;">Hurtighandlinger</div>
+      <div class="quick-row">
+        <div class="quick-card">
+          <div class="quick-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          </div>
+          <div class="quick-label">Logg runde</div>
+          <div class="quick-desc">Registrer score og SG</div>
+        </div>
+        <div class="quick-card">
+          <div class="quick-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <div class="quick-label">Logg okt</div>
+          <div class="quick-desc">Treningsdagbok</div>
+        </div>
+        <div class="quick-card">
+          <div class="quick-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="quick-label">Book coaching</div>
+          <div class="quick-desc">Neste ledige: fre 11:00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row: Heatmap + Score Trend + Activity -->
+    <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 12px;">
+      <!-- Heatmap -->
+      <div class="heatmap-card">
+        <div class="heatmap-title">Treningsfrekvens</div>
+        <div class="heatmap-subtitle">Siste 4 uker</div>
+        <div class="heatmap-day-labels">
+          <span class="heatmap-day-label">M</span>
+          <span class="heatmap-day-label">T</span>
+          <span class="heatmap-day-label">O</span>
+          <span class="heatmap-day-label">T</span>
+          <span class="heatmap-day-label">F</span>
+          <span class="heatmap-day-label">L</span>
+          <span class="heatmap-day-label">S</span>
+        </div>
+        <div class="heatmap-grid">
+          <div class="heatmap-cell l2"></div><div class="heatmap-cell l1"></div><div class="heatmap-cell l3"></div><div class="heatmap-cell"></div><div class="heatmap-cell l1"></div><div class="heatmap-cell l4"></div><div class="heatmap-cell"></div>
+          <div class="heatmap-cell l3"></div><div class="heatmap-cell"></div><div class="heatmap-cell l2"></div><div class="heatmap-cell l1"></div><div class="heatmap-cell l3"></div><div class="heatmap-cell"></div><div class="heatmap-cell"></div>
+          <div class="heatmap-cell l1"></div><div class="heatmap-cell l2"></div><div class="heatmap-cell"></div><div class="heatmap-cell l3"></div><div class="heatmap-cell l2"></div><div class="heatmap-cell l1"></div><div class="heatmap-cell"></div>
+          <div class="heatmap-cell l2"></div><div class="heatmap-cell l3"></div><div class="heatmap-cell l2"></div><div class="heatmap-cell l4"></div><div class="heatmap-cell"></div><div class="heatmap-cell"></div><div class="heatmap-cell"></div>
+        </div>
+      </div>
+
+      <!-- Score Trend -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Handicap-utvikling</div>
+          <div class="sg-period">
+            <button class="sg-period-btn">3m</button>
+            <button class="sg-period-btn active">6m</button>
+            <button class="sg-period-btn">1ar</button>
+          </div>
+        </div>
+        <div class="chart-area">
+          <div class="chart-bar" style="height:90%"></div>
+          <div class="chart-bar" style="height:85%"></div>
+          <div class="chart-bar" style="height:88%"></div>
+          <div class="chart-bar" style="height:80%"></div>
+          <div class="chart-bar" style="height:75%"></div>
+          <div class="chart-bar" style="height:78%"></div>
+          <div class="chart-bar" style="height:72%"></div>
+          <div class="chart-bar" style="height:70%"></div>
+          <div class="chart-bar" style="height:68%"></div>
+          <div class="chart-bar" style="height:65%"></div>
+          <div class="chart-bar" style="height:60%"></div>
+          <div class="chart-bar" style="height:62%"></div>
+          <div class="chart-bar" style="height:58%"></div>
+          <div class="chart-bar" style="height:55%"></div>
+          <div class="chart-bar" style="height:52%"></div>
+          <div class="chart-bar" style="height:50%"></div>
+          <div class="chart-bar" style="height:48%"></div>
+          <div class="chart-bar highlight" style="height:45%"></div>
+        </div>
+        <div class="chart-labels">
+          <span class="chart-label">Okt</span>
+          <span class="chart-label">Nov</span>
+          <span class="chart-label">Des</span>
+          <span class="chart-label">Jan</span>
+          <span class="chart-label">Feb</span>
+          <span class="chart-label">Mar</span>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="history-card">
+        <div class="history-title">Siste aktivitet</div>
+        <div class="history-item">
+          <div class="history-dot coaching"></div>
+          <div class="history-info">
+            <div class="history-info-title">Coaching-okt</div>
+            <div class="history-info-meta">Foundation Test</div>
+          </div>
+          <div class="history-time">2d</div>
+        </div>
+        <div class="history-item">
+          <div class="history-dot data"></div>
+          <div class="history-info">
+            <div class="history-info-title">Runde logget</div>
+            <div class="history-info-meta">GFGK — 82 slag</div>
+          </div>
+          <div class="history-time">3d</div>
+        </div>
+        <div class="history-item">
+          <div class="history-dot ai"></div>
+          <div class="history-info">
+            <div class="history-info-title">AI-analyse</div>
+            <div class="history-info-meta">Ny treningsplan</div>
+          </div>
+          <div class="history-time">5d</div>
+        </div>
+        <div class="history-item">
+          <div class="history-dot data"></div>
+          <div class="history-info">
+            <div class="history-info-title">Treningsokt</div>
+            <div class="history-info-meta">Range — 45 min</div>
+          </div>
+          <div class="history-time">5d</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

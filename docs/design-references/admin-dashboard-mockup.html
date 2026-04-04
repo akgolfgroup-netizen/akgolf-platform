@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK Golf — Mission Control Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --black: #1D1D1F; --white: #FFFFFF;
+    --grey-100: #F5F5F7; --grey-200: #E8E8ED; --grey-300: #D2D2D7;
+    --grey-400: #86868B; --grey-500: #6E6E73; --grey-600: #48484A;
+    --brand: #2D6A4F; --brand-light: #EDF5F0;
+    --success: #34C759; --success-light: #F0FDF4; --success-text: #166534;
+    --error: #FF3B30; --error-light: #FEF2F2;
+    --warning: #FF9500; --warning-light: #FFFBEB;
+    --ai: #AF52DE; --ai-light: #FAF5FF; --ai-text: #6B21A8;
+    --coaching: #2563EB; --coaching-light: #EFF6FF;
+    --junior: #007AFF;
+  }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--grey-100); color: var(--black); -webkit-font-smoothing: antialiased; }
+
+  .app { display: flex; min-height: 100vh; }
+
+  /* ─── MC SIDEBAR ─── */
+  .mc-sidebar {
+    width: 220px; background: var(--black); color: white;
+    padding: 20px 0; display: flex; flex-direction: column; position: fixed; top: 0; bottom: 0;
+  }
+  .mc-logo {
+    padding: 0 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 10px;
+  }
+  .mc-logo-mark { font-size: 18px; font-weight: 800; color: white; }
+  .mc-logo-mark .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--grey-300); }
+  .mc-logo-text { display: flex; flex-direction: column; }
+  .mc-logo-text .name { font-size: 13px; font-weight: 700; color: white; }
+  .mc-logo-text .sub { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.35); }
+
+  .mc-nav-section { margin-bottom: 24px; }
+  .mc-nav-label {
+    padding: 0 20px; font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: rgba(255,255,255,0.25); margin-bottom: 6px;
+  }
+  .mc-nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 8px 20px;
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); cursor: pointer;
+    transition: all 0.15s; text-decoration: none;
+  }
+  .mc-nav-item:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.06); }
+  .mc-nav-item.active { color: white; font-weight: 600; background: rgba(255,255,255,0.1); border-right: 2px solid white; }
+  .mc-nav-item svg { width: 14px; height: 14px; }
+  .mc-nav-badge {
+    margin-left: auto; font-size: 10px; font-weight: 700; padding: 1px 6px;
+    border-radius: 100px; background: var(--error); color: white;
+  }
+
+  .mc-user {
+    margin-top: auto; padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .mc-avatar {
+    width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;
+  }
+  .mc-user-name { font-size: 13px; font-weight: 600; }
+  .mc-user-role { font-size: 10px; color: rgba(255,255,255,0.4); }
+
+  /* ─── MC MAIN ─── */
+  .mc-main { margin-left: 220px; flex: 1; padding: 24px 32px; }
+
+  /* ─── MC TOPBAR ─── */
+  .mc-topbar {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;
+  }
+  .mc-topbar-left h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .mc-topbar-left p { font-size: 12px; color: var(--grey-500); margin-top: 2px; }
+  .mc-topbar-right { display: flex; gap: 8px; }
+  .mc-btn {
+    padding: 8px 16px; border-radius: 10px; font-size: 12px; font-weight: 600;
+    border: 1px solid var(--grey-200); background: var(--white); color: var(--black);
+    cursor: pointer; display: flex; align-items: center; gap: 6px;
+  }
+  .mc-btn-primary { background: var(--black); color: white; border-color: var(--black); }
+  .mc-search {
+    padding: 8px 14px 8px 36px; border-radius: 10px; border: 1px solid var(--grey-200);
+    background: var(--white); font-size: 13px; width: 200px; color: var(--black);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2386868B' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: 12px center;
+  }
+
+  /* ─── KPI ROW ─── */
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .kpi-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 18px;
+    position: relative;
+  }
+  .kpi-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--grey-400); margin-bottom: 8px; }
+  .kpi-value-row { display: flex; align-items: baseline; gap: 8px; }
+  .kpi-value { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .kpi-badge {
+    font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 100px;
+    display: inline-flex; align-items: center; gap: 3px;
+  }
+  .kpi-badge.up { background: var(--success-light); color: var(--success-text); }
+  .kpi-badge.down { background: var(--error-light); color: var(--error); }
+  .kpi-sub { font-size: 11px; color: var(--grey-400); margin-top: 4px; }
+  .kpi-sparkline {
+    position: absolute; bottom: 8px; right: 12px;
+    display: flex; align-items: flex-end; gap: 2px;
+  }
+  .kpi-spark-bar { width: 3px; border-radius: 1.5px; background: var(--grey-200); }
+  .kpi-spark-bar:last-child { background: var(--success); }
+
+  /* ─── BENTO LAYOUT ─── */
+  .mc-bento { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .mc-bento-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+
+  /* ─── SCHEDULE CARD ─── */
+  .schedule-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 20px;
+  }
+  .schedule-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .schedule-title { font-size: 14px; font-weight: 700; }
+  .schedule-row {
+    display: flex; align-items: center; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid var(--grey-100);
+  }
+  .schedule-row:last-child { border: none; }
+  .schedule-time {
+    font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums;
+    color: var(--grey-400); width: 44px; flex-shrink: 0;
+  }
+  .schedule-type-tag {
+    font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 100px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .tag-indiv { background: var(--coaching-light); color: var(--coaching); }
+  .tag-gruppe { background: var(--success-light); color: var(--success-text); }
+  .tag-junior { background: #DBEAFE; color: var(--junior); }
+  .tag-ledig { background: var(--grey-100); color: var(--grey-400); }
+  .schedule-name { font-size: 13px; font-weight: 500; flex: 1; }
+  .schedule-status { font-size: 10px; color: var(--grey-400); }
+
+  /* ─── ACTIVITY FEED ─── */
+  .feed-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 20px;
+  }
+  .feed-title { font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+  .feed-item {
+    display: flex; align-items: flex-start; gap: 10px; padding: 8px 0;
+    border-bottom: 1px solid var(--grey-100);
+  }
+  .feed-item:last-child { border: none; }
+  .feed-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .feed-content { flex: 1; }
+  .feed-text { font-size: 12px; color: var(--grey-500); line-height: 1.4; }
+  .feed-text strong { color: var(--black); font-weight: 600; }
+  .feed-time { font-size: 10px; color: var(--grey-300); margin-top: 2px; }
+
+  /* ─── STUDENT ALERTS ─── */
+  .alerts-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 20px;
+  }
+  .alerts-title { font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+  .alert-row {
+    display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+    border-radius: 10px; margin-bottom: 6px;
+  }
+  .alert-row:last-child { margin-bottom: 0; }
+  .alert-avatar {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--grey-200);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--grey-600); flex-shrink: 0;
+  }
+  .alert-info { flex: 1; }
+  .alert-name { font-size: 13px; font-weight: 600; }
+  .alert-meta { font-size: 11px; color: var(--grey-400); }
+  .alert-badge {
+    font-size: 9px; font-weight: 700; padding: 3px 10px; border-radius: 100px;
+  }
+  .alert-risk { background: var(--error-light); color: var(--error); }
+  .alert-warn { background: var(--warning-light); color: #B45309; }
+  .alert-ok { background: var(--success-light); color: var(--success-text); }
+
+  /* ─── REVENUE CHART ─── */
+  .revenue-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 20px;
+  }
+  .revenue-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+  .revenue-value { font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .revenue-sub { font-size: 11px; color: var(--grey-400); margin-bottom: 16px; }
+  .revenue-bars { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
+  .revenue-bar {
+    flex: 1; border-radius: 4px 4px 0 0; transition: opacity 0.2s;
+  }
+  .revenue-bar:hover { opacity: 0.8; }
+  .revenue-labels { display: flex; justify-content: space-between; margin-top: 6px; }
+  .revenue-label { font-size: 9px; color: var(--grey-400); text-align: center; flex: 1; }
+
+  /* ─── DONUT CHART ─── */
+  .donut-card {
+    background: var(--white); border: 1px solid var(--grey-200); border-radius: 14px; padding: 20px;
+  }
+  .donut-title { font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+  .donut-container { display: flex; align-items: center; gap: 20px; }
+  .donut-legend { display: flex; flex-direction: column; gap: 8px; }
+  .donut-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .donut-legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+  .donut-legend-value { margin-left: auto; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  /* ─── AI AGENT STATUS ─── */
+  .agent-card {
+    background: var(--ai-light); border: 1px solid rgba(175,82,222,0.12); border-radius: 14px; padding: 20px;
+  }
+  .agent-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .agent-icon {
+    width: 32px; height: 32px; border-radius: 8px; background: var(--ai);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .agent-icon svg { color: white; width: 16px; height: 16px; }
+  .agent-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ai-text); }
+  .agent-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .agent-stat-row { display: flex; gap: 16px; }
+  .agent-stat { }
+  .agent-stat-value { font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .agent-stat-label { font-size: 10px; color: var(--grey-500); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- MC SIDEBAR -->
+  <aside class="mc-sidebar">
+    <div class="mc-logo">
+      <span class="mc-logo-mark">AK<span class="dot"></span></span>
+      <span class="mc-logo-text">
+        <span class="name">AK Golf</span>
+        <span class="sub">Mission Control</span>
+      </span>
+    </div>
+
+    <div class="mc-nav-section">
+      <div class="mc-nav-label">Oversikt</div>
+      <a class="mc-nav-item active" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Hub
+      </a>
+      <a class="mc-nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+        Kalender
+      </a>
+      <a class="mc-nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        Elever
+        <span class="mc-nav-badge">2</span>
+      </a>
+    </div>
+
+    <div class="mc-nav-section">
+      <div class="mc-nav-label">Drift</div>
+      <a class="mc-nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+        Bookinger
+      </a>
+      <a class="mc-nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Meldinger
+        <span class="mc-nav-badge">5</span>
+      </a>
+      <a class="mc-nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+        Okter
+      </a>
+    </div>
+
+    <div class="mc-nav-section">
+      <div class="mc-nav-label">Analyse</div>
+      <a class="mc-nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Okonomi
+      </a>
+      <a class="mc-nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Rapporter
+      </a>
+      <a class="mc-nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/></svg>
+        AI-agenter
+      </a>
+    </div>
+
+    <div class="mc-user">
+      <div class="mc-avatar">AK</div>
+      <div>
+        <div class="mc-user-name">Anders K.</div>
+        <div class="mc-user-role">Admin</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MC MAIN -->
+  <main class="mc-main">
+    <!-- Topbar -->
+    <div class="mc-topbar">
+      <div class="mc-topbar-left">
+        <h1>Mission Control</h1>
+        <p>Uke 14 — Fredag 4. april 2026</p>
+      </div>
+      <div class="mc-topbar-right">
+        <input class="mc-search" type="text" placeholder="Sok...">
+        <button class="mc-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>
+          5
+        </button>
+        <button class="mc-btn mc-btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Ny booking
+        </button>
+      </div>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">Bookinger denne uken</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">12</span>
+          <span class="kpi-badge up">+3</span>
+        </div>
+        <div class="kpi-sub">vs forrige uke</div>
+        <div class="kpi-sparkline">
+          <div class="kpi-spark-bar" style="height:12px"></div>
+          <div class="kpi-spark-bar" style="height:18px"></div>
+          <div class="kpi-spark-bar" style="height:14px"></div>
+          <div class="kpi-spark-bar" style="height:22px"></div>
+          <div class="kpi-spark-bar" style="height:16px"></div>
+          <div class="kpi-spark-bar" style="height:26px"></div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Inntekt denne mnd</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">45 200</span>
+          <span style="font-size:14px; font-weight:600; color:var(--grey-400);">kr</span>
+        </div>
+        <div class="kpi-sub"><span class="kpi-badge up" style="margin-right:4px;">+12%</span> vs mars</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Aktive elever</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">8</span>
+          <span class="kpi-badge up">+2 nye</span>
+        </div>
+        <div class="kpi-sub">Performance: 5 | Pro: 3</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Oppmoterate</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">94%</span>
+          <span class="kpi-badge up">+2%</span>
+        </div>
+        <div class="kpi-sub">0 no-shows denne mnd</div>
+      </div>
+    </div>
+
+    <!-- Bento: Schedule + Activity -->
+    <div class="mc-bento">
+      <!-- Today's schedule -->
+      <div class="schedule-card">
+        <div class="schedule-header">
+          <div class="schedule-title">Dagens timeplan</div>
+          <button class="mc-btn" style="font-size:11px; padding:5px 10px;">Se kalender</button>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-time">08:00</span>
+          <span class="schedule-type-tag tag-indiv">Indiv.</span>
+          <span class="schedule-name">Martin Hansen — Foundation Test</span>
+          <span class="schedule-status">Bekreftet</span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-time">09:00</span>
+          <span class="schedule-type-tag tag-gruppe">Gruppe</span>
+          <span class="schedule-name">Flex 50 Duo — 2 spillere</span>
+          <span class="schedule-status">Bekreftet</span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-time">10:00</span>
+          <span class="schedule-type-tag tag-junior">Junior</span>
+          <span class="schedule-name">WANG Treningsgruppe</span>
+          <span class="schedule-status">4 pameldt</span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-time">11:00</span>
+          <span class="schedule-type-tag tag-ledig">Ledig</span>
+          <span class="schedule-name" style="color:var(--grey-400);">Tilgjengelig</span>
+          <span class="schedule-status"></span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-time">13:00</span>
+          <span class="schedule-type-tag tag-indiv">Indiv.</span>
+          <span class="schedule-name">Erik Olsen — Performance</span>
+          <span class="schedule-status">Bekreftet</span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-time">14:00</span>
+          <span class="schedule-type-tag tag-indiv">Indiv.</span>
+          <span class="schedule-name">Sara Johnsen — Performance Pro</span>
+          <span class="schedule-status">Venter betaling</span>
+        </div>
+      </div>
+
+      <!-- Activity feed -->
+      <div class="feed-card">
+        <div class="feed-title">Siste aktivitet</div>
+        <div class="feed-item">
+          <div class="feed-dot" style="background:var(--coaching);"></div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>Martin Hansen</strong> booket Foundation Test</div>
+            <div class="feed-time">12 min siden</div>
+          </div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-dot" style="background:var(--success);"></div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>Erik Olsen</strong> betalte <strong>1 600 kr</strong></div>
+            <div class="feed-time">45 min siden</div>
+          </div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-dot" style="background:var(--ai);"></div>
+          <div class="feed-content">
+            <div class="feed-text">AI genererte treningsplan for <strong>Sara Johnsen</strong></div>
+            <div class="feed-time">2 timer siden</div>
+          </div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-dot" style="background:var(--success);"></div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>Lisa Berg</strong> logget runde — 84 slag</div>
+            <div class="feed-time">3 timer siden</div>
+          </div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-dot" style="background:var(--warning);"></div>
+          <div class="feed-content">
+            <div class="feed-text"><strong>Ola Nordmann</strong> streak brutt (7 dager)</div>
+            <div class="feed-time">I gar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: Students + Revenue + AI -->
+    <div class="mc-bento-3col">
+      <!-- Student alerts -->
+      <div class="alerts-card">
+        <div class="alerts-title">Elever — krever oppmerksomhet</div>
+        <div class="alert-row" style="background: var(--error-light);">
+          <div class="alert-avatar">ON</div>
+          <div class="alert-info">
+            <div class="alert-name">Ola Nordmann</div>
+            <div class="alert-meta">Ikke logget pa 14 dager</div>
+          </div>
+          <span class="alert-badge alert-risk">Inaktiv</span>
+        </div>
+        <div class="alert-row" style="background: var(--warning-light);">
+          <div class="alert-avatar">TK</div>
+          <div class="alert-info">
+            <div class="alert-name">Thomas Karlsen</div>
+            <div class="alert-meta">Streak brutt i gar</div>
+          </div>
+          <span class="alert-badge alert-warn">Streak brutt</span>
+        </div>
+        <div class="alert-row" style="background: var(--success-light);">
+          <div class="alert-avatar">MH</div>
+          <div class="alert-info">
+            <div class="alert-name">Martin Hansen</div>
+            <div class="alert-meta">HCP ned 0.3 denne mnd</div>
+          </div>
+          <span class="alert-badge alert-ok">Mal nadd</span>
+        </div>
+      </div>
+
+      <!-- Revenue chart -->
+      <div class="revenue-card">
+        <div class="kpi-label">Manedlig inntekt</div>
+        <div class="revenue-header">
+          <span class="revenue-value">45 200 kr</span>
+          <span class="kpi-badge up">+12%</span>
+        </div>
+        <div class="revenue-sub">April 2026 — hittil</div>
+        <div class="revenue-bars">
+          <div class="revenue-bar" style="height:40%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:55%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:48%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:62%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:70%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:58%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:75%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:82%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:68%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:88%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:78%; background:var(--grey-200);"></div>
+          <div class="revenue-bar" style="height:95%; background:var(--brand);"></div>
+        </div>
+        <div class="revenue-labels">
+          <span class="revenue-label">Mai</span>
+          <span class="revenue-label">Jun</span>
+          <span class="revenue-label">Jul</span>
+          <span class="revenue-label">Aug</span>
+          <span class="revenue-label">Sep</span>
+          <span class="revenue-label">Okt</span>
+          <span class="revenue-label">Nov</span>
+          <span class="revenue-label">Des</span>
+          <span class="revenue-label">Jan</span>
+          <span class="revenue-label">Feb</span>
+          <span class="revenue-label">Mar</span>
+          <span class="revenue-label" style="font-weight:700; color:var(--brand);">Apr</span>
+        </div>
+      </div>
+
+      <!-- AI Agent Status -->
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/></svg>
+          </div>
+          <div class="agent-label">AI-agenter</div>
+        </div>
+        <div class="agent-title">Ukentlig oppsummering</div>
+        <p style="font-size: 13px; color: var(--grey-600); line-height: 1.5; margin-bottom: 16px;">
+          3 treningsplaner generert, 5 ukentlige innsikter sendt, 2 meldingsutkast klar for godkjenning.
+        </p>
+        <div class="agent-stat-row">
+          <div class="agent-stat">
+            <div class="agent-stat-value">3</div>
+            <div class="agent-stat-label">Planer</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-value">5</div>
+            <div class="agent-stat-label">Innsikter</div>
+          </div>
+          <div class="agent-stat">
+            <div class="agent-stat-value">2</div>
+            <div class="agent-stat-label">Venter</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Donut + Tier breakdown -->
+    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px;">
+      <div class="donut-card">
+        <div class="donut-title">Fordeling per tier</div>
+        <div class="donut-container">
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="var(--grey-200)" stroke-width="12"/>
+            <!-- Performance: 62.5% -->
+            <circle cx="50" cy="50" r="40" fill="none" stroke="var(--brand)" stroke-width="12"
+              stroke-dasharray="251" stroke-dashoffset="94" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+            <!-- Pro: 37.5% -->
+            <circle cx="50" cy="50" r="40" fill="none" stroke="var(--coaching)" stroke-width="12"
+              stroke-dasharray="251" stroke-dashoffset="157" stroke-linecap="round" transform="rotate(135 50 50)"/>
+            <text x="50" y="48" text-anchor="middle" font-size="16" font-weight="800" fill="var(--black)">8</text>
+            <text x="50" y="60" text-anchor="middle" font-size="8" font-weight="600" fill="var(--grey-400)">ELEVER</text>
+          </svg>
+          <div class="donut-legend">
+            <div class="donut-legend-item">
+              <div class="donut-legend-dot" style="background:var(--brand)"></div>
+              Performance
+              <span class="donut-legend-value">5</span>
+            </div>
+            <div class="donut-legend-item">
+              <div class="donut-legend-dot" style="background:var(--coaching)"></div>
+              Performance Pro
+              <span class="donut-legend-value">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="schedule-card">
+        <div class="schedule-header">
+          <div class="schedule-title">Kommende bookinger</div>
+          <div style="display:flex; gap:4px;">
+            <button class="mc-btn" style="font-size:11px; padding:5px 10px;">I dag</button>
+            <button class="mc-btn" style="font-size:11px; padding:5px 10px; background:var(--black); color:white; border-color:var(--black);">Denne uken</button>
+            <button class="mc-btn" style="font-size:11px; padding:5px 10px;">Neste uke</button>
+          </div>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-time" style="color:var(--black); font-weight:700;">Lor 5.</span>
+          <span class="schedule-type-tag tag-gruppe">Gruppe</span>
+          <span class="schedule-name">Flex 50 Trio — 3 spillere</span>
+          <span class="schedule-status" style="color:var(--success);">Bekreftet</span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-time" style="color:var(--black); font-weight:700;">Man 7.</span>
+          <span class="schedule-type-tag tag-indiv">Indiv.</span>
+          <span class="schedule-name">Lisa Berg — Performance</span>
+          <span class="schedule-status" style="color:var(--success);">Bekreftet</span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-time" style="color:var(--black); font-weight:700;">Man 7.</span>
+          <span class="schedule-type-tag tag-junior">Junior</span>
+          <span class="schedule-name">WANG Mandag</span>
+          <span class="schedule-status">6 pameldt</span>
+        </div>
+        <div class="schedule-row">
+          <span class="schedule-time" style="color:var(--black); font-weight:700;">Tir 8.</span>
+          <span class="schedule-type-tag tag-indiv">Indiv.</span>
+          <span class="schedule-name">Martin Hansen — Performance Pro</span>
+          <span class="schedule-status" style="color:var(--warning);">Venter</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
