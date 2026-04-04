@@ -100,7 +100,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
                       +{data.newStudents}
                     </div>
                   </div>
-                  <div className="w-10 h-10 rounded-lg bg-[#DCFCE7] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-[#EDF5F0] flex items-center justify-center">
                     <UserPlus className="w-5 h-5 text-[#2D6A4F]" />
                   </div>
                 </div>
@@ -160,7 +160,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
                       {data.completedSessions}
                     </div>
                   </div>
-                  <div className="w-10 h-10 rounded-lg bg-[#DCFCE7] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-[#EDF5F0] flex items-center justify-center">
                     <CalendarCheck className="w-5 h-5 text-[#2D6A4F]" />
                   </div>
                 </div>

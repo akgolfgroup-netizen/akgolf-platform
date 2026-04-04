@@ -104,7 +104,7 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
                     </span>
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-lg bg-[#DCFCE7] flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-[#EDF5F0] flex items-center justify-center">
                   <Wallet className="w-5 h-5 text-[#2D6A4F]" />
                 </div>
               </div>
