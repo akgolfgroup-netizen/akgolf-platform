@@ -42,8 +42,6 @@ export function WebsiteNav() {
             <AKLogo
               variant={isDarkMode ? "inverted" : "black"}
               size={28}
-              showText
-              textLabel="Golf"
             />
           </Link>
 

@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SectionLabel } from "@/components/website/SectionLabel";
@@ -15,6 +17,74 @@ import {
   UTVIKLING_REFERENCES_V2,
   UTVIKLING_CTA_V2,
 } from "@/lib/website-constants";
+
+function ExpandableCard({ item }: { item: { id: string; label: string; title: string; description: string; expandedDescription: string; span: string; theme: string } }) {
+  const [expanded, setExpanded] = useState(false);
+  const isDark = item.theme === "dark";
+
+  return (
+    <div
+      className={`rounded-[20px] p-8 ${
+        item.span === "large" ? "md:col-span-2 p-10" : ""
+      } ${
+        isDark
+          ? "bg-[#1D1D1F] text-white"
+          : item.span === "large"
+            ? "bg-[#F5F5F7] border border-[#E8E8ED]"
+            : "bg-white border border-[#E8E8ED]"
+      }`}
+    >
+      <span
+        className={`text-[10px] font-mono uppercase tracking-[0.15em] font-medium ${
+          isDark ? "text-white/60" : "text-grey-500"
+        }`}
+      >
+        {item.label}
+      </span>
+      <h3
+        className={`text-xl font-bold mt-3 mb-3 ${
+          item.span === "large" ? "text-2xl" : ""
+        } ${isDark ? "text-white" : "text-[#1D1D1F]"}`}
+      >
+        {item.title}
+      </h3>
+      <p
+        className={`text-sm leading-relaxed ${
+          item.span === "large" ? "max-w-xl" : ""
+        } ${isDark ? "text-white/60" : "text-grey-500"}`}
+      >
+        {item.description}
+      </p>
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <p
+              className={`text-sm leading-relaxed mt-4 ${
+                item.span === "large" ? "max-w-xl" : ""
+              } ${isDark ? "text-white/60" : "text-grey-500"}`}
+            >
+              {item.expandedDescription}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className={`text-xs font-semibold mt-4 transition-colors ${
+          isDark ? "text-white/80 hover:text-white" : "text-[#1D1D1F] hover:text-[#6E6E73]"
+        }`}
+      >
+        {expanded ? "Vis mindre" : "Les mer"}
+      </button>
+    </div>
+  );
+}
 
 export default function UtviklingPage() {
   return (
@@ -52,8 +122,18 @@ export default function UtviklingPage() {
           }}
         />
         <PageTransition>
-          {/* ─── 1. Hero (dark, no image) ─── */}
+          {/* ─── 1. Hero (dark, with background image) ─── */}
           <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-[#1D1D1F] grain-overlay">
+            <div className="absolute inset-0 pointer-events-none">
+              <Image
+                src="/images/branding/ak-golf-academy-19.jpg"
+                alt="Bred fairway"
+                fill
+                className="object-cover opacity-25"
+                priority
+                sizes="100vw"
+              />
+            </div>
             <div className="w-container relative">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -128,67 +208,9 @@ export default function UtviklingPage() {
 
               <RevealOnScroll delay={0.1}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-                  {/* Large card spanning 2 cols */}
-                  {UTVIKLING_SERVICES_V2.items
-                    .filter((item) => item.span === "large")
-                    .map((item) => (
-                      <div
-                        key={item.id}
-                        className="md:col-span-2 bg-[#F5F5F7] rounded-[20px] border border-[#E8E8ED] p-10"
-                      >
-                        <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-grey-500 font-medium">
-                          {item.label}
-                        </span>
-                        <h3 className="text-2xl font-bold text-[#1D1D1F] mt-3 mb-3">
-                          {item.title}
-                        </h3>
-                        <p className="text-sm text-grey-500 leading-relaxed max-w-xl">
-                          {item.description}
-                        </p>
-                      </div>
-                    ))}
-
-                  {/* Small cards */}
-                  {UTVIKLING_SERVICES_V2.items
-                    .filter((item) => item.span === "small")
-                    .map((item) => (
-                      <div
-                        key={item.id}
-                        className={`rounded-[20px] p-8 ${
-                          item.theme === "dark"
-                            ? "bg-[#1D1D1F] text-white"
-                            : "bg-white border border-[#E8E8ED]"
-                        }`}
-                      >
-                        <span
-                          className={`text-[10px] font-mono uppercase tracking-[0.15em] font-medium ${
-                            item.theme === "dark"
-                              ? "text-white/60"
-                              : "text-grey-500"
-                          }`}
-                        >
-                          {item.label}
-                        </span>
-                        <h3
-                          className={`text-xl font-bold mt-3 mb-3 ${
-                            item.theme === "dark"
-                              ? "text-white"
-                              : "text-[#1D1D1F]"
-                          }`}
-                        >
-                          {item.title}
-                        </h3>
-                        <p
-                          className={`text-sm leading-relaxed ${
-                            item.theme === "dark"
-                              ? "text-white/60"
-                              : "text-grey-500"
-                          }`}
-                        >
-                          {item.description}
-                        </p>
-                      </div>
-                    ))}
+                  {UTVIKLING_SERVICES_V2.items.map((item) => (
+                    <ExpandableCard key={item.id} item={item} />
+                  ))}
                 </div>
               </RevealOnScroll>
             </div>
@@ -202,14 +224,28 @@ export default function UtviklingPage() {
                   <SectionLabel>
                     {UTVIKLING_REFERENCES_V2.label}
                   </SectionLabel>
-                  <h2 className="w-heading-lg mt-4 mb-8">
+                  <h2 className="w-heading-lg mt-4 mb-12">
                     {UTVIKLING_REFERENCES_V2.heading}
                   </h2>
-                  {UTVIKLING_REFERENCES_V2.clubs.map((club) => (
-                    <p key={club} className="text-lg text-grey-500">
-                      {club}
-                    </p>
-                  ))}
+                  <div className="flex flex-wrap items-center justify-center gap-8 max-w-3xl mx-auto">
+                    <div className="flex flex-col items-center gap-3">
+                      <Image
+                        src="/images/partners/gfgk-logo.svg"
+                        alt="Gamle Fredrikstad Golfklubb"
+                        width={80}
+                        height={80}
+                        className="opacity-60 hover:opacity-100 transition-opacity"
+                      />
+                      <p className="text-sm text-grey-500">Gamle Fredrikstad Golfklubb</p>
+                    </div>
+                    {/* TODO: Legg til Miklagard-logo nar tilgjengelig */}
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-20 h-20 rounded-[16px] border border-[#E8E8ED] bg-white flex items-center justify-center">
+                        <span className="text-xs font-semibold text-grey-500">MG</span>
+                      </div>
+                      <p className="text-sm text-grey-500">Miklagard Golfklubb</p>
+                    </div>
+                  </div>
                 </div>
               </RevealOnScroll>
             </div>
@@ -226,20 +262,12 @@ export default function UtviklingPage() {
                   <p className="text-white/60 leading-relaxed mb-10">
                     {UTVIKLING_CTA_V2.description}
                   </p>
-                  <div className="flex flex-wrap gap-4 justify-center">
-                    <Link
-                      href="/booking"
-                      className="px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
-                    >
-                      {UTVIKLING_CTA_V2.ctaPrimary} &rarr;
-                    </Link>
-                    <a
-                      href="tel:+4790967995"
-                      className="px-7 py-3.5 rounded-[980px] border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
-                    >
-                      {UTVIKLING_CTA_V2.ctaSecondary}
-                    </a>
-                  </div>
+                  <Link
+                    href="/booking"
+                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
+                  >
+                    {UTVIKLING_CTA_V2.ctaPrimary} &rarr;
+                  </Link>
                 </div>
               </RevealOnScroll>
             </div>

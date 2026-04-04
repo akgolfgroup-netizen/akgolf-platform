@@ -1611,7 +1611,8 @@ export const COACH_BIO = {
   name: "Anders Kristiansen",
   title: "Grunnlegger og hovedcoach",
   description: "15 års erfaring med spillerutvikling på alle nivåer. Har coachet spillere fra nybegynner til PGA Tour. Kombinerer TrackMan-data med individuell coaching for å gi hver spiller en tydelig utviklingsretning.",
-  image: "/images/branding/ak-golf-academy-37.jpg",
+  // TODO: Verifiser at ak-golf-academy-anders.jpg er riktig portrettbilde (svart genser, uten caps)
+  image: "/images/branding/ak-golf-academy-anders.jpg",
 } as const;
 
 // ─── Coaching Offers ───
@@ -1621,7 +1622,7 @@ export const COACHING_OFFERS = [
     description: "2 økter i måneden med TrackMan-analyse, treningsplan og full portaltilgang.",
     price: "1 600",
     period: "kr/mnd",
-    image: "/images/branding/ak-golf-academy-38.jpg",
+    image: "/images/branding/ak-golf-academy-40.jpg",
     href: "/#packages",
   },
   {
@@ -1629,7 +1630,7 @@ export const COACHING_OFFERS = [
     description: "4 økter i måneden for deg som vil ha maksimal fremgang. Prioritert booking.",
     price: "2 000",
     period: "kr/mnd",
-    image: "/images/branding/ak-golf-academy-26.jpg",
+    image: "/images/branding/ak-golf-academy-29.jpg",
     href: "/#packages",
     highlighted: true,
   },
@@ -1638,7 +1639,7 @@ export const COACHING_OFFERS = [
     description: "Enkeltsesjon uten binding. Perfekt for å prøve coaching eller få en engangs-gjennomgang.",
     price: "fra 1 500",
     period: "kr",
-    image: "/images/branding/ak-golf-academy-28.jpg",
+    image: "/images/branding/ak-golf-academy-07.jpg",
     href: "/#packages",
   },
 ] as const;
@@ -1732,7 +1733,7 @@ export const ACADEMY_CTA_V2 = {
   heading: "Klar for neste niv\u00e5?",
   description: "Book din f\u00f8rste time og f\u00e5 en komplett analyse.",
   ctaLabel: "Book coaching",
-  heroImage: "/images/academy/AK-Golf-Academy-18.jpg",
+  heroImage: "/images/academy/AK-Golf-Academy-25.jpg",
 } as const;
 
 // ─── Junior Academy Page v2 (dark hero rewrite) ───
@@ -1755,6 +1756,7 @@ export const JUNIOR_AGE_GROUPS_V2 = {
       description: "Introduksjon gjennom lek og moro.",
       schedule: "Onsdager 16:00\u201317:00",
       maxParticipants: "Maks 12 barn",
+      note: "I regi av GFGK Junior",
     },
     {
       ageRange: "10\u201314 \u00c5R",
@@ -1762,6 +1764,7 @@ export const JUNIOR_AGE_GROUPS_V2 = {
       description: "Strukturert trening.",
       schedule: "Tirsdager og torsdager 16:00\u201317:30",
       maxParticipants: "Maks 8",
+      note: "I regi av GFGK Junior",
     },
     {
       ageRange: "15\u201318 \u00c5R",
@@ -1769,6 +1772,7 @@ export const JUNIOR_AGE_GROUPS_V2 = {
       description: "TrackMan-data, mental trening.",
       schedule: "Mandager og onsdager 16:00\u201318:00",
       maxParticipants: "Maks 6",
+      note: "I regi av GFGK Junior",
     },
   ],
 } as const;
@@ -1780,10 +1784,18 @@ export const JUNIOR_WANG_V2 = {
   ctaLabel: "Les mer om WANG",
 } as const;
 
+export const JUNIOR_GFGK_V2 = {
+  label: "SAMARBEID",
+  heading: "I samarbeid med Gamle Fredrikstad Golfklubb",
+  description: "AK Golf Junior Academy leverer det sportslige innholdet i samarbeid med GFGK Junior. Junioravdelingen til GFGK organiserer treningsgrupper og arrangementer.\n\nAK Golf Junior Academy kommer pa toppen av klubbens eget juniorprogram (Junior Elite).",
+} as const;
+
 export const JUNIOR_CTA_V2 = {
-  heading: "Vil barnet ditt pr\u00f8ve golf?",
-  description: "F\u00f8rste trenings\u00f8kt er gratis. Ingen forpliktelser.",
-  ctaLabel: "Meld p\u00e5 gratis pr\u00f8vetime",
+  heading: "Bli med i juniorprogrammet",
+  description: "Oppmelding skjer gjennom GFGK Junior.",
+  ctaLabel: "Kontakt GFGK Junior",
+  // TODO: Legg til korrekt URL til GFGK Junior kontaktside
+  ctaHref: "#",
 } as const;
 
 // ─── Utvikling Page v2 (dark hero, bento grid) ───
@@ -1802,7 +1814,8 @@ export const UTVIKLING_SERVICES_V2 = {
       id: "sportsplan",
       label: "SPORTSLIG PLAN",
       title: "Komplett sportslig plan",
-      description: "Vi utarbeider en helhetlig sportslig plan tilpasset klubbens st\u00f8rrelse, ambisjoner og ressurser. Fra juniorutvikling til elitesatsing, med konkrete m\u00e5l og handlingsplaner.",
+      description: "Vi utarbeider en helhetlig sportslig plan tilpasset klubbens storrelse, ambisjoner og ressurser. Fra juniorutvikling til elitesatsing, med konkrete mal og handlingsplaner.",
+      expandedDescription: "Planen dekker alle niva i klubben: nybegynnerprogram, bredde, junior elite og voksenutvikling. Vi definerer treningsfilosofi, periodisering og konkrete mileparler for hver gruppe. Inkluderer ogsa trenerveiledning og evalueringsverktoy.",
       span: "large" as const,
       theme: "light" as const,
     },
@@ -1810,7 +1823,8 @@ export const UTVIKLING_SERVICES_V2 = {
       id: "programvare",
       label: "PROGRAMVARE",
       title: "Spillerportalen",
-      description: "Booking, coaching-notater, treningsplaner og progresjonslogging i \u00e9n plattform. Brukes av alle v\u00e5re spillere i dag.",
+      description: "Booking, coaching-notater, treningsplaner og progresjonslogging i en plattform. Brukes av alle vare spillere i dag.",
+      expandedDescription: "Portalen gir spillere tilgang til treningshistorikk, Strokes Gained-analyse, AI-drevne anbefalinger og direkte kommunikasjon med coach. Trenere far oversikt over alle elever, kan lage periodiserte planer og folge opp progresjon.",
       span: "small" as const,
       theme: "light" as const,
     },
@@ -1818,7 +1832,8 @@ export const UTVIKLING_SERVICES_V2 = {
       id: "skilting",
       label: "SKILTING",
       title: "QR-skilt konsept",
-      description: "Digitale treningsskilt med QR-koder p\u00e5 rangen. Spillerne scanner og f\u00e5r tilgang til \u00f8velser og videoer direkte p\u00e5 telefonen.",
+      description: "Digitale treningsskilt med QR-koder pa rangen. Spillerne scanner og far tilgang til ovelser og videoer direkte pa telefonen.",
+      expandedDescription: "Hvert skilt er knyttet til spesifikke ovelser med video og instruksjoner. Klubben kan tilpasse innholdet til egne treningsprogrammer. Installasjon og innholdsproduksjon er inkludert.",
       span: "small" as const,
       theme: "dark" as const,
     },
@@ -1828,12 +1843,11 @@ export const UTVIKLING_SERVICES_V2 = {
 export const UTVIKLING_REFERENCES_V2 = {
   label: "SAMARBEID",
   heading: "Klubber vi jobber med.",
-  clubs: ["Gamle Fredrikstad Golfklubb"],
+  clubs: ["Gamle Fredrikstad Golfklubb", "Miklagard Golfklubb"],
 } as const;
 
 export const UTVIKLING_CTA_V2 = {
   heading: "Trenger klubben din en sportslig plan?",
   description: "Ta kontakt for en uforpliktende samtale om hvordan vi kan hjelpe klubben din.",
   ctaPrimary: "Ta kontakt",
-  ctaSecondary: "Ring: 909 67 995",
 } as const;

@@ -10,10 +10,8 @@ import { SectionLabel } from "@/components/website/SectionLabel";
 import { RevealOnScroll } from "@/components/website/RevealOnScroll";
 import { FAQAccordion } from "@/components/website/FAQAccordion";
 import { BackToTop } from "@/components/website/BackToTop";
-import { SocialProofBar } from "@/components/website/SocialProofBar";
 import { BentoFeatures } from "@/components/website/BentoFeatures";
 import { ParallaxImage } from "@/components/website/ParallaxImage";
-import { DarkStats } from "@/components/website/DarkStats";
 import { CoachingOfferGrid } from "@/components/website/CoachingOfferGrid";
 import { TestimonialBlock } from "@/components/website/TestimonialBlock";
 import { ApplicationForm } from "@/components/website/ApplicationForm";
@@ -64,7 +62,7 @@ export default function HomePage() {
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-2 h-2 rounded-full bg-[var(--color-brand)]" />
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--color-brand)]">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white">
                     {HERO.eyebrow}
                   </span>
                 </div>
@@ -125,17 +123,12 @@ export default function HomePage() {
         </section>
 
         {/* ================================================================= */}
-        {/* 2. SOCIAL PROOF BAR                                                */}
-        {/* ================================================================= */}
-        <SocialProofBar />
-
-        {/* ================================================================= */}
-        {/* 3. BENTO FEATURES — SG-radar + AI + TrackMan                      */}
+        {/* 2. BENTO FEATURES — SG-radar + AI + TrackMan                      */}
         {/* ================================================================= */}
         <BentoFeatures />
 
         {/* ================================================================= */}
-        {/* 4. PARALLAX IMAGE                                                  */}
+        {/* 3. PARALLAX IMAGE                                                  */}
         {/* ================================================================= */}
         <ParallaxImage
           src="/images/branding/ak-golf-academy-06.jpg"
@@ -143,12 +136,37 @@ export default function HomePage() {
         />
 
         {/* ================================================================= */}
-        {/* 5. DARK STATS                                                      */}
+        {/* 4. SPILLERPORTAL                                                   */}
         {/* ================================================================= */}
-        <DarkStats />
+        <section className="py-[120px] md:py-[160px] bg-white">
+          <div className="w-container">
+            <RevealOnScroll>
+              <div className="max-w-2xl mx-auto text-center">
+                <SectionLabel>Spillerportalen</SectionLabel>
+                <h2 className="font-display text-3xl md:text-[48px] font-extrabold tracking-tight text-[#1D1D1F] mt-5 mb-4">
+                  Din treningspartner — alltid tilgjengelig.
+                </h2>
+                <p className="text-[#48484A] text-lg leading-relaxed mb-4">
+                  Spillerportalen gir deg full oversikt over spillet ditt.
+                  Treningsplaner, Strokes Gained-analyse, coaching-notater
+                  og AI-drevne anbefalinger — alt samlet pa ett sted.
+                </p>
+                <p className="text-[#6E6E73] text-sm mb-10">
+                  Inkludert i alle coaching-abonnement. Fristaende tilgang: 299 kr/mnd.
+                </p>
+                <Link
+                  href="/portal"
+                  className="inline-flex px-8 py-4 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
+                >
+                  Prov Spillerportalen
+                </Link>
+              </div>
+            </RevealOnScroll>
+          </div>
+        </section>
 
         {/* ================================================================= */}
-        {/* 6. COACHING OFFERS                                                 */}
+        {/* 5. COACHING OFFERS                                                 */}
         {/* ================================================================= */}
         <CoachingOfferGrid />
 
@@ -178,20 +196,6 @@ export default function HomePage() {
                   <h2 className="font-display text-3xl md:text-[48px] font-extrabold tracking-tight text-[#1D1D1F] mt-5 mb-4">{COACH_BIO.name}</h2>
                   <p className="text-[#6E6E73] text-sm uppercase tracking-wider mb-6">{COACH_BIO.title}</p>
                   <p className="text-[#48484A] text-lg leading-relaxed">{COACH_BIO.description}</p>
-                  <div className="mt-8 pt-6 border-t border-[#E8E8ED] flex gap-8">
-                    <div>
-                      <span className="font-display text-2xl font-bold text-[#1D1D1F]">12</span>
-                      <p className="text-[13px] text-[#6E6E73] mt-0.5">ars erfaring</p>
-                    </div>
-                    <div>
-                      <span className="font-display text-2xl font-bold text-[#1D1D1F]">500+</span>
-                      <p className="text-[13px] text-[#6E6E73] mt-0.5">spillere coachet</p>
-                    </div>
-                    <div>
-                      <span className="font-display text-2xl font-bold text-[#1D1D1F]">8</span>
-                      <p className="text-[13px] text-[#6E6E73] mt-0.5">tour-spillere</p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </RevealOnScroll>
@@ -228,6 +232,7 @@ export default function HomePage() {
               alt="To figurer på fairway"
               fill
               className="object-cover"
+              style={{ objectPosition: "center 30%" }}
               sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/70 to-black/80" />

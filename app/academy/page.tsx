@@ -185,6 +185,7 @@ export default function AcademyPage() {
           </section>
 
           {/* ─── 4. Prices (white bg) ─── */}
+          {/* TODO: Anders oppdaterer priser og pakkenavn manuelt */}
           <section id="prices" className="py-28 md:py-40 bg-white">
             <div className="w-container">
               <RevealOnScroll>
@@ -271,6 +272,7 @@ export default function AcademyPage() {
                 alt="AK Golf Academy"
                 fill
                 className="object-cover opacity-15"
+                style={{ objectPosition: "center 30%" }}
                 sizes="100vw"
               />
             </div>

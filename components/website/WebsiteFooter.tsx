@@ -4,7 +4,7 @@ import { AKLogo } from "./AKLogo";
 
 export function WebsiteFooter() {
   return (
-    <footer className="relative bg-[#1D1D1F] text-white overflow-hidden">
+    <footer className="relative bg-[#1D1D1F] text-white overflow-hidden border-t border-white/10">
       <div className="w-container relative py-16 md:py-20">
         {/* Links grid — 2 cols on mobile, 4 on desktop */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
@@ -98,14 +98,6 @@ export function WebsiteFooter() {
               Kontakt
             </h4>
             <ul className="space-y-2 text-xs text-[#6E6E73]">
-              <li>
-                <a
-                  href="tel:+4790967995"
-                  className="hover:text-white transition-colors"
-                >
-                  909 67 995
-                </a>
-              </li>
               <li>
                 <a
                   href={`mailto:${FOOTER_LINKS.contact.email}`}

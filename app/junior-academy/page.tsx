@@ -17,6 +17,7 @@ import { EASE_ENTRANCE } from "@/lib/design-tokens";
 import {
   JUNIOR_HERO_V2,
   JUNIOR_AGE_GROUPS_V2,
+  JUNIOR_GFGK_V2,
   JUNIOR_WANG_V2,
   JUNIOR_CTA_V2,
 } from "@/lib/website-constants";
@@ -168,6 +169,11 @@ export default function JuniorPage() {
                         <p className="text-xs text-grey-400 mt-1">
                           {group.maxParticipants}
                         </p>
+                        {"note" in group && group.note && (
+                          <p className="text-xs text-[var(--color-brand)] font-medium mt-2">
+                            {group.note}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </StaggerItem>
@@ -176,7 +182,26 @@ export default function JuniorPage() {
             </div>
           </section>
 
-          {/* ─── 3. WANG (dark section) ─── */}
+          {/* ─── 3. GFGK samarbeid (light section) ─── */}
+          <section className="py-28 md:py-40 bg-[#F5F5F7]">
+            <div className="w-container">
+              <RevealOnScroll>
+                <div className="max-w-2xl mx-auto text-center">
+                  <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-grey-500 font-medium">
+                    {JUNIOR_GFGK_V2.label}
+                  </span>
+                  <h2 className="w-heading-lg mt-4 mb-6">
+                    {JUNIOR_GFGK_V2.heading}
+                  </h2>
+                  <p className="text-grey-500 leading-relaxed whitespace-pre-line">
+                    {JUNIOR_GFGK_V2.description}
+                  </p>
+                </div>
+              </RevealOnScroll>
+            </div>
+          </section>
+
+          {/* ─── 4. WANG (dark section) ─── */}
           <section className="py-28 md:py-40 bg-[#1D1D1F]">
             <div className="w-container">
               <RevealOnScroll>
@@ -190,6 +215,8 @@ export default function JuniorPage() {
                   <p className="text-white/60 leading-relaxed mb-10">
                     {JUNIOR_WANG_V2.description}
                   </p>
+                  {/* TODO: Legg til WANG-logo nar tilgjengelig */}
+                  {/* TODO: Legg til lenker til WANG UNG/Toppidrett med korrekte URLer */}
                   <Link
                     href="/utvikling"
                     className="inline-flex px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
@@ -201,7 +228,7 @@ export default function JuniorPage() {
             </div>
           </section>
 
-          {/* ─── 4. CTA (white bg) ─── */}
+          {/* ─── 5. CTA (white bg) ─── */}
           <section id="apply" className="py-28 md:py-40 bg-white">
             <div className="w-container">
               <RevealOnScroll>
@@ -212,8 +239,9 @@ export default function JuniorPage() {
                   <p className="text-grey-500 leading-relaxed mb-10">
                     {JUNIOR_CTA_V2.description}
                   </p>
+                  {/* TODO: Oppdater href til korrekt GFGK Junior kontakt-URL */}
                   <Link
-                    href="/booking"
+                    href={JUNIOR_CTA_V2.ctaHref}
                     className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
                   >
                     {JUNIOR_CTA_V2.ctaLabel} &rarr;
