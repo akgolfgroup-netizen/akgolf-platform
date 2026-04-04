@@ -268,16 +268,17 @@ Supabase Auth (ingen NextAuth/Auth.js):
 
 ### Design: Se `docs/ART-DIRECTION.md` for komplett visuell spesifikasjon.
 
-- **Farger:** «Sort. Hvit. En gronn.» — #1D1D1F base + AK Green #2D6A4F.
-- **Logo:** AK-monogram SVG med gronn signalprikk. I nav: SVG + «Golf» Inter 500.
-- **Font:** Inter med dramatisk storrelsevariasjon (11px → 72px).
-- **AI-elementer:** Gronn (#2D6A4F / #EDF5F0), ALDRI lilla/purple.
+- **Farger:** "Sort. Hvit. En gronn." — #1D1D1F base + AK Green #2D6A4F (brand).
+- **Semantikk:** Success=#34C759, Error=#FF3B30, Warning=#FF9500 (Apple-standard).
+- **AI-elementer:** Lilla (#AF52DE / #FAF5FF / #6B21A8), ALDRI gronn for AI.
+- **Logo:** AK-monogram SVG med GRA signalprikk (#D2D2D7) som default. Gronn kun pa moerk bg (inverted).
+- **Font:** Inter med dramatisk storrelsevariasjon (11px til 72px).
 - **Komposisjon:** Bento-grid med varierende kortstorrelser. Aldri identisk grid.
 - **Data:** Alltid med sparkline, trend og kontekst. Aldri bare et tall.
 - **Empty states:** Aldri generisk ikon+tekst+knapp. Vis preview, onboarding, eksempeldata.
 - **Bilder:** Kun pa markedsside (profesjonell fotografering). Portal = kun data og ikoner.
 
-**ALDRI bruk:** `--color-gold`, `#B07D4F` (bronse), `--apple-gold-*`, `--color-ink-*`, lilla/purple for AI
+**ALDRI bruk:** `--color-gold`, `#B07D4F` (bronse), `--apple-gold-*`, `--color-ink-*`, #2D6A4F for success-indikatorer
 
 ### Typography
 

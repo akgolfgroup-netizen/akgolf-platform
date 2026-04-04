@@ -62,9 +62,11 @@ import { HERO_CONTENT } from "@/lib/website-constants";
 
 Se `docs/ART-DIRECTION.md` for komplett visuell spesifikasjon.
 
-Farger: «Sort. Hvit. En gronn.» — #1D1D1F base + AK Green #2D6A4F.
+Farger: "Sort. Hvit. En gronn." — #1D1D1F base + AK Green #2D6A4F (brand).
+Semantikk: Success=#34C759, Error=#FF3B30, Warning=#FF9500 (Apple-standard).
+AI: Lilla #AF52DE (--color-ai). Logo-prikk: Gra #D2D2D7 som default.
 
-**ALDRI bruk:** `--color-gold`, `--apple-gold-*`, `#B07D4F` (bronse), `--color-ink-*`, lilla/purple for AI
+**ALDRI bruk:** `--color-gold`, `--apple-gold-*`, `#B07D4F` (bronse), `--color-ink-*`, #2D6A4F for success
 
 ### Font
 Inter via `next/font/google` — definert i `app/layout.tsx`.

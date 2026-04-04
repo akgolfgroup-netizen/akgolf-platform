@@ -634,6 +634,32 @@ components/portal/mission-control/
 
 **CSS-tokens:** MC-tokens er definert i `globals.css` under `/* MISSION CONTROL */` seksjonen.
 
+## 39. Semantiske farger og AI-lilla (2026-04-04)
+
+**Status:** Semantiske farger foelger naa Apple-standard. AI-elementer bruker lilla.
+
+**Fargeendringer:**
+| Token | Gammel | Ny |
+|-------|--------|------|
+| --color-success | #2D6A4F | #34C759 |
+| --color-success-light | #EDF5F0 | #F0FDF4 |
+| --color-success-text | #1B4332 | #166534 |
+| --color-error | #D14343 | #FF3B30 |
+| --color-warning | #E89C30 | #FF9500 |
+| --color-ai (NY) | — | #AF52DE |
+| --color-ai-light (NY) | — | #FAF5FF |
+| --color-ai-text (NY) | — | #6B21A8 |
+| Logo-prikk (default) | #2D6A4F | #D2D2D7 |
+
+**Brand-farger UENDRET:** `--color-brand: #2D6A4F`, `--color-green: #2D6A4F`
+
+**Regler:**
+- ALDRI bruk #2D6A4F for success/positive-indikatorer — bruk var(--color-success)
+- ALDRI bruk groenn for AI-elementer — bruk var(--color-ai)
+- AI-badges: bg var(--color-ai-light), tekst var(--color-ai-text), ikon var(--color-ai)
+- Success-tekst pa lys bg: bruk --color-success-text (#166534), IKKE --color-success (#34C759) som har for lav kontrast
+- #2D6A4F er KUN for brand: logo, nav-aksent, CTA "Book coaching"
+
 ---
 
 ## VIKTIG: Oppdater dokumentasjon ved strukturelle endringer
