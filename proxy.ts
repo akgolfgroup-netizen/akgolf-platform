@@ -26,19 +26,9 @@ export async function proxy(request: NextRequest) {
     if (request.cookies.get("maintenance_bypass")?.value === "true") {
       // Continue to normal flow
     } else if (
-      !pathname.startsWith("/api") &&
       !pathname.startsWith("/_next") &&
       !pathname.startsWith("/favicon") &&
       !pathname.startsWith("/icon") &&
-      !pathname.startsWith("/portal") &&
-      !pathname.startsWith("/portal-preview") &&
-      !pathname.startsWith("/auth") &&
-      !pathname.startsWith("/booking") &&
-      pathname !== "/" &&
-      pathname !== "/coaching" &&
-      pathname !== "/junior-academy" &&
-      pathname !== "/utvikling" &&
-      pathname !== "/personvern" &&
       pathname !== "/maintenance"
     ) {
       return NextResponse.rewrite(new URL("/maintenance", request.url));
