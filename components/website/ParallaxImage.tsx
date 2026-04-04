@@ -10,17 +10,17 @@ interface ParallaxImageProps {
   height?: string;
 }
 
-export function ParallaxImage({ src, alt, height = "h-[50vh] md:h-[60vh]" }: ParallaxImageProps) {
+export function ParallaxImage({ src, alt, height = "h-[60vh] md:h-[70vh]" }: ParallaxImageProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
     <section ref={ref} className={`relative ${height} overflow-hidden`}>
-      <motion.div style={{ y }} className="absolute inset-0 scale-110">
+      <motion.div style={{ y }} className="absolute inset-0 scale-[1.15]">
         <Image
           src={src}
           alt={alt}

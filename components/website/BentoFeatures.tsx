@@ -33,7 +33,7 @@ const features = [
 
 export function BentoFeatures() {
   return (
-    <section className="py-28 md:py-40 bg-white">
+    <section className="py-[120px] md:py-[160px] bg-white">
       <div className="w-container">
         <RevealOnScroll>
           <div className="text-center mb-16">
@@ -45,16 +45,28 @@ export function BentoFeatures() {
           </div>
         </RevealOnScroll>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
               <StaggerItem key={feature.title} className={feature.span}>
-                <div className={`${feature.bg} rounded-[20px] p-8 h-full border border-[#E8E8ED] ${feature.bg === "bg-[#1D1D1F]" ? "border-transparent" : ""}`}>
+                <div className={`${feature.bg} rounded-[20px] ${feature.span.includes("row-span-2") ? "p-10 md:p-12" : "p-8"} h-full border border-[#E8E8ED] ${feature.bg === "bg-[#1D1D1F]" ? "border-transparent" : ""} transition-transform duration-300 hover:-translate-y-1 relative overflow-hidden`}>
+                  {feature.span.includes("row-span-2") && (
+                    <svg className="absolute right-6 bottom-6 w-40 h-40 opacity-[0.07] text-current" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="0.5">
+                      <polygon points="50,5 95,35 80,90 20,90 5,35" />
+                      <polygon points="50,20 78,40 70,78 30,78 22,40" />
+                      <polygon points="50,35 65,47 60,67 40,67 35,47" />
+                      <line x1="50" y1="5" x2="50" y2="50" />
+                      <line x1="95" y1="35" x2="50" y2="50" />
+                      <line x1="80" y1="90" x2="50" y2="50" />
+                      <line x1="20" y1="90" x2="50" y2="50" />
+                      <line x1="5" y1="35" x2="50" y2="50" />
+                    </svg>
+                  )}
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-5 ${feature.bg === "bg-[#1D1D1F]" ? "bg-white/10" : feature.bg === "bg-[#EDF5F0]" ? "bg-[#2D6A4F]/10" : "bg-[#F5F5F7]"}`}>
                     <Icon className={`w-5 h-5 ${"iconColor" in feature && feature.iconColor ? feature.iconColor : (feature.bg === "bg-[#1D1D1F]" ? "text-white" : "text-[#1D1D1F]")}`} />
                   </div>
-                  <h3 className={`font-display text-xl font-bold mb-3 ${"textColor" in feature && feature.textColor ? feature.textColor : "text-[#1D1D1F]"}`}>
+                  <h3 className={`font-display ${feature.span.includes("row-span-2") ? "text-xl md:text-2xl" : "text-xl"} font-bold mb-3 ${"textColor" in feature && feature.textColor ? feature.textColor : "text-[#1D1D1F]"}`}>
                     {feature.title}
                   </h3>
                   <p className={`text-sm leading-relaxed ${"descColor" in feature && feature.descColor ? feature.descColor : "text-[#6E6E73]"}`}>

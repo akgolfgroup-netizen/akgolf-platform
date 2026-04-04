@@ -21,7 +21,7 @@ function DarkStat({ value, suffix, label }: { value: number; suffix: string; lab
 
 export function DarkStats() {
   return (
-    <section className="py-28 md:py-40 bg-[#1D1D1F]">
+    <section className="py-28 md:py-40 bg-[#1D1D1F] grain-overlay">
       <div className="w-container">
         <RevealOnScroll>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
