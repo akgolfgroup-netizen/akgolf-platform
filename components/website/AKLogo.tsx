@@ -1,9 +1,9 @@
 // Brand Guide 2026 — AK Green Signal Dot
 // Primary: Black #1D1D1F, Green Dot #2D6A4F
 const VARIANTS = {
-  // Primary — grey signal dot (default)
-  black:     { path: "#1D1D1F", dot: "#D2D2D7" },
-  primary:   { path: "#1D1D1F", dot: "#D2D2D7" },
+  // Primary — green signal dot
+  black:     { path: "#1D1D1F", dot: "#2D6A4F" },
+  primary:   { path: "#1D1D1F", dot: "#2D6A4F" },
   // Inverted for dark backgrounds
   inverted:  { path: "#FFFFFF", dot: "#40916C" },
   white:     { path: "#FFFFFF", dot: "#40916C" },
