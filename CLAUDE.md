@@ -68,11 +68,11 @@ app/
 ├── global-error.tsx         # Global error boundary
 ├── sitemap.ts / robots.ts   # SEO (MetadataRoute)
 │
-├── academy/                 # Academy-underside (accent: bronse #B07D4F)
+├── academy/                 # Academy-underside
 │   ├── page.tsx / layout.tsx
 │   └── booking/page.tsx     # Academy booking
 ├── junior/                  # Junior-underside (accent: blue #3B82F6)
-├── utvikling/               # Utvikling-underside (accent: green #22C55E + purple #8B5CF6)
+├── utvikling/               # Utvikling-underside
 ├── personvern/              # Personvernerklæring
 │
 ├── auth/                    # Autentisering (Supabase)
@@ -266,29 +266,18 @@ Supabase Auth (ingen NextAuth/Auth.js):
 
 ## Styling & Design System
 
-### Brand Guide 2026 — Apple Light (GJELDENDE)
+### Design: Se `docs/ART-DIRECTION.md` for komplett visuell spesifikasjon.
 
-**Offisiell kilde:** `Google Drive/AK Golf Group/ak-golf-academy/branding/2026/`
-- `design-tokens.css` — Offisielle CSS-tokens
-- `brand-guide.md` — Komplett brand guide
+- **Farger:** «Sort. Hvit. En gronn.» — #1D1D1F base + AK Green #2D6A4F.
+- **Logo:** AK-monogram SVG med gronn signalprikk. I nav: SVG + «Golf» Inter 500.
+- **Font:** Inter med dramatisk storrelsevariasjon (11px → 72px).
+- **AI-elementer:** Gronn (#2D6A4F / #EDF5F0), ALDRI lilla/purple.
+- **Komposisjon:** Bento-grid med varierende kortstorrelser. Aldri identisk grid.
+- **Data:** Alltid med sparkline, trend og kontekst. Aldri bare et tall.
+- **Empty states:** Aldri generisk ikon+tekst+knapp. Vis preview, onboarding, eksempeldata.
+- **Bilder:** Kun pa markedsside (profesjonell fotografering). Portal = kun data og ikoner.
 
-### Colors — Monokrom (INGEN aksent-farger)
-
-| Token | Hex | Bruk |
-|-------|-----|------|
-| `--color-black` | `#1D1D1F` | Tekst, logo, primær-knapper |
-| `--color-white` | `#FFFFFF` | Bakgrunn |
-| `--color-grey-50` | `#FBFBFD` | Lyseste bakgrunn |
-| `--color-grey-100` | `#F5F5F7` | Sekundær bakgrunn |
-| `--color-grey-200` | `#E8E8ED` | Borders, dividers |
-| `--color-grey-300` | `#D2D2D7` | Inactive states |
-| `--color-grey-400` | `#86868B` | Muted text |
-| `--color-grey-500` | `#6E6E73` | Secondary text |
-| `--color-grey-900` | `#1D1D1F` | Primary text |
-
-**Semantisk:** Success `#34C759`, Error `#FF3B30`, Warning `#FF9500`, Info `#007AFF`
-
-**UTDATERT — ALDRI bruk:** `--color-gold`, `#B07D4F` (bronse), `--apple-gold-*`, `--color-ink-*` (dark theme)
+**ALDRI bruk:** `--color-gold`, `#B07D4F` (bronse), `--apple-gold-*`, `--color-ink-*`, lilla/purple for AI
 
 ### Typography
 

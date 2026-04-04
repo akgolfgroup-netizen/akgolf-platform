@@ -60,30 +60,11 @@ import { HERO_CONTENT } from "@/lib/website-constants";
 
 **Offisiell kilde:** `Google Drive/AK Golf Group/ak-golf-academy/branding/2026/design-tokens.css`
 
-Monokrom Apple-inspirert design. **Ingen aksent-farger** (ingen bronse/gull):
-```css
---color-black: #1D1D1F;       /* Tekst, logo, knapper */
---color-white: #FFFFFF;        /* Bakgrunn */
---color-grey-100: #F5F5F7;    /* Sekundær bakgrunn */
---color-grey-200: #E8E8ED;    /* Borders, dividers */
---color-grey-400: #86868B;    /* Muted text */
---color-grey-500: #6E6E73;    /* Secondary text */
---color-grey-900: #1D1D1F;    /* Primary text */
-```
+Se `docs/ART-DIRECTION.md` for komplett visuell spesifikasjon.
 
-### Farger — KUN monokrom
-| Element | Farge |
-|---------|-------|
-| Primær tekst | `#1D1D1F` (svart) |
-| Sekundær tekst | `#6E6E73` (grey-500) |
-| Borders | `#E8E8ED` (grey-200) |
-| Bakgrunn | `#FFFFFF` (hvit) |
-| Sekundær bg | `#F5F5F7` (grey-100) |
-| Knapper primær | `#1D1D1F` bg, `#FFFFFF` tekst |
-| Success | `#34C759` |
-| Error | `#FF3B30` |
+Farger: «Sort. Hvit. En gronn.» — #1D1D1F base + AK Green #2D6A4F.
 
-**ALDRI bruk:** `--color-gold`, `--apple-gold-*`, `#B07D4F` (bronse), `--color-ink-*` (dark theme)
+**ALDRI bruk:** `--color-gold`, `--apple-gold-*`, `#B07D4F` (bronse), `--color-ink-*`, lilla/purple for AI
 
 ### Font
 Inter via `next/font/google` — definert i `app/layout.tsx`.
