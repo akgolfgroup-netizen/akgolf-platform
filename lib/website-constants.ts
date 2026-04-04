@@ -1611,7 +1611,6 @@ export const COACH_BIO = {
   name: "Anders Kristiansen",
   title: "Grunnlegger og hovedcoach",
   description: "15 års erfaring med spillerutvikling på alle nivåer. Har coachet spillere fra nybegynner til PGA Tour. Kombinerer TrackMan-data med individuell coaching for å gi hver spiller en tydelig utviklingsretning.",
-  // TODO: Verifiser at ak-golf-academy-anders.jpg er riktig portrettbilde (svart genser, uten caps)
   image: "/images/branding/ak-golf-academy-anders.jpg",
 } as const;
 
