@@ -6,6 +6,7 @@ import { format, startOfISOWeek, addDays, isToday } from "date-fns";
 import { nb } from "date-fns/locale";
 import Link from "next/link";
 import { TrainingCalendar } from "@/components/portal/treningsplan/training-calendar";
+import { ExerciseSidebar } from "@/components/portal/treningsplan/exercise-sidebar";
 
 interface SessionExercise {
   name: string;
@@ -118,12 +119,21 @@ export default async function TreningsplanPage() {
   const periodLabel = currentWeek?.focus || plan.periodType || undefined;
 
   return (
-    <TrainingCalendar
-      weekNumber={weekNumber}
-      weekLabel={weekLabel}
-      periodLabel={periodLabel}
-      days={calendarDays}
-      canGenerate={canGenerate}
-    />
+    <div className="flex gap-0 -mr-4 lg:-mr-8">
+      <div className="flex-1 min-w-0">
+        <TrainingCalendar
+          weekNumber={weekNumber}
+          weekLabel={weekLabel}
+          periodLabel={periodLabel}
+          days={calendarDays}
+          canGenerate={canGenerate}
+        />
+      </div>
+      <div className="hidden xl:block">
+        <div className="sticky top-0 h-screen">
+          <ExerciseSidebar />
+        </div>
+      </div>
+    </div>
   );
 }
