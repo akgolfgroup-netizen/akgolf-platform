@@ -57,14 +57,14 @@ export const colors = {
     software: '#8B5CF6',
     softwareLight: '#A78BFA',
     softwareDark: '#7C3AED',
-    utvikling: '#22C55E',
+    utvikling: '#2D6A4F',
     utviklingLight: '#4ADE80',
     utviklingDark: '#16A34A',
   },
 
   // Semantiske farger
   semantic: {
-    success: '#22C55E',
+    success: '#2D6A4F',
     error: '#EF4444',
     warning: '#F59E0B',
     info: '#3B82F6',

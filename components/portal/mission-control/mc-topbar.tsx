@@ -92,7 +92,7 @@ export function MCTopbar({
         <button className="relative p-2 rounded-lg bg-[#F5F5F7] hover:bg-[#E8E8ED] transition-colors cursor-pointer">
           <Bell className="w-4 h-4 text-[#6E6E73]" />
           {notificationCount > 0 && (
-            <span className="absolute top-1 right-1 min-w-[14px] h-[14px] px-1 bg-[#FF3B30] text-white text-[9px] font-semibold rounded-full flex items-center justify-center">
+            <span className="absolute top-1 right-1 min-w-[14px] h-[14px] px-1 bg-[#D14343] text-white text-[9px] font-semibold rounded-full flex items-center justify-center">
               {notificationCount > 9 ? "9+" : notificationCount}
             </span>
           )}

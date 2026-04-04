@@ -62,7 +62,7 @@ export function ProgressBar({ currentStep, totalSteps, stepNames = STEP_NAMES }:
               <motion.div
                 className={`w-2.5 h-2.5 rounded-full transition-colors duration-300 ${
                   isCompleted
-                    ? "bg-[#34C759]"
+                    ? "bg-[#2D6A4F]"
                     : isCurrent
                     ? "bg-black ring-2 ring-black/20"
                     : "bg-grey-200"
@@ -74,7 +74,7 @@ export function ProgressBar({ currentStep, totalSteps, stepNames = STEP_NAMES }:
               <span
                 className={`text-[10px] uppercase tracking-wider hidden sm:block ${
                   isCompleted
-                    ? "text-[#34C759] font-medium"
+                    ? "text-[#2D6A4F] font-medium"
                     : isCurrent
                     ? "text-black font-medium"
                     : "text-grey-500"

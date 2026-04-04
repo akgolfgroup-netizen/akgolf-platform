@@ -2,11 +2,11 @@
 
 // Farger for aktivitetstyper (Brand Guide 2026 - Apple Light)
 export const ACTIVITY_TYPE_COLORS: Record<string, { color: string; label: string }> = {
-  TOURNAMENT_CLUB: { color: "#FF3B30", label: "Klubbturnering" },
-  TOURNAMENT_REGION: { color: "#FF3B30", label: "Regionturnering" },
-  TOURNAMENT_JUNIOR: { color: "#FF3B30", label: "Juniorturnering" },
+  TOURNAMENT_CLUB: { color: "#D14343", label: "Klubbturnering" },
+  TOURNAMENT_REGION: { color: "#D14343", label: "Regionturnering" },
+  TOURNAMENT_JUNIOR: { color: "#D14343", label: "Juniorturnering" },
   VTG_COURSE: { color: "#FF9500", label: "VTG-kurs" },
-  GFGK_JUNIOR: { color: "#34C759", label: "GFGK Junior" },
+  GFGK_JUNIOR: { color: "#2D6A4F", label: "GFGK Junior" },
   AK_GOLF: { color: "#007AFF", label: "AK Golf" },
   AK_GOLF_JUNIOR_ACADEMY: { color: "#007AFF", label: "AK Golf Junior Academy" },
   SPONSOR_EVENT: { color: "#5856D6", label: "Sponsorevent" },
@@ -38,9 +38,9 @@ export function FacilityLegend() {
 
 export function FacilityLegendCompact() {
   const items = [
-    { color: "#FF3B30", label: "Turnering" },
+    { color: "#D14343", label: "Turnering" },
     { color: "#FF9500", label: "VTG" },
-    { color: "#34C759", label: "GFGK Junior" },
+    { color: "#2D6A4F", label: "GFGK Junior" },
     { color: "#007AFF", label: "AK Golf" },
     { color: "#86868B", label: "Booking" },
     { color: "#1D1D1F", label: "Stengt" },

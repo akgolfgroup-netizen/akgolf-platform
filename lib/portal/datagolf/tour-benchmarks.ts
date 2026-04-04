@@ -89,7 +89,7 @@ export function getPercentileLabel(percentile: number): string {
  * Get color for percentile display
  */
 export function getPercentileColor(percentile: number): string {
-  if (percentile >= 75) return "#22C55E"; // Green
+  if (percentile >= 75) return "#2D6A4F"; // Green
   if (percentile >= 50) return "#3B82F6"; // Blue
   if (percentile >= 25) return "#F59E0B"; // Amber
   return "#EF4444"; // Red

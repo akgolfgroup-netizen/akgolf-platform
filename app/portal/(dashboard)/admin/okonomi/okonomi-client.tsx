@@ -91,13 +91,13 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
                   </div>
                   <div className="flex items-center gap-1 mt-1">
                     {isPositiveChange ? (
-                      <TrendingUp className="w-3 h-3 text-[#34C759]" />
+                      <TrendingUp className="w-3 h-3 text-[#2D6A4F]" />
                     ) : (
-                      <TrendingDown className="w-3 h-3 text-[#FF3B30]" />
+                      <TrendingDown className="w-3 h-3 text-[#D14343]" />
                     )}
                     <span
                       className={`text-[10px] ${
-                        isPositiveChange ? "text-[#34C759]" : "text-[#FF3B30]"
+                        isPositiveChange ? "text-[#2D6A4F]" : "text-[#D14343]"
                       }`}
                     >
                       {Math.abs(revenueChange).toFixed(1)}% vs forrige mnd
@@ -105,7 +105,7 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
                   </div>
                 </div>
                 <div className="w-10 h-10 rounded-lg bg-[#DCFCE7] flex items-center justify-center">
-                  <Wallet className="w-5 h-5 text-[#34C759]" />
+                  <Wallet className="w-5 h-5 text-[#2D6A4F]" />
                 </div>
               </div>
             </MCCardBody>

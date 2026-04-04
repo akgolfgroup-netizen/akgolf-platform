@@ -107,7 +107,7 @@ export function KPICards({ data }: KPICardsProps) {
         title="Nye elever"
         value={data.newStudents}
         icon={UserPlus}
-        iconColor="#22C55E"
+        iconColor="#2D6A4F"
         delay={0}
       />
 

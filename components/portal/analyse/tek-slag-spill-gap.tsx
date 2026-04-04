@@ -300,7 +300,7 @@ export function TekSlagSpillGap({ data }: TekSlagSpillGapProps) {
                   point.gap < -0.5
                     ? "text-[#FF9500]"
                     : point.gap > 0.5
-                    ? "text-[#34C759]"
+                    ? "text-[#2D6A4F]"
                     : "text-[var(--color-grey-500)]"
                 }`}
               >
@@ -315,7 +315,7 @@ export function TekSlagSpillGap({ data }: TekSlagSpillGapProps) {
       <div
         className={`flex items-start gap-3 p-3 rounded-lg ${
           recommendation.type === "good"
-            ? "bg-[#34C759]/10"
+            ? "bg-[#2D6A4F]/10"
             : recommendation.type === "focus"
             ? "bg-[#FF9500]/10"
             : "bg-[var(--color-grey-100)]"
@@ -324,7 +324,7 @@ export function TekSlagSpillGap({ data }: TekSlagSpillGapProps) {
         <recommendation.icon
           className={`h-4 w-4 mt-0.5 flex-shrink-0 ${
             recommendation.type === "good"
-              ? "text-[#34C759]"
+              ? "text-[#2D6A4F]"
               : recommendation.type === "focus"
               ? "text-[#FF9500]"
               : "text-[var(--color-grey-400)]"
@@ -401,7 +401,7 @@ function CustomTooltip({
             data.gap < -0.5
               ? "text-[#FF9500]"
               : data.gap > 0.5
-              ? "text-[#34C759]"
+              ? "text-[#2D6A4F]"
               : "text-[var(--color-grey-400)]"
           }`}
         >

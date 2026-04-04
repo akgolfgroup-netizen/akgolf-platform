@@ -87,7 +87,7 @@ export default async function FasilitetInnstillingerPage() {
                 <span
                   className={`flex items-center gap-1 text-xs font-medium ${
                     facility.isActive
-                      ? "text-[#34C759]"
+                      ? "text-[#2D6A4F]"
                       : "text-[var(--color-grey-400)]"
                   }`}
                 >

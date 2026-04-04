@@ -6,7 +6,7 @@ import { Flame, Trophy, Crown, Star, Zap, Award } from "lucide-react";
 const MILESTONES = [
   { days: 7, label: "1 uke", icon: Flame, color: "#F97316" },
   { days: 14, label: "2 uker", icon: Zap, color: "#EAB308" },
-  { days: 30, label: "1 maned", icon: Star, color: "#22C55E" },
+  { days: 30, label: "1 maned", icon: Star, color: "#2D6A4F" },
   { days: 60, label: "2 maneder", icon: Award, color: "#3B82F6" },
   { days: 90, label: "3 maneder", icon: Trophy, color: "#8B5CF6" },
   { days: 365, label: "1 ar", icon: Crown, color: "#EC4899" },

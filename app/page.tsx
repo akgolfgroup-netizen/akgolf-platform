@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SectionLabel } from "@/components/website/SectionLabel";
@@ -24,6 +25,8 @@ import {
 } from "@/lib/website-constants";
 
 export default function HomePage() {
+  const reducedMotion = useReducedMotion();
+
   return (
     <>
       <WebsiteNav />
@@ -37,8 +40,8 @@ export default function HomePage() {
           {/* Background with Ken Burns */}
           <motion.div
             className="absolute inset-0"
-            animate={{ scale: [1, 1.05] }}
-            transition={{ duration: 15, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
+            animate={reducedMotion ? {} : { scale: [1, 1.05] }}
+            transition={reducedMotion ? undefined : { duration: 15, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
           >
             <Image
               src="/images/branding/ak-golf-academy-18.jpg"

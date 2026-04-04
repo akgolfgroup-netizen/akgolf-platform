@@ -7,11 +7,11 @@ import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limi
 
 // Farger for aktivitetstyper (Brand Guide 2026 - Apple Light)
 const ACTIVITY_COLORS: Record<string, string> = {
-  TOURNAMENT_CLUB: "#FF3B30", // Error red
-  TOURNAMENT_REGION: "#FF3B30",
-  TOURNAMENT_JUNIOR: "#FF3B30",
+  TOURNAMENT_CLUB: "#D14343", // Error red
+  TOURNAMENT_REGION: "#D14343",
+  TOURNAMENT_JUNIOR: "#D14343",
   VTG_COURSE: "#FF9500", // Warning
-  GFGK_JUNIOR: "#34C759", // Success
+  GFGK_JUNIOR: "#2D6A4F", // Success
   AK_GOLF: "#007AFF", // Info blue
   AK_GOLF_JUNIOR_ACADEMY: "#007AFF",
   SPONSOR_EVENT: "#5856D6", // Purple

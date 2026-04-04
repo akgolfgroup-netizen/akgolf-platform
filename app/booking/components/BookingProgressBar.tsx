@@ -32,12 +32,12 @@ export function BookingProgressBar({ currentStep }: Props) {
                 initial={false}
                 animate={{
                   backgroundColor: isCompleted
-                    ? "#34C759"
+                    ? "#2D6A4F"
                     : isCurrent
                     ? "#1D1D1F"
                     : "#F5F5F7",
                   borderColor: isCompleted
-                    ? "#34C759"
+                    ? "#2D6A4F"
                     : isCurrent
                     ? "#1D1D1F"
                     : "#E8E8ED",
@@ -69,7 +69,7 @@ export function BookingProgressBar({ currentStep }: Props) {
                   className="h-full rounded-full"
                   initial={{ backgroundColor: "#E8E8ED" }}
                   animate={{
-                    backgroundColor: isCompleted ? "#34C759" : "#E8E8ED",
+                    backgroundColor: isCompleted ? "#2D6A4F" : "#E8E8ED",
                   }}
                   transition={{ duration: 0.3 }}
                 />

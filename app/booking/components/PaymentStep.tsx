@@ -95,7 +95,7 @@ function CheckoutForm({
           <span className="text-black">kr {subtotal.toLocaleString("nb-NO")}</span>
         </div>
         {appliedDiscount && (
-          <div className="flex justify-between items-center py-2 text-sm text-[#34C759]">
+          <div className="flex justify-between items-center py-2 text-sm text-[#2D6A4F]">
             <span>Rabattkode: {appliedDiscount.code}</span>
             <span>-kr {appliedDiscount.amount.toLocaleString("nb-NO")}</span>
           </div>
@@ -158,10 +158,10 @@ function CheckoutForm({
         <motion.div
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-start gap-2 px-4 py-3 rounded-[12px] bg-[#FF3B30]/10 border border-[#FF3B30]/20"
+          className="flex items-start gap-2 px-4 py-3 rounded-[12px] bg-[#D14343]/10 border border-[#D14343]/20"
         >
-          <AlertCircle size={16} className="text-[#FF3B30] flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-[#FF3B30]">{error}</p>
+          <AlertCircle size={16} className="text-[#D14343] flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-[#D14343]">{error}</p>
         </motion.div>
       )}
 
@@ -213,7 +213,7 @@ export function PaymentStep({
                 colorPrimary: "#1D1D1F",
                 colorBackground: "#FFFFFF",
                 colorText: "#1D1D1F",
-                colorDanger: "#FF3B30",
+                colorDanger: "#D14343",
                 fontFamily: "Inter, sans-serif",
                 borderRadius: "12px",
                 spacingUnit: "4px",

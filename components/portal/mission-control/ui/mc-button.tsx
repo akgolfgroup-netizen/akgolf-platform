@@ -19,8 +19,8 @@ interface MCButtonProps {
 const variantStyles: Record<ButtonVariant, string> = {
   primary: "bg-[#1D1D1F] text-white hover:bg-[#3a3a3c]",
   secondary: "bg-white border border-[#E8E8ED] text-[#6E6E73] hover:bg-[#F5F5F7] hover:text-[#1D1D1F]",
-  success: "bg-[#34C759] text-white hover:bg-[#2eb34d]",
-  danger: "bg-[#FF3B30] text-white hover:bg-[#e6352b]",
+  success: "bg-[#2D6A4F] text-white hover:bg-[#245A42]",
+  danger: "bg-[#D14343] text-white hover:bg-[#B93A3A]",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

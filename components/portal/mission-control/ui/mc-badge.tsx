@@ -41,7 +41,7 @@ interface DivisionDotProps {
 const divisionColors: Record<DivisionColor, string> = {
   coaching: "bg-[#1D1D1F]",
   junior: "bg-[#007AFF]",
-  gfgk: "bg-[#34C759]",
+  gfgk: "bg-[#2D6A4F]",
 };
 
 export function DivisionDot({ division, className }: DivisionDotProps) {
@@ -57,7 +57,7 @@ export function getDivisionBorderClass(division: DivisionColor): string {
   const borders: Record<DivisionColor, string> = {
     coaching: "border-l-[#1D1D1F]",
     junior: "border-l-[#007AFF]",
-    gfgk: "border-l-[#34C759]",
+    gfgk: "border-l-[#2D6A4F]",
   };
   return borders[division];
 }
