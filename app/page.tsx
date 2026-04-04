@@ -36,7 +36,7 @@ export default function HomePage() {
         {/* ================================================================= */}
         {/* 1. HERO — Dark cinematic with Ken Burns image                     */}
         {/* ================================================================= */}
-        <section className="relative min-h-[100svh] flex items-end pb-20 md:pb-28 overflow-hidden">
+        <section className="relative min-h-[100svh] flex items-end pb-20 md:pb-28 overflow-hidden grain-overlay">
           {/* Background with Ken Burns */}
           <motion.div
             className="absolute inset-0"
@@ -53,7 +53,7 @@ export default function HomePage() {
             />
           </motion.div>
           {/* Dark gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/80" />
 
           <div className="w-container relative z-10 w-full">
             <div className="max-w-2xl">
@@ -71,7 +71,7 @@ export default function HomePage() {
               </motion.div>
 
               <motion.h1
-                className="font-display text-4xl md:text-6xl lg:text-[72px] font-bold text-white tracking-[-0.035em] mb-6"
+                className="font-display text-4xl md:text-6xl lg:text-[80px] font-bold text-white tracking-[-0.035em] mb-6"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.4 }}
@@ -96,13 +96,13 @@ export default function HomePage() {
               >
                 <a
                   href="#packages"
-                  className="px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
+                  className="px-8 py-4 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
                 >
                   {HERO.ctaPrimary}
                 </a>
                 <a
                   href={BOOKING_URL}
-                  className="px-7 py-3.5 rounded-[980px] border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
+                  className="px-8 py-4 rounded-[980px] border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
                 >
                   {HERO.ctaSecondary}
                 </a>
