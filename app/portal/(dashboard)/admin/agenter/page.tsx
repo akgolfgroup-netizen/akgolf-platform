@@ -105,7 +105,7 @@ export default function AgenterPage() {
                   isEnabled={enabledAgents[agent.id]}
                   onToggle={(enabled) => handleToggle(agent.id, enabled)}
                   gradient={agent.gradient}
-                  iconEmoji={agent.iconEmoji}
+                  iconName={agent.iconName}
                   scopes={agent.scopes}
                   lastAction="2 min siden"
                 />

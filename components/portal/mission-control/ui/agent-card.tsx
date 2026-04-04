@@ -2,6 +2,32 @@
 
 import { cn } from "@/lib/portal/utils/cn";
 import { Switch } from "@/components/ui/switch";
+import {
+  GraduationCap,
+  Megaphone,
+  BarChart3,
+  Scale,
+  Shield,
+  Search,
+  CheckCircle2,
+  Cog,
+  Database,
+  ClipboardList,
+  type LucideIcon,
+} from "lucide-react";
+
+const AGENT_ICON_MAP: Record<string, LucideIcon> = {
+  "graduation-cap": GraduationCap,
+  megaphone: Megaphone,
+  "bar-chart": BarChart3,
+  scale: Scale,
+  shield: Shield,
+  search: Search,
+  "check-circle": CheckCircle2,
+  cog: Cog,
+  database: Database,
+  clipboard: ClipboardList,
+};
 
 type AgentStatus = "active" | "busy" | "inactive";
 
@@ -13,7 +39,7 @@ interface AgentCardProps {
   isEnabled: boolean;
   onToggle?: (enabled: boolean) => void;
   gradient: string; // CSS gradient string
-  iconEmoji?: string;
+  iconName?: string;
   lastAction?: string;
   scopes?: string[];
   className?: string;
@@ -33,32 +59,38 @@ export function AgentCard({
   isEnabled,
   onToggle,
   gradient,
-  iconEmoji,
+  iconName,
   lastAction,
   scopes,
   className,
 }: AgentCardProps) {
+  const IconComponent = iconName ? AGENT_ICON_MAP[iconName] : null;
+
   return (
     <div
       className={cn(
         "bg-white rounded-xl border border-[#E8E8ED] p-4 relative transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md",
-        className
+        className,
       )}
     >
       {/* Status indicator */}
       <div
         className={cn(
           "absolute top-3 right-3 w-2 h-2 rounded-full",
-          statusStyles[status]
+          statusStyles[status],
         )}
       />
 
       {/* Icon */}
       <div
-        className="w-14 h-14 rounded-[14px] flex items-center justify-center mb-3 text-2xl text-white"
+        className="w-14 h-14 rounded-[14px] flex items-center justify-center mb-3 text-white"
         style={{ background: gradient }}
       >
-        {iconEmoji || "AI"}
+        {IconComponent ? (
+          <IconComponent className="w-7 h-7" />
+        ) : (
+          <span className="text-sm font-bold">AI</span>
+        )}
       </div>
 
       {/* Name & Role */}
@@ -116,7 +148,7 @@ export interface AgentConfig {
   role: string;
   description: string;
   gradient: string;
-  iconEmoji: string;
+  iconName: string;
   team: "leadership" | "quality" | "technical";
   scopes: string[];
 }
@@ -128,9 +160,10 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     name: "Coach",
     displayName: "Coach",
     role: "Akademi-direktor",
-    description: "Ansvarlig for spillerutvikling, coaching-planer og treningsstrategier.",
+    description:
+      "Ansvarlig for spillerutvikling, coaching-planer og treningsstrategier.",
     gradient: "linear-gradient(135deg, #1D1D1F, #3a3a3c)",
-    iconEmoji: "🎓",
+    iconName: "graduation-cap",
     team: "leadership",
     scopes: ["AK Golf", "Junior", "GFGK"],
   },
@@ -139,9 +172,10 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     name: "Mercury",
     displayName: "Mercury",
     role: "CMO",
-    description: "Markedsforing, innholdsstrategi og kampanjer for alle divisjoner.",
+    description:
+      "Markedsforing, innholdsstrategi og kampanjer for alle divisjoner.",
     gradient: "linear-gradient(135deg, #F97316, #EF4444)",
-    iconEmoji: "📣",
+    iconName: "megaphone",
     team: "leadership",
     scopes: ["AK Golf", "Junior", "GFGK"],
   },
@@ -150,9 +184,10 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     name: "Atlas",
     displayName: "Atlas",
     role: "CFO",
-    description: "Okonomi, budsjett, cash flow og finansiell rapportering.",
+    description:
+      "Okonomi, budsjett, cash flow og finansiell rapportering.",
     gradient: "linear-gradient(135deg, #14B8A6, #0D9488)",
-    iconEmoji: "📊",
+    iconName: "bar-chart",
     team: "leadership",
     scopes: ["AK Golf", "Junior", "GFGK"],
   },
@@ -161,9 +196,10 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     name: "Themis",
     displayName: "Themis",
     role: "Juridisk radgiver",
-    description: "Avtaler, forhandlinger, compliance og juridisk radgivning.",
+    description:
+      "Avtaler, forhandlinger, compliance og juridisk radgivning.",
     gradient: "linear-gradient(135deg, #8B5CF6, #7C3AED)",
-    iconEmoji: "⚖️",
+    iconName: "scale",
     team: "leadership",
     scopes: ["AK Golf", "Junior", "GFGK"],
   },
@@ -172,9 +208,10 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     name: "Guardian",
     displayName: "Guardian",
     role: "Brand Enforcer",
-    description: "Kvalitetssikrer at alt innhold folger brand guidelines.",
+    description:
+      "Kvalitetssikrer at alt innhold folger brand guidelines.",
     gradient: "linear-gradient(135deg, #EC4899, #DB2777)",
-    iconEmoji: "🛡️",
+    iconName: "shield",
     team: "quality",
     scopes: ["AK Golf", "Junior", "GFGK"],
   },
@@ -183,9 +220,10 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     name: "Inspector",
     displayName: "Inspector",
     role: "Code Reviewer",
-    description: "Gjennomgar kode for bugs, sikkerhet og kvalitet.",
+    description:
+      "Gjennomgar kode for bugs, sikkerhet og kvalitet.",
     gradient: "linear-gradient(135deg, #06B6D4, #8B5CF6)",
-    iconEmoji: "🔍",
+    iconName: "search",
     team: "quality",
     scopes: ["Developer"],
   },
@@ -194,9 +232,10 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     name: "Validator",
     displayName: "Validator",
     role: "Test Runner",
-    description: "Skriver og kjorer tester for a sikre kodekvalitet.",
+    description:
+      "Skriver og kjorer tester for a sikre kodekvalitet.",
     gradient: "linear-gradient(135deg, #10B981, #EC4899)",
-    iconEmoji: "✓",
+    iconName: "check-circle",
     team: "technical",
     scopes: ["Developer"],
   },
@@ -205,9 +244,10 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     name: "Architect",
     displayName: "Architect",
     role: "Dev Tech Lead",
-    description: "Teknisk arkitektur, kodereviews og deployment-strategi.",
+    description:
+      "Teknisk arkitektur, kodereviews og deployment-strategi.",
     gradient: "linear-gradient(135deg, #6366F1, #4F46E5)",
-    iconEmoji: "⚙️",
+    iconName: "cog",
     team: "technical",
     scopes: ["Developer"],
   },
@@ -218,7 +258,7 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     role: "Supabase Expert",
     description: "Database-design, migrasjoner og RLS-regler.",
     gradient: "linear-gradient(135deg, #3ECF8E, #1C7C4E)",
-    iconEmoji: "🗄️",
+    iconName: "database",
     team: "technical",
     scopes: ["Developer"],
   },
@@ -227,9 +267,10 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     name: "Ops",
     displayName: "Ops",
     role: "Operations Assistant",
-    description: "Daglig drift, oppfolging og operasjonell styring.",
+    description:
+      "Daglig drift, oppfolging og operasjonell styring.",
     gradient: "linear-gradient(135deg, #F472B6, #FBBF24)",
-    iconEmoji: "📋",
+    iconName: "clipboard",
     team: "technical",
     scopes: ["Operations"],
   },
