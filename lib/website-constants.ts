@@ -1737,17 +1737,31 @@ export const ACADEMY_CTA_V2 = {
 
 // ─── Junior Academy Page v2 (dark hero rewrite) ───
 export const JUNIOR_HERO_V2 = {
-  label: "JUNIOR ACADEMY",
+  label: "AK GOLF JUNIOR ACADEMY",
   heading: "Morgendagens\ngolfspillere.",
-  description: "Alderstilpasset coaching for barn og ungdom 6\u201318 \u00e5r. Moro, mestring og utvikling.",
-  ctaPrimary: "Meld p\u00e5",
-  ctaSecondary: "Les mer",
+  description: "Elite juniorcoaching med TrackMan, individuell oppfolging og turneringsplan. For ambisjose juniorer 10\u201318 ar.",
+  ctaPrimary: "Sok opptak",
+  ctaSecondary: "Se treningsgrupper",
   heroImage: "/images/academy/AK-Golf-Academy-29.jpg",
 } as const;
 
+export const JUNIOR_ACADEMY_PROGRAM = {
+  label: "VART PROGRAM",
+  heading: "AK Golf Junior Academy",
+  description: "Individuelt tilpasset coaching for juniorer som vil satse. Personlig treningsplan, spillerportal og oppfolging.",
+  price: "3 500 kr/mnd",
+  capacity: "Maks 8 spillere",
+  ctaLabel: "Sok opptak",
+  images: [
+    "/images/academy/AK-Golf-Academy-8.jpg",
+    "/images/academy/AK-Golf-Academy-12.jpg",
+    "/images/academy/AK-Golf-Academy-14.jpg",
+  ],
+} as const;
+
 export const JUNIOR_AGE_GROUPS_V2 = {
-  label: "ALDERSGRUPPER",
-  heading: "Tilpasset hvert niv\u00e5.",
+  label: "GFGK JUNIOR",
+  heading: "Treningsgrupper for alle nivaer",
   groups: [
     {
       ageRange: "6\u20139 \u00c5R",
@@ -1790,11 +1804,13 @@ export const JUNIOR_GFGK_V2 = {
 } as const;
 
 export const JUNIOR_CTA_V2 = {
-  heading: "Bli med i juniorprogrammet",
-  description: "Oppmelding skjer gjennom GFGK Junior.",
-  ctaLabel: "Kontakt GFGK Junior",
-  // TODO: Legg til korrekt URL til GFGK Junior kontaktside
-  ctaHref: "#",
+  heading: "Vil barnet ditt prove golf?",
+  description: "Kontakt oss for mer informasjon om AK Golf Junior Academy eller treningsgrupper gjennom GFGK Junior.",
+  ctaPrimary: "Sok opptak til Junior Academy",
+  ctaPrimaryHref: "/#apply",
+  ctaSecondary: "Kontakt GFGK Junior",
+  // TODO: Oppdater til korrekt GFGK Junior kontakt-URL
+  ctaSecondaryHref: "#",
 } as const;
 
 // ─── Utvikling Page v2 (dark hero, bento grid) ───

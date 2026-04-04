@@ -16,6 +16,7 @@ import { PageTransition } from "@/components/website/PageTransition";
 import { EASE_ENTRANCE } from "@/lib/design-tokens";
 import {
   JUNIOR_HERO_V2,
+  JUNIOR_ACADEMY_PROGRAM,
   JUNIOR_AGE_GROUPS_V2,
   JUNIOR_GFGK_V2,
   JUNIOR_WANG_V2,
@@ -137,8 +138,68 @@ export default function JuniorPage() {
             </div>
           </section>
 
-          {/* ─── 2. Age Groups (white bg) ─── */}
-          <section id="age-groups" className="py-28 md:py-40 bg-white">
+          {/* ─── 2. AK Golf Junior Academy (white bg, primary program) ─── */}
+          <section className="py-28 md:py-40 bg-white">
+            <div className="w-container">
+              <RevealOnScroll>
+                <div className="max-w-3xl mx-auto text-center">
+                  <SectionLabel>{JUNIOR_ACADEMY_PROGRAM.label}</SectionLabel>
+                  <h2 className="w-heading-lg mt-4 mb-4">
+                    {JUNIOR_ACADEMY_PROGRAM.heading}
+                  </h2>
+                  <p className="text-grey-500 leading-relaxed max-w-xl mx-auto mb-8">
+                    {JUNIOR_ACADEMY_PROGRAM.description}
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-10">
+                    <div className="text-center">
+                      <p className="text-3xl md:text-4xl font-bold text-[#1D1D1F]">
+                        {JUNIOR_ACADEMY_PROGRAM.price}
+                      </p>
+                    </div>
+                    <div className="hidden sm:block w-px h-10 bg-[#E8E8ED]" />
+                    <div className="text-center">
+                      <p className="text-sm text-grey-500">
+                        {JUNIOR_ACADEMY_PROGRAM.capacity}
+                      </p>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="#apply"
+                    className="inline-flex px-8 py-4 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
+                  >
+                    {JUNIOR_ACADEMY_PROGRAM.ctaLabel} &rarr;
+                  </Link>
+                </div>
+              </RevealOnScroll>
+
+              {/* Images */}
+              <RevealOnScroll delay={0.15}>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mt-16">
+                  {JUNIOR_ACADEMY_PROGRAM.images.map((src, i) => (
+                    <div
+                      key={src}
+                      className={`relative rounded-[20px] overflow-hidden ${
+                        i === 0 ? "aspect-[4/3]" : "aspect-[4/3]"
+                      }`}
+                    >
+                      <Image
+                        src={src}
+                        alt="AK Golf Junior Academy"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, 33vw"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </RevealOnScroll>
+            </div>
+          </section>
+
+          {/* ─── 3. GFGK Junior treningsgrupper (light grey bg) ─── */}
+          <section id="age-groups" className="py-28 md:py-40 bg-[#F5F5F7]">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center mb-16">
@@ -152,7 +213,7 @@ export default function JuniorPage() {
               <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 {JUNIOR_AGE_GROUPS_V2.groups.map((group) => (
                   <StaggerItem key={group.ageRange}>
-                    <div className="bg-[#F5F5F7] rounded-[20px] border border-[#E8E8ED] p-8 h-full flex flex-col">
+                    <div className="bg-white rounded-[20px] border border-[#E8E8ED] p-8 h-full flex flex-col">
                       <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-grey-500 font-medium">
                         {group.ageRange}
                       </span>
@@ -179,29 +240,26 @@ export default function JuniorPage() {
                   </StaggerItem>
                 ))}
               </StaggerContainer>
-            </div>
-          </section>
 
-          {/* ─── 3. GFGK samarbeid (light section) ─── */}
-          <section className="py-28 md:py-40 bg-[#F5F5F7]">
-            <div className="w-container">
-              <RevealOnScroll>
-                <div className="max-w-2xl mx-auto text-center">
-                  <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-grey-500 font-medium">
-                    {JUNIOR_GFGK_V2.label}
-                  </span>
-                  <h2 className="w-heading-lg mt-4 mb-6">
-                    {JUNIOR_GFGK_V2.heading}
-                  </h2>
-                  <p className="text-grey-500 leading-relaxed whitespace-pre-line">
-                    {JUNIOR_GFGK_V2.description}
+              {/* GFGK Logo */}
+              <RevealOnScroll delay={0.1}>
+                <div className="flex flex-col items-center gap-3 mt-12">
+                  <Image
+                    src="/images/partners/gfgk-logo.svg"
+                    alt="Gamle Fredrikstad Golfklubb"
+                    width={80}
+                    height={80}
+                    className="opacity-60"
+                  />
+                  <p className="text-xs text-grey-500">
+                    I regi av GFGK Junior
                   </p>
                 </div>
               </RevealOnScroll>
             </div>
           </section>
 
-          {/* ─── 4. WANG (dark section) ─── */}
+          {/* ─── 4. WANG Toppidrett (dark section) ─── */}
           <section className="py-28 md:py-40 bg-[#1D1D1F]">
             <div className="w-container">
               <RevealOnScroll>
@@ -214,9 +272,9 @@ export default function JuniorPage() {
                   </h2>
                   <div className="flex justify-center mb-8">
                     <Image
-                      src="/images/partners/wang-logo-white.svg"
+                      src="/images/partners/wang-logo-white-symbol.svg"
                       alt="WANG Toppidrett"
-                      width={120}
+                      width={80}
                       height={80}
                       className="opacity-80"
                     />
@@ -237,7 +295,7 @@ export default function JuniorPage() {
             </div>
           </section>
 
-          {/* ─── 5. CTA (white bg) ─── */}
+          {/* ─── 5. CTA (white bg, two buttons) ─── */}
           <section id="apply" className="py-28 md:py-40 bg-white">
             <div className="w-container">
               <RevealOnScroll>
@@ -248,13 +306,21 @@ export default function JuniorPage() {
                   <p className="text-grey-500 leading-relaxed mb-10">
                     {JUNIOR_CTA_V2.description}
                   </p>
-                  {/* TODO: Oppdater href til korrekt GFGK Junior kontakt-URL */}
-                  <Link
-                    href={JUNIOR_CTA_V2.ctaHref}
-                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
-                  >
-                    {JUNIOR_CTA_V2.ctaLabel} &rarr;
-                  </Link>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Link
+                      href={JUNIOR_CTA_V2.ctaPrimaryHref}
+                      className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
+                    >
+                      {JUNIOR_CTA_V2.ctaPrimary} &rarr;
+                    </Link>
+                    {/* TODO: Oppdater href til korrekt GFGK Junior kontakt-URL */}
+                    <a
+                      href={JUNIOR_CTA_V2.ctaSecondaryHref}
+                      className="inline-flex px-7 py-3.5 rounded-[980px] border border-[#E8E8ED] text-[#1D1D1F] text-sm font-semibold hover:bg-[#F5F5F7] transition-colors"
+                    >
+                      {JUNIOR_CTA_V2.ctaSecondary} &rarr;
+                    </a>
+                  </div>
                 </div>
               </RevealOnScroll>
             </div>
