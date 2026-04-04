@@ -129,7 +129,7 @@ export function MCKPIStrip({ items, alerts, className }: MCKPIStripProps) {
           <div className="ml-auto flex gap-2">
             {alerts.map((alert) => {
               const alertColors = {
-                success: "bg-[#DCFCE7] text-[#166534]",
+                success: "bg-[#EDF5F0] text-[#2D6A4F]",
                 warning: "bg-[#FEF3C7] text-[#92400E]",
                 error: "bg-[#FEE2E2] text-[#991B1B]",
                 info: "bg-[#DBEAFE] text-[#1E40AF]",

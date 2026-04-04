@@ -22,8 +22,8 @@ export const HERO = {
   ],
   stats: [
     { value: "500+", label: "Spillere utviklet" },
-    { value: "15+", label: "Ars erfaring" },
-    { value: "Tour-niva", label: "Metodikk" },
+    { value: "15+", label: "Års erfaring" },
+    { value: "Tour-nivå", label: "Metodikk" },
   ],
 } as const;
 
@@ -1586,21 +1586,21 @@ export const PERIODIZATION = {
 // ─── Social Proof Stats ───
 export const SOCIAL_PROOF_STATS = [
   { value: 500, suffix: "+", label: "Spillere utviklet" },
-  { value: 15, suffix: "+", label: "Ars erfaring" },
+  { value: 15, suffix: "+", label: "Års erfaring" },
   { value: 92, suffix: "%", label: "Fornyer abonnement" },
   { value: 4.9, suffix: "", label: "Gjennomsnittlig vurdering" },
 ] as const;
 
 // ─── Dark Stats ───
 export const DARK_STATS = [
-  { value: 3.2, suffix: "", label: "Gj.snitt HCP-forbedring forste ar" },
-  { value: 120, suffix: "+", label: "TrackMan-okter per maned" },
-  { value: 8, suffix: "", label: "Spillere pa tour-niva" },
+  { value: 3.2, suffix: "", label: "Gj.snitt HCP-forbedring første år" },
+  { value: 120, suffix: "+", label: "TrackMan-økter per måned" },
+  { value: 8, suffix: "", label: "Spillere på tour-nivå" },
 ] as const;
 
 // ─── Testimonial ───
 export const TESTIMONIAL = {
-  quote: "Etter 6 maneder med Anders gikk jeg fra 18.4 til 12.1 i handicap. Strukturen i treningsplanen og de jevnlige TrackMan-oktene ga meg en retning jeg aldri hadde hatt for.",
+  quote: "Etter 6 måneder med Anders gikk jeg fra 18.4 til 12.1 i handicap. Strukturen i treningsplanen og de jevnlige TrackMan-øktene ga meg en retning jeg aldri hadde hatt før.",
   author: "Thomas H.",
   detail: "Handicap 12.1 — spiller siden 2019",
   image: "/images/branding/ak-golf-academy-10.jpg",
@@ -1610,7 +1610,7 @@ export const TESTIMONIAL = {
 export const COACH_BIO = {
   name: "Anders Kristiansen",
   title: "Grunnlegger og hovedcoach",
-  description: "15 ars erfaring med spillerutvikling pa alle nivaer. Har coachet spillere fra nybegynner til PGA Tour. Kombinerer TrackMan-data med individuell coaching for a gi hver spiller en tydelig utviklingsretning.",
+  description: "15 års erfaring med spillerutvikling på alle nivåer. Har coachet spillere fra nybegynner til PGA Tour. Kombinerer TrackMan-data med individuell coaching for å gi hver spiller en tydelig utviklingsretning.",
   image: "/images/branding/ak-golf-academy-37.jpg",
 } as const;
 
@@ -1618,7 +1618,7 @@ export const COACH_BIO = {
 export const COACHING_OFFERS = [
   {
     title: "Performance",
-    description: "2 okter i maneden med TrackMan-analyse, treningsplan og full portaltilgang.",
+    description: "2 økter i måneden med TrackMan-analyse, treningsplan og full portaltilgang.",
     price: "1 600",
     period: "kr/mnd",
     image: "/images/branding/ak-golf-academy-38.jpg",
@@ -1626,7 +1626,7 @@ export const COACHING_OFFERS = [
   },
   {
     title: "Performance Pro",
-    description: "4 okter i maneden for deg som vil ha maksimal fremgang. Prioritert booking.",
+    description: "4 økter i måneden for deg som vil ha maksimal fremgang. Prioritert booking.",
     price: "2 000",
     period: "kr/mnd",
     image: "/images/branding/ak-golf-academy-26.jpg",
@@ -1635,7 +1635,7 @@ export const COACHING_OFFERS = [
   },
   {
     title: "Flex-sesjon",
-    description: "Enkeltsesjon uten binding. Perfekt for a prove coaching eller fa en engangs-gjennomgang.",
+    description: "Enkeltsesjon uten binding. Perfekt for å prøve coaching eller få en engangs-gjennomgang.",
     price: "fra 1 500",
     period: "kr",
     image: "/images/branding/ak-golf-academy-28.jpg",

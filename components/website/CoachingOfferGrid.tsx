@@ -12,7 +12,7 @@ export function CoachingOfferGrid() {
         <RevealOnScroll>
           <div className="text-center mb-16">
             <SectionLabel>Coaching-pakker</SectionLabel>
-            <h2 className="w-heading-lg mt-5">Velg ditt niva</h2>
+            <h2 className="w-heading-lg mt-5">Velg ditt nivå</h2>
             <p className="text-[#6E6E73] max-w-xl mx-auto mt-5 text-lg leading-relaxed">
               Alle pakker inkluderer TrackMan-analyse, treningsplan og full portaltilgang. Ingen binding.
             </p>
@@ -37,7 +37,7 @@ export function CoachingOfferGrid() {
                   {"highlighted" in offer && offer.highlighted && (
                     <div className="absolute top-4 right-4">
                       <span className="bg-[#2D6A4F] text-white text-[10px] font-mono uppercase tracking-wider px-3 py-1 rounded-full font-semibold">
-                        Mest populaer
+                        Mest populær
                       </span>
                     </div>
                   )}

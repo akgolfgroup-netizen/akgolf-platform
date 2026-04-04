@@ -17,7 +17,7 @@ export function WebsiteFooter() {
               </span>
             </div>
             <p className="text-xs leading-relaxed text-[#86868B] max-w-[240px] mb-4">
-              Premium golfcoaching for ambisiose spillere.
+              Premium golfcoaching for ambisiøse spillere.
             </p>
             {/* Social icons */}
             <div className="flex items-center gap-3">
@@ -121,7 +121,7 @@ export function WebsiteFooter() {
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center">
           <p className="text-[10px] text-[#6E6E73]">
-            &copy; {new Date().getFullYear()} AK Golf Group
+            &copy; {new Date().getFullYear()} AK Golf Group AS
           </p>
         </div>
       </div>

@@ -9,7 +9,7 @@ interface MCBadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  success: "bg-[#DCFCE7] text-[#166534]",
+  success: "bg-[#EDF5F0] text-[#2D6A4F]",
   warning: "bg-[#FEF3C7] text-[#92400E]",
   error: "bg-[#FEE2E2] text-[#991B1B]",
   info: "bg-[#DBEAFE] text-[#1E40AF]",

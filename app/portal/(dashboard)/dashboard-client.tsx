@@ -227,7 +227,7 @@ function OnboardingCard({
   return (
     <Link
       href={href}
-      className="block p-5 rounded-[14px] bg-white border border-[#E8E8ED] hover:border-[#2D6A4F]/30 hover:shadow-sm transition-all"
+      className="block p-5 rounded-[14px] bg-white border border-[#E8E8ED] hover:border-[#2D6A4F]/30 hover:shadow-sm transition-[border-color,box-shadow]"
     >
       <div className="flex items-center gap-3 mb-3">
         <span className="w-6 h-6 rounded-full bg-[#2D6A4F] text-white text-xs font-bold flex items-center justify-center">

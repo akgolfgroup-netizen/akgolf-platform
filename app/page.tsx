@@ -42,7 +42,7 @@ export default function HomePage() {
           >
             <Image
               src="/images/branding/ak-golf-academy-18.jpg"
-              alt="Golf coaching pa fairway i kveldslys"
+              alt="Golf coaching på fairway i kveldslys"
               fill
               className="object-cover"
               priority
@@ -61,14 +61,14 @@ export default function HomePage() {
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-2 h-2 rounded-full bg-[#2D6A4F]" />
-                  <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#40916C]">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#40916C]">
                     {HERO.eyebrow}
                   </span>
                 </div>
               </motion.div>
 
               <motion.h1
-                className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6"
+                className="font-display text-4xl md:text-6xl lg:text-[72px] font-bold text-white tracking-[-0.035em] mb-6"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.4 }}
@@ -78,7 +78,7 @@ export default function HomePage() {
               </motion.h1>
 
               <motion.p
-                className="text-lg text-white/70 max-w-xl leading-relaxed"
+                className="text-lg text-white/60 max-w-xl leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
@@ -189,8 +189,8 @@ export default function HomePage() {
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-16">
-                <SectionLabel>Sporsmal og svar</SectionLabel>
-                <h2 className="w-heading-lg mt-5">Ofte stilte sporsmal</h2>
+                <SectionLabel>Spørsmål og svar</SectionLabel>
+                <h2 className="w-heading-lg mt-5">Ofte stilte spørsmål</h2>
               </div>
             </RevealOnScroll>
 
@@ -209,7 +209,7 @@ export default function HomePage() {
           <div className="absolute inset-0">
             <Image
               src="/images/branding/ak-golf-academy-31.jpg"
-              alt="To figurer pa fairway"
+              alt="To figurer på fairway"
               fill
               className="object-cover"
               sizes="100vw"
@@ -221,15 +221,15 @@ export default function HomePage() {
             <RevealOnScroll>
               <div className="text-center max-w-xl mx-auto">
                 <h2 className="font-display text-3xl md:text-5xl font-bold text-white tracking-tight mb-6">
-                  Klar for a ta spillet ditt videre?
+                  Klar for å bli bedre?
                 </h2>
-                <p className="text-lg text-white/70 mb-10">
-                  Start med en coaching-sesjon og fa en tydelig plan for utviklingen din.
+                <p className="text-lg text-white/60 mb-10">
+                  Start med en coaching-sesjon og få en tydelig plan for utviklingen din.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <a
                     href={BOOKING_URL}
-                    className="px-8 py-4 rounded-[980px] bg-[#2D6A4F] text-white text-sm font-semibold hover:bg-[#1B4332] transition-colors"
+                    className="px-8 py-4 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
                   >
                     Book coaching
                   </a>
@@ -253,9 +253,9 @@ export default function HomePage() {
             <RevealOnScroll>
               <div className="text-center mb-16">
                 <SectionLabel>Ta kontakt</SectionLabel>
-                <h2 className="w-heading-lg mt-5 mb-4">Klar for a starte?</h2>
+                <h2 className="w-heading-lg mt-5 mb-4">Klar for å starte?</h2>
                 <p className="text-[#6E6E73] max-w-md mx-auto text-lg">
-                  Fortell oss om dine mal, sa finner vi ut hvordan vi kan hjelpe deg videre.
+                  Fortell oss om dine mål, så finner vi ut hvordan vi kan hjelpe deg videre.
                 </p>
               </div>
             </RevealOnScroll>

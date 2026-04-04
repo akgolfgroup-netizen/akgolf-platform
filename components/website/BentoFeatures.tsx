@@ -7,14 +7,14 @@ import { Target, Sparkles, Crosshair } from "lucide-react";
 const features = [
   {
     title: "Strokes Gained-analyse",
-    description: "Identifiser noyaktig hvor du taper og vinner slag sammenlignet med ditt handicap-niva. Data-drevet beslutninger for treningen din.",
+    description: "Identifiser nøyaktig hvor du taper og vinner slag sammenlignet med ditt handicap-nivå. Data-drevet beslutninger for treningen din.",
     icon: Target,
     span: "md:col-span-2 md:row-span-2",
     bg: "bg-white",
   },
   {
     title: "AI-drevet treningsplan",
-    description: "Personlig treningsplan som oppdateres etter hver okt basert pa dine data.",
+    description: "Personlig treningsplan som oppdateres etter hver økt basert på dine data.",
     icon: Sparkles,
     span: "md:col-span-1",
     bg: "bg-[#EDF5F0]",
@@ -22,7 +22,7 @@ const features = [
   },
   {
     title: "TrackMan-integrasjon",
-    description: "Hver okt inkluderer fullstendig TrackMan-analyse med balldata og klubbdata.",
+    description: "Hver økt inkluderer fullstendig TrackMan-analyse med balldata og klubbdata.",
     icon: Crosshair,
     span: "md:col-span-1",
     bg: "bg-[#1D1D1F]",
@@ -40,7 +40,7 @@ export function BentoFeatures() {
             <SectionLabel>Metodikk</SectionLabel>
             <h2 className="w-heading-lg mt-5">Data-drevet coaching</h2>
             <p className="text-[#6E6E73] max-w-xl mx-auto mt-5 text-lg leading-relaxed">
-              Kombinasjonen av TrackMan-data, Strokes Gained-analyse og individuell oppfolging gir deg en klar retning.
+              Kombinasjonen av TrackMan-data, Strokes Gained-analyse og individuell oppfølging gir deg en klar retning.
             </p>
           </div>
         </RevealOnScroll>
@@ -54,7 +54,7 @@ export function BentoFeatures() {
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-5 ${feature.bg === "bg-[#1D1D1F]" ? "bg-white/10" : feature.bg === "bg-[#EDF5F0]" ? "bg-[#2D6A4F]/10" : "bg-[#F5F5F7]"}`}>
                     <Icon className={`w-5 h-5 ${"iconColor" in feature && feature.iconColor ? feature.iconColor : (feature.bg === "bg-[#1D1D1F]" ? "text-white" : "text-[#1D1D1F]")}`} />
                   </div>
-                  <h3 className={`font-display text-xl font-semibold mb-3 ${"textColor" in feature && feature.textColor ? feature.textColor : "text-[#1D1D1F]"}`}>
+                  <h3 className={`font-display text-xl font-bold mb-3 ${"textColor" in feature && feature.textColor ? feature.textColor : "text-[#1D1D1F]"}`}>
                     {feature.title}
                   </h3>
                   <p className={`text-sm leading-relaxed ${"descColor" in feature && feature.descColor ? feature.descColor : "text-[#6E6E73]"}`}>
