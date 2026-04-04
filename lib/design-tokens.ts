@@ -62,13 +62,28 @@ export const colors = {
     utviklingDark: '#16A34A',
   },
 
-  // Semantiske farger
+  // Semantiske farger (Apple-standard)
   semantic: {
-    success: '#2D6A4F',
-    error: '#EF4444',
-    warning: '#F59E0B',
-    info: '#3B82F6',
+    success: '#34C759',
+    successLight: '#F0FDF4',
+    successText: '#166534',
+    error: '#FF3B30',
+    errorLight: '#FEF2F2',
+    errorText: '#991B1B',
+    warning: '#FF9500',
+    warningLight: '#FFFBEB',
+    warningText: '#92400E',
+    info: '#007AFF',
+    infoLight: '#EFF6FF',
+    infoText: '#1E40AF',
     vipps: '#FF5B24',
+  },
+
+  // AI accent — purple
+  ai: {
+    primary: '#AF52DE',
+    light: '#FAF5FF',
+    text: '#6B21A8',
   },
 
   // Ikoner og tekst

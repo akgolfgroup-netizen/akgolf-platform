@@ -37,19 +37,24 @@
   --color-brand-dark: #1B4332;
   --color-brand-light: #EDF5F0;
 
-  /* Semantic colors (portal + admin) */
-  --color-success: #2D6A4F;
-  --color-success-light: #EDF5F0;
-  --color-success-text: #1B4332;
-  --color-error: #D14343;
+  /* Semantic colors (portal + admin) — Apple-standard */
+  --color-success: #34C759;
+  --color-success-light: #F0FDF4;
+  --color-success-text: #166534;
+  --color-error: #FF3B30;
   --color-error-light: #FEF2F2;
   --color-error-text: #991B1B;
-  --color-warning: #E89C30;
+  --color-warning: #FF9500;
   --color-warning-light: #FFFBEB;
   --color-warning-text: #92400E;
   --color-info: #007AFF;
   --color-info-light: #EFF6FF;
   --color-info-text: #1E40AF;
+
+  /* AI accent — purple */
+  --color-ai: #AF52DE;
+  --color-ai-light: #FAF5FF;
+  --color-ai-text: #6B21A8;
 
   /* Accent (subtle, not primary) */
   --color-accent: #1D1D1F;
@@ -217,18 +222,18 @@
   --mc-color-coaching: #1D1D1F;
   --mc-color-junior: #007AFF;
   --mc-color-gfgk: #2D6A4F;
-  --mc-color-ai: #2D6A4F;
+  --mc-color-ai: #AF52DE;
 
   /* Layout */
   --mc-sidebar-width: 220px;
   --mc-topbar-height: 56px;
 
   /* Semantic Backgrounds */
-  --mc-success-bg: #EDF5F0;
-  --mc-success-text: #2D6A4F;
-  --mc-warning-bg: #FEF3C7;
+  --mc-success-bg: #F0FDF4;
+  --mc-success-text: #166534;
+  --mc-warning-bg: #FFFBEB;
   --mc-warning-text: #92400E;
-  --mc-error-bg: #FEE2E2;
+  --mc-error-bg: #FEF2F2;
   --mc-error-text: #991B1B;
   --mc-info-bg: #DBEAFE;
   --mc-info-text: #1E40AF;
@@ -783,8 +788,8 @@
     --portal-text-muted: #86868B;
     --portal-accent: #1D1D1F;
     --portal-accent-glow: rgba(29, 29, 31, 0.1);
-    --portal-success: #2D6A4F;
-    --portal-error: #D14343;
+    --portal-success: #34C759;
+    --portal-error: #FF3B30;
 
     /* Apple grey scale */
     --apple-gray-50: #FAFAFA;
