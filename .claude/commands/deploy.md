@@ -6,7 +6,6 @@ description: Sjekk deploy-status og klargjør for produksjon
 
 1. TypeScript-sjekk:
 ```bash
-cd /Users/anderskristiansen/Developer/akgolf/akgolf-website
 npx tsc --noEmit
 ```
 

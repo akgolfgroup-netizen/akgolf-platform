@@ -18,7 +18,6 @@
 ## Steg 1: Kjør setup (2 min)
 
 ```bash
-cd /Users/anderskristiansen/Developer/akgolf-website
 ./setup.sh
 ```
 

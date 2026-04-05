@@ -5,7 +5,6 @@ description: Kjør TypeScript-sjekk og vis feil
 Kjør TypeScript-sjekk for hele prosjektet:
 
 ```bash
-cd /Users/anderskristiansen/Developer/akgolf/akgolf-website
 npx tsc --noEmit
 ```
 

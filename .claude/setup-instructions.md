@@ -5,9 +5,6 @@ Denne guiden viser hvordan du bruker Claude Code med MCP-tilgang til å sette op
 ## Kjøre setup-scriptet
 
 ```bash
-# Naviger til prosjektet
-cd /Users/anderskristiansen/Developer/akgolf-website
-
 # Kjør interaktivt setup
 ./setup-booking.sh
 ```

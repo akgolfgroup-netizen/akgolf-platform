@@ -31,9 +31,9 @@ Du er ekspert på AK Golf spillerportal. Du kjenner arkitekturen, auth-flyten, A
 1. **Supabase ID vs Prisma ID**
    - Bruk `OR: [{ supabaseId }, { id }]` for oppslag
 
-2. **SubscriptionTier**
-   - Website: FREE, PRO, ELITE
-   - ALDRI bruk VISITOR/ACADEMY/STARTER (det er dashboard)
+2. **SubscriptionTier** (synkronisert siden 2026-03-24)
+   - VISITOR (default, gratis), ACADEMY, STARTER, PRO, ELITE
+   - Website og portal bruker SAMME enum
 
 3. **Server vs Client**
    - Server: `requirePortalUser()`, Prisma direkte

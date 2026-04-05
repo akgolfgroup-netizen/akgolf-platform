@@ -11,23 +11,25 @@ Du er ekspert på AK Golf markedsside. Du kjenner designsystemet, brand guidelin
 
 ### Sider
 - `/` — Forsiden (hero, stats, metode, testimonials)
-- `/academy` — Academy-program (navy accent)
+- `/academy` — Academy-program
 - `/junior` — Junior-program (blue accent)
 - `/utvikling` — Utvikling/Software (green accent)
 - `/personvern` — Personvernerklæring
 
 ### Design-system
 
-#### Farger
+#### Farger (Brand Guide 2026)
 ```
-Navy:  #0F2950 (primær)
-Gold:  #B8975C (accent)
-Ink:   #0A1929 (deep)
-Snow:  #FAFBFC (bakgrunn)
+Sort:   #1D1D1F (primær)
+Hvit:   #FFFFFF (bakgrunn)
+Grønn:  #2D6A4F (brand-aksent)
+Grå:    #F5F5F7 / #E8E8ED / #86868B
 ```
 
+Semantisk: Success=#34C759, Error=#FF3B30, Warning=#FF9500
+AI: Lilla #AF52DE (aldri grønn for AI)
+
 #### Sub-brand aksenter
-- Academy: Navy #0F2950
 - Junior: Blue #3B82F6
 - Utvikling: Green #22C55E
 

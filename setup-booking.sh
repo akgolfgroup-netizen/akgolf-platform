@@ -18,7 +18,7 @@ echo -e "${BLUE}║     AK Golf Booking - Full Integrasjonsoppsett              
 echo -e "${BLUE}╚══════════════════════════════════════════════════════════════╝${NC}"
 echo ""
 
-PROJECT_DIR="/Users/anderskristiansen/Developer/akgolf-website"
+PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$PROJECT_DIR"
 
 # =============================================================================
