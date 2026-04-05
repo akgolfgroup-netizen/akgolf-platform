@@ -1206,6 +1206,14 @@ model User {
   FacilityActivityApprovedBy                  FacilityActivity[]         @relation("FacilityActivityApprovedBy")
   // Mission Control relations
   AgentConfig                                 AgentConfig[]
+  // Round tracker relations
+  Round                                       Round[]
+  PlayerBag                                   PlayerBag?
+  Friendship_UserFriends                      Friendship[]               @relation("UserFriends")
+  Friendship_FriendOf                         Friendship[]               @relation("FriendOf")
+  Challenge                                   Challenge[]
+  ChallengeParticipant                        ChallengeParticipant[]
+  UserGolfId                                  UserGolfId?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1666,4 +1674,273 @@ model InstructorFacilityDefault {
   ServiceType ServiceType? @relation(fields: [serviceTypeId], references: [id])
 
   @@unique([instructorId, facilityId, serviceTypeId])
+}
+
+// ════════════════════════════════════════════════════════════
+// ROUND TRACKER — Course, Hole, Round, HoleResult, Shot
+// ════════════════════════════════════════════════════════════
+
+model Course {
+  id           String   @id
+  name         String
+  location     String?
+  country      String   @default("NO")
+  par          Int
+  totalLength  Int?
+  courseRating  Float?
+  slopeRating  Int?
+  latitude     Float?
+  longitude    Float?
+  gpsData      Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+
+  Hole  Hole[]
+  Round Round[]
+
+  @@index([name])
+  @@index([country])
+}
+
+model Hole {
+  id          String @id
+  courseId     String
+  holeNumber  Int
+  par         Int
+  handicap    Int?
+  lengthMeter Int
+  teeColor    String @default("yellow")
+  latitude    Float?
+  longitude   Float?
+  greenLat    Float?
+  greenLon    Float?
+
+  Course     Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  Shot       Shot[]
+  HoleResult HoleResult[]
+
+  @@unique([courseId, holeNumber, teeColor])
+  @@index([courseId])
+}
+
+model Round {
+  id        String    @id
+  userId    String
+  courseId   String
+  date      DateTime
+  startTime DateTime?
+  endTime   DateTime?
+  teeColor  String    @default("yellow")
+  weather   String?
+  windSpeed Int?
+  windDir   String?
+  temperature Int?
+
+  totalScore    Int?
+  scoreToPar    Int?
+  sgTotal       Float?
+  sgOffTheTee   Float?
+  sgApproach    Float?
+  sgShortGame   Float?
+  sgPutting     Float?
+  fairwaysHit   Int?
+  fairwaysTotal Int?
+  girCount      Int?
+  totalPutts    Int?
+
+  decadeScore     Float?
+  preRoutineScore Float?
+  pressureLevel   Int?
+
+  isComplete Boolean @default(false)
+  source     String  @default("MANUAL")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  User       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Course     Course       @relation(fields: [courseId], references: [id])
+  HoleResult HoleResult[]
+
+  @@index([userId, date])
+  @@index([courseId])
+}
+
+model HoleResult {
+  id         String   @id
+  roundId    String
+  holeId     String
+  holeNumber Int
+  par        Int
+  score      Int
+  scoreToPar Int
+  putts      Int
+  fairwayHit Boolean?
+  gir        Boolean
+  upAndDown  Boolean?
+  sandSave   Boolean?
+  penalty    Int      @default(0)
+
+  sgTotal     Float?
+  sgTee       Float?
+  sgApproach  Float?
+  sgShortGame Float?
+  sgPutting   Float?
+
+  decadeTargetScore    Float?
+  decadeActualVsTarget Float?
+  strategyFollowed     Boolean?
+
+  Round Round @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  Hole  Hole  @relation(fields: [holeId], references: [id])
+  Shot  Shot[]
+
+  @@unique([roundId, holeNumber])
+  @@index([roundId])
+}
+
+model Shot {
+  id           String @id
+  holeResultId String
+  holeId       String
+  shotNumber   Int
+
+  fromLie     String
+  fromDistance Float
+  toLie       String
+  toDistance   Float
+
+  club          String
+  offline       Float?
+  carryDistance  Float?
+  totalDistance  Float?
+
+  expectedBefore Float
+  expectedAfter  Float
+  strokesGained  Float
+  sgCategory     String
+
+  targetDirection String?
+  actualDirection String?
+  decadeDecision  String?
+
+  preRoutineCompleted Boolean?
+  confidenceLevel     Int?
+
+  trackmanShotId String? @unique
+
+  HoleResult HoleResult @relation(fields: [holeResultId], references: [id], onDelete: Cascade)
+  Hole       Hole       @relation(fields: [holeId], references: [id])
+
+  @@index([holeResultId])
+  @@index([sgCategory])
+}
+
+// ════════════════════════════════════════════════════════════
+// BAG MANAGEMENT
+// ════════════════════════════════════════════════════════════
+
+model PlayerBag {
+  id     String       @id
+  userId String       @unique
+  clubs  PlayerClub[]
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PlayerClub {
+  id         String  @id
+  bagId      String
+  name       String
+  brand      String?
+  model      String?
+  loft       Float?
+  avgCarry   Float?
+  avgTotal   Float?
+  avgOffline Float?
+  shotCount  Int     @default(0)
+  sortOrder  Int     @default(0)
+
+  PlayerBag PlayerBag @relation(fields: [bagId], references: [id], onDelete: Cascade)
+
+  @@index([bagId])
+}
+
+// ════════════════════════════════════════════════════════════
+// SOCIAL & GAMIFICATION
+// ════════════════════════════════════════════════════════════
+
+model Friendship {
+  id        String           @id
+  userId    String
+  friendId  String
+  status    FriendshipStatus @default(PENDING)
+  createdAt DateTime         @default(now())
+
+  User   User @relation("UserFriends", fields: [userId], references: [id], onDelete: Cascade)
+  Friend User @relation("FriendOf", fields: [friendId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, friendId])
+}
+
+model Challenge {
+  id          String    @id
+  createdById String
+  title       String
+  type        ChallengeType
+  metric      String
+  startDate   DateTime
+  endDate     DateTime
+  isPublic    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  Creator      User                     @relation(fields: [createdById], references: [id])
+  Participants ChallengeParticipant[]
+}
+
+model ChallengeParticipant {
+  id           String  @id
+  challengeId  String
+  userId       String
+  currentValue Float?
+  rank         Int?
+
+  Challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([challengeId, userId])
+}
+
+// ════════════════════════════════════════════════════════════
+// GOLF ID & NGF
+// ════════════════════════════════════════════════════════════
+
+model UserGolfId {
+  id        String  @id
+  userId    String  @unique
+  golfboxId String?
+  clubName  String?
+  handicap  Float?
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ════════════════════════════════════════════════════════════
+// ENUMS — Round Tracker
+// ════════════════════════════════════════════════════════════
+
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  BLOCKED
+}
+
+enum ChallengeType {
+  HANDICAP
+  PUTTING
+  SG
+  DECADE
+  ROUNDS
+  STREAK
+  CUSTOM
 }
