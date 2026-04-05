@@ -25,6 +25,8 @@ import {
   CheckCircle,
   MessageSquare,
   Bot,
+  Crosshair,
+  Trophy,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
@@ -37,6 +39,8 @@ const navItems = [
   { href: "/portal/treningsplan", label: "Treningsplan", icon: Target },
   { href: "/portal/dagbok", label: "Treningsdagbok", icon: BookOpen },
   { href: "/portal/statistikk", label: "Statistikk", icon: BarChart3 },
+  { href: "/portal/turneringer", label: "Turneringer", icon: Trophy },
+  { href: "/portal/benchmark", label: "Benchmarking", icon: Crosshair },
   { href: "/portal/kalender", label: "Kalender", icon: Calendar },
 ];
 
