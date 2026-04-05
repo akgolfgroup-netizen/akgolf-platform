@@ -43,6 +43,7 @@ const navItems = [
   { href: "/portal/turneringer", label: "Turneringer", icon: Trophy },
   { href: "/portal/benchmark", label: "Benchmarking", icon: Crosshair },
   { href: "/portal/kalender", label: "Kalender", icon: Calendar },
+  { href: "/portal/ai-coach", label: "AI Coach", icon: Sparkles },
 ];
 
 const trainingItems = [

@@ -15,52 +15,52 @@ export async function getFriends() {
   const user = await requirePortalUser();
   if (!user?.id) return [];
 
+  // Hent alle aksepterte vennskap
   const friendships = await prisma.friendship.findMany({
     where: {
       status: FriendshipStatus.ACCEPTED,
       OR: [{ userId: user.id }, { friendId: user.id }],
     },
-    include: {
-      User: {
-        select: {
-          id: true,
-          name: true,
-          image: true,
-          lastActiveAt: true,
-          HandicapEntry: {
-            orderBy: { date: "desc" },
-            take: 1,
-            select: { handicap: true },
-          },
-        },
-      },
-      Friend: {
-        select: {
-          id: true,
-          name: true,
-          image: true,
-          lastActiveAt: true,
-          HandicapEntry: {
-            orderBy: { date: "desc" },
-            take: 1,
-            select: { handicap: true },
-          },
-        },
+    select: { id: true, userId: true, friendId: true },
+  });
+
+  const friendIds = friendships.map((f) =>
+    f.userId === user.id ? f.friendId : f.userId
+  );
+
+  if (friendIds.length === 0) return [];
+
+  // Hent vennedata separat for ren typing
+  const friends = await prisma.user.findMany({
+    where: { id: { in: friendIds } },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+      lastActiveAt: true,
+      HandicapEntry: {
+        orderBy: { date: "desc" as const },
+        take: 1,
+        select: { handicapIndex: true },
       },
     },
   });
 
-  return friendships.map((f) => {
-    const friend = f.userId === user.id ? f.Friend : f.User;
-    return {
-      friendshipId: f.id,
-      id: friend.id,
-      name: friend.name ?? "Ukjent",
-      image: friend.image,
-      lastActiveAt: friend.lastActiveAt?.toISOString() ?? null,
-      latestHandicap: friend.HandicapEntry[0]?.handicap ?? null,
-    };
-  });
+  const friendshipMap = new Map(
+    friendships.map((f) => [
+      f.userId === user.id ? f.friendId : f.userId,
+      f.id,
+    ])
+  );
+
+  return friends.map((friend) => ({
+    friendshipId: friendshipMap.get(friend.id) ?? "",
+    id: friend.id,
+    name: friend.name ?? "Ukjent",
+    image: friend.image,
+    lastActiveAt: friend.lastActiveAt?.toISOString() ?? null,
+    latestHandicap: friend.HandicapEntry[0]?.handicapIndex ?? null,
+  }));
 }
 
 export async function getPendingRequests() {
@@ -435,7 +435,7 @@ export async function getFriendsLeaderboard(
         HandicapEntry: {
           orderBy: { date: "desc" },
           take: 1,
-          select: { handicap: true },
+          select: { handicapIndex: true },
         },
       },
     });
@@ -445,7 +445,7 @@ export async function getFriendsLeaderboard(
         id: u.id,
         name: u.name ?? "Ukjent",
         image: u.image,
-        value: u.HandicapEntry[0]?.handicap ?? null,
+        value: u.HandicapEntry[0]?.handicapIndex ?? null,
         isCurrentUser: u.id === user.id,
       }))
       .filter((u) => u.value !== null)
@@ -465,7 +465,7 @@ export async function getFriendsLeaderboard(
         HandicapEntry: {
           orderBy: { date: "desc" },
           take: 10,
-          select: { handicap: true, date: true },
+          select: { handicapIndex: true, date: true },
         },
       },
     });
@@ -473,13 +473,13 @@ export async function getFriendsLeaderboard(
     return users
       .map((u) => {
         const entries = u.HandicapEntry;
-        const current = entries[0]?.handicap;
+        const current = entries[0]?.handicapIndex;
         const oldEntry = entries.find(
           (e) => e.date <= thirtyDaysAgo
         );
         const improvement =
           current != null && oldEntry
-            ? oldEntry.handicap - current
+            ? (oldEntry.handicapIndex ?? 0) - current
             : null;
 
         return {
