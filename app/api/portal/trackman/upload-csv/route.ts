@@ -59,8 +59,8 @@ export async function POST(req: NextRequest) {
         userId: user.id,
         sessionDate: sessionDate ? new Date(sessionDate) : new Date(),
         club: agg.club,
-        shots: clubShots as unknown as Record<string, unknown>[],
-        averages: agg as unknown as Record<string, unknown>,
+        shots: JSON.parse(JSON.stringify(clubShots)),
+        averages: JSON.parse(JSON.stringify(agg)),
       },
     });
     sessions.push(session);
