@@ -5,11 +5,12 @@ import { getStudentProfile } from "../actions";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import Link from "next/link";
-import { ArrowLeft, Mail, Phone, Calendar, BookOpen, ExternalLink, Target, TrendingDown, MessageCircle } from "lucide-react";
+import { ArrowLeft, Mail, Phone, Calendar, BookOpen, ExternalLink, Target, TrendingDown, MessageCircle, BarChart3 } from "lucide-react";
 import { PlayerProgressionChart } from "@/components/portal/admin/player-progression-chart";
 import { PlayerGoalsSection } from "@/components/portal/admin/player-goals-section";
 import { EditableCoachingNotes } from "@/components/portal/admin/editable-coaching-notes";
 import { CommunicationLog } from "@/components/portal/admin/communication-log";
+import { TrainingDataTabs } from "./training-data-tabs";
 import { getCommunicationLogs } from "./communication-actions";
 
 export const dynamic = "force-dynamic";
@@ -220,6 +221,18 @@ export default async function StudentProfilePage({ params }: Props) {
             initialLogs={communicationLogs}
           />
         </div>
+      </div>
+
+      {/* Training data */}
+      <div>
+        <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-3 flex items-center gap-2">
+          <BarChart3 className="w-5 h-5 text-[var(--color-grey-700)]" />
+          Treningsdata
+        </h2>
+        <TrainingDataTabs
+          studentId={id}
+          studentName={student.name ?? "Elev"}
+        />
       </div>
     </div>
   );

@@ -27,6 +27,7 @@ import {
   Bot,
   Crosshair,
   Trophy,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
