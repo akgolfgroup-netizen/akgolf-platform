@@ -139,6 +139,46 @@ export async function POST(req: Request) {
     logger.info(`[Stripe Webhook] Payment failed for PaymentIntent: ${paymentIntent.id}`);
   }
 
+  // ─── Refund Events ───
+  else if (event.type === "charge.refunded") {
+    const charge = event.data.object as Stripe.Charge;
+    const paymentIntentId = charge.payment_intent as string;
+
+    if (paymentIntentId) {
+      const booking = await prisma.booking.findFirst({
+        where: { stripePaymentId: paymentIntentId },
+        select: { id: true, amount: true },
+      });
+
+      if (booking) {
+        // Bestem om full eller delvis refund basert på beløp
+        const refundedTotal = charge.amount_refunded; // i øre
+        const fullAmount = booking.amount * 100; // konverter kroner til øre
+        const isFullRefund = refundedTotal >= fullAmount;
+
+        await prisma.$transaction([
+          prisma.booking.update({
+            where: { id: booking.id },
+            data: {
+              paymentStatus: isFullRefund
+                ? PaymentStatus.REFUNDED
+                : PaymentStatus.PARTIALLY_REFUNDED,
+            },
+          }),
+          prisma.paymentTransaction.updateMany({
+            where: { bookingId: booking.id },
+            data: { refundedAt: new Date() },
+          }),
+        ]);
+        logger.info(
+          `[Stripe Webhook] Refund processed for booking ${booking.id} (${isFullRefund ? "full" : "partial"})`
+        );
+      } else {
+        logger.info(`[Stripe Webhook] No booking found for refunded PaymentIntent: ${paymentIntentId}`);
+      }
+    }
+  }
+
   // ─── Subscription Events ───
   else if (event.type === "customer.subscription.created") {
     const subscription = event.data.object as Stripe.Subscription;
