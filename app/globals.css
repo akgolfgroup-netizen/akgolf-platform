@@ -396,23 +396,6 @@
     color: var(--color-black);
   }
 
-  /* Legacy compatibility — map old gold buttons to primary */
-  .w-btn-gold {
-    background: var(--color-black);
-    color: var(--color-white);
-    padding: 0.875rem 2rem;
-    border-radius: var(--radius-pill);
-    font-weight: 600;
-  }
-
-  .w-btn-gold:hover {
-    opacity: 0.85;
-  }
-
-  .w-btn-gold:active {
-    opacity: 0.75;
-  }
-
   /* Shimmer effect for CTA buttons */
   .w-btn-shimmer {
     position: relative;

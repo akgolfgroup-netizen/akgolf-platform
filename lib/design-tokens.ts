@@ -10,14 +10,8 @@
 export const colors = {
   // Primære brand-farger (Brand Guide 2026 — Monokrom + Signal)
   primary: {
-    midnightNavy: '#1D1D1F',
-    navyLight: '#6E6E73',
-    navyDark: '#1D1D1F',
-    softGold: '#1D1D1F',
-    goldLight: '#6E6E73',
-    goldDark: '#1D1D1F',
-    goldMuted: '#86868B',
-    goldText: '#1D1D1F',
+    black: '#1D1D1F',
+    white: '#FFFFFF',
     snow: '#F5F5F5',
     deepInk: '#1D1D1F',
   },

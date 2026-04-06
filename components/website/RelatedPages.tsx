@@ -2,11 +2,10 @@ import Link from "next/link";
 import { DIVISIONS } from "@/lib/website-constants";
 
 const accentColors = {
-  academy: "bg-academy",
+  academy: "bg-black",
   junior: "bg-junior",
-  software: "bg-software",
+  software: "bg-black",
   utvikling: "bg-utvikling",
-  gold: "bg-black",
 } as const;
 
 export function RelatedPages({ exclude }: { exclude: string }) {
