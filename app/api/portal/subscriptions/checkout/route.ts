@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
   });
   const isEligibleForTrial = !previousSub;
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",

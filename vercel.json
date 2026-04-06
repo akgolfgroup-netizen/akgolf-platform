@@ -35,6 +35,22 @@
     {
       "path": "/api/portal/cron/ai-insights",
       "schedule": "0 6 * * 1"
+    },
+    {
+      "path": "/api/cron/cleanup-pending-bookings",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/release-dropin-slots",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/smart-notifications",
+      "schedule": "*/30 * * * *"
+    },
+    {
+      "path": "/api/cron/sync-tournaments",
+      "schedule": "0 3 * * *"
     }
   ],
   "env": {

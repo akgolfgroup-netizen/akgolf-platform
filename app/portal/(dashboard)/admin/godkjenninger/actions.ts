@@ -6,6 +6,8 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff, isAdmin } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { FacilityActivityStatus } from "@prisma/client";
+import { sendBookingConfirmation, sendBookingCancellation } from "@/lib/portal/email/send-booking-email";
+import { logger } from "@/lib/logger";
 
 export async function approveBooking(
   bookingId: string
@@ -22,6 +24,11 @@ export async function approveBooking(
         id: bookingId,
         status: "PENDING",
       },
+      include: {
+        User: { select: { name: true, email: true } },
+        Instructor: { select: { User: { select: { name: true, email: true } } } },
+        ServiceType: { select: { name: true, duration: true } },
+      },
     });
 
     if (!booking) {
@@ -33,7 +40,22 @@ export async function approveBooking(
       data: { status: "CONFIRMED" },
     });
 
-    // TODO: Send bekreftelse til student via e-post
+    // Send bekreftelse til student og instruktør
+    if (booking.User.email && booking.Instructor.User.email) {
+      sendBookingConfirmation({
+        bookingId,
+        studentName: booking.User.name ?? "Kunde",
+        studentEmail: booking.User.email,
+        instructorName: booking.Instructor.User.name ?? "Instruktør",
+        instructorEmail: booking.Instructor.User.email,
+        serviceName: booking.ServiceType.name,
+        startTime: booking.startTime,
+        duration: booking.ServiceType.duration,
+        amount: booking.amount,
+        vatAmount: booking.vatAmount,
+        location: "Gamle Fredrikstad Golfklubb",
+      }).catch((err: unknown) => logger.error("[Godkjenning] E-post feilet:", err));
+    }
 
     revalidatePath("/portal/admin/godkjenninger");
     revalidatePath("/portal/admin");
@@ -61,6 +83,11 @@ export async function rejectBooking(
         id: bookingId,
         status: "PENDING",
       },
+      include: {
+        User: { select: { name: true, email: true } },
+        Instructor: { select: { User: { select: { name: true } } } },
+        ServiceType: { select: { name: true } },
+      },
     });
 
     if (!booking) {
@@ -72,7 +99,18 @@ export async function rejectBooking(
       data: { status: "CANCELLED" },
     });
 
-    // TODO: Send avvisning til student via e-post med begrunnelse
+    // Send avvisnings-e-post til student
+    if (booking.User.email) {
+      sendBookingCancellation(
+        booking.User.email,
+        booking.User.name ?? "Kunde",
+        booking.ServiceType.name,
+        booking.Instructor.User.name ?? "Instruktør",
+        booking.startTime,
+        "Bookingen ble avvist av instruktør",
+        100, // Full refund ved avvisning
+      ).catch((err: unknown) => logger.error("[Godkjenning] Avvisnings-e-post feilet:", err));
+    }
 
     revalidatePath("/portal/admin/godkjenninger");
     revalidatePath("/portal/admin");

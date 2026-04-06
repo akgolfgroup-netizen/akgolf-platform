@@ -1809,8 +1809,7 @@ export const JUNIOR_CTA_V2 = {
   ctaPrimary: "Sok opptak til Junior Academy",
   ctaPrimaryHref: "/#apply",
   ctaSecondary: "Kontakt GFGK Junior",
-  // TODO: Oppdater til korrekt GFGK Junior kontakt-URL
-  ctaSecondaryHref: "#",
+  ctaSecondaryHref: "https://gfrg.no/junior",
 } as const;
 
 // ─── Utvikling Page v2 (dark hero, bento grid) ───

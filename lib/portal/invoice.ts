@@ -1,14 +1,16 @@
 import { randomUUID } from "crypto";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
+import { stripe } from "@/lib/portal/stripe";
 
 /**
- * Invoice generation stub for AK Golf Portal.
+ * Invoice generation via Stripe Invoicing.
  *
- * Currently creates a PaymentTransaction with INVOICE method and logs the
- * invoice details. In the future, this can be extended to generate a PDF,
- * integrate with an accounting system (e.g., Fiken, Tripletex), or send
- * the invoice via email.
+ * Creates a Stripe Invoice for the booking, which handles:
+ * - Professional PDF generation
+ * - Email delivery to customer
+ * - Payment tracking and reminders
+ * - MVA/tax calculation
  */
 
 export interface InvoiceBooking {
@@ -40,24 +42,17 @@ export interface GeneratedInvoice {
   bookingId: string;
   amount: number;
   vatAmount: number;
+  stripeInvoiceId?: string;
+  stripeInvoiceUrl?: string;
 }
 
 /**
- * Generate an invoice for a booking.
- *
- * For now this creates a PaymentTransaction with INVOICE method and stores
- * the invoiceId on the booking. A real implementation would generate a PDF
- * and/or push to an external accounting system.
- *
- * @param booking  - Booking data including service type and student
- * @param customer - Customer payment preference (company details if business)
- * @returns The generated invoice record
+ * Generate and send an invoice for a booking via Stripe.
  */
 export async function generateInvoice(
   booking: InvoiceBooking,
   customer: InvoiceCustomer
 ): Promise<GeneratedInvoice> {
-  // Generate a human-readable invoice ID
   const dateStr = new Date()
     .toISOString()
     .slice(0, 10)
@@ -66,6 +61,79 @@ export async function generateInvoice(
   const invoiceId = `INV-${dateStr}-${seq}`;
 
   logger.info(`[Invoice] Generating invoice ${invoiceId} for booking ${booking.id}`);
+
+  // Find or create Stripe customer
+  const user = await prisma.user.findUnique({
+    where: { id: booking.student.id },
+    select: { stripeCustomerId: true },
+  });
+
+  let stripeCustomerId = user?.stripeCustomerId;
+
+  if (!stripeCustomerId) {
+    const stripeCustomer = await stripe.customers.create({
+      email: customer.invoiceEmail ?? booking.student.email ?? undefined,
+      name:
+        customer.customerType === "BUSINESS"
+          ? customer.companyName ?? booking.student.name ?? undefined
+          : booking.student.name ?? undefined,
+      metadata: {
+        userId: booking.student.id,
+        customerType: customer.customerType,
+        ...(customer.orgNumber && { orgNumber: customer.orgNumber }),
+      },
+    });
+    stripeCustomerId = stripeCustomer.id;
+
+    await prisma.user.update({
+      where: { id: booking.student.id },
+      data: { stripeCustomerId },
+    });
+  }
+
+  // Create Stripe Invoice
+  const netAmount = booking.amount - booking.vatAmount;
+
+  const stripeInvoice = await stripe.invoices.create({
+    customer: stripeCustomerId,
+    collection_method: "send_invoice",
+    days_until_due: 14,
+    metadata: {
+      bookingId: booking.id,
+      invoiceId,
+    },
+  });
+
+  // Add line item (amount in øre for Stripe)
+  await stripe.invoiceItems.create({
+    customer: stripeCustomerId,
+    invoice: stripeInvoice.id,
+    amount: netAmount * 100,
+    currency: "nok",
+    description: booking.serviceType.name,
+    metadata: { bookingId: booking.id },
+    tax_rates: [], // MVA handled via Stripe Tax or manual rate
+  });
+
+  // If there's VAT, add as separate line
+  if (booking.vatAmount > 0) {
+    await stripe.invoiceItems.create({
+      customer: stripeCustomerId,
+      invoice: stripeInvoice.id,
+      amount: booking.vatAmount * 100,
+      currency: "nok",
+      description: `MVA ${booking.serviceType.vatRate}%`,
+      metadata: { bookingId: booking.id },
+    });
+  }
+
+  // Finalize and send
+  const finalizedInvoice = await stripe.invoices.finalizeInvoice(stripeInvoice.id);
+  await stripe.invoices.sendInvoice(stripeInvoice.id);
+
+  logger.info(
+    `[Invoice] Stripe invoice ${stripeInvoice.id} sent to ${customer.invoiceEmail ?? booking.student.email}`
+  );
 
   // Create PaymentTransaction record
   const transaction = await prisma.paymentTransaction.create({
@@ -76,8 +144,8 @@ export async function generateInvoice(
       grossAmount: booking.amount,
       vatAmount: booking.vatAmount,
       vatRate: booking.serviceType.vatRate,
-      netAmount: booking.amount - booking.vatAmount,
-      providerRef: invoiceId,
+      netAmount,
+      providerRef: stripeInvoice.id,
       status: "PENDING",
       updatedAt: new Date(),
     },
@@ -90,13 +158,11 @@ export async function generateInvoice(
       invoiceId,
       paymentMethod: "INVOICE",
       paymentStatus: "PENDING",
+      stripePaymentId: stripeInvoice.id,
     },
   });
 
   logger.info(`[Invoice] Invoice ${invoiceId} created — transaction ${transaction.id}`);
-
-  // TODO: In production, generate PDF and/or send to accounting system
-  // TODO: Send invoice email to customer.invoiceEmail or booking.student.email
 
   return {
     invoiceId,
@@ -104,5 +170,7 @@ export async function generateInvoice(
     bookingId: booking.id,
     amount: booking.amount,
     vatAmount: booking.vatAmount,
+    stripeInvoiceId: stripeInvoice.id,
+    stripeInvoiceUrl: finalizedInvoice.hosted_invoice_url ?? undefined,
   };
 }

@@ -4,7 +4,7 @@ import {
   verifyState,
 } from "@/lib/portal/calendar/google-calendar";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3002";
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
 
 /**
  * GET /api/portal/calendar/google/callback

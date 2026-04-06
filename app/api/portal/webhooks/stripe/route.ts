@@ -16,6 +16,7 @@ import {
   resetQuotaForNewPeriod,
   cancelSubscriptionQuota,
 } from "@/lib/portal/booking/subscription-quota";
+import { createNotification } from "@/lib/portal/notifications";
 
 export const dynamic = "force-dynamic";
 
@@ -175,6 +176,33 @@ export async function POST(req: Request) {
         );
       } else {
         logger.info(`[Stripe Webhook] No booking found for refunded PaymentIntent: ${paymentIntentId}`);
+      }
+    }
+  }
+
+  // ─── Invoice Events ───
+  else if (event.type === "invoice.payment_failed") {
+    const invoice = event.data.object as Stripe.Invoice;
+    const customerId = invoice.customer as string;
+
+    if (customerId && "subscription" in invoice && invoice.subscription) {
+      const user = await prisma.user.findFirst({
+        where: { stripeCustomerId: customerId },
+        select: { id: true },
+      });
+
+      if (user) {
+        await createNotification({
+          userId: user.id,
+          type: "GENERAL",
+          title: "Betalingen feilet",
+          message:
+            "Vi klarte ikke å belaste betalingsmetoden din. Oppdater betalingsinformasjonen for å beholde tilgangen.",
+          linkUrl: "/portal/apper",
+        });
+        logger.info(
+          `[Stripe Webhook] Invoice payment failed for customer ${customerId}, notified user ${user.id}`
+        );
       }
     }
   }

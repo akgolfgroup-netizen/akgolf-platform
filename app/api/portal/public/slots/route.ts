@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
   }
   const corsOrigin =
-    process.env.WEBSITE_URL ?? "http://localhost:3000";
+    process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
 
   const corsHeaders = {
     "Access-Control-Allow-Origin": corsOrigin,
@@ -124,7 +124,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function OPTIONS(_req: NextRequest) {
-  const corsOrigin = process.env.WEBSITE_URL ?? "http://localhost:3000";
+  const corsOrigin = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
   return new NextResponse(null, {
     headers: {
       "Access-Control-Allow-Origin": corsOrigin,
