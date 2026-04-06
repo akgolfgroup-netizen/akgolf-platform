@@ -31,12 +31,21 @@ export const metadata: Metadata = {
     title: "AK Golf Group — Premium golfutvikling",
     description:
       "Individuell coaching, juniorakademi og teknologiløsninger for ambisiøse golfere som krever resultater.",
+    images: [
+      {
+        url: `${SITE_URL}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "AK Golf Group — Premium golfutvikling",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "AK Golf Group — Premium golfutvikling",
     description:
       "Individuell coaching, juniorakademi og teknologiløsninger for ambisiøse golfere som krever resultater.",
+    images: [`${SITE_URL}/og-image.png`],
   },
 };
 

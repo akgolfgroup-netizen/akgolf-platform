@@ -16,6 +16,7 @@ import {
   resetQuotaForNewPeriod,
   cancelSubscriptionQuota,
 } from "@/lib/portal/booking/subscription-quota";
+import { createNotification } from "@/lib/portal/notifications";
 
 export const dynamic = "force-dynamic";
 
@@ -137,6 +138,73 @@ export async function POST(req: Request) {
       data: { paymentStatus: PaymentStatus.FAILED },
     });
     logger.info(`[Stripe Webhook] Payment failed for PaymentIntent: ${paymentIntent.id}`);
+  }
+
+  // ─── Refund Events ───
+  else if (event.type === "charge.refunded") {
+    const charge = event.data.object as Stripe.Charge;
+    const paymentIntentId = charge.payment_intent as string;
+
+    if (paymentIntentId) {
+      const booking = await prisma.booking.findFirst({
+        where: { stripePaymentId: paymentIntentId },
+        select: { id: true, amount: true },
+      });
+
+      if (booking) {
+        // Bestem om full eller delvis refund basert på beløp
+        const refundedTotal = charge.amount_refunded; // i øre
+        const fullAmount = booking.amount * 100; // konverter kroner til øre
+        const isFullRefund = refundedTotal >= fullAmount;
+
+        await prisma.$transaction([
+          prisma.booking.update({
+            where: { id: booking.id },
+            data: {
+              paymentStatus: isFullRefund
+                ? PaymentStatus.REFUNDED
+                : PaymentStatus.PARTIALLY_REFUNDED,
+            },
+          }),
+          prisma.paymentTransaction.updateMany({
+            where: { bookingId: booking.id },
+            data: { refundedAt: new Date() },
+          }),
+        ]);
+        logger.info(
+          `[Stripe Webhook] Refund processed for booking ${booking.id} (${isFullRefund ? "full" : "partial"})`
+        );
+      } else {
+        logger.info(`[Stripe Webhook] No booking found for refunded PaymentIntent: ${paymentIntentId}`);
+      }
+    }
+  }
+
+  // ─── Invoice Events ───
+  else if (event.type === "invoice.payment_failed") {
+    const invoice = event.data.object as Stripe.Invoice;
+    const customerId = invoice.customer as string;
+
+    if (customerId && "subscription" in invoice && invoice.subscription) {
+      const user = await prisma.user.findFirst({
+        where: { stripeCustomerId: customerId },
+        select: { id: true },
+      });
+
+      if (user) {
+        await createNotification({
+          userId: user.id,
+          type: "GENERAL",
+          title: "Betalingen feilet",
+          message:
+            "Vi klarte ikke å belaste betalingsmetoden din. Oppdater betalingsinformasjonen for å beholde tilgangen.",
+          linkUrl: "/portal/apper",
+        });
+        logger.info(
+          `[Stripe Webhook] Invoice payment failed for customer ${customerId}, notified user ${user.id}`
+        );
+      }
+    }
   }
 
   // ─── Subscription Events ───

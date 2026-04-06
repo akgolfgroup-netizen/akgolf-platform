@@ -354,12 +354,14 @@ export default function UtviklingPage() {
                         Gamle Fredrikstad Golfklubb
                       </p>
                     </div>
-                    {/* TODO: Legg til Miklagard-logo nar tilgjengelig */}
                     <div className="flex flex-col items-center gap-3">
                       <div className="w-20 h-20 rounded-[16px] border border-[#E8E8ED] bg-white flex items-center justify-center">
-                        <span className="text-xs font-semibold text-grey-500">
-                          MG
-                        </span>
+                        <svg viewBox="0 0 40 40" className="w-10 h-10" aria-hidden="true">
+                          <text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle"
+                            style={{ fontSize: "16px", fontWeight: 700, fill: "#6E6E73", fontFamily: "var(--font-inter), system-ui" }}>
+                            MG
+                          </text>
+                        </svg>
                       </div>
                       <p className="text-sm text-grey-500">
                         Miklagard Golfklubb

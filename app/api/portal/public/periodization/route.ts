@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
-const corsOrigin = () => process.env.WEBSITE_URL ?? "http://localhost:3003";
+const corsOrigin = () => process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
 
 export const dynamic = "force-dynamic";
 

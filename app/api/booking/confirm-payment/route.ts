@@ -52,14 +52,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Oppdater booking til CONFIRMED
-    const booking = await prisma.booking.update({
-      where: { id: bookingId },
-      data: {
-        status: BookingStatus.CONFIRMED,
-        paymentStatus: PaymentStatus.PAID,
-        stripePaymentId: paymentIntentId,
-      },
+    // Idempotens-guard: sjekk om allerede prosessert (av webhook eller tidligere kall)
+    const existingBooking = await prisma.booking.findFirst({
+      where: { id: bookingId, paymentStatus: { not: PaymentStatus.PAID } },
       include: {
         ServiceType: { select: { name: true, duration: true } },
         Instructor: {
@@ -69,38 +64,53 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Opprett betalingstransaksjon
-    await prisma.paymentTransaction.create({
-      data: {
-        id: crypto.randomUUID(),
-        bookingId,
-        paymentMethod: booking.paymentMethod,
-        grossAmount: booking.amount,
-        vatAmount: booking.vatAmount,
-        vatRate: booking.ServiceType
-          ? Math.round((booking.vatAmount / booking.amount) * 100)
-          : 0,
-        netAmount: booking.amount - booking.vatAmount,
-        providerRef: paymentIntentId,
-        status: PaymentStatus.PAID,
-        paidAt: new Date(),
-        updatedAt: new Date(),
-      },
-    });
+    if (!existingBooking) {
+      // Allerede bekreftet av webhook — returner suksess uten å gjøre noe
+      return NextResponse.json({ success: true, status: "CONFIRMED" });
+    }
+
+    // Atomisk oppdatering: booking + PaymentTransaction i én transaksjon
+    await prisma.$transaction([
+      prisma.booking.update({
+        where: { id: bookingId },
+        data: {
+          status: BookingStatus.CONFIRMED,
+          paymentStatus: PaymentStatus.PAID,
+          stripePaymentId: paymentIntentId,
+        },
+      }),
+      prisma.paymentTransaction.create({
+        data: {
+          id: crypto.randomUUID(),
+          bookingId,
+          paymentMethod: existingBooking.paymentMethod,
+          grossAmount: existingBooking.amount,
+          vatAmount: existingBooking.vatAmount,
+          vatRate: existingBooking.ServiceType
+            ? Math.round((existingBooking.vatAmount / existingBooking.amount) * 100)
+            : 0,
+          netAmount: existingBooking.amount - existingBooking.vatAmount,
+          providerRef: paymentIntentId,
+          status: PaymentStatus.PAID,
+          paidAt: new Date(),
+          updatedAt: new Date(),
+        },
+      }),
+    ]);
 
     // Send bekreftelses-e-post (non-blocking)
-    if (booking.User.email && booking.Instructor.User.email) {
+    if (existingBooking.User.email && existingBooking.Instructor.User.email) {
       sendBookingConfirmation({
         bookingId,
-        studentName: booking.User.name ?? "Kunde",
-        studentEmail: booking.User.email,
-        instructorName: booking.Instructor.User.name ?? "Instruktør",
-        instructorEmail: booking.Instructor.User.email,
-        serviceName: booking.ServiceType.name,
-        startTime: booking.startTime,
-        duration: booking.ServiceType.duration,
-        amount: booking.amount,
-        vatAmount: booking.vatAmount,
+        studentName: existingBooking.User.name ?? "Kunde",
+        studentEmail: existingBooking.User.email,
+        instructorName: existingBooking.Instructor.User.name ?? "Instruktør",
+        instructorEmail: existingBooking.Instructor.User.email,
+        serviceName: existingBooking.ServiceType.name,
+        startTime: existingBooking.startTime,
+        duration: existingBooking.ServiceType.duration,
+        amount: existingBooking.amount,
+        vatAmount: existingBooking.vatAmount,
         location: "Gamle Fredrikstad Golfklubb",
       }).catch((err: unknown) =>
         logger.error("[confirm-payment] Email failed:", err)
@@ -108,14 +118,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Send SMS til instruktør (non-blocking)
-    if (booking.Instructor.User.phone) {
+    if (existingBooking.Instructor.User.phone) {
       sendBookingConfirmationSms({
-        instructorPhone: booking.Instructor.User.phone,
-        instructorName: booking.Instructor.User.name ?? "Instruktør",
-        studentName: booking.User.name ?? "Kunde",
-        serviceName: booking.ServiceType.name,
-        startTime: booking.startTime,
-        duration: booking.ServiceType.duration,
+        instructorPhone: existingBooking.Instructor.User.phone,
+        instructorName: existingBooking.Instructor.User.name ?? "Instruktør",
+        studentName: existingBooking.User.name ?? "Kunde",
+        serviceName: existingBooking.ServiceType.name,
+        startTime: existingBooking.startTime,
+        duration: existingBooking.ServiceType.duration,
       }).catch((err: unknown) =>
         logger.error("[confirm-payment] SMS failed:", err)
       );

@@ -3,6 +3,12 @@
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { nanoid } from "nanoid";
+import {
+  generateHoleStrategy,
+  type DecadeHoleStrategy,
+  type HoleLayout,
+} from "@/lib/portal/golf/decade-caddy";
+import type { ClubDispersion } from "@/lib/portal/golf/dispersion";
 
 export async function searchCourses(query: string) {
   const courses = await prisma.course.findMany({
@@ -180,6 +186,75 @@ export async function completeRound(roundId: string) {
   });
 
   return updated;
+}
+
+export async function getDecadeStrategy(
+  courseId: string,
+  teeColor: string,
+  handicap: number
+): Promise<DecadeHoleStrategy[]> {
+  const user = await requirePortalUser();
+
+  // Hent hull for banen
+  const holes = await prisma.hole.findMany({
+    where: { courseId, teeColor },
+    orderBy: { holeNumber: "asc" },
+  });
+
+  if (holes.length === 0) return [];
+
+  // Hent spillerens bag og klubb-dispersjoner
+  const bag = await prisma.playerBag.findUnique({
+    where: { userId: user.id },
+    include: {
+      clubs: {
+        orderBy: { sortOrder: "asc" },
+      },
+    },
+  });
+
+  // Konverter PlayerClub til ClubDispersion
+  const dispersions: ClubDispersion[] = (bag?.clubs ?? [])
+    .filter((c) => c.avgCarry !== null && c.avgCarry > 0)
+    .map((c) => {
+      const avgCarry = c.avgCarry ?? 0;
+      const avgTotal = c.avgTotal ?? avgCarry;
+      const avgOffline = Math.abs(c.avgOffline ?? 5);
+      // Estimer standardavvik fra gjennomsnitt (ca. 3-5% av carry for lengde, offline direkte)
+      const carryStdDev = avgCarry * 0.04;
+      const lateralStdDev = avgOffline;
+
+      return {
+        club: c.name,
+        avgCarry,
+        avgTotal,
+        carryStdDev,
+        lateralStdDev,
+        shotCount: c.shotCount,
+        dispersion68: {
+          carry: Math.round(carryStdDev * 10) / 10,
+          lateral: Math.round(lateralStdDev * 10) / 10,
+        },
+        dispersion95: {
+          carry: Math.round(carryStdDev * 2 * 10) / 10,
+          lateral: Math.round(lateralStdDev * 2 * 10) / 10,
+        },
+      };
+    });
+
+  // Generer strategi for hvert hull
+  const strategies = holes.map((hole) => {
+    const layout: HoleLayout = {
+      holeNumber: hole.holeNumber,
+      par: hole.par,
+      lengthMeter: hole.lengthMeter,
+      handicap: hole.handicap ?? undefined,
+    };
+
+    return generateHoleStrategy(layout, dispersions, handicap);
+  });
+
+  return strategies;
 }
 
 export async function getUserRounds(limit = 20) {

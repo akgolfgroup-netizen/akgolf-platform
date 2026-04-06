@@ -13,7 +13,7 @@ import { BackToTop } from "@/components/website/BackToTop";
 import { BentoFeatures } from "@/components/website/BentoFeatures";
 import { ParallaxImage } from "@/components/website/ParallaxImage";
 import { CoachingOfferGrid } from "@/components/website/CoachingOfferGrid";
-// import { TestimonialBlock } from "@/components/website/TestimonialBlock";
+import { TestimonialBlock } from "@/components/website/TestimonialBlock";
 import { ApplicationForm } from "@/components/website/ApplicationForm";
 import {
   HERO,
@@ -242,8 +242,7 @@ export default function HomePage() {
         {/* ================================================================= */}
         {/* 7. TESTIMONIAL                                                     */}
         {/* ================================================================= */}
-        {/* TODO: Aktiver nar ekte testimonials er klare */}
-        {/* <TestimonialBlock /> */}
+        <TestimonialBlock />
 
         {/* ================================================================= */}
         {/* 8. COACH — Bio section                                             */}

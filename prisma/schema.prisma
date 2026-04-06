@@ -1208,6 +1208,8 @@ model User {
   AgentConfig                                 AgentConfig[]
   // Round tracker relations
   Round                                       Round[]
+  GameSessionCreator                          GameSession[]              @relation("GameSessionCreator")
+  GamePlayer                                  GamePlayer[]
   PlayerBag                                   PlayerBag?
   Friendship_UserFriends                      Friendship[]               @relation("UserFriends")
   Friendship_FriendOf                         Friendship[]               @relation("FriendOf")
@@ -1695,8 +1697,9 @@ model Course {
   createdAt    DateTime @default(now())
   updatedAt    DateTime
 
-  Hole  Hole[]
-  Round Round[]
+  Hole        Hole[]
+  Round       Round[]
+  GameSession GameSession[]
 
   @@index([name])
   @@index([country])
@@ -1764,6 +1767,54 @@ model Round {
 
   @@index([userId, date])
   @@index([courseId])
+
+  gameSessionId String?
+  GameSession   GameSession? @relation(fields: [gameSessionId], references: [id])
+}
+
+// ════════════════════════════════════════════════════════════
+// GAME SESSION — Gruppe-runde (GameBook-stil)
+// ════════════════════════════════════════════════════════════
+
+model GameSession {
+  id          String   @id
+  name        String?                 // "Fredagsrunde med gutta"
+  courseId     String
+  date        DateTime
+  teeColor    String   @default("yellow")
+  format      GameFormat @default(STROKEPLAY)
+  createdById String
+  joinCode    String   @unique        // 6-tegn kode for a bli med
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+
+  Course      Course   @relation(fields: [courseId], references: [id])
+  CreatedBy   User     @relation("GameSessionCreator", fields: [createdById], references: [id])
+  Players     GamePlayer[]
+  Rounds      Round[]
+}
+
+model GamePlayer {
+  id            String   @id
+  gameSessionId String
+  userId        String
+  displayName   String?
+  playingHandicap Int?
+  joinedAt      DateTime @default(now())
+
+  GameSession   GameSession @relation(fields: [gameSessionId], references: [id], onDelete: Cascade)
+  User          User        @relation(fields: [userId], references: [id])
+
+  @@unique([gameSessionId, userId])
+}
+
+enum GameFormat {
+  STROKEPLAY
+  STABLEFORD
+  MATCHPLAY
+  BESTBALL
+  SCRAMBLE
 }
 
 model HoleResult {

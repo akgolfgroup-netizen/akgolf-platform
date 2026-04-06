@@ -60,6 +60,7 @@ export function UpgradeModal({
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">(
     "monthly"
   );
+  const [isLoading, setIsLoading] = useState(false);
   const titleId = useId();
 
   useEffect(() => {
@@ -89,10 +90,25 @@ export function UpgradeModal({
     annual: { price: 219, period: "/mnd", total: 2628, savings: 960 },
   };
 
-  const handleUpgrade = (tier: "PRO" | "ELITE") => {
-    // TODO: Redirect to Stripe checkout
-    const checkoutUrl = `/api/portal/subscription/checkout?tier=${tier}&period=${billingPeriod}`;
-    window.location.href = checkoutUrl;
+  const handleUpgrade = async (tier: "PRO" | "ELITE") => {
+    setIsLoading(true);
+    try {
+      const moduleSlug = tier === "PRO" ? "pro" : "elite";
+      const interval = billingPeriod === "annual" ? "year" : "month";
+
+      const res = await fetch("/api/portal/subscriptions/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ moduleSlug, interval }),
+      });
+
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -211,13 +227,14 @@ export function UpgradeModal({
             </ul>
             <button
               onClick={() => handleUpgrade("PRO")}
-              className="w-full py-2.5 rounded-full font-semibold text-sm transition-transform hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)]"
+              disabled={isLoading}
+              className="w-full py-2.5 rounded-full font-semibold text-sm transition-transform hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)] disabled:opacity-50"
               style={{
                 background: "var(--color-grey-900)",
                 color: "white",
               }}
             >
-              Velg Pro
+              {isLoading ? "Laster..." : "Velg Pro"}
             </button>
           </div>
 
@@ -269,13 +286,14 @@ export function UpgradeModal({
             </ul>
             <button
               onClick={() => handleUpgrade("ELITE")}
-              className="w-full py-2.5 rounded-full font-semibold text-sm transition-transform hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)]"
+              disabled={isLoading}
+              className="w-full py-2.5 rounded-full font-semibold text-sm transition-transform hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)] disabled:opacity-50"
               style={{
                 background: "var(--color-brand)",
                 color: "white",
               }}
             >
-              Velg Pro+
+              {isLoading ? "Laster..." : "Velg Pro+"}
             </button>
           </div>
         </div>

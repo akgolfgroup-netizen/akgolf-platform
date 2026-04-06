@@ -10,8 +10,14 @@ import {
   BarChart3,
   Minus,
   Plus,
+  Timer,
 } from "lucide-react";
 import { saveHoleResult, completeRound } from "../actions";
+import { DecadePanel } from "@/components/portal/runde/decade-panel";
+import { PreShotGuide } from "@/components/portal/runde/pre-shot-guide";
+import { GPSDistance } from "@/components/portal/runde/gps-distance";
+import type { DecadeHoleStrategy } from "@/lib/portal/golf/decade-caddy";
+import type { PreShotRoutine } from "@/lib/portal/golf/decade-caddy";
 
 interface HoleData {
   id: string;
@@ -19,6 +25,8 @@ interface HoleData {
   par: number;
   handicap: number | null;
   lengthMeter: number;
+  greenLat?: number | null;
+  greenLon?: number | null;
 }
 
 interface HoleResult {
@@ -27,6 +35,7 @@ interface HoleResult {
   putts: number;
   fairwayHit: boolean | null;
   gir: boolean;
+  strategyFollowed?: boolean | null;
 }
 
 interface Props {
@@ -35,6 +44,8 @@ interface Props {
   coursePar: number;
   holes: HoleData[];
   existingResults: HoleResult[];
+  decadeStrategies?: DecadeHoleStrategy[];
+  preShotRoutine?: PreShotRoutine;
 }
 
 export function LiveRoundClient({
@@ -43,10 +54,14 @@ export function LiveRoundClient({
   coursePar,
   holes,
   existingResults,
+  decadeStrategies,
+  preShotRoutine,
 }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [currentHole, setCurrentHole] = useState(0);
+  const [showPreShot, setShowPreShot] = useState(false);
+  const [preRoutineCompleted, setPreRoutineCompleted] = useState<Set<number>>(new Set());
   const [results, setResults] = useState<Map<number, HoleResult>>(() => {
     const map = new Map<number, HoleResult>();
     for (const r of existingResults) {
@@ -64,7 +79,11 @@ export function LiveRoundClient({
     putts: 2,
     fairwayHit: hole.par === 3 ? null : null,
     gir: false,
+    strategyFollowed: null,
   };
+
+  const currentStrategy =
+    decadeStrategies?.find((s) => s.holeNumber === hole.holeNumber) ?? null;
 
   const totalScore = Array.from(results.values()).reduce((s, r) => s + r.score, 0);
   const totalPar = Array.from(results.values()).reduce((s, r) => {
@@ -90,6 +109,7 @@ export function LiveRoundClient({
         putts: result.putts,
         fairwayHit: result.fairwayHit,
         gir: result.gir,
+        strategyFollowed: result.strategyFollowed,
       });
 
       if (currentHole < holes.length - 1) {
@@ -109,6 +129,7 @@ export function LiveRoundClient({
         putts: result.putts,
         fairwayHit: result.fairwayHit,
         gir: result.gir,
+        strategyFollowed: result.strategyFollowed,
       });
 
       await completeRound(roundId);
@@ -179,6 +200,9 @@ export function LiveRoundClient({
         </div>
       </div>
 
+      {/* DECADE Strategi-panel */}
+      <DecadePanel strategy={currentStrategy} />
+
       {/* Hull-info */}
       <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6 space-y-6">
         <div className="flex items-center justify-between">
@@ -196,6 +220,12 @@ export function LiveRoundClient({
             <div className="text-xs text-[var(--color-grey-500)]">{scoreLabel}</div>
           </div>
         </div>
+
+        {/* GPS-avstand */}
+        <GPSDistance
+          greenLat={hole.greenLat ?? null}
+          greenLon={hole.greenLon ?? null}
+        />
 
         {/* Score */}
         <div>
@@ -301,7 +331,75 @@ export function LiveRoundClient({
             </div>
           </div>
         </div>
+
+        {/* Fulgte strategi? + Pre-shot rutine */}
+        {currentStrategy && (
+          <div className="space-y-3">
+            <div>
+              <label className="text-sm font-medium text-[var(--color-grey-600)] mb-2 block">
+                Fulgte strategi?
+              </label>
+              <div className="flex gap-2">
+                {[
+                  { value: true, label: "Ja" },
+                  { value: false, label: "Nei" },
+                ].map((opt) => (
+                  <button
+                    key={String(opt.value)}
+                    onClick={() =>
+                      updateResult({ strategyFollowed: opt.value })
+                    }
+                    className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                      result.strategyFollowed === opt.value
+                        ? opt.value
+                          ? "bg-[var(--color-success)]/10 text-[var(--color-success-text)] border border-[var(--color-success)]"
+                          : "bg-[var(--color-error)]/10 text-[var(--color-error)] border border-[var(--color-error)]"
+                        : "bg-[var(--color-grey-100)] text-[var(--color-grey-600)] border border-transparent"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {preShotRoutine && (
+              <button
+                onClick={() => setShowPreShot(true)}
+                className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                  preRoutineCompleted.has(hole.holeNumber)
+                    ? "bg-[var(--color-success)]/10 text-[var(--color-success-text)] border border-[var(--color-success)]"
+                    : "border border-[var(--color-ai)]/20 text-[var(--color-ai-text)]"
+                }`}
+                style={
+                  !preRoutineCompleted.has(hole.holeNumber)
+                    ? { backgroundColor: "var(--color-ai-light)" }
+                    : undefined
+                }
+              >
+                <Timer className="h-4 w-4" />
+                {preRoutineCompleted.has(hole.holeNumber)
+                  ? "Pre-shot rutine fullfort"
+                  : "Start pre-shot rutine"}
+              </button>
+            )}
+          </div>
+        )}
       </div>
+
+      {/* Pre-shot rutine overlay */}
+      {showPreShot && preShotRoutine && (
+        <PreShotGuide
+          routine={preShotRoutine}
+          onComplete={() => {
+            setPreRoutineCompleted(
+              (prev) => new Set([...prev, hole.holeNumber])
+            );
+            setShowPreShot(false);
+          }}
+          onClose={() => setShowPreShot(false)}
+        />
+      )}
 
       {/* Navigation */}
       <div className="flex items-center justify-between mt-6 gap-3">

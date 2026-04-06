@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useTransition } from "react";
+import { toggleAgent, getAgentStates } from "./actions";
 import {
   MCTopbar,
   MCCard,
@@ -26,9 +27,20 @@ export default function AgenterPage() {
     Object.fromEntries(AGENT_CONFIGS.map((a) => [a.id, true]))
   );
 
+  const [, startTransition] = useTransition();
+
+  // Load persisted states on mount
+  useEffect(() => {
+    getAgentStates().then((states) => {
+      setEnabledAgents((prev) => ({ ...prev, ...states }));
+    });
+  }, []);
+
   const handleToggle = (agentId: string, enabled: boolean) => {
     setEnabledAgents((prev) => ({ ...prev, [agentId]: enabled }));
-    // TODO: Persist to database via API
+    startTransition(() => {
+      toggleAgent(agentId, enabled);
+    });
   };
 
   // Group agents by team
