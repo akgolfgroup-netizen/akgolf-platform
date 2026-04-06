@@ -1,94 +1,99 @@
-# AK Golf Website
+# AK Golf Platform
 
-Premium golf coaching website for AK Golf Group. Norwegian-language marketing site with four sub-pages: Academy, Junior, Utvikling (Development), and Personvern (Privacy Policy).
+Premium golfcoaching-plattform for AK Golf Group. Norskspråklig markedsside med komplett portal/dashboard-system for elever og instruktører.
 
 ## Tech Stack
 
 - **Next.js 16** (App Router, Turbopack) + TypeScript
 - **React 19** + Framer Motion 12
 - **Tailwind CSS v4** (inline theme tokens)
-- **Font:** Inter (self-hosted, per AK Golf Branding 2.0)
-- **AI:** Anthropic Claude (training plan generation)
-- **Payments:** Stripe (training plan purchases)
-- **Auth:** Supabase
+- **Font:** Inter (Google Fonts)
+- **Database:** PostgreSQL + Prisma ORM
+- **AI:** Anthropic Claude (coaching-analyse, treningsplaner)
+- **Payments:** Stripe + Vipps
+- **Auth:** Supabase Auth
+- **Email:** Resend
 - **Linting:** ESLint 9 + eslint-config-next
 
-## Prerequisites
-
-- Node.js 18+
-- npm
-
-## Getting Started
+## Kom i gang
 
 ```bash
 npm install
 cp .env.example .env.local
-# Fill in Supabase, Stripe, Anthropic, and Formspree keys
+# Fyll inn miljøvariabler i .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Åpne [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
 ```bash
-npm run dev      # Development server (Turbopack)
-npm run build    # Production build
-npm run lint     # ESLint
+npm run dev       # Utviklingsserver (Turbopack)
+npm run build     # Produksjonsbygg
+npm run lint      # ESLint
+npm run seed      # Seed database (prisma/seed-config.ts)
 ```
 
-## Project Structure
+## Prosjektstruktur
 
 ```
 app/
-  layout.tsx             — Root layout, fonts, metadata, JSON-LD
-  page.tsx               — Home page (hero, method, team, testimonials, CTA)
-  academy/               — Academy sub-page (accent: teal)
-  junior/                — Junior sub-page (accent: blue)
-  utvikling/             — Development sub-page (accent: violet + amber)
-  personvern/            — Privacy policy
-  treningsplan/          — AI training plan product (purchase + dashboard)
-  auth/                  — Authentication (Supabase callback)
-  api/                   — API routes (contact, newsletter, training plan, Stripe)
+  page.tsx               # Forside
+  academy/               # Coaching-side
+  junior-academy/        # Junior Academy
+  utvikling/             # B2B for klubber
+  booking/               # Offentlig booking
+  portal/                # Spillerportal (innlogget)
+  api/                   # API-ruter
 components/
-  website/               — Marketing UI components (24+)
-  dashboard/             — Training plan dashboard components
-hooks/                   — useScrollPosition, useAnimatedCounter, useMediaQuery
+  website/               # Markedsside-komponenter
+  portal/                # Portal-komponenter
+  ui/                    # UI bibliotek
 lib/
-  website-constants.ts   — All text content, contact info, pricing, FAQ
-  ai/                    — Claude prompts + plan generation
-  stripe/                — Stripe product config
-  supabase/              — Supabase client/server
+  website-constants.ts   # Tekst, priser, kontaktinfo
+  design-tokens.ts       # Design tokens
+  portal/                # Portal-utils (auth, prisma, etc.)
+prisma/
+  schema.prisma          # Database-skjema
+  seed-config.ts         # Seed-konfigurasjon
 ```
 
 ## Design System
 
-### Colors (Branding 2.0 canonical)
-- **Navy:** `#0F2950` (primary), `#0A1929` (dark/deep ink)
-- **Gold:** `#B8975C` (accent), `#D4C4A8` (light), `#E8D4B0` (muted)
-- **Sub-brands:** Junior = blue `#3B82F6`, Labs = purple `#8B5CF6`, Utvikling = green `#22C55E`
-- **Surfaces:** Snow `#FAFBFC`, Cloud `#F0F2F5`
+Se `docs/ART-DIRECTION.md` for komplett design-spesifikasjon.
 
-### Typography
-- **Target:** Inter for all text (per AK Golf Branding 2.0)
-- Headings: `font-display`, weight 400, tracking -0.02em
-- Body: `font-sans`
+### Farger (Brand Guide 2026)
+- **Black:** `#1D1D1F` (tekst, knapper)
+- **White:** `#FFFFFF` (bakgrunn)
+- **Grey:** `#F5F5F7`, `#E8E8ED`, `#6E6E73` (overflater, tekst)
+- **Brand Green:** `#2D6A4F` (logo, CTA)
+- **Success:** `#34C759` | **Error:** `#FF3B30` | **AI:** `#AF52DE`
 
-## Environment Variables
+### Typografi
+- **Font:** Inter (variable, 300-700)
+- **Headings:** Weight 700, tight letter-spacing
+- **Body:** Weight 400, 16px
 
-See `.env.example` for required variables:
-- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
-- `ANTHROPIC_API_KEY`
-- `NEXT_PUBLIC_FORMSPREE_ID`
+## Dokumentasjon
 
-## Status
+| Fil | Beskrivelse |
+|-----|-------------|
+| `CLAUDE.md` | Hoveddokumentasjon for utviklere |
+| `docs/ART-DIRECTION.md` | Visuell retning, farger, komponenter |
+| `docs/DESIGN-SYSTEM-CLAUDE.md` | Tekniske design-tokens |
+| `docs/claude-project-instructions.md` | Prosjektkontekst |
+| `.claude/rules/gotchas.md` | Kjente feller |
 
-See `STATUS.md` for launch checklist. Key remaining items:
-1. Connect contact form (Formspree endpoint)
-2. Replace image placeholders with real photos
-3. Add real contact information
+## Oppsett
 
-## License
+1. Kjør `./setup.sh` for initial oppsett
+2. Rediger `prisma/seed-config.ts` med dine priser
+3. Kjør `npx prisma db seed`
+4. Fyll inn `.env.local` med API-nøkler
 
-Private — AK Golf Group.
+Se `.env.example` for påkrevde miljøvariabler.
+
+## Lisens
+
+Private — AK Golf Group AS.
