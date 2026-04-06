@@ -49,3 +49,4 @@ mcp-server/
 .env*.local
 .superpowers/
 backups/
+__pycache__/
