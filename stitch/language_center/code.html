@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#154212",
+                    "secondary": "#576500",
+                    "on-primary-container": "#9dd090",
+                    "background": "#fdf9f0",
+                    "surface-container": "#f1eee5",
+                    "surface-container-low": "#f7f3ea",
+                    "inverse-primary": "#a1d494",
+                    "primary-fixed-dim": "#a1d494",
+                    "outline-variant": "#c2c9bb",
+                    "surface-container-high": "#ece8df",
+                    "surface": "#fdf9f0",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#42493e",
+                    "primary": "#154212",
+                    "on-primary-fixed-variant": "#23501e",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed-dim": "#b8d300",
+                    "secondary-container": "#d0ed00",
+                    "surface-dim": "#dddad1",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "surface-tint": "#3b6934",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#bcf0ae",
+                    "on-tertiary-fixed": "#002201",
+                    "inverse-surface": "#31302b",
+                    "tertiary-container": "#2d5a27",
+                    "on-tertiary-container": "#9dd090",
+                    "error-container": "#ffdad6",
+                    "outline": "#72796e",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e6e2d9",
+                    "on-surface": "#1c1c16",
+                    "primary-fixed": "#bcf0ae",
+                    "secondary-fixed": "#d2f000",
+                    "primary-container": "#2d5a27",
+                    "on-background": "#1c1c16",
+                    "inverse-on-surface": "#f4f0e7",
+                    "surface-variant": "#e6e2d9",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#fdf9f0",
+                    "on-primary-fixed": "#002201",
+                    "on-secondary-fixed": "#191e00",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-container": "#5b6900"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container/30">
+<!-- Sidebar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] dark:bg-emerald-950 flex flex-col py-6 shadow-[0_4px_16px_rgba(45,90,39,0.06)] z-50">
+<div class="px-6 mb-8">
+<h1 class="text-xl font-bold text-white tracking-tight">AK Sports OS</h1>
+<p class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem] text-emerald-100/50">Admin Suite</p>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem] text-emerald-100/70 px-4 py-3 bg-[#d2f000] text-[#154212] rounded-lg mx-2 my-1 flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+<span>Branding</span>
+</div>
+<div class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem] text-emerald-100/70 px-4 py-3 hover:text-white hover:bg-emerald-800/50 transition-colors flex items-center gap-3 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span>Themes</span>
+</div>
+<div class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem] text-emerald-100/70 px-4 py-3 hover:text-white hover:bg-emerald-800/50 transition-colors flex items-center gap-3 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="dashboard_customize">dashboard_customize</span>
+<span>Templates</span>
+</div>
+<div class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem] text-emerald-100/70 px-4 py-3 hover:text-white hover:bg-emerald-800/50 transition-colors flex items-center gap-3 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+<span>System</span>
+</div>
+<div class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem] text-emerald-100/70 px-4 py-3 hover:text-white hover:bg-emerald-800/50 transition-colors flex items-center gap-3 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span>Analytics</span>
+</div>
+</nav>
+<div class="mt-auto border-t border-emerald-800/30 pt-4">
+<div class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem] text-emerald-100/70 px-4 py-3 hover:text-white hover:bg-emerald-800/50 transition-colors flex items-center gap-3 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span>Support</span>
+</div>
+<div class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem] text-emerald-100/70 px-4 py-3 hover:text-white hover:bg-emerald-800/50 transition-colors flex items-center gap-3 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span>Logs</span>
+</div>
+<div class="px-4 mt-4">
+<button class="w-full bg-[#d2f000] text-[#154212] py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all">
+                    Publish Changes
+                </button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen pt-16 px-12 pb-12">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-[#fdf9f0]/80 backdrop-blur-md flex items-center justify-between px-8 z-40">
+<div class="flex items-center gap-8">
+<span class="font-['DM_Sans'] font-semibold text-[#154212] text-sm">Admin Console</span>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm">search</span>
+<input class="bg-surface-container-high/50 border-none rounded-full pl-10 pr-4 py-1.5 text-xs w-64 focus:ring-1 focus:ring-primary/20" placeholder="Search keys..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-[#154212] cursor-pointer hover:bg-stone-100/50 p-2 rounded-full transition-all" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-[#154212] cursor-pointer hover:bg-stone-100/50 p-2 rounded-full transition-all" data-icon="help">help</span>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-stone-200 ring-2 ring-primary/10">
+<img alt="Administrator Profile" data-alt="Professional headshot of an administrator for a sports software platform, clean studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0u5aA6HKyNA3kPeJ7ejOOSwUmv4TWWljvayJqZuusddDQC8p7ODI5sNY2iz9-TxmkdH7m17U6DXugIpzuGcYNJ7AvKvVjWb_HnJiSBWKR9dWTcRy1QZQAx07QKWLo1nDHEY0Di5sDn-Q---Ha_6cCqAGFYy4RL3Jy1nLA1cyhpC3SlLr4rmL0fQrtZh7rj7gWl1dJUW-n8Gmd5umDi5qDAmm5h-L9UudpN5WKMnV7PRQeOGqvbQJMkGCsW8h9PdRw9ifZObBCrCVU"/>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="mt-8 mb-12">
+<div class="flex items-end justify-between">
+<div>
+<span class="font-mono text-[10px] text-primary uppercase tracking-[0.2em] mb-2 block opacity-60">System / Configuration</span>
+<h2 class="text-4xl font-semibold tracking-tight text-primary">Global Localization</h2>
+</div>
+<div class="flex gap-3">
+<button class="bg-secondary-fixed text-on-secondary-fixed px-6 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest flex items-center gap-2 hover:shadow-lg transition-all active:scale-95 shadow-secondary/10">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        AI Translate All
+                    </button>
+</div>
+</div>
+</section>
+<!-- Bento Grid Heritage Style -->
+<div class="bento-grid">
+<!-- Language Selection Card -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-[24px] border border-primary/5">
+<h3 class="font-mono text-[10px] text-primary uppercase tracking-widest mb-6 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                    Default Language
+                </h3>
+<div class="relative group">
+<select class="w-full bg-surface-container-low border-none rounded-xl px-4 py-4 font-['DM_Sans'] text-on-surface appearance-none focus:ring-2 focus:ring-primary/10 transition-all cursor-pointer">
+<option>English (US)</option>
+<option>English (UK)</option>
+<option>Deutsch</option>
+<option>Français</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary/40 group-hover:text-primary transition-colors">expand_more</span>
+</div>
+<p class="mt-4 text-xs text-on-surface-variant leading-relaxed">
+                    This language will be used as the source for all AI-assisted translations and fallback text.
+                </p>
+</div>
+<!-- Supported Languages List -->
+<div class="col-span-8 bg-surface-container-lowest p-8 rounded-[24px] border border-primary/5">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-mono text-[10px] text-primary uppercase tracking-widest flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                        Active Locales
+                    </h3>
+<button class="text-[10px] font-bold uppercase tracking-widest text-primary hover:bg-primary/5 px-3 py-1 rounded-full transition-colors">
+                        Add New Locale
+                    </button>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<!-- Spanish -->
+<div class="bg-surface-container-low p-4 rounded-xl flex items-center justify-between group hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-sm text-lg">🇪🇸</div>
+<div>
+<p class="text-sm font-semibold">Spanish</p>
+<p class="text-[10px] text-on-surface-variant font-mono">es-ES</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary/20 group-hover:text-primary cursor-pointer transition-colors" data-icon="more_vert">more_vert</span>
+</div>
+<!-- Norwegian -->
+<div class="bg-surface-container-low p-4 rounded-xl flex items-center justify-between group hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-sm text-lg">🇳🇴</div>
+<div>
+<p class="text-sm font-semibold">Norwegian</p>
+<p class="text-[10px] text-on-surface-variant font-mono">nb-NO</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary/20 group-hover:text-primary cursor-pointer transition-colors" data-icon="more_vert">more_vert</span>
+</div>
+<!-- Korean -->
+<div class="bg-surface-container-low p-4 rounded-xl flex items-center justify-between group hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-sm text-lg">🇰🇷</div>
+<div>
+<p class="text-sm font-semibold">Korean</p>
+<p class="text-[10px] text-on-surface-variant font-mono">ko-KR</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary/20 group-hover:text-primary cursor-pointer transition-colors" data-icon="more_vert">more_vert</span>
+</div>
+</div>
+</div>
+<!-- Translation Table -->
+<div class="col-span-9 bg-surface-container-lowest rounded-[24px] border border-primary/5 overflow-hidden flex flex-col">
+<div class="p-8 pb-4 border-b border-primary/5 flex items-center justify-between">
+<h3 class="font-mono text-[10px] text-primary uppercase tracking-widest flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                        Translation Dictionary
+                    </h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-2 text-[10px] font-mono text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+                            84% Translated
+                        </div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="py-4 px-8 font-mono text-[10px] text-on-surface-variant uppercase tracking-widest border-b border-primary/5">Key ID</th>
+<th class="py-4 px-8 font-mono text-[10px] text-on-surface-variant uppercase tracking-widest border-b border-primary/5">Source (EN)</th>
+<th class="py-4 px-8 font-mono text-[10px] text-on-surface-variant uppercase tracking-widest border-b border-primary/5">Translation</th>
+<th class="py-4 px-8 border-b border-primary/5"></th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-8 font-mono text-xs text-primary/60">auth.login.title</td>
+<td class="py-4 px-8">Welcome Back</td>
+<td class="py-4 px-8">
+<input class="bg-transparent border-none p-0 focus:ring-0 w-full font-medium italic" type="text" value="Bienvenido de nuevo"/>
+</td>
+<td class="py-4 px-8 text-right">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-8 font-mono text-xs text-primary/60">dashboard.stat.revenue</td>
+<td class="py-4 px-8">Annual Revenue</td>
+<td class="py-4 px-8">
+<input class="bg-transparent border-none p-0 focus:ring-0 w-full italic text-stone-400" placeholder="Pending translation..." type="text"/>
+</td>
+<td class="py-4 px-8 text-right">
+<span class="material-symbols-outlined text-stone-200 text-sm">pending</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-8 font-mono text-xs text-primary/60">nav.settings.general</td>
+<td class="py-4 px-8">General Settings</td>
+<td class="py-4 px-8">
+<input class="bg-transparent border-none p-0 focus:ring-0 w-full font-medium italic" type="text" value="Ajustes generales"/>
+</td>
+<td class="py-4 px-8 text-right">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-8 font-mono text-xs text-primary/60">error.404.message</td>
+<td class="py-4 px-8">Page Not Found</td>
+<td class="py-4 px-8">
+<input class="bg-transparent border-none p-0 focus:ring-0 w-full font-medium italic" type="text" value="Página no encontrada"/>
+</td>
+<td class="py-4 px-8 text-right">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 bg-surface-container-low/30 flex justify-center">
+<button class="text-[10px] font-bold uppercase tracking-widest text-primary/60 hover:text-primary transition-colors">View All 1,248 Keys</button>
+</div>
+</div>
+<!-- Import/Export PO Files -->
+<div class="col-span-3 flex flex-col gap-6">
+<!-- Data Sync Card -->
+<div class="bg-surface-container-lowest p-8 rounded-[24px] border border-primary/5 flex-1 relative overflow-hidden group">
+<div class="absolute -right-12 -top-12 w-32 h-32 bg-secondary/5 rounded-full blur-2xl group-hover:bg-secondary/10 transition-all duration-500"></div>
+<h3 class="font-mono text-[10px] text-primary uppercase tracking-widest mb-8 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                        External Sync
+                    </h3>
+<div class="space-y-6 relative z-10">
+<div class="p-6 bg-surface-container-low rounded-2xl border-2 border-dashed border-primary/10 hover:border-secondary/40 transition-colors cursor-pointer text-center group/drop">
+<span class="material-symbols-outlined text-3xl text-primary/20 mb-3 block group-hover/drop:text-secondary transition-colors" data-icon="upload_file">upload_file</span>
+<p class="text-xs font-bold uppercase tracking-wider mb-1">Import .PO</p>
+<p class="text-[10px] text-on-surface-variant leading-tight">Drag and drop localized catalog files</p>
+</div>
+<button class="w-full py-4 px-6 bg-primary text-white rounded-2xl flex items-center justify-between group hover:shadow-xl hover:shadow-primary/10 transition-all active:scale-95">
+<div class="text-left">
+<p class="text-xs font-bold uppercase tracking-widest">Export PO</p>
+<p class="text-[10px] text-emerald-100/50">Current Locale: es-ES</p>
+</div>
+<span class="material-symbols-outlined text-secondary">download</span>
+</button>
+</div>
+<div class="mt-8 pt-8 border-t border-primary/5">
+<div class="flex items-center gap-3 text-xs opacity-60">
+<span class="material-symbols-outlined text-sm">history</span>
+<span class="font-mono text-[9px]">Last export: 2 hours ago</span>
+</div>
+</div>
+</div>
+<!-- Technical Note -->
+<div class="bg-primary-container p-6 rounded-[24px] text-on-primary-container">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<h4 class="font-bold text-[10px] uppercase tracking-widest">Dev Helper</h4>
+</div>
+<p class="text-xs leading-relaxed opacity-80 mb-4">
+                        Localization keys are fetched via our GraphQL API at runtime. Use the following hook in your frontend components:
+                    </p>
+<code class="block bg-black/20 p-3 rounded-lg font-mono text-[10px] text-secondary-container">
+                        const { t } = useTranslate();
+                    </code>
+</div>
+</div>
+</div>
+<!-- Footer Accent Section -->
+<footer class="mt-12 flex items-center justify-between opacity-40">
+<p class="font-mono text-[9px] uppercase tracking-[0.3em]">AK Sports OS // Localization Engine v2.4.0</p>
+<div class="flex gap-8">
+<span class="font-mono text-[9px] uppercase tracking-widest">Server: AWS-US-EAST-1</span>
+<span class="font-mono text-[9px] uppercase tracking-widest">Status: Operational</span>
+</div>
+</footer>
+</main>
+</body></html>

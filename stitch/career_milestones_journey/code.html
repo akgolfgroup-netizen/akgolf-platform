@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#3b6934",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "surface-container-low": "#f7f3ea",
+                    "on-secondary-fixed": "#191e00",
+                    "on-surface-variant": "#42493e",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#dddad1",
+                    "on-surface": "#1c1c16",
+                    "inverse-on-surface": "#f4f0e7",
+                    "primary-fixed-dim": "#a1d494",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed": "#002201",
+                    "tertiary-container": "#2d5a27",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#31302b",
+                    "inverse-primary": "#a1d494",
+                    "primary-container": "#2d5a27",
+                    "surface-container-highest": "#e6e2d9",
+                    "outline-variant": "#c2c9bb",
+                    "on-tertiary-container": "#9dd090",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#23501e",
+                    "on-primary-container": "#9dd090",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "surface-variant": "#e6e2d9",
+                    "surface-bright": "#fdf9f0",
+                    "on-background": "#1c1c16",
+                    "background": "#fdf9f0",
+                    "on-secondary-container": "#5b6900",
+                    "surface": "#fdf9f0",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#bcf0ae",
+                    "secondary": "#576500",
+                    "surface-container": "#f1eee5",
+                    "primary-fixed": "#bcf0ae",
+                    "outline": "#72796e",
+                    "on-primary-fixed": "#002201",
+                    "surface-container-high": "#ece8df",
+                    "secondary-fixed": "#d2f000",
+                    "primary": "#154212",
+                    "tertiary": "#154212",
+                    "secondary-fixed-dim": "#b8d300",
+                    "secondary-container": "#d0ed00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-72 left-0 top-0 fixed bg-[#154212] flex flex-col py-8 z-50 shadow-[4px_0_16px_rgba(45,90,39,0.06)]">
+<div class="px-8 mb-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#d2f000] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#154212]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div>
+<h1 class="text-[#fdf9f0] font-semibold text-lg leading-none">AK Sports OS</h1>
+<p class="text-[#fdf9f0]/60 text-[10px] uppercase tracking-widest mt-1">Elite Performance</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-0 overflow-y-auto">
+<!-- Achievements Tab - Active -->
+<a class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 my-1 flex items-center px-6 py-3 font-bold transition-transform active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="military_tech" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<span class="font-medium uppercase tracking-widest text-[11px]">Achievements</span>
+</a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="leaderboard">leaderboard</span>
+<span class="font-medium uppercase tracking-widest text-[11px]">Leaderboard</span>
+</a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="emoji_events">emoji_events</span>
+<span class="font-medium uppercase tracking-widest text-[11px]">Challenges</span>
+</a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="local_fire_department">local_fire_department</span>
+<span class="font-medium uppercase tracking-widest text-[11px]">Streaks</span>
+</a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="shopping_basket">shopping_basket</span>
+<span class="font-medium uppercase tracking-widest text-[11px]">Points Shop</span>
+</a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="sports_score">sports_score</span>
+<span class="font-medium uppercase tracking-widest text-[11px]">Tournaments</span>
+</a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="group">group</span>
+<span class="font-medium uppercase tracking-widest text-[11px]">Social Feed</span>
+</a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="confirmation_number">confirmation_number</span>
+<span class="font-medium uppercase tracking-widest text-[11px]">Season Pass</span>
+</a>
+</nav>
+<div class="mt-auto px-8 py-6 space-y-4">
+<button class="w-full bg-[#d2f000] text-[#154212] py-3 rounded-xl font-bold text-[11px] uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all">
+                    View Milestones
+                </button>
+<div class="pt-6 space-y-4">
+<a class="text-[#fdf9f0]/50 flex items-center gap-3 text-[11px] uppercase tracking-widest hover:text-[#fdf9f0] transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+                        Settings
+                    </a>
+<a class="text-[#fdf9f0]/50 flex items-center gap-3 text-[11px] uppercase tracking-widest hover:text-[#fdf9f0] transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help_outline">help_outline</span>
+                        Support
+                    </a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 ml-72">
+<!-- TopNavBar -->
+<header class="bg-[#fdf9f0] sticky top-0 z-40 flex justify-between items-center h-16 px-8 w-full border-b border-[#f7f3ea]">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-[#154212]">Athlete Journey</span>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#154212]/40">search</span>
+<input class="bg-[#f7f3ea] border-none rounded-full py-1.5 pl-10 pr-4 text-sm w-64 focus:ring-2 focus:ring-[#d2f000] transition-all" placeholder="Search achievements..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#154212]/60 hover:bg-[#f7f3ea] rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-[#154212]/60 hover:bg-[#f7f3ea] rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="workspace_premium">workspace_premium</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-[#f7f3ea]"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right">
+<p class="text-xs font-bold text-[#154212]">Alex Knight</p>
+<p class="text-[10px] text-[#154212]/50 font-mono">HCP 4.2</p>
+</div>
+<img alt="Athlete Profile" class="w-10 h-10 rounded-full border-2 border-transparent group-hover:border-[#d2f000] transition-all object-cover" data-alt="professional portrait of a confident athlete in sporting gear with natural lighting and soft background focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqugus6yYHYaOonf89bqwoTW7jHH76noQg_JeTX0I4C9-WuwOSW4z_CEjpt8gqLb9BJfnMYoM7mWDkMkCOfAgIR1nSB0gUV8H6raxremozKude8uGcmABGBSTcp3z-01mrSUwQBl4CS_b4-vSz4x41bc3qD5fgK15XhzSu3DZ0_tq0vGxbJZx7j9VbveD3VLudhcikXYt7dnvhseaC2nxfm5PiBTBTzDFg2eG2cto_zbGcOodoYCnZkXFGfdrbSM0b8JHKnLR2HXN2"/>
+</div>
+</div>
+</header>
+<div class="p-10 max-w-7xl mx-auto">
+<!-- Hero Section -->
+<div class="mb-16 flex justify-between items-end">
+<div>
+<p class="font-mono text-xs uppercase tracking-[0.2em] text-[#154212]/60 mb-2">The Legacy Board</p>
+<h2 class="text-5xl font-extrabold tracking-tighter text-[#154212]">Career Milestones</h2>
+</div>
+<button class="bg-[#d2f000] text-[#154212] px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-xs flex items-center gap-3 hover:scale-[1.03] transition-transform active:scale-95 shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">ios_share</span>
+                        Share Journey
+                    </button>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Vertical Timeline Column -->
+<div class="col-span-8 relative">
+<!-- Connecting Line -->
+<div class="absolute left-[39px] top-4 bottom-0 w-[2px] bg-gradient-to-b from-[#d2f000] via-[#154212]/20 to-transparent"></div>
+<div class="space-y-20">
+<!-- Milestone 1 -->
+<div class="relative pl-24 flex group">
+<div class="absolute left-0 top-0 w-20 h-20 bg-white border-2 border-[#d2f000] rounded-2xl flex items-center justify-center z-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[#154212] text-3xl" style="font-variation-settings: 'FILL' 1;">golf_course</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-4 mb-2">
+<span class="font-mono text-xs text-[#154212]/40">MAR 2018</span>
+<div class="h-[1px] flex-1 bg-[#f7f3ea]"></div>
+<span class="bg-[#154212]/5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#154212]">Career Launch</span>
+</div>
+<h3 class="text-2xl font-bold text-[#154212] mb-3">The First Round</h3>
+<p class="text-[#42493e] leading-relaxed max-w-xl">Where it all began. Pine Valley course, rainy morning, 18 holes of pure discovery. Finished with a 112 score but a lifetime of motivation.</p>
+<div class="mt-6 flex gap-4 overflow-x-auto pb-4">
+<img class="w-48 h-32 rounded-xl object-cover hover:brightness-110 cursor-pointer transition-all" data-alt="misty morning at a luxury golf course with green fairways and pine trees in soft light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDK_XsTA4RVIuld8CNDAn4jdA3bBCSO_X_K09zCWWBYQhacLyfiIfxnpAbbLEbKZG-yBXvnkYYElT_85QWgz4mYGt1jVFrJq_zgDMujuJ1YtH8bcFlU6tHWHlJgwaTpIRwkgFFSJ38fmmrJJiWfP6UHONcHQlraE5vuIlA_GsgWDPCVLTwUiist9hg_VS1fXDbuMNnpcYGMg73PxONPTbPFm1sP1ug8bVIAMcfo7iSgYtvq64VvGGJF88AXkKDvC6OVTFJsTej4UvCB"/>
+<img class="w-48 h-32 rounded-xl object-cover hover:brightness-110 cursor-pointer transition-all" data-alt="close up of a vintage leather golf bag and clubs on a grassy course with soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoQ8S-SwY3OztZFVVBCt3F7-oGc-uGVgQZYhRzF-JjAL5bvvqXBKKrqtSOzcf0h2QqWgz_JYaUXcE5U9yrFMllre9cCvMf7afBZM6t-5LqNLPEZn9q8sIh4sgIx4tOtGsoazEI_yHUxhfIvkPgGZ0i9KJTkrK3CGifJ57NhQz9u564wuhaQIEZ_PnKnXIwmCz81XPe_khKMpe3Z4NQbbVhKCNPzV22X95uNovOMsgpd1_JLUmuQrdiwbxJDH9wA8lRAIeC-EZv0ICE"/>
+</div>
+</div>
+</div>
+<!-- Milestone 2 -->
+<div class="relative pl-24 flex group">
+<div class="absolute left-0 top-0 w-20 h-20 bg-[#154212] rounded-2xl flex items-center justify-center z-10 group-hover:scale-110 transition-transform shadow-lg shadow-[#154212]/20">
+<span class="material-symbols-outlined text-[#d2f000] text-3xl">school</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-4 mb-2">
+<span class="font-mono text-xs text-[#154212]/40">AUG 2019</span>
+<div class="h-[1px] flex-1 bg-[#f7f3ea]"></div>
+<span class="bg-[#d2f000]/20 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#154212]">Professional Coaching</span>
+</div>
+<h3 class="text-2xl font-bold text-[#154212] mb-3">First Professional Lesson</h3>
+<p class="text-[#42493e] leading-relaxed max-w-xl">Mastered the grip and swing plane with Coach Miller. Total biomechanical reset that dropped 10 strokes from the average handicap within two months.</p>
+<div class="mt-4 p-4 bg-white rounded-xl border border-[#f7f3ea] inline-flex items-center gap-4">
+<div class="p-2 bg-[#d2f000]/10 rounded-lg">
+<span class="material-symbols-outlined text-[#154212]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-widest font-bold text-[#154212]/40">Achievement Unlocked</p>
+<p class="text-sm font-bold text-[#154212]">Swing Mechanic Level 1</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Milestone 3 -->
+<div class="relative pl-24 flex group">
+<div class="absolute left-0 top-0 w-20 h-20 bg-white border-2 border-[#154212]/10 rounded-2xl flex items-center justify-center z-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[#154212] text-3xl" style="font-variation-settings: 'FILL' 1;">trending_down</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-4 mb-2">
+<span class="font-mono text-xs text-[#154212]/40">JAN 2021</span>
+<div class="h-[1px] flex-1 bg-[#f7f3ea]"></div>
+<span class="bg-[#154212] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#d2f000]">Elite Milestone</span>
+</div>
+<h3 class="text-2xl font-bold text-[#154212] mb-3">Single Digit Handicap</h3>
+<p class="text-[#42493e] leading-relaxed max-w-xl">Breaking the barrier. Reached a 9.4 HCP after the Summer Invitational. A major psychological turning point in the competitive journey.</p>
+<div class="mt-6 grid grid-cols-2 gap-4">
+<div class="bg-white p-6 rounded-2xl border border-[#f7f3ea]">
+<p class="text-[10px] uppercase tracking-widest font-bold text-[#154212]/40 mb-1">Before</p>
+<p class="text-3xl font-extrabold text-[#154212] tracking-tighter">14.2</p>
+</div>
+<div class="bg-[#154212] p-6 rounded-2xl shadow-xl shadow-[#154212]/10">
+<p class="text-[10px] uppercase tracking-widest font-bold text-[#d2f000]/60 mb-1">After</p>
+<p class="text-3xl font-extrabold text-[#d2f000] tracking-tighter">9.4</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Milestone 4 -->
+<div class="relative pl-24 flex group">
+<div class="absolute left-0 top-0 w-20 h-20 bg-[#d2f000] rounded-2xl flex items-center justify-center z-10 group-hover:scale-110 transition-transform shadow-lg shadow-[#d2f000]/20">
+<span class="material-symbols-outlined text-[#154212] text-4xl" style="font-variation-settings: 'FILL' 1;">trophy</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-4 mb-2">
+<span class="font-mono text-xs text-[#154212]/40">DEC 2023</span>
+<div class="h-[1px] flex-1 bg-[#f7f3ea]"></div>
+<span class="bg-[#d2f000] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#154212]">Master Status</span>
+</div>
+<h3 class="text-2xl font-bold text-[#154212] mb-3">Major Achievements: Club Champion</h3>
+<p class="text-[#42493e] leading-relaxed max-w-xl">Secured the annual Club Championship in a final-round playoff. 72 holes of relentless focus. The ultimate validation of five years of training.</p>
+<div class="mt-8">
+<img class="w-full h-64 rounded-3xl object-cover shadow-2xl" data-alt="celebratory athlete holding a gold trophy on a sun-drenched sporting field with bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGA9CL9QaV9IDGwM6sPBQQuPz3wDp-FbZMSTfBbnHZE3DJS-19bzxCAGytKK3Fukd3AOvNthG6l2xd_moobA948Z2rtNqCv-dfSJzmDJRfeiHqygVR2BJaWvvNsmjzIwsrlwSbCisT9WlcEhGMdw9uRxv5xTzpzRZX03BizeiOOYsybQOJtujwNhymB63BTa-HYMpIwuKtg4tzBrJixSMqRPJySgFWdQgxT9h-OsQfVgmoedWnsfewO_EixdYCRXecr4Vw-_Oa31DY"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Panels (Bento) -->
+<div class="col-span-4 space-y-8">
+<!-- Stats Card -->
+<div class="bg-white p-8 rounded-[24px] border border-[#f7f3ea] shadow-sm">
+<h4 class="text-[11px] uppercase tracking-widest font-bold text-[#154212] mb-6">Journey Velocity</h4>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-sm font-bold text-[#154212] mb-2">
+<span>Training Hours</span>
+<span class="font-mono">1,482</span>
+</div>
+<div class="h-2 w-full bg-[#f7f3ea] rounded-full overflow-hidden">
+<div class="h-full bg-[#154212] w-[85%] rounded-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm font-bold text-[#154212] mb-2">
+<span>Tournaments Played</span>
+<span class="font-mono">24</span>
+</div>
+<div class="h-2 w-full bg-[#f7f3ea] rounded-full overflow-hidden">
+<div class="h-full bg-[#154212] w-[60%] rounded-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm font-bold text-[#154212] mb-2">
+<span>Wins/Top 10s</span>
+<span class="font-mono">8</span>
+</div>
+<div class="h-2 w-full bg-[#f7f3ea] rounded-full overflow-hidden">
+<div class="h-full bg-[#d2f000] w-[45%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Gallery Card -->
+<div class="bg-white p-8 rounded-[24px] border border-[#f7f3ea] shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h4 class="text-[11px] uppercase tracking-widest font-bold text-[#154212]">Memory Gallery</h4>
+<button class="text-[10px] font-bold text-[#154212]/50 hover:text-[#154212] uppercase tracking-widest transition-colors">View All</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="aspect-square rounded-xl overflow-hidden bg-[#f7f3ea] group cursor-pointer">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform" data-alt="close up of detailed high quality golf ball on an orange tee at sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoeBdyQpC0RUEnJEdCLieFNt2nMNV7-5U2HfyKkCXi3PoU10AHxxgfm5KgXRejC_3wQzVOSnSYir0TrXtJGl9pBH2SsOcELE4rDqWW31frHx2BkX4zWfEyKWjv9i8qPFv1YpkdsVAObIjFjhnOVOjYc4CH6yIl4v4NNYdq6UQgnlAMitKSPcj-1081bbDp-oYsNHgte3axjRObESq3YQ34IS0Iq72bQ_j8kFV-joZTglGiPrT7-OY_aCrf2YaouuRi2kNADorEi9cm"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden bg-[#f7f3ea] group cursor-pointer">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform" data-alt="landscape view of lush modern sports training facility with bright natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdWbQxPJVu0HoR8BRhcogmbn4gmJJlBWmG5SUwSi3dkiSIYTA_kDBsj-JAEL_HkwuSUqYPxL8COegAwqjB0HWmDuoqhmQiODwRhm0Uk2atJ97RvZuGKaX6u0wsf_uukBykcpQ6OYHUUEJTBnutxBc90Y-ru3tiAar8bZZKA0GfB-G-K0lfkRaMCccoYDaFPQAhQn5if9J9IMxcVyAsJYATP2cUWExVRsvi20Mhz7bwgq9eOe9WOttjZ4mhI3YkAb1o1xGNTVJ9AxKV"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden bg-[#f7f3ea] group cursor-pointer">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform" data-alt="athletic gear layout including gloves and shoes on high end textured surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa_g-lQiMB2VeiqwX2-V3BJm0VDTiqVgC8blo0GrnU5dWXCttA6D-FZvWLDtfaop-3wrXQhQhIYiVU3sfgFLAPtpOTZfHBlc9xoggRaua7-fzVHfCjtE7uF5cTWrL5n1GuWPmE-Zfle5fXvBMUQCUrxwk9_PkL7TOGnGkuyxCovu4fSz7cPM-u-yBYv2wVlzPy6mJ4PuHlWYAJ6zGHmNHyErz4ZNXTE4W2JIl8kj3SlQ9Op_YN1CnhoIXqquJUa40RFZSys77Da-kY"/>
+</div>
+<div class="aspect-square rounded-xl bg-[#154212]/5 flex items-center justify-center border-2 border-dashed border-[#154212]/10 hover:border-[#d2f000] transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-[#154212]/40 group-hover:text-[#154212]">add_a_photo</span>
+</div>
+</div>
+</div>
+<!-- Coaches Quote -->
+<div class="bg-[#154212] p-8 rounded-[24px] text-[#fdf9f0] relative overflow-hidden">
+<span class="material-symbols-outlined absolute -right-4 -top-4 text-9xl opacity-5 text-[#d2f000]">format_quote</span>
+<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#d2f000] mb-4">Coach's Note</h4>
+<p class="text-lg italic font-medium leading-relaxed mb-6">"Alex has demonstrated a rare level of commitment to the technical foundations of the game. The transition to single-digit HCP was inevitable."</p>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-[#d2f000] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#154212] text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest">Coach Miller</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Section -->
+<footer class="mt-20 px-10 py-16 bg-[#f7f3ea]">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+<div class="max-w-xs">
+<h3 class="text-[#154212] font-bold text-xl tracking-tighter mb-4">AK Sports OS</h3>
+<p class="text-sm text-[#42493e]">The professional standard for athletic data, journey tracking, and performance optimization.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+<div>
+<h5 class="text-[10px] uppercase tracking-widest font-bold text-[#154212] mb-6">Ecosystem</h5>
+<ul class="space-y-3 text-sm text-[#42493e]">
+<li><a class="hover:text-[#154212] transition-colors" href="#">Performance Lab</a></li>
+<li><a class="hover:text-[#154212] transition-colors" href="#">Biomechanics</a></li>
+<li><a class="hover:text-[#154212] transition-colors" href="#">Nutrition Sync</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-[10px] uppercase tracking-widest font-bold text-[#154212] mb-6">Company</h5>
+<ul class="space-y-3 text-sm text-[#42493e]">
+<li><a class="hover:text-[#154212] transition-colors" href="#">Privacy</a></li>
+<li><a class="hover:text-[#154212] transition-colors" href="#">Terms</a></li>
+<li><a class="hover:text-[#154212] transition-colors" href="#">Support</a></li>
+</ul>
+</div>
+<div class="col-span-2 md:col-span-1">
+<h5 class="text-[10px] uppercase tracking-widest font-bold text-[#154212] mb-6">Newsletter</h5>
+<div class="flex gap-2">
+<input class="bg-white border-none rounded-lg py-2 px-4 text-xs flex-1" placeholder="Email address" type="email"/>
+<button class="bg-[#154212] text-white px-4 py-2 rounded-lg">
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-[#e6e2d9] flex justify-between items-center text-[10px] font-mono text-[#154212]/40">
+<p>© 2024 AK SPORTS OPERATING SYSTEM. ALL RIGHTS RESERVED.</p>
+<p>VER. 4.2.0-STABLE</p>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

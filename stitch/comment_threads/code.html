@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AthletaCore - Discussion Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#fdf9f0",
+                      "secondary-fixed-dim": "#b8d300",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed-dim": "#a1d494",
+                      "surface-dim": "#dddad1",
+                      "on-tertiary-fixed": "#002201",
+                      "secondary": "#576500",
+                      "surface-bright": "#fdf9f0",
+                      "surface-tint": "#3b6934",
+                      "tertiary": "#154212",
+                      "on-primary-fixed": "#002201",
+                      "inverse-primary": "#a1d494",
+                      "primary-fixed": "#bcf0ae",
+                      "on-primary-container": "#9dd090",
+                      "on-error-container": "#93000a",
+                      "background": "#fdf9f0",
+                      "tertiary-fixed": "#bcf0ae",
+                      "outline": "#72796e",
+                      "on-secondary-container": "#5b6900",
+                      "on-tertiary-fixed-variant": "#23501e",
+                      "surface-container": "#f1eee5",
+                      "surface-container-low": "#f7f3ea",
+                      "error": "#ba1a1a",
+                      "primary": "#154212",
+                      "tertiary-container": "#2d5a27",
+                      "secondary-container": "#d0ed00",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#23501e",
+                      "on-background": "#1c1c16",
+                      "primary-container": "#2d5a27",
+                      "on-tertiary-container": "#9dd090",
+                      "outline-variant": "#c2c9bb",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#414c00",
+                      "on-surface": "#1c1c16",
+                      "on-secondary": "#ffffff",
+                      "secondary-fixed": "#d2f000",
+                      "on-secondary-fixed": "#191e00",
+                      "inverse-surface": "#31302b",
+                      "surface-variant": "#e6e2d9",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#a1d494",
+                      "surface-container-high": "#ece8df",
+                      "inverse-on-surface": "#f4f0e7",
+                      "surface-container-highest": "#e6e2d9",
+                      "on-error": "#ffffff",
+                      "on-surface-variant": "#42493e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["DM Sans", "sans-serif"],
+                      "body": ["DM Sans", "sans-serif"],
+                      "label": ["DM Sans", "sans-serif"],
+                      "mono": ["JetBrains Mono", "monospace"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+        .glass-panel { backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.7); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Sidebar Navigation (Forest Green) -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-primary text-secondary-fixed flex flex-col py-6 z-50 shadow-[4px_0_16px_rgba(45,90,39,0.06)] overflow-hidden">
+<div class="px-6 mb-10">
+<h1 class="text-white font-bold text-xl tracking-tighter uppercase">Elite Sports Mgmt</h1>
+<p class="text-white/60 text-[10px] tracking-widest font-mono uppercase">Premium Tier</p>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="bg-secondary-container text-primary rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all duration-150 translate-x-1">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label uppercase text-[11px] tracking-widest font-medium">Conversations</span>
+</div>
+<div class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-label uppercase text-[11px] tracking-widest font-medium">Campaigns</span>
+</div>
+<div class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all">
+<span class="material-symbols-outlined" data-icon="videocam">videocam</span>
+<span class="font-label uppercase text-[11px] tracking-widest font-medium">Video Hub</span>
+</div>
+<div class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-label uppercase text-[11px] tracking-widest font-medium">Announcements</span>
+</div>
+<div class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all">
+<span class="material-symbols-outlined" data-icon="poll">poll</span>
+<span class="font-label uppercase text-[11px] tracking-widest font-medium">Surveys</span>
+</div>
+<div class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label uppercase text-[11px] tracking-widest font-medium">Reports</span>
+</div>
+</nav>
+<div class="mt-auto px-2 space-y-1">
+<button class="w-full bg-secondary-fixed text-on-secondary-fixed font-bold py-3 rounded-xl mb-6 flex items-center justify-center gap-2 uppercase text-[11px] tracking-widest">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                New Message
+            </button>
+<div class="text-white/70 hover:text-white hover:bg-white/10 px-4 py-3 flex items-center gap-3 transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label uppercase text-[11px] tracking-widest font-medium">Support</span>
+</div>
+<div class="text-white/70 hover:text-white hover:bg-white/10 px-4 py-3 flex items-center gap-3 transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="archive">archive</span>
+<span class="font-label uppercase text-[11px] tracking-widest font-medium">Archive</span>
+</div>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 left-64 bg-[#fdf9f0] backdrop-blur-md flex justify-between items-center px-8 py-4 z-40">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-primary uppercase font-['DM_Sans']">AthletaCore</span>
+<div class="hidden lg:flex gap-6 items-center">
+<a class="text-primary border-b-2 border-secondary-fixed pb-1 font-semibold text-sm tracking-tight" href="#">Inbox</a>
+<a class="text-primary/60 hover:text-primary transition-colors text-sm tracking-tight" href="#">Marketing</a>
+<a class="text-primary/60 hover:text-primary transition-colors text-sm tracking-tight" href="#">Channels</a>
+<a class="text-primary/60 hover:text-primary transition-colors text-sm tracking-tight" href="#">Analytics</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-low rounded-full cursor-pointer" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary-fixed rounded-full border border-surface"></span>
+</div>
+<span class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-low rounded-full cursor-pointer" data-icon="settings">settings</span>
+<img alt="User profile" class="w-8 h-8 rounded-full object-cover" data-alt="professional portrait of a sports executive in a minimalist studio setting with soft warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV9PkwfeUFOXCq7lXK5ljwgW0bIZjtABDqU35RDJnW6xV1YUCNwONeA5WG0niEuB4V9-Om3RC7I1SUPlqmfLKEEEYK0hbFHxLFFbhmIgEHWpnh7TuDegvjWs-a-kBYoneaRJJdwpdo-8tGPJlfji-SPXhaElyMS7LiP3KA7VsVpaI4oThbKjrTMhXTES5CtRIL5jJmdxxrETfrTn8U9B712YEwf_XQrQ-R5bhblojNfy073EVqIFZB85NAL1mzXwnTECG5MkvSqiGD"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 px-10 pb-12">
+<div class="max-w-5xl mx-auto">
+<!-- Thread Header -->
+<section class="mb-12">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider">Case #882-Alpha</span>
+<span class="text-on-surface/40 font-mono text-[10px]">REVISED: 12 OCT 2023</span>
+</div>
+<h2 class="text-4xl font-semibold tracking-tight text-primary mb-6 leading-tight">Q4 Performance Optimization Strategies: Regional Talent Scouting Analysis</h2>
+<div class="flex items-center gap-4 text-on-surface/60 text-sm border-b border-outline-variant/20 pb-8">
+<div class="flex items-center gap-2">
+<img alt="Author" class="w-6 h-6 rounded-full grayscale" data-alt="close up headshot of a distinguished male sports analyst with grey hair and glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtF0IZMpQCtPzlFRu3ShAbHynHLMv4ExWZlIaGOn_8t998-YMXVd1WiAt9WAJ7pz9fkTbT5lJbKz9vUjLfwXOiQ0pBFLpshNzH2zk18rvlICZyHKYRtdx_NOWQcBAaTSfUf6hge7pVkXrqY-mvAvahj4sJPKkh6rXE_AYvY3rb98N7TqeZ6qXdcPmUa6tDTs-ad2ChI0erPGFxMAyJVRFD2fyXvSWTF8jZSKugEAesBmnW7NLbTHMP6SkaEtHDUT1nQlrH1gKgVmVQ"/>
+<span class="font-medium text-primary">Marcus Vancore</span>
+</div>
+<span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+<span class="font-mono">42 Comments</span>
+<span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="share">share</span>
+<span>Share Thread</span>
+</div>
+</div>
+</section>
+<!-- Discussion Interface Bento Grid -->
+<div class="bento-grid">
+<!-- Main Comment Thread (Span 8) -->
+<div class="col-span-8 space-y-8">
+<!-- Input Section -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-[4px_0_16px_rgba(45,90,39,0.02)]">
+<div class="flex items-start gap-4">
+<img alt="User" class="w-10 h-10 rounded-xl object-cover" data-alt="professional business profile photo of a young woman with a focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4l4mO6JZEGlp8JLrBhPAS_4zsofeinFb-6fs2GlZKVmVTbFCbQ4mdZSfSMmrbKp2P6rhqm0VoLk7hkwzIzj9wV07Z-eZoHE46kVnVjgJqvoQHNvXq_czXGCC-qz0bGY2sNdvyfGDGgb7DJlwUhxaOwvIA0CloW6BG0uLgL05i28Evj72oO8vH4A_jBIxhuD2uuGt5zmhXyg9-6DOEdz8_1huqCWoozI9-WabTbf3-6pUGZvI-u9IhPy7zhpnwO92DtKPL7BS4MNcj"/>
+<div class="flex-1">
+<textarea class="w-full bg-surface-container-low border-none rounded-xl p-4 focus:ring-1 focus:ring-primary/20 text-sm min-h-[100px] resize-none font-body" placeholder="Add to the discussion... use @ to mention peers"></textarea>
+<div class="flex justify-between items-center mt-4">
+<div class="flex gap-2">
+<button class="p-2 text-primary/60 hover:bg-surface-container rounded-lg transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="attach_file">attach_file</span>
+</button>
+<button class="p-2 text-primary/60 hover:bg-surface-container rounded-lg transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="format_bold">format_bold</span>
+</button>
+<button class="p-2 text-primary/60 hover:bg-surface-container rounded-lg transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="alternate_email">alternate_email</span>
+</button>
+</div>
+<button class="bg-primary text-white px-6 py-2 rounded-xl font-label text-[11px] font-bold uppercase tracking-widest hover:bg-primary-container transition-all">
+                                        Post Reply
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="flex justify-between items-center px-2">
+<div class="flex gap-6">
+<button class="text-primary font-bold text-[11px] uppercase tracking-widest border-b-2 border-secondary-fixed pb-1">Best</button>
+<button class="text-on-surface/40 font-medium text-[11px] uppercase tracking-widest hover:text-primary transition-colors">Newest</button>
+<button class="text-on-surface/40 font-medium text-[11px] uppercase tracking-widest hover:text-primary transition-colors">Oldest</button>
+</div>
+<div class="flex items-center gap-2 text-on-surface/40 text-[11px] uppercase tracking-widest">
+<span class="material-symbols-outlined text-sm" data-icon="tune">tune</span>
+                            Filters
+                        </div>
+</div>
+<!-- Nested Comments Container -->
+<div class="space-y-6">
+<!-- Parent Comment 01 -->
+<div class="group">
+<div class="flex gap-4">
+<div class="flex flex-col items-center gap-2 pt-1">
+<img alt="User" class="w-10 h-10 rounded-xl object-cover" data-alt="portrait of an athletic woman in tech apparel against a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP5IRtxSZdTNyMZNhrbFALrNrxlnz_Zwwi-gYc-KP0ylahkdFZADAnXfbLySVRUFzY2m5PNYZyw3SG9N4RR5Rqc1UTpZR6gcrHbf38VDez6d594_-clt6Yy6aNPbCKQzEAxiXTliw11PbbetVth0K2M7bXA2hs7dLtpVb2mCm_O5fKHM7iSgEX3GZQ74jeiX2ClvKUoo5peLe_XHisRmuxPkUI6JfwpaUdkKqqB2h4KJqrBt_NDnoGO3iMu3ONKSLfqxKhKyPZf1Cj"/>
+<div class="w-0.5 h-full bg-surface-container rounded-full group-hover:bg-secondary-fixed/30 transition-colors"></div>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-6 rounded-2xl">
+<div class="flex justify-between items-start mb-3">
+<div>
+<span class="font-bold text-primary block">Elena Rodriguez</span>
+<span class="text-[10px] font-mono text-on-surface/40 uppercase">Lead Analyst • 2h ago</span>
+</div>
+<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-surface-container rounded-lg text-primary/60"><span class="material-symbols-outlined text-lg" data-icon="flag">flag</span></button>
+<button class="p-1.5 hover:bg-surface-container rounded-lg text-primary/60"><span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span></button>
+</div>
+</div>
+<p class="text-sm leading-relaxed text-on-surface/80 mb-4">
+                                        The shift toward data-driven scouting in the Mediterranean sector is long overdue. However, I’m concerned that the proposed @ScoutingModule doesn't account for the latent potential of academy-level athletes who haven't hit the biomechanical benchmarks yet.
+                                    </p>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container-low rounded-lg hover:bg-secondary-fixed/20 cursor-pointer transition-all">
+<span class="material-symbols-outlined text-lg text-primary" data-icon="thumb_up" style="font-variation-settings: 'FILL' 1;">thumb_up</span>
+<span class="text-xs font-mono font-bold">128</span>
+</div>
+<button class="text-xs font-bold text-primary/60 uppercase tracking-widest hover:text-primary">Reply</button>
+<button class="text-xs font-bold text-primary/60 uppercase tracking-widest hover:text-primary">Report</button>
+</div>
+</div>
+</div>
+<!-- Reply 01 -->
+<div class="ml-14 mt-4 flex gap-4">
+<div class="flex flex-col items-center gap-2 pt-1">
+<img alt="User" class="w-8 h-8 rounded-lg object-cover" data-alt="man in professional attire looking thoughtful in a modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhhM2ZvlrZ8c4oSo3vCflWHBg6RU8DUYocprSpVRq98--2YPT83RstqFqesIvFRxCzk8wZO7IMwaRcZMal7NAKI6e1JN3SJ1IfI6GzqKJU5D9bY41noisyKG78qd1lh5Vjznr8i5rUb5Jlw3dC9IU5uCwC-DMLHgQCH0ldoY2xQUUCrQFYFKIzFFewrBUzmAcWK5sr-oapYmGy-hd31QWhzSqal1bZSULlqNTmAAVMpj47tMnkZ1okXfKCxFFh5XTxSY2rULSiOjSU"/>
+<div class="w-0.5 h-full bg-surface-container rounded-full"></div>
+</div>
+<div class="flex-1 bg-surface-container-low/50 p-5 rounded-2xl">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="font-bold text-primary text-sm">David Sterling</span>
+<span class="text-[9px] font-mono text-on-surface/40 uppercase ml-2">Regional Director • 1h ago</span>
+</div>
+</div>
+<p class="text-sm leading-relaxed text-on-surface/80 mb-3">
+<span class="text-secondary font-bold">@ElenaRodriguez</span> agreed. We should integrate the psychological profiling metrics from the Alpha-9 dataset to balance the biomechanical focus.
+                                    </p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface/40 hover:text-primary cursor-pointer transition-all">
+<span class="material-symbols-outlined text-base" data-icon="thumb_up">thumb_up</span>
+<span class="text-[10px] font-mono">14</span>
+</div>
+<button class="text-[10px] font-bold text-primary/40 uppercase tracking-widest hover:text-primary">Reply</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Parent Comment 02 (Moderated/Staff Highlight) -->
+<div class="group border-l-4 border-secondary-fixed pl-4">
+<div class="flex gap-4">
+<div class="flex flex-col items-center pt-1">
+<img alt="User" class="w-10 h-10 rounded-xl object-cover" data-alt="professional woman in a blazer with a warm smile and sharp lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu6FBfyzg6Ph7_unX35xqx1AkJctuMi-wxEkC14SEnGg3RJEZz3zMhVHb9dq83E74a8sZHYV1wVn288YKbf-fPl9ZE1c7wCurGZRnR9H576kNwY-FlFGaEsARigZri89SCjsxVUQXCIKtDMsq191FNP5YryUdRLeSTi8nl9QMWmxDctC-shr1agqWGDgJ7oTlZPvC9W1-I5OYpM-V1400r6SqPtoG9vpvv3JTn8EiouVoEwaZpf-8GtsSw9Sud6_1p0twf8xRY-r5P"/>
+</div>
+<div class="flex-1 bg-white p-6 rounded-2xl shadow-sm">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<span class="font-bold text-primary block">Sarah Chen</span>
+<span class="bg-primary text-white text-[9px] px-2 py-0.5 rounded-full uppercase tracking-tighter">Staff</span>
+<span class="text-[10px] font-mono text-on-surface/40 uppercase">Product Head • 45m ago</span>
+</div>
+<span class="material-symbols-outlined text-primary/20" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<p class="text-sm leading-relaxed text-on-surface/80 mb-4">
+                                        Thank you for the feedback everyone. I've flagged the biometric weighting for the technical team. We're looking into a "Manual Override" toggle for academy scouting.
+                                    </p>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container-low rounded-lg hover:bg-secondary-fixed/20 cursor-pointer transition-all">
+<span class="material-symbols-outlined text-lg text-primary" data-icon="thumb_up">thumb_up</span>
+<span class="text-xs font-mono font-bold">45</span>
+</div>
+<button class="text-xs font-bold text-primary/60 uppercase tracking-widest hover:text-primary">Reply</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Modules (Span 4) -->
+<aside class="col-span-4 space-y-8">
+<!-- Moderation Card -->
+<div class="bg-primary p-6 rounded-2xl text-white">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary-fixed" data-icon="shield">shield</span>
+<h3 class="font-bold text-sm uppercase tracking-widest">Moderation Tools</h3>
+</div>
+<div class="space-y-4">
+<button class="w-full flex items-center justify-between p-3 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
+<span class="text-xs uppercase tracking-wide font-medium">Flagged Items</span>
+<span class="bg-secondary-fixed text-primary px-2 py-0.5 rounded-full text-[10px] font-bold">04</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
+<span class="text-xs uppercase tracking-wide font-medium">User Restrictions</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
+<span class="text-xs uppercase tracking-wide font-medium">Thread Settings</span>
+<span class="material-symbols-outlined text-xs" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="mt-8 pt-6 border-t border-white/10">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[10px] uppercase text-white/40 tracking-widest">Safety Score</span>
+<span class="text-[10px] font-mono text-secondary-fixed">98.2%</span>
+</div>
+<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary-fixed h-full w-[98%]"></div>
+</div>
+</div>
+</div>
+<!-- Participant Summary -->
+<div class="bg-surface-container-low p-6 rounded-2xl">
+<h3 class="text-primary font-bold text-xs uppercase tracking-widest mb-6">Active Contributors</h3>
+<div class="flex flex-wrap gap-2 mb-6">
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-white" data-alt="blurred motion of athletes training in a gym" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6cMRGFSsj6WBbq9WGPkkB_5c7TBnA2u_p-Z8R3TUurAHembpuDhg--jChSrMnhfe6S_lKSvlXAp7YvZmCQSUz5Y_I1oinWTJr9QaqmoFvxFt-C5Zx8UwUdWOtaTySEuVX8WyaRbx649930jMYPxWJJmaq-YU-L0C2ZFASJjijKQpI1LnATpez_GMhoQ9OXxnbMZ5Mg7f8reHoCwLz471cx7irw2JNUU9o9bOIxX26sysn7-Jxg5xwehKaV19dLBqSpdnDwfVJ3vF-"/>
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-white -ml-4" data-alt="portrait of a coach in sportswear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJoxCMZ_LXQZW6_6lHMOrdqXeieeEdX3OuzBmIVmssKnnjQwIzgTKl1MhnEfGVDMQ4RFB4BgNWOEfwVgS0EyXV2-tF96A2Gt4DMr8Y3dWCbeKTFal77nD-G5Zq-oUWZnbk9p3gNRBANzbejEXEezLBvAaa9Qpf3FQzY83LcJqZUwbxGe0y2ywiuhgjMdbgEGjB4oOxL8_9lph7OJUL1M7QaM6kLpsO6Whsc7ZRB-jHpGNGllmIJC0_Ncj_XF6S4nvjE4QSYw_8y3RS"/>
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-white -ml-4" data-alt="close up profile of a young woman with braided hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSjBc_PSFa2ndkcIOkqNeWn4v068bByW65dAOqY0X99uNaf7slOK7QkP-yZzkQMjq_5Le9uVjlk-MYs5-lUkPJn_4stVp__vZ7lYnomGW1GIVccKawDqd3zCaYx4yyM3VLJ8Nj74957b-vsFh6FvOBTv-w2qY8jV4t5z3DmaQTbFupfZ4ll10xLRlOYyMbWecTplRSocp3lhsIeF4lM7SesxOaOfjHsEIf9UdV0pEfFcEg_8cj3v4R16IeDFzHdKmxg7tz030V1PRV"/>
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-primary flex items-center justify-center text-xs font-bold border-2 border-white -ml-4">+12</div>
+</div>
+<div class="p-4 bg-surface-container-highest rounded-xl">
+<p class="text-[10px] font-mono text-on-surface/60 mb-2 uppercase tracking-tight">Most Mentioned</p>
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-primary">@StrategyTeam</span>
+<span class="text-[10px] font-mono bg-primary/10 text-primary px-2 py-0.5 rounded">24 mentions</span>
+</div>
+</div>
+</div>
+<!-- Heritage Grid Widget -->
+<div class="relative overflow-hidden rounded-2xl aspect-square">
+<img alt="Heritage Brand" class="w-full h-full object-cover grayscale opacity-40" data-alt="abstract artistic shot of a vintage stopwatch on a dark textured wood surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiSy9nQvHbSRcw7dakImrQVKUnN-rM-vQOxvJBCrQkiJ9Po9lP3o0KPervrUE-4mX3JhPSqgOSXwjR9RN8M84f315AzYSCUrH8N7UzHkGmQUhCcTDaa-xQ8LzoRJjuu2N2gG2rSCy79z5gwHn7yRHbxmIaFLt5POepbwvTTOCKy3Sad8RelMud7qQtj2i9YtiylpbyZjXNNz2_mV9O_hwwHmMP3swNU7fkQoXK8pm8sno4vwaNcDRkcIf26eHscfDPG0N2ywoduo0f"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary to-transparent"></div>
+<div class="absolute bottom-6 left-6">
+<h4 class="text-white font-bold text-lg leading-tight mb-1 tracking-tight">Heritage in Performance.</h4>
+<p class="text-white/60 text-[10px] uppercase tracking-widest">Since 1982 Analysis</p>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Discussion specific) -->
+<button class="fixed bottom-10 right-10 bg-secondary-fixed text-primary w-14 h-14 rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-3xl" data-icon="add_comment">add_comment</span>
+</button>
+</body></html>

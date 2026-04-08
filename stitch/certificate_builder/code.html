@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Certificate Builder | AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#154212",
+                    "secondary": "#576500",
+                    "on-primary-container": "#9dd090",
+                    "background": "#fdf9f0",
+                    "surface-container": "#f1eee5",
+                    "surface-container-low": "#f7f3ea",
+                    "inverse-primary": "#a1d494",
+                    "primary-fixed-dim": "#a1d494",
+                    "outline-variant": "#c2c9bb",
+                    "surface-container-high": "#ece8df",
+                    "surface": "#fdf9f0",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#42493e",
+                    "primary": "#154212",
+                    "on-primary-fixed-variant": "#23501e",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed-dim": "#b8d300",
+                    "secondary-container": "#d0ed00",
+                    "surface-dim": "#dddad1",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "surface-tint": "#3b6934",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#bcf0ae",
+                    "on-tertiary-fixed": "#002201",
+                    "inverse-surface": "#31302b",
+                    "tertiary-container": "#2d5a27",
+                    "on-tertiary-container": "#9dd090",
+                    "error-container": "#ffdad6",
+                    "outline": "#72796e",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e6e2d9",
+                    "on-surface": "#1c1c16",
+                    "primary-fixed": "#bcf0ae",
+                    "secondary-fixed": "#d2f000",
+                    "primary-container": "#2d5a27",
+                    "on-background": "#1c1c16",
+                    "inverse-on-surface": "#f4f0e7",
+                    "surface-variant": "#e6e2d9",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#fdf9f0",
+                    "on-primary-fixed": "#002201",
+                    "on-secondary-fixed": "#191e00",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-container": "#5b6900"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"],
+                    "mono": ["JetBrains Mono"],
+                    "brand": ["DM Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .canvas-bg {
+            background-image: radial-gradient(#d2f000 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container">
+<!-- Shared SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] dark:bg-emerald-950 shadow-[0_4px_16px_rgba(45,90,39,0.06)] flex flex-col py-6 z-50">
+<div class="px-6 mb-10">
+<h1 class="text-xl font-bold text-white tracking-tight font-brand">AK Sports OS</h1>
+<p class="font-brand font-medium uppercase tracking-wider text-[0.75rem] text-emerald-100/50">Admin Suite</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-emerald-100/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-colors font-brand font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined">palette</span> Branding
+            </a>
+<a class="text-emerald-100/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-colors font-brand font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined">style</span> Themes
+            </a>
+<!-- Active State: Templates maps to Certificate Builder -->
+<a class="bg-[#d2f000] text-[#154212] rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors font-brand font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined">dashboard_customize</span> Templates
+            </a>
+<a class="text-emerald-100/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-colors font-brand font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined">settings_suggest</span> System
+            </a>
+<a class="text-emerald-100/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-colors font-brand font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined">monitoring</span> Analytics
+            </a>
+</nav>
+<div class="mt-auto px-2 space-y-1">
+<a class="text-emerald-100/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-colors font-brand font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined">help_outline</span> Support
+            </a>
+<a class="text-emerald-100/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-colors font-brand font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined">history_edu</span> Logs
+            </a>
+<button class="w-full mt-4 bg-[#d2f000] text-[#154212] font-brand font-bold py-3 rounded-lg uppercase text-xs tracking-widest hover:brightness-110 transition-all">
+                Publish Changes
+            </button>
+</div>
+</aside>
+<!-- Shared TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-[#fdf9f0]/80 backdrop-blur-md flex items-center justify-between px-8 z-40">
+<div class="flex items-center gap-8 flex-1">
+<span class="font-brand font-semibold text-[#154212] text-sm">Admin Console / Certificates</span>
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-full py-1.5 pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary/20" placeholder="Search templates..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-stone-500 hover:text-[#154212] transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-stone-500 hover:text-[#154212] transition-all">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="Professional corporate headshot of a male administrator in a clean minimalist studio setting with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIBhOPBh2HiUJdCkqkBD_OKIm9RPdh1ggfInnH9FBewxeGIRQJQj2Ar3vN5s64FkaReCrM5KqsN7wVr6Is1k591TPGsdea3R_0zMiuo2HJNaYznIGnmwJoEBDPZxEuaMwaPUZ5JqvleitXstwbZ_wQDz2E2vZ1sgUJaNcgWVuUTn0K_v6u4R1txexUaxCPt_oVwtwwBUDh8pSR5dv5Zt4AmheZhlirtQwYe5nSCFDI5fFqKr7x5xOvuYIA-uDTbhIePlgM4c30o-bU"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas Area -->
+<main class="ml-64 pt-16 h-screen flex overflow-hidden">
+<!-- Left Toolbar (Designer Tools) -->
+<div class="w-20 bg-surface-container-low flex flex-col items-center py-6 gap-6 border-r border-outline-variant/10">
+<button class="p-3 bg-white rounded-xl shadow-sm text-primary hover:bg-secondary-container transition-all" title="Logo placement">
+<span class="material-symbols-outlined">branding_watermark</span>
+</button>
+<button class="p-3 bg-white rounded-xl shadow-sm text-primary hover:bg-secondary-container transition-all" title="Signature upload">
+<span class="material-symbols-outlined">draw</span>
+</button>
+<button class="p-3 bg-white rounded-xl shadow-sm text-primary hover:bg-secondary-container transition-all" title="Add Text">
+<span class="material-symbols-outlined">title</span>
+</button>
+<div class="h-px w-8 bg-outline-variant/30"></div>
+<div class="flex flex-col gap-4 text-center">
+<span class="font-mono text-[10px] text-outline font-bold">VARS</span>
+<button class="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-mono hover:bg-primary hover:text-white transition-all">{{Name}}</button>
+<button class="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-mono hover:bg-primary hover:text-white transition-all">{{Course}}</button>
+<button class="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-mono hover:bg-primary hover:text-white transition-all">{{Date}}</button>
+</div>
+</div>
+<!-- Center Canvas -->
+<section class="flex-1 canvas-bg p-12 flex items-center justify-center overflow-auto">
+<!-- The Certificate Template -->
+<div class="w-[842px] h-[595px] bg-white shadow-2xl relative p-12 border-[16px] border-double border-primary/10 flex flex-col items-center text-center">
+<!-- Inner Border Decor -->
+<div class="absolute inset-4 border border-primary/20 pointer-events-none"></div>
+<!-- Logo Slot -->
+<div class="mb-8 w-24 h-24 border-2 border-dashed border-outline-variant rounded flex items-center justify-center text-outline text-xs uppercase font-mono">
+                    Logo Slot
+                </div>
+<h2 class="font-headline text-5xl font-extrabold text-primary tracking-tight mb-2 uppercase">Certificate</h2>
+<p class="font-brand text-sm tracking-[0.3em] uppercase text-secondary mb-12">of achievement</p>
+<p class="font-brand italic text-lg text-outline mb-4">This acknowledges that</p>
+<div class="w-3/4 border-b-2 border-primary/20 pb-2 mb-8">
+<span class="font-headline text-4xl font-semibold text-primary-container">{{Name}}</span>
+</div>
+<p class="font-brand text-outline mb-12">has successfully completed the professional course in</p>
+<h3 class="font-headline text-2xl font-bold text-primary mb-16">{{Course}}</h3>
+<!-- Footer elements -->
+<div class="w-full flex justify-between items-end px-12 mt-auto">
+<div class="text-center w-48">
+<div class="border-b border-outline mb-2 h-12 flex items-center justify-center">
+<img class="h-10 opacity-80 mix-blend-multiply" data-alt="A clean black ink digital signature on a transparent white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRrehS41QkX1j8HEg_OZ6s1F51eImBnOd-TrIuABkJNXBbdRqtMy9lSQdHeT3SX5Fi4vpD4uGNWQ_0riTyjgs8oOwpVBBw3GopEyg8sP6FGn2RTt0cbZZMZVwHi_tTgXzp83Ft7z4mTT3M5HtVg9p03u5L6cDlelyN9kHUtaLVMH69EOMCAmDP2TBCvDjqXZcRT2rcEmUR-3APD2hEXqkKHfpBWaasr1rBjq9hP0K5tWukbXlNOrON6aMwoIedwquXgSbQpuvAMU2f"/>
+</div>
+<p class="font-mono text-[10px] uppercase text-outline">Authorized Signature</p>
+</div>
+<!-- Gold Seal -->
+<div class="relative flex items-center justify-center">
+<div class="w-20 h-20 bg-secondary-container rounded-full flex items-center justify-center shadow-lg border-4 border-white">
+<span class="material-symbols-outlined text-secondary scale-150" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="absolute -z-10 w-24 h-24 bg-secondary/10 rounded-full animate-pulse"></div>
+</div>
+<div class="text-center w-48">
+<div class="border-b border-outline mb-2 h-12 flex items-center justify-center">
+<span class="font-mono text-sm text-primary">{{Date}}</span>
+</div>
+<p class="font-mono text-[10px] uppercase text-outline">Date of Issuance</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Properties Sidebar -->
+<aside class="w-80 bg-surface-container-low border-l border-outline-variant/10 p-6 flex flex-col">
+<h4 class="font-brand font-bold uppercase text-xs tracking-widest text-primary mb-6">Properties</h4>
+<!-- Font Styling Section -->
+<div class="space-y-6 flex-1">
+<div>
+<label class="font-mono text-[10px] uppercase text-outline block mb-3">Font Styling</label>
+<div class="grid grid-cols-2 gap-2">
+<select class="col-span-2 w-full bg-white border-outline-variant/30 rounded-lg text-sm font-body focus:ring-primary">
+<option>Manrope (Default)</option>
+<option>Playfair Display</option>
+<option>Montserrat</option>
+<option>Cormorant Garamond</option>
+</select>
+<div class="flex bg-white rounded-lg border border-outline-variant/30 overflow-hidden">
+<button class="flex-1 p-2 hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-sm">format_bold</span></button>
+<button class="flex-1 p-2 hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-sm">format_italic</span></button>
+<button class="flex-1 p-2 hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-sm">format_underlined</span></button>
+</div>
+<div class="flex items-center gap-2 bg-white rounded-lg border border-outline-variant/30 px-3">
+<span class="material-symbols-outlined text-sm text-outline">format_size</span>
+<input class="w-full border-none p-0 text-sm focus:ring-0" type="number" value="48"/>
+</div>
+</div>
+</div>
+<!-- Border Selector -->
+<div>
+<label class="font-mono text-[10px] uppercase text-outline block mb-3">Border Style</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="aspect-square bg-white border-2 border-primary rounded-lg flex items-center justify-center">
+<div class="w-8 h-8 border-4 border-double border-primary/40"></div>
+</button>
+<button class="aspect-square bg-white border border-outline-variant/30 rounded-lg flex items-center justify-center hover:border-primary transition-all">
+<div class="w-8 h-8 border-2 border-dashed border-primary/20"></div>
+</button>
+<button class="aspect-square bg-white border border-outline-variant/30 rounded-lg flex items-center justify-center hover:border-primary transition-all">
+<div class="w-8 h-8 border-2 border-primary/30"></div>
+</button>
+</div>
+</div>
+<!-- Color Palette -->
+<div>
+<label class="font-mono text-[10px] uppercase text-outline block mb-3">Accents</label>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full bg-primary ring-2 ring-offset-2 ring-primary"></button>
+<button class="w-8 h-8 rounded-full bg-secondary"></button>
+<button class="w-8 h-8 rounded-full bg-secondary-container"></button>
+<button class="w-8 h-8 rounded-full bg-[#8b4513]"></button>
+<button class="w-8 h-8 rounded-full bg-[#1a1a1a]"></button>
+</div>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="pt-6 border-t border-outline-variant/30">
+<button class="w-full bg-secondary-fixed text-on-secondary-fixed font-brand font-bold py-4 rounded-xl flex items-center justify-center gap-3 shadow-lg hover:shadow-secondary/20 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined">save</span>
+                    SAVE TEMPLATE
+                </button>
+</div>
+</aside>
+</main>
+<!-- Contextual FAB (Only for Home/Dashboard, technically hidden here as per rules but structural reference) -->
+<!-- Suppressed on specific details screens as per instruction -->
+</body></html>

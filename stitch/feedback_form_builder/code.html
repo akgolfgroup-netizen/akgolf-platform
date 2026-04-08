@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#fdf9f0",
+                    "secondary-fixed-dim": "#b8d300",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "surface-dim": "#dddad1",
+                    "on-tertiary-fixed": "#002201",
+                    "secondary": "#576500",
+                    "surface-bright": "#fdf9f0",
+                    "surface-tint": "#3b6934",
+                    "tertiary": "#154212",
+                    "on-primary-fixed": "#002201",
+                    "inverse-primary": "#a1d494",
+                    "primary-fixed": "#bcf0ae",
+                    "on-primary-container": "#9dd090",
+                    "on-error-container": "#93000a",
+                    "background": "#fdf9f0",
+                    "tertiary-fixed": "#bcf0ae",
+                    "outline": "#72796e",
+                    "on-secondary-container": "#5b6900",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "surface-container": "#f1eee5",
+                    "surface-container-low": "#f7f3ea",
+                    "error": "#ba1a1a",
+                    "primary": "#154212",
+                    "tertiary-container": "#2d5a27",
+                    "secondary-container": "#d0ed00",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#23501e",
+                    "on-background": "#1c1c16",
+                    "primary-container": "#2d5a27",
+                    "on-tertiary-container": "#9dd090",
+                    "outline-variant": "#c2c9bb",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "on-surface": "#1c1c16",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#d2f000",
+                    "on-secondary-fixed": "#191e00",
+                    "inverse-surface": "#31302b",
+                    "surface-variant": "#e6e2d9",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#a1d494",
+                    "surface-container-high": "#ece8df",
+                    "inverse-on-surface": "#f4f0e7",
+                    "surface-container-highest": "#e6e2d9",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#42493e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen">
+<!-- SideNavBar (JSON Derived) -->
+<aside class="h-screen w-64 bg-[#154212] flex flex-col h-full py-6 shadow-[4px_0_16px_rgba(45,90,39,0.06)] fixed left-0 top-0 z-50">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-10 h-10 bg-[#d2f000] rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-[#154212]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<div>
+<h2 class="text-white font-bold text-lg leading-none">Elite Sports Mgmt</h2>
+<p class="font-['DM_Sans'] uppercase text-[10px] tracking-widest font-medium text-white/50">Premium Tier</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="text-white/40 font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium px-6 mb-2">Main Navigation</div>
+<a class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Conversations</span>
+</a>
+<a class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Campaigns</span>
+</a>
+<a class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="videocam">videocam</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Video Hub</span>
+</a>
+<a class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Announcements</span>
+</a>
+<!-- ACTIVE TAB -->
+<a class="bg-[#d2f000] text-[#154212] rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="poll" style="font-variation-settings: 'FILL' 1;">poll</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Surveys</span>
+</a>
+<a class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Reports</span>
+</a>
+</nav>
+<div class="px-2 mt-auto">
+<button class="w-full bg-[#d2f000] text-[#154212] font-['DM_Sans'] uppercase text-[11px] tracking-widest font-bold py-4 rounded-xl flex items-center justify-center gap-2 mb-6 hover:brightness-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+                New Message
+            </button>
+<a class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Support</span>
+</a>
+<a class="text-white/70 hover:text-white hover:bg-white/10 mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="archive">archive</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Archive</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 flex-1 flex flex-col">
+<!-- TopAppBar (JSON Derived) -->
+<header class="fixed top-0 right-0 left-64 bg-[#fdf9f0] dark:bg-stone-950/80 backdrop-blur-md z-40 flex justify-between items-center px-8 py-4 w-full">
+<div class="flex items-center gap-8">
+<span class="font-['DM_Sans'] text-xl font-extrabold tracking-tighter text-[#154212] uppercase">AthletaCore</span>
+<div class="hidden md:flex gap-6">
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors font-['DM_Sans'] tracking-tight" href="#">Inbox</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors font-['DM_Sans'] tracking-tight" href="#">Marketing</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors font-['DM_Sans'] tracking-tight" href="#">Channels</a>
+<a class="text-[#154212] border-b-2 border-[#d2f000] pb-1 font-semibold font-['DM_Sans'] tracking-tight" href="#">Analytics</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#154212]/40">search</span>
+<input class="bg-[#f7f3ea] border-none rounded-full pl-10 pr-4 py-2 text-sm font-['DM_Sans'] focus:ring-1 focus:ring-[#154212]/20 w-64" placeholder="Search surveys..." type="text"/>
+</div>
+<button class="p-2 text-[#154212] hover:bg-[#f7f3ea] rounded-full transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-[#154212] hover:bg-[#f7f3ea] rounded-full transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border-2 border-[#d2f000]">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="close-up portrait of a professional athletic coach with short hair wearing a dark green polo shirt with clean lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6SMZs_kUtosx4hAgEQSNdCmOxsbxuAi-5_lYrAL0lNWqmDQSgB2MhzQgBeIvG4OpSKJuQmMooeMbVm0Y4QO_QMEK3G651naabnpsg16YUNzydZMjyrQpTwqqybClslBCji695kFBH4IXiKo3Vtj-lvWMvhI6BNtmz7qKNNAfqgQ0OWVcvBtmmTsre96x021ZSoroR1cfpQCzFG_FOtj14txZKBZEy9lXThcJTYTXzSFAYswLl-mPgOXT-Pg6Ne8LHT1XYBAmk3wAM"/>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="mt-20 p-8 pb-12">
+<!-- Page Header Section -->
+<section class="mb-10 flex justify-between items-end">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="font-mono text-[10px] text-primary/60 tracking-wider">PROJECT ID: AC-2024-SV</span>
+<span class="w-1 h-1 rounded-full bg-secondary-fixed"></span>
+<span class="font-mono text-[10px] text-primary/60 tracking-wider uppercase">Last Edited: 14 Oct 2024</span>
+</div>
+<h1 class="text-4xl font-headline font-bold text-primary leading-tight">Q4 Member Satisfaction <br/>Pulse Survey</h1>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 bg-surface-container-low text-primary border border-primary/10 rounded-xl font-label text-[11px] font-bold uppercase tracking-widest hover:bg-surface-container transition-all">
+                        Preview
+                    </button>
+<button class="px-6 py-3 bg-secondary-fixed text-on-secondary-fixed rounded-xl font-label text-[11px] font-bold uppercase tracking-widest hover:brightness-105 transition-all shadow-[0_4px_16px_rgba(210,240,0,0.15)]">
+                        Launch Survey
+                    </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Main Builder Area -->
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<!-- Form Builder Card -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/10 shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline font-bold text-lg text-primary">Survey Builder</h3>
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-1.5 bg-surface-container-lowest rounded-md text-[11px] font-bold uppercase tracking-tighter text-primary shadow-sm">Questions</button>
+<button class="px-4 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-tighter text-primary/40 hover:text-primary transition-colors">Logic Flow</button>
+<button class="px-4 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-tighter text-primary/40 hover:text-primary transition-colors">Styling</button>
+</div>
+</div>
+<!-- Question Item 1: Multi Choice -->
+<div class="group bg-surface-container-low/40 border border-outline-variant/20 rounded-2xl p-6 mb-6 hover:border-primary/20 transition-all">
+<div class="flex items-start gap-4">
+<div class="bg-primary text-secondary-fixed w-8 h-8 rounded-lg flex items-center justify-center font-mono text-sm shrink-0">01</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label text-[10px] text-primary/40 font-bold uppercase tracking-widest">Multiple Choice</span>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-surface-container-highest rounded-md"><span class="material-symbols-outlined text-sm">content_copy</span></button>
+<button class="p-1.5 hover:bg-error-container text-error rounded-md"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+</div>
+<input class="w-full bg-transparent border-none p-0 text-lg font-headline font-semibold text-primary focus:ring-0 mb-4 placeholder:text-primary/20" type="text" value="How satisfied are you with the new recovery zone equipment?"/>
+<div class="space-y-3">
+<div class="flex items-center gap-3 bg-surface-container-lowest border border-outline-variant/10 rounded-xl px-4 py-3">
+<div class="w-4 h-4 rounded-full border-2 border-primary/20"></div>
+<span class="text-sm font-medium text-primary/80">Extremely Satisfied</span>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-lowest border border-outline-variant/10 rounded-xl px-4 py-3">
+<div class="w-4 h-4 rounded-full border-2 border-primary/20"></div>
+<span class="text-sm font-medium text-primary/80">Somewhat Satisfied</span>
+</div>
+<button class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-primary/40 px-4 py-2 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add</span> Add Option
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Question Item 2: Rating Scale -->
+<div class="group bg-surface-container-low/40 border border-outline-variant/20 rounded-2xl p-6 mb-6 hover:border-primary/20 transition-all">
+<div class="flex items-start gap-4">
+<div class="bg-primary text-secondary-fixed w-8 h-8 rounded-lg flex items-center justify-center font-mono text-sm shrink-0">02</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label text-[10px] text-primary/40 font-bold uppercase tracking-widest">Rating Scale</span>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-surface-container-highest rounded-md"><span class="material-symbols-outlined text-sm">content_copy</span></button>
+<button class="p-1.5 hover:bg-error-container text-error rounded-md"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+</div>
+<input class="w-full bg-transparent border-none p-0 text-lg font-headline font-semibold text-primary focus:ring-0 mb-6 placeholder:text-primary/20" type="text" value="Rate the professionalism of our training staff."/>
+<div class="flex justify-between items-center px-4 py-8 bg-surface-container-lowest rounded-2xl border border-outline-variant/10">
+<div class="text-center">
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary/20 flex items-center justify-center text-xl font-bold mb-2">1</div>
+<span class="text-[9px] uppercase font-bold tracking-widest text-primary/40">Poor</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary/20 flex items-center justify-center text-xl font-bold">2</div>
+<div class="w-12 h-12 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center text-xl font-bold shadow-lg shadow-secondary-fixed/30 ring-4 ring-secondary-fixed/20">3</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary/20 flex items-center justify-center text-xl font-bold">4</div>
+<div class="text-center">
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary/20 flex items-center justify-center text-xl font-bold mb-2">5</div>
+<span class="text-[9px] uppercase font-bold tracking-widest text-primary/40">Exemplary</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Add Question Trigger -->
+<div class="flex items-center gap-4 p-8 border-2 border-dashed border-outline-variant/30 rounded-3xl justify-center hover:bg-surface-container-low transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-primary/30 group-hover:text-primary transition-colors text-3xl">add_circle</span>
+<span class="font-headline font-bold text-primary/30 group-hover:text-primary transition-colors">Add a new block to your survey</span>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Configuration & Stats -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- Response Analytics Mini Card -->
+<div class="bg-primary text-white rounded-3xl p-6 shadow-xl relative overflow-hidden">
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-secondary-fixed/10 rounded-full blur-3xl"></div>
+<h3 class="font-label text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-white/50">Real-time Responses</h3>
+<div class="flex items-end gap-2 mb-1">
+<span class="text-4xl font-headline font-bold">1,248</span>
+<span class="font-mono text-secondary-fixed text-xs pb-2">+12%</span>
+</div>
+<p class="text-sm text-white/60 font-medium mb-6">Total active participants this week</p>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-xs">
+<span class="text-white/40">Completion Rate</span>
+<span class="font-mono">84.2%</span>
+</div>
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="bg-secondary-fixed h-full w-[84.2%]"></div>
+</div>
+</div>
+<button class="w-full mt-6 py-3 bg-white/10 hover:bg-white/20 transition-all rounded-xl font-label text-[10px] font-bold uppercase tracking-widest">
+                            Export Results (.csv)
+                        </button>
+</div>
+<!-- Question Types Bento -->
+<div class="bg-surface-container-low rounded-3xl p-6">
+<h3 class="font-headline font-bold text-primary mb-4 text-sm px-2">Question Toolbox</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-secondary-container transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">checklist</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-primary">Choices</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-secondary-container transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">star</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-primary">Rating</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-secondary-container transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">subject</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-primary">Long Text</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-secondary-container transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">upload_file</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-primary">Upload</span>
+</div>
+</div>
+</div>
+<!-- Distribution Options Card -->
+<div class="bg-surface-container-lowest rounded-3xl p-6 border border-outline-variant/10 shadow-sm">
+<h3 class="font-headline font-bold text-primary mb-6 text-sm">Distribution</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">link</span>
+</div>
+<span class="text-xs font-bold text-primary">Direct Link</span>
+</div>
+<span class="material-symbols-outlined text-primary/20 cursor-pointer hover:text-primary">content_copy</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">mail</span>
+</div>
+<span class="text-xs font-bold text-primary">Email Invite</span>
+</div>
+<span class="text-[10px] font-mono text-primary/40">Active</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">qr_code</span>
+</div>
+<span class="text-xs font-bold text-primary">QR Access</span>
+</div>
+<span class="material-symbols-outlined text-primary/20 cursor-pointer hover:text-primary">visibility</span>
+</div>
+</div>
+</div>
+<!-- Logic Jumps Logic -->
+<div class="bg-[#d2f000] rounded-3xl p-6 relative overflow-hidden group cursor-pointer shadow-lg shadow-secondary-fixed/20 transition-all hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-on-secondary-fixed text-3xl">alt_route</span>
+<span class="bg-on-secondary-fixed text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest">Advanced</span>
+</div>
+<h4 class="font-headline font-bold text-on-secondary-fixed mb-1">Logic Jumps</h4>
+<p class="text-xs text-on-secondary-fixed/60 font-medium">Create custom paths based on member responses.</p>
+<div class="mt-4 flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-white border-2 border-[#d2f000] flex items-center justify-center text-[8px] font-bold text-primary">1</div>
+<div class="w-6 h-6 rounded-full bg-white border-2 border-[#d2f000] flex items-center justify-center text-[8px] font-bold text-primary">2</div>
+<div class="w-6 h-6 rounded-full bg-on-secondary-fixed border-2 border-[#d2f000] flex items-center justify-center text-[8px] font-bold text-white"><span class="material-symbols-outlined text-[10px]">bolt</span></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Heritage Grid (Bottom Section) -->
+<section class="mt-12 pt-12 border-t border-outline-variant/20">
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-headline font-bold text-2xl text-primary tracking-tight">Response History</h2>
+<div class="flex items-center gap-2 text-primary/60 font-mono text-xs">
+<span class="material-symbols-outlined text-sm">history</span>
+                        View Detailed Audit Trail
+                    </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-low p-6 rounded-2xl border border-transparent hover:border-primary/10 transition-all cursor-default">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-white">
+<img alt="Reviewer" class="w-full h-full object-cover" data-alt="professional woman in corporate attire smiling, soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjNEyVVkdyIHs04uvZPo0k-3dlWk3scgyXAqHGfb13V16LbRppebqfTtFWParhbPAUd6JN0bGfqf-fRYb2fI54rGWn4Ycx1JE-nKrLj7GxNw9zN3ySZBK0AtrZIPRccxguMwXrQ4CfXH6Cx2f42nL2jVzh1pFHbJYZYzkqnMF7-T0IP-ydL-TzdlV4mDMZz51p4d3y94pDR9_xHfNuLXO5uAdDwESPD_9BK4__kmfjli20zoBs9yuGVf89QQ3GJUgd9P_griHu0Od0"/>
+</div>
+<div>
+<h4 class="font-headline font-bold text-primary text-sm">Marcus Chen</h4>
+<p class="text-[10px] font-mono text-primary/40 uppercase">Platinum Member • 2m ago</p>
+</div>
+</div>
+<p class="text-xs italic text-primary/70 line-clamp-2">"The new recovery pods are a game changer. Would love to see more availability in the evenings..."</p>
+<div class="mt-4 flex gap-1">
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl border border-transparent hover:border-primary/10 transition-all cursor-default">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-white">
+<img alt="Reviewer" class="w-full h-full object-cover" data-alt="young athletic man wearing a headband and gym clothes, bright outdoor studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARt7DHnTINtVfhh22fKbR6hxHEXAE9kNyPzDMiWcQ-1-CKcKfPRTIr6Wl2w4Qh-5zOReX6K5n-S4qfpaPALf69YsQcbLHjbVzL5Q4yCj0l1r5ZbU7MRXq9w3Dv2RhUUyvZH4-JEgyEGfNfXF4Tz4B9K2lZReY8koE6hCzPbklwi1nUfoyP1TQtquxq1G8VHdKZNOMKkWzmO9uDVBpLyDemSGcacK_xKHp2Ic0585FDs1UeKKYmUwveA1ENtmrrGezOn0LSK13oRM7p"/>
+</div>
+<div>
+<h4 class="font-headline font-bold text-primary text-sm">Sarah Jenkins</h4>
+<p class="text-[10px] font-mono text-primary/40 uppercase">Gold Member • 14m ago</p>
+</div>
+</div>
+<p class="text-xs italic text-primary/70 line-clamp-2">"Classes are excellent but booking system sometimes lags on mobile. Survey logic was very smooth."</p>
+<div class="mt-4 flex gap-1">
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary/10 text-xs">star</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl border border-transparent hover:border-primary/10 transition-all cursor-default">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-white">
+<img alt="Reviewer" class="w-full h-full object-cover" data-alt="senior gentleman in high-end leisure wear, clean professional studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs53UgMrIlls38VyyvDcpdgqeCjHhqEbcc67RCGpsm6j4GprOOSoF5c6IwCwFesQnmOIuGiZE9HVp1zS79CAzMCP4QIVfM0ojLnUIx1p9n6uthKiSFySZFTlRFGRZPIQKlf3CvqvMGIjh7AryefL7lcX6cJDHpRNlZ_lMN0zNI4SgrjHK9RtsKyH3RNXev_D6dJk3oiWvkweebC9gubuNYAkNxoj7IMbW4Wf6_nny-x9i5YVviAFfW5T7G1mAHL9H4-QiVHaD9HhpT"/>
+</div>
+<div>
+<h4 class="font-headline font-bold text-primary text-sm">Elena Rodriguez</h4>
+<p class="text-[10px] font-mono text-primary/40 uppercase">Basic Tier • 1h ago</p>
+</div>
+</div>
+<p class="text-xs italic text-primary/70 line-clamp-2">"Great facility. I appreciate being asked for feedback. Keep up the high standard of cleanliness!"</p>
+<div class="mt-4 flex gap-1">
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Waitlist | AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#a1d494",
+                    "on-surface": "#1c1c16",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#bcf0ae",
+                    "tertiary-container": "#2d5a27",
+                    "primary-fixed-dim": "#a1d494",
+                    "surface": "#fdf9f0",
+                    "primary-fixed": "#bcf0ae",
+                    "surface-variant": "#e6e2d9",
+                    "tertiary": "#154212",
+                    "on-secondary-fixed": "#191e00",
+                    "inverse-primary": "#a1d494",
+                    "on-background": "#1c1c16",
+                    "primary": "#154212",
+                    "inverse-surface": "#31302b",
+                    "surface-dim": "#dddad1",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "outline-variant": "#c2c9bb",
+                    "secondary-fixed": "#d2f000",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "surface-container": "#f1eee5",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#9dd090",
+                    "on-secondary-container": "#5b6900",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#3b6934",
+                    "primary-container": "#2d5a27",
+                    "surface-bright": "#fdf9f0",
+                    "on-surface-variant": "#42493e",
+                    "secondary": "#576500",
+                    "on-secondary": "#ffffff",
+                    "outline": "#72796e",
+                    "secondary-fixed-dim": "#b8d300",
+                    "on-primary-fixed": "#002201",
+                    "on-primary-container": "#9dd090",
+                    "surface-container-highest": "#e6e2d9",
+                    "on-primary-fixed-variant": "#23501e",
+                    "on-tertiary-fixed": "#002201",
+                    "background": "#fdf9f0",
+                    "secondary-container": "#d0ed00",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#f4f0e7",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#ece8df",
+                    "surface-container-low": "#f7f3ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        background-color: #fdf9f0;
+        color: #1c1c16;
+        font-family: 'DM Sans', sans-serif;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+      }
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 24px;
+      }
+    </style>
+</head>
+<body class="antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-8 bg-opacity-80 backdrop-blur-md w-full h-16 border-b border-[#154212]/10 bg-[#fdf9f0] dark:bg-[#1c1c16]">
+<div class="flex items-center gap-8">
+<span class="font-['DM_Sans'] font-bold text-xl uppercase tracking-widest text-[#154212]">AK Sports OS</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="font-['DM_Sans'] text-sm tracking-tight transition-colors hover:text-[#154212] text-[#154212]/60" href="#">Dashboard</a>
+<a class="font-['DM_Sans'] text-sm tracking-tight transition-colors hover:text-[#154212] text-[#154212] border-b-2 border-[#d2f000] pb-1" href="#">Waitlist</a>
+<a class="font-['DM_Sans'] text-sm tracking-tight transition-colors hover:text-[#154212] text-[#154212]/60" href="#">Bookings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#154212]/60 hover:text-[#154212] transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-[#154212]/60 hover:text-[#154212] transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-primary/10">
+<img alt="User profile avatar" data-alt="close-up portrait of a professional athletic coach with a friendly expression in a modern sports facility background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0RSB5dqvA1UJofsHy8Ovdy01HBUzdEeEyOxbF9-duvnQhSTb7POHwO6Lt8AUdnilU9UHp0_PTyYEpRP5Ec86xHydaeN27O38NUvRE7Z8LzmantXF6PPe01oeXWhp5xTz_44zY3pNwNiZ7ldj6j9WC406iA5WxqNKMlzRxUG11Nl4Dnhcy_UJWZOtzWtzsyKT_nc3I0MrjUgrbujP5-7HSFelFSlSA5d5GGwufLt5RXADBqrB-59PHrpSUPyY7hrQm3R9jc6h4NTdv"/>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-8 py-12">
+<div class="bento-grid">
+<!-- Hero Waitlist Status Section -->
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<div class="bg-surface-container-lowest rounded-2xl p-10 border border-outline-variant/10 shadow-[0_4px_16px_rgba(45,90,39,0.04)] overflow-hidden relative">
+<div class="absolute top-0 right-0 p-8 opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">hourglass_top</span>
+</div>
+<div class="relative z-10">
+<span class="font-mono text-xs uppercase tracking-widest text-primary/60 mb-2 block">Current Status</span>
+<h1 class="text-4xl font-bold text-primary tracking-tight mb-4">You're on the list!</h1>
+<p class="text-on-surface-variant max-w-md leading-relaxed mb-8">
+                            We've secured your spot for the <span class="font-semibold text-primary">Elite Performance Coaching</span> with Coach Marcus. We'll notify you the moment a slot opens.
+                        </p>
+<div class="flex items-center gap-6">
+<div class="bg-surface-container-low px-6 py-4 rounded-xl border border-outline-variant/5">
+<span class="font-mono text-xs uppercase tracking-widest text-primary/40 block mb-1">Queue Position</span>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-bold text-primary">3</span>
+<span class="text-primary/60 font-medium italic">rd</span>
+<span class="ml-2 text-on-surface-variant text-sm">in line</span>
+</div>
+</div>
+<div class="bg-secondary-container/30 px-6 py-4 rounded-xl border border-secondary/10">
+<span class="font-mono text-xs uppercase tracking-widest text-secondary/60 block mb-1">Est. Wait Time</span>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-bold text-secondary">14</span>
+<span class="text-secondary/60 text-sm font-medium">MINS</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Auto-Book Toggle & Settings -->
+<div class="bg-primary rounded-2xl p-8 text-white flex items-center justify-between shadow-xl">
+<div class="flex items-center gap-6">
+<div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div>
+<h3 class="font-bold text-lg leading-tight">Enable Auto-book</h3>
+<p class="text-white/70 text-sm">Instantly claim the slot as soon as it becomes available.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-14 h-8 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+</div>
+<!-- Alternative Suggestions (Sidebar-ish Bento) -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<div class="bg-surface-container-low rounded-2xl p-8 border border-outline-variant/10">
+<h3 class="font-mono text-xs uppercase tracking-widest text-primary/60 mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">event_repeat</span>
+                        Alternative Times
+                    </h3>
+<div class="space-y-4">
+<div class="group bg-surface-container-lowest p-4 rounded-xl border border-transparent hover:border-secondary transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="font-bold text-primary">Today, 4:30 PM</span>
+<span class="text-xs bg-tertiary-fixed text-on-tertiary-fixed-variant px-2 py-0.5 rounded uppercase font-mono">Available</span>
+</div>
+<p class="text-xs text-on-surface-variant mb-4">Court 04 • 60 min session</p>
+<button class="w-full py-2 bg-surface-container text-primary text-xs font-bold uppercase tracking-widest rounded-lg group-hover:bg-secondary group-hover:text-on-secondary transition-colors">Switch Now</button>
+</div>
+<div class="group bg-surface-container-lowest p-4 rounded-xl border border-transparent hover:border-secondary transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="font-bold text-primary">Tomorrow, 9:00 AM</span>
+<span class="text-xs bg-tertiary-fixed text-on-tertiary-fixed-variant px-2 py-0.5 rounded uppercase font-mono">Available</span>
+</div>
+<p class="text-xs text-on-surface-variant mb-4">Main Arena • 90 min session</p>
+<button class="w-full py-2 bg-surface-container text-primary text-xs font-bold uppercase tracking-widest rounded-lg group-hover:bg-secondary group-hover:text-on-secondary transition-colors">Switch Now</button>
+</div>
+<div class="p-4 border border-dashed border-primary/20 rounded-xl text-center">
+<p class="text-xs text-primary/40 font-medium">View more availability in the full calendar</p>
+</div>
+</div>
+</div>
+<!-- Small Info Card -->
+<div class="bg-surface-container-highest/40 rounded-2xl p-6 relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="text-sm font-bold text-primary mb-2">Waitlist Policy</h4>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+                            If you do not have Auto-book enabled, you will have 3 minutes to respond to the notification before the slot is offered to the next person.
+                        </p>
+</div>
+<div class="absolute -bottom-2 -right-2 opacity-5 scale-150">
+<span class="material-symbols-outlined text-primary text-6xl">verified_user</span>
+</div>
+</div>
+</div>
+<!-- Bottom Row: Detailed Context -->
+<div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Session Details -->
+<div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/10 flex flex-col justify-between">
+<div>
+<span class="font-mono text-[10px] uppercase tracking-widest text-primary/40 block mb-4">Session Details</span>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary/60">fitness_center</span>
+<div>
+<p class="text-xs text-on-surface-variant font-mono">ACTIVITY</p>
+<p class="text-sm font-bold text-primary">Elite Performance Coaching</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary/60">person</span>
+<div>
+<p class="text-xs text-on-surface-variant font-mono">COACH</p>
+<p class="text-sm font-bold text-primary">Marcus H. Sterling</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Image/Aesthetic Break -->
+<div class="relative rounded-2xl overflow-hidden min-h-[200px] group shadow-inner">
+<img alt="Coach preparation" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="dramatic wide shot of a luxury indoor sports training facility with clean lines, polished wood floors, and soft ambient morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHTSUAttcgo9LWtMWlY2SM54qdglr6XLSphsl2XBel1wYPib1Ej9n6F4p2zw0VjFZwpB5xn4hGna-HOyZnEeloIJZ_NlrdvCLsHcUmTk_wVyfMjKN5vzwhy_3fxdk7bYGgLc0UphV8rYWfogCjJjuK-o5wW_EaL9RldynGN5ONIbk3jRscYOXWwi7WwV202t5uZGODzZFiYMmdsK-Hjjdzl-Dm94KC1_9Qzk-s64Pz8XuO_EdoR7a8t0pbgg-RFa4DrebtHGYgJghA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6 text-white">
+<p class="font-mono text-[10px] uppercase tracking-[0.2em] mb-1 text-secondary">The Facility</p>
+<h4 class="font-bold text-xl leading-tight">Heritage Court • East Wing</h4>
+</div>
+</div>
+<!-- Quick Action/Support -->
+<div class="bg-surface-container-low p-8 rounded-2xl border border-outline-variant/10">
+<span class="font-mono text-[10px] uppercase tracking-widest text-primary/40 block mb-4">Assistance</span>
+<h4 class="text-primary font-bold mb-2">Need to reschedule?</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed mb-6">If you can no longer attend, please remove yourself from the list to help others get a spot faster.</p>
+<button class="text-error font-mono text-[11px] uppercase tracking-widest font-bold border-b border-error/30 pb-0.5 hover:border-error transition-all">Cancel Request</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Decoration -->
+<footer class="mt-12 px-8 py-12 border-t border-primary/5 flex justify-between items-center bg-surface-container-low/50">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[10px] uppercase tracking-widest text-primary/40">Powered by</span>
+<span class="font-['DM_Sans'] font-extrabold text-xs uppercase tracking-widest text-[#154212]">Heritage Grid System</span>
+</div>
+<div class="flex gap-8">
+<a class="font-mono text-[10px] uppercase tracking-widest text-primary/40 hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-mono text-[10px] uppercase tracking-widest text-primary/40 hover:text-primary transition-colors" href="#">Terms</a>
+<a class="font-mono text-[10px] uppercase tracking-widest text-primary/40 hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+</footer>
+</body></html>

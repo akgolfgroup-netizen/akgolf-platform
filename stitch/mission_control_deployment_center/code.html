@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Sports OS - Deployment Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "background": "#fdf9f0",
+            "tertiary-fixed": "#bcf0ae",
+            "primary-fixed": "#bcf0ae",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-container": "#f1eee5",
+            "tertiary": "#154212",
+            "surface-container-highest": "#e6e2d9",
+            "on-error-container": "#93000a",
+            "error-container": "#ffdad6",
+            "on-primary-fixed": "#002201",
+            "tertiary-container": "#2d5a27",
+            "surface": "#fdf9f0",
+            "outline-variant": "#c2c9bb",
+            "surface-tint": "#3b6934",
+            "on-surface-variant": "#42493e",
+            "tertiary-fixed-dim": "#a1d494",
+            "surface-variant": "#e6e2d9",
+            "surface-container-high": "#ece8df",
+            "secondary-container": "#d0ed00",
+            "on-secondary-fixed-variant": "#414c00",
+            "on-tertiary-container": "#9dd090",
+            "on-surface": "#1c1c16",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#9dd090",
+            "on-primary-fixed-variant": "#23501e",
+            "secondary-fixed": "#d2f000",
+            "on-secondary-fixed": "#191e00",
+            "surface-bright": "#fdf9f0",
+            "secondary": "#576500",
+            "primary-fixed-dim": "#a1d494",
+            "on-tertiary-fixed-variant": "#23501e",
+            "inverse-surface": "#31302b",
+            "primary": "#154212",
+            "inverse-primary": "#a1d494",
+            "surface-container-low": "#f7f3ea",
+            "on-secondary-container": "#5b6900",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#dddad1",
+            "primary-container": "#2d5a27",
+            "outline": "#72796e",
+            "on-error": "#ffffff",
+            "on-primary": "#ffffff",
+            "on-tertiary-fixed": "#002201",
+            "inverse-on-surface": "#f4f0e7",
+            "secondary-fixed-dim": "#b8d300",
+            "on-background": "#1c1c16"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Manrope"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      background-color: #fdf9f0;
+      color: #1c1c16;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #15421220;
+      border-radius: 10px;
+    }
+    .glass-effect {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- SideNavBar -->
+<aside class="h-screen w-72 flex flex-col fixed left-0 top-0 bg-[#154212] z-50">
+<div class="flex flex-col h-full py-8">
+<!-- Brand Header -->
+<div class="px-8 mb-10">
+<h1 class="text-xl font-bold tracking-tighter text-[#fdf9f0]">AK Sports OS</h1>
+<p class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-[#fdf9f0]/60 mt-1">Mission Control</p>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 space-y-1 overflow-y-auto custom-scrollbar">
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Command Center</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">sensors</span>
+<span>Live Ops</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">insights</span>
+<span>Pulse</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">health_and_safety</span>
+<span>System Health</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">notifications</span>
+<span>Alerts</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">emergency_home</span>
+<span>Incidents</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">data_usage</span>
+<span>Capacity</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">leaderboard</span>
+<span>Metrics</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">security</span>
+<span>Security</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">history_edu</span>
+<span>Audit</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">settings_backup_restore</span>
+<span>Backups</span>
+</div>
+<!-- Active Tab: Deploy -->
+<div class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 scale-95 active:scale-90 cursor-default">
+<span class="material-symbols-outlined">rocket_launch</span>
+<span>Deploy</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">payments</span>
+<span>Costs</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">support_agent</span>
+<span>CS Health</span>
+</div>
+<div class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 transition-colors duration-200 hover:bg-[#fdf9f0]/10 scale-95 active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">visibility</span>
+<span>CEO View</span>
+</div>
+</nav>
+<!-- User Profile Anchor -->
+<div class="px-6 mt-8">
+<div class="flex items-center gap-3 p-3 bg-[#fdf9f0]/5 rounded-xl border border-[#fdf9f0]/10">
+<img class="w-10 h-10 rounded-lg" data-alt="close-up portrait of a professional system administrator in a clean office environment with soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOs-DNHv94lfg2kyoOIjXlC_tBWxk-BlHMdUtz2gy_33S2Shm3kdjHX2Ju8b3D0jqoC_EFSC5hzsc_Kp01xXQgOlx_9_r6Y0Rrvs94QxtBrMsfpzIDYP2r7eKTYVZ7EnyjJQVJrEZoTLowgiiV3Tx4rU2lHOTAAF7biw_de948lTKIEQQTMS5JI_yGrm-xQAf7Vtw9N28HyQeIdqM36rVuRt0uuZ3yMQ7gb9TO1jS36zTRynufjjY_wDOCvKoGH4aib4ujsHnDQtxZ"/>
+<div>
+<p class="text-[12px] font-bold text-[#fdf9f0]">Alex K.</p>
+<p class="text-[10px] text-[#fdf9f0]/50 font-mono">SYS_ROOT_01</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="pl-72 min-h-screen">
+<!-- TopNavBar -->
+<header class="h-16 flex justify-between items-center w-full px-8 bg-[#fdf9f0]/80 backdrop-blur-md sticky top-0 z-40 border-b border-[#154212]/10 shadow-sm shadow-[#2d5a27]/05">
+<div class="flex items-center gap-4 w-96">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#154212]/40 text-sm">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-highest/50 border-none rounded-xl text-sm focus:ring-1 focus:ring-primary/20 font-['JetBrains_Mono']" placeholder="Search pipelines, clusters, or logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-[#154212] cursor-pointer hover:opacity-70 transition-opacity">account_circle</span>
+<span class="material-symbols-outlined text-[#154212] cursor-pointer hover:opacity-70 transition-opacity">settings</span>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-8 max-w-7xl mx-auto">
+<!-- Deployment Header / Status -->
+<div class="flex items-end justify-between mb-12">
+<div>
+<span class="font-['JetBrains_Mono'] text-xs font-medium text-primary/60 mb-2 block tracking-widest uppercase">System Control / Environment: Production</span>
+<h2 class="text-4xl font-bold text-primary tracking-tight font-headline">Deployment Center</h2>
+</div>
+<div class="flex gap-3">
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-xl font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] shadow-lg shadow-primary/10 hover:opacity-90 transition-all active:scale-95">
+            New Deployment
+          </button>
+</div>
+</div>
+<!-- Hero Bento Grid -->
+<div class="grid grid-cols-12 gap-6 mb-12">
+<!-- Current Version Card -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-3xl p-8 flex flex-col justify-between border border-outline-variant/10">
+<div>
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">rocket_launch</span>
+</div>
+<div>
+<p class="font-['JetBrains_Mono'] text-xs text-on-surface-variant uppercase tracking-tighter">Current Production Version</p>
+<h3 class="text-2xl font-bold text-primary">v4.12.0-stable</h3>
+</div>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Live &amp; Healthy</span>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between pb-4 border-b border-surface-container-high">
+<div class="flex items-center gap-6">
+<div class="text-left">
+<p class="text-[10px] uppercase font-mono text-on-surface-variant">Last Deployed</p>
+<p class="font-['JetBrains_Mono'] text-sm">2023-10-24 14:22 UTC</p>
+</div>
+<div class="text-left">
+<p class="text-[10px] uppercase font-mono text-on-surface-variant">Commit Hash</p>
+<p class="font-['JetBrains_Mono'] text-sm text-secondary font-bold">8f2a1c9</p>
+</div>
+<div class="text-left">
+<p class="text-[10px] uppercase font-mono text-on-surface-variant">Deploys Today</p>
+<p class="font-['JetBrains_Mono'] text-sm">14 Sessions</p>
+</div>
+</div>
+<button class="bg-secondary-fixed text-on-secondary-fixed px-5 py-2 rounded-xl font-['DM_Sans'] font-bold uppercase tracking-wider text-[11px] shadow-sm hover:scale-[1.02] transition-transform">
+                  Initiate Rollback
+                </button>
+</div>
+<!-- Pipeline Viz -->
+<div>
+<p class="text-[10px] uppercase font-mono text-on-surface-variant mb-4">Live Pipeline Visualization</p>
+<div class="flex items-center gap-2">
+<div class="h-1.5 flex-1 bg-primary rounded-full relative group">
+<div class="absolute -top-6 left-0 text-[9px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">Build: OK</div>
+</div>
+<div class="material-symbols-outlined text-xs text-primary">chevron_right</div>
+<div class="h-1.5 flex-1 bg-primary rounded-full relative group">
+<div class="absolute -top-6 left-0 text-[9px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">Test: 100%</div>
+</div>
+<div class="material-symbols-outlined text-xs text-primary">chevron_right</div>
+<div class="h-1.5 flex-1 bg-primary rounded-full relative group">
+<div class="absolute -top-6 left-0 text-[9px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">Stage: PASS</div>
+</div>
+<div class="material-symbols-outlined text-xs text-primary">chevron_right</div>
+<div class="h-1.5 flex-1 bg-secondary rounded-full animate-pulse relative group">
+<div class="absolute -top-6 left-0 text-[9px] font-mono text-secondary font-bold">PROD: LIVE</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature Flags Sidebar -->
+<div class="col-span-12 lg:col-span-4 bg-primary text-[#fdf9f0] rounded-3xl p-8 flex flex-col border border-primary/20">
+<h3 class="text-xl font-bold mb-6 font-headline">Active Feature Flags</h3>
+<div class="space-y-4 flex-1">
+<div class="flex items-center justify-between p-4 bg-[#fdf9f0]/10 rounded-2xl hover:bg-[#fdf9f0]/15 transition-colors cursor-pointer group">
+<div>
+<p class="text-[13px] font-bold">Real-time Analytics v2</p>
+<p class="text-[10px] opacity-60 font-mono">BETA_RELEASE_TRACK</p>
+</div>
+<div class="w-10 h-6 bg-secondary-fixed rounded-full relative p-1 shadow-inner">
+<div class="w-4 h-4 bg-primary rounded-full absolute right-1"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-[#fdf9f0]/10 rounded-2xl hover:bg-[#fdf9f0]/15 transition-colors cursor-pointer">
+<div>
+<p class="text-[13px] font-bold">Predictive Heatmaps</p>
+<p class="text-[10px] opacity-60 font-mono">INTERNAL_ONLY</p>
+</div>
+<div class="w-10 h-6 bg-secondary-fixed rounded-full relative p-1 shadow-inner">
+<div class="w-4 h-4 bg-primary rounded-full absolute right-1"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-[#fdf9f0]/10 rounded-2xl opacity-50 cursor-not-allowed">
+<div>
+<p class="text-[13px] font-bold">Legacy API v1.0</p>
+<p class="text-[10px] opacity-60 font-mono">DEPRECATED</p>
+</div>
+<div class="w-10 h-6 bg-white/20 rounded-full relative p-1">
+<div class="w-4 h-4 bg-white/40 rounded-full absolute left-1"></div>
+</div>
+</div>
+</div>
+<button class="mt-6 w-full py-3 border border-[#fdf9f0]/20 rounded-xl font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors">
+            Manage All Overrides
+          </button>
+</div>
+</div>
+<!-- History List Section -->
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-bold text-primary font-headline">Deployment History</h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span class="text-[11px] font-bold uppercase tracking-wider">All Services</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-sm">download</span>
+<span class="text-[11px] font-bold uppercase tracking-wider">Export Logs</span>
+</div>
+</div>
+</div>
+<!-- Deployment Table/List -->
+<div class="bg-surface-container-lowest rounded-3xl overflow-hidden border border-outline-variant/5">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-4 text-[10px] uppercase font-mono text-on-surface-variant tracking-widest font-bold">Release ID</th>
+<th class="px-8 py-4 text-[10px] uppercase font-mono text-on-surface-variant tracking-widest font-bold">Environment</th>
+<th class="px-8 py-4 text-[10px] uppercase font-mono text-on-surface-variant tracking-widest font-bold">Commit &amp; Author</th>
+<th class="px-8 py-4 text-[10px] uppercase font-mono text-on-surface-variant tracking-widest font-bold">Status</th>
+<th class="px-8 py-4 text-[10px] uppercase font-mono text-on-surface-variant tracking-widest font-bold">Duration</th>
+<th class="px-8 py-4 text-[10px] uppercase font-mono text-on-surface-variant tracking-widest font-bold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<!-- Item 1 (Active) -->
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(210,240,0,0.8)]"></div>
+<div>
+<p class="font-['JetBrains_Mono'] text-sm font-bold">v4.12.0</p>
+<p class="text-[10px] text-on-surface-variant">Production-A</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container text-[10px] font-bold">PROD</span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<img class="w-6 h-6 rounded-full" data-alt="professional user avatar small circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRht6Eypg2Erve9m0ZwQdF_OkvCj7-wG1ZvHas7MLS92Nh21jMaeSHboCFrHtitL1JaJyaYVfqqdLfEDJrGr86OP90ZtaVDKUnQcFRdOkLvm2UVKy7N2yrH8d7zNrBxjTvfsCs2ZRJZ-OC0Iu-c5SZt8Ziuyor2WGH-FduFIAmW0NsykLMBOvxmjjjWHGJDxFBM8gz1KfctJ_eOsdgl54D-w48iWnHmLYOpHgXhlMrq8XStVIeBbaQNgMaDyL0oII96UjXyQRUDHw5"/>
+<div>
+<p class="text-xs font-bold text-primary">8f2a1c9</p>
+<p class="text-[10px] text-on-surface-variant">S. Miller • fix: caching headers</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-tight">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                    Deployed
+                  </div>
+</td>
+<td class="px-8 py-6">
+<p class="font-['JetBrains_Mono'] text-xs">4m 22s</p>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary cursor-pointer transition-colors">more_vert</span>
+</td>
+</tr>
+<!-- Item 2 -->
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div>
+<p class="font-['JetBrains_Mono'] text-sm">v4.11.8</p>
+<p class="text-[10px] text-on-surface-variant">Production-A</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container text-[10px] font-bold">PROD</span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<img class="w-6 h-6 rounded-full" data-alt="professional user avatar small circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy5I4F1D3HFtvmcsaF9iGNtr34CykGc4UtMMHd6IoUaDnymYyQNlRYlV3qL1XRdAyCGVh9yfpY7a8AxxDyyTuVRusuUaekfrpsByL40iInmgfTstSCjto2xrGaYVvxdFaCCmOWGh_a9P5mRUF6JdzAriupAoZT4jTVbpflMY_ix-kOasFA25RtKpS3TAKcu58m5dbthGvXhS_EpS5Z7j_v6-Hlrj8qbbva5vnpdVyHVy-_2G0-ZzcrMiRiYnfcE3uUSC8cl3sC9_1V"/>
+<div>
+<p class="text-xs font-bold text-primary">3d1e4f2</p>
+<p class="text-[10px] text-on-surface-variant">R. Chen • chore: dependency update</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2 text-on-surface-variant font-bold text-xs uppercase tracking-tight">
+<span class="material-symbols-outlined text-sm">history</span>
+                    Superceded
+                  </div>
+</td>
+<td class="px-8 py-6">
+<p class="font-['JetBrains_Mono'] text-xs">3m 11s</p>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="text-secondary font-bold text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity mr-4">Rollback Here</button>
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary cursor-pointer transition-colors">more_vert</span>
+</td>
+</tr>
+<!-- Item 3 (Failed) -->
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div>
+<p class="font-['JetBrains_Mono'] text-sm">v4.11.7-rc</p>
+<p class="text-[10px] text-on-surface-variant">Staging</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant text-[10px] font-bold">STG</span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<img class="w-6 h-6 rounded-full" data-alt="professional user avatar small circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARE6kXe7Az2JXeOqxZHd5rd6wxmtavtLXsoyloychiHJFclTgZd-FduXbm21fasGCT6buZSQvEJ9U_lOiP38_6o4hlGfRXHgQw-bIkULKgMgHgcCxM6jJSWdtolB4Ph1ywBaRTtnuGPHF0W4oyULyHMqZgs8K7n_1bjkt_zrvZz5qv02DbPJHLYsP_8YGY8cCDRAoMsEc0FiyK9Md9RiaTKAv_LAkVVWmW0mITsfIfP8_PZTNwppXgwfSpsbFfukz9KukUc1TOKehs"/>
+<div>
+<p class="text-xs font-bold text-primary">5a22c1b</p>
+<p class="text-[10px] text-on-surface-variant">S. Miller • feat: new socket logic</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2 text-error font-bold text-xs uppercase tracking-tight">
+<span class="material-symbols-outlined text-sm">cancel</span>
+                    Failed
+                  </div>
+</td>
+<td class="px-8 py-6">
+<p class="font-['JetBrains_Mono'] text-xs">1m 45s</p>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary cursor-pointer transition-colors">more_vert</span>
+</td>
+</tr>
+<!-- Item 4 -->
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div>
+<p class="font-['JetBrains_Mono'] text-sm">v4.11.6</p>
+<p class="text-[10px] text-on-surface-variant">Production-A</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container text-[10px] font-bold">PROD</span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<img class="w-6 h-6 rounded-full" data-alt="professional user avatar small circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAQlNJI1rgf1y3wfFlBFWWPoD44F8p_rII4MkYSJ4ysvCOTYR1yiw6wU6wrzy4GWFCXWN10c2Isoz4tu0-fhK1iY2Fn-TytYi_MP0MC-XThsBRanhQevf7a3A23slA9Av6HwVRaxGOxQzDzv-0eXEWDSmzJTqaFfTl1Nwm_U7qtHtCQVLduOM9cwbarbCbSYuYJdDNR6MMZqtj94s4H4Y5VhLGJcbbzYpu5WH88RR96Qi_YNFBY5SatYBl7SCzBOGl7CB4nGQar9u8"/>
+<div>
+<p class="text-xs font-bold text-primary">2f9b8a3</p>
+<p class="text-[10px] text-on-surface-variant">M. Rodriguez • refactor: database models</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2 text-on-surface-variant font-bold text-xs uppercase tracking-tight">
+<span class="material-symbols-outlined text-sm">history</span>
+                    Superceded
+                  </div>
+</td>
+<td class="px-8 py-6">
+<p class="font-['JetBrains_Mono'] text-xs">5m 58s</p>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="text-secondary font-bold text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity mr-4">Rollback Here</button>
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary cursor-pointer transition-colors">more_vert</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="bg-surface-container-low/30 px-8 py-4 flex justify-between items-center">
+<p class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant">Showing 1-4 of 1,244 deployments</p>
+<div class="flex gap-2">
+<button class="p-2 bg-white rounded-lg border border-outline-variant/10 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="p-2 bg-white rounded-lg border border-outline-variant/10 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Metrics Footer -->
+<div class="mt-12 grid grid-cols-4 gap-6">
+<div class="p-6 bg-surface-container-low rounded-2xl">
+<p class="text-[10px] uppercase font-mono text-on-surface-variant mb-2">Success Rate</p>
+<div class="flex items-center gap-4">
+<span class="text-2xl font-bold text-primary">99.2%</span>
+<span class="text-[10px] text-secondary font-bold">+0.4%</span>
+</div>
+</div>
+<div class="p-6 bg-surface-container-low rounded-2xl">
+<p class="text-[10px] uppercase font-mono text-on-surface-variant mb-2">MTTD</p>
+<div class="flex items-center gap-4">
+<span class="text-2xl font-bold text-primary">14m</span>
+<span class="text-[10px] text-error font-bold">+2m</span>
+</div>
+</div>
+<div class="p-6 bg-surface-container-low rounded-2xl">
+<p class="text-[10px] uppercase font-mono text-on-surface-variant mb-2">Build Duration</p>
+<div class="flex items-center gap-4">
+<span class="text-2xl font-bold text-primary">3m 44s</span>
+<span class="text-[10px] text-secondary font-bold">-12s</span>
+</div>
+</div>
+<div class="p-6 bg-surface-container-low rounded-2xl">
+<p class="text-[10px] uppercase font-mono text-on-surface-variant mb-2">Uptime Index</p>
+<div class="flex items-center gap-4">
+<span class="text-2xl font-bold text-primary">4-Nines</span>
+<span class="text-[10px] text-secondary font-bold">Stable</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button (SUPPRESSED on this detail view per instruction) -->
+</body></html>

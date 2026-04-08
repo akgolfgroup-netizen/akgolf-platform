@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fdf9f0",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-container": "#f1eee5",
+                        "on-secondary-container": "#5b6900",
+                        "on-tertiary-container": "#9dd090",
+                        "on-secondary-fixed": "#191e00",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#002201",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-surface-variant": "#42493e",
+                        "outline": "#72796e",
+                        "outline-variant": "#c2c9bb",
+                        "tertiary": "#154212",
+                        "surface-tint": "#3b6934",
+                        "secondary-container": "#d0ed00",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-dim": "#dddad1",
+                        "on-surface": "#1c1c16",
+                        "surface-container-high": "#ece8df",
+                        "error": "#ba1a1a",
+                        "on-background": "#1c1c16",
+                        "secondary-fixed": "#d2f000",
+                        "secondary-fixed-dim": "#b8d300",
+                        "tertiary-fixed": "#bcf0ae",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-primary": "#ffffff",
+                        "background": "#fdf9f0",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#bcf0ae",
+                        "inverse-surface": "#31302b",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-low": "#f7f3ea",
+                        "secondary": "#576500",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-primary-fixed": "#002201",
+                        "surface": "#fdf9f0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#9dd090",
+                        "inverse-primary": "#a1d494",
+                        "tertiary-container": "#2d5a27",
+                        "primary": "#154212"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #fdf9f0;
+            color: #1c1c16;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col py-6 gap-2 shadow-[4px_0_16px_rgba(45,90,39,0.06)] z-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-[#d2f000] rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-[#154212]" data-icon="fitness_center">fitness_center</span>
+</div>
+<div>
+<h1 class="text-white font-semibold text-lg leading-tight">Coach Portal</h1>
+<p class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest text-white/50">Precision Performance</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 rounded-xl transition-all hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 rounded-xl transition-all hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Schedule</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 rounded-xl transition-all hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Players</span>
+</a>
+<!-- Active Tab -->
+<a class="flex items-center gap-3 bg-[#d2f000] text-[#154212] rounded-xl px-4 py-3 mx-2 shadow-lg shadow-[#d2f000]/10" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest">Drills</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 rounded-xl transition-all hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Messages</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 rounded-xl transition-all hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Earnings</span>
+</a>
+</nav>
+<div class="mt-auto px-2 border-t border-white/10 pt-4">
+<button class="w-[calc(100%-1rem)] mx-2 bg-[#d2f000] text-[#154212] font-bold uppercase text-[10px] tracking-widest py-3 rounded-xl mb-4 hover:brightness-105 active:scale-95 transition-all">
+                New Session
+            </button>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 rounded-xl transition-all hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Support</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 rounded-xl transition-all hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- Top Navigation -->
+<header class="w-full h-16 sticky top-0 z-40 bg-[#fdf9f0]/80 backdrop-blur-md flex justify-between items-center px-8">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="arrow_back">arrow_back</span>
+<h2 class="text-xl font-bold tracking-tighter text-[#154212]">Drill View</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined text-[#154212]/60 hover:text-[#154212] cursor-pointer" data-icon="notifications">notifications</span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<span class="material-symbols-outlined text-[#154212]/60 hover:text-[#154212] cursor-pointer" data-icon="settings">settings</span>
+<div class="h-8 w-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant">
+<img alt="Coach Profile" class="w-full h-full object-cover" data-alt="professional portrait of a sports coach in athletic wear against a neutral grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpvXlj_BOId-AAlMBNfraI_d_r2zxvTZoDajrs7508NBAVhksK0jgQnDvFRkLGnHsFsB0F-9l4s2yJPqT0PVKsaQQTN_BNF3YHw7yo3dtSWpj9kiqgzCLH65JyO-PKJcrYxoNSsZAMgdoBlBmewY0hQBWlFIgcQgExQWjKd0QXBvOoDX1CzmCWngwwNZpMuTQfs1L-YcOvWeVKHsnHcqWz2ysgdy3wPc_ohAA3o-lxH15OxYGbEWDWTCdEfQeqhOZ0tlhdnW2pxC9r"/>
+</div>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto">
+<!-- Hero Video Section -->
+<div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-stone-900 shadow-2xl mb-12">
+<img alt="Drill Video Thumbnail" class="w-full h-full object-cover opacity-60" data-alt="Cinematic wide shot of a professional soccer player performing an agile dribbling drill on a lush green pitch during golden hour" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjnyAto8VEfW1MW8jJaQWQdgMn1bIbjC_KrgtfmVxv1uBjS_vlZ9UPHeiqaTGnFz9r_Yz7XEk-FtxG4_y2wdTAJD2UrBQSitvinccNfhHrGq-os897k6_ckWzX-EQ0U5Pi6XMORa009ROlXtRGfzUEwpLnPAx4hPpN-xkYr0mag5APY_ixOeu7BqvH1YsrqKdSWeDaOCLdaQzCSVEgL1NLaxMpC5NydgNIvCpX-8ejDTKOOQGrPEryKW94HmApE68UJbv_aT1Qc0Ao"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<button class="w-20 h-20 bg-[#d2f000] text-[#154212] rounded-full flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
+<div class="flex items-center gap-4 text-white/80 font-mono text-xs">
+<span class="bg-primary/80 backdrop-blur px-3 py-1 rounded-full uppercase tracking-widest text-[#d2f000]">Live Instruction</span>
+<span>04:22 / 12:45</span>
+</div>
+</div>
+</div>
+<!-- Header Info Bento -->
+<div class="grid grid-cols-12 gap-6 mb-12">
+<div class="col-span-12 lg:col-span-8">
+<h1 class="text-5xl font-extrabold tracking-tight text-primary mb-4">Diamond Weave Agility</h1>
+<p class="text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                        A high-intensity footwork drill designed to improve lateral explosive power and rapid change-of-direction mechanics for elite midfielders.
+                    </p>
+</div>
+<div class="col-span-12 lg:col-span-4 flex flex-col justify-end">
+<button class="w-full bg-[#d2f000] hover:bg-[#b8d300] text-primary font-bold uppercase py-5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 active:scale-95">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+                        ADD TO SESSION
+                    </button>
+</div>
+</div>
+<!-- Stats & Meta Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10">
+<span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-2 block">Category</span>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="sprint">sprint</span>
+<p class="font-bold text-primary">Technical Agility</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10">
+<span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-2 block">Duration</span>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="timer">timer</span>
+<p class="font-bold text-primary">15 Minutes</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10">
+<span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-2 block">Difficulty</span>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<p class="font-bold text-primary">Elite / Advanced</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10">
+<span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-2 block">Intensity</span>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+<p class="font-bold text-primary">High (90% Max)</p>
+</div>
+</div>
+</div>
+<!-- Asymmetric Details Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Instructions Content -->
+<div class="lg:col-span-7 space-y-12">
+<section>
+<h3 class="font-['DM_Sans'] uppercase text-xs font-bold tracking-[0.2em] text-primary mb-6 border-b border-primary/10 pb-2">Step-by-Step Execution</h3>
+<div class="space-y-8">
+<div class="flex gap-6">
+<div class="font-mono text-xl font-bold text-outline-variant">01</div>
+<div>
+<h4 class="text-xl font-bold text-primary mb-2">Initial Setup</h4>
+<p class="text-on-surface-variant leading-relaxed">Place four cones in a diamond formation, 5 yards apart. Position the athlete at the base cone facing the center.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="font-mono text-xl font-bold text-outline-variant">02</div>
+<div>
+<h4 class="text-xl font-bold text-primary mb-2">The Cross-over Phase</h4>
+<p class="text-on-surface-variant leading-relaxed">Sprint to the center hub. Execute a low-gravity lateral shuffle to the left perimeter cone without crossing feet.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="font-mono text-xl font-bold text-outline-variant">03</div>
+<div>
+<h4 class="text-xl font-bold text-primary mb-2">Explosive Pivot</h4>
+<p class="text-on-surface-variant leading-relaxed">Touch the cone and explode 180 degrees towards the opposite perimeter cone. Maintain eye contact with the coach for reactive signals.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="font-mono text-xl font-bold text-outline-variant">04</div>
+<div>
+<h4 class="text-xl font-bold text-primary mb-2">Finish &amp; Recovery</h4>
+<p class="text-on-surface-variant leading-relaxed">Back-pedal to the start position. 30 seconds recovery between sets. Perform 6 total repetitions.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-primary p-8 rounded-2xl text-white">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-[#d2f000]" data-icon="psychology">psychology</span>
+<h3 class="font-['DM_Sans'] uppercase text-xs font-bold tracking-[0.2em]">Coaching Points</h3>
+</div>
+<ul class="space-y-4 font-body text-white/90">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-[#d2f000] text-sm mt-1" data-icon="check_circle">check_circle</span>
+<span>Maintain a low center of gravity throughout the lateral transition.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-[#d2f000] text-sm mt-1" data-icon="check_circle">check_circle</span>
+<span>Eyes should be up, scanning the field, not looking at the cones.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-[#d2f000] text-sm mt-1" data-icon="check_circle">check_circle</span>
+<span>Emphasize the "push" from the outside foot during the explosive pivot.</span>
+</li>
+</ul>
+</section>
+</div>
+<!-- Sidebar Content -->
+<div class="lg:col-span-5 space-y-8">
+<div class="bg-surface-container-low p-8 rounded-2xl border border-surface-container-highest">
+<h3 class="font-['DM_Sans'] uppercase text-xs font-bold tracking-[0.2em] text-primary mb-6">Equipment Needed</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex items-center gap-3 p-4 bg-white rounded-xl">
+<span class="material-symbols-outlined text-primary/60" data-icon="change_history">change_history</span>
+<span class="text-sm font-medium">4x Agility Cones</span>
+</div>
+<div class="flex items-center gap-3 p-4 bg-white rounded-xl">
+<span class="material-symbols-outlined text-primary/60" data-icon="straighten">straighten</span>
+<span class="text-sm font-medium">10yd Area</span>
+</div>
+<div class="flex items-center gap-3 p-4 bg-white rounded-xl">
+<span class="material-symbols-outlined text-primary/60" data-icon="timer">timer</span>
+<span class="text-sm font-medium">Stopwatch</span>
+</div>
+<div class="flex items-center gap-3 p-4 bg-white rounded-xl">
+<span class="material-symbols-outlined text-primary/60" data-icon="sports_soccer">sports_soccer</span>
+<span class="text-sm font-medium">1x Match Ball</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/10">
+<h3 class="font-['DM_Sans'] uppercase text-xs font-bold tracking-[0.2em] text-primary mb-6">Related Drills</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-2 hover:bg-surface-container-low rounded-xl transition-colors cursor-pointer group">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Drill thumbnail" class="w-full h-full object-cover" data-alt="close-up of vibrant orange cones on a soccer field with soft morning dew" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABAbMnc1uX2xCBYhaO8LMVCYU3o94EoVo1JVzYxcT10vYv9tBVz-5MX57FalX0dJX_vsiway-vbAMo67spZS6NndCMvsJNh91x7TjNKmc_cAs86UzjgbWmF8H-QARWgVcRs6oiMFmOjBIrmqEsjrPeHHJVbBjAUDVmboaraXo_YXGt3NGQCwU0dlMzMHKC0SieNXta6WB4KEp_CPFV1o_b2pQ1ENrFlbq_73_x-pP00zm_iPGef9W8l1aBMM0QUo7mH2i5GnN7fBpt"/>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-bold text-primary group-hover:text-secondary transition-colors">T-Drill Mastery</h5>
+<p class="text-[10px] font-mono text-on-surface-variant">12 MIN • INTERMEDIATE</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="flex items-center gap-4 p-2 hover:bg-surface-container-low rounded-xl transition-colors cursor-pointer group border-t border-surface-container-highest pt-4">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Drill thumbnail" class="w-full h-full object-cover" data-alt="professional athlete feet in soccer cleats performing ladder drills" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDExL8E_t0yDpOU0poupvC8Q7f3gne7JCHTrIiOY6oSGSzk_Uhs5A2CkGzIhDdxfDQdM-4NTFUo195PCZpBOueYzMyvSLSm41JrLndUYkEHZilAZ8RW1WfeRrdasKmAWXJRgc-BjFmvmnkK8MKlCCl2x9zfQZ7PYZXi3LDEbK42PkOP69vSQHclp-4Qss1N8EMX7eIALkUpVHZgsK8QWKH86aRa_31VA4LgDVbpGud9rYr00yFbY8d4t4-sRauA73VeCjwWbhCK51gF"/>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-bold text-primary group-hover:text-secondary transition-colors">Ladder Speed Bursts</h5>
+<p class="text-[10px] font-mono text-on-surface-variant">20 MIN • ADVANCED</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="p-8 rounded-2xl bg-[#d2f000]/10 border border-[#d2f000]/20">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-secondary" data-icon="info">info</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-secondary">Coach's Note</span>
+</div>
+<p class="text-sm text-primary italic font-medium leading-relaxed">
+                            "Best utilized as a second module in pre-match warmups. The cognitive load of the reactive signals mimics 80th-minute fatigue conditions."
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Accent -->
+<footer class="mt-24 py-12 px-8 bg-surface-container-low border-t border-surface-container-highest">
+<div class="max-w-7xl mx-auto flex justify-between items-center">
+<div class="text-primary/40 font-mono text-[10px] uppercase tracking-widest">
+                    © 2024 AK Sports OS • Performance Analytics Division
+                </div>
+<div class="flex gap-8">
+<a class="text-primary/40 hover:text-primary font-mono text-[10px] uppercase tracking-widest transition-colors" href="#">Privacy</a>
+<a class="text-primary/40 hover:text-primary font-mono text-[10px] uppercase tracking-widest transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

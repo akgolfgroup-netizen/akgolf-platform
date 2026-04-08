@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dev Tools | AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed-variant": "#23501e",
+                      "surface-container-high": "#ece8df",
+                      "primary-fixed": "#bcf0ae",
+                      "on-secondary-container": "#5b6900",
+                      "tertiary": "#154212",
+                      "on-primary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "on-tertiary-container": "#9dd090",
+                      "secondary-fixed": "#d2f000",
+                      "on-primary-fixed-variant": "#23501e",
+                      "on-background": "#1c1c16",
+                      "on-secondary": "#ffffff",
+                      "inverse-primary": "#a1d494",
+                      "background": "#fdf9f0",
+                      "secondary-fixed-dim": "#b8d300",
+                      "surface": "#fdf9f0",
+                      "surface-container": "#f1eee5",
+                      "on-surface": "#1c1c16",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#9dd090",
+                      "surface-tint": "#3b6934",
+                      "surface-container-low": "#f7f3ea",
+                      "inverse-surface": "#31302b",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-secondary-fixed": "#191e00",
+                      "primary-container": "#2d5a27",
+                      "on-secondary-fixed-variant": "#414c00",
+                      "surface-bright": "#fdf9f0",
+                      "secondary-container": "#d0ed00",
+                      "outline-variant": "#c2c9bb",
+                      "on-primary-fixed": "#002201",
+                      "tertiary-fixed-dim": "#a1d494",
+                      "secondary": "#576500",
+                      "tertiary-fixed": "#bcf0ae",
+                      "primary-fixed-dim": "#a1d494",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-container": "#2d5a27",
+                      "surface-dim": "#dddad1",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-fixed": "#002201",
+                      "outline": "#72796e",
+                      "on-surface-variant": "#42493e",
+                      "surface-variant": "#e6e2d9",
+                      "inverse-on-surface": "#f4f0e7",
+                      "surface-container-highest": "#e6e2d9"
+              },
+              "fontFamily": {
+                "sans": ["DM Sans", "sans-serif"],
+                "mono": ["JetBrains Mono", "monospace"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+        .mono-text { font-family: 'JetBrains Mono', monospace; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="bg-[#154212] h-screen w-64 fixed left-0 top-0 flex flex-col py-8 z-50">
+<div class="px-6 mb-10">
+<h1 class="text-xl font-bold text-[#d2f000] tracking-tighter">AK Sports OS</h1>
+<p class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium text-white/60 mt-1">Developer Suite</p>
+</div>
+<nav class="flex-1 overflow-y-auto no-scrollbar">
+<ul class="space-y-1">
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span> Directory</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="extension">extension</span> Connectors</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="vpn_key">vpn_key</span> SSO Config</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings_ethernet">settings_ethernet</span> Webhooks</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span> API Docs</a></li>
+<li><a class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span> Console</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="biotech">biotech</span> Sandbox</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span> Calendar</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span> Payments</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span> Analytics</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Settings</a></li>
+</ul>
+</nav>
+<div class="mt-auto px-6 border-t border-white/10 pt-6">
+<button class="w-full bg-[#d2f000] text-[#154212] font-bold py-3 rounded-xl mb-6 hover:scale-[1.02] active:scale-95 transition-all text-xs uppercase tracking-widest">
+                Deploy Integration
+            </button>
+<ul class="space-y-2">
+<li><a class="text-white/50 hover:text-white flex items-center gap-3 text-[0.75rem] font-medium uppercase tracking-wider transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help_outline">help_outline</span> Support</a></li>
+<li><a class="text-white/50 hover:text-white flex items-center gap-3 text-[0.75rem] font-medium uppercase tracking-wider transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="dns">dns</span> System Status</a></li>
+</ul>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-[#fdf9f0]/80 backdrop-blur-md z-40 flex justify-between items-center px-8 w-full">
+<div class="flex items-center gap-4">
+<h2 class="text-[#154212] font-['DM_Sans'] text-sm font-semibold">Admin Console</h2>
+<div class="h-4 w-[1px] bg-outline-variant/30"></div>
+<span class="mono-text text-[10px] text-on-surface-variant uppercase tracking-tighter">Instance: US-EAST-01</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<input class="bg-surface-container-high border-none rounded-full px-5 py-1.5 text-xs w-64 focus:ring-1 focus:ring-primary transition-all placeholder:text-on-surface-variant/50" placeholder="Search logs, endpoints..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-primary text-lg" data-icon="search">search</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#154212] opacity-80 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-[#154212] opacity-80 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 pb-12 px-10 min-h-screen">
+<!-- Header Section -->
+<section class="mb-12 flex justify-between items-end">
+<div>
+<span class="mono-text text-[0.7rem] text-primary font-bold uppercase tracking-[0.2em] mb-2 block">System Pulse</span>
+<h3 class="text-4xl font-semibold text-primary tracking-tight">Developer Tools</h3>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-lowest border border-outline-variant/20 px-4 py-2 rounded-lg flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#d2f000]"></div>
+<span class="mono-text text-[11px] font-bold text-on-surface uppercase">API Status: Operational</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- API Usage Graph (Hero Card) -->
+<div class="col-span-8 bg-surface-container-lowest rounded-[24px] p-8 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-10">
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest text-primary/40 mb-1">Request Volume</h4>
+<p class="text-2xl font-semibold text-primary">API Usage (24h)</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-primary text-white rounded-md text-[10px] font-bold uppercase">Requests</button>
+<button class="px-3 py-1 bg-surface-container-high text-primary/50 rounded-md text-[10px] font-bold uppercase">Latency</button>
+</div>
+</div>
+<!-- SVG Graph Mock -->
+<div class="h-64 w-full relative flex items-end gap-1">
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/20 w-full"></div>
+</div>
+<!-- Simplified Graph Path -->
+<svg class="absolute bottom-0 left-0 w-full h-full text-secondary opacity-20" viewbox="0 0 800 200">
+<path d="M0,150 Q100,100 200,130 T400,80 T600,110 T800,40 L800,200 L0,200 Z" fill="currentColor"></path>
+<path d="M0,150 Q100,100 200,130 T400,80 T600,110 T800,40" fill="none" stroke="currentColor" stroke-width="3"></path>
+</svg>
+<!-- Interaction Points -->
+<div class="absolute bottom-1/2 left-[40%] group-hover:block hidden">
+<div class="bg-primary text-secondary px-3 py-1.5 rounded-lg text-xs mono-text shadow-xl">
+                            12.4k req/s
+                        </div>
+<div class="w-1 h-20 bg-primary/20 mx-auto"></div>
+</div>
+</div>
+<div class="mt-8 flex justify-between mono-text text-[10px] text-on-surface-variant font-medium">
+<span>00:00</span>
+<span>04:00</span>
+<span>08:00</span>
+<span>12:00</span>
+<span>16:00</span>
+<span>20:00</span>
+<span>23:59</span>
+</div>
+</div>
+<!-- Rate Limit Meter -->
+<div class="col-span-4 bg-primary text-white rounded-[24px] p-8 flex flex-col justify-between relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="text-xs font-bold uppercase tracking-widest text-[#d2f000] mb-6">Quota Threshold</h4>
+<div class="mb-2 flex justify-between items-end">
+<span class="text-4xl font-bold tracking-tighter">84.2<span class="text-xl opacity-40">%</span></span>
+<span class="mono-text text-[10px] uppercase opacity-60">Limit: 1M / Day</span>
+</div>
+<div class="w-full bg-white/10 h-3 rounded-full overflow-hidden mb-8">
+<div class="bg-[#d2f000] h-full w-[84%] shadow-[0_0_12px_rgba(210,240,0,0.4)]"></div>
+</div>
+<p class="text-sm text-white/70 leading-relaxed">Your tier 3 subscription allows for increased burst capacity. <a class="text-[#d2f000] underline underline-offset-4 font-bold" href="#">Upgrade for unlimited.</a></p>
+</div>
+<div class="mt-auto z-10 flex gap-4">
+<div class="bg-white/5 p-3 rounded-xl flex-1">
+<span class="mono-text text-[9px] block opacity-40 uppercase mb-1">Bursting</span>
+<span class="font-bold text-sm">Active</span>
+</div>
+<div class="bg-white/5 p-3 rounded-xl flex-1">
+<span class="mono-text text-[9px] block opacity-40 uppercase mb-1">Next Reset</span>
+<span class="font-bold text-sm">04:12:08</span>
+</div>
+</div>
+<!-- Abstract BG Shape -->
+<div class="absolute -right-10 -bottom-10 w-48 h-48 bg-[#d2f000]/10 rounded-full blur-3xl"></div>
+</div>
+<!-- Error Rate by Endpoint -->
+<div class="col-span-4 bg-surface-container-low rounded-[24px] p-8">
+<h4 class="text-xs font-bold uppercase tracking-widest text-primary/40 mb-6">Error Distribution</h4>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="mono-text text-xs font-bold text-primary">/v1/auth/login</span>
+<span class="text-error text-xs font-bold">0.42%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full">
+<div class="bg-error h-full w-[42%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="mono-text text-xs font-bold text-primary">/v1/payments/intent</span>
+<span class="text-error text-xs font-bold">0.18%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full">
+<div class="bg-error h-full w-[18%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="mono-text text-xs font-bold text-primary">/v1/user/profile</span>
+<span class="text-primary text-xs font-bold">0.02%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full">
+<div class="bg-primary h-full w-[5%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="mono-text text-xs font-bold text-primary">/v1/analytics/stream</span>
+<span class="text-primary text-xs font-bold">0.00%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full">
+<div class="bg-primary h-full w-[1%]"></div>
+</div>
+</div>
+</div>
+<button class="mt-8 w-full border border-outline-variant/30 py-3 rounded-xl mono-text text-[10px] font-bold uppercase hover:bg-white transition-colors">
+                    Download Full Error Log
+                </button>
+</div>
+<!-- SDK Downloads -->
+<div class="col-span-4 bg-surface-container-lowest rounded-[24px] p-8 shadow-sm">
+<h4 class="text-xs font-bold uppercase tracking-widest text-primary/40 mb-6">Latest SDK Packages</h4>
+<ul class="divide-y divide-outline-variant/10">
+<li class="py-4 flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-[#fdf9f0] rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="data_object">data_object</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Node.js Core</p>
+<p class="mono-text text-[10px] text-on-surface-variant">v2.4.1 • 4.2MB</p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity bg-secondary p-2 rounded-full text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+</button>
+</li>
+<li class="py-4 flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-[#fdf9f0] rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Python Client</p>
+<p class="mono-text text-[10px] text-on-surface-variant">v1.9.0 • 1.8MB</p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity bg-secondary p-2 rounded-full text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+</button>
+</li>
+<li class="py-4 flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-[#fdf9f0] rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="smartphone">smartphone</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">React Native</p>
+<p class="mono-text text-[10px] text-on-surface-variant">v3.0.0 • 8.4MB</p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity bg-secondary p-2 rounded-full text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+</button>
+</li>
+</ul>
+</div>
+<!-- Changelog Timeline -->
+<div class="col-span-4 bg-surface-container-high rounded-[24px] p-8 overflow-hidden relative">
+<h4 class="text-xs font-bold uppercase tracking-widest text-primary/40 mb-6">Changelog Feed</h4>
+<div class="relative space-y-8 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[1px] before:bg-primary/10">
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-6 h-6 bg-secondary rounded-full flex items-center justify-center border-4 border-surface-container-high z-10">
+<div class="w-1.5 h-1.5 bg-primary rounded-full"></div>
+</div>
+<span class="mono-text text-[9px] font-bold text-primary uppercase">Oct 24, 2023</span>
+<p class="text-xs font-bold text-primary mt-1">WebSocket Auto-Reconnect</p>
+<p class="text-[11px] text-on-surface-variant mt-1 leading-relaxed">Improved persistent socket handling for real-time betting feeds.</p>
+</div>
+<div class="relative pl-8 opacity-60">
+<div class="absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full flex items-center justify-center border-4 border-surface-container-high z-10">
+<div class="w-1.5 h-1.5 bg-primary/30 rounded-full"></div>
+</div>
+<span class="mono-text text-[9px] font-bold text-primary/60 uppercase">Oct 18, 2023</span>
+<p class="text-xs font-bold text-primary mt-1">New Webhook Signatures</p>
+<p class="text-[11px] text-on-surface-variant mt-1 leading-relaxed">HMAC-SHA256 headers now mandatory for all production endpoints.</p>
+</div>
+<div class="relative pl-8 opacity-40">
+<div class="absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full flex items-center justify-center border-4 border-surface-container-high z-10">
+<div class="w-1.5 h-1.5 bg-primary/30 rounded-full"></div>
+</div>
+<span class="mono-text text-[9px] font-bold text-primary/60 uppercase">Oct 12, 2023</span>
+<p class="text-xs font-bold text-primary mt-1">Rate Limit Increase</p>
+<p class="text-[11px] text-on-surface-variant mt-1 leading-relaxed">Enterprise clients upgraded to 5,000 req/min base.</p>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-surface-container-high to-transparent pointer-events-none"></div>
+</div>
+</div>
+<!-- Documentation Inset -->
+<section class="mt-12 bg-[#154212] rounded-[32px] p-12 flex items-center justify-between text-white overflow-hidden relative">
+<div class="max-w-xl relative z-10">
+<h2 class="text-3xl font-semibold mb-4 tracking-tight">Need a customized integration flow?</h2>
+<p class="text-white/70 text-lg mb-8 leading-relaxed">Our solution architects are available for white-glove onboarding for high-volume deployments.</p>
+<div class="flex gap-4">
+<button class="bg-[#d2f000] text-[#154212] px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:scale-105 transition-transform">Book a Technical Review</button>
+<button class="bg-white/10 hover:bg-white/20 px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-xs transition-colors">Documentation</button>
+</div>
+</div>
+<div class="hidden lg:block relative w-96 h-64 z-10">
+<img alt="Code" class="rounded-2xl shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700" data-alt="Close-up of clean programming code on a monitor with soft blue and green ambient lighting in a professional workspace" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAJFFgrYHdVbH3O0sK1HJoXtC9k7NLfrkDzvCA-dbPdNTiCI4ZdxosyhwA2MM33LmYjZaoc-NtCRegyq00JSwdNIgndY04UikNBe-K_9I52KiqFKnforFTwiwODQ6kbS7tK40KuAHCQYC7WtvlAzKNl0GmyUsXfw9V8N-aZOaOdvNgN19mWt90VTNTqt8HWjzjs_vWHGURhL4CFFTyRrvKXnu2Z9eoJIiB1gSpXHLptowqINKfRjdBhS-VUc7XZ4sNLHrsyTwloa58"/>
+</div>
+<!-- Decorative Background Element -->
+<div class="absolute right-0 top-0 w-1/2 h-full bg-[#d2f000]/5 -skew-x-12 translate-x-20"></div>
+</section>
+</main>
+<!-- Floating Action Button Suppression - Not needed on dev tools console -->
+</body></html>

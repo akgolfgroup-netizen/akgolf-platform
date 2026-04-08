@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-low": "#f7f3ea",
+                        "secondary-fixed": "#d2f000",
+                        "surface-container-high": "#ece8df",
+                        "surface-dim": "#dddad1",
+                        "secondary-fixed-dim": "#b8d300",
+                        "on-primary-container": "#9dd090",
+                        "primary-container": "#2d5a27",
+                        "secondary-container": "#d0ed00",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#a1d494",
+                        "tertiary": "#154212",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-variant": "#e6e2d9",
+                        "on-secondary-container": "#5b6900",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#576500",
+                        "on-surface": "#1c1c16",
+                        "on-primary-fixed": "#002201",
+                        "background": "#fdf9f0",
+                        "on-tertiary-fixed": "#002201",
+                        "on-tertiary-container": "#9dd090",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#23501e",
+                        "inverse-surface": "#31302b",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#bcf0ae",
+                        "outline": "#72796e",
+                        "primary": "#154212",
+                        "error-container": "#ffdad6",
+                        "surface": "#fdf9f0",
+                        "surface-container": "#f1eee5",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "tertiary-fixed": "#bcf0ae",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "primary-fixed": "#bcf0ae",
+                        "surface-bright": "#fdf9f0",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "on-surface-variant": "#42493e",
+                        "on-background": "#1c1c16",
+                        "outline-variant": "#c2c9bb",
+                        "surface-tint": "#3b6934",
+                        "on-secondary-fixed": "#191e00"
+                    },
+                    fontFamily: {
+                        "dm-sans": ["DM Sans", "sans-serif"],
+                        "jetbrains-mono": ["JetBrains Mono", "monospace"],
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fdf9f0;
+            color: #1c1c16;
+            font-family: 'DM Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-emerald-950 flex flex-col py-8 px-4 shadow-[4px_0_16px_rgba(21,66,18,0.06)] z-50">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold tracking-widest text-white">AK SPORTS OS</h1>
+<p class="font-dm-sans tracking-tight text-xs font-medium uppercase text-emerald-100/50 mt-1">Admin/Coach Portal</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center space-x-3 px-4 py-3 transition-colors text-emerald-100/70 hover:text-white hover:bg-emerald-800/50 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="dashboard">dashboard</span>
+<span class="font-dm-sans tracking-tight text-sm font-medium uppercase">Dashboard</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 transition-colors text-emerald-100/70 hover:text-white hover:bg-emerald-800/50 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="groups">groups</span>
+<span class="font-dm-sans tracking-tight text-sm font-medium uppercase">Players</span>
+</a>
+<!-- Active State: Schedule -->
+<a class="flex items-center space-x-3 px-4 py-3 bg-lime-400 text-emerald-950 rounded-lg font-bold scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="calendar_today" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-dm-sans tracking-tight text-sm font-medium uppercase">Schedule</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 transition-colors text-emerald-100/70 hover:text-white hover:bg-emerald-800/50 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="analytics">analytics</span>
+<span class="font-dm-sans tracking-tight text-sm font-medium uppercase">Reports</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 transition-colors text-emerald-100/70 hover:text-white hover:bg-emerald-800/50 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span class="font-dm-sans tracking-tight text-sm font-medium uppercase">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 py-6 border-t border-emerald-900/50">
+<button class="w-full bg-lime-400 text-emerald-950 font-bold py-3 rounded-lg flex items-center justify-center space-x-2 mb-6 hover:brightness-110 transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="text-xs uppercase tracking-wider">New Session</span>
+</button>
+<div class="space-y-4">
+<a class="flex items-center space-x-3 text-emerald-100/70 text-xs font-medium uppercase hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 text-xs font-medium uppercase hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<main class="flex-1 ml-64 bg-background min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 z-40 bg-[#fdf9f0]/80 backdrop-blur-md flex items-center justify-between px-8">
+<div class="flex items-center space-x-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-emerald-900/40" data-icon="search">search</span>
+<input class="bg-surface-container-highest/50 border-none rounded-full pl-10 pr-4 py-2 text-xs font-dm-sans focus:ring-1 ring-emerald-900/10 w-64 transition-all" placeholder="Search sessions or players..." type="text"/>
+</div>
+<div class="flex items-center space-x-2 text-emerald-900/60 font-dm-sans font-semibold uppercase text-xs">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span>Elite Training Center</span>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<div class="flex items-center bg-surface-container-low px-2 py-1 rounded-lg">
+<button class="px-4 py-1.5 text-emerald-900 border-b-2 border-emerald-900 font-dm-sans font-semibold uppercase text-[10px]">Day</button>
+<button class="px-4 py-1.5 text-emerald-900/40 hover:bg-emerald-50 font-dm-sans font-semibold uppercase text-[10px]">Week</button>
+<button class="px-4 py-1.5 text-emerald-900/40 hover:bg-emerald-50 font-dm-sans font-semibold uppercase text-[10px]">Month</button>
+</div>
+<div class="h-6 w-[1px] bg-emerald-900/10 mx-2"></div>
+<button class="flex items-center space-x-2 bg-primary text-white px-4 py-2 rounded-xl hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="lock_clock">lock_clock</span>
+<span class="font-dm-sans font-semibold uppercase text-[10px] tracking-wider">Block Time</span>
+</button>
+<button class="flex items-center space-x-2 bg-secondary-fixed text-emerald-950 px-4 py-2 rounded-xl hover:brightness-110 transition-all shadow-sm">
+<span class="material-symbols-outlined text-sm" data-icon="event">event</span>
+<span class="font-dm-sans font-semibold uppercase text-[10px] tracking-wider">Add Session</span>
+</button>
+<div class="flex items-center space-x-4 ml-4">
+<button class="text-emerald-900/60 hover:text-emerald-900 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<img alt="Coach Profile" class="w-10 h-10 rounded-full border-2 border-emerald-900/10 object-cover" data-alt="Close up portrait of a professional athletic coach in a dark green polo shirt, confident expression, outdoor sports field background blurred" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbwI8c7GeAOPr1HIC7eD4gAQEtXdJieiNiMhPKb1x3HF3h8p2ih2RzG_MlLmAyPqDCqapEiDZmiA21g1SGVZD-5sK4XcIyW0dsIkM83qJQlwvyskg5L4yeX_HLpvZVuavp3VSjqGhevY-0d432ZZRoiwZXhAEKZoKgCCgcb7Q3vQLPkBZRfEQPAeIgBwrWvO8hg8pxiqmA-3D96rFhooYA5FfR0Wbu38v1nqFM-BUFmONehWe5Ig22ejNOI2uruIGFYM4SI6t6KZ06"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="pt-24 pb-12 px-10">
+<!-- Header & Filter Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
+<div>
+<div class="flex items-center space-x-3 mb-2">
+<span class="font-jetbrains-mono text-emerald-900/40 text-xs uppercase tracking-widest">System / Schedule</span>
+<div class="h-[1px] w-12 bg-emerald-900/10"></div>
+<span class="font-jetbrains-mono text-emerald-900/40 text-xs">24 OCT 2023</span>
+</div>
+<h2 class="text-4xl font-semibold text-emerald-900 font-headline tracking-tight">Schedule Management</h2>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<div class="bg-surface-container-low px-4 py-2 rounded-xl flex items-center space-x-3">
+<span class="text-[10px] font-jetbrains-mono text-emerald-900/40 uppercase">Coach</span>
+<select class="bg-transparent border-none text-xs font-semibold text-emerald-900 p-0 focus:ring-0">
+<option>All Coaches</option>
+<option>Marcus Aurelius</option>
+<option>Elena Vance</option>
+</select>
+</div>
+<div class="bg-surface-container-low px-4 py-2 rounded-xl flex items-center space-x-3">
+<span class="text-[10px] font-jetbrains-mono text-emerald-900/40 uppercase">Location</span>
+<select class="bg-transparent border-none text-xs font-semibold text-emerald-900 p-0 focus:ring-0">
+<option>Main Track</option>
+<option>Indoor Lab</option>
+<option>Workshop Room A</option>
+</select>
+</div>
+<button class="bg-surface-container-highest px-4 py-2 rounded-xl hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-lg align-middle" data-icon="filter_list">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Calendar Bento Grid -->
+<div class="grid grid-cols-12 gap-1 bg-surface-container-high rounded-3xl overflow-hidden shadow-[0_4px_16px_rgba(45,90,39,0.06)] border border-white/40">
+<!-- Time Column -->
+<div class="col-span-1 bg-surface-container-low flex flex-col pt-12 border-r border-emerald-900/5">
+<div class="h-20 flex items-start justify-center border-b border-emerald-900/5">
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">08:00</span>
+</div>
+<div class="h-20 flex items-start justify-center border-b border-emerald-900/5">
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">09:00</span>
+</div>
+<div class="h-20 flex items-start justify-center border-b border-emerald-900/5">
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">10:00</span>
+</div>
+<div class="h-20 flex items-start justify-center border-b border-emerald-900/5">
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">11:00</span>
+</div>
+<div class="h-20 flex items-start justify-center border-b border-emerald-900/5">
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">12:00</span>
+</div>
+<div class="h-20 flex items-start justify-center border-b border-emerald-900/5">
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">13:00</span>
+</div>
+<div class="h-20 flex items-start justify-center">
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">14:00</span>
+</div>
+</div>
+<!-- Main Schedule Canvas -->
+<div class="col-span-11 bg-surface-container-lowest relative p-0 min-h-[600px] bg-[linear-gradient(to_bottom,#f7f3ea_1px,transparent_1px)] bg-[size:100%_80px]">
+<!-- Session Block: Coaching (Forest Green) -->
+<div class="absolute left-8 top-[40px] w-72 h-[100px] bg-primary-container/10 border-l-4 border-primary rounded-r-xl p-3 group hover:scale-[1.02] transition-transform cursor-pointer shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-primary text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Coaching</span>
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">08:30 - 09:45</span>
+</div>
+<h4 class="text-sm font-bold text-emerald-900">Sprint Performance II</h4>
+<div class="flex items-center mt-2 space-x-2">
+<img class="w-5 h-5 rounded-full object-cover" data-alt="Portrait of a female athlete focused and professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-cjLOQD2FcAqeQ-Ot10vTqNzDKn5eXEbBSVcBDkNjpBJ9a-AZFrno93pC5HgZEj0wCz1yQC2l1Ds5PyER6o-tESD3tBWOLL9fwqz0Ep3NejmBAP3DCkcRlxqRbyHjqxa1eH0UD3dHnAveQ4qcWL4vvY5DSWEpXqJKJpjRUXdrDotfEpt5fe966VK54T-Qa23hztOZZW6ry9IGibDFl4j0QSyweAvLtPHODLH5q0t_Qd_7Y1M3QXq0rkI_BYYZUBMVSj1ChcFsu9oh"/>
+<span class="text-[10px] font-medium text-emerald-900/60 uppercase">Sarah Jenkins • Coach Vance</span>
+</div>
+</div>
+<!-- Session Block: Trackman (Vibrant Lime) -->
+<div class="absolute left-[340px] top-[140px] w-64 h-[80px] bg-secondary-container/20 border-l-4 border-secondary-fixed rounded-r-xl p-3 group hover:scale-[1.02] transition-transform cursor-pointer shadow-sm">
+<div class="flex justify-between items-start mb-1">
+<span class="bg-secondary-fixed text-emerald-950 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Trackman</span>
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">09:45 - 10:45</span>
+</div>
+<h4 class="text-sm font-bold text-emerald-900">Ball Flight Analysis</h4>
+<span class="text-[10px] font-medium text-emerald-900/60 uppercase">Bay 4 • Elite Lab</span>
+</div>
+<!-- Session Block: Workshop (Warm Green/White) -->
+<div class="absolute right-12 top-[80px] w-80 h-[140px] bg-surface-container-low border-l-4 border-surface-dim rounded-r-xl p-4 group hover:scale-[1.02] transition-transform cursor-pointer shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-surface-dim text-emerald-900 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Workshop</span>
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">09:00 - 10:45</span>
+</div>
+<h4 class="text-sm font-bold text-emerald-900">Nutrition for High Performance</h4>
+<p class="text-xs text-emerald-900/60 mt-1 line-clamp-2 leading-relaxed">Advanced caloric intake strategy for the upcoming season qualifiers.</p>
+<div class="mt-3 flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white bg-emerald-100 flex items-center justify-center text-[8px] font-bold">JD</div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-emerald-200 flex items-center justify-center text-[8px] font-bold">ML</div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-emerald-300 flex items-center justify-center text-[8px] font-bold">TK</div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center text-[8px] font-bold">+8</div>
+</div>
+</div>
+<!-- Session Block: Blocked Time -->
+<div class="absolute left-8 top-[320px] w-[calc(100%-80px)] h-[40px] bg-emerald-950/5 border-2 border-dashed border-emerald-900/10 rounded-xl flex items-center justify-center">
+<span class="text-[10px] font-jetbrains-mono text-emerald-900/20 uppercase tracking-[0.2em]">Maintenance Window - No Sessions</span>
+</div>
+<!-- Session Block: Coaching (Forest Green) -->
+<div class="absolute left-8 top-[420px] w-72 h-[120px] bg-primary-container/10 border-l-4 border-primary rounded-r-xl p-3 group hover:scale-[1.02] transition-transform cursor-pointer shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-primary text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Coaching</span>
+<span class="font-jetbrains-mono text-[10px] text-emerald-900/40">13:15 - 14:45</span>
+</div>
+<h4 class="text-sm font-bold text-emerald-900">Post-Op Mobility Session</h4>
+<div class="flex items-center mt-2 space-x-2">
+<img class="w-5 h-5 rounded-full object-cover" data-alt="Close up of professional athletic woman in sports gear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIWjM42x10AV9gMqzHjo9rqrprRSHQDdDrUylUq9yJYxjkFQJHRH9RZo0HACRm_KyoYT3QXGHeatrMqsJF9VmXEKNreATXfYqM-jsk0k_YsXs7Rf7uy0P4soJf_5kxkzqfUYZ4ubzxwIOIG-KH9NbZMe0rPWigSOr3nJsZLbRfHUhQYToMu20PB6lvilSu_u_4qwGkpOhMEZWxXW_ZMd7x6SIl5vOLvd9WIVAfjRdUARlcafYbHksCRfdfGOANPJQtcWD8jc4rZ0FU"/>
+<span class="text-[10px] font-medium text-emerald-900/60 uppercase">Jordan Blake • Coach Aurelius</span>
+</div>
+<div class="mt-2 flex items-center text-error space-x-1">
+<span class="material-symbols-outlined text-xs" data-icon="error">error</span>
+<span class="text-[9px] font-bold uppercase tracking-tight">Injury Alert</span>
+</div>
+</div>
+<!-- Current Time Indicator -->
+<div class="absolute top-[280px] w-full flex items-center pointer-events-none">
+<div class="w-3 h-3 rounded-full bg-error ml-[-6px]"></div>
+<div class="flex-1 h-[1px] bg-error/30"></div>
+<span class="absolute right-4 -top-2 text-[9px] font-bold text-error bg-white px-2">11:30 NOW</span>
+</div>
+</div>
+</div>
+<!-- Bottom Stats / Bento Footer -->
+<div class="grid grid-cols-4 gap-6 mt-8">
+<div class="bg-white p-6 rounded-2xl border border-emerald-900/5 flex items-center space-x-4">
+<div class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-900">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+</div>
+<div>
+<p class="text-[10px] font-jetbrains-mono text-emerald-900/40 uppercase">Total Attendance</p>
+<p class="text-xl font-bold text-emerald-900">124 <span class="text-xs text-primary-container">+12%</span></p>
+</div>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-emerald-900/5 flex items-center space-x-4">
+<div class="w-12 h-12 rounded-xl bg-lime-50 flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined" data-icon="timer">timer</span>
+</div>
+<div>
+<p class="text-[10px] font-jetbrains-mono text-emerald-900/40 uppercase">Facility Utilization</p>
+<p class="text-xl font-bold text-emerald-900">88%</p>
+</div>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-emerald-900/5 flex items-center space-x-4">
+<div class="w-12 h-12 rounded-xl bg-primary-container/5 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<p class="text-[10px] font-jetbrains-mono text-emerald-900/40 uppercase">Coach Availability</p>
+<p class="text-xl font-bold text-emerald-900">4/6 Active</p>
+</div>
+</div>
+<div class="bg-primary text-white p-6 rounded-2xl flex flex-col justify-between">
+<p class="text-[10px] font-jetbrains-mono text-white/50 uppercase">Session Efficiency</p>
+<div class="flex items-end justify-between">
+<p class="text-3xl font-bold">9.4</p>
+<span class="material-symbols-outlined text-lime-400" data-icon="trending_up">trending_up</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

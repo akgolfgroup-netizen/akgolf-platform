@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed": "#d2f000",
+                        "primary-container": "#2d5a27",
+                        "on-background": "#1c1c16",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-bright": "#fdf9f0",
+                        "surface-variant": "#e6e2d9",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#002201",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#5b6900",
+                        "on-secondary-fixed": "#191e00",
+                        "inverse-surface": "#31302b",
+                        "tertiary-fixed": "#bcf0ae",
+                        "on-tertiary-fixed": "#002201",
+                        "tertiary-container": "#2d5a27",
+                        "outline": "#72796e",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9dd090",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1c1c16",
+                        "primary-fixed": "#bcf0ae",
+                        "on-surface-variant": "#42493e",
+                        "surface": "#fdf9f0",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-secondary": "#ffffff",
+                        "primary": "#154212",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-dim": "#dddad1",
+                        "secondary-container": "#d0ed00",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-tint": "#3b6934",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#576500",
+                        "on-primary-container": "#9dd090",
+                        "background": "#fdf9f0",
+                        "tertiary": "#154212",
+                        "surface-container": "#f1eee5",
+                        "surface-container-low": "#f7f3ea",
+                        "inverse-primary": "#a1d494",
+                        "primary-fixed-dim": "#a1d494",
+                        "outline-variant": "#c2c9bb",
+                        "surface-container-high": "#ece8df"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .bento-card { transition: transform 0.2s ease; }
+        .bento-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="bg-surface flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-primary-container flex flex-col py-8 gap-y-6 shadow-2xl shadow-[#154212]/20 z-50">
+<div class="px-8 mb-4">
+<h1 class="text-[#ffffff] font-bold text-lg tracking-tight">AK Sports</h1>
+<p class="font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest text-[#d2f000]">Precision Performance</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 bg-[#d2f000] text-[#154212] rounded-lg mx-4 px-4 py-3 font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-white px-4 mx-4 py-3 font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest hover:bg-[#154212]/80 transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Roster</span>
+</a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-white px-4 mx-4 py-3 font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest hover:bg-[#154212]/80 transition-all" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Performance</span>
+</a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-white px-4 mx-4 py-3 font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest hover:bg-[#154212]/80 transition-all" href="#">
+<span class="material-symbols-outlined">event_note</span>
+<span>Schedule</span>
+</a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-white px-4 mx-4 py-3 font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest hover:bg-[#154212]/80 transition-all" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span>Analytics</span>
+</a>
+</nav>
+<div class="px-4 mt-auto space-y-4">
+<div class="bg-[#154212] border border-[#d2f000]/20 rounded-xl p-4">
+<p class="text-[10px] text-[#d2f000] font-bold tracking-widest mb-2 uppercase">Subscription</p>
+<button class="w-full bg-[#d2f000] text-[#154212] py-2 rounded-lg text-[11px] font-bold uppercase tracking-wider">UPGRADE PRO</button>
+</div>
+<div class="space-y-1">
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-white px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-white px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-8 w-full sticky top-0 z-40 bg-[#fdf9f0]/80 backdrop-blur-md h-16 border-b border-[#154212]/10">
+<div class="flex items-center gap-6">
+<h2 class="text-xl font-bold tracking-tight text-[#154212] font-['DM_Sans']">Mission Control</h2>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#154212]/40 text-sm">search</span>
+<input class="bg-surface-container-high/50 border-none rounded-full pl-10 pr-4 py-1.5 text-sm w-64 focus:ring-1 focus:ring-primary/20 placeholder-[#154212]/30 font-body" placeholder="Search athletes or sessions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-[#d2f000] text-[#154212] px-6 py-2 rounded-lg text-[11px] font-bold uppercase tracking-widest hover:opacity-90 active:scale-95 transition-all">
+                    BOOK SESSION
+                </button>
+<div class="flex items-center gap-3 border-l border-[#154212]/10 pl-4">
+<button class="text-[#154212]/60 hover:text-[#154212] transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-[#154212]/60 hover:text-[#154212] transition-colors"><span class="material-symbols-outlined">settings</span></button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-variant ring-2 ring-[#d2f000]">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a professional athlete in high-performance athletic gear with a determined expression and soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxyMiQCx91qw3QuWq-kDEFPqY-0quJHKoqh7hVGDOcXT0ZjBMgv6jx3DO336THqTPT-bgs656Y3Pu4BojSj7KmHLD_9DfDK1GMSlVKOdKDQRkPgL7RE-uOrHbcs9nEni1rZnxzpM0HH7Ud363--kogdS6njCFq98KLYzdFyAvVSliZX8J9lE3fhSpPW3oogQOPyDx8As7a2ZrigM_puwslx8y1V4P9KMzaEYkCku8SUEqDFVVyZkFtxl_7RVyrnmaMhJPbSefCAAiE"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<section class="p-8 space-y-6">
+<div class="grid grid-cols-12 gap-6">
+<!-- Performance Radar (Top Left 2x2) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-3xl p-8 bento-card border border-outline-variant/10">
+<div class="flex justify-between items-start mb-8">
+<div>
+<span class="font-mono text-[10px] text-primary/60 uppercase tracking-tighter">Metric Analysis</span>
+<h3 class="text-2xl font-bold text-primary tracking-tight">Strokes Gained Radar</h3>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-primary text-white text-[10px] font-bold rounded-full">TOTAL +2.4</span>
+<span class="px-3 py-1 bg-surface-container text-primary/60 text-[10px] font-bold rounded-full">PGA AVG</span>
+</div>
+</div>
+<div class="relative h-[400px] flex items-center justify-center overflow-hidden">
+<!-- Simulated Radar Chart with SVG -->
+<svg class="w-full h-full max-w-md" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="#2d5a27" stroke-dasharray="2 2" stroke-width="0.1"></circle>
+<circle cx="50" cy="50" fill="none" r="30" stroke="#2d5a27" stroke-dasharray="2 2" stroke-width="0.1"></circle>
+<circle cx="50" cy="50" fill="none" r="15" stroke="#2d5a27" stroke-dasharray="2 2" stroke-width="0.1"></circle>
+<path d="M50 5 L50 95 M5 50 L95 50 M18 18 L82 82 M18 82 L82 18" opacity="0.3" stroke="#2d5a27" stroke-width="0.05"></path>
+<!-- The Chart Data Shape -->
+<path d="M50 15 L75 40 L80 65 L50 85 L20 70 L25 35 Z" fill="rgba(210, 240, 0, 0.4)" stroke="#d2f000" stroke-width="1.5"></path>
+<!-- Labels -->
+<text fill="#154212" font-size="3" font-weight="bold" text-anchor="middle" x="50" y="8">DRIVING</text>
+<text fill="#154212" font-size="3" font-weight="bold" text-anchor="start" x="92" y="52">APPROACH</text>
+<text fill="#154212" font-size="3" font-weight="bold" text-anchor="middle" x="50" y="98">PUTTING</text>
+<text fill="#154212" font-size="3" font-weight="bold" text-anchor="end" x="8" y="52">SHORT GAME</text>
+</svg>
+</div>
+<div class="grid grid-cols-4 gap-4 mt-8">
+<div class="p-4 bg-surface rounded-2xl border-l-4 border-secondary-fixed">
+<p class="font-mono text-[9px] text-primary/50 uppercase">Driving</p>
+<p class="text-lg font-bold text-primary">+1.12</p>
+</div>
+<div class="p-4 bg-surface rounded-2xl border-l-4 border-secondary-fixed">
+<p class="font-mono text-[9px] text-primary/50 uppercase">Approach</p>
+<p class="text-lg font-bold text-primary">+0.85</p>
+</div>
+<div class="p-4 bg-surface rounded-2xl border-l-4 border-secondary-fixed">
+<p class="font-mono text-[9px] text-primary/50 uppercase">Short</p>
+<p class="text-lg font-bold text-primary">-0.15</p>
+</div>
+<div class="p-4 bg-surface rounded-2xl border-l-4 border-secondary-fixed">
+<p class="font-mono text-[9px] text-primary/50 uppercase">Putting</p>
+<p class="text-lg font-bold text-primary">+0.58</p>
+</div>
+</div>
+</div>
+<!-- AI-IUP Module (Top Right 2x1) -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<div class="bg-primary text-[#fdf9f0] rounded-3xl p-8 bento-card h-full relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-secondary-fixed" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-mono text-[10px] text-secondary-fixed uppercase tracking-widest">AI-IUP Intelligence</span>
+</div>
+<h3 class="text-3xl font-bold leading-tight mb-2">12-Week Transformation</h3>
+<p class="text-[#fdf9f0]/60 text-sm mb-8 leading-relaxed">Phase 02: Kinetic Power Transfer. Focusing on vertical ground force and hip rotation speed.</p>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<span class="text-[11px] font-mono uppercase">Progress 42%</span>
+<span class="text-[11px] font-mono uppercase">Week 5/12</span>
+</div>
+<div class="h-1 bg-[#fdf9f0]/10 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed w-[42%]"></div>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-[#fdf9f0]/10">
+<p class="text-[10px] uppercase font-mono text-secondary-fixed mb-4">Today's Focus</p>
+<div class="flex items-center gap-4 bg-[#fdf9f0]/5 p-3 rounded-xl">
+<div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">fitness_center</span>
+</div>
+<div>
+<p class="text-xs font-bold">Explosive Glute Load</p>
+<p class="text-[10px] text-[#fdf9f0]/40">3 Sets | 12 Reps</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Background Texture -->
+<div class="absolute right-0 bottom-0 opacity-10 translate-x-1/4 translate-y-1/4">
+<span class="material-symbols-outlined text-[300px]" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+</div>
+</div>
+</div>
+<!-- Stats Row (3 Cards) -->
+<div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- GIR% -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/10 bento-card">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-mono text-[10px] text-primary/50 uppercase">GIR Accuracy</p>
+<h4 class="text-3xl font-bold text-primary">68.4%</h4>
+</div>
+<span class="text-green-600 text-[10px] font-bold bg-green-50 px-2 py-1 rounded">+2.1%</span>
+</div>
+<div class="h-12 flex items-end gap-1">
+<div class="flex-1 bg-primary/10 h-[40%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[55%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[45%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[70%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary-fixed h-[85%] rounded-t-sm"></div>
+</div>
+</div>
+<!-- Scrambling -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/10 bento-card">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-mono text-[10px] text-primary/50 uppercase">Scrambling</p>
+<h4 class="text-3xl font-bold text-primary">54.2%</h4>
+</div>
+<span class="text-red-600 text-[10px] font-bold bg-red-50 px-2 py-1 rounded">-0.4%</span>
+</div>
+<div class="h-12 flex items-end gap-1">
+<div class="flex-1 bg-primary/10 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[50%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[65%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[55%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[40%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary-fixed h-[50%] rounded-t-sm"></div>
+</div>
+</div>
+<!-- Putts -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/10 bento-card">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-mono text-[10px] text-primary/50 uppercase">Putts per Round</p>
+<h4 class="text-3xl font-bold text-primary">28.5</h4>
+</div>
+<span class="text-green-600 text-[10px] font-bold bg-green-50 px-2 py-1 rounded">-1.2</span>
+</div>
+<div class="h-12 flex items-end gap-1">
+<div class="flex-1 bg-primary/10 h-[70%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[65%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[55%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[50%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary-fixed h-[45%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- Next Sessions (List) -->
+<div class="col-span-12 lg:col-span-7 bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/10 bento-card">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-xl font-bold text-primary tracking-tight">Upcoming Sessions</h3>
+<button class="text-xs font-bold text-primary/40 hover:text-primary transition-colors">VIEW CALENDAR</button>
+</div>
+<div class="space-y-4">
+<!-- Session Item -->
+<div class="flex items-center justify-between p-4 bg-surface rounded-2xl border border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Female performance coach in golf attire, smiling warmly in a bright indoor sports facility with high-end equipment background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyrktHhDXmyvDsbRqkvH7s566BfDtcEa69W8SV251gFCqs_Gy75aYIu9szFAA-Fzr7-lZnRkorJFT4qTkcZ9mCCOnxqVT0i-i1DLP6r2O76UbMBrmI6r1EBRqBwsbhosAbnBjve1NcgTIv3DB-NwtJv6opRY8Sby4PX8q7PDOi3H5v-2lT6feR9s6UzRQ5u3Niu0KYS7cOG6NqhlaLwBDV1-uu0ehWcbgou0CKZ2EzhKPinSccqWwi8CMnxnmsnHEH1rJUgKKLgfDF"/>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Swing Biomechanics Lab</p>
+<p class="text-[11px] text-primary/40 font-mono">w/ Coach Elena Marks</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-primary">Tomorrow, 09:00 AM</p>
+<p class="text-[10px] text-secondary font-bold uppercase">Main Studio</p>
+</div>
+</div>
+<!-- Session Item -->
+<div class="flex items-center justify-between p-4 bg-surface rounded-2xl border border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional male golf instructor in black polo shirt standing on a lush green fairway under a clear blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSoftBJ5rj-BQtPm_tl-BPES4lo1qCwtGRRoJwn6hxAEiNHymLoLXx7rs2rVO6SZJpd285vKe62uQTe7H010e_29AfD7GewabX6xaKMimpk60aFHp7gmKU1VthxK4sF_3LIajrWY6XSNfpfxqsQPEy5vxTlZZVpTnrSTMupqM0DjGPJlSqLktOfCL5wZ4-XG33a_p-62r_COpqrfLlb3LCuXx3m5oW-70YQI4mDMcjh7_6hBfiCAxNO27_H9aUbbwarTuJF4vc_qBL"/>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Wedge Control Matrix</p>
+<p class="text-[11px] text-primary/40 font-mono">w/ Coach David Chen</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-primary">Thursday, 02:30 PM</p>
+<p class="text-[10px] text-secondary font-bold uppercase">Short Game Area</p>
+</div>
+</div>
+<!-- Session Item -->
+<div class="flex items-center justify-between p-4 bg-surface rounded-2xl border border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up of a high-performance track and field coach looking focused and analytical during an outdoor training session" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGlTj62SrFyilrbEDa7pVL_SDx_oOw4gr9nYLHQDB3iYdHypEDrOahBC2OwV3XZa1TYIywqEGsn2c-k2EYbkSg3LNvRXDaLGk1s83m41olGQypU1aTFXLWltqLHeFlhKYx704eAe7t4DANS1AbQbnrHdbtG47EhvM2mBnJjQ3bcxQ4644hHnst7wD9BlIKrxRr3456qEsyRubYYZCzpi-oYfP72tAY6zC4W_BbPx10rMw9cyJ9ysNF31gUr4B2BvdgmAMakyi0zdEZ"/>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Mental Game Assessment</p>
+<p class="text-[11px] text-primary/40 font-mono">w/ Dr. Sarah Vane</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-primary">Saturday, 11:00 AM</p>
+<p class="text-[10px] text-secondary font-bold uppercase">Consultation Pod 3</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 20-Min Transformation (Ad/Subscription) -->
+<div class="col-span-12 lg:col-span-5 flex flex-col gap-6">
+<div class="bg-[#d2f000] rounded-3xl p-8 bento-card flex-1 relative overflow-hidden group">
+<div class="relative z-10">
+<span class="px-2 py-1 bg-primary text-white text-[9px] font-bold rounded mb-4 inline-block">TRENDING</span>
+<h3 class="text-2xl font-black text-primary leading-tight mb-4">20-Min Transformation: Power Core</h3>
+<p class="text-primary/70 text-sm mb-6 max-w-[240px]">Unlock explosive rotation with our daily micro-routine. No gym required.</p>
+<button class="bg-primary text-white px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all flex items-center gap-2">
+                                START NOW
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="absolute right-[-40px] bottom-[-20px] w-64 h-64 opacity-20 group-hover:rotate-12 transition-transform duration-700">
+<img class="w-full h-full object-contain filter grayscale brightness-50" data-alt="Macro close-up of a modern professional golf ball showing intricate dimple texture with clean studio lighting and soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMgSOQDOG2qk7FYu1Y27rnzxbIu19uFLrUnh53gWb8qKHcZyF1GqeBA7ACX0-XLmavF3RaRWRklTywoiJX35dG-o_HuotQDh1yFMehAJxM7-8ZF_VorDKUoCkVOsah7d2P3rIyWDW80LDstiaAnbTQrIHNX38GGFQtXSWm9uppdnN09bZRV8j1DNYB80l3RW5Vv5QcrQqrSX0Z5hKUPFb5wp11_3z_ZiRbJ6MF2y26zCZM4EBKLrwgPD3g-cNb4y0z790kkm5NMpVc"/>
+</div>
+</div>
+<div class="bg-surface-container-high rounded-3xl p-8 bento-card border border-outline-variant/10">
+<div class="flex items-center gap-4 mb-4">
+<div class="p-3 bg-primary/5 rounded-2xl">
+<span class="material-symbols-outlined text-primary">workspace_premium</span>
+</div>
+<div>
+<h4 class="font-bold text-primary">Elite Membership</h4>
+<p class="text-[10px] text-primary/40 font-mono uppercase tracking-widest">Active since Jan 2024</p>
+</div>
+</div>
+<p class="text-xs text-primary/60 mb-4 italic">"Your drive speed has increased by 8mph since joining. You're in the top 5% of your age bracket."</p>
+<div class="flex gap-2">
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-3 text-center border border-outline-variant/10">
+<p class="font-mono text-[9px] text-primary/40 mb-1">COACHES</p>
+<p class="text-sm font-bold text-primary">3 Assigned</p>
+</div>
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-3 text-center border border-outline-variant/10">
+<p class="font-mono text-[9px] text-primary/40 mb-1">FACILITY</p>
+<p class="text-sm font-bold text-primary">Full Access</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Stats Bar -->
+<footer class="mt-auto border-t border-[#154212]/10 p-6 flex justify-between items-center bg-surface-container-low/50">
+<div class="flex gap-8">
+<div>
+<p class="text-[10px] font-mono text-primary/40 uppercase">System Status</p>
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+<p class="text-xs font-bold text-primary">ALL MODULES ACTIVE</p>
+</div>
+</div>
+<div class="border-l border-primary/10 pl-8">
+<p class="text-[10px] font-mono text-primary/40 uppercase">Data Sync</p>
+<p class="text-xs font-bold text-primary">REAL-TIME (2MS LATENCY)</p>
+</div>
+</div>
+<p class="text-[10px] font-mono text-primary/30 uppercase tracking-[0.2em]">AK Sports OS v4.2.0-Alpha</p>
+</footer>
+</main>
+</body></html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Print View - AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#002201",
+                        "background": "#fdf9f0",
+                        "on-tertiary-container": "#9dd090",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#002201",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#154212",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-variant": "#e6e2d9",
+                        "on-secondary-container": "#5b6900",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#576500",
+                        "on-surface": "#1c1c16",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-dim": "#dddad1",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-container-high": "#ece8df",
+                        "primary-container": "#2d5a27",
+                        "secondary-container": "#d0ed00",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#a1d494",
+                        "on-primary-container": "#9dd090",
+                        "surface-container-low": "#f7f3ea",
+                        "secondary-fixed": "#d2f000",
+                        "outline-variant": "#c2c9bb",
+                        "surface-tint": "#3b6934",
+                        "on-background": "#1c1c16",
+                        "on-secondary-fixed": "#191e00",
+                        "primary-fixed": "#bcf0ae",
+                        "surface-bright": "#fdf9f0",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "on-surface-variant": "#42493e",
+                        "error-container": "#ffdad6",
+                        "surface": "#fdf9f0",
+                        "primary": "#154212",
+                        "tertiary-container": "#2d5a27",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-container": "#f1eee5",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#bcf0ae",
+                        "outline": "#72796e",
+                        "inverse-surface": "#31302b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .page-break { page-break-before: always; }
+            .print-border { border: 1px solid #000 !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fdf9f0;
+            color: #1c1c16;
+            font-family: 'DM Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen">
+<!-- Floating Actions (Suppressed in Print) -->
+<div class="no-print fixed top-6 right-6 flex flex-col gap-4 z-50">
+<button class="bg-primary text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">close</span>
+</button>
+<button class="bg-secondary-fixed text-on-secondary-fixed w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform" onclick="window.print()">
+<span class="material-symbols-outlined">print</span>
+</button>
+</div>
+<!-- Print Shell -->
+<div class="max-w-4xl mx-auto bg-white min-h-screen p-8 md:p-16 shadow-sm border-x border-stone-100 print:shadow-none print:border-none">
+<!-- Clinical Header -->
+<header class="border-b-2 border-black pb-8 mb-12 flex justify-between items-end">
+<div>
+<p class="font-mono text-xs uppercase tracking-widest text-stone-500 mb-2">System Output / Archive 2024</p>
+<h1 class="text-4xl font-black tracking-tighter uppercase text-black">AK Sports OS</h1>
+</div>
+<div class="text-right">
+<p class="font-mono text-xs uppercase text-stone-500">Document Class</p>
+<p class="text-xl font-bold uppercase tracking-tight">Performance Summary</p>
+</div>
+</header>
+<!-- Metadata Section -->
+<section class="grid grid-cols-2 gap-8 mb-12 border-b border-stone-200 pb-12">
+<div class="space-y-4">
+<div>
+<span class="font-mono text-[10px] uppercase text-stone-400 block mb-1">Generated Date</span>
+<p class="font-medium">October 24, 2023 14:32:01 UTC</p>
+</div>
+<div>
+<span class="font-mono text-[10px] uppercase text-stone-400 block mb-1">Entity Reference</span>
+<p class="font-medium">AK-DASH-9912-B</p>
+</div>
+</div>
+<div class="space-y-4">
+<div>
+<span class="font-mono text-[10px] uppercase text-stone-400 block mb-1">Verification Status</span>
+<p class="font-medium uppercase tracking-wider">Clinical / Verified</p>
+</div>
+<div>
+<span class="font-mono text-[10px] uppercase text-stone-400 block mb-1">Security Tier</span>
+<p class="font-medium">Restricted Internal View</p>
+</div>
+</div>
+</section>
+<!-- Main Data Content (Bento Print Style) -->
+<main class="space-y-12">
+<!-- Section 1: Core Performance -->
+<section>
+<h2 class="font-mono text-sm font-bold uppercase tracking-widest border-l-4 border-black pl-4 mb-8">01. Core Performance Metrics</h2>
+<div class="grid grid-cols-1 gap-6">
+<div class="border border-stone-200 p-6 flex justify-between items-center">
+<div>
+<p class="text-stone-500 uppercase text-[10px] font-mono tracking-tighter">Active Subscribers</p>
+<p class="text-3xl font-bold">12,402</p>
+</div>
+<div class="text-right">
+<span class="font-mono text-xs text-stone-400">+14.2% YoY</span>
+</div>
+</div>
+<div class="border border-stone-200 p-6 flex justify-between items-center">
+<div>
+<p class="text-stone-500 uppercase text-[10px] font-mono tracking-tighter">System Uptime</p>
+<p class="text-3xl font-bold">99.98%</p>
+</div>
+<div class="text-right">
+<span class="font-mono text-xs text-stone-400">Stable</span>
+</div>
+</div>
+<div class="border border-stone-200 p-6 flex justify-between items-center">
+<div>
+<p class="text-stone-500 uppercase text-[10px] font-mono tracking-tighter">API Response Latency</p>
+<p class="text-3xl font-bold">42ms</p>
+</div>
+<div class="text-right">
+<span class="font-mono text-xs text-stone-400">Target: &lt; 50ms</span>
+</div>
+</div>
+</div>
+</section>
+<div class="page-break"></div>
+<!-- Section 2: Data Distribution -->
+<section class="pt-12">
+<h2 class="font-mono text-sm font-bold uppercase tracking-widest border-l-4 border-black pl-4 mb-8">02. Regional Distribution Analysis</h2>
+<div class="border border-stone-200 overflow-hidden">
+<table class="w-full text-left font-mono text-xs">
+<thead>
+<tr class="bg-stone-50 border-b border-stone-200">
+<th class="p-4 uppercase font-bold">Region Code</th>
+<th class="p-4 uppercase font-bold">Volume</th>
+<th class="p-4 uppercase font-bold">Variance</th>
+<th class="p-4 uppercase font-bold">Load Factor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-stone-100">
+<td class="p-4">EU-WEST-01</td>
+<td class="p-4">4.2M txn/s</td>
+<td class="p-4 text-stone-500">±0.02</td>
+<td class="p-4 font-bold">Optimal</td>
+</tr>
+<tr class="border-b border-stone-100">
+<td class="p-4">US-EAST-02</td>
+<td class="p-4">3.8M txn/s</td>
+<td class="p-4 text-stone-500">±0.04</td>
+<td class="p-4 font-bold">Optimal</td>
+</tr>
+<tr class="border-b border-stone-100">
+<td class="p-4">ASIA-SOUTH-04</td>
+<td class="p-4">6.1M txn/s</td>
+<td class="p-4 text-stone-500">±0.12</td>
+<td class="p-4 font-bold">High</td>
+</tr>
+<tr>
+<td class="p-4">AU-EAST-01</td>
+<td class="p-4">1.2M txn/s</td>
+<td class="p-4 text-stone-500">±0.01</td>
+<td class="p-4 font-bold">Low</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Section 3: Visual Audit -->
+<section>
+<h2 class="font-mono text-sm font-bold uppercase tracking-widest border-l-4 border-black pl-4 mb-8">03. Site Audit Preview</h2>
+<div class="grid grid-cols-1 gap-8">
+<div class="space-y-4">
+<div class="aspect-[21/9] bg-stone-100 border border-stone-200 grayscale">
+<img alt="System architecture diagram" class="w-full h-full object-cover opacity-50" data-alt="Technical schematic showing cloud infrastructure nodes and data pathways in a clean monochrome architectural style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO5MIKMrw6DO0Rd7F2uxCvI6oSYuz7TlH7s34WTwrtUew8_xQDWXWsFfnwig9pR13D1uLpxRrSAgtxgImpe0cFBdwFiXbiXd7-lhnFKQ43oOGBq8TxiUK4Apj-pgIAOdic-BdoBf0I6ZWxIx0zzOglOKj-k5G9r4hrw7uZ9WCkyYtSrTC0vfzhg2PiAF3sNdFR7N6QKi-XiFOJat-n6k3ueSKEf4PXfe1sqZ8gZwfW-2V7PhCgB1lExgRwikHlhx06Qs_ZOSKj7End"/>
+</div>
+<p class="font-mono text-[10px] text-stone-400 uppercase italic">Fig. 1.0: Global Node Topology - Grayscale Map</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Clinical Footer -->
+<footer class="mt-24 pt-8 border-t border-black flex justify-between items-start font-mono text-[10px] uppercase text-stone-400">
+<div>
+<p>AK Sports OS / Precision Logistics Module</p>
+<p>Proprietary Content - Unauthorized duplication prohibited</p>
+</div>
+<div class="text-right">
+<p>Page 01 / 02</p>
+<p>End of Report</p>
+</div>
+</footer>
+</div>
+<!-- Hidden Navigation Required by Protocol but suppressed in Print view via Logic -->
+<nav class="hidden md:hidden">
+<!-- Suppressed for print-focused UI -->
+</nav>
+</body></html>

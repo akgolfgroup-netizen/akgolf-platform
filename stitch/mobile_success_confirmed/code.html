@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#3b6934",
+                        "primary-fixed": "#bcf0ae",
+                        "surface": "#fdf9f0",
+                        "tertiary-fixed": "#bcf0ae",
+                        "tertiary": "#154212",
+                        "surface-container-high": "#ece8df",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dddad1",
+                        "outline-variant": "#c2c9bb",
+                        "background": "#fdf9f0",
+                        "primary": "#154212",
+                        "on-primary-fixed": "#002201",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d0ed00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1c1c16",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-container-low": "#f7f3ea",
+                        "surface-bright": "#fdf9f0",
+                        "on-secondary-fixed": "#191e00",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "secondary": "#576500",
+                        "tertiary-container": "#2d5a27",
+                        "inverse-surface": "#31302b",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-surface": "#1c1c16",
+                        "on-secondary-container": "#5b6900",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#2d5a27",
+                        "secondary-fixed": "#d2f000",
+                        "outline": "#72796e",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9dd090",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-container-highest": "#e6e2d9",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-primary-container": "#9dd090",
+                        "on-surface-variant": "#42493e",
+                        "on-tertiary-fixed": "#002201",
+                        "surface-container": "#f1eee5",
+                        "surface-variant": "#e6e2d9",
+                        "inverse-primary": "#a1d494"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .confetti-overlay {
+            background-image: radial-gradient(#d2f000 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.15;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen font-body antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<div class="max-w-[390px] mx-auto min-h-screen relative overflow-hidden flex flex-col">
+<!-- Background Pattern -->
+<div class="absolute inset-0 confetti-overlay pointer-events-none"></div>
+<div class="absolute top-0 right-0 w-64 h-64 bg-secondary-fixed/10 blur-[100px] rounded-full -mr-32 -mt-32"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 blur-[100px] rounded-full -ml-32 -mb-32"></div>
+<!-- Top App Bar -->
+<header class="bg-[#fdf9f0]/80 backdrop-blur-md dark:bg-stone-900/80 fixed top-0 z-50 w-full max-w-[390px]">
+<div class="flex justify-between items-center w-full px-6 py-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="close-up portrait of a professional athlete in high-performance sports apparel with soft studio lighting and neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaJohrJCPNnKN10668fo4djlWfJ_zwZ56jkJNKfcTj9Z917WL-EzQb6mNTk3UcMzGd-TlBOOZWghR8x75k02eUlKMjWi2Dk703-6QvTwSb_Ju-dKs4EFTeoP92m0xOrzEZE5G1wm6k9klwZvPD0EMttA8b1VeTlMQl7pxsQw_mpxwsIw22VczqvmdXzt8-Gde6b0oyciatT7vmnPG-JkO6iz890aVUtHBlIooftmrS1QhzqECBXfmB6sNBPMkypgVmEv8FXLcHjmxg"/>
+</div>
+<span class="text-xl font-bold uppercase tracking-widest text-[#154212] dark:text-white">AK Sports OS</span>
+<button class="text-[#154212] dark:text-[#d2f000] hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="flex-grow pt-24 pb-32 px-6 flex flex-col items-center">
+<!-- Success Icon -->
+<div class="relative mt-8 mb-10">
+<div class="absolute inset-0 bg-secondary-fixed/20 blur-2xl rounded-full scale-150"></div>
+<div class="relative w-28 h-28 bg-secondary-fixed rounded-full flex items-center justify-center shadow-lg shadow-secondary-fixed/20">
+<span class="material-symbols-outlined text-[64px] text-on-secondary-fixed" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<!-- Headline -->
+<div class="text-center mb-10">
+<p class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/60 mb-2">Booking Sequence Complete</p>
+<h1 class="text-4xl font-bold tracking-tight text-primary font-headline">Booking Confirmed!</h1>
+</div>
+<!-- Detail Card (Bento Style) -->
+<div class="w-full bg-surface-container-lowest rounded-[24px] p-6 shadow-[0_4px_16px_rgba(45,90,39,0.06)] relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-5">
+<span class="material-symbols-outlined text-64 text-primary" data-icon="golf_course">golf_course</span>
+</div>
+<div class="space-y-6 relative z-10">
+<div>
+<label class="font-mono text-[10px] uppercase tracking-widest text-outline mb-1 block">Session Type</label>
+<p class="text-xl font-semibold text-primary">Trackman Session</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="font-mono text-[10px] uppercase tracking-widest text-outline mb-1 block">Lead Coach</label>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Coach Sarah" class="w-full h-full object-cover" data-alt="portrait of a female professional sports coach in athletic gear looking confident and smiling softly" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB1mcM91lwiBZeEWSmjzKDjOPMOzF6OUEy8lpcZDDCilFW-A5dNt2ek6JPfL-shR_jwgY9vr8S-LME1q4SGQyQbpXwYtOVn99VMHa8ggDsXB7PmuJFBgdBFGx7yw1AbL16UyxusAKQa_ptv-msDjX1mIezzAw7WbspTt5VxOL5yUe9lpHs6tHI1-knL75m-iecQHK-iMELA3vSRnrnSosEzTZNAq6FVR2TiCerWFy8pOEC2xI7AU7QmNusVQ1C_JteSbviF2NoyJvy"/>
+</div>
+<span class="text-sm font-medium text-on-surface">Sarah Mitchell</span>
+</div>
+</div>
+<div>
+<label class="font-mono text-[10px] uppercase tracking-widest text-outline mb-1 block">Date</label>
+<span class="text-sm font-medium text-on-surface">Sept 12, 2024</span>
+</div>
+</div>
+<div class="pt-4 border-t border-surface-container-high flex items-center justify-between">
+<div>
+<label class="font-mono text-[10px] uppercase tracking-widest text-outline mb-1 block">Time Slot</label>
+<span class="text-lg font-mono font-bold text-primary">10:00 AM</span>
+</div>
+<div class="bg-primary/5 px-3 py-1 rounded-full">
+<span class="text-[10px] font-bold text-primary tracking-tighter uppercase">60 Minutes</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Cluster -->
+<div class="w-full mt-8 space-y-3">
+<button class="w-full flex items-center justify-center gap-3 bg-surface-container-low text-primary py-4 px-6 rounded-xl font-semibold text-sm uppercase tracking-wider hover:bg-surface-container-high transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-xl" data-icon="calendar_add_on">calendar_add_on</span>
+                    Add to Calendar
+                </button>
+<button class="w-full flex items-center justify-center gap-3 bg-surface-container-low text-primary py-4 px-6 rounded-xl font-semibold text-sm uppercase tracking-wider hover:bg-surface-container-high transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-xl" data-icon="ios_share">ios_share</span>
+                    Share Booking
+                </button>
+</div>
+<!-- Primary CTA -->
+<div class="mt-auto pt-8 w-full">
+<button class="w-full bg-secondary-fixed text-on-secondary-fixed py-5 px-8 rounded-xl font-bold text-base uppercase tracking-widest shadow-xl shadow-secondary-fixed/20 active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+                    Back to Dashboard
+                    <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation (Shared Component) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#fdf9f0]/90 backdrop-blur-xl dark:bg-stone-950/90 rounded-t-[24px] border-t-[0.5px] border-[#154212]/10 shadow-[0_-4px_16px_rgba(45,90,39,0.06)]">
+<div class="flex flex-col items-center justify-center text-[#154212]/50 px-3 py-1.5 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['DM_Sans'] font-medium text-[10px] uppercase tracking-tighter mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#154212] bg-[#d2f000] rounded-xl px-3 py-1.5 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="calendar_today" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-['DM_Sans'] font-medium text-[10px] uppercase tracking-tighter mt-1">Book</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#154212]/50 px-3 py-1.5">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-['DM_Sans'] font-medium text-[10px] uppercase tracking-tighter mt-1">Stats</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#154212]/50 px-3 py-1.5">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-['DM_Sans'] font-medium text-[10px] uppercase tracking-tighter mt-1">Chat</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#154212]/50 px-3 py-1.5">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['DM_Sans'] font-medium text-[10px] uppercase tracking-tighter mt-1">Profile</span>
+</div>
+</nav>
+</div>
+</body></html>

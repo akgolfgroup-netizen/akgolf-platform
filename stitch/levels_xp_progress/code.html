@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Sports OS - Levels Progress</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#3b6934",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-fixed": "#191e00",
+                        "on-surface-variant": "#42493e",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dddad1",
+                        "on-surface": "#1c1c16",
+                        "inverse-on-surface": "#f4f0e7",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002201",
+                        "tertiary-container": "#2d5a27",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#31302b",
+                        "inverse-primary": "#a1d494",
+                        "primary-container": "#2d5a27",
+                        "surface-container-highest": "#e6e2d9",
+                        "outline-variant": "#c2c9bb",
+                        "on-tertiary-container": "#9dd090",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-primary-container": "#9dd090",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-variant": "#e6e2d9",
+                        "surface-bright": "#fdf9f0",
+                        "on-background": "#1c1c16",
+                        "background": "#fdf9f0",
+                        "on-secondary-container": "#5b6900",
+                        "surface": "#fdf9f0",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#bcf0ae",
+                        "secondary": "#576500",
+                        "surface-container": "#f1eee5",
+                        "primary-fixed": "#bcf0ae",
+                        "outline": "#72796e",
+                        "on-primary-fixed": "#002201",
+                        "surface-container-high": "#ece8df",
+                        "secondary-fixed": "#d2f000",
+                        "primary": "#154212",
+                        "tertiary": "#154212",
+                        "secondary-fixed-dim": "#b8d300",
+                        "secondary-container": "#d0ed00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e6e2d9;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased">
+<!-- SideNavBar (Forest Green Sidebar) -->
+<aside class="hidden md:flex flex-col h-screen w-72 left-0 top-0 fixed bg-[#154212] dark:bg-emerald-950 py-8 z-50 shadow-[4px_0_16px_rgba(45,90,39,0.06)]">
+<div class="px-8 mb-12">
+<h1 class="text-[#fdf9f0] font-semibold text-lg tracking-tighter">AK Sports OS</h1>
+<p class="text-[#d2f000] font-mono text-[10px] tracking-widest uppercase mt-1">Elite Performance</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] transition-colors duration-200 font-medium uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="military_tech">military_tech</span>
+                Achievements
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] transition-colors duration-200 font-medium uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="leaderboard">leaderboard</span>
+                Leaderboard
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] transition-colors duration-200 font-medium uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="emoji_events">emoji_events</span>
+                Challenges
+            </a>
+<a class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 my-1 flex items-center px-6 py-3 font-bold uppercase tracking-widest text-[11px] scale-100 active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+                Streaks
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] transition-colors duration-200 font-medium uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="shopping_basket">shopping_basket</span>
+                Points Shop
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] transition-colors duration-200 font-medium uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="sports_score">sports_score</span>
+                Tournaments
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] transition-colors duration-200 font-medium uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="group">group</span>
+                Social Feed
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-6 py-3 my-1 hover:text-[#fdf9f0] transition-colors duration-200 font-medium uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="confirmation_number">confirmation_number</span>
+                Season Pass
+            </a>
+</nav>
+<div class="mt-auto px-8">
+<button class="w-full py-4 bg-[#d2f000] text-[#154212] rounded-xl font-bold text-xs uppercase tracking-widest transition-transform active:scale-95">
+                View Milestones
+            </button>
+<div class="mt-8 pt-8 border-t border-white/10 space-y-4">
+<a class="flex items-center text-[#fdf9f0]/50 hover:text-[#fdf9f0] transition-colors text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined mr-3 text-sm" data-icon="settings">settings</span> Settings
+                </a>
+<a class="flex items-center text-[#fdf9f0]/50 hover:text-[#fdf9f0] transition-colors text-[11px] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined mr-3 text-sm" data-icon="help_outline">help_outline</span> Support
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-72 min-h-screen bg-background">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-16 px-8 w-full sticky top-0 z-40 bg-[#fdf9f0] dark:bg-stone-900">
+<div class="flex items-center space-x-8">
+<span class="text-xl font-bold tracking-tighter text-[#154212]">LEVELS PROGRESS</span>
+<nav class="hidden lg:flex space-x-6">
+<a class="text-[#154212] font-semibold border-b-2 border-[#d2f000] font-['DM_Sans'] text-sm tracking-tight py-5" href="#">Overview</a>
+<a class="text-[#154212]/60 hover:text-[#154212] font-['DM_Sans'] font-medium text-sm tracking-tight py-5 transition-all" href="#">History</a>
+<a class="text-[#154212]/60 hover:text-[#154212] font-['DM_Sans'] font-medium text-sm tracking-tight py-5 transition-all" href="#">Leaderboard</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<div class="bg-surface-container-low px-4 py-2 rounded-full flex items-center">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm ml-2 w-48 font-mono" placeholder="Search data..." type="text"/>
+</div>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all active:scale-95">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border-2 border-secondary">
+<img alt="Athlete Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a focused professional athlete in performance gear with neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5YLwW2xHeRwGginFNmHJjcbvQJRfjox7n6-862mJ47soDU0HmFbEknqmMjOVx98jc7zhfRORLyAiOz7Lnj-CydOXoKmREoi6PE6pVSs9KUlpbtrhx49UvEbOtZ8g5Cly4dk_cJDgGCPM3bXEsQ1nyxqeTQlyFPE4yF719-ruLfbIDVVaWjhKj_7fa4SAakOppKU4omM4VOXrUOJWgtaMM6MRMBASJwnBYuIsLT5IHFWQEo4to8Zoq3G-mG8NMYXsmgC_rwXTp7Owc"/>
+</div>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+<!-- Hero XP Section (Bento Style) -->
+<section class="grid grid-cols-12 gap-8">
+<!-- Large XP Display -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-[24px] p-10 flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[120px]" data-icon="military_tech">military_tech</span>
+</div>
+<div class="relative z-10">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-secondary-fixed bg-primary px-3 py-1 rounded-md font-mono text-[10px] tracking-widest uppercase">Current Status</span>
+<h2 class="text-6xl font-extrabold text-primary tracking-tighter mt-4">Level 42</h2>
+<p class="text-on-surface-variant font-medium mt-2">Elite Vanguard Division</p>
+</div>
+<div class="text-right">
+<p class="font-mono text-xs text-on-surface-variant uppercase tracking-widest">Total XP Earned</p>
+<p class="text-3xl font-bold text-primary tracking-tight">124,500 <span class="text-sm font-normal text-on-surface-variant">XP</span></p>
+</div>
+</div>
+<div class="mt-16">
+<div class="flex justify-between items-end mb-4">
+<p class="font-mono text-xs uppercase tracking-widest text-primary font-bold">Progress to Level 43</p>
+<p class="font-mono text-xs text-on-surface-variant"><span class="text-primary font-bold">8,200</span> / 12,000 XP</p>
+</div>
+<div class="h-6 w-full bg-surface-container-low rounded-full overflow-hidden p-1 border border-surface-container-high">
+<div class="h-full bg-secondary rounded-full relative transition-all duration-1000 ease-out" style="width: 68%;">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Next Level Reward Preview -->
+<div class="col-span-12 lg:col-span-4 bg-primary rounded-[24px] p-8 text-white flex flex-col justify-between">
+<div>
+<p class="font-mono text-[10px] uppercase tracking-widest text-secondary-fixed opacity-80">Upcoming Reward</p>
+<h3 class="text-2xl font-bold mt-2 tracking-tight">Titanium Gear Unlock</h3>
+<p class="text-white/60 text-sm mt-4 leading-relaxed">Reach Level 43 to unlock the full Titanium aesthetic pack and 2x performance multiplier for tournament entries.</p>
+</div>
+<div class="mt-8 aspect-video w-full rounded-xl overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center">
+<img alt="Gear Unlock Preview" class="w-full h-full object-cover mix-blend-luminosity hover:mix-blend-normal transition-all" data-alt="Minimalist high-tech sports watch with metallic titanium finish and glowing interface on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQMHVTYijM9gy3h2ItC_en8_HHg0fZf5wsPidudyixVe1JB-QttBm0J4wglifkm-quUPVjHpAUs1HuhOKIjHvgKIwijnLCHs9dnkTffQhNLskFV4RAINqeq7FufLSZ0f1prqwWUlHaaCufxDuBx7g8VQ_DaGUmx6Mkq4EiLVekNwxl4SocpveftF8SH_2Eju9KkgXoS5ZnahSpDNhEdhItYkVc0wP_RXtWfUjyn5M12Ls6tWiNsffcHrizSmxOpcg2Lzw9T7hS2-1a"/>
+</div>
+<button class="mt-6 w-full py-4 bg-secondary-fixed text-primary rounded-xl font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all">
+                        Expedite Progress
+                    </button>
+</div>
+</section>
+<!-- Middle Section: Benefits & How to Earn -->
+<section class="grid grid-cols-12 gap-8">
+<!-- Benefits Comparison -->
+<div class="col-span-12 xl:col-span-8 space-y-6">
+<div class="flex justify-between items-end">
+<h3 class="text-xl font-bold text-primary tracking-tight">Tier Benefits Comparison</h3>
+<p class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Level 42 vs Level 43</p>
+</div>
+<div class="bg-surface-container-low rounded-[24px] overflow-hidden">
+<table class="w-full border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50">
+<th class="px-8 py-4 text-left font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Benefit Feature</th>
+<th class="px-8 py-4 text-center font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Current (Lvl 42)</th>
+<th class="px-8 py-4 text-center font-mono text-[10px] uppercase tracking-widest text-secondary font-bold">Next (Lvl 43)</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="border-b border-outline-variant/10">
+<td class="px-8 py-5 text-primary font-medium">Daily XP Multiplier</td>
+<td class="px-8 py-5 text-center text-on-surface-variant">1.2x</td>
+<td class="px-8 py-5 text-center text-primary font-bold">1.5x</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="px-8 py-5 text-primary font-medium">Store Discount</td>
+<td class="px-8 py-5 text-center text-on-surface-variant">5%</td>
+<td class="px-8 py-5 text-center text-primary font-bold">10%</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="px-8 py-5 text-primary font-medium">Tournament Entry</td>
+<td class="px-8 py-5 text-center text-on-surface-variant">Standard</td>
+<td class="px-8 py-5 text-center text-primary font-bold">Priority</td>
+</tr>
+<tr>
+<td class="px-8 py-5 text-primary font-medium">Coach Access</td>
+<td class="px-8 py-5 text-center text-on-surface-variant">—</td>
+<td class="px-8 py-5 text-center text-primary font-bold">AI Support+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- How to Earn Tips -->
+<div class="col-span-12 xl:col-span-4 space-y-6">
+<h3 class="text-xl font-bold text-primary tracking-tight">How to Earn</h3>
+<div class="space-y-4">
+<div class="bg-surface-container-lowest p-6 rounded-2xl border-l-4 border-secondary shadow-sm hover:translate-x-1 transition-transform">
+<div class="flex items-center space-x-4">
+<div class="bg-secondary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-secondary" data-icon="bolt">bolt</span>
+</div>
+<div>
+<h4 class="font-bold text-primary text-sm">Perfect Streak</h4>
+<p class="text-xs text-on-surface-variant mt-1">Earn 500 XP for every 7-day workout streak maintained.</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl border-l-4 border-primary shadow-sm hover:translate-x-1 transition-transform">
+<div class="flex items-center space-x-4">
+<div class="bg-primary/5 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="group">group</span>
+</div>
+<div>
+<h4 class="font-bold text-primary text-sm">Group Sessions</h4>
+<p class="text-xs text-on-surface-variant mt-1">Participate in community events for a 200 XP bonus per event.</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl border-l-4 border-tertiary-container shadow-sm hover:translate-x-1 transition-transform">
+<div class="flex items-center space-x-4">
+<div class="bg-tertiary-container/5 p-2 rounded-lg">
+<span class="material-symbols-outlined text-tertiary-container" data-icon="reviews">reviews</span>
+</div>
+<div>
+<h4 class="font-bold text-primary text-sm">Review &amp; Log</h4>
+<p class="text-xs text-on-surface-variant mt-1">Log your nutrition data daily for a consistent 50 XP boost.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- XP History Log -->
+<section class="space-y-6">
+<div class="flex justify-between items-center">
+<h3 class="text-xl font-bold text-primary tracking-tight">Recent Activity Log</h3>
+<button class="text-primary font-mono text-[10px] uppercase tracking-widest flex items-center hover:opacity-70 transition-all">
+                        Full Statement <span class="material-symbols-outlined ml-2 text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest rounded-[24px] shadow-sm border border-outline-variant/10 overflow-hidden">
+<div class="divide-y divide-outline-variant/10">
+<div class="p-6 flex justify-between items-center hover:bg-surface-container-low/30 transition-colors">
+<div class="flex items-center space-x-6">
+<span class="font-mono text-[11px] text-on-surface-variant">Today, 08:14</span>
+<div class="h-10 w-10 bg-secondary/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="fitness_center">fitness_center</span>
+</div>
+<div>
+<p class="font-bold text-primary">High-Intensity Interval Training</p>
+<p class="text-xs text-on-surface-variant">Completed 45min session with 98% efficiency</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-lg font-bold text-primary">+850 <span class="text-[10px] text-on-surface-variant font-mono">XP</span></p>
+</div>
+</div>
+<div class="p-6 flex justify-between items-center hover:bg-surface-container-low/30 transition-colors">
+<div class="flex items-center space-x-6">
+<span class="font-mono text-[11px] text-on-surface-variant">Yesterday</span>
+<div class="h-10 w-10 bg-primary/5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div>
+<p class="font-bold text-primary">Daily Login Streak</p>
+<p class="text-xs text-on-surface-variant">15 consecutive days achievement</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-lg font-bold text-primary">+200 <span class="text-[10px] text-on-surface-variant font-mono">XP</span></p>
+</div>
+</div>
+<div class="p-6 flex justify-between items-center hover:bg-surface-container-low/30 transition-colors">
+<div class="flex items-center space-x-6">
+<span class="font-mono text-[11px] text-on-surface-variant">Nov 12</span>
+<div class="h-10 w-10 bg-tertiary-container/5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary-container" data-icon="emoji_events">emoji_events</span>
+</div>
+<div>
+<p class="font-bold text-primary">Mountain Peak Challenge</p>
+<p class="text-xs text-on-surface-variant">Climbed total 1,000m altitude in one week</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-lg font-bold text-primary">+1,250 <span class="text-[10px] text-on-surface-variant font-mono">XP</span></p>
+</div>
+</div>
+<div class="p-6 flex justify-between items-center hover:bg-surface-container-low/30 transition-colors">
+<div class="flex items-center space-x-6">
+<span class="font-mono text-[11px] text-on-surface-variant">Nov 10</span>
+<div class="h-10 w-10 bg-on-secondary-fixed-variant/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="restaurant">restaurant</span>
+</div>
+<div>
+<p class="font-bold text-primary">Nutrition Mastery</p>
+<p class="text-xs text-on-surface-variant">Logged consistent macro-data for 10 days</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-lg font-bold text-primary">+350 <span class="text-[10px] text-on-surface-variant font-mono">XP</span></p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high/20 p-4 text-center">
+<button class="text-primary/50 text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors">Load more activity</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer / Space Anchor -->
+<footer class="h-24"></footer>
+</main>
+<!-- FAB (Suppressed as per rules for Details/Settings focus) -->
+</body></html>

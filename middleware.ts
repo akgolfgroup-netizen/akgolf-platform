@@ -1,34 +1,104 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
-  // Sjekk om vedlikeholdsmodus er aktivert
-  const isMaintenanceMode = process.env.MAINTENANCE_MODE === "true";
-  
-  // Hent path fra request
-  const { pathname } = request.nextUrl;
-  
-  // Hvis vedlikeholdsmodus er aktivert og brukeren ikke allerede er på maintenance-siden
-  if (isMaintenanceMode && pathname !== "/maintenance") {
-    // Unntak for API-ruter og statiske filer
-    if (pathname.startsWith("/api") || pathname.startsWith("/_next") || pathname.startsWith("/static")) {
-      return NextResponse.next();
+// Vedlikeholdsmodus - les fra env, default til false (LIVE)
+const MAINTENANCE_MODE = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
+const BYPASS_KEY = process.env.MAINTENANCE_BYPASS_KEY;
+
+export async function middleware(request: NextRequest) {
+  // ─── Maintenance Mode ───
+  if (MAINTENANCE_MODE) {
+    const pathname = request.nextUrl.pathname;
+
+    // Bypass med secret key
+    if (BYPASS_KEY && request.nextUrl.searchParams.get("bypass") === BYPASS_KEY) {
+      const response = NextResponse.next({ request });
+      response.cookies.set("maintenance_bypass", "true", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24,
+      });
+      return response;
     }
-    
-    // Omdiriger til maintenance-siden
-    return NextResponse.redirect(new URL("/maintenance", request.url));
+
+    // Sjekk bypass-cookie
+    if (request.cookies.get("maintenance_bypass")?.value === "true") {
+      // Continue to normal flow
+    } else if (
+      !pathname.startsWith("/_next") &&
+      !pathname.startsWith("/favicon") &&
+      !pathname.startsWith("/icon") &&
+      pathname !== "/maintenance"
+    ) {
+      return NextResponse.rewrite(new URL("/maintenance", request.url));
+    }
   }
-  
-  // Hvis vedlikeholdsmodus er av og brukeren er på maintenance-siden, send til forsiden
-  if (!isMaintenanceMode && pathname === "/maintenance") {
-    return NextResponse.redirect(new URL("/", request.url));
+
+  let supabaseResponse = NextResponse.next({ request });
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          );
+          supabaseResponse = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
+          );
+        },
+      },
+    }
+  );
+
+  // Refresh the session — must be called before getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // Website training plan dashboard requires authentication
+  if (request.nextUrl.pathname.startsWith("/treningsplan/dashboard")) {
+    if (!user) {
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
+      return NextResponse.redirect(loginUrl);
+    }
   }
-  
-  return NextResponse.next();
+
+  // Portal requires authentication (except login and preview pages)
+  if (
+    request.nextUrl.pathname.startsWith("/portal") &&
+    !request.nextUrl.pathname.startsWith("/portal/login") &&
+    !request.nextUrl.pathname.startsWith("/portal-preview")
+  ) {
+    if (!user) {
+      return NextResponse.redirect(new URL("/portal/login", request.url));
+    }
+  }
+
+  // Already logged-in users on login pages → redirect
+  if (request.nextUrl.pathname === "/auth/login" && user) {
+    return NextResponse.redirect(
+      new URL("/treningsplan/dashboard", request.url)
+    );
+  }
+  if (request.nextUrl.pathname === "/portal/login" && user) {
+    return NextResponse.redirect(new URL("/portal", request.url));
+  }
+
+  return supabaseResponse;
 }
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // Match all paths except static files
+    "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };

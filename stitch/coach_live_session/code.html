@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Sports OS - Session In Progress</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fdf9f0",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-container": "#f1eee5",
+                        "on-secondary-container": "#5b6900",
+                        "on-tertiary-container": "#9dd090",
+                        "on-secondary-fixed": "#191e00",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#42493e",
+                        "outline": "#72796e",
+                        "outline-variant": "#c2c9bb",
+                        "tertiary": "#154212",
+                        "surface-tint": "#3b6934",
+                        "secondary-container": "#d0ed00",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-dim": "#dddad1",
+                        "on-surface": "#1c1c16",
+                        "surface-container-high": "#ece8df",
+                        "error": "#ba1a1a",
+                        "on-background": "#1c1c16",
+                        "secondary-fixed": "#d2f000",
+                        "secondary-fixed-dim": "#b8d300",
+                        "tertiary-fixed": "#bcf0ae",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-primary": "#ffffff",
+                        "background": "#fdf9f0",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#bcf0ae",
+                        "inverse-surface": "#31302b",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-low": "#f7f3ea",
+                        "secondary": "#576500",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-primary-fixed": "#002201",
+                        "surface": "#fdf9f0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#9dd090",
+                        "inverse-primary": "#a1d494",
+                        "tertiary-container": "#2d5a27",
+                        "primary": "#154212"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+        .mono-text { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(253, 249, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-surface-bright text-on-surface overflow-hidden">
+<!-- SIDEBAR -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col py-6 gap-2 shadow-[4px_0_16px_rgba(45,90,39,0.06)] z-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#d2f000] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#154212] text-xl">fitness_center</span>
+</div>
+<div>
+<h1 class="text-white font-semibold text-lg leading-none">Coach Portal</h1>
+<p class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest text-white/50 mt-1">Precision Performance</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 bg-[#d2f000] text-[#154212] rounded-xl px-4 py-3 mx-2" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Schedule</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Players</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined">fitness_center</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Drills</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Messages</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Earnings</span>
+</a>
+</nav>
+<div class="mt-auto px-2 flex flex-col gap-1 border-t border-white/10 pt-4">
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Support</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- MAIN CONTENT CANVAS -->
+<main class="ml-64 min-h-screen relative overflow-y-auto">
+<!-- TOP APP BAR -->
+<header class="w-full h-16 sticky top-0 z-40 bg-[#fdf9f0]/80 backdrop-blur-md flex justify-between items-center px-8">
+<div class="flex items-center gap-4">
+<span class="mono-text text-xs uppercase tracking-widest text-primary/60">Live Session ID: SC-4920</span>
+<div class="flex items-center gap-2 bg-error/10 px-3 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-bold text-error tracking-wider">In Progress</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary/60 text-xl">videocam</span>
+<span class="font-['DM_Sans'] text-sm font-medium text-primary uppercase tracking-tighter">Recording Toggle</span>
+<div class="w-10 h-5 bg-surface-container-highest rounded-full relative p-0.5 cursor-pointer">
+<div class="w-4 h-4 bg-secondary rounded-full absolute right-0.5 shadow-sm transition-all"></div>
+</div>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<button class="bg-primary text-white px-5 py-2 rounded-xl font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest hover:bg-primary/90 active:scale-95 transition-all">
+                    End Session
+                </button>
+</div>
+</header>
+<div class="p-8">
+<div class="grid grid-cols-12 gap-6">
+<!-- TIMER & SESSION INFO (BENTO HERO) -->
+<section class="col-span-8 bg-surface-container-lowest rounded-[24px] p-8 relative overflow-hidden border border-outline-variant/10">
+<div class="absolute top-0 right-0 p-8 opacity-10">
+<span class="material-symbols-outlined text-9xl">timer</span>
+</div>
+<div class="relative z-10">
+<h2 class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest text-primary/60 mb-2">Elite Striker Module</h2>
+<h1 class="text-4xl font-bold text-primary tracking-tighter mb-8">Afternoon Technical Clinic</h1>
+<div class="flex items-end gap-1 mb-8">
+<span class="mono-text text-7xl font-bold text-primary tabular-nums tracking-tighter">00:42:18</span>
+<span class="mono-text text-xl font-medium text-primary/40 pb-3 uppercase">Session Time</span>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 bg-surface-container px-4 py-3 rounded-xl hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">pause</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest">Pause Timer</span>
+</button>
+<button class="flex items-center gap-2 bg-surface-container px-4 py-3 rounded-xl hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-primary group-hover:rotate-180 transition-transform">restart_alt</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest">Reset Phase</span>
+</button>
+</div>
+</div>
+</section>
+<!-- PLAYER LIST SIDEBAR -->
+<section class="col-span-4 bg-surface-container-low rounded-[24px] p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-primary/80">Active Players (04)</h3>
+<span class="material-symbols-outlined text-primary/40">groups</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-4 bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/5">
+<img class="w-10 h-10 rounded-full object-cover grayscale" data-alt="professional athlete portrait with clean lighting and neutral studio background for sports profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy-1MIu7L-UfN5Ws9sIyO4DAAcP7Amag7P1gA_o632Fqgh9Uj4XkO3mZxbQEzHbGMTkOV8YYCTN8xVKpD5jHErHictJOsNnTrmF7QVb20IEac1Yp4sqgkqvHjT73LoJy3g3m0KjXq75mXXJ2bHQWhbsOCZ_0TiZbDhoSupBiJDO9ciiJT2Nwb7LaO7WJUMBTbnmZa36ZCPOAhn4kq20MCVIRU9Owhq4FFyNMBIonDM9HJWUlxT3FK4LP0LXxiENd7nPyDpsgL_hiB3"/>
+<div class="flex-1">
+<p class="text-sm font-semibold text-primary">Marcus H.</p>
+<p class="mono-text text-[10px] text-primary/50">HR: 142 BPM</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">lens</span>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/5">
+<img class="w-10 h-10 rounded-full object-cover grayscale" data-alt="focused female athlete with athletic headband looking directly at camera with neutral expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8dNP3KU2VCC1nq0O0VYFmM9vpQ70Z5-dvtWuogJDLmmBoOMHvrGE4qggS7B30Ja4kYazLLrYY8MxIcibUG9MfgXmaEaW0V8qTitwB3ri-o6496ObYFLSaUj_xMlHK4Vh2RiYlWBfbrJM7XRVIjDVx2zMrIAp7eeuZvKFpBauARtY3GE3a4-EYfCnDo_6wAf2C7Gw1QUcJiDoF_ptOERqKOrxEyBE8yx7jp9-LQhVZC7XppSQBSwaW9yL_VNkoN3m0n7K6q8Cek2Di"/>
+<div class="flex-1">
+<p class="text-sm font-semibold text-primary">Elena Rodriguez</p>
+<p class="mono-text text-[10px] text-primary/50">HR: 158 BPM</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">lens</span>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/5">
+<img class="w-10 h-10 rounded-full object-cover grayscale" data-alt="young male athlete in sportswear against a textured grey wall backdrop professional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOdK8lLJ6bB0Qt9PSXeeYF2UTUwmJGvLE8nKoxWS3limTdwE2p-3fjWs91XK0_Hq_BPySIvM4KL_mBCIvffNacPBiw_PhS1ka4hIQ_xIfkHy8ce_4_136Ldjp9ZyPd3E-xSU583kGTqO6wpxJpZRGkuuwnRzCMvwkIKPjXh3_0_JUgldhZppnod0IAce4EKWiNWWjrCrxBBSKoqWHCsN79ZyRyLvaFfbopzuyezw1I8Vl1J_DtrUIGdiCs9PSVDHLXiQxu1mFrOL3X"/>
+<div class="flex-1">
+<p class="text-sm font-semibold text-primary">David Chen</p>
+<p class="mono-text text-[10px] text-primary/50">HR: 135 BPM</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">lens</span>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/5">
+<img class="w-10 h-10 rounded-full object-cover grayscale" data-alt="determined female runner athlete profile picture against a clean minimalist studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsKLvgMUco8rc-ubQBDlzfFUywnJWx6NCpHOFTpEr4IfuTwrzChMbtX0JNhvzn8ZUqM4qEAVjDtkSb50rYw5ihBgBC-Nz4Ma0b6yAr75di7XQrI_5DCTGIH6AN-fkrxrjn70XovJH_E9XIgjXqYLensZsYrjsITFSyJeYz_YlHF9JhPIZ3M8cbrDswOVudZ_YfEACa6mNa-5OeQzxFx2gD3Hb_7jP1cFjxfx6MFKpFTuxNm6v5O7He7GHsVHzx4IfI63hrae3fSCI8"/>
+<div class="flex-1">
+<p class="text-sm font-semibold text-primary">Sarah Jenkins</p>
+<p class="mono-text text-[10px] text-primary/50">HR: 147 BPM</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">lens</span>
+</div>
+</div>
+<button class="w-full mt-6 py-3 border border-dashed border-primary/20 rounded-xl font-['DM_Sans'] uppercase text-[10px] font-bold text-primary/40 hover:bg-primary/5 transition-all">
+                        + Manage Squad
+                    </button>
+</section>
+<!-- QUICK NOTES BUTTONS -->
+<section class="col-span-8 space-y-6">
+<div class="bg-surface-container-lowest rounded-[24px] p-8 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-primary/80">Observation Log</h3>
+<span class="mono-text text-[10px] text-primary/40">Timestamped to 00:42:18</span>
+</div>
+<div class="grid grid-cols-4 gap-3">
+<button class="bg-surface-container-low hover:bg-secondary-container transition-all p-4 rounded-xl text-center group">
+<span class="material-symbols-outlined text-primary mb-2 block group-hover:scale-110">sprint</span>
+<span class="font-['DM_Sans'] uppercase text-[9px] font-bold tracking-widest text-primary">Form Error</span>
+</button>
+<button class="bg-surface-container-low hover:bg-secondary-container transition-all p-4 rounded-xl text-center group">
+<span class="material-symbols-outlined text-primary mb-2 block group-hover:scale-110">bolt</span>
+<span class="font-['DM_Sans'] uppercase text-[9px] font-bold tracking-widest text-primary">High Intensity</span>
+</button>
+<button class="bg-surface-container-low hover:bg-secondary-container transition-all p-4 rounded-xl text-center group">
+<span class="material-symbols-outlined text-primary mb-2 block group-hover:scale-110">psychology</span>
+<span class="font-['DM_Sans'] uppercase text-[9px] font-bold tracking-widest text-primary">Mental Fatigue</span>
+</button>
+<button class="bg-surface-container-low hover:bg-secondary-container transition-all p-4 rounded-xl text-center group">
+<span class="material-symbols-outlined text-primary mb-2 block group-hover:scale-110">edit_note</span>
+<span class="font-['DM_Sans'] uppercase text-[9px] font-bold tracking-widest text-primary">Custom Tag</span>
+</button>
+</div>
+<textarea class="w-full mt-6 bg-surface-container-highest border-none rounded-xl p-4 font-['DM_Sans'] text-sm focus:ring-1 focus:ring-primary/20 placeholder:text-primary/30" placeholder="Type detailed tactical observation..."></textarea>
+</div>
+</section>
+<!-- DRILLS CHECKLIST -->
+<section class="col-span-4 bg-surface-container-lowest rounded-[24px] p-8 border border-outline-variant/10 h-full">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-primary/80">Drill Status</h3>
+<span class="mono-text text-[10px] text-primary/40">2/5 Done</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-md bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-primary font-bold">check</span>
+</div>
+<span class="text-sm font-medium text-primary/40 line-through">Dynamic Warm-up</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-md bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-primary font-bold">check</span>
+</div>
+<span class="text-sm font-medium text-primary/40 line-through">Ball Mastery Patterns</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-md border-2 border-primary/20"></div>
+<span class="text-sm font-medium text-primary">1v1 Transitional Striking</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-md border-2 border-primary/20"></div>
+<span class="text-sm font-medium text-primary">Target Practice (Low Cross)</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-md border-2 border-primary/20"></div>
+<span class="text-sm font-medium text-primary">Cool Down &amp; Mobility</span>
+</div>
+</div>
+<div class="mt-12 p-4 bg-surface-container-low rounded-xl">
+<p class="font-['DM_Sans'] uppercase text-[9px] font-bold tracking-widest text-primary/50 mb-2">Next Focus</p>
+<p class="text-xs font-semibold text-primary leading-relaxed">Transition to high-intensity strikers box positioning drills.</p>
+</div>
+</section>
+</div>
+</div>
+<!-- EMERGENCY FLOATING BUTTON -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="bg-error w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all group relative">
+<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">emergency_home</span>
+<!-- TOOLTIP -->
+<span class="absolute right-20 bg-inverse-surface text-inverse-on-surface px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                    Emergency Contact
+                </span>
+</button>
+</div>
+</main>
+</body></html>

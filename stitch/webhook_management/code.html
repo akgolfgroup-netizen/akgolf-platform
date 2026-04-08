@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Webhook Management | AK Sports OS</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "surface-container-high": "#ece8df",
+                    "primary-fixed": "#bcf0ae",
+                    "on-secondary-container": "#5b6900",
+                    "tertiary": "#154212",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#9dd090",
+                    "secondary-fixed": "#d2f000",
+                    "on-primary-fixed-variant": "#23501e",
+                    "on-background": "#1c1c16",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#a1d494",
+                    "background": "#fdf9f0",
+                    "secondary-fixed-dim": "#b8d300",
+                    "surface": "#fdf9f0",
+                    "primary": "#154212",
+                    "surface-container": "#f1eee5",
+                    "on-surface": "#1c1c16",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#9dd090",
+                    "surface-tint": "#3b6934",
+                    "surface-container-low": "#f7f3ea",
+                    "inverse-surface": "#31302b",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#191e00",
+                    "primary-container": "#2d5a27",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "surface-bright": "#fdf9f0",
+                    "secondary-container": "#d0ed00",
+                    "outline-variant": "#c2c9bb",
+                    "on-primary-fixed": "#002201",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "secondary": "#576500",
+                    "tertiary-fixed": "#bcf0ae",
+                    "primary-fixed-dim": "#a1d494",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#2d5a27",
+                    "surface-dim": "#dddad1",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#002201",
+                    "outline": "#72796e",
+                    "on-surface-variant": "#42493e",
+                    "surface-variant": "#e6e2d9",
+                    "inverse-on-surface": "#f4f0e7",
+                    "surface-container-highest": "#e6e2d9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col py-8 z-50">
+<div class="px-6 mb-10">
+<h1 class="text-xl font-bold text-[#d2f000] tracking-tighter">AK Sports OS</h1>
+<p class="font-['DM_Sans'] uppercase tracking-wider text-[0.7rem] font-medium text-white/50 mt-1">Developer Suite</p>
+</div>
+<nav class="flex-1 overflow-y-auto no-scrollbar">
+<ul class="space-y-1">
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#"><span class="material-symbols-outlined" data-icon="hub">hub</span> Directory</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#"><span class="material-symbols-outlined" data-icon="extension">extension</span> Connectors</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#"><span class="material-symbols-outlined" data-icon="vpn_key">vpn_key</span> SSO Config</a></li>
+<li><a class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium active:scale-95 transition-all" href="#"><span class="material-symbols-outlined" data-icon="settings_ethernet">settings_ethernet</span> Webhooks</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#"><span class="material-symbols-outlined" data-icon="description">description</span> API Docs</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#"><span class="material-symbols-outlined" data-icon="terminal">terminal</span> Console</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#"><span class="material-symbols-outlined" data-icon="biotech">biotech</span> Sandbox</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#"><span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span> Calendar</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#"><span class="material-symbols-outlined" data-icon="payments">payments</span> Payments</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#"><span class="material-symbols-outlined" data-icon="analytics">analytics</span> Analytics</a></li>
+<li><a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium hover:bg-white/10 transition-colors duration-200" href="#"><span class="material-symbols-outlined" data-icon="settings">settings</span> Settings</a></li>
+</ul>
+</nav>
+<div class="mt-auto px-6 pt-6 border-t border-white/10">
+<button class="w-full bg-[#d2f000] text-[#154212] py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all mb-6">
+                Deploy Integration
+            </button>
+<div class="space-y-4">
+<a class="text-white/50 hover:text-white flex items-center gap-2 text-xs font-medium" href="#"><span class="material-symbols-outlined text-sm" data-icon="help_outline">help_outline</span> Support</a>
+<a class="text-white/50 hover:text-white flex items-center gap-2 text-xs font-medium" href="#"><span class="material-symbols-outlined text-sm" data-icon="dns">dns</span> System Status</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="pl-64 min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-[#fdf9f0]/80 backdrop-blur-md flex justify-between items-center px-8 z-40 transition-opacity">
+<div class="flex items-center gap-4">
+<span class="text-[#154212] font-['DM_Sans'] text-sm font-semibold">Admin Console</span>
+<span class="text-outline-variant text-lg">/</span>
+<span class="text-[#154212] font-['DM_Sans'] text-sm font-semibold border-b-2 border-[#154212] py-1">Webhooks</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary opacity-40" data-icon="search">search</span>
+<input class="bg-surface-container-highest border-none rounded-full pl-10 pr-4 py-1.5 text-sm focus:ring-1 focus:ring-primary w-64 font-body" placeholder="Search events..." type="text"/>
+</div>
+<div class="flex items-center gap-4 text-primary">
+<button class="material-symbols-outlined hover:opacity-70 transition-opacity" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined hover:opacity-70 transition-opacity" data-icon="account_circle">account_circle</button>
+</div>
+</div>
+</header>
+<!-- Canvas Body -->
+<section class="pt-24 px-12 pb-20 max-w-7xl mx-auto">
+<!-- Page Title & Header -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<span class="font-mono text-primary/50 text-[0.7rem] tracking-[0.2em] uppercase">Connectivity / Core v4.2</span>
+<h2 class="text-4xl font-bold text-primary mt-2 leading-tight">Webhook Management</h2>
+<p class="text-on-surface-variant max-w-lg mt-4 leading-relaxed">
+                        Configure HTTP callbacks for real-time notifications about activities within the ecosystem. Receive payloads for player registrations, payment success, and roster updates.
+                    </p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 bg-primary text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span> Add Endpoint
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Main Endpoints List -->
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<div class="bg-surface-container-lowest p-8 rounded-[24px] overflow-hidden">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline font-bold text-xl text-primary">Active Endpoints</h3>
+<span class="font-mono text-xs text-primary bg-secondary-fixed/30 px-3 py-1 rounded-full">3 Live</span>
+</div>
+<div class="space-y-4">
+<!-- Endpoint Card 1 -->
+<div class="bg-surface-container-low rounded-2xl p-6 border-l-4 border-secondary-fixed">
+<div class="flex justify-between items-start mb-4">
+<div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-mono font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">POST</span>
+<span class="font-bold text-primary">https://api.internal-sports.io/hooks/v1</span>
+</div>
+<p class="text-sm text-on-surface-variant mt-2">Primary production endpoint for mobile push triggers.</p>
+</div>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors" data-icon="more_vert">more_vert</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="text-[0.65rem] font-mono bg-white text-primary px-2 py-1 rounded border border-outline-variant/20 uppercase">player.created</span>
+<span class="text-[0.65rem] font-mono bg-white text-primary px-2 py-1 rounded border border-outline-variant/20 uppercase">payment.succeeded</span>
+<span class="text-[0.65rem] font-mono bg-white text-primary px-2 py-1 rounded border border-outline-variant/20 uppercase">league.updated</span>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-4">
+<span class="text-xs text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span> Last sent: 2m ago</span>
+<span class="text-xs text-secondary-fixed-dim flex items-center gap-1 font-bold"><span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span> 99.8% Success</span>
+</div>
+<button class="text-xs font-bold text-primary underline underline-offset-4 hover:opacity-70 transition-opacity">View Details</button>
+</div>
+</div>
+<!-- Endpoint Card 2 -->
+<div class="bg-surface-container-low rounded-2xl p-6 border-l-4 border-outline">
+<div class="flex justify-between items-start mb-4">
+<div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-mono font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">POST</span>
+<span class="font-bold text-primary opacity-60">https://staging.hooks.service/alpha-test</span>
+</div>
+<p class="text-sm text-on-surface-variant mt-2">Temporary alpha test environment.</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[10px] bg-outline-variant/20 text-on-surface-variant px-2 py-1 rounded font-bold uppercase tracking-widest">Inactive</span>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors" data-icon="more_vert">more_vert</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="text-[0.65rem] font-mono bg-white/50 text-primary opacity-50 px-2 py-1 rounded border border-outline-variant/20 uppercase">user.deleted</span>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10 opacity-50">
+<div class="flex items-center gap-4">
+<span class="text-xs text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="history">history</span> Never triggered</span>
+</div>
+<button class="text-xs font-bold text-primary underline underline-offset-4 hover:opacity-70 transition-opacity">Activate</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Delivery Logs Table -->
+<div class="bg-surface-container-lowest rounded-[24px] overflow-hidden">
+<div class="px-8 py-6 border-b border-outline-variant/10 flex justify-between items-center">
+<h3 class="font-headline font-bold text-xl text-primary">Delivery Logs</h3>
+<button class="text-xs font-bold text-primary flex items-center gap-2 hover:bg-surface-container-low px-4 py-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span> Export CSV
+                            </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="px-8 py-4 font-mono text-[0.65rem] uppercase tracking-widest text-on-surface-variant">Status</th>
+<th class="px-8 py-4 font-mono text-[0.65rem] uppercase tracking-widest text-on-surface-variant">Event</th>
+<th class="px-8 py-4 font-mono text-[0.65rem] uppercase tracking-widest text-on-surface-variant">Request ID</th>
+<th class="px-8 py-4 font-mono text-[0.65rem] uppercase tracking-widest text-on-surface-variant text-right">Timestamp</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-8 py-4">
+<span class="flex items-center gap-2 text-xs font-bold text-[#154212]">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span> 200 OK
+                                            </span>
+</td>
+<td class="px-8 py-4 text-sm font-medium">player.created</td>
+<td class="px-8 py-4 font-mono text-xs text-on-surface-variant">req_7h2k9l1m0p</td>
+<td class="px-8 py-4 text-xs text-on-surface-variant text-right">Oct 24, 14:02:11</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-8 py-4">
+<span class="flex items-center gap-2 text-xs font-bold text-error">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> 500 Error
+                                            </span>
+</td>
+<td class="px-8 py-4 text-sm font-medium">payment.succeeded</td>
+<td class="px-8 py-4 font-mono text-xs text-on-surface-variant">req_1z5v8x0b4n</td>
+<td class="px-8 py-4 text-xs text-on-surface-variant text-right">Oct 24, 13:58:45</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-8 py-4">
+<span class="flex items-center gap-2 text-xs font-bold text-[#154212]">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span> 200 OK
+                                            </span>
+</td>
+<td class="px-8 py-4 text-sm font-medium">league.updated</td>
+<td class="px-8 py-4 font-mono text-xs text-on-surface-variant">req_4q8w2e7r6t</td>
+<td class="px-8 py-4 text-xs text-on-surface-variant text-right">Oct 24, 12:30:04</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface-container-low/30 text-center">
+<button class="text-[0.65rem] font-mono uppercase tracking-widest text-primary/60 hover:text-primary font-bold">View full activity log</button>
+</div>
+</div>
+</div>
+<!-- Sidebar Controls -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- Security Card -->
+<div class="bg-primary text-white p-8 rounded-[24px] relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-headline font-bold text-lg mb-6">Security &amp; Secrets</h3>
+<div class="space-y-6">
+<div>
+<label class="block font-mono text-[10px] text-white/50 uppercase tracking-[0.2em] mb-2">Signing Secret</label>
+<div class="flex items-center justify-between bg-white/10 rounded-lg px-4 py-3 border border-white/10">
+<span class="font-mono text-sm tracking-widest">whsec_••••••••••••x9A1</span>
+<button class="material-symbols-outlined text-secondary-fixed hover:scale-110 transition-transform" data-icon="visibility">visibility</button>
+</div>
+</div>
+<div class="pt-4 border-t border-white/10">
+<button class="w-full text-xs font-bold text-[#d2f000] border border-[#d2f000]/30 py-3 rounded-lg hover:bg-white/5 transition-all uppercase tracking-widest">Rotate Key</button>
+</div>
+</div>
+</div>
+<!-- Background Accent -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-secondary-fixed opacity-10 blur-3xl rounded-full"></div>
+</div>
+<!-- Retry Configuration -->
+<div class="bg-surface-container-lowest p-8 rounded-[24px]">
+<h3 class="font-headline font-bold text-lg text-primary mb-6">Retry Policy</h3>
+<div class="space-y-5">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface">Max Retries</span>
+<span class="font-mono text-sm text-primary font-bold">5 Attempts</span>
+</div>
+<div class="w-full bg-surface-container-low h-1 rounded-full overflow-hidden">
+<div class="bg-secondary-fixed h-full w-[60%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface">Backoff Strategy</span>
+<span class="text-xs bg-surface-container-high px-2 py-1 rounded font-mono text-primary">Exponential</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                                When an endpoint fails, the system will wait 10s, then 20s, 40s... until the max retry limit is reached.
+                            </p>
+<button class="w-full mt-4 bg-surface-container-high text-primary font-bold text-[10px] py-3 rounded-lg uppercase tracking-widest hover:bg-outline-variant/20 transition-all">
+                                Configure Backoff
+                            </button>
+</div>
+</div>
+<!-- Test Payload Editor -->
+<div class="bg-surface-container-lowest p-8 rounded-[24px]">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline font-bold text-lg text-primary">Test Payload</h3>
+<button class="material-symbols-outlined text-primary/40 hover:text-primary transition-colors" data-icon="settings">settings</button>
+</div>
+<div class="bg-[#1c1c16] rounded-xl p-4 mb-4">
+<pre class="font-mono text-[11px] leading-relaxed text-secondary-fixed overflow-x-auto">{
+  "event": "player.created",
+  "data": {
+    "id": "pl_82103",
+    "status": "pending",
+    "meta": {
+      "origin": "mobile-app"
+    }
+  }
+}</pre>
+</div>
+<button class="w-full bg-secondary-fixed text-primary font-bold text-xs py-3 rounded-xl uppercase tracking-widest shadow-lg shadow-secondary-fixed/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="send">send</span> Send Test
+                        </button>
+</div>
+</div>
+</div>
+<!-- Footer Metrics / Subtle Detail -->
+<div class="mt-16 pt-8 border-t border-outline-variant/10 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div>
+<span class="block font-mono text-[10px] uppercase text-on-surface-variant mb-1">MTTR (Mean Time to Repair)</span>
+<span class="font-headline font-bold text-primary">4.2 Minutes</span>
+</div>
+<div>
+<span class="block font-mono text-[10px] uppercase text-on-surface-variant mb-1">Queue Depth</span>
+<span class="font-headline font-bold text-primary">0 Items</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+<span class="text-xs font-bold text-primary uppercase tracking-widest">Core Engine Operational</span>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB (Suppressed based on logic for details/management pages, but included if user was on a listing view) -->
+<!-- Suppressed for Webhook Management focus to maintain "Quiet Luxury" -->
+</body></html>

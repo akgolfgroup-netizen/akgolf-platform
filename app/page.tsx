@@ -22,7 +22,7 @@ export default function LandingHomepage() {
           <div className="max-w-[1440px] mx-auto px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-16">
             <div className="z-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#f7f3ea] rounded-full mb-8">
-                <span className="font-mono text-[10px] uppercase tracking-widest text-[#154212] font-bold">Norges mest systematiske</span>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-[#154212] font-bold">Systematisk golf coaching</span>
                 <div className="w-1 h-1 rounded-full bg-[#576500]"></div>
                 <span className="font-mono text-[10px] uppercase tracking-widest text-[#154212]/60">Est. 2024</span>
               </div>
@@ -120,7 +120,7 @@ export default function LandingHomepage() {
                 Om oss
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-[#154212] tracking-tight mb-6">
-                Norges mest systematiske golfcoaching
+                Systematisk golf coaching golfcoaching
               </h2>
               <p className="text-xl text-[#42493e] leading-relaxed mb-8">
                 AK Golf Academy drives av Anders Kristiansen — en coach som har jobbet med spillere på PGA Tour, DP World Tour og Ladies European Tour. Metodikken bygger på teknisk veiledning etter plan, ikke bare data fra TrackMan.

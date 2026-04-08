@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed": "#d2f000",
+                        "primary-container": "#2d5a27",
+                        "on-background": "#1c1c16",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-bright": "#fdf9f0",
+                        "surface-variant": "#e6e2d9",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#002201",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#5b6900",
+                        "on-secondary-fixed": "#191e00",
+                        "inverse-surface": "#31302b",
+                        "tertiary-fixed": "#bcf0ae",
+                        "on-tertiary-fixed": "#002201",
+                        "tertiary-container": "#2d5a27",
+                        "outline": "#72796e",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9dd090",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1c1c16",
+                        "primary-fixed": "#bcf0ae",
+                        "on-surface-variant": "#42493e",
+                        "surface": "#fdf9f0",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-secondary": "#ffffff",
+                        "primary": "#154212",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-dim": "#dddad1",
+                        "secondary-container": "#d0ed00",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-tint": "#3b6934",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#576500",
+                        "on-primary-container": "#9dd090",
+                        "background": "#fdf9f0",
+                        "tertiary": "#154212",
+                        "surface-container": "#f1eee5",
+                        "surface-container-low": "#f7f3ea",
+                        "inverse-primary": "#a1d494",
+                        "primary-fixed-dim": "#a1d494",
+                        "outline-variant": "#c2c9bb",
+                        "surface-container-high": "#ece8df"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .radar-bg {
+            background: radial-gradient(circle, rgba(210, 240, 0, 0.05) 0%, rgba(21, 66, 18, 0.02) 100%);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col py-8 gap-y-6 shadow-2xl shadow-[#154212]/20 z-50">
+<div class="px-8 mb-4">
+<h1 class="text-[#ffffff] font-bold text-lg tracking-tight">AK Sports</h1>
+<p class="font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest text-[#fdf9f0]/70">Precision Performance</p>
+</div>
+<nav class="flex flex-col gap-y-1">
+<a class="text-[#fdf9f0]/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest">Dashboard</span>
+</a>
+<a class="text-[#fdf9f0]/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest">Roster</span>
+</a>
+<a class="text-[#fdf9f0]/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">monitoring</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest">Performance</span>
+</a>
+<a class="text-[#fdf9f0]/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">event_note</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest">Schedule</span>
+</a>
+<a class="bg-[#d2f000] text-[#154212] rounded-lg mx-4 py-3 flex items-center gap-3 active:scale-95 duration-150 shadow-lg shadow-black/10" href="#">
+<span class="material-symbols-outlined text-[20px] ml-4">query_stats</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] font-bold tracking-widest">Analytics</span>
+</a>
+</nav>
+<div class="mt-auto px-4 flex flex-col gap-4">
+<button class="w-full bg-[#d2f000] text-[#154212] py-3 rounded-xl font-bold text-[11px] tracking-widest uppercase hover:brightness-110 transition-all">
+                UPGRADE PRO
+            </button>
+<div class="pt-4 border-t border-white/10 flex flex-col gap-1">
+<a class="text-[#fdf9f0]/70 hover:text-white px-4 py-2 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">help_outline</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest">Support</span>
+</a>
+<a class="text-[#fdf9f0]/70 hover:text-white px-4 py-2 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] font-medium tracking-widest">Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<main class="ml-64 min-h-screen">
+<header class="flex justify-between items-center px-8 w-full sticky top-0 z-40 bg-[#fdf9f0]/80 backdrop-blur-md h-16 border-b border-[#154212]/10">
+<div class="flex items-center gap-4">
+<h2 class="text-xl font-bold tracking-tight text-[#154212]">Strokes Gained Deep Dive</h2>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container rounded-full">
+<div class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></div>
+<span class="text-[10px] font-mono uppercase tracking-tighter text-on-surface-variant">Live Sync Active</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex bg-surface-container rounded-lg p-1">
+<button class="px-3 py-1 text-[11px] font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors">Last 5</button>
+<button class="px-3 py-1 text-[11px] font-bold tracking-widest uppercase bg-surface-container-lowest text-primary rounded shadow-sm">Last 10</button>
+<button class="px-3 py-1 text-[11px] font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors">Season</button>
+</div>
+<button class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold tracking-widest uppercase hover:opacity-90 transition-all scale-95 active:scale-90">
+<span class="material-symbols-outlined text-sm">download</span>
+                    EXPORT
+                </button>
+<span class="material-symbols-outlined text-[#154212] cursor-pointer hover:opacity-70 transition-opacity">notifications</span>
+<span class="material-symbols-outlined text-[#154212] cursor-pointer hover:opacity-70 transition-opacity">settings</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden">
+<img alt="User profile" data-alt="professional portrait of a high-performance sports coach with a focused expression, neutral studio lighting, high resolution" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqOWdvIoezUYwD0MAXI9gQ5TQupLLUNoec3_TE9v6LamramitpAaMBL6cvOouV5UQPGhlVJLcvMBWLM0ZWN88jPW_riFsGNOG2grUDdFMU_fZso5WmH9PGUJvNfeEFVmRFJjMh1kcCqwBTX8Dm-FcWQfbi9oaPI79AI9S8ucrbPHbRAYrCVou5f77J5HAlrmjoOjqBbVwsOP11iXYfMiHjWZP5vNc1slkUaUTa3r9BsoVFDTASGpshA9CEchpYQmb5pAtqyrNmwATk"/>
+</div>
+</div>
+</header>
+<div class="p-8">
+<div class="bento-grid">
+<section class="col-span-12 lg:col-span-5 bg-surface-container-lowest rounded-[24px] p-8 border border-outline-variant/10 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-primary">analytics</span>
+</div>
+<div class="relative z-10 h-full flex flex-col">
+<div class="mb-8">
+<span class="font-mono text-[10px] text-primary-container bg-primary-fixed/30 px-2 py-0.5 rounded uppercase tracking-wider">Metrics visualization</span>
+<h3 class="text-2xl font-bold text-primary mt-2">Performance Radar</h3>
+</div>
+<div class="flex-grow flex items-center justify-center radar-bg rounded-full p-4 border border-primary/5">
+<div class="relative w-full aspect-square max-w-[320px]">
+<svg class="w-full h-full transform -rotate-18" viewbox="0 0 100 100">
+<circle class="text-outline-variant/20" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></circle>
+<circle class="text-outline-variant/20" cx="50" cy="50" fill="none" r="30" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></circle>
+<circle class="text-outline-variant/20" cx="50" cy="50" fill="none" r="15" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></circle>
+<line class="text-outline-variant/30" stroke="currentColor" stroke-width="0.5" x1="50" x2="50" y1="5" y2="95"></line>
+<line class="text-outline-variant/30" stroke="currentColor" stroke-width="0.5" x1="5" x2="95" y1="50" y2="50"></line>
+<line class="text-outline-variant/30" stroke="currentColor" stroke-width="0.5" x1="18" x2="82" y1="18" y2="82"></line>
+<polygon fill="rgba(210, 240, 0, 0.4)" points="50,15 80,35 75,70 50,85 25,70 20,35" stroke="#d2f000" stroke-width="1.5"></polygon>
+<circle cx="50" cy="15" fill="#154212" r="1.5"></circle>
+<circle cx="80" cy="35" fill="#154212" r="1.5"></circle>
+<circle cx="75" cy="70" fill="#154212" r="1.5"></circle>
+<circle cx="50" cy="85" fill="#154212" r="1.5"></circle>
+<circle cx="25" cy="70" fill="#154212" r="1.5"></circle>
+<circle cx="20" cy="35" fill="#154212" r="1.5"></circle>
+</svg>
+<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 font-mono text-[9px] uppercase tracking-tighter font-bold">Driving</div>
+<div class="absolute top-1/4 right-0 translate-x-8 font-mono text-[9px] uppercase tracking-tighter font-bold">Approach</div>
+<div class="absolute bottom-1/4 right-0 translate-x-8 font-mono text-[9px] uppercase tracking-tighter font-bold">Short Game</div>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-4 font-mono text-[9px] uppercase tracking-tighter font-bold">Putting</div>
+<div class="absolute bottom-1/4 left-0 -translate-x-8 font-mono text-[9px] uppercase tracking-tighter font-bold">Recovery</div>
+<div class="absolute top-1/4 left-0 -translate-x-6 font-mono text-[9px] uppercase tracking-tighter font-bold">Mental</div>
+</div>
+</div>
+<div class="mt-8 flex justify-between items-center text-[11px] font-mono">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary-fixed"></div>
+<span class="uppercase">Current Period</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full border border-primary/20"></div>
+<span class="uppercase text-on-surface-variant">Tour Avg.</span>
+</div>
+</div>
+</div>
+</section>
+<div class="col-span-12 lg:col-span-7 flex flex-col gap-6">
+<section class="bg-surface-container-low rounded-[24px] p-6 border border-outline-variant/5">
+<div class="flex justify-between items-end mb-6">
+<div>
+<span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">Trend Analysis</span>
+<h4 class="text-lg font-bold text-primary">Historical Strokes Gained</h4>
+</div>
+<div class="flex gap-4 font-mono text-[10px] uppercase">
+<div class="flex flex-col items-end">
+<span class="text-on-surface-variant">Peak</span>
+<span class="text-primary font-bold">+2.45</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-on-surface-variant">Average</span>
+<span class="text-primary font-bold">+1.12</span>
+</div>
+</div>
+</div>
+<div class="h-48 w-full relative mt-8">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 40">
+<path d="M 0 35 Q 10 32, 20 25 T 40 28 T 60 15 T 80 18 T 100 10" fill="none" stroke="#154212" stroke-width="1.5"></path>
+<path d="M 0 35 Q 10 32, 20 25 T 40 28 T 60 15 T 80 18 T 100 10 L 100 40 L 0 40 Z" fill="url(#gradient-area)" opacity="0.1"></path>
+<defs>
+<lineargradient id="gradient-area" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#154212"></stop>
+<stop offset="100%" stop-color="#fdf9f0"></stop>
+</lineargradient>
+</defs>
+<g class="text-primary/10">
+<line stroke="currentColor" stroke-width="0.1" x1="0" x2="100" y1="10" y2="10"></line>
+<line stroke="currentColor" stroke-width="0.1" x1="0" x2="100" y1="20" y2="20"></line>
+<line stroke="currentColor" stroke-width="0.1" x1="0" x2="100" y1="30" y2="30"></line>
+</g>
+<g class="font-mono text-[2px]">
+<text class="fill-primary font-bold" x="2" y="24">1.2</text>
+<text class="fill-primary font-bold" x="22" y="24">1.8</text>
+<text class="fill-primary font-bold" x="42" y="27">1.4</text>
+<text class="fill-primary font-bold" x="62" y="14">2.3</text>
+<text class="fill-primary font-bold" x="82" y="17">2.1</text>
+</g>
+</svg>
+<div class="flex justify-between mt-4 px-2 font-mono text-[9px] uppercase text-on-surface-variant tracking-tighter">
+<span>Round 42</span>
+<span>Round 43</span>
+<span>Round 44</span>
+<span>Round 45</span>
+<span>Round 46</span>
+<span>Latest</span>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/10">
+<p class="font-mono text-[9px] uppercase tracking-widest text-on-surface-variant">GIR Accuracy</p>
+<div class="flex items-end justify-between mt-2">
+<span class="text-2xl font-bold text-primary">74.2%</span>
+<span class="flex items-center text-[#2d5a27] text-[10px] font-bold">
+<span class="material-symbols-outlined text-xs">trending_up</span> 2.4%
+                                </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/10">
+<p class="font-mono text-[9px] uppercase tracking-widest text-on-surface-variant">Avg. Putts</p>
+<div class="flex items-end justify-between mt-2">
+<span class="text-2xl font-bold text-primary">28.4</span>
+<span class="flex items-center text-[#ba1a1a] text-[10px] font-bold">
+<span class="material-symbols-outlined text-xs">trending_down</span> 0.8
+                                </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/10">
+<p class="font-mono text-[9px] uppercase tracking-widest text-on-surface-variant">Drive dist.</p>
+<div class="flex items-end justify-between mt-2">
+<span class="text-2xl font-bold text-primary">312.5</span>
+<span class="flex items-center text-[#2d5a27] text-[10px] font-bold">
+<span class="material-symbols-outlined text-xs">trending_up</span> 4.1y
+                                </span>
+</div>
+</div>
+</div>
+</div>
+<section class="col-span-12 bg-surface-container-low rounded-[24px] overflow-hidden border border-outline-variant/5">
+<div class="px-8 py-6 flex justify-between items-center border-b border-outline-variant/10">
+<h4 class="text-lg font-bold text-primary">Statistical Breakdown</h4>
+<div class="flex items-center gap-2">
+<span class="font-mono text-[10px] uppercase text-on-surface-variant">Filter By Event</span>
+<span class="material-symbols-outlined text-lg cursor-pointer">filter_list</span>
+</div>
+</div>
+<div class="overflow-x-auto no-scrollbar">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-high/50">
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Round #</th>
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">FIR %</th>
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">GIR %</th>
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Scrambling</th>
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Putts/Rnd</th>
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">SG: Total</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-8 py-4 font-mono text-xs font-bold">#46 - Memorial</td>
+<td class="px-8 py-4 text-sm">68%</td>
+<td class="px-8 py-4 text-sm font-bold text-primary">78%</td>
+<td class="px-8 py-4 text-sm">62%</td>
+<td class="px-8 py-4 text-sm">27</td>
+<td class="px-8 py-4 font-mono text-sm text-[#2d5a27] font-bold">+2.41</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-8 py-4 font-mono text-xs font-bold">#45 - Memorial</td>
+<td class="px-8 py-4 text-sm">72%</td>
+<td class="px-8 py-4 text-sm">72%</td>
+<td class="px-8 py-4 text-sm">58%</td>
+<td class="px-8 py-4 text-sm">29</td>
+<td class="px-8 py-4 font-mono text-sm text-[#2d5a27] font-bold">+1.85</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-8 py-4 font-mono text-xs font-bold">#44 - PGA Champ</td>
+<td class="px-8 py-4 text-sm text-error">54%</td>
+<td class="px-8 py-4 text-sm">65%</td>
+<td class="px-8 py-4 text-sm font-bold text-primary">82%</td>
+<td class="px-8 py-4 text-sm">31</td>
+<td class="px-8 py-4 font-mono text-sm text-[#ba1a1a] font-bold">-0.12</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-8 py-4 font-mono text-xs font-bold">#43 - PGA Champ</td>
+<td class="px-8 py-4 text-sm">64%</td>
+<td class="px-8 py-4 text-sm">70%</td>
+<td class="px-8 py-4 text-sm">68%</td>
+<td class="px-8 py-4 text-sm">28</td>
+<td class="px-8 py-4 font-mono text-sm text-[#2d5a27] font-bold">+1.44</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</div>
+<footer class="p-8 mt-4 border-t border-outline-variant/10 flex justify-between items-center opacity-60">
+<div class="flex gap-8">
+<div class="flex flex-col">
+<span class="font-mono text-[8px] uppercase tracking-widest">OS Build</span>
+<span class="text-[10px] font-bold">v2.4.12-PRO</span>
+</div>
+<div class="flex flex-col">
+<span class="font-mono text-[8px] uppercase tracking-widest">Last Update</span>
+<span class="text-[10px] font-bold">06.12.2023 - 14:22 GMT</span>
+</div>
+</div>
+<div class="text-[10px] font-medium tracking-tight">
+                © AK SPORTS ANALYTICS ENGINE. ALL DATA POINTS VERIFIED.
+            </div>
+</footer>
+</main>
+</body></html>
