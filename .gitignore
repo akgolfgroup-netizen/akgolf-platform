@@ -50,3 +50,16 @@ mcp-server/
 .superpowers/
 backups/
 __pycache__/
+
+# Local development config
+.kimi/
+.agents/
+.claude/
+
+# Design assets (keep in repo but manage separately)
+stitch/*.zip
+stitch-export/
+
+# Test outputs
+playwright-report/
+test-results/
