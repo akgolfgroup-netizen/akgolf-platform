@@ -96,7 +96,12 @@ export default function TilgjengelighetPage() {
       ]);
 
       setAvailability(availData);
-      setBlockedTimes(blockedData);
+      // Map Prisma Date to strings for BlockedTime interface
+      setBlockedTimes(blockedData.map(bt => ({
+        ...bt,
+        startTime: bt.startTime.toISOString(),
+        endTime: bt.endTime.toISOString(),
+      })));
 
       // Convert to editing format
       const slots: Record<number, Array<{ start: string; end: string }>> = {};

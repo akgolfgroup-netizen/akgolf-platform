@@ -74,8 +74,8 @@ export async function upsertAvailability(
 
   // Revalidate cache
   revalidatePath("/portal/admin/tilgjengelighet");
-  revalidateTag("slots");
-  revalidateTag(`availability:${instructorId}`);
+  revalidateTag("slots", {});
+  revalidateTag(`availability:${instructorId}`, {});
   
   // Invalidate slots cache for this instructor
   await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/portal/public/slots`, {
@@ -125,9 +125,9 @@ export async function createBlockedTime(data: {
 
   // Revalidate cache
   revalidatePath("/portal/admin/tilgjengelighet");
-  revalidateTag("slots");
+  revalidateTag("slots", {});
   if (data.instructorId) {
-    revalidateTag(`availability:${data.instructorId}`);
+    revalidateTag(`availability:${data.instructorId}`, {});
   }
 
   return blockedTime;
@@ -146,9 +146,9 @@ export async function deleteBlockedTime(id: string) {
 
   // Revalidate cache
   revalidatePath("/portal/admin/tilgjengelighet");
-  revalidateTag("slots");
+  revalidateTag("slots", {});
   if (blockedTime.instructorId) {
-    revalidateTag(`availability:${blockedTime.instructorId}`);
+    revalidateTag(`availability:${blockedTime.instructorId}`, {});
   }
 }
 
@@ -239,8 +239,8 @@ export async function syncGoogleCalendar(
 
     // Revalidate cache
     revalidatePath("/portal/admin/tilgjengelighet");
-    revalidateTag("slots");
-    revalidateTag(`availability:${instructorId}`);
+    revalidateTag("slots", {});
+    revalidateTag(`availability:${instructorId}`, {});
 
     logger.info(
       `[google-calendar-sync] Synced ${createdCount} events for instructor ${instructorId}`

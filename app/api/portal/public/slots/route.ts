@@ -291,13 +291,13 @@ export async function POST(req: NextRequest) {
     }
 
     // Revalidate cache tags
-    revalidateTag(CACHE_TAG_PREFIX);
+    revalidateTag(CACHE_TAG_PREFIX, {});
     if (date) {
-      revalidateTag(getSlotsCacheKey(instructorId, date, ""));
+      revalidateTag(getSlotsCacheKey(instructorId, date, ""), {});
     }
 
     // Also invalidate general availability
-    revalidateTag(`availability:${instructorId}`);
+    revalidateTag(`availability:${instructorId}`, {});
 
     return NextResponse.json({
       success: true,

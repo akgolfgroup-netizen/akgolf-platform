@@ -63,3 +63,5 @@ stitch-export/
 # Test outputs
 playwright-report/
 test-results/
+playwright.config.ts
+e2e/
