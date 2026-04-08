@@ -1,47 +1,66 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createClient } from "@supabase/supabase-js";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export const dynamic = "force-dynamic";
+
+// Bruk Supabase direkte for å unngå Prisma-tilkoblingsproblemer lokalt
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 export async function GET(request: NextRequest) {
   const rateLimit = checkRateLimit(`public:${getClientIp(request)}`, RATE_LIMITS.API_GENERAL);
   if (!rateLimit.allowed) {
     return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
   }
+  
   try {
-    const types = await prisma.serviceType.findMany({
-      where: { isPublic: true, isActive: true },
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        category: true,
-        duration: true,
-        price: true,
-        color: true,
-        minNoticeHours: true,
-        maxAdvanceDays: true,
-        allowStripe: true,
-        allowVipps: true,
-        Instructor: {
-          select: {
-            id: true,
-            title: true,
-            User: { select: { name: true, image: true } },
-          },
-        },
-      },
-      orderBy: { sortOrder: "asc" },
-    });
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    
+    // Hent service types med tilhørende instruktører
+    const { data: types, error } = await supabase
+      .from("ServiceType")
+      .select(`
+        id,
+        name,
+        description,
+        category,
+        duration,
+        price,
+        color,
+        minNoticeHours,
+        maxAdvanceDays,
+        allowStripe,
+        allowVipps,
+        Instructor (
+          id,
+          title,
+          User (
+            name,
+            image
+          )
+        )
+      `)
+      .eq("isPublic", true)
+      .eq("isActive", true)
+      .order("sortOrder", { ascending: true });
 
-    return NextResponse.json(types, {
+    if (error) {
+      console.error("[ServiceTypes] Supabase error:", error);
+      return NextResponse.json(
+        { error: "Service unavailable" },
+        { status: 503, headers: { "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no" } }
+      );
+    }
+
+    return NextResponse.json(types || [], {
       headers: {
         "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no",
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       },
     });
-  } catch {
+  } catch (error) {
+    console.error("[ServiceTypes] Error:", error);
     return NextResponse.json(
       { error: "Service unavailable" },
       { status: 503, headers: { "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no" } }

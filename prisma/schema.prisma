@@ -53,8 +53,8 @@ model Agent {
   status      AgentStatus   @default(ACTIVE)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime
-  AgentLog    AgentLog[]
   AgentConfig AgentConfig[]
+  AgentLog    AgentLog[]
 
   @@index([status])
   @@index([team])
@@ -68,9 +68,8 @@ model AgentConfig {
   scope     String[] @default([])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  User  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  Agent     Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, agentId])
   @@index([userId])
@@ -156,43 +155,13 @@ model AppSubscription {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model BlockedTime {
-  id           String              @id
+  id           String   @id
   instructorId String?
   startTime    DateTime
   endTime      DateTime
   reason       String?
-  source       BlockedTimeSource   @default(MANUAL)
-  externalId   String?             @unique // Google Calendar event ID
-  isRecurring  Boolean             @default(false)
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
-
-  @@index([instructorId, startTime])
-  @@index([source])
-  @@index([externalId])
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model GoogleCalendarSync {
-  id            String   @id @default(cuid())
-  userId        String   @unique
-  instructorId  String?  @unique
-  accessToken   String
-  refreshToken  String
-  expiresAt     DateTime
-  calendarId    String   @default("primary")
-  syncEnabled   Boolean  @default(true)
-  lastSyncAt    DateTime?
-  lastError     String?
-  lastErrorAt   DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  User       User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Instructor Instructor? @relation(fields: [instructorId], references: [id])
-
-  @@index([syncEnabled])
-  @@index([lastSyncAt])
+  isRecurring  Boolean  @default(false)
+  createdAt    DateTime @default(now())
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -203,7 +172,6 @@ model Booking {
   serviceTypeId      String
   locationId         String?
   resourceId         String?
-  facilityId         String?
   startTime          DateTime
   endTime            DateTime
   status             BookingStatus        @default(PENDING)
@@ -223,12 +191,13 @@ model Booking {
   smsReminderSentAt  DateTime?
   createdAt          DateTime             @default(now())
   updatedAt          DateTime
+  facilityId         String?
+  Facility           Facility?            @relation(fields: [facilityId], references: [id])
   Instructor         Instructor           @relation(fields: [instructorId], references: [id])
   Location           Location?            @relation(fields: [locationId], references: [id])
   Resource           Resource?            @relation(fields: [resourceId], references: [id])
   ServiceType        ServiceType          @relation(fields: [serviceTypeId], references: [id])
   User               User                 @relation(fields: [studentId], references: [id])
-  Facility           Facility?            @relation(fields: [facilityId], references: [id])
   CoachingSession    CoachingSession?
   GroupParticipant   GroupParticipant[]
   PaymentTransaction PaymentTransaction[]
@@ -238,25 +207,6 @@ model Booking {
   @@index([startTime])
   @@index([status])
   @@index([studentId])
-  
-  // Optimalisert index for konfliktsjekk
-  @@index([instructorId, status, startTime, endTime])
-}
-
-/// BookingLock: Pessimistic locking for å forhindre race conditions ved booking
-/// Låser holdes i maks 5 minutter og ryddes automatisk opp
-model BookingLock {
-  id            String   @id
-  instructorId  String
-  startTime     DateTime
-  endTime       DateTime
-  lockedBy      String   // Session/user ID
-  lockedAt      DateTime @default(now())
-  expiresAt     DateTime // 5 minutter fra nå
-  
-  @@unique([instructorId, startTime, endTime])
-  @@index([expiresAt])
-  @@index([instructorId])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -623,29 +573,20 @@ model Instructor {
   User                       User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
   InstructorAvailability     InstructorAvailability[]
   InstructorDateAvailability InstructorDateAvailability[]
-  ServiceType                ServiceType[]
   InstructorFacilityDefault  InstructorFacilityDefault[]
-  GoogleCalendarSync         GoogleCalendarSync?
+  ServiceType                ServiceType[]                @relation("InstructorToServiceType")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model InstructorAvailability {
-  id            String                    @id
-  instructorId  String
-  dayOfWeek     Int
-  startTime     String
-  endTime       String
-  isActive      Boolean                   @default(true)
-  validFrom     DateTime                  @default(now())
-  validUntil    DateTime?
-  createdAt     DateTime                  @default(now())
-  updatedAt     DateTime                  @updatedAt
-  Instructor    Instructor                @relation(fields: [instructorId], references: [id], onDelete: Cascade)
-  changeLog     AvailabilityChangeLog[]
+  id           String     @id
+  instructorId String
+  dayOfWeek    Int
+  startTime    String
+  endTime      String
+  Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 
   @@unique([instructorId, dayOfWeek, startTime])
-  @@index([instructorId, isActive])
-  @@index([validFrom, validUntil])
 }
 
 model InstructorDateAvailability {
@@ -656,37 +597,10 @@ model InstructorDateAvailability {
   endTime      String
   locationId   String?
   createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
   Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
   Location     Location?  @relation(fields: [locationId], references: [id])
 
   @@index([instructorId, date])
-}
-
-/// Audit log for availability changes
-model AvailabilityChangeLog {
-  id             String                 @id @default(cuid())
-  availabilityId String
-  instructorId   String
-  changedBy      String                 // User ID who made the change
-  changeType     AvailabilityChangeType
-  oldValue       Json?
-  newValue       Json?
-  changeReason   String?
-  createdAt      DateTime               @default(now())
-  Availability   InstructorAvailability @relation(fields: [availabilityId], references: [id], onDelete: Cascade)
-
-  @@index([availabilityId])
-  @@index([instructorId])
-  @@index([createdAt])
-}
-
-enum AvailabilityChangeType {
-  CREATED
-  UPDATED
-  DEACTIVATED
-  REACTIVATED
-  DELETED
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -697,9 +611,9 @@ model Location {
   createdAt                  DateTime                     @default(now())
   updatedAt                  DateTime
   Booking                    Booking[]
+  Facility                   Facility[]
   InstructorDateAvailability InstructorDateAvailability[]
   Resource                   Resource[]
-  Facility                   Facility[]
 }
 
 model Message {
@@ -717,28 +631,17 @@ model Message {
 }
 
 model Notification {
-  id                  String           @id
-  userId              String
-  senderId            String?          // Avsender (null for system)
-  type                NotificationType
-  title               String
-  message             String
-  linkUrl             String?          // Lenke til relevant side
-  linkText            String?          // "Se booking", "Les notater"
-  metadata            Json?            // Extra data (JSON)
-  read                Boolean          @default(false)
-  readAt              DateTime?
-  createdAt           DateTime         @default(now())
-  expiresAt           DateTime?        // Utløpsdato (valgfritt)
-  isAdminNotification Boolean          @default(false) // For admin/MC notifikasjoner
-  adminType           String?          // "booking", "system", "urgent", "coaching", "video", "diary"
-  
-  User                User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  sender              User?            @relation("SentNotifications", fields: [senderId], references: [id], onDelete: SetNull)
+  id        String           @id
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  read      Boolean          @default(false)
+  linkUrl   String?
+  createdAt DateTime         @default(now())
+  User      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, read])
-  @@index([userId, isAdminNotification, read])
-  @@index([createdAt])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -858,8 +761,8 @@ model PushSubscription {
   endpoint   String   @unique
   p256dh     String
   auth       String
-  deviceType String?
   createdAt  DateTime @default(now())
+  deviceType String?
 
   @@index([userId])
 }
@@ -954,31 +857,31 @@ model RoundStats {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model ServiceType {
-  id             String          @id
-  name           String
-  description    String?
-  category       ServiceCategory
-  duration       Int
-  price          Int
-  maxStudents    Int             @default(1)
-  isActive       Boolean         @default(true)
-  isPublic       Boolean         @default(true)
-  color          String?
-  image          String?
-  sortOrder      Int             @default(0)
-  vatRate        Int             @default(0)
-  bufferBefore   Int             @default(0)
-  bufferAfter    Int             @default(15)
-  minNoticeHours Int             @default(24)
-  maxAdvanceDays Int             @default(60)
-  allowStripe    Boolean         @default(true)
-  allowVipps     Boolean         @default(true)
-  allowInvoice   Boolean         @default(false)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime
-  Booking        Booking[]
-  Instructor     Instructor[]
+  id                        String                      @id
+  name                      String
+  description               String?
+  category                  ServiceCategory
+  duration                  Int
+  price                     Int
+  maxStudents               Int                         @default(1)
+  isActive                  Boolean                     @default(true)
+  isPublic                  Boolean                     @default(true)
+  color                     String?
+  image                     String?
+  sortOrder                 Int                         @default(0)
+  vatRate                   Int                         @default(0)
+  bufferBefore              Int                         @default(0)
+  bufferAfter               Int                         @default(15)
+  minNoticeHours            Int                         @default(24)
+  maxAdvanceDays            Int                         @default(60)
+  allowStripe               Boolean                     @default(true)
+  allowVipps                Boolean                     @default(true)
+  allowInvoice              Boolean                     @default(false)
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime
+  Booking                   Booking[]
   InstructorFacilityDefault InstructorFacilityDefault[]
+  Instructor                Instructor[]                @relation("InstructorToServiceType")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1130,12 +1033,11 @@ model TrainingLog {
   deviationReason      String?
   createdAt            DateTime              @default(now())
   updatedAt            DateTime
-  // New fields for training diary
-  primaryLPhase        String?
-  primaryEnvironment   Int?
-  primaryPressLevel    Int?
   coachFeedback        String?
   coachId              String?
+  primaryEnvironment   Int?
+  primaryLPhase        String?
+  primaryPressLevel    Int?
   TrainingPlanSession  TrainingPlanSession?  @relation(fields: [planSessionId], references: [id])
   User                 User                  @relation(fields: [userId], references: [id])
   TrainingLogExercises TrainingLogExercise[]
@@ -1177,11 +1079,11 @@ model TrainingPlanSession {
   focusArea        String?
   exercises        Json             @default("[]")
   sortOrder        Int              @default(0)
-  facilityId       String?
   createdAt        DateTime         @default(now())
+  facilityId       String?
   TrainingLog      TrainingLog[]
-  TrainingPlanWeek TrainingPlanWeek @relation(fields: [weekId], references: [id], onDelete: Cascade)
   Facility         Facility?        @relation(fields: [facilityId], references: [id])
+  TrainingPlanWeek TrainingPlanWeek @relation(fields: [weekId], references: [id], onDelete: Cascade)
 
   @@index([weekId])
 }
@@ -1253,30 +1155,44 @@ model User {
   onboardingCompletedAt                       DateTime?
   welcomeEmailStep                            Int                        @default(0)
   checkoutAbandonedAt                         DateTime?
-  lastCheckoutSessionId                       String?
-  portalMonthlyLogCount                       Int                        @default(0)
   portalMonthlyAiCount                        Int                        @default(0)
+  portalMonthlyLogCount                       Int                        @default(0)
   portalUsageResetDate                        DateTime?
-  latestAiInsight                             Json?
   aiInsightGeneratedAt                        DateTime?
+  lastCheckoutSessionId                       String?
+  latestAiInsight                             Json?
+  AILearning                                  AILearning[]
+  ApprovedResponses                           AIResponse[]               @relation("ApprovedResponses")
   Account                                     Account[]
+  AgentConfig                                 AgentConfig[]
   AppSubscription                             AppSubscription[]
   Booking                                     Booking[]
+  Challenge                                   Challenge[]
+  ChallengeParticipant                        ChallengeParticipant[]
   CoachingSession                             CoachingSession[]
   CommunicationLog                            CommunicationLog[]
   CustomerPaymentPreference                   CustomerPaymentPreference?
+  DegradationTracking                         DegradationTracking[]
   ExerciseDefinition                          ExerciseDefinition[]
+  FacilityActivityApprovedBy                  FacilityActivity[]         @relation("FacilityActivityApprovedBy")
+  FacilityActivityCreatedBy                   FacilityActivity[]         @relation("FacilityActivityCreatedBy")
+  Friendship_FriendOf                         Friendship[]               @relation("FriendOf")
+  Friendship_UserFriends                      Friendship[]               @relation("UserFriends")
+  GamePlayer                                  GamePlayer[]
+  GameSessionCreator                          GameSession[]              @relation("GameSessionCreator")
   Goal                                        Goal[]
   HandicapEntry                               HandicapEntry[]
   Instructor                                  Instructor?
   Message                                     Message[]
   Notification                                Notification[]
-  SentNotifications                           Notification[]             @relation("SentNotifications")
   PeriodizationPeriod                         PeriodizationPeriod[]
   PlayerAchievement                           PlayerAchievement[]
+  PlayerBag                                   PlayerBag?
   PlayerTournamentPlan                        PlayerTournamentPlan[]
+  Round                                       Round[]
   RoundStats                                  RoundStats[]
   Session                                     Session[]
+  ShotTypeLPhase                              ShotTypeLPhase[]
   SubscriptionQuota                           SubscriptionQuota?
   SwingVideo                                  SwingVideo[]
   TestResult                                  TestResult[]
@@ -1287,33 +1203,12 @@ model User {
   TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
   TrainingSubscription                        TrainingSubscription?
+  AssignedMessages                            UnifiedMessage[]           @relation("AssignedMessages")
   UserExerciseBank                            UserExerciseBank[]
+  UserGolfId                                  UserGolfId?
   UserSubscription                            UserSubscription[]
   WaitlistEntry                               WaitlistEntry[]
   Conversation                                Conversation[]             @relation("ConversationParticipants")
-  GoogleCalendarSync                          GoogleCalendarSync?
-  // Training diary relations
-  ShotTypeLPhase                              ShotTypeLPhase[]
-  DegradationTracking                         DegradationTracking[]
-  // Coach Hub relations
-  AssignedMessages                            UnifiedMessage[]           @relation("AssignedMessages")
-  ApprovedResponses                           AIResponse[]               @relation("ApprovedResponses")
-  AILearning                                  AILearning[]
-  // Facility Manager relations
-  FacilityActivityCreatedBy                   FacilityActivity[]         @relation("FacilityActivityCreatedBy")
-  FacilityActivityApprovedBy                  FacilityActivity[]         @relation("FacilityActivityApprovedBy")
-  // Mission Control relations
-  AgentConfig                                 AgentConfig[]
-  // Round tracker relations
-  Round                                       Round[]
-  GameSessionCreator                          GameSession[]              @relation("GameSessionCreator")
-  GamePlayer                                  GamePlayer[]
-  PlayerBag                                   PlayerBag?
-  Friendship_UserFriends                      Friendship[]               @relation("UserFriends")
-  Friendship_FriendOf                         Friendship[]               @relation("FriendOf")
-  Challenge                                   Challenge[]
-  ChallengeParticipant                        ChallengeParticipant[]
-  UserGolfId                                  UserGolfId?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1378,14 +1273,13 @@ model WaitlistEntry {
   @@index([status])
 }
 
-// Training diary models
 model ShotTypeLPhase {
   id       String   @id @default(cuid())
   userId   String
-  shotType String   // DRIVER, IRON, WEDGE, PUTT
-  lPhase   String   // KROPP, ARM, KØLLE, BALL, AUTO
+  shotType String
+  lPhase   String
   setAt    DateTime @default(now())
-  setBy    String?  // coachId or "SELF"
+  setBy    String?
   notes    String?
   User     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -1402,11 +1296,11 @@ model TrainingLogExercise {
   actualSets    Int?
   actualReps    Int?
   lPhase        String?
-  clubSpeed     Int?        // 0-100
-  environment   Int?        // M 0-5
-  pressLevel    Int?        // PR 1-5
+  clubSpeed     Int?
+  environment   Int?
+  pressLevel    Int?
   successRate   Float?
-  score         Int?        // 1-10
+  score         Int?
   notes         String?
   coachFeedback String?
   sortOrder     Int         @default(0)
@@ -1437,8 +1331,8 @@ model DegradationTracking {
 /// Coach Hub: Unified inbox for all communication channels
 model UnifiedMessage {
   id           String       @id @default(cuid())
-  channel      String       // EMAIL, SMS, INSTAGRAM, etc.
-  direction    String       // INBOUND, OUTBOUND
+  channel      String
+  direction    String
   externalId   String?
   senderName   String?
   senderHandle String?
@@ -1447,11 +1341,11 @@ model UnifiedMessage {
   receivedAt   DateTime     @default(now())
   threadId     String?
   assignedToId String?
-  status       String       @default("PENDING") // PENDING, AI_PROCESSING, APPROVED, SENT, FAILED
+  status       String       @default("PENDING")
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
-  AssignedTo   User?        @relation("AssignedMessages", fields: [assignedToId], references: [id])
   AIResponses  AIResponse[]
+  AssignedTo   User?        @relation("AssignedMessages", fields: [assignedToId], references: [id])
 
   @@index([status])
   @@index([assignedToId])
@@ -1459,21 +1353,21 @@ model UnifiedMessage {
 
 /// Coach Hub: AI-generated responses for unified inbox
 model AIResponse {
-  id           String          @id @default(cuid())
+  id           String         @id @default(cuid())
   messageId    String
   draftContent String
   finalContent String?
   confidence   Float?
   category     String?
   modelUsed    String?
-  autoSent     Boolean         @default(false)
-  wasEdited    Boolean         @default(false)
+  autoSent     Boolean        @default(false)
+  wasEdited    Boolean        @default(false)
   approvedById String?
   approvedAt   DateTime?
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
-  Message      UnifiedMessage  @relation(fields: [messageId], references: [id], onDelete: Cascade)
-  ApprovedBy   User?           @relation("ApprovedResponses", fields: [approvedById], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  ApprovedBy   User?          @relation("ApprovedResponses", fields: [approvedById], references: [id])
+  Message      UnifiedMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
 
   @@index([messageId])
 }
@@ -1493,6 +1387,306 @@ model AILearning {
   User       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, category])
+}
+
+model Facility {
+  id                        String                      @id @default(cuid())
+  locationId                String
+  name                      String
+  slug                      String                      @unique
+  description               String?
+  capacity                  Int?
+  sortOrder                 Int                         @default(0)
+  isActive                  Boolean                     @default(true)
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  Booking                   Booking[]
+  Location                  Location                    @relation(fields: [locationId], references: [id])
+  FacilityActivity          FacilityActivity[]
+  InstructorFacilityDefault InstructorFacilityDefault[]
+  TrainingPlanSession       TrainingPlanSession[]
+}
+
+model FacilityActivity {
+  id             String                 @id @default(cuid())
+  facilityId     String
+  title          String
+  description    String?
+  activityType   FacilityActivityType
+  startTime      DateTime
+  endTime        DateTime
+  isRecurring    Boolean                @default(false)
+  recurrenceRule String?
+  createdById    String
+  approvedById   String?
+  status         FacilityActivityStatus @default(CONFIRMED)
+  conflictNote   String?
+  color          String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  ApprovedBy     User?                  @relation("FacilityActivityApprovedBy", fields: [approvedById], references: [id])
+  CreatedBy      User                   @relation("FacilityActivityCreatedBy", fields: [createdById], references: [id])
+  Facility       Facility               @relation(fields: [facilityId], references: [id])
+
+  @@index([facilityId, startTime])
+  @@index([status])
+}
+
+model InstructorFacilityDefault {
+  id            String       @id @default(cuid())
+  instructorId  String
+  facilityId    String
+  serviceTypeId String?
+  priority      Int          @default(0)
+  Facility      Facility     @relation(fields: [facilityId], references: [id])
+  Instructor    Instructor   @relation(fields: [instructorId], references: [id])
+  ServiceType   ServiceType? @relation(fields: [serviceTypeId], references: [id])
+
+  @@unique([instructorId, facilityId, serviceTypeId])
+}
+
+model Course {
+  id           String        @id
+  name         String
+  location     String?
+  country      String        @default("NO")
+  par          Int
+  totalLength  Int?
+  courseRating Float?
+  slopeRating  Int?
+  latitude     Float?
+  longitude    Float?
+  gpsData      Json?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime
+  GameSession  GameSession[]
+  Hole         Hole[]
+  Round        Round[]
+
+  @@index([name])
+  @@index([country])
+}
+
+model Hole {
+  id          String       @id
+  courseId    String
+  holeNumber  Int
+  par         Int
+  handicap    Int?
+  lengthMeter Int
+  teeColor    String       @default("yellow")
+  latitude    Float?
+  longitude   Float?
+  greenLat    Float?
+  greenLon    Float?
+  Course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  HoleResult  HoleResult[]
+  Shot        Shot[]
+
+  @@unique([courseId, holeNumber, teeColor])
+  @@index([courseId])
+}
+
+model Round {
+  id              String       @id
+  userId          String
+  courseId        String
+  date            DateTime
+  startTime       DateTime?
+  endTime         DateTime?
+  teeColor        String       @default("yellow")
+  weather         String?
+  windSpeed       Int?
+  windDir         String?
+  temperature     Int?
+  totalScore      Int?
+  scoreToPar      Int?
+  sgTotal         Float?
+  sgOffTheTee     Float?
+  sgApproach      Float?
+  sgShortGame     Float?
+  sgPutting       Float?
+  fairwaysHit     Int?
+  fairwaysTotal   Int?
+  girCount        Int?
+  totalPutts      Int?
+  decadeScore     Float?
+  preRoutineScore Float?
+  pressureLevel   Int?
+  isComplete      Boolean      @default(false)
+  source          String       @default("MANUAL")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime
+  gameSessionId   String?
+  HoleResult      HoleResult[]
+  Course          Course       @relation(fields: [courseId], references: [id])
+  GameSession     GameSession? @relation(fields: [gameSessionId], references: [id])
+  User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+  @@index([courseId])
+}
+
+model GameSession {
+  id          String       @id
+  name        String?
+  courseId    String
+  date        DateTime
+  teeColor    String       @default("yellow")
+  format      GameFormat   @default(STROKEPLAY)
+  createdById String
+  joinCode    String       @unique
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime
+  Players     GamePlayer[]
+  Course      Course       @relation(fields: [courseId], references: [id])
+  CreatedBy   User         @relation("GameSessionCreator", fields: [createdById], references: [id])
+  Rounds      Round[]
+}
+
+model GamePlayer {
+  id              String      @id
+  gameSessionId   String
+  userId          String
+  displayName     String?
+  playingHandicap Int?
+  joinedAt        DateTime    @default(now())
+  GameSession     GameSession @relation(fields: [gameSessionId], references: [id], onDelete: Cascade)
+  User            User        @relation(fields: [userId], references: [id])
+
+  @@unique([gameSessionId, userId])
+}
+
+model HoleResult {
+  id                   String   @id
+  roundId              String
+  holeId               String
+  holeNumber           Int
+  par                  Int
+  score                Int
+  scoreToPar           Int
+  putts                Int
+  fairwayHit           Boolean?
+  gir                  Boolean
+  upAndDown            Boolean?
+  sandSave             Boolean?
+  penalty              Int      @default(0)
+  sgTotal              Float?
+  sgTee                Float?
+  sgApproach           Float?
+  sgShortGame          Float?
+  sgPutting            Float?
+  decadeTargetScore    Float?
+  decadeActualVsTarget Float?
+  strategyFollowed     Boolean?
+  Hole                 Hole     @relation(fields: [holeId], references: [id])
+  Round                Round    @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  Shot                 Shot[]
+
+  @@unique([roundId, holeNumber])
+  @@index([roundId])
+}
+
+model Shot {
+  id                  String     @id
+  holeResultId        String
+  holeId              String
+  shotNumber          Int
+  fromLie             String
+  fromDistance        Float
+  toLie               String
+  toDistance          Float
+  club                String
+  offline             Float?
+  carryDistance       Float?
+  totalDistance       Float?
+  expectedBefore      Float
+  expectedAfter       Float
+  strokesGained       Float
+  sgCategory          String
+  targetDirection     String?
+  actualDirection     String?
+  decadeDecision      String?
+  preRoutineCompleted Boolean?
+  confidenceLevel     Int?
+  trackmanShotId      String?    @unique
+  Hole                Hole       @relation(fields: [holeId], references: [id])
+  HoleResult          HoleResult @relation(fields: [holeResultId], references: [id], onDelete: Cascade)
+
+  @@index([holeResultId])
+  @@index([sgCategory])
+}
+
+model PlayerBag {
+  id     String       @id
+  userId String       @unique
+  User   User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clubs  PlayerClub[]
+}
+
+model PlayerClub {
+  id         String    @id
+  bagId      String
+  name       String
+  brand      String?
+  model      String?
+  loft       Float?
+  avgCarry   Float?
+  avgTotal   Float?
+  avgOffline Float?
+  shotCount  Int       @default(0)
+  sortOrder  Int       @default(0)
+  PlayerBag  PlayerBag @relation(fields: [bagId], references: [id], onDelete: Cascade)
+
+  @@index([bagId])
+}
+
+model Friendship {
+  id        String           @id
+  userId    String
+  friendId  String
+  status    FriendshipStatus @default(PENDING)
+  createdAt DateTime         @default(now())
+  Friend    User             @relation("FriendOf", fields: [friendId], references: [id], onDelete: Cascade)
+  User      User             @relation("UserFriends", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, friendId])
+}
+
+model Challenge {
+  id           String                 @id
+  createdById  String
+  title        String
+  type         ChallengeType
+  metric       String
+  startDate    DateTime
+  endDate      DateTime
+  isPublic     Boolean                @default(false)
+  createdAt    DateTime               @default(now())
+  Creator      User                   @relation(fields: [createdById], references: [id])
+  Participants ChallengeParticipant[]
+}
+
+model ChallengeParticipant {
+  id           String    @id
+  challengeId  String
+  userId       String
+  currentValue Float?
+  rank         Int?
+  Challenge    Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  User         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([challengeId, userId])
+}
+
+model UserGolfId {
+  id        String  @id
+  userId    String  @unique
+  golfboxId String?
+  clubName  String?
+  handicap  Float?
+  User      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum AgentStatus {
@@ -1684,15 +1878,8 @@ enum SubscriptionTier {
 enum UserRole {
   ADMIN
   INSTRUCTOR
-  INVITED
   STUDENT
-}
-
-enum BlockedTimeSource {
-  MANUAL
-  GOOGLE_CALENDAR
-  OUTLOOK_CALENDAR
-  FACILITY_BOOKING
+  INVITED
 }
 
 enum WaitlistStatus {
@@ -1702,10 +1889,6 @@ enum WaitlistStatus {
   EXPIRED
   CANCELLED
 }
-
-// ============================================================================
-// Facility Manager — Fasilitetsoversikt for GFGK
-// ============================================================================
 
 enum FacilityActivityType {
   TOURNAMENT_CLUB
@@ -1727,196 +1910,6 @@ enum FacilityActivityStatus {
   CANCELLED
 }
 
-model Facility {
-  id          String   @id @default(cuid())
-  locationId  String
-  name        String
-  slug        String   @unique
-  description String?
-  capacity    Int?
-  sortOrder   Int      @default(0)
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  Location                  Location                    @relation(fields: [locationId], references: [id])
-  FacilityActivity          FacilityActivity[]
-  InstructorFacilityDefault InstructorFacilityDefault[]
-  Booking                   Booking[]
-  TrainingPlanSession       TrainingPlanSession[]
-}
-
-model FacilityActivity {
-  id             String                 @id @default(cuid())
-  facilityId     String
-  title          String
-  description    String?
-  activityType   FacilityActivityType
-  startTime      DateTime
-  endTime        DateTime
-  isRecurring    Boolean                @default(false)
-  recurrenceRule String?
-  createdById    String
-  approvedById   String?
-  status         FacilityActivityStatus @default(CONFIRMED)
-  conflictNote   String?
-  color          String?
-  createdAt      DateTime               @default(now())
-  updatedAt      DateTime               @updatedAt
-
-  Facility   Facility @relation(fields: [facilityId], references: [id])
-  CreatedBy  User     @relation("FacilityActivityCreatedBy", fields: [createdById], references: [id])
-  ApprovedBy User?    @relation("FacilityActivityApprovedBy", fields: [approvedById], references: [id])
-
-  @@index([facilityId, startTime])
-  @@index([status])
-}
-
-model InstructorFacilityDefault {
-  id            String  @id @default(cuid())
-  instructorId  String
-  facilityId    String
-  serviceTypeId String?
-  priority      Int     @default(0)
-
-  Instructor  Instructor   @relation(fields: [instructorId], references: [id])
-  Facility    Facility     @relation(fields: [facilityId], references: [id])
-  ServiceType ServiceType? @relation(fields: [serviceTypeId], references: [id])
-
-  @@unique([instructorId, facilityId, serviceTypeId])
-}
-
-// ════════════════════════════════════════════════════════════
-// ROUND TRACKER — Course, Hole, Round, HoleResult, Shot
-// ════════════════════════════════════════════════════════════
-
-model Course {
-  id           String   @id
-  name         String
-  location     String?
-  country      String   @default("NO")
-  par          Int
-  totalLength  Int?
-  courseRating  Float?
-  slopeRating  Int?
-  latitude     Float?
-  longitude    Float?
-  gpsData      Json?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime
-
-  Hole        Hole[]
-  Round       Round[]
-  GameSession GameSession[]
-
-  @@index([name])
-  @@index([country])
-}
-
-model Hole {
-  id          String @id
-  courseId     String
-  holeNumber  Int
-  par         Int
-  handicap    Int?
-  lengthMeter Int
-  teeColor    String @default("yellow")
-  latitude    Float?
-  longitude   Float?
-  greenLat    Float?
-  greenLon    Float?
-
-  Course     Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  Shot       Shot[]
-  HoleResult HoleResult[]
-
-  @@unique([courseId, holeNumber, teeColor])
-  @@index([courseId])
-}
-
-model Round {
-  id        String    @id
-  userId    String
-  courseId   String
-  date      DateTime
-  startTime DateTime?
-  endTime   DateTime?
-  teeColor  String    @default("yellow")
-  weather   String?
-  windSpeed Int?
-  windDir   String?
-  temperature Int?
-
-  totalScore    Int?
-  scoreToPar    Int?
-  sgTotal       Float?
-  sgOffTheTee   Float?
-  sgApproach    Float?
-  sgShortGame   Float?
-  sgPutting     Float?
-  fairwaysHit   Int?
-  fairwaysTotal Int?
-  girCount      Int?
-  totalPutts    Int?
-
-  decadeScore     Float?
-  preRoutineScore Float?
-  pressureLevel   Int?
-
-  isComplete Boolean @default(false)
-  source     String  @default("MANUAL")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime
-
-  User       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Course     Course       @relation(fields: [courseId], references: [id])
-  HoleResult HoleResult[]
-
-  @@index([userId, date])
-  @@index([courseId])
-
-  gameSessionId String?
-  GameSession   GameSession? @relation(fields: [gameSessionId], references: [id])
-}
-
-// ════════════════════════════════════════════════════════════
-// GAME SESSION — Gruppe-runde (GameBook-stil)
-// ════════════════════════════════════════════════════════════
-
-model GameSession {
-  id          String   @id
-  name        String?                 // "Fredagsrunde med gutta"
-  courseId     String
-  date        DateTime
-  teeColor    String   @default("yellow")
-  format      GameFormat @default(STROKEPLAY)
-  createdById String
-  joinCode    String   @unique        // 6-tegn kode for a bli med
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime
-
-  Course      Course   @relation(fields: [courseId], references: [id])
-  CreatedBy   User     @relation("GameSessionCreator", fields: [createdById], references: [id])
-  Players     GamePlayer[]
-  Rounds      Round[]
-}
-
-model GamePlayer {
-  id            String   @id
-  gameSessionId String
-  userId        String
-  displayName   String?
-  playingHandicap Int?
-  joinedAt      DateTime @default(now())
-
-  GameSession   GameSession @relation(fields: [gameSessionId], references: [id], onDelete: Cascade)
-  User          User        @relation(fields: [userId], references: [id])
-
-  @@unique([gameSessionId, userId])
-}
-
 enum GameFormat {
   STROKEPLAY
   STABLEFORD
@@ -1924,169 +1917,6 @@ enum GameFormat {
   BESTBALL
   SCRAMBLE
 }
-
-model HoleResult {
-  id         String   @id
-  roundId    String
-  holeId     String
-  holeNumber Int
-  par        Int
-  score      Int
-  scoreToPar Int
-  putts      Int
-  fairwayHit Boolean?
-  gir        Boolean
-  upAndDown  Boolean?
-  sandSave   Boolean?
-  penalty    Int      @default(0)
-
-  sgTotal     Float?
-  sgTee       Float?
-  sgApproach  Float?
-  sgShortGame Float?
-  sgPutting   Float?
-
-  decadeTargetScore    Float?
-  decadeActualVsTarget Float?
-  strategyFollowed     Boolean?
-
-  Round Round @relation(fields: [roundId], references: [id], onDelete: Cascade)
-  Hole  Hole  @relation(fields: [holeId], references: [id])
-  Shot  Shot[]
-
-  @@unique([roundId, holeNumber])
-  @@index([roundId])
-}
-
-model Shot {
-  id           String @id
-  holeResultId String
-  holeId       String
-  shotNumber   Int
-
-  fromLie     String
-  fromDistance Float
-  toLie       String
-  toDistance   Float
-
-  club          String
-  offline       Float?
-  carryDistance  Float?
-  totalDistance  Float?
-
-  expectedBefore Float
-  expectedAfter  Float
-  strokesGained  Float
-  sgCategory     String
-
-  targetDirection String?
-  actualDirection String?
-  decadeDecision  String?
-
-  preRoutineCompleted Boolean?
-  confidenceLevel     Int?
-
-  trackmanShotId String? @unique
-
-  HoleResult HoleResult @relation(fields: [holeResultId], references: [id], onDelete: Cascade)
-  Hole       Hole       @relation(fields: [holeId], references: [id])
-
-  @@index([holeResultId])
-  @@index([sgCategory])
-}
-
-// ════════════════════════════════════════════════════════════
-// BAG MANAGEMENT
-// ════════════════════════════════════════════════════════════
-
-model PlayerBag {
-  id     String       @id
-  userId String       @unique
-  clubs  PlayerClub[]
-
-  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model PlayerClub {
-  id         String  @id
-  bagId      String
-  name       String
-  brand      String?
-  model      String?
-  loft       Float?
-  avgCarry   Float?
-  avgTotal   Float?
-  avgOffline Float?
-  shotCount  Int     @default(0)
-  sortOrder  Int     @default(0)
-
-  PlayerBag PlayerBag @relation(fields: [bagId], references: [id], onDelete: Cascade)
-
-  @@index([bagId])
-}
-
-// ════════════════════════════════════════════════════════════
-// SOCIAL & GAMIFICATION
-// ════════════════════════════════════════════════════════════
-
-model Friendship {
-  id        String           @id
-  userId    String
-  friendId  String
-  status    FriendshipStatus @default(PENDING)
-  createdAt DateTime         @default(now())
-
-  User   User @relation("UserFriends", fields: [userId], references: [id], onDelete: Cascade)
-  Friend User @relation("FriendOf", fields: [friendId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, friendId])
-}
-
-model Challenge {
-  id          String    @id
-  createdById String
-  title       String
-  type        ChallengeType
-  metric      String
-  startDate   DateTime
-  endDate     DateTime
-  isPublic    Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-
-  Creator      User                     @relation(fields: [createdById], references: [id])
-  Participants ChallengeParticipant[]
-}
-
-model ChallengeParticipant {
-  id           String  @id
-  challengeId  String
-  userId       String
-  currentValue Float?
-  rank         Int?
-
-  Challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
-  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([challengeId, userId])
-}
-
-// ════════════════════════════════════════════════════════════
-// GOLF ID & NGF
-// ════════════════════════════════════════════════════════════
-
-model UserGolfId {
-  id        String  @id
-  userId    String  @unique
-  golfboxId String?
-  clubName  String?
-  handicap  Float?
-
-  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-// ════════════════════════════════════════════════════════════
-// ENUMS — Round Tracker
-// ════════════════════════════════════════════════════════════
 
 enum FriendshipStatus {
   PENDING
@@ -2102,119 +1932,4 @@ enum ChallengeType {
   ROUNDS
   STREAK
   CUSTOM
-}
-
-// ════════════════════════════════════════════════════════════
-// REAL-TIME SYNC SYSTEM — Spillerportal <-> Mission Control
-// ════════════════════════════════════════════════════════════
-
-enum SyncEventType {
-  BOOKING_CREATED
-  BOOKING_UPDATED
-  BOOKING_CANCELLED
-  BOOKING_RESCHEDULED
-  BOOKING_COMPLETED
-  AVAILABILITY_CHANGED
-  BLOCKED_TIME_CREATED
-  BLOCKED_TIME_DELETED
-  COACHING_NOTES_ADDED
-  COACHING_NOTES_UPDATED
-  NOTIFICATION_CREATED
-  USER_PRESENCE_CHANGED
-  SYNC_PING
-  SYNC_ACK
-}
-
-enum SyncEventStatus {
-  PENDING
-  DELIVERED
-  FAILED
-  EXPIRED
-}
-
-/// Real-time sync events for cross-system data consistency
-model SyncEvent {
-  id          String          @id @default(cuid())
-  type        SyncEventType
-  payload     Json            // Event data
-  
-  // Targeting - who should receive this event
-  targetUserIds String[]      // Specific users (empty = broadcast)
-  targetRoles   String[]      // Role-based targeting (ADMIN, INSTRUCTOR, etc)
-  
-  // Source tracking
-  sourceUserId  String?       // Who triggered the event
-  sourceSystem  String        // "PORTAL", "MISSION_CONTROL", "CRON", "WEBHOOK"
-  
-  // Delivery tracking
-  status        SyncEventStatus @default(PENDING)
-  deliveredTo   String[]      @default([]) // User IDs that received the event
-  failedFor     String[]      @default([]) // User IDs where delivery failed
-  
-  // Timestamps
-  createdAt     DateTime      @default(now())
-  expiresAt     DateTime      // TTL - auto cleanup
-  deliveredAt   DateTime?     // First successful delivery
-  
-  // Deduplication
-  dedupKey      String?       @unique // Prevent duplicate events
-  
-  @@index([status, createdAt])
-  @@index([targetUserIds])
-  @@index([expiresAt])
-  @@index([type, createdAt])
-  @@index([dedupKey])
-}
-
-/// Audit log for all data mutations (immutable)
-model SyncAuditLog {
-  id            String    @id @default(cuid())
-  tableName     String    // e.g., "Booking", "CoachingSession"
-  recordId      String    // Primary key of affected record
-  action        String    // CREATE, UPDATE, DELETE
-  
-  // Change details
-  before        Json?     // Previous state (null for CREATE)
-  after         Json?     // New state (null for DELETE)
-  changedFields String[]  // Which fields changed
-  
-  // Actor info
-  userId        String?
-  userRole      String?
-  ipAddress     String?
-  userAgent     String?
-  
-  // Context
-  sourceSystem  String    // "PORTAL", "MISSION_CONTROL", "API", "CRON"
-  correlationId String?   // For tracing across services
-  
-  createdAt     DateTime  @default(now())
-  
-  @@index([tableName, recordId])
-  @@index([userId, createdAt])
-  @@index([createdAt])
-  @@index([correlationId])
-}
-
-/// Connection state for SSE clients
-model SyncConnection {
-  id           String    @id @default(cuid())
-  userId       String
-  sessionId    String    @unique // Client-generated session ID
-  
-  // Connection metadata
-  connectedAt  DateTime  @default(now())
-  lastPingAt   DateTime  @default(now())
-  disconnectedAt DateTime?
-  
-  // Client info
-  userAgent    String?
-  ipAddress    String?
-  
-  // Subscription filters
-  eventTypes   String[]  @default([]) // Filter by event types
-  
-  @@index([userId, connectedAt])
-  @@index([sessionId])
-  @@index([lastPingAt])
 }

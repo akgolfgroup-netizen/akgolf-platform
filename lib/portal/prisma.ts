@@ -7,17 +7,24 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error("DATABASE_URL is not set");
+  }
+  
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    max: 10, // Maks samtidige connections
-    idleTimeoutMillis: 30000, // Lukk idle connections etter 30s
-    connectionTimeoutMillis: 5000, // 5s timeout for nye connections
+    connectionString,
+    max: 10,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 10000,
+    family: 4,
   });
+  
   const adapter = new PrismaPg(pool);
+  
   return new PrismaClient({
     adapter,
-    log:
-      process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
   });
 }
 
