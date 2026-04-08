@@ -46,7 +46,7 @@ export function Footer({ variant = "light" }: FooterProps) {
             <div className="flex flex-col gap-4">
               <Logo variant="light" size="lg" />
               <p className="text-white/60 text-sm max-w-xs">
-                Systematisk golf coaching. To baner, ett system.
+                Systematisk golf coaching.
               </p>
             </div>
 

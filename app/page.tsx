@@ -79,8 +79,9 @@ export default function LandingHomepage() {
         <section className="py-24 lg:py-32 px-6 lg:px-8 max-w-[1440px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 lg:mb-20 gap-8">
             <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-5xl font-semibold text-[#154212] tracking-tight mb-6">Slik fungerer det</h2>
-              <p className="text-[#42493e] text-lg">20 minutter som endrer spillet ditt. Tradisjonell golfcoaching er én time, én gang i blant, uten oppfølging mellom sesjonene. Vi gjør det annerledes.</p>
+              <h2 className="text-4xl md:text-5xl font-semibold text-[#154212] tracking-tight mb-6">Treningsabonnement</h2>
+              <p className="text-[#42493e] text-lg">Systematisk coaching med alt inkludert. Ikke bare én time i blant — men kontinuerlig utvikling med oppfølging mellom hver sesjon.</p>
+              <p className="text-[#576500] text-sm mt-3 font-medium">Lanseres i starten av mai 2026</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -120,7 +121,7 @@ export default function LandingHomepage() {
                 Om oss
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-[#154212] tracking-tight mb-6">
-                Systematisk golf coaching golfcoaching
+                Systematisk golf coaching
               </h2>
               <p className="text-xl text-[#42493e] leading-relaxed mb-8">
                 AK Golf Academy drives av Anders Kristiansen — en coach som har jobbet med spillere på PGA Tour, DP World Tour og Ladies European Tour. Metodikken bygger på teknisk veiledning etter plan, ikke bare data fra TrackMan.
@@ -138,8 +139,6 @@ export default function LandingHomepage() {
                   <span className="font-medium">Miklagard Golfklubb</span>
                 </div>
               </div>
-              <p className="mt-4 text-[#576500] font-medium">To baner, ett system.</p>
-              
               <div className="mt-8">
                 <Link 
                   href="/landing/about"

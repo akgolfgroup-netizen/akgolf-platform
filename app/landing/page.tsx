@@ -15,7 +15,12 @@ export default function LandingHomepage() {
         </div>
         <div className="flex items-center gap-6">
           <button className="font-medium uppercase tracking-wider text-sm text-[#154212]/70 hover:text-[#154212]">Logg inn</button>
-          <button className="bg-[#d2f000] text-[#154212] px-6 py-2.5 rounded-lg font-medium uppercase tracking-wider text-sm scale-95 active:scale-90 transition-transform hover:opacity-80 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]">Bli medlem</button>
+          <a 
+            href="/spillerportal"
+            className="bg-[#d2f000] text-[#154212] px-6 py-2.5 rounded-lg font-medium uppercase tracking-wider text-sm scale-95 active:scale-90 transition-transform hover:opacity-80 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]"
+          >
+            Spillerportal
+          </a>
         </div>
       </nav>
 
@@ -76,8 +81,9 @@ export default function LandingHomepage() {
         <section className="py-32 px-8 max-w-[1440px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-5xl font-semibold text-[#154212] tracking-tight mb-6">Slik fungerer det</h2>
-              <p className="text-[#42493e] text-lg">20 minutter som endrer spillet ditt. Tradisjonell golfcoaching er én time, én gang i blant, uten oppfølging mellom sesjonene. Vi gjør det annerledes.</p>
+              <h2 className="text-4xl md:text-5xl font-semibold text-[#154212] tracking-tight mb-6">Treningsabonnement</h2>
+              <p className="text-[#42493e] text-lg">Systematisk coaching med alt inkludert. Ikke bare én time i blant — men kontinuerlig utvikling med oppfølging mellom hver sesjon.</p>
+              <p className="text-[#576500] text-sm mt-3 font-medium">Lanseres i starten av mai 2026</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -135,7 +141,6 @@ export default function LandingHomepage() {
                   <span className="font-medium">Miklagard Golfklubb</span>
                 </div>
               </div>
-              <p className="mt-4 text-[#576500] font-medium">To baner, ett system.</p>
             </div>
             <div className="lg:col-span-5 relative">
               <div className="aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl bg-[#154212]/10">

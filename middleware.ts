@@ -1,9 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// Vedlikeholdsmodus - HARDKODET til true for lansering
-// Sett til false for å gå live
-const MAINTENANCE_MODE = true;
+// Vedlikeholdsmodus - kun aktiv i produksjon når env er satt
+const MAINTENANCE_MODE = process.env.MAINTENANCE_MODE === "true";
 const BYPASS_KEY = process.env.MAINTENANCE_BYPASS_KEY;
 
 export async function middleware(request: NextRequest) {

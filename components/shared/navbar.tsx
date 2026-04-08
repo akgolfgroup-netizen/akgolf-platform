@@ -84,10 +84,10 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
                 Logg inn
               </Link>
               <Link
-                href="/booking/select-service"
+                href="/spillerportal"
                 className="bg-[#d2f000] text-[#154212] px-6 py-2.5 rounded-lg font-medium uppercase tracking-wider text-sm hover:opacity-90 transition-all scale-95 active:scale-90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]"
               >
-                Bli medlem
+                Spillerportal
               </Link>
             </div>
           )}
@@ -170,11 +170,11 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
                   Logg inn
                 </Link>
                 <Link
-                  href="/booking/select-service"
+                  href="/spillerportal"
                   onClick={() => setMobileMenuOpen(false)}
                   className="block w-full text-center bg-[#d2f000] text-[#154212] px-6 py-3 rounded-lg font-medium uppercase tracking-wider text-sm"
                 >
-                  Bli medlem
+                  Spillerportal
                 </Link>
               </div>
             )}
