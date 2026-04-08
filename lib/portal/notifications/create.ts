@@ -274,9 +274,15 @@ async function sendPushNotification(
   userId: string,
   payload: PushNotificationPayload
 ): Promise<{ success: boolean; sent?: number; failed?: number }> {
-  if (!vapidPublicKey || !vapidPrivateKey) {
-    return { success: false };
-  }
+  // Midlertidig deaktivert - push-notifikasjoner kommer etter lansering
+  return { success: false };
+  
+  // TODO: Aktiver etter VAPID-fiks
+  // const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  // const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+  // if (!vapidPublicKey || !vapidPrivateKey) {
+  //   return { success: false };
+  // }
 
   try {
     const subscriptions = await prisma.pushSubscription.findMany({
