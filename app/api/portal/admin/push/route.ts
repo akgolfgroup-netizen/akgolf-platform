@@ -16,14 +16,18 @@ const sendPushSchema = z.object({
   broadcast: z.boolean().optional(),
 });
 
-// Configure web-push with VAPID keys
-const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
-const vapidSubject = process.env.VAPID_SUBJECT || "mailto:admin@akgolf.no";
+// Configure web-push with VAPID keys (midlertidig deaktivert)
+// TODO: Fiks VAPID-nøkler etter lansering
+// const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+// const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+// const vapidSubject = process.env.VAPID_SUBJECT || "mailto:admin@akgolf.no";
 
-if (vapidPublicKey && vapidPrivateKey) {
-  webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
-}
+// if (vapidPublicKey && vapidPrivateKey) {
+//   webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
+// }
+
+const vapidPublicKey = null;
+const vapidPrivateKey = null;
 
 /**
  * POST /api/portal/admin/push
