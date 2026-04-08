@@ -15,19 +15,18 @@ import {
 } from "./types";
 import webpush from "web-push";
 
-// Konfigurer web-push (midlertidig deaktivert for lansering)
-// TODO: Fiks VAPID-nøkler etter lansering
-// const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-// const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
-// const vapidSubject = process.env.VAPID_SUBJECT || "mailto:admin@akgolf.no";
+// Konfigurer web-push
+const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+const vapidSubject = process.env.VAPID_SUBJECT || "mailto:admin@akgolf.no";
 
-// if (vapidPublicKey && vapidPrivateKey) {
-//   try {
-//     webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
-//   } catch (e) {
-//     console.warn("[webpush] VAPID config failed:", e);
-//   }
-// }
+if (vapidPublicKey && vapidPrivateKey) {
+  try {
+    webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
+  } catch (e) {
+    console.warn("[webpush] VAPID config failed:", e);
+  }
+}
 
 /**
  * Opprett en enkelt notifikasjon
@@ -56,21 +55,20 @@ export async function createNotification(
       },
     });
 
-    // Send push-notifikasjon hvis konfigurert (midlertidig deaktivert)
-    // TODO: Aktiver etter VAPID-fiks
-    // await sendPushNotification(input.userId, {
-    //   title: input.title,
-    //   body: input.message,
-    //   icon: "/icons/icon-192.png",
-    //   badge: "/icons/badge-72.png",
-    //   tag: notificationId,
-    //   data: {
-    //     url: input.linkUrl || "/portal",
-    //     notificationId,
-    //     type: input.type,
-    //     metadata: input.metadata,
-    //   },
-    // });
+    // Send push-notifikasjon hvis konfigurert
+    await sendPushNotification(input.userId, {
+      title: input.title,
+      body: input.message,
+      icon: "/icons/icon-192.png",
+      badge: "/icons/badge-72.png",
+      tag: notificationId,
+      data: {
+        url: input.linkUrl || "/portal",
+        notificationId,
+        type: input.type,
+        metadata: input.metadata,
+      },
+    });
 
     return { success: true, notificationId };
   } catch (error) {
@@ -274,15 +272,9 @@ async function sendPushNotification(
   userId: string,
   payload: PushNotificationPayload
 ): Promise<{ success: boolean; sent?: number; failed?: number }> {
-  // Midlertidig deaktivert - push-notifikasjoner kommer etter lansering
-  return { success: false };
-  
-  // TODO: Aktiver etter VAPID-fiks
-  // const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-  // const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
-  // if (!vapidPublicKey || !vapidPrivateKey) {
-  //   return { success: false };
-  // }
+  if (!vapidPublicKey || !vapidPrivateKey) {
+    return { success: false };
+  }
 
   try {
     const subscriptions = await prisma.pushSubscription.findMany({
