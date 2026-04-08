@@ -43,7 +43,7 @@ export default function TemporaryBookingPage() {
             
             <div className="relative" style={{ minHeight: '800px' }}>
               <iframe 
-                src="https://app.acuityscheduling.com/schedule.php?owner=28391543&ref=embedded_csp" 
+                src="https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=11780416&ref=embedded_csp" 
                 title="Schedule Appointment" 
                 width="100%" 
                 height="800" 
