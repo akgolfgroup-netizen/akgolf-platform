@@ -14,22 +14,25 @@ export default async function SammenligningPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Sammenligning</h1>
+      <div>
+        <h1 className="text-2xl font-bold text-[#1c1c16]">Sammenligning</h1>
+        <p className="text-sm text-[#6b7366] mt-1">Sammenlign deg med andre spillere</p>
+      </div>
 
       <div className="max-w-4xl">
         <TierGate userTier={userTier} required={SubscriptionTier.PRO}>
           {!data ? (
-            <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]">
-              <Users className="w-10 h-10 text-[var(--color-grey-400)] mb-3" />
-              <p className="text-sm text-[var(--color-grey-400)]">
+            <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-white border border-[#c2c9bb]/50">
+              <Users className="w-10 h-10 text-[#c2c9bb] mb-3" />
+              <p className="text-sm text-[#6b7366]">
                 Registrer handicap og noen runder for å se sammenligning.
               </p>
             </div>
           ) : (
             <div className="space-y-8">
               {/* Peer Benchmark Card */}
-              <div className="p-6 rounded-2xl bg-white border border-[var(--color-grey-200)]">
-                <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-4">
+              <div className="p-6 rounded-2xl bg-white border border-[#c2c9bb]/50">
+                <h2 className="text-lg font-semibold text-[#1c1c16] mb-4">
                   Din spillerkategori
                 </h2>
                 <PeerBenchmarkCard

@@ -4,12 +4,21 @@ import Link from "next/link";
 import { format, isToday, isTomorrow } from "date-fns";
 import { nb } from "date-fns/locale";
 import { motion } from "framer-motion";
-import { BookOpen, BarChart3, Calendar } from "lucide-react";
-import { Sparkline } from "@/components/portal/dashboard/sparkline";
-import { StreakCard } from "@/components/portal/dashboard/streak-card";
-import { SGOverviewCard } from "@/components/portal/dashboard/sg-overview-card";
-import { AIRecommendationCard } from "@/components/portal/dashboard/ai-recommendation-card";
-import { WeeklyPlanCard } from "@/components/portal/dashboard/weekly-plan-card";
+import {
+  TrendingDown,
+  TrendingUp,
+  Calendar,
+  Target,
+  BookOpen,
+  BarChart3,
+  Sparkles,
+  ArrowRight,
+  Trophy,
+  Clock,
+} from "lucide-react";
+import { StatCard } from "@/components/portal/heritage/stat-card";
+import { QuickAction } from "@/components/portal/heritage/quick-action";
+import { ProgressChart } from "@/components/portal/heritage/progress-chart";
 
 /* ── Animation variants ── */
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -28,17 +37,7 @@ const staggerGrid = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
-  },
-};
-
-const staggerCard = {
-  hidden: { opacity: 0, y: 16, scale: 0.98 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.5, ease: EASE },
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
   },
 };
 
@@ -92,175 +91,193 @@ export function DashboardClient({
     return <OnboardingView userName={userName} />;
   }
 
+  // Mock data for handicap chart
+  const handicapData = [
+    { date: "2024-01", value: handicap.current ? handicap.current + 2 : 18 },
+    { date: "2024-02", value: handicap.current ? handicap.current + 1.5 : 17 },
+    { date: "2024-03", value: handicap.current ? handicap.current + 1 : 16 },
+    { date: "2024-04", value: handicap.current ? handicap.current + 0.5 : 15 },
+    { date: "2024-05", value: handicap.current ? handicap.current : 14 },
+    { date: "2024-06", value: handicap.current ? handicap.current - 0.5 : 13.5 },
+  ];
+
   return (
-    <div className="space-y-6">
-      {/* ── Greeting ── */}
+    <div className="space-y-8">
+      {/* ── Hero Section ── */}
       <motion.div
         initial="hidden"
         animate="visible"
         variants={blurReveal}
+        className="bg-gradient-to-br from-[#154212] to-[#0d2e0c] rounded-3xl p-6 lg:p-8 text-white"
       >
-        <h1 className="text-[28px] font-medium tracking-[-0.02em] text-[#1D1D1F]">
-          {greeting}
-          {firstName ? `, ${firstName}.` : "."}
-        </h1>
-        <p className="text-sm text-[#86868B] mt-1">
-          {format(now, "EEEE d. MMMM yyyy", { locale: nb })}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div>
+            <p className="text-[#d2f000] text-sm font-medium mb-1">
+              {format(now, "EEEE d. MMMM yyyy", { locale: nb })}
+            </p>
+            <h1 className="text-3xl lg:text-4xl font-bold tracking-tight">
+              {greeting}
+              {firstName ? `, ${firstName}` : ""}
+            </h1>
+            <p className="text-white/70 mt-2 max-w-md">
+              Her er din ukentlige oppdatering. Du er på rett spor mot å nå dine mål!
+            </p>
+          </div>
+
           {nextBooking && (
-            <span className="text-[#1D1D1F] font-medium">
-              {" "}
-              &middot; Neste okt {formatBookingDate(new Date(nextBooking.startTime))} kl.{" "}
-              {format(new Date(nextBooking.startTime), "HH:mm")}
-            </span>
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-[#d2f000] flex items-center justify-center">
+                  <Calendar className="w-6 h-6 text-[#1c1c16]" />
+                </div>
+                <div>
+                  <p className="text-xs text-white/60 uppercase tracking-wider font-semibold">
+                    Neste økt
+                  </p>
+                  <p className="font-semibold">{nextBooking.serviceName}</p>
+                  <p className="text-sm text-white/70">
+                    {formatBookingDate(new Date(nextBooking.startTime))} kl{" "}
+                    {format(new Date(nextBooking.startTime), "HH:mm")}
+                  </p>
+                </div>
+              </div>
+            </div>
           )}
-        </p>
+        </div>
       </motion.div>
 
-      {/* ── 4 Stat Cards ── */}
+      {/* ── Stats Grid ── */}
       <motion.div
         className="grid grid-cols-2 lg:grid-cols-4 gap-4"
         initial="hidden"
         animate="visible"
         variants={staggerGrid}
       >
-        {/* Handicap */}
-        <motion.div variants={staggerCard} className="portal-stat-card">
-          <span className="portal-label">Handicap</span>
-          <div className="flex items-baseline gap-2 mt-2">
-            <span className="text-[32px] font-bold text-[#1D1D1F] tabular-nums leading-none">
-              {handicap.current !== null
-                ? handicap.current.toFixed(1)
-                : "\u2014"}
-            </span>
-            {handicap.trend !== null && (
-              <span
-                className={`text-sm font-semibold ${
-                  handicap.trend < 0
-                    ? "text-[#2D6A4F]"
-                    : handicap.trend > 0
-                      ? "text-[#D14343]"
-                      : "text-[#86868B]"
-                }`}
-              >
-                {handicap.trend > 0 ? "+" : ""}
-                {handicap.trend.toFixed(1)}
-              </span>
-            )}
-          </div>
-          <div className="mt-3">
-            <Sparkline
-              color={handicap.trend !== null && handicap.trend < 0 ? "#2D6A4F" : "#D14343"}
-            />
-          </div>
+        <StatCard
+          label="Handicap"
+          value={handicap.current !== null ? handicap.current.toFixed(1) : "—"}
+          trend={
+            handicap.trend !== null
+              ? {
+                  value: handicap.trend,
+                  label: "siste 30 dager",
+                }
+              : undefined
+          }
+          icon={handicap.trend !== null && handicap.trend < 0 ? TrendingDown : TrendingUp}
+          iconColor={handicap.trend !== null && handicap.trend < 0 ? "#22c55e" : "#ef4444"}
+          delay={0}
+        />
+
+        <StatCard
+          label="Treningsøkter"
+          value={stats.sessionsCount}
+          icon={Target}
+          iconColor="#154212"
+          delay={0.1}
+        />
+
+        <StatCard
+          label="Runder spilt"
+          value={stats.roundsCount}
+          icon={Trophy}
+          iconColor="#f59e0b"
+          delay={0.2}
+        />
+
+        <StatCard
+          label="Streak"
+          value={`${Math.min(stats.sessionsCount, 14)} dager`}
+          icon={Clock}
+          iconColor="#d2f000"
+          delay={0.3}
+        />
+      </motion.div>
+
+      {/* ── Charts & AI Row ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Handicap Chart */}
+        <motion.div
+          className="lg:col-span-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <ProgressChart
+            data={handicapData}
+            title="Handicap-utvikling"
+            color="#154212"
+            height={180}
+          />
         </motion.div>
 
-        {/* Treningsokter */}
-        <motion.div variants={staggerCard} className="portal-stat-card">
-          <span className="portal-label">Treningsokter</span>
-          <div className="flex items-baseline gap-2 mt-2">
-            <span className="text-[32px] font-bold text-[#1D1D1F] tabular-nums leading-none">
-              {stats.sessionsCount}
-            </span>
-          </div>
-          <div className="mt-3">
-            <Sparkline />
-          </div>
-        </motion.div>
-
-        {/* Neste coaching */}
-        <motion.div variants={staggerCard} className="portal-stat-card">
-          <span className="portal-label">Neste coaching</span>
-          {nextBooking ? (
-            <div className="mt-2">
-              <span className="text-base font-semibold text-[#1D1D1F]">
-                {nextBooking.serviceName}
-              </span>
-              <p className="text-sm text-[#86868B] mt-1">
-                {formatBookingDate(new Date(nextBooking.startTime))} kl.{" "}
-                {format(new Date(nextBooking.startTime), "HH:mm")}
-              </p>
-              <p className="text-xs text-[#86868B] mt-0.5">
-                {nextBooking.duration} min &middot; {nextBooking.instructorName}
-              </p>
+        {/* AI Insight */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
+          <div className="bg-[#f7f3ea] rounded-2xl p-6 border border-[#c2c9bb]/50 h-full">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-[#8b5cf6]/10 flex items-center justify-center">
+                <Sparkles className="w-4 h-4 text-[#8b5cf6]" />
+              </div>
+              <h3 className="font-semibold text-[#1c1c16]">AI-innsikt</h3>
             </div>
-          ) : (
-            <p className="text-sm text-[#D2D2D7] mt-2">Ingen planlagt</p>
-          )}
+            <p className="text-sm text-[#42493e] leading-relaxed">
+              {aiInsight?.focusTip ||
+                coachInsight?.summary ||
+                "Basert på din treningshistorikk anbefaler vi å fokusere på putting denne uken. Din statistikk viser potensial for forbedring innen kortspill."}
+            </p>
+            <Link
+              href="/portal/ai-coach"
+              className="inline-flex items-center gap-1 text-sm font-medium text-[#154212] mt-4 hover:underline"
+            >
+              Snakk med AI Coach
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </motion.div>
-
-        {/* Streak */}
-        <motion.div variants={staggerCard}>
-          <StreakCard
-            days={stats.sessionsCount > 0 ? Math.min(stats.sessionsCount, 14) : 0}
-          />
-        </motion.div>
-      </motion.div>
-
-      {/* ── SG + AI Row ── */}
-      <motion.div
-        className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-40px" }}
-        variants={staggerGrid}
-      >
-        <motion.div variants={staggerCard}>
-          <SGOverviewCard />
-        </motion.div>
-        <motion.div variants={staggerCard}>
-          <AIRecommendationCard
-            recommendation={
-              aiInsight?.focusTip || coachInsight?.summary
-            }
-          />
-        </motion.div>
-      </motion.div>
-
-      {/* ── Weekly Plan ── */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-40px" }}
-        variants={blurReveal}
-      >
-        <WeeklyPlanCard />
-      </motion.div>
+      </div>
 
       {/* ── Quick Actions ── */}
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-3 gap-3"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-40px" }}
-        variants={staggerGrid}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
       >
-        <motion.div variants={staggerCard}>
-          <Link
-            href="/portal/statistikk/ny-runde"
-            className="flex items-center gap-3 px-5 py-4 bg-[#1D1D1F] text-white rounded-[16px] font-semibold text-sm hover:bg-[#3A3A3C] transition-colors"
-          >
-            <BarChart3 className="w-5 h-5" />
-            Logg runde
-          </Link>
-        </motion.div>
-        <motion.div variants={staggerCard}>
-          <Link
-            href="/portal/dagbok"
-            className="flex items-center gap-3 px-5 py-4 bg-white text-[#1D1D1F] border border-[#E8E8ED] rounded-[16px] font-semibold text-sm hover:bg-[#F5F5F7] transition-colors"
-          >
-            <BookOpen className="w-5 h-5" />
-            Logg okt
-          </Link>
-        </motion.div>
-        <motion.div variants={staggerCard}>
-          <Link
+        <h3 className="text-sm font-semibold text-[#1c1c16] mb-4">Snarveier</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <QuickAction
             href="/portal/bookinger/ny"
-            className="flex items-center gap-3 px-5 py-4 bg-[#2D6A4F] text-white rounded-[16px] font-semibold text-sm hover:opacity-90 transition-opacity"
-          >
-            <Calendar className="w-5 h-5" />
-            Book coaching
-          </Link>
-        </motion.div>
+            icon={Calendar}
+            label="Book coaching"
+            description="Planlegg ny økt"
+            variant="primary"
+            delay={0.5}
+          />
+          <QuickAction
+            href="/portal/statistikk/ny-runde"
+            icon={BarChart3}
+            label="Logg runde"
+            description="Registrer score"
+            delay={0.55}
+          />
+          <QuickAction
+            href="/portal/dagbok"
+            icon={BookOpen}
+            label="Treningsdagbok"
+            description="Logg økt"
+            delay={0.6}
+          />
+          <QuickAction
+            href="/portal/treningsplan"
+            icon={Target}
+            label="Treningsplan"
+            description="Se ukens plan"
+            delay={0.65}
+          />
+        </div>
       </motion.div>
     </div>
   );
@@ -268,110 +285,67 @@ export function DashboardClient({
 
 function OnboardingView({ userName }: { userName: string | null }) {
   return (
-    <div className="space-y-6">
-      <motion.div initial="hidden" animate="visible" variants={blurReveal}>
-        <h1 className="text-[28px] font-medium tracking-[-0.02em] text-[#1D1D1F]">
+    <div className="space-y-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-gradient-to-br from-[#154212] to-[#0d2e0c] rounded-3xl p-6 lg:p-8 text-white"
+      >
+        <h1 className="text-3xl font-bold tracking-tight">
           Velkommen{userName ? `, ${userName.split(" ")[0]}` : ""}!
         </h1>
-        <p className="text-sm text-[#86868B] mt-1">
-          Her er 3 ting du kan gjore for a komme i gang:
+        <p className="text-white/70 mt-2 max-w-md">
+          La oss komme i gang med din golf-reise. Her er tre enkle steg:
         </p>
       </motion.div>
 
-      {/* Mocked preview cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 opacity-30 pointer-events-none">
-        <div className="portal-stat-card">
-          <span className="portal-label">HCP</span>
-          <span className="block text-[32px] font-bold text-[#D2D2D7] tabular-nums mt-2 leading-none">
-            18.4
-          </span>
-        </div>
-        <div className="portal-stat-card">
-          <span className="portal-label">Okter</span>
-          <span className="block text-[32px] font-bold text-[#D2D2D7] tabular-nums mt-2 leading-none">
-            0
-          </span>
-        </div>
-        <div className="portal-stat-card">
-          <span className="portal-label">Neste coaching</span>
-          <span className="block text-sm text-[#D2D2D7] mt-2">
-            Ingen planlagt
-          </span>
-        </div>
-        <div className="portal-stat-card">
-          <span className="portal-label">Streak</span>
-          <span className="block text-[32px] font-bold text-[#D2D2D7] tabular-nums mt-2 leading-none">
-            0
-          </span>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[
+          {
+            step: 1,
+            icon: Calendar,
+            title: "Book en time",
+            description: "Start med en coaching-økt for å få din første analyse",
+            href: "/portal/bookinger/ny",
+          },
+          {
+            step: 2,
+            icon: BarChart3,
+            title: "Registrer en runde",
+            description: "Logg din første golfrunde for å spore fremgangen",
+            href: "/portal/statistikk/ny-runde",
+          },
+          {
+            step: 3,
+            icon: Target,
+            title: "Sett mål",
+            description: "Definer dine golfmål for å få personlige anbefalinger",
+            href: "/portal/profil",
+          },
+        ].map((item, index) => (
+          <motion.div
+            key={item.step}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 + 0.2 }}
+          >
+            <Link
+              href={item.href}
+              className="block p-6 bg-white rounded-2xl border border-[#c2c9bb]/50 hover:border-[#154212]/30 hover:shadow-lg transition-all duration-300 group"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-8 h-8 rounded-full bg-[#154212] text-white text-sm font-bold flex items-center justify-center">
+                  {item.step}
+                </span>
+                <item.icon className="w-5 h-5 text-[#8a9385] group-hover:text-[#154212] transition-colors" />
+              </div>
+              <h3 className="font-semibold text-[#1c1c16]">{item.title}</h3>
+              <p className="text-sm text-[#6b7366] mt-1">{item.description}</p>
+            </Link>
+          </motion.div>
+        ))}
       </div>
-
-      {/* Onboarding steps */}
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-3 gap-4"
-        initial="hidden"
-        animate="visible"
-        variants={staggerGrid}
-      >
-        <motion.div variants={staggerCard}>
-          <OnboardingCard
-            step={1}
-            href="/portal/bookinger/ny"
-            icon={Calendar}
-            title="Book en time"
-            description="Start med en coaching-okt for a fa din forste analyse"
-          />
-        </motion.div>
-        <motion.div variants={staggerCard}>
-          <OnboardingCard
-            step={2}
-            href="/portal/statistikk/ny-runde"
-            icon={BarChart3}
-            title="Registrer en runde"
-            description="Logg din forste golfrunde for a spore fremgangen"
-          />
-        </motion.div>
-        <motion.div variants={staggerCard}>
-          <OnboardingCard
-            step={3}
-            href="/portal/profil"
-            icon={BookOpen}
-            title="Sett mal"
-            description="Definer dine golfmal for a fa personlige anbefalinger"
-          />
-        </motion.div>
-      </motion.div>
     </div>
-  );
-}
-
-function OnboardingCard({
-  step,
-  href,
-  icon: Icon,
-  title,
-  description,
-}: {
-  step: number;
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="block p-6 rounded-[20px] bg-white border border-[#E8E8ED] hover:border-[#2D6A4F]/30 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.06)] transition-all duration-300"
-    >
-      <div className="flex items-center gap-3 mb-3">
-        <span className="w-7 h-7 rounded-full bg-[#2D6A4F] text-white text-xs font-bold flex items-center justify-center">
-          {step}
-        </span>
-        <Icon className="w-5 h-5 text-[#86868B]" />
-      </div>
-      <p className="font-semibold text-[#1D1D1F] text-[15px]">{title}</p>
-      <p className="text-sm text-[#86868B] mt-1">{description}</p>
-    </Link>
   );
 }
 

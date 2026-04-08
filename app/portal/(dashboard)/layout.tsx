@@ -5,6 +5,7 @@ import { SidebarProvider } from "@/components/portal/layout/sidebar-context";
 import { TrialBannerWrapper } from "@/components/portal/layout/trial-banner-wrapper";
 import { DashboardProviders } from "@/components/portal/layout/dashboard-providers";
 import { LenisProvider } from "@/components/portal/layout/lenis-provider";
+import { ServiceWorkerRegistration } from "@/components/portal/layout/service-worker-registration";
 import type { SubscriptionTier, SubscriptionStatus } from "@prisma/client";
 
 export default async function DashboardLayout({
@@ -21,7 +22,7 @@ export default async function DashboardLayout({
         logCount={user.portalMonthlyLogCount}
       >
         <LenisProvider>
-          <div className="min-h-screen flex bg-[#F5F5F7]">
+          <div className="min-h-screen flex bg-[#fdf9f0]">
             <PremiumSidebar user={user} />
             <MobileHeader />
             <main className="flex-1 lg:ml-[220px] min-h-screen p-4 lg:p-8 pt-18 lg:pt-8 max-w-[1400px] portal-atmosphere">
@@ -33,6 +34,7 @@ export default async function DashboardLayout({
               {children}
             </main>
           </div>
+          <ServiceWorkerRegistration />
         </LenisProvider>
       </DashboardProviders>
     </SidebarProvider>

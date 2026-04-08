@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/portal/prisma";
 import { createHmac } from "crypto";
 import { logger } from "@/lib/logger";
+import { nanoid } from "nanoid";
 
 /**
  * Google Calendar integration for AK Golf Portal.
@@ -172,7 +173,7 @@ export async function handleCallback(
   code: string,
   userId: string,
   redirectUri: string
-): Promise<void> {
+): Promise<{ syncId: string }> {
   const res = await fetch(GOOGLE_TOKEN_URL, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -200,12 +201,44 @@ export async function handleCallback(
     expires_at: Date.now() + (data.expires_in ?? 3600) * 1000,
   };
 
+  // Oppdater bruker med tokens (for bakoverkompatibilitet)
   await prisma.user.update({
     where: { id: userId },
     data: { googleCalendarTokens: tokens as object },
   });
 
-  logger.info("[Google Calendar] Tokens saved successfully");
+  // Opprett eller oppdater GoogleCalendarSync for synkronisering til BlockedTime
+  const instructor = await prisma.instructor.findUnique({
+    where: { userId },
+  });
+
+  if (instructor) {
+    await prisma.googleCalendarSync.upsert({
+      where: { instructorId: instructor.id },
+      create: {
+        id: nanoid(),
+        userId,
+        instructorId: instructor.id,
+        accessToken: tokens.access_token,
+        refreshToken: tokens.refresh_token ?? "",
+        expiresAt: new Date(tokens.expires_at),
+        calendarId: "primary",
+        syncEnabled: true,
+      },
+      update: {
+        accessToken: tokens.access_token,
+        refreshToken: tokens.refresh_token ?? undefined,
+        expiresAt: new Date(tokens.expires_at),
+        syncEnabled: true,
+        lastError: null,
+        lastErrorAt: null,
+      },
+    });
+  }
+
+  logger.info("[Google Calendar] Tokens and sync config saved successfully");
+  
+  return { syncId: instructor?.id ?? userId };
 }
 
 /**

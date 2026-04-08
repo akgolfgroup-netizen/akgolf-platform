@@ -39,10 +39,8 @@ function NavLink({
       href={item.href}
       onClick={onClick}
       className={cn(
-        "flex items-center gap-2 px-5 py-2 text-xs transition-[background-color,border-color,color] duration-150 border-l-[3px] -ml-px",
-        isActive
-          ? "bg-[#F5F5F7] border-l-[#1D1D1F] text-[#1D1D1F] font-semibold"
-          : "border-l-transparent text-[#6E6E73] hover:bg-[#F5F5F7] hover:text-[#1D1D1F]"
+        "hg-sidebar-link",
+        isActive && "active"
       )}
     >
       {Icon && <Icon className="w-[18px] h-[18px]" />}
@@ -72,7 +70,7 @@ function NavGroupComponent({
 
   return (
     <div className="mb-4">
-      <div className="px-5 py-2 text-[9px] font-semibold text-[#86868B] uppercase tracking-[0.5px]">
+      <div className="px-5 py-2 text-[10px] font-semibold text-[var(--hg-text-muted)] uppercase tracking-[0.05em]">
         {group.label}
       </div>
       {accessibleItems.map((item) => {
@@ -114,23 +112,23 @@ function SidebarContent({
       </nav>
 
       {/* User Footer */}
-      <div className="p-4 border-t border-[#E8E8ED]">
-        <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-[#F5F5F7] transition-colors cursor-pointer">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1D1D1F] to-[#3a3a3c] flex items-center justify-center text-white text-[10px] font-semibold">
+      <div className="p-4 border-t border-[var(--hg-border)]">
+        <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-[var(--hg-surface-raised)] transition-colors cursor-pointer">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--hg-surface-raised)] to-[var(--hg-border)] flex items-center justify-center text-[var(--hg-text)] text-[10px] font-semibold border border-[var(--hg-border)]">
             {(user.name ?? user.email ?? "U")[0].toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="text-[11px] font-semibold text-[#1D1D1F] truncate">
+            <div className="text-[11px] font-semibold text-[var(--hg-text)] truncate">
               {user.name ?? "Bruker"}
             </div>
-            <div className={`text-[9px] ${isAdmin(user.role) ? "text-[#1D1D1F] font-semibold" : "text-[#86868B]"}`}>
+            <div className={`text-[9px] ${isAdmin(user.role) ? "text-[var(--hg-primary)] font-semibold" : "text-[var(--hg-text-muted)]"}`}>
               {isAdmin(user.role) ? "Admin" : isStaff(user.role) ? "Instruktor" : "Invitert"}
             </div>
           </div>
         </div>
         <button
           onClick={onSignOut}
-          className="w-full flex items-center gap-2 px-2 py-2 mt-2 text-[11px] text-[#6E6E73] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10 rounded-lg transition-colors cursor-pointer"
+          className="w-full flex items-center gap-2 px-2 py-2 mt-2 text-[11px] text-[var(--hg-text-muted)] hover:text-[var(--hg-error)] hover:bg-[var(--hg-error-bg)] rounded-lg transition-colors cursor-pointer"
         >
           <LogOut className="w-4 h-4" />
           <span>Logg ut</span>
@@ -156,13 +154,13 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-[220px] hidden lg:flex flex-col z-20 bg-white border-r border-[#E8E8ED]">
+      <aside className="fixed left-0 top-0 h-full w-[220px] hidden lg:flex flex-col z-20 hg-sidebar">
         {/* Header */}
-        <div className="px-5 py-4 border-b border-[#E8E8ED] flex items-center gap-3">
+        <div className="px-5 py-4 border-b border-[var(--hg-border)] flex items-center gap-3">
           <AKLogo variant="neutral" size={32} />
           <div>
-            <span className="text-[14px] font-bold text-[#1D1D1F]">AK Golf</span>
-            <p className="text-[9px] text-[#86868B] uppercase tracking-wider font-bold">Mission Control</p>
+            <span className="text-[14px] font-bold text-[var(--hg-text)]">AK Golf</span>
+            <p className="text-[9px] text-[var(--hg-primary)] uppercase tracking-wider font-bold">Mission Control</p>
           </div>
         </div>
 
@@ -188,20 +186,20 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-[#E8E8ED]"
+              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden hg-sidebar"
             >
               {/* Header with close button */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[#E8E8ED]">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--hg-border)]">
                 <div className="flex items-center gap-3">
                   <AKLogo variant="neutral" size={32} />
                   <div>
-                    <span className="text-[14px] font-bold text-[#1D1D1F]">AK Golf</span>
-                    <p className="text-[9px] text-[#86868B] uppercase tracking-wider font-bold">Mission Control</p>
+                    <span className="text-[14px] font-bold text-[var(--hg-text)]">AK Golf</span>
+                    <p className="text-[9px] text-[var(--hg-primary)] uppercase tracking-wider font-bold">Mission Control</p>
                   </div>
                 </div>
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-lg text-[#86868B] hover:text-[#1D1D1F] hover:bg-[#F5F5F7] transition-colors cursor-pointer"
+                  className="p-2 rounded-lg text-[var(--hg-text-muted)] hover:text-[var(--hg-text)] hover:bg-[var(--hg-surface-raised)] transition-colors cursor-pointer"
                   aria-label="Lukk meny"
                 >
                   <X className="w-5 h-5" />

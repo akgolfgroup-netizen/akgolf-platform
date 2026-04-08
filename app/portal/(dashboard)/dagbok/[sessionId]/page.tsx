@@ -83,288 +83,249 @@ export default async function SessionDetailPage({ params }: Props) {
   }
 
   const sessionTitle =
-    log.TrainingPlanSession?.title || log.focusArea || "Treningsokt";
+    log.TrainingPlanSession?.title || log.focusArea || "Treningsøkt";
   const sessionDate = format(new Date(log.date), "EEEE d. MMMM yyyy", {
     locale: nb,
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--color-grey-100)] via-white to-[var(--color-grey-100)]">
-      <div className="max-w-[900px] mx-auto px-6 py-8 space-y-6">
-        {/* Header with back button */}
-        <div className="flex items-center gap-4">
-          <Link
-            href="/portal/dagbok"
-            className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-600)] hover:bg-[var(--color-grey-100)] transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-          <div>
-            <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">
-              {sessionTitle}
-            </h1>
-            <p className="text-sm text-[var(--color-grey-500)] capitalize">
-              {sessionDate}
-            </p>
-          </div>
+    <div className="space-y-6">
+      {/* Header with back button */}
+      <div className="flex items-center gap-4">
+        <Link
+          href="/portal/dagbok"
+          className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white border border-[#c2c9bb]/50 text-[#6b7366] hover:bg-[#f7f3ea] hover:text-[#1c1c16] transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </Link>
+        <div>
+          <h1 className="text-2xl font-bold text-[#1c1c16]">{sessionTitle}</h1>
+          <p className="text-sm text-[#6b7366] capitalize">{sessionDate}</p>
         </div>
+      </div>
 
-        {/* Session Overview Card */}
-        <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6 space-y-5">
-          <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
-            Oktoversikt
-          </h2>
+      {/* Session Overview Card */}
+      <div className="bg-white rounded-2xl border border-[#c2c9bb]/50 p-6 space-y-5">
+        <h2 className="text-lg font-semibold text-[#1c1c16]">Øktoversikt</h2>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {log.durationMinutes && (
-              <div className="flex items-center gap-3 p-4 bg-[var(--color-grey-100)] rounded-xl">
-                <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-                  <Clock className="w-5 h-5 text-[var(--color-grey-600)]" />
-                </div>
-                <div>
-                  <p className="text-xs text-[var(--color-grey-500)]">Varighet</p>
-                  <p className="text-base font-semibold text-[var(--color-grey-900)]">
-                    {log.durationMinutes} min
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {log.focusArea && (
-              <div className="flex items-center gap-3 p-4 bg-[var(--color-grey-100)] rounded-xl">
-                <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-                  <Target className="w-5 h-5 text-[var(--color-grey-600)]" />
-                </div>
-                <div>
-                  <p className="text-xs text-[var(--color-grey-500)]">Fokusomrade</p>
-                  <p className="text-base font-semibold text-[var(--color-grey-900)]">
-                    {log.focusArea}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {log.rating !== null && (
-              <div className="flex items-center gap-3 p-4 bg-[var(--color-grey-100)] rounded-xl">
-                <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-                  <Activity className="w-5 h-5 text-[var(--color-grey-600)]" />
-                </div>
-                <div>
-                  <p className="text-xs text-[var(--color-grey-500)]">Vurdering</p>
-                  <p className="text-base font-semibold text-[var(--color-grey-900)]">
-                    {log.rating}/10
-                  </p>
-                </div>
-              </div>
-            )}
-
-            <div className="flex items-center gap-3 p-4 bg-[var(--color-grey-100)] rounded-xl">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {log.durationMinutes && (
+            <div className="flex items-center gap-3 p-4 bg-[#f7f3ea] rounded-xl">
               <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-                <Layers className="w-5 h-5 text-[var(--color-grey-600)]" />
+                <Clock className="w-5 h-5 text-[#154212]" />
               </div>
               <div>
-                <p className="text-xs text-[var(--color-grey-500)]">Ovelser</p>
-                <p className="text-base font-semibold text-[var(--color-grey-900)]">
-                  {log.TrainingLogExercises.length}
-                </p>
+                <p className="text-xs text-[#6b7366]">Varighet</p>
+                <p className="text-base font-semibold text-[#1c1c16]">{log.durationMinutes} min</p>
               </div>
+            </div>
+          )}
+
+          {log.focusArea && (
+            <div className="flex items-center gap-3 p-4 bg-[#f7f3ea] rounded-xl">
+              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
+                <Target className="w-5 h-5 text-[#154212]" />
+              </div>
+              <div>
+                <p className="text-xs text-[#6b7366]">Fokusområde</p>
+                <p className="text-base font-semibold text-[#1c1c16]">{log.focusArea}</p>
+              </div>
+            </div>
+          )}
+
+          {log.rating !== null && (
+            <div className="flex items-center gap-3 p-4 bg-[#f7f3ea] rounded-xl">
+              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
+                <Activity className="w-5 h-5 text-[#154212]" />
+              </div>
+              <div>
+                <p className="text-xs text-[#6b7366]">Vurdering</p>
+                <p className="text-base font-semibold text-[#1c1c16]">{log.rating}/10</p>
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center gap-3 p-4 bg-[#f7f3ea] rounded-xl">
+            <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
+              <Layers className="w-5 h-5 text-[#154212]" />
+            </div>
+            <div>
+              <p className="text-xs text-[#6b7366]">Øvelser</p>
+              <p className="text-base font-semibold text-[#1c1c16]">{log.TrainingLogExercises.length}</p>
             </div>
           </div>
-
-          {/* L-M-PR Summary */}
-          {(log.primaryLPhase || log.primaryEnvironment !== null || log.primaryPressLevel !== null) && (
-            <div className="flex flex-wrap gap-2 pt-2">
-              {log.primaryLPhase && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 text-sm font-medium">
-                  <Gauge className="w-3.5 h-3.5" />
-                  L: {getLPhaseLabel(log.primaryLPhase)}
-                </span>
-              )}
-              {log.primaryEnvironment !== null && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-brand)]/5 text-[var(--color-brand)] text-sm font-medium">
-                  <Target className="w-3.5 h-3.5" />
-                  M: {getMEnvironmentLabel(log.primaryEnvironment)}
-                </span>
-              )}
-              {log.primaryPressLevel !== null && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 text-amber-700 text-sm font-medium">
-                  <Zap className="w-3.5 h-3.5" />
-                  PR: {getPRLevelLabel(log.primaryPressLevel)}
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* Notes */}
-          {log.notes && (
-            <div className="pt-2">
-              <p className="text-xs text-[var(--color-grey-500)] mb-1">Notater</p>
-              <p className="text-sm text-[var(--color-grey-700)] leading-relaxed">
-                {log.notes}
-              </p>
-            </div>
-          )}
-
-          {/* Plan deviation */}
-          {log.deviatedFromPlan && (
-            <div className="pt-2 border-t border-[var(--color-grey-200)]">
-              <div className="flex items-center gap-2 text-amber-600 mb-1">
-                <XCircle className="w-4 h-4" />
-                <span className="text-sm font-medium">Avvik fra plan</span>
-              </div>
-              {log.deviationReason && (
-                <p className="text-sm text-[var(--color-grey-600)]">
-                  {log.deviationReason}
-                </p>
-              )}
-            </div>
-          )}
         </div>
 
-        {/* Exercises Card */}
-        {log.TrainingLogExercises.length > 0 && (
-          <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
-              Ovelser
-            </h2>
-
-            <div className="space-y-3">
-              {log.TrainingLogExercises.map((exercise, idx) => (
-                <div
-                  key={exercise.id}
-                  className="p-4 bg-[var(--color-grey-100)] rounded-xl space-y-3"
-                >
-                  {/* Exercise header */}
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="w-7 h-7 rounded-lg bg-white flex items-center justify-center text-sm font-semibold text-[var(--color-grey-600)]">
-                        {idx + 1}
-                      </span>
-                      <div>
-                        <p className="text-base font-medium text-[var(--color-grey-900)]">
-                          {exercise.name}
-                        </p>
-                      </div>
-                    </div>
-                    {exercise.score !== null && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[var(--color-grey-200)] text-sm font-medium text-[var(--color-grey-900)]">
-                        <Star className="w-3.5 h-3.5 text-amber-500" />
-                        {exercise.score}/10
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Sets/Reps comparison */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-xs text-[var(--color-grey-500)] mb-1">Planlagt</p>
-                      <p className="text-sm font-medium text-[var(--color-grey-700)]">
-                        {exercise.plannedSets ?? "-"} sett x{" "}
-                        {exercise.plannedReps ?? "-"} reps
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-[var(--color-grey-500)] mb-1">Faktisk</p>
-                      <p className="text-sm font-medium text-[var(--color-grey-900)]">
-                        {exercise.actualSets ?? "-"} sett x{" "}
-                        {exercise.actualReps ?? "-"} reps
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* L-M-PR for exercise */}
-                  <div className="flex flex-wrap gap-2">
-                    {exercise.lPhase && (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-blue-50 text-blue-700 text-xs font-medium">
-                        L: {getLPhaseLabel(exercise.lPhase)}
-                      </span>
-                    )}
-                    {exercise.environment !== null && (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--color-brand)]/5 text-[var(--color-brand)] text-xs font-medium">
-                        M: {getMEnvironmentLabel(exercise.environment)}
-                      </span>
-                    )}
-                    {exercise.pressLevel !== null && (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-amber-50 text-amber-700 text-xs font-medium">
-                        PR: {getPRLevelLabel(exercise.pressLevel)}
-                      </span>
-                    )}
-                    {exercise.clubSpeed !== null && (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--color-grey-200)] text-[var(--color-grey-700)] text-xs font-medium">
-                        CS: {exercise.clubSpeed}%
-                      </span>
-                    )}
-                    {exercise.successRate !== null && (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--color-grey-200)] text-[var(--color-grey-700)] text-xs font-medium">
-                        Treffprosent: {Math.round(exercise.successRate * 100)}%
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Exercise notes */}
-                  {exercise.notes && (
-                    <p className="text-sm text-[var(--color-grey-600)] pt-1">
-                      {exercise.notes}
-                    </p>
-                  )}
-
-                  {/* Coach feedback for this exercise */}
-                  {exercise.coachFeedback && (
-                    <div className="pt-2 border-t border-[var(--color-grey-200)]">
-                      <div className="flex items-center gap-2 text-[var(--color-grey-500)] mb-1">
-                        <MessageSquare className="w-3.5 h-3.5" />
-                        <span className="text-xs font-medium">Coach-feedback</span>
-                      </div>
-                      <p className="text-sm text-[var(--color-grey-700)]">
-                        {exercise.coachFeedback}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+        {/* L-M-PR Summary */}
+        {(log.primaryLPhase || log.primaryEnvironment !== null || log.primaryPressLevel !== null) && (
+          <div className="flex flex-wrap gap-2 pt-2">
+            {log.primaryLPhase && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#3b82f6]/10 text-[#3b82f6] text-sm font-medium">
+                <Gauge className="w-3.5 h-3.5" />
+                L: {getLPhaseLabel(log.primaryLPhase)}
+              </span>
+            )}
+            {log.primaryEnvironment !== null && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#154212]/10 text-[#154212] text-sm font-medium">
+                <Target className="w-3.5 h-3.5" />
+                M: {getMEnvironmentLabel(log.primaryEnvironment)}
+              </span>
+            )}
+            {log.primaryPressLevel !== null && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#f59e0b]/10 text-[#f59e0b] text-sm font-medium">
+                <Zap className="w-3.5 h-3.5" />
+                PR: {getPRLevelLabel(log.primaryPressLevel)}
+              </span>
+            )}
           </div>
         )}
 
-        {/* Coach Feedback Card */}
-        {log.coachFeedback && (
-          <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6 space-y-3">
-            <div className="flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-[var(--color-grey-600)]" />
-              <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
-                Coach-feedback
-              </h2>
-            </div>
-            <p className="text-sm text-[var(--color-grey-700)] leading-relaxed">
-              {log.coachFeedback}
-            </p>
+        {/* Notes */}
+        {log.notes && (
+          <div className="pt-2">
+            <p className="text-xs text-[#6b7366] mb-1">Notater</p>
+            <p className="text-sm text-[#42493e] leading-relaxed">{log.notes}</p>
           </div>
         )}
 
-        {/* Linked plan session */}
-        {log.TrainingPlanSession && (
-          <div className="bg-[var(--color-grey-100)] rounded-2xl p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <CheckCircle2 className="w-5 h-5 text-[var(--color-success)]" />
-              <div>
-                <p className="text-xs text-[var(--color-grey-500)]">
-                  Koblet til treningsplan
-                </p>
-                <p className="text-sm font-medium text-[var(--color-grey-900)]">
-                  {log.TrainingPlanSession.title}
-                </p>
-              </div>
+        {/* Plan deviation */}
+        {log.deviatedFromPlan && (
+          <div className="pt-2 border-t border-[#f7f3ea]">
+            <div className="flex items-center gap-2 text-[#f59e0b] mb-1">
+              <XCircle className="w-4 h-4" />
+              <span className="text-sm font-medium">Avvik fra plan</span>
             </div>
-            <Link
-              href={`/portal/treningsplan/${log.TrainingPlanSession.id}`}
-              className="text-sm font-medium text-[var(--color-grey-900)] hover:underline"
-            >
-              Se okt
-            </Link>
+            {log.deviationReason && (
+              <p className="text-sm text-[#6b7366]">{log.deviationReason}</p>
+            )}
           </div>
         )}
       </div>
+
+      {/* Exercises Card */}
+      {log.TrainingLogExercises.length > 0 && (
+        <div className="bg-white rounded-2xl border border-[#c2c9bb]/50 p-6 space-y-4">
+          <h2 className="text-lg font-semibold text-[#1c1c16]">Øvelser</h2>
+
+          <div className="space-y-3">
+            {log.TrainingLogExercises.map((exercise, idx) => (
+              <div key={exercise.id} className="p-4 bg-[#f7f3ea] rounded-xl space-y-3">
+                {/* Exercise header */}
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="w-7 h-7 rounded-lg bg-white flex items-center justify-center text-sm font-semibold text-[#154212]">
+                      {idx + 1}
+                    </span>
+                    <div>
+                      <p className="text-base font-medium text-[#1c1c16]">{exercise.name}</p>
+                    </div>
+                  </div>
+                  {exercise.score !== null && (
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[#c2c9bb]/50 text-sm font-medium text-[#1c1c16]">
+                      <Star className="w-3.5 h-3.5 text-[#f59e0b]" />
+                      {exercise.score}/10
+                    </span>
+                  )}
+                </div>
+
+                {/* Sets/Reps comparison */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs text-[#6b7366] mb-1">Planlagt</p>
+                    <p className="text-sm font-medium text-[#6b7366]">
+                      {exercise.plannedSets ?? "-"} sett x{" "}
+                      {exercise.plannedReps ?? "-"} reps
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-[#6b7366] mb-1">Faktisk</p>
+                    <p className="text-sm font-medium text-[#1c1c16]">
+                      {exercise.actualSets ?? "-"} sett x{" "}
+                      {exercise.actualReps ?? "-"} reps
+                    </p>
+                  </div>
+                </div>
+
+                {/* L-M-PR for exercise */}
+                <div className="flex flex-wrap gap-2">
+                  {exercise.lPhase && (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#3b82f6]/10 text-[#3b82f6] text-xs font-medium">
+                      L: {getLPhaseLabel(exercise.lPhase)}
+                    </span>
+                  )}
+                  {exercise.environment !== null && (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#154212]/10 text-[#154212] text-xs font-medium">
+                      M: {getMEnvironmentLabel(exercise.environment)}
+                    </span>
+                  )}
+                  {exercise.pressLevel !== null && (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#f59e0b]/10 text-[#f59e0b] text-xs font-medium">
+                      PR: {getPRLevelLabel(exercise.pressLevel)}
+                    </span>
+                  )}
+                  {exercise.clubSpeed !== null && (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#f7f3ea] text-[#6b7366] text-xs font-medium">
+                      CS: {exercise.clubSpeed}%
+                    </span>
+                  )}
+                  {exercise.successRate !== null && (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#f7f3ea] text-[#6b7366] text-xs font-medium">
+                      Treffprosent: {Math.round(exercise.successRate * 100)}%
+                    </span>
+                  )}
+                </div>
+
+                {/* Exercise notes */}
+                {exercise.notes && (
+                  <p className="text-sm text-[#6b7366] pt-1">{exercise.notes}</p>
+                )}
+
+                {/* Coach feedback for this exercise */}
+                {exercise.coachFeedback && (
+                  <div className="pt-2 border-t border-[#c2c9bb]/50">
+                    <div className="flex items-center gap-2 text-[#154212] mb-1">
+                      <MessageSquare className="w-3.5 h-3.5" />
+                      <span className="text-xs font-medium">Coach-feedback</span>
+                    </div>
+                    <p className="text-sm text-[#42493e]">{exercise.coachFeedback}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Coach Feedback Card */}
+      {log.coachFeedback && (
+        <div className="bg-white rounded-2xl border border-[#c2c9bb]/50 p-6 space-y-3">
+          <div className="flex items-center gap-2">
+            <MessageSquare className="w-5 h-5 text-[#154212]" />
+            <h2 className="text-lg font-semibold text-[#1c1c16]">Coach-feedback</h2>
+          </div>
+          <p className="text-sm text-[#42493e] leading-relaxed">{log.coachFeedback}</p>
+        </div>
+      )}
+
+      {/* Linked plan session */}
+      {log.TrainingPlanSession && (
+        <div className="bg-[#f7f3ea] rounded-2xl p-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <CheckCircle2 className="w-5 h-5 text-[#22c55e]" />
+            <div>
+              <p className="text-xs text-[#6b7366]">Koblet til treningsplan</p>
+              <p className="text-sm font-medium text-[#1c1c16]">{log.TrainingPlanSession.title}</p>
+            </div>
+          </div>
+          <Link
+            href={`/portal/treningsplan/${log.TrainingPlanSession.id}`}
+            className="text-sm font-medium text-[#154212] hover:underline"
+          >
+            Se økt
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

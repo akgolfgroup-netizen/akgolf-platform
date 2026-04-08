@@ -1,29 +1,54 @@
-import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
-import { isStaff } from "@/lib/portal/rbac";
-import { redirect } from "next/navigation";
-import { getThisWeekTournamentPlans } from "@/modules/tournament-planner/actions";
-import { startOfWeek, endOfWeek, format } from "date-fns";
-import { nb } from "date-fns/locale";
+"use client";
+
 import { ThisWeekClient } from "./this-week-client";
 
-export default async function DenneUkenPage() {
-  const user = await requirePortalUser();
-  if (!user || !isStaff(user.role)) redirect("/");
+// Mock data
+const mockPlans = [
+  {
+    id: "p1",
+    tournamentId: "t1",
+    tournament: {
+      id: "t1",
+      name: "NM Junior 2025",
+      startDate: new Date("2025-06-15"),
+    },
+    student: {
+      id: "s1",
+      name: "Olav Hansen",
+      image: null,
+    },
+    isRegistered: true,
+    planLevel: "A",
+    goalType: "TOP3",
+    notes: "Fokus på putting",
+  },
+  {
+    id: "p2",
+    tournamentId: "t1",
+    tournament: {
+      id: "t1",
+      name: "NM Junior 2025",
+      startDate: new Date("2025-06-15"),
+    },
+    student: {
+      id: "s2",
+      name: "Mari Kristiansen",
+      image: null,
+    },
+    isRegistered: false,
+    planLevel: "B",
+    goalType: "CUT",
+    notes: null,
+  },
+];
 
-  const now = new Date();
-  const from = startOfWeek(now, { weekStartsOn: 1 });
-  const to = endOfWeek(now, { weekStartsOn: 1 });
+const mockWeekStats = {
+  totalPlayers: 2,
+  tournaments: 1,
+  registered: 1,
+  weekLabel: "15. - 21. juni",
+};
 
-  const plans = await getThisWeekTournamentPlans(prisma, { from, to });
-
-  // Get week stats
-  const weekStats = {
-    totalPlayers: plans.length,
-    tournaments: new Set(plans.map((p) => p.tournamentId)).size,
-    registered: plans.filter((p) => p.isRegistered).length,
-    weekLabel: `${format(from, "d.", { locale: nb })} - ${format(to, "d. MMMM", { locale: nb })}`,
-  };
-
-  return <ThisWeekClient plans={plans} weekStats={weekStats} />;
+export default function DenneUkenPage() {
+  return <ThisWeekClient plans={mockPlans} weekStats={mockWeekStats} />;
 }

@@ -160,13 +160,10 @@ export function ApperClient({
     <div className="space-y-10">
       {/* Success message */}
       {isSuccess && (
-        <div
-          className="rounded-2xl p-4 border flex items-center gap-3"
-          style={{ background: "rgba(34,197,94,0.1)", borderColor: "rgba(34,197,94,0.3)" }}
-        >
-          <Check className="w-5 h-5 text-[var(--color-success)] flex-shrink-0" />
-          <p className="text-sm text-[var(--color-success)] font-medium">
-            Abonnementet ditt er aktivert! Din 14-dagers proveperiode har startet.
+        <div className="rounded-2xl p-4 border flex items-center gap-3 bg-[#22c55e]/10 border-[#22c55e]/30">
+          <Check className="w-5 h-5 text-[#22c55e] flex-shrink-0" />
+          <p className="text-sm text-[#22c55e] font-medium">
+            Abonnementet ditt er aktivert! Din 14-dagers prøveperiode har startet.
           </p>
         </div>
       )}
@@ -174,11 +171,11 @@ export function ApperClient({
       {/* Pricing Table */}
       <div className="space-y-4">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-[var(--color-grey-900)] mb-2">
+          <h2 className="text-2xl font-bold text-[#1c1c16] mb-2">
             Velg ditt abonnement
           </h2>
-          <p className="text-[var(--color-grey-500)]">
-            Fa tilgang til avanserte verktoy for a forbedre golfen din
+          <p className="text-[#6b7366]">
+            Få tilgang til avanserte verktøy for å forbedre golfen din
           </p>
         </div>
         <PricingTable
@@ -190,7 +187,7 @@ export function ApperClient({
 
       {/* Bundles */}
       <div className="space-y-4">
-        <p className="text-[11px] font-semibold text-[var(--color-grey-400)]/50 uppercase tracking-widest">
+        <p className="text-[11px] font-semibold text-[#8a9385] uppercase tracking-widest">
           Pakker
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -201,36 +198,24 @@ export function ApperClient({
             return (
               <div
                 key={bundle.id}
-                className="rounded-2xl p-6 border relative overflow-hidden"
-                style={{
-                  background: isPremium
-                    ? "linear-gradient(135deg, var(--color-grey-200) 0%, var(--color-grey-100) 100%)"
-                    : "var(--color-grey-100)",
-                  borderColor: isPremium
-                    ? "var(--color-grey-200)"
-                    : "var(--color-grey-200)",
-                }}
+                className="rounded-2xl p-6 border relative overflow-hidden bg-white border-[#c2c9bb]/50"
               >
                 {isPremium && (
                   <div className="absolute top-3 right-3">
-                    <Crown className="w-5 h-5 text-[var(--color-grey-900)]" />
+                    <Crown className="w-5 h-5 text-[#d2f000]" />
                   </div>
                 )}
-                <h3 className="text-lg font-bold text-[var(--color-grey-900)] mb-1">
+                <h3 className="text-lg font-bold text-[#1c1c16] mb-1">
                   {bundle.name}
                 </h3>
-                <p className="text-xs text-[var(--color-grey-500)] mb-3">
+                <p className="text-xs text-[#6b7366] mb-3">
                   {bundle.description}
                 </p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {bundle.items.map((item) => (
                     <span
                       key={item.module.slug}
-                      className="text-[10px] px-2 py-0.5 rounded-full border"
-                      style={{
-                        borderColor: "var(--color-grey-200)",
-                        color: "var(--color-grey-500)",
-                      }}
+                      className="text-[10px] px-2 py-0.5 rounded-full border border-[#c2c9bb]/50 text-[#6b7366]"
                     >
                       {item.module.name}
                     </span>
@@ -238,28 +223,22 @@ export function ApperClient({
                 </div>
                 <div className="flex items-end justify-between">
                   <div>
-                    <span className="text-2xl font-bold text-[var(--color-grey-900)]">
+                    <span className="text-2xl font-bold text-[#1c1c16]">
                       {bundle.monthlyPriceNok / 100}
                     </span>
-                    <span className="text-sm text-[var(--color-grey-500)] ml-1">
+                    <span className="text-sm text-[#6b7366] ml-1">
                       kr/mnd
                     </span>
                   </div>
                   {active ? (
-                    <span className="text-xs font-medium text-[var(--color-success)] flex items-center gap-1">
+                    <span className="text-xs font-medium text-[#22c55e] flex items-center gap-1">
                       <Check className="w-3.5 h-3.5" /> Aktiv
                     </span>
                   ) : (
                     <button
                       onClick={() => handleCheckout(undefined, bundle.slug)}
                       disabled={loading !== null}
-                      className="px-4 py-2 rounded-xl text-xs font-semibold transition-colors"
-                      style={{
-                        background: isPremium
-                          ? "var(--color-black)"
-                          : "var(--color-grey-200)",
-                        color: isPremium ? "var(--color-grey-900)" : "var(--color-grey-900)",
-                      }}
+                      className="px-4 py-2 rounded-xl text-xs font-semibold transition-colors bg-[#154212] text-white hover:bg-[#0d2e0c]"
                     >
                       {loading === bundle.slug ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -277,7 +256,7 @@ export function ApperClient({
 
       {/* Individual modules */}
       <div className="space-y-4">
-        <p className="text-[11px] font-semibold text-[var(--color-grey-400)]/50 uppercase tracking-widest">
+        <p className="text-[11px] font-semibold text-[#8a9385] uppercase tracking-widest">
           Enkeltapper
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -288,41 +267,35 @@ export function ApperClient({
             return (
               <div
                 key={mod.id}
-                className="rounded-2xl p-5 border transition-colors"
+                className="rounded-2xl p-5 border transition-colors bg-white border-[#c2c9bb]/50"
                 style={{
-                  background: "var(--color-grey-100)",
-                  borderColor: active
-                    ? "rgba(34,197,94,0.4)"
-                    : "var(--color-grey-200)",
+                  borderColor: active ? "rgba(34,197,94,0.4)" : undefined,
                 }}
               >
                 <div className="flex items-start justify-between mb-3">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center"
-                    style={{ background: "var(--color-grey-200)" }}
-                  >
-                    <Icon className="w-4.5 h-4.5 text-[var(--color-grey-900)]" />
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#f7f3ea]">
+                    <Icon className="w-4.5 h-4.5 text-[#154212]" />
                   </div>
                   {active && (
-                    <span className="text-[10px] font-medium text-[var(--color-success)] flex items-center gap-1">
+                    <span className="text-[10px] font-medium text-[#22c55e] flex items-center gap-1">
                       <Check className="w-3 h-3" /> Aktiv
                     </span>
                   )}
                 </div>
-                <h4 className="text-sm font-semibold text-[var(--color-grey-900)] mb-1">
+                <h4 className="text-sm font-semibold text-[#1c1c16] mb-1">
                   {mod.name}
                 </h4>
-                <p className="text-xs text-[var(--color-grey-500)] mb-4 line-clamp-2">
+                <p className="text-xs text-[#6b7366] mb-4 line-clamp-2">
                   {mod.description}
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-[var(--color-grey-900)]">
+                  <span className="text-sm font-bold text-[#1c1c16]">
                     {mod.monthlyPriceNok === 0 ? (
                       "Gratis"
                     ) : (
                       <>
                         {mod.monthlyPriceNok / 100}
-                        <span className="text-xs font-normal text-[var(--color-grey-500)] ml-0.5">
+                        <span className="text-xs font-normal text-[#6b7366] ml-0.5">
                           kr/mnd
                         </span>
                       </>
@@ -332,11 +305,7 @@ export function ApperClient({
                     <button
                       onClick={() => handleActivateFree(mod.slug)}
                       disabled={loading !== null}
-                      className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors"
-                      style={{
-                        background: "rgba(34,197,94,0.2)",
-                        color: "#10B981",
-                      }}
+                      className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors bg-[#22c55e]/10 text-[#22c55e] hover:bg-[#22c55e]/20"
                     >
                       {loading === mod.slug ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -348,11 +317,7 @@ export function ApperClient({
                     <button
                       onClick={() => handleCheckout(mod.slug)}
                       disabled={loading !== null}
-                      className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors"
-                      style={{
-                        background: "var(--color-grey-200)",
-                        color: "var(--color-grey-900)",
-                      }}
+                      className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors bg-[#f7f3ea] text-[#1c1c16] hover:bg-[#e8e4db]"
                     >
                       {loading === mod.slug ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -374,7 +339,7 @@ export function ApperClient({
           <button
             onClick={handlePortal}
             disabled={loading === "portal"}
-            className="flex items-center gap-2 text-sm text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors"
+            className="flex items-center gap-2 text-sm text-[#6b7366] hover:text-[#1c1c16] transition-colors"
           >
             <Settings className="w-4 h-4" />
             {loading === "portal" ? "Åpner..." : "Administrer abonnementer"}

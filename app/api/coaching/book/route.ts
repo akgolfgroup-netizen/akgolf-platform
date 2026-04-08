@@ -13,6 +13,8 @@ import {
   BillingType,
   SubscriptionStatus,
 } from "@prisma/client";
+import { invalidateSlotsCache, invalidateBookingsCache } from "@/lib/portal/booking/cache";
+import { broadcastUpdate } from "@/app/api/portal/bookings/live/route";
 
 class ConflictError extends Error {
   constructor(message: string) {
@@ -207,6 +209,21 @@ export async function POST(req: NextRequest) {
           throw new ConflictError("Tidspunktet er ikke lenger ledig");
         }
 
+        // Check for blocked times
+        const blocked = await tx.blockedTime.findFirst({
+          where: {
+            OR: [{ instructorId: instructor.id }, { instructorId: null }],
+            AND: [
+              { startTime: { lt: end } },
+              { endTime: { gt: start } },
+            ],
+          },
+        });
+
+        if (blocked) {
+          throw new ConflictError("Tidspunktet er ikke tilgjengelig");
+        }
+
         // Create the booking
         const newBooking = await tx.booking.create({
           data: {
@@ -251,6 +268,18 @@ export async function POST(req: NextRequest) {
       },
       { isolationLevel: "Serializable" }
     );
+
+    // Invalider cache og broadcast oppdatering
+    const dateStr = start.toISOString().split("T")[0];
+    
+    await Promise.all([
+      invalidateSlotsCache(instructor.id, dateStr),
+      invalidateBookingsCache(instructor.id),
+      broadcastUpdate(instructor.id, dateStr, "BOOKING_CREATED", {
+        bookingId: booking.id,
+        startTime: start.toISOString(),
+      }),
+    ]);
 
     // For one-time (Flex) packages: create Stripe Checkout Session
     if (coachingPackage.billingType === BillingType.ONE_TIME) {

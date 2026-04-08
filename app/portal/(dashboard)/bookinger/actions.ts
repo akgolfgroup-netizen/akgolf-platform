@@ -43,10 +43,14 @@ export async function getUpcomingBookings(studentId?: string) {
   });
 
   return bookings.map((b) => ({
-    ...b,
-    serviceType: { name: b.ServiceType.name, category: b.ServiceType.category, color: b.ServiceType.color, duration: b.ServiceType.duration },
-    instructor: { user: { name: b.Instructor.User.name, image: b.Instructor.User.image }, title: b.Instructor.title },
-    location: b.Location ? { name: b.Location.name } : null,
+    id: b.id,
+    serviceName: b.ServiceType.name,
+    instructorName: b.Instructor.User.name ?? "Coach",
+    startTime: b.startTime,
+    duration: b.ServiceType.duration,
+    location: b.Location?.name,
+    status: "upcoming" as const,
+    type: (b.ServiceType.category === "INDIVIDUAL" ? "coaching" : "training") as "coaching" | "training" | "tournament" | "booking",
   }));
 }
 
@@ -70,10 +74,14 @@ export async function getPastBookings(studentId?: string) {
   });
 
   return bookings.map((b) => ({
-    ...b,
-    serviceType: { name: b.ServiceType.name, category: b.ServiceType.category, color: b.ServiceType.color, duration: b.ServiceType.duration },
-    instructor: { user: { name: b.Instructor.User.name, image: b.Instructor.User.image }, title: b.Instructor.title },
-    location: b.Location ? { name: b.Location.name } : null,
+    id: b.id,
+    serviceName: b.ServiceType.name,
+    instructorName: b.Instructor.User.name ?? "Coach",
+    startTime: b.startTime,
+    duration: b.ServiceType.duration,
+    location: b.Location?.name,
+    status: (b.status === "CANCELLED" ? "cancelled" : "completed") as "upcoming" | "completed" | "cancelled",
+    type: (b.ServiceType.category === "INDIVIDUAL" ? "coaching" : "training") as "coaching" | "training" | "tournament" | "booking",
   }));
 }
 

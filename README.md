@@ -33,7 +33,23 @@ npm run dev       # Utviklingsserver (Turbopack)
 npm run build     # Produksjonsbygg
 npm run lint      # ESLint
 npm run seed      # Seed database (prisma/seed-config.ts)
+npm run kimi      # Start Kimi Code CLI (AI-assistert kodegenerering)
+npm run kimi:login # Start Kimi + login
 ```
+
+### Kimi Code CLI
+
+**Kimi** er AI-assistert kodegenerering for terminal. Bruk det til å:
+- Generere React-komponenter
+- Skrive API-ruter
+- Analysere og debugge kode
+- Effektivisere utvikling
+
+```bash
+npm run kimi
+```
+
+Se `.kimi/KIMI_SETUP.md` og `.kimi/AKGOLF_INSTRUCTIONS.md` for detaljer.
 
 ## Prosjektstruktur
 

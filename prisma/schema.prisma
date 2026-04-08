@@ -156,13 +156,43 @@ model AppSubscription {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model BlockedTime {
-  id           String   @id
+  id           String              @id
   instructorId String?
   startTime    DateTime
   endTime      DateTime
   reason       String?
-  isRecurring  Boolean  @default(false)
-  createdAt    DateTime @default(now())
+  source       BlockedTimeSource   @default(MANUAL)
+  externalId   String?             @unique // Google Calendar event ID
+  isRecurring  Boolean             @default(false)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@index([instructorId, startTime])
+  @@index([source])
+  @@index([externalId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model GoogleCalendarSync {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  instructorId  String?  @unique
+  accessToken   String
+  refreshToken  String
+  expiresAt     DateTime
+  calendarId    String   @default("primary")
+  syncEnabled   Boolean  @default(true)
+  lastSyncAt    DateTime?
+  lastError     String?
+  lastErrorAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  User       User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Instructor Instructor? @relation(fields: [instructorId], references: [id])
+
+  @@index([syncEnabled])
+  @@index([lastSyncAt])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -208,6 +238,25 @@ model Booking {
   @@index([startTime])
   @@index([status])
   @@index([studentId])
+  
+  // Optimalisert index for konfliktsjekk
+  @@index([instructorId, status, startTime, endTime])
+}
+
+/// BookingLock: Pessimistic locking for å forhindre race conditions ved booking
+/// Låser holdes i maks 5 minutter og ryddes automatisk opp
+model BookingLock {
+  id            String   @id
+  instructorId  String
+  startTime     DateTime
+  endTime       DateTime
+  lockedBy      String   // Session/user ID
+  lockedAt      DateTime @default(now())
+  expiresAt     DateTime // 5 minutter fra nå
+  
+  @@unique([instructorId, startTime, endTime])
+  @@index([expiresAt])
+  @@index([instructorId])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -576,18 +625,27 @@ model Instructor {
   InstructorDateAvailability InstructorDateAvailability[]
   ServiceType                ServiceType[]
   InstructorFacilityDefault  InstructorFacilityDefault[]
+  GoogleCalendarSync         GoogleCalendarSync?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model InstructorAvailability {
-  id           String     @id
-  instructorId String
-  dayOfWeek    Int
-  startTime    String
-  endTime      String
-  Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  id            String                    @id
+  instructorId  String
+  dayOfWeek     Int
+  startTime     String
+  endTime       String
+  isActive      Boolean                   @default(true)
+  validFrom     DateTime                  @default(now())
+  validUntil    DateTime?
+  createdAt     DateTime                  @default(now())
+  updatedAt     DateTime                  @updatedAt
+  Instructor    Instructor                @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  changeLog     AvailabilityChangeLog[]
 
   @@unique([instructorId, dayOfWeek, startTime])
+  @@index([instructorId, isActive])
+  @@index([validFrom, validUntil])
 }
 
 model InstructorDateAvailability {
@@ -598,10 +656,37 @@ model InstructorDateAvailability {
   endTime      String
   locationId   String?
   createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
   Location     Location?  @relation(fields: [locationId], references: [id])
 
   @@index([instructorId, date])
+}
+
+/// Audit log for availability changes
+model AvailabilityChangeLog {
+  id             String                 @id @default(cuid())
+  availabilityId String
+  instructorId   String
+  changedBy      String                 // User ID who made the change
+  changeType     AvailabilityChangeType
+  oldValue       Json?
+  newValue       Json?
+  changeReason   String?
+  createdAt      DateTime               @default(now())
+  Availability   InstructorAvailability @relation(fields: [availabilityId], references: [id], onDelete: Cascade)
+
+  @@index([availabilityId])
+  @@index([instructorId])
+  @@index([createdAt])
+}
+
+enum AvailabilityChangeType {
+  CREATED
+  UPDATED
+  DEACTIVATED
+  REACTIVATED
+  DELETED
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -632,17 +717,28 @@ model Message {
 }
 
 model Notification {
-  id        String           @id
-  userId    String
-  type      NotificationType
-  title     String
-  message   String
-  read      Boolean          @default(false)
-  linkUrl   String?
-  createdAt DateTime         @default(now())
-  User      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                  String           @id
+  userId              String
+  senderId            String?          // Avsender (null for system)
+  type                NotificationType
+  title               String
+  message             String
+  linkUrl             String?          // Lenke til relevant side
+  linkText            String?          // "Se booking", "Les notater"
+  metadata            Json?            // Extra data (JSON)
+  read                Boolean          @default(false)
+  readAt              DateTime?
+  createdAt           DateTime         @default(now())
+  expiresAt           DateTime?        // Utløpsdato (valgfritt)
+  isAdminNotification Boolean          @default(false) // For admin/MC notifikasjoner
+  adminType           String?          // "booking", "system", "urgent", "coaching", "video", "diary"
+  
+  User                User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sender              User?            @relation("SentNotifications", fields: [senderId], references: [id], onDelete: SetNull)
 
   @@index([userId, read])
+  @@index([userId, isAdminNotification, read])
+  @@index([createdAt])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1175,6 +1271,7 @@ model User {
   Instructor                                  Instructor?
   Message                                     Message[]
   Notification                                Notification[]
+  SentNotifications                           Notification[]             @relation("SentNotifications")
   PeriodizationPeriod                         PeriodizationPeriod[]
   PlayerAchievement                           PlayerAchievement[]
   PlayerTournamentPlan                        PlayerTournamentPlan[]
@@ -1194,6 +1291,7 @@ model User {
   UserSubscription                            UserSubscription[]
   WaitlistEntry                               WaitlistEntry[]
   Conversation                                Conversation[]             @relation("ConversationParticipants")
+  GoogleCalendarSync                          GoogleCalendarSync?
   // Training diary relations
   ShotTypeLPhase                              ShotTypeLPhase[]
   DegradationTracking                         DegradationTracking[]
@@ -1428,12 +1526,14 @@ enum CoachingBookingType {
   FIXED
   SELF_BOOK
   DROP_IN
+  NO_BOOKING
 }
 
 enum CoachingSubscriptionTier {
   PERFORMANCE_PRO
   PERFORMANCE
   START
+  PORTAL
 }
 
 enum CommunicationType {
@@ -1554,6 +1654,7 @@ enum ServiceCategory {
   VTG_COURSE
   SIMULATOR
   PLAYING_LESSON
+  DIGITAL
 }
 
 enum SubscriptionSource {
@@ -1585,6 +1686,13 @@ enum UserRole {
   INSTRUCTOR
   INVITED
   STUDENT
+}
+
+enum BlockedTimeSource {
+  MANUAL
+  GOOGLE_CALENDAR
+  OUTLOOK_CALENDAR
+  FACILITY_BOOKING
 }
 
 enum WaitlistStatus {
@@ -1994,4 +2102,119 @@ enum ChallengeType {
   ROUNDS
   STREAK
   CUSTOM
+}
+
+// ════════════════════════════════════════════════════════════
+// REAL-TIME SYNC SYSTEM — Spillerportal <-> Mission Control
+// ════════════════════════════════════════════════════════════
+
+enum SyncEventType {
+  BOOKING_CREATED
+  BOOKING_UPDATED
+  BOOKING_CANCELLED
+  BOOKING_RESCHEDULED
+  BOOKING_COMPLETED
+  AVAILABILITY_CHANGED
+  BLOCKED_TIME_CREATED
+  BLOCKED_TIME_DELETED
+  COACHING_NOTES_ADDED
+  COACHING_NOTES_UPDATED
+  NOTIFICATION_CREATED
+  USER_PRESENCE_CHANGED
+  SYNC_PING
+  SYNC_ACK
+}
+
+enum SyncEventStatus {
+  PENDING
+  DELIVERED
+  FAILED
+  EXPIRED
+}
+
+/// Real-time sync events for cross-system data consistency
+model SyncEvent {
+  id          String          @id @default(cuid())
+  type        SyncEventType
+  payload     Json            // Event data
+  
+  // Targeting - who should receive this event
+  targetUserIds String[]      // Specific users (empty = broadcast)
+  targetRoles   String[]      // Role-based targeting (ADMIN, INSTRUCTOR, etc)
+  
+  // Source tracking
+  sourceUserId  String?       // Who triggered the event
+  sourceSystem  String        // "PORTAL", "MISSION_CONTROL", "CRON", "WEBHOOK"
+  
+  // Delivery tracking
+  status        SyncEventStatus @default(PENDING)
+  deliveredTo   String[]      @default([]) // User IDs that received the event
+  failedFor     String[]      @default([]) // User IDs where delivery failed
+  
+  // Timestamps
+  createdAt     DateTime      @default(now())
+  expiresAt     DateTime      // TTL - auto cleanup
+  deliveredAt   DateTime?     // First successful delivery
+  
+  // Deduplication
+  dedupKey      String?       @unique // Prevent duplicate events
+  
+  @@index([status, createdAt])
+  @@index([targetUserIds])
+  @@index([expiresAt])
+  @@index([type, createdAt])
+  @@index([dedupKey])
+}
+
+/// Audit log for all data mutations (immutable)
+model SyncAuditLog {
+  id            String    @id @default(cuid())
+  tableName     String    // e.g., "Booking", "CoachingSession"
+  recordId      String    // Primary key of affected record
+  action        String    // CREATE, UPDATE, DELETE
+  
+  // Change details
+  before        Json?     // Previous state (null for CREATE)
+  after         Json?     // New state (null for DELETE)
+  changedFields String[]  // Which fields changed
+  
+  // Actor info
+  userId        String?
+  userRole      String?
+  ipAddress     String?
+  userAgent     String?
+  
+  // Context
+  sourceSystem  String    // "PORTAL", "MISSION_CONTROL", "API", "CRON"
+  correlationId String?   // For tracing across services
+  
+  createdAt     DateTime  @default(now())
+  
+  @@index([tableName, recordId])
+  @@index([userId, createdAt])
+  @@index([createdAt])
+  @@index([correlationId])
+}
+
+/// Connection state for SSE clients
+model SyncConnection {
+  id           String    @id @default(cuid())
+  userId       String
+  sessionId    String    @unique // Client-generated session ID
+  
+  // Connection metadata
+  connectedAt  DateTime  @default(now())
+  lastPingAt   DateTime  @default(now())
+  disconnectedAt DateTime?
+  
+  // Client info
+  userAgent    String?
+  ipAddress    String?
+  
+  // Subscription filters
+  eventTypes   String[]  @default([]) // Filter by event types
+  
+  @@index([userId, connectedAt])
+  @@index([sessionId])
+  @@index([lastPingAt])
 }

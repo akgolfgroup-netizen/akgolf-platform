@@ -3,6 +3,9 @@ import {
   handleCallback,
   verifyState,
 } from "@/lib/portal/calendar/google-calendar";
+import { syncGoogleCalendar } from "@/lib/portal/google-calendar/sync";
+import { prisma } from "@/lib/portal/prisma";
+import { logger } from "@/lib/logger";
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
 
@@ -11,6 +14,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
  *
  * Google redirects here after the user grants calendar access.
  * Exchanges the authorization code for tokens and saves them.
+ * Triggers initial sync to BlockedTime.
  */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -37,10 +41,32 @@ export async function GET(request: Request) {
     const redirectUri = `${BASE_URL}/api/portal/calendar/google/callback`;
     await handleCallback(code, userId, redirectUri);
 
+    // Finn instruktør og trigger initial synkronisering
+    const instructor = await prisma.instructor.findUnique({
+      where: { userId },
+    });
+
+    if (instructor) {
+      // Kjør initial sync i bakgrunnen (ikke await for raskere respons)
+      syncGoogleCalendar(instructor.id)
+        .then((result) => {
+          logger.info(
+            `[Google Calendar Callback] Initial sync completed: ${result.synced} events`
+          );
+        })
+        .catch((syncError) => {
+          logger.error(
+            `[Google Calendar Callback] Initial sync failed:`,
+            syncError
+          );
+        });
+    }
+
     return NextResponse.redirect(
       `${BASE_URL}/portal/kalender?google=connected`
     );
-  } catch {
+  } catch (error) {
+    logger.error("[Google Calendar Callback] Error:", error);
     return NextResponse.redirect(
       `${BASE_URL}/portal/kalender?google=error`
     );

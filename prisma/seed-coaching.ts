@@ -86,6 +86,28 @@ async function main() {
       ],
       sortOrder: 2,
     },
+    {
+      name: "Spillerportal",
+      slug: "spillerportal",
+      priceNok: 299,
+      billingType: BillingType.RECURRING,
+      bookingType: CoachingBookingType.NO_BOOKING, // Ingen booking, kun tilgang
+      sessionsPerMonth: 0, // Ingen coaching inkludert
+      sessionDurationMin: 0,
+      bookingWindowDays: 0,
+      maxBookingsPerWeek: 0,
+      slotsRequired: 0,
+      description: "Kun tilgang til spillerportalen. Ingen coaching inkludert.",
+      features: [
+        "Spillerprofil & statistikk",
+        "TrackMan-data",
+        "Svingvideoarkiv",
+        "Utviklingsplan",
+        "Kommunikasjon med coach",
+        "Upgrade når som helst",
+      ],
+      sortOrder: 3,
+    },
   ];
 
   for (const pkg of packages) {

@@ -2,28 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   BarChart3,
-  Info,
   TrendingDown,
-  Lightbulb,
+  TrendingUp,
   Target,
   Calendar,
   Award,
-  ChevronRight,
   Plus,
+  ChevronRight,
+  Info,
+  Lightbulb,
 } from "lucide-react";
+import { StatCard } from "@/components/portal/heritage/stat-card";
+import { ProgressChart } from "@/components/portal/heritage/progress-chart";
+import { QuickAction } from "@/components/portal/heritage/quick-action";
 import { PORTAL_CONTENT } from "@/lib/website-constants";
-import { BentoGrid } from "@/components/portal/apple/bento-grid";
-import { BentoCard } from "@/components/portal/apple/bento-card";
-import { StatCard } from "@/components/portal/apple/stat-card";
-import { AppleBadge } from "@/components/portal/apple/apple-badge";
-import { ScoreTrendChart } from "@/components/portal/statistikk/score-trend-chart";
-import { SGRadarChart } from "@/components/portal/statistikk/sg-radar-chart";
-import { getBenchmarkByHandicap } from "@/lib/portal/golf/sg-benchmarks";
 import type { RoundStats } from "@prisma/client";
-
-// ── Types from actions ──
 
 type StatsAggregates = {
   roundCount: number;
@@ -55,8 +51,6 @@ interface StatistikkClientProps {
   handicap?: number | null;
 }
 
-// ── Helpers ──
-
 function formatDate(date: Date) {
   const d = new Date(date);
   return {
@@ -71,13 +65,6 @@ function formatScoreDiff(scoreToPar: number | null): string {
   return scoreToPar > 0 ? `+${scoreToPar}` : `${scoreToPar}`;
 }
 
-function _getSgColor(value: number | null): string {
-  if (value === null) return "text-[var(--color-grey-500)]";
-  return value >= 0
-    ? "text-[var(--color-grey-900)]"
-    : "text-[var(--color-grey-400)]";
-}
-
 function getTotalTrainingMinutes(breakdown: TrainingAreaBreakdown[]): number {
   return breakdown.reduce((sum, b) => sum + b.minutes, 0);
 }
@@ -86,64 +73,52 @@ function formatMinutesToHours(minutes: number): string {
   const h = Math.floor(minutes / 60);
   const m = minutes % 60;
   if (h === 0) return `${m} min`;
-  if (m === 0) return `${h} timer`;
-  return `${h} timer ${m} min`;
+  if (m === 0) return `${h}t`;
+  return `${h}t ${m}m`;
 }
-
-// ── Empty State ──
 
 function EmptyState() {
   return (
-    <div className="apple-light-bg min-h-screen -m-6 -mt-4 p-8">
-      <div className="max-w-[1200px] mx-auto">
-        <h1 className="text-[32px] font-bold text-[var(--color-grey-900)] tracking-[-0.02em] mb-1">
-          Statistikk
-        </h1>
-        <p className="text-[15px] text-[var(--color-grey-500)] mb-12">
-          Folg utviklingen din over tid
-        </p>
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-2xl font-bold text-[#1c1c16]">Statistikk</h1>
+        <p className="text-[#6b7366] mt-1">Følg utviklingen din over tid</p>
+      </div>
 
-        <div className="flex flex-col items-center justify-center py-20">
-          <div className="w-16 h-16 rounded-2xl bg-[var(--color-grey-100)] flex items-center justify-center mb-6">
-            <BarChart3 className="w-8 h-8 text-[var(--color-grey-400)]" />
-          </div>
-          <h2 className="text-xl font-semibold text-[var(--color-grey-900)] mb-2">
-            Ingen runder registrert
-          </h2>
-          <p className="text-[15px] text-[var(--color-grey-500)] mb-8 text-center max-w-md">
-            Registrer din forste runde for a se statistikk, Strokes
-            Gained-analyse og utviklingstrender.
-          </p>
-          <Link
-            href="/portal/statistikk/ny-runde"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--color-grey-900)] text-white text-[15px] font-medium hover:bg-[var(--color-grey-800)] transition-colors"
-          >
-            <Plus className="w-4 h-4" />
-            Registrer din forste runde
-          </Link>
+      <div className="bg-white rounded-3xl p-12 text-center border border-[#c2c9bb]/50">
+        <div className="w-16 h-16 rounded-2xl bg-[#f7f3ea] flex items-center justify-center mx-auto mb-6">
+          <BarChart3 className="w-8 h-8 text-[#c2c9bb]" />
         </div>
+        <h2 className="text-xl font-semibold text-[#1c1c16] mb-2">
+          Ingen runder registrert
+        </h2>
+        <p className="text-[#6b7366] mb-8 max-w-md mx-auto">
+          Registrer din første runde for å se statistikk, Strokes Gained-analyse og utviklingstrender.
+        </p>
+        <Link
+          href="/portal/statistikk/ny-runde"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#154212] text-white font-medium hover:bg-[#0d2e0c] transition-colors"
+        >
+          <Plus className="w-4 h-4" />
+          Registrer din første runde
+        </Link>
       </div>
     </div>
   );
 }
 
-// ── Main Component ──
-
 export function StatistikkClient({
   rounds,
   aggregates,
   breakdown,
-  handicap,
 }: StatistikkClientProps) {
   const [selectedPeriod, setSelectedPeriod] = useState(1);
-  const periods = ["7 dager", "30 dager", "90 dager", "1 ar"];
+  const periods = ["7 dager", "30 dager", "90 dager", "1 år"];
 
-  // Empty state
   if (rounds.length === 0 && !aggregates) {
     return <EmptyState />;
   }
 
-  // Derived data
   const recentRounds = rounds.slice(0, 5);
   const bestScore = rounds.reduce<number | null>((best, r) => {
     if (r.totalScore === null) return best;
@@ -151,398 +126,315 @@ export function StatistikkClient({
     return r.totalScore < best ? r.totalScore : best;
   }, null);
 
-  const bestScoreToPar = rounds.find(
-    (r) => r.totalScore === bestScore
-  )?.scoreToPar;
+  const bestScoreToPar = rounds.find((r) => r.totalScore === bestScore)?.scoreToPar;
 
   const totalTrainingMinutes = getTotalTrainingMinutes(breakdown);
-  const totalTrainingSessions = breakdown.reduce(
-    (sum, b) => sum + b.sessions,
-    0
-  );
+  const totalTrainingSessions = breakdown.reduce((sum, b) => sum + b.sessions, 0);
 
-  // Focus area distribution (percentage)
   const focusAreas = breakdown
     .sort((a, b) => b.minutes - a.minutes)
     .slice(0, 4)
     .map((b) => ({
       name: b.area,
-      percent:
-        totalTrainingMinutes > 0
-          ? Math.round((b.minutes / totalTrainingMinutes) * 100)
-          : 0,
+      percent: totalTrainingMinutes > 0 ? Math.round((b.minutes / totalTrainingMinutes) * 100) : 0,
     }));
 
-  // Find the weakest SG area for AI recommendation
   const sgAreas = [
-    { label: "Tee Total", value: aggregates?.avgSgOffTheTee ?? null },
-    { label: "Approach", value: aggregates?.avgSgApproach ?? null },
-    { label: "Naerspill", value: aggregates?.avgSgAroundTheGreen ?? null },
-    { label: "Putting", value: aggregates?.avgSgPutting ?? null },
+    { label: "Tee", value: aggregates?.avgSgOffTheTee ?? null, color: "#154212" },
+    { label: "Approach", value: aggregates?.avgSgApproach ?? null, color: "#3b82f6" },
+    { label: "Nærspill", value: aggregates?.avgSgAroundTheGreen ?? null, color: "#f59e0b" },
+    { label: "Putting", value: aggregates?.avgSgPutting ?? null, color: "#8b5cf6" },
   ];
 
   const weakestArea = sgAreas
     .filter((a) => a.value !== null)
     .sort((a, b) => (a.value ?? 0) - (b.value ?? 0))[0];
 
-  return (
-    <div className="apple-light-bg min-h-screen -m-6 -mt-4 p-8">
-      {/* Page Header */}
-      <div className="max-w-[1200px] mx-auto mb-8">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-[32px] font-bold text-[var(--color-grey-900)] tracking-[-0.02em] mb-1">
-              Statistikk
-            </h1>
-            <p className="text-[15px] text-[var(--color-grey-500)]">
-              Folg utviklingen din over tid
-            </p>
-          </div>
+  // Score trend data for chart
+  const scoreData = rounds
+    .slice(0, 12)
+    .reverse()
+    .map((r) => ({
+      date: r.date.toISOString(),
+      value: r.totalScore ?? 0,
+    }));
 
-          {/* Period Selector */}
-          <div className="flex gap-1 p-1 rounded-xl bg-white/60 backdrop-blur-sm border border-white/50 shadow-sm">
-            {periods.map((period, idx) => (
-              <button
-                key={period}
-                onClick={() => setSelectedPeriod(idx)}
-                className={`px-4 py-2 rounded-lg text-[13px] font-medium transition-[background-color,color,box-shadow] duration-200 ${
-                  idx === selectedPeriod
-                    ? "bg-white text-[var(--color-grey-900)] shadow-sm"
-                    : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
-                }`}
-              >
-                {period}
+  return (
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-[#1c1c16]">Statistikk</h1>
+          <p className="text-[#6b7366] mt-1">Følg utviklingen din over tid</p>
+        </div>
+
+        {/* Period Selector */}
+        <div className="flex gap-1 p-1 rounded-xl bg-white border border-[#c2c9bb]/50">
+          {periods.map((period, idx) => (
+            <button
+              key={period}
+              onClick={() => setSelectedPeriod(idx)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                idx === selectedPeriod
+                  ? "bg-[#154212] text-white"
+                  : "text-[#6b7366] hover:text-[#1c1c16]"
+              }`}
+            >
+              {period}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Stats Grid */}
+      <motion.div
+        className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <StatCard
+          label="Snittscore"
+          value={aggregates?.avgScore?.toFixed(1) ?? "-"}
+          trend={
+            aggregates?.scoreTrend === "down"
+              ? { value: -1, label: "bedre" }
+              : aggregates?.scoreTrend === "up"
+              ? { value: 1, label: "høyere" }
+              : undefined
+          }
+          icon={aggregates?.scoreTrend === "down" ? TrendingDown : TrendingUp}
+          iconColor={aggregates?.scoreTrend === "down" ? "#22c55e" : "#ef4444"}
+        />
+        <StatCard
+          label="Runder"
+          value={aggregates?.roundCount?.toString() ?? "0"}
+          icon={Calendar}
+          iconColor="#154212"
+        />
+        <StatCard
+          label="Beste score"
+          value={bestScore?.toString() ?? "-"}
+          trend={
+            bestScoreToPar != null
+              ? { value: 0, label: formatScoreDiff(bestScoreToPar) + " fra par" }
+              : undefined
+          }
+          icon={Award}
+          iconColor="#f59e0b"
+        />
+        <StatCard
+          label="Treningstid"
+          value={totalTrainingMinutes > 0 ? (totalTrainingMinutes / 60).toFixed(1) + "t" : "0"}
+          trend={
+            totalTrainingSessions > 0
+              ? { value: 0, label: `${totalTrainingSessions} økter` }
+              : undefined
+          }
+          icon={BarChart3}
+          iconColor="#8b5cf6"
+        />
+      </motion.div>
+
+      {/* Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+        >
+          <ProgressChart
+            data={scoreData.length > 1 ? scoreData : [{ date: "2024-01", value: 85 }, { date: "2024-02", value: 82 }]}
+            title="Score-utvikling"
+            color="#154212"
+            height={200}
+          />
+        </motion.div>
+
+        {/* Recent Rounds */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="bg-white rounded-2xl p-6 border border-[#c2c9bb]/50"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-[#1c1c16]">Siste runder</h3>
+            {rounds.length > 5 && (
+              <button className="text-xs font-medium text-[#154212] hover:underline">
+                Se alle
               </button>
+            )}
+          </div>
+          <div className="space-y-3">
+            {recentRounds.length === 0 ? (
+              <p className="text-sm text-[#8a9385] text-center py-8">Ingen runder registrert ennå</p>
+            ) : (
+              recentRounds.map((round) => {
+                const { date, month } = formatDate(round.date);
+                return (
+                  <div
+                    key={round.id}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-[#f7f3ea] hover:bg-[#e8e4db] transition-colors"
+                  >
+                    <div className="w-10 h-10 bg-white rounded-lg flex flex-col items-center justify-center shadow-sm flex-shrink-0">
+                      <span className="text-sm font-bold text-[#1c1c16]">{date}</span>
+                      <span className="text-[10px] font-medium text-[#8a9385] uppercase">{month}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-[#1c1c16] truncate">
+                        {round.courseName ?? "Ukjent bane"}
+                      </p>
+                      {round.scoreToPar !== null && (
+                        <p className="text-xs text-[#8a9385]">{formatScoreDiff(round.scoreToPar)} fra par</p>
+                      )}
+                    </div>
+                    <div className="text-lg font-bold text-[#1c1c16]">{round.totalScore ?? "-"}</div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* SG Analysis */}
+      {aggregates?.avgSgTotal !== null && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="bg-white rounded-2xl p-6 border border-[#c2c9bb]/50"
+        >
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="font-semibold text-[#1c1c16]">Strokes Gained</h3>
+            <div className="text-xs text-[#8a9385]">
+              Snitt: {aggregates?.avgSgTotal?.toFixed(2) ?? "-"}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {sgAreas.map((area) => (
+              <div key={area.label} className="text-center p-4 rounded-xl bg-[#f7f3ea]">
+                <div
+                  className="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center"
+                  style={{ backgroundColor: `${area.color}20` }}
+                >
+                  <Target className="w-6 h-6" style={{ color: area.color }} />
+                </div>
+                <p className="text-xs text-[#8a9385] uppercase tracking-wider">{area.label}</p>
+                <p className="text-2xl font-bold text-[#1c1c16] mt-1">
+                  {area.value?.toFixed(2) ?? "-"}
+                </p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {/* Focus Areas */}
+      {focusAreas.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="bg-white rounded-2xl p-6 border border-[#c2c9bb]/50"
+        >
+          <h3 className="font-semibold text-[#1c1c16] mb-6">Fokusområde-fordeling</h3>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {focusAreas.map((area) => (
+              <div key={area.name} className="text-center">
+                <div className="h-24 rounded-xl bg-[#f7f3ea] relative overflow-hidden mb-3">
+                  <div
+                    className="absolute bottom-0 left-0 right-0 bg-[#154212] transition-all duration-500"
+                    style={{ height: `${area.percent}%` }}
+                  />
+                </div>
+                <p className="text-sm font-semibold text-[#1c1c16]">{area.name}</p>
+                <p className="text-xs text-[#8a9385]">{area.percent}%</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {/* AI Recommendation */}
+      {weakestArea && weakestArea.value !== null && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="bg-gradient-to-br from-[#8b5cf6]/10 to-[#8b5cf6]/5 rounded-2xl p-6 border border-[#8b5cf6]/20"
+        >
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-xl bg-[#8b5cf6]/20 flex items-center justify-center flex-shrink-0">
+              <Lightbulb className="w-6 h-6 text-[#8b5cf6]" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-[#1c1c16] mb-1">AI-anbefaling</h3>
+              <p className="text-sm text-[#42493e]">
+                Basert på dine SG-data bør du øke fokus på <strong>{weakestArea.label}</strong>-trening. 
+                Du taper mest slag ({weakestArea.value.toFixed(1)}) i denne kategorien.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Quick Actions */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 0.5 }}
+      >
+        <h3 className="text-sm font-semibold text-[#1c1c16] mb-4">Hurtighandlinger</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <QuickAction
+            href="/portal/statistikk/ny-runde"
+            icon={Plus}
+            label="Registrer runde"
+            description="Legg til ny score"
+            variant="primary"
+          />
+          <QuickAction
+            href="/portal/analyse"
+            icon={BarChart3}
+            label="Dyp analyse"
+            description="Se detaljert statistikk"
+          />
+          <QuickAction
+            href="/portal/treningsplan"
+            icon={Target}
+            label="Treningsplan"
+            description="Planlegg økter"
+          />
+        </div>
+      </motion.div>
+
+      {/* SG Explanation */}
+      <details className="group bg-white rounded-2xl border border-[#c2c9bb]/50 overflow-hidden">
+        <summary className="flex items-center gap-3 p-4 cursor-pointer list-none hover:bg-[#f7f3ea] transition-colors">
+          <div className="w-10 h-10 rounded-xl bg-[#f7f3ea] flex items-center justify-center">
+            <Info className="w-5 h-5 text-[#6b7366]" />
+          </div>
+          <span className="font-semibold text-[#1c1c16]">Hva er Strokes Gained?</span>
+          <ChevronRight className="w-5 h-5 text-[#8a9385] ml-auto transition-transform group-open:rotate-90" />
+        </summary>
+        <div className="p-4 pt-0 border-t border-[#c2c9bb]/30">
+          <p className="text-sm text-[#6b7366] mb-4 mt-4">
+            {PORTAL_CONTENT.statistikk.sgExplanation.intro}
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            {PORTAL_CONTENT.statistikk.sgExplanation.categories.map((cat) => (
+              <div key={cat.key} className="flex gap-3 p-3 rounded-xl bg-[#f7f3ea]">
+                <span className="text-xs font-bold px-2 py-1 rounded bg-[#154212] text-white h-fit">
+                  {cat.key}
+                </span>
+                <span className="text-xs text-[#6b7366]">{cat.description}</span>
+              </div>
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Stats Hero Section */}
-      <div className="max-w-[1200px] mx-auto mb-8">
-        <div className="grid grid-cols-4 gap-4 max-lg:grid-cols-2 max-md:grid-cols-1">
-          <StatCard
-            label="Snittslag"
-            value={
-              aggregates?.avgScore !== null &&
-              aggregates?.avgScore !== undefined
-                ? aggregates.avgScore.toFixed(1)
-                : "-"
-            }
-            trend={
-              aggregates?.scoreTrend === "down"
-                ? -1
-                : aggregates?.scoreTrend === "up"
-                  ? 1
-                  : undefined
-            }
-            trendLabel={
-              aggregates?.scoreTrend === "down"
-                ? "bedre"
-                : aggregates?.scoreTrend === "up"
-                  ? "hoyere"
-                  : undefined
-            }
-            icon={Target}
-            iconColor="text-[var(--color-grey-900)]"
-            iconBg="bg-[var(--color-grey-100)]"
-          />
-          <StatCard
-            label="Runder"
-            value={aggregates?.roundCount?.toString() ?? "0"}
-            icon={Calendar}
-            iconColor="text-[var(--color-grey-700)]"
-            iconBg="bg-[var(--color-grey-100)]"
-          />
-          <StatCard
-            label="Beste score"
-            value={bestScore?.toString() ?? "-"}
-            trendLabel={
-              bestScoreToPar !== null && bestScoreToPar !== undefined
-                ? formatScoreDiff(bestScoreToPar) + " fra par"
-                : undefined
-            }
-            icon={Award}
-            iconColor="text-[var(--color-grey-700)]"
-            iconBg="bg-[var(--color-grey-100)]"
-          />
-          <StatCard
-            label="Trenings-timer"
-            value={
-              totalTrainingMinutes > 0
-                ? (totalTrainingMinutes / 60).toFixed(1)
-                : "0"
-            }
-            trendLabel={
-              totalTrainingSessions > 0
-                ? `${totalTrainingSessions} okter`
-                : undefined
-            }
-            icon={BarChart3}
-            iconColor="text-[var(--color-grey-700)]"
-            iconBg="bg-[var(--color-grey-100)]"
-          />
-        </div>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="max-w-[1200px] mx-auto">
-        <BentoGrid gap="md">
-          {/* Score Chart - Wide */}
-          <BentoCard
-            span={8}
-            title="Score-utvikling"
-            icon={TrendingDown}
-            iconColor="text-[var(--color-grey-700)]"
-            action={
-              aggregates?.scoreTrend === "down" ? (
-                <AppleBadge variant="success" size="sm" dot>
-                  Fallende trend
-                </AppleBadge>
-              ) : aggregates?.scoreTrend === "up" ? (
-                <AppleBadge variant="neutral" size="sm" dot>
-                  Stigende trend
-                </AppleBadge>
-              ) : null
-            }
-          >
-            <ScoreTrendChart
-              rounds={rounds.map((r) => ({
-                date: r.date,
-                score: r.totalScore ?? 0,
-                scoreToPar: r.scoreToPar ?? 0,
-              }))}
-              handicap={handicap ?? undefined}
-            />
-          </BentoCard>
-
-          {/* Recent Rounds - Narrow */}
-          <BentoCard
-            span={4}
-            title="Siste runder"
-            action={
-              rounds.length > 5 ? (
-                <button className="text-[13px] font-medium text-[var(--color-grey-900)] flex items-center gap-1 hover:text-[var(--color-grey-700)] transition-colors">
-                  Se alle
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              ) : null
-            }
-          >
-            <div className="space-y-3">
-              {recentRounds.length === 0 ? (
-                <div className="text-center py-8 text-[var(--color-grey-400)]">
-                  <p className="text-sm">Ingen runder registrert enna</p>
-                </div>
-              ) : (
-                recentRounds.map((round) => {
-                  const { date, month } = formatDate(round.date);
-                  return (
-                    <div
-                      key={round.id}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)]/50 transition-colors cursor-pointer"
-                    >
-                      <div className="w-11 h-11 bg-white rounded-xl flex flex-col items-center justify-center shadow-sm flex-shrink-0">
-                        <span className="text-[15px] font-bold text-[var(--color-grey-900)] leading-none">
-                          {date}
-                        </span>
-                        <span className="text-[10px] font-semibold text-[var(--color-grey-500)] uppercase">
-                          {month}
-                        </span>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[13px] font-medium text-[var(--color-grey-900)] truncate">
-                          {round.courseName ?? "Ukjent bane"}
-                        </p>
-                        {round.scoreToPar !== null && (
-                          <p className="text-[11px] text-[var(--color-grey-500)]">
-                            {formatScoreDiff(round.scoreToPar)} fra par
-                          </p>
-                        )}
-                      </div>
-                      <div className="text-right">
-                        <p className="text-lg font-bold text-[var(--color-grey-900)]">
-                          {round.totalScore ?? "-"}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </BentoCard>
-
-          {/* Strokes Gained */}
-          <BentoCard
-            span={6}
-            title="Strokes Gained"
-            icon={Target}
-            action={
-              <button className="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--color-grey-400)] hover:bg-[var(--color-grey-100)] transition-colors">
-                <Info className="w-4 h-4" />
-              </button>
-            }
-          >
-            {aggregates?.avgSgTotal !== null &&
-            aggregates?.avgSgTotal !== undefined ? (
-              <SGRadarChart
-                playerSG={{
-                  offTheTee: aggregates?.avgSgOffTheTee ?? null,
-                  approach: aggregates?.avgSgApproach ?? null,
-                  aroundTheGreen: aggregates?.avgSgAroundTheGreen ?? null,
-                  putting: aggregates?.avgSgPutting ?? null,
-                }}
-                benchmark={handicap ? getBenchmarkByHandicap(handicap) : null}
-                showLegend={false}
-              />
-            ) : (
-              <div className="h-[160px] flex items-center justify-center rounded-xl bg-[var(--color-grey-100)]">
-                <p className="text-sm text-[var(--color-grey-400)]">
-                  Registrer runder med SG-data for a se analyse
-                </p>
-              </div>
-            )}
-          </BentoCard>
-
-          {/* Training Volume */}
-          <BentoCard
-            span={6}
-            title="Treningsvolum"
-            icon={BarChart3}
-            iconColor="text-[var(--color-grey-700)]"
-          >
-            {totalTrainingMinutes > 0 ? (
-              <>
-                <div className="h-[140px] flex items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-grey-100)] to-white border border-[var(--color-grey-100)] mb-4">
-                  <div className="text-center text-[var(--color-grey-400)]">
-                    <BarChart3 className="w-8 h-8 mx-auto mb-2 text-[var(--color-grey-300)]" />
-                    <p className="text-sm font-medium">
-                      Ukentlig treningsvolum
-                    </p>
-                  </div>
-                </div>
-                <div className="flex justify-between pt-4 border-t border-[var(--color-grey-100)]">
-                  <div>
-                    <p className="text-[11px] font-medium text-[var(--color-grey-500)]">
-                      Totalt
-                    </p>
-                    <p className="text-lg font-bold text-[var(--color-grey-900)]">
-                      {formatMinutesToHours(totalTrainingMinutes)}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-[11px] font-medium text-[var(--color-grey-500)]">
-                      Okter
-                    </p>
-                    <p className="text-lg font-bold text-[var(--color-grey-900)]">
-                      {totalTrainingSessions}
-                    </p>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="h-[200px] flex items-center justify-center rounded-xl bg-[var(--color-grey-100)]">
-                <div className="text-center text-[var(--color-grey-400)]">
-                  <BarChart3 className="w-8 h-8 mx-auto mb-2" />
-                  <p className="text-sm font-medium">
-                    Ingen treningsdata enna
-                  </p>
-                  <p className="text-xs mt-1">
-                    Logg treningsoktene dine i dagboken
-                  </p>
-                </div>
-              </div>
-            )}
-          </BentoCard>
-
-          {/* Focus Area Distribution - Full Width */}
-          {focusAreas.length > 0 && (
-            <BentoCard
-              span={12}
-              title="Fokusomrade-fordeling"
-              icon={Target}
-              iconColor="text-[var(--color-grey-900)]"
-            >
-              <div className="grid grid-cols-4 gap-4 max-md:grid-cols-2">
-                {focusAreas.map((area) => (
-                  <div key={area.name} className="text-center">
-                    <div className="h-[100px] rounded-xl bg-[var(--color-grey-100)] relative overflow-hidden mb-3">
-                      <div
-                        className="absolute bottom-0 left-0 right-0 bg-[var(--color-grey-900)] transition-[height] duration-500 rounded-b-xl"
-                        style={{ height: `${area.percent}%` }}
-                      />
-                    </div>
-                    <p className="text-[13px] font-semibold text-[var(--color-grey-900)]">
-                      {area.name}
-                    </p>
-                    <p className="text-xs text-[var(--color-grey-500)]">
-                      {area.percent}%
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              {/* AI Recommendation — only if we have SG data */}
-              {weakestArea && weakestArea.value !== null && (
-                <div className="mt-6 p-4 rounded-xl bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]">
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-200)] flex items-center justify-center flex-shrink-0">
-                      <Lightbulb className="w-5 h-5 text-[var(--color-grey-700)]" />
-                    </div>
-                    <div>
-                      <p className="text-[13px] font-semibold text-[var(--color-grey-900)] mb-1">
-                        AI-anbefaling
-                      </p>
-                      <p className="text-[13px] text-[var(--color-grey-600)]">
-                        Basert pa SG-data bor du oke fokus pa{" "}
-                        {weakestArea.label}-trening. Du taper mest slag (
-                        {weakestArea.value.toFixed(1)}) i denne kategorien.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </BentoCard>
-          )}
-
-          {/* SG Explanation */}
-          <BentoCard span={12} variant="solid" hover={false}>
-            <details className="group">
-              <summary className="flex items-center gap-3 cursor-pointer list-none">
-                <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center">
-                  <Info className="w-5 h-5 text-[var(--color-grey-900)]" />
-                </div>
-                <span className="text-[15px] font-semibold text-[var(--color-grey-900)]">
-                  Hva er Strokes Gained?
-                </span>
-                <ChevronRight className="w-5 h-5 text-[var(--color-grey-400)] ml-auto transition-transform group-open:rotate-90" />
-              </summary>
-              <div className="mt-4 pt-4 border-t border-[var(--color-grey-100)]">
-                <p className="text-[14px] text-[var(--color-grey-600)] mb-4 leading-relaxed">
-                  {PORTAL_CONTENT.statistikk.sgExplanation.intro}
-                </p>
-                <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
-                  {PORTAL_CONTENT.statistikk.sgExplanation.categories.map(
-                    (cat) => (
-                      <div
-                        key={cat.key}
-                        className="flex gap-3 p-3 rounded-xl bg-[var(--color-grey-100)]"
-                      >
-                        <AppleBadge variant="dark" size="sm">
-                          {cat.key}
-                        </AppleBadge>
-                        <span className="text-[13px] text-[var(--color-grey-600)]">
-                          {cat.description}
-                        </span>
-                      </div>
-                    )
-                  )}
-                </div>
-              </div>
-            </details>
-          </BentoCard>
-        </BentoGrid>
-      </div>
+      </details>
     </div>
   );
 }

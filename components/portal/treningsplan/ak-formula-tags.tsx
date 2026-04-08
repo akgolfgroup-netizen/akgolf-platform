@@ -39,7 +39,7 @@ export function AreaTag({ area, className = "" }: TagProps & { area: TrainingAre
   const areaData = TRAINING_AREAS[area];
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#262626] text-white ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#154212] text-white ${className}`}
     >
       {areaData.name}
     </span>
@@ -50,7 +50,7 @@ export function LPhaseTag({ phase, className = "" }: TagProps & { phase: LPhase 
   const phaseData = L_PHASES[phase];
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#333] text-[#A3A3A3] ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#f7f3ea] text-[#42493e] border border-[#c2c9bb]/50 ${className}`}
       title={phaseData.description}
     >
       L-{phaseData.id}
@@ -60,10 +60,10 @@ export function LPhaseTag({ phase, className = "" }: TagProps & { phase: LPhase 
 
 export function ClubSpeedTag({ cs, className = "" }: TagProps & { cs: number }) {
   const getColor = () => {
-    if (cs <= 40) return "bg-[var(--color-success)]/20 text-[var(--color-success)]";
-    if (cs <= 60) return "bg-yellow-500/20 text-yellow-400";
-    if (cs <= 80) return "bg-orange-500/20 text-orange-400";
-    return "bg-[var(--color-error)]/20 text-[var(--color-error)]";
+    if (cs <= 40) return "bg-[#22c55e]/10 text-[#22c55e]";
+    if (cs <= 60) return "bg-[#f59e0b]/10 text-[#f59e0b]";
+    if (cs <= 80) return "bg-orange-500/10 text-orange-600";
+    return "bg-[#ef4444]/10 text-[#ef4444]";
   };
 
   return (
@@ -80,7 +80,7 @@ export function EnvironmentTag({ env, className = "" }: TagProps & { env: MEnvir
   const envData = M_ENVIRONMENTS[env];
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-blue-500/20 text-blue-400 ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-blue-500/10 text-blue-600 ${className}`}
       title={envData.description}
     >
       M{env}
@@ -89,17 +89,16 @@ export function EnvironmentTag({ env, className = "" }: TagProps & { env: MEnvir
 }
 
 export function PressTag({ press, className = "" }: TagProps & { press: PRLevel }) {
-  const pressData = PR_LEVELS[press];
   const getColor = () => {
-    if (press <= 2) return "bg-[var(--color-success)]/20 text-[var(--color-success)]";
-    if (press === 3) return "bg-yellow-500/20 text-yellow-400";
-    return "bg-[var(--color-error)]/20 text-[var(--color-error)]";
+    if (press <= 2) return "bg-[#22c55e]/10 text-[#22c55e]";
+    if (press === 3) return "bg-[#f59e0b]/10 text-[#f59e0b]";
+    return "bg-[#ef4444]/10 text-[#ef4444]";
   };
 
   return (
     <span
       className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium ${getColor()} ${className}`}
-      title={pressData.description}
+      title={PR_LEVELS[press].description}
     >
       PR{press}
     </span>
@@ -179,9 +178,9 @@ interface FormulaBarProps {
 export function FormulaBar({ sessionId, className = "" }: FormulaBarProps) {
   return (
     <div
-      className={`inline-flex items-center px-3 py-1.5 rounded-lg bg-[#1a1a1a] border border-[#333] font-mono text-xs text-[#A3A3A3] ${className}`}
+      className={`inline-flex items-center px-3 py-1.5 rounded-lg bg-[#f7f3ea] border border-[#c2c9bb]/50 font-mono text-xs text-[#42493e] ${className}`}
     >
-      <span className="text-[var(--color-grey-900)] mr-1">AK</span>
+      <span className="text-[#154212] font-semibold mr-1">AK</span>
       <span>{sessionId}</span>
     </div>
   );
@@ -198,9 +197,9 @@ interface AreaCategoryBadgeProps {
 
 export function AreaCategoryBadge({ category, className = "" }: AreaCategoryBadgeProps) {
   const config = {
-    FULL_SWING: { label: "Full Swing", color: "bg-blue-500/20 text-blue-400" },
-    SHORT_GAME: { label: "Naerspill", color: "bg-[var(--color-success)]/20 text-[var(--color-success)]" },
-    PUTTING: { label: "Putting", color: "bg-purple-500/20 text-purple-400" },
+    FULL_SWING: { label: "Full Swing", color: "bg-blue-500/10 text-blue-600" },
+    SHORT_GAME: { label: "Naerspill", color: "bg-[#22c55e]/10 text-[#22c55e]" },
+    PUTTING: { label: "Putting", color: "bg-purple-500/10 text-purple-600" },
   };
 
   const { label, color } = config[category];

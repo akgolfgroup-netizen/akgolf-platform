@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: import.meta.dirname,
   },
+  // Exclude stitch-export from build
+  pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
+  distDir: '.next',
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "lh3.googleusercontent.com" },

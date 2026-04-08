@@ -7,6 +7,7 @@ import { evaluateCancellationPolicy } from "@/lib/portal/booking/cancellation-po
 import { processRefund } from "@/lib/portal/booking/refund";
 import { notifyNextOnWaitlist } from "@/lib/portal/booking/waitlist";
 import { sendBookingCancellation } from "@/lib/portal/email/send-booking-email";
+import { notifyBookingCancelled } from "@/lib/portal/notifications/triggers";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function POST(req: NextRequest) {
@@ -115,6 +116,11 @@ export async function POST(req: NextRequest) {
         cancellation.refundPercent,
       ).catch((err) => logger.error("[Cancel] Cancellation email failed", err));
     }
+
+    // Send notifikasjon til instruktør (non-blocking)
+    notifyBookingCancelled(booking, reason || cancellation.reason).catch((err) =>
+      logger.error("[Cancel] Notification failed", err)
+    );
 
     // Notify waitlist if applicable
     await notifyNextOnWaitlist(

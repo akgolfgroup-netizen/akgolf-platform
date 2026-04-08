@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Bell } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useSidebar } from "./sidebar-context";
+import { NotificationBell } from "./notification-bell";
 
 export function MobileHeader() {
   const { toggle } = useSidebar();
@@ -17,15 +18,11 @@ export function MobileHeader() {
         <Menu className="w-5 h-5" />
       </button>
 
-      <span className="text-sm font-bold text-[#1D1D1F]">AK Golf</span>
-
-      <Link
-        href="/portal"
-        className="p-2 rounded-lg text-[#86868B] hover:text-[#1D1D1F] hover:bg-[#F5F5F7] transition-colors"
-        aria-label="Notifikasjoner"
-      >
-        <Bell className="w-5 h-5" />
+      <Link href="/portal" className="text-sm font-bold text-[#1D1D1F]">
+        AK Golf
       </Link>
+
+      <NotificationBell />
     </header>
   );
 }

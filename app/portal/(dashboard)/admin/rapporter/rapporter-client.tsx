@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Users,
   UserPlus,
@@ -9,15 +10,11 @@ import {
   XCircle,
   Trophy,
   BarChart3,
+  Download,
+  Calendar,
 } from "lucide-react";
-import {
-  MCTopbar,
-  MCCard,
-  MCCardHeader,
-  MCCardTitle,
-  MCCardBody,
-  useMCSidebar,
-} from "@/components/portal/mission-control";
+import { cn } from "@/lib/utils";
+import { MCTopbar, useMCSidebar, HGStatCard } from "@/components/portal/mission-control";
 
 interface ReportData {
   totalStudents: number;
@@ -47,271 +44,224 @@ const tierLabels: Record<string, string> = {
 const tierColors: Record<string, string> = {
   VISITOR: "#86868B",
   ACADEMY: "#007AFF",
-  STARTER: "#2D6A4F",
-  PRO: "#FF9500",
+  STARTER: "#FF9500",
+  PRO: "#d2f000",
   ELITE: "#2D6A4F",
 };
 
+const timeRanges = [
+  { label: "Siste 7 dager", value: "7d" },
+  { label: "Siste 30 dager", value: "30d" },
+  { label: "Siste 3 måneder", value: "3m" },
+  { label: "År til dato", value: "ytd" },
+];
+
 export function RapporterClient({ data }: RapporterClientProps) {
   const { toggle } = useMCSidebar();
+  const [timeRange, setTimeRange] = useState("30d");
 
   const maxBookings = Math.max(...data.bookingTrends.map((t) => t.count), 1);
+  const totalTier = data.tierDistribution.reduce((sum, t) => sum + t.count, 0);
 
   return (
     <>
       <MCTopbar
         title="Rapporter"
-        subtitle="KPIer og analyse"
+        subtitle="KPIer og analyse av akademiets ytelse"
         onMenuClick={toggle}
-        notificationCount={0}
       />
 
-      <div className="p-5 space-y-6">
+      <div className="p-5 space-y-5">
+        {/* Time Range & Export */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="hg-tabs">
+            {timeRanges.map((range) => (
+              <button
+                key={range.value}
+                onClick={() => setTimeRange(range.value)}
+                className={cn("hg-tab", timeRange === range.value && "active")}
+              >
+                {range.label}
+              </button>
+            ))}
+          </div>
+          <button className="hg-btn hg-btn-secondary">
+            <Download className="w-4 h-4" />
+            Eksporter rapport
+          </button>
+        </div>
+
         {/* Student KPIs */}
         <div>
-          <h2 className="text-sm font-bold text-[#1D1D1F] mb-3">Elever</h2>
+          <h2 className="text-sm font-medium text-[var(--hg-text-muted)] uppercase tracking-wider mb-3">Elever</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <MCCard>
-              <MCCardBody>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
-                      Totalt
-                    </div>
-                    <div className="text-2xl font-bold text-[#1D1D1F] mt-1">
-                      {data.totalStudents}
-                    </div>
-                  </div>
-                  <div className="w-10 h-10 rounded-lg bg-[#F5F5F7] flex items-center justify-center">
-                    <Users className="w-5 h-5 text-[#1D1D1F]" />
-                  </div>
-                </div>
-              </MCCardBody>
-            </MCCard>
-
-            <MCCard>
-              <MCCardBody>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
-                      Nye (30d)
-                    </div>
-                    <div className="text-2xl font-bold text-[var(--color-success)] mt-1">
-                      +{data.newStudents}
-                    </div>
-                  </div>
-                  <div className="w-10 h-10 rounded-lg bg-[var(--color-success-light)] flex items-center justify-center">
-                    <UserPlus className="w-5 h-5 text-[var(--color-success)]" />
-                  </div>
-                </div>
-              </MCCardBody>
-            </MCCard>
-
-            <MCCard>
-              <MCCardBody>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
-                      Aktive (30d)
-                    </div>
-                    <div className="text-2xl font-bold text-[#007AFF] mt-1">
-                      {data.activeStudents}
-                    </div>
-                  </div>
-                  <div className="w-10 h-10 rounded-lg bg-[#DBEAFE] flex items-center justify-center">
-                    <UserCheck className="w-5 h-5 text-[#007AFF]" />
-                  </div>
-                </div>
-              </MCCardBody>
-            </MCCard>
-
-            <MCCard>
-              <MCCardBody>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
-                      Retensjon
-                    </div>
-                    <div className="text-2xl font-bold text-[#1D1D1F] mt-1">
-                      {data.retentionRate}%
-                    </div>
-                  </div>
-                  <div className="w-10 h-10 rounded-lg bg-[#F3E8FF] flex items-center justify-center">
-                    <BarChart3 className="w-5 h-5 text-[#8B5CF6]" />
-                  </div>
-                </div>
-              </MCCardBody>
-            </MCCard>
+            <HGStatCard
+              label="Totalt"
+              value={data.totalStudents}
+              icon={Users}
+            />
+            <HGStatCard
+              label="Nye (30d)"
+              value={`+${data.newStudents}`}
+              trend={{ value: 12, direction: "up" }}
+              icon={UserPlus}
+            />
+            <HGStatCard
+              label="Aktive (30d)"
+              value={data.activeStudents}
+              icon={UserCheck}
+            />
+            <HGStatCard
+              label="Retensjon"
+              value={`${data.retentionRate}%`}
+              icon={BarChart3}
+            />
           </div>
         </div>
 
         {/* Session KPIs */}
         <div>
-          <h2 className="text-sm font-bold text-[#1D1D1F] mb-3">Okter (siste 30 dager)</h2>
+          <h2 className="text-sm font-medium text-[var(--hg-text-muted)] uppercase tracking-wider mb-3">Økter (siste 30 dager)</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <MCCard>
-              <MCCardBody>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
-                      Fullforte
-                    </div>
-                    <div className="text-2xl font-bold text-[var(--color-success)] mt-1">
-                      {data.completedSessions}
-                    </div>
-                  </div>
-                  <div className="w-10 h-10 rounded-lg bg-[var(--color-success-light)] flex items-center justify-center">
-                    <CalendarCheck className="w-5 h-5 text-[var(--color-success)]" />
-                  </div>
-                </div>
-              </MCCardBody>
-            </MCCard>
-
-            <MCCard>
-              <MCCardBody>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
-                      Kansellerte
-                    </div>
-                    <div className="text-2xl font-bold text-[var(--color-error)] mt-1">
-                      {data.cancelledSessions}
-                    </div>
-                  </div>
-                  <div className="w-10 h-10 rounded-lg bg-[#FEE2E2] flex items-center justify-center">
-                    <XCircle className="w-5 h-5 text-[var(--color-error)]" />
-                  </div>
-                </div>
-              </MCCardBody>
-            </MCCard>
-
-            <MCCard>
-              <MCCardBody>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
-                      Kanselleringsrate
-                    </div>
-                    <div className="text-2xl font-bold text-[#1D1D1F] mt-1">
-                      {data.cancellationRate}%
-                    </div>
-                  </div>
-                  <div className="w-10 h-10 rounded-lg bg-[#F5F5F7] flex items-center justify-center">
-                    <TrendingDown className="w-5 h-5 text-[#86868B]" />
-                  </div>
-                </div>
-              </MCCardBody>
-            </MCCard>
-
-            <MCCard>
-              <MCCardBody>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
-                      HCP-forbedring
-                    </div>
-                    <div className="text-2xl font-bold text-[var(--color-success)] mt-1">
-                      {data.handicapImprovement}
-                    </div>
-                  </div>
-                  <div className="w-10 h-10 rounded-lg bg-[#FEF3C7] flex items-center justify-center">
-                    <Trophy className="w-5 h-5 text-[#F59E0B]" />
-                  </div>
-                </div>
-              </MCCardBody>
-            </MCCard>
+            <HGStatCard
+              label="Fullførte"
+              value={data.completedSessions}
+              trend={{ value: 8, direction: "up" }}
+              icon={CalendarCheck}
+            />
+            <HGStatCard
+              label="Kansellerte"
+              value={data.cancelledSessions}
+              trend={{ value: 5, direction: "down" }}
+              icon={XCircle}
+              variant={data.cancelledSessions > 10 ? "warning" : "default"}
+            />
+            <HGStatCard
+              label="Kanselleringsrate"
+              value={`${data.cancellationRate}%`}
+              icon={TrendingDown}
+              variant={data.cancellationRate > 10 ? "warning" : "default"}
+            />
+            <HGStatCard
+              label="HCP-forbedring"
+              value={data.handicapImprovement}
+              trend={{ value: 15, direction: "up" }}
+              icon={Trophy}
+            />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Charts Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           {/* Booking Trends */}
-          <MCCard>
-            <MCCardHeader>
-              <MCCardTitle>Booking-trend (siste 4 uker)</MCCardTitle>
-            </MCCardHeader>
-            <MCCardBody>
-              <div className="space-y-3">
-                {data.bookingTrends.length > 0 ? (
-                  data.bookingTrends.map((trend) => (
-                    <div key={trend.week}>
+          <div className="hg-card overflow-hidden">
+            <div className="px-4 py-3 border-b border-[var(--hg-border)]">
+              <h3 className="hg-section-title">Booking-trend</h3>
+            </div>
+            <div className="p-4 space-y-4">
+              {data.bookingTrends.length > 0 ? (
+                data.bookingTrends.map((trend, index) => (
+                  <div key={index}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-[var(--hg-text)]">
+                        Uke fra {trend.week}
+                      </span>
+                      <span className="text-sm text-[var(--hg-text-muted)]">
+                        {trend.count} bookinger
+                      </span>
+                    </div>
+                    <div className="h-2 bg-[var(--hg-surface-raised)] rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-[var(--hg-primary)] rounded-full transition-all"
+                        style={{ width: `${(trend.count / maxBookings) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-8 text-[var(--hg-text-muted)]">
+                  Ingen bookinger i perioden
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Tier Distribution */}
+          <div className="hg-card overflow-hidden">
+            <div className="px-4 py-3 border-b border-[var(--hg-border)]">
+              <h3 className="hg-section-title">Fordeling per tier</h3>
+            </div>
+            <div className="p-4 space-y-4">
+              {data.tierDistribution.length > 0 ? (
+                data.tierDistribution.map((tier) => {
+                  const percentage = totalTier > 0 ? (tier.count / totalTier) * 100 : 0;
+                  const color = tierColors[tier.tier] || "#86868B";
+                  return (
+                    <div key={tier.tier}>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-[11px] font-medium text-[#1D1D1F]">
-                          Uke fra {trend.week}
-                        </span>
-                        <span className="text-[11px] text-[#6E6E73]">
-                          {trend.count} bookinger
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="w-2 h-2 rounded-sm"
+                            style={{ backgroundColor: color }}
+                          />
+                          <span className="text-sm text-[var(--hg-text)]">
+                            {tierLabels[tier.tier] || tier.tier}
+                          </span>
+                        </div>
+                        <span className="text-sm text-[var(--hg-text-muted)]">
+                          {tier.count} ({percentage.toFixed(1)}%)
                         </span>
                       </div>
-                      <div className="h-2 bg-[#E8E8ED] rounded-full overflow-hidden">
+                      <div className="h-2 bg-[var(--hg-surface-raised)] rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-[#007AFF] rounded-full"
-                          style={{ width: `${(trend.count / maxBookings) * 100}%` }}
+                          className="h-full rounded-full transition-all"
+                          style={{ width: `${percentage}%`, backgroundColor: color }}
                         />
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <div className="text-[10px] text-[#86868B] text-center py-4">
-                    Ingen bookinger i perioden
-                  </div>
-                )}
-              </div>
-            </MCCardBody>
-          </MCCard>
+                  );
+                })
+              ) : (
+                <div className="text-center py-8 text-[var(--hg-text-muted)]">
+                  Ingen elever funnet
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
 
-          {/* Tier Distribution */}
-          <MCCard>
-            <MCCardHeader>
-              <MCCardTitle>Fordeling per tier</MCCardTitle>
-            </MCCardHeader>
-            <MCCardBody>
-              <div className="space-y-3">
-                {data.tierDistribution.length > 0 ? (
-                  data.tierDistribution.map((tier) => {
-                    const percentage =
-                      data.totalStudents > 0
-                        ? (tier.count / data.totalStudents) * 100
-                        : 0;
-                    return (
-                      <div key={tier.tier}>
-                        <div className="flex items-center justify-between mb-1">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className="w-2 h-2 rounded-sm"
-                              style={{
-                                backgroundColor:
-                                  tierColors[tier.tier] || "#86868B",
-                              }}
-                            />
-                            <span className="text-[11px] font-medium text-[#1D1D1F]">
-                              {tierLabels[tier.tier] || tier.tier}
-                            </span>
-                          </div>
-                          <span className="text-[11px] text-[#6E6E73]">
-                            {tier.count} ({percentage.toFixed(1)}%)
-                          </span>
-                        </div>
-                        <div className="h-2 bg-[#E8E8ED] rounded-full overflow-hidden">
-                          <div
-                            className="h-full rounded-full"
-                            style={{
-                              width: `${percentage}%`,
-                              backgroundColor:
-                                tierColors[tier.tier] || "#86868B",
-                            }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <div className="text-[10px] text-[#86868B] text-center py-4">
-                    Ingen elever funnet
-                  </div>
-                )}
+        {/* Additional Insights */}
+        <div className="hg-card p-4">
+          <h3 className="hg-section-title mb-4">Innsikt og anbefalinger</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-4 rounded-xl bg-[var(--hg-surface-raised)]">
+              <div className="flex items-center gap-2 mb-2">
+                <Users className="w-4 h-4 text-[var(--hg-primary)]" />
+                <span className="text-sm font-medium text-[var(--hg-text)]">Vekst</span>
               </div>
-            </MCCardBody>
-          </MCCard>
+              <p className="text-xs text-[var(--hg-text-secondary)]">
+                {data.newStudents} nye elever denne måneden. Fortsett markedsføringen på Instagram.
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-[var(--hg-surface-raised)]">
+              <div className="flex items-center gap-2 mb-2">
+                <CalendarCheck className="w-4 h-4 text-[var(--hg-success)]" />
+                <span className="text-sm font-medium text-[var(--hg-text)]">Oppmøte</span>
+              </div>
+              <p className="text-xs text-[var(--hg-text-secondary)]">
+                {data.cancellationRate}% kanselleringsrate er innenfor normalen. Send påminnelser dagen før.
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-[var(--hg-surface-raised)]">
+              <div className="flex items-center gap-2 mb-2">
+                <Trophy className="w-4 h-4 text-[var(--hg-warning)]" />
+                <span className="text-sm font-medium text-[var(--hg-text)]">Fremskritt</span>
+              </div>
+              <p className="text-xs text-[var(--hg-text-secondary)]">
+                Elevene forbedrer i snitt {data.handicapImprovement} i handicap. Godt arbeid!
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </>

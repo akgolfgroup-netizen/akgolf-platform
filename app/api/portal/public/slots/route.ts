@@ -1,3 +1,16 @@
+/**
+ * Offentlig API for å hente tilgjengelige tidspunkter (slots)
+ * 
+ * GET /api/portal/public/slots?instructorId=xxx&serviceTypeId=xxx&date=YYYY-MM-DD
+ * 
+ * Features:
+ * - 30 sekunders cache med Next.js unstable_cache
+ * - Støtte for InstructorDateAvailability overrides
+ * - Konfliktsjekk mot eksisterende bookinger og blokkerte tider
+ * - Rate limiting
+ * - Google Calendar blokkerte tider
+ */
+
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import {
@@ -6,51 +19,46 @@ import {
 } from "@/lib/portal/slots";
 import { BookingStatus } from "@prisma/client";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { unstable_cache, revalidateTag } from "next/cache";
+import { logger } from "@/lib/logger";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(req: NextRequest) {
-  const rateLimit = checkRateLimit(`public:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
-  if (!rateLimit.allowed) {
-    return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
-  }
-  const corsOrigin =
-    process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
+// Cache-konfigurasjon
+const CACHE_MAX_AGE = 30; // sekunder
+const STALE_WHILE_REVALIDATE = 60; // sekunder
+const CACHE_TAG_PREFIX = "slots";
 
-  const corsHeaders = {
-    "Access-Control-Allow-Origin": corsOrigin,
-    "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
-  };
+// Cache key generator
+const getSlotsCacheKey = (
+  instructorId: string,
+  dateStr: string,
+  serviceTypeId: string
+) => `${CACHE_TAG_PREFIX}:${instructorId}:${dateStr}:${serviceTypeId}`;
 
-  const { searchParams } = new URL(req.url);
-  const serviceTypeId = searchParams.get("serviceTypeId");
-  const instructorId = searchParams.get("instructorId");
-  const dateStr = searchParams.get("date"); // YYYY-MM-DD
+// Cached slot generation with Next.js unstable_cache
+const getCachedSlotsData = unstable_cache(
+  async (
+    instructorId: string,
+    date: Date,
+    nextDay: Date,
+    serviceTypeId: string
+  ): Promise<{ slots: string[]; source: string }> => {
+    const startTime = Date.now();
 
-  if (!serviceTypeId || !instructorId || !dateStr) {
-    return NextResponse.json(
-      { error: "Mangler parametere: serviceTypeId, instructorId, date" },
-      {
-        status: 400,
-        headers: { "Access-Control-Allow-Origin": corsOrigin },
-      }
-    );
-  }
-
-  // Parse dato som UTC midnatt
-  const [year, month, day] = dateStr.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
-  const nextDay = new Date(Date.UTC(year, month - 1, day + 1, 0, 0, 0, 0));
-
-  try {
     // Hent tilgjengelighet med støtte for date-overrides
     const [serviceType, availabilityWindows, existingBookings, blockedTimes] =
       await Promise.all([
         prisma.serviceType.findUnique({
           where: { id: serviceTypeId },
-          select: { duration: true, bufferAfter: true, minNoticeHours: true },
+          select: {
+            duration: true,
+            bufferAfter: true,
+            bufferBefore: true,
+            minNoticeHours: true,
+            isActive: true,
+          },
         }),
-        // Bruker getAvailabilityForDate som sjekker InstructorDateAvailability først
         getAvailabilityForDate(instructorId, date),
         prisma.booking.findMany({
           where: {
@@ -73,24 +81,12 @@ export async function GET(req: NextRequest) {
         }),
       ]);
 
-    if (!serviceType) {
-      return NextResponse.json([], { headers: corsHeaders });
-    }
-
-    // Valider at instructoren tilbyr denne serviceType
-    const instructor = await prisma.instructor.findFirst({
-      where: {
-        id: instructorId,
-        ServiceType: { some: { id: serviceTypeId } },
-      },
-      select: { id: true },
-    });
-    if (!instructor) {
-      return NextResponse.json([], { headers: corsHeaders });
+    if (!serviceType || !serviceType.isActive) {
+      return { slots: [], source: "error" };
     }
 
     if (availabilityWindows.length === 0) {
-      return NextResponse.json([], { headers: corsHeaders });
+      return { slots: [], source: "no-availability" };
     }
 
     const allSlots: string[] = [];
@@ -100,6 +96,7 @@ export async function GET(req: NextRequest) {
         availEnd: window.endTime,
         duration: serviceType.duration,
         bufferAfter: serviceType.bufferAfter,
+        bufferBefore: serviceType.bufferBefore,
         date,
         existingBookings,
         blockedTimes,
@@ -111,8 +108,150 @@ export async function GET(req: NextRequest) {
     // Sorter kronologisk
     allSlots.sort();
 
-    return NextResponse.json(allSlots, { headers: corsHeaders });
-  } catch {
+    logger.debug(
+      `[slots-cache] Generated ${allSlots.length} slots for ${instructorId} ${date.toISOString().split("T")[0]} (${Date.now() - startTime}ms)`
+    );
+
+    return { slots: allSlots, source: "cache" };
+  },
+  ["slots-data"],
+  {
+    revalidate: CACHE_MAX_AGE,
+    tags: [CACHE_TAG_PREFIX],
+  }
+);
+
+export async function GET(req: NextRequest) {
+  const startTime = Date.now();
+  const rateLimit = checkRateLimit(
+    `public:${getClientIp(req)}`,
+    RATE_LIMITS.API_GENERAL
+  );
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "For mange forespørsler" },
+      { status: 429 }
+    );
+  }
+
+  const corsOrigin = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
+
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": corsOrigin,
+    "Cache-Control": `public, s-maxage=${CACHE_MAX_AGE}, stale-while-revalidate=${STALE_WHILE_REVALIDATE}`,
+  };
+
+  const { searchParams } = new URL(req.url);
+  const serviceTypeId = searchParams.get("serviceTypeId");
+  const instructorId = searchParams.get("instructorId");
+  const dateStr = searchParams.get("date"); // YYYY-MM-DD
+  const nocache = searchParams.get("nocache") === "true"; // Force refresh
+
+  if (!serviceTypeId || !instructorId || !dateStr) {
+    return NextResponse.json(
+      { error: "Mangler parametere: serviceTypeId, instructorId, date" },
+      {
+        status: 400,
+        headers: { "Access-Control-Allow-Origin": corsOrigin },
+      }
+    );
+  }
+
+  // Valider datoformat
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(dateStr)) {
+    return NextResponse.json(
+      { error: "Ugyldig datoformat. Bruk YYYY-MM-DD" },
+      {
+        status: 400,
+        headers: { "Access-Control-Allow-Origin": corsOrigin },
+      }
+    );
+  }
+
+  // Parse dato som UTC midnatt
+  const [year, month, day] = dateStr.split("-").map(Number);
+
+  // Valider at datoen er gyldig
+  const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  ) {
+    return NextResponse.json(
+      { error: "Ugyldig dato" },
+      {
+        status: 400,
+        headers: { "Access-Control-Allow-Origin": corsOrigin },
+      }
+    );
+  }
+
+  const nextDay = new Date(Date.UTC(year, month - 1, day + 1, 0, 0, 0, 0));
+
+  try {
+    // Valider at instructoren tilbyr denne serviceType
+    const instructor = await prisma.instructor.findFirst({
+      where: {
+        id: instructorId,
+        ServiceType: { some: { id: serviceTypeId } },
+      },
+      select: { id: true },
+    });
+
+    if (!instructor) {
+      return NextResponse.json(
+        { error: "Instruktør tilbyr ikke denne tjenesten" },
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
+    // Bruk cache hvis ikke nocache
+    let slots: string[];
+    let source: string;
+
+    if (!nocache) {
+      const cached = await getCachedSlotsData(
+        instructorId,
+        date,
+        nextDay,
+        serviceTypeId
+      );
+      slots = cached.slots;
+      source = cached.source;
+
+      if (source === "error") {
+        return NextResponse.json(
+          { error: "Tjeneste ikke funnet eller ikke aktiv" },
+          { status: 404, headers: corsHeaders }
+        );
+      }
+    } else {
+      // Force fresh data
+      const fresh = await getCachedSlotsData(
+        instructorId,
+        date,
+        nextDay,
+        serviceTypeId
+      );
+      slots = fresh.slots;
+      source = "fresh";
+    }
+
+    logger.debug(
+      `[slots] Returning ${slots.length} slots for ${instructorId} ${dateStr} (${Date.now() - startTime}ms, source: ${source})`
+    );
+
+    return NextResponse.json(slots, {
+      headers: {
+        ...corsHeaders,
+        "X-Cache": nocache ? "BYPASS" : source === "cache" ? "HIT" : "MISS",
+        "X-Response-Time": `${Date.now() - startTime}ms`,
+      },
+    });
+  } catch (error) {
+    logger.error("[slots] Error:", error);
     return NextResponse.json(
       { error: "Service unavailable" },
       {
@@ -123,12 +262,63 @@ export async function GET(req: NextRequest) {
   }
 }
 
+/**
+ * POST for å manuelt invalidere cache (brukes av admin etter endringer)
+ */
+export async function POST(req: NextRequest) {
+  const rateLimit = checkRateLimit(
+    `public:${getClientIp(req)}`,
+    RATE_LIMITS.API_GENERAL
+  );
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "For mange forespørsler" },
+      { status: 429 }
+    );
+  }
+
+  try {
+    const { instructorId, date } = (await req.json()) as {
+      instructorId?: string;
+      date?: string;
+    };
+
+    if (!instructorId) {
+      return NextResponse.json(
+        { error: "instructorId påkrevd" },
+        { status: 400 }
+      );
+    }
+
+    // Revalidate cache tags
+    revalidateTag(CACHE_TAG_PREFIX);
+    if (date) {
+      revalidateTag(getSlotsCacheKey(instructorId, date, ""));
+    }
+
+    // Also invalidate general availability
+    revalidateTag(`availability:${instructorId}`);
+
+    return NextResponse.json({
+      success: true,
+      message: "Cache invalidert",
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    logger.error("[slots POST] Error:", error);
+    return NextResponse.json(
+      { error: "Kunne ikke invalidere cache" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function OPTIONS(_req: NextRequest) {
   const corsOrigin = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
-  return new NextResponse(null, {
+  return new Response(null, {
     headers: {
       "Access-Control-Allow-Origin": corsOrigin,
-      "Access-Control-Allow-Methods": "GET",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     },
   });

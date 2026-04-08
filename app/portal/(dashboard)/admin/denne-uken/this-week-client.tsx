@@ -1,22 +1,44 @@
 "use client";
 
 import Image from "next/image";
-import { BentoGrid } from "@/components/portal/apple/bento-grid";
-import { BentoCard } from "@/components/portal/apple/bento-card";
-import { StatCard } from "@/components/portal/apple/stat-card";
-import { AppleCard } from "@/components/portal/apple/apple-card";
-import { AppleBadge } from "@/components/portal/apple/apple-badge";
-import type { TournamentPlanWithStudent } from "@/modules/tournament-planner/types";
-import type { GoalType, PlanLevel } from "@/modules/tournament-planner/types";
-import { PLAN_LEVEL_CONFIG } from "@/modules/tournament-planner/constants";
-import { GoalTypeBadge } from "@/modules/tournament-planner/components/GoalTypeBadge";
-import { Trophy, Users, Calendar, CheckCircle2, Clock } from "lucide-react";
+import {
+  Trophy,
+  Users,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  MapPin,
+  ChevronRight,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { MCTopbar, useMCSidebar, HGStatCard } from "@/components/portal/mission-control";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { motion } from "framer-motion";
 
+interface Tournament {
+  id: string;
+  name: string;
+  startDate: Date;
+}
+
+interface TournamentPlan {
+  id: string;
+  tournamentId: string;
+  tournament: Tournament;
+  student: {
+    id: string;
+    name: string | null;
+    image: string | null;
+  };
+  isRegistered: boolean;
+  planLevel: string;
+  goalType: string;
+  notes?: string | null;
+}
+
 interface ThisWeekClientProps {
-  plans: TournamentPlanWithStudent[];
+  plans: TournamentPlan[];
   weekStats: {
     totalPlayers: number;
     tournaments: number;
@@ -25,12 +47,25 @@ interface ThisWeekClientProps {
   };
 }
 
+const PLAN_LEVEL_CONFIG: Record<string, { label: string; color: string }> = {
+  A: { label: "Plan A", color: "#d2f000" },
+  B: { label: "Plan B", color: "#00d2ff" },
+  C: { label: "Plan C", color: "#86868B" },
+};
+
+const GOAL_TYPE_CONFIG: Record<string, { label: string; color: string }> = {
+  WIN: { label: "Seier", color: "#2D6A4F" },
+  TOP3: { label: "Topp 3", color: "#d2f000" },
+  TOP10: { label: "Topp 10", color: "#007AFF" },
+  CUT: { label: "Cut", color: "#86868B" },
+  EXPERIENCE: { label: "Erfaring", color: "#FF9500" },
+};
+
 export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
+  const { toggle } = useMCSidebar();
+
   // Group by tournament
-  const byTournament = new Map<
-    string,
-    { tournament: TournamentPlanWithStudent["tournament"]; plans: TournamentPlanWithStudent[] }
-  >();
+  const byTournament = new Map<string, { tournament: Tournament; plans: TournamentPlan[] }>();
   for (const plan of plans) {
     const existing = byTournament.get(plan.tournamentId);
     if (existing) {
@@ -48,218 +83,155 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--color-grey-100)] via-white to-[var(--color-grey-100)]/30 -m-6 p-6 lg:p-8">
-      {/* Header */}
-      <motion.div
-        className="mb-8"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--color-grey-400)] to-[var(--color-grey-900)] flex items-center justify-center shadow-lg">
-            <Calendar className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)] bg-clip-text text-transparent">
-              Denne uken
-            </h1>
-            <p className="text-sm text-[var(--color-grey-500)]">{weekStats.weekLabel}</p>
-          </div>
-        </div>
-      </motion.div>
+    <>
+      <MCTopbar
+        title="Denne uken"
+        subtitle={`Turneringsplaner for ${weekStats.weekLabel}`}
+        onMenuClick={toggle}
+      />
 
-      {/* Stats Grid */}
-      <BentoGrid gap="md" className="mb-8">
-        <motion.div
-          className="col-span-3 max-lg:col-span-3 max-md:col-span-1"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-        >
-          <StatCard
+      <div className="p-5 space-y-5">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <HGStatCard
             label="Spillere"
             value={weekStats.totalPlayers}
             icon={Users}
-            iconColor="text-[var(--color-grey-900)]"
-            iconBg="bg-[var(--color-grey-100)]"
-            size="md"
           />
-        </motion.div>
-
-        <motion.div
-          className="col-span-3 max-lg:col-span-3 max-md:col-span-1"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
-        >
-          <StatCard
+          <HGStatCard
             label="Turneringer"
             value={weekStats.tournaments}
             icon={Trophy}
-            iconColor="text-purple-500"
-            iconBg="bg-purple-50"
-            size="md"
           />
-        </motion.div>
-
-        <motion.div
-          className="col-span-3 max-lg:col-span-3 max-md:col-span-1"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-        >
-          <StatCard
-            label="Pameldt"
+          <HGStatCard
+            label="Påmeldt"
             value={weekStats.registered}
             icon={CheckCircle2}
-            iconColor="text-[var(--color-success)]"
-            iconBg="bg-[var(--color-success)]/5"
-            size="md"
           />
-        </motion.div>
-
-        <motion.div
-          className="col-span-3 max-lg:col-span-3 max-md:col-span-1"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.25 }}
-        >
-          <StatCard
+          <HGStatCard
             label="Registreringsrate"
             value={`${registrationRate}%`}
-            trend={registrationRate >= 80 ? registrationRate - 80 : undefined}
+            trend={registrationRate >= 80 ? { value: registrationRate - 80, direction: "up" } : undefined}
             icon={Clock}
-            iconColor="text-blue-500"
-            iconBg="bg-blue-50"
-            size="md"
           />
-        </motion.div>
-      </BentoGrid>
+        </div>
 
-      {/* Tournament Cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        <BentoCard
-          span={12}
-          title="Spillere i turnering"
-          subtitle={`${plans.length} spillerplan${plans.length !== 1 ? "er" : ""}`}
-          icon={Trophy}
-          variant="glass"
-        >
+        {/* Tournament Cards */}
+        <div className="hg-card overflow-hidden">
+          <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
+            <h3 className="hg-section-title">Spillere i turnering</h3>
+            <span className="text-sm text-[var(--hg-text-muted)]">
+              {plans.length} spillerplan{plans.length !== 1 ? "er" : ""}
+            </span>
+          </div>
+
           {plans.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-[var(--color-grey-100)] flex items-center justify-center mb-4">
-                <Trophy className="w-8 h-8 text-[var(--color-grey-400)]" />
+              <div className="w-16 h-16 rounded-2xl bg-[var(--hg-surface-raised)] flex items-center justify-center mb-4">
+                <Trophy className="w-8 h-8 text-[var(--hg-text-muted)]" />
               </div>
-              <p className="text-sm text-[var(--color-grey-500)]">
+              <p className="text-sm text-[var(--hg-text-muted)]">
                 Ingen spillere i turnering denne uken
               </p>
             </div>
           ) : (
-            <div className="space-y-8">
+            <div className="p-4 space-y-8">
               {Array.from(byTournament.values()).map(({ tournament, plans: tournamentPlans }, index) => (
                 <motion.div
                   key={tournament.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 * index }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
                   {/* Tournament Header */}
-                  <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[var(--color-grey-200)]/50">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                      <Calendar className="w-5 h-5 text-white" />
+                  <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[var(--hg-border)]">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--hg-primary)] to-[var(--hg-primary-muted)] flex items-center justify-center">
+                      <Calendar className="w-5 h-5 text-[var(--hg-bg)]" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-[var(--color-grey-900)] truncate">
+                      <h3 className="font-semibold text-[var(--hg-text)] truncate">
                         {tournament.name}
                       </h3>
-                      <p className="text-xs text-[var(--color-grey-500)]">
+                      <p className="text-xs text-[var(--hg-text-muted)]">
                         {format(new Date(tournament.startDate), "EEEE d. MMMM", { locale: nb })}
                       </p>
                     </div>
-                    <AppleBadge variant="neutral" size="md">
+                    <span className="text-xs px-2 py-1 rounded-full bg-[var(--hg-surface-raised)] text-[var(--hg-text-muted)]">
                       {tournamentPlans.length} spiller{tournamentPlans.length !== 1 ? "e" : ""}
-                    </AppleBadge>
+                    </span>
                   </div>
 
                   {/* Players List */}
-                  <div className="grid gap-3">
-                    {tournamentPlans.map((plan, playerIndex) => (
-                      <motion.div
-                        key={plan.id}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: 0.05 * playerIndex }}
-                      >
-                        <AppleCard
-                          variant="solid"
-                          padding="sm"
-                          hover
-                          className="!rounded-xl"
+                  <div className="space-y-3">
+                    {tournamentPlans.map((plan) => {
+                      const planLevel = PLAN_LEVEL_CONFIG[plan.planLevel] || { label: plan.planLevel, color: "#86868B" };
+                      const goalType = GOAL_TYPE_CONFIG[plan.goalType] || { label: plan.goalType, color: "#86868B" };
+                      
+                      return (
+                        <div
+                          key={plan.id}
+                          className="hg-card p-3 flex items-center gap-4"
                         >
-                          <div className="flex items-center gap-4">
-                            {/* Avatar */}
-                            {plan.student.image ? (
-                              <Image
-                                src={plan.student.image}
-                                alt=""
-                                width={44}
-                                height={44}
-                                className="w-11 h-11 rounded-xl object-cover flex-shrink-0 ring-2 ring-white shadow-md"
-                              />
-                            ) : (
-                              <div
-                                className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0 ring-2 ring-white shadow-md"
-                                style={{
-                                  background:
-                                    "linear-gradient(135deg, var(--color-grey-400) 0%, var(--color-grey-900) 100%)",
-                                }}
-                              >
-                                {plan.student.name?.charAt(0) ?? "?"}
-                              </div>
-                            )}
+                          {/* Avatar */}
+                          {plan.student.image ? (
+                            <Image
+                              src={plan.student.image}
+                              alt=""
+                              width={44}
+                              height={44}
+                              className="w-11 h-11 rounded-xl object-cover ring-2 ring-[var(--hg-surface-raised)]"
+                            />
+                          ) : (
+                            <div className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold text-[var(--hg-text)] bg-[var(--hg-surface-raised)]">
+                              {plan.student.name?.charAt(0) ?? "?"}
+                            </div>
+                          )}
 
-                            {/* Player Info */}
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-semibold text-[var(--color-grey-900)] truncate">
-                                {plan.student.name ?? "Ukjent spiller"}
+                          {/* Player Info */}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-[var(--hg-text)] truncate">
+                              {plan.student.name ?? "Ukjent spiller"}
+                            </p>
+                            {plan.notes && (
+                              <p className="text-xs text-[var(--hg-text-muted)] italic truncate mt-0.5">
+                                {plan.notes}
                               </p>
-                              {plan.notes && (
-                                <p className="text-xs text-[var(--color-grey-500)] italic line-clamp-1 mt-0.5">
-                                  {plan.notes}
-                                </p>
-                              )}
-                            </div>
-
-                            {/* Badges */}
-                            <div className="flex items-center gap-2 flex-shrink-0">
-                              <AppleBadge
-                                variant={plan.isRegistered ? "success" : "error"}
-                                size="sm"
-                                dot
-                              >
-                                {plan.isRegistered ? "Pameldt" : "Ikke pameldt"}
-                              </AppleBadge>
-                              <AppleBadge variant="dark" size="sm">
-                                {PLAN_LEVEL_CONFIG[plan.planLevel as PlanLevel]?.label}
-                              </AppleBadge>
-                              <GoalTypeBadge goalType={plan.goalType as GoalType} size="sm" />
-                            </div>
+                            )}
                           </div>
-                        </AppleCard>
-                      </motion.div>
-                    ))}
+
+                          {/* Badges */}
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <span className={cn(
+                              "text-xs px-2 py-0.5 rounded-full",
+                              plan.isRegistered 
+                                ? "text-[var(--hg-success)] bg-[var(--hg-success)]/10" 
+                                : "text-[var(--hg-error)] bg-[var(--hg-error)]/10"
+                            )}>
+                              {plan.isRegistered ? "Påmeldt" : "Ikke påmeldt"}
+                            </span>
+                            <span 
+                              className="text-xs px-2 py-0.5 rounded-full text-[var(--hg-bg)]"
+                              style={{ backgroundColor: planLevel.color }}
+                            >
+                              {planLevel.label}
+                            </span>
+                            <span 
+                              className="text-xs px-2 py-0.5 rounded-full text-[var(--hg-bg)]"
+                              style={{ backgroundColor: goalType.color }}
+                            >
+                              {goalType.label}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </motion.div>
               ))}
             </div>
           )}
-        </BentoCard>
-      </motion.div>
-    </div>
+        </div>
+      </div>
+    </>
   );
 }

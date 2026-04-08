@@ -101,7 +101,7 @@ export function SessionView({
       {onBack && (
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-sm text-[#737373] hover:text-white transition-colors"
+          className="flex items-center gap-2 text-sm text-[#6b7366] hover:text-[#1c1c16] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Tilbake til treningsplan
@@ -123,8 +123,8 @@ export function SessionView({
         {warmupExercises.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-medium text-[#737373] uppercase">Oppvarming</h3>
-              <span className="text-xs text-[#525252]">{warmupExercises.length} ovelser</span>
+              <h3 className="text-sm font-medium text-[#6b7366] uppercase">Oppvarming</h3>
+              <span className="text-xs text-[#8a9385]">{warmupExercises.length} ovelser</span>
             </div>
             <div className="space-y-2">
               {warmupExercises.map((exercise) => {
@@ -147,8 +147,8 @@ export function SessionView({
         {/* Main block */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-medium text-[#737373] uppercase">Hovedblokk</h3>
-            <span className="text-xs text-[#525252]">{mainExercises.length} ovelser</span>
+            <h3 className="text-sm font-medium text-[#6b7366] uppercase">Hovedblokk</h3>
+            <span className="text-xs text-[#8a9385]">{mainExercises.length} ovelser</span>
           </div>
           <div className="space-y-2">
             {mainExercises.map((exercise) => {
@@ -170,7 +170,7 @@ export function SessionView({
           {editable && onAddExercise && (
             <button
               onClick={onAddExercise}
-              className="mt-3 w-full py-3 rounded-lg border border-dashed border-[#333] text-[#737373] hover:border-[var(--color-grey-900)] hover:text-[var(--color-grey-900)] transition-colors flex items-center justify-center gap-2"
+              className="mt-3 w-full py-3 rounded-xl border-2 border-dashed border-[#c2c9bb]/50 text-[#6b7366] hover:border-[#154212] hover:text-[#154212] transition-colors flex items-center justify-center gap-2"
             >
               <Plus className="w-4 h-4" />
               Legg til ovelse
@@ -182,8 +182,8 @@ export function SessionView({
         {cooldownExercises.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-medium text-[#737373] uppercase">Avslutning</h3>
-              <span className="text-xs text-[#525252]">{cooldownExercises.length} ovelser</span>
+              <h3 className="text-sm font-medium text-[#6b7366] uppercase">Avslutning</h3>
+              <span className="text-xs text-[#8a9385]">{cooldownExercises.length} ovelser</span>
             </div>
             <div className="space-y-2">
               {cooldownExercises.map((exercise) => {
@@ -206,10 +206,10 @@ export function SessionView({
 
       {/* Bottom actions */}
       {isActive && (
-        <div className="flex items-center justify-between p-4 rounded-lg bg-[#1a1a1a] border border-[#333]">
+        <div className="flex items-center justify-between p-4 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/50">
           <button
             onClick={handleResetSession}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-[#737373] hover:text-white transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-[#6b7366] hover:text-[#1c1c16] hover:bg-white transition-colors"
           >
             <RotateCcw className="w-4 h-4" />
             Nullstill
@@ -217,11 +217,11 @@ export function SessionView({
 
           <div className="flex items-center gap-3">
             {isSaving && (
-              <span className="text-sm text-[#737373]">Lagrer...</span>
+              <span className="text-sm text-[#8a9385]">Lagrer...</span>
             )}
 
             {completedCount === totalExercises && (
-              <div className="flex items-center gap-2 text-[var(--color-success)]">
+              <div className="flex items-center gap-2 text-[#22c55e]">
                 <span className="text-sm font-medium">Okt fullfort!</span>
               </div>
             )}
@@ -230,7 +230,7 @@ export function SessionView({
               <button
                 onClick={() => onSaveProgress(exercises)}
                 disabled={isSaving}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-black)] text-white font-medium hover:bg-[var(--color-grey-900)] transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#154212] text-white font-medium hover:bg-[#0d2e0c] transition-colors disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
                 Lagre

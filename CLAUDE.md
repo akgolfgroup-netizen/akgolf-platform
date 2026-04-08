@@ -253,6 +253,54 @@ PostgreSQL via Prisma med `@prisma/adapter-pg`. Nøkkelmodeller:
 
 **VIKTIG:** Prisma-relasjoner bruker PascalCase (f.eks. `User`, `CoachingPackage`, ikke `user`, `package`). Se gotchas.md #29.
 
+### Booking System (Validert & Testet)
+
+**MÅL: 100% pålitelighet - ingen dobbeltbookings**
+
+Systemet har 3 lag med beskyttelse:
+
+1. **Application Layer** (`lib/portal/booking/validation.ts`)
+   - `validateBooking()` - Komplett validering før DB
+   - Sjekker tidsbegrensninger, tilgjengelighet, kvoter
+
+2. **Locking Layer** (`lib/portal/booking/conflict-check.ts`)
+   - `acquireBookingLock()` - Pessimistisk låsing (5 minutter)
+   - `checkCompleteConflict()` - Race condition beskyttelse
+
+3. **Database Layer** (`prisma/migrations/20250406_booking_validation/migration.sql`)
+   - PostgreSQL triggers: `prevent_double_booking_insert/update`
+   - `BookingLock` tabell for midlertidige låser
+   - `booking_conflicts_view` for monitorering
+
+**API:**
+- `POST /api/booking/create` - Opprett booking med låsing
+- `GET /api/health/booking` - Systemhelse + dobbeltbooking-sjekk
+
+**Testing:**
+- Unit-tester: `__tests__/booking/validation.test.ts`
+- Integrasjonstester: `__tests__/booking/api.test.ts` (concurrent requests)
+- E2E-tester: `e2e/booking.spec.ts`
+
+**Bruk:**
+```typescript
+import { validateBooking, acquireBookingLock } from "@/lib/portal/booking";
+
+// 1. Valider
+const validation = await validateBooking({ instructorId, startTime, serviceTypeId });
+if (!validation.valid) return { error: validation.errors };
+
+// 2. Lås
+const lock = await acquireBookingLock(instructorId, startTime, endTime, sessionId);
+if (!lock.success) return { error: lock.error };
+
+try {
+  // 3. Opprett booking
+  const booking = await prisma.booking.create({...});
+} finally {
+  await releaseBookingLock(lock.lockId);
+}
+```
+
 ## Authentication
 
 Supabase Auth (ingen NextAuth/Auth.js):

@@ -6,21 +6,31 @@ import { ServiceCategory } from "@prisma/client";
 /**
  * Oppdaterer ServiceType-tabellen med produkter fra AK Golf Academy 2026 konsept.
  *
- * Oppdatert: 2026-03-26
+ * Oppdatert: 2026-04-07
  *
- * Produkter:
- * - AK Start (onboarding): 3 000 kr, 3×20 min over 3 uker + 30d portal
+ * KJERNETJENESTER (7 stk + onboarding + portal):
+ * 
+ * Onboarding:
+ * - AK Start: 3 000 kr, 3×20 min over 3 uker + 30d portal
  * - Foundation Test: 995 kr, 50 min intro (refunderbar ved abo-kjøp)
+ *
+ * Abonnement (Stripe):
+ * - Performance Pro: 2 000 kr/mnd, 4×20 min
+ * - Performance: 1 600 kr/mnd, 2×20 min
+ * - Spillerportal: 299 kr/mnd (kun tilgang til portalen, ingen coaching)
+ *
+ * Drop-in/Flex (48t booking-vindu):
  * - Flex 50 Solo: 1 500 kr, 50 min
- * - Flex 50 Duo: 850 kr/pers (1 700 kr total), 50 min
+ * - Flex 50 Duo: 1 700 kr (850×2), 50 min
  * - Flex 90 Solo: 2 500 kr, 90 min
- * - Flex 90 Duo: 1 400 kr/pers (2 800 kr total), 90 min
- * - On-Course 9: 3 000 kr/spiller, 9 hull (~2.5 timer) — Anders
- * - On-Course Par 3: 500 kr/spiller — Markus
+ * - Flex 90 Duo: 2 800 kr (1 400×2), 90 min
  * - Markus 20 min: 300 kr, 20 min
  *
- * Booking-vindu: Drop-in/Flex har 48t vindu (minNoticeHours: 48)
- * Abonnement (Performance Pro/Performance) håndteres av Stripe.
+ * Playing Lessons:
+ * - On-Course 9: 3 000 kr/spiller, 9 hull (~2.5 timer) — Anders
+ * - On-Course Par 3: 500 kr/spiller — Markus
+ *
+ * NOTE: Gruppe- og juniortjenester er midlertidig deaktivert.
  */
 
 const NEW_SERVICE_TYPES = [
@@ -163,142 +173,22 @@ const NEW_SERVICE_TYPES = [
     minNoticeHours: 12,
     maxAdvanceDays: 30,
   },
-  // ─── Gruppekonsepter (krever lengre planleggingstid) ───
+
+  // ─── Spillerportal (digital tilgang) ───
   {
-    name: "Gameday",
+    name: "Spillerportal",
     description:
-      "Full dag på banen med coaching, banemanagement og konkurranse. Inkluderer Trackman-analyse, lunsj og premiering. Maks 12 deltakere.",
-    category: ServiceCategory.GROUP,
-    duration: 240, // 3-5 timer
-    price: 2500, // Per person
-    maxStudents: 12,
+      "Månedlig tilgang til spillerportalen. Se din spillerprofil, TrackMan-statistikk, svingvideoer, utviklingsplan og kommunikasjon med coach. Ingen coaching inkludert.",
+    category: ServiceCategory.DIGITAL,
+    duration: 0, // Ingen fysisk tid
+    price: 299, // Per måned
+    maxStudents: 1,
     isActive: true,
     isPublic: true,
-    sortOrder: 40,
+    sortOrder: 60,
     vatRate: 0,
-    minNoticeHours: 168, // 7 dager
-    maxAdvanceDays: 90,
-  },
-  {
-    name: "Første Sesong",
-    description:
-      "8-ukers program for nybegynnere. 90 min coaching hver uke, grunnleggende teknikk, kortspill, etikette og baneintro. Maks 12 deltakere per kull.",
-    category: ServiceCategory.VTG_COURSE,
-    duration: 90, // Per økt
-    price: 4500, // Totalpris for hele kurset
-    maxStudents: 12,
-    isActive: true,
-    isPublic: true,
-    sortOrder: 41,
-    vatRate: 0,
-    minNoticeHours: 336, // 14 dager
-    maxAdvanceDays: 120,
-  },
-  {
-    name: "AK 9",
-    description:
-      "Ukentlig sosial golfrunde med coaching-elementer. 9 hull på Par 3-banen med Markus. Lavterskel og hyggelig. Maks 16 deltakere.",
-    category: ServiceCategory.GROUP,
-    duration: 120,
-    price: 250, // Per kveld
-    maxStudents: 16,
-    isActive: true,
-    isPublic: true,
-    sortOrder: 42,
-    vatRate: 0,
-    minNoticeHours: 48, // 2 dager
-    maxAdvanceDays: 30,
-  },
-  {
-    name: "After Work",
-    description:
-      "3 timers golfopplevelse etter jobb. Driving range, kortspill og avslappet sosialt samvær. Perfekt for kollegaer eller vennegrupper. Maks 24 deltakere.",
-    category: ServiceCategory.GROUP,
-    duration: 180,
-    price: 500, // Per person
-    maxStudents: 24,
-    isActive: true,
-    isPublic: true,
-    sortOrder: 43,
-    vatRate: 0,
-    minNoticeHours: 168, // 7 dager
-    maxAdvanceDays: 60,
-  },
-  {
-    name: "Bedriftsgolf",
-    description:
-      "Premium bedriftsevent med coaching, konkurranse og servering. Tilpasset opplegg for firmaet ditt. Maks 16 deltakere.",
-    category: ServiceCategory.GROUP,
-    duration: 180,
-    price: 2500, // Per person
-    maxStudents: 16,
-    isActive: true,
-    isPublic: true,
-    sortOrder: 44,
-    vatRate: 0,
-    minNoticeHours: 336, // 14 dager
-    maxAdvanceDays: 90,
-  },
-  {
-    name: "Vintertrening",
-    description:
-      "6-ukers vinterprogram på innendørs simulator. 90 min coaching per uke med Trackman-analyse og øvelser. Maks 8 deltakere.",
-    category: ServiceCategory.SIMULATOR,
-    duration: 90, // Per økt
-    price: 3500, // Totalpris for hele kurset
-    maxStudents: 8,
-    isActive: true,
-    isPublic: true,
-    sortOrder: 45,
-    vatRate: 0,
-    minNoticeHours: 336, // 14 dager
-    maxAdvanceDays: 90,
-  },
-  // ─── Junior Academy ───
-  {
-    name: "Junior Academy",
-    description:
-      "Månedsbasert treningsprogram for juniorer (13-18 år) som satser. Ukentlig coaching, konkurranseforberedelse og treningsplan. 12 mnd binding.",
-    category: ServiceCategory.GROUP,
-    duration: 90, // Per økt
-    price: 2500, // Per måned
-    maxStudents: 12,
-    isActive: true,
-    isPublic: true,
-    sortOrder: 50,
-    vatRate: 0,
-    minNoticeHours: 0, // Abonnement
+    minNoticeHours: 0, // Umiddelbar tilgang
     maxAdvanceDays: 0,
-  },
-  {
-    name: "Junior Prospect",
-    description:
-      "Utviklingsprogram for yngre juniorer (10-14 år). Fokus på teknikk, motorikk og glede ved golf. Ukentlig trening i grupper. 12 mnd binding.",
-    category: ServiceCategory.GROUP,
-    duration: 60, // Per økt
-    price: 2000, // Per måned
-    maxStudents: 16,
-    isActive: true,
-    isPublic: true,
-    sortOrder: 51,
-    vatRate: 0,
-    minNoticeHours: 0,
-    maxAdvanceDays: 0,
-  },
-  {
-    name: "Junior Camp",
-    description:
-      "Intensiv golfcamp for juniorer i ferier. 4 dager med coaching, spill og konkurranser. Inkluderer lunsj og premier.",
-    category: ServiceCategory.GROUP,
-    duration: 300, // Per dag (5 timer)
-    price: 4500, // Totalpris
-    maxStudents: 20,
-    isActive: true,
-    isPublic: true,
-    sortOrder: 52,
-    vatRate: 0,
-    minNoticeHours: 168, // 7 dager
-    maxAdvanceDays: 90,
   },
 ];
 

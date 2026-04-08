@@ -1,5 +1,4 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { Topbar } from "@/components/portal/layout/topbar";
 import { prisma } from "@/lib/portal/prisma";
 import { getUserModuleSlugs } from "@/lib/portal/access";
 import { ApperClient } from "./apper-client";
@@ -65,18 +64,20 @@ export default async function ApperPage() {
   }));
 
   return (
-    <div>
-      <Topbar title="Apper og Abonnement" />
-      <div className="p-8 max-w-5xl">
-        <ApperClient
-          modules={modules}
-          bundles={transformedBundles}
-          userModules={userModules}
-          subscriptions={transformedSubscriptions}
-          hasStripeCustomer={!!user.stripeCustomerId}
-          currentTier={pricingTier}
-        />
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-2xl font-bold text-[#1c1c16]">Apper og Abonnement</h1>
+        <p className="text-sm text-[#6b7366] mt-1">Få tilgang til avanserte verktøy for å forbedre golfen din</p>
       </div>
+
+      <ApperClient
+        modules={modules}
+        bundles={transformedBundles}
+        userModules={userModules}
+        subscriptions={transformedSubscriptions}
+        hasStripeCustomer={!!user.stripeCustomerId}
+        currentTier={pricingTier}
+      />
     </div>
   );
 }

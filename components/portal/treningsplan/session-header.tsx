@@ -48,23 +48,23 @@ export function SessionHeader({
   const progress = totalExercises > 0 ? (completedCount / totalExercises) * 100 : 0;
 
   return (
-    <div className="rounded-xl border border-[#333] bg-[#1a1a1a] overflow-hidden">
+    <div className="rounded-2xl border border-[#c2c9bb]/50 bg-white overflow-hidden shadow-sm">
       {/* Top bar with title and action */}
-      <div className="flex items-center justify-between p-4 border-b border-[#333]">
+      <div className="flex items-center justify-between p-5 border-b border-[#c2c9bb]/30">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <h2 className="text-lg font-semibold text-white">{session.title}</h2>
+            <h2 className="text-lg font-semibold text-[#1c1c16]">{session.title}</h2>
             <AreaCategoryBadge category={areaData.category} />
           </div>
           {session.description && (
-            <p className="text-sm text-[#737373]">{session.description}</p>
+            <p className="text-sm text-[#6b7366]">{session.description}</p>
           )}
         </div>
 
         {onStartSession && !isActive && (
           <button
             onClick={onStartSession}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-black)] text-white font-medium hover:bg-[var(--color-grey-900)] transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#d2f000] text-[#154212] font-semibold hover:bg-[#b8d600] transition-colors"
           >
             <Play className="w-4 h-4" />
             Start okt
@@ -74,16 +74,16 @@ export function SessionHeader({
         {isActive && (
           <div className="flex items-center gap-3">
             <div className="text-right">
-              <p className="text-sm text-[#737373]">Fremgang</p>
-              <p className="text-lg font-semibold text-white">
+              <p className="text-sm text-[#6b7366]">Fremgang</p>
+              <p className="text-lg font-semibold text-[#1c1c16]">
                 {completedCount}/{totalExercises}
               </p>
             </div>
-            <div className="w-12 h-12 rounded-full bg-[#262626] flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-[#f7f3ea] flex items-center justify-center">
               {progress === 100 ? (
-                <CheckCircle className="w-6 h-6 text-[var(--color-success)]" />
+                <CheckCircle className="w-6 h-6 text-[#22c55e]" />
               ) : (
-                <span className="text-sm font-semibold text-[var(--color-grey-900)]">{Math.round(progress)}%</span>
+                <span className="text-sm font-semibold text-[#154212]">{Math.round(progress)}%</span>
               )}
             </div>
           </div>
@@ -91,20 +91,20 @@ export function SessionHeader({
       </div>
 
       {/* Session info grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-5">
         {/* Objective */}
         <div className="col-span-2">
           <div className="flex items-center gap-2 mb-2">
-            <Target className="w-4 h-4 text-[var(--color-grey-900)]" />
-            <span className="text-[11px] text-[#737373] uppercase font-medium">Malsetning</span>
+            <Target className="w-4 h-4 text-[#154212]" />
+            <span className="text-[11px] text-[#6b7366] uppercase font-medium">Malsetning</span>
           </div>
-          <p className="text-sm text-white">{session.objective}</p>
+          <p className="text-sm text-[#1c1c16]">{session.objective}</p>
           {session.focusPoints.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mt-2">
               {session.focusPoints.map((point, idx) => (
                 <span
                   key={idx}
-                  className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-[#262626] text-[#A3A3A3]"
+                  className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-[#f7f3ea] text-[#42493e]"
                 >
                   {point}
                 </span>
@@ -116,10 +116,10 @@ export function SessionHeader({
         {/* Duration & Intensity */}
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Clock className="w-4 h-4 text-[var(--color-grey-900)]" />
-            <span className="text-[11px] text-[#737373] uppercase font-medium">Varighet</span>
+            <Clock className="w-4 h-4 text-[#154212]" />
+            <span className="text-[11px] text-[#6b7366] uppercase font-medium">Varighet</span>
           </div>
-          <p className="text-sm text-white">{session.durationMinutes} minutter</p>
+          <p className="text-sm text-[#1c1c16]">{session.durationMinutes} minutter</p>
           <div className="flex items-center gap-1.5 mt-1">
             <Zap className="w-3 h-3" style={{ color: intensity.color }} />
             <span className="text-[11px]" style={{ color: intensity.color }}>
@@ -131,20 +131,20 @@ export function SessionHeader({
         {/* Equipment */}
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Wrench className="w-4 h-4 text-[var(--color-grey-900)]" />
-            <span className="text-[11px] text-[#737373] uppercase font-medium">Hjelpemidler</span>
+            <Wrench className="w-4 h-4 text-[#154212]" />
+            <span className="text-[11px] text-[#6b7366] uppercase font-medium">Hjelpemidler</span>
           </div>
           <div className="flex flex-wrap gap-1">
             {session.equipment.slice(0, 3).map((item, idx) => (
               <span
                 key={idx}
-                className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-[#262626] text-[#A3A3A3]"
+                className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-[#f7f3ea] text-[#42493e]"
               >
                 {item}
               </span>
             ))}
             {session.equipment.length > 3 && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-[#262626] text-[#737373]">
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-[#f7f3ea] text-[#6b7366]">
                 +{session.equipment.length - 3}
               </span>
             )}
@@ -153,7 +153,7 @@ export function SessionHeader({
       </div>
 
       {/* AK-formelen section */}
-      <div className="flex items-center justify-between p-4 border-t border-[#333] bg-[#0f0f0f]">
+      <div className="flex items-center justify-between p-5 border-t border-[#c2c9bb]/30 bg-[#fdf9f0]">
         <div className="flex items-center gap-4">
           {/* Pyramid visualization */}
           <div className="hidden sm:block w-24">
@@ -162,7 +162,7 @@ export function SessionHeader({
 
           {/* Session ID display */}
           <div>
-            <p className="text-[11px] text-[#737373] uppercase mb-1.5">AK-formel</p>
+            <p className="text-[11px] text-[#6b7366] uppercase mb-1.5">AK-formel</p>
             <SessionIdDisplay
               pyramid={session.primaryPyramid}
               area={session.primaryArea}
@@ -173,12 +173,12 @@ export function SessionHeader({
           {/* Secondary areas */}
           {session.secondaryAreas && session.secondaryAreas.length > 0 && (
             <div className="hidden md:block">
-              <p className="text-[11px] text-[#737373] uppercase mb-1.5">Sekundaere omrader</p>
+              <p className="text-[11px] text-[#6b7366] uppercase mb-1.5">Sekundaere omrader</p>
               <div className="flex gap-1">
                 {session.secondaryAreas.map((area) => (
                   <span
                     key={area}
-                    className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-[#262626] text-[#737373]"
+                    className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-white border border-[#c2c9bb]/50 text-[#6b7366]"
                   >
                     {TRAINING_AREAS[area].name}
                   </span>
@@ -196,9 +196,9 @@ export function SessionHeader({
 
       {/* Progress bar */}
       {isActive && (
-        <div className="h-1 bg-[#262626]">
+        <div className="h-1 bg-[#f7f3ea]">
           <div
-            className="h-full bg-[var(--color-grey-900)] transition-[width] duration-300"
+            className="h-full bg-[#d2f000] transition-[width] duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -224,21 +224,21 @@ export function SessionCardCompact({
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left p-4 rounded-lg border transition-[border-color,background-color] ${
+      className={`w-full text-left p-4 rounded-xl border transition-all ${
         isCompleted
-          ? "bg-[var(--color-success)]/5 border-[var(--color-success)]/30"
-          : "bg-[#1a1a1a] border-[#333] hover:border-[#444]"
+          ? "bg-[#22c55e]/5 border-[#22c55e]/30"
+          : "bg-white border-[#c2c9bb]/50 hover:border-[#c2c9bb] hover:shadow-sm"
       }`}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           {isCompleted ? (
-            <div className="w-10 h-10 rounded-lg bg-[var(--color-success)]/20 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-[var(--color-success)]" />
+            <div className="w-10 h-10 rounded-xl bg-[#22c55e]/20 flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-[#22c55e]" />
             </div>
           ) : (
             <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center"
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{ backgroundColor: `${intensity.color}20` }}
             >
               <Target className="w-5 h-5" style={{ color: intensity.color }} />
@@ -247,7 +247,7 @@ export function SessionCardCompact({
 
           <div>
             <div className="flex items-center gap-2">
-              <h3 className={`font-medium ${isCompleted ? "text-[#737373]" : "text-white"}`}>
+              <h3 className={`font-medium ${isCompleted ? "text-[#6b7366]" : "text-[#1c1c16]"}`}>
                 {session.title}
               </h3>
               <SessionIdDisplay
@@ -256,13 +256,13 @@ export function SessionCardCompact({
                 compact
               />
             </div>
-            <p className="text-sm text-[#737373]">
+            <p className="text-sm text-[#6b7366]">
               {session.durationMinutes} min - {intensity.name} intensitet
             </p>
           </div>
         </div>
 
-        <ChevronRight className="w-5 h-5 text-[#737373]" />
+        <ChevronRight className="w-5 h-5 text-[#c2c9bb]" />
       </div>
     </button>
   );

@@ -22,15 +22,16 @@ import {
   ClipboardCheck,
   Dumbbell,
   X,
-  ChevronRight,
   TrendingUp,
   MapPin,
+  Bell,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
 import type { PortalUser } from "@/lib/portal/auth";
 import { useSidebar } from "./sidebar-context";
 import { AKLogo } from "@/components/website/AKLogo";
+import { NotificationBell } from "./notification-bell";
 
 const navItems = [
   { href: "/portal", label: "Oversikt", icon: LayoutDashboard },
@@ -61,6 +62,7 @@ const staffItems = [
   { href: "/portal/admin/analytics", label: "Analyse", icon: TrendingUp },
   { href: "/portal/admin/denne-uken", label: "Denne uken", icon: CalendarCheck },
   { href: "/portal/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
+  { href: "/portal/admin/notifications", label: "Notifikasjoner", icon: Bell },
 ];
 
 interface SidebarProps {
@@ -89,17 +91,17 @@ function NavLink({
           className={cn(
             "flex items-center gap-3 px-4 py-2 mx-3 rounded-lg text-[13px] font-medium transition-[background-color,color] duration-200",
             active
-              ? "bg-[#F5F5F7] text-[#1D1D1F] font-semibold"
-              : "text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-[#F5F5F7]"
+              ? "bg-[#f7f3ea] text-[#154212] font-semibold"
+              : "text-[#6b7366] hover:text-[#1c1c16] hover:bg-[#f7f3ea]"
           )}
         >
           <div className={cn(
             "w-[18px] h-[18px] rounded-[5px] flex items-center justify-center transition-colors shrink-0",
-            active ? "bg-[#1D1D1F]" : ""
+            active ? "bg-[#154212]" : ""
           )}>
             <item.icon className={cn(
               "w-3.5 h-3.5 transition-colors",
-              active ? "text-white" : "text-[#86868B] group-hover:text-[#1D1D1F]"
+              active ? "text-white" : "text-[#8a9385] group-hover:text-[#154212]"
             )} />
           </div>
 
@@ -113,7 +115,7 @@ function NavLink({
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
     <div className="px-6 pt-6 pb-2">
-      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D2D2D7]">
+      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#c2c9bb]">
         {children}
       </p>
     </div>
@@ -166,10 +168,10 @@ function SidebarContent({
               <motion.div
                 whileHover={{ x: 4 }}
                 transition={{ duration: 0.15 }}
-                className="flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium text-[#6E6E73] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10 transition-[background-color,color] duration-200"
+                className="flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium text-[#6b7366] hover:text-[#ef4444] hover:bg-[#ef4444]/10 transition-[background-color,color] duration-200"
               >
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#E8E8ED] group-hover:bg-[var(--color-error)]/20 transition-colors">
-                  <LogOut className="w-4 h-4 text-[#86868B] group-hover:text-[var(--color-error)] transition-colors" />
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#f7f3ea] group-hover:bg-[#ef4444]/20 transition-colors">
+                  <LogOut className="w-4 h-4 text-[#8a9385] group-hover:text-[#ef4444] transition-colors" />
                 </div>
                 <span>Logg ut</span>
               </motion.div>
@@ -191,7 +193,7 @@ function SidebarContent({
       </nav>
 
       {/* User footer */}
-      <div className="p-4 mx-3 mb-3 rounded-xl bg-[#F5F5F7] border border-[#E8E8ED]">
+      <div className="p-4 mx-3 mb-3 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/30">
         <div className="flex items-center gap-3">
           <div className="relative">
             {user.image ? (
@@ -201,7 +203,7 @@ function SidebarContent({
                 className="w-10 h-10 rounded-full object-cover"
               />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-[#1D1D1F] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-[#154212] flex items-center justify-center">
                 <span className="text-sm font-semibold text-white">
                   {(user.name ?? "S")[0].toUpperCase()}
                 </span>
@@ -209,10 +211,10 @@ function SidebarContent({
             )}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-[#1D1D1F] truncate">
+            <p className="text-sm font-medium text-[#1c1c16] truncate">
               {user.name ?? "Spiller"}
             </p>
-            <p className="text-xs font-medium text-[var(--color-brand)] truncate">
+            <p className="text-xs font-medium text-[#154212] truncate">
               {user.subscriptionTier ?? "Academy"}
             </p>
           </div>
@@ -239,20 +241,23 @@ export function PremiumSidebar({ user }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-[220px] hidden lg:flex flex-col z-20 bg-white border-r border-[#E8E8ED]">
+      <aside className="fixed left-0 top-0 h-full w-[220px] hidden lg:flex flex-col z-20 bg-white border-r border-[#c2c9bb]/30">
         {/* Logo */}
-        <div className="px-5 py-4 border-b border-[#E8E8ED]">
-          <Link href="/portal" className="flex items-center gap-3 group">
-            <AKLogo variant="black" size={32} />
-            <div>
-              <span className="text-[14px] font-bold text-[#1D1D1F] group-hover:text-[#86868B] transition-colors">
-                AK Golf
-              </span>
-              <p className="text-[9px] text-[#86868B] uppercase tracking-wider font-bold">
-                Academy
-              </p>
-            </div>
-          </Link>
+        <div className="px-5 py-4 border-b border-[#c2c9bb]/30">
+          <div className="flex items-center justify-between">
+            <Link href="/portal" className="flex items-center gap-3 group">
+              <AKLogo variant="black" size={32} />
+              <div>
+                <span className="text-[14px] font-bold text-[#1c1c16] group-hover:text-[#154212] transition-colors">
+                  AK Golf
+                </span>
+                <p className="text-[9px] text-[#8a9385] uppercase tracking-wider font-bold">
+                  Academy
+                </p>
+              </div>
+            </Link>
+            <NotificationBell />
+          </div>
         </div>
 
         <SidebarContent
@@ -272,7 +277,7 @@ export function PremiumSidebar({ user }: SidebarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={close}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-[#1c1c16]/40 backdrop-blur-sm z-40 lg:hidden"
             />
             {/* Drawer */}
             <motion.aside
@@ -280,20 +285,20 @@ export function PremiumSidebar({ user }: SidebarProps) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-[#E8E8ED]"
+              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-[#c2c9bb]/30"
             >
               {/* Close button */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[#E8E8ED]">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-[#c2c9bb]/30">
                 <div className="flex items-center gap-3">
                   <AKLogo variant="black" size={32} />
                   <div>
-                    <span className="text-[14px] font-bold text-[#1D1D1F]">AK Golf</span>
-                    <p className="text-[9px] text-[#86868B] uppercase tracking-wider font-bold">Academy</p>
+                    <span className="text-[14px] font-bold text-[#1c1c16]">AK Golf</span>
+                    <p className="text-[9px] text-[#8a9385] uppercase tracking-wider font-bold">Academy</p>
                   </div>
                 </div>
                 <button
                   onClick={close}
-                  className="p-2 rounded-lg text-[#86868B] hover:text-[#1D1D1F] hover:bg-[#F5F5F7] transition-colors cursor-pointer"
+                  className="p-2 rounded-lg text-[#8a9385] hover:text-[#1c1c16] hover:bg-[#f7f3ea] transition-colors cursor-pointer"
                   aria-label="Lukk meny"
                 >
                   <X className="w-5 h-5" />

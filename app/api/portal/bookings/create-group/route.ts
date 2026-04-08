@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
-import { BookingStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
+import { BookingStatus, PaymentMethod, PaymentStatus, Prisma } from "@prisma/client";
 import { addMinutes } from "date-fns";
 import { nanoid } from "nanoid";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { invalidateSlotsCache, invalidateBookingsCache } from "@/lib/portal/booking/cache";
+import { broadcastUpdate } from "@/app/api/portal/bookings/live/route";
+import { logger } from "@/lib/logger";
+import { notifyNewBooking, notifyBookingConfirmed } from "@/lib/portal/notifications/triggers";
 
 interface Participant {
   name: string;
@@ -104,6 +108,7 @@ export async function POST(req: NextRequest) {
     const vatAmount = Math.round((serviceType.price * serviceType.vatRate) / 100);
 
     const booking = await prisma.$transaction(async (tx) => {
+      // Sjekk for eksisterende bookinger med overlappende tid
       const existingBookingsCount = await tx.booking.count({
         where: {
           instructorId,
@@ -116,6 +121,21 @@ export async function POST(req: NextRequest) {
       const remainingSpots = serviceType.maxStudents - existingBookingsCount;
       if (remainingSpots < 1) {
         throw new Error("CAPACITY_FULL");
+      }
+
+      // Sjekk for blokkerte tider
+      const blocked = await tx.blockedTime.findFirst({
+        where: {
+          OR: [{ instructorId }, { instructorId: null }],
+          AND: [
+            { startTime: { lt: end } },
+            { endTime: { gt: start } },
+          ],
+        },
+      });
+
+      if (blocked) {
+        throw new Error("TIME_BLOCKED");
       }
 
       return tx.booking.create({
@@ -146,7 +166,41 @@ export async function POST(req: NextRequest) {
           id: true,
         },
       });
+    }, {
+      isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+      maxWait: 5000,
+      timeout: 10000,
     });
+
+    // Invalider cache og broadcast oppdatering
+    const dateStr = start.toISOString().split("T")[0];
+    
+    await Promise.all([
+      invalidateSlotsCache(instructorId, dateStr),
+      invalidateBookingsCache(instructorId),
+      broadcastUpdate(instructorId, dateStr, "BOOKING_CREATED", {
+        bookingId: booking.id,
+        startTime: start.toISOString(),
+      }),
+    ]);
+
+    // Send notifikasjoner
+    const fullBooking = await prisma.booking.findUnique({
+      where: { id: booking.id },
+      include: {
+        User: { select: { name: true, email: true } },
+        ServiceType: { select: { name: true, duration: true } },
+        Instructor: { select: { User: { select: { name: true } } } },
+        Location: { select: { name: true } },
+      },
+    });
+
+    if (fullBooking) {
+      notifyBookingConfirmed(fullBooking).catch(console.error);
+      notifyNewBooking(fullBooking).catch(console.error);
+    }
+
+    logger.info(`[create-group] Created group booking ${booking.id} for instructor ${instructorId}`);
 
     return NextResponse.json({
       bookingId: booking.id,
@@ -159,6 +213,13 @@ export async function POST(req: NextRequest) {
         { status: 409 }
       );
     }
+    if (error instanceof Error && error.message === "TIME_BLOCKED") {
+      return NextResponse.json(
+        { error: "Tidspunktet er ikke lenger tilgjengelig" },
+        { status: 409 }
+      );
+    }
+    logger.error("[create-group] Error:", error);
     return NextResponse.json(
       { error: "Noe gikk galt. Prøv igjen." },
       { status: 500 }

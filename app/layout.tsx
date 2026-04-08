@@ -20,6 +20,14 @@ export const metadata: Metadata = {
     template: "%s | AK Golf Group",
   },
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+  },
   description:
     "Premium golfutvikling for ambisiøse spillere. Individuell coaching, juniorakademi og teknologiløsninger for golfens fremtid.",
   metadataBase: new URL(SITE_URL),

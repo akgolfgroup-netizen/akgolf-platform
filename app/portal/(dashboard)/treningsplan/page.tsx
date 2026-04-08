@@ -1,12 +1,11 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getActivePlan, getCurrentWeekSessions } from "./actions";
 import { isStaff } from "@/lib/portal/rbac";
-import { Calendar, Sparkles } from "lucide-react";
+import { Calendar, Sparkles, CheckCircle2, Clock, Target } from "lucide-react";
 import { format, startOfISOWeek, addDays, isToday } from "date-fns";
 import { nb } from "date-fns/locale";
 import Link from "next/link";
-import { TrainingCalendar } from "@/components/portal/treningsplan/training-calendar";
-import { ExerciseSidebar } from "@/components/portal/treningsplan/exercise-sidebar";
+import { motion } from "framer-motion";
 
 interface SessionExercise {
   name: string;
@@ -18,11 +17,19 @@ function inferPyramidLevel(focusArea: string | null): "FYS" | "TEK" | "SLAG" | "
   const lower = focusArea.toLowerCase();
   if (["styrke", "kondisjon", "mobilitet", "eksplosivitet", "gym"].some((k) => lower.includes(k))) return "FYS";
   if (["sving", "teknikk", "driver", "jern", "full swing"].some((k) => lower.includes(k))) return "TEK";
-  if (["putting", "putt", "chip", "pitch", "bunker", "naerspill", "approach", "range"].some((k) => lower.includes(k))) return "SLAG";
+  if (["putting", "putt", "chip", "pitch", "bunker", "nærspill", "approach", "range"].some((k) => lower.includes(k))) return "SLAG";
   if (["bane", "strategi", "management", "9 hull", "18 hull", "spill"].some((k) => lower.includes(k))) return "SPILL";
   if (["turnering", "test", "konkurranse", "benchmark"].some((k) => lower.includes(k))) return "TURN";
   return null;
 }
+
+const pyramidConfig = {
+  FYS: { color: "#f59e0b", bg: "bg-[#f59e0b]/10", label: "Fysisk" },
+  TEK: { color: "#3b82f6", bg: "bg-[#3b82f6]/10", label: "Teknikk" },
+  SLAG: { color: "#154212", bg: "bg-[#154212]/10", label: "Slag" },
+  SPILL: { color: "#8b5cf6", bg: "bg-[#8b5cf6]/10", label: "Spill" },
+  TURN: { color: "#1c1c16", bg: "bg-[#1c1c16]/10", label: "Turnering" },
+};
 
 export default async function TreningsplanPage() {
   const user = await requirePortalUser();
@@ -33,106 +40,178 @@ export default async function TreningsplanPage() {
   const now = new Date();
   const weekStart = startOfISOWeek(now);
   const weekNumber = format(now, "w");
-  const weekDates = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 
-  const sessionsByDay = new Map(
-    sessions.map((s) => [s.dayOfWeek, s])
-  );
+  const sessionsByDay = new Map(sessions.map((s) => [s.dayOfWeek, s]));
 
-  const calendarDays = weekDates.map((date, idx) => {
+  const weekDays = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"].map((day, idx) => {
     const dayOfWeek = idx + 1;
     const session = sessionsByDay.get(dayOfWeek);
-    const exercises = session?.exercises
-      ? (session.exercises as unknown as SessionExercise[])
-      : [];
-    const completed = session?.TrainingLog
-      ? session.TrainingLog.length > 0
-      : false;
-
-    const calendarSessions = session
-      ? [
-          {
-            id: session.id,
-            title: session.title,
-            durationMinutes: session.durationMinutes,
-            focusArea: session.focusArea,
-            pyramidLevel: inferPyramidLevel(session.focusArea),
-            completed,
-            exerciseCount: exercises.length,
-          },
-        ]
-      : [];
+    const date = addDays(weekStart, idx);
 
     return {
-      id: session?.id ?? `rest-${dayOfWeek}`,
-      dayName: format(date, "EEE", { locale: nb }).slice(0, 3),
-      dateNum: format(date, "d"),
-      date: format(date, "yyyy-MM-dd"),
+      dayName: day,
+      date,
       isToday: isToday(date),
-      isRest: !session,
-      sessions: calendarSessions,
+      session: session
+        ? {
+            id: session.id,
+            title: session.title,
+            duration: session.durationMinutes,
+            focusArea: session.focusArea,
+            pyramidLevel: inferPyramidLevel(session.focusArea),
+            completed: session.TrainingLog ? session.TrainingLog.length > 0 : false,
+            exercises: (session.exercises as unknown as SessionExercise[]) || [],
+          }
+        : null,
     };
   });
-
-  const weekLabel = `Uke ${weekNumber} \u00B7 ${format(weekStart, "d. MMM", { locale: nb })}\u2013${format(addDays(weekStart, 6), "d. MMM yyyy", { locale: nb })}`;
 
   if (!plan) {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-[28px] font-medium tracking-[-0.02em] text-[#1D1D1F]">
-            Treningsplan
-          </h1>
-          <p className="text-sm text-[#86868B] mt-1">{weekLabel}</p>
+          <h1 className="text-2xl font-bold text-[#1c1c16]">Treningsplan</h1>
+          <p className="text-[#6b7366] mt-1">Uke {weekNumber}</p>
         </div>
 
-        <div className="portal-card text-center py-16">
-          <div className="flex flex-col items-center">
-            <div className="w-16 h-16 rounded-2xl bg-[#F5F5F7] flex items-center justify-center mb-5">
-              <Calendar className="w-8 h-8 text-[#D2D2D7]" />
-            </div>
-            <h2 className="text-lg font-semibold text-[#1D1D1F] mb-2">
-              Din treningsplan er tom
-            </h2>
-            <p className="text-sm text-[#86868B] max-w-md mb-6">
-              {canGenerate
-                ? "Dra ovelser fra banken til hoyre, eller la AI lage en plan for deg."
-                : "Kontakt din coach for a fa en personlig treningsplan."}
-            </p>
-            {canGenerate && (
-              <button className="flex items-center gap-2 px-5 py-3 rounded-full bg-[#AF52DE] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
-                <Sparkles className="w-4 h-4" />
-                Generer plan med AI
-              </button>
-            )}
+        <div className="bg-white rounded-3xl p-12 text-center border border-[#c2c9bb]/50">
+          <div className="w-16 h-16 rounded-2xl bg-[#f7f3ea] flex items-center justify-center mx-auto mb-5">
+            <Calendar className="w-8 h-8 text-[#c2c9bb]" />
           </div>
+          <h2 className="text-lg font-semibold text-[#1c1c16] mb-2">
+            Din treningsplan er tom
+          </h2>
+          <p className="text-sm text-[#6b7366] max-w-md mx-auto mb-6">
+            {canGenerate
+              ? "Dra øvelser fra banken, eller la AI lage en plan for deg."
+              : "Kontakt din coach for å få en personlig treningsplan."}
+          </p>
+          {canGenerate && (
+            <button className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#8b5cf6] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+              <Sparkles className="w-4 h-4" />
+              Generer plan med AI
+            </button>
+          )}
         </div>
       </div>
     );
   }
 
-  // Find period info from current week
-  const currentWeek = plan.TrainingPlanWeek.find((w) => {
-    const ws = new Date(w.weekStart);
-    return ws <= now && addDays(ws, 7) > now;
-  });
-  const periodLabel = currentWeek?.focus || plan.periodType || undefined;
-
   return (
-    <div className="flex gap-0 -mr-4 lg:-mr-8">
-      <div className="flex-1 min-w-0">
-        <TrainingCalendar
-          weekNumber={weekNumber}
-          weekLabel={weekLabel}
-          periodLabel={periodLabel}
-          days={calendarDays}
-          canGenerate={canGenerate}
-        />
-      </div>
-      <div className="hidden xl:block">
-        <div className="sticky top-0 h-screen">
-          <ExerciseSidebar />
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-[#1c1c16]">Treningsplan</h1>
+          <p className="text-[#6b7366] mt-1">
+            Uke {weekNumber} · {format(weekStart, "d.", { locale: nb })} -
+            {format(addDays(weekStart, 6), "d. MMMM yyyy", { locale: nb })}
+          </p>
         </div>
+        {canGenerate && (
+          <button className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#8b5cf6]/10 text-[#8b5cf6] text-sm font-semibold hover:bg-[#8b5cf6]/20 transition-colors">
+            <Sparkles className="w-4 h-4" />
+            Generer med AI
+          </button>
+        )}
+      </div>
+
+      {/* Week Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
+        {weekDays.map((day, index) => (
+          <div
+            key={day.dayName}
+            className={`bg-white rounded-2xl border ${
+              day.isToday ? "border-[#d2f000] ring-1 ring-[#d2f000]/50" : "border-[#c2c9bb]/50"
+            } overflow-hidden`}
+          >
+            {/* Day Header */}
+            <div
+              className={`p-3 text-center border-b ${
+                day.isToday ? "bg-[#d2f000]/10 border-[#d2f000]/30" : "bg-[#f7f3ea] border-[#c2c9bb]/30"
+              }`}
+            >
+              <p
+                className={`text-xs font-semibold uppercase tracking-wider ${
+                  day.isToday ? "text-[#154212]" : "text-[#8a9385]"
+                }`}
+              >
+                {day.dayName}
+              </p>
+              <p
+                className={`text-lg font-bold mt-0.5 ${
+                  day.isToday ? "text-[#154212]" : "text-[#1c1c16]"
+                }`}
+              >
+                {format(day.date, "d")}
+              </p>
+            </div>
+
+            {/* Day Content */}
+            <div className="p-3 min-h-[180px]">
+              {day.session ? (
+                <Link href={`/portal/treningsplan/${day.session.id}`}>
+                  <div
+                    className={`p-3 rounded-xl border-l-4 transition-all hover:shadow-md ${
+                      day.session.completed
+                        ? "bg-[#22c55e]/10 border-[#22c55e]"
+                        : `${pyramidConfig[day.session.pyramidLevel || "SLAG"].bg} border-${
+                            pyramidConfig[day.session.pyramidLevel || "SLAG"].color
+                          }`
+                    }`}
+                    style={{
+                      borderLeftColor: day.session.completed
+                        ? "#22c55e"
+                        : pyramidConfig[day.session.pyramidLevel || "SLAG"].color,
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-white/50">
+                        {pyramidConfig[day.session.pyramidLevel || "SLAG"].label}
+                      </span>
+                      {day.session.completed && (
+                        <CheckCircle2 className="w-4 h-4 text-[#22c55e]" />
+                      )}
+                    </div>
+                    <h4 className="font-medium text-sm text-[#1c1c16] leading-tight">
+                      {day.session.title}
+                    </h4>
+                    <div className="flex items-center gap-1 mt-2 text-xs text-[#6b7366]">
+                      <Clock className="w-3 h-3" />
+                      {day.session.duration} min
+                    </div>
+                    {day.session.exercises.length > 0 && (
+                      <p className="text-xs text-[#8a9385] mt-2">
+                        {day.session.exercises.length} øvelser
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center py-8">
+                  <Target className="w-6 h-6 text-[#c2c9bb] mb-2" />
+                  <p className="text-xs text-[#8a9385]">Hviledag</p>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Legend */}
+      <div className="flex flex-wrap items-center gap-4 text-xs">
+        <span className="text-[#8a9385] font-medium">Pyramidenivåer:</span>
+        {Object.entries(pyramidConfig).map(([key, config]) => (
+          <div key={key} className="flex items-center gap-1.5">
+            <div
+              className="w-3 h-3 rounded-sm"
+              style={{ backgroundColor: config.color }}
+            />
+            <span className="text-[#6b7366]">
+              {config.label} ({key})
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );

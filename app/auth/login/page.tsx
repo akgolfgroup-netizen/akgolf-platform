@@ -1,170 +1,54 @@
 "use client";
 
-import { useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
-import { AKLogo } from "@/components/website/AKLogo";
-
-function LoginForm() {
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/treningsplan/dashboard";
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    const supabase = createClient();
-    const { error: authError } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(redirect)}`,
-      },
-    });
-
-    if (authError) {
-      setError("Kunne ikke sende innloggingslenke. Sjekk e-postadressen.");
-      setLoading(false);
-    } else {
-      setSent(true);
-      setLoading(false);
-    }
-  };
-
-  if (sent) {
-    return (
-      <div className="text-center max-w-md mx-auto">
-        <div className="w-16 h-16 bg-[var(--color-success)]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            className="text-[var(--color-success)]"
-          >
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-        </div>
-        <h1 className="text-2xl font-semibold text-[var(--color-grey-900)] mb-4">Sjekk e-posten din</h1>
-        <p className="text-[var(--color-grey-400)] mb-2">
-          Vi har sendt en innloggingslenke til
-        </p>
-        <p className="font-semibold text-[var(--color-grey-900)] mb-8">{email}</p>
-        <p className="text-sm text-[var(--color-grey-400)]">
-          Klikk lenken i e-posten for a logge inn. Sjekk spam-mappen om du ikke
-          finner den.
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="max-w-md mx-auto w-full">
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-semibold text-[var(--color-grey-900)] mb-3">Logg inn</h1>
-        <p className="text-[var(--color-grey-400)]">
-          Logg inn for a se din treningsplan og folge utviklingen din.
-        </p>
-      </div>
-
-      <form onSubmit={handleLogin} className="bg-[var(--color-grey-100)] rounded-2xl p-8">
-        <label htmlFor="email" className="block text-sm font-medium text-[var(--color-grey-900)] mb-2">
-          E-post
-        </label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="din@epost.no"
-          required
-          autoComplete="email"
-          spellCheck={false}
-          className="w-full px-4 py-3 bg-white border border-[var(--color-grey-200)] rounded-xl text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)] transition-[border-color,box-shadow] mb-6"
-          autoFocus
-        />
-
-        {error && (
-          <p className="text-[var(--color-error)] text-sm mb-4" role="alert" aria-live="assertive">{error}</p>
-        )}
-
-        <button
-          type="submit"
-          disabled={loading || !email.includes("@")}
-          className="w-full bg-[var(--color-grey-900)] text-white font-medium py-3 px-6 rounded-full hover:bg-[var(--color-grey-900)]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-[background-color,opacity]"
-        >
-          {loading ? (
-            <span className="flex items-center justify-center gap-2">
-              <svg
-                className="animate-spin h-4 w-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                />
-              </svg>
-              Sender...
-            </span>
-          ) : (
-            "Send innloggingslenke"
-          )}
-        </button>
-
-        <p className="text-xs text-[var(--color-grey-400)] text-center mt-4">
-          Vi sender en sikker lenke til e-postadressen din. Ingen passord
-          trengs.
-        </p>
-      </form>
-
-      <div className="text-center mt-6">
-        <Link
-          href="/treningsplan"
-          className="text-sm text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-colors"
-        >
-          Tilbake til treningsplan
-        </Link>
-      </div>
-    </div>
-  );
-}
+import { motion } from "framer-motion";
+import { Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 export default function LoginPage() {
   return (
-    <main className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-16" id="main-content">
-      <div className="w-full max-w-md">
-        <div className="flex justify-center mb-8">
-          <AKLogo variant="black" size={48} />
-        </div>
-        <Suspense
-          fallback={
-            <div className="text-center">
-              <p className="text-[var(--color-grey-400)]">Laster...</p>
+    <div className="min-h-screen bg-[#F5F1E8] flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md"
+      >
+        <Card className="p-8 bg-white border-[#e5e1d8]">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-[#2D5A27] rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Zap className="w-8 h-8 text-[#DFFF00]" />
             </div>
-          }
-        >
-          <LoginForm />
-        </Suspense>
-      </div>
-    </main>
+            <h1 className="text-2xl font-bold text-[#333333]">AK Sports OS</h1>
+            <p className="text-[#666666]">Sign in to your account</p>
+          </div>
+
+          <form className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-[#333333] mb-1">Email</label>
+              <input
+                type="email"
+                placeholder="coach@akgolf.no"
+                className="w-full px-4 py-3 bg-[#F5F1E8] border border-[#e5e1d8] rounded-xl text-[#333333] focus:outline-none focus:ring-2 focus:ring-[#DFFF00]"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-[#333333] mb-1">Password</label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                className="w-full px-4 py-3 bg-[#F5F1E8] border border-[#e5e1d8] rounded-xl text-[#333333] focus:outline-none focus:ring-2 focus:ring-[#DFFF00]"
+              />
+            </div>
+            <Button className="w-full bg-[#2D5A27] hover:bg-[#1a3d16] text-[#F5F1E8] font-bold py-3 rounded-xl">
+              Sign In
+            </Button>
+          </form>
+
+          <div className="mt-6 text-center">
+            <a href="#" className="text-[#2D5A27] hover:underline text-sm">Forgot password?</a>
+          </div>
+        </Card>
+      </motion.div>
+    </div>
   );
 }

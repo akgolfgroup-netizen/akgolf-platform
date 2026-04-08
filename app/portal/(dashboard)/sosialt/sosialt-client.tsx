@@ -150,13 +150,9 @@ function Avatar({
   return (
     <div
       className={cn(
-        "rounded-full flex items-center justify-center flex-shrink-0 font-medium",
+        "rounded-full flex items-center justify-center flex-shrink-0 font-medium bg-[#f7f3ea] text-[#6b7366]",
         sizeClasses[size]
       )}
-      style={{
-        background: "var(--color-grey-200)",
-        color: "var(--color-grey-600)",
-      }}
     >
       {name.charAt(0).toUpperCase()}
     </div>
@@ -169,7 +165,7 @@ function formatRelativeTime(dateStr: string | null): string {
   const now = new Date();
   const diffMs = now.getTime() - date.getTime();
   const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 1) return "Akkurat na";
+  if (diffMin < 1) return "Akkurat nå";
   if (diffMin < 60) return `${diffMin} min siden`;
   const diffHours = Math.floor(diffMin / 60);
   if (diffHours < 24) return `${diffHours}t siden`;
@@ -208,25 +204,12 @@ export function SosialtClient({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1
-          className="text-2xl font-bold tracking-tight"
-          style={{ color: "var(--color-grey-900)" }}
-        >
-          Sosialt
-        </h1>
-        <p
-          className="mt-1 text-sm"
-          style={{ color: "var(--color-grey-500)" }}
-        >
-          Venner, utfordringer og leaderboard
-        </p>
+        <h1 className="text-2xl font-bold text-[#1c1c16]">Sosialt</h1>
+        <p className="mt-1 text-sm text-[#6b7366]">Venner, utfordringer og leaderboard</p>
       </div>
 
       {/* Tab bar */}
-      <div
-        className="flex gap-1 p-1 rounded-xl"
-        style={{ background: "var(--color-grey-100)" }}
-      >
+      <div className="flex gap-1 p-1 rounded-xl bg-[#f7f3ea]">
         {TABS.map(({ key, label, icon: Icon }) => (
           <button
             key={key}
@@ -234,15 +217,9 @@ export function SosialtClient({
             className={cn(
               "flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer",
               tab === key
-                ? "bg-white shadow-sm"
-                : "hover:bg-white/50"
+                ? "bg-white shadow-sm text-[#1c1c16]"
+                : "text-[#8a9385] hover:text-[#1c1c16]"
             )}
-            style={{
-              color:
-                tab === key
-                  ? "var(--color-grey-900)"
-                  : "var(--color-grey-500)",
-            }}
           >
             <Icon className="w-4 h-4" />
             <span className="hidden sm:inline">{label}</span>
@@ -344,18 +321,9 @@ function VennerTab({
     <div className="space-y-4">
       {/* Pending requests */}
       {pendingRequests.length > 0 && (
-        <div
-          className="rounded-2xl border p-4"
-          style={{
-            borderColor: "var(--color-grey-200)",
-            background: "white",
-          }}
-        >
-          <h3
-            className="text-sm font-semibold mb-3"
-            style={{ color: "var(--color-grey-900)" }}
-          >
-            Ventende foresporsler ({pendingRequests.length})
+        <div className="rounded-2xl border border-[#c2c9bb]/50 p-4 bg-white">
+          <h3 className="text-sm font-semibold text-[#1c1c16] mb-3">
+            Ventende forespørsler ({pendingRequests.length})
           </h3>
           <div className="space-y-3">
             {pendingRequests.map((req) => (
@@ -365,16 +333,10 @@ function VennerTab({
               >
                 <Avatar src={req.image} name={req.name} />
                 <div className="flex-1 min-w-0">
-                  <p
-                    className="text-sm font-medium truncate"
-                    style={{ color: "var(--color-grey-900)" }}
-                  >
+                  <p className="text-sm font-medium truncate text-[#1c1c16]">
                     {req.name}
                   </p>
-                  <p
-                    className="text-xs"
-                    style={{ color: "var(--color-grey-400)" }}
-                  >
+                  <p className="text-xs text-[#8a9385]">
                     {formatRelativeTime(req.createdAt)}
                   </p>
                 </div>
@@ -382,8 +344,7 @@ function VennerTab({
                   <button
                     onClick={() => handleAccept(req.friendshipId)}
                     disabled={isPending}
-                    className="p-2 rounded-lg transition-colors cursor-pointer hover:bg-[var(--color-grey-100)]"
-                    style={{ color: "var(--color-success)" }}
+                    className="p-2 rounded-lg transition-colors cursor-pointer hover:bg-[#f7f3ea] text-[#22c55e]"
                     title="Godta"
                   >
                     <Check className="w-4 h-4" />
@@ -391,8 +352,7 @@ function VennerTab({
                   <button
                     onClick={() => handleDecline(req.friendshipId)}
                     disabled={isPending}
-                    className="p-2 rounded-lg transition-colors cursor-pointer hover:bg-[var(--color-grey-100)]"
-                    style={{ color: "var(--color-error)" }}
+                    className="p-2 rounded-lg transition-colors cursor-pointer hover:bg-[#fef2f2] text-[#ef4444]"
                     title="Avvis"
                   >
                     <X className="w-4 h-4" />
@@ -405,27 +365,14 @@ function VennerTab({
       )}
 
       {/* Search / Add friends */}
-      <div
-        className="rounded-2xl border p-4"
-        style={{
-          borderColor: "var(--color-grey-200)",
-          background: "white",
-        }}
-      >
+      <div className="rounded-2xl border border-[#c2c9bb]/50 p-4 bg-white">
         <div className="flex items-center justify-between mb-3">
-          <h3
-            className="text-sm font-semibold"
-            style={{ color: "var(--color-grey-900)" }}
-          >
+          <h3 className="text-sm font-semibold text-[#1c1c16]">
             Venner ({friends.length})
           </h3>
           <button
             onClick={() => setShowSearch(!showSearch)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer"
-            style={{
-              background: "var(--color-grey-900)",
-              color: "white",
-            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer bg-[#154212] text-white hover:bg-[#0d2e0c]"
           >
             <UserPlus className="w-3.5 h-3.5" />
             Legg til
@@ -435,24 +382,14 @@ function VennerTab({
         {/* Search bar */}
         {showSearch && (
           <div className="mb-4">
-            <div
-              className="flex items-center gap-2 px-3 py-2 rounded-lg border"
-              style={{
-                borderColor: "var(--color-grey-200)",
-                background: "var(--color-grey-100)",
-              }}
-            >
-              <Search
-                className="w-4 h-4 flex-shrink-0"
-                style={{ color: "var(--color-grey-400)" }}
-              />
+            <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#c2c9bb]/50 bg-[#f7f3ea]">
+              <Search className="w-4 h-4 flex-shrink-0 text-[#8a9385]" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Sok etter navn eller e-post..."
-                className="flex-1 bg-transparent text-sm outline-none"
-                style={{ color: "var(--color-grey-900)" }}
+                placeholder="Søk etter navn eller e-post..."
+                className="flex-1 bg-transparent text-sm outline-none text-[#1c1c16]"
                 autoFocus
               />
             </div>
@@ -463,52 +400,32 @@ function VennerTab({
                 {searchResults.map((result) => (
                   <div
                     key={result.id}
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg"
-                    style={{ background: "var(--color-grey-100)" }}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#f7f3ea]"
                   >
                     <Avatar src={result.image} name={result.name} size="sm" />
                     <div className="flex-1 min-w-0">
-                      <p
-                        className="text-sm font-medium truncate"
-                        style={{ color: "var(--color-grey-900)" }}
-                      >
+                      <p className="text-sm font-medium truncate text-[#1c1c16]">
                         {result.name}
                       </p>
                       {result.email && (
-                        <p
-                          className="text-xs truncate"
-                          style={{ color: "var(--color-grey-400)" }}
-                        >
+                        <p className="text-xs truncate text-[#8a9385]">
                           {result.email}
                         </p>
                       )}
                     </div>
                     {result.friendshipStatus === "ACCEPTED" ? (
-                      <span
-                        className="text-xs font-medium px-2 py-1 rounded-full"
-                        style={{
-                          background: "var(--color-success-light)",
-                          color: "var(--color-success-text)",
-                        }}
-                      >
+                      <span className="text-xs font-medium px-2 py-1 rounded-full bg-[#22c55e]/10 text-[#22c55e]">
                         Venn
                       </span>
                     ) : result.friendshipStatus === "PENDING" ? (
-                      <span
-                        className="text-xs font-medium px-2 py-1 rounded-full"
-                        style={{
-                          background: "var(--color-grey-100)",
-                          color: "var(--color-grey-500)",
-                        }}
-                      >
+                      <span className="text-xs font-medium px-2 py-1 rounded-full bg-[#f7f3ea] text-[#8a9385]">
                         Sendt
                       </span>
                     ) : (
                       <button
                         onClick={() => handleSendRequest(result.id)}
                         disabled={isPending}
-                        className="p-1.5 rounded-lg transition-colors cursor-pointer hover:bg-white"
-                        style={{ color: "var(--color-grey-900)" }}
+                        className="p-1.5 rounded-lg transition-colors cursor-pointer hover:bg-white text-[#1c1c16]"
                       >
                         <UserPlus className="w-4 h-4" />
                       </button>
@@ -519,10 +436,7 @@ function VennerTab({
             )}
 
             {searchQuery.length >= 2 && searchResults.length === 0 && !isSearching && (
-              <p
-                className="mt-2 text-xs text-center py-3"
-                style={{ color: "var(--color-grey-400)" }}
-              >
+              <p className="mt-2 text-xs text-center py-3 text-[#8a9385]">
                 Ingen brukere funnet
               </p>
             )}
@@ -532,21 +446,10 @@ function VennerTab({
         {/* Friends list */}
         {friends.length === 0 ? (
           <div className="py-8 text-center">
-            <Users
-              className="w-10 h-10 mx-auto mb-3"
-              style={{ color: "var(--color-grey-300)" }}
-            />
-            <p
-              className="text-sm font-medium"
-              style={{ color: "var(--color-grey-500)" }}
-            >
-              Ingen venner enna
-            </p>
-            <p
-              className="text-xs mt-1"
-              style={{ color: "var(--color-grey-400)" }}
-            >
-              Sok etter andre spillere for a legge dem til
+            <Users className="w-10 h-10 mx-auto mb-3 text-[#c2c9bb]" />
+            <p className="text-sm font-medium text-[#6b7366]">Ingen venner ennå</p>
+            <p className="text-xs mt-1 text-[#8a9385]">
+              Søk etter andre spillere for å legge dem til
             </p>
           </div>
         ) : (
@@ -554,37 +457,27 @@ function VennerTab({
             {friends.map((friend) => (
               <div
                 key={friend.friendshipId}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-[var(--color-grey-100)] group"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-[#f7f3ea] group"
               >
                 <Avatar src={friend.image} name={friend.name} />
                 <div className="flex-1 min-w-0">
-                  <p
-                    className="text-sm font-medium truncate"
-                    style={{ color: "var(--color-grey-900)" }}
-                  >
+                  <p className="text-sm font-medium truncate text-[#1c1c16]">
                     {friend.name}
                   </p>
-                  <p
-                    className="text-xs"
-                    style={{ color: "var(--color-grey-400)" }}
-                  >
+                  <p className="text-xs text-[#8a9385]">
                     {friend.lastActiveAt
                       ? `Aktiv ${formatRelativeTime(friend.lastActiveAt)}`
-                      : "Ikke aktiv enna"}
+                      : "Ikke aktiv ennå"}
                   </p>
                 </div>
                 {friend.latestHandicap !== null && (
-                  <span
-                    className="text-sm font-semibold tabular-nums"
-                    style={{ color: "var(--color-grey-900)" }}
-                  >
+                  <span className="text-sm font-semibold tabular-nums text-[#1c1c16]">
                     HCP {friend.latestHandicap.toFixed(1)}
                   </span>
                 )}
                 <button
                   onClick={() => handleRemove(friend.friendshipId)}
-                  className="p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:bg-[var(--color-grey-200)]"
-                  style={{ color: "var(--color-grey-400)" }}
+                  className="p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:bg-[#e8e4db] text-[#8a9385]"
                   title="Fjern venn"
                 >
                   <UserMinus className="w-3.5 h-3.5" />
@@ -663,11 +556,7 @@ function UtfordringerTab({
       {/* Create button */}
       <button
         onClick={() => setShowCreate(!showCreate)}
-        className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-medium transition-colors cursor-pointer"
-        style={{
-          background: "var(--color-grey-900)",
-          color: "white",
-        }}
+        className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-medium transition-colors cursor-pointer bg-[#154212] text-white hover:bg-[#0d2e0c]"
       >
         <Plus className="w-4 h-4" />
         Opprett utfordring
@@ -675,26 +564,12 @@ function UtfordringerTab({
 
       {/* Create form */}
       {showCreate && (
-        <div
-          className="rounded-2xl border p-4 space-y-4"
-          style={{
-            borderColor: "var(--color-grey-200)",
-            background: "white",
-          }}
-        >
-          <h3
-            className="text-sm font-semibold"
-            style={{ color: "var(--color-grey-900)" }}
-          >
-            Ny utfordring
-          </h3>
+        <div className="rounded-2xl border border-[#c2c9bb]/50 p-4 space-y-4 bg-white">
+          <h3 className="text-sm font-semibold text-[#1c1c16]">Ny utfordring</h3>
 
           <div className="space-y-3">
             <div>
-              <label
-                className="block text-xs font-medium mb-1"
-                style={{ color: "var(--color-grey-500)" }}
-              >
+              <label className="block text-xs font-medium mb-1 text-[#6b7366]">
                 Tittel
               </label>
               <input
@@ -704,19 +579,12 @@ function UtfordringerTab({
                   setForm({ ...form, title: e.target.value })
                 }
                 placeholder="F.eks. Handicap-kamp april"
-                className="w-full px-3 py-2 rounded-lg border text-sm outline-none focus:ring-2 focus:ring-[var(--color-grey-300)]"
-                style={{
-                  borderColor: "var(--color-grey-200)",
-                  color: "var(--color-grey-900)",
-                }}
+                className="w-full px-3 py-2 rounded-lg border border-[#c2c9bb]/50 text-sm outline-none focus:ring-2 focus:ring-[#154212]/20 text-[#1c1c16] bg-white"
               />
             </div>
 
             <div>
-              <label
-                className="block text-xs font-medium mb-1"
-                style={{ color: "var(--color-grey-500)" }}
-              >
+              <label className="block text-xs font-medium mb-1 text-[#6b7366]">
                 Type
               </label>
               <select
@@ -727,11 +595,7 @@ function UtfordringerTab({
                     type: e.target.value as ChallengeType,
                   })
                 }
-                className="w-full px-3 py-2 rounded-lg border text-sm outline-none cursor-pointer"
-                style={{
-                  borderColor: "var(--color-grey-200)",
-                  color: "var(--color-grey-900)",
-                }}
+                className="w-full px-3 py-2 rounded-lg border border-[#c2c9bb]/50 text-sm outline-none cursor-pointer text-[#1c1c16] bg-white"
               >
                 {CHALLENGE_TYPES.map((ct) => (
                   <option key={ct.value} value={ct.value}>
@@ -742,11 +606,8 @@ function UtfordringerTab({
             </div>
 
             <div>
-              <label
-                className="block text-xs font-medium mb-1"
-                style={{ color: "var(--color-grey-500)" }}
-              >
-                Malemetode
+              <label className="block text-xs font-medium mb-1 text-[#6b7366]">
+                Målemetode
               </label>
               <input
                 type="text"
@@ -755,20 +616,13 @@ function UtfordringerTab({
                   setForm({ ...form, metric: e.target.value })
                 }
                 placeholder="F.eks. Lavest handicap"
-                className="w-full px-3 py-2 rounded-lg border text-sm outline-none focus:ring-2 focus:ring-[var(--color-grey-300)]"
-                style={{
-                  borderColor: "var(--color-grey-200)",
-                  color: "var(--color-grey-900)",
-                }}
+                className="w-full px-3 py-2 rounded-lg border border-[#c2c9bb]/50 text-sm outline-none focus:ring-2 focus:ring-[#154212]/20 text-[#1c1c16] bg-white"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label
-                  className="block text-xs font-medium mb-1"
-                  style={{ color: "var(--color-grey-500)" }}
-                >
+                <label className="block text-xs font-medium mb-1 text-[#6b7366]">
                   Start
                 </label>
                 <input
@@ -777,18 +631,11 @@ function UtfordringerTab({
                   onChange={(e) =>
                     setForm({ ...form, startDate: e.target.value })
                   }
-                  className="w-full px-3 py-2 rounded-lg border text-sm outline-none cursor-pointer"
-                  style={{
-                    borderColor: "var(--color-grey-200)",
-                    color: "var(--color-grey-900)",
-                  }}
+                  className="w-full px-3 py-2 rounded-lg border border-[#c2c9bb]/50 text-sm outline-none cursor-pointer text-[#1c1c16] bg-white"
                 />
               </div>
               <div>
-                <label
-                  className="block text-xs font-medium mb-1"
-                  style={{ color: "var(--color-grey-500)" }}
-                >
+                <label className="block text-xs font-medium mb-1 text-[#6b7366]">
                   Slutt
                 </label>
                 <input
@@ -797,11 +644,7 @@ function UtfordringerTab({
                   onChange={(e) =>
                     setForm({ ...form, endDate: e.target.value })
                   }
-                  className="w-full px-3 py-2 rounded-lg border text-sm outline-none cursor-pointer"
-                  style={{
-                    borderColor: "var(--color-grey-200)",
-                    color: "var(--color-grey-900)",
-                  }}
+                  className="w-full px-3 py-2 rounded-lg border border-[#c2c9bb]/50 text-sm outline-none cursor-pointer text-[#1c1c16] bg-white"
                 />
               </div>
             </div>
@@ -809,10 +652,7 @@ function UtfordringerTab({
             {/* Friend selection */}
             {friends.length > 0 && (
               <div>
-                <label
-                  className="block text-xs font-medium mb-2"
-                  style={{ color: "var(--color-grey-500)" }}
-                >
+                <label className="block text-xs font-medium mb-2 text-[#6b7366]">
                   Inviter venner
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -825,17 +665,9 @@ function UtfordringerTab({
                         className={cn(
                           "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer border",
                           selected
-                            ? "border-[var(--color-grey-900)]"
-                            : "border-[var(--color-grey-200)] hover:border-[var(--color-grey-300)]"
+                            ? "border-[#154212] bg-[#154212] text-white"
+                            : "border-[#c2c9bb]/50 bg-white text-[#1c1c16] hover:border-[#154212]"
                         )}
-                        style={{
-                          background: selected
-                            ? "var(--color-grey-900)"
-                            : "white",
-                          color: selected
-                            ? "white"
-                            : "var(--color-grey-700)",
-                        }}
                       >
                         <Avatar src={friend.image} name={friend.name} size="sm" />
                         {friend.name}
@@ -851,22 +683,14 @@ function UtfordringerTab({
           <div className="flex gap-2 pt-2">
             <button
               onClick={() => setShowCreate(false)}
-              className="flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer border"
-              style={{
-                borderColor: "var(--color-grey-200)",
-                color: "var(--color-grey-700)",
-              }}
+              className="flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer border border-[#c2c9bb]/50 text-[#6b7366] hover:bg-[#f7f3ea]"
             >
               Avbryt
             </button>
             <button
               onClick={handleCreate}
               disabled={isPending || !form.title.trim()}
-              className="flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer disabled:opacity-50"
-              style={{
-                background: "var(--color-grey-900)",
-                color: "white",
-              }}
+              className="flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer disabled:opacity-50 bg-[#154212] text-white hover:bg-[#0d2e0c]"
             >
               {isPending ? "Oppretter..." : "Opprett"}
             </button>
@@ -876,27 +700,10 @@ function UtfordringerTab({
 
       {/* Active challenges */}
       {challenges.length === 0 ? (
-        <div
-          className="rounded-2xl border py-12 text-center"
-          style={{
-            borderColor: "var(--color-grey-200)",
-            background: "white",
-          }}
-        >
-          <Trophy
-            className="w-10 h-10 mx-auto mb-3"
-            style={{ color: "var(--color-grey-300)" }}
-          />
-          <p
-            className="text-sm font-medium"
-            style={{ color: "var(--color-grey-500)" }}
-          >
-            Ingen aktive utfordringer
-          </p>
-          <p
-            className="text-xs mt-1"
-            style={{ color: "var(--color-grey-400)" }}
-          >
+        <div className="rounded-2xl border border-[#c2c9bb]/50 py-12 text-center bg-white">
+          <Trophy className="w-10 h-10 mx-auto mb-3 text-[#c2c9bb]" />
+          <p className="text-sm font-medium text-[#6b7366]">Ingen aktive utfordringer</p>
+          <p className="text-xs mt-1 text-[#8a9385]">
             Opprett en utfordring og inviter vennene dine
           </p>
         </div>
@@ -934,52 +741,24 @@ function ChallengeCard({
   const progress = Math.min(100, ((totalDays - days) / totalDays) * 100);
 
   return (
-    <div
-      className="rounded-2xl border p-4"
-      style={{
-        borderColor: "var(--color-grey-200)",
-        background: "white",
-      }}
-    >
+    <div className="rounded-2xl border border-[#c2c9bb]/50 p-4 bg-white">
       <div className="flex items-start justify-between mb-3">
         <div>
-          <h4
-            className="text-sm font-semibold"
-            style={{ color: "var(--color-grey-900)" }}
-          >
-            {challenge.title}
-          </h4>
+          <h4 className="text-sm font-semibold text-[#1c1c16]">{challenge.title}</h4>
           <div className="flex items-center gap-2 mt-1">
-            <span
-              className="text-xs px-2 py-0.5 rounded-full font-medium"
-              style={{
-                background: "var(--color-grey-100)",
-                color: "var(--color-grey-600)",
-              }}
-            >
+            <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-[#f7f3ea] text-[#6b7366]">
               {challenge.type}
             </span>
-            <span
-              className="text-xs"
-              style={{ color: "var(--color-grey-400)" }}
-            >
-              {challenge.metric}
-            </span>
+            <span className="text-xs text-[#8a9385]">{challenge.metric}</span>
           </div>
         </div>
         <div className="flex items-center gap-1.5">
-          <Clock
-            className="w-3.5 h-3.5"
-            style={{ color: "var(--color-grey-400)" }}
-          />
+          <Clock className="w-3.5 h-3.5 text-[#8a9385]" />
           <span
-            className="text-xs font-medium"
-            style={{
-              color:
-                days <= 3
-                  ? "var(--color-error)"
-                  : "var(--color-grey-500)",
-            }}
+            className={cn(
+              "text-xs font-medium",
+              days <= 3 ? "text-[#ef4444]" : "text-[#6b7366]"
+            )}
           >
             {days}d igjen
           </span>
@@ -987,16 +766,10 @@ function ChallengeCard({
       </div>
 
       {/* Progress bar */}
-      <div
-        className="h-1.5 rounded-full mb-3"
-        style={{ background: "var(--color-grey-100)" }}
-      >
+      <div className="h-1.5 rounded-full bg-[#f7f3ea] mb-3">
         <div
-          className="h-full rounded-full transition-all duration-500"
-          style={{
-            width: `${progress}%`,
-            background: "var(--color-grey-900)",
-          }}
+          className="h-full rounded-full transition-all duration-500 bg-[#154212]"
+          style={{ width: `${progress}%` }}
         />
       </div>
 
@@ -1004,22 +777,12 @@ function ChallengeCard({
       <div className="flex items-center justify-between">
         <div className="flex -space-x-2">
           {challenge.participants.slice(0, 5).map((p, i) => (
-            <div
-              key={p.id}
-              className="relative"
-              style={{ zIndex: 5 - i }}
-            >
+            <div key={p.id} className="relative" style={{ zIndex: 5 - i }}>
               <Avatar src={p.image} name={p.name} size="sm" />
             </div>
           ))}
           {challenge.participants.length > 5 && (
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 border-white"
-              style={{
-                background: "var(--color-grey-200)",
-                color: "var(--color-grey-600)",
-              }}
-            >
+            <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 border-white bg-[#f7f3ea] text-[#6b7366]">
               +{challenge.participants.length - 5}
             </div>
           )}
@@ -1029,11 +792,7 @@ function ChallengeCard({
           <button
             onClick={() => onJoin(challenge.id)}
             disabled={isPending}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer"
-            style={{
-              background: "var(--color-grey-900)",
-              color: "white",
-            }}
+            className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer bg-[#154212] text-white hover:bg-[#0d2e0c]"
           >
             Bli med
           </button>
@@ -1042,32 +801,18 @@ function ChallengeCard({
 
       {/* Leaderboard preview */}
       {challenge.participants.some((p) => p.currentValue !== null) && (
-        <div className="mt-3 pt-3 border-t" style={{ borderColor: "var(--color-grey-100)" }}>
+        <div className="mt-3 pt-3 border-t border-[#f7f3ea]">
           {challenge.participants
             .filter((p) => p.currentValue !== null)
             .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
             .slice(0, 3)
             .map((p, i) => (
-              <div
-                key={p.id}
-                className="flex items-center gap-2 py-1"
-              >
-                <span
-                  className="w-5 text-xs font-semibold text-center"
-                  style={{ color: "var(--color-grey-400)" }}
-                >
+              <div key={p.id} className="flex items-center gap-2 py-1">
+                <span className="w-5 text-xs font-semibold text-center text-[#8a9385]">
                   {i + 1}.
                 </span>
-                <span
-                  className="text-xs flex-1"
-                  style={{ color: "var(--color-grey-700)" }}
-                >
-                  {p.name}
-                </span>
-                <span
-                  className="text-xs font-semibold tabular-nums"
-                  style={{ color: "var(--color-grey-900)" }}
-                >
+                <span className="text-xs flex-1 text-[#6b7366]">{p.name}</span>
+                <span className="text-xs font-semibold tabular-nums text-[#1c1c16]">
                   {p.currentValue?.toFixed(1)}
                 </span>
               </div>
@@ -1107,29 +852,20 @@ function LeaderboardTab({
       ? "HCP"
       : sortBy === "improvement"
         ? "slag"
-        : "okter";
+        : "økter";
 
   return (
     <div className="space-y-4">
       {/* Sort toggles */}
-      <div
-        className="flex gap-1 p-1 rounded-xl"
-        style={{ background: "var(--color-grey-100)" }}
-      >
+      <div className="flex gap-1 p-1 rounded-xl bg-[#f7f3ea]">
         {LEADERBOARD_SORTS.map(({ key, label, icon: Icon }) => (
           <button
             key={key}
             onClick={() => handleSort(key)}
             className={cn(
               "flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer",
-              sortBy === key ? "bg-white shadow-sm" : "hover:bg-white/50"
+              sortBy === key ? "bg-white shadow-sm text-[#1c1c16]" : "text-[#8a9385] hover:text-[#1c1c16]"
             )}
-            style={{
-              color:
-                sortBy === key
-                  ? "var(--color-grey-900)"
-                  : "var(--color-grey-500)",
-            }}
           >
             <Icon className="w-3.5 h-3.5" />
             {label}
@@ -1138,30 +874,13 @@ function LeaderboardTab({
       </div>
 
       {/* Leaderboard */}
-      <div
-        className="rounded-2xl border overflow-hidden"
-        style={{
-          borderColor: "var(--color-grey-200)",
-          background: "white",
-        }}
-      >
+      <div className="rounded-2xl border border-[#c2c9bb]/50 overflow-hidden bg-white">
         {entries.length === 0 ? (
           <div className="py-12 text-center">
-            <BarChart3
-              className="w-10 h-10 mx-auto mb-3"
-              style={{ color: "var(--color-grey-300)" }}
-            />
-            <p
-              className="text-sm font-medium"
-              style={{ color: "var(--color-grey-500)" }}
-            >
-              Ingen data enna
-            </p>
-            <p
-              className="text-xs mt-1"
-              style={{ color: "var(--color-grey-400)" }}
-            >
-              Legg til venner for a se leaderboard
+            <BarChart3 className="w-10 h-10 mx-auto mb-3 text-[#c2c9bb]" />
+            <p className="text-sm font-medium text-[#6b7366]">Ingen data ennå</p>
+            <p className="text-xs mt-1 text-[#8a9385]">
+              Legg til venner for å se leaderboard
             </p>
           </div>
         ) : (
@@ -1171,23 +890,18 @@ function LeaderboardTab({
                 key={entry.id}
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 transition-colors",
-                  entry.isCurrentUser && "bg-[var(--color-grey-100)]"
+                  entry.isCurrentUser && "bg-[#f7f3ea]",
+                  index < entries.length - 1 && "border-b border-[#f7f3ea]"
                 )}
-                style={{
-                  borderBottom:
-                    index < entries.length - 1
-                      ? "1px solid var(--color-grey-100)"
-                      : undefined,
-                }}
               >
                 {/* Rank */}
                 <div
                   className={cn(
                     "w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0",
-                    index === 0 && "bg-[var(--color-grey-900)] text-white",
-                    index === 1 && "bg-[var(--color-grey-300)] text-[var(--color-grey-800)]",
-                    index === 2 && "bg-[var(--color-grey-200)] text-[var(--color-grey-700)]",
-                    index > 2 && "text-[var(--color-grey-400)]"
+                    index === 0 && "bg-[#d2f000] text-[#1c1c16]",
+                    index === 1 && "bg-[#c2c9bb] text-[#1c1c16]",
+                    index === 2 && "bg-[#f7f3ea] text-[#1c1c16]",
+                    index > 2 && "text-[#8a9385]"
                   )}
                 >
                   {index + 1}
@@ -1199,26 +913,17 @@ function LeaderboardTab({
                   <p
                     className={cn(
                       "text-sm truncate",
-                      entry.isCurrentUser ? "font-semibold" : "font-medium"
+                      entry.isCurrentUser ? "font-semibold text-[#154212]" : "font-medium text-[#1c1c16]"
                     )}
-                    style={{ color: "var(--color-grey-900)" }}
                   >
                     {entry.name}
                     {entry.isCurrentUser && (
-                      <span
-                        className="ml-1.5 text-xs"
-                        style={{ color: "var(--color-grey-400)" }}
-                      >
-                        (deg)
-                      </span>
+                      <span className="ml-1.5 text-xs text-[#8a9385]">(deg)</span>
                     )}
                   </p>
                 </div>
 
-                <span
-                  className="text-sm font-bold tabular-nums"
-                  style={{ color: "var(--color-grey-900)" }}
-                >
+                <span className="text-sm font-bold tabular-nums text-[#1c1c16]">
                   {entry.value !== null
                     ? sortBy === "handicap"
                       ? entry.value.toFixed(1)
@@ -1227,12 +932,7 @@ function LeaderboardTab({
                         : entry.value
                     : "-"}
                 </span>
-                <span
-                  className="text-xs"
-                  style={{ color: "var(--color-grey-400)" }}
-                >
-                  {unit}
-                </span>
+                <span className="text-xs text-[#8a9385]">{unit}</span>
               </div>
             ))}
           </div>

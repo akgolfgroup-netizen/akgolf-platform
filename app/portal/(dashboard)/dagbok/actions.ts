@@ -16,7 +16,7 @@ export async function getTrainingLogs(month?: Date) {
   const from = startOfMonth(ref);
   const to = endOfMonth(ref);
 
-  return prisma.trainingLog.findMany({
+  const logs = await prisma.trainingLog.findMany({
     where: {
       userId: user.id,
       date: { gte: from, lte: to },
@@ -28,6 +28,20 @@ export async function getTrainingLogs(month?: Date) {
     },
     orderBy: { date: "desc" },
   });
+
+  // Transform to expected format
+  return logs.map((log) => ({
+    id: log.id,
+    date: log.date,
+    durationMinutes: log.durationMinutes,
+    focusArea: log.focusArea,
+    notes: log.notes,
+    rating: log.rating,
+    energyLevel: null as "high" | "medium" | "low" | null,
+    type: "range" as "range" | "course" | "putting" | "coaching" | "fitness",
+    completed: true,
+    TrainingPlanSession: log.TrainingPlanSession,
+  }));
 }
 
 export async function logSession(data: {

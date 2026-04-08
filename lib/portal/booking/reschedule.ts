@@ -4,6 +4,7 @@ import { BookingStatus } from "@prisma/client";
 import { addMinutes } from "date-fns";
 import { sendRescheduleNotification } from "@/lib/portal/email/send-booking-email";
 import { logger } from "@/lib/logger";
+import { notifyBookingRescheduled } from "@/lib/portal/notifications/triggers";
 
 interface RescheduleResult {
   success: boolean;
@@ -170,6 +171,22 @@ export async function rescheduleBooking(
         newStartTime,
       ).catch((err) => {
         logger.error("[Reschedule] Email notification failed:", err);
+      });
+    }
+
+    // Send push notification
+    const fullBooking = await prisma.booking.findUnique({
+      where: { id: newBooking.id },
+      include: {
+        ServiceType: { select: { name: true } },
+        Instructor: { select: { User: { select: { name: true } } } },
+        Location: { select: { name: true } },
+      },
+    });
+
+    if (fullBooking) {
+      notifyBookingRescheduled(fullBooking, booking.startTime).catch((err) => {
+        logger.error("[Reschedule] Push notification failed:", err);
       });
     }
 
