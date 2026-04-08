@@ -15,14 +15,19 @@ import {
 } from "./types";
 import webpush from "web-push";
 
-// Konfigurer web-push
-const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
-const vapidSubject = process.env.VAPID_SUBJECT || "mailto:admin@akgolf.no";
+// Konfigurer web-push (midlertidig deaktivert for lansering)
+// TODO: Fiks VAPID-nøkler etter lansering
+// const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+// const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+// const vapidSubject = process.env.VAPID_SUBJECT || "mailto:admin@akgolf.no";
 
-if (vapidPublicKey && vapidPrivateKey) {
-  webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
-}
+// if (vapidPublicKey && vapidPrivateKey) {
+//   try {
+//     webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
+//   } catch (e) {
+//     console.warn("[webpush] VAPID config failed:", e);
+//   }
+// }
 
 /**
  * Opprett en enkelt notifikasjon
@@ -51,20 +56,21 @@ export async function createNotification(
       },
     });
 
-    // Send push-notifikasjon hvis konfigurert
-    await sendPushNotification(input.userId, {
-      title: input.title,
-      body: input.message,
-      icon: "/icons/icon-192.png",
-      badge: "/icons/badge-72.png",
-      tag: notificationId,
-      data: {
-        url: input.linkUrl || "/portal",
-        notificationId,
-        type: input.type,
-        metadata: input.metadata,
-      },
-    });
+    // Send push-notifikasjon hvis konfigurert (midlertidig deaktivert)
+    // TODO: Aktiver etter VAPID-fiks
+    // await sendPushNotification(input.userId, {
+    //   title: input.title,
+    //   body: input.message,
+    //   icon: "/icons/icon-192.png",
+    //   badge: "/icons/badge-72.png",
+    //   tag: notificationId,
+    //   data: {
+    //     url: input.linkUrl || "/portal",
+    //     notificationId,
+    //     type: input.type,
+    //     metadata: input.metadata,
+    //   },
+    // });
 
     return { success: true, notificationId };
   } catch (error) {
