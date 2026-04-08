@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { nanoid } from "nanoid";
 import {
@@ -11,73 +11,67 @@ import {
 import type { ClubDispersion } from "@/lib/portal/golf/dispersion";
 
 export async function searchCourses(query: string) {
-  const courses = await prisma.course.findMany({
-    where: {
-      OR: [
-        { name: { contains: query, mode: "insensitive" } },
-        { location: { contains: query, mode: "insensitive" } },
-      ],
-    },
-    select: {
-      id: true,
-      name: true,
-      location: true,
-      par: true,
-      courseRating: true,
-      slopeRating: true,
-    },
-    orderBy: { name: "asc" },
-    take: 20,
-  });
-  return courses;
+  const supabase = await createServerSupabase();
+
+  const { data: courses } = await supabase
+    .from("Course")
+    .select("id, name, location, par, courseRating, slopeRating")
+    .or(`name.ilike.%${query}%,location.ilike.%${query}%`)
+    .order("name", { ascending: true })
+    .limit(20);
+
+  return courses || [];
 }
 
 export async function getCourseHoles(courseId: string, teeColor = "yellow") {
-  const holes = await prisma.hole.findMany({
-    where: { courseId, teeColor },
-    orderBy: { holeNumber: "asc" },
-    select: {
-      id: true,
-      holeNumber: true,
-      par: true,
-      handicap: true,
-      lengthMeter: true,
-      teeColor: true,
-    },
-  });
-  return holes;
+  const supabase = await createServerSupabase();
+
+  const { data: holes } = await supabase
+    .from("Hole")
+    .select("id, holeNumber, par, handicap, lengthMeter, teeColor")
+    .eq("courseId", courseId)
+    .eq("teeColor", teeColor)
+    .order("holeNumber", { ascending: true });
+
+  return holes || [];
 }
 
 export async function startRound(courseId: string, teeColor: string, weather?: string) {
   const user = await requirePortalUser();
+  const supabase = await createServerSupabase();
 
-  const course = await prisma.course.findUnique({
-    where: { id: courseId },
-    include: {
-      Hole: {
-        where: { teeColor },
-        orderBy: { holeNumber: "asc" },
-      },
-    },
-  });
+  const { data: course } = await supabase
+    .from("Course")
+    .select(`
+      id,
+      name,
+      par,
+      Hole (id, holeNumber, par, handicap, lengthMeter, teeColor)
+    `)
+    .eq("id", courseId)
+    .eq("Hole.teeColor", teeColor)
+    .order("Hole.holeNumber", { ascending: true })
+    .single();
 
   if (!course) throw new Error("Bane ikke funnet");
 
-  const round = await prisma.round.create({
-    data: {
+  const { data: round } = await supabase
+    .from("Round")
+    .insert({
       id: nanoid(),
       userId: user.id,
       courseId,
-      date: new Date(),
-      startTime: new Date(),
+      date: new Date().toISOString(),
+      startTime: new Date().toISOString(),
       teeColor,
       weather: weather ?? null,
       source: "LIVE",
-      updatedAt: new Date(),
-    },
-  });
+      updatedAt: new Date().toISOString(),
+    })
+    .select()
+    .single();
 
-  return { roundId: round.id, holes: course.Hole, courseName: course.name, coursePar: course.par };
+  return { roundId: round!.id, holes: course.Hole, courseName: course.name, coursePar: course.par };
 }
 
 export async function saveHoleResult(
@@ -97,21 +91,43 @@ export async function saveHoleResult(
   }
 ) {
   const user = await requirePortalUser();
+  const supabase = await createServerSupabase();
 
-  const round = await prisma.round.findUnique({
-    where: { id: roundId },
-    select: { userId: true },
-  });
+  const { data: round } = await supabase
+    .from("Round")
+    .select("userId")
+    .eq("id", roundId)
+    .single();
 
   if (!round || round.userId !== user.id) throw new Error("Runde ikke funnet");
 
   const scoreToPar = data.score - data.par;
 
-  await prisma.holeResult.upsert({
-    where: {
-      roundId_holeNumber: { roundId, holeNumber: data.holeNumber },
-    },
-    create: {
+  // Upsert using unique constraint on roundId_holeNumber
+  const { data: existing } = await supabase
+    .from("HoleResult")
+    .select("id")
+    .eq("roundId", roundId)
+    .eq("holeNumber", data.holeNumber)
+    .single();
+
+  if (existing) {
+    await supabase
+      .from("HoleResult")
+      .update({
+        score: data.score,
+        scoreToPar,
+        putts: data.putts,
+        fairwayHit: data.fairwayHit,
+        gir: data.gir,
+        upAndDown: data.upAndDown ?? null,
+        sandSave: data.sandSave ?? null,
+        penalty: data.penalty ?? 0,
+        strategyFollowed: data.strategyFollowed ?? null,
+      })
+      .eq("id", existing.id);
+  } else {
+    await supabase.from("HoleResult").insert({
       id: nanoid(),
       roundId,
       holeId: data.holeId,
@@ -126,37 +142,30 @@ export async function saveHoleResult(
       sandSave: data.sandSave ?? null,
       penalty: data.penalty ?? 0,
       strategyFollowed: data.strategyFollowed ?? null,
-    },
-    update: {
-      score: data.score,
-      scoreToPar,
-      putts: data.putts,
-      fairwayHit: data.fairwayHit,
-      gir: data.gir,
-      upAndDown: data.upAndDown ?? null,
-      sandSave: data.sandSave ?? null,
-      penalty: data.penalty ?? 0,
-      strategyFollowed: data.strategyFollowed ?? null,
-    },
-  });
+    });
+  }
 }
 
 export async function completeRound(roundId: string) {
   const user = await requirePortalUser();
+  const supabase = await createServerSupabase();
 
-  const round = await prisma.round.findUnique({
-    where: { id: roundId },
-    include: {
-      HoleResult: true,
-      Course: { select: { par: true } },
-    },
-  });
+  const { data: round } = await supabase
+    .from("Round")
+    .select(`
+      id,
+      userId,
+      Course (par),
+      HoleResult (score, putts, gir, fairwayHit, sgTotal, sgTee, sgApproach, sgShortGame, sgPutting)
+    `)
+    .eq("id", roundId)
+    .single();
 
   if (!round || round.userId !== user.id) throw new Error("Runde ikke funnet");
 
-  const holes = round.HoleResult;
+  const holes = round.HoleResult as { score: number; putts: number; gir: boolean; fairwayHit: boolean | null; sgTotal: number | null; sgTee: number | null; sgApproach: number | null; sgShortGame: number | null; sgPutting: number | null }[];
   const totalScore = holes.reduce((sum, h) => sum + h.score, 0);
-  const scoreToPar = totalScore - (round.Course?.par ?? 72);
+  const scoreToPar = totalScore - ((round.Course as { par: number } | null)?.par ?? 72);
   const totalPutts = holes.reduce((sum, h) => sum + h.putts, 0);
   const girCount = holes.filter((h) => h.gir).length;
   const fairwayHoles = holes.filter((h) => h.fairwayHit !== null);
@@ -165,11 +174,11 @@ export async function completeRound(roundId: string) {
   const round3 = (n: number | null) => n !== null ? Math.round(n * 1000) / 1000 : null;
   const holesWithSG = holes.filter((h) => h.sgTotal !== null);
 
-  const updated = await prisma.round.update({
-    where: { id: roundId },
-    data: {
+  const { data: updated } = await supabase
+    .from("Round")
+    .update({
       isComplete: true,
-      endTime: new Date(),
+      endTime: new Date().toISOString(),
       totalScore,
       scoreToPar,
       totalPutts,
@@ -181,9 +190,11 @@ export async function completeRound(roundId: string) {
       sgApproach: round3(holesWithSG.reduce((s, h) => s + (h.sgApproach ?? 0), 0) || null),
       sgShortGame: round3(holesWithSG.reduce((s, h) => s + (h.sgShortGame ?? 0), 0) || null),
       sgPutting: round3(holesWithSG.reduce((s, h) => s + (h.sgPutting ?? 0), 0) || null),
-      updatedAt: new Date(),
-    },
-  });
+      updatedAt: new Date().toISOString(),
+    })
+    .eq("id", roundId)
+    .select()
+    .single();
 
   return updated;
 }
@@ -194,27 +205,39 @@ export async function getDecadeStrategy(
   handicap: number
 ): Promise<DecadeHoleStrategy[]> {
   const user = await requirePortalUser();
+  const supabase = await createServerSupabase();
 
   // Hent hull for banen
-  const holes = await prisma.hole.findMany({
-    where: { courseId, teeColor },
-    orderBy: { holeNumber: "asc" },
-  });
+  const { data: holes } = await supabase
+    .from("Hole")
+    .select("*")
+    .eq("courseId", courseId)
+    .eq("teeColor", teeColor)
+    .order("holeNumber", { ascending: true });
 
-  if (holes.length === 0) return [];
+  if (!holes || holes.length === 0) return [];
 
   // Hent spillerens bag og klubb-dispersjoner
-  const bag = await prisma.playerBag.findUnique({
-    where: { userId: user.id },
-    include: {
-      clubs: {
-        orderBy: { sortOrder: "asc" },
-      },
-    },
-  });
+  const { data: bag } = await supabase
+    .from("PlayerBag")
+    .select(`
+      id,
+      PlayerClub (
+        name,
+        avgCarry,
+        avgTotal,
+        avgOffline,
+        shotCount,
+        sortOrder
+      )
+    `)
+    .eq("userId", user.id)
+    .order("PlayerClub.sortOrder", { ascending: true })
+    .single();
 
   // Konverter PlayerClub til ClubDispersion
-  const dispersions: ClubDispersion[] = (bag?.clubs ?? [])
+  const clubs = (bag?.PlayerClub as { name: string; avgCarry: number | null; avgTotal: number | null; avgOffline: number | null; shotCount: number }[]) || [];
+  const dispersions: ClubDispersion[] = clubs
     .filter((c) => c.avgCarry !== null && c.avgCarry > 0)
     .map((c) => {
       const avgCarry = c.avgCarry ?? 0;
@@ -259,40 +282,48 @@ export async function getDecadeStrategy(
 
 export async function getUserRounds(limit = 20) {
   const user = await requirePortalUser();
+  const supabase = await createServerSupabase();
 
-  return prisma.round.findMany({
-    where: { userId: user.id },
-    orderBy: { date: "desc" },
-    take: limit,
-    include: {
-      Course: { select: { name: true, par: true, location: true } },
-      _count: { select: { HoleResult: true } },
-    },
-  });
+  const { data: rounds } = await supabase
+    .from("Round")
+    .select(`
+      *,
+      Course (name, par, location),
+      HoleResult (id)
+    `)
+    .eq("userId", user.id)
+    .order("date", { ascending: false })
+    .limit(limit);
+
+  return (rounds || []).map((r) => ({
+    ...r,
+    _count: { HoleResult: (r.HoleResult as { id: string }[]).length },
+  }));
 }
 
 export async function getRoundDetail(roundId: string) {
   const user = await requirePortalUser();
+  const supabase = await createServerSupabase();
 
-  const round = await prisma.round.findUnique({
-    where: { id: roundId },
-    include: {
-      Course: {
-        include: {
-          Hole: {
-            where: { teeColor: "yellow" },
-            orderBy: { holeNumber: "asc" },
-          },
-        },
-      },
-      HoleResult: {
-        orderBy: { holeNumber: "asc" },
-        include: {
-          Shot: { orderBy: { shotNumber: "asc" } },
-        },
-      },
-    },
-  });
+  const { data: round } = await supabase
+    .from("Round")
+    .select(`
+      *,
+      Course (
+        *,
+        Hole (id, holeNumber, par, handicap, lengthMeter, teeColor)
+      ),
+      HoleResult (
+        *,
+        Shot (*)
+      )
+    `)
+    .eq("id", roundId)
+    .eq("Course.Hole.teeColor", "yellow")
+    .order("Course.Hole.holeNumber", { ascending: true })
+    .order("HoleResult.holeNumber", { ascending: true })
+    .order("Shot.shotNumber", { ascending: true })
+    .single();
 
   if (!round || round.userId !== user.id) return null;
   return round;

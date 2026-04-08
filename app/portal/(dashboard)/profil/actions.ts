@@ -1,8 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { writeFile } from "fs/promises";
 import path from "path";
@@ -18,21 +17,24 @@ export async function getMyProfile() {
   const user = await requirePortalUser();
   if (!user?.id) return null;
 
-  return prisma.user.findUnique({
-    where: { id: user.id },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      phone: true,
-      image: true,
-      role: true,
-      subscriptionTier: true,
-      Instructor: {
-        select: { specialization: true, title: true, bio: true },
-      },
-    },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: profile } = await supabase
+    .from("User")
+    .select(`
+      id,
+      name,
+      email,
+      phone,
+      image,
+      role,
+      subscriptionTier,
+      Instructor (specialization, title, bio)
+    `)
+    .eq("id", user.id)
+    .single();
+
+  return profile;
 }
 
 export async function updateProfile(data: {
@@ -49,26 +51,29 @@ export async function updateProfile(data: {
   }
 
   const validated = result.data;
+  const supabase = await createServerSupabase();
 
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
+  await supabase
+    .from("User")
+    .update({
       name: validated.name,
       phone: validated.phone || null,
-    },
-  });
+    })
+    .eq("id", user.id);
 
   revalidatePath("/profil");
 }
 
 async function calculateStreak(userId: string): Promise<number> {
-  const logs = await prisma.trainingLog.findMany({
-    where: { userId },
-    select: { date: true },
-    orderBy: { date: "desc" },
-  });
+  const supabase = await createServerSupabase();
 
-  if (logs.length === 0) return 0;
+  const { data: logs } = await supabase
+    .from("TrainingLog")
+    .select("date")
+    .eq("userId", userId)
+    .order("date", { ascending: false });
+
+  if (!logs || logs.length === 0) return 0;
 
   // Normalize to UTC date-only strings (YYYY-MM-DD) and deduplicate
   const uniqueDates = [
@@ -101,31 +106,43 @@ export async function getPlayerStats() {
   if (!user?.id) throw new Error("Ikke innlogget");
   const userId = user.id;
 
+  const supabase = await createServerSupabase();
   const thirtyDaysAgo = subDays(new Date(), 30);
 
-  const [trainingSessions, coachingSessions, tournaments, streak, latestHandicap] =
-    await Promise.all([
-      prisma.trainingLog.count({
-        where: { userId, date: { gte: thirtyDaysAgo } },
-      }),
-      prisma.coachingSession.count({
-        where: { studentId: userId },
-      }),
-      prisma.playerTournamentPlan.count({
-        where: { studentId: userId },
-      }),
-      calculateStreak(userId),
-      prisma.handicapEntry.findFirst({
-        where: { userId },
-        orderBy: { date: "desc" },
-        select: { handicapIndex: true },
-      }),
-    ]);
+  const [
+    { count: trainingSessions },
+    { count: coachingSessions },
+    { count: tournaments },
+    streak,
+    { data: latestHandicap },
+  ] = await Promise.all([
+    supabase
+      .from("TrainingLog")
+      .select("*", { count: "exact", head: true })
+      .eq("userId", userId)
+      .gte("date", thirtyDaysAgo.toISOString()),
+    supabase
+      .from("CoachingSession")
+      .select("*", { count: "exact", head: true })
+      .eq("studentId", userId),
+    supabase
+      .from("PlayerTournamentPlan")
+      .select("*", { count: "exact", head: true })
+      .eq("studentId", userId),
+    calculateStreak(userId),
+    supabase
+      .from("HandicapEntry")
+      .select("handicapIndex")
+      .eq("userId", userId)
+      .order("date", { ascending: false })
+      .limit(1)
+      .single(),
+  ]);
 
   return {
-    trainingSessions,
-    coachingSessions,
-    tournaments,
+    trainingSessions: trainingSessions ?? 0,
+    coachingSessions: coachingSessions ?? 0,
+    tournaments: tournaments ?? 0,
     streak,
     currentHandicap: latestHandicap?.handicapIndex ?? null,
   };
@@ -135,28 +152,36 @@ export async function getHandicapHistory(months = 6) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
-  return prisma.handicapEntry.findMany({
-    where: {
-      userId: user.id,
-      date: { gte: subMonths(new Date(), months) },
-    },
-    orderBy: { date: "asc" },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: entries } = await supabase
+    .from("HandicapEntry")
+    .select("*")
+    .eq("userId", user.id)
+    .gte("date", subMonths(new Date(), months).toISOString())
+    .order("date", { ascending: true });
+
+  return entries || [];
 }
 
 export async function getAchievements() {
   const user = await requirePortalUser();
   if (!user?.id) return { definitions: [], unlocked: [] };
 
-  const [definitions, unlocked] = await Promise.all([
-    prisma.achievementDefinition.findMany({ orderBy: { sortOrder: "asc" } }),
-    prisma.playerAchievement.findMany({
-      where: { userId: user.id },
-      select: { achievementDefinitionId: true, unlockedAt: true },
-    }),
+  const supabase = await createServerSupabase();
+
+  const [{ data: definitions }, { data: unlocked }] = await Promise.all([
+    supabase
+      .from("AchievementDefinition")
+      .select("*")
+      .order("sortOrder", { ascending: true }),
+    supabase
+      .from("PlayerAchievement")
+      .select("achievementDefinitionId, unlockedAt")
+      .eq("userId", user.id),
   ]);
 
-  return { definitions, unlocked };
+  return { definitions: definitions || [], unlocked: unlocked || [] };
 }
 
 export async function uploadAvatar(formData: FormData) {
@@ -175,10 +200,12 @@ export async function uploadAvatar(formData: FormData) {
   await writeFile(filePath, buffer);
 
   const imageUrl = `/avatars/${fileName}`;
-  await prisma.user.update({
-    where: { id: user.id },
-    data: { image: imageUrl },
-  });
+  const supabase = await createServerSupabase();
+
+  await supabase
+    .from("User")
+    .update({ image: imageUrl })
+    .eq("id", user.id);
 
   revalidatePath("/profil");
   return imageUrl;
@@ -192,24 +219,18 @@ export async function getPlayerSGData() {
   const user = await requirePortalUser();
   if (!user?.id) return null;
 
-  const rounds = await prisma.roundStats.findMany({
-    where: {
-      userId: user.id,
-      sgTotal: { not: null },
-    },
-    orderBy: { date: "desc" },
-    take: 10, // Use last 10 rounds for average
-    select: {
-      sgTotal: true,
-      sgOffTheTee: true,
-      sgApproach: true,
-      sgAroundTheGreen: true,
-      sgPutting: true,
-    },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: rounds } = await supabase
+    .from("RoundStats")
+    .select("sgTotal, sgOffTheTee, sgApproach, sgAroundTheGreen, sgPutting")
+    .eq("userId", user.id)
+    .not("sgTotal", "is", null)
+    .order("date", { ascending: false })
+    .limit(10);
 
   // Need at least 3 rounds
-  if (rounds.length < 3) {
+  if (!rounds || rounds.length < 3) {
     return null;
   }
 

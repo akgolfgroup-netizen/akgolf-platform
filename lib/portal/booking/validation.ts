@@ -8,11 +8,11 @@
  * men database constraints er den ultimate garantien mot dobbeltbookings.
  */
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { addDays, addHours, isBefore, isAfter, format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { logger } from "@/lib/logger";
-import type { BookingStatus, ServiceType, BlockedTime } from "@prisma/client";
+import type { BookingStatus } from "@prisma/client";
 
 // -----------------------------------------------------------------------------
 // Typer
@@ -104,6 +104,8 @@ export async function validateBooking(
   const { instructorId, startTime, serviceTypeId, studentId, ignoreBookingId } = input;
 
   try {
+    const supabase = createServiceClient();
+
     // 1. Grunnleggende validering av input
     const basicValidation = validateBasicInput(startTime);
     errors.push(...basicValidation.errors);
@@ -114,17 +116,17 @@ export async function validateBooking(
     }
 
     // 2. Hent serviceType
-    const serviceType = await prisma.serviceType.findUnique({
-      where: { id: serviceTypeId },
-      include: {
-        Instructor: {
-          where: { id: instructorId },
-          select: { id: true },
-        },
-      },
-    });
+    const { data: serviceType, error: serviceError } = await supabase
+      .from("ServiceType")
+      .select(`
+        *,
+        Instructor!inner(id)
+      `)
+      .eq("id", serviceTypeId)
+      .eq("Instructor.id", instructorId)
+      .single();
 
-    if (!serviceType) {
+    if (serviceError || !serviceType) {
       errors.push({
         code: "SERVICE_NOT_FOUND",
         message: "Tjenesten finnes ikke",
@@ -140,15 +142,6 @@ export async function validateBooking(
         code: "SERVICE_INACTIVE",
         message: "Tjenesten er ikke aktiv",
         field: "serviceTypeId",
-      });
-    }
-
-    // Sjekk at instruktøren tilbyr tjenesten
-    if (serviceType.Instructor.length === 0) {
-      errors.push({
-        code: "INSTRUCTOR_UNAVAILABLE",
-        message: "Instruktøren tilbyr ikke denne tjenesten",
-        field: "instructorId",
       });
     }
 
@@ -268,7 +261,10 @@ function validateBasicInput(startTime: Date): {
 
 function validateTimeConstraints(
   startTime: Date,
-  serviceType: ServiceType
+  serviceType: {
+    minNoticeHours: number;
+    maxAdvanceDays: number;
+  }
 ): {
   errors: ValidationError[];
   warnings: ValidationWarning[];
@@ -324,16 +320,19 @@ async function checkInstructorAvailability(
   endTime: Date
 ): Promise<{ errors: ValidationError[] }> {
   const errors: ValidationError[] = [];
+  const supabase = createServiceClient();
 
   // Hent instruktør
-  const instructor = await prisma.instructor.findUnique({
-    where: { id: instructorId },
-    include: {
-      User: { select: { name: true } },
-    },
-  });
+  const { data: instructor, error } = await supabase
+    .from("Instructor")
+    .select(`
+      id,
+      User:userId (name)
+    `)
+    .eq("id", instructorId)
+    .single();
 
-  if (!instructor) {
+  if (error || !instructor) {
     errors.push({
       code: "INSTRUCTOR_NOT_FOUND",
       message: "Instruktøren finnes ikke",
@@ -342,37 +341,38 @@ async function checkInstructorAvailability(
     return { errors };
   }
 
+  const userData = instructor.User as { name: string | null } | null;
+
   // Sjekk ukedag-tilgjengelighet (InstructorAvailability)
   const dayOfWeek = startTime.getDay();
   const timeString = format(startTime, "HH:mm");
 
-  const availability = await prisma.instructorAvailability.findFirst({
-    where: {
-      instructorId,
-      dayOfWeek,
-      startTime: { lte: timeString },
-      endTime: { gte: timeString },
-    },
-  });
+  const { data: availability, error: availError } = await supabase
+    .from("InstructorAvailability")
+    .select("id")
+    .eq("instructorId", instructorId)
+    .eq("dayOfWeek", dayOfWeek)
+    .lte("startTime", timeString)
+    .gte("endTime", timeString)
+    .single();
 
   if (!availability) {
     // Sjekk om det er en spesifikk dato-tilgjengelighet
-    const dateAvailability = await prisma.instructorDateAvailability.findFirst({
-      where: {
-        instructorId,
-        date: {
-          gte: new Date(startTime.getFullYear(), startTime.getMonth(), startTime.getDate()),
-          lt: new Date(startTime.getFullYear(), startTime.getMonth(), startTime.getDate() + 1),
-        },
-        startTime: { lte: timeString },
-        endTime: { gte: timeString },
-      },
-    });
+    const dateStr = startTime.toISOString().split("T")[0];
+    const { data: dateAvailability } = await supabase
+      .from("InstructorDateAvailability")
+      .select("id")
+      .eq("instructorId", instructorId)
+      .gte("date", `${dateStr}T00:00:00`)
+      .lt("date", `${dateStr}T23:59:59`)
+      .lte("startTime", timeString)
+      .gte("endTime", timeString)
+      .single();
 
     if (!dateAvailability) {
       errors.push({
         code: "INSTRUCTOR_UNAVAILABLE",
-        message: `${instructor.User.name || "Instruktøren"} er ikke tilgjengelig på dette tidspunktet`,
+        message: `${userData?.name || "Instruktøren"} er ikke tilgjengelig på dette tidspunktet`,
         field: "startTime",
       });
     }
@@ -391,29 +391,30 @@ async function checkBookingConflict(
   conflictingBookingId?: string;
 }> {
   const errors: ValidationError[] = [];
+  const supabase = createServiceClient();
 
-  // Buffer-tider for konfliktsjekk (inkluderer bufferBefore/bufferAfter)
-  const conflictingBooking = await prisma.booking.findFirst({
-    where: {
-      instructorId,
-      status: { in: ["PENDING", "CONFIRMED"] },
-      ...(ignoreBookingId && { id: { not: ignoreBookingId } }),
-      AND: [
-        { startTime: { lt: endTime } },
-        { endTime: { gt: startTime } },
-      ],
-    },
-    select: { id: true, startTime: true, endTime: true },
-  });
+  let query = supabase
+    .from("Booking")
+    .select("id, startTime, endTime")
+    .eq("instructorId", instructorId)
+    .in("status", ["PENDING", "CONFIRMED"] as BookingStatus[])
+    .lt("startTime", endTime.toISOString())
+    .gt("endTime", startTime.toISOString());
+
+  if (ignoreBookingId) {
+    query = query.neq("id", ignoreBookingId);
+  }
+
+  const { data: conflictingBooking, error } = await query.limit(1).single();
 
   if (conflictingBooking) {
     errors.push({
       code: "TIME_SLOT_CONFLICT",
       message: `Tidspunktet er nettopp booket av noen andre (${format(
-        conflictingBooking.startTime,
+        new Date(conflictingBooking.startTime),
         "HH:mm",
         { locale: nb }
-      )}-${format(conflictingBooking.endTime, "HH:mm", { locale: nb })})`,
+      )}-${format(new Date(conflictingBooking.endTime), "HH:mm", { locale: nb })})`,
       field: "startTime",
     });
     return { errors, conflictingBookingId: conflictingBooking.id };
@@ -428,16 +429,16 @@ async function checkBlockedTime(
   endTime: Date
 ): Promise<{ errors: ValidationError[]; blockedReason?: string }> {
   const errors: ValidationError[] = [];
+  const supabase = createServiceClient();
 
-  const blockedTime = await prisma.blockedTime.findFirst({
-    where: {
-      OR: [{ instructorId }, { instructorId: null }],
-      AND: [
-        { startTime: { lt: endTime } },
-        { endTime: { gt: startTime } },
-      ],
-    },
-  });
+  const { data: blockedTime, error } = await supabase
+    .from("BlockedTime")
+    .select("reason")
+    .or(`instructorId.eq.${instructorId},instructorId.is.null`)
+    .lt("startTime", endTime.toISOString())
+    .gt("endTime", startTime.toISOString())
+    .limit(1)
+    .single();
 
   if (blockedTime) {
     errors.push({
@@ -459,18 +460,21 @@ async function checkStudentQuota(
   startTime: Date
 ): Promise<{ errors: ValidationError[] }> {
   const errors: ValidationError[] = [];
+  const supabase = createServiceClient();
 
-  const quota = await prisma.subscriptionQuota.findUnique({
-    where: { userId: studentId },
-  });
+  const { data: quota, error } = await supabase
+    .from("SubscriptionQuota")
+    .select("*")
+    .eq("userId", studentId)
+    .single();
 
-  if (!quota) {
+  if (error || !quota) {
     // Ingen kvote = drop-in eller ingen abonnement - OK
     return { errors };
   }
 
   // Sjekk om perioden er utløpt
-  if (new Date() > quota.periodEnd) {
+  if (new Date() > new Date(quota.periodEnd)) {
     errors.push({
       code: "QUOTA_EXCEEDED",
       message: "Abonnementsperioden har utløpt. Vennligst forny abonnementet.",
@@ -493,7 +497,7 @@ async function checkStudentQuota(
   if (quota.sessionsUsed >= quota.sessionsAllowed) {
     errors.push({
       code: "QUOTA_EXCEEDED",
-      message: `Du har brukt alle ${quota.sessionsAllowed} sesjonene dine denne perioden. Ny kvote fra ${quota.periodEnd.toLocaleDateString("nb-NO")}.`,
+      message: `Du har brukt alle ${quota.sessionsAllowed} sesjonene dine denne perioden. Ny kvote fra ${new Date(quota.periodEnd).toLocaleDateString("nb-NO")}.`,
       field: "studentId",
     });
   }
@@ -508,23 +512,26 @@ async function checkDuplicateUserBooking(
   ignoreBookingId?: string
 ): Promise<{ errors: ValidationError[] }> {
   const errors: ValidationError[] = [];
+  const supabase = createServiceClient();
 
   // Tillatt tidsdiff (5 minutter) for å unngå duplikater pga klokkeslett-forskjeller
   const startLowerBound = new Date(startTime.getTime() - 5 * 60000);
   const startUpperBound = new Date(startTime.getTime() + 5 * 60000);
 
-  const existingBooking = await prisma.booking.findFirst({
-    where: {
-      studentId,
-      instructorId,
-      status: { in: ["PENDING", "CONFIRMED"] },
-      ...(ignoreBookingId && { id: { not: ignoreBookingId } }),
-      startTime: {
-        gte: startLowerBound,
-        lte: startUpperBound,
-      },
-    },
-  });
+  let query = supabase
+    .from("Booking")
+    .select("id")
+    .eq("studentId", studentId)
+    .eq("instructorId", instructorId)
+    .in("status", ["PENDING", "CONFIRMED"] as BookingStatus[])
+    .gte("startTime", startLowerBound.toISOString())
+    .lte("startTime", startUpperBound.toISOString());
+
+  if (ignoreBookingId) {
+    query = query.neq("id", ignoreBookingId);
+  }
+
+  const { data: existingBooking, error } = await query.limit(1).single();
 
   if (existingBooking) {
     errors.push({

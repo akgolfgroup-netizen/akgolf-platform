@@ -1,10 +1,9 @@
 "use server";
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff, isAdmin } from "@/lib/portal/rbac";
 import { checkFacilityConflicts } from "@/lib/portal/facility/conflict-check";
-import { FacilityActivityStatus, FacilityActivityType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export interface CreateActivityInput {
@@ -24,6 +23,8 @@ export async function createActivity(input: CreateActivityInput) {
     throw new Error("Ikke tilgang");
   }
 
+  const supabase = await createServerSupabase();
+
   const {
     facilityId,
     title,
@@ -36,7 +37,8 @@ export async function createActivity(input: CreateActivityInput) {
   } = input;
 
   // Valider aktivitetstype
-  if (!Object.values(FacilityActivityType).includes(activityType as FacilityActivityType)) {
+  const validTypes = ["PRACTICE", "LESSON", "TOURNAMENT", "MAINTENANCE", "EVENT", "OTHER"];
+  if (!validTypes.includes(activityType)) {
     throw new Error("Ugyldig aktivitetstype");
   }
 
@@ -52,34 +54,36 @@ export async function createActivity(input: CreateActivityInput) {
   const conflicts = await checkFacilityConflicts(facilityId, start, end);
 
   // Bestem status basert på konflikter
-  let activityStatus: FacilityActivityStatus = FacilityActivityStatus.CONFIRMED;
+  let activityStatus = "CONFIRMED";
   let conflictNote: string | null = null;
 
   if (conflicts.hasConflict) {
     if (isAdmin(user.role)) {
-      activityStatus = FacilityActivityStatus.CONFIRMED;
+      activityStatus = "CONFIRMED";
       conflictNote = `Godkjent med ${conflicts.conflictingItems.length} konflikter`;
     } else {
-      activityStatus = FacilityActivityStatus.PENDING;
+      activityStatus = "PENDING";
       conflictNote = `Venter på godkjenning - ${conflicts.conflictingItems.length} konflikter`;
     }
   }
 
-  const activity = await prisma.facilityActivity.create({
-    data: {
+  const { data: activity } = await supabase
+    .from("FacilityActivity")
+    .insert({
       facilityId,
       title,
       description,
-      activityType: activityType as FacilityActivityType,
-      startTime: start,
-      endTime: end,
+      activityType,
+      startTime: start.toISOString(),
+      endTime: end.toISOString(),
       createdById: user.id,
-      approvedById: activityStatus === FacilityActivityStatus.CONFIRMED ? user.id : null,
+      approvedById: activityStatus === "CONFIRMED" ? user.id : null,
       status: activityStatus,
       conflictNote,
       color,
-    },
-  });
+    })
+    .select()
+    .single();
 
   revalidatePath("/portal/admin/fasiliteter");
 
@@ -97,26 +101,27 @@ export async function approveActivity(activityId: string) {
     throw new Error("Kun admin kan godkjenne aktiviteter");
   }
 
-  const activity = await prisma.facilityActivity.findUnique({
-    where: { id: activityId },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: activity } = await supabase
+    .from("FacilityActivity")
+    .select("*")
+    .eq("id", activityId)
+    .eq("status", "PENDING")
+    .single();
 
   if (!activity) {
     throw new Error("Aktivitet ikke funnet");
   }
 
-  if (activity.status !== FacilityActivityStatus.PENDING) {
-    throw new Error("Aktiviteten er ikke i ventestatus");
-  }
-
-  await prisma.facilityActivity.update({
-    where: { id: activityId },
-    data: {
-      status: FacilityActivityStatus.CONFIRMED,
+  await supabase
+    .from("FacilityActivity")
+    .update({
+      status: "CONFIRMED",
       approvedById: user.id,
       conflictNote: `Godkjent av ${user.name ?? "admin"}`,
-    },
-  });
+    })
+    .eq("id", activityId);
 
   revalidatePath("/portal/admin/fasiliteter");
   revalidatePath("/portal/admin/godkjenninger");
@@ -130,9 +135,13 @@ export async function cancelActivity(activityId: string) {
     throw new Error("Ikke tilgang");
   }
 
-  const activity = await prisma.facilityActivity.findUnique({
-    where: { id: activityId },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: activity } = await supabase
+    .from("FacilityActivity")
+    .select("createdById")
+    .eq("id", activityId)
+    .single();
 
   if (!activity) {
     throw new Error("Aktivitet ikke funnet");
@@ -143,10 +152,10 @@ export async function cancelActivity(activityId: string) {
     throw new Error("Du kan kun kansellere egne aktiviteter");
   }
 
-  await prisma.facilityActivity.update({
-    where: { id: activityId },
-    data: { status: FacilityActivityStatus.CANCELLED },
-  });
+  await supabase
+    .from("FacilityActivity")
+    .update({ status: "CANCELLED" })
+    .eq("id", activityId);
 
   revalidatePath("/portal/admin/fasiliteter");
 
@@ -159,12 +168,17 @@ export async function getPendingActivities() {
     throw new Error("Ikke tilgang");
   }
 
-  return prisma.facilityActivity.findMany({
-    where: { status: FacilityActivityStatus.PENDING },
-    include: {
-      Facility: { select: { id: true, name: true } },
-      CreatedBy: { select: { id: true, name: true } },
-    },
-    orderBy: { createdAt: "asc" },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: activities } = await supabase
+    .from("FacilityActivity")
+    .select(`
+      *,
+      Facility (id, name),
+      CreatedBy (id, name)
+    `)
+    .eq("status", "PENDING")
+    .order("createdAt", { ascending: true });
+
+  return activities || [];
 }

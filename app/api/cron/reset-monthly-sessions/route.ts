@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { verifyCronAuth } from "@/lib/cron-auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { sendMonthlyResetEmail } from "@/lib/portal/email/send-monthly-reset-email";
-import { SubscriptionStatus } from "@prisma/client";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,23 +22,29 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   const results = { reset: 0, notified: 0, errors: 0 };
 
   try {
     // Finn aktive abonnementer der faktureringsperioden har utlopt
-    const expiredSubs = await prisma.userSubscription.findMany({
-      where: {
-        status: SubscriptionStatus.ACTIVE,
-        billingPeriodEnd: { lte: now },
-      },
-      include: {
-        User: { select: { id: true, name: true, email: true } },
-        CoachingPackage: { select: { name: true, sessionsPerMonth: true } },
-      },
-    });
+    const { data: expiredSubs, error: subsError } = await supabase
+      .from("UserSubscription")
+      .select(`
+        id,
+        sessionsUsedThisMonth,
+        billingPeriodEnd,
+        User (id, name, email),
+        CoachingPackage (name, sessionsPerMonth)
+      `)
+      .eq("status", "ACTIVE")
+      .lte("billingPeriodEnd", now.toISOString());
 
-    if (expiredSubs.length === 0) {
+    if (subsError) {
+      throw subsError;
+    }
+
+    if (!expiredSubs || expiredSubs.length === 0) {
       logger.info("[cron/reset] Ingen abonnementer a nullstille");
       return NextResponse.json({
         success: true,
@@ -55,7 +60,7 @@ export async function GET(request: NextRequest) {
         if (!sub.billingPeriodEnd) continue;
 
         const sessionsUsed = sub.sessionsUsedThisMonth ?? 0;
-        const sessionsTotal = sub.CoachingPackage?.sessionsPerMonth ?? 0;
+        const sessionsTotal = (sub.CoachingPackage as { sessionsPerMonth?: number })?.sessionsPerMonth ?? 0;
         const unusedSessions = Math.max(0, sessionsTotal - sessionsUsed);
 
         // Beregn ny faktureringsperiode (en maned frem)
@@ -65,24 +70,29 @@ export async function GET(request: NextRequest) {
         newEnd.setMonth(newEnd.getMonth() + 1);
 
         // Oppdater abonnementet
-        await prisma.userSubscription.update({
-          where: { id: sub.id },
-          data: {
+        const { error: updateError } = await supabase
+          .from("UserSubscription")
+          .update({
             sessionsUsedThisMonth: 0,
-            billingPeriodStart: newStart,
-            billingPeriodEnd: newEnd,
-          },
-        });
+            billingPeriodStart: newStart.toISOString(),
+            billingPeriodEnd: newEnd.toISOString(),
+          })
+          .eq("id", sub.id);
+
+        if (updateError) {
+          throw updateError;
+        }
 
         results.reset++;
 
         // Send e-post om ubrukte økter
-        if (unusedSessions > 0 && sub.User?.email) {
+        const user = (sub.User as { id: string; name?: string; email?: string }[] | null)?.[0] ?? null;
+        if (unusedSessions > 0 && user?.email) {
           try {
             await sendMonthlyResetEmail({
-              studentName: sub.User.name ?? "Elev",
-              studentEmail: sub.User.email,
-              packageName: sub.CoachingPackage?.name ?? "Coaching-pakke",
+              studentName: user.name ?? "Elev",
+              studentEmail: user.email,
+              packageName: (sub.CoachingPackage as { name?: string })?.name ?? "Coaching-pakke",
               sessionsUsed: sessionsUsed,
               sessionsTotal: sessionsTotal,
               unusedSessions: unusedSessions,
@@ -92,7 +102,7 @@ export async function GET(request: NextRequest) {
             results.notified++;
           } catch (emailErr) {
             logger.error(
-              `[cron/reset] Feil ved sending av e-post til ${sub.User.email}:`,
+              `[cron/reset] Feil ved sending av e-post til ${user.email}:`,
               emailErr
             );
             // Ikke telle dette som kritisk feil — reset er allerede gjort

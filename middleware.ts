@@ -29,6 +29,11 @@ export async function middleware(request: NextRequest) {
       !pathname.startsWith("/_next") &&
       !pathname.startsWith("/favicon") &&
       !pathname.startsWith("/icon") &&
+      !pathname.startsWith("/landing") &&
+      !pathname.startsWith("/booking") &&
+      !pathname.startsWith("/spillerportal") &&
+      !pathname.startsWith("/personvern") &&
+      !pathname.startsWith("/api") &&
       pathname !== "/maintenance"
     ) {
       return NextResponse.rewrite(new URL("/maintenance", request.url));

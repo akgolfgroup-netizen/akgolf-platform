@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
-import { BookingStatus, FacilityActivityStatus } from "@prisma/client";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 // Farger for aktivitetstyper (Brand Guide 2026 - Apple Light)
@@ -66,97 +65,105 @@ export async function GET(req: NextRequest) {
 
   const start = new Date(startDate);
   const end = new Date(endDate);
+  const supabase = await createServerSupabase();
 
   // Hent fasiliteter
-  const facilities = await prisma.facility.findMany({
-    where: {
-      isActive: true,
-      ...(facilityId && { id: facilityId }),
-      ...(locationId && { locationId }),
-    },
-    include: {
-      Location: {
-        select: { id: true, name: true },
-      },
-    },
-    orderBy: { sortOrder: "asc" },
-  });
+  let facilitiesQuery = supabase
+    .from("Facility")
+    .select(`
+      *,
+      Location (id, name)
+    `)
+    .eq("isActive", true);
 
-  const facilityIds = facilities.map((f) => f.id);
+  if (facilityId) {
+    facilitiesQuery = facilitiesQuery.eq("id", facilityId);
+  }
+  if (locationId) {
+    facilitiesQuery = facilitiesQuery.eq("locationId", locationId);
+  }
+
+  const { data: facilities, error: facilitiesError } = await facilitiesQuery.order("sortOrder", { ascending: true });
+
+  if (facilitiesError) {
+    return NextResponse.json({ error: "Kunne ikke hente fasiliteter" }, { status: 500 });
+  }
+
+  const facilityIds = (facilities || []).map((f: { id: string }) => f.id);
+
+  if (facilityIds.length === 0) {
+    return NextResponse.json({ facilities: [], events: [], activityColors: ACTIVITY_COLORS });
+  }
 
   // Hent aktiviteter
-  const activities = await prisma.facilityActivity.findMany({
-    where: {
-      facilityId: { in: facilityIds },
-      status: { not: FacilityActivityStatus.CANCELLED },
-      OR: [
-        { startTime: { gte: start, lte: end } },
-        { endTime: { gte: start, lte: end } },
-        { startTime: { lte: start }, endTime: { gte: end } },
-      ],
-    },
-    include: {
-      Facility: { select: { id: true, name: true } },
-      CreatedBy: { select: { name: true } },
-    },
-    orderBy: { startTime: "asc" },
-  });
+  const { data: activities, error: activitiesError } = await supabase
+    .from("FacilityActivity")
+    .select(`
+      *,
+      Facility (id, name),
+      CreatedBy (name)
+    `)
+    .in("facilityId", facilityIds)
+    .neq("status", "CANCELLED")
+    .or(`startTime.gte.${start.toISOString()},startTime.lte.${end.toISOString()},and(startTime.lte.${start.toISOString()},endTime.gte.${end.toISOString()})`)
+    .order("startTime", { ascending: true });
+
+  if (activitiesError) {
+    return NextResponse.json({ error: "Kunne ikke hente aktiviteter" }, { status: 500 });
+  }
 
   // Hent bookinger med fasilitet
-  const bookings = await prisma.booking.findMany({
-    where: {
-      facilityId: { in: facilityIds },
-      status: { in: [BookingStatus.CONFIRMED, BookingStatus.PENDING] },
-      OR: [
-        { startTime: { gte: start, lte: end } },
-        { endTime: { gte: start, lte: end } },
-        { startTime: { lte: start }, endTime: { gte: end } },
-      ],
-    },
-    include: {
-      Facility: { select: { id: true, name: true } },
-      User: { select: { name: true } },
-      ServiceType: { select: { name: true } },
-      Instructor: {
-        include: {
-          User: { select: { name: true } },
-        },
-      },
-    },
-    orderBy: { startTime: "asc" },
-  });
+  const { data: bookings, error: bookingsError } = await supabase
+    .from("Booking")
+    .select(`
+      *,
+      Facility (id, name),
+      User (name),
+      ServiceType (name),
+      Instructor (
+        User (name)
+      )
+    `)
+    .in("facilityId", facilityIds)
+    .in("status", ["CONFIRMED", "PENDING"])
+    .or(`startTime.gte.${start.toISOString()},startTime.lte.${end.toISOString()},and(startTime.lte.${start.toISOString()},endTime.gte.${end.toISOString()})`)
+    .order("startTime", { ascending: true });
+
+  if (bookingsError) {
+    return NextResponse.json({ error: "Kunne ikke hente bookinger" }, { status: 500 });
+  }
 
   // Konverter til kalender-events
   const events: CalendarEvent[] = [];
 
-  for (const activity of activities) {
+  for (const activity of activities || []) {
     events.push({
       id: activity.id,
       type: "activity",
       title: activity.title,
       description: activity.description,
       facilityId: activity.facilityId,
-      facilityName: activity.Facility.name,
-      startTime: activity.startTime.toISOString(),
-      endTime: activity.endTime.toISOString(),
+      facilityName: activity.Facility?.name,
+      startTime: activity.startTime,
+      endTime: activity.endTime,
       color: activity.color ?? ACTIVITY_COLORS[activity.activityType] ?? ACTIVITY_COLORS.OTHER,
       status: activity.status,
-      createdBy: activity.CreatedBy.name,
+      createdBy: activity.CreatedBy?.name,
       activityType: activity.activityType,
     });
   }
 
-  for (const booking of bookings) {
+  for (const booking of bookings || []) {
     if (!booking.Facility) continue;
     events.push({
       id: booking.id,
       type: "booking",
-      title: `${booking.ServiceType.name} - ${booking.User.name ?? "Ukjent"}`,
-      description: `Instruktør: ${booking.Instructor.User.name}`,
+      title: `${booking.ServiceType?.name} - ${booking.User?.name ?? "Ukjent"}`,
+      description: `Instruktør: ${booking.Instructor?.User?.name}`,
       facilityId: booking.Facility.id,
       facilityName: booking.Facility.name,
-      startTime: booking.startTime.toISOString(),
-      endTime: booking.endTime.toISOString(),
+      startTime: booking.startTime,
+      endTime: booking.endTime,
       color: ACTIVITY_COLORS.BOOKING,
       status: booking.status,
     });

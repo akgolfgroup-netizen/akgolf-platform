@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { nanoid } from "nanoid";
 import {
@@ -46,6 +46,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const supabase = await createServerSupabase();
+
   // Aggreger per klubb
   const clubAggregates = aggregateByClub(shots);
 
@@ -53,62 +55,83 @@ export async function POST(req: NextRequest) {
   const sessions = [];
   for (const agg of clubAggregates) {
     const clubShots = shots.filter((s) => s.club === agg.club);
-    const session = await prisma.trackmanSession.create({
-      data: {
+    const { data: session, error } = await supabase
+      .from("TrackManSession")
+      .insert({
         id: nanoid(),
         userId: user.id,
-        sessionDate: sessionDate ? new Date(sessionDate) : new Date(),
+        sessionDate: sessionDate ? new Date(sessionDate).toISOString() : new Date().toISOString(),
         club: agg.club,
-        shots: JSON.parse(JSON.stringify(clubShots)),
-        averages: JSON.parse(JSON.stringify(agg)),
-      },
-    });
+        shots: clubShots,
+        averages: agg,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      return NextResponse.json({ error: "Kunne ikke lagre session" }, { status: 500 });
+    }
     sessions.push(session);
   }
 
   // Oppdater PlayerBag med nye gjennomsnitt
-  let bag = await prisma.playerBag.findUnique({
-    where: { userId: user.id },
-    include: { clubs: true },
-  });
+  const { data: bag, error: bagError } = await supabase
+    .from("PlayerBag")
+    .select(`
+      *,
+      PlayerClub (*)
+    `)
+    .eq("userId", user.id)
+    .single();
 
-  if (!bag) {
-    bag = await prisma.playerBag.create({
-      data: {
+  let playerBag = bag;
+  if (bagError || !bag) {
+    // Create new bag
+    const { data: newBag, error: createError } = await supabase
+      .from("PlayerBag")
+      .insert({
         id: nanoid(),
         userId: user.id,
-      },
-      include: { clubs: true },
-    });
+      })
+      .select(`
+        *,
+        PlayerClub (*)
+      `)
+      .single();
+
+    if (createError) {
+      return NextResponse.json({ error: "Kunne ikke opprette bag" }, { status: 500 });
+    }
+    playerBag = newBag;
   }
 
   for (const agg of clubAggregates) {
-    const existingClub = bag.clubs.find(
-      (c) => c.name.toLowerCase() === agg.club.toLowerCase()
+    const existingClub = (playerBag?.PlayerClub || []).find(
+      (c: { name: string }) => c.name.toLowerCase() === agg.club.toLowerCase()
     );
 
     if (existingClub) {
-      await prisma.playerClub.update({
-        where: { id: existingClub.id },
-        data: {
+      await supabase
+        .from("PlayerClub")
+        .update({
           avgCarry: agg.avgCarry,
           avgTotal: agg.avgTotal,
           avgOffline: agg.avgOffline,
           shotCount: existingClub.shotCount + agg.count,
-        },
-      });
+        })
+        .eq("id", existingClub.id);
     } else {
-      await prisma.playerClub.create({
-        data: {
+      await supabase
+        .from("PlayerClub")
+        .insert({
           id: nanoid(),
-          bagId: bag.id,
+          bagId: playerBag.id,
           name: agg.club,
           avgCarry: agg.avgCarry,
           avgTotal: agg.avgTotal,
           avgOffline: agg.avgOffline,
           shotCount: agg.count,
-        },
-      });
+        });
     }
   }
 

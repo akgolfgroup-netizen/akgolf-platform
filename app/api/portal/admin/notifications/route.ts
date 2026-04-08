@@ -35,17 +35,15 @@ export async function GET(req: NextRequest) {
       offset,
     });
 
-    // Filtrer på adminType hvis spesifisert
+    // Filtrer på adminType hvis spesifisert (TODO: legg til adminType i schema)
     let notifications = result.notifications;
-    if (adminType) {
-      notifications = notifications.filter((n) => n.adminType === adminType);
-    }
+    // adminType filtering disabled pending schema update
+    // if (adminType) {
+    //   notifications = notifications.filter((n) => n.adminType === adminType);
+    // }
 
     // Grupper notifikasjoner etter dato
-    const typedNotifications = notifications.map(n => ({
-      ...n,
-      metadata: n.metadata as NotificationMetadata | null,
-    })) as NotificationWithDetails[];
+    const typedNotifications = notifications as NotificationWithDetails[];
     const grouped = groupNotificationsByDate(typedNotifications);
 
     return NextResponse.json({

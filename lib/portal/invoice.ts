@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { stripe } from "@/lib/portal/stripe";
 
 /**
@@ -53,6 +53,7 @@ export async function generateInvoice(
   booking: InvoiceBooking,
   customer: InvoiceCustomer
 ): Promise<GeneratedInvoice> {
+  const supabase = createServiceClient();
   const dateStr = new Date()
     .toISOString()
     .slice(0, 10)
@@ -63,10 +64,15 @@ export async function generateInvoice(
   logger.info(`[Invoice] Generating invoice ${invoiceId} for booking ${booking.id}`);
 
   // Find or create Stripe customer
-  const user = await prisma.user.findUnique({
-    where: { id: booking.student.id },
-    select: { stripeCustomerId: true },
-  });
+  const { data: user, error: userError } = await supabase
+    .from("User")
+    .select("stripeCustomerId")
+    .eq("id", booking.student.id)
+    .single();
+
+  if (userError) {
+    logger.error(`[Invoice] Failed to fetch user:`, userError);
+  }
 
   let stripeCustomerId = user?.stripeCustomerId;
 
@@ -85,10 +91,14 @@ export async function generateInvoice(
     });
     stripeCustomerId = stripeCustomer.id;
 
-    await prisma.user.update({
-      where: { id: booking.student.id },
-      data: { stripeCustomerId },
-    });
+    const { error: updateError } = await supabase
+      .from("User")
+      .update({ stripeCustomerId })
+      .eq("id", booking.student.id);
+
+    if (updateError) {
+      logger.error(`[Invoice] Failed to update user with stripeCustomerId:`, updateError);
+    }
   }
 
   // Create Stripe Invoice
@@ -136,8 +146,9 @@ export async function generateInvoice(
   );
 
   // Create PaymentTransaction record
-  const transaction = await prisma.paymentTransaction.create({
-    data: {
+  const { data: transaction, error: txError } = await supabase
+    .from("PaymentTransaction")
+    .insert({
       id: randomUUID(),
       bookingId: booking.id,
       paymentMethod: "INVOICE",
@@ -147,20 +158,30 @@ export async function generateInvoice(
       netAmount,
       providerRef: stripeInvoice.id,
       status: "PENDING",
-      updatedAt: new Date(),
-    },
-  });
+      updatedAt: new Date().toISOString(),
+    })
+    .select()
+    .single();
+
+  if (txError) {
+    logger.error(`[Invoice] Failed to create payment transaction:`, txError);
+    throw txError;
+  }
 
   // Store invoiceId on the booking
-  await prisma.booking.update({
-    where: { id: booking.id },
-    data: {
+  const { error: bookingError } = await supabase
+    .from("Booking")
+    .update({
       invoiceId,
       paymentMethod: "INVOICE",
       paymentStatus: "PENDING",
       stripePaymentId: stripeInvoice.id,
-    },
-  });
+    })
+    .eq("id", booking.id);
+
+  if (bookingError) {
+    logger.error(`[Invoice] Failed to update booking:`, bookingError);
+  }
 
   logger.info(`[Invoice] Invoice ${invoiceId} created — transaction ${transaction.id}`);
 

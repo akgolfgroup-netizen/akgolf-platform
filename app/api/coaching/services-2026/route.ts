@@ -1,107 +1,91 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 
 /**
  * GET /api/coaching/services-2026
- * 
+ *
  * Henter coaching-tjenester for 2026 på Gamle Fredrikstad Golfklubb
  * Inkluderer instruktører, pakker og tilgjengelighet
  */
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
-    // Hent instruktører (Anders og Markus)
-    const instructors = await prisma.instructor.findMany({
-      where: {
-        User: {
-          name: {
-            in: ["Anders Kristiansen", "Markus"],
-          },
-        },
-      },
-      include: {
-        User: {
-          select: {
-            name: true,
-            email: true,
-            phone: true,
-            image: true,
-          },
-        },
-        InstructorAvailability: true,
-        ServiceType: true,
-      },
-    });
+    const supabase = await createServerSupabase();
+
+    // Hent instruktører (Anders og Markus) med brukerinfo
+    const { data: instructors, error: instructorsError } = await supabase
+      .from("Instructor")
+      .select(
+        `
+        id,
+        title,
+        bio,
+        specialization,
+        User (name, email, phone, image),
+        InstructorAvailability (dayOfWeek, startTime, endTime),
+        ServiceType (id, name, description, category, duration, price, maxStudents, minNoticeHours, maxAdvanceDays, sortOrder)
+      `
+      )
+      .in("User.name", ["Anders Kristiansen", "Markus"]);
+
+    if (instructorsError) throw instructorsError;
 
     // Hent coaching-pakker
-    const packages = await prisma.coachingPackage.findMany({
-      where: {
-        isActive: true,
-      },
-      orderBy: {
-        sortOrder: "asc",
-      },
-    });
+    const { data: packages, error: packagesError } = await supabase
+      .from("CoachingPackage")
+      .select("*")
+      .eq("isActive", true)
+      .order("sortOrder", { ascending: true });
+
+    if (packagesError) throw packagesError;
 
     // Hent GFGK lokasjon
-    const location = await prisma.location.findFirst({
-      where: {
-        name: {
-          contains: "Gamle Fredrikstad",
-          mode: "insensitive",
-        },
-      },
-    });
+    const { data: location, error: locationError } = await supabase
+      .from("Location")
+      .select("*")
+      .ilike("name", "%Gamle Fredrikstad%")
+      .single();
+
+    if (locationError && locationError.code !== "PGRST116") throw locationError;
 
     // Hent kommende bookinger for 2026
-    const bookings2026 = await prisma.booking.findMany({
-      where: {
-        startTime: {
-          gte: new Date("2026-01-01"),
-          lte: new Date("2026-12-31"),
-        },
-        instructorId: {
-          in: instructors.map((i) => i.id),
-        },
-        status: {
-          in: ["CONFIRMED", "PENDING"],
-        },
-      },
-      include: {
-        Instructor: {
-          include: {
-            User: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-        ServiceType: true,
-      },
-      orderBy: {
-        startTime: "asc",
-      },
-      take: 100,
-    });
+    const instructorIds = instructors?.map((i) => i.id) || [];
+    const { data: bookings2026, error: bookingsError } = await supabase
+      .from("Booking")
+      .select(
+        `
+        id,
+        startTime,
+        status,
+        Instructor (User (name)),
+        ServiceType (name)
+      `
+      )
+      .gte("startTime", "2026-01-01")
+      .lte("startTime", "2026-12-31")
+      .in("instructorId", instructorIds)
+      .in("status", ["CONFIRMED", "PENDING"])
+      .order("startTime", { ascending: true })
+      .limit(100);
+
+    if (bookingsError) throw bookingsError;
 
     // Hent alle ServiceTypes (tjenester) for GFGK
-    const serviceTypes = await prisma.serviceType.findMany({
-      where: {
-        isActive: true,
-        isPublic: true,
-      },
-      orderBy: {
-        sortOrder: "asc",
-      },
-    });
+    const { data: serviceTypes, error: serviceTypesError } = await supabase
+      .from("ServiceType")
+      .select("*")
+      .eq("isActive", true)
+      .eq("isPublic", true)
+      .order("sortOrder", { ascending: true });
+
+    if (serviceTypesError) throw serviceTypesError;
 
     // Kategoriser tjenester
     const categories = {
-      onboarding: serviceTypes.filter(s => ["Start", "Foundation Test"].includes(s.name)),
-      subscription: serviceTypes.filter(s => ["Performance Pro", "Performance"].includes(s.name)),
-      portal: serviceTypes.filter(s => s.name === "Spillerportal"),
-      flex: serviceTypes.filter(s => s.name.startsWith("Flex") || s.name === "Markus 20 min"),
-      playing: serviceTypes.filter(s => s.name.startsWith("On-Course")),
+      onboarding: serviceTypes?.filter((s) => ["Start", "Foundation Test"].includes(s.name)) || [],
+      subscription: serviceTypes?.filter((s) => ["Performance Pro", "Performance"].includes(s.name)) || [],
+      portal: serviceTypes?.filter((s) => s.name === "Spillerportal") || [],
+      flex: serviceTypes?.filter((s) => s.name.startsWith("Flex") || s.name === "Markus 20 min") || [],
+      playing: serviceTypes?.filter((s) => s.name.startsWith("On-Course")) || [],
       // NOTE: Gruppe- og juniortjenester midlertidig deaktivert
       // group: serviceTypes.filter(s => [...]),
       // junior: serviceTypes.filter(s => s.name.startsWith("Junior")),
@@ -115,25 +99,27 @@ export async function GET(request: NextRequest) {
         shortName: "GFGK",
         address: location?.address || "Fredrikstad",
       },
-      instructors: instructors.map((instructor) => ({
+      instructors: instructors?.map((instructor) => ({
         id: instructor.id,
-        name: instructor.User.name,
-        email: instructor.User.email,
-        phone: instructor.User.phone,
+        name: (instructor.User as unknown as { name: string })?.name,
+        email: (instructor.User as unknown as { email: string })?.email,
+        phone: (instructor.User as unknown as { phone: string })?.phone,
         title: instructor.title,
         bio: instructor.bio,
         specialization: instructor.specialization,
-        image: instructor.User.image,
-        availability: instructor.InstructorAvailability.map((avail) => ({
-          dayOfWeek: avail.dayOfWeek,
-          startTime: avail.startTime,
-          endTime: avail.endTime,
-        })),
-      })),
+        image: (instructor.User as unknown as { image: string })?.image,
+        availability: (instructor.InstructorAvailability as unknown as Array<{ dayOfWeek: number; startTime: string; endTime: string }>)?.map(
+          (avail) => ({
+            dayOfWeek: avail.dayOfWeek,
+            startTime: avail.startTime,
+            endTime: avail.endTime,
+          })
+        ) || [],
+      })) || [],
       services: {
-        total: serviceTypes.length,
+        total: serviceTypes?.length || 0,
         byCategory: categories,
-        all: serviceTypes.map((s) => ({
+        all: serviceTypes?.map((s) => ({
           id: s.id,
           name: s.name,
           description: s.description,
@@ -143,9 +129,9 @@ export async function GET(request: NextRequest) {
           maxStudents: s.maxStudents,
           minNoticeHours: s.minNoticeHours,
           maxAdvanceDays: s.maxAdvanceDays,
-        })),
+        })) || [],
       },
-      packages: packages.map((pkg) => ({
+      packages: packages?.map((pkg) => ({
         id: pkg.id,
         name: pkg.name,
         slug: pkg.slug,
@@ -156,19 +142,19 @@ export async function GET(request: NextRequest) {
         maxBookingsPerWeek: pkg.maxBookingsPerWeek,
         description: pkg.description,
         features: pkg.features,
-      })),
-      upcomingSessions: bookings2026.map((booking) => ({
+      })) || [],
+      upcomingSessions: bookings2026?.map((booking) => ({
         id: booking.id,
         date: booking.startTime,
-        instructor: booking.Instructor?.User?.name,
-        serviceType: booking.ServiceType?.name,
+        instructor: (booking.Instructor as unknown as { User: { name: string } })?.User?.name,
+        serviceType: (booking.ServiceType as unknown as { name: string })?.name,
         status: booking.status,
-      })),
+      })) || [],
       summary: {
-        totalInstructors: instructors.length,
-        totalServices: serviceTypes.length,
-        totalPackages: packages.length,
-        upcomingSessionsCount: bookings2026.length,
+        totalInstructors: instructors?.length || 0,
+        totalServices: serviceTypes?.length || 0,
+        totalPackages: packages?.length || 0,
+        upcomingSessionsCount: bookings2026?.length || 0,
         categories: {
           onboarding: categories.onboarding.length,
           subscription: categories.subscription.length,

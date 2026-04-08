@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { WinBackDay3Email } from "@/lib/portal/email/templates/win-back-day3";
 import { WinBackDay7Email } from "@/lib/portal/email/templates/win-back-day7";
@@ -27,6 +27,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   const day3Threshold = subDays(now, 3);
   const day7Threshold = subDays(now, 7);
@@ -46,27 +47,29 @@ export async function GET(req: NextRequest) {
   // Step 2: Users with no activity in 14+ days and winBackEmailStep = 2
 
   // Step 0 → 1: Day 3 email
-  const step0Users = await prisma.user.findMany({
-    where: {
-      isActive: true,
-      email: { not: null },
-      role: "STUDENT",
-      winBackEmailStep: 0,
-      subscriptionTier: { in: ["VISITOR", "ACADEMY"] }, // Only free users
-      lastActiveAt: { lt: day3Threshold },
-    },
-    select: { id: true, name: true, email: true, lastActiveAt: true },
-    take: 50, // Process in batches
-  });
+  const { data: step0Users, error: step0Error } = await supabase
+    .from("User")
+    .select("id, name, email, lastActiveAt")
+    .eq("isActive", true)
+    .not("email", "is", null)
+    .eq("role", "STUDENT")
+    .eq("winBackEmailStep", 0)
+    .in("subscriptionTier", ["VISITOR", "ACADEMY"])
+    .lt("lastActiveAt", day3Threshold.toISOString())
+    .limit(50);
 
-  for (const user of step0Users) {
+  if (step0Error) {
+    logger.error("[Cron] Error fetching step0 users:", step0Error);
+  }
+
+  for (const user of (step0Users ?? [])) {
     if (!user.email) continue;
 
     try {
       // Get streak
-      const streak = await getStreak(user.id);
+      const streak = await getStreak(supabase, user.id);
       const lastActiveDate = user.lastActiveAt
-        ? format(user.lastActiveAt, "d. MMMM", { locale: nb })
+        ? format(new Date(user.lastActiveAt), "d. MMMM", { locale: nb })
         : "en stund siden";
 
       await resend.emails.send({
@@ -80,10 +83,10 @@ export async function GET(req: NextRequest) {
         }),
       });
 
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { winBackEmailStep: 1 },
-      });
+      await supabase
+        .from("User")
+        .update({ winBackEmailStep: 1 })
+        .eq("id", user.id);
 
       sent++;
     } catch (error) {
@@ -93,26 +96,28 @@ export async function GET(req: NextRequest) {
   }
 
   // Step 1 → 2: Day 7 email
-  const step1Users = await prisma.user.findMany({
-    where: {
-      isActive: true,
-      email: { not: null },
-      role: "STUDENT",
-      winBackEmailStep: 1,
-      subscriptionTier: { in: ["VISITOR", "ACADEMY"] },
-      lastActiveAt: { lt: day7Threshold },
-    },
-    select: { id: true, name: true, email: true },
-    take: 50,
-  });
+  const { data: step1Users, error: step1Error } = await supabase
+    .from("User")
+    .select("id, name, email")
+    .eq("isActive", true)
+    .not("email", "is", null)
+    .eq("role", "STUDENT")
+    .eq("winBackEmailStep", 1)
+    .in("subscriptionTier", ["VISITOR", "ACADEMY"])
+    .lt("lastActiveAt", day7Threshold.toISOString())
+    .limit(50);
 
-  for (const user of step1Users) {
+  if (step1Error) {
+    logger.error("[Cron] Error fetching step1 users:", step1Error);
+  }
+
+  for (const user of (step1Users ?? [])) {
     if (!user.email) continue;
 
     try {
       const [totalSessions, bestStreak] = await Promise.all([
-        prisma.trainingLog.count({ where: { userId: user.id } }),
-        getBestStreak(user.id),
+        getTrainingLogCount(supabase, user.id),
+        getBestStreak(supabase, user.id),
       ]);
 
       await resend.emails.send({
@@ -126,10 +131,10 @@ export async function GET(req: NextRequest) {
         }),
       });
 
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { winBackEmailStep: 2 },
-      });
+      await supabase
+        .from("User")
+        .update({ winBackEmailStep: 2 })
+        .eq("id", user.id);
 
       sent++;
     } catch (error) {
@@ -139,20 +144,22 @@ export async function GET(req: NextRequest) {
   }
 
   // Step 2 → 3: Day 14 email with discount
-  const step2Users = await prisma.user.findMany({
-    where: {
-      isActive: true,
-      email: { not: null },
-      role: "STUDENT",
-      winBackEmailStep: 2,
-      subscriptionTier: { in: ["VISITOR", "ACADEMY"] },
-      lastActiveAt: { lt: day14Threshold },
-    },
-    select: { id: true, name: true, email: true },
-    take: 50,
-  });
+  const { data: step2Users, error: step2Error } = await supabase
+    .from("User")
+    .select("id, name, email")
+    .eq("isActive", true)
+    .not("email", "is", null)
+    .eq("role", "STUDENT")
+    .eq("winBackEmailStep", 2)
+    .in("subscriptionTier", ["VISITOR", "ACADEMY"])
+    .lt("lastActiveAt", day14Threshold.toISOString())
+    .limit(50);
 
-  for (const user of step2Users) {
+  if (step2Error) {
+    logger.error("[Cron] Error fetching step2 users:", step2Error);
+  }
+
+  for (const user of (step2Users ?? [])) {
     if (!user.email) continue;
 
     try {
@@ -170,10 +177,10 @@ export async function GET(req: NextRequest) {
         }),
       });
 
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { winBackEmailStep: 3 }, // Done with sequence
-      });
+      await supabase
+        .from("User")
+        .update({ winBackEmailStep: 3 })
+        .eq("id", user.id);
 
       sent++;
     } catch (error) {
@@ -183,35 +190,43 @@ export async function GET(req: NextRequest) {
   }
 
   // Reset users who have become active again
-  const activeAgain = await prisma.user.updateMany({
-    where: {
-      winBackEmailStep: { gt: 0 },
-      lastActiveAt: { gte: day3Threshold },
-    },
-    data: { winBackEmailStep: 0 },
-  });
+  const { data: activeAgain, error: resetError } = await supabase
+    .from("User")
+    .update({ winBackEmailStep: 0 })
+    .gt("winBackEmailStep", 0)
+    .gte("lastActiveAt", day3Threshold.toISOString())
+    .select("id");
+
+  if (resetError) {
+    logger.error("[Cron] Error resetting active users:", resetError);
+  }
+
+  const resetCount = activeAgain?.length ?? 0;
 
   logger.info(
-    `[Cron] Win-back: ${sent} emails sent, ${errors} errors, ${activeAgain.count} users reset`
+    `[Cron] Win-back: ${sent} emails sent, ${errors} errors, ${resetCount} users reset`
   );
 
   return NextResponse.json({
     ok: true,
     sent,
     errors,
-    reset: activeAgain.count,
+    reset: resetCount,
     timestamp: now.toISOString(),
   });
 }
 
-async function getStreak(userId: string): Promise<number> {
-  const logs = await prisma.trainingLog.findMany({
-    where: { userId },
-    select: { date: true },
-    orderBy: { date: "desc" },
-  });
+async function getStreak(
+  supabase: ReturnType<typeof createServiceClient>,
+  userId: string
+): Promise<number> {
+  const { data: logs, error } = await supabase
+    .from("TrainingLog")
+    .select("date")
+    .eq("userId", userId)
+    .order("date", { ascending: false });
 
-  if (logs.length === 0) return 0;
+  if (error || !logs || logs.length === 0) return 0;
 
   const uniqueDates = [
     ...new Set(logs.map((l) => new Date(l.date).toISOString().split("T")[0])),
@@ -235,14 +250,17 @@ async function getStreak(userId: string): Promise<number> {
   return streak;
 }
 
-async function getBestStreak(userId: string): Promise<number> {
-  const logs = await prisma.trainingLog.findMany({
-    where: { userId },
-    select: { date: true },
-    orderBy: { date: "asc" },
-  });
+async function getBestStreak(
+  supabase: ReturnType<typeof createServiceClient>,
+  userId: string
+): Promise<number> {
+  const { data: logs, error } = await supabase
+    .from("TrainingLog")
+    .select("date")
+    .eq("userId", userId)
+    .order("date", { ascending: true });
 
-  if (logs.length === 0) return 0;
+  if (error || !logs || logs.length === 0) return 0;
 
   const uniqueDates = [
     ...new Set(logs.map((l) => new Date(l.date).toISOString().split("T")[0])),
@@ -265,4 +283,21 @@ async function getBestStreak(userId: string): Promise<number> {
   }
 
   return bestStreak;
+}
+
+async function getTrainingLogCount(
+  supabase: ReturnType<typeof createServiceClient>,
+  userId: string
+): Promise<number> {
+  const { count, error } = await supabase
+    .from("TrainingLog")
+    .select("*", { count: "exact", head: true })
+    .eq("userId", userId);
+
+  if (error) {
+    logger.error(`[getTrainingLogCount] Error for user ${userId}:`, error);
+    return 0;
+  }
+
+  return count ?? 0;
 }

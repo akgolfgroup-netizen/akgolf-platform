@@ -1,6 +1,6 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { randomBytes } from "crypto";
 import { hasTierAccess } from "@/lib/portal/rbac";
 import { SubscriptionTier } from "@prisma/client";
@@ -24,10 +24,15 @@ export async function POST(request: NextRequest) {
 
   const token = randomBytes(32).toString("hex");
 
-  await prisma.user.update({
-    where: { id: user.id },
-    data: { calendarToken: token },
-  });
+  const supabase = createServiceClient();
+  const { error } = await supabase
+    .from("User")
+    .update({ calendarToken: token })
+    .eq("id", user.id);
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke generere token" }, { status: 500 });
+  }
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://akgolf.no";
   const feedUrl = `${baseUrl}/api/portal/calendar/feed/${token}`;
@@ -46,10 +51,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const dbUser = await prisma.user.findUnique({
-    where: { id: user.id },
-    select: { calendarToken: true },
-  });
+  const supabase = createServiceClient();
+  const { data: dbUser } = await supabase
+    .from("User")
+    .select("calendarToken")
+    .eq("id", user.id)
+    .single();
 
   if (!dbUser?.calendarToken) {
     return NextResponse.json({ feedUrl: null });

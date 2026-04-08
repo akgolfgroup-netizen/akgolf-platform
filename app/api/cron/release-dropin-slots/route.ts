@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { verifyCronAuth } from "@/lib/cron-auth";
-import { prisma } from "@/lib/portal/prisma";
-import { BookingStatus } from "@prisma/client";
+import { createServiceClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,39 +18,36 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   const in48h = new Date(now.getTime() + 48 * 60 * 60 * 1000);
 
   try {
     // Finn alle aktive slots som IKKE er reservert for junior_elite
-    const openSlots = await prisma.coachingAvailability.findMany({
-      where: {
-        isActive: true,
-        OR: [
-          { reservedFor: null },
-          { NOT: { reservedFor: "junior_elite" } },
-        ],
-      },
-      select: {
-        id: true,
-        dayOfWeek: true,
-        startTime: true,
-        endTime: true,
-        reservedFor: true,
-      },
-    });
+    const { data: openSlots, error: slotsError } = await supabase
+      .from("CoachingAvailability")
+      .select("id, dayOfWeek, startTime, endTime, reservedFor")
+      .eq("isActive", true)
+      .or("reservedFor.is.null,reservedFor.neq.junior_elite");
+
+    if (slotsError) {
+      throw slotsError;
+    }
 
     // Finn bookinger innen de neste 48 timene
-    const upcomingBookings = await prisma.booking.findMany({
-      where: {
-        status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
-        startTime: { gte: now, lte: in48h },
-      },
-      select: { id: true, startTime: true, endTime: true },
-    });
+    const { data: upcomingBookings, error: bookingsError } = await supabase
+      .from("Booking")
+      .select("id, startTime, endTime")
+      .in("status", ["PENDING", "CONFIRMED"])
+      .gte("startTime", now.toISOString())
+      .lte("startTime", in48h.toISOString());
 
-    const totalOpenSlots = openSlots.length;
-    const totalBookings = upcomingBookings.length;
+    if (bookingsError) {
+      throw bookingsError;
+    }
+
+    const totalOpenSlots = openSlots?.length ?? 0;
+    const totalBookings = upcomingBookings?.length ?? 0;
 
     logger.info(
       `[cron/dropin] Status: ${totalOpenSlots} åpne slots totalt, ${totalBookings} bookinger neste 48t`

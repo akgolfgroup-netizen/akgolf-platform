@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { subDays } from "date-fns";
+import type { TrainingLog, RoundStats, CoachingSession } from "@prisma/client";
 
 export interface FocusRecommendation {
   areas: {
@@ -11,27 +12,36 @@ export interface FocusRecommendation {
 }
 
 export async function generateFocusRecommendation(userId: string): Promise<FocusRecommendation> {
+  const supabase = createServiceClient();
   const thirtyDaysAgo = subDays(new Date(), 30);
 
-  const [trainingLogs, rounds, coachingSessions] = await Promise.all([
-    prisma.trainingLog.findMany({
-      where: { userId, date: { gte: thirtyDaysAgo } },
-      orderBy: { date: "desc" },
-      take: 30,
-      select: { focusArea: true, durationMinutes: true, rating: true, notes: true },
-    }),
-    prisma.roundStats.findMany({
-      where: { userId, date: { gte: thirtyDaysAgo } },
-      orderBy: { date: "desc" },
-      take: 5,
-    }),
-    prisma.coachingSession.findMany({
-      where: { studentId: userId, sessionDate: { gte: thirtyDaysAgo } },
-      orderBy: { sessionDate: "desc" },
-      take: 3,
-      select: { primaryFocus: true, aiFocusAreas: true, aiActionItems: true },
-    }),
+  const [trainingLogsResult, roundsResult, coachingSessionsResult] = await Promise.all([
+    supabase
+      .from("TrainingLog")
+      .select("focusArea, durationMinutes, rating, notes")
+      .eq("userId", userId)
+      .gte("date", thirtyDaysAgo.toISOString())
+      .order("date", { ascending: false })
+      .limit(30),
+    supabase
+      .from("RoundStats")
+      .select("totalScore, scoreToPar, sgTotal, sgOffTheTee, sgApproach, sgAroundTheGreen, sgPutting")
+      .eq("userId", userId)
+      .gte("date", thirtyDaysAgo.toISOString())
+      .order("date", { ascending: false })
+      .limit(5),
+    supabase
+      .from("CoachingSession")
+      .select("primaryFocus, aiFocusAreas, aiActionItems")
+      .eq("studentId", userId)
+      .gte("sessionDate", thirtyDaysAgo.toISOString())
+      .order("sessionDate", { ascending: false })
+      .limit(3),
   ]);
+
+  const trainingLogs = trainingLogsResult.data || [];
+  const rounds = roundsResult.data || [];
+  const coachingSessions = coachingSessionsResult.data || [];
 
   const trainingContext = trainingLogs.map((l) =>
     `- ${l.focusArea ?? "Generell"}: ${l.durationMinutes ?? 0}min, rating ${l.rating ?? "N/A"}`
@@ -42,7 +52,7 @@ export async function generateFocusRecommendation(userId: string): Promise<Focus
   ).join("\n");
 
   const coachingContext = coachingSessions.map((s) =>
-    `- Fokus: ${s.primaryFocus ?? "?"}, Områder: ${s.aiFocusAreas.join(", ")}, Oppgaver: ${s.aiActionItems.join(", ")}`
+    `- Fokus: ${s.primaryFocus ?? "?"}, Områder: ${(s.aiFocusAreas || []).join(", ")}, Oppgaver: ${(s.aiActionItems || []).join(", ")}`
   ).join("\n");
 
   const client = new Anthropic();

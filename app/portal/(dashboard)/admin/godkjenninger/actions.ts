@@ -1,11 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff, isAdmin } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { FacilityActivityStatus } from "@prisma/client";
 import { sendBookingConfirmation, sendBookingCancellation } from "@/lib/portal/email/send-booking-email";
 import { logger } from "@/lib/logger";
 
@@ -18,39 +17,49 @@ export async function approveBooking(
       redirect("/");
     }
 
+    const supabase = await createServerSupabase();
+
     // Verifiser at bookingen tilhorer en av denne instructorens elever
-    const booking = await prisma.booking.findFirst({
-      where: {
-        id: bookingId,
-        status: "PENDING",
-      },
-      include: {
-        User: { select: { name: true, email: true } },
-        Instructor: { select: { User: { select: { name: true, email: true } } } },
-        ServiceType: { select: { name: true, duration: true } },
-      },
-    });
+    const { data: booking } = await supabase
+      .from("Booking")
+      .select(`
+        id,
+        startTime,
+        endTime,
+        amount,
+        vatAmount,
+        stripePaymentId,
+        status,
+        User (name, email),
+        Instructor (User (name, email)),
+        ServiceType (name, duration)
+      `)
+      .eq("id", bookingId)
+      .eq("status", "PENDING")
+      .single();
 
     if (!booking) {
       return { success: false, error: "Booking ikke funnet" };
     }
 
-    await prisma.booking.update({
-      where: { id: bookingId },
-      data: { status: "CONFIRMED" },
-    });
+    await supabase
+      .from("Booking")
+      .update({ status: "CONFIRMED" })
+      .eq("id", bookingId);
 
     // Send bekreftelse til student og instruktør
-    if (booking.User.email && booking.Instructor.User.email) {
+    const userEmail = (booking.User as { email: string | null }).email;
+    const instructorEmail = (booking.Instructor as { User: { email: string | null } }).User?.email;
+    if (userEmail && instructorEmail) {
       sendBookingConfirmation({
         bookingId,
-        studentName: booking.User.name ?? "Kunde",
-        studentEmail: booking.User.email,
-        instructorName: booking.Instructor.User.name ?? "Instruktør",
-        instructorEmail: booking.Instructor.User.email,
-        serviceName: booking.ServiceType.name,
-        startTime: booking.startTime,
-        duration: booking.ServiceType.duration,
+        studentName: (booking.User as { name: string | null }).name ?? "Kunde",
+        studentEmail: userEmail,
+        instructorName: (booking.Instructor as { User: { name: string | null } }).User?.name ?? "Instruktør",
+        instructorEmail,
+        serviceName: (booking.ServiceType as { name: string }).name,
+        startTime: new Date(booking.startTime),
+        duration: (booking.ServiceType as { duration: number }).duration,
         amount: booking.amount,
         vatAmount: booking.vatAmount,
         location: "Gamle Fredrikstad Golfklubb",
@@ -78,35 +87,39 @@ export async function rejectBooking(
       redirect("/");
     }
 
-    const booking = await prisma.booking.findFirst({
-      where: {
-        id: bookingId,
-        status: "PENDING",
-      },
-      include: {
-        User: { select: { name: true, email: true } },
-        Instructor: { select: { User: { select: { name: true } } } },
-        ServiceType: { select: { name: true } },
-      },
-    });
+    const supabase = await createServerSupabase();
+
+    const { data: booking } = await supabase
+      .from("Booking")
+      .select(`
+        id,
+        startTime,
+        User (name, email),
+        Instructor (User (name)),
+        ServiceType (name)
+      `)
+      .eq("id", bookingId)
+      .eq("status", "PENDING")
+      .single();
 
     if (!booking) {
       return { success: false, error: "Booking ikke funnet" };
     }
 
-    await prisma.booking.update({
-      where: { id: bookingId },
-      data: { status: "CANCELLED" },
-    });
+    await supabase
+      .from("Booking")
+      .update({ status: "CANCELLED" })
+      .eq("id", bookingId);
 
     // Send avvisnings-e-post til student
-    if (booking.User.email) {
+    const userEmail = (booking.User as { email: string | null }).email;
+    if (userEmail) {
       sendBookingCancellation(
-        booking.User.email,
-        booking.User.name ?? "Kunde",
-        booking.ServiceType.name,
-        booking.Instructor.User.name ?? "Instruktør",
-        booking.startTime,
+        userEmail,
+        (booking.User as { name: string | null }).name ?? "Kunde",
+        (booking.ServiceType as { name: string }).name,
+        (booking.Instructor as { User: { name: string | null } }).User?.name ?? "Instruktør",
+        new Date(booking.startTime),
         "Bookingen ble avvist av instruktør",
         100, // Full refund ved avvisning
       ).catch((err: unknown) => logger.error("[Godkjenning] Avvisnings-e-post feilet:", err));
@@ -133,25 +146,27 @@ export async function approveActivity(
       return { success: false, error: "Kun admin kan godkjenne aktiviteter" };
     }
 
-    const activity = await prisma.facilityActivity.findFirst({
-      where: {
-        id: activityId,
-        status: FacilityActivityStatus.PENDING,
-      },
-    });
+    const supabase = await createServerSupabase();
+
+    const { data: activity } = await supabase
+      .from("FacilityActivity")
+      .select("*")
+      .eq("id", activityId)
+      .eq("status", "PENDING")
+      .single();
 
     if (!activity) {
       return { success: false, error: "Aktivitet ikke funnet" };
     }
 
-    await prisma.facilityActivity.update({
-      where: { id: activityId },
-      data: {
-        status: FacilityActivityStatus.CONFIRMED,
+    await supabase
+      .from("FacilityActivity")
+      .update({
+        status: "CONFIRMED",
         approvedById: user.id,
         conflictNote: `Godkjent av ${user.name ?? "admin"}`,
-      },
-    });
+      })
+      .eq("id", activityId);
 
     revalidatePath("/portal/admin/godkjenninger");
     revalidatePath("/portal/admin/fasiliteter");
@@ -174,21 +189,23 @@ export async function rejectActivity(
       return { success: false, error: "Kun admin kan avvise aktiviteter" };
     }
 
-    const activity = await prisma.facilityActivity.findFirst({
-      where: {
-        id: activityId,
-        status: FacilityActivityStatus.PENDING,
-      },
-    });
+    const supabase = await createServerSupabase();
+
+    const { data: activity } = await supabase
+      .from("FacilityActivity")
+      .select("*")
+      .eq("id", activityId)
+      .eq("status", "PENDING")
+      .single();
 
     if (!activity) {
       return { success: false, error: "Aktivitet ikke funnet" };
     }
 
-    await prisma.facilityActivity.update({
-      where: { id: activityId },
-      data: { status: FacilityActivityStatus.CANCELLED },
-    });
+    await supabase
+      .from("FacilityActivity")
+      .update({ status: "CANCELLED" })
+      .eq("id", activityId);
 
     revalidatePath("/portal/admin/godkjenninger");
     revalidatePath("/portal/admin/fasiliteter");

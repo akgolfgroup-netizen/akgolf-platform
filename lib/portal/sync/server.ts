@@ -4,7 +4,7 @@
  * Funksjoner for å sende sync events fra serveren.
  */
 
-import { prisma } from '@/lib/portal/prisma';
+import { createServiceClient } from '@/lib/supabase/server';
 import { SyncEventType, SyncEventStatus } from '@prisma/client';
 
 // ════════════════════════════════════════════════════════════
@@ -43,12 +43,16 @@ export async function createSyncEvent({
   dedupKey,
   expiresInMinutes = 60,
 }: EmitSyncEventOptions) {
+  const supabase = createServiceClient();
+
   try {
     // Sjekk for duplikat hvis dedupKey er satt
     if (dedupKey) {
-      const existing = await prisma.syncEvent.findUnique({
-        where: { dedupKey },
-      });
+      const { data: existing } = await supabase
+        .from("SyncEvent")
+        .select("id")
+        .eq("dedupKey", dedupKey)
+        .single();
       
       if (existing) {
         return { success: false, reason: 'duplicate', eventId: existing.id };
@@ -56,22 +60,28 @@ export async function createSyncEvent({
     }
     
     const expiresAt = new Date(Date.now() + expiresInMinutes * 60 * 1000);
+    const id = crypto.randomUUID();
     
-    const event = await prisma.syncEvent.create({
-      data: {
+    const { data: event, error } = await supabase
+      .from("SyncEvent")
+      .insert({
+        id,
         type,
-        payload: payload as never,
+        payload: payload as Record<string, unknown>,
         targetUserIds,
         targetRoles,
         sourceUserId,
         sourceSystem,
         dedupKey,
-        expiresAt,
-        status: SyncEventStatus.PENDING,
+        expiresAt: expiresAt.toISOString(),
+        status: "PENDING" as SyncEventStatus,
         deliveredTo: [],
         failedFor: [],
-      },
-    });
+      })
+      .select()
+      .single();
+    
+    if (error) throw error;
     
     return { success: true, eventId: event.id };
   } catch (error) {
@@ -115,25 +125,27 @@ export async function getPendingEventsForUser(
     after?: Date;
   } = {}
 ) {
+  const supabase = createServiceClient();
   const { limit = 100, after } = options;
   
-  const events = await prisma.syncEvent.findMany({
-    where: {
-      status: { in: [SyncEventStatus.PENDING, SyncEventStatus.FAILED] },
-      expiresAt: { gt: new Date() },
-      OR: [
-        { targetUserIds: { has: userId } },
-        { targetRoles: { has: userRole } },
-        { targetUserIds: { isEmpty: true }, targetRoles: { isEmpty: true } },
-      ],
-      NOT: { deliveredTo: { has: userId } },
-      ...(after && { createdAt: { gt: after } }),
-    },
-    orderBy: { createdAt: 'asc' },
-    take: limit,
-  });
+  // Build the query with proper filters
+  const { data: events, error } = await supabase
+    .from("SyncEvent")
+    .select("*")
+    .in("status", ["PENDING", "FAILED"] as SyncEventStatus[])
+    .gt("expiresAt", new Date().toISOString())
+    .or(`targetUserIds.cs.{${userId}},targetRoles.cs.{${userRole}},and(targetUserIds.eq.[],targetRoles.eq.[])`)
+    .not("deliveredTo", "cs", `{${userId}}`)
+    .gt("createdAt", after ? after.toISOString() : new Date(0).toISOString())
+    .order("createdAt", { ascending: true })
+    .limit(limit);
   
-  return events;
+  if (error) {
+    console.error('Failed to get pending events:', error);
+    return [];
+  }
+  
+  return events || [];
 }
 
 /**
@@ -145,18 +157,29 @@ export async function markEventsAsDelivered(
 ) {
   if (eventIds.length === 0) return;
   
-  await prisma.$transaction(
-    eventIds.map(id =>
-      prisma.syncEvent.update({
-        where: { id },
-        data: {
-          deliveredTo: { push: userId },
-          status: SyncEventStatus.DELIVERED,
-          deliveredAt: new Date(),
-        },
-      })
-    )
-  );
+  const supabase = createServiceClient();
+  
+  // Update each event individually since we need to append to an array
+  for (const id of eventIds) {
+    const { data: event } = await supabase
+      .from("SyncEvent")
+      .select("deliveredTo")
+      .eq("id", id)
+      .single();
+    
+    if (event) {
+      const deliveredTo = [...(event.deliveredTo || []), userId];
+      
+      await supabase
+        .from("SyncEvent")
+        .update({
+          deliveredTo,
+          status: "DELIVERED" as SyncEventStatus,
+          deliveredAt: new Date().toISOString(),
+        })
+        .eq("id", id);
+    }
+  }
 }
 
 /**
@@ -168,17 +191,28 @@ export async function markEventsAsFailed(
 ) {
   if (eventIds.length === 0) return;
   
-  await prisma.$transaction(
-    eventIds.map(id =>
-      prisma.syncEvent.update({
-        where: { id },
-        data: {
-          failedFor: { push: userId },
-          status: SyncEventStatus.FAILED,
-        },
-      })
-    )
-  );
+  const supabase = createServiceClient();
+  
+  // Update each event individually since we need to append to an array
+  for (const id of eventIds) {
+    const { data: event } = await supabase
+      .from("SyncEvent")
+      .select("failedFor")
+      .eq("id", id)
+      .single();
+    
+    if (event) {
+      const failedFor = [...(event.failedFor || []), userId];
+      
+      await supabase
+        .from("SyncEvent")
+        .update({
+          failedFor,
+          status: "FAILED" as SyncEventStatus,
+        })
+        .eq("id", id);
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════
@@ -204,14 +238,17 @@ interface AuditLogOptions {
  * Logger en audit event for data-endringer
  */
 export async function logAuditEvent(options: AuditLogOptions) {
+  const supabase = createServiceClient();
+  
   try {
-    await prisma.syncAuditLog.create({
-      data: {
+    await supabase
+      .from("SyncAuditLog")
+      .insert({
         tableName: options.tableName,
         recordId: options.recordId,
         action: options.action,
-        before: (options.before ?? null) as any,
-        after: (options.after ?? null) as any,
+        before: (options.before ?? null) as Record<string, unknown> | null,
+        after: (options.after ?? null) as Record<string, unknown> | null,
         changedFields: options.changedFields ?? [],
         userId: options.userId ?? null,
         userRole: options.userRole ?? null,
@@ -219,8 +256,7 @@ export async function logAuditEvent(options: AuditLogOptions) {
         userAgent: options.userAgent ?? null,
         sourceSystem: options.sourceSystem,
         correlationId: options.correlationId ?? null,
-      },
-    });
+      });
   } catch (error) {
     console.error('Failed to log audit event:', error);
   }
@@ -242,18 +278,20 @@ export async function registerConnection(
     eventTypes?: string[];
   } = {}
 ) {
+  const supabase = createServiceClient();
+  
   try {
-    await prisma.syncConnection.create({
-      data: {
+    await supabase
+      .from("SyncConnection")
+      .insert({
         userId,
         sessionId,
         userAgent: metadata.userAgent ?? null,
         ipAddress: metadata.ipAddress ?? null,
         eventTypes: metadata.eventTypes ?? [],
-        connectedAt: new Date(),
-        lastPingAt: new Date(),
-      },
-    });
+        connectedAt: new Date().toISOString(),
+        lastPingAt: new Date().toISOString(),
+      });
   } catch (error) {
     console.error('Failed to register connection:', error);
   }
@@ -263,11 +301,13 @@ export async function registerConnection(
  * Oppdaterer lastPingAt for en connection
  */
 export async function updateConnectionPing(sessionId: string) {
+  const supabase = createServiceClient();
+  
   try {
-    await prisma.syncConnection.update({
-      where: { sessionId },
-      data: { lastPingAt: new Date() },
-    });
+    await supabase
+      .from("SyncConnection")
+      .update({ lastPingAt: new Date().toISOString() })
+      .eq("sessionId", sessionId);
   } catch (error) {
     // Ignorer - connection kan være slettet
   }
@@ -277,11 +317,13 @@ export async function updateConnectionPing(sessionId: string) {
  * Markerer en connection som disconnected
  */
 export async function unregisterConnection(sessionId: string) {
+  const supabase = createServiceClient();
+  
   try {
-    await prisma.syncConnection.update({
-      where: { sessionId },
-      data: { disconnectedAt: new Date() },
-    });
+    await supabase
+      .from("SyncConnection")
+      .update({ disconnectedAt: new Date().toISOString() })
+      .eq("sessionId", sessionId);
   } catch (error) {
     // Ignorer
   }
@@ -291,19 +333,22 @@ export async function unregisterConnection(sessionId: string) {
  * Rydder opp gamle connections
  */
 export async function cleanupStaleConnections(staleThresholdMinutes: number = 5) {
+  const supabase = createServiceClient();
   const cutoff = new Date(Date.now() - staleThresholdMinutes * 60 * 1000);
   
-  const result = await prisma.syncConnection.updateMany({
-    where: {
-      disconnectedAt: null,
-      lastPingAt: { lt: cutoff },
-    },
-    data: {
-      disconnectedAt: new Date(),
-    },
-  });
+  const { data, error } = await supabase
+    .from("SyncConnection")
+    .update({ disconnectedAt: new Date().toISOString() })
+    .is("disconnectedAt", null)
+    .lt("lastPingAt", cutoff.toISOString())
+    .select();
   
-  return result.count;
+  if (error) {
+    console.error('Failed to cleanup stale connections:', error);
+    return 0;
+  }
+  
+  return data?.length || 0;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -314,29 +359,42 @@ export async function cleanupStaleConnections(staleThresholdMinutes: number = 5)
  * Rydder opp utløpte events
  */
 export async function cleanupExpiredEvents() {
-  const result = await prisma.syncEvent.deleteMany({
-    where: {
-      expiresAt: { lt: new Date() },
-      status: { in: [SyncEventStatus.DELIVERED, SyncEventStatus.EXPIRED] },
-    },
-  });
+  const supabase = createServiceClient();
   
-  return result.count;
+  const { data, error } = await supabase
+    .from("SyncEvent")
+    .delete()
+    .lt("expiresAt", new Date().toISOString())
+    .in("status", ["DELIVERED", "EXPIRED"] as SyncEventStatus[])
+    .select();
+  
+  if (error) {
+    console.error('Failed to cleanup expired events:', error);
+    return 0;
+  }
+  
+  return data?.length || 0;
 }
 
 /**
  * Rydder opp gamle audit logs
  */
 export async function cleanupOldAuditLogs(retentionDays: number = 90) {
+  const supabase = createServiceClient();
   const cutoff = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000);
   
-  const result = await prisma.syncAuditLog.deleteMany({
-    where: {
-      createdAt: { lt: cutoff },
-    },
-  });
+  const { data, error } = await supabase
+    .from("SyncAuditLog")
+    .delete()
+    .lt("createdAt", cutoff.toISOString())
+    .select();
   
-  return result.count;
+  if (error) {
+    console.error('Failed to cleanup old audit logs:', error);
+    return 0;
+  }
+  
+  return data?.length || 0;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -362,7 +420,7 @@ export async function emitBookingEvent(
   sourceSystem: 'PORTAL' | 'MISSION_CONTROL'
 ) {
   return emitSyncEvent({
-    type: SyncEventType[type],
+    type: type as SyncEventType,
     payload: {
       bookingId: booking.id,
       studentId: booking.studentId,
@@ -388,7 +446,7 @@ export async function emitAvailabilityEvent(
   sourceSystem: 'PORTAL' | 'MISSION_CONTROL'
 ) {
   return emitSyncEvent({
-    type: SyncEventType.AVAILABILITY_CHANGED,
+    type: 'AVAILABILITY_CHANGED' as SyncEventType,
     payload: {
       instructorId,
       date: new Date().toISOString().split('T')[0],
@@ -414,7 +472,7 @@ export async function emitCoachingNotesEvent(
   sourceUserId: string
 ) {
   return emitSyncEvent({
-    type: SyncEventType.COACHING_NOTES_ADDED,
+    type: 'COACHING_NOTES_ADDED' as SyncEventType,
     payload: {
       coachingSessionId: coachingSession.id,
       bookingId: coachingSession.bookingId,

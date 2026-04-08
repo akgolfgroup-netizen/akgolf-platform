@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { nanoid } from "nanoid";
 import type { NotificationType } from "@prisma/client";
 
@@ -11,27 +11,42 @@ interface CreateNotificationInput {
 }
 
 export async function createNotification(input: CreateNotificationInput) {
-  return prisma.notification.create({
-    data: {
+  const supabase = createServiceClient();
+  
+  const { data, error } = await supabase
+    .from("Notification")
+    .insert({
       id: nanoid(),
       userId: input.userId,
       type: input.type,
       title: input.title,
       message: input.message,
       linkUrl: input.linkUrl,
-    },
-  });
+    })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data;
 }
 
 export async function createNotifications(inputs: CreateNotificationInput[]) {
-  return prisma.notification.createMany({
-    data: inputs.map((input) => ({
-      id: nanoid(),
-      userId: input.userId,
-      type: input.type,
-      title: input.title,
-      message: input.message,
-      linkUrl: input.linkUrl,
-    })),
-  });
+  const supabase = createServiceClient();
+  
+  const { data, error } = await supabase
+    .from("Notification")
+    .insert(
+      inputs.map((input) => ({
+        id: nanoid(),
+        userId: input.userId,
+        type: input.type,
+        title: input.title,
+        message: input.message,
+        linkUrl: input.linkUrl,
+      }))
+    )
+    .select();
+  
+  if (error) throw error;
+  return data;
 }

@@ -1,66 +1,78 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getUserModuleSlugs } from "@/lib/portal/access";
 import { ApperClient } from "./apper-client";
-import { SubscriptionTier } from "@prisma/client";
 
 export default async function ApperPage() {
   const user = await requirePortalUser();
 
-  const [modules, bundles, userModules, subscriptions, userData] = await Promise.all([
-    prisma.appModule.findMany({
-      where: { isActive: true },
-      orderBy: { sortOrder: "asc" },
-    }),
-    prisma.appBundle.findMany({
-      where: { isActive: true },
-      orderBy: { sortOrder: "asc" },
-      include: {
-        BundleItem: {
-          include: { AppModule: { select: { slug: true, name: true } } },
-        },
-      },
-    }),
+  const supabase = await createServerSupabase();
+
+  const [
+    { data: modules },
+    { data: bundles },
+    userModules,
+    { data: subscriptions },
+    { data: userData },
+  ] = await Promise.all([
+    supabase
+      .from("AppModule")
+      .select("*")
+      .eq("isActive", true)
+      .order("sortOrder", { ascending: true }),
+    supabase
+      .from("AppBundle")
+      .select(`
+        *,
+        BundleItem(
+          *,
+          AppModule:moduleId(slug, name)
+        )
+      `)
+      .eq("isActive", true)
+      .order("sortOrder", { ascending: true }),
     getUserModuleSlugs(user.id),
-    prisma.appSubscription.findMany({
-      where: { userId: user.id },
-      select: {
-        id: true,
-        status: true,
-        cancelAtPeriodEnd: true,
-        AppModule: { select: { slug: true } },
-        AppBundle: { select: { slug: true } },
-      },
-    }),
-    prisma.user.findUnique({
-      where: { id: user.id },
-      select: { subscriptionTier: true },
-    }),
+    supabase
+      .from("AppSubscription")
+      .select(`
+        id,
+        status,
+        cancelAtPeriodEnd,
+        AppModule:moduleId(slug),
+        AppBundle:bundleId(slug)
+      `)
+      .eq("userId", user.id),
+    supabase
+      .from("User")
+      .select("subscriptionTier")
+      .eq("id", user.id)
+      .single(),
   ]);
 
   // Map SubscriptionTier to pricing tier
-  const currentTier = userData?.subscriptionTier ?? SubscriptionTier.VISITOR;
+  type SubscriptionTier = "VISITOR" | "PRO" | "ELITE";
+  const currentTier = (userData?.subscriptionTier as SubscriptionTier) ?? "VISITOR";
   const pricingTier: "VISITOR" | "PRO" | "ELITE" =
-    currentTier === SubscriptionTier.PRO
+    currentTier === "PRO"
       ? "PRO"
-      : currentTier === SubscriptionTier.ELITE
+      : currentTier === "ELITE"
         ? "ELITE"
         : "VISITOR";
 
-  // Transform Prisma data to match client component interfaces
-  const transformedBundles = bundles.map((b) => ({
+  // Transform data to match client component interfaces
+  const transformedBundles = (bundles ?? []).map((b) => ({
     ...b,
-    items: b.BundleItem.map((item) => ({
+    items: (b.BundleItem ?? []).map((item: { AppModule: { slug: string; name: string } }) => ({
       module: item.AppModule,
     })),
   }));
 
-  const transformedSubscriptions = subscriptions.map((s) => ({
+  const transformedSubscriptions = (subscriptions ?? []).map((s) => ({
     id: s.id,
     status: s.status,
     cancelAtPeriodEnd: s.cancelAtPeriodEnd,
-    module: s.AppModule,
-    bundle: s.AppBundle,
+    module: s.AppModule?.[0] ?? null,
+    bundle: s.AppBundle?.[0] ?? null,
   }));
 
   return (
@@ -71,7 +83,7 @@ export default async function ApperPage() {
       </div>
 
       <ApperClient
-        modules={modules}
+        modules={modules ?? []}
         bundles={transformedBundles}
         userModules={userModules}
         subscriptions={transformedSubscriptions}

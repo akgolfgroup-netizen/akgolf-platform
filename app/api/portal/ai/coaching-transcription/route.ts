@@ -1,7 +1,7 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { generateCoachingSummary } from "@/lib/portal/ai/coaching-summary";
 import { transcribeAudio } from "@/lib/portal/ai/transcribe-audio";
 import { isStaff } from "@/lib/portal/rbac";
@@ -23,6 +23,8 @@ export async function POST(req: NextRequest) {
   if (!rateLimit.allowed) {
     return NextResponse.json({ error: "For mange AI-forespørsler" }, { status: 429 });
   }
+
+  const supabase = await createServerSupabase();
 
   const formData = await req.formData();
   const sessionId = formData.get("sessionId") as string;
@@ -63,11 +65,20 @@ export async function POST(req: NextRequest) {
   }
 
   // Verify session exists
-  const coachingSession = await prisma.coachingSession.findUnique({
-    where: { id: sessionId },
-    include: { Booking: { include: { ServiceType: true } } },
-  });
-  if (!coachingSession) {
+  const { data: coachingSession, error: sessionError } = await supabase
+    .from("CoachingSession")
+    .select(
+      `
+      id,
+      studentId,
+      sessionDate,
+      Booking (ServiceType (name))
+    `
+    )
+    .eq("id", sessionId)
+    .single();
+
+  if (sessionError || !coachingSession) {
     return NextResponse.json(
       { error: "Sesjon ikke funnet" },
       { status: 404 }
@@ -87,27 +98,33 @@ export async function POST(req: NextRequest) {
   const summary = await generateCoachingSummary(transcription);
 
   // Persist transcription + AI summary
-  await prisma.coachingSession.update({
-    where: { id: sessionId },
-    data: {
+  const { error: updateError } = await supabase
+    .from("CoachingSession")
+    .update({
       aiSummary: transcription,
       aiKeyPoints: summary.keyPoints,
       aiFocusAreas: summary.focusAreas,
       aiActionItems: summary.actionItems,
-      aiGeneratedAt: new Date(),
-    },
-  });
+      aiGeneratedAt: new Date().toISOString(),
+    })
+    .eq("id", sessionId);
+
+  if (updateError) {
+    logger.error("[coaching-transcription] Failed to update session:", updateError);
+  }
 
   // Sync to Notion player profile (non-blocking)
-  const student = await prisma.user.findUnique({
-    where: { id: coachingSession.studentId },
-    select: { notionPageId: true, name: true },
-  });
+  const { data: student } = await supabase
+    .from("User")
+    .select("notionPageId, name")
+    .eq("id", coachingSession.studentId)
+    .single();
+
   if (student?.notionPageId) {
     appendCoachingSessionToProfile(student.notionPageId, {
-      date: coachingSession.sessionDate.toISOString(),
+      date: new Date(coachingSession.sessionDate).toISOString(),
       serviceName:
-        coachingSession.Booking?.ServiceType?.name ?? "Coaching",
+        (coachingSession.Booking as unknown as { ServiceType?: { name: string } })?.ServiceType?.name ?? "Coaching",
       keyPoints: summary.keyPoints,
       focusAreas: summary.focusAreas,
       actionItems: summary.actionItems,

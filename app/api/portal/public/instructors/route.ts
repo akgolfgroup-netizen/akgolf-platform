@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export const dynamic = "force-dynamic";
@@ -10,17 +10,33 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
   }
   try {
-    const instructors = await prisma.instructor.findMany({
-      select: {
-        id: true,
-        title: true,
-        bio: true,
-        specialization: true,
-        User: { select: { name: true, image: true } },
-      },
-    });
+    const supabase = await createServerSupabase();
 
-    return NextResponse.json(instructors, {
+    // For public endpoints, use service role client to bypass RLS
+    const { data: instructors, error } = await supabase
+      .from("Instructor")
+      .select(
+        `
+        id,
+        title,
+        bio,
+        specialization,
+        User (name, image)
+      `
+      );
+
+    if (error) throw error;
+
+    // Format the response to match the original structure
+    const formattedInstructors = instructors?.map((instructor) => ({
+      id: instructor.id,
+      title: instructor.title,
+      bio: instructor.bio,
+      specialization: instructor.specialization,
+      User: instructor.User as unknown as { name: string; image: string },
+    })) || [];
+
+    return NextResponse.json(formattedInstructors, {
       headers: {
         "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no",
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",

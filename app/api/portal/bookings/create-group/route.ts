@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
-import { BookingStatus, PaymentMethod, PaymentStatus, Prisma } from "@prisma/client";
 import { addMinutes } from "date-fns";
 import { nanoid } from "nanoid";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
@@ -70,18 +69,16 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Fetch service type
-    const serviceType = await prisma.serviceType.findUnique({
-      where: { id: serviceTypeId },
-      select: {
-        duration: true,
-        price: true,
-        vatRate: true,
-        maxStudents: true,
-      },
-    });
+    const supabase = await createServerSupabase();
 
-    if (!serviceType) {
+    // Fetch service type
+    const { data: serviceType, error: serviceError } = await supabase
+      .from("ServiceType")
+      .select("duration, price, vatRate, maxStudents")
+      .eq("id", serviceTypeId)
+      .single();
+
+    if (serviceError || !serviceType) {
       return NextResponse.json(
         { error: "Tjeneste ikke funnet" },
         { status: 404 }
@@ -102,75 +99,99 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check remaining capacity and create booking atomically
+    // Check remaining capacity
     const start = new Date(startTime);
     const end = addMinutes(start, serviceType.duration);
     const vatAmount = Math.round((serviceType.price * serviceType.vatRate) / 100);
 
-    const booking = await prisma.$transaction(async (tx) => {
-      // Sjekk for eksisterende bookinger med overlappende tid
-      const existingBookingsCount = await tx.booking.count({
-        where: {
-          instructorId,
-          serviceTypeId,
-          startTime: start,
-          status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
-        },
-      });
+    // Sjekk for eksisterende bookinger med overlappende tid
+    const { count: existingBookingsCount, error: countError } = await supabase
+      .from("Booking")
+      .select("*", { count: "exact", head: true })
+      .eq("instructorId", instructorId)
+      .eq("serviceTypeId", serviceTypeId)
+      .eq("startTime", start.toISOString())
+      .in("status", ["PENDING", "CONFIRMED"]);
 
-      const remainingSpots = serviceType.maxStudents - existingBookingsCount;
-      if (remainingSpots < 1) {
-        throw new Error("CAPACITY_FULL");
-      }
+    if (countError) {
+      throw countError;
+    }
 
-      // Sjekk for blokkerte tider
-      const blocked = await tx.blockedTime.findFirst({
-        where: {
-          OR: [{ instructorId }, { instructorId: null }],
-          AND: [
-            { startTime: { lt: end } },
-            { endTime: { gt: start } },
-          ],
-        },
-      });
+    const remainingSpots = serviceType.maxStudents - (existingBookingsCount || 0);
+    if (remainingSpots < 1) {
+      return NextResponse.json(
+        { error: "Ingen ledige plasser for dette tidspunktet" },
+        { status: 409 }
+      );
+    }
 
-      if (blocked) {
-        throw new Error("TIME_BLOCKED");
-      }
+    // Sjekk for blokkerte tider
+    const { data: blocked, error: blockedError } = await supabase
+      .from("BlockedTime")
+      .select("id")
+      .or(`instructorId.eq.${instructorId},instructorId.is.null`)
+      .lt("startTime", end.toISOString())
+      .gt("endTime", start.toISOString())
+      .limit(1)
+      .single();
 
-      return tx.booking.create({
-        data: {
-          id: nanoid(),
-          studentId: user.id,
-          instructorId,
-          serviceTypeId,
-          startTime: start,
-          endTime: end,
-          status: BookingStatus.CONFIRMED,
-          paymentMethod: paymentMethod === "VIPPS" ? PaymentMethod.VIPPS : PaymentMethod.STRIPE,
-          paymentStatus: PaymentStatus.PENDING,
-          amount: serviceType.price,
-          vatAmount,
-          isGroupBooking: true,
-          updatedAt: new Date(),
-          GroupParticipant: {
-            create: participants.map((p: Participant) => ({
-              id: nanoid(),
-              name: p.name,
-              email: p.email,
-              phone: p.phone ?? null,
-            })),
-          },
-        },
-        select: {
-          id: true,
-        },
-      });
-    }, {
-      isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
-      maxWait: 5000,
-      timeout: 10000,
-    });
+    if (blockedError && blockedError.code !== "PGRST116") {
+      throw blockedError;
+    }
+
+    if (blocked) {
+      return NextResponse.json(
+        { error: "Tidspunktet er ikke lenger tilgjengelig" },
+        { status: 409 }
+      );
+    }
+
+    // Create booking
+    const now = new Date().toISOString();
+    const bookingId = nanoid();
+
+    const { data: booking, error: createError } = await supabase
+      .from("Booking")
+      .insert({
+        id: bookingId,
+        studentId: user.id,
+        instructorId,
+        serviceTypeId,
+        startTime: start.toISOString(),
+        endTime: end.toISOString(),
+        status: "CONFIRMED",
+        paymentMethod: paymentMethod === "VIPPS" ? "VIPPS" : "STRIPE",
+        paymentStatus: "PENDING",
+        amount: serviceType.price,
+        vatAmount,
+        isGroupBooking: true,
+        updatedAt: now,
+      })
+      .select()
+      .single();
+
+    if (createError) {
+      throw createError;
+    }
+
+    // Create group participants
+    const participantsData = participants.map((p: Participant) => ({
+      id: nanoid(),
+      bookingId,
+      name: p.name,
+      email: p.email,
+      phone: p.phone ?? null,
+    }));
+
+    const { error: participantsError } = await supabase
+      .from("GroupParticipant")
+      .insert(participantsData);
+
+    if (participantsError) {
+      // Rollback booking if participants creation fails
+      await supabase.from("Booking").delete().eq("id", bookingId);
+      throw participantsError;
+    }
 
     // Invalider cache og broadcast oppdatering
     const dateStr = start.toISOString().split("T")[0];
@@ -185,17 +206,31 @@ export async function POST(req: NextRequest) {
     ]);
 
     // Send notifikasjoner
-    const fullBooking = await prisma.booking.findUnique({
-      where: { id: booking.id },
-      include: {
-        User: { select: { name: true, email: true } },
-        ServiceType: { select: { name: true, duration: true } },
-        Instructor: { select: { User: { select: { name: true } } } },
-        Location: { select: { name: true } },
-      },
-    });
+    const { data: fullBooking, error: fullBookingError } = await supabase
+      .from("Booking")
+      .select(`
+        *,
+        User (
+          name,
+          email
+        ),
+        ServiceType (
+          name,
+          duration
+        ),
+        Instructor (
+          User (
+            name
+          )
+        ),
+        Location (
+          name
+        )
+      `)
+      .eq("id", bookingId)
+      .single();
 
-    if (fullBooking) {
+    if (fullBooking && !fullBookingError) {
       notifyBookingConfirmed(fullBooking).catch(console.error);
       notifyNewBooking(fullBooking).catch(console.error);
     }
@@ -207,18 +242,6 @@ export async function POST(req: NextRequest) {
       message: "Gruppebooking opprettet",
     });
   } catch (error) {
-    if (error instanceof Error && error.message === "CAPACITY_FULL") {
-      return NextResponse.json(
-        { error: "Ingen ledige plasser for dette tidspunktet" },
-        { status: 409 }
-      );
-    }
-    if (error instanceof Error && error.message === "TIME_BLOCKED") {
-      return NextResponse.json(
-        { error: "Tidspunktet er ikke lenger tilgjengelig" },
-        { status: 409 }
-      );
-    }
     logger.error("[create-group] Error:", error);
     return NextResponse.json(
       { error: "Noe gikk galt. Prøv igjen." },

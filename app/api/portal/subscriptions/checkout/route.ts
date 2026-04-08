@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getPortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { stripe } from "@/lib/portal/stripe";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
@@ -38,17 +38,29 @@ export async function POST(req: NextRequest) {
 
   const { moduleSlug, bundleSlug, interval } = parsed.data;
 
+  const supabase = await createServerSupabase();
+
   // Look up the price ID
   let stripePriceId: string | null = null;
 
   if (moduleSlug) {
-    const mod = await prisma.appModule.findUnique({ where: { slug: moduleSlug } });
+    const { data: mod } = await supabase
+      .from("AppModule")
+      .select("id, isActive, stripePriceId, stripeYearlyPriceId")
+      .eq("slug", moduleSlug)
+      .single();
+    
     if (!mod || !mod.isActive) {
       return NextResponse.json({ error: "Modul ikke funnet" }, { status: 404 });
     }
     stripePriceId = interval === "year" ? mod.stripeYearlyPriceId : mod.stripePriceId;
   } else if (bundleSlug) {
-    const bundle = await prisma.appBundle.findUnique({ where: { slug: bundleSlug } });
+    const { data: bundle } = await supabase
+      .from("AppBundle")
+      .select("id, isActive, stripePriceId, stripeYearlyPriceId")
+      .eq("slug", bundleSlug)
+      .single();
+    
     if (!bundle || !bundle.isActive) {
       return NextResponse.json({ error: "Bundle ikke funnet" }, { status: 404 });
     }
@@ -70,16 +82,20 @@ export async function POST(req: NextRequest) {
     });
     stripeCustomerId = customer.id;
 
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { stripeCustomerId },
-    });
+    await supabase
+      .from("User")
+      .update({ stripeCustomerId })
+      .eq("id", user.id);
   }
 
   // Check if user is eligible for trial (no previous subscriptions)
-  const previousSub = await prisma.appSubscription.findFirst({
-    where: { userId: user.id },
-  });
+  const { data: previousSub } = await supabase
+    .from("AppSubscription")
+    .select("id")
+    .eq("userId", user.id)
+    .limit(1)
+    .single();
+  
   const isEligibleForTrial = !previousSub;
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
@@ -104,13 +120,13 @@ export async function POST(req: NextRequest) {
   });
 
   // Track checkout start for abandoned cart recovery
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
-      checkoutAbandonedAt: new Date(),
+  await supabase
+    .from("User")
+    .update({
+      checkoutAbandonedAt: new Date().toISOString(),
       lastCheckoutSessionId: session.id,
-    },
-  });
+    })
+    .eq("id", user.id);
 
   return NextResponse.json({ url: session.url });
 }

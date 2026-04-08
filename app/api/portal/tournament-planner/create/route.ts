@@ -1,9 +1,9 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
-import { createTournament } from "@/modules/tournament-planner";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { nanoid } from "nanoid";
 
 export async function POST(req: NextRequest) {
   const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
@@ -17,15 +17,24 @@ export async function POST(req: NextRequest) {
   }
 
   const { name, startDate, level, location, externalUrl } = await req.json();
+  const supabase = await createServerSupabase();
 
-  await createTournament(prisma, {
-    name,
-    startDate: new Date(startDate),
-    level,
-    location: location || undefined,
-    externalUrl: externalUrl || undefined,
-    createdById: user.id,
-  });
+  const { error } = await supabase
+    .from("Tournament")
+    .insert({
+      id: nanoid(),
+      name,
+      startDate: new Date(startDate).toISOString(),
+      level,
+      location: location || null,
+      externalUrl: externalUrl || null,
+      createdById: user.id,
+      updatedAt: new Date().toISOString(),
+    });
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke opprette turnering" }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }

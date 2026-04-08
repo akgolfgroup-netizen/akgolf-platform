@@ -1,6 +1,6 @@
 import { randomBytes, randomUUID } from "crypto";
 import bcrypt from "bcrypt";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { createPlayerProfile } from "@/lib/portal/notion/player-profiles";
 import { logger } from "@/lib/logger";
 
@@ -20,11 +20,18 @@ export async function autoCreateUser(
   email: string,
   name: string
 ): Promise<AutoCreateResult> {
+  const supabase = createServiceClient();
+  
   // Check if user already exists
-  const existing = await prisma.user.findUnique({
-    where: { email },
-    select: { id: true },
-  });
+  const { data: existing, error: existingError } = await supabase
+    .from("User")
+    .select("id")
+    .eq("email", email)
+    .single();
+
+  if (existingError && existingError.code !== "PGRST116") {
+    logger.error(`[AutoCreate] Error fetching user:`, existingError);
+  }
 
   if (existing) {
     return { userId: existing.id, isNewUser: false };
@@ -37,16 +44,23 @@ export async function autoCreateUser(
   const hashedPassword = await bcrypt.hash(tempPassword, SALT_ROUNDS);
 
   // Create user with hashed password
-  const user = await prisma.user.create({
-    data: {
+  const { data: user, error: createError } = await supabase
+    .from("User")
+    .insert({
       id: randomUUID(),
       email,
       name,
       role: "STUDENT",
       password: hashedPassword,
-      updatedAt: new Date(),
-    },
-  });
+      updatedAt: new Date().toISOString(),
+    })
+    .select()
+    .single();
+
+  if (createError || !user) {
+    logger.error(`[AutoCreate] Failed to create user:`, createError);
+    throw createError || new Error("Failed to create user");
+  }
 
   // Create Notion player profile (non-blocking)
   let notionPageId = "";
@@ -62,10 +76,14 @@ export async function autoCreateUser(
 
   // Update user with Notion page ID if created
   if (notionPageId) {
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { notionPageId },
-    });
+    const { error: updateError } = await supabase
+      .from("User")
+      .update({ notionPageId })
+      .eq("id", user.id);
+    
+    if (updateError) {
+      logger.error(`[AutoCreate] Failed to update user with notionPageId:`, updateError);
+    }
   }
 
   return { userId: user.id, isNewUser: true, tempPassword };

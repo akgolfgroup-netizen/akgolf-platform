@@ -1,7 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
 export interface OnboardingGoals {
@@ -15,13 +15,15 @@ export async function saveOnboardingData(data: OnboardingGoals) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
+  const supabase = await createServerSupabase();
+
+  await supabase
+    .from("User")
+    .update({
       onboardingGoals: JSON.parse(JSON.stringify(data)),
-      onboardingCompletedAt: new Date(),
-    },
-  });
+      onboardingCompletedAt: new Date().toISOString(),
+    })
+    .eq("id", user.id);
 
   revalidatePath("/portal");
 }
@@ -30,13 +32,13 @@ export async function checkOnboardingStatus() {
   const user = await requirePortalUser();
   if (!user?.id) return { completed: false };
 
-  const userData = await prisma.user.findUnique({
-    where: { id: user.id },
-    select: {
-      onboardingCompletedAt: true,
-      onboardingGoals: true,
-    },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: userData } = await supabase
+    .from("User")
+    .select("onboardingCompletedAt, onboardingGoals")
+    .eq("id", user.id)
+    .single();
 
   return {
     completed: !!userData?.onboardingCompletedAt,
@@ -48,12 +50,14 @@ export async function skipOnboarding() {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
-      onboardingCompletedAt: new Date(),
-    },
-  });
+  const supabase = await createServerSupabase();
+
+  await supabase
+    .from("User")
+    .update({
+      onboardingCompletedAt: new Date().toISOString(),
+    })
+    .eq("id", user.id);
 
   revalidatePath("/portal");
 }

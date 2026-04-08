@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import type { ShotTypeLPhase } from "@prisma/client";
 
 // Re-export client-safe types from types file
@@ -14,17 +14,19 @@ export async function getLPhaseForShotType(
   userId: string,
   shotType: ShotType
 ): Promise<ShotTypeLPhase | null> {
-  const entry = await prisma.shotTypeLPhase.findFirst({
-    where: {
-      userId,
-      shotType,
-    },
-    orderBy: {
-      setAt: "desc",
-    },
-  });
-
-  return entry;
+  const supabase = createServiceClient();
+  
+  const { data, error } = await supabase
+    .from("ShotTypeLPhase")
+    .select("*")
+    .eq("userId", userId)
+    .eq("shotType", shotType)
+    .order("setAt", { ascending: false })
+    .limit(1)
+    .single();
+  
+  if (error || !data) return null;
+  return data as ShotTypeLPhase;
 }
 
 /**
@@ -38,17 +40,22 @@ export async function setLPhaseForShotType(
   setBy: string,
   notes?: string
 ): Promise<ShotTypeLPhase> {
-  const entry = await prisma.shotTypeLPhase.create({
-    data: {
+  const supabase = createServiceClient();
+  
+  const { data, error } = await supabase
+    .from("ShotTypeLPhase")
+    .insert({
       userId,
       shotType,
       lPhase,
       setBy,
       notes,
-    },
-  });
-
-  return entry;
+    })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data as ShotTypeLPhase;
 }
 
 /**
@@ -59,17 +66,17 @@ export async function getLPhaseHistory(
   userId: string,
   shotType: ShotType
 ): Promise<ShotTypeLPhase[]> {
-  const entries = await prisma.shotTypeLPhase.findMany({
-    where: {
-      userId,
-      shotType,
-    },
-    orderBy: {
-      setAt: "desc",
-    },
-  });
-
-  return entries;
+  const supabase = createServiceClient();
+  
+  const { data, error } = await supabase
+    .from("ShotTypeLPhase")
+    .select("*")
+    .eq("userId", userId)
+    .eq("shotType", shotType)
+    .order("setAt", { ascending: false });
+  
+  if (error) throw error;
+  return (data || []) as ShotTypeLPhase[];
 }
 
 /**
@@ -79,24 +86,25 @@ export async function getLPhaseHistory(
 export async function getAllLPhasesForUser(
   userId: string
 ): Promise<Map<ShotType, ShotTypeLPhase>> {
-  const entries = await prisma.shotTypeLPhase.findMany({
-    where: {
-      userId,
-    },
-    orderBy: {
-      setAt: "desc",
-    },
-  });
-
+  const supabase = createServiceClient();
+  
+  const { data, error } = await supabase
+    .from("ShotTypeLPhase")
+    .select("*")
+    .eq("userId", userId)
+    .order("setAt", { ascending: false });
+  
+  if (error) throw error;
+  
   const phaseMap = new Map<ShotType, ShotTypeLPhase>();
-
+  
   // Group by shotType, keep only the most recent for each
-  for (const entry of entries) {
+  for (const entry of (data || []) as ShotTypeLPhase[]) {
     const shotType = entry.shotType as ShotType;
     if (!phaseMap.has(shotType)) {
       phaseMap.set(shotType, entry);
     }
   }
-
+  
   return phaseMap;
 }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff, isAdmin } from "@/lib/portal/rbac";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
@@ -22,23 +22,35 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const locationId = searchParams.get("locationId");
 
-  const facilities = await prisma.facility.findMany({
-    where: {
-      isActive: true,
-      ...(locationId && { locationId }),
-    },
-    include: {
-      Location: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-    orderBy: [{ Location: { name: "asc" } }, { sortOrder: "asc" }],
+  const supabase = await createServerSupabase();
+  
+  let query = supabase
+    .from("Facility")
+    .select(`
+      *,
+      Location (id, name)
+    `)
+    .eq("isActive", true);
+
+  if (locationId) {
+    query = query.eq("locationId", locationId);
+  }
+
+  const { data: facilities, error } = await query
+    .order("sortOrder", { ascending: true });
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke hente fasiliteter" }, { status: 500 });
+  }
+
+  // Sort by Location name first, then sortOrder
+  const sortedFacilities = (facilities || []).sort((a, b) => {
+    const locationCompare = (a.Location?.name || "").localeCompare(b.Location?.name || "");
+    if (locationCompare !== 0) return locationCompare;
+    return (a.sortOrder || 0) - (b.sortOrder || 0);
   });
 
-  return NextResponse.json(facilities);
+  return NextResponse.json(sortedFacilities);
 }
 
 /**
@@ -66,30 +78,38 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const supabase = await createServerSupabase();
+
   // Sjekk at slug er unik
-  const existing = await prisma.facility.findUnique({ where: { slug } });
+  const { data: existing } = await supabase
+    .from("Facility")
+    .select("id")
+    .eq("slug", slug)
+    .single();
+
   if (existing) {
     return NextResponse.json({ error: "Slug er allerede i bruk" }, { status: 400 });
   }
 
-  const facility = await prisma.facility.create({
-    data: {
+  const { data: facility, error } = await supabase
+    .from("Facility")
+    .insert({
       locationId,
       name,
       slug,
       description,
       capacity,
       sortOrder: sortOrder ?? 0,
-    },
-    include: {
-      Location: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-  });
+    })
+    .select(`
+      *,
+      Location (id, name)
+    `)
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke opprette fasilitet" }, { status: 500 });
+  }
 
   return NextResponse.json(facility, { status: 201 });
 }

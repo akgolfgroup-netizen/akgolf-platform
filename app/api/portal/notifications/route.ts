@@ -1,6 +1,6 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { z } from "zod";
 import { validateRequest } from "@/lib/api/validation";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
@@ -19,20 +19,35 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const unreadOnly = searchParams.get("unread") === "true";
 
-  const notifications = await prisma.notification.findMany({
-    where: {
-      userId: user.id,
-      ...(unreadOnly ? { read: false } : {}),
-    },
-    orderBy: { createdAt: "desc" },
-    take: 50,
-  });
+  const supabase = await createServerSupabase();
 
-  const unreadCount = await prisma.notification.count({
-    where: { userId: user.id, read: false },
-  });
+  let query = supabase
+    .from("Notification")
+    .select("*")
+    .eq("userId", user.id)
+    .order("createdAt", { ascending: false })
+    .limit(50);
 
-  return NextResponse.json({ notifications, unreadCount });
+  if (unreadOnly) {
+    query = query.eq("read", false);
+  }
+
+  const { data: notifications, error } = await query;
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke hente notifikasjoner" }, { status: 500 });
+  }
+
+  const { count: unreadCount, error: countError } = await supabase
+    .from("Notification")
+    .select("*", { count: "exact", head: true })
+    .eq("userId", user.id)
+    .eq("read", false);
+
+  return NextResponse.json({ 
+    notifications: notifications || [], 
+    unreadCount: unreadCount || 0 
+  });
 }
 
 const markReadSchema = z.object({
@@ -53,13 +68,17 @@ export async function PATCH(req: NextRequest) {
   const validation = await validateRequest(req, markReadSchema);
   if (!validation.success) return validation.response;
 
-  await prisma.notification.updateMany({
-    where: {
-      id: { in: validation.data.notificationIds },
-      userId: user.id,
-    },
-    data: { read: true },
-  });
+  const supabase = await createServerSupabase();
+
+  const { error } = await supabase
+    .from("Notification")
+    .update({ read: true })
+    .in("id", validation.data.notificationIds)
+    .eq("userId", user.id);
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke oppdatere notifikasjoner" }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }

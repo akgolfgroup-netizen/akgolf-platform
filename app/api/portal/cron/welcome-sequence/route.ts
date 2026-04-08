@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import { WelcomeDay0Email } from "@/lib/portal/email/templates/welcome-day0";
@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   const twoDaysAgo = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
@@ -31,20 +32,18 @@ export async function GET(request: NextRequest) {
 
   try {
     // Day 0: Users who signed up in the last 24 hours (step 0)
-    const day0Users = await prisma.user.findMany({
-      where: {
-        welcomeEmailStep: 0,
-        createdAt: { gte: oneDayAgo },
-        email: { not: null },
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-      },
-    });
+    const { data: day0Users, error: day0Error } = await supabase
+      .from("User")
+      .select("id, name, email")
+      .eq("welcomeEmailStep", 0)
+      .gte("createdAt", oneDayAgo.toISOString())
+      .not("email", "is", null);
 
-    for (const user of day0Users) {
+    if (day0Error) {
+      throw day0Error;
+    }
+
+    for (const user of (day0Users ?? [])) {
       if (!user.email) continue;
 
       try {
@@ -59,10 +58,10 @@ export async function GET(request: NextRequest) {
           html,
         });
 
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { welcomeEmailStep: 1 },
-        });
+        await supabase
+          .from("User")
+          .update({ welcomeEmailStep: 1 })
+          .eq("id", user.id);
 
         results.day0++;
       } catch (error) {
@@ -71,32 +70,30 @@ export async function GET(request: NextRequest) {
     }
 
     // Day 1: Users who signed up 1-2 days ago (step 1)
-    const day1Users = await prisma.user.findMany({
-      where: {
-        welcomeEmailStep: 1,
-        createdAt: {
-          gte: twoDaysAgo,
-          lt: oneDayAgo,
-        },
-        email: { not: null },
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        onboardingGoals: true,
-        TrainingLog: {
-          select: { id: true },
-          take: 1,
-        },
-      },
-    });
+    const { data: day1Users, error: day1Error } = await supabase
+      .from("User")
+      .select(`
+        id,
+        name,
+        email,
+        onboardingGoals,
+        TrainingLog (id)
+      `)
+      .eq("welcomeEmailStep", 1)
+      .gte("createdAt", twoDaysAgo.toISOString())
+      .lt("createdAt", oneDayAgo.toISOString())
+      .not("email", "is", null);
 
-    for (const user of day1Users) {
+    if (day1Error) {
+      throw day1Error;
+    }
+
+    for (const user of (day1Users ?? [])) {
       if (!user.email) continue;
 
       try {
-        const hasLoggedSession = user.TrainingLog.length > 0;
+        const trainingLogs = user.TrainingLog as { id: string }[] | null;
+        const hasLoggedSession = (trainingLogs?.length ?? 0) > 0;
         const hasSetGoals = !!user.onboardingGoals;
 
         const html = await render(
@@ -114,10 +111,10 @@ export async function GET(request: NextRequest) {
           html,
         });
 
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { welcomeEmailStep: 2 },
-        });
+        await supabase
+          .from("User")
+          .update({ welcomeEmailStep: 2 })
+          .eq("id", user.id);
 
         results.day1++;
       } catch (error) {
@@ -126,33 +123,33 @@ export async function GET(request: NextRequest) {
     }
 
     // Day 3: Users who signed up 3-4 days ago (step 2)
-    const day3Users = await prisma.user.findMany({
-      where: {
-        welcomeEmailStep: 2,
-        createdAt: {
-          gte: fourDaysAgo,
-          lt: threeDaysAgo,
-        },
-        email: { not: null },
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        _count: {
-          select: { TrainingLog: true },
-        },
-      },
-    });
+    const { data: day3Users, error: day3Error } = await supabase
+      .from("User")
+      .select(`
+        id,
+        name,
+        email,
+        TrainingLog (count)
+      `)
+      .eq("welcomeEmailStep", 2)
+      .gte("createdAt", fourDaysAgo.toISOString())
+      .lt("createdAt", threeDaysAgo.toISOString())
+      .not("email", "is", null);
 
-    for (const user of day3Users) {
+    if (day3Error) {
+      throw day3Error;
+    }
+
+    for (const user of (day3Users ?? [])) {
       if (!user.email) continue;
 
       try {
+        const trainingLogCount = (user.TrainingLog as { count: number }[] | null)?.[0]?.count ?? 0;
+
         const html = await render(
           WelcomeDay3Email({
             name: user.name || "Golfspiller",
-            sessionCount: user._count.TrainingLog,
+            sessionCount: trainingLogCount,
           })
         );
 
@@ -160,16 +157,16 @@ export async function GET(request: NextRequest) {
           from: process.env.FROM_EMAIL || "AK Golf <hei@akgolf.no>",
           to: user.email,
           subject:
-            user._count.TrainingLog > 0
+            trainingLogCount > 0
               ? "Bra jobba! Her er neste steg"
               : "Trenger du hjelp a komme i gang?",
           html,
         });
 
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { welcomeEmailStep: 3 },
-        });
+        await supabase
+          .from("User")
+          .update({ welcomeEmailStep: 3 })
+          .eq("id", user.id);
 
         results.day3++;
       } catch (error) {

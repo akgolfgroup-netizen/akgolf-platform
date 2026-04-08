@@ -1,40 +1,37 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
 import { nanoid } from "nanoid";
-import { CommunicationType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export async function getCommunicationLogs(studentId: string) {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return [];
 
-  return prisma.communicationLog.findMany({
-    where: { studentId },
-    orderBy: { sentAt: "desc" },
-    take: 50,
-    select: {
-      id: true,
-      type: true,
-      subject: true,
-      content: true,
-      sentAt: true,
-      Instructor: {
-        select: {
-          User: {
-            select: { name: true },
-          },
-        },
-      },
-    },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: logs } = await supabase
+    .from("CommunicationLog")
+    .select(`
+      id,
+      type,
+      subject,
+      content,
+      sentAt,
+      Instructor (User (name))
+    `)
+    .eq("studentId", studentId)
+    .order("sentAt", { ascending: false })
+    .limit(50);
+
+  return logs || [];
 }
 
 export async function addCommunicationLog(
   studentId: string,
-  type: CommunicationType,
+  type: string,
   subject: string | null,
   content: string
 ) {
@@ -43,12 +40,14 @@ export async function addCommunicationLog(
     return { success: false, error: "Ikke tilgang" };
   }
 
+  const supabase = await createServerSupabase();
+
   // Finn instruktørprofilen til innlogget bruker
-  const instructor = await prisma.instructor.findFirst({
-    where: {
-      OR: [{ userId: user.id }],
-    },
-  });
+  const { data: instructor } = await supabase
+    .from("Instructor")
+    .select("id")
+    .eq("userId", user.id)
+    .single();
 
   if (!instructor) {
     return { success: false, error: "Fant ikke instruktørprofil for innlogget bruker" };
@@ -58,15 +57,13 @@ export async function addCommunicationLog(
     return { success: false, error: "Innhold kan ikke være tomt" };
   }
 
-  await prisma.communicationLog.create({
-    data: {
-      id: nanoid(),
-      studentId,
-      instructorId: instructor.id,
-      type,
-      subject: subject?.trim() || null,
-      content: content.trim(),
-    },
+  await supabase.from("CommunicationLog").insert({
+    id: nanoid(),
+    studentId,
+    instructorId: instructor.id,
+    type,
+    subject: subject?.trim() || null,
+    content: content.trim(),
   });
 
   revalidatePath(`/portal/admin/elever/${studentId}`);

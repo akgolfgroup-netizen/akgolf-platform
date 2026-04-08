@@ -10,7 +10,7 @@
  * 3. Vi trigger synkronisering basert på notifikasjonen
  */
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { logger } from "@/lib/logger";
 import { syncGoogleCalendar } from "./sync";
 
@@ -155,15 +155,18 @@ export async function handleWebhookNotification(
     return { success: false, message: "Manglende channel token" };
   }
 
-  // Sjekk at sync-konfigurasjonen eksisterer
-  const sync = await prisma.googleCalendarSync.findUnique({
-    where: { instructorId },
-  });
+  // Sjekk at instruktøren eksisterer
+  const supabase = createServiceClient();
+  const { data: instructor, error } = await supabase
+    .from("Instructor")
+    .select("id")
+    .eq("id", instructorId)
+    .single();
 
-  if (!sync || !sync.syncEnabled) {
+  if (error || !instructor) {
     return {
       success: false,
-      message: "Synkronisering ikke aktiv for denne instruktøren",
+      message: "Instruktør ikke funnet",
     };
   }
 
@@ -195,24 +198,11 @@ export async function renewExpiringWebhooks(): Promise<{
   renewed: number;
   failed: number;
 }> {
-  // Finn webhooks som utløper innen 24 timer
-  const expiringSoon = new Date(Date.now() + 24 * 60 * 60 * 1000);
-
-  const syncs = await prisma.googleCalendarSync.findMany({
-    where: {
-      syncEnabled: true,
-      // Her ville vi hatt et webhookExpiration felt
-      // For nå logger vi bare at dette bør implementeres
-    },
-  });
-
-  let renewed = 0;
-  let failed = 0;
-
-  // TODO: Implementer webhook fornyelse når vi har webhookExpiration felt
+  // TODO: Implementer webhook fornyelse når vi har en måte å lagre
+  // webhook-informasjon på (f.eks. en InstructorSetting eller lignende)
   logger.info(
-    `[Google Calendar Webhook] Webhook renewal check: ${syncs.length} active syncs`
+    `[Google Calendar Webhook] Webhook renewal check - not implemented yet`
   );
 
-  return { renewed, failed };
+  return { renewed: 0, failed: 0 };
 }

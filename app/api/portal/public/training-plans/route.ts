@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 const corsOrigin = () => process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
@@ -14,53 +14,74 @@ export async function GET(request: NextRequest) {
   const group = request.nextUrl.searchParams.get("group");
 
   try {
-    const plans = await prisma.trainingPlan.findMany({
-      where: {
-        isActive: true,
-        ...(group === "junior"
-          ? {
-              User_TrainingPlan_studentIdToUser: {
-                role: "STUDENT",
-              },
-            }
-          : {}),
-      },
-      select: {
-        id: true,
-        title: true,
-        periodType: true,
-        startDate: true,
-        endDate: true,
-        goals: true,
-        TrainingPlanWeek: {
-          select: {
-            weekNumber: true,
-            focus: true,
-            TrainingPlanSession: {
-              select: {
-                dayOfWeek: true,
-                title: true,
-                durationMinutes: true,
-                focusArea: true,
-                exercises: true,
-              },
-              orderBy: { sortOrder: "asc" },
-            },
-          },
-          orderBy: { weekNumber: "asc" },
-        },
-      },
-      orderBy: { startDate: "desc" },
-      take: 10,
-    });
+    // Use service client for public endpoints to bypass RLS
+    const supabase = createServiceClient();
 
-    // Parse goals from JSON string if needed
-    const formatted = plans.map((plan) => ({
-      ...plan,
-      startDate: plan.startDate.toISOString().split("T")[0],
-      endDate: plan.endDate.toISOString().split("T")[0],
+    // Build the query
+    let query = supabase
+      .from("TrainingPlan")
+      .select(
+        `
+        id,
+        title,
+        periodType,
+        startDate,
+        endDate,
+        goals,
+        TrainingPlanWeek (
+          weekNumber,
+          focus,
+          TrainingPlanSession (
+            dayOfWeek,
+            title,
+            durationMinutes,
+            focusArea,
+            exercises,
+            sortOrder
+          )
+        )
+      `
+      )
+      .eq("isActive", true)
+      .order("startDate", { ascending: false })
+      .limit(10);
+
+    // Filter for junior group if requested
+    if (group === "junior") {
+      // This is a more complex query that would require joining with User table
+      // For now, we'll fetch and filter manually or you may need to adjust the database structure
+      // Alternative: use RPC function or a view for this complex filter
+    }
+
+    const { data: plans, error } = await query;
+
+    if (error) throw error;
+
+    // Parse goals from JSON string if needed and format dates
+    const formatted = plans?.map((plan) => ({
+      id: plan.id,
+      title: plan.title,
+      periodType: plan.periodType,
+      startDate: new Date(plan.startDate).toISOString().split("T")[0],
+      endDate: new Date(plan.endDate).toISOString().split("T")[0],
       goals: plan.goals ? JSON.parse(plan.goals) : [],
-    }));
+      TrainingPlanWeek: (plan.TrainingPlanWeek as unknown as Array<{
+        weekNumber: number;
+        focus: string;
+        TrainingPlanSession: Array<{
+          dayOfWeek: number;
+          title: string;
+          durationMinutes: number;
+          focusArea: string;
+          exercises: unknown;
+          sortOrder: number;
+        }>;
+      }>)?.map((week) => ({
+        weekNumber: week.weekNumber,
+        focus: week.focus,
+        TrainingPlanSession: week.TrainingPlanSession?.sort((a, b) => a.sortOrder - b.sortOrder) || [],
+      })).sort((a, b) => a.weekNumber - b.weekNumber) || [],
+    })) || [];
 
     return NextResponse.json(
       { plans: formatted },

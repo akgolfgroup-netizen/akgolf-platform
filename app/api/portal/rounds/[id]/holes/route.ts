@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { nanoid } from "nanoid";
 import { calculateShotSG, calculateHoleSG } from "@/lib/portal/golf/sg-calculator";
@@ -18,13 +18,15 @@ export async function POST(
   }
 
   const { id: roundId } = await params;
+  const supabase = await createServerSupabase();
 
-  const round = await prisma.round.findUnique({
-    where: { id: roundId },
-    select: { userId: true },
-  });
+  const { data: round, error: roundError } = await supabase
+    .from("Round")
+    .select("userId")
+    .eq("id", roundId)
+    .single();
 
-  if (!round || round.userId !== user.id) {
+  if (roundError || !round || round.userId !== user.id) {
     return NextResponse.json({ error: "Runde ikke funnet" }, { status: 404 });
   }
 
@@ -110,60 +112,99 @@ export async function POST(
     );
   }
 
-  // Upsert hull-resultat
-  const holeResult = await prisma.holeResult.upsert({
-    where: {
-      roundId_holeNumber: { roundId, holeNumber },
-    },
-    create: {
-      id: nanoid(),
-      roundId,
-      holeId,
-      holeNumber,
-      par,
-      score,
-      scoreToPar,
-      putts,
-      fairwayHit: fairwayHit ?? null,
-      gir: gir ?? false,
-      upAndDown: upAndDown ?? null,
-      sandSave: sandSave ?? null,
-      penalty: penalty ?? 0,
-      sgTotal: sgData?.sgTotal ?? null,
-      sgTee: sgData?.sgTee ?? null,
-      sgApproach: sgData?.sgApproach ?? null,
-      sgShortGame: sgData?.sgShortGame ?? null,
-      sgPutting: sgData?.sgPutting ?? null,
-      strategyFollowed: strategyFollowed ?? null,
-    },
-    update: {
-      score,
-      scoreToPar,
-      putts,
-      fairwayHit: fairwayHit ?? null,
-      gir: gir ?? false,
-      upAndDown: upAndDown ?? null,
-      sandSave: sandSave ?? null,
-      penalty: penalty ?? 0,
-      sgTotal: sgData?.sgTotal ?? null,
-      sgTee: sgData?.sgTee ?? null,
-      sgApproach: sgData?.sgApproach ?? null,
-      sgShortGame: sgData?.sgShortGame ?? null,
-      sgPutting: sgData?.sgPutting ?? null,
-      strategyFollowed: strategyFollowed ?? null,
-    },
-  });
+  // Check if hole result exists
+  const { data: existingHoleResult } = await supabase
+    .from("HoleResult")
+    .select("id")
+    .eq("roundId", roundId)
+    .eq("holeNumber", holeNumber)
+    .single();
+
+  let holeResult;
+  let holeResultError;
+
+  if (existingHoleResult) {
+    // Update existing
+    const { data, error } = await supabase
+      .from("HoleResult")
+      .update({
+        score,
+        scoreToPar,
+        putts,
+        fairwayHit: fairwayHit ?? null,
+        gir: gir ?? false,
+        upAndDown: upAndDown ?? null,
+        sandSave: sandSave ?? null,
+        penalty: penalty ?? 0,
+        sgTotal: sgData?.sgTotal ?? null,
+        sgTee: sgData?.sgTee ?? null,
+        sgApproach: sgData?.sgApproach ?? null,
+        sgShortGame: sgData?.sgShortGame ?? null,
+        sgPutting: sgData?.sgPutting ?? null,
+        strategyFollowed: strategyFollowed ?? null,
+      })
+      .eq("id", existingHoleResult.id)
+      .select()
+      .single();
+    holeResult = data;
+    holeResultError = error;
+  } else {
+    // Create new
+    const { data, error } = await supabase
+      .from("HoleResult")
+      .insert({
+        id: nanoid(),
+        roundId,
+        holeId,
+        holeNumber,
+        par,
+        score,
+        scoreToPar,
+        putts,
+        fairwayHit: fairwayHit ?? null,
+        gir: gir ?? false,
+        upAndDown: upAndDown ?? null,
+        sandSave: sandSave ?? null,
+        penalty: penalty ?? 0,
+        sgTotal: sgData?.sgTotal ?? null,
+        sgTee: sgData?.sgTee ?? null,
+        sgApproach: sgData?.sgApproach ?? null,
+        sgShortGame: sgData?.sgShortGame ?? null,
+        sgPutting: sgData?.sgPutting ?? null,
+        strategyFollowed: strategyFollowed ?? null,
+      })
+      .select()
+      .single();
+    holeResult = data;
+    holeResultError = error;
+  }
+
+  if (holeResultError || !holeResult) {
+    return NextResponse.json({ error: "Kunne ikke lagre hull-resultat" }, { status: 500 });
+  }
 
   // Lagre individuelle slag
   if (createdShots.length > 0) {
-    await prisma.shot.deleteMany({ where: { holeResultId: holeResult.id } });
-    await prisma.shot.createMany({
-      data: createdShots.map((s) => ({
-        ...s,
-        holeResultId: holeResult.id,
-        holeId,
-      })),
-    });
+    // Delete existing shots for this hole result
+    await supabase
+      .from("Shot")
+      .delete()
+      .eq("holeResultId", holeResult.id);
+
+    // Insert new shots
+    const { error: shotsError } = await supabase
+      .from("Shot")
+      .insert(
+        createdShots.map((s) => ({
+          ...s,
+          holeResultId: holeResult.id,
+          holeId,
+        }))
+      );
+
+    if (shotsError) {
+      return NextResponse.json({ error: "Kunne ikke lagre slag" }, { status: 500 });
+    }
   }
 
   return NextResponse.json({ holeResult, shots: createdShots });

@@ -1,5 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { format } from "date-fns";
@@ -55,21 +55,19 @@ export default async function SessionDetailPage({ params }: Props) {
   const { sessionId } = await params;
   const user = await requirePortalUser();
 
+  const supabase = await createServerSupabase();
+
   // Fetch training log with exercises
-  const log = await prisma.trainingLog.findUnique({
-    where: { id: sessionId },
-    include: {
-      TrainingLogExercises: {
-        orderBy: { sortOrder: "asc" },
-      },
-      User: {
-        select: { id: true, name: true },
-      },
-      TrainingPlanSession: {
-        select: { id: true, title: true, focusArea: true },
-      },
-    },
-  });
+  const { data: log } = await supabase
+    .from("TrainingLog")
+    .select(`
+      *,
+      TrainingLogExercises(*),
+      User:userId(id, name),
+      TrainingPlanSession:planSessionId(id, title, focusArea)
+    `)
+    .eq("id", sessionId)
+    .single();
 
   if (!log) {
     notFound();
@@ -152,7 +150,7 @@ export default async function SessionDetailPage({ params }: Props) {
             </div>
             <div>
               <p className="text-xs text-[#6b7366]">Øvelser</p>
-              <p className="text-base font-semibold text-[#1c1c16]">{log.TrainingLogExercises.length}</p>
+              <p className="text-base font-semibold text-[#1c1c16]">{log.TrainingLogExercises?.length ?? 0}</p>
             </div>
           </div>
         </div>
@@ -204,12 +202,12 @@ export default async function SessionDetailPage({ params }: Props) {
       </div>
 
       {/* Exercises Card */}
-      {log.TrainingLogExercises.length > 0 && (
+      {log.TrainingLogExercises && log.TrainingLogExercises.length > 0 && (
         <div className="bg-white rounded-2xl border border-[#c2c9bb]/50 p-6 space-y-4">
           <h2 className="text-lg font-semibold text-[#1c1c16]">Øvelser</h2>
 
           <div className="space-y-3">
-            {log.TrainingLogExercises.map((exercise, idx) => (
+            {log.TrainingLogExercises.sort((a: { sortOrder: number }, b: { sortOrder: number }) => a.sortOrder - b.sortOrder).map((exercise: { id: string; name: string; score: number | null; plannedSets: number | null; plannedReps: number | null; actualSets: number | null; actualReps: number | null; lPhase: string | null; environment: number | null; pressLevel: number | null; clubSpeed: number | null; successRate: number | null; notes: string | null; coachFeedback: string | null }, idx: number) => (
               <div key={exercise.id} className="p-4 bg-[#f7f3ea] rounded-xl space-y-3">
                 {/* Exercise header */}
                 <div className="flex items-start justify-between">

@@ -1,5 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getTournamentsWithPlans } from "@/modules/tournament-planner";
 import { getTourSchedule } from "@/lib/portal/datagolf/client";
 import { TurneringerClient } from "./turneringer-client";
@@ -10,8 +10,10 @@ export default async function TurneringerPage() {
   const user = await requirePortalUser();
   if (!user?.id) return null;
 
+  const supabase = await createServerSupabase();
+
   const [tournaments, pgaSchedule, euroSchedule] = await Promise.all([
-    getTournamentsWithPlans(prisma, user.id),
+    getTournamentsWithPlans(supabase, user.id),
     getTourSchedule("pga", undefined, true).catch(() => []),
     getTourSchedule("euro", undefined, true).catch(() => []),
   ]);

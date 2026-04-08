@@ -1,8 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
 
 export async function searchStudents(query: string, page = 1) {
@@ -11,114 +10,118 @@ export async function searchStudents(query: string, page = 1) {
     return { students: [], total: 0 };
   }
 
+  const supabase = await createServerSupabase();
   const pageSize = 20;
   const skip = (page - 1) * pageSize;
 
-  const where = query
-    ? {
-        role: "STUDENT" as const,
-        OR: [
-          { name: { contains: query, mode: "insensitive" as const } },
-          { email: { contains: query, mode: "insensitive" as const } },
-        ],
-      }
-    : { role: "STUDENT" as const };
+  let baseQuery = supabase
+    .from("User")
+    .select("*", { count: "exact" })
+    .eq("role", "STUDENT");
 
-  const [students, total] = await Promise.all([
-    prisma.user.findMany({
-      where,
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        phone: true,
-        image: true,
-        createdAt: true,
-        _count: {
-          select: {
-            Booking: true,
-            CoachingSession: true,
-          },
-        },
-      },
-      orderBy: { name: "asc" },
-      skip,
-      take: pageSize,
-    }),
-    prisma.user.count({ where }),
-  ]);
+  if (query) {
+    baseQuery = baseQuery.or(`name.ilike.%${query}%,email.ilike.%${query}%`);
+  }
 
-  return { students, total };
+  const { data: students, count: total } = await baseQuery
+    .order("name", { ascending: true })
+    .range(skip, skip + pageSize - 1);
+
+  // Get counts for each student
+  const studentsWithCounts = await Promise.all(
+    (students || []).map(async (student) => {
+      const [{ count: bookingCount }, { count: coachingCount }] = await Promise.all([
+        supabase.from("Booking").select("*", { count: "exact", head: true }).eq("studentId", student.id),
+        supabase.from("CoachingSession").select("*", { count: "exact", head: true }).eq("studentId", student.id),
+      ]);
+      return {
+        ...student,
+        _count: { Booking: bookingCount ?? 0, CoachingSession: coachingCount ?? 0 },
+      };
+    })
+  );
+
+  return { students: studentsWithCounts, total: total ?? 0 };
 }
 
 export async function getStudentProfile(studentId: string) {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return null;
 
-  const student = await prisma.user.findUnique({
-    where: { id: studentId },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      phone: true,
-      image: true,
-      createdAt: true,
-      notionPageId: true,
-      subscriptionTier: true,
-      Booking: {
-        select: {
-          id: true,
-          startTime: true,
-          endTime: true,
-          status: true,
-          amount: true,
-          paymentStatus: true,
-          ServiceType: { select: { name: true } },
-          Instructor: { select: { User: { select: { name: true } } } },
-        },
-        orderBy: { startTime: "desc" },
-        take: 50,
-      },
-      CoachingSession: {
-        select: {
-          id: true,
-          sessionDate: true,
-          primaryFocus: true,
-          instructorNotes: true,
-          aiSummary: true,
-          aiKeyPoints: true,
-          progressRating: true,
-        },
-        orderBy: { sessionDate: "desc" },
-        take: 20,
-      },
-      HandicapEntry: {
-        select: {
-          id: true,
-          date: true,
-          handicapIndex: true,
-          source: true,
-        },
-        orderBy: { date: "asc" },
-        take: 24,
-      },
-      Goal: {
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          targetDate: true,
-          status: true,
-          targetValue: true,
-          currentValue: true,
-        },
-        where: { status: { in: ["ACTIVE", "COMPLETED", "PAUSED"] } },
-        orderBy: { createdAt: "desc" },
-        take: 10,
-      },
-    },
-  });
+  const supabase = await createServerSupabase();
 
-  return student;
+  const { data: student } = await supabase
+    .from("User")
+    .select(`
+      id,
+      name,
+      email,
+      phone,
+      image,
+      createdAt,
+      notionPageId,
+      subscriptionTier
+    `)
+    .eq("id", studentId)
+    .single();
+
+  if (!student) return null;
+
+  const [
+    { data: bookings },
+    { data: coachingSessions },
+    { data: handicapEntries },
+    { data: goals },
+  ] = await Promise.all([
+    supabase
+      .from("Booking")
+      .select(`
+        id,
+        startTime,
+        endTime,
+        status,
+        amount,
+        paymentStatus,
+        ServiceType (name),
+        Instructor (User (name))
+      `)
+      .eq("studentId", studentId)
+      .order("startTime", { ascending: false })
+      .limit(50),
+    supabase
+      .from("CoachingSession")
+      .select(`
+        id,
+        sessionDate,
+        primaryFocus,
+        instructorNotes,
+        aiSummary,
+        aiKeyPoints,
+        progressRating
+      `)
+      .eq("studentId", studentId)
+      .order("sessionDate", { ascending: false })
+      .limit(20),
+    supabase
+      .from("HandicapEntry")
+      .select("id, date, handicapIndex, source")
+      .eq("userId", studentId)
+      .order("date", { ascending: true })
+      .limit(24),
+    supabase
+      .from("Goal")
+      .select("id, title, description, targetDate, status, targetValue, currentValue")
+      .eq("userId", studentId)
+      .in("status", ["ACTIVE", "COMPLETED", "PAUSED"])
+      .order("createdAt", { ascending: false })
+      .limit(10),
+  ]);
+
+  return {
+    ...student,
+    Booking: bookings || [],
+    CoachingSession: coachingSessions || [],
+    HandicapEntry: handicapEntries || [],
+    Goal: goals || [],
+  };
 }

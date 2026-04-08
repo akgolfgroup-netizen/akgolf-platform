@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { generateSlots } from "@/lib/portal/slots";
-import { BookingStatus } from "@prisma/client";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { logger } from "@/lib/logger";
 
@@ -35,46 +34,58 @@ export async function GET(req: NextRequest) {
   const nextDay = new Date(Date.UTC(year, month - 1, day + 1, 0, 0, 0, 0));
 
   try {
-    const [serviceType, availabilityWindows, existingBookings, blockedTimes] =
-      await Promise.all([
-        prisma.serviceType.findUnique({
-          where: { id: serviceTypeId },
-          select: { duration: true, bufferAfter: true, bufferBefore: true, minNoticeHours: true },
-        }),
-        prisma.instructorAvailability.findMany({
-          where: { instructorId, dayOfWeek },
-        }),
-        prisma.booking.findMany({
-          where: {
-            instructorId,
-            startTime: { gte: date, lt: nextDay },
-            status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
-          },
-          select: { startTime: true, endTime: true },
-        }),
-        prisma.blockedTime.findMany({
-          where: {
-            OR: [{ instructorId }, { instructorId: null }],
-            startTime: { lt: nextDay },
-            endTime: { gt: date },
-          },
-          select: { startTime: true, endTime: true },
-        }),
-      ]);
+    const supabase = await createServerSupabase();
+
+    // Fetch all required data in parallel
+    const [
+      serviceTypeResult,
+      availabilityWindowsResult,
+      existingBookingsResult,
+      blockedTimesResult,
+    ] = await Promise.all([
+      supabase
+        .from("ServiceType")
+        .select("duration, bufferAfter, bufferBefore, minNoticeHours")
+        .eq("id", serviceTypeId)
+        .single(),
+      supabase
+        .from("InstructorAvailability")
+        .select("startTime, endTime")
+        .eq("instructorId", instructorId)
+        .eq("dayOfWeek", dayOfWeek),
+      supabase
+        .from("Booking")
+        .select("startTime, endTime")
+        .eq("instructorId", instructorId)
+        .gte("startTime", date.toISOString())
+        .lt("startTime", nextDay.toISOString())
+        .in("status", ["PENDING", "CONFIRMED"]),
+      supabase
+        .from("BlockedTime")
+        .select("startTime, endTime")
+        .or(`instructorId.eq.${instructorId},instructorId.is.null`)
+        .lt("startTime", nextDay.toISOString())
+        .gt("endTime", date.toISOString()),
+    ]);
+
+    const serviceType = serviceTypeResult.data;
+    const availabilityWindows = availabilityWindowsResult.data ?? [];
+    const existingBookings = existingBookingsResult.data ?? [];
+    const blockedTimes = blockedTimesResult.data ?? [];
 
     if (!serviceType) {
       return NextResponse.json([]);
     }
 
     // Valider at instruktøren tilbyr denne tjenesten
-    const instructor = await prisma.instructor.findFirst({
-      where: {
-        id: instructorId,
-        ServiceType: { some: { id: serviceTypeId } },
-      },
-      select: { id: true },
-    });
-    if (!instructor) {
+    const { data: instructor, error: instructorError } = await supabase
+      .from("Instructor")
+      .select("id")
+      .eq("id", instructorId)
+      .filter("ServiceType", "cs", `{${serviceTypeId}}`)
+      .single();
+
+    if (instructorError || !instructor) {
       return NextResponse.json([]);
     }
 

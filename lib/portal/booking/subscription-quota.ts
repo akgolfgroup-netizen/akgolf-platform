@@ -8,7 +8,7 @@
  * - Resetting quota on subscription renewal
  */
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { nanoid } from "nanoid";
 import { CoachingSubscriptionTier } from "@prisma/client";
 
@@ -51,11 +51,15 @@ export function getSessionLimits(tier: CoachingSubscriptionTier): {
  * Check if user has available booking quota
  */
 export async function checkUserQuota(userId: string): Promise<QuotaCheckResult> {
-  const quota = await prisma.subscriptionQuota.findUnique({
-    where: { userId },
-  });
+  const supabase = createServiceClient();
+  
+  const { data: quota, error } = await supabase
+    .from("SubscriptionQuota")
+    .select("*")
+    .eq("userId", userId)
+    .single();
 
-  if (!quota) {
+  if (error || !quota) {
     return {
       hasQuota: false,
       sessionsUsed: 0,
@@ -67,13 +71,13 @@ export async function checkUserQuota(userId: string): Promise<QuotaCheckResult> 
   }
 
   // Check if period has expired
-  if (new Date() > quota.periodEnd) {
+  if (new Date() > new Date(quota.periodEnd)) {
     return {
       hasQuota: false,
       sessionsUsed: quota.sessionsUsed,
       sessionsAllowed: quota.sessionsAllowed,
       sessionsRemaining: 0,
-      periodEnd: quota.periodEnd,
+      periodEnd: new Date(quota.periodEnd),
       reason: "Abonnementsperioden har utløpt. Venter på fornyelse.",
     };
   }
@@ -85,9 +89,9 @@ export async function checkUserQuota(userId: string): Promise<QuotaCheckResult> 
     sessionsUsed: quota.sessionsUsed,
     sessionsAllowed: quota.sessionsAllowed,
     sessionsRemaining,
-    periodEnd: quota.periodEnd,
+    periodEnd: new Date(quota.periodEnd),
     reason: sessionsRemaining <= 0
-      ? `Du har brukt alle ${quota.sessionsAllowed} sesjonene dine denne måneden. Ny kvote fra ${quota.periodEnd.toLocaleDateString("nb-NO")}.`
+      ? `Du har brukt alle ${quota.sessionsAllowed} sesjonene dine denne måneden. Ny kvote fra ${new Date(quota.periodEnd).toLocaleDateString("nb-NO")}.`
       : undefined,
   };
 }
@@ -99,11 +103,15 @@ export async function checkBookingWindow(
   userId: string,
   requestedDate: Date
 ): Promise<BookingWindowResult> {
-  const quota = await prisma.subscriptionQuota.findUnique({
-    where: { userId },
-  });
+  const supabase = createServiceClient();
+  
+  const { data: quota, error } = await supabase
+    .from("SubscriptionQuota")
+    .select("bookingWindowDays")
+    .eq("userId", userId)
+    .single();
 
-  if (!quota) {
+  if (error || !quota) {
     return {
       canBook: false,
       maxBookingDate: new Date(),
@@ -134,19 +142,39 @@ export async function checkBookingWindow(
  * Returns true if a session was successfully consumed.
  */
 export async function consumeSession(userId: string): Promise<boolean> {
+  const supabase = createServiceClient();
+  
   try {
-    const result = await prisma.subscriptionQuota.updateMany({
-      where: {
-        userId,
-        sessionsUsed: { lt: prisma.subscriptionQuota.fields.sessionsAllowed },
-      },
-      data: {
-        sessionsUsed: { increment: 1 },
-        updatedAt: new Date(),
-      },
+    // Use RPC for atomic increment
+    const { data, error } = await supabase.rpc("increment_sessions_used", {
+      p_user_id: userId,
     });
 
-    return result.count > 0;
+    if (error) {
+      // Fallback: manual update with check
+      const { data: quota } = await supabase
+        .from("SubscriptionQuota")
+        .select("sessionsUsed, sessionsAllowed")
+        .eq("userId", userId)
+        .single();
+
+      if (!quota || quota.sessionsUsed >= quota.sessionsAllowed) {
+        return false;
+      }
+
+      const { error: updateError } = await supabase
+        .from("SubscriptionQuota")
+        .update({
+          sessionsUsed: quota.sessionsUsed + 1,
+          updatedAt: new Date().toISOString(),
+        })
+        .eq("userId", userId)
+        .lt("sessionsUsed", quota.sessionsAllowed);
+
+      return !updateError;
+    }
+
+    return data || false;
   } catch {
     return false;
   }
@@ -156,19 +184,39 @@ export async function consumeSession(userId: string): Promise<boolean> {
  * Release a session back to user's quota (called after cancellation >24h before)
  */
 export async function releaseSession(userId: string): Promise<boolean> {
+  const supabase = createServiceClient();
+  
   try {
-    const result = await prisma.subscriptionQuota.updateMany({
-      where: {
-        userId,
-        sessionsUsed: { gt: 0 },
-      },
-      data: {
-        sessionsUsed: { decrement: 1 },
-        updatedAt: new Date(),
-      },
+    // Use RPC for atomic decrement
+    const { data, error } = await supabase.rpc("decrement_sessions_used", {
+      p_user_id: userId,
     });
 
-    return result.count > 0;
+    if (error) {
+      // Fallback: manual update with check
+      const { data: quota } = await supabase
+        .from("SubscriptionQuota")
+        .select("sessionsUsed")
+        .eq("userId", userId)
+        .single();
+
+      if (!quota || quota.sessionsUsed <= 0) {
+        return false;
+      }
+
+      const { error: updateError } = await supabase
+        .from("SubscriptionQuota")
+        .update({
+          sessionsUsed: quota.sessionsUsed - 1,
+          updatedAt: new Date().toISOString(),
+        })
+        .eq("userId", userId)
+        .gt("sessionsUsed", 0);
+
+      return !updateError;
+    }
+
+    return data || false;
   } catch {
     return false;
   }
@@ -182,35 +230,29 @@ export async function resetQuotaForNewPeriod(
   stripeSubscriptionId: string,
   tier: CoachingSubscriptionTier
 ): Promise<void> {
+  const supabase = createServiceClient();
   const limits = getSessionLimits(tier);
   const now = new Date();
   const periodEnd = new Date(now);
   periodEnd.setMonth(periodEnd.getMonth() + 1);
 
-  await prisma.subscriptionQuota.upsert({
-    where: { userId },
-    create: {
-      id: nanoid(),
-      updatedAt: new Date(),
+  const { error } = await supabase
+    .from("SubscriptionQuota")
+    .upsert({
       userId,
       subscriptionId: stripeSubscriptionId,
       tier,
       sessionsAllowed: limits.sessionsPerPeriod,
       sessionsUsed: 0,
       bookingWindowDays: limits.bookingWindowDays,
-      periodStart: now,
-      periodEnd,
-    },
-    update: {
-      subscriptionId: stripeSubscriptionId,
-      tier,
-      sessionsAllowed: limits.sessionsPerPeriod,
-      sessionsUsed: 0,
-      bookingWindowDays: limits.bookingWindowDays,
-      periodStart: now,
-      periodEnd,
-    },
-  });
+      periodStart: now.toISOString(),
+      periodEnd: periodEnd.toISOString(),
+      updatedAt: now.toISOString(),
+    }, {
+      onConflict: "userId",
+    });
+
+  if (error) throw error;
 }
 
 /**
@@ -222,74 +264,71 @@ export async function createQuotaForNewSubscription(
   tier: CoachingSubscriptionTier,
   periodEnd?: Date
 ): Promise<void> {
+  const supabase = createServiceClient();
   const limits = getSessionLimits(tier);
   const now = new Date();
   const end = periodEnd ?? new Date(now.setMonth(now.getMonth() + 1));
 
-  await prisma.subscriptionQuota.upsert({
-    where: { userId },
-    create: {
+  const { error } = await supabase
+    .from("SubscriptionQuota")
+    .upsert({
       id: nanoid(),
-      updatedAt: new Date(),
       userId,
       subscriptionId: stripeSubscriptionId,
       tier,
       sessionsAllowed: limits.sessionsPerPeriod,
       sessionsUsed: 0,
       bookingWindowDays: limits.bookingWindowDays,
-      periodStart: new Date(),
-      periodEnd: end,
-    },
-    update: {
-      subscriptionId: stripeSubscriptionId,
-      tier,
-      sessionsAllowed: limits.sessionsPerPeriod,
-      sessionsUsed: 0,
-      bookingWindowDays: limits.bookingWindowDays,
-      periodStart: new Date(),
-      periodEnd: end,
-    },
-  });
+      periodStart: new Date().toISOString(),
+      periodEnd: end.toISOString(),
+      updatedAt: new Date().toISOString(),
+    }, {
+      onConflict: "userId",
+    });
+
+  if (error) throw error;
 }
 
 /**
  * Cancel subscription and remove quota
  */
 export async function cancelSubscriptionQuota(userId: string): Promise<void> {
-  await prisma.subscriptionQuota.delete({
-    where: { userId },
-  }).catch(() => {
-    // Ignore if not found
-  });
+  const supabase = createServiceClient();
+  
+  await supabase
+    .from("SubscriptionQuota")
+    .delete()
+    .eq("userId", userId);
 }
 
 /**
  * Get user's current quota status (for display in UI)
  */
 export async function getQuotaStatus(userId: string) {
-  const quota = await prisma.subscriptionQuota.findUnique({
-    where: { userId },
-    include: {
-      User: {
-        select: {
-          name: true,
-          email: true,
-        },
-      },
-    },
-  });
+  const supabase = createServiceClient();
+  
+  const { data: quota, error } = await supabase
+    .from("SubscriptionQuota")
+    .select(`
+      *,
+      User:userId (name, email)
+    `)
+    .eq("userId", userId)
+    .single();
 
-  if (!quota) return null;
+  if (error || !quota) return null;
 
-  const limits = getSessionLimits(quota.tier);
+  const limits = getSessionLimits(quota.tier as CoachingSubscriptionTier);
+  const userData = quota.User as { name: string | null; email: string | null } | null;
 
   return {
     ...quota,
+    User: userData,
     sessionsRemaining: quota.sessionsAllowed - quota.sessionsUsed,
     maxPerWeek: limits.maxPerWeek,
-    isExpired: new Date() > quota.periodEnd,
+    isExpired: new Date() > new Date(quota.periodEnd),
     daysUntilRenewal: Math.ceil(
-      (quota.periodEnd.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+      (new Date(quota.periodEnd).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
     ),
   };
 }

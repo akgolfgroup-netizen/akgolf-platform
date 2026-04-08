@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isAdmin } from "@/lib/portal/rbac";
-import { FacilityActivityStatus } from "@prisma/client";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 interface RouteParams {
@@ -28,16 +27,19 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   }
 
   const { id } = await params;
+  const supabase = await createServerSupabase();
 
-  const existing = await prisma.facilityActivity.findUnique({
-    where: { id },
-  });
+  const { data: existing, error: existingError } = await supabase
+    .from("FacilityActivity")
+    .select("status")
+    .eq("id", id)
+    .single();
 
-  if (!existing) {
+  if (existingError || !existing) {
     return NextResponse.json({ error: "Aktivitet ikke funnet" }, { status: 404 });
   }
 
-  if (existing.status !== FacilityActivityStatus.PENDING) {
+  if (existing.status !== "PENDING") {
     return NextResponse.json(
       { error: "Aktiviteten er ikke i ventestatus" },
       { status: 400 }
@@ -47,19 +49,25 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   const body = await req.json().catch(() => ({}));
   const { conflictNote } = body;
 
-  const activity = await prisma.facilityActivity.update({
-    where: { id },
-    data: {
-      status: FacilityActivityStatus.CONFIRMED,
+  const { data: activity, error } = await supabase
+    .from("FacilityActivity")
+    .update({
+      status: "CONFIRMED",
       approvedById: user.id,
       conflictNote: conflictNote ?? `Godkjent av ${user.name ?? "admin"}`,
-    },
-    include: {
-      Facility: { select: { id: true, name: true, slug: true } },
-      CreatedBy: { select: { id: true, name: true } },
-      ApprovedBy: { select: { id: true, name: true } },
-    },
-  });
+    })
+    .eq("id", id)
+    .select(`
+      *,
+      Facility (id, name, slug),
+      CreatedBy (id, name),
+      ApprovedBy (id, name)
+    `)
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke godkjenne aktivitet" }, { status: 500 });
+  }
 
   return NextResponse.json(activity);
 }

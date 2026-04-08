@@ -16,12 +16,13 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getPortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { nanoid } from "nanoid";
 import { notifyNewBooking, notifyBookingConfirmed } from "@/lib/portal/notifications/triggers";
 
 export async function GET(request: NextRequest) {
   try {
+    const supabase = await createServerSupabase();
     const { searchParams } = new URL(request.url);
     const serviceType = searchParams.get("type");
     const instructorId = searchParams.get("instructor");
@@ -30,35 +31,32 @@ export async function GET(request: NextRequest) {
 
     // Returner tilgjengelige tjenester
     if (!serviceType) {
-      const services = await prisma.serviceType.findMany({
-        where: {
-          isActive: true,
-          category: {
-            in: ["INDIVIDUAL", "GROUP", "DIGITAL"],
-          },
-        },
-        include: {
-          Instructor: {
-            select: {
-              id: true,
-              title: true,
-              User: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
-        },
-      });
+      const { data: services, error } = await supabase
+        .from("ServiceType")
+        .select(`
+          *,
+          Instructor (
+            id,
+            title,
+            User (
+              name
+            )
+          )
+        `)
+        .eq("isActive", true)
+        .in("category", ["INDIVIDUAL", "GROUP", "DIGITAL"]);
+
+      if (error) {
+        throw error;
+      }
 
       // Grupper tjenester
       const grouped = {
-        abonnement: services.filter(s => 
+        abonnement: (services || []).filter((s: { name: string }) => 
           s.name.includes("Performance") && !s.name.includes("Drop-in")
         ),
-        portalOnly: services.filter(s => s.category === "DIGITAL"),
-        dropIn: services.filter(s => 
+        portalOnly: (services || []).filter((s: { category: string }) => s.category === "DIGITAL"),
+        dropIn: (services || []).filter((s: { name: string }) => 
           s.name.includes("Flex") || s.name.includes("Markus")
         ),
       };
@@ -70,17 +68,17 @@ export async function GET(request: NextRequest) {
     }
 
     // Returner tilgjengelige tidspunkter for en tjeneste
-    const service = await prisma.serviceType.findFirst({
-      where: {
-        name: serviceType,
-        isActive: true,
-      },
-      include: {
-        Instructor: true,
-      },
-    });
+    const { data: service, error: serviceError } = await supabase
+      .from("ServiceType")
+      .select(`
+        *,
+        Instructor (*)
+      `)
+      .eq("name", serviceType)
+      .eq("isActive", true)
+      .single();
 
-    if (!service) {
+    if (serviceError || !service) {
       return NextResponse.json(
         { success: false, error: "Tjeneste ikke funnet" },
         { status: 404 }
@@ -88,7 +86,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Hent tilgjengelighet
-    const targetInstructorId = instructorId || service.Instructor[0]?.id;
+    const targetInstructorId = instructorId || service.Instructor?.[0]?.id;
     
     if (!targetInstructorId) {
       return NextResponse.json(
@@ -97,28 +95,30 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const availability = await prisma.instructorAvailability.findMany({
-      where: {
-        instructorId: targetInstructorId,
-      },
-    });
+    const { data: availability, error: availError } = await supabase
+      .from("InstructorAvailability")
+      .select("*")
+      .eq("instructorId", targetInstructorId);
+
+    if (availError) {
+      throw availError;
+    }
 
     // Hent eksisterende bookings for perioden
     const fromDate = from ? new Date(from) : new Date();
     const toDate = to ? new Date(to) : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
-    const existingBookings = await prisma.booking.findMany({
-      where: {
-        instructorId: targetInstructorId,
-        startTime: {
-          gte: fromDate,
-          lte: toDate,
-        },
-        status: {
-          in: ["PENDING", "CONFIRMED"],
-        },
-      },
-    });
+    const { data: existingBookings, error: bookingError } = await supabase
+      .from("Booking")
+      .select("startTime, endTime")
+      .eq("instructorId", targetInstructorId)
+      .gte("startTime", fromDate.toISOString())
+      .lte("startTime", toDate.toISOString())
+      .in("status", ["PENDING", "CONFIRMED"]);
+
+    if (bookingError) {
+      throw bookingError;
+    }
 
     return NextResponse.json({
       success: true,
@@ -129,7 +129,7 @@ export async function GET(request: NextRequest) {
         minNoticeHours: service.minNoticeHours,
       },
       availability,
-      existingBookings: existingBookings.map(b => ({
+      existingBookings: (existingBookings || []).map((b: { startTime: string; endTime: string }) => ({
         startTime: b.startTime,
         endTime: b.endTime,
       })),
@@ -155,6 +155,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const supabase = await createServerSupabase();
+
     const body = await request.json();
     const {
       serviceTypeName,
@@ -165,11 +167,13 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // Hent full brukerdata
-    const dbUser = await prisma.user.findUnique({
-      where: { email: user.email },
-    });
+    const { data: dbUser, error: userError } = await supabase
+      .from("User")
+      .select("*")
+      .eq("email", user.email)
+      .single();
 
-    if (!dbUser) {
+    if (userError || !dbUser) {
       return NextResponse.json(
         { success: false, error: "Bruker ikke funnet" },
         { status: 404 }
@@ -177,17 +181,17 @@ export async function POST(request: NextRequest) {
     }
 
     // Finn tjeneste
-    const serviceType = await prisma.serviceType.findFirst({
-      where: {
-        name: serviceTypeName,
-        isActive: true,
-      },
-      include: {
-        Instructor: true,
-      },
-    });
+    const { data: serviceType, error: serviceError } = await supabase
+      .from("ServiceType")
+      .select(`
+        *,
+        Instructor (*)
+      `)
+      .eq("name", serviceTypeName)
+      .eq("isActive", true)
+      .single();
 
-    if (!serviceType) {
+    if (serviceError || !serviceType) {
       return NextResponse.json(
         { success: false, error: "Tjeneste ikke funnet" },
         { status: 404 }
@@ -202,17 +206,14 @@ export async function POST(request: NextRequest) {
     let instructorId: string;
     if (isMarkusService) {
       // Markus-tjeneste -> finn Markus
-      const markus = await prisma.instructor.findFirst({
-        where: {
-          User: {
-            name: {
-              contains: "Markus",
-              mode: "insensitive",
-            },
-          },
-        },
-      });
-      if (!markus) {
+      const { data: markus, error: markusError } = await supabase
+        .from("Instructor")
+        .select("id, User!inner(name)")
+        .ilike("User.name", "%Markus%")
+        .limit(1)
+        .single();
+
+      if (markusError || !markus) {
         return NextResponse.json(
           { success: false, error: "Markus er ikke tilgjengelig" },
           { status: 404 }
@@ -221,17 +222,14 @@ export async function POST(request: NextRequest) {
       instructorId = markus.id;
     } else {
       // Alle andre -> Anders
-      const anders = await prisma.instructor.findFirst({
-        where: {
-          User: {
-            name: {
-              contains: "Anders",
-              mode: "insensitive",
-            },
-          },
-        },
-      });
-      if (!anders) {
+      const { data: anders, error: andersError } = await supabase
+        .from("Instructor")
+        .select("id, User!inner(name)")
+        .ilike("User.name", "%Anders%")
+        .limit(1)
+        .single();
+
+      if (andersError || !anders) {
         return NextResponse.json(
           { success: false, error: "Anders er ikke tilgjengelig" },
           { status: 404 }
@@ -258,24 +256,18 @@ export async function POST(request: NextRequest) {
     // Sjekk om tidspunktet er ledig
     const endTime = new Date(bookingTime.getTime() + serviceType.duration * 60000);
 
-    const conflictingBooking = await prisma.booking.findFirst({
-      where: {
-        instructorId,
-        OR: [
-          {
-            startTime: { lte: bookingTime },
-            endTime: { gt: bookingTime },
-          },
-          {
-            startTime: { lt: endTime },
-            endTime: { gte: endTime },
-          },
-        ],
-        status: {
-          in: ["PENDING", "CONFIRMED"],
-        },
-      },
-    });
+    const { data: conflictingBooking, error: conflictError } = await supabase
+      .from("Booking")
+      .select("id")
+      .eq("instructorId", instructorId)
+      .or(`and(startTime.lte.${bookingTime.toISOString()},endTime.gt.${bookingTime.toISOString()}),and(startTime.lt.${endTime.toISOString()},endTime.gte.${endTime.toISOString()})`)
+      .in("status", ["PENDING", "CONFIRMED"])
+      .limit(1)
+      .single();
+
+    if (conflictError && conflictError.code !== "PGRST116") {
+      throw conflictError;
+    }
 
     if (conflictingBooking) {
       return NextResponse.json(
@@ -286,17 +278,18 @@ export async function POST(request: NextRequest) {
 
     // For abonnement: sjekk om bruker har aktivt abonnement
     if (isSubscription) {
-      const activeSubscription = await prisma.appSubscription.findFirst({
-        where: {
-          userId: dbUser.id,
-          status: "ACTIVE",
-          AppBundle: {
-            name: serviceTypeName,
-          },
-        },
-      });
+      const { data: activeSubscription, error: subError } = await supabase
+        .from("AppSubscription")
+        .select(`
+          *,
+          AppBundle!inner(name)
+        `)
+        .eq("userId", dbUser.id)
+        .eq("status", "ACTIVE")
+        .eq("AppBundle.name", serviceTypeName)
+        .single();
 
-      if (!activeSubscription) {
+      if (subError || !activeSubscription) {
         return NextResponse.json(
           { 
             success: false, 
@@ -312,24 +305,31 @@ export async function POST(request: NextRequest) {
     }
 
     // Opprett booking
-    const booking = await prisma.booking.create({
-      data: {
+    const nowIso = new Date().toISOString();
+    const { data: booking, error: createError } = await supabase
+      .from("Booking")
+      .insert({
         id: nanoid(),
         studentId: dbUser.id,
         instructorId,
         serviceTypeId: serviceType.id,
-        startTime: bookingTime,
-        endTime,
+        startTime: bookingTime.toISOString(),
+        endTime: endTime.toISOString(),
         status: isSubscription ? "CONFIRMED" : "PENDING", // Drop-in trenger betaling
         studentNotes: notes || null,
-        updatedAt: new Date(),
-      },
-      include: {
-        User: { select: { name: true, email: true } },
-        ServiceType: { select: { name: true, duration: true } },
-        Instructor: { select: { User: { select: { name: true } } } },
-      },
-    });
+        updatedAt: nowIso,
+      })
+      .select(`
+        *,
+        User (name, email),
+        ServiceType (name, duration),
+        Instructor (User (name))
+      `)
+      .single();
+
+    if (createError) {
+      throw createError;
+    }
 
     // Send notifikasjoner (ikke-blokkerende)
     if (isSubscription) {

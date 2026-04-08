@@ -12,12 +12,11 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import {
   generateSlots,
   getAvailabilityForDate,
 } from "@/lib/portal/slots";
-import { BookingStatus } from "@prisma/client";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { unstable_cache, revalidateTag } from "next/cache";
 import { logger } from "@/lib/logger";
@@ -45,41 +44,35 @@ const getCachedSlotsData = unstable_cache(
     serviceTypeId: string
   ): Promise<{ slots: string[]; source: string }> => {
     const startTime = Date.now();
+    const supabase = await createServerSupabase();
 
     // Hent tilgjengelighet med støtte for date-overrides
-    const [serviceType, availabilityWindows, existingBookings, blockedTimes] =
+    const [serviceTypeResult, availabilityWindows, existingBookingsResult, blockedTimesResult] =
       await Promise.all([
-        prisma.serviceType.findUnique({
-          where: { id: serviceTypeId },
-          select: {
-            duration: true,
-            bufferAfter: true,
-            bufferBefore: true,
-            minNoticeHours: true,
-            isActive: true,
-          },
-        }),
+        supabase
+          .from("ServiceType")
+          .select("duration, bufferAfter, bufferBefore, minNoticeHours, isActive")
+          .eq("id", serviceTypeId)
+          .single(),
         getAvailabilityForDate(instructorId, date),
-        prisma.booking.findMany({
-          where: {
-            instructorId,
-            startTime: { gte: date, lt: nextDay },
-            status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
-          },
-          select: { startTime: true, endTime: true },
-        }),
-        prisma.blockedTime.findMany({
-          where: {
-            OR: [
-              { instructorId },
-              { instructorId: null }, // global blocks
-            ],
-            startTime: { lt: nextDay },
-            endTime: { gt: date },
-          },
-          select: { startTime: true, endTime: true },
-        }),
+        supabase
+          .from("Booking")
+          .select("startTime, endTime")
+          .eq("instructorId", instructorId)
+          .gte("startTime", date.toISOString())
+          .lt("startTime", nextDay.toISOString())
+          .in("status", ["PENDING", "CONFIRMED"]),
+        supabase
+          .from("BlockedTime")
+          .select("startTime, endTime")
+          .or(`instructorId.eq.${instructorId},instructorId.is.null`)
+          .lt("startTime", nextDay.toISOString())
+          .gt("endTime", date.toISOString()),
       ]);
+
+    const serviceType = serviceTypeResult.data;
+    const existingBookings = existingBookingsResult.data || [];
+    const blockedTimes = blockedTimesResult.data || [];
 
     if (!serviceType || !serviceType.isActive) {
       return { slots: [], source: "error" };
@@ -191,16 +184,17 @@ export async function GET(req: NextRequest) {
   const nextDay = new Date(Date.UTC(year, month - 1, day + 1, 0, 0, 0, 0));
 
   try {
-    // Valider at instructoren tilbyr denne serviceType
-    const instructor = await prisma.instructor.findFirst({
-      where: {
-        id: instructorId,
-        ServiceType: { some: { id: serviceTypeId } },
-      },
-      select: { id: true },
-    });
+    const supabase = await createServerSupabase();
 
-    if (!instructor) {
+    // Valider at instructoren tilbyr denne serviceType
+    const { data: instructor, error: instructorError } = await supabase
+      .from("Instructor")
+      .select("id")
+      .eq("id", instructorId)
+      .filter("ServiceType.id", "eq", serviceTypeId)
+      .single();
+
+    if (instructorError || !instructor) {
       return NextResponse.json(
         { error: "Instruktør tilbyr ikke denne tjenesten" },
         { status: 400, headers: corsHeaders }

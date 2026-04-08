@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { nanoid } from "nanoid";
 import { getPortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 const ActivateFreeSchema = z.object({
@@ -32,12 +32,16 @@ export async function POST(req: NextRequest) {
 
   const { moduleSlug } = parsed.data;
 
-  // Verify module exists and is free
-  const mod = await prisma.appModule.findUnique({
-    where: { slug: moduleSlug },
-  });
+  const supabase = await createServerSupabase();
 
-  if (!mod || !mod.isActive) {
+  // Verify module exists and is free
+  const { data: mod, error: modError } = await supabase
+    .from("AppModule")
+    .select("id, isActive, monthlyPriceNok")
+    .eq("slug", moduleSlug)
+    .single();
+
+  if (modError || !mod || !mod.isActive) {
     return NextResponse.json({ error: "Modul ikke funnet" }, { status: 404 });
   }
 
@@ -49,12 +53,13 @@ export async function POST(req: NextRequest) {
   }
 
   // Check if user already has this module
-  const existingSub = await prisma.appSubscription.findFirst({
-    where: {
-      userId: user.id,
-      moduleId: mod.id,
-    },
-  });
+  const { data: existingSub } = await supabase
+    .from("AppSubscription")
+    .select("id")
+    .eq("userId", user.id)
+    .eq("moduleId", mod.id)
+    .limit(1)
+    .single();
 
   if (existingSub) {
     return NextResponse.json(
@@ -64,17 +69,25 @@ export async function POST(req: NextRequest) {
   }
 
   // Create subscription for free module
-  await prisma.appSubscription.create({
-    data: {
+  const { error: insertError } = await supabase
+    .from("AppSubscription")
+    .insert({
       id: nanoid(),
-      updatedAt: new Date(),
       userId: user.id,
       moduleId: mod.id,
       status: "ACTIVE",
-      currentPeriodStart: new Date(),
-      currentPeriodEnd: new Date("2099-12-31"), // Essentially forever for free modules
-    },
-  });
+      currentPeriodStart: new Date().toISOString(),
+      currentPeriodEnd: new Date("2099-12-31").toISOString(), // Essentially forever for free modules
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
+
+  if (insertError) {
+    return NextResponse.json(
+      { error: "Kunne ikke aktivere modulen" },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json({ success: true });
 }

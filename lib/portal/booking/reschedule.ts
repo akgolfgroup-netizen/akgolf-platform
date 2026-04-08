@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { BookingStatus } from "@prisma/client";
 import { addMinutes } from "date-fns";
 import { sendRescheduleNotification } from "@/lib/portal/email/send-booking-email";
@@ -14,7 +14,7 @@ interface RescheduleResult {
 
 /**
  * Reschedule a booking to a new time slot.
- * Cancels the old booking and creates a new one in a single transaction,
+ * Cancels the old booking and creates a new one,
  * preserving the payment reference.
  */
 export async function rescheduleBooking(
@@ -22,26 +22,20 @@ export async function rescheduleBooking(
   newStartTime: Date,
   userId: string
 ): Promise<RescheduleResult> {
-  const booking = await prisma.booking.findUnique({
-    where: { id: bookingId },
-    include: {
-      ServiceType: {
-        select: {
-          name: true,
-          duration: true,
-          bufferBefore: true,
-          bufferAfter: true,
-          minNoticeHours: true,
-          maxAdvanceDays: true,
-        },
-      },
-      User: {
-        select: { name: true, email: true },
-      },
-    },
-  });
+  const supabase = createServiceClient();
+  
+  // Fetch booking with related data
+  const { data: booking, error: bookingError } = await supabase
+    .from("Booking")
+    .select(`
+      *,
+      ServiceType:serviceTypeId (name, duration, bufferBefore, bufferAfter, minNoticeHours, maxAdvanceDays),
+      User:studentId (name, email)
+    `)
+    .eq("id", bookingId)
+    .single();
 
-  if (!booking) {
+  if (bookingError || !booking) {
     return { success: false, error: "Booking ikke funnet" };
   }
 
@@ -56,118 +50,130 @@ export async function rescheduleBooking(
     return { success: false, error: "Kan kun endre aktive bookinger" };
   }
 
+  // Type assertions for joined data
+  const serviceType = booking.ServiceType as {
+    name: string;
+    duration: number;
+    bufferBefore: number;
+    bufferAfter: number;
+    minNoticeHours: number;
+    maxAdvanceDays: number;
+  } | null;
+  const userData = booking.User as { name: string | null; email: string | null } | null;
+
+  if (!serviceType) {
+    return { success: false, error: "Tjenestetype ikke funnet" };
+  }
+
   // Validate new time
   const now = new Date();
   if (newStartTime <= now) {
     return { success: false, error: "Nytt tidspunkt må være i fremtiden" };
   }
 
-  const minNoticeMs = booking.ServiceType.minNoticeHours * 60 * 60 * 1000;
+  const minNoticeMs = serviceType.minNoticeHours * 60 * 60 * 1000;
   if (newStartTime.getTime() - now.getTime() < minNoticeMs) {
     return {
       success: false,
-      error: `Krever minst ${booking.ServiceType.minNoticeHours} timers varsel`,
+      error: `Krever minst ${serviceType.minNoticeHours} timers varsel`,
     };
   }
 
-  const maxAdvanceMs = booking.ServiceType.maxAdvanceDays * 24 * 60 * 60 * 1000;
+  const maxAdvanceMs = serviceType.maxAdvanceDays * 24 * 60 * 60 * 1000;
   if (newStartTime.getTime() - Date.now() > maxAdvanceMs) {
     return {
       success: false,
-      error: `Kan ikke bestille mer enn ${booking.ServiceType.maxAdvanceDays} dager frem i tid`,
+      error: `Kan ikke bestille mer enn ${serviceType.maxAdvanceDays} dager frem i tid`,
     };
   }
 
-  const newEndTime = addMinutes(newStartTime, booking.ServiceType.duration);
+  const newEndTime = addMinutes(newStartTime, serviceType.duration);
   const conflictStart = addMinutes(
     newStartTime,
-    -booking.ServiceType.bufferBefore
+    -serviceType.bufferBefore
   );
-  const conflictEnd = addMinutes(newEndTime, booking.ServiceType.bufferAfter);
+  const conflictEnd = addMinutes(newEndTime, serviceType.bufferAfter);
 
-  // Atomic: cancel old + create new in serializable transaction
   try {
-    const newBooking = await prisma.$transaction(
-      async (tx) => {
-        // Check for conflicts (excluding the booking being rescheduled)
-        const conflict = await tx.booking.findFirst({
-          where: {
-            id: { not: bookingId },
-            instructorId: booking.instructorId,
-            status: {
-              in: [BookingStatus.PENDING, BookingStatus.CONFIRMED],
-            },
-            AND: [
-              { startTime: { lt: conflictEnd } },
-              { endTime: { gt: conflictStart } },
-            ],
-          },
-        });
+    // Check for conflicts (excluding the booking being rescheduled)
+    const { data: conflict, error: conflictError } = await supabase
+      .from("Booking")
+      .select("id")
+      .neq("id", bookingId)
+      .eq("instructorId", booking.instructorId)
+      .in("status", [BookingStatus.PENDING, BookingStatus.CONFIRMED])
+      .lt("startTime", conflictEnd.toISOString())
+      .gt("endTime", conflictStart.toISOString())
+      .limit(1)
+      .single();
 
-        if (conflict) {
-          throw new Error("Tidspunktet er ikke lenger ledig");
-        }
+    if (conflict) {
+      throw new Error("Tidspunktet er ikke lenger ledig");
+    }
 
-        // Check blocked times
-        const blockedConflict = await tx.blockedTime.findFirst({
-          where: {
-            OR: [
-              { instructorId: booking.instructorId },
-              { instructorId: null },
-            ],
-            AND: [
-              { startTime: { lt: conflictEnd } },
-              { endTime: { gt: conflictStart } },
-            ],
-          },
-        });
+    // Check blocked times
+    const { data: blockedConflict, error: blockedError } = await supabase
+      .from("BlockedTime")
+      .select("id")
+      .or(`instructorId.eq.${booking.instructorId},instructorId.is.null`)
+      .lt("startTime", conflictEnd.toISOString())
+      .gt("endTime", conflictStart.toISOString())
+      .limit(1)
+      .single();
 
-        if (blockedConflict) {
-          throw new Error("Tidspunktet er blokkert");
-        }
+    if (blockedConflict) {
+      throw new Error("Tidspunktet er blokkert");
+    }
 
-        // Cancel old booking
-        await tx.booking.update({
-          where: { id: bookingId },
-          data: {
-            status: BookingStatus.CANCELLED,
-            cancelledAt: now,
-            cancelReason: "Ombestilt",
-          },
-        });
+    // Cancel old booking
+    const { error: cancelError } = await supabase
+      .from("Booking")
+      .update({
+        status: BookingStatus.CANCELLED,
+        cancelledAt: now.toISOString(),
+        cancelReason: "Ombestilt",
+      })
+      .eq("id", bookingId);
 
-        // Create new booking with same payment info
-        return tx.booking.create({
-          data: {
-            id: randomUUID(),
-            studentId: booking.studentId,
-            instructorId: booking.instructorId,
-            serviceTypeId: booking.serviceTypeId,
-            locationId: booking.locationId,
-            resourceId: booking.resourceId,
-            startTime: newStartTime,
-            endTime: newEndTime,
-            status: booking.status, // preserve CONFIRMED/PENDING
-            paymentMethod: booking.paymentMethod,
-            paymentStatus: booking.paymentStatus,
-            amount: booking.amount,
-            vatAmount: booking.vatAmount,
-            stripePaymentId: booking.stripePaymentId,
-            vippsOrderId: booking.vippsOrderId,
-            updatedAt: new Date(),
-          },
-        });
-      },
-      { isolationLevel: "Serializable" }
-    );
+    if (cancelError) {
+      throw new Error("Kunne ikke kansellere eksisterende booking");
+    }
+
+    // Create new booking with same payment info
+    const { data: newBooking, error: createError } = await supabase
+      .from("Booking")
+      .insert({
+        id: randomUUID(),
+        studentId: booking.studentId,
+        instructorId: booking.instructorId,
+        serviceTypeId: booking.serviceTypeId,
+        locationId: booking.locationId,
+        resourceId: booking.resourceId,
+        startTime: newStartTime.toISOString(),
+        endTime: newEndTime.toISOString(),
+        status: booking.status, // preserve CONFIRMED/PENDING
+        paymentMethod: booking.paymentMethod,
+        paymentStatus: booking.paymentStatus,
+        amount: booking.amount,
+        vatAmount: booking.vatAmount,
+        stripePaymentId: booking.stripePaymentId,
+        vippsOrderId: booking.vippsOrderId,
+        updatedAt: new Date().toISOString(),
+      })
+      .select()
+      .single();
+
+    if (createError || !newBooking) {
+      throw new Error("Kunne ikke opprette ny booking");
+    }
 
     // Send reschedule notification (non-blocking)
-    if (booking.User.email) {
+    if (userData?.email) {
       sendRescheduleNotification(
-        booking.User.email,
-        booking.User.name ?? "Elev",
-        booking.ServiceType.name,
-        booking.startTime,
+        userData.email,
+        userData.name ?? "Elev",
+        serviceType.name,
+        new Date(booking.startTime),
         newStartTime,
       ).catch((err) => {
         logger.error("[Reschedule] Email notification failed:", err);
@@ -175,17 +181,19 @@ export async function rescheduleBooking(
     }
 
     // Send push notification
-    const fullBooking = await prisma.booking.findUnique({
-      where: { id: newBooking.id },
-      include: {
-        ServiceType: { select: { name: true } },
-        Instructor: { select: { User: { select: { name: true } } } },
-        Location: { select: { name: true } },
-      },
-    });
+    const { data: fullBooking, error: fullBookingError } = await supabase
+      .from("Booking")
+      .select(`
+        *,
+        ServiceType:serviceTypeId (name),
+        Instructor:instructorId (User:userId (name)),
+        Location:locationId (name)
+      `)
+      .eq("id", newBooking.id)
+      .single();
 
     if (fullBooking) {
-      notifyBookingRescheduled(fullBooking, booking.startTime).catch((err) => {
+      notifyBookingRescheduled(fullBooking, new Date(booking.startTime)).catch((err) => {
         logger.error("[Reschedule] Push notification failed:", err);
       });
     }

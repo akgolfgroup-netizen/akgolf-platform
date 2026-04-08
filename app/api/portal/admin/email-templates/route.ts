@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isAdmin } from "@/lib/portal/rbac";
-import { prisma } from "@/lib/portal/prisma";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function POST(request: NextRequest) {
@@ -27,16 +27,27 @@ export async function POST(request: NextRequest) {
     }
 
     const { nanoid } = await import("nanoid");
-    const template = await prisma.emailTemplate.create({
-      data: {
+    const supabase = await createServerSupabase();
+    
+    const { data: template, error } = await supabase
+      .from("EmailTemplate")
+      .insert({
         id: nanoid(),
         name,
         subject,
         htmlContent: htmlContent ?? "",
         variables: variables ?? [],
-        updatedAt: new Date(),
-      },
-    });
+        updatedAt: new Date().toISOString(),
+      })
+      .select()
+      .single();
+
+    if (error) {
+      const message = error.message.includes("duplicate")
+        ? "En mal med dette navnet finnes allerede"
+        : "Kunne ikke opprette mal";
+      return NextResponse.json({ error: message }, { status: 500 });
+    }
 
     return NextResponse.json(template);
   } catch (e) {

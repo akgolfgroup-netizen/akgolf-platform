@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff, isAdmin } from "@/lib/portal/rbac";
 import { checkFacilityConflicts } from "@/lib/portal/facility/conflict-check";
-import { FacilityActivityStatus, FacilityActivityType } from "@prisma/client";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 /**
@@ -25,59 +24,39 @@ export async function GET(req: NextRequest) {
   const facilityId = searchParams.get("facilityId");
   const startDate = searchParams.get("startDate");
   const endDate = searchParams.get("endDate");
-  const status = searchParams.get("status") as FacilityActivityStatus | null;
+  const status = searchParams.get("status");
 
-  const activities = await prisma.facilityActivity.findMany({
-    where: {
-      ...(facilityId && { facilityId }),
-      ...(status && { status }),
-      ...(startDate &&
-        endDate && {
-          OR: [
-            {
-              startTime: {
-                gte: new Date(startDate),
-                lte: new Date(endDate),
-              },
-            },
-            {
-              endTime: {
-                gte: new Date(startDate),
-                lte: new Date(endDate),
-              },
-            },
-            {
-              startTime: { lte: new Date(startDate) },
-              endTime: { gte: new Date(endDate) },
-            },
-          ],
-        }),
-    },
-    include: {
-      Facility: {
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-        },
-      },
-      CreatedBy: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-      ApprovedBy: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-    orderBy: { startTime: "asc" },
-  });
+  const supabase = await createServerSupabase();
+  
+  let query = supabase
+    .from("FacilityActivity")
+    .select(`
+      *,
+      Facility (id, name, slug),
+      CreatedBy (id, name),
+      ApprovedBy (id, name)
+    `);
 
-  return NextResponse.json(activities);
+  if (facilityId) {
+    query = query.eq("facilityId", facilityId);
+  }
+  if (status) {
+    query = query.eq("status", status);
+  }
+  if (startDate && endDate) {
+    const start = new Date(startDate).toISOString();
+    const end = new Date(endDate).toISOString();
+    // OR logic for overlapping events
+    query = query.or(`startTime.gte.${start},startTime.lte.${end},and(startTime.lte.${start},endTime.gte.${end})`);
+  }
+
+  const { data: activities, error } = await query.order("startTime", { ascending: true });
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke hente aktiviteter" }, { status: 500 });
+  }
+
+  return NextResponse.json(activities || []);
 }
 
 /**
@@ -116,7 +95,8 @@ export async function POST(req: NextRequest) {
   }
 
   // Valider aktivitetstype
-  if (!Object.values(FacilityActivityType).includes(activityType)) {
+  const validActivityTypes = ["TOURNAMENT_CLUB", "TOURNAMENT_REGION", "TOURNAMENT_JUNIOR", "VTG_COURSE", "GFGK_JUNIOR", "AK_GOLF", "AK_GOLF_JUNIOR_ACADEMY", "SPONSOR_EVENT", "INTERNAL", "CLOSURE", "OTHER", "BOOKING"];
+  if (!validActivityTypes.includes(activityType)) {
     return NextResponse.json(
       { error: "Ugyldig aktivitetstype" },
       { status: 400 }
@@ -137,52 +117,48 @@ export async function POST(req: NextRequest) {
   const conflicts = await checkFacilityConflicts(facilityId, start, end);
 
   // Bestem status basert på konflikter
-  let activityStatus: FacilityActivityStatus = FacilityActivityStatus.CONFIRMED;
+  let activityStatus: string = "CONFIRMED";
   let conflictNote: string | null = null;
 
   if (conflicts.hasConflict) {
     // Kun admin kan godkjenne konflikter direkte
     if (isAdmin(user.role)) {
-      activityStatus = FacilityActivityStatus.CONFIRMED;
+      activityStatus = "CONFIRMED";
       conflictNote = `Godkjent med ${conflicts.conflictingItems.length} konflikter`;
     } else {
-      activityStatus = FacilityActivityStatus.PENDING;
+      activityStatus = "PENDING";
       conflictNote = `Venter på godkjenning - ${conflicts.conflictingItems.length} konflikter`;
     }
   }
 
-  const activity = await prisma.facilityActivity.create({
-    data: {
+  const supabase = await createServerSupabase();
+  const { data: activity, error } = await supabase
+    .from("FacilityActivity")
+    .insert({
       facilityId,
       title,
       description,
       activityType,
-      startTime: start,
-      endTime: end,
+      startTime: start.toISOString(),
+      endTime: end.toISOString(),
       isRecurring: isRecurring ?? false,
       recurrenceRule,
       createdById: user.id,
-      approvedById: activityStatus === FacilityActivityStatus.CONFIRMED ? user.id : null,
+      approvedById: activityStatus === "CONFIRMED" ? user.id : null,
       status: activityStatus,
       conflictNote,
       color,
-    },
-    include: {
-      Facility: {
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-        },
-      },
-      CreatedBy: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-  });
+    })
+    .select(`
+      *,
+      Facility (id, name, slug),
+      CreatedBy (id, name)
+    `)
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke opprette aktivitet" }, { status: 500 });
+  }
 
   return NextResponse.json(
     {

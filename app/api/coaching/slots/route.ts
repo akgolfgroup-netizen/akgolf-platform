@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
-import { BookingStatus } from "@prisma/client";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { addHours, addDays, isBefore, isAfter } from "date-fns";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
@@ -45,49 +44,38 @@ export async function GET(req: NextRequest) {
   const nextDay = new Date(Date.UTC(year, month - 1, day + 1, 0, 0, 0, 0));
 
   try {
-    // Fetch package and availability in parallel
-    const [coachingPackage, availabilitySlots, existingBookings] =
-      await Promise.all([
-        prisma.coachingPackage.findUnique({
-          where: { slug: packageSlug },
-          select: {
-            id: true,
-            bookingType: true,
-            bookingWindowDays: true,
-            bookingWindowHours: true,
-            slotsRequired: true,
-            sessionDurationMin: true,
-          },
-        }),
-        prisma.coachingAvailability.findMany({
-          where: {
-            dayOfWeek,
-            isActive: true,
-          },
-          orderBy: { startTime: "asc" },
-          select: {
-            startTime: true,
-            endTime: true,
-            reservedFor: true,
-          },
-        }),
-        prisma.booking.findMany({
-          where: {
-            startTime: { gte: date, lt: nextDay },
-            status: {
-              in: [BookingStatus.PENDING, BookingStatus.CONFIRMED],
-            },
-          },
-          select: { startTime: true, endTime: true },
-        }),
-      ]);
+    const supabase = await createServerSupabase();
 
-    if (!coachingPackage) {
+    // Fetch package and availability in parallel
+    const [{ data: coachingPackage, error: packageError }, { data: availabilitySlots, error: availabilityError }, { data: existingBookings, error: bookingsError }] = await Promise.all([
+      supabase
+        .from("CoachingPackage")
+        .select("id, bookingType, bookingWindowDays, bookingWindowHours, slotsRequired, sessionDurationMin")
+        .eq("slug", packageSlug)
+        .single(),
+      supabase
+        .from("CoachingAvailability")
+        .select("startTime, endTime, reservedFor")
+        .eq("dayOfWeek", dayOfWeek)
+        .eq("isActive", true)
+        .order("startTime", { ascending: true }),
+      supabase
+        .from("Booking")
+        .select("startTime, endTime")
+        .gte("startTime", date.toISOString())
+        .lt("startTime", nextDay.toISOString())
+        .in("status", ["PENDING", "CONFIRMED"]),
+    ]);
+
+    if (packageError || !coachingPackage) {
       return NextResponse.json(
         { error: "Pakke ikke funnet" },
         { status: 404 }
       );
     }
+
+    if (availabilityError) throw availabilityError;
+    if (bookingsError) throw bookingsError;
 
     const now = new Date();
 
@@ -117,7 +105,7 @@ export async function GET(req: NextRequest) {
 
     // Filter slots based on reservation rules
     const isJuniorElite = packageSlug.includes("junior");
-    const filteredSlots = availabilitySlots.filter(
+    const filteredSlots = (availabilitySlots as unknown as AvailabilitySlot[])?.filter(
       (slot: AvailabilitySlot) => {
         // Exclude junior_elite reserved slots unless user has junior package
         if (slot.reservedFor === "junior_elite" && !isJuniorElite) {
@@ -125,7 +113,7 @@ export async function GET(req: NextRequest) {
         }
         return true;
       }
-    );
+    ) || [];
 
     // Build available time slots
     const slotsRequired = coachingPackage.slotsRequired;
@@ -166,15 +154,13 @@ export async function GET(req: NextRequest) {
           const [checkH, checkM] = checkSlot.startTime.split(":").map(Number);
           const checkStart = new Date(date);
           checkStart.setUTCHours(checkH, checkM, 0, 0);
-          const [checkEndH, checkEndM] = checkSlot.endTime
-            .split(":")
-            .map(Number);
+          const [checkEndH, checkEndM] = checkSlot.endTime.split(":").map(Number);
           const checkEnd = new Date(date);
           checkEnd.setUTCHours(checkEndH, checkEndM, 0, 0);
 
-          const isBooked = existingBookings.some(
+          const isBooked = existingBookings?.some(
             (b) =>
-              isBefore(checkStart, b.endTime) && isAfter(checkEnd, b.startTime)
+              isBefore(checkStart, new Date(b.endTime)) && isAfter(checkEnd, new Date(b.startTime))
           );
           if (isBooked) {
             consecutiveAvailable = false;
@@ -191,9 +177,9 @@ export async function GET(req: NextRequest) {
         const slotEnd = new Date(date);
         slotEnd.setUTCHours(endH, endM, 0, 0);
 
-        const isBooked = existingBookings.some(
+        const isBooked = existingBookings?.some(
           (b) =>
-            isBefore(slotStart, b.endTime) && isAfter(slotEnd, b.startTime)
+            isBefore(slotStart, new Date(b.endTime)) && isAfter(slotEnd, new Date(b.startTime))
         );
         if (isBooked) continue;
       }

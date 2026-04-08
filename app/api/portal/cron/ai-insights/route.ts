@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { createNotification } from "@/lib/portal/notifications";
 import {
   generateWeeklyInsight,
@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   const fourteenDaysAgo = subDays(now, 14);
   const sevenDaysAgo = subDays(now, 7);
@@ -32,47 +33,44 @@ export async function GET(req: NextRequest) {
   // - Innlogget siste 14 dager
   // - Har minst 1 treningslogg siste 7 dager ELLER minst 1 runde siste 30 dager
   // - Ikke fått AI-innsikt denne uken
-  const users = await prisma.user.findMany({
-    where: {
-      AND: [
-        { isActive: true },
-        { role: "STUDENT" },
-        { lastActiveAt: { gte: fourteenDaysAgo } },
-        // Har treningsdata
-        {
-          OR: [
-            {
-              TrainingLog: {
-                some: { date: { gte: sevenDaysAgo } },
-              },
-            },
-            {
-              RoundStats: {
-                some: { date: { gte: subDays(now, 30) } },
-              },
-            },
-          ],
-        },
-        // Ikke generert nylig
-        {
-          OR: [
-            { aiInsightGeneratedAt: null },
-            { aiInsightGeneratedAt: { lt: sevenDaysAgo } },
-          ],
-        },
-      ],
-    },
-    select: {
-      id: true,
-      name: true,
-    },
+  const { data: users, error: usersError } = await supabase
+    .from("User")
+    .select(`
+      id,
+      name,
+      lastActiveAt,
+      aiInsightGeneratedAt,
+      TrainingLog!inner(id),
+      RoundStats!inner(id)
+    `)
+    .eq("isActive", true)
+    .eq("role", "STUDENT")
+    .gte("lastActiveAt", fourteenDaysAgo.toISOString())
+    .or(
+      `TrainingLog(date.gte.${sevenDaysAgo.toISOString()}),RoundStats(date.gte.${subDays(now, 30).toISOString()})`
+    );
+
+  // Filtrer manuelt for aiInsightGeneratedAt siden det er en OR-condition
+  const filteredUsers = (users ?? []).filter((user) => {
+    return (
+      !user.aiInsightGeneratedAt ||
+      new Date(user.aiInsightGeneratedAt) < sevenDaysAgo
+    );
   });
+
+  if (usersError && !users) {
+    logger.error("[AI Insights] Error fetching users:", usersError);
+    return NextResponse.json(
+      { error: "Failed to fetch users" },
+      { status: 500 }
+    );
+  }
 
   let generated = 0;
   let skipped = 0;
   let errors = 0;
 
-  for (const user of users) {
+  for (const user of filteredUsers) {
     try {
       const insight = await generateWeeklyInsight(user.id);
 

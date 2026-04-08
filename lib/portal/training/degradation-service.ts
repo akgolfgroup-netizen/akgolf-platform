@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { PYRAMID_LEVELS, M_ENVIRONMENTS } from "@/lib/portal/golf/ak-formula";
 import type { ShotType } from "./l-phase-service";
 
@@ -90,30 +90,31 @@ export async function calculateDegradation(
   userId: string,
   shotType: ShotType
 ): Promise<DegradationCurve> {
+  const supabase = createServiceClient();
+  
   // Get exercises for this shot type from the last 90 days
   const ninetyDaysAgo = new Date();
   ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
 
-  const exercises = await prisma.trainingLogExercise.findMany({
-    where: {
-      TrainingLog: {
-        userId,
-        date: { gte: ninetyDaysAgo },
-      },
-      score: { not: null },
-    },
-    select: {
-      score: true,
-      clubSpeed: true,
-      environment: true,
-      pressLevel: true,
-      name: true,
-    },
-  });
+  const { data: exercises, error } = await supabase
+    .from("TrainingLogExercise")
+    .select(`
+      score,
+      clubSpeed,
+      environment,
+      pressLevel,
+      name,
+      TrainingLog!inner(userId, date)
+    `)
+    .gte("TrainingLog.date", ninetyDaysAgo.toISOString())
+    .eq("TrainingLog.userId", userId)
+    .not("score", "is", null);
+
+  if (error) throw error;
 
   // Filter exercises that match this shot type (by name pattern)
   const shotTypePatterns = getShotTypePatterns(shotType);
-  const relevantExercises = exercises.filter((ex) =>
+  const relevantExercises = (exercises || []).filter((ex) =>
     shotTypePatterns.some((pattern) =>
       ex.name.toLowerCase().includes(pattern.toLowerCase())
     )
@@ -223,23 +224,24 @@ export async function getTekSlagSpillGap(
 export async function getEnvironmentDistribution(
   userId: string
 ): Promise<EnvironmentDistribution[]> {
+  const supabase = createServiceClient();
+  
   // Get exercises from the last 90 days
   const ninetyDaysAgo = new Date();
   ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
 
-  const exercises = await prisma.trainingLogExercise.findMany({
-    where: {
-      TrainingLog: {
-        userId,
-        date: { gte: ninetyDaysAgo },
-      },
-      environment: { not: null },
-    },
-    select: {
-      environment: true,
-      score: true,
-    },
-  });
+  const { data: exercises, error } = await supabase
+    .from("TrainingLogExercise")
+    .select(`
+      environment,
+      score,
+      TrainingLog!inner(userId, date)
+    `)
+    .gte("TrainingLog.date", ninetyDaysAgo.toISOString())
+    .eq("TrainingLog.userId", userId)
+    .not("environment", "is", null);
+
+  if (error) throw error;
 
   // Group by environment
   const envGroups: Map<number, { count: number; scores: number[] }> = new Map();
@@ -248,7 +250,7 @@ export async function getEnvironmentDistribution(
     envGroups.set(i, { count: 0, scores: [] });
   }
 
-  for (const ex of exercises) {
+  for (const ex of (exercises || [])) {
     if (ex.environment === null) continue;
     const group = envGroups.get(ex.environment);
     if (group) {
@@ -259,7 +261,7 @@ export async function getEnvironmentDistribution(
     }
   }
 
-  const totalCount = exercises.length || 1; // Avoid division by zero
+  const totalCount = (exercises || []).length || 1; // Avoid division by zero
 
   // Build distribution array
   const distribution: EnvironmentDistribution[] = [];

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
-import { CustomerType, PaymentMethod } from "@prisma/client";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { nanoid } from "nanoid";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
@@ -13,10 +12,13 @@ export async function GET(request: NextRequest) {
 
   try {
     const user = await requirePortalUser();
+    const supabase = await createServerSupabase();
 
-    const preference = await prisma.customerPaymentPreference.findUnique({
-      where: { userId: user.id },
-    });
+    const { data: preference } = await supabase
+      .from("CustomerPaymentPreference")
+      .select("*")
+      .eq("userId", user.id)
+      .single();
 
     return NextResponse.json(preference);
   } catch {
@@ -61,30 +63,59 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const preference = await prisma.customerPaymentPreference.upsert({
-      where: { userId: user.id },
-      create: {
-        id: nanoid(),
-        userId: user.id,
-        customerType: (customerType as CustomerType) ?? "PRIVATE",
-        preferredMethod: (preferredMethod as PaymentMethod) ?? "NONE",
-        companyName: companyName ?? null,
-        orgNumber: orgNumber ?? null,
-        invoiceEmail: invoiceEmail ?? null,
-        invoiceAddress: invoiceAddress ?? null,
-        updatedAt: new Date(),
-      },
-      update: {
-        customerType: customerType as CustomerType | undefined,
-        preferredMethod: preferredMethod as PaymentMethod | undefined,
-        companyName: companyName ?? null,
-        orgNumber: orgNumber ?? null,
-        invoiceEmail: invoiceEmail ?? null,
-        invoiceAddress: invoiceAddress ?? null,
-      },
-    });
+    const supabase = await createServerSupabase();
 
-    return NextResponse.json(preference);
+    // Check if preference exists
+    const { data: existingPreference } = await supabase
+      .from("CustomerPaymentPreference")
+      .select("id")
+      .eq("userId", user.id)
+      .single();
+
+    let result;
+    if (existingPreference) {
+      // Update existing
+      const { data, error } = await supabase
+        .from("CustomerPaymentPreference")
+        .update({
+          customerType: customerType ?? undefined,
+          preferredMethod: preferredMethod ?? undefined,
+          companyName: companyName ?? null,
+          orgNumber: orgNumber ?? null,
+          invoiceEmail: invoiceEmail ?? null,
+          invoiceAddress: invoiceAddress ?? null,
+          updatedAt: new Date().toISOString(),
+        })
+        .eq("userId", user.id)
+        .select()
+        .single();
+      
+      if (error) throw error;
+      result = data;
+    } else {
+      // Create new
+      const { data, error } = await supabase
+        .from("CustomerPaymentPreference")
+        .insert({
+          id: nanoid(),
+          userId: user.id,
+          customerType: customerType ?? "PRIVATE",
+          preferredMethod: preferredMethod ?? "NONE",
+          companyName: companyName ?? null,
+          orgNumber: orgNumber ?? null,
+          invoiceEmail: invoiceEmail ?? null,
+          invoiceAddress: invoiceAddress ?? null,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        })
+        .select()
+        .single();
+      
+      if (error) throw error;
+      result = data;
+    }
+
+    return NextResponse.json(result);
   } catch {
     return NextResponse.json(
       { error: "Kunne ikke lagre betalingsinnstillinger" },

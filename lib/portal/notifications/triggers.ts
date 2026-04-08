@@ -5,7 +5,6 @@
 
 import { format, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { prisma } from "@/lib/portal/prisma";
 import { logger } from "@/lib/logger";
 import { NotificationType } from "./types";
 import {
@@ -46,7 +45,7 @@ export async function notifyNewBooking(
 
     const metadata: BookingNotificationMetadata = {
       bookingId: booking.id,
-      startTime: booking.startTime.toISOString(),
+      startTime: booking.startTime,
       studentName: booking.User?.name ?? undefined,
       serviceTypeName: booking.ServiceType?.name ?? undefined,
       locationName: booking.Location?.name ?? undefined,
@@ -54,7 +53,7 @@ export async function notifyNewBooking(
 
     await createNotification({
       userId: booking.instructorId,
-      type: NotificationType.BOOKING_CONFIRMED, // Bruker eksisterende type
+      type: NotificationType.BOOKING_CONFIRMED,
       title: "Ny booking",
       message: `${studentName} har booket ${serviceName} ${dateStr} kl ${timeStr}`,
       linkUrl: `/portal/admin/bookinger/${booking.id}`,
@@ -89,7 +88,7 @@ export async function notifyBookingCancelled(
 
     const metadata: BookingNotificationMetadata = {
       bookingId: booking.id,
-      startTime: booking.startTime.toISOString(),
+      startTime: booking.startTime,
       studentName: booking.User?.name ?? undefined,
       serviceTypeName: booking.ServiceType?.name ?? undefined,
     };
@@ -126,13 +125,6 @@ export async function notifyVideoUploaded(
   }
 ): Promise<void> {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { name: true },
-    });
-
-    const studentName = user?.name ?? "En elev";
-
     const metadata: VideoNotificationMetadata = {
       videoId,
       title: videoData?.title,
@@ -142,9 +134,9 @@ export async function notifyVideoUploaded(
 
     await createNotification({
       userId: instructorId,
-      type: NotificationType.GENERAL, // Bruker GENERAL for video inntil vi har dedikert type
+      type: NotificationType.GENERAL,
       title: "Ny video opplastet",
-      message: `${studentName} har lastet opp en ny TrackMan-video${videoData?.title ? `: "${videoData.title}"` : ""}`,
+      message: `En elev har lastet opp en ny TrackMan-video${videoData?.title ? `: "${videoData.title}"` : ""}`,
       linkUrl: `/portal/admin/video/${videoId}`,
       linkText: "Se video",
       metadata,
@@ -172,12 +164,6 @@ export async function notifyDiaryEntry(
   }
 ): Promise<void> {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { name: true },
-    });
-
-    const studentName = user?.name ?? "En elev";
     const dateStr = entryData?.date
       ? format(new Date(entryData.date), "d. MMMM", { locale: nb })
       : "";
@@ -194,7 +180,7 @@ export async function notifyDiaryEntry(
       userId: instructorId,
       type: NotificationType.GENERAL,
       title: "Nytt dagbok-innlegg",
-      message: `${studentName} logget en ny runde${entryData?.courseName ? ` på ${entryData.courseName}` : ""}${dateStr ? ` ${dateStr}` : ""}${scoreStr}`,
+      message: `En elev logget en ny runde${entryData?.courseName ? ` på ${entryData.courseName}` : ""}${dateStr ? ` ${dateStr}` : ""}${scoreStr}`,
       linkUrl: `/portal/admin/elever/${userId}/dagbok`,
       linkText: "Se dagbok",
       metadata,
@@ -221,12 +207,6 @@ export async function notifyPlayerQuestion(
   }
 ): Promise<void> {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { name: true },
-    });
-
-    const studentName = user?.name ?? "En elev";
     const preview = questionData?.questionPreview
       ? questionData.questionPreview.slice(0, 50) + (questionData.questionPreview.length > 50 ? "..." : "")
       : "";
@@ -241,7 +221,7 @@ export async function notifyPlayerQuestion(
       userId: instructorId,
       type: NotificationType.GENERAL,
       title: "Nytt spørsmål fra elev",
-      message: `${studentName} har et spørsmål${preview ? `: "${preview}"` : ""}`,
+      message: `En elev har et spørsmål${preview ? `: "${preview}"` : ""}`,
       linkUrl: `/portal/admin/meldinger?question=${questionId}`,
       linkText: "Svar",
       metadata,
@@ -277,7 +257,7 @@ export async function notifyBookingConfirmed(
 
     const metadata: BookingNotificationMetadata = {
       bookingId: booking.id,
-      startTime: booking.startTime.toISOString(),
+      startTime: booking.startTime,
       instructorName: booking.Instructor?.User?.name ?? undefined,
       serviceTypeName: booking.ServiceType?.name ?? undefined,
       locationName: booking.Location?.name ?? undefined,
@@ -319,8 +299,8 @@ export async function notifyBookingRescheduled(
 
     const metadata: BookingNotificationMetadata = {
       bookingId: booking.id,
-      startTime: booking.startTime.toISOString(),
-      endTime: booking.endTime?.toISOString(),
+      startTime: booking.startTime,
+      endTime: booking.endTime ?? undefined,
       serviceTypeName: booking.ServiceType?.name ?? undefined,
       locationName: booking.Location?.name ?? undefined,
     };
@@ -341,7 +321,7 @@ export async function notifyBookingRescheduled(
 
     await createNotification({
       userId: booking.studentId,
-      type: NotificationType.BOOKING_CANCELLED, // Vi trenger en BOOKING_RESCHEDULED type
+      type: NotificationType.BOOKING_CANCELLED,
       title: "Booking endret",
       message: `Din ${serviceName} er ${changeMessage}. Ny tid: ${newDateStr} kl ${newTimeStr}`,
       linkUrl: `/portal/bookinger/${booking.id}`,
@@ -373,7 +353,7 @@ export async function notifyCoachingNotesAdded(
     const metadata: CoachingNotesMetadata = {
       sessionId: session.id,
       instructorName: session.Instructor?.User?.name ?? "",
-      sessionDate: session.sessionDate.toISOString(),
+      sessionDate: session.sessionDate,
       focusArea: session.primaryFocus ?? undefined,
     };
 
@@ -409,8 +389,8 @@ export async function notifyTrainingPlanReady(
     const metadata: TrainingPlanMetadata = {
       planId: plan.id,
       planTitle: plan.title,
-      startDate: plan.startDate.toISOString(),
-      endDate: plan.endDate.toISOString(),
+      startDate: plan.startDate,
+      endDate: plan.endDate,
     };
 
     await createNotification({
@@ -441,7 +421,6 @@ export async function notifyBookingReminder(
   }
 ): Promise<void> {
   try {
-    const studentName = booking.User?.name ?? "Hei";
     const serviceName = booking.ServiceType?.name ?? "coaching-time";
     const timeStr = format(new Date(booking.startTime), "HH:mm", { locale: nb });
     const dateStr = format(new Date(booking.startTime), "EEEE d. MMMM", { locale: nb });
@@ -449,7 +428,7 @@ export async function notifyBookingReminder(
 
     const metadata: BookingNotificationMetadata = {
       bookingId: booking.id,
-      startTime: booking.startTime.toISOString(),
+      startTime: booking.startTime,
       instructorName: booking.Instructor?.User?.name ?? undefined,
       serviceTypeName: booking.ServiceType?.name ?? undefined,
       locationName: booking.Location?.name ?? undefined,
@@ -508,44 +487,32 @@ export async function notifyGoalAchieved(
 // BATCH/CRON OPERASJONER
 // ============================================================================
 
+// Note: Functions that need direct database access for batch operations
+// should be implemented in API routes or server actions instead
+
 /**
  * Send påminnelser til alle med bookinger i morgen
  * Kjøres som cron-job daglig kl 08:00
+ * 
+ * NOTE: This function requires database access and should be called
+ * from an API route with proper Supabase client setup
  */
-export async function sendBookingReminders(): Promise<{
+export async function sendBookingReminders(
+  bookings: (Booking & {
+    User?: Pick<User, "name">;
+    ServiceType?: Pick<ServiceType, "name" | "duration">;
+    Instructor?: { User?: Pick<User, "name"> };
+    Location?: Pick<Location, "name"> | null;
+  })[]
+): Promise<{
   success: boolean;
   count?: number;
   error?: string;
 }> {
   try {
-    const tomorrow = addDays(new Date(), 1);
-    const startOfDay = new Date(tomorrow.setHours(0, 0, 0, 0));
-    const endOfDay = new Date(tomorrow.setHours(23, 59, 59, 999));
-
-    const bookings = await prisma.booking.findMany({
-      where: {
-        startTime: { gte: startOfDay, lte: endOfDay },
-        status: "CONFIRMED",
-        reminderSentAt: null, // Ikke sendt påminnelse enda
-      },
-      include: {
-        User: { select: { name: true } },
-        ServiceType: { select: { name: true, duration: true } },
-        Instructor: { select: { User: { select: { name: true } } } },
-        Location: { select: { name: true } },
-      },
-    });
-
     let count = 0;
     for (const booking of bookings) {
       await notifyBookingReminder(booking);
-
-      // Marker påminnelse som sendt
-      await prisma.booking.update({
-        where: { id: booking.id },
-        data: { reminderSentAt: new Date() },
-      });
-
       count++;
     }
 
@@ -559,36 +526,23 @@ export async function sendBookingReminders(): Promise<{
 
 /**
  * Send daglig oppsummering til admin
+ * 
+ * NOTE: This function should be called from an API route with
+ * the counts pre-calculated
  */
 export async function sendAdminDailySummary(
-  adminId: string
+  adminId: string,
+  stats: {
+    todaysBookings: number;
+    pendingBookings: number;
+  }
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    // Hent dagens bookinger
-    const todaysBookings = await prisma.booking.count({
-      where: {
-        instructorId: adminId,
-        startTime: { gte: today, lt: addDays(today, 1) },
-        status: "CONFIRMED",
-      },
-    });
-
-    // Hent ventende bookinger
-    const pendingBookings = await prisma.booking.count({
-      where: {
-        instructorId: adminId,
-        status: "PENDING",
-      },
-    });
-
     await createNotification({
       userId: adminId,
       type: NotificationType.GENERAL,
       title: "Dagens oppsummering",
-      message: `Du har ${todaysBookings} bookinger i dag. ${pendingBookings > 0 ? `${pendingBookings} venter på bekreftelse.` : ""}`,
+      message: `Du har ${stats.todaysBookings} bookinger i dag. ${stats.pendingBookings > 0 ? `${stats.pendingBookings} venter på bekreftelse.` : ""}`,
       linkUrl: "/portal/admin",
       linkText: "Åpne Mission Control",
       isAdminNotification: true,

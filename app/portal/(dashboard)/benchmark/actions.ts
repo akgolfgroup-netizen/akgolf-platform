@@ -1,7 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import {
   getSkillDecompositions,
   getApproachSkill,
@@ -51,24 +51,16 @@ export async function getPlayerSGProfile(): Promise<PlayerSGProfile | null> {
   const user = await requirePortalUser();
   if (!user?.id) return null;
 
-  const rounds = await prisma.roundStats.findMany({
-    where: { userId: user.id },
-    orderBy: { date: "desc" },
-    take: 20,
-    select: {
-      sgTotal: true,
-      sgOffTheTee: true,
-      sgApproach: true,
-      sgAroundTheGreen: true,
-      sgPutting: true,
-      approach100: true,
-      approach150: true,
-      approach200: true,
-      approach200Plus: true,
-    },
-  });
+  const supabase = await createServerSupabase();
+  
+  const { data: rounds } = await supabase
+    .from("RoundStats")
+    .select("sgTotal, sgOffTheTee, sgApproach, sgAroundTheGreen, sgPutting, approach100, approach150, approach200, approach200Plus")
+    .eq("userId", user.id)
+    .order("date", { ascending: false })
+    .limit(20);
 
-  if (rounds.length === 0) return null;
+  if (!rounds || rounds.length === 0) return null;
 
   function avg(vals: (number | null)[]): number | null {
     const valid = vals.filter((v): v is number => v !== null);

@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { WaitlistStatus } from "@prisma/client";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { WaitlistAvailableEmail } from "@/lib/portal/email/templates/waitlist-available";
@@ -17,30 +17,43 @@ export async function notifyNextOnWaitlist(
   instructorName: string,
   startTime: Date
 ) {
+  const supabase = createServiceClient();
+  
   // Find the next WAITING entry for this booking
-  const nextEntry = await prisma.waitlistEntry.findFirst({
-    where: {
-      bookingId,
-      status: WaitlistStatus.WAITING,
-    },
-    orderBy: { position: "asc" },
-    include: {
-      User: { select: { name: true, email: true } },
-    },
-  });
+  const { data: nextEntry, error } = await supabase
+    .from("WaitlistEntry")
+    .select(`
+      id,
+      position,
+      User:userId (name, email)
+    `)
+    .eq("bookingId", bookingId)
+    .eq("status", WaitlistStatus.WAITING)
+    .order("position", { ascending: true })
+    .limit(1)
+    .single();
 
-  if (!nextEntry || !nextEntry.User.email) return;
+  if (error || !nextEntry) return;
+  
+  // Type assertion for joined data
+  const userData = nextEntry.User as { name: string | null; email: string | null } | null;
+  if (!userData?.email) return;
 
   // Mark as notified with 24h expiry
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
-  await prisma.waitlistEntry.update({
-    where: { id: nextEntry.id },
-    data: {
+  const { error: updateError } = await supabase
+    .from("WaitlistEntry")
+    .update({
       status: WaitlistStatus.NOTIFIED,
-      notifiedAt: new Date(),
-      expiresAt,
-    },
-  });
+      notifiedAt: new Date().toISOString(),
+      expiresAt: expiresAt.toISOString(),
+    })
+    .eq("id", nextEntry.id);
+
+  if (updateError) {
+    logger.error(`[Waitlist] Failed to update waitlist entry:`, updateError);
+    return;
+  }
 
   // Send notification email
   const resend = getResend();
@@ -52,10 +65,10 @@ export async function notifyNextOnWaitlist(
   try {
     await resend.emails.send({
       from: FROM_EMAIL,
-      to: nextEntry.User.email,
+      to: userData.email,
       subject: `Plass ledig! ${serviceName} — ${dateStr}`,
       react: WaitlistAvailableEmail({
-        studentName: nextEntry.User.name ?? "Hei",
+        studentName: userData.name ?? "Hei",
         serviceName,
         instructorName,
         date: dateStr,
@@ -63,7 +76,7 @@ export async function notifyNextOnWaitlist(
         expiresAt: format(expiresAt, "EEEE d. MMMM HH:mm", { locale: nb }),
       }),
     });
-    logger.info(`[Waitlist] Notified ${nextEntry.User.email} for booking ${bookingId}`);
+    logger.info(`[Waitlist] Notified ${userData.email} for booking ${bookingId}`);
   } catch (error) {
     logger.error("[Waitlist] Failed to send notification:", error);
   }
@@ -76,36 +89,54 @@ export async function addToWaitlist(
   bookingId: string,
   studentId: string
 ): Promise<{ success: boolean; position: number }> {
+  const supabase = createServiceClient();
+  
   // Check for existing entry
-  const existing = await prisma.waitlistEntry.findUnique({
-    where: {
-      bookingId_studentId: { bookingId, studentId },
-    },
-  });
+  const { data: existing, error: existingError } = await supabase
+    .from("WaitlistEntry")
+    .select("position")
+    .eq("bookingId", bookingId)
+    .eq("studentId", studentId)
+    .single();
+
+  if (existingError && existingError.code !== "PGRST116") {
+    logger.error(`[Waitlist] Error checking existing entry:`, existingError);
+  }
 
   if (existing) {
     return { success: false, position: existing.position };
   }
 
   // Get current max position
-  const maxEntry = await prisma.waitlistEntry.findFirst({
-    where: { bookingId },
-    orderBy: { position: "desc" },
-    select: { position: true },
-  });
+  const { data: maxEntry, error: maxError } = await supabase
+    .from("WaitlistEntry")
+    .select("position")
+    .eq("bookingId", bookingId)
+    .order("position", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (maxError && maxError.code !== "PGRST116") {
+    logger.error(`[Waitlist] Error fetching max position:`, maxError);
+  }
 
   const position = (maxEntry?.position ?? 0) + 1;
 
-  await prisma.waitlistEntry.create({
-    data: {
+  const { error: insertError } = await supabase
+    .from("WaitlistEntry")
+    .insert({
       id: randomUUID(),
       bookingId,
       studentId,
       position,
       status: WaitlistStatus.WAITING,
-      updatedAt: new Date(),
-    },
-  });
+      updatedAt: new Date().toISOString(),
+    });
+
+  if (insertError) {
+    logger.error(`[Waitlist] Failed to add to waitlist:`, insertError);
+    return { success: false, position };
+  }
 
   return { success: true, position };
 }

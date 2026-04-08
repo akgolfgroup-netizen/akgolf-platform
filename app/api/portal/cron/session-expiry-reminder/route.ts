@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
-import { SubscriptionStatus } from "@prisma/client";
+import { createServiceClient } from "@/lib/supabase/server";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { addDays, format } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -21,6 +20,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   const reminderWindowStart = addDays(now, 9);
   const reminderWindowEnd = addDays(now, 11);
@@ -29,19 +29,22 @@ export async function GET(req: NextRequest) {
 
   try {
     // Find subscriptions expiring in 9-11 days with unused sessions
-    const subscriptions = await prisma.userSubscription.findMany({
-      where: {
-        status: SubscriptionStatus.ACTIVE,
-        billingPeriodEnd: {
-          gte: reminderWindowStart,
-          lte: reminderWindowEnd,
-        },
-      },
-      include: {
-        User: { select: { name: true, email: true } },
-        CoachingPackage: { select: { name: true, sessionsPerMonth: true } },
-      },
-    });
+    const { data: subscriptions, error: subsError } = await supabase
+      .from("UserSubscription")
+      .select(`
+        id,
+        sessionsUsedThisMonth,
+        billingPeriodEnd,
+        User (name, email),
+        CoachingPackage (name, sessionsPerMonth)
+      `)
+      .eq("status", "ACTIVE")
+      .gte("billingPeriodEnd", reminderWindowStart.toISOString())
+      .lte("billingPeriodEnd", reminderWindowEnd.toISOString());
+
+    if (subsError) {
+      throw subsError;
+    }
 
     const resend = getResend();
     if (!resend) {
@@ -49,25 +52,28 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ ok: true, remindersSent: 0, skipped: true });
     }
 
-    for (const sub of subscriptions) {
-      if (!sub.User.email) continue;
-      if (!sub.CoachingPackage.sessionsPerMonth) continue;
+    for (const sub of (subscriptions ?? [])) {
+      const user = sub.User as { name?: string; email?: string } | null;
+      const coachingPackage = sub.CoachingPackage as { name?: string; sessionsPerMonth?: number } | null;
 
-      const unusedSessions = sub.CoachingPackage.sessionsPerMonth - sub.sessionsUsedThisMonth;
+      if (!user?.email) continue;
+      if (!coachingPackage?.sessionsPerMonth) continue;
+
+      const unusedSessions = coachingPackage.sessionsPerMonth - sub.sessionsUsedThisMonth;
       if (unusedSessions <= 0) continue;
 
-      const expiryDate = format(sub.billingPeriodEnd!, "d. MMMM", { locale: nb });
+      const expiryDate = format(new Date(sub.billingPeriodEnd!), "d. MMMM", { locale: nb });
 
       try {
         await resend.emails.send({
           from: FROM_EMAIL,
-          to: sub.User.email,
+          to: user.email,
           subject: `${unusedSessions} ubrukte coaching-sesjoner utloper ${expiryDate}`,
           html: `
             <div style="font-family: sans-serif; max-width: 500px; margin: 0 auto;">
-              <h2 style="color: #1D1D1F;">Hei${sub.User.name ? ` ${sub.User.name.split(" ")[0]}` : ""}!</h2>
+              <h2 style="color: #1D1D1F;">Hei${user.name ? ` ${user.name.split(" ")[0]}` : ""}!</h2>
               <p style="color: #374151; line-height: 1.6;">
-                Du har <strong>${unusedSessions} ubrukte coaching-sesjoner</strong> i ${sub.CoachingPackage.name}-pakken din.
+                Du har <strong>${unusedSessions} ubrukte coaching-sesjoner</strong> i ${coachingPackage.name}-pakken din.
               </p>
               <p style="color: #374151; line-height: 1.6;">
                 Disse utloper <strong>${expiryDate}</strong> og kan ikke overføres til neste måned.
@@ -87,7 +93,7 @@ export async function GET(req: NextRequest) {
 
         remindersSent++;
       } catch (error) {
-        logger.error(`[Cron] Failed to send expiry reminder to ${sub.User.email}:`, error);
+        logger.error(`[Cron] Failed to send expiry reminder to ${user.email}:`, error);
       }
     }
 

@@ -1,26 +1,30 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
-import type { GoalCategory, GoalStatus } from "@prisma/client";
 import { nanoid } from "nanoid";
 
 export async function getGoals() {
   const user = await requirePortalUser();
   if (!user?.id) return [];
 
-  return prisma.goal.findMany({
-    where: { userId: user.id },
-    orderBy: [{ status: "asc" }, { createdAt: "desc" }],
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: goals } = await supabase
+    .from("Goal")
+    .select("*")
+    .eq("userId", user.id)
+    .order("status", { ascending: true })
+    .order("createdAt", { ascending: false });
+
+  return goals || [];
 }
 
 export async function createGoal(data: {
   title: string;
   description?: string;
-  category: GoalCategory;
+  category: string;
   targetValue?: number;
   unit?: string;
   targetDate?: string;
@@ -28,18 +32,18 @@ export async function createGoal(data: {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
-  await prisma.goal.create({
-    data: {
-      id: nanoid(),
-      updatedAt: new Date(),
-      userId: user.id,
-      title: data.title,
-      description: data.description ?? null,
-      category: data.category,
-      targetValue: data.targetValue ?? null,
-      unit: data.unit ?? null,
-      targetDate: data.targetDate ? new Date(data.targetDate) : null,
-    },
+  const supabase = await createServerSupabase();
+
+  await supabase.from("Goal").insert({
+    id: nanoid(),
+    updatedAt: new Date().toISOString(),
+    userId: user.id,
+    title: data.title,
+    description: data.description ?? null,
+    category: data.category,
+    targetValue: data.targetValue ?? null,
+    unit: data.unit ?? null,
+    targetDate: data.targetDate ? new Date(data.targetDate).toISOString() : null,
   });
 
   revalidatePath("/profil");
@@ -50,35 +54,42 @@ export async function updateGoal(
   data: Partial<{
     title: string;
     description: string;
-    category: GoalCategory;
+    category: string;
     targetValue: number;
     currentValue: number;
     unit: string;
     targetDate: string;
-    status: GoalStatus;
+    status: string;
   }>
 ) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
-  const existing = await prisma.goal.findFirst({
-    where: { id, userId: user.id },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: existing } = await supabase
+    .from("Goal")
+    .select("id")
+    .eq("id", id)
+    .eq("userId", user.id)
+    .single();
+
   if (!existing) throw new Error("Mål ikke funnet");
 
-  await prisma.goal.update({
-    where: { id },
-    data: {
-      ...(data.title !== undefined && { title: data.title }),
-      ...(data.description !== undefined && { description: data.description }),
-      ...(data.category !== undefined && { category: data.category }),
-      ...(data.targetValue !== undefined && { targetValue: data.targetValue }),
-      ...(data.currentValue !== undefined && { currentValue: data.currentValue }),
-      ...(data.unit !== undefined && { unit: data.unit }),
-      ...(data.targetDate !== undefined && { targetDate: new Date(data.targetDate) }),
-      ...(data.status !== undefined && { status: data.status }),
-    },
-  });
+  const updateData: Record<string, unknown> = {};
+  if (data.title !== undefined) updateData.title = data.title;
+  if (data.description !== undefined) updateData.description = data.description;
+  if (data.category !== undefined) updateData.category = data.category;
+  if (data.targetValue !== undefined) updateData.targetValue = data.targetValue;
+  if (data.currentValue !== undefined) updateData.currentValue = data.currentValue;
+  if (data.unit !== undefined) updateData.unit = data.unit;
+  if (data.targetDate !== undefined) updateData.targetDate = new Date(data.targetDate).toISOString();
+  if (data.status !== undefined) updateData.status = data.status;
+
+  await supabase
+    .from("Goal")
+    .update(updateData)
+    .eq("id", id);
 
   revalidatePath("/profil");
 }
@@ -87,11 +98,18 @@ export async function deleteGoal(id: string) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
-  const existing = await prisma.goal.findFirst({
-    where: { id, userId: user.id },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: existing } = await supabase
+    .from("Goal")
+    .select("id")
+    .eq("id", id)
+    .eq("userId", user.id)
+    .single();
+
   if (!existing) throw new Error("Mål ikke funnet");
 
-  await prisma.goal.delete({ where: { id } });
+  await supabase.from("Goal").delete().eq("id", id);
+
   revalidatePath("/profil");
 }

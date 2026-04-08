@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { syncGoogleCalendar, getSyncStatus, getImportedEvents, disconnectGoogleCalendar } from "@/lib/portal/google-calendar/sync";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 
 /**
  * POST /api/portal/calendar/google/sync
@@ -23,9 +23,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Finn instruktør-record for brukeren
-    const instructor = await prisma.instructor.findUnique({
-      where: { userId: user.id },
-    });
+    const supabase = createServiceClient();
+    const { data: instructor } = await supabase
+      .from("Instructor")
+      .select("id")
+      .eq("userId", user.id)
+      .single();
 
     if (!instructor) {
       return NextResponse.json(
@@ -66,9 +69,12 @@ export async function GET(request: NextRequest) {
     }
 
     // Finn instruktør-record for brukeren
-    const instructor = await prisma.instructor.findUnique({
-      where: { userId: user.id },
-    });
+    const supabase = createServiceClient();
+    const { data: instructor } = await supabase
+      .from("Instructor")
+      .select("id")
+      .eq("userId", user.id)
+      .single();
 
     if (!instructor) {
       return NextResponse.json(
@@ -127,9 +133,12 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Finn instruktør-record for brukeren
-    const instructor = await prisma.instructor.findUnique({
-      where: { userId: user.id },
-    });
+    const supabase = createServiceClient();
+    const { data: instructor } = await supabase
+      .from("Instructor")
+      .select("id")
+      .eq("userId", user.id)
+      .single();
 
     if (!instructor) {
       return NextResponse.json(

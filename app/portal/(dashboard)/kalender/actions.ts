@@ -1,9 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-
-import { prisma } from "@/lib/portal/prisma";
-import { BookingStatus } from "@prisma/client";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { GOAL_TYPE_CONFIG } from "@/modules/tournament-planner";
 import {
   startOfISOWeek,
@@ -49,82 +47,102 @@ export async function getCalendarEvents(
   const user = await requirePortalUser();
   if (!user?.id) return [];
 
+  const supabase = await createServerSupabase();
   const id = studentId ?? user.id;
   const events: CalendarEvent[] = [];
 
-  const [bookings, coachingSessions, activePlan, playerTournaments] =
-    await Promise.all([
-      // Bookings
-      prisma.booking.findMany({
-        where: {
-          studentId: id,
-          startTime: { gte: from, lte: to },
-          status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
-        },
-        include: { ServiceType: { select: { name: true } } },
-      }),
+  const fromStr = from.toISOString();
+  const toStr = to.toISOString();
 
-      // Coaching sessions
-      prisma.coachingSession.findMany({
-        where: {
-          studentId: id,
-          sessionDate: { gte: from, lte: to },
-        },
-        select: { id: true, sessionDate: true, primaryFocus: true },
-      }),
+  const [
+    { data: bookings },
+    { data: coachingSessions },
+    { data: activePlan },
+    { data: playerTournaments },
+  ] = await Promise.all([
+    // Bookings
+    supabase
+      .from("Booking")
+      .select(`
+        id,
+        startTime,
+        endTime,
+        ServiceType (name)
+      `)
+      .eq("studentId", id)
+      .gte("startTime", fromStr)
+      .lte("startTime", toStr)
+      .in("status", ["PENDING", "CONFIRMED"]),
 
-      // Active training plan weeks
-      prisma.trainingPlan.findFirst({
-        where: { studentId: id, isActive: true },
-        include: {
-          TrainingPlanWeek: {
-            where: {
-              weekStart: { lte: to },
-            },
-            include: {
-              TrainingPlanSession: { where: { dayOfWeek: { gte: 1, lte: 7 } } },
-            },
-          },
-        },
-      }),
+    // Coaching sessions
+    supabase
+      .from("CoachingSession")
+      .select("id, sessionDate, primaryFocus")
+      .eq("studentId", id)
+      .gte("sessionDate", fromStr)
+      .lte("sessionDate", toStr),
 
-      // Tournament plans (filter by tournament startDate)
-      prisma.playerTournamentPlan.findMany({
-        where: {
-          studentId: id,
-          Tournament: { startDate: { gte: from, lte: to } },
-        },
-        include: { Tournament: true },
-      }),
-    ]);
+    // Active training plan weeks
+    supabase
+      .from("TrainingPlan")
+      .select(`
+        id,
+        TrainingPlanWeek (
+          id,
+          weekStart,
+          TrainingPlanSession (
+            id,
+            dayOfWeek,
+            title
+          )
+        )
+      `)
+      .eq("studentId", id)
+      .eq("isActive", true)
+      .lte("TrainingPlanWeek.weekStart", toStr)
+      .single(),
+
+    // Tournament plans
+    supabase
+      .from("PlayerTournamentPlan")
+      .select(`
+        id,
+        goalType,
+        Tournament (name, startDate, endDate)
+      `)
+      .eq("studentId", id)
+      .gte("Tournament.startDate", fromStr)
+      .lte("Tournament.startDate", toStr),
+  ]);
 
   // Bookings → blue
-  for (const b of bookings) {
+  for (const b of bookings || []) {
     events.push({
       id: b.id,
       type: "booking",
-      title: b.ServiceType.name,
-      startDate: b.startTime,
-      endDate: b.endTime,
+      title: (b.ServiceType as { name: string }).name,
+      startDate: new Date(b.startTime),
+      endDate: new Date(b.endTime),
       color: "#38BDF8",
     });
   }
 
   // Coaching sessions → gold
-  for (const c of coachingSessions) {
+  for (const c of coachingSessions || []) {
     events.push({
       id: c.id,
       type: "coaching",
       title: c.primaryFocus ?? "Coachingsesjon",
-      startDate: c.sessionDate,
+      startDate: new Date(c.sessionDate),
       color: "#1D1D1F",
     });
   }
 
   // Training sessions → green (map dayOfWeek to actual date)
   if (activePlan) {
-    for (const week of activePlan.TrainingPlanWeek) {
-      const weekMon = startOfISOWeek(week.weekStart);
+    const weeks = (activePlan.TrainingPlanWeek as { weekStart: string; TrainingPlanSession: { id: string; dayOfWeek: number; title: string }[] }[]) || [];
+    for (const week of weeks) {
+      const weekMon = startOfISOWeek(new Date(week.weekStart));
       for (const s of week.TrainingPlanSession) {
         const sessionDate = addDays(weekMon, s.dayOfWeek - 1);
         if (sessionDate >= from && sessionDate <= to) {
@@ -141,16 +159,17 @@ export async function getCalendarEvents(
   }
 
   // Tournament plans → goal type color
-  for (const tp of playerTournaments) {
-    if (!tp.Tournament) continue;
+  for (const tp of playerTournaments || []) {
+    const tournament = tp.Tournament as { name: string; startDate: string; endDate: string | null };
+    if (!tournament) continue;
     const goalConfig =
       GOAL_TYPE_CONFIG[tp.goalType as keyof typeof GOAL_TYPE_CONFIG];
     events.push({
       id: tp.id,
       type: "tournament",
-      title: tp.Tournament.name,
-      startDate: tp.Tournament.startDate,
-      endDate: tp.Tournament.endDate ?? undefined,
+      title: tournament.name,
+      startDate: new Date(tournament.startDate),
+      endDate: tournament.endDate ? new Date(tournament.endDate) : undefined,
       color: goalConfig?.color ?? "#1D1D1F",
       allDay: true,
     });
@@ -168,23 +187,23 @@ export async function getPeriodizationBands(
   const user = await requirePortalUser();
   if (!user?.id) return [];
 
+  const supabase = await createServerSupabase();
   const id = studentId ?? user.id;
   const yearStart = new Date(year, 0, 1);
   const yearEnd = new Date(year, 11, 31);
 
-  const periods = await prisma.periodizationPeriod.findMany({
-    where: {
-      OR: [{ studentId: null }, { studentId: id }],
-      startDate: { lte: yearEnd },
-      endDate: { gte: yearStart },
-    },
-    orderBy: { startDate: "asc" },
-  });
+  const { data: periods } = await supabase
+    .from("PeriodizationPeriod")
+    .select("*")
+    .or(`studentId.is.null,studentId.eq.${id}`)
+    .lte("startDate", yearEnd.toISOString())
+    .gte("endDate", yearStart.toISOString())
+    .order("startDate", { ascending: true });
 
-  return periods.map((p) => ({
+  return (periods || []).map((p) => ({
     periodType: p.periodType,
-    startDate: p.startDate,
-    endDate: p.endDate,
+    startDate: new Date(p.startDate),
+    endDate: new Date(p.endDate),
     label: p.label,
     color: PERIOD_COLORS[p.periodType] ?? "#38BDF8",
   }));

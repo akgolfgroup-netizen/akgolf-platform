@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
-import { SubscriptionStatus } from "@prisma/client";
+import { createServiceClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
@@ -18,35 +17,45 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   let resetCount = 0;
 
   try {
     // Find active subscriptions where billingPeriodEnd has passed
-    const expiredPeriods = await prisma.userSubscription.findMany({
-      where: {
-        status: SubscriptionStatus.ACTIVE,
-        billingPeriodEnd: { lt: now },
-      },
-      include: {
-        CoachingPackage: { select: { sessionsPerMonth: true } },
-      },
-    });
+    const { data: expiredPeriods, error: subsError } = await supabase
+      .from("UserSubscription")
+      .select(`
+        id,
+        billingPeriodEnd,
+        CoachingPackage (sessionsPerMonth)
+      `)
+      .eq("status", "ACTIVE")
+      .lt("billingPeriodEnd", now.toISOString());
 
-    for (const sub of expiredPeriods) {
+    if (subsError) {
+      throw subsError;
+    }
+
+    for (const sub of (expiredPeriods ?? [])) {
       // Calculate new billing period (1 month from previous end)
-      const newStart = sub.billingPeriodEnd ?? now;
+      const newStart = sub.billingPeriodEnd ? new Date(sub.billingPeriodEnd) : now;
       const newEnd = new Date(newStart);
       newEnd.setMonth(newEnd.getMonth() + 1);
 
-      await prisma.userSubscription.update({
-        where: { id: sub.id },
-        data: {
+      const { error: updateError } = await supabase
+        .from("UserSubscription")
+        .update({
           sessionsUsedThisMonth: 0,
-          billingPeriodStart: newStart,
-          billingPeriodEnd: newEnd,
-        },
-      });
+          billingPeriodStart: newStart.toISOString(),
+          billingPeriodEnd: newEnd.toISOString(),
+        })
+        .eq("id", sub.id);
+
+      if (updateError) {
+        logger.error(`[Cron] Failed to reset subscription ${sub.id}:`, updateError);
+        continue;
+      }
 
       resetCount++;
     }
@@ -58,7 +67,8 @@ export async function GET(req: NextRequest) {
       resetCount,
       timestamp: now.toISOString(),
     });
-  } catch {
+  } catch (error) {
+    logger.error("[Cron] Reset monthly sessions error:", error);
     return NextResponse.json(
       { error: "Internal error" },
       { status: 500 }

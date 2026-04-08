@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 const corsOrigin = () => process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
@@ -14,31 +14,35 @@ export async function GET(request: NextRequest) {
   const upcoming = request.nextUrl.searchParams.get("upcoming") === "true";
 
   try {
-    const tournaments = await prisma.tournament.findMany({
-      where: upcoming
-        ? { startDate: { gte: new Date() } }
-        : {},
-      select: {
-        id: true,
-        name: true,
-        startDate: true,
-        endDate: true,
-        level: true,
-        course: true,
-        location: true,
-        registrationDeadline: true,
-        series: true,
-      },
-      orderBy: { startDate: "asc" },
-      take: 50,
-    });
+    // Use service client for public endpoints to bypass RLS
+    const supabase = createServiceClient();
 
-    const formatted = tournaments.map((t) => ({
+    let query = supabase
+      .from("Tournament")
+      .select(
+        "id, name, startDate, endDate, level, course, location, registrationDeadline, series"
+      )
+      .order("startDate", { ascending: true })
+      .limit(50);
+
+    // Filter for upcoming tournaments if requested
+    if (upcoming) {
+      const today = new Date().toISOString().split("T")[0];
+      query = query.gte("startDate", today);
+    }
+
+    const { data: tournaments, error } = await query;
+
+    if (error) throw error;
+
+    const formatted = tournaments?.map((t) => ({
       ...t,
-      startDate: t.startDate.toISOString().split("T")[0],
-      endDate: t.endDate?.toISOString().split("T")[0] ?? null,
-      registrationDeadline: t.registrationDeadline?.toISOString().split("T")[0] ?? null,
-    }));
+      startDate: new Date(t.startDate).toISOString().split("T")[0],
+      endDate: t.endDate ? new Date(t.endDate).toISOString().split("T")[0] : null,
+      registrationDeadline: t.registrationDeadline
+        ? new Date(t.registrationDeadline).toISOString().split("T")[0]
+        : null,
+    })) || [];
 
     return NextResponse.json(
       { tournaments: formatted },

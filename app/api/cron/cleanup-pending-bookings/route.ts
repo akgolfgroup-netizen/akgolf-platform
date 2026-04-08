@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { verifyCronAuth } from "@/lib/cron-auth";
-import { prisma } from "@/lib/portal/prisma";
-import { BookingStatus, PaymentStatus } from "@prisma/client";
+import { createServiceClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,29 +18,35 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const cutoff = new Date(Date.now() - 30 * 60 * 1000); // 30 minutter
 
   try {
-    const result = await prisma.booking.updateMany({
-      where: {
-        status: BookingStatus.PENDING,
-        paymentStatus: PaymentStatus.PENDING,
-        createdAt: { lt: cutoff },
-      },
-      data: {
-        status: BookingStatus.CANCELLED,
-        cancelledAt: new Date(),
+    const { data: result, error } = await supabase
+      .from("Booking")
+      .update({
+        status: "CANCELLED",
+        cancelledAt: new Date().toISOString(),
         cancelReason: "Betaling ikke mottatt innen tidsfristen",
-      },
-    });
+      })
+      .eq("status", "PENDING")
+      .eq("paymentStatus", "PENDING")
+      .lt("createdAt", cutoff.toISOString())
+      .select();
+
+    if (error) {
+      throw error;
+    }
+
+    const cancelledCount = result?.length ?? 0;
 
     logger.info(
-      `[cleanup-pending-bookings] Cancelled ${result.count} stale pending bookings`
+      `[cleanup-pending-bookings] Cancelled ${cancelledCount} stale pending bookings`
     );
 
     return NextResponse.json({
       success: true,
-      cancelled: result.count,
+      cancelled: cancelledCount,
     });
   } catch (error) {
     logger.error("[cleanup-pending-bookings] Error:", error);

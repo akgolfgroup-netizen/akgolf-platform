@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/portal/prisma";
-import type { Facility } from "@prisma/client";
+import { createServiceClient } from "@/lib/supabase/server";
+import type { Facility, InstructorFacilityDefault } from "@prisma/client";
 
 /**
  * Henter standard fasilitet for en instruktør basert på tjenestetype
@@ -11,27 +11,25 @@ export async function getDefaultFacility(
   instructorId: string,
   serviceTypeId?: string
 ): Promise<Facility | null> {
-  // Hent alle defaults for instruktøren, sortert etter prioritet
-  const defaults = await prisma.instructorFacilityDefault.findMany({
-    where: {
-      instructorId,
-      OR: serviceTypeId
-        ? [{ serviceTypeId }, { serviceTypeId: null }]
-        : [{ serviceTypeId: null }],
-    },
-    include: {
-      Facility: true,
-    },
-    orderBy: [
-      // Prioriter spesifikk serviceType over null
-      { serviceTypeId: "desc" },
-      // Deretter etter prioritet
-      { priority: "desc" },
-    ],
-  });
+  const supabase = createServiceClient();
+
+  // Hent alle defaults for instruktøren
+  const { data: defaults } = await supabase
+    .from("InstructorFacilityDefault")
+    .select(`
+      *,
+      Facility:FacilityId(*)
+    `)
+    .eq("instructorId", instructorId)
+    .or(serviceTypeId 
+      ? `serviceTypeId.eq.${serviceTypeId},serviceTypeId.is.null` 
+      : "serviceTypeId.is.null")
+    .order("serviceTypeId", { ascending: false })
+    .order("priority", { ascending: false })
+    .returns<(InstructorFacilityDefault & { Facility: Facility })[]>();
 
   // Returner første match
-  if (defaults.length > 0) {
+  if (defaults && defaults.length > 0) {
     // Hvis vi har en serviceTypeId, prioriter den som matcher
     const specificMatch = defaults.find((d) => d.serviceTypeId === serviceTypeId);
     if (specificMatch) {
@@ -48,46 +46,53 @@ export async function getDefaultFacility(
  * Henter alle fasiliteter for en lokasjon
  */
 export async function getFacilitiesByLocation(locationId: string): Promise<Facility[]> {
-  return prisma.facility.findMany({
-    where: {
-      locationId,
-      isActive: true,
-    },
-    orderBy: { sortOrder: "asc" },
-  });
+  const supabase = createServiceClient();
+
+  const { data } = await supabase
+    .from("Facility")
+    .select("*")
+    .eq("locationId", locationId)
+    .eq("isActive", true)
+    .order("sortOrder", { ascending: true });
+
+  return data || [];
 }
 
 /**
  * Henter alle aktive fasiliteter
  */
-export async function getAllFacilities(): Promise<Facility[]> {
-  return prisma.facility.findMany({
-    where: { isActive: true },
-    include: {
-      Location: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-    orderBy: [{ Location: { name: "asc" } }, { sortOrder: "asc" }],
-  });
+export async function getAllFacilities(): Promise<(Facility & { Location?: { id: string; name: string } })[]> {
+  const supabase = createServiceClient();
+
+  const { data } = await supabase
+    .from("Facility")
+    .select(`
+      *,
+      Location:locationId(id, name)
+    `)
+    .eq("isActive", true)
+    .order("Location(name)", { ascending: true })
+    .order("sortOrder", { ascending: true })
+    .returns<(Facility & { Location?: { id: string; name: string } })[]>();
+
+  return data || [];
 }
 
 /**
  * Henter fasilitet basert på slug
  */
-export async function getFacilityBySlug(slug: string): Promise<Facility | null> {
-  return prisma.facility.findUnique({
-    where: { slug },
-    include: {
-      Location: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-  });
+export async function getFacilityBySlug(slug: string): Promise<(Facility & { Location?: { id: string; name: string } }) | null> {
+  const supabase = createServiceClient();
+
+  const { data } = await supabase
+    .from("Facility")
+    .select(`
+      *,
+      Location:locationId(id, name)
+    `)
+    .eq("slug", slug)
+    .single()
+    .returns<Facility & { Location?: { id: string; name: string } }>();
+
+  return data;
 }

@@ -1,6 +1,6 @@
 import { getPortalUser } from "@/lib/portal/auth";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/portal/prisma";
 import { BookingPaymentForm } from "./BookingPaymentForm";
 import { BookingStepManager } from "./BookingStepManager";
 import { Calendar, CreditCard } from "lucide-react";
@@ -41,19 +41,16 @@ export default async function BookingNewPage({ searchParams }: Props) {
     );
   }
 
+  const supabase = await createServerSupabase();
+
   // Fetch service type and instructors
-  const serviceType = await prisma.serviceType.findFirst({
-    where: { id: serviceTypeId, isPublic: true, isActive: true },
-    select: {
-      id: true,
-      name: true,
-      duration: true,
-      price: true,
-      description: true,
-      allowStripe: true,
-      allowVipps: true,
-    },
-  });
+  const { data: serviceType } = await supabase
+    .from("ServiceType")
+    .select("id, name, duration, price, description, allowStripe, allowVipps")
+    .eq("id", serviceTypeId)
+    .eq("isPublic", true)
+    .eq("isActive", true)
+    .single();
 
   if (!serviceType) {
     return (
@@ -74,16 +71,18 @@ export default async function BookingNewPage({ searchParams }: Props) {
   }
 
   // Fetch instructors for this service
-  const instructors = await prisma.instructor.findMany({
-    where: {
-      ServiceType: { some: { id: serviceTypeId } },
-    },
-    include: { User: { select: { name: true, image: true } } },
-  });
+  const { data: instructors } = await supabase
+    .from("Instructor")
+    .select(`
+      *,
+      User:userId(name, image),
+      InstructorServiceType!inner(serviceTypeId)
+    `)
+    .eq("InstructorServiceType.serviceTypeId", serviceTypeId);
 
   // If all params provided, show payment form directly
   if (instructorId && startTime) {
-    const instructor = instructors.find((i) => i.id === instructorId);
+    const instructor = instructors?.find((i) => i.id === instructorId);
     if (instructor) {
       return (
         <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F5F5F7]">
@@ -91,7 +90,7 @@ export default async function BookingNewPage({ searchParams }: Props) {
             serviceType={serviceType}
             instructor={{
               id: instructor.id,
-              user: { name: instructor.User.name, image: instructor.User.image },
+              user: { name: instructor.User?.name, image: instructor.User?.image },
             }}
             startTime={startTime}
             studentId={user.id}
@@ -106,9 +105,9 @@ export default async function BookingNewPage({ searchParams }: Props) {
     <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F5F5F7]">
       <BookingStepManager
         serviceType={serviceType}
-        instructors={instructors.map((i) => ({
+        instructors={(instructors ?? []).map((i) => ({
           id: i.id,
-          user: { name: i.User.name, image: i.User.image },
+          user: { name: i.User?.name, image: i.User?.image },
         }))}
         studentId={user.id}
       />

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 
 /**
@@ -16,40 +16,38 @@ export async function GET(
   }
 
   const { id } = await params;
+  const supabase = await createServerSupabase();
 
-  const session = await prisma.gameSession.findUnique({
-    where: { id },
-    include: {
-      Course: { select: { name: true, par: true } },
-      Players: {
-        include: {
-          User: { select: { id: true, name: true, image: true } },
-        },
-      },
-      Rounds: {
-        include: {
-          User: { select: { id: true, name: true } },
-          HoleResult: {
-            select: {
-              holeNumber: true,
-              score: true,
-              scoreToPar: true,
-              putts: true,
-              gir: true,
-            },
-            orderBy: { holeNumber: "asc" },
-          },
-        },
-      },
-    },
-  });
+  const { data: session, error } = await supabase
+    .from("GameSession")
+    .select(`
+      *,
+      Course (name, par),
+      Players (
+        *,
+        User (id, name, image)
+      ),
+      Rounds (
+        *,
+        User (id, name),
+        HoleResult (
+          holeNumber,
+          score,
+          scoreToPar,
+          putts,
+          gir
+        )
+      )
+    `)
+    .eq("id", id)
+    .single();
 
-  if (!session) {
+  if (error || !session) {
     return NextResponse.json({ error: "Spillokt ikke funnet" }, { status: 404 });
   }
 
   // Sjekk at brukeren er med
-  const isPlayer = session.Players.some((p) => p.User.id === user.id);
+  const isPlayer = (session.Players || []).some((p: { User: { id: string } }) => p.User.id === user.id);
   if (!isPlayer) {
     return NextResponse.json({ error: "Du er ikke med i denne spillokten" }, { status: 403 });
   }
@@ -57,13 +55,17 @@ export async function GET(
   const coursePar = session.Course?.par ?? 72;
 
   // Bygg leaderboard
-  const leaderboard = session.Players.map((player) => {
-    const round = session.Rounds.find((r) => r.User.id === player.User.id);
-    const holes = round?.HoleResult ?? [];
+  const leaderboard = (session.Players || []).map((player: {
+    User: { id: string; name: string | null; image: string | null };
+    displayName: string | null;
+    playingHandicap: number | null;
+  }) => {
+    const round = (session.Rounds || []).find((r: { User: { id: string } }) => r.User.id === player.User.id);
+    const holes = round?.HoleResult || [];
     const holesPlayed = holes.length;
-    const totalScore = holes.reduce((sum, h) => sum + h.score, 0);
-    const totalPar = holes.reduce((sum, h) => sum + h.scoreToPar, 0);
-    const totalPutts = holes.reduce((sum, h) => sum + h.putts, 0);
+    const totalScore = holes.reduce((sum: number, h: { score: number }) => sum + h.score, 0);
+    const totalPar = holes.reduce((sum: number, h: { scoreToPar: number }) => sum + h.scoreToPar, 0);
+    const totalPutts = holes.reduce((sum: number, h: { putts: number }) => sum + h.putts, 0);
 
     // Stableford-beregning (hvis format = STABLEFORD)
     let stablefordPoints = 0;
@@ -90,7 +92,7 @@ export async function GET(
       totalPutts: holesPlayed > 0 ? totalPutts : null,
       stablefordPoints: session.format === "STABLEFORD" ? stablefordPoints : null,
       thru: holesPlayed > 0 ? `${holesPlayed}` : "-",
-      holeScores: holes.map((h) => ({
+      holeScores: holes.map((h: { holeNumber: number; score: number; scoreToPar: number }) => ({
         hole: h.holeNumber,
         score: h.score,
         toPar: h.scoreToPar,
@@ -99,7 +101,7 @@ export async function GET(
   });
 
   // Sorter leaderboard
-  const sorted = leaderboard.sort((a, b) => {
+  const sorted = leaderboard.sort((a: { stablefordPoints: number | null; holesPlayed: number; scoreToPar: number | null }, b: { stablefordPoints: number | null; holesPlayed: number; scoreToPar: number | null }) => {
     if (session.format === "STABLEFORD") {
       return (b.stablefordPoints ?? 0) - (a.stablefordPoints ?? 0);
     }

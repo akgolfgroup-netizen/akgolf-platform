@@ -3,14 +3,13 @@
  * Håndterer opprettelse av notifikasjoner i databasen og push-varsler
  */
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { nanoid } from "nanoid";
 import type { NotificationType } from "@prisma/client";
 import { logger } from "@/lib/logger";
 import {
   CreateNotificationInput,
   CreateBulkNotificationInput,
-  NotificationMetadata,
   PushNotificationPayload,
 } from "./types";
 import webpush from "web-push";
@@ -34,26 +33,30 @@ if (vapidPublicKey && vapidPrivateKey) {
 export async function createNotification(
   input: CreateNotificationInput
 ): Promise<{ success: boolean; notificationId?: string; error?: string }> {
+  const supabase = createServiceClient();
+
   try {
     const notificationId = nanoid();
 
-    await prisma.notification.create({
-      data: {
+    const { error } = await supabase
+      .from("Notification")
+      .insert({
         id: notificationId,
         userId: input.userId,
-        senderId: input.senderId,
+        senderId: input.senderId ?? null,
         type: input.type,
         title: input.title,
         message: input.message,
-        linkUrl: input.linkUrl,
-        linkText: input.linkText,
-        metadata: input.metadata ? JSON.parse(JSON.stringify(input.metadata)) : null,
+        linkUrl: input.linkUrl ?? null,
+        linkText: input.linkText ?? null,
+        metadata: input.metadata ? (JSON.parse(JSON.stringify(input.metadata)) as Record<string, unknown>) : null,
         isAdminNotification: input.isAdminNotification ?? false,
-        adminType: input.adminType,
-        expiresAt: input.expiresAt,
+        adminType: input.adminType ?? null,
+        expiresAt: input.expiresAt ? input.expiresAt.toISOString() : null,
         read: false,
-      },
-    });
+      });
+
+    if (error) throw error;
 
     // Send push-notifikasjon hvis konfigurert
     await sendPushNotification(input.userId, {
@@ -83,6 +86,8 @@ export async function createNotification(
 export async function createBulkNotifications(
   input: CreateBulkNotificationInput
 ): Promise<{ success: boolean; count?: number; error?: string }> {
+  const supabase = createServiceClient();
+
   try {
     const notifications = input.userIds.map((userId) => ({
       id: nanoid(),
@@ -90,17 +95,20 @@ export async function createBulkNotifications(
       type: input.type,
       title: input.title,
       message: input.message,
-      linkUrl: input.linkUrl,
-      linkText: input.linkText,
-      metadata: input.metadata ? JSON.parse(JSON.stringify(input.metadata)) : null,
+      linkUrl: input.linkUrl ?? null,
+      linkText: input.linkText ?? null,
+      metadata: input.metadata ? (JSON.parse(JSON.stringify(input.metadata)) as Record<string, unknown>) : null,
       isAdminNotification: input.isAdminNotification ?? false,
-      adminType: input.adminType,
+      adminType: input.adminType ?? null,
       read: false,
     }));
 
-    const result = await prisma.notification.createMany({
-      data: notifications,
-    });
+    const { data, error } = await supabase
+      .from("Notification")
+      .insert(notifications)
+      .select();
+
+    if (error) throw error;
 
     // Send push-notifikasjoner i bakgrunn
     Promise.all(
@@ -121,7 +129,7 @@ export async function createBulkNotifications(
       })
     ).catch((err) => logger.error("[createBulkNotifications] Push failed:", err));
 
-    return { success: true, count: result.count };
+    return { success: true, count: data?.length || 0 };
   } catch (error) {
     logger.error("[createBulkNotifications] Failed to create notifications:", error);
     return { success: false, error: "Failed to create notifications" };
@@ -135,17 +143,19 @@ export async function markNotificationAsRead(
   notificationId: string,
   userId: string
 ): Promise<{ success: boolean; error?: string }> {
+  const supabase = createServiceClient();
+
   try {
-    await prisma.notification.updateMany({
-      where: {
-        id: notificationId,
-        userId,
-      },
-      data: {
+    const { error } = await supabase
+      .from("Notification")
+      .update({
         read: true,
-        readAt: new Date(),
-      },
-    });
+        readAt: new Date().toISOString(),
+      })
+      .eq("id", notificationId)
+      .eq("userId", userId);
+
+    if (error) throw error;
 
     return { success: true };
   } catch (error) {
@@ -161,22 +171,27 @@ export async function markAllNotificationsAsRead(
   userId: string,
   filter?: { isAdminNotification?: boolean }
 ): Promise<{ success: boolean; count?: number; error?: string }> {
-  try {
-    const result = await prisma.notification.updateMany({
-      where: {
-        userId,
-        read: false,
-        ...(filter?.isAdminNotification !== undefined && {
-          isAdminNotification: filter.isAdminNotification,
-        }),
-      },
-      data: {
-        read: true,
-        readAt: new Date(),
-      },
-    });
+  const supabase = createServiceClient();
 
-    return { success: true, count: result.count };
+  try {
+    let query = supabase
+      .from("Notification")
+      .update({
+        read: true,
+        readAt: new Date().toISOString(),
+      })
+      .eq("userId", userId)
+      .eq("read", false);
+
+    if (filter?.isAdminNotification !== undefined) {
+      query = query.eq("isAdminNotification", filter.isAdminNotification);
+    }
+
+    const { data, error } = await query.select();
+
+    if (error) throw error;
+
+    return { success: true, count: data?.length || 0 };
   } catch (error) {
     logger.error("[markAllNotificationsAsRead] Failed:", error);
     return { success: false, error: "Failed to mark all as read" };
@@ -195,42 +210,46 @@ export async function getNotifications(
     isAdminNotification?: boolean;
   } = {}
 ) {
+  const supabase = createServiceClient();
   const { unreadOnly, limit = 50, offset = 0, isAdminNotification } = options;
 
-  const [notifications, unreadCount, totalCount] = await Promise.all([
-    prisma.notification.findMany({
-      where: {
-        userId,
-        ...(unreadOnly && { read: false }),
-        ...(isAdminNotification !== undefined && { isAdminNotification }),
-      },
-      orderBy: { createdAt: "desc" },
-      take: limit,
-      skip: offset,
-      include: {
-        sender: {
-          select: {
-            id: true,
-            name: true,
-            image: true,
-          },
-        },
-      },
-    }),
-    prisma.notification.count({
-      where: {
-        userId,
-        read: false,
-        ...(isAdminNotification !== undefined && { isAdminNotification }),
-      },
-    }),
-    prisma.notification.count({
-      where: {
-        userId,
-        ...(isAdminNotification !== undefined && { isAdminNotification }),
-      },
-    }),
+  // Build base query for notifications
+  let notificationsQuery = supabase
+    .from("Notification")
+    .select(`
+      *,
+      sender:senderId(id, name, image)
+    `)
+    .eq("userId", userId)
+    .order("createdAt", { ascending: false })
+    .range(offset, offset + limit - 1);
+
+  if (unreadOnly) {
+    notificationsQuery = notificationsQuery.eq("read", false);
+  }
+
+  if (isAdminNotification !== undefined) {
+    notificationsQuery = notificationsQuery.eq("isAdminNotification", isAdminNotification);
+  }
+
+  const [notificationsResult, unreadCountResult, totalCountResult] = await Promise.all([
+    notificationsQuery,
+    supabase
+      .from("Notification")
+      .select("id", { count: "exact", head: true })
+      .eq("userId", userId)
+      .eq("read", false)
+      .eq("isAdminNotification", isAdminNotification ?? false),
+    supabase
+      .from("Notification")
+      .select("id", { count: "exact", head: true })
+      .eq("userId", userId)
+      .eq("isAdminNotification", isAdminNotification ?? false),
   ]);
+
+  const notifications = notificationsResult.data || [];
+  const unreadCount = unreadCountResult.count || 0;
+  const totalCount = totalCountResult.count || 0;
 
   return {
     notifications,
@@ -246,19 +265,23 @@ export async function getNotifications(
 export async function cleanupOldNotifications(
   daysOld: number = 90
 ): Promise<{ success: boolean; deletedCount?: number; error?: string }> {
+  const supabase = createServiceClient();
+
   try {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysOld);
 
-    const result = await prisma.notification.deleteMany({
-      where: {
-        createdAt: { lt: cutoffDate },
-        read: true,
-      },
-    });
+    const { data, error } = await supabase
+      .from("Notification")
+      .delete()
+      .lt("createdAt", cutoffDate.toISOString())
+      .eq("read", true)
+      .select();
 
-    logger.info(`[cleanupOldNotifications] Deleted ${result.count} old notifications`);
-    return { success: true, deletedCount: result.count };
+    if (error) throw error;
+
+    logger.info(`[cleanupOldNotifications] Deleted ${data?.length || 0} old notifications`);
+    return { success: true, deletedCount: data?.length || 0 };
   } catch (error) {
     logger.error("[cleanupOldNotifications] Failed:", error);
     return { success: false, error: "Failed to cleanup notifications" };
@@ -276,12 +299,15 @@ async function sendPushNotification(
     return { success: false };
   }
 
-  try {
-    const subscriptions = await prisma.pushSubscription.findMany({
-      where: { userId },
-    });
+  const supabase = createServiceClient();
 
-    if (subscriptions.length === 0) {
+  try {
+    const { data: subscriptions } = await supabase
+      .from("PushSubscription")
+      .select("endpoint, p256dh, auth")
+      .eq("userId", userId);
+
+    if (!subscriptions || subscriptions.length === 0) {
       return { success: true, sent: 0, failed: 0 };
     }
 
@@ -303,9 +329,10 @@ async function sendPushNotification(
         } catch (error) {
           // Fjern ugyldig abonnement
           if ((error as webpush.WebPushError)?.statusCode === 410) {
-            await prisma.pushSubscription.delete({
-              where: { endpoint: sub.endpoint },
-            });
+            await supabase
+              .from("PushSubscription")
+              .delete()
+              .eq("endpoint", sub.endpoint);
           }
           return { success: false, error };
         }
@@ -331,11 +358,18 @@ export async function getUnreadCount(
   userId: string,
   isAdminNotification?: boolean
 ): Promise<number> {
-  return prisma.notification.count({
-    where: {
-      userId,
-      read: false,
-      ...(isAdminNotification !== undefined && { isAdminNotification }),
-    },
-  });
+  const supabase = createServiceClient();
+
+  let query = supabase
+    .from("Notification")
+    .select("id", { count: "exact", head: true })
+    .eq("userId", userId)
+    .eq("read", false);
+
+  if (isAdminNotification !== undefined) {
+    query = query.eq("isAdminNotification", isAdminNotification);
+  }
+
+  const { count } = await query;
+  return count || 0;
 }

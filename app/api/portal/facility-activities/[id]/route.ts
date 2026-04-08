@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff, isAdmin } from "@/lib/portal/rbac";
 import { checkFacilityConflicts } from "@/lib/portal/facility/conflict-check";
-import { FacilityActivityStatus, FacilityActivityType } from "@prisma/client";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 interface RouteParams {
@@ -26,23 +25,20 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   }
 
   const { id } = await params;
+  const supabase = await createServerSupabase();
 
-  const activity = await prisma.facilityActivity.findUnique({
-    where: { id },
-    include: {
-      Facility: {
-        select: { id: true, name: true, slug: true },
-      },
-      CreatedBy: {
-        select: { id: true, name: true },
-      },
-      ApprovedBy: {
-        select: { id: true, name: true },
-      },
-    },
-  });
+  const { data: activity, error } = await supabase
+    .from("FacilityActivity")
+    .select(`
+      *,
+      Facility (id, name, slug),
+      CreatedBy (id, name),
+      ApprovedBy (id, name)
+    `)
+    .eq("id", id)
+    .single();
 
-  if (!activity) {
+  if (error || !activity) {
     return NextResponse.json({ error: "Aktivitet ikke funnet" }, { status: 404 });
   }
 
@@ -65,12 +61,15 @@ export async function PUT(req: NextRequest, { params }: RouteParams) {
   }
 
   const { id } = await params;
+  const supabase = await createServerSupabase();
 
-  const existing = await prisma.facilityActivity.findUnique({
-    where: { id },
-  });
+  const { data: existing, error: existingError } = await supabase
+    .from("FacilityActivity")
+    .select("*")
+    .eq("id", id)
+    .single();
 
-  if (!existing) {
+  if (existingError || !existing) {
     return NextResponse.json({ error: "Aktivitet ikke funnet" }, { status: 404 });
   }
 
@@ -96,8 +95,8 @@ export async function PUT(req: NextRequest, { params }: RouteParams) {
     status,
   } = body;
 
-  const start = startTime ? new Date(startTime) : existing.startTime;
-  const end = endTime ? new Date(endTime) : existing.endTime;
+  const start = startTime ? new Date(startTime) : new Date(existing.startTime);
+  const end = endTime ? new Date(endTime) : new Date(existing.endTime);
 
   if (end <= start) {
     return NextResponse.json(
@@ -112,8 +111,8 @@ export async function PUT(req: NextRequest, { params }: RouteParams) {
 
   const targetFacilityId = facilityId ?? existing.facilityId;
   const timeChanged =
-    (startTime && new Date(startTime).getTime() !== existing.startTime.getTime()) ||
-    (endTime && new Date(endTime).getTime() !== existing.endTime.getTime());
+    (startTime && new Date(startTime).getTime() !== new Date(existing.startTime).getTime()) ||
+    (endTime && new Date(endTime).getTime() !== new Date(existing.endTime).getTime());
   const facilityChanged = facilityId && facilityId !== existing.facilityId;
 
   if (timeChanged || facilityChanged) {
@@ -125,33 +124,43 @@ export async function PUT(req: NextRequest, { params }: RouteParams) {
     );
 
     if (conflicts.hasConflict && !isAdmin(user.role)) {
-      activityStatus = FacilityActivityStatus.PENDING;
+      activityStatus = "PENDING";
       conflictNote = `Venter på godkjenning - ${conflicts.conflictingItems.length} konflikter`;
     }
   }
 
-  const activity = await prisma.facilityActivity.update({
-    where: { id },
-    data: {
-      ...(facilityId && { facilityId }),
-      ...(title && { title }),
-      ...(description !== undefined && { description }),
-      ...(activityType &&
-        Object.values(FacilityActivityType).includes(activityType) && { activityType }),
-      ...(startTime && { startTime: start }),
-      ...(endTime && { endTime: end }),
-      ...(isRecurring !== undefined && { isRecurring }),
-      ...(recurrenceRule !== undefined && { recurrenceRule }),
-      ...(color !== undefined && { color }),
-      status: activityStatus,
-      conflictNote,
-    },
-    include: {
-      Facility: { select: { id: true, name: true, slug: true } },
-      CreatedBy: { select: { id: true, name: true } },
-      ApprovedBy: { select: { id: true, name: true } },
-    },
-  });
+  const updateData: Record<string, unknown> = {
+    status: activityStatus,
+    conflictNote,
+  };
+
+  if (facilityId) updateData.facilityId = facilityId;
+  if (title) updateData.title = title;
+  if (description !== undefined) updateData.description = description;
+  if (activityType && ["TOURNAMENT_CLUB", "TOURNAMENT_REGION", "TOURNAMENT_JUNIOR", "VTG_COURSE", "GFGK_JUNIOR", "AK_GOLF", "AK_GOLF_JUNIOR_ACADEMY", "SPONSOR_EVENT", "INTERNAL", "CLOSURE", "OTHER", "BOOKING"].includes(activityType)) {
+    updateData.activityType = activityType;
+  }
+  if (startTime) updateData.startTime = start.toISOString();
+  if (endTime) updateData.endTime = end.toISOString();
+  if (isRecurring !== undefined) updateData.isRecurring = isRecurring;
+  if (recurrenceRule !== undefined) updateData.recurrenceRule = recurrenceRule;
+  if (color !== undefined) updateData.color = color;
+
+  const { data: activity, error } = await supabase
+    .from("FacilityActivity")
+    .update(updateData)
+    .eq("id", id)
+    .select(`
+      *,
+      Facility (id, name, slug),
+      CreatedBy (id, name),
+      ApprovedBy (id, name)
+    `)
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke oppdatere aktivitet" }, { status: 500 });
+  }
 
   return NextResponse.json(activity);
 }
@@ -172,12 +181,15 @@ export async function DELETE(req: NextRequest, { params }: RouteParams) {
   }
 
   const { id } = await params;
+  const supabase = await createServerSupabase();
 
-  const existing = await prisma.facilityActivity.findUnique({
-    where: { id },
-  });
+  const { data: existing, error: existingError } = await supabase
+    .from("FacilityActivity")
+    .select("createdById")
+    .eq("id", id)
+    .single();
 
-  if (!existing) {
+  if (existingError || !existing) {
     return NextResponse.json({ error: "Aktivitet ikke funnet" }, { status: 404 });
   }
 
@@ -190,10 +202,14 @@ export async function DELETE(req: NextRequest, { params }: RouteParams) {
   }
 
   // Sett status til CANCELLED i stedet for å slette
-  await prisma.facilityActivity.update({
-    where: { id },
-    data: { status: FacilityActivityStatus.CANCELLED },
-  });
+  const { error } = await supabase
+    .from("FacilityActivity")
+    .update({ status: "CANCELLED" })
+    .eq("id", id);
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke kansellere aktivitet" }, { status: 500 });
+  }
 
   return NextResponse.json({ success: true });
 }

@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { startOfWeek, endOfWeek, format, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { BookingStatus } from "@prisma/client";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 /**
@@ -25,37 +24,57 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = await createServerSupabase();
   const now = new Date();
   const weekStart = startOfWeek(now, { weekStartsOn: 1 });
   const weekEnd = endOfWeek(now, { weekStartsOn: 1 });
 
   // Hent alle instruktorer
-  const instructors = await prisma.instructor.findMany({
-    include: {
-      User: { select: { name: true } },
-      InstructorAvailability: true,
-    },
-  });
+  const { data: instructors, error: instructorsError } = await supabase
+    .from("Instructor")
+    .select(`
+      id,
+      User (name),
+      InstructorAvailability (*)
+    `);
+
+  if (instructorsError) {
+    return NextResponse.json({ error: "Kunne ikke hente instruktører" }, { status: 500 });
+  }
 
   // Hent bookinger denne uken
-  const weeklyBookings = await prisma.booking.findMany({
-    where: {
-      startTime: { gte: weekStart, lte: weekEnd },
-      status: { in: [BookingStatus.CONFIRMED, BookingStatus.COMPLETED] },
-    },
-    include: {
-      ServiceType: { select: { price: true, duration: true } },
-      Instructor: { select: { id: true } },
-    },
-  });
+  const { data: weeklyBookings, error: bookingsError } = await supabase
+    .from("Booking")
+    .select(`
+      id,
+      startTime,
+      status,
+      ServiceType (price, duration),
+      Instructor (id)
+    `)
+    .gte("startTime", weekStart.toISOString())
+    .lte("startTime", weekEnd.toISOString())
+    .in("status", ["CONFIRMED", "COMPLETED"]);
+
+  if (bookingsError) {
+    return NextResponse.json({ error: "Kunne ikke hente bookinger" }, { status: 500 });
+  }
 
   // Beregn kapasitet per instruktor
-  const coaches = instructors.map((instructor) => {
+  const coaches = (instructors || []).map((instructor: {
+    id: string;
+    User: { name: string | null };
+    InstructorAvailability: Array<{
+      dayOfWeek: number;
+      startTime: string;
+      endTime: string;
+    }>;
+  }) => {
     let weeklySlots = 0;
     let maxWeeklyRevenue = 0;
     const avgPricePerHour = 1500;
 
-    for (const avail of instructor.InstructorAvailability) {
+    for (const avail of instructor.InstructorAvailability || []) {
       const startMinutes = parseInt(avail.startTime.split(":")[0]) * 60 + parseInt(avail.startTime.split(":")[1]);
       const endMinutes = parseInt(avail.endTime.split(":")[0]) * 60 + parseInt(avail.endTime.split(":")[1]);
       const slotsInWindow = Math.floor((endMinutes - startMinutes) / 50);
@@ -63,16 +82,16 @@ export async function GET(req: NextRequest) {
       maxWeeklyRevenue += slotsInWindow * avgPricePerHour;
     }
 
-    const bookedSlots = weeklyBookings.filter(
-      (b) => b.Instructor?.id === instructor.id
-    ).length;
+    const instructorBookings = (weeklyBookings || []).filter(
+      (b: { Instructor: { id: string } | null }) => b.Instructor?.id === instructor.id
+    );
+    const bookedSlots = instructorBookings.length;
 
-    const weeklyRevenue = weeklyBookings
-      .filter((b) => b.Instructor?.id === instructor.id)
-      .reduce((sum, b) => sum + b.ServiceType.price, 0);
+    const weeklyRevenue = instructorBookings.reduce((sum: number, b: { ServiceType: { price: number } | null }) => 
+      sum + (b.ServiceType?.price || 0), 0);
 
     return {
-      name: instructor.User.name ?? "Ukjent",
+      name: instructor.User?.name ?? "Ukjent",
       weeklySlots,
       bookedSlots,
       occupancy: weeklySlots > 0 ? Math.round((bookedSlots / weeklySlots) * 1000) / 1000 : 0,
@@ -90,8 +109,8 @@ export async function GET(req: NextRequest) {
     const dayOfWeek = day.getDay();
     const dayData: Record<string, { booked: number; total: number }> = {};
 
-    for (const instructor of instructors) {
-      const totalSlots = instructor.InstructorAvailability
+    for (const instructor of instructors || []) {
+      const totalSlots = (instructor.InstructorAvailability || [])
         .filter((a: { dayOfWeek: number }) => a.dayOfWeek === dayOfWeek)
         .reduce((sum: number, a: { startTime: string; endTime: string }) => {
           const startMinutes = parseInt(a.startTime.split(":")[0]) * 60 + parseInt(a.startTime.split(":")[1]);
@@ -99,13 +118,13 @@ export async function GET(req: NextRequest) {
           return sum + Math.floor((endMinutes - startMinutes) / 50);
         }, 0);
 
-      const bookedSlots = weeklyBookings.filter(
-        (b) =>
+      const bookedSlots = (weeklyBookings || []).filter(
+        (b: { Instructor: { id: string } | null; startTime: string }) =>
           b.Instructor?.id === instructor.id &&
           new Date(b.startTime).toDateString() === day.toDateString()
       ).length;
 
-      const name = instructor.User.name ?? "Ukjent";
+      const name = instructor.User?.name ?? "Ukjent";
       dayData[name] = { booked: bookedSlots, total: totalSlots };
     }
 

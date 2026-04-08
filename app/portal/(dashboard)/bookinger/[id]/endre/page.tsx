@@ -1,5 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import { RescheduleForm } from "@/components/portal/booking/reschedule-form";
 
@@ -14,20 +14,20 @@ export default async function ReschedulePage({ params }: Props) {
   const user = await requirePortalUser();
   if (!user?.id) redirect("/login");
 
-  const booking = await prisma.booking.findUnique({
-    where: { id },
-    include: {
-      ServiceType: {
-        select: { id: true, name: true, duration: true },
-      },
-      Instructor: {
-        select: {
-          id: true,
-          User: { select: { name: true } },
-        },
-      },
-    },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: booking } = await supabase
+    .from("Booking")
+    .select(`
+      *,
+      ServiceType:serviceTypeId(id, name, duration),
+      Instructor:instructorId(
+        id,
+        User:userId(name)
+      )
+    `)
+    .eq("id", id)
+    .single();
 
   if (!booking || booking.studentId !== user.id) {
     notFound();
@@ -39,7 +39,7 @@ export default async function ReschedulePage({ params }: Props) {
         <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Endre tidspunkt</h1>
         <p className="text-sm text-[var(--color-grey-500)] mt-1">
           {booking.ServiceType.name} med{" "}
-          {booking.Instructor.User.name ?? "Instruktor"}
+          {booking.Instructor?.User?.name ?? "Instruktor"}
         </p>
       </div>
 
@@ -47,7 +47,7 @@ export default async function ReschedulePage({ params }: Props) {
         bookingId={booking.id}
         serviceTypeId={booking.ServiceType.id}
         instructorId={booking.Instructor.id}
-        instructorName={booking.Instructor.User.name ?? "Instruktor"}
+        instructorName={booking.Instructor?.User?.name ?? "Instruktor"}
         serviceName={booking.ServiceType.name}
         duration={booking.ServiceType.duration}
       />

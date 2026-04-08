@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isAdmin } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
@@ -14,17 +14,28 @@ export async function toggleAgent(
     const user = await requirePortalUser();
     if (!isAdmin(user.role)) redirect("/");
 
-    await prisma.agentConfig.upsert({
-      where: {
-        userId_agentId: { userId: user.id, agentId },
-      },
-      update: { isActive: enabled },
-      create: {
+    const supabase = await createServerSupabase();
+
+    // Check if config exists
+    const { data: existing } = await supabase
+      .from("AgentConfig")
+      .select("id")
+      .eq("userId", user.id)
+      .eq("agentId", agentId)
+      .single();
+
+    if (existing) {
+      await supabase
+        .from("AgentConfig")
+        .update({ isActive: enabled })
+        .eq("id", existing.id);
+    } else {
+      await supabase.from("AgentConfig").insert({
         userId: user.id,
         agentId,
         isActive: enabled,
-      },
-    });
+      });
+    }
 
     revalidatePath("/portal/admin/agenter");
     return { success: true };
@@ -40,10 +51,12 @@ export async function getAgentStates(): Promise<Record<string, boolean>> {
   const user = await requirePortalUser();
   if (!isAdmin(user.role)) redirect("/");
 
-  const configs = await prisma.agentConfig.findMany({
-    where: { userId: user.id },
-    select: { agentId: true, isActive: true },
-  });
+  const supabase = await createServerSupabase();
 
-  return Object.fromEntries(configs.map((c) => [c.agentId, c.isActive]));
+  const { data: configs } = await supabase
+    .from("AgentConfig")
+    .select("agentId, isActive")
+    .eq("userId", user.id);
+
+  return Object.fromEntries((configs || []).map((c) => [c.agentId, c.isActive]));
 }

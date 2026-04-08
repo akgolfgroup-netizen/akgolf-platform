@@ -1,19 +1,23 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getSkillLevelByHandicap } from "@/lib/portal/golf/skill-levels";
 
 export async function getPeerComparisonData() {
   const user = await requirePortalUser();
   if (!user?.id) return null;
 
+  const supabase = await createServerSupabase();
+
   // Get current user's handicap to determine peer group
-  const latestHandicap = await prisma.handicapEntry.findFirst({
-    where: { userId: user.id },
-    orderBy: { date: "desc" },
-  });
+  const { data: latestHandicap } = await supabase
+    .from("HandicapEntry")
+    .select("*")
+    .eq("userId", user.id)
+    .order("date", { ascending: false })
+    .limit(1)
+    .single();
 
   if (!latestHandicap) return null;
 
@@ -21,37 +25,34 @@ export async function getPeerComparisonData() {
   if (!skillLevel) return null;
 
   // Get user's stats (last 10 rounds)
-  const myRounds = await prisma.roundStats.findMany({
-    where: { userId: user.id },
-    orderBy: { date: "desc" },
-    take: 10,
-  });
+  const { data: myRounds } = await supabase
+    .from("RoundStats")
+    .select("*")
+    .eq("userId", user.id)
+    .order("date", { ascending: false })
+    .limit(10);
 
-  if (myRounds.length === 0) return null;
+  if (!myRounds || myRounds.length === 0) return null;
 
   // Get all users in same handicap range
-  const peerUsers = await prisma.handicapEntry.findMany({
-    where: {
-      handicapIndex: {
-        gte: skillLevel.handicapRange[0],
-        lte: skillLevel.handicapRange[1],
-      },
-      userId: { not: user.id },
-    },
-    distinct: ["userId"],
-    select: { userId: true },
-  });
+  const { data: peerUsers } = await supabase
+    .from("HandicapEntry")
+    .select("userId")
+    .gte("handicapIndex", skillLevel.handicapRange[0])
+    .lte("handicapIndex", skillLevel.handicapRange[1])
+    .neq("userId", user.id);
 
-  const peerUserIds = peerUsers.map((p) => p.userId);
+  const peerUserIds = [...new Set((peerUsers || []).map((p) => p.userId))];
 
   // Get peer rounds
-  const peerRounds = peerUserIds.length > 0
-    ? await prisma.roundStats.findMany({
-        where: { userId: { in: peerUserIds } },
-        orderBy: { date: "desc" },
-        take: 100,
-      })
-    : [];
+  const { data: peerRounds } = peerUserIds.length > 0
+    ? await supabase
+        .from("RoundStats")
+        .select("*")
+        .in("userId", peerUserIds)
+        .order("date", { ascending: false })
+        .limit(100)
+    : { data: [] };
 
   function avg(vals: (number | null)[]): number | null {
     const valid = vals.filter((v): v is number => v !== null);
@@ -80,22 +81,23 @@ export async function getPeerComparisonData() {
     puttsPerGir: avg(myRounds.map((r) => r.puttsPerGir)),
   };
 
+  const myRoundStats = peerRounds || [];
   const peerStats = {
-    sgTotal: avg(peerRounds.map((r) => r.sgTotal)),
-    sgOffTheTee: avg(peerRounds.map((r) => r.sgOffTheTee)),
-    sgApproach: avg(peerRounds.map((r) => r.sgApproach)),
-    sgAroundTheGreen: avg(peerRounds.map((r) => r.sgAroundTheGreen)),
-    sgPutting: avg(peerRounds.map((r) => r.sgPutting)),
-    avgScore: avg(peerRounds.map((r) => r.totalScore)),
+    sgTotal: avg(myRoundStats.map((r) => r.sgTotal)),
+    sgOffTheTee: avg(myRoundStats.map((r) => r.sgOffTheTee)),
+    sgApproach: avg(myRoundStats.map((r) => r.sgApproach)),
+    sgAroundTheGreen: avg(myRoundStats.map((r) => r.sgAroundTheGreen)),
+    sgPutting: avg(myRoundStats.map((r) => r.sgPutting)),
+    avgScore: avg(myRoundStats.map((r) => r.totalScore)),
     fairwayPct: pct(
-      peerRounds.reduce((s, r) => s + (r.fairwaysHit ?? 0), 0),
-      peerRounds.reduce((s, r) => s + (r.fairwaysTotal ?? 0), 0)
+      myRoundStats.reduce((s, r) => s + (r.fairwaysHit ?? 0), 0),
+      myRoundStats.reduce((s, r) => s + (r.fairwaysTotal ?? 0), 0)
     ),
     girPct: pct(
-      peerRounds.reduce((s, r) => s + (r.gir ?? 0), 0),
-      peerRounds.reduce((s, r) => s + (r.girTotal ?? 0), 0)
+      myRoundStats.reduce((s, r) => s + (r.gir ?? 0), 0),
+      myRoundStats.reduce((s, r) => s + (r.girTotal ?? 0), 0)
     ),
-    puttsPerGir: avg(peerRounds.map((r) => r.puttsPerGir)),
+    puttsPerGir: avg(myRoundStats.map((r) => r.puttsPerGir)),
   };
 
   // Count categories where player is above average
@@ -113,7 +115,7 @@ export async function getPeerComparisonData() {
     myStats,
     peerStats,
     myRoundCount: myRounds.length,
-    peerRoundCount: peerRounds.length,
+    peerRoundCount: myRoundStats.length,
     aboveAverageCount: aboveCount,
     totalSGCategories: sgCategories.length,
   };

@@ -1,7 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
 import {
   calculateDegradation,
@@ -32,48 +32,42 @@ async function requireStaff() {
 
 export async function getStudentTrainingPlan(studentId: string) {
   await requireStaff();
+  const supabase = await createServerSupabase();
 
-  const plan = await prisma.trainingPlan.findFirst({
-    where: {
-      studentId,
-      isActive: true,
-    },
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      goals: true,
-      periodType: true,
-      startDate: true,
-      endDate: true,
-      aiGenerated: true,
-      createdAt: true,
-      TrainingPlanWeek: {
-        select: {
-          id: true,
-          weekNumber: true,
-          weekStart: true,
-          focus: true,
-          volumeLabel: true,
-          TrainingPlanSession: {
-            select: {
-              id: true,
-              dayOfWeek: true,
-              title: true,
-              description: true,
-              durationMinutes: true,
-              focusArea: true,
-              exercises: true,
-              sortOrder: true,
-            },
-            orderBy: { sortOrder: "asc" },
-          },
-        },
-        orderBy: { weekNumber: "asc" },
-      },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  const { data: plan } = await supabase
+    .from("TrainingPlan")
+    .select(`
+      id,
+      title,
+      description,
+      goals,
+      periodType,
+      startDate,
+      endDate,
+      aiGenerated,
+      createdAt,
+      TrainingPlanWeek (
+        id,
+        weekNumber,
+        weekStart,
+        focus,
+        volumeLabel,
+        TrainingPlanSession (
+          id,
+          dayOfWeek,
+          title,
+          description,
+          durationMinutes,
+          focusArea,
+          exercises,
+          sortOrder
+        )
+      )
+    `)
+    .eq("studentId", studentId)
+    .eq("isActive", true)
+    .order("createdAt", { ascending: false })
+    .single();
 
   return plan;
 }
@@ -84,47 +78,45 @@ export async function getStudentTrainingPlan(studentId: string) {
 
 export async function getStudentTrainingLogs(studentId: string, limit = 20) {
   await requireStaff();
+  const supabase = await createServerSupabase();
 
-  const logs = await prisma.trainingLog.findMany({
-    where: { userId: studentId },
-    select: {
-      id: true,
-      date: true,
-      durationMinutes: true,
-      focusArea: true,
-      exercises: true,
-      notes: true,
-      rating: true,
-      deviatedFromPlan: true,
-      deviationReason: true,
-      primaryLPhase: true,
-      primaryEnvironment: true,
-      primaryPressLevel: true,
-      coachFeedback: true,
-      coachId: true,
-      TrainingLogExercises: {
-        select: {
-          id: true,
-          name: true,
-          lPhase: true,
-          clubSpeed: true,
-          environment: true,
-          pressLevel: true,
-          successRate: true,
-          score: true,
-          actualSets: true,
-          actualReps: true,
-          notes: true,
-          coachFeedback: true,
-        },
-        orderBy: { sortOrder: "asc" },
-      },
-    },
-    orderBy: { date: "desc" },
-    take: limit,
-  });
+  const { data: logs } = await supabase
+    .from("TrainingLog")
+    .select(`
+      id,
+      date,
+      durationMinutes,
+      focusArea,
+      exercises,
+      notes,
+      rating,
+      deviatedFromPlan,
+      deviationReason,
+      primaryLPhase,
+      primaryEnvironment,
+      primaryPressLevel,
+      coachFeedback,
+      coachId,
+      TrainingLogExercises (
+        id,
+        name,
+        lPhase,
+        clubSpeed,
+        environment,
+        pressLevel,
+        successRate,
+        score,
+        actualSets,
+        actualReps,
+        notes,
+        coachFeedback
+      )
+    `)
+    .eq("userId", studentId)
+    .order("date", { ascending: false })
+    .limit(limit);
 
-  return logs;
+  return logs || [];
 }
 
 // =============================================================================
@@ -133,33 +125,16 @@ export async function getStudentTrainingLogs(studentId: string, limit = 20) {
 
 export async function getStudentRoundStats(studentId: string, limit = 10) {
   await requireStaff();
+  const supabase = await createServerSupabase();
 
-  const rounds = await prisma.roundStats.findMany({
-    where: { userId: studentId },
-    select: {
-      id: true,
-      date: true,
-      courseName: true,
-      totalScore: true,
-      scoreToPar: true,
-      sgTotal: true,
-      sgOffTheTee: true,
-      sgApproach: true,
-      sgAroundTheGreen: true,
-      sgPutting: true,
-      fairwaysHit: true,
-      fairwaysTotal: true,
-      gir: true,
-      girTotal: true,
-      totalPutts: true,
-      drivingDistance: true,
-      notes: true,
-    },
-    orderBy: { date: "desc" },
-    take: limit,
-  });
+  const { data: rounds } = await supabase
+    .from("RoundStats")
+    .select("*")
+    .eq("userId", studentId)
+    .order("date", { ascending: false })
+    .limit(limit);
 
-  return rounds;
+  return rounds || [];
 }
 
 // =============================================================================
@@ -168,48 +143,28 @@ export async function getStudentRoundStats(studentId: string, limit = 10) {
 
 export async function getStudentRounds(studentId: string, limit = 10) {
   await requireStaff();
+  const supabase = await createServerSupabase();
 
-  const rounds = await prisma.round.findMany({
-    where: { userId: studentId },
-    select: {
-      id: true,
-      date: true,
-      totalScore: true,
-      scoreToPar: true,
-      sgTotal: true,
-      sgOffTheTee: true,
-      sgApproach: true,
-      sgShortGame: true,
-      sgPutting: true,
-      fairwaysHit: true,
-      fairwaysTotal: true,
-      girCount: true,
-      totalPutts: true,
-      isComplete: true,
-      Course: {
-        select: {
-          name: true,
-          par: true,
-        },
-      },
-      HoleResult: {
-        select: {
-          holeNumber: true,
-          par: true,
-          score: true,
-          scoreToPar: true,
-          putts: true,
-          fairwayHit: true,
-          gir: true,
-        },
-        orderBy: { holeNumber: "asc" },
-      },
-    },
-    orderBy: { date: "desc" },
-    take: limit,
-  });
+  const { data: rounds } = await supabase
+    .from("Round")
+    .select(`
+      *,
+      Course (name, par),
+      HoleResult (
+        holeNumber,
+        par,
+        score,
+        scoreToPar,
+        putts,
+        fairwayHit,
+        gir
+      )
+    `)
+    .eq("userId", studentId)
+    .order("date", { ascending: false })
+    .limit(limit);
 
-  return rounds;
+  return rounds || [];
 }
 
 // =============================================================================
@@ -288,21 +243,16 @@ export async function getStudentTrackManSessions(
   limit = 5
 ) {
   await requireStaff();
+  const supabase = await createServerSupabase();
 
-  const sessions = await prisma.trackmanSession.findMany({
-    where: { userId: studentId },
-    select: {
-      id: true,
-      sessionDate: true,
-      club: true,
-      shots: true,
-      averages: true,
-    },
-    orderBy: { sessionDate: "desc" },
-    take: limit,
-  });
+  const { data: sessions } = await supabase
+    .from("TrackmanSession")
+    .select("id, sessionDate, club, shots, averages")
+    .eq("userId", studentId)
+    .order("sessionDate", { ascending: false })
+    .limit(limit);
 
-  return sessions;
+  return sessions || [];
 }
 
 // =============================================================================
@@ -315,29 +265,29 @@ export async function addCoachNote(
   note: string
 ) {
   const user = await requireStaff();
+  const supabase = await createServerSupabase();
 
   // Verify the log belongs to the student
-  const log = await prisma.trainingLog.findFirst({
-    where: { id: logId, userId: studentId },
-    select: { id: true },
-  });
+  const { data: log } = await supabase
+    .from("TrainingLog")
+    .select("id")
+    .eq("id", logId)
+    .eq("userId", studentId)
+    .single();
 
   if (!log) {
     throw new Error("Treningslogg ikke funnet");
   }
 
-  const updated = await prisma.trainingLog.update({
-    where: { id: logId },
-    data: {
+  const { data: updated } = await supabase
+    .from("TrainingLog")
+    .update({
       coachFeedback: note,
       coachId: user.id,
-    },
-    select: {
-      id: true,
-      coachFeedback: true,
-      coachId: true,
-    },
-  });
+    })
+    .eq("id", logId)
+    .select("id, coachFeedback, coachId")
+    .single();
 
   return updated;
 }

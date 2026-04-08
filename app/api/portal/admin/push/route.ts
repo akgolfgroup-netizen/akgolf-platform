@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import webpush from "web-push";
@@ -48,6 +48,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const supabase = await createServerSupabase();
+
   try {
     const body = await req.json();
     const validation = sendPushSchema.safeParse(body);
@@ -65,11 +67,14 @@ export async function POST(req: NextRequest) {
     let targetUserIds: string[] = [];
     if (broadcast) {
       // Get all users with push subscriptions
-      const subscriptions = await prisma.pushSubscription.findMany({
-        distinct: ["userId"],
-        select: { userId: true },
-      });
-      targetUserIds = subscriptions.map((s) => s.userId);
+      const { data: subscriptions } = await supabase
+        .from("PushSubscription")
+        .select("userId")
+        .order("userId");
+      
+      // Get unique userIds
+      const uniqueUserIds = new Set(subscriptions?.map((s) => s.userId) || []);
+      targetUserIds = Array.from(uniqueUserIds);
     } else if (userIds) {
       targetUserIds = userIds;
     } else if (userId) {
@@ -82,11 +87,12 @@ export async function POST(req: NextRequest) {
     }
 
     // Get all push subscriptions for target users
-    const subscriptions = await prisma.pushSubscription.findMany({
-      where: { userId: { in: targetUserIds } },
-    });
+    const { data: subscriptions, error } = await supabase
+      .from("PushSubscription")
+      .select("*")
+      .in("userId", targetUserIds);
 
-    if (subscriptions.length === 0) {
+    if (error || !subscriptions || subscriptions.length === 0) {
       return NextResponse.json(
         { error: "Ingen push-abonnementer funnet" },
         { status: 404 }
@@ -120,9 +126,10 @@ export async function POST(req: NextRequest) {
         } catch (error) {
           // Remove invalid subscription
           if ((error as webpush.WebPushError)?.statusCode === 410) {
-            await prisma.pushSubscription.delete({
-              where: { endpoint: sub.endpoint },
-            });
+            await supabase
+              .from("PushSubscription")
+              .delete()
+              .eq("endpoint", sub.endpoint);
           }
           return { success: false, userId: sub.userId, error: String(error) };
         }
@@ -154,16 +161,31 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Uautorisert" }, { status: 403 });
   }
 
+  const supabase = await createServerSupabase();
+
   try {
-    const totalSubscriptions = await prisma.pushSubscription.count();
-    const uniqueUsers = await prisma.pushSubscription.groupBy({
-      by: ["userId"],
-      _count: { userId: true },
-    });
+    const { count: totalSubscriptions, error: countError } = await supabase
+      .from("PushSubscription")
+      .select("*", { count: "exact", head: true });
+
+    if (countError) {
+      return NextResponse.json({ error: "Serverfeil" }, { status: 500 });
+    }
+
+    // Get unique users count
+    const { data: uniqueUsers, error: uniqueError } = await supabase
+      .from("PushSubscription")
+      .select("userId");
+
+    if (uniqueError) {
+      return NextResponse.json({ error: "Serverfeil" }, { status: 500 });
+    }
+
+    const uniqueUserCount = new Set(uniqueUsers?.map((u) => u.userId)).size;
 
     return NextResponse.json({
-      totalSubscriptions,
-      uniqueUsers: uniqueUsers.length,
+      totalSubscriptions: totalSubscriptions || 0,
+      uniqueUsers: uniqueUserCount,
     });
   } catch (error) {
     console.error("[Push Stats] Error:", error);

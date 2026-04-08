@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
-import { BookingStatus, PaymentStatus } from "@prisma/client";
 import { evaluateCancellationPolicy } from "@/lib/portal/booking/cancellation-policy";
 import { processRefund } from "@/lib/portal/booking/refund";
 import { notifyNextOnWaitlist } from "@/lib/portal/booking/waitlist";
@@ -36,22 +35,33 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const supabase = await createServerSupabase();
+
   try {
     // Fetch booking with ownership check
-    const booking = await prisma.booking.findFirst({
-      where: {
-        id: bookingId,
-        studentId: user.id,
-        status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
-      },
-      include: {
-        ServiceType: { select: { name: true } },
-        Instructor: { select: { User: { select: { name: true } } } },
-        User: { select: { name: true, email: true } },
-      },
-    });
+    const { data: booking, error: bookingError } = await supabase
+      .from("Booking")
+      .select(`
+        *,
+        ServiceType (
+          name
+        ),
+        Instructor (
+          User (
+            name
+          )
+        ),
+        User (
+          name,
+          email
+        )
+      `)
+      .eq("id", bookingId)
+      .eq("studentId", user.id)
+      .in("status", ["PENDING", "CONFIRMED"])
+      .single();
 
-    if (!booking) {
+    if (bookingError || !booking) {
       return NextResponse.json(
         { error: "Booking ikke funnet eller kan ikke avbestilles" },
         { status: 404 }
@@ -75,7 +85,7 @@ export async function POST(req: NextRequest) {
     } | null = null;
 
     if (
-      booking.paymentStatus === PaymentStatus.PAID &&
+      booking.paymentStatus === "PAID" &&
       cancellation.refundPercent > 0
     ) {
       refundResult = await processRefund(
@@ -92,25 +102,42 @@ export async function POST(req: NextRequest) {
     }
 
     // Update booking status
-    await prisma.booking.update({
-      where: { id: bookingId },
-      data: {
-        status: BookingStatus.CANCELLED,
-        cancelledAt: new Date(),
-        cancelReason: reason || cancellation.reason,
-        ...(refundResult?.refundedAmount
-          ? { paymentStatus: PaymentStatus.REFUNDED }
-          : {}),
-      },
-    });
+    const updateData: {
+      status: string;
+      cancelledAt: string;
+      cancelReason: string;
+      paymentStatus?: string;
+    } = {
+      status: "CANCELLED",
+      cancelledAt: new Date().toISOString(),
+      cancelReason: reason || cancellation.reason,
+    };
+
+    if (refundResult?.refundedAmount) {
+      updateData.paymentStatus = "REFUNDED";
+    }
+
+    const { error: updateError } = await supabase
+      .from("Booking")
+      .update(updateData)
+      .eq("id", bookingId);
+
+    if (updateError) {
+      throw updateError;
+    }
 
     // Send cancellation email (non-blocking)
-    if (booking.User.email) {
+    const userEmail = booking.User?.email;
+    const userName = booking.User?.name ?? "Elev";
+    const serviceName = booking.ServiceType?.name ?? "Tjeneste";
+    const instructorName = booking.Instructor?.User?.name ?? "Instruktør";
+
+    if (userEmail) {
       sendBookingCancellation(
-        booking.User.email,
-        booking.User.name ?? "Elev",
-        booking.ServiceType.name,
-        booking.Instructor.User.name ?? "Instruktør",
+        userEmail,
+        userName,
+        serviceName,
+        instructorName,
         booking.startTime,
         reason || cancellation.reason,
         cancellation.refundPercent,
@@ -125,8 +152,8 @@ export async function POST(req: NextRequest) {
     // Notify waitlist if applicable
     await notifyNextOnWaitlist(
       bookingId,
-      booking.ServiceType.name,
-      booking.Instructor.User.name ?? "Instruktør",
+      serviceName,
+      instructorName,
       booking.startTime
     ).catch((err) => logger.error("[Cancel] Waitlist notification failed", err));
 

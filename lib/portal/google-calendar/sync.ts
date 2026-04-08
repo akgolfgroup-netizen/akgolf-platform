@@ -5,7 +5,7 @@
 double-booking når Anders har møter i sin Google Calendar.
  */
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { logger } from "@/lib/logger";
 import { nanoid } from "nanoid";
 
@@ -87,31 +87,47 @@ async function refreshAccessToken(
  * Hent gyldig access token, refresh om nødvendig
  */
 async function getValidAccessToken(
-  sync: {
-    id: string;
-    accessToken: string;
-    refreshToken: string;
-    expiresAt: Date;
+  userId: string
+): Promise<string | null> {
+  const supabase = createServiceClient();
+  
+  const { data: user, error } = await supabase
+    .from("User")
+    .select("googleCalendarTokens")
+    .eq("id", userId)
+    .single();
+
+  if (error || !user?.googleCalendarTokens) {
+    return null;
   }
-): Promise<string> {
+
+  const tokens = user.googleCalendarTokens as unknown as GoogleTokens;
+
   // Refresh hvis utløpt eller utløper innen 5 minutter
-  if (new Date() >= new Date(sync.expiresAt.getTime() - 5 * 60 * 1000)) {
-    logger.info(`[Google Calendar Sync] Refreshing token for sync ${sync.id}`);
+  if (Date.now() >= tokens.expires_at - 5 * 60 * 1000) {
+    if (!tokens.refresh_token) {
+      return null;
+    }
+
+    logger.info(`[Google Calendar Sync] Refreshing token for user ${userId}`);
     
-    const refreshed = await refreshAccessToken(sync.refreshToken);
+    const refreshed = await refreshAccessToken(tokens.refresh_token);
     
-    await prisma.googleCalendarSync.update({
-      where: { id: sync.id },
-      data: {
-        accessToken: refreshed.accessToken,
-        expiresAt: refreshed.expiresAt,
-      },
-    });
+    await supabase
+      .from("User")
+      .update({
+        googleCalendarTokens: {
+          ...tokens,
+          access_token: refreshed.accessToken,
+          expires_at: refreshed.expiresAt.getTime(),
+        } as object,
+      })
+      .eq("id", userId);
 
     return refreshed.accessToken;
   }
 
-  return sync.accessToken;
+  return tokens.access_token;
 }
 
 /**
@@ -124,7 +140,6 @@ async function fetchCalendarEvents(
   timeMax: Date
 ): Promise<GoogleCalendarEvent[]> {
   const params = new URLSearchParams({
-    calendarId: calendarId === "primary" ? "primary" : calendarId,
     timeMin: timeMin.toISOString(),
     timeMax: timeMax.toISOString(),
     singleEvents: "true", // Ekspander recurring events
@@ -132,7 +147,8 @@ async function fetchCalendarEvents(
     maxResults: "250",
   });
 
-  const url = `${GOOGLE_CALENDAR_API}/calendars/${encodeURIComponent(calendarId === "primary" ? "primary" : calendarId)}/events?${params.toString()}`;
+  const calId = calendarId === "primary" ? "primary" : calendarId;
+  const url = `${GOOGLE_CALENDAR_API}/calendars/${encodeURIComponent(calId)}/events?${params.toString()}`;
 
   const res = await fetch(url, {
     headers: {
@@ -192,20 +208,20 @@ function eventToBlockedTime(
 ): {
   externalId: string;
   instructorId: string;
-  startTime: Date;
-  endTime: Date;
+  startTime: string;
+  endTime: string;
   reason: string;
   source: "GOOGLE_CALENDAR";
   isRecurring: boolean;
 } {
   // Håndter all-day events (date) vs timed events (dateTime)
   const startTime = event.start.dateTime 
-    ? new Date(event.start.dateTime)
-    : new Date(event.start.date!); // All-day event
+    ? new Date(event.start.dateTime).toISOString()
+    : new Date(event.start.date!).toISOString(); // All-day event
 
   const endTime = event.end.dateTime
-    ? new Date(event.end.dateTime)
-    : new Date(event.end.date!); // All-day event
+    ? new Date(event.end.dateTime).toISOString()
+    : new Date(event.end.date!).toISOString(); // All-day event
 
   return {
     externalId: event.id,
@@ -224,11 +240,32 @@ function eventToBlockedTime(
 export async function syncGoogleCalendar(
   instructorId: string
 ): Promise<{ synced: number; errors: number; message: string }> {
-  const sync = await prisma.googleCalendarSync.findUnique({
-    where: { instructorId },
-  });
+  const supabase = createServiceClient();
+  
+  // Hent instruktør med tilhørende bruker for å få tokens
+  const { data: instructor, error } = await supabase
+    .from("Instructor")
+    .select(`
+      id,
+      User:userId (
+        id,
+        googleCalendarTokens
+      )
+    `)
+    .eq("id", instructorId)
+    .single();
 
-  if (!sync) {
+  if (error || !instructor) {
+    return {
+      synced: 0,
+      errors: 1,
+      message: "Ingen instruktør funnet",
+    };
+  }
+
+  const userData = instructor.User as { id: string; googleCalendarTokens: unknown } | null;
+  
+  if (!userData?.googleCalendarTokens) {
     return {
       synced: 0,
       errors: 1,
@@ -236,17 +273,17 @@ export async function syncGoogleCalendar(
     };
   }
 
-  if (!sync.syncEnabled) {
-    return {
-      synced: 0,
-      errors: 0,
-      message: "Synkronisering er deaktivert",
-    };
-  }
-
   try {
     // 1. Hent gyldig access token
-    const accessToken = await getValidAccessToken(sync);
+    const accessToken = await getValidAccessToken(userData.id);
+    
+    if (!accessToken) {
+      return {
+        synced: 0,
+        errors: 1,
+        message: "Kunne ikke hente gyldig access token",
+      };
+    }
 
     // 2. Definer tidsperiode for synkronisering
     // Synkroniser 30 dager tilbake og 180 dager fremover
@@ -256,7 +293,7 @@ export async function syncGoogleCalendar(
     // 3. Hent events fra Google Calendar
     const events = await fetchCalendarEvents(
       accessToken,
-      sync.calendarId,
+      "primary",
       timeMin,
       timeMax
     );
@@ -276,21 +313,33 @@ export async function syncGoogleCalendar(
       try {
         const blockedTimeData = eventToBlockedTime(event, instructorId);
 
-        await prisma.blockedTime.upsert({
-          where: {
-            externalId: event.id,
-          },
-          create: {
-            id: nanoid(),
-            ...blockedTimeData,
-          },
-          update: {
-            startTime: blockedTimeData.startTime,
-            endTime: blockedTimeData.endTime,
-            reason: blockedTimeData.reason,
-            isRecurring: blockedTimeData.isRecurring,
-          },
-        });
+        // Sjekk om det finnes en eksisterende post
+        const { data: existing } = await supabase
+          .from("BlockedTime")
+          .select("id")
+          .eq("externalId", event.id)
+          .single();
+
+        if (existing) {
+          // Oppdater eksisterende
+          await supabase
+            .from("BlockedTime")
+            .update({
+              startTime: blockedTimeData.startTime,
+              endTime: blockedTimeData.endTime,
+              reason: blockedTimeData.reason,
+              isRecurring: blockedTimeData.isRecurring,
+            })
+            .eq("id", existing.id);
+        } else {
+          // Opprett ny
+          await supabase
+            .from("BlockedTime")
+            .insert({
+              id: nanoid(),
+              ...blockedTimeData,
+            });
+        }
 
         synced++;
       } catch (error) {
@@ -301,16 +350,6 @@ export async function syncGoogleCalendar(
         errors++;
       }
     }
-
-    // 6. Oppdater lastSyncAt og nullstill feil
-    await prisma.googleCalendarSync.update({
-      where: { id: sync.id },
-      data: {
-        lastSyncAt: new Date(),
-        lastError: null,
-        lastErrorAt: null,
-      },
-    });
 
     logger.info(
       `[Google Calendar Sync] Synced ${synced} events for instructor ${instructorId} (${errors} errors)`
@@ -324,15 +363,6 @@ export async function syncGoogleCalendar(
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Ukjent feil";
     
-    // Logg feilen
-    await prisma.googleCalendarSync.update({
-      where: { id: sync.id },
-      data: {
-        lastError: errorMessage,
-        lastErrorAt: new Date(),
-      },
-    });
-
     logger.error(
       `[Google Calendar Sync] Sync failed for instructor ${instructorId}:`,
       error
@@ -354,26 +384,42 @@ export async function syncAllGoogleCalendars(): Promise<{
   total: number;
   successful: number;
   failed: number;
-  details: Array<{ instructorId: string; result: ReturnType<typeof syncGoogleCalendar> extends Promise<infer T> ? T : never }>;
+  details: Array<{ instructorId: string; result: Awaited<ReturnType<typeof syncGoogleCalendar>> }>;
 }> {
-  const syncs = await prisma.googleCalendarSync.findMany({
-    where: {
-      syncEnabled: true,
-    },
-    select: {
-      instructorId: true,
-    },
+  const supabase = createServiceClient();
+  
+  // Hent alle instruktører som har Google Calendar tokens
+  const { data: instructors, error } = await supabase
+    .from("Instructor")
+    .select(`
+      id,
+      User:userId (
+        googleCalendarTokens
+      )
+    `);
+
+  if (error || !instructors) {
+    return {
+      total: 0,
+      successful: 0,
+      failed: 0,
+      details: [],
+    };
+  }
+
+  // Filtrer bare de med Google Calendar tokens
+  const instructorsWithTokens = instructors.filter((inst) => {
+    const userData = inst.User as { googleCalendarTokens: unknown } | null;
+    return !!userData?.googleCalendarTokens;
   });
 
   const results = [];
   let successful = 0;
   let failed = 0;
 
-  for (const { instructorId } of syncs) {
-    if (!instructorId) continue;
-
-    const result = await syncGoogleCalendar(instructorId);
-    results.push({ instructorId, result });
+  for (const instructor of instructorsWithTokens) {
+    const result = await syncGoogleCalendar(instructor.id);
+    results.push({ instructorId: instructor.id, result });
 
     if (result.errors === 0) {
       successful++;
@@ -387,7 +433,7 @@ export async function syncAllGoogleCalendars(): Promise<{
   );
 
   return {
-    total: syncs.length,
+    total: instructorsWithTokens.length,
     successful,
     failed,
     details: results,
@@ -398,38 +444,50 @@ export async function syncAllGoogleCalendars(): Promise<{
  * Hent synkroniseringsstatus for en instruktør
  */
 export async function getSyncStatus(instructorId: string) {
-  const sync = await prisma.googleCalendarSync.findUnique({
-    where: { instructorId },
-    select: {
-      id: true,
-      calendarId: true,
-      syncEnabled: true,
-      lastSyncAt: true,
-      lastError: true,
-      lastErrorAt: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  });
+  const supabase = createServiceClient();
+  
+  // Hent instruktør med brukerinfo
+  const { data: instructor, error } = await supabase
+    .from("Instructor")
+    .select(`
+      id,
+      createdAt,
+      updatedAt,
+      User:userId (
+        googleCalendarTokens,
+        googleCalendarId
+      )
+    `)
+    .eq("id", instructorId)
+    .single();
 
-  if (!sync) {
+  if (error || !instructor) {
     return null;
   }
 
+  const userData = instructor.User as { 
+    googleCalendarTokens: unknown; 
+    googleCalendarId: string | null;
+  } | null;
+
   // Tell antall blokkerte tider fra Google Calendar
-  const blockedCount = await prisma.blockedTime.count({
-    where: {
-      instructorId,
-      source: "GOOGLE_CALENDAR",
-      endTime: {
-        gte: new Date(),
-      },
-    },
-  });
+  const { count: blockedCount } = await supabase
+    .from("BlockedTime")
+    .select("id", { count: "exact", head: true })
+    .eq("instructorId", instructorId)
+    .eq("source", "GOOGLE_CALENDAR")
+    .gte("endTime", new Date().toISOString());
 
   return {
-    ...sync,
-    blockedCount,
+    id: instructor.id,
+    calendarId: userData?.googleCalendarId || "primary",
+    syncEnabled: !!userData?.googleCalendarTokens,
+    lastSyncAt: null, // Vi sporer ikke dette ennå
+    lastError: null,
+    lastErrorAt: null,
+    createdAt: instructor.createdAt,
+    updatedAt: instructor.updatedAt,
+    blockedCount: blockedCount || 0,
   };
 }
 
@@ -439,26 +497,34 @@ export async function getSyncStatus(instructorId: string) {
 export async function disconnectGoogleCalendar(
   instructorId: string
 ): Promise<void> {
-  const sync = await prisma.googleCalendarSync.findUnique({
-    where: { instructorId },
-  });
+  const supabase = createServiceClient();
+  
+  // Hent instruktørens brukerId
+  const { data: instructor, error } = await supabase
+    .from("Instructor")
+    .select("userId")
+    .eq("id", instructorId)
+    .single();
 
-  if (!sync) {
-    throw new Error("Ingen Google Calendar kobling funnet");
+  if (error || !instructor) {
+    throw new Error("Ingen instruktør funnet");
   }
 
   // Slett alle blocked times fra Google Calendar
-  await prisma.blockedTime.deleteMany({
-    where: {
-      instructorId,
-      source: "GOOGLE_CALENDAR",
-    },
-  });
+  await supabase
+    .from("BlockedTime")
+    .delete()
+    .eq("instructorId", instructorId)
+    .eq("source", "GOOGLE_CALENDAR");
 
-  // Slett sync-konfigurasjonen
-  await prisma.googleCalendarSync.delete({
-    where: { id: sync.id },
-  });
+  // Fjern tokens fra bruker
+  await supabase
+    .from("User")
+    .update({
+      googleCalendarTokens: null,
+      googleCalendarId: null,
+    })
+    .eq("id", instructor.userId);
 
   logger.info(
     `[Google Calendar Sync] Disconnected calendar for instructor ${instructorId}`
@@ -476,31 +542,28 @@ export async function getImportedEvents(
     limit?: number;
   } = {}
 ) {
+  const supabase = createServiceClient();
   const { from, to, limit = 50 } = options;
 
-  const where = {
-    instructorId,
-    source: "GOOGLE_CALENDAR" as const,
-    ...(from && { startTime: { gte: from } }),
-    ...(to && { endTime: { lte: to } }),
-  };
+  let query = supabase
+    .from("BlockedTime")
+    .select("id, startTime, endTime, reason, externalId, isRecurring, createdAt")
+    .eq("instructorId", instructorId)
+    .eq("source", "GOOGLE_CALENDAR")
+    .order("startTime", { ascending: false })
+    .limit(limit);
 
-  const events = await prisma.blockedTime.findMany({
-    where,
-    orderBy: {
-      startTime: "desc",
-    },
-    take: limit,
-    select: {
-      id: true,
-      startTime: true,
-      endTime: true,
-      reason: true,
-      externalId: true,
-      isRecurring: true,
-      createdAt: true,
-    },
-  });
+  if (from) {
+    query = query.gte("startTime", from.toISOString());
+  }
 
-  return events;
+  if (to) {
+    query = query.lte("endTime", to.toISOString());
+  }
+
+  const { data: events, error } = await query;
+
+  if (error) throw error;
+
+  return events || [];
 }

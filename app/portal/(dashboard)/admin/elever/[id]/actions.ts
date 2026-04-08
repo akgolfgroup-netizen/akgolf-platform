@@ -1,7 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
 import { revalidatePath } from "next/cache";
 
@@ -14,11 +14,13 @@ export async function updateCoachingNotes(
     return { success: false, error: "Ingen tilgang" };
   }
 
+  const supabase = await createServerSupabase();
+
   try {
-    await prisma.coachingSession.update({
-      where: { id: sessionId },
-      data: { instructorNotes: notes },
-    });
+    await supabase
+      .from("CoachingSession")
+      .update({ instructorNotes: notes })
+      .eq("id", sessionId);
 
     revalidatePath("/admin/elever");
     return { success: true };

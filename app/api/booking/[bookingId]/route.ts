@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { stripe } from "@/lib/portal/stripe";
 import { getPortalUser } from "@/lib/portal/auth";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
@@ -25,32 +25,29 @@ export async function GET(
   const user = await getPortalUser();
 
   try {
-    const booking = await prisma.booking.findUnique({
-      where: { id: bookingId },
-      select: {
-        id: true,
-        startTime: true,
-        endTime: true,
-        amount: true,
-        vatAmount: true,
-        status: true,
-        paymentStatus: true,
-        paymentMethod: true,
-        stripePaymentId: true,
-        studentId: true,
-        ServiceType: {
-          select: { name: true, duration: true },
-        },
-        Instructor: {
-          select: { User: { select: { name: true } } },
-        },
-        User: {
-          select: { name: true, email: true },
-        },
-      },
-    });
+    const supabase = await createServerSupabase();
+    
+    const { data: booking, error } = await supabase
+      .from("Booking")
+      .select(`
+        id,
+        startTime,
+        endTime,
+        amount,
+        vatAmount,
+        status,
+        paymentStatus,
+        paymentMethod,
+        stripePaymentId,
+        studentId,
+        ServiceType:serviceTypeId (name, duration),
+        Instructor:instructorId (User:userId (name)),
+        User:studentId (name, email)
+      `)
+      .eq("id", bookingId)
+      .single();
 
-    if (!booking) {
+    if (error || !booking) {
       return NextResponse.json(
         { error: "Booking ikke funnet" },
         { status: 404 }
@@ -78,6 +75,10 @@ export async function GET(
     const isOwner = user?.id === booking.studentId;
     const isStaff = user?.role === "ADMIN" || user?.role === "INSTRUCTOR";
 
+    // Handle Supabase array response format for joined tables
+    const userArray = booking.User as unknown as Array<{ name?: string; email?: string }>;
+    const userData = userArray?.[0] ?? null;
+
     // Strip sensitive data for unauthenticated users
     const safeBooking = {
       id: booking.id,
@@ -91,7 +92,7 @@ export async function GET(
       ServiceType: booking.ServiceType,
       Instructor: booking.Instructor,
       // Only include user info and clientSecret for owner/staff
-      User: isOwner || isStaff ? booking.User : { name: booking.User.name },
+      User: isOwner || isStaff ? userData : { name: userData?.name },
       clientSecret: isOwner || isStaff ? clientSecret : null,
     };
 

@@ -3,12 +3,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { logger } from "@/lib/logger";
 import { stripe } from "@/lib/portal/stripe";
-import { prisma } from "@/lib/portal/prisma";
-import {
-  BookingStatus,
-  PaymentMethod,
-  PaymentStatus,
-} from "@prisma/client";
+import { createServiceClient } from "@/lib/supabase/server";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
 import { nanoid } from "nanoid";
 import {
@@ -53,90 +48,110 @@ export async function POST(req: Request) {
     );
   }
 
+  // Use service role client for webhooks (no auth context)
+  const supabase = createServiceClient();
+
   if (event.type === "payment_intent.succeeded") {
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
     const paymentIntentId = paymentIntent.id;
 
     // Atomic idempotency guard: only update bookings still in PENDING state
-    const booking = await prisma.booking.findFirst({
-      where: {
-        stripePaymentId: paymentIntentId,
-        paymentStatus: { not: PaymentStatus.PAID },
-      },
-      select: {
-        id: true,
-        amount: true,
-        vatAmount: true,
-        startTime: true,
-        ServiceType: { select: { name: true, duration: true, vatRate: true } },
-        User: { select: { name: true, email: true } },
-        Instructor: {
-          select: {
-            User: { select: { name: true, email: true } },
-          },
-        },
-        Location: { select: { name: true } },
-      },
-    });
+    const { data: booking } = await supabase
+      .from("Booking")
+      .select(`
+        id,
+        amount,
+        vatAmount,
+        startTime,
+        ServiceType:serviceTypeId (name, duration, vatRate),
+        User:studentId (name, email),
+        Instructor:instructorId (User:userId (name, email)),
+        Location:locationId (name)
+      `)
+      .eq("stripePaymentId", paymentIntentId)
+      .neq("paymentStatus", "PAID")
+      .single();
 
     if (!booking) {
       logger.info(`[Stripe Webhook] Already processed or not found: ${paymentIntentId}`);
     } else {
-      const vatRate = booking.ServiceType?.vatRate ?? 25;
+      const serviceTypeArray = booking.ServiceType as unknown as Array<{ vatRate?: number; name?: string; duration?: number }>;
+      const serviceType = serviceTypeArray?.[0] ?? null;
+      const vatRate = serviceType?.vatRate ?? 25;
       const netAmount = booking.amount - booking.vatAmount;
 
-      await prisma.$transaction([
-        prisma.booking.update({
-          where: { id: booking.id },
-          data: {
-            status: BookingStatus.CONFIRMED,
-            paymentStatus: PaymentStatus.PAID,
-          },
-        }),
-        prisma.paymentTransaction.create({
-          data: {
+      // Update booking status
+      const { error: updateError } = await supabase
+        .from("Booking")
+        .update({
+          status: "CONFIRMED",
+          paymentStatus: "PAID",
+          updatedAt: new Date().toISOString(),
+        })
+        .eq("id", booking.id);
+
+      if (updateError) {
+        logger.error("[Stripe Webhook] Failed to update booking:", updateError);
+      } else {
+        // Create payment transaction
+        await supabase
+          .from("PaymentTransaction")
+          .insert({
             id: nanoid(),
             bookingId: booking.id,
-            paymentMethod: PaymentMethod.STRIPE,
+            paymentMethod: "STRIPE",
             grossAmount: booking.amount,
             vatAmount: booking.vatAmount,
             vatRate,
             feeAmount: 0,
             netAmount,
             providerRef: paymentIntentId,
-            status: PaymentStatus.PAID,
-            paidAt: new Date(),
-            updatedAt: new Date(),
-          },
-        }),
-      ]);
-      logger.info(`[Stripe Webhook] Booking ${booking.id} confirmed`);
+            status: "PAID",
+            paidAt: new Date().toISOString(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
+        
+        logger.info(`[Stripe Webhook] Booking ${booking.id} confirmed`);
+      }
+
+      // Type assertions for nested data
+      const userArray = booking.User as unknown as Array<{ name?: string; email?: string }>;
+      const user = userArray?.[0] ?? null;
+      const instructorArray = booking.Instructor as unknown as Array<{ 
+        User?: Array<{ name?: string; email?: string }> 
+      }>;
+      const instructor = instructorArray?.[0] ?? null;
+      const locationArray = booking.Location as unknown as Array<{ name?: string }>;
+      const location = locationArray?.[0] ?? null;
 
       // Send confirmation emails (non-blocking — don't fail the webhook)
       sendBookingConfirmation({
         bookingId: booking.id,
-        studentName: booking.User?.name ?? "Golfer",
-        studentEmail: booking.User?.email ?? "",
-        instructorName: booking.Instructor?.User?.name ?? "Trener",
-        instructorEmail: booking.Instructor?.User?.email ?? "",
-        serviceName: booking.ServiceType?.name ?? "Coaching",
+        studentName: user?.name ?? "Golfer",
+        studentEmail: user?.email ?? "",
+        instructorName: instructor?.User?.[0]?.name ?? "Trener",
+        instructorEmail: instructor?.User?.[0]?.email ?? "",
+        serviceName: serviceType?.name ?? "Coaching",
         startTime: booking.startTime,
-        duration: booking.ServiceType?.duration ?? 60,
+        duration: serviceType?.duration ?? 60,
         amount: booking.amount,
         vatAmount: booking.vatAmount,
-        location: booking.Location?.name ?? "Gamle Fredrikstad Golfklubb",
+        location: location?.name ?? "Gamle Fredrikstad Golfklubb",
       }).catch((err) => logger.error("[Stripe Webhook] Email send failed", err));
     }
   } else if (event.type === "payment_intent.payment_failed") {
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
-    await prisma.booking.updateMany({
-      where: {
-        stripePaymentId: paymentIntent.id,
-        paymentStatus: PaymentStatus.PENDING,
-      },
-      data: { paymentStatus: PaymentStatus.FAILED },
-    });
+    await supabase
+      .from("Booking")
+      .update({
+        paymentStatus: "FAILED",
+        updatedAt: new Date().toISOString(),
+      })
+      .eq("stripePaymentId", paymentIntent.id)
+      .eq("paymentStatus", "PENDING");
+    
     logger.info(`[Stripe Webhook] Payment failed for PaymentIntent: ${paymentIntent.id}`);
   }
 
@@ -146,10 +161,11 @@ export async function POST(req: Request) {
     const paymentIntentId = charge.payment_intent as string;
 
     if (paymentIntentId) {
-      const booking = await prisma.booking.findFirst({
-        where: { stripePaymentId: paymentIntentId },
-        select: { id: true, amount: true },
-      });
+      const { data: booking } = await supabase
+        .from("Booking")
+        .select("id, amount")
+        .eq("stripePaymentId", paymentIntentId)
+        .single();
 
       if (booking) {
         // Bestem om full eller delvis refund basert på beløp
@@ -157,20 +173,24 @@ export async function POST(req: Request) {
         const fullAmount = booking.amount * 100; // konverter kroner til øre
         const isFullRefund = refundedTotal >= fullAmount;
 
-        await prisma.$transaction([
-          prisma.booking.update({
-            where: { id: booking.id },
-            data: {
-              paymentStatus: isFullRefund
-                ? PaymentStatus.REFUNDED
-                : PaymentStatus.PARTIALLY_REFUNDED,
-            },
-          }),
-          prisma.paymentTransaction.updateMany({
-            where: { bookingId: booking.id },
-            data: { refundedAt: new Date() },
-          }),
-        ]);
+        // Update booking payment status
+        await supabase
+          .from("Booking")
+          .update({
+            paymentStatus: isFullRefund ? "REFUNDED" : "PARTIALLY_REFUNDED",
+            updatedAt: new Date().toISOString(),
+          })
+          .eq("id", booking.id);
+
+        // Update payment transaction
+        await supabase
+          .from("PaymentTransaction")
+          .update({
+            refundedAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          })
+          .eq("bookingId", booking.id);
+
         logger.info(
           `[Stripe Webhook] Refund processed for booking ${booking.id} (${isFullRefund ? "full" : "partial"})`
         );
@@ -186,10 +206,11 @@ export async function POST(req: Request) {
     const customerId = invoice.customer as string;
 
     if (customerId && "subscription" in invoice && invoice.subscription) {
-      const user = await prisma.user.findFirst({
-        where: { stripeCustomerId: customerId },
-        select: { id: true },
-      });
+      const { data: user } = await supabase
+        .from("User")
+        .select("id")
+        .eq("stripeCustomerId", customerId)
+        .single();
 
       if (user) {
         await createNotification({
@@ -210,16 +231,16 @@ export async function POST(req: Request) {
   // ─── Subscription Events ───
   else if (event.type === "customer.subscription.created") {
     const subscription = event.data.object as Stripe.Subscription;
-    await handleSubscriptionCreated(subscription);
+    await handleSubscriptionCreated(subscription, supabase);
   } else if (event.type === "customer.subscription.updated") {
     const subscription = event.data.object as Stripe.Subscription;
-    await handleSubscriptionUpdated(subscription);
+    await handleSubscriptionUpdated(subscription, supabase);
   } else if (event.type === "customer.subscription.deleted") {
     const subscription = event.data.object as Stripe.Subscription;
-    await handleSubscriptionCanceled(subscription);
+    await handleSubscriptionCanceled(subscription, supabase);
   } else if (event.type === "invoice.paid") {
     const invoice = event.data.object as Stripe.Invoice;
-    await handleInvoicePaid(invoice);
+    await handleInvoicePaid(invoice, supabase);
   }
 
   return NextResponse.json({ received: true }, { status: 200 });
@@ -242,7 +263,10 @@ function mapPriceToTier(priceId: string): CoachingTier | null {
   return null;
 }
 
-async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
+async function handleSubscriptionCreated(
+  subscription: Stripe.Subscription,
+  supabase: ReturnType<typeof createServiceClient>
+) {
   const customerId = subscription.customer as string;
   const priceId = subscription.items.data[0]?.price.id;
 
@@ -258,9 +282,11 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
   }
 
   // Find user by Stripe customer ID
-  const user = await prisma.user.findFirst({
-    where: { stripeCustomerId: customerId },
-  });
+  const { data: user } = await supabase
+    .from("User")
+    .select("id")
+    .eq("stripeCustomerId", customerId)
+    .single();
 
   if (!user) {
     logger.info(`[Stripe Webhook] No user found for customer: ${customerId}`);
@@ -275,26 +301,32 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
   await createQuotaForNewSubscription(user.id, subscription.id, tier, periodEnd);
 
   // Update user subscription info and clear abandoned checkout flag
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
+  const subscriptionTier = tier === "PERFORMANCE_PRO" ? "PRO"
+    : tier === "PERFORMANCE" ? "STARTER"
+    : "ACADEMY";
+
+  await supabase
+    .from("User")
+    .update({
       stripeSubscriptionId: subscription.id,
-      subscriptionTier: tier === "PERFORMANCE_PRO" ? "PRO"
-                      : tier === "PERFORMANCE" ? "STARTER"
-                      : "ACADEMY",
+      subscriptionTier,
       subscriptionSource: "STRIPE",
-      subscriptionExpiresAt: periodEnd,
+      subscriptionExpiresAt: periodEnd.toISOString(),
       activeCoachingCustomer: true,
       // Clear abandoned checkout tracking
       checkoutAbandonedAt: null,
       lastCheckoutSessionId: null,
-    },
-  });
+      updatedAt: new Date().toISOString(),
+    })
+    .eq("id", user.id);
 
   logger.info(`[Stripe Webhook] Subscription created for user ${user.id}, tier: ${tier}`);
 }
 
-async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
+async function handleSubscriptionUpdated(
+  subscription: Stripe.Subscription,
+  supabase: ReturnType<typeof createServiceClient>
+) {
   const customerId = subscription.customer as string;
   const priceId = subscription.items.data[0]?.price.id;
 
@@ -303,9 +335,11 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   const tier = mapPriceToTier(priceId);
   if (!tier) return;
 
-  const user = await prisma.user.findFirst({
-    where: { stripeCustomerId: customerId },
-  });
+  const { data: user } = await supabase
+    .from("User")
+    .select("id")
+    .eq("stripeCustomerId", customerId)
+    .single();
 
   if (!user) return;
 
@@ -314,47 +348,59 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   const periodEndTimestamp = subAny.current_period_end ?? subAny.currentPeriodEnd;
   const periodEnd = new Date(periodEndTimestamp * 1000);
 
+  const subscriptionTier = tier === "PERFORMANCE_PRO" ? "PRO"
+    : tier === "PERFORMANCE" ? "STARTER"
+    : "ACADEMY";
+
   // Update user and quota
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
-      subscriptionTier: tier === "PERFORMANCE_PRO" ? "PRO"
-                      : tier === "PERFORMANCE" ? "STARTER"
-                      : "ACADEMY",
-      subscriptionExpiresAt: periodEnd,
-    },
-  });
+  await supabase
+    .from("User")
+    .update({
+      subscriptionTier,
+      subscriptionExpiresAt: periodEnd.toISOString(),
+      updatedAt: new Date().toISOString(),
+    })
+    .eq("id", user.id);
 
   logger.info(`[Stripe Webhook] Subscription updated for user ${user.id}, tier: ${tier}`);
 }
 
-async function handleSubscriptionCanceled(subscription: Stripe.Subscription) {
+async function handleSubscriptionCanceled(
+  subscription: Stripe.Subscription,
+  supabase: ReturnType<typeof createServiceClient>
+) {
   const customerId = subscription.customer as string;
 
-  const user = await prisma.user.findFirst({
-    where: { stripeCustomerId: customerId },
-  });
+  const { data: user } = await supabase
+    .from("User")
+    .select("id")
+    .eq("stripeCustomerId", customerId)
+    .single();
 
   if (!user) return;
 
   // Remove quota and downgrade user
   await cancelSubscriptionQuota(user.id);
 
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
+  await supabase
+    .from("User")
+    .update({
       stripeSubscriptionId: null,
       subscriptionTier: "VISITOR",
       subscriptionSource: null,
       subscriptionExpiresAt: null,
       activeCoachingCustomer: false,
-    },
-  });
+      updatedAt: new Date().toISOString(),
+    })
+    .eq("id", user.id);
 
   logger.info(`[Stripe Webhook] Subscription canceled for user ${user.id}`);
 }
 
-async function handleInvoicePaid(invoice: Stripe.Invoice) {
+async function handleInvoicePaid(
+  invoice: Stripe.Invoice,
+  supabase: ReturnType<typeof createServiceClient>
+) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const invoiceAny = invoice as any;
   const subscriptionId = (invoiceAny.subscription ?? invoiceAny.subscriptionId) as string | null;
@@ -370,9 +416,11 @@ async function handleInvoicePaid(invoice: Stripe.Invoice) {
   const tier = mapPriceToTier(priceId);
   if (!tier) return;
 
-  const user = await prisma.user.findFirst({
-    where: { stripeCustomerId: customerId },
-  });
+  const { data: user } = await supabase
+    .from("User")
+    .select("id")
+    .eq("stripeCustomerId", customerId)
+    .single();
 
   if (!user) return;
 

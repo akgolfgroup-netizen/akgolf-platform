@@ -1,6 +1,6 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import {
   getDashboardStats,
   getHandicapData,
@@ -14,12 +14,12 @@ export default async function DashboardPage() {
   const user = await requirePortalUser();
 
   // Check if onboarding is completed
-  const userData = await prisma.user.findUnique({
-    where: { id: user.id },
-    select: {
-      onboardingCompletedAt: true,
-    },
-  });
+  const supabase = await createServerSupabase();
+  const { data: userData } = await supabase
+    .from("User")
+    .select("onboardingCompletedAt")
+    .eq("id", user.id)
+    .single();
 
   const needsOnboarding = !userData?.onboardingCompletedAt;
 

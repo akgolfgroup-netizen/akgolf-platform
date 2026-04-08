@@ -2,7 +2,7 @@
 
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isAdmin } from "@/lib/portal/rbac";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { nanoid } from "nanoid";
 
@@ -10,9 +10,14 @@ export async function getTemplates() {
   const user = await requirePortalUser();
   if (!isAdmin(user.role)) throw new Error("Ingen tilgang");
 
-  return prisma.emailTemplate.findMany({
-    orderBy: { name: "asc" },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: templates } = await supabase
+    .from("EmailTemplate")
+    .select("*")
+    .order("name", { ascending: true });
+
+  return templates || [];
 }
 
 export async function createTemplate(data: {
@@ -28,16 +33,20 @@ export async function createTemplate(data: {
     throw new Error("Navn og emne er obligatorisk");
   }
 
-  const template = await prisma.emailTemplate.create({
-    data: {
+  const supabase = await createServerSupabase();
+
+  const { data: template } = await supabase
+    .from("EmailTemplate")
+    .insert({
       id: nanoid(),
-      updatedAt: new Date(),
+      updatedAt: new Date().toISOString(),
       name: data.name,
       subject: data.subject,
       htmlContent: data.htmlContent,
       variables: data.variables,
-    },
-  });
+    })
+    .select()
+    .single();
 
   revalidatePath("/portal/admin/e-postmaler");
   return template;
@@ -55,15 +64,19 @@ export async function updateTemplate(
   const user = await requirePortalUser();
   if (!isAdmin(user.role)) throw new Error("Ingen tilgang");
 
-  const template = await prisma.emailTemplate.update({
-    where: { id },
-    data: {
+  const supabase = await createServerSupabase();
+
+  const { data: template } = await supabase
+    .from("EmailTemplate")
+    .update({
       name: data.name,
       subject: data.subject,
       htmlContent: data.htmlContent,
       variables: data.variables,
-    },
-  });
+    })
+    .eq("id", id)
+    .select()
+    .single();
 
   revalidatePath("/portal/admin/e-postmaler");
   return template;
@@ -73,9 +86,9 @@ export async function deleteTemplate(id: string) {
   const user = await requirePortalUser();
   if (!isAdmin(user.role)) throw new Error("Ingen tilgang");
 
-  await prisma.emailTemplate.delete({
-    where: { id },
-  });
+  const supabase = await createServerSupabase();
+
+  await supabase.from("EmailTemplate").delete().eq("id", id);
 
   revalidatePath("/portal/admin/e-postmaler");
 }

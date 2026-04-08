@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 
 /**
  * GET /api/portal/courses/:id/holes — Hent alle hull for en bane
@@ -11,40 +11,30 @@ export async function GET(
 ) {
   const { id } = await params;
   const teeColor = req.nextUrl.searchParams.get("tee") ?? "yellow";
+  const supabase = await createServerSupabase();
 
-  const course = await prisma.course.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      name: true,
-      par: true,
-      courseRating: true,
-      slopeRating: true,
-    },
-  });
+  const { data: course, error: courseError } = await supabase
+    .from("Course")
+    .select("id, name, par, courseRating, slopeRating")
+    .eq("id", id)
+    .single();
 
-  if (!course) {
+  if (courseError || !course) {
     return NextResponse.json({ error: "Bane ikke funnet" }, { status: 404 });
   }
 
-  const holes = await prisma.hole.findMany({
-    where: { courseId: id, teeColor },
-    orderBy: { holeNumber: "asc" },
-    select: {
-      id: true,
-      holeNumber: true,
-      par: true,
-      handicap: true,
-      lengthMeter: true,
-      teeColor: true,
-      latitude: true,
-      longitude: true,
-      greenLat: true,
-      greenLon: true,
-    },
-  });
+  const { data: holes, error: holesError } = await supabase
+    .from("Hole")
+    .select("id, holeNumber, par, handicap, lengthMeter, teeColor, latitude, longitude, greenLat, greenLon")
+    .eq("courseId", id)
+    .eq("teeColor", teeColor)
+    .order("holeNumber", { ascending: true });
 
-  return NextResponse.json({ course, holes }, {
+  if (holesError) {
+    return NextResponse.json({ error: "Kunne ikke hente hull" }, { status: 500 });
+  }
+
+  return NextResponse.json({ course, holes: holes || [] }, {
     headers: {
       "Cache-Control": "s-maxage=3600, stale-while-revalidate=7200",
     },

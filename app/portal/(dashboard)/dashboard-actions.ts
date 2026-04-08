@@ -1,40 +1,56 @@
 "use server";
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { subDays, startOfDay } from "date-fns";
 
 export async function getDashboardStats(userId: string) {
   const thirtyDaysAgo = subDays(new Date(), 30);
+  const supabase = await createServerSupabase();
 
-  const [sessionsCount, roundsCount] = await Promise.all([
-    prisma.booking.count({
-      where: {
-        studentId: userId,
-        status: "COMPLETED",
-        startTime: { gte: thirtyDaysAgo },
-      },
-    }),
-    prisma.roundStats.count({
-      where: {
-        userId,
-        date: { gte: thirtyDaysAgo },
-      },
-    }),
+  const [bookingResult, roundStatsResult] = await Promise.all([
+    supabase
+      .from("Booking")
+      .select("id", { count: "exact", head: true })
+      .eq("studentId", userId)
+      .eq("status", "COMPLETED")
+      .gte("startTime", thirtyDaysAgo.toISOString()),
+    supabase
+      .from("RoundStats")
+      .select("id", { count: "exact", head: true })
+      .eq("userId", userId)
+      .gte("date", thirtyDaysAgo.toISOString()),
   ]);
+
+  if (bookingResult.error) {
+    console.error("Error fetching booking stats:", bookingResult.error);
+  }
+  if (roundStatsResult.error) {
+    console.error("Error fetching round stats:", roundStatsResult.error);
+  }
+
+  const sessionsCount = bookingResult.count ?? 0;
+  const roundsCount = roundStatsResult.count ?? 0;
 
   return { sessionsCount, roundsCount };
 }
 
 export async function getHandicapData(userId: string) {
-  const entries = await prisma.handicapEntry.findMany({
-    where: { userId },
-    orderBy: { date: "desc" },
-    take: 2,
-    select: { handicapIndex: true, date: true },
-  });
+  const supabase = await createServerSupabase();
 
-  const current = entries[0]?.handicapIndex ?? null;
-  const previous = entries[1]?.handicapIndex ?? null;
+  const { data: entries, error } = await supabase
+    .from("HandicapEntry")
+    .select("handicapIndex, date")
+    .eq("userId", userId)
+    .order("date", { ascending: false })
+    .limit(2);
+
+  if (error) {
+    console.error("Error fetching handicap data:", error);
+    return { current: null, trend: null };
+  }
+
+  const current = entries?.[0]?.handicapIndex ?? null;
+  const previous = entries?.[1]?.handicapIndex ?? null;
   const trend =
     current !== null && previous !== null ? current - previous : null;
 
@@ -42,53 +58,77 @@ export async function getHandicapData(userId: string) {
 }
 
 export async function getNextBooking(userId: string) {
-  const booking = await prisma.booking.findFirst({
-    where: {
-      studentId: userId,
-      status: "CONFIRMED",
-      startTime: { gte: startOfDay(new Date()) },
-    },
-    include: {
-      Instructor: {
-        include: {
-          User: { select: { name: true } },
-        },
-      },
-      ServiceType: { select: { name: true, duration: true } },
-    },
-    orderBy: { startTime: "asc" },
-  });
+  const supabase = await createServerSupabase();
+  const today = startOfDay(new Date()).toISOString();
+
+  const { data: booking, error } = await supabase
+    .from("Booking")
+    .select(`
+      id,
+      startTime,
+      Instructor (
+        id,
+        User (
+          name
+        )
+      ),
+      ServiceType (
+        name,
+        duration
+      )
+    `)
+    .eq("studentId", userId)
+    .eq("status", "CONFIRMED")
+    .gte("startTime", today)
+    .order("startTime", { ascending: true })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Error fetching next booking:", error);
+    return null;
+  }
 
   if (!booking) return null;
 
+  // Type assertion for nested relations
+  const instructor = booking.Instructor as { User?: { name?: string } } | null;
+  const serviceType = booking.ServiceType as { name?: string; duration?: number } | null;
+
   return {
     id: booking.id,
-    instructorName: booking.Instructor?.User?.name ?? "Instruktør",
-    serviceName: booking.ServiceType?.name ?? "Coaching",
-    duration: booking.ServiceType?.duration ?? 60,
+    instructorName: instructor?.User?.name ?? "Instruktør",
+    serviceName: serviceType?.name ?? "Coaching",
+    duration: serviceType?.duration ?? 60,
     startTime: booking.startTime,
   };
 }
 
 export async function getCoachInsight(userId: string) {
-  const session = await prisma.coachingSession.findFirst({
-    where: { studentId: userId },
-    orderBy: { sessionDate: "desc" },
-    select: {
-      aiSummary: true,
-      aiFocusAreas: true,
-      primaryFocus: true,
-      sessionDate: true,
-    },
-  });
+  const supabase = await createServerSupabase();
 
-  if (!session?.aiFocusAreas?.length && !session?.aiSummary) return null;
+  const { data: session, error } = await supabase
+    .from("CoachingSession")
+    .select("aiSummary, aiFocusAreas, primaryFocus, sessionDate")
+    .eq("studentId", userId)
+    .order("sessionDate", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Error fetching coach insight:", error);
+    return null;
+  }
+
+  const aiFocusAreas = session?.aiFocusAreas as string[] | null;
+
+  if (!aiFocusAreas?.length && !session?.aiSummary) return null;
 
   return {
-    focusAreas: session.aiFocusAreas,
-    primaryFocus: session.primaryFocus,
-    summary: session.aiSummary,
-    date: session.sessionDate,
+    focusAreas: aiFocusAreas,
+    primaryFocus: session?.primaryFocus,
+    summary: session?.aiSummary,
+    date: session?.sessionDate,
   };
 }
 
@@ -101,30 +141,39 @@ interface WeeklyInsight {
 }
 
 export async function getLatestAiInsight(userId: string): Promise<WeeklyInsight | null> {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      latestAiInsight: true,
-      aiInsightGeneratedAt: true,
-    },
-  });
+  const supabase = await createServerSupabase();
 
-  if (!user?.latestAiInsight || !user.aiInsightGeneratedAt) {
-    return null;
-  }
+  // TODO: AI-insights felt (latestAiInsight, aiInsightGeneratedAt) mangler i Supabase.
+  // Når disse feltene er migrert fra Prisma til Supabase, oppdater denne spørringen.
+  // Midlertidig returneres null.
 
-  const insight = user.latestAiInsight as {
-    summary?: string;
-    strengths?: string[];
-    improvements?: string[];
-    focusTip?: string;
-  };
+  console.warn("getLatestAiInsight: AI-insights tabell/felt mangler i Supabase for userId:", userId);
 
-  return {
-    summary: insight.summary ?? "",
-    strengths: insight.strengths ?? [],
-    improvements: insight.improvements ?? [],
-    focusTip: insight.focusTip ?? "",
-    generatedAt: user.aiInsightGeneratedAt,
-  };
+  // Kommentert ut frem til feltene er tilgjengelige:
+  // const { data: user, error } = await supabase
+  //   .from("User")
+  //   .select("latestAiInsight, aiInsightGeneratedAt")
+  //   .eq("id", userId)
+  //   .single();
+  //
+  // if (error || !user?.latestAiInsight || !user.aiInsightGeneratedAt) {
+  //   return null;
+  // }
+  //
+  // const insight = user.latestAiInsight as {
+  //   summary?: string;
+  //   strengths?: string[];
+  //   improvements?: string[];
+  //   focusTip?: string;
+  // };
+  //
+  // return {
+  //   summary: insight.summary ?? "",
+  //   strengths: insight.strengths ?? [],
+  //   improvements: insight.improvements ?? [],
+  //   focusTip: insight.focusTip ?? "",
+  //   generatedAt: user.aiInsightGeneratedAt,
+  // };
+
+  return null;
 }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function GET(request: NextRequest) {
@@ -14,20 +14,34 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });
   }
 
-  const subscriptions = await prisma.appSubscription.findMany({
-    where: { userId: user.id },
-    include: {
-      AppModule: { select: { slug: true, name: true, icon: true } },
-      AppBundle: {
-        select: {
-          slug: true,
-          name: true,
-          BundleItem: { include: { AppModule: { select: { slug: true, name: true } } } },
-        },
-      },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  const supabase = await createServerSupabase();
 
-  return NextResponse.json(subscriptions);
+  const { data: subscriptions, error } = await supabase
+    .from("AppSubscription")
+    .select(`
+      *,
+      AppModule (
+        slug,
+        name,
+        icon
+      ),
+      AppBundle (
+        slug,
+        name,
+        BundleItem (
+          AppModule (
+            slug,
+            name
+          )
+        )
+      )
+    `)
+    .eq("userId", user.id)
+    .order("createdAt", { ascending: false });
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke hente abonnementer" }, { status: 500 });
+  }
+
+  return NextResponse.json(subscriptions || []);
 }

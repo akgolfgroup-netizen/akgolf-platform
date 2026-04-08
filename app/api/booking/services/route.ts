@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { logger } from "@/lib/logger";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
@@ -15,30 +15,42 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const types = await prisma.serviceType.findMany({
-      where: { isPublic: true, isActive: true },
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        category: true,
-        duration: true,
-        price: true,
-        color: true,
-        minNoticeHours: true,
-        maxAdvanceDays: true,
-        allowStripe: true,
-        allowVipps: true,
-        Instructor: {
-          select: {
-            id: true,
-            title: true,
-            User: { select: { name: true, image: true } },
-          },
-        },
-      },
-      orderBy: { sortOrder: "asc" },
-    });
+    const supabase = await createServerSupabase();
+    
+    const { data: types, error } = await supabase
+      .from("ServiceType")
+      .select(`
+        id,
+        name,
+        description,
+        category,
+        duration,
+        price,
+        color,
+        minNoticeHours,
+        maxAdvanceDays,
+        allowStripe,
+        allowVipps,
+        Instructor!inner (
+          id,
+          title,
+          User (
+            name,
+            image
+          )
+        )
+      `)
+      .eq("isPublic", true)
+      .eq("isActive", true)
+      .order("sortOrder", { ascending: true });
+
+    if (error) {
+      logger.error("[booking/services] DB error:", error);
+      return NextResponse.json(
+        { error: "Tjenester er midlertidig utilgjengelige" },
+        { status: 503 }
+      );
+    }
 
     return NextResponse.json(types, {
       headers: {

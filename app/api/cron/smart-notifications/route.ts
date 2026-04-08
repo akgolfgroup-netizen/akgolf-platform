@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { verifyCronAuth } from "@/lib/cron-auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { createNotification } from "@/lib/portal/notifications";
-import type { NotificationType } from "@prisma/client";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,6 +23,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const results = {
@@ -37,20 +37,19 @@ export async function GET(request: NextRequest) {
 
   try {
     // Get all active users with recent activity data
-    const users = await prisma.user.findMany({
-      where: {
-        isActive: true,
-        role: { in: ["STUDENT", "ADMIN", "INSTRUCTOR"] },
-      },
-      select: {
-        id: true,
-        name: true,
-      },
-    });
+    const { data: users, error: usersError } = await supabase
+      .from("User")
+      .select("id, name")
+      .eq("isActive", true)
+      .in("role", ["STUDENT", "ADMIN", "INSTRUCTOR"]);
 
-    for (const user of users) {
+    if (usersError) {
+      throw usersError;
+    }
+
+    for (const user of (users ?? [])) {
       try {
-        await processUserNotifications(user.id, user.name, todayStart, results);
+        await processUserNotifications(supabase, user.id, user.name, todayStart, results);
       } catch (userError) {
         logger.error(
           `[smart-notifications] Feil for bruker ${user.id}:`,
@@ -79,22 +78,29 @@ export async function GET(request: NextRequest) {
 }
 
 async function hasNotificationToday(
+  supabase: ReturnType<typeof createServiceClient>,
   userId: string,
-  type: NotificationType,
+  type: string,
   todayStart: Date
 ): Promise<boolean> {
-  const existing = await prisma.notification.findFirst({
-    where: {
-      userId,
-      type,
-      createdAt: { gte: todayStart },
-    },
-    select: { id: true },
-  });
+  const { data: existing, error } = await supabase
+    .from("Notification")
+    .select("id")
+    .eq("userId", userId)
+    .eq("type", type)
+    .gte("createdAt", todayStart.toISOString())
+    .limit(1)
+    .single();
+
+  if (error && error.code !== "PGRST116") {
+    throw error;
+  }
+
   return existing !== null;
 }
 
 async function processUserNotifications(
+  supabase: ReturnType<typeof createServiceClient>,
   userId: string,
   userName: string | null,
   todayStart: Date,
@@ -114,18 +120,24 @@ async function processUserNotifications(
   const sundayLastWeek = new Date(mondayThisWeek.getTime() - 1);
 
   // 1. INACTIVITY: No training in 7+ days
-  const lastLog = await prisma.trainingLog.findFirst({
-    where: { userId },
-    orderBy: { date: "desc" },
-    select: { date: true },
-  });
+  const { data: lastLog, error: logError } = await supabase
+    .from("TrainingLog")
+    .select("date")
+    .eq("userId", userId)
+    .order("date", { ascending: false })
+    .limit(1)
+    .single();
 
-  if (lastLog && lastLog.date < sevenDaysAgo) {
+  if (logError && logError.code !== "PGRST116") {
+    throw logError;
+  }
+
+  if (lastLog && new Date(lastLog.date) < sevenDaysAgo) {
     const daysInactive = Math.floor(
-      (now.getTime() - lastLog.date.getTime()) / (1000 * 60 * 60 * 24)
+      (now.getTime() - new Date(lastLog.date).getTime()) / (1000 * 60 * 60 * 24)
     );
 
-    if (!(await hasNotificationToday(userId, "TRAINING_REMINDER", todayStart))) {
+    if (!(await hasNotificationToday(supabase, userId, "TRAINING_REMINDER", todayStart))) {
       await createNotification({
         userId,
         type: "TRAINING_REMINDER",
@@ -138,24 +150,31 @@ async function processUserNotifications(
   }
 
   // 2. STREAK AT RISK: Active last week, nothing this week
-  const logsLastWeek = await prisma.trainingLog.count({
-    where: {
-      userId,
-      date: { gte: mondayLastWeek, lte: sundayLastWeek },
-    },
-  });
+  const { count: logsLastWeek, error: lastWeekError } = await supabase
+    .from("TrainingLog")
+    .select("*", { count: "exact", head: true })
+    .eq("userId", userId)
+    .gte("date", mondayLastWeek.toISOString())
+    .lte("date", new Date(sundayLastWeek.getTime() + 86400000).toISOString());
 
-  const logsThisWeek = await prisma.trainingLog.count({
-    where: {
-      userId,
-      date: { gte: mondayThisWeek },
-    },
-  });
+  if (lastWeekError) {
+    throw lastWeekError;
+  }
 
-  if (logsLastWeek >= 3 && logsThisWeek === 0) {
-    if (!(await hasNotificationToday(userId, "TRAINING_REMINDER", todayStart))) {
+  const { count: logsThisWeek, error: thisWeekError } = await supabase
+    .from("TrainingLog")
+    .select("*", { count: "exact", head: true })
+    .eq("userId", userId)
+    .gte("date", mondayThisWeek.toISOString());
+
+  if (thisWeekError) {
+    throw thisWeekError;
+  }
+
+  if ((logsLastWeek ?? 0) >= 3 && (logsThisWeek ?? 0) === 0) {
+    if (!(await hasNotificationToday(supabase, userId, "TRAINING_REMINDER", todayStart))) {
       // Only send if we didn't already send an inactivity notification
-      const alreadySent = await hasNotificationToday(userId, "TRAINING_REMINDER", todayStart);
+      const alreadySent = await hasNotificationToday(supabase, userId, "TRAINING_REMINDER", todayStart);
       if (!alreadySent) {
         await createNotification({
           userId,
@@ -170,38 +189,38 @@ async function processUserNotifications(
   }
 
   // 3. ROUND IMPROVEMENT: Latest round beat the average
-  const latestRounds = await prisma.roundStats.findMany({
-    where: { userId, sgTotal: { not: null } },
-    orderBy: { date: "desc" },
-    take: 10,
-    select: {
-      date: true,
-      totalScore: true,
-      sgTotal: true,
-      courseName: true,
-    },
-  });
+  const { data: latestRounds, error: roundsError } = await supabase
+    .from("RoundStats")
+    .select("date, totalScore, sgTotal, courseName")
+    .eq("userId", userId)
+    .not("sgTotal", "is", null)
+    .order("date", { ascending: false })
+    .limit(10);
 
-  if (latestRounds.length >= 3) {
+  if (roundsError) {
+    throw roundsError;
+  }
+
+  if (latestRounds && latestRounds.length >= 3) {
     const latest = latestRounds[0];
     const previousRounds = latestRounds.slice(1);
     const avgSg =
-      previousRounds.reduce((sum, r) => sum + (r.sgTotal ?? 0), 0) /
+      previousRounds.reduce((sum, r) => sum + ((r.sgTotal as number) ?? 0), 0) /
       previousRounds.length;
 
     // Only check rounds from the last 3 days to avoid re-notifying
     const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
     if (
       latest.sgTotal !== null &&
-      latest.sgTotal > avgSg + 0.5 &&
-      latest.date > threeDaysAgo
+      (latest.sgTotal as number) > avgSg + 0.5 &&
+      new Date(latest.date) > threeDaysAgo
     ) {
-      if (!(await hasNotificationToday(userId, "GENERAL", todayStart))) {
+      if (!(await hasNotificationToday(supabase, userId, "GENERAL", todayStart))) {
         await createNotification({
           userId,
           type: "GENERAL",
           title: "Sterk runde",
-          message: `${latest.totalScore ? `Score ${latest.totalScore}` : "Din siste runde"}${latest.courseName ? ` pa ${latest.courseName}` : ""} var over gjennomsnittet ditt. SG Total: ${latest.sgTotal.toFixed(1)} (snitt: ${avgSg.toFixed(1)}).`,
+          message: `${latest.totalScore ? `Score ${latest.totalScore}` : "Din siste runde"}${latest.courseName ? ` pa ${latest.courseName}` : ""} var over gjennomsnittet ditt. SG Total: ${(latest.sgTotal as number).toFixed(1)} (snitt: ${avgSg.toFixed(1)}).`,
           linkUrl: "/portal/statistikk",
         });
         results.roundImprovement++;
@@ -211,36 +230,37 @@ async function processUserNotifications(
 
   // 4. TOURNAMENT APPROACHING: Tournament in next 7 days
   const sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
-  const upcomingTournaments = await prisma.playerTournamentPlan.findMany({
-    where: {
-      studentId: userId,
-      Tournament: {
-        startDate: { gte: todayStart, lte: sevenDaysFromNow },
-      },
-    },
-    include: {
-      Tournament: { select: { name: true, startDate: true } },
-    },
-  });
+  const { data: upcomingTournaments, error: tournamentError } = await supabase
+    .from("PlayerTournamentPlan")
+    .select(`
+      id,
+      Tournament (name, startDate)
+    `)
+    .eq("studentId", userId)
+    .gte("Tournament.startDate", todayStart.toISOString())
+    .lte("Tournament.startDate", sevenDaysFromNow.toISOString());
 
-  for (const tp of upcomingTournaments) {
+  if (tournamentError) {
+    throw tournamentError;
+  }
+
+  for (const tp of (upcomingTournaments ?? [])) {
+    const tournament = (tp as { Tournament?: { name?: string; startDate?: string } }).Tournament;
+    if (!tournament?.startDate) continue;
+
     const daysUntil = Math.ceil(
-      (tp.Tournament.startDate.getTime() - now.getTime()) /
+      (new Date(tournament.startDate).getTime() - now.getTime()) /
         (1000 * 60 * 60 * 24)
     );
 
     if (
-      !(await hasNotificationToday(
-        userId,
-        "TOURNAMENT_REMINDER",
-        todayStart
-      ))
+      !(await hasNotificationToday(supabase, userId, "TOURNAMENT_REMINDER", todayStart))
     ) {
       await createNotification({
         userId,
         type: "TOURNAMENT_REMINDER",
         title: "Turnering snart",
-        message: `${tp.Tournament.name} starter om ${daysUntil} ${daysUntil === 1 ? "dag" : "dager"}. Fokuser pa turneringsforberedelser.`,
+        message: `${tournament.name} starter om ${daysUntil} ${daysUntil === 1 ? "dag" : "dager"}. Fokuser pa turneringsforberedelser.`,
         linkUrl: "/portal/turneringsplan",
       });
       results.tournamentApproaching++;
@@ -249,14 +269,18 @@ async function processUserNotifications(
   }
 
   // 5. HANDICAP MILESTONE: Crossed a whole number
-  const latestHandicaps = await prisma.handicapEntry.findMany({
-    where: { userId },
-    orderBy: { date: "desc" },
-    take: 2,
-    select: { handicapIndex: true, date: true },
-  });
+  const { data: latestHandicaps, error: handicapError } = await supabase
+    .from("HandicapEntry")
+    .select("handicapIndex, date")
+    .eq("userId", userId)
+    .order("date", { ascending: false })
+    .limit(2);
 
-  if (latestHandicaps.length >= 2) {
+  if (handicapError) {
+    throw handicapError;
+  }
+
+  if (latestHandicaps && latestHandicaps.length >= 2) {
     const current = latestHandicaps[0];
     const previous = latestHandicaps[1];
     const currentWhole = Math.floor(current.handicapIndex);
@@ -265,8 +289,8 @@ async function processUserNotifications(
     // Only notify on improvement (lower handicap) crossing a whole number
     if (currentWhole < previousWhole) {
       const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
-      if (current.date > threeDaysAgo) {
-        if (!(await hasNotificationToday(userId, "GENERAL", todayStart))) {
+      if (new Date(current.date) > threeDaysAgo) {
+        if (!(await hasNotificationToday(supabase, userId, "GENERAL", todayStart))) {
           await createNotification({
             userId,
             type: "GENERAL",

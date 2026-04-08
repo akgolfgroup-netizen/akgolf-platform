@@ -1,10 +1,9 @@
 import { getPortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { stripe } from "@/lib/portal/stripe";
 import { StripePaymentPage } from "../StripePaymentPage";
 import { PublicStripePaymentPage } from "../PublicStripePaymentPage";
 import { AlertCircle, CreditCard, ShieldCheck } from "lucide-react";
-import { BookingStatus } from "@prisma/client";
 
 // Apple Light Theme 2026
 const THEME = {
@@ -25,16 +24,23 @@ export default async function BookingPayPage({ params }: Props) {
 
   const user = await getPortalUser();
   
+  const supabase = await createServerSupabase();
+
   // Fetch booking - if user is logged in, verify ownership; otherwise allow public access
-  const booking = await prisma.booking.findFirst({
-    where: user?.id 
-      ? { id, studentId: user.id }
-      : { id },
-    include: {
-      ServiceType: { select: { name: true, duration: true, price: true } },
-      User: { select: { name: true, email: true } },
-    },
-  });
+  let query = supabase
+    .from("Booking")
+    .select(`
+      *,
+      ServiceType:serviceTypeId(name, duration, price),
+      User:studentId(name, email)
+    `)
+    .eq("id", id);
+  
+  if (user?.id) {
+    query = query.eq("studentId", user.id);
+  }
+
+  const { data: booking } = await query.single();
 
   if (!booking) {
     return (
@@ -67,7 +73,7 @@ export default async function BookingPayPage({ params }: Props) {
   }
 
   // Check if booking is already paid or cancelled
-  if (booking.status === BookingStatus.CONFIRMED) {
+  if (booking.status === "CONFIRMED") {
     return (
       <div 
         className="min-h-screen flex items-center justify-center px-4"
@@ -97,7 +103,7 @@ export default async function BookingPayPage({ params }: Props) {
     );
   }
 
-  if (booking.status === BookingStatus.CANCELLED) {
+  if (booking.status === "CANCELLED") {
     return (
       <div 
         className="min-h-screen flex items-center justify-center px-4"
@@ -197,10 +203,10 @@ export default async function BookingPayPage({ params }: Props) {
       <PublicStripePaymentPage
         clientSecret={paymentIntent.client_secret}
         bookingId={id}
-        serviceName={booking.ServiceType.name}
-        customerEmail={booking.User.email ?? ""}
-        customerName={booking.User.name ?? ""}
-        amount={booking.ServiceType.price}
+        serviceName={booking.ServiceType?.name}
+        customerEmail={booking.User?.email ?? ""}
+        customerName={booking.User?.name ?? ""}
+        amount={booking.ServiceType?.price}
       />
     );
   }
@@ -209,7 +215,7 @@ export default async function BookingPayPage({ params }: Props) {
     <StripePaymentPage
       clientSecret={paymentIntent.client_secret}
       bookingId={id}
-      serviceName={booking.ServiceType.name}
+      serviceName={booking.ServiceType?.name}
     />
   );
 }

@@ -1,5 +1,5 @@
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { webpush, ensureVapidConfigured } from "./vapid";
 
 interface NotificationPayload {
@@ -23,9 +23,16 @@ export async function sendPushNotification(
     return;
   }
 
-  const subscriptions = await prisma.pushSubscription.findMany({
-    where: { userId },
-  });
+  const supabase = createServiceClient();
+
+  const { data: subscriptions } = await supabase
+    .from("PushSubscription")
+    .select("id, endpoint, p256dh, auth")
+    .eq("userId", userId);
+
+  if (!subscriptions || subscriptions.length === 0) {
+    return;
+  }
 
   const notifications = subscriptions.map(async (sub) => {
     try {
@@ -43,9 +50,10 @@ export async function sendPushNotification(
       const webPushError = error as { statusCode?: number };
       if (webPushError.statusCode === 410) {
         // Subscription expired, delete it
-        await prisma.pushSubscription.delete({
-          where: { id: sub.id },
-        });
+        await supabase
+          .from("PushSubscription")
+          .delete()
+          .eq("id", sub.id);
       }
       logger.error("Push notification failed", error);
     }

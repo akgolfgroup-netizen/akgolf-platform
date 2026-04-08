@@ -1,7 +1,7 @@
 import { getPortalUser } from "@/lib/portal/auth";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { prisma } from "@/lib/portal/prisma";
 import { ConfirmationView } from "./ConfirmationView";
 import { PublicConfirmationView } from "./PublicConfirmationView";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -25,17 +25,26 @@ export default async function BookingConfirmationPage({ params }: Props) {
 
   const user = await getPortalUser();
   
+  const supabase = await createServerSupabase();
+
   // Fetch booking - if user is logged in, verify ownership; otherwise allow public access
-  const booking = await prisma.booking.findFirst({
-    where: user?.id 
-      ? { id, studentId: user.id }
-      : { id },
-    include: {
-      ServiceType: { select: { name: true, duration: true, price: true } },
-      Instructor: { include: { User: { select: { name: true, image: true } } } },
-      User: { select: { name: true, email: true } },
-    },
-  });
+  let query = supabase
+    .from("Booking")
+    .select(`
+      *,
+      ServiceType:serviceTypeId(name, duration, price),
+      Instructor:instructorId(
+        User:userId(name, image)
+      ),
+      User:studentId(name, email)
+    `)
+    .eq("id", id);
+  
+  if (user?.id) {
+    query = query.eq("studentId", user.id);
+  }
+
+  const { data: booking } = await query.single();
 
   // Booking not found
   if (!booking) {
@@ -109,41 +118,41 @@ export default async function BookingConfirmationPage({ params }: Props) {
 
   // Format price
   // Prisene er lagret i kroner
-  const priceNOK = booking.ServiceType.price.toLocaleString("nb-NO", {
+  const priceNOK = booking.ServiceType?.price?.toLocaleString("nb-NO", {
     style: "currency",
     currency: "NOK",
     minimumFractionDigits: 0,
   });
 
-  const instructorName = booking.Instructor.User.name ?? "Ukjent instruktør";
+  const instructorName = booking.Instructor?.User?.name ?? "Ukjent instruktør";
 
   // If user is not logged in, show public confirmation view
   if (!user?.id) {
     return (
       <PublicConfirmationView
-        serviceName={booking.ServiceType.name}
+        serviceName={booking.ServiceType?.name}
         instructorName={instructorName}
         formattedDate={formattedDate}
-        duration={booking.ServiceType.duration}
+        duration={booking.ServiceType?.duration}
         priceNOK={priceNOK}
         paymentMethod={booking.paymentMethod}
-        studentEmail={booking.User.email ?? ""}
+        studentEmail={booking.User?.email ?? ""}
         bookingId={booking.id}
-        bookingPrice={booking.ServiceType.price}
+        bookingPrice={booking.ServiceType?.price}
       />
     );
   }
 
   return (
     <ConfirmationView
-      serviceName={booking.ServiceType.name}
+      serviceName={booking.ServiceType?.name}
       instructorName={instructorName}
       formattedDate={formattedDate}
-      duration={booking.ServiceType.duration}
+      duration={booking.ServiceType?.duration}
       priceNOK={priceNOK}
       paymentMethod={booking.paymentMethod}
       userName={user.name}
-      bookingPrice={booking.ServiceType.price}
+      bookingPrice={booking.ServiceType?.price}
     />
   );
 }

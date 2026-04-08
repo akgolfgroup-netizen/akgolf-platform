@@ -1,6 +1,6 @@
 // lib/coach/integrations/gmail.ts
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { generateAIResponse, AUTO_SEND_CONFIDENCE_THRESHOLD } from "../ai/generate-response";
 import { notifyNewMessage } from "../push/send-notification";
 
@@ -24,19 +24,22 @@ export async function processIncomingEmail(
   message: GmailMessage,
   targetUserId: string | null
 ): Promise<void> {
+  const supabase = createServiceClient();
+
   // Sjekk om meldingen allerede er prosessert
-  const existing = await prisma.unifiedMessage.findFirst({
-    where: {
-      channel: "EMAIL",
-      externalId: message.id,
-    },
-  });
+  const { data: existing } = await supabase
+    .from("UnifiedMessage")
+    .select("id")
+    .eq("channel", "EMAIL")
+    .eq("externalId", message.id)
+    .single();
 
   if (existing) return;
 
   // Opprett melding
-  const unifiedMessage = await prisma.unifiedMessage.create({
-    data: {
+  const { data: unifiedMessage, error: createError } = await supabase
+    .from("UnifiedMessage")
+    .insert({
       channel: "EMAIL",
       direction: "INBOUND",
       externalId: message.id,
@@ -44,12 +47,17 @@ export async function processIncomingEmail(
       senderHandle: message.fromEmail,
       subject: message.subject,
       content: message.body,
-      receivedAt: message.date,
+      receivedAt: message.date.toISOString(),
       threadId: message.threadId,
       assignedToId: targetUserId,
       status: "AI_PROCESSING",
-    },
-  });
+    })
+    .select()
+    .single();
+
+  if (createError || !unifiedMessage) {
+    throw new Error(`Failed to create unified message: ${createError?.message}`);
+  }
 
   // Generer AI-svar
   const aiResponse = await generateAIResponse(
@@ -59,24 +67,24 @@ export async function processIncomingEmail(
     targetUserId || "system"
   );
 
-  await prisma.aIResponse.create({
-    data: {
+  await supabase
+    .from("AIResponse")
+    .insert({
       messageId: unifiedMessage.id,
       draftContent: aiResponse.content,
       confidence: aiResponse.confidence,
       category: aiResponse.category,
       modelUsed: aiResponse.modelUsed,
       autoSent: aiResponse.confidence >= AUTO_SEND_CONFIDENCE_THRESHOLD,
-    },
-  });
+    });
 
   // Oppdater status
-  await prisma.unifiedMessage.update({
-    where: { id: unifiedMessage.id },
-    data: {
+  await supabase
+    .from("UnifiedMessage")
+    .update({
       status: aiResponse.confidence >= AUTO_SEND_CONFIDENCE_THRESHOLD ? "SENT" : "AI_READY",
-    },
-  });
+    })
+    .eq("id", unifiedMessage.id);
 
   // Send push notification hvis konfidensen er under 95%
   if (targetUserId && aiResponse.confidence < AUTO_SEND_CONFIDENCE_THRESHOLD) {
@@ -113,10 +121,13 @@ export async function routeEmailToUser(toEmail: string): Promise<string | null> 
  * Returnerer null hvis brukeren ikke finnes.
  */
 async function findUserIdByEmail(email: string): Promise<string | null> {
-  const user = await prisma.user.findUnique({
-    where: { email },
-    select: { id: true },
-  });
+  const supabase = createServiceClient();
+
+  const { data: user } = await supabase
+    .from("User")
+    .select("id")
+    .eq("email", email)
+    .single();
 
   return user?.id ?? null;
 }

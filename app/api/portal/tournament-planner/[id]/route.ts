@@ -1,8 +1,7 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
-import { updateTournament, deleteTournament } from "@/modules/tournament-planner/actions";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function PUT(
@@ -21,16 +20,26 @@ export async function PUT(
 
   const { id } = await params;
   const data = await req.json();
+  const supabase = await createServerSupabase();
 
-  await updateTournament(prisma, id, {
-    name: data.name,
-    startDate: data.startDate ? new Date(data.startDate) : undefined,
-    endDate: data.endDate ? new Date(data.endDate) : undefined,
-    level: data.level,
-    course: data.course,
-    location: data.location,
-    externalUrl: data.externalUrl,
-  });
+  const updateData: Record<string, unknown> = {};
+  if (data.name !== undefined) updateData.name = data.name;
+  if (data.startDate !== undefined) updateData.startDate = new Date(data.startDate).toISOString();
+  if (data.endDate !== undefined) updateData.endDate = data.endDate ? new Date(data.endDate).toISOString() : null;
+  if (data.level !== undefined) updateData.level = data.level;
+  if (data.course !== undefined) updateData.course = data.course;
+  if (data.location !== undefined) updateData.location = data.location;
+  if (data.externalUrl !== undefined) updateData.externalUrl = data.externalUrl;
+  updateData.updatedAt = new Date().toISOString();
+
+  const { error } = await supabase
+    .from("Tournament")
+    .update(updateData)
+    .eq("id", id);
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke oppdatere turnering" }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }
@@ -50,7 +59,16 @@ export async function DELETE(
   }
 
   const { id } = await params;
-  await deleteTournament(prisma, id);
+  const supabase = await createServerSupabase();
+
+  const { error } = await supabase
+    .from("Tournament")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke slette turnering" }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }

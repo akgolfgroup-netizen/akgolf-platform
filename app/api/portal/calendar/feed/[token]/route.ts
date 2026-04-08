@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { generateIcal, CalEvent } from "@/lib/portal/calendar/ical";
 import { addMinutes } from "date-fns";
 
@@ -9,11 +9,14 @@ export async function GET(
 ) {
   const { token } = await params;
 
+  const supabase = createServiceClient();
+
   // Look up user by calendar token
-  const user = await prisma.user.findUnique({
-    where: { calendarToken: token },
-    select: { id: true, name: true },
-  });
+  const { data: user } = await supabase
+    .from("User")
+    .select("id, name")
+    .eq("calendarToken", token)
+    .single();
 
   if (!user) {
     return new NextResponse("Not found", { status: 404 });
@@ -23,33 +26,56 @@ export async function GET(
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
 
   // Training plan sessions
-  const plan = await prisma.trainingPlan.findFirst({
-    where: { studentId: user.id, isActive: true },
-    include: {
-      TrainingPlanWeek: {
-        include: {
-          TrainingPlanSession: {
-            include: {
-              TrainingLog: {
-                where: { userId: user.id },
-                select: { id: true },
-              },
-            },
-          },
-        },
-        orderBy: { weekNumber: "asc" },
-      },
-    },
-  });
+  const { data: plan } = await supabase
+    .from("TrainingPlan")
+    .select(`
+      id,
+      TrainingPlanWeek!inner(
+        id,
+        weekNumber,
+        weekStart,
+        TrainingPlanSession!inner(
+          id,
+          title,
+          description,
+          focusArea,
+          durationMinutes,
+          dayOfWeek,
+          TrainingLog:userId(
+            id
+          )
+        )
+      )
+    `)
+    .eq("studentId", user.id)
+    .eq("isActive", true)
+    .order("weekNumber", { foreignTable: "TrainingPlanWeek", ascending: true })
+    .single();
 
   if (plan) {
-    for (const week of plan.TrainingPlanWeek) {
+    // Supabase returns nested relations as arrays
+    const weeks = plan.TrainingPlanWeek as unknown as Array<{
+      id: string;
+      weekNumber: number;
+      weekStart: string;
+      TrainingPlanSession: Array<{
+        id: string;
+        title: string;
+        description: string | null;
+        focusArea: string | null;
+        durationMinutes: number | null;
+        dayOfWeek: number;
+        TrainingLog: Array<{ id: string }>;
+      }>;
+    }>;
+
+    for (const week of weeks) {
       for (const session of week.TrainingPlanSession) {
         const sessionDate = new Date(week.weekStart);
         sessionDate.setDate(sessionDate.getDate() + (session.dayOfWeek - 1));
         sessionDate.setUTCHours(8, 0, 0, 0); // Default 08:00 UTC
 
-        const isLogged = session.TrainingLog.length > 0;
+        const isLogged = session.TrainingLog && session.TrainingLog.length > 0;
         const duration = session.durationMinutes ?? 60;
         const dtend = addMinutes(sessionDate, duration);
 
@@ -64,7 +90,7 @@ export async function GET(
             `${baseUrl}/treningsplan`,
           ]
             .filter(Boolean)
-            .join("\\n"),
+            .join("\n"),
           dtstart: sessionDate,
           dtend,
           url: `${baseUrl}/treningsplan`,
@@ -74,76 +100,122 @@ export async function GET(
   }
 
   // Confirmed bookings
-  const bookings = await prisma.booking.findMany({
-    where: {
-      studentId: user.id,
-      status: { in: ["CONFIRMED", "PENDING"] },
-      startTime: { gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
-    },
-    include: { ServiceType: true, Instructor: { include: { User: true } } },
-  });
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+  const { data: bookings } = await supabase
+    .from("Booking")
+    .select(`
+      id,
+      startTime,
+      endTime,
+      status,
+      ServiceType!inner(name),
+      Instructor!inner(
+        User!inner(name)
+      )
+    `)
+    .eq("studentId", user.id)
+    .in("status", ["CONFIRMED", "PENDING"])
+    .gte("startTime", thirtyDaysAgo);
 
-  for (const b of bookings) {
+  for (const b of bookings || []) {
+    // Supabase returns nested relations as arrays - take first element
+    const serviceType = (b.ServiceType as unknown as Array<{ name: string }>)?.[0];
+    const instructor = (b.Instructor as unknown as Array<{ User: Array<{ name: string | null }> }>)?.[0];
+    const userName = instructor?.User?.[0]?.name;
+
     events.push({
       uid: `booking-${b.id}@akgolf`,
-      summary: `${b.status === "CONFIRMED" ? "" : "⏳ "}${b.ServiceType.name}`,
+      summary: `${b.status === "CONFIRMED" ? "" : "⏳ "}${serviceType?.name ?? ""}`,
       description: [
-        `Coach: ${b.Instructor.User.name ?? ""}`,
+        `Coach: ${userName ?? ""}`,
         `Status: ${b.status === "CONFIRMED" ? "Bekreftet" : "Venter"}`,
         `${baseUrl}/bookinger`,
-      ].join("\\n"),
-      dtstart: b.startTime,
-      dtend: b.endTime,
+      ].join("\n"),
+      dtstart: new Date(b.startTime),
+      dtend: new Date(b.endTime),
       url: `${baseUrl}/bookinger`,
     });
   }
 
   // Tournament plans
-  const tournaments = await prisma.playerTournamentPlan.findMany({
-    where: { studentId: user.id },
-    include: { Tournament: true },
-  });
+  const { data: tournaments } = await supabase
+    .from("PlayerTournamentPlan")
+    .select(`
+      id,
+      planLevel,
+      goalType,
+      Tournament!inner(
+        name,
+        startDate,
+        endDate,
+        location,
+        course,
+        level
+      )
+    `)
+    .eq("studentId", user.id);
 
-  for (const tp of tournaments) {
-    const t = tp.Tournament;
-    const dtstart = new Date(t.startDate);
-    const dtend = t.endDate ? new Date(t.endDate) : new Date(t.startDate);
+  for (const tp of tournaments || []) {
+    // Supabase returns nested relations as arrays - take first element
+    const tournament = (tp.Tournament as unknown as Array<{
+      name: string;
+      startDate: string;
+      endDate: string | null;
+      location: string | null;
+      course: string | null;
+      level: string;
+    }>)?.[0];
+
+    if (!tournament) continue;
+
+    const dtstart = new Date(tournament.startDate);
+    const dtend = tournament.endDate ? new Date(tournament.endDate) : new Date(tournament.startDate);
 
     events.push({
       uid: `tournament-${tp.id}@akgolf`,
-      summary: `🏆 ${t.name}`,
+      summary: `🏆 ${tournament.name}`,
       description: [
-        t.location ? `Sted: ${t.location}` : "",
-        t.course ? `Bane: ${t.course}` : "",
-        `Nivå: ${t.level}`,
+        tournament.location ? `Sted: ${tournament.location}` : "",
+        tournament.course ? `Bane: ${tournament.course}` : "",
+        `Nivå: ${tournament.level}`,
         `Plan: ${tp.planLevel} (${tp.goalType})`,
       ]
         .filter(Boolean)
-        .join("\\n"),
+        .join("\n"),
       dtstart,
       dtend,
-      location: t.location ?? undefined,
+      location: tournament.location ?? undefined,
       allDay: true,
     });
   }
 
   // Training logs (as completed events)
-  const logs = await prisma.trainingLog.findMany({
-    where: {
-      userId: user.id,
-      date: { gte: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000) },
-    },
-    include: { TrainingPlanSession: { select: { title: true } } },
-  });
+  const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString();
+  const { data: logs } = await supabase
+    .from("TrainingLog")
+    .select(`
+      id,
+      date,
+      durationMinutes,
+      focusArea,
+      notes,
+      rating,
+      TrainingPlanSession(title)
+    `)
+    .eq("userId", user.id)
+    .gte("date", ninetyDaysAgo);
 
-  for (const log of logs) {
+  for (const log of logs || []) {
+    // Supabase returns nested relations as arrays - take first element
+    const session = (log.TrainingPlanSession as unknown as Array<{ title: string | null }>)?.[0];
+
     const dtstart = new Date(log.date);
     dtstart.setUTCHours(8, 0, 0, 0);
     const dtend = addMinutes(dtstart, log.durationMinutes ?? 60);
 
     events.push({
       uid: `log-${log.id}@akgolf`,
-      summary: `✓ ${log.TrainingPlanSession?.title ?? "Treningsøkt"}`,
+      summary: `✓ ${session?.title ?? "Treningsøkt"}`,
       description: [
         log.focusArea ? `Fokus: ${log.focusArea}` : "",
         log.notes ?? "",
@@ -151,7 +223,7 @@ export async function GET(
         `${baseUrl}/dagbok`,
       ]
         .filter(Boolean)
-        .join("\\n"),
+        .join("\n"),
       dtstart,
       dtend,
       url: `${baseUrl}/dagbok`,

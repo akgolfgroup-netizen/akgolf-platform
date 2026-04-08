@@ -4,7 +4,7 @@ import {
   verifyState,
 } from "@/lib/portal/calendar/google-calendar";
 import { syncGoogleCalendar } from "@/lib/portal/google-calendar/sync";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { logger } from "@/lib/logger";
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
@@ -42,9 +42,12 @@ export async function GET(request: Request) {
     await handleCallback(code, userId, redirectUri);
 
     // Finn instruktør og trigger initial synkronisering
-    const instructor = await prisma.instructor.findUnique({
-      where: { userId },
-    });
+    const supabase = createServiceClient();
+    const { data: instructor } = await supabase
+      .from("Instructor")
+      .select("id")
+      .eq("userId", userId)
+      .single();
 
     if (instructor) {
       // Kjør initial sync i bakgrunnen (ikke await for raskere respons)

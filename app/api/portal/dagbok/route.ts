@@ -1,6 +1,6 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { nanoid } from "nanoid";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
@@ -19,18 +19,28 @@ export async function GET(req: NextRequest) {
   const from = searchParams.get("from");
   const to = searchParams.get("to");
 
-  const logs = await prisma.trainingLog.findMany({
-    where: {
-      userId: user.id,
-      ...(from && to
-        ? { date: { gte: new Date(from), lte: new Date(to) } }
-        : {}),
-    },
-    include: { TrainingPlanSession: { select: { title: true, focusArea: true } } },
-    orderBy: { date: "desc" },
-  });
+  const supabase = await createServerSupabase();
+  
+  let query = supabase
+    .from("TrainingLog")
+    .select(`
+      *,
+      TrainingPlanSession (title, focusArea)
+    `)
+    .eq("userId", user.id)
+    .order("date", { ascending: false });
 
-  return NextResponse.json(logs);
+  if (from && to) {
+    query = query.gte("date", from).lte("date", to);
+  }
+
+  const { data: logs, error } = await query;
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke hente logger" }, { status: 500 });
+  }
+
+  return NextResponse.json(logs || []);
 }
 
 export async function POST(req: NextRequest) {
@@ -57,12 +67,14 @@ export async function POST(req: NextRequest) {
     deviationReason,
   } = body;
 
-  const log = await prisma.trainingLog.create({
-    data: {
+  const supabase = await createServerSupabase();
+  const { data: log, error } = await supabase
+    .from("TrainingLog")
+    .insert({
       id: nanoid(),
       userId: user.id,
       planSessionId: planSessionId ?? null,
-      date: date ? new Date(date) : new Date(),
+      date: date ? new Date(date).toISOString() : new Date().toISOString(),
       durationMinutes: durationMinutes ?? null,
       focusArea: focusArea ?? null,
       exercises: exercises ?? [],
@@ -70,9 +82,14 @@ export async function POST(req: NextRequest) {
       rating: rating ?? null,
       deviatedFromPlan: deviatedFromPlan ?? false,
       deviationReason: deviationReason ?? null,
-      updatedAt: new Date(),
-    },
-  });
+      updatedAt: new Date().toISOString(),
+    })
+    .select()
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke opprette logg" }, { status: 500 });
+  }
 
   return NextResponse.json(log, { status: 201 });
 }
@@ -95,11 +112,17 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "Missing id" }, { status: 400 });
   }
 
+  const supabase = await createServerSupabase();
+
   // Ensure user owns the log
-  const existing = await prisma.trainingLog.findFirst({
-    where: { id, userId: user.id },
-  });
-  if (!existing) {
+  const { data: existing, error: existingError } = await supabase
+    .from("TrainingLog")
+    .select("id")
+    .eq("id", id)
+    .eq("userId", user.id)
+    .single();
+
+  if (existingError || !existing) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
@@ -113,10 +136,19 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "No valid fields to update" }, { status: 400 });
   }
 
-  const updated = await prisma.trainingLog.update({
-    where: { id },
-    data: sanitizedData,
-  });
+  const { data: updated, error } = await supabase
+    .from("TrainingLog")
+    .update({
+      ...sanitizedData,
+      updatedAt: new Date().toISOString(),
+    })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke oppdatere logg" }, { status: 500 });
+  }
 
   return NextResponse.json(updated);
 }
@@ -139,13 +171,27 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: "Missing id" }, { status: 400 });
   }
 
-  const existing = await prisma.trainingLog.findFirst({
-    where: { id, userId: user.id },
-  });
-  if (!existing) {
+  const supabase = await createServerSupabase();
+
+  const { data: existing, error: existingError } = await supabase
+    .from("TrainingLog")
+    .select("id")
+    .eq("id", id)
+    .eq("userId", user.id)
+    .single();
+
+  if (existingError || !existing) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  await prisma.trainingLog.delete({ where: { id } });
+  const { error } = await supabase
+    .from("TrainingLog")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke slette logg" }, { status: 500 });
+  }
+
   return NextResponse.json({ ok: true });
 }

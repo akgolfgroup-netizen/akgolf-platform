@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 
 /**
@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });
   }
 
+  const supabase = await createServerSupabase();
   const testNumberParam = req.nextUrl.searchParams.get("testNumber");
   const period = req.nextUrl.searchParams.get("period") ?? "all";
 
@@ -29,32 +30,41 @@ export async function GET(req: NextRequest) {
   }
 
   // Hent alle tilgjengelige tester
-  const testDefinitions = await prisma.testDefinition.findMany({
-    select: { testNumber: true, name: true, unit: true, comparison: true },
-    orderBy: { testNumber: "asc" },
-  });
+  const { data: testDefinitions, error: testError } = await supabase
+    .from("TestDefinition")
+    .select("testNumber, name, unit, comparison")
+    .order("testNumber", { ascending: true });
+
+  if (testError) {
+    return NextResponse.json({ error: "Kunne ikke hente testdefinisjoner" }, { status: 500 });
+  }
 
   const testNumber = testNumberParam ? parseInt(testNumberParam, 10) : null;
 
   if (testNumber !== null) {
-    const testDef = testDefinitions.find((t) => t.testNumber === testNumber);
+    const testDef = (testDefinitions || []).find((t: { testNumber: number }) => t.testNumber === testNumber);
     if (!testDef) {
       return NextResponse.json({ error: "Test ikke funnet" }, { status: 404 });
     }
 
     // Hent beste resultat per bruker for denne testen
-    const results = await prisma.testResult.findMany({
-      where: {
-        testNumber,
-        ...(dateFilter ? { createdAt: { gte: dateFilter } } : {}),
-      },
-      include: {
-        User: { select: { id: true, name: true, image: true } },
-      },
-      orderBy: testDef.comparison === "higher"
-        ? { value: "desc" as const }
-        : { value: "asc" as const },
-    });
+    let resultsQuery = supabase
+      .from("TestResult")
+      .select(`
+        *,
+        User (id, name, image)
+      `)
+      .eq("testNumber", testNumber);
+
+    if (dateFilter) {
+      resultsQuery = resultsQuery.gte("createdAt", dateFilter.toISOString());
+    }
+
+    const { data: results, error: resultsError } = await resultsQuery;
+
+    if (resultsError) {
+      return NextResponse.json({ error: "Kunne ikke hente resultater" }, { status: 500 });
+    }
 
     // Grupper per bruker — ta beste resultat
     const bestPerUser = new Map<
@@ -65,12 +75,12 @@ export async function GET(req: NextRequest) {
         image: string | null;
         bestValue: number;
         passed: boolean;
-        date: Date;
+        date: string;
         isCurrentUser: boolean;
       }
     >();
 
-    for (const r of results) {
+    for (const r of results || []) {
       const existing = bestPerUser.get(r.userId);
       const isBetter = testDef.comparison === "higher"
         ? !existing || r.value > existing.bestValue
@@ -79,8 +89,8 @@ export async function GET(req: NextRequest) {
       if (isBetter) {
         bestPerUser.set(r.userId, {
           userId: r.userId,
-          name: r.User.name ?? "Ukjent",
-          image: r.User.image,
+          name: r.User?.name ?? "Ukjent",
+          image: r.User?.image ?? null,
           bestValue: r.value,
           passed: r.passed,
           date: r.createdAt,
@@ -91,7 +101,7 @@ export async function GET(req: NextRequest) {
 
     const leaderboard = Array.from(bestPerUser.values())
       .sort((a, b) =>
-        testDef.comparison
+        testDef.comparison === "higher"
           ? b.bestValue - a.bestValue
           : a.bestValue - b.bestValue
       )
@@ -116,32 +126,45 @@ export async function GET(req: NextRequest) {
 
   // Ingen spesifikk test — vis oversikt over alle tester med brukerens ranking
   const overview = await Promise.all(
-    testDefinitions.map(async (testDef) => {
-      const userBest = await prisma.testResult.findFirst({
-        where: { userId: user.id, testNumber: testDef.testNumber },
-        orderBy: testDef.comparison
-          ? { value: "desc" }
-          : { value: "asc" },
-        select: { value: true, passed: true, createdAt: true },
-      });
+    (testDefinitions || []).map(async (testDef: { testNumber: number; comparison: string | null }) => {
+      let userBestQuery = supabase
+        .from("TestResult")
+        .select("value, passed, createdAt")
+        .eq("userId", user.id)
+        .eq("testNumber", testDef.testNumber);
 
-      const totalResults = await prisma.testResult.groupBy({
-        by: ["userId"],
-        where: { testNumber: testDef.testNumber },
-      });
+      if (testDef.comparison === "higher") {
+        userBestQuery = userBestQuery.order("value", { ascending: false });
+      } else {
+        userBestQuery = userBestQuery.order("value", { ascending: true });
+      }
+
+      const { data: userBest } = await userBestQuery.limit(1).single();
+
+      // Count total participants
+      const { data: totalResults, error: countError } = await supabase
+        .from("TestResult")
+        .select("userId")
+        .eq("testNumber", testDef.testNumber);
+
+      const uniqueParticipants = new Set(totalResults?.map((r) => r.userId)).size;
 
       let userRank: number | null = null;
       if (userBest) {
-        const betterCount = await prisma.testResult.groupBy({
-          by: ["userId"],
-          where: {
-            testNumber: testDef.testNumber,
-            value: testDef.comparison
-              ? { gt: userBest.value }
-              : { lt: userBest.value },
-          },
-        });
-        userRank = betterCount.length + 1;
+        let betterCountQuery = supabase
+          .from("TestResult")
+          .select("userId")
+          .eq("testNumber", testDef.testNumber);
+
+        if (testDef.comparison === "higher") {
+          betterCountQuery = betterCountQuery.gt("value", userBest.value);
+        } else {
+          betterCountQuery = betterCountQuery.lt("value", userBest.value);
+        }
+
+        const { data: betterResults } = await betterCountQuery;
+        const betterCount = new Set(betterResults?.map((r) => r.userId)).size;
+        userRank = betterCount + 1;
       }
 
       return {
@@ -151,7 +174,7 @@ export async function GET(req: NextRequest) {
         userBestValue: userBest?.value ?? null,
         userPassed: userBest?.passed ?? null,
         userRank,
-        totalParticipants: totalResults.length,
+        totalParticipants: uniqueParticipants,
       };
     })
   );

@@ -1,5 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { HubOversiktClient } from "./hub-oversikt-client";
 
 export const metadata = {
@@ -7,6 +7,8 @@ export const metadata = {
 };
 
 async function getHubData(_userId: string) {
+  const supabase = await createServerSupabase();
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const tomorrow = new Date(today);
@@ -15,144 +17,128 @@ async function getHubData(_userId: string) {
   const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
 
   // Get today's sessions
-  const todaysSessions = await prisma.booking.findMany({
-    where: {
-      startTime: { gte: today, lt: tomorrow },
-      status: { in: ["CONFIRMED", "PENDING"] },
-    },
-    include: {
-      User: { select: { id: true, name: true, subscriptionTier: true } },
-      ServiceType: { select: { name: true } },
-    },
-    orderBy: { startTime: "asc" },
-  });
+  const { data: todaysSessions } = await supabase
+    .from("Booking")
+    .select(`
+      *,
+      User:studentId(id, name, subscriptionTier),
+      ServiceType:serviceTypeId(name)
+    `)
+    .gte("startTime", today.toISOString())
+    .lt("startTime", tomorrow.toISOString())
+    .in("status", ["CONFIRMED", "PENDING"])
+    .order("startTime", { ascending: true });
 
-  // Get student counts by division (simplified - using subscriptionTier as proxy)
-  const studentCounts = await prisma.user.groupBy({
-    by: ["subscriptionTier"],
-    where: { role: "STUDENT", isActive: true },
-    _count: true,
-  });
+  // Get student counts by subscription tier
+  const { data: studentCounts } = await supabase
+    .from("User")
+    .select("subscriptionTier")
+    .eq("role", "STUDENT")
+    .eq("isActive", true);
+
+  const tierCounts = (studentCounts ?? []).reduce((acc, s) => {
+    acc[s.subscriptionTier] = (acc[s.subscriptionTier] ?? 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 
   // Get active students (last 30 days)
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-  const activeStudents = await prisma.user.count({
-    where: {
-      role: "STUDENT",
-      isActive: true,
-      Booking: {
-        some: {
-          startTime: { gte: thirtyDaysAgo },
-        },
-      },
-    },
-  });
+  const { count: activeStudents } = await supabase
+    .from("User")
+    .select("id", { count: "exact", head: true })
+    .eq("role", "STUDENT")
+    .eq("isActive", true)
+    .gte("Booking.startTime", thirtyDaysAgo.toISOString());
 
   // Get pending bookings
-  const pendingBookings = await prisma.booking.count({
-    where: { status: "PENDING" },
-  });
+  const { count: pendingBookings } = await supabase
+    .from("Booking")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "PENDING");
 
   // Get MTD revenue
-  const mtdRevenue = await prisma.paymentTransaction.aggregate({
-    where: {
-      createdAt: { gte: monthStart },
-      status: "PAID",
-    },
-    _sum: { grossAmount: true },
-  });
+  const { data: mtdRevenue } = await supabase
+    .from("PaymentTransaction")
+    .select("grossAmount")
+    .gte("createdAt", monthStart.toISOString())
+    .eq("status", "PAID");
+
+  const mtdRevenueTotal = (mtdRevenue ?? []).reduce((sum, t) => sum + (t.grossAmount ?? 0), 0);
 
   // Get students needing follow-up (no booking in 14+ days)
   const fourteenDaysAgo = new Date();
   fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14);
 
-  const needsFollowUp = await prisma.user.findMany({
-    where: {
-      role: "STUDENT",
-      isActive: true,
-      Booking: {
-        none: {
-          startTime: { gte: fourteenDaysAgo },
-        },
-        some: {}, // Has at least one booking ever
-      },
-    },
-    select: { id: true, name: true },
-    take: 5,
-  });
+  const { data: needsFollowUp } = await supabase
+    .rpc("get_students_needing_followup", {
+      since_date: fourteenDaysAgo.toISOString(),
+      limit_count: 5,
+    });
 
   // Get expiring subscriptions (next 7 days)
   const sevenDaysFromNow = new Date();
   sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
 
-  const expiringSubscriptions = await prisma.user.findMany({
-    where: {
-      role: "STUDENT",
-      isActive: true,
-      subscriptionExpiresAt: {
-        gte: today,
-        lte: sevenDaysFromNow,
-      },
-    },
-    select: { id: true, name: true, subscriptionExpiresAt: true },
-    take: 5,
-  });
+  const { data: expiringSubscriptions } = await supabase
+    .from("User")
+    .select("id, name, subscriptionExpiresAt")
+    .eq("role", "STUDENT")
+    .eq("isActive", true)
+    .gte("subscriptionExpiresAt", today.toISOString())
+    .lte("subscriptionExpiresAt", sevenDaysFromNow.toISOString())
+    .limit(5);
 
-  // Simplified division counts (in real app, this would be based on actual division field)
-  const coachingStudents = studentCounts
-    .filter((s) => s.subscriptionTier === "PRO" || s.subscriptionTier === "ELITE")
-    .reduce((sum, s) => sum + s._count, 0);
-  const juniorStudents = studentCounts
-    .filter((s) => s.subscriptionTier === "ACADEMY" || s.subscriptionTier === "STARTER")
-    .reduce((sum, s) => sum + s._count, 0);
-  const gfgkStudents = studentCounts
-    .filter((s) => s.subscriptionTier === "VISITOR")
-    .reduce((sum, s) => sum + s._count, 0);
+  // Simplified division counts
+  const coachingStudents =
+    (tierCounts["PRO"] ?? 0) + (tierCounts["ELITE"] ?? 0);
+  const juniorStudents =
+    (tierCounts["ACADEMY"] ?? 0) + (tierCounts["STARTER"] ?? 0);
+  const gfgkStudents = tierCounts["VISITOR"] ?? 0;
 
   return {
     kpis: {
-      sessionsToday: todaysSessions.length,
-      activeStudents,
-      pendingBookings,
-      mtdRevenue: mtdRevenue._sum?.grossAmount ?? 0,
+      sessionsToday: todaysSessions?.length ?? 0,
+      activeStudents: activeStudents ?? 0,
+      pendingBookings: pendingBookings ?? 0,
+      mtdRevenue: mtdRevenueTotal,
     },
     divisions: {
       coaching: {
         studentCount: coachingStudents || 48,
-        sessions: todaysSessions
+        sessions: (todaysSessions ?? [])
           .filter(
             (s) =>
-              s.User.subscriptionTier === "PRO" ||
-              s.User.subscriptionTier === "ELITE"
+              s.User?.subscriptionTier === "PRO" ||
+              s.User?.subscriptionTier === "ELITE"
           )
           .map((s) => ({
             id: s.id,
-            name: s.User.name || "Ukjent",
+            name: s.User?.name || "Ukjent",
             time: new Date(s.startTime).toLocaleTimeString("nb-NO", {
               hour: "2-digit",
               minute: "2-digit",
             }),
             isActive: new Date(s.startTime) <= new Date(),
-            subtitle: `${s.User.subscriptionTier} · ${s.ServiceType?.name || "Okt"}`,
+            subtitle: `${s.User?.subscriptionTier} · ${s.ServiceType?.name || "Okt"}`,
           })),
-        actionItems: needsFollowUp.slice(0, 2).map((u) => ({
+        actionItems: (needsFollowUp ?? []).slice(0, 2).map((u: { name: string }) => ({
           text: `${u.name} — 14+ dager siden sist`,
           variant: "error" as const,
         })),
       },
       junior: {
         studentCount: juniorStudents || 52,
-        sessions: todaysSessions
+        sessions: (todaysSessions ?? [])
           .filter(
             (s) =>
-              s.User.subscriptionTier === "ACADEMY" ||
-              s.User.subscriptionTier === "STARTER"
+              s.User?.subscriptionTier === "ACADEMY" ||
+              s.User?.subscriptionTier === "STARTER"
           )
           .map((s) => ({
             id: s.id,
-            name: s.User.name || "Ukjent",
+            name: s.User?.name || "Ukjent",
             time: new Date(s.startTime).toLocaleTimeString("nb-NO", {
               hour: "2-digit",
               minute: "2-digit",
@@ -161,7 +147,7 @@ async function getHubData(_userId: string) {
             subtitle: `Junior · ${s.ServiceType?.name || "Okt"}`,
           })),
         actionItems:
-          pendingBookings > 0
+          (pendingBookings ?? 0) > 0
             ? [
                 {
                   text: `${pendingBookings} nye pameldinger a godkjenne`,
@@ -172,11 +158,11 @@ async function getHubData(_userId: string) {
       },
       gfgk: {
         studentCount: gfgkStudents || 42,
-        sessions: todaysSessions
-          .filter((s) => s.User.subscriptionTier === "VISITOR")
+        sessions: (todaysSessions ?? [])
+          .filter((s) => s.User?.subscriptionTier === "VISITOR")
           .map((s) => ({
             id: s.id,
-            name: s.User.name || "Gruppetrening",
+            name: s.User?.name || "Gruppetrening",
             time: new Date(s.startTime).toLocaleTimeString("nb-NO", {
               hour: "2-digit",
               minute: "2-digit",
@@ -188,13 +174,13 @@ async function getHubData(_userId: string) {
       },
     },
     alerts: [
-      ...(needsFollowUp.length > 0
-        ? [{ label: `${needsFollowUp.length} oppfolging`, variant: "info" as const }]
+      ...((needsFollowUp?.length ?? 0) > 0
+        ? [{ label: `${needsFollowUp?.length} oppfolging`, variant: "info" as const }]
         : []),
-      ...(expiringSubscriptions.length > 0
-        ? [{ label: `${expiringSubscriptions.length} utloper`, variant: "warning" as const }]
+      ...((expiringSubscriptions?.length ?? 0) > 0
+        ? [{ label: `${expiringSubscriptions?.length} utloper`, variant: "warning" as const }]
         : []),
-      ...(pendingBookings > 0
+      ...((pendingBookings ?? 0) > 0
         ? [{ label: `${pendingBookings} ventende`, variant: "error" as const }]
         : []),
     ],

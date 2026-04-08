@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
-import { BookingStatus } from "@prisma/client";
+import { createServiceClient } from "@/lib/supabase/server";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { BookingReminderEmail } from "@/lib/portal/email/templates/booking-reminder";
 import { sendReminderSms } from "@/lib/portal/sms/send-reminder-sms";
@@ -24,6 +23,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   let emailsSent = 0;
   let smsSent = 0;
@@ -32,50 +32,61 @@ export async function GET(req: NextRequest) {
   const emailWindowStart = addHours(now, 23);
   const emailWindowEnd = addHours(now, 25);
 
-  const emailBookings = await prisma.booking.findMany({
-    where: {
-      status: { in: [BookingStatus.CONFIRMED] },
-      startTime: { gte: emailWindowStart, lte: emailWindowEnd },
-      reminderSentAt: null,
-    },
-    include: {
-      User: { select: { name: true, email: true } },
-      ServiceType: { select: { name: true, duration: true } },
-      Instructor: { select: { User: { select: { name: true } } } },
-      Location: { select: { name: true } },
-    },
-  });
+  const { data: emailBookings, error: emailBookingsError } = await supabase
+    .from("Booking")
+    .select(`
+      id,
+      startTime,
+      reminderSentAt,
+      User (name, email),
+      ServiceType (name, duration),
+      Instructor (User (name)),
+      Location (name)
+    `)
+    .in("status", ["CONFIRMED"])
+    .gte("startTime", emailWindowStart.toISOString())
+    .lte("startTime", emailWindowEnd.toISOString())
+    .is("reminderSentAt", null);
+
+  if (emailBookingsError) {
+    logger.error("[Cron] Error fetching email bookings:", emailBookingsError);
+  }
 
   const resend = getResend();
 
-  for (const booking of emailBookings) {
-    if (!booking.User.email || !resend) continue;
+  for (const booking of (emailBookings ?? [])) {
+    const user = booking.User as { name?: string; email?: string } | null;
+    const serviceType = (booking.ServiceType as { name: string; duration: number }[] | null)?.[0] ?? null;
+    const instructor = booking.Instructor as { User?: { name?: string } } | null;
+    const location = booking.Location as { name?: string } | null;
 
-    const dateStr = format(booking.startTime, "EEEE d. MMMM yyyy", {
+    if (!user?.email || !resend || !serviceType) continue;
+
+    const dateStr = format(new Date(booking.startTime), "EEEE d. MMMM yyyy", {
       locale: nb,
     });
-    const timeStr = format(booking.startTime, "HH:mm");
+    const timeStr = format(new Date(booking.startTime), "HH:mm");
 
     try {
       await resend.emails.send({
         from: FROM_EMAIL,
-        to: booking.User.email,
-        subject: `Påminnelse: ${booking.ServiceType.name} — ${dateStr}`,
+        to: user.email,
+        subject: `Påminnelse: ${serviceType.name} — ${dateStr}`,
         react: BookingReminderEmail({
-          studentName: booking.User.name ?? "Hei",
-          serviceName: booking.ServiceType.name,
-          instructorName: booking.Instructor.User.name ?? "Instruktør",
+          studentName: user.name ?? "Hei",
+          serviceName: serviceType.name,
+          instructorName: instructor?.User?.name ?? "Instruktør",
           date: dateStr,
           time: timeStr,
-          duration: booking.ServiceType.duration,
-          location: booking.Location?.name ?? "Gamle Fredrikstad Golfklubb",
+          duration: serviceType.duration,
+          location: location?.name ?? "Gamle Fredrikstad Golfklubb",
         }),
       });
 
-      await prisma.booking.update({
-        where: { id: booking.id },
-        data: { reminderSentAt: now },
-      });
+      await supabase
+        .from("Booking")
+        .update({ reminderSentAt: now.toISOString() })
+        .eq("id", booking.id);
 
       emailsSent++;
     } catch (error) {
@@ -87,36 +98,46 @@ export async function GET(req: NextRequest) {
   const smsWindowStart = addHours(now, 0.5);
   const smsWindowEnd = addHours(now, 1.5);
 
-  const smsBookings = await prisma.booking.findMany({
-    where: {
-      status: { in: [BookingStatus.CONFIRMED] },
-      startTime: { gte: smsWindowStart, lte: smsWindowEnd },
-      smsReminderSentAt: null,
-    },
-    include: {
-      User: { select: { name: true, phone: true } },
-      ServiceType: { select: { name: true } },
-      Instructor: { select: { User: { select: { name: true } } } },
-    },
-  });
+  const { data: smsBookings, error: smsBookingsError } = await supabase
+    .from("Booking")
+    .select(`
+      id,
+      startTime,
+      smsReminderSentAt,
+      User (name, phone),
+      ServiceType (name),
+      Instructor (User (name))
+    `)
+    .in("status", ["CONFIRMED"])
+    .gte("startTime", smsWindowStart.toISOString())
+    .lte("startTime", smsWindowEnd.toISOString())
+    .is("smsReminderSentAt", null);
 
-  for (const booking of smsBookings) {
-    if (!booking.User.phone) continue;
+  if (smsBookingsError) {
+    logger.error("[Cron] Error fetching SMS bookings:", smsBookingsError);
+  }
+
+  for (const booking of (smsBookings ?? [])) {
+    const user = booking.User as { name?: string; phone?: string } | null;
+    const serviceType = (booking.ServiceType as { name: string }[] | null)?.[0] ?? null;
+    const instructor = booking.Instructor as { User?: { name?: string } } | null;
+
+    if (!user?.phone || !serviceType) continue;
 
     try {
       const sent = await sendReminderSms({
-        phone: booking.User.phone,
-        studentName: booking.User.name ?? "Hei",
-        serviceName: booking.ServiceType.name,
-        startTime: booking.startTime,
-        instructorName: booking.Instructor.User.name ?? "Instruktør",
+        phone: user.phone,
+        studentName: user.name ?? "Hei",
+        serviceName: serviceType.name,
+        startTime: new Date(booking.startTime),
+        instructorName: instructor?.User?.name ?? "Instruktør",
       });
 
       if (sent) {
-        await prisma.booking.update({
-          where: { id: booking.id },
-          data: { smsReminderSentAt: now },
-        });
+        await supabase
+          .from("Booking")
+          .update({ smsReminderSentAt: now.toISOString() })
+          .eq("id", booking.id);
         smsSent++;
       }
     } catch (error) {

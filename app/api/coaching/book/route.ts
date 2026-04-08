@@ -1,18 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { randomUUID } from "crypto";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { stripe } from "@/lib/portal/stripe";
 import { addMinutes, startOfMonth, endOfMonth, startOfWeek, endOfWeek } from "date-fns";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
-import {
-  BookingStatus,
-  PaymentMethod,
-  PaymentStatus,
-  BillingType,
-  SubscriptionStatus,
-} from "@prisma/client";
 import { invalidateSlotsCache, invalidateBookingsCache } from "@/lib/portal/booking/cache";
 import { broadcastUpdate } from "@/app/api/portal/bookings/live/route";
 
@@ -77,13 +70,17 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const supabase = await createServerSupabase();
+
   try {
     // Fetch coaching package
-    const coachingPackage = await prisma.coachingPackage.findUnique({
-      where: { slug: packageSlug },
-    });
+    const { data: coachingPackage, error: packageError } = await supabase
+      .from("CoachingPackage")
+      .select("*")
+      .eq("slug", packageSlug)
+      .single();
 
-    if (!coachingPackage || !coachingPackage.isActive) {
+    if (packageError || !coachingPackage || !coachingPackage.isActive) {
       return NextResponse.json(
         { error: "Pakke ikke funnet eller ikke aktiv" },
         { status: 404 }
@@ -99,16 +96,16 @@ export async function POST(req: NextRequest) {
     // Check user subscription for recurring packages
     let subscription = null;
 
-    if (coachingPackage.billingType === BillingType.RECURRING) {
-      subscription = await prisma.userSubscription.findFirst({
-        where: {
-          userId: user.id,
-          packageId: coachingPackage.id,
-          status: SubscriptionStatus.ACTIVE,
-        },
-      });
+    if (coachingPackage.billingType === "RECURRING") {
+      const { data: sub, error: subError } = await supabase
+        .from("UserSubscription")
+        .select("*")
+        .eq("userId", user.id)
+        .eq("packageId", coachingPackage.id)
+        .eq("status", "ACTIVE")
+        .single();
 
-      if (!subscription) {
+      if (subError || !sub) {
         return NextResponse.json(
           {
             error:
@@ -117,6 +114,8 @@ export async function POST(req: NextRequest) {
           { status: 403 }
         );
       }
+
+      subscription = sub;
 
       // Check sessions used this month
       if (
@@ -136,17 +135,15 @@ export async function POST(req: NextRequest) {
         const weekStart = startOfWeek(start, { weekStartsOn: 1 });
         const weekEnd = endOfWeek(start, { weekStartsOn: 1 });
 
-        const bookingsThisWeek = await prisma.booking.count({
-          where: {
-            studentId: user.id,
-            startTime: { gte: weekStart, lte: weekEnd },
-            status: {
-              in: [BookingStatus.PENDING, BookingStatus.CONFIRMED],
-            },
-          },
-        });
+        const { count: bookingsThisWeek, error: weekError } = await supabase
+          .from("Booking")
+          .select("*", { count: "exact", head: true })
+          .eq("studentId", user.id)
+          .gte("startTime", weekStart.toISOString())
+          .lte("startTime", weekEnd.toISOString())
+          .in("status", ["PENDING", "CONFIRMED"]);
 
-        if (bookingsThisWeek >= coachingPackage.maxBookingsPerWeek) {
+        if (!weekError && bookingsThisWeek && bookingsThisWeek >= coachingPackage.maxBookingsPerWeek) {
           return NextResponse.json(
             {
               error: `Maks ${coachingPackage.maxBookingsPerWeek} bookinger per uke for denne pakken.`,
@@ -158,14 +155,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Get the primary instructor (Anders)
-    const instructor = await prisma.instructor.findFirst({
-      where: {
-        User: { role: "ADMIN" },
-      },
-      select: { id: true },
-    });
+    const { data: instructor, error: instructorError } = await supabase
+      .from("Instructor")
+      .select("id, User!inner(role)")
+      .eq("User.role", "ADMIN")
+      .limit(1)
+      .single();
 
-    if (!instructor) {
+    if (instructorError || !instructor) {
       return NextResponse.json(
         { error: "Ingen instruktor tilgjengelig" },
         { status: 500 }
@@ -173,101 +170,101 @@ export async function POST(req: NextRequest) {
     }
 
     // Get a service type to link (use INDIVIDUAL category)
-    const serviceType = await prisma.serviceType.findFirst({
-      where: {
-        category: "INDIVIDUAL",
-        isActive: true,
-      },
-      select: { id: true },
-    });
+    const { data: serviceType, error: serviceTypeError } = await supabase
+      .from("ServiceType")
+      .select("id")
+      .eq("category", "INDIVIDUAL")
+      .eq("isActive", true)
+      .limit(1)
+      .single();
 
-    if (!serviceType) {
+    if (serviceTypeError || !serviceType) {
       return NextResponse.json(
         { error: "Ingen tjenestetype funnet" },
         { status: 500 }
       );
     }
 
-    // Atomisk: sjekk konflikt og opprett booking
-    const booking = await prisma.$transaction(
-      async (tx) => {
-        // Check for conflicts in the time window
-        const conflict = await tx.booking.findFirst({
-          where: {
-            instructorId: instructor.id,
-            status: {
-              in: [BookingStatus.PENDING, BookingStatus.CONFIRMED],
-            },
-            AND: [
-              { startTime: { lt: end } },
-              { endTime: { gt: start } },
-            ],
-          },
-        });
+    // Check for conflicts in the time window
+    const { data: conflict, error: conflictError } = await supabase
+      .from("Booking")
+      .select("id")
+      .eq("instructorId", instructor.id)
+      .in("status", ["PENDING", "CONFIRMED"])
+      .lt("startTime", end.toISOString())
+      .gt("endTime", start.toISOString())
+      .limit(1)
+      .single();
 
-        if (conflict) {
-          throw new ConflictError("Tidspunktet er ikke lenger ledig");
-        }
+    if (conflictError && conflictError.code !== "PGRST116") {
+      throw conflictError;
+    }
 
-        // Check for blocked times
-        const blocked = await tx.blockedTime.findFirst({
-          where: {
-            OR: [{ instructorId: instructor.id }, { instructorId: null }],
-            AND: [
-              { startTime: { lt: end } },
-              { endTime: { gt: start } },
-            ],
-          },
-        });
+    if (conflict) {
+      throw new ConflictError("Tidspunktet er ikke lenger ledig");
+    }
 
-        if (blocked) {
-          throw new ConflictError("Tidspunktet er ikke tilgjengelig");
-        }
+    // Check for blocked times
+    const { data: blocked, error: blockedError } = await supabase
+      .from("BlockedTime")
+      .select("id")
+      .or(`instructorId.eq.${instructor.id},instructorId.is.null`)
+      .lt("startTime", end.toISOString())
+      .gt("endTime", start.toISOString())
+      .limit(1)
+      .single();
 
-        // Create the booking
-        const newBooking = await tx.booking.create({
-          data: {
-            id: randomUUID(),
-            studentId: user.id,
-            instructorId: instructor.id,
-            serviceTypeId: serviceType.id,
-            startTime: start,
-            endTime: end,
-            updatedAt: new Date(),
-            status:
-              coachingPackage.billingType === BillingType.RECURRING
-                ? BookingStatus.CONFIRMED
-                : BookingStatus.PENDING,
-            paymentMethod:
-              coachingPackage.billingType === BillingType.RECURRING
-                ? PaymentMethod.NONE
-                : PaymentMethod.STRIPE,
-            paymentStatus:
-              coachingPackage.billingType === BillingType.RECURRING
-                ? PaymentStatus.PAID
-                : PaymentStatus.PENDING,
-            amount:
-              coachingPackage.billingType === BillingType.ONE_TIME
-                ? coachingPackage.priceNok * 100 // Convert NOK to ore
-                : 0,
-            vatAmount: 0,
-          },
-        });
+    if (blockedError && blockedError.code !== "PGRST116") {
+      throw blockedError;
+    }
 
-        // For subscription users: increment sessions used
-        if (subscription) {
-          await tx.userSubscription.update({
-            where: { id: subscription.id },
-            data: {
-              sessionsUsedThisMonth: { increment: 1 },
-            },
-          });
-        }
+    if (blocked) {
+      throw new ConflictError("Tidspunktet er ikke tilgjengelig");
+    }
 
-        return newBooking;
-      },
-      { isolationLevel: "Serializable" }
-    );
+    // Create the booking
+    const now = new Date().toISOString();
+    const bookingId = randomUUID();
+
+    const isRecurring = coachingPackage.billingType === "RECURRING";
+
+    const { data: newBooking, error: createError } = await supabase
+      .from("Booking")
+      .insert({
+        id: bookingId,
+        studentId: user.id,
+        instructorId: instructor.id,
+        serviceTypeId: serviceType.id,
+        startTime: start.toISOString(),
+        endTime: end.toISOString(),
+        updatedAt: now,
+        status: isRecurring ? "CONFIRMED" : "PENDING",
+        paymentMethod: isRecurring ? "NONE" : "STRIPE",
+        paymentStatus: isRecurring ? "PAID" : "PENDING",
+        amount: isRecurring ? 0 : coachingPackage.priceNok * 100, // Convert NOK to ore
+        vatAmount: 0,
+      })
+      .select()
+      .single();
+
+    if (createError) {
+      throw createError;
+    }
+
+    // For subscription users: increment sessions used
+    if (subscription) {
+      const { error: updateError } = await supabase
+        .from("UserSubscription")
+        .update({
+          sessionsUsedThisMonth: subscription.sessionsUsedThisMonth + 1,
+          updatedAt: now,
+        })
+        .eq("id", subscription.id);
+
+      if (updateError) {
+        logger.error("[coaching/book] Failed to update subscription:", updateError);
+      }
+    }
 
     // Invalider cache og broadcast oppdatering
     const dateStr = start.toISOString().split("T")[0];
@@ -276,13 +273,13 @@ export async function POST(req: NextRequest) {
       invalidateSlotsCache(instructor.id, dateStr),
       invalidateBookingsCache(instructor.id),
       broadcastUpdate(instructor.id, dateStr, "BOOKING_CREATED", {
-        bookingId: booking.id,
+        bookingId: newBooking.id,
         startTime: start.toISOString(),
       }),
     ]);
 
     // For one-time (Flex) packages: create Stripe Checkout Session
-    if (coachingPackage.billingType === BillingType.ONE_TIME) {
+    if (coachingPackage.billingType === "ONE_TIME") {
       const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://book.akgolf.no";
 
       const checkoutSession = await stripe.checkout.sessions.create({
@@ -301,21 +298,21 @@ export async function POST(req: NextRequest) {
           },
         ],
         metadata: {
-          bookingId: booking.id,
+          bookingId: newBooking.id,
           packageSlug: coachingPackage.slug,
         },
-        success_url: `${baseUrl}/coaching/bekreftelse?bookingId=${booking.id}`,
+        success_url: `${baseUrl}/coaching/bekreftelse?bookingId=${newBooking.id}`,
         cancel_url: `${baseUrl}/coaching?cancelled=true`,
       });
 
       // Store Stripe session ID
-      await prisma.booking.update({
-        where: { id: booking.id },
-        data: { stripePaymentId: checkoutSession.id },
-      });
+      await supabase
+        .from("Booking")
+        .update({ stripePaymentId: checkoutSession.id })
+        .eq("id", newBooking.id);
 
       return NextResponse.json({
-        bookingId: booking.id,
+        bookingId: newBooking.id,
         checkoutUrl: checkoutSession.url,
         type: "checkout",
       });
@@ -323,15 +320,12 @@ export async function POST(req: NextRequest) {
 
     // For subscription users: booking confirmed directly
     // Get session count info for response
-    const _monthStart = startOfMonth(new Date());
-    const monthEnd = endOfMonth(new Date());
-
     const sessionsThisMonth = subscription
       ? subscription.sessionsUsedThisMonth + 1
       : 0;
 
     return NextResponse.json({
-      bookingId: booking.id,
+      bookingId: newBooking.id,
       type: "confirmed",
       sessionsUsed: sessionsThisMonth,
       sessionsTotal: coachingPackage.sessionsPerMonth,

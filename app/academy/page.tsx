@@ -121,7 +121,7 @@ export default function AcademyPage() {
                 }}
               >
                 <Link
-                  href="/booking"
+                  href="/booking-temp"
                   className="px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
                 >
                   {ACADEMY_HERO_V2.ctaPrimary} &rarr;
@@ -252,7 +252,7 @@ export default function AcademyPage() {
                         ))}
                       </ul>
                       <Link
-                        href="/booking"
+                        href="/booking-temp"
                         className="mt-8 px-7 py-3.5 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors text-center block"
                       >
                         Book coaching &rarr;
@@ -286,7 +286,7 @@ export default function AcademyPage() {
                     {ACADEMY_CTA_V2.description}
                   </p>
                   <Link
-                    href="/booking"
+                    href="/booking-temp"
                     className="inline-flex px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
                   >
                     {ACADEMY_CTA_V2.ctaLabel} &rarr;

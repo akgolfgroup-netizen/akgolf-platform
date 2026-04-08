@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { nanoid } from "nanoid";
 
@@ -21,35 +21,33 @@ export async function GET() {
     return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });
   }
 
-  const sessions = await prisma.gameSession.findMany({
-    where: {
-      OR: [
-        { createdById: user.id },
-        { Players: { some: { userId: user.id } } },
-      ],
-    },
-    orderBy: { date: "desc" },
-    take: 20,
-    include: {
-      Course: { select: { name: true, par: true } },
-      Players: {
-        include: {
-          User: { select: { id: true, name: true, image: true } },
-        },
-      },
-      Rounds: {
-        where: { isComplete: true },
-        select: {
-          userId: true,
-          totalScore: true,
-          scoreToPar: true,
-          sgTotal: true,
-        },
-      },
-    },
-  });
+  const supabase = await createServerSupabase();
 
-  return NextResponse.json(sessions);
+  const { data: sessions, error } = await supabase
+    .from("GameSession")
+    .select(`
+      *,
+      Course (name, par),
+      Players (
+        *,
+        User (id, name, image)
+      ),
+      Rounds (
+        userId,
+        totalScore,
+        scoreToPar,
+        sgTotal
+      )
+    `)
+    .or(`createdById.eq.${user.id},Players.userId.eq.${user.id}`)
+    .order("date", { ascending: false })
+    .limit(20);
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke hente spillokter" }, { status: 500 });
+  }
+
+  return NextResponse.json(sessions || []);
 }
 
 /**
@@ -69,12 +67,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "courseId er paakrevd" }, { status: 400 });
   }
 
-  const course = await prisma.course.findUnique({
-    where: { id: courseId },
-    select: { name: true },
-  });
+  const supabase = await createServerSupabase();
 
-  if (!course) {
+  const { data: course, error: courseError } = await supabase
+    .from("Course")
+    .select("name")
+    .eq("id", courseId)
+    .single();
+
+  if (courseError || !course) {
     return NextResponse.json({ error: "Bane ikke funnet" }, { status: 404 });
   }
 
@@ -82,39 +83,52 @@ export async function POST(req: NextRequest) {
   let joinCode = generateJoinCode();
   let attempts = 0;
   while (attempts < 10) {
-    const existing = await prisma.gameSession.findUnique({
-      where: { joinCode },
-    });
+    const { data: existing } = await supabase
+      .from("GameSession")
+      .select("id")
+      .eq("joinCode", joinCode)
+      .single();
     if (!existing) break;
     joinCode = generateJoinCode();
     attempts++;
   }
 
   const sessionId = nanoid();
+  const now = new Date().toISOString();
 
-  const session = await prisma.gameSession.create({
-    data: {
+  const { data: session, error: sessionError } = await supabase
+    .from("GameSession")
+    .insert({
       id: sessionId,
       name: name ?? `Runde pa ${course.name}`,
       courseId,
-      date: new Date(),
+      date: now,
       teeColor: teeColor ?? "yellow",
       format: format ?? "STROKEPLAY",
       createdById: user.id,
       joinCode,
-      updatedAt: new Date(),
-    },
-  });
+      updatedAt: now,
+    })
+    .select()
+    .single();
+
+  if (sessionError) {
+    return NextResponse.json({ error: "Kunne ikke opprette spillokt" }, { status: 500 });
+  }
 
   // Legg til skaperen som spiller
-  await prisma.gamePlayer.create({
-    data: {
+  const { error: playerError } = await supabase
+    .from("GamePlayer")
+    .insert({
       id: nanoid(),
       gameSessionId: sessionId,
       userId: user.id,
       displayName: user.name,
-    },
-  });
+    });
+
+  if (playerError) {
+    return NextResponse.json({ error: "Kunne ikke legge til spiller" }, { status: 500 });
+  }
 
   return NextResponse.json({
     session,

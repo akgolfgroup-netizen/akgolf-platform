@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 
 export interface ChatContext {
@@ -42,86 +42,65 @@ export interface ChatContext {
 
 export async function getChatContext(): Promise<ChatContext> {
   const user = await requirePortalUser();
+  const supabase = await createServerSupabase();
 
   const [
-    handicapEntry,
-    recentRounds,
-    recentLogs,
-    activePlan,
-    trackmanSessions,
-    tournamentPlans,
+    { data: handicapEntry },
+    { data: recentRounds },
+    { data: recentLogs },
+    { data: activePlan },
+    { data: trackmanSessions },
+    { data: tournamentPlans },
   ] = await Promise.all([
-    prisma.handicapEntry.findFirst({
-      where: { userId: user.id },
-      orderBy: { date: "desc" },
-      select: { handicapIndex: true },
-    }),
-    prisma.roundStats.findMany({
-      where: { userId: user.id },
-      orderBy: { date: "desc" },
-      take: 10,
-      select: {
-        date: true,
-        courseName: true,
-        totalScore: true,
-        sgTotal: true,
-        sgOffTheTee: true,
-        sgApproach: true,
-        sgAroundTheGreen: true,
-        sgPutting: true,
-      },
-    }),
-    prisma.trainingLog.findMany({
-      where: { userId: user.id },
-      orderBy: { date: "desc" },
-      take: 20,
-      select: {
-        date: true,
-        focusArea: true,
-        durationMinutes: true,
-        notes: true,
-        rating: true,
-      },
-    }),
-    prisma.trainingPlan.findFirst({
-      where: { studentId: user.id, isActive: true },
-      orderBy: { createdAt: "desc" },
-      select: {
-        title: true,
-        periodType: true,
-        startDate: true,
-        endDate: true,
-      },
-    }),
-    prisma.trackmanSession.findMany({
-      where: { userId: user.id },
-      orderBy: { sessionDate: "desc" },
-      take: 5,
-      select: {
-        club: true,
-        averages: true,
-      },
-    }),
-    prisma.playerTournamentPlan.findMany({
-      where: {
-        studentId: user.id,
-        Tournament: { startDate: { gte: new Date() } },
-      },
-      orderBy: { Tournament: { startDate: "asc" } },
-      take: 3,
-      include: {
-        Tournament: {
-          select: { name: true, startDate: true, course: true },
-        },
-      },
-    }),
+    supabase
+      .from("HandicapEntry")
+      .select("handicapIndex")
+      .eq("userId", user.id)
+      .order("date", { ascending: false })
+      .limit(1)
+      .single(),
+    supabase
+      .from("RoundStats")
+      .select("date, courseName, totalScore, sgTotal, sgOffTheTee, sgApproach, sgAroundTheGreen, sgPutting")
+      .eq("userId", user.id)
+      .order("date", { ascending: false })
+      .limit(10),
+    supabase
+      .from("TrainingLog")
+      .select("date, focusArea, durationMinutes, notes, rating")
+      .eq("userId", user.id)
+      .order("date", { ascending: false })
+      .limit(20),
+    supabase
+      .from("TrainingPlan")
+      .select("title, periodType, startDate, endDate")
+      .eq("studentId", user.id)
+      .eq("isActive", true)
+      .order("createdAt", { ascending: false })
+      .limit(1)
+      .single(),
+    supabase
+      .from("TrackmanSession")
+      .select("club, averages")
+      .eq("userId", user.id)
+      .order("sessionDate", { ascending: false })
+      .limit(5),
+    supabase
+      .from("PlayerTournamentPlan")
+      .select(`
+        Tournament (name, startDate, course)
+      `)
+      .eq("studentId", user.id)
+      .gte("Tournament.startDate", new Date().toISOString())
+      .order("Tournament.startDate", { ascending: true })
+      .limit(3),
   ]);
 
   return {
     userName: user.name ?? "Spiller",
     handicap: handicapEntry?.handicapIndex ?? null,
-    recentRounds: recentRounds.map((r) => ({
-      date: r.date.toISOString(),
+    recentRounds: (recentRounds || []).map((r) => ({
+      date: new Date(r.date).toISOString(),
       courseName: r.courseName,
       totalScore: r.totalScore,
       sgTotal: r.sgTotal,
@@ -130,8 +109,8 @@ export async function getChatContext(): Promise<ChatContext> {
       sgAroundTheGreen: r.sgAroundTheGreen,
       sgPutting: r.sgPutting,
     })),
-    recentTrainingLogs: recentLogs.map((l) => ({
-      date: l.date.toISOString(),
+    recentTrainingLogs: (recentLogs || []).map((l) => ({
+      date: new Date(l.date).toISOString(),
       focusArea: l.focusArea,
       durationMinutes: l.durationMinutes,
       notes: l.notes,
@@ -141,49 +120,52 @@ export async function getChatContext(): Promise<ChatContext> {
       ? {
           title: activePlan.title,
           periodType: activePlan.periodType,
-          startDate: activePlan.startDate.toISOString(),
-          endDate: activePlan.endDate.toISOString(),
+          startDate: new Date(activePlan.startDate).toISOString(),
+          endDate: new Date(activePlan.endDate).toISOString(),
         }
       : null,
-    trackmanAverages: trackmanSessions.map((t) => ({
+    trackmanAverages: (trackmanSessions || []).map((t) => ({
       club: t.club,
       averages: t.averages as Record<string, unknown>,
     })),
-    upcomingTournaments: tournamentPlans.map((tp) => ({
-      name: tp.Tournament.name,
-      startDate: tp.Tournament.startDate.toISOString(),
-      course: tp.Tournament.course,
+    upcomingTournaments: (tournamentPlans || []).map((tp) => ({
+      name: (tp.Tournament as { name: string }).name,
+      startDate: new Date((tp.Tournament as { startDate: string }).startDate).toISOString(),
+      course: (tp.Tournament as { course: string | null }).course,
     })),
   };
 }
 
 export async function getQuickInsight(): Promise<string> {
   const user = await requirePortalUser();
+  const supabase = await createServerSupabase();
 
-  const [lastRound, lastLog, handicap] = await Promise.all([
-    prisma.roundStats.findFirst({
-      where: { userId: user.id },
-      orderBy: { date: "desc" },
-      select: {
-        date: true,
-        totalScore: true,
-        sgTotal: true,
-        sgOffTheTee: true,
-        sgApproach: true,
-        sgAroundTheGreen: true,
-        sgPutting: true,
-      },
-    }),
-    prisma.trainingLog.findFirst({
-      where: { userId: user.id },
-      orderBy: { date: "desc" },
-      select: { date: true, focusArea: true, rating: true },
-    }),
-    prisma.handicapEntry.findFirst({
-      where: { userId: user.id },
-      orderBy: { date: "desc" },
-      select: { handicapIndex: true },
-    }),
+  const [
+    { data: lastRound },
+    { data: lastLog },
+    { data: handicap },
+  ] = await Promise.all([
+    supabase
+      .from("RoundStats")
+      .select("date, totalScore, sgTotal, sgOffTheTee, sgApproach, sgAroundTheGreen, sgPutting")
+      .eq("userId", user.id)
+      .order("date", { ascending: false })
+      .limit(1)
+      .single(),
+    supabase
+      .from("TrainingLog")
+      .select("date, focusArea, rating")
+      .eq("userId", user.id)
+      .order("date", { ascending: false })
+      .limit(1)
+      .single(),
+    supabase
+      .from("HandicapEntry")
+      .select("handicapIndex")
+      .eq("userId", user.id)
+      .order("date", { ascending: false })
+      .limit(1)
+      .single(),
   ]);
 
   const parts: string[] = [];
@@ -204,7 +186,7 @@ export async function getQuickInsight(): Promise<string> {
   }
   if (lastLog) {
     const daysAgo = Math.floor(
-      (Date.now() - lastLog.date.getTime()) / (1000 * 60 * 60 * 24)
+      (Date.now() - new Date(lastLog.date).getTime()) / (1000 * 60 * 60 * 24)
     );
     parts.push(
       `Siste trening: ${daysAgo === 0 ? "i dag" : `${daysAgo} dager siden`} (${lastLog.focusArea ?? "generell"})`

@@ -1,5 +1,5 @@
 import { getPortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -28,33 +28,40 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  const bookings = await prisma.booking.findMany({
-    where: {
-      studentId: user.id,
-      ...(statusParams.length > 0 && {
-        status: { in: statusParams as never[] },
-      }),
-    },
-    select: {
-      id: true,
-      startTime: true,
-      endTime: true,
-      status: true,
-      paymentStatus: true,
-      amount: true,
-      ServiceType: {
-        select: { name: true, duration: true },
-      },
-      Instructor: {
-        select: {
-          User: {
-            select: { name: true, image: true },
-          },
-        },
-      },
-    },
-    orderBy: { startTime: "desc" },
-  });
+  const supabase = await createServerSupabase();
+  
+  let query = supabase
+    .from("Booking")
+    .select(`
+      id,
+      startTime,
+      endTime,
+      status,
+      paymentStatus,
+      amount,
+      ServiceType (
+        name,
+        duration
+      ),
+      Instructor (
+        User (
+          name,
+          image
+        )
+      )
+    `)
+    .eq("studentId", user.id)
+    .order("startTime", { ascending: false });
 
-  return NextResponse.json({ bookings });
+  if (statusParams.length > 0) {
+    query = query.in("status", statusParams);
+  }
+
+  const { data: bookings, error } = await query;
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke hente bookinger" }, { status: 500 });
+  }
+
+  return NextResponse.json({ bookings: bookings || [] });
 }

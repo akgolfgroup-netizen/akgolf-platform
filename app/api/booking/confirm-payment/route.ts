@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { stripe } from "@/lib/portal/stripe";
-import { BookingStatus, PaymentStatus } from "@prisma/client";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
 import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { logger } from "@/lib/logger";
+import { nanoid } from "nanoid";
 
 export async function POST(req: NextRequest) {
   // Rate limiting to prevent abuse
@@ -52,63 +52,92 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Idempotens-guard: sjekk om allerede prosessert (av webhook eller tidligere kall)
-    const existingBooking = await prisma.booking.findFirst({
-      where: { id: bookingId, paymentStatus: { not: PaymentStatus.PAID } },
-      include: {
-        ServiceType: { select: { name: true, duration: true } },
-        Instructor: {
-          select: { User: { select: { name: true, email: true, phone: true } } },
-        },
-        User: { select: { name: true, email: true } },
-      },
-    });
+    const supabase = await createServerSupabase();
 
-    if (!existingBooking) {
+    // Idempotens-guard: sjekk om allerede prosessert (av webhook eller tidligere kall)
+    const { data: existingBooking, error: fetchError } = await supabase
+      .from("Booking")
+      .select(`
+        id,
+        amount,
+        vatAmount,
+        paymentMethod,
+        startTime,
+        ServiceType:serviceTypeId (name, duration, vatRate),
+        Instructor:instructorId (User:userId (name, email, phone)),
+        User:studentId (name, email)
+      `)
+      .eq("id", bookingId)
+      .neq("paymentStatus", "PAID")
+      .single();
+
+    if (fetchError || !existingBooking) {
       // Allerede bekreftet av webhook — returner suksess uten å gjøre noe
       return NextResponse.json({ success: true, status: "CONFIRMED" });
     }
 
-    // Atomisk oppdatering: booking + PaymentTransaction i én transaksjon
-    await prisma.$transaction([
-      prisma.booking.update({
-        where: { id: bookingId },
-        data: {
-          status: BookingStatus.CONFIRMED,
-          paymentStatus: PaymentStatus.PAID,
-          stripePaymentId: paymentIntentId,
-        },
-      }),
-      prisma.paymentTransaction.create({
-        data: {
-          id: crypto.randomUUID(),
-          bookingId,
-          paymentMethod: existingBooking.paymentMethod,
-          grossAmount: existingBooking.amount,
-          vatAmount: existingBooking.vatAmount,
-          vatRate: existingBooking.ServiceType
-            ? Math.round((existingBooking.vatAmount / existingBooking.amount) * 100)
-            : 0,
-          netAmount: existingBooking.amount - existingBooking.vatAmount,
-          providerRef: paymentIntentId,
-          status: PaymentStatus.PAID,
-          paidAt: new Date(),
-          updatedAt: new Date(),
-        },
-      }),
-    ]);
+    // Beregn VAT rate
+    const serviceTypeArray = existingBooking.ServiceType as unknown as Array<{ vatRate?: number; name: string; duration: number }>;
+    const serviceType = serviceTypeArray?.[0] ?? null;
+    const vatRate = serviceType?.vatRate ?? 25;
+    const netAmount = existingBooking.amount - existingBooking.vatAmount;
+
+    // Atomisk oppdatering: booking + PaymentTransaction via RPC eller to separate kall
+    const { error: updateError } = await supabase
+      .from("Booking")
+      .update({
+        status: "CONFIRMED",
+        paymentStatus: "PAID",
+        stripePaymentId: paymentIntentId,
+        updatedAt: new Date().toISOString(),
+      })
+      .eq("id", bookingId);
+
+    if (updateError) {
+      throw updateError;
+    }
+
+    const { error: transactionError } = await supabase
+      .from("PaymentTransaction")
+      .insert({
+        id: nanoid(),
+        bookingId,
+        paymentMethod: existingBooking.paymentMethod ?? "STRIPE",
+        grossAmount: existingBooking.amount,
+        vatAmount: existingBooking.vatAmount,
+        vatRate,
+        netAmount,
+        providerRef: paymentIntentId,
+        status: "PAID",
+        paidAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+
+    if (transactionError) {
+      throw transactionError;
+    }
+
+    // Type assertions for nested data
+    const instructorArray = existingBooking.Instructor as unknown as Array<{ 
+      User?: Array<{ name?: string; email?: string; phone?: string }>
+    }>;
+    const instructor = instructorArray?.[0] ?? null;
+    const instructorUser = instructor?.User?.[0] ?? null;
+    const userArray = existingBooking.User as unknown as Array<{ name?: string; email?: string }>;
+    const user = userArray?.[0] ?? null;
+    const service = serviceType;
 
     // Send bekreftelses-e-post (non-blocking)
-    if (existingBooking.User.email && existingBooking.Instructor.User.email) {
+    if (user?.email && instructorUser?.email) {
       sendBookingConfirmation({
         bookingId,
-        studentName: existingBooking.User.name ?? "Kunde",
-        studentEmail: existingBooking.User.email,
-        instructorName: existingBooking.Instructor.User.name ?? "Instruktør",
-        instructorEmail: existingBooking.Instructor.User.email,
-        serviceName: existingBooking.ServiceType.name,
+        studentName: user.name ?? "Kunde",
+        studentEmail: user.email,
+        instructorName: instructorUser.name ?? "Instruktør",
+        instructorEmail: instructorUser.email,
+        serviceName: service?.name ?? "Coaching",
         startTime: existingBooking.startTime,
-        duration: existingBooking.ServiceType.duration,
+        duration: service?.duration ?? 60,
         amount: existingBooking.amount,
         vatAmount: existingBooking.vatAmount,
         location: "Gamle Fredrikstad Golfklubb",
@@ -118,14 +147,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Send SMS til instruktør (non-blocking)
-    if (existingBooking.Instructor.User.phone) {
+    if (instructorUser?.phone) {
       sendBookingConfirmationSms({
-        instructorPhone: existingBooking.Instructor.User.phone,
-        instructorName: existingBooking.Instructor.User.name ?? "Instruktør",
-        studentName: existingBooking.User.name ?? "Kunde",
-        serviceName: existingBooking.ServiceType.name,
+        instructorPhone: instructorUser.phone,
+        instructorName: instructorUser.name ?? "Instruktør",
+        studentName: user?.name ?? "Kunde",
+        serviceName: service?.name ?? "Coaching",
         startTime: existingBooking.startTime,
-        duration: existingBooking.ServiceType.duration,
+        duration: service?.duration ?? 60,
       }).catch((err: unknown) =>
         logger.error("[confirm-payment] SMS failed:", err)
       );

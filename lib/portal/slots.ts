@@ -1,5 +1,6 @@
 import { addMinutes, addHours, isBefore, isAfter, startOfDay } from "date-fns";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
+import { BookingStatus } from "@prisma/client";
 
 export function generateSlots({
   availStart,
@@ -68,30 +69,30 @@ export async function getAvailabilityForDate(
   instructorId: string,
   date: Date
 ): Promise<{ startTime: string; endTime: string }[]> {
+  const supabase = createServiceClient();
   const dayStart = startOfDay(date);
   const dayOfWeek = date.getUTCDay();
 
   // Sjekk for dato-spesifikk override først
-  const override = await prisma.instructorDateAvailability.findFirst({
-    where: {
-      instructorId,
-      date: dayStart,
-    },
-  });
+  const { data: override } = await supabase
+    .from("InstructorDateAvailability")
+    .select("startTime, endTime")
+    .eq("instructorId", instructorId)
+    .eq("date", dayStart.toISOString())
+    .single();
 
   if (override) {
     return [{ startTime: override.startTime, endTime: override.endTime }];
   }
 
   // Fall tilbake til fast tilgjengelighet
-  const regularAvailability = await prisma.instructorAvailability.findMany({
-    where: {
-      instructorId,
-      dayOfWeek,
-    },
-  });
+  const { data: regularAvailability } = await supabase
+    .from("InstructorAvailability")
+    .select("startTime, endTime")
+    .eq("instructorId", instructorId)
+    .eq("dayOfWeek", dayOfWeek);
 
-  return regularAvailability.map((a) => ({
+  return (regularAvailability || []).map((a) => ({
     startTime: a.startTime,
     endTime: a.endTime,
   }));
@@ -116,6 +117,7 @@ export async function generateSlotsWithOverrides({
   bufferBefore?: number;
   minNoticeHours: number;
 }): Promise<string[]> {
+  const supabase = createServiceClient();
   const nextDay = new Date(date);
   nextDay.setUTCDate(nextDay.getUTCDate() + 1);
 
@@ -127,24 +129,31 @@ export async function generateSlotsWithOverrides({
   }
 
   // Hent eksisterende bookinger og blokkerte tider
-  const [existingBookings, blockedTimes] = await Promise.all([
-    prisma.booking.findMany({
-      where: {
-        instructorId,
-        startTime: { gte: date, lt: nextDay },
-        status: { in: ["PENDING", "CONFIRMED"] },
-      },
-      select: { startTime: true, endTime: true },
-    }),
-    prisma.blockedTime.findMany({
-      where: {
-        OR: [{ instructorId }, { instructorId: null }],
-        startTime: { lt: nextDay },
-        endTime: { gt: date },
-      },
-      select: { startTime: true, endTime: true },
-    }),
+  const [bookingsResult, blockedResult] = await Promise.all([
+    supabase
+      .from("Booking")
+      .select("startTime, endTime")
+      .eq("instructorId", instructorId)
+      .gte("startTime", date.toISOString())
+      .lt("startTime", nextDay.toISOString())
+      .in("status", ["PENDING", "CONFIRMED"] as BookingStatus[]),
+    supabase
+      .from("BlockedTime")
+      .select("startTime, endTime")
+      .or(`instructorId.eq.${instructorId},instructorId.is.null`)
+      .lt("startTime", nextDay.toISOString())
+      .gt("endTime", date.toISOString()),
   ]);
+
+  const existingBookings = (bookingsResult.data || []).map((b) => ({
+    startTime: new Date(b.startTime),
+    endTime: new Date(b.endTime),
+  }));
+
+  const blockedTimes = (blockedResult.data || []).map((b) => ({
+    startTime: new Date(b.startTime),
+    endTime: new Date(b.endTime),
+  }));
 
   // Generer slots for hvert tilgjengelighetsvindu
   const allSlots: string[] = [];

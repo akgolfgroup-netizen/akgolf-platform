@@ -385,7 +385,7 @@ export default function UtviklingPage() {
                     {UTVIKLING_CTA_V2.description}
                   </p>
                   <Link
-                    href="/booking"
+                    href="/booking-temp"
                     className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
                   >
                     {UTVIKLING_CTA_V2.ctaPrimary} &rarr;

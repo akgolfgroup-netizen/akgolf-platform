@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function GET(request: NextRequest) {
@@ -10,26 +10,19 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const packages = await prisma.coachingPackage.findMany({
-      where: { isActive: true },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        priceNok: true,
-        billingType: true,
-        bookingType: true,
-        sessionsPerMonth: true,
-        sessionDurationMin: true,
-        bookingWindowDays: true,
-        bookingWindowHours: true,
-        maxBookingsPerWeek: true,
-        slotsRequired: true,
-        description: true,
-        sortOrder: true,
-      },
-      orderBy: { sortOrder: "asc" },
-    });
+    const supabase = await createServerSupabase();
+
+    const { data: packages, error } = await supabase
+      .from("CoachingPackage")
+      .select(
+        "id, name, slug, priceNok, billingType, bookingType, sessionsPerMonth, sessionDurationMin, bookingWindowDays, bookingWindowHours, maxBookingsPerWeek, slotsRequired, description, sortOrder"
+      )
+      .eq("isActive", true)
+      .order("sortOrder", { ascending: true });
+
+    if (error) {
+      throw error;
+    }
 
     return NextResponse.json(packages, {
       headers: {

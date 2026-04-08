@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { nanoid } from "nanoid";
 import {
@@ -18,39 +18,44 @@ export async function GET() {
     return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });
   }
 
-  // Hent siste 20 fullforte runder med bane-data
-  const rounds = await prisma.round.findMany({
-    where: { userId: user.id, isComplete: true },
-    orderBy: { date: "desc" },
-    take: 20,
-    include: {
-      Course: { select: { par: true, courseRating: true, slopeRating: true } },
-      HoleResult: {
-        select: { score: true, par: true },
-        orderBy: { holeNumber: "asc" },
-      },
-    },
-  });
+  const supabase = await createServerSupabase();
 
-  if (rounds.length < 3) {
+  // Hent siste 20 fullforte runder med bane-data
+  const { data: rounds, error } = await supabase
+    .from("Round")
+    .select(`
+      *,
+      Course (par, courseRating, slopeRating),
+      HoleResult (score, par)
+    `)
+    .eq("userId", user.id)
+    .eq("isComplete", true)
+    .order("date", { ascending: false })
+    .limit(20);
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke hente runder" }, { status: 500 });
+  }
+
+  if ((rounds || []).length < 3) {
     return NextResponse.json({
       handicapIndex: null,
       message: "Trenger minst 3 runder for handicap-beregning",
-      roundCount: rounds.length,
+      roundCount: (rounds || []).length,
     });
   }
 
   // Beregn differensialer
   const differentials: number[] = [];
   const roundDetails: Array<{
-    date: Date;
+    date: string;
     course: string | null;
     score: number;
     adjustedScore: number;
     differential: number;
   }> = [];
 
-  for (const round of rounds) {
+  for (const round of rounds || []) {
     const cr = round.Course?.courseRating;
     const sr = round.Course?.slopeRating;
     const par = round.Course?.par ?? 72;
@@ -58,11 +63,14 @@ export async function GET() {
     if (!cr || !sr) continue;
 
     // Beregn Playing Handicap (bruk forrige handicap eller 36 som default)
-    const currentHcp = await prisma.handicapEntry.findFirst({
-      where: { userId: user.id, date: { lt: round.date } },
-      orderBy: { date: "desc" },
-      select: { handicapIndex: true },
-    });
+    const { data: currentHcp } = await supabase
+      .from("HandicapEntry")
+      .select("handicapIndex")
+      .eq("userId", user.id)
+      .lt("date", round.date)
+      .order("date", { ascending: false })
+      .limit(1)
+      .single();
 
     const playingHcp = calculatePlayingHandicap(
       currentHcp?.handicapIndex ?? 36,
@@ -72,7 +80,7 @@ export async function GET() {
     );
 
     const adjustedScore = calculateAdjustedGrossScore(
-      round.HoleResult.map((h) => ({ score: h.score, par: h.par })),
+      (round.HoleResult || []).map((h: { score: number; par: number }) => ({ score: h.score, par: h.par })),
       playingHcp
     );
 
@@ -91,15 +99,19 @@ export async function GET() {
   const handicapIndex = calculateHandicapIndex(differentials);
 
   // Lagre ny handicap-entry
-  await prisma.handicapEntry.create({
-    data: {
+  const { error: insertError } = await supabase
+    .from("HandicapEntry")
+    .insert({
       id: nanoid(),
       userId: user.id,
-      date: new Date(),
+      date: new Date().toISOString(),
       handicapIndex,
       source: "MANUAL",
-    },
-  });
+    });
+
+  if (insertError) {
+    return NextResponse.json({ error: "Kunne ikke lagre handicap" }, { status: 500 });
+  }
 
   return NextResponse.json({
     handicapIndex,

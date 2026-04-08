@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 const corsOrigin = () => process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
@@ -12,25 +12,22 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
   }
   try {
-    const periods = await prisma.periodizationPeriod.findMany({
-      where: {
-        studentId: null, // Only global periods (not per-student)
-      },
-      select: {
-        id: true,
-        periodType: true,
-        startDate: true,
-        endDate: true,
-        label: true,
-      },
-      orderBy: { startDate: "asc" },
-    });
+    // Use service client for public endpoints to bypass RLS
+    const supabase = createServiceClient();
 
-    const formatted = periods.map((p) => ({
+    const { data: periods, error } = await supabase
+      .from("PeriodizationPeriod")
+      .select("id, periodType, startDate, endDate, label")
+      .is("studentId", null) // Only global periods (not per-student)
+      .order("startDate", { ascending: true });
+
+    if (error) throw error;
+
+    const formatted = periods?.map((p) => ({
       ...p,
-      startDate: p.startDate.toISOString().split("T")[0],
-      endDate: p.endDate.toISOString().split("T")[0],
-    }));
+      startDate: new Date(p.startDate).toISOString().split("T")[0],
+      endDate: new Date(p.endDate).toISOString().split("T")[0],
+    })) || [];
 
     return NextResponse.json(
       { periods: formatted },

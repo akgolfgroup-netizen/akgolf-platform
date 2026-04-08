@@ -8,7 +8,7 @@
  */
 
 import { NextRequest } from 'next/server';
-import { prisma } from '@/lib/portal/prisma';
+import { createServiceClient } from '@/lib/supabase/server';
 import { 
   getPendingEventsForUser, 
   markEventsAsDelivered,
@@ -79,7 +79,7 @@ function createSSEStream(
         // Mark as delivered
         if (pendingEvents.length > 0) {
           await markEventsAsDelivered(
-            pendingEvents.map(e => e.id),
+            pendingEvents.map((e: { id: string }) => e.id),
             userId
           );
         }
@@ -147,7 +147,7 @@ function createSSEStream(
           // Mark as delivered
           if (newEvents.length > 0) {
             await markEventsAsDelivered(
-              newEvents.map(e => e.id),
+              newEvents.map((event: { id: string }) => event.id),
               userId
             );
           }
@@ -195,28 +195,29 @@ export async function GET(request: NextRequest) {
   
   // Check connection limit per user
   try {
-    const activeConnections = await prisma.syncConnection.count({
-      where: {
-        userId,
-        disconnectedAt: null,
-      },
-    });
+    const supabase = createServiceClient();
+    const { count: activeConnections } = await supabase
+      .from('SyncConnection')
+      .select('*', { count: 'exact', head: true })
+      .eq('userId', userId)
+      .is('disconnectedAt', null);
     
-    if (activeConnections >= MAX_CONNECTIONS_PER_USER) {
+    if ((activeConnections ?? 0) >= MAX_CONNECTIONS_PER_USER) {
       // Disconnect oldest connection
-      const oldestConnection = await prisma.syncConnection.findFirst({
-        where: {
-          userId,
-          disconnectedAt: null,
-        },
-        orderBy: { lastPingAt: 'asc' },
-      });
+      const { data: oldestConnection } = await supabase
+        .from('SyncConnection')
+        .select('id')
+        .eq('userId', userId)
+        .is('disconnectedAt', null)
+        .order('lastPingAt', { ascending: true })
+        .limit(1)
+        .single();
       
       if (oldestConnection) {
-        await prisma.syncConnection.update({
-          where: { id: oldestConnection.id },
-          data: { disconnectedAt: new Date() },
-        });
+        await supabase
+          .from('SyncConnection')
+          .update({ disconnectedAt: new Date().toISOString() })
+          .eq('id', oldestConnection.id);
       }
     }
   } catch (error) {

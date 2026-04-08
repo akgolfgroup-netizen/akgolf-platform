@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { WeeklySummaryEmail } from "@/lib/portal/email/templates/weekly-summary";
 import { subDays, startOfWeek, endOfWeek, subWeeks } from "date-fns";
@@ -20,6 +20,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   const thisWeekStart = startOfWeek(now, { weekStartsOn: 1 });
   const thisWeekEnd = endOfWeek(now, { weekStartsOn: 1 });
@@ -30,22 +31,18 @@ export async function GET(req: NextRequest) {
   const oneWeekAgo = subDays(now, 7);
 
   // Get users who haven't received a weekly summary this week
-  const users = await prisma.user.findMany({
-    where: {
-      isActive: true,
-      email: { not: null },
-      role: "STUDENT",
-      OR: [
-        { weeklyEmailSentAt: null },
-        { weeklyEmailSentAt: { lt: oneWeekAgo } },
-      ],
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-    },
-  });
+  const { data: users, error: usersError } = await supabase
+    .from("User")
+    .select("id, name, email, weeklyEmailSentAt")
+    .eq("isActive", true)
+    .not("email", "is", null)
+    .eq("role", "STUDENT")
+    .or(`weeklyEmailSentAt.is.null,weeklyEmailSentAt.lt.${oneWeekAgo.toISOString()}`);
+
+  if (usersError) {
+    logger.error("[Cron] Error fetching users:", usersError);
+    return NextResponse.json({ error: "Failed to fetch users" }, { status: 500 });
+  }
 
   const resend = getResend();
   if (!resend) {
@@ -55,38 +52,45 @@ export async function GET(req: NextRequest) {
   let sent = 0;
   let errors = 0;
 
-  for (const user of users) {
+  for (const user of (users ?? [])) {
     if (!user.email) continue;
 
     try {
       // Get this week's logs
-      const thisWeekLogs = await prisma.trainingLog.findMany({
-        where: {
-          userId: user.id,
-          date: { gte: thisWeekStart, lte: thisWeekEnd },
-        },
-        select: { focusArea: true, durationMinutes: true },
-      });
+      const { data: thisWeekLogs, error: logsError } = await supabase
+        .from("TrainingLog")
+        .select("focusArea, durationMinutes")
+        .eq("userId", user.id)
+        .gte("date", thisWeekStart.toISOString())
+        .lte("date", thisWeekEnd.toISOString());
+
+      if (logsError) {
+        throw logsError;
+      }
 
       // Get last week's logs count
-      const lastWeekCount = await prisma.trainingLog.count({
-        where: {
-          userId: user.id,
-          date: { gte: lastWeekStart, lte: lastWeekEnd },
-        },
-      });
+      const { count: lastWeekCount, error: lastWeekError } = await supabase
+        .from("TrainingLog")
+        .select("*", { count: "exact", head: true })
+        .eq("userId", user.id)
+        .gte("date", lastWeekStart.toISOString())
+        .lte("date", lastWeekEnd.toISOString());
+
+      if (lastWeekError) {
+        throw lastWeekError;
+      }
 
       // Calculate streak
-      const streak = await calculateStreak(user.id);
+      const streak = await calculateStreak(supabase, user.id);
 
       // Calculate total minutes this week
-      const totalMinutes = thisWeekLogs.reduce(
+      const totalMinutes = (thisWeekLogs ?? []).reduce(
         (sum, log) => sum + (log.durationMinutes || 0),
         0
       );
 
       // Find most common focus area
-      const focusAreas = thisWeekLogs
+      const focusAreas = (thisWeekLogs ?? [])
         .map((l) => l.focusArea)
         .filter((f): f is string => f !== null);
       const focusCounts = focusAreas.reduce(
@@ -105,8 +109,8 @@ export async function GET(req: NextRequest) {
         subject: "Din ukentlige treningsoversikt",
         react: WeeklySummaryEmail({
           name: user.name || "Hei",
-          sessionsThisWeek: thisWeekLogs.length,
-          sessionsLastWeek: lastWeekCount,
+          sessionsThisWeek: (thisWeekLogs ?? []).length,
+          sessionsLastWeek: lastWeekCount ?? 0,
           currentStreak: streak,
           totalMinutes,
           topFocusArea,
@@ -114,10 +118,10 @@ export async function GET(req: NextRequest) {
       });
 
       // Update user
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { weeklyEmailSentAt: now },
-      });
+      await supabase
+        .from("User")
+        .update({ weeklyEmailSentAt: now.toISOString() })
+        .eq("id", user.id);
 
       sent++;
     } catch (error) {
@@ -136,14 +140,17 @@ export async function GET(req: NextRequest) {
   });
 }
 
-async function calculateStreak(userId: string): Promise<number> {
-  const logs = await prisma.trainingLog.findMany({
-    where: { userId },
-    select: { date: true },
-    orderBy: { date: "desc" },
-  });
+async function calculateStreak(
+  supabase: ReturnType<typeof createServiceClient>,
+  userId: string
+): Promise<number> {
+  const { data: logs, error } = await supabase
+    .from("TrainingLog")
+    .select("date")
+    .eq("userId", userId)
+    .order("date", { ascending: false });
 
-  if (logs.length === 0) return 0;
+  if (error || !logs || logs.length === 0) return 0;
 
   const uniqueDates = [
     ...new Set(logs.map((l) => new Date(l.date).toISOString().split("T")[0])),

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { nanoid } from "nanoid";
 import Anthropic from "@anthropic-ai/sdk";
@@ -112,20 +112,28 @@ export async function POST(req: NextRequest) {
   const metricShots = rawShots.map(convertToMetric);
   const clubAggregates = aggregateByClub(metricShots);
 
+  const supabase = await createServerSupabase();
+
   // Lagre TrackmanSession per klubb
   const sessions = [];
   for (const agg of clubAggregates) {
     const clubShots = metricShots.filter((s) => s.club === agg.club);
-    const session = await prisma.trackmanSession.create({
-      data: {
+    const { data: session, error } = await supabase
+      .from("TrackManSession")
+      .insert({
         id: nanoid(),
         userId: user.id,
-        sessionDate: sessionDate ? new Date(sessionDate) : new Date(),
+        sessionDate: sessionDate ? new Date(sessionDate).toISOString() : new Date().toISOString(),
         club: agg.club,
-        shots: JSON.parse(JSON.stringify(clubShots)),
-        averages: JSON.parse(JSON.stringify(agg)),
-      },
-    });
+        shots: clubShots,
+        averages: agg,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      return NextResponse.json({ error: "Kunne ikke lagre session" }, { status: 500 });
+    }
     sessions.push(session);
   }
 

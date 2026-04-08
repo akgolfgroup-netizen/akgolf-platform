@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isAdmin } from "@/lib/portal/rbac";
-import { prisma } from "@/lib/portal/prisma";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function PUT(
@@ -30,15 +30,23 @@ export async function PUT(
       );
     }
 
-    const template = await prisma.emailTemplate.update({
-      where: { id },
-      data: {
+    const supabase = await createServerSupabase();
+    const { data: template, error } = await supabase
+      .from("EmailTemplate")
+      .update({
         name,
         subject,
         htmlContent: htmlContent ?? "",
         variables: variables ?? [],
-      },
-    });
+        updatedAt: new Date().toISOString(),
+      })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      return NextResponse.json({ error: "Kunne ikke oppdatere mal" }, { status: 500 });
+    }
 
     return NextResponse.json(template);
   } catch {
@@ -65,7 +73,16 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    await prisma.emailTemplate.delete({ where: { id } });
+    const supabase = await createServerSupabase();
+    
+    const { error } = await supabase
+      .from("EmailTemplate")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      return NextResponse.json({ error: "Kunne ikke slette mal" }, { status: 500 });
+    }
 
     return NextResponse.json({ ok: true });
   } catch {

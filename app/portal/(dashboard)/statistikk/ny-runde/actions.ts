@@ -1,52 +1,60 @@
 "use server";
 
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
-import { revalidatePath } from "next/cache";
-import { checkAchievements } from "@/lib/portal/achievements/check-achievements";
 import { nanoid } from "nanoid";
+import { revalidatePath } from "next/cache";
 
-interface SaveRoundData {
+export async function saveRound(data: {
+  courseId: string;
   date: string;
-  courseName?: string;
-  totalScore: number;
-  scoreToPar: number;
-  fairwaysHit?: number;
-  fairwaysTotal?: number;
-  gir?: number;
-  girTotal?: number;
-  totalPutts?: number;
-  notes?: string;
-}
-
-export async function saveRound(data: SaveRoundData) {
+  scores: Array<{
+    holeNumber: number;
+    score: number;
+    putts?: number;
+    fairway?: boolean;
+    greenInRegulation?: boolean;
+  }>;
+}) {
   const user = await requirePortalUser();
-  if (!user?.id) throw new Error("Ikke innlogget");
+  const supabase = await createServerSupabase();
 
-  const now = new Date();
-
-  await prisma.roundStats.create({
-    data: {
-      id: nanoid(),
-      userId: user.id,
-      date: new Date(data.date),
-      courseName: data.courseName ?? null,
-      source: "MANUAL",
-      totalScore: data.totalScore,
-      scoreToPar: data.scoreToPar,
-      fairwaysHit: data.fairwaysHit ?? null,
-      fairwaysTotal: data.fairwaysTotal ?? null,
-      gir: data.gir ?? null,
-      girTotal: data.girTotal ?? null,
-      totalPutts: data.totalPutts ?? null,
-      notes: data.notes ?? null,
-      updatedAt: now,
-    },
+  const roundId = nanoid();
+  
+  await supabase.from("Round").insert({
+    id: roundId,
+    userId: user.id,
+    courseId: data.courseId,
+    date: data.date,
+    status: "COMPLETED",
   });
 
-  revalidatePath("/portal/statistikk");
-  revalidatePath("/portal/profil");
+  // Insert scores
+  if (data.scores.length > 0) {
+    await supabase.from("HoleScore").insert(
+      data.scores.map((s) => ({
+        id: nanoid(),
+        roundId,
+        holeNumber: s.holeNumber,
+        score: s.score,
+        putts: s.putts ?? 0,
+        fairway: s.fairway ?? null,
+        greenInRegulation: s.greenInRegulation ?? null,
+      }))
+    );
+  }
 
-  // Sjekk achievements i bakgrunnen
-  checkAchievements(user.id).catch(() => {});
+  revalidatePath("/portal/statistikk");
+  return { roundId };
+}
+
+export async function getCourses() {
+  const supabase = await createServerSupabase();
+
+  const { data: courses } = await supabase
+    .from("Course")
+    .select("id, name, par, holes")
+    .order("name");
+
+  return courses || [];
 }

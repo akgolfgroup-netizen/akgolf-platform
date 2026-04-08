@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
-import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import Anthropic from "@anthropic-ai/sdk";
 
 export const maxDuration = 60;
@@ -29,52 +29,84 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "roundId er paakrevd" }, { status: 400 });
   }
 
-  const round = await prisma.round.findUnique({
-    where: { id: roundId },
-    include: {
-      Course: { select: { name: true, par: true } },
-      HoleResult: {
-        orderBy: { holeNumber: "asc" },
-        include: { Shot: { orderBy: { shotNumber: "asc" } } },
-      },
-    },
-  });
+  const supabase = await createServerSupabase();
 
-  if (!round || round.userId !== user.id) {
+  // Fetch round with related data
+  const { data: round, error: roundError } = await supabase
+    .from("Round")
+    .select(
+      `
+      id,
+      userId,
+      courseId,
+      totalScore,
+      scoreToPar,
+      totalPutts,
+      fairwaysHit,
+      fairwaysTotal,
+      girCount,
+      sgTotal,
+      sgOffTheTee,
+      sgApproach,
+      sgShortGame,
+      sgPutting,
+      Course (name, par),
+      HoleResult (
+        holeNumber, par, score, putts, fairwayHit, gir, sgTotal, sgTee, sgApproach, sgShortGame, sgPutting,
+        Shot (shotNumber, fromLie, fromDistance, toLie, toDistance, club, strokesGained, sgCategory)
+      )
+    `
+    )
+    .eq("id", roundId)
+    .single();
+
+  if (roundError || !round || round.userId !== user.id) {
     return NextResponse.json({ error: "Runde ikke funnet" }, { status: 404 });
   }
 
   // Hent siste 5 runder for sammenligning
-  const recentRounds = await prisma.round.findMany({
-    where: {
-      userId: user.id,
-      isComplete: true,
-      id: { not: roundId },
-    },
-    orderBy: { date: "desc" },
-    take: 5,
-    select: {
-      totalScore: true,
-      sgTotal: true,
-      sgOffTheTee: true,
-      sgApproach: true,
-      sgShortGame: true,
-      sgPutting: true,
-      totalPutts: true,
-      fairwaysHit: true,
-      fairwaysTotal: true,
-      girCount: true,
-    },
-  });
+  const { data: recentRounds, error: recentError } = await supabase
+    .from("Round")
+    .select(
+      "totalScore, sgTotal, sgOffTheTee, sgApproach, sgShortGame, sgPutting, totalPutts, fairwaysHit, fairwaysTotal, girCount"
+    )
+    .eq("userId", user.id)
+    .eq("isComplete", true)
+    .neq("id", roundId)
+    .order("date", { ascending: false })
+    .limit(5);
+
+  if (recentError) {
+    console.error("Error fetching recent rounds:", recentError);
+  }
 
   // Hent handicap
-  const handicap = await prisma.handicapEntry.findFirst({
-    where: { userId: user.id },
-    orderBy: { date: "desc" },
-    select: { handicapIndex: true },
-  });
+  const { data: handicap, error: handicapError } = await supabase
+    .from("HandicapEntry")
+    .select("handicapIndex")
+    .eq("userId", user.id)
+    .order("date", { ascending: false })
+    .limit(1)
+    .single();
 
-  const holes = round.HoleResult;
+  if (handicapError && handicapError.code !== "PGRST116") {
+    console.error("Error fetching handicap:", handicapError);
+  }
+
+  const holes = (round.HoleResult as unknown as Array<{
+    holeNumber: number;
+    par: number;
+    score: number;
+    putts: number;
+    fairwayHit?: boolean;
+    gir?: boolean;
+    sgTotal?: number;
+    sgTee?: number;
+    sgApproach?: number;
+    sgShortGame?: number;
+    sgPutting?: number;
+  }>) || [];
+
   const holesData = holes.map((h) => ({
     hull: h.holeNumber,
     par: h.par,
@@ -89,7 +121,7 @@ export async function POST(req: NextRequest) {
     sgPutting: h.sgPutting,
   }));
 
-  const recentAvg = recentRounds.length > 0
+  const recentAvg = recentRounds && recentRounds.length > 0
     ? {
         avgScore: Math.round(
           recentRounds.reduce((s, r) => s + (r.totalScore ?? 0), 0) / recentRounds.length
@@ -104,8 +136,8 @@ export async function POST(req: NextRequest) {
   const prompt = `Analyser denne golfrunden og gi konkrete, personaliserte tilbakemeldinger pa norsk.
 
 RUNDE:
-- Bane: ${round.Course?.name ?? "Ukjent"}
-- Score: ${round.totalScore} (${(round.scoreToPar ?? 0) > 0 ? "+" : ""}${round.scoreToPar} mot par ${round.Course?.par})
+- Bane: ${(round.Course as unknown as { name?: string })?.name ?? "Ukjent"}
+- Score: ${round.totalScore} (${(round.scoreToPar ?? 0) > 0 ? "+" : ""}${round.scoreToPar} mot par ${(round.Course as unknown as { par?: number })?.par})
 - Putts: ${round.totalPutts}
 - Fairways: ${round.fairwaysHit}/${round.fairwaysTotal}
 - GIR: ${round.girCount}/18

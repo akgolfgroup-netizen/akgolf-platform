@@ -1,6 +1,6 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
 import { nanoid } from "nanoid";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
@@ -33,41 +33,47 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Ingen turneringer valgt" }, { status: 400 });
   }
 
+  const supabase = await createServerSupabase();
   let created = 0;
   let updated = 0;
 
   for (const comp of competitions) {
-    const existing = await prisma.tournament.findUnique({
-      where: { golfboxId: comp.golfboxId },
-    });
+    const { data: existing } = await supabase
+      .from("Tournament")
+      .select("id")
+      .eq("golfboxId", comp.golfboxId)
+      .single();
 
     if (existing) {
-      await prisma.tournament.update({
-        where: { golfboxId: comp.golfboxId },
-        data: {
+      const { error } = await supabase
+        .from("Tournament")
+        .update({
           name: comp.name,
-          startDate: new Date(comp.startDate),
-          endDate: comp.endDate ? new Date(comp.endDate) : null,
-          location: comp.venue || undefined,
+          startDate: new Date(comp.startDate).toISOString(),
+          endDate: comp.endDate ? new Date(comp.endDate).toISOString() : null,
+          location: comp.venue || null,
           level: comp.level,
-        },
-      });
-      updated++;
+          updatedAt: new Date().toISOString(),
+        })
+        .eq("golfboxId", comp.golfboxId);
+
+      if (!error) updated++;
     } else {
-      await prisma.tournament.create({
-        data: {
+      const { error } = await supabase
+        .from("Tournament")
+        .insert({
           id: nanoid(),
           golfboxId: comp.golfboxId,
           name: comp.name,
-          startDate: new Date(comp.startDate),
-          endDate: comp.endDate ? new Date(comp.endDate) : null,
-          location: comp.venue || undefined,
+          startDate: new Date(comp.startDate).toISOString(),
+          endDate: comp.endDate ? new Date(comp.endDate).toISOString() : null,
+          location: comp.venue || null,
           level: comp.level,
           createdById: user.id,
-          updatedAt: new Date(),
-        },
-      });
-      created++;
+          updatedAt: new Date().toISOString(),
+        });
+
+      if (!error) created++;
     }
   }
 

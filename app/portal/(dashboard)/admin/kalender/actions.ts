@@ -1,17 +1,15 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
-import { BookingStatus } from "@prisma/client";
 import { startOfDay, endOfDay, startOfWeek, endOfWeek } from "date-fns";
 
 export interface CalendarBooking {
   id: string;
   startTime: Date;
   endTime: Date;
-  status: BookingStatus;
+  status: string;
   student: { name: string | null; email: string | null };
   serviceType: { name: string; color: string | null; duration: number };
   instructor: { id: string; user: { name: string | null } };
@@ -27,39 +25,42 @@ export async function getBookingsForPeriod(
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return [];
 
+  const supabase = await createServerSupabase();
   const start = startOfDay(new Date(startDate));
   const end = endOfDay(new Date(endDate));
 
-  const bookings = await prisma.booking.findMany({
-    where: {
-      startTime: { gte: start },
-      endTime: { lte: end },
-      status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED, BookingStatus.COMPLETED] },
-      ...(instructorId ? { instructorId } : {}),
-    },
-    select: {
-      id: true,
-      startTime: true,
-      endTime: true,
-      status: true,
-      adminNotes: true,
-      User: { select: { name: true, email: true } },
-      ServiceType: { select: { name: true, color: true, duration: true } },
-      Instructor: { select: { id: true, User: { select: { name: true } } } },
-      Location: { select: { name: true } },
-    },
-    orderBy: { startTime: "asc" },
-  });
+  let query = supabase
+    .from("Booking")
+    .select(`
+      id,
+      startTime,
+      endTime,
+      status,
+      adminNotes,
+      User (name, email),
+      ServiceType (name, color, duration),
+      Instructor (id, User (name)),
+      Location (name)
+    `)
+    .gte("startTime", start.toISOString())
+    .lte("endTime", end.toISOString())
+    .in("status", ["PENDING", "CONFIRMED", "COMPLETED"]);
 
-  return bookings.map((b) => ({
+  if (instructorId) {
+    query = query.eq("instructorId", instructorId);
+  }
+
+  const { data: bookings } = await query.order("startTime", { ascending: true });
+
+  return (bookings || []).map((b) => ({
     id: b.id,
-    startTime: b.startTime,
-    endTime: b.endTime,
+    startTime: new Date(b.startTime),
+    endTime: new Date(b.endTime),
     status: b.status,
-    student: { name: b.User?.name ?? null, email: b.User?.email ?? null },
-    serviceType: { name: b.ServiceType.name, color: b.ServiceType.color, duration: b.ServiceType.duration },
-    instructor: { id: b.Instructor.id, user: { name: b.Instructor.User?.name ?? null } },
-    location: b.Location ? { name: b.Location.name } : null,
+    student: { name: (b.User as { name: string | null }).name ?? null, email: (b.User as { email: string | null }).email ?? null },
+    serviceType: { name: (b.ServiceType as { name: string }).name, color: (b.ServiceType as { color: string | null }).color, duration: (b.ServiceType as { duration: number }).duration },
+    instructor: { id: (b.Instructor as { id: string }).id, user: { name: (b.Instructor as { User: { name: string | null } }).User?.name ?? null } },
+    location: b.Location ? { name: (b.Location as { name: string }).name } : null,
     adminNotes: b.adminNotes,
   }));
 }
@@ -68,17 +69,19 @@ export async function getInstructors() {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return [];
 
-  const instructors = await prisma.instructor.findMany({
-    select: {
-      id: true,
-      User: { select: { name: true, image: true } },
-    },
-    orderBy: { User: { name: "asc" } },
-  });
+  const supabase = await createServerSupabase();
 
-  return instructors.map((i) => ({
+  const { data: instructors } = await supabase
+    .from("Instructor")
+    .select(`
+      id,
+      User (name, image)
+    `)
+    .order("User(name)", { ascending: true });
+
+  return (instructors || []).map((i) => ({
     id: i.id,
-    user: { name: i.User.name, image: i.User.image },
+    user: { name: (i.User as { name: string | null }).name, image: (i.User as { image: string | null }).image },
   }));
 }
 
@@ -101,10 +104,12 @@ export async function markNoShow(bookingId: string) {
     throw new Error("Ikke autorisert");
   }
 
-  await prisma.booking.update({
-    where: { id: bookingId },
-    data: { status: BookingStatus.NO_SHOW },
-  });
+  const supabase = await createServerSupabase();
+
+  await supabase
+    .from("Booking")
+    .update({ status: "NO_SHOW" })
+    .eq("id", bookingId);
 }
 
 export async function addAdminNote(bookingId: string, note: string) {
@@ -113,8 +118,10 @@ export async function addAdminNote(bookingId: string, note: string) {
     throw new Error("Ikke autorisert");
   }
 
-  await prisma.booking.update({
-    where: { id: bookingId },
-    data: { adminNotes: note },
-  });
+  const supabase = await createServerSupabase();
+
+  await supabase
+    .from("Booking")
+    .update({ adminNotes: note })
+    .eq("id", bookingId);
 }

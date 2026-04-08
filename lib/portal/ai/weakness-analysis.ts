@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { subDays } from "date-fns";
+import type { MessageCategory } from "./model-router";
 
 function getClient() {
   return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -14,39 +15,28 @@ interface WeaknessAnalysis {
 }
 
 export async function analyzeWeakness(userId: string): Promise<WeaknessAnalysis> {
+  const supabase = createServiceClient();
   const thirtyDaysAgo = subDays(new Date(), 30);
 
   // Fetch training logs
-  const logs = await prisma.trainingLog.findMany({
-    where: { userId, date: { gte: thirtyDaysAgo } },
-    select: {
-      date: true,
-      focusArea: true,
-      durationMinutes: true,
-      notes: true,
-      rating: true,
-      deviatedFromPlan: true,
-      deviationReason: true,
-    },
-    orderBy: { date: "desc" },
-  });
+  const { data: logs } = await supabase
+    .from("TrainingLog")
+    .select("date, focusArea, durationMinutes, notes, rating, deviatedFromPlan, deviationReason")
+    .eq("userId", userId)
+    .gte("date", thirtyDaysAgo.toISOString())
+    .order("date", { ascending: false });
 
   // Fetch recent coaching sessions
-  const coachingSessions = await prisma.coachingSession.findMany({
-    where: { studentId: userId },
-    select: {
-      sessionDate: true,
-      primaryFocus: true,
-      aiSummary: true,
-      aiFocusAreas: true,
-    },
-    orderBy: { sessionDate: "desc" },
-    take: 3,
-  });
+  const { data: coachingSessions } = await supabase
+    .from("CoachingSession")
+    .select("sessionDate, primaryFocus, aiSummary, aiFocusAreas")
+    .eq("studentId", userId)
+    .order("sessionDate", { ascending: false })
+    .limit(3);
 
   // Build focus area breakdown
   const focusCounts: Record<string, number> = {};
-  for (const log of logs) {
+  for (const log of logs || []) {
     const area = log.focusArea ?? "ukjent";
     focusCounts[area] = (focusCounts[area] ?? 0) + 1;
   }
@@ -60,8 +50,8 @@ export async function analyzeWeakness(userId: string): Promise<WeaknessAnalysis>
 
 TRENINGSLOGG (siste 30 dager):
 ${JSON.stringify(
-  logs.map((l) => ({
-    dato: l.date.toISOString().split("T")[0],
+  (logs || []).map((l) => ({
+    dato: new Date(l.date).toISOString().split("T")[0],
     fokus: l.focusArea,
     varighet_min: l.durationMinutes,
     notat: l.notes,
@@ -75,8 +65,8 @@ ${JSON.stringify(
 
 COACHING-HISTORIKK (siste 3 sesjoner):
 ${JSON.stringify(
-  coachingSessions.map((c) => ({
-    dato: c.sessionDate.toISOString().split("T")[0],
+  (coachingSessions || []).map((c) => ({
+    dato: new Date(c.sessionDate).toISOString().split("T")[0],
     primærfokus: c.primaryFocus,
     ai_oppsummering: c.aiSummary,
     fokusområder: c.aiFocusAreas,

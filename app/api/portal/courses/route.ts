@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 
 /**
  * GET /api/portal/courses — Sok etter baner
@@ -8,35 +8,27 @@ import { prisma } from "@/lib/portal/prisma";
 export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get("q") ?? "";
   const country = req.nextUrl.searchParams.get("country") ?? "NO";
+  const supabase = await createServerSupabase();
 
-  const courses = await prisma.course.findMany({
-    where: {
-      country,
-      ...(q
-        ? {
-            OR: [
-              { name: { contains: q, mode: "insensitive" } },
-              { location: { contains: q, mode: "insensitive" } },
-            ],
-          }
-        : {}),
-    },
-    select: {
-      id: true,
-      name: true,
-      location: true,
-      par: true,
-      courseRating: true,
-      slopeRating: true,
-      totalLength: true,
-      latitude: true,
-      longitude: true,
-    },
-    orderBy: { name: "asc" },
-    take: 50,
-  });
+  let query = supabase
+    .from("Course")
+    .select("id, name, location, par, courseRating, slopeRating, totalLength, latitude, longitude")
+    .eq("country", country)
+    .order("name", { ascending: true })
+    .limit(50);
 
-  return NextResponse.json(courses, {
+  if (q) {
+    // Use ilike for case-insensitive search
+    query = query.or(`name.ilike.%${q}%,location.ilike.%${q}%`);
+  }
+
+  const { data: courses, error } = await query;
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke hente baner" }, { status: 500 });
+  }
+
+  return NextResponse.json(courses || [], {
     headers: {
       "Cache-Control": "s-maxage=300, stale-while-revalidate=600",
     },

@@ -1,11 +1,10 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { nanoid } from "nanoid";
 import { z } from "zod";
-import { FriendshipStatus, ChallengeType } from "@prisma/client";
 
 // ════════════════════════════════════════════════════════════
 // FRIENDS
@@ -15,77 +14,76 @@ export async function getFriends() {
   const user = await requirePortalUser();
   if (!user?.id) return [];
 
-  // Hent alle aksepterte vennskap
-  const friendships = await prisma.friendship.findMany({
-    where: {
-      status: FriendshipStatus.ACCEPTED,
-      OR: [{ userId: user.id }, { friendId: user.id }],
-    },
-    select: { id: true, userId: true, friendId: true },
-  });
+  const supabase = await createServerSupabase();
 
-  const friendIds = friendships.map((f) =>
+  // Hent alle aksepterte vennskap
+  const { data: friendships } = await supabase
+    .from("Friendship")
+    .select("id, userId, friendId")
+    .eq("status", "ACCEPTED")
+    .or(`userId.eq.${user.id},friendId.eq.${user.id}`);
+
+  const friendIds = (friendships || []).map((f) =>
     f.userId === user.id ? f.friendId : f.userId
   );
 
   if (friendIds.length === 0) return [];
 
   // Hent vennedata separat for ren typing
-  const friends = await prisma.user.findMany({
-    where: { id: { in: friendIds } },
-    select: {
-      id: true,
-      name: true,
-      image: true,
-      lastActiveAt: true,
-      HandicapEntry: {
-        orderBy: { date: "desc" as const },
-        take: 1,
-        select: { handicapIndex: true },
-      },
-    },
-  });
+  const { data: friends } = await supabase
+    .from("User")
+    .select(`
+      id,
+      name,
+      image,
+      lastActiveAt,
+      HandicapEntry (handicapIndex, date)
+    `)
+    .in("id", friendIds);
 
   const friendshipMap = new Map(
-    friendships.map((f) => [
+    (friendships || []).map((f) => [
       f.userId === user.id ? f.friendId : f.userId,
       f.id,
     ])
   );
 
-  return friends.map((friend) => ({
-    friendshipId: friendshipMap.get(friend.id) ?? "",
-    id: friend.id,
-    name: friend.name ?? "Ukjent",
-    image: friend.image,
-    lastActiveAt: friend.lastActiveAt?.toISOString() ?? null,
-    latestHandicap: friend.HandicapEntry[0]?.handicapIndex ?? null,
-  }));
+  return (friends || []).map((friend) => {
+    const handicapEntries = (friend.HandicapEntry as { handicapIndex: number; date: string }[]) || [];
+    return {
+      friendshipId: friendshipMap.get(friend.id) ?? "",
+      id: friend.id,
+      name: friend.name ?? "Ukjent",
+      image: friend.image,
+      lastActiveAt: friend.lastActiveAt?.toString() ?? null,
+      latestHandicap: handicapEntries[0]?.handicapIndex ?? null,
+    };
+  });
 }
 
 export async function getPendingRequests() {
   const user = await requirePortalUser();
   if (!user?.id) return [];
 
-  const pending = await prisma.friendship.findMany({
-    where: {
-      friendId: user.id,
-      status: FriendshipStatus.PENDING,
-    },
-    include: {
-      User: {
-        select: { id: true, name: true, image: true },
-      },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  const supabase = await createServerSupabase();
 
-  return pending.map((f) => ({
+  const { data: pending } = await supabase
+    .from("Friendship")
+    .select(`
+      id,
+      User (id, name, image),
+      createdAt
+    `)
+    .eq("friendId", user.id)
+    .eq("status", "PENDING")
+    .order("createdAt", { ascending: false });
+
+  return (pending || []).map((f) => ({
     friendshipId: f.id,
-    id: f.User.id,
-    name: f.User.name ?? "Ukjent",
-    image: f.User.image,
-    createdAt: f.createdAt.toISOString(),
+    id: (f.User as { id: string }).id,
+    name: (f.User as { name: string | null }).name ?? "Ukjent",
+    image: (f.User as { image: string | null }).image,
+    createdAt: f.createdAt,
   }));
 }
 
@@ -101,47 +99,31 @@ export async function searchUsers(query: string) {
   if (!parsed.success) return [];
 
   const safeQuery = parsed.data.query;
+  const supabase = await createServerSupabase();
 
-  const users = await prisma.user.findMany({
-    where: {
-      AND: [
-        { id: { not: user.id } },
-        { isActive: true },
-        {
-          OR: [
-            { name: { contains: safeQuery, mode: "insensitive" } },
-            { email: { contains: safeQuery, mode: "insensitive" } },
-          ],
-        },
-      ],
-    },
-    select: {
-      id: true,
-      name: true,
-      image: true,
-      email: true,
-    },
-    take: 10,
-  });
+  const { data: users } = await supabase
+    .from("User")
+    .select("id, name, image, email")
+    .neq("id", user.id)
+    .eq("isActive", true)
+    .or(`name.ilike.%${safeQuery}%,email.ilike.%${safeQuery}%`)
+    .limit(10);
 
   // Check existing friendships
-  const existingFriendships = await prisma.friendship.findMany({
-    where: {
-      OR: [
-        { userId: user.id, friendId: { in: users.map((u) => u.id) } },
-        { friendId: user.id, userId: { in: users.map((u) => u.id) } },
-      ],
-    },
-    select: { userId: true, friendId: true, status: true },
-  });
+  const { data: existingFriendships } = await supabase
+    .from("Friendship")
+    .select("userId, friendId, status")
+    .or(`userId.eq.${user.id},friendId.eq.${user.id}`)
+    .in("userId", (users || []).map((u) => u.id))
+    .in("friendId", (users || []).map((u) => u.id));
 
   const friendshipMap = new Map<string, string>();
-  for (const f of existingFriendships) {
+  for (const f of existingFriendships || []) {
     const otherId = f.userId === user.id ? f.friendId : f.userId;
     friendshipMap.set(otherId, f.status);
   }
 
-  return users.map((u) => ({
+  return (users || []).map((u) => ({
     id: u.id,
     name: u.name ?? "Ukjent",
     image: u.image,
@@ -158,27 +140,24 @@ export async function sendFriendRequest(friendId: string) {
     throw new Error("Du kan ikke legge til deg selv");
   }
 
+  const supabase = await createServerSupabase();
+
   // Check if friendship already exists
-  const existing = await prisma.friendship.findFirst({
-    where: {
-      OR: [
-        { userId: user.id, friendId },
-        { userId: friendId, friendId: user.id },
-      ],
-    },
-  });
+  const { data: existing } = await supabase
+    .from("Friendship")
+    .select("id")
+    .or(`and(userId.eq.${user.id},friendId.eq.${friendId}),and(userId.eq.${friendId},friendId.eq.${user.id})`)
+    .single();
 
   if (existing) {
     throw new Error("Venneforespørsel eksisterer allerede");
   }
 
-  await prisma.friendship.create({
-    data: {
-      id: nanoid(),
-      userId: user.id,
-      friendId,
-      status: FriendshipStatus.PENDING,
-    },
+  await supabase.from("Friendship").insert({
+    id: nanoid(),
+    userId: user.id,
+    friendId,
+    status: "PENDING",
   });
 
   revalidatePath("/portal/sosialt");
@@ -188,22 +167,26 @@ export async function acceptFriendRequest(friendshipId: string) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
-  const friendship = await prisma.friendship.findUnique({
-    where: { id: friendshipId },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: friendship } = await supabase
+    .from("Friendship")
+    .select("*")
+    .eq("id", friendshipId)
+    .single();
 
   if (!friendship || friendship.friendId !== user.id) {
     throw new Error("Venneforespørsel ikke funnet");
   }
 
-  if (friendship.status !== FriendshipStatus.PENDING) {
+  if (friendship.status !== "PENDING") {
     throw new Error("Venneforespørsel er allerede behandlet");
   }
 
-  await prisma.friendship.update({
-    where: { id: friendshipId },
-    data: { status: FriendshipStatus.ACCEPTED },
-  });
+  await supabase
+    .from("Friendship")
+    .update({ status: "ACCEPTED" })
+    .eq("id", friendshipId);
 
   revalidatePath("/portal/sosialt");
 }
@@ -212,17 +195,19 @@ export async function declineFriendRequest(friendshipId: string) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
-  const friendship = await prisma.friendship.findUnique({
-    where: { id: friendshipId },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: friendship } = await supabase
+    .from("Friendship")
+    .select("*")
+    .eq("id", friendshipId)
+    .single();
 
   if (!friendship || friendship.friendId !== user.id) {
     throw new Error("Venneforespørsel ikke funnet");
   }
 
-  await prisma.friendship.delete({
-    where: { id: friendshipId },
-  });
+  await supabase.from("Friendship").delete().eq("id", friendshipId);
 
   revalidatePath("/portal/sosialt");
 }
@@ -231,9 +216,13 @@ export async function removeFriend(friendshipId: string) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
-  const friendship = await prisma.friendship.findUnique({
-    where: { id: friendshipId },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: friendship } = await supabase
+    .from("Friendship")
+    .select("*")
+    .eq("id", friendshipId)
+    .single();
 
   if (
     !friendship ||
@@ -242,9 +231,7 @@ export async function removeFriend(friendshipId: string) {
     throw new Error("Vennskap ikke funnet");
   }
 
-  await prisma.friendship.delete({
-    where: { id: friendshipId },
-  });
+  await supabase.from("Friendship").delete().eq("id", friendshipId);
 
   revalidatePath("/portal/sosialt");
 }
@@ -257,42 +244,37 @@ export async function getActiveChallenges() {
   const user = await requirePortalUser();
   if (!user?.id) return [];
 
-  const now = new Date();
+  const supabase = await createServerSupabase();
+  const now = new Date().toISOString();
 
-  const challenges = await prisma.challenge.findMany({
-    where: {
-      endDate: { gte: now },
-      OR: [
-        { createdById: user.id },
-        { Participants: { some: { userId: user.id } } },
-      ],
-    },
-    include: {
-      Creator: { select: { id: true, name: true, image: true } },
-      Participants: {
-        include: {
-          User: { select: { id: true, name: true, image: true } },
-        },
-        orderBy: { rank: "asc" },
-      },
-    },
-    orderBy: { endDate: "asc" },
-  });
+  const { data: challenges } = await supabase
+    .from("Challenge")
+    .select(`
+      *,
+      Creator (id, name, image),
+      ChallengeParticipant (
+        *,
+        User (id, name, image)
+      )
+    `)
+    .gte("endDate", now)
+    .or(`createdById.eq.${user.id},ChallengeParticipant.userId.eq.${user.id}`)
+    .order("endDate", { ascending: true });
 
-  return challenges.map((c) => ({
+  return (challenges || []).map((c) => ({
     id: c.id,
     title: c.title,
     type: c.type,
     metric: c.metric,
-    startDate: c.startDate.toISOString(),
-    endDate: c.endDate.toISOString(),
+    startDate: c.startDate,
+    endDate: c.endDate,
     isPublic: c.isPublic,
     creator: {
-      id: c.Creator.id,
-      name: c.Creator.name ?? "Ukjent",
-      image: c.Creator.image,
+      id: (c.Creator as { id: string }).id,
+      name: (c.Creator as { name: string | null }).name ?? "Ukjent",
+      image: (c.Creator as { image: string | null }).image,
     },
-    participants: c.Participants.map((p) => ({
+    participants: ((c.ChallengeParticipant as { User: { id: string; name: string | null; image: string | null }; userId: string; currentValue: number; rank: number }[]) || []).map((p) => ({
       id: p.userId,
       name: p.User.name ?? "Ukjent",
       image: p.User.image,
@@ -300,13 +282,13 @@ export async function getActiveChallenges() {
       rank: p.rank,
     })),
     isCreator: c.createdById === user.id,
-    isParticipant: c.Participants.some((p) => p.userId === user.id),
+    isParticipant: (c.ChallengeParticipant as { userId: string }[]).some((p) => p.userId === user.id),
   }));
 }
 
 const challengeSchema = z.object({
   title: z.string().min(2).max(100),
-  type: z.nativeEnum(ChallengeType),
+  type: z.string(),
   metric: z.string().min(1).max(100),
   startDate: z.string().datetime(),
   endDate: z.string().datetime(),
@@ -315,7 +297,7 @@ const challengeSchema = z.object({
 
 export async function createChallenge(data: {
   title: string;
-  type: ChallengeType;
+  type: string;
   metric: string;
   startDate: string;
   endDate: string;
@@ -330,37 +312,34 @@ export async function createChallenge(data: {
   }
 
   const challengeId = nanoid();
+  const supabase = await createServerSupabase();
 
-  await prisma.challenge.create({
-    data: {
-      id: challengeId,
-      createdById: user.id,
-      title: parsed.data.title,
-      type: parsed.data.type,
-      metric: parsed.data.metric,
-      startDate: new Date(parsed.data.startDate),
-      endDate: new Date(parsed.data.endDate),
-    },
+  await supabase.from("Challenge").insert({
+    id: challengeId,
+    createdById: user.id,
+    title: parsed.data.title,
+    type: parsed.data.type,
+    metric: parsed.data.metric,
+    startDate: parsed.data.startDate,
+    endDate: parsed.data.endDate,
   });
 
   // Add creator as participant
-  await prisma.challengeParticipant.create({
-    data: {
-      id: nanoid(),
-      challengeId,
-      userId: user.id,
-    },
+  await supabase.from("ChallengeParticipant").insert({
+    id: nanoid(),
+    challengeId,
+    userId: user.id,
   });
 
   // Add invited friends as participants
   if (parsed.data.inviteFriendIds?.length) {
-    await prisma.challengeParticipant.createMany({
-      data: parsed.data.inviteFriendIds.map((friendId) => ({
+    await supabase.from("ChallengeParticipant").insert(
+      parsed.data.inviteFriendIds.map((friendId) => ({
         id: nanoid(),
         challengeId,
         userId: friendId,
-      })),
-    });
+      }))
+    );
   }
 
   revalidatePath("/portal/sosialt");
@@ -371,31 +350,30 @@ export async function joinChallenge(challengeId: string) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke innlogget");
 
-  const challenge = await prisma.challenge.findUnique({
-    where: { id: challengeId },
-    select: { isPublic: true, endDate: true },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: challenge } = await supabase
+    .from("Challenge")
+    .select("isPublic, endDate")
+    .eq("id", challengeId)
+    .single();
 
   if (!challenge) throw new Error("Utfordring ikke funnet");
-  if (challenge.endDate < new Date()) throw new Error("Utfordringen er avsluttet");
+  if (new Date(challenge.endDate) < new Date()) throw new Error("Utfordringen er avsluttet");
 
-  const existing = await prisma.challengeParticipant.findUnique({
-    where: {
-      challengeId_userId: {
-        challengeId,
-        userId: user.id,
-      },
-    },
-  });
+  const { data: existing } = await supabase
+    .from("ChallengeParticipant")
+    .select("id")
+    .eq("challengeId", challengeId)
+    .eq("userId", user.id)
+    .single();
 
   if (existing) throw new Error("Du deltar allerede");
 
-  await prisma.challengeParticipant.create({
-    data: {
-      id: nanoid(),
-      challengeId,
-      userId: user.id,
-    },
+  await supabase.from("ChallengeParticipant").insert({
+    id: nanoid(),
+    challengeId,
+    userId: user.id,
   });
 
   revalidatePath("/portal/sosialt");
@@ -411,43 +389,42 @@ export async function getFriendsLeaderboard(
   const user = await requirePortalUser();
   if (!user?.id) return [];
 
-  // Get all accepted friends
-  const friendships = await prisma.friendship.findMany({
-    where: {
-      status: FriendshipStatus.ACCEPTED,
-      OR: [{ userId: user.id }, { friendId: user.id }],
-    },
-    select: { userId: true, friendId: true },
-  });
+  const supabase = await createServerSupabase();
 
-  const friendIds = friendships.map((f) =>
+  // Get all accepted friends
+  const { data: friendships } = await supabase
+    .from("Friendship")
+    .select("userId, friendId")
+    .eq("status", "ACCEPTED")
+    .or(`userId.eq.${user.id},friendId.eq.${user.id}`);
+
+  const friendIds = (friendships || []).map((f) =>
     f.userId === user.id ? f.friendId : f.userId
   );
   const allUserIds = [user.id, ...friendIds];
 
   if (sortBy === "handicap") {
-    const users = await prisma.user.findMany({
-      where: { id: { in: allUserIds } },
-      select: {
-        id: true,
-        name: true,
-        image: true,
-        HandicapEntry: {
-          orderBy: { date: "desc" },
-          take: 1,
-          select: { handicapIndex: true },
-        },
-      },
-    });
+    const { data: users } = await supabase
+      .from("User")
+      .select(`
+        id,
+        name,
+        image,
+        HandicapEntry (handicapIndex, date)
+      `)
+      .in("id", allUserIds);
 
-    return users
-      .map((u) => ({
-        id: u.id,
-        name: u.name ?? "Ukjent",
-        image: u.image,
-        value: u.HandicapEntry[0]?.handicapIndex ?? null,
-        isCurrentUser: u.id === user.id,
-      }))
+    return (users || [])
+      .map((u) => {
+        const entries = (u.HandicapEntry as { handicapIndex: number; date: string }[]) || [];
+        return {
+          id: u.id,
+          name: u.name ?? "Ukjent",
+          image: u.image,
+          value: entries[0]?.handicapIndex ?? null,
+          isCurrentUser: u.id === user.id,
+        };
+      })
       .filter((u) => u.value !== null)
       .sort((a, b) => (a.value ?? 54) - (b.value ?? 54));
   }
@@ -456,26 +433,23 @@ export async function getFriendsLeaderboard(
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const users = await prisma.user.findMany({
-      where: { id: { in: allUserIds } },
-      select: {
-        id: true,
-        name: true,
-        image: true,
-        HandicapEntry: {
-          orderBy: { date: "desc" },
-          take: 10,
-          select: { handicapIndex: true, date: true },
-        },
-      },
-    });
+    const { data: users } = await supabase
+      .from("User")
+      .select(`
+        id,
+        name,
+        image,
+        HandicapEntry (handicapIndex, date)
+      `)
+      .in("id", allUserIds);
 
-    return users
+    return (users || [])
       .map((u) => {
-        const entries = u.HandicapEntry;
+        const entries = ((u.HandicapEntry as { handicapIndex: number; date: string }[]) || [])
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         const current = entries[0]?.handicapIndex;
         const oldEntry = entries.find(
-          (e) => e.date <= thirtyDaysAgo
+          (e) => new Date(e.date) <= thirtyDaysAgo
         );
         const improvement =
           current != null && oldEntry
@@ -498,25 +472,23 @@ export async function getFriendsLeaderboard(
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-  const users = await prisma.user.findMany({
-    where: { id: { in: allUserIds } },
-    select: {
-      id: true,
-      name: true,
-      image: true,
-      TrainingLog: {
-        where: { date: { gte: thirtyDaysAgo } },
-        select: { id: true },
-      },
-    },
-  });
+  const { data: users } = await supabase
+    .from("User")
+    .select(`
+      id,
+      name,
+      image,
+      TrainingLog (id)
+    `)
+    .in("id", allUserIds)
+    .filter("TrainingLog.date", "gte", thirtyDaysAgo.toISOString());
 
-  return users
+  return (users || [])
     .map((u) => ({
       id: u.id,
       name: u.name ?? "Ukjent",
       image: u.image,
-      value: u.TrainingLog.length,
+      value: ((u.TrainingLog as { id: string }[]) || []).length,
       isCurrentUser: u.id === user.id,
     }))
     .sort((a, b) => (b.value ?? 0) - (a.value ?? 0));

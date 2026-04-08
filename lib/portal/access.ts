@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/portal/prisma";
-import { SubscriptionStatus, SubscriptionTier } from "@prisma/client";
+import { createServiceClient } from "@/lib/supabase/server";
+import { SubscriptionTier, SubscriptionStatus } from "@prisma/client";
 import {
   PORTAL_LIMITS,
   type PortalLimits,
@@ -14,15 +14,23 @@ export {
   type PortalLimits,
 } from "./tier-utils";
 
+// ════════════════════════════════════════════════════════════
+// Subscription & Usage
+// ════════════════════════════════════════════════════════════
+
 /**
  * Get portal limits for a user based on their subscription tier
  */
 export async function getPortalLimits(userId: string): Promise<PortalLimits> {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { subscriptionTier: true },
-  });
-  return PORTAL_LIMITS[user?.subscriptionTier ?? SubscriptionTier.VISITOR];
+  const supabase = createServiceClient();
+  
+  const { data: user } = await supabase
+    .from("User")
+    .select("subscriptionTier")
+    .eq("id", userId)
+    .single();
+
+  return PORTAL_LIMITS[(user?.subscriptionTier as SubscriptionTier) ?? "VISITOR"];
 }
 
 /**
@@ -34,46 +42,46 @@ export async function getPortalUsage(userId: string): Promise<{
   resetDate: Date;
   tier: SubscriptionTier;
 }> {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      portalMonthlyLogCount: true,
-      portalMonthlyAiCount: true,
-      portalUsageResetDate: true,
-      subscriptionTier: true,
-    },
-  });
+  const supabase = createServiceClient();
+
+  const { data: user } = await supabase
+    .from("User")
+    .select("portalMonthlyLogCount, portalMonthlyAiCount, portalUsageResetDate, subscriptionTier")
+    .eq("id", userId)
+    .single();
 
   if (!user) {
     return {
       logCount: 0,
       aiCount: 0,
       resetDate: new Date(),
-      tier: SubscriptionTier.VISITOR,
+      tier: "VISITOR" as SubscriptionTier,
     };
   }
 
   // Check if we need to reset (new month)
   const now = new Date();
-  const resetDate = user.portalUsageResetDate ?? new Date();
+  const resetDate = user.portalUsageResetDate ? new Date(user.portalUsageResetDate) : new Date();
+  
   if (
     now.getMonth() !== resetDate.getMonth() ||
     now.getFullYear() !== resetDate.getFullYear()
   ) {
     // Reset counters for new month
-    await prisma.user.update({
-      where: { id: userId },
-      data: {
+    await supabase
+      .from("User")
+      .update({
         portalMonthlyLogCount: 0,
         portalMonthlyAiCount: 0,
-        portalUsageResetDate: now,
-      },
-    });
+        portalUsageResetDate: now.toISOString(),
+      })
+      .eq("id", userId);
+
     return {
       logCount: 0,
       aiCount: 0,
       resetDate: now,
-      tier: user.subscriptionTier,
+      tier: user.subscriptionTier as SubscriptionTier,
     };
   }
 
@@ -81,7 +89,7 @@ export async function getPortalUsage(userId: string): Promise<{
     logCount: user.portalMonthlyLogCount ?? 0,
     aiCount: user.portalMonthlyAiCount ?? 0,
     resetDate,
-    tier: user.subscriptionTier,
+    tier: user.subscriptionTier as SubscriptionTier,
   };
 }
 
@@ -135,30 +143,52 @@ export async function canUseAiAnalysis(userId: string): Promise<{
  * Increment log count after successfully logging a session
  */
 export async function incrementLogCount(userId: string): Promise<void> {
-  await prisma.user.update({
-    where: { id: userId },
-    data: { portalMonthlyLogCount: { increment: 1 } },
-  });
+  const supabase = createServiceClient();
+  
+  // Get current value and increment
+  const { data: user } = await supabase
+    .from("User")
+    .select("portalMonthlyLogCount")
+    .eq("id", userId)
+    .single();
+
+  await supabase
+    .from("User")
+    .update({ portalMonthlyLogCount: (user?.portalMonthlyLogCount ?? 0) + 1 })
+    .eq("id", userId);
 }
 
 /**
  * Increment AI analysis count after using AI
  */
 export async function incrementAiCount(userId: string): Promise<void> {
-  await prisma.user.update({
-    where: { id: userId },
-    data: { portalMonthlyAiCount: { increment: 1 } },
-  });
+  const supabase = createServiceClient();
+  
+  // Get current value and increment
+  const { data: user } = await supabase
+    .from("User")
+    .select("portalMonthlyAiCount")
+    .eq("id", userId)
+    .single();
+
+  await supabase
+    .from("User")
+    .update({ portalMonthlyAiCount: (user?.portalMonthlyAiCount ?? 0) + 1 })
+    .eq("id", userId);
 }
 
 /**
  * Check if user has completed onboarding
  */
 export async function hasCompletedOnboarding(userId: string): Promise<boolean> {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { onboardingCompletedAt: true },
-  });
+  const supabase = createServiceClient();
+  
+  const { data: user } = await supabase
+    .from("User")
+    .select("onboardingCompletedAt")
+    .eq("id", userId)
+    .single();
+
   return !!user?.onboardingCompletedAt;
 }
 
@@ -166,11 +196,17 @@ export async function hasCompletedOnboarding(userId: string): Promise<boolean> {
  * Mark onboarding as completed
  */
 export async function completeOnboarding(userId: string): Promise<void> {
-  await prisma.user.update({
-    where: { id: userId },
-    data: { onboardingCompletedAt: new Date() },
-  });
+  const supabase = createServiceClient();
+  
+  await supabase
+    .from("User")
+    .update({ onboardingCompletedAt: new Date().toISOString() })
+    .eq("id", userId);
 }
+
+// ════════════════════════════════════════════════════════════
+// Module Access Control
+// ════════════════════════════════════════════════════════════
 
 /**
  * Legacy tier → module mapping for backward compatibility.
@@ -190,8 +226,8 @@ const LEGACY_TIER_MAP: Record<string, string[]> = {
 };
 
 const ACTIVE_STATUSES: SubscriptionStatus[] = [
-  SubscriptionStatus.ACTIVE,
-  SubscriptionStatus.TRIALING,
+  "ACTIVE",
+  "TRIALING",
 ];
 
 /**
@@ -202,38 +238,64 @@ export async function hasModuleAccess(
   userId: string,
   moduleSlug: string
 ): Promise<boolean> {
+  const supabase = createServiceClient();
+
   // 1. Direct module subscription
-  const directSub = await prisma.appSubscription.findFirst({
-    where: {
-      userId,
-      AppModule: { slug: moduleSlug },
-      status: { in: ACTIVE_STATUSES },
-      currentPeriodEnd: { gte: new Date() },
-    },
-  });
+  const { data: directSub } = await supabase
+    .from("AppSubscription")
+    .select(`
+      id,
+      AppModule:moduleId(slug)
+    `)
+    .eq("userId", userId)
+    .not("moduleId", "is", null)
+    .in("status", ACTIVE_STATUSES)
+    .gte("currentPeriodEnd", new Date().toISOString())
+    .eq("AppModule.slug", moduleSlug)
+    .single();
+
   if (directSub) return true;
 
   // 2. Bundle subscription that includes the module
-  const bundleSub = await prisma.appSubscription.findFirst({
-    where: {
-      userId,
-      bundleId: { not: null },
-      status: { in: ACTIVE_STATUSES },
-      currentPeriodEnd: { gte: new Date() },
-      AppBundle: {
-        BundleItem: { some: { AppModule: { slug: moduleSlug } } },
-      },
-    },
-  });
-  if (bundleSub) return true;
+  const { data: bundleSubs } = await supabase
+    .from("AppSubscription")
+    .select(`
+      id,
+      AppBundle:bundleId(
+        BundleItem:AppBundleItem(
+          AppModule:moduleId(slug)
+        )
+      )
+    `)
+    .eq("userId", userId)
+    .not("bundleId", "is", null)
+    .in("status", ACTIVE_STATUSES)
+    .gte("currentPeriodEnd", new Date().toISOString())
+    .returns<{
+      id: string;
+      AppBundle?: {
+        BundleItem?: {
+          AppModule?: { slug: string };
+        }[];
+      };
+    }[]>();
+
+  for (const sub of bundleSubs || []) {
+    const items = sub.AppBundle?.BundleItem || [];
+    for (const item of items) {
+      if (item.AppModule?.slug === moduleSlug) return true;
+    }
+  }
 
   // 3. Legacy tier fallback
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { subscriptionTier: true },
-  });
+  const { data: user } = await supabase
+    .from("User")
+    .select("subscriptionTier")
+    .eq("id", userId)
+    .single();
+
   if (user) {
-    const legacyModules = LEGACY_TIER_MAP[user.subscriptionTier] ?? [];
+    const legacyModules = LEGACY_TIER_MAP[user.subscriptionTier as string] ?? [];
     if (legacyModules.includes(moduleSlug)) return true;
   }
 
@@ -245,49 +307,64 @@ export async function hasModuleAccess(
  * Returns a flat array of slugs for use in UI gating.
  */
 export async function getUserModuleSlugs(userId: string): Promise<string[]> {
+  const supabase = createServiceClient();
   const slugs = new Set<string>();
 
   // 1. Direct module subscriptions
-  const directSubs = await prisma.appSubscription.findMany({
-    where: {
-      userId,
-      moduleId: { not: null },
-      status: { in: ACTIVE_STATUSES },
-      currentPeriodEnd: { gte: new Date() },
-    },
-    include: { AppModule: { select: { slug: true } } },
-  });
-  for (const sub of directSubs) {
+  const { data: directSubs } = await supabase
+    .from("AppSubscription")
+    .select(`
+      id,
+      AppModule:moduleId(slug)
+    `)
+    .eq("userId", userId)
+    .not("moduleId", "is", null)
+    .in("status", ACTIVE_STATUSES)
+    .gte("currentPeriodEnd", new Date().toISOString())
+    .returns<{ AppModule?: { slug: string } }[]>();
+
+  for (const sub of directSubs || []) {
     if (sub.AppModule?.slug) slugs.add(sub.AppModule.slug);
   }
 
   // 2. Bundle subscriptions
-  const bundleSubs = await prisma.appSubscription.findMany({
-    where: {
-      userId,
-      bundleId: { not: null },
-      status: { in: ACTIVE_STATUSES },
-      currentPeriodEnd: { gte: new Date() },
-    },
-    include: {
-      AppBundle: {
-        include: { BundleItem: { include: { AppModule: { select: { slug: true } } } } },
-      },
-    },
-  });
-  for (const sub of bundleSubs) {
+  const { data: bundleSubs } = await supabase
+    .from("AppSubscription")
+    .select(`
+      id,
+      AppBundle:bundleId(
+        BundleItem:AppBundleItem(
+          AppModule:moduleId(slug)
+        )
+      )
+    `)
+    .eq("userId", userId)
+    .not("bundleId", "is", null)
+    .in("status", ACTIVE_STATUSES)
+    .gte("currentPeriodEnd", new Date().toISOString())
+    .returns<{
+      AppBundle?: {
+        BundleItem?: {
+          AppModule?: { slug: string };
+        }[];
+      };
+    }[]>();
+
+  for (const sub of bundleSubs || []) {
     for (const item of sub.AppBundle?.BundleItem ?? []) {
       if (item.AppModule?.slug) slugs.add(item.AppModule.slug);
     }
   }
 
   // 3. Legacy tier fallback
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { subscriptionTier: true },
-  });
+  const { data: user } = await supabase
+    .from("User")
+    .select("subscriptionTier")
+    .eq("id", userId)
+    .single();
+
   if (user) {
-    const legacyModules = LEGACY_TIER_MAP[user.subscriptionTier] ?? [];
+    const legacyModules = LEGACY_TIER_MAP[user.subscriptionTier as string] ?? [];
     for (const slug of legacyModules) slugs.add(slug);
   }
 

@@ -1,9 +1,8 @@
 "use server";
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { startOfWeek, endOfWeek, startOfMonth, endOfMonth, addDays, format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { BookingStatus } from "@prisma/client";
 
 export interface CoachCapacity {
   id: string;
@@ -42,6 +41,7 @@ export interface CapacityData {
 }
 
 export async function getCapacityData(): Promise<CapacityData> {
+  const supabase = await createServerSupabase();
   const now = new Date();
   const weekStart = startOfWeek(now, { weekStartsOn: 1 });
   const weekEnd = endOfWeek(now, { weekStartsOn: 1 });
@@ -49,44 +49,46 @@ export async function getCapacityData(): Promise<CapacityData> {
   const monthEnd = endOfMonth(now);
 
   // Hent alle instruktorer
-  const instructors = await prisma.instructor.findMany({
-    include: {
-      User: { select: { name: true } },
-      InstructorAvailability: true,
-    },
-  });
+  const { data: instructors } = await supabase
+    .from("Instructor")
+    .select(`
+      id,
+      User (name),
+      InstructorAvailability (dayOfWeek, startTime, endTime)
+    `);
 
   // Hent bookinger denne uken
-  const weeklyBookings = await prisma.booking.findMany({
-    where: {
-      startTime: { gte: weekStart, lte: weekEnd },
-      status: { in: [BookingStatus.CONFIRMED, BookingStatus.COMPLETED] },
-    },
-    include: {
-      ServiceType: { select: { price: true, duration: true } },
-      Instructor: { select: { id: true } },
-    },
-  });
+  const { data: weeklyBookings } = await supabase
+    .from("Booking")
+    .select(`
+      startTime,
+      ServiceType (price, duration),
+      Instructor (id)
+    `)
+    .gte("startTime", weekStart.toISOString())
+    .lte("startTime", weekEnd.toISOString())
+    .in("status", ["CONFIRMED", "COMPLETED"]);
 
   // Hent bookinger denne måneden
-  const monthlyBookings = await prisma.booking.findMany({
-    where: {
-      startTime: { gte: monthStart, lte: monthEnd },
-      status: { in: [BookingStatus.CONFIRMED, BookingStatus.COMPLETED] },
-    },
-    include: {
-      ServiceType: { select: { price: true } },
-    },
-  });
+  const { data: monthlyBookings } = await supabase
+    .from("Booking")
+    .select(`
+      ServiceType (price)
+    `)
+    .gte("startTime", monthStart.toISOString())
+    .lte("startTime", monthEnd.toISOString())
+    .in("status", ["CONFIRMED", "COMPLETED"]);
 
   // Beregn kapasitet per instruktor
-  const coaches: CoachCapacity[] = instructors.map((instructor) => {
+  const coaches: CoachCapacity[] = (instructors || []).map((instructor) => {
+    const availabilities = (instructor.InstructorAvailability as { dayOfWeek: number; startTime: string; endTime: string }[]) || [];
+    
     // Beregn totale slots per uke basert på tilgjengelighet
     let weeklySlots = 0;
     let maxWeeklyRevenue = 0;
     const avgPricePerHour = 1500; // Gjennomsnittlig pris per time
 
-    for (const avail of instructor.InstructorAvailability) {
+    for (const avail of availabilities) {
       const startMinutes = parseInt(avail.startTime.split(":")[0]) * 60 + parseInt(avail.startTime.split(":")[1]);
       const endMinutes = parseInt(avail.endTime.split(":")[0]) * 60 + parseInt(avail.endTime.split(":")[1]);
       const slotsInWindow = Math.floor((endMinutes - startMinutes) / 50); // 50 min per slot
@@ -95,18 +97,18 @@ export async function getCapacityData(): Promise<CapacityData> {
     }
 
     // Tell bookede slots denne uken
-    const bookedSlots = weeklyBookings.filter(
-      (b) => b.Instructor?.id === instructor.id
+    const bookedSlots = (weeklyBookings || []).filter(
+      (b) => (b.Instructor as { id: string } | null)?.id === instructor.id
     ).length;
 
     // Beregn faktisk inntekt
-    const weeklyRevenue = weeklyBookings
-      .filter((b) => b.Instructor?.id === instructor.id)
-      .reduce((sum, b) => sum + b.ServiceType.price, 0);
+    const weeklyRevenue = (weeklyBookings || [])
+      .filter((b) => (b.Instructor as { id: string } | null)?.id === instructor.id)
+      .reduce((sum, b) => sum + ((b.ServiceType as { price: number } | null)?.price ?? 0), 0);
 
     return {
       id: instructor.id,
-      name: instructor.User.name ?? "Ukjent",
+      name: (instructor.User as { name: string | null }).name ?? "Ukjent",
       weeklySlots,
       bookedSlots,
       occupancy: weeklySlots > 0 ? bookedSlots / weeklySlots : 0,
@@ -123,8 +125,10 @@ export async function getCapacityData(): Promise<CapacityData> {
 
     const coachesData: Record<string, { booked: number; total: number }> = {};
 
-    for (const instructor of instructors) {
-      const totalSlots = instructor.InstructorAvailability
+    for (const instructor of instructors || []) {
+      const availabilities = (instructor.InstructorAvailability as { dayOfWeek: number; startTime: string; endTime: string }[]) || [];
+      
+      const totalSlots = availabilities
         .filter((a: { dayOfWeek: number }) => a.dayOfWeek === dayOfWeek)
         .reduce((sum: number, a: { startTime: string; endTime: string }) => {
           const startMinutes = parseInt(a.startTime.split(":")[0]) * 60 + parseInt(a.startTime.split(":")[1]);
@@ -132,13 +136,13 @@ export async function getCapacityData(): Promise<CapacityData> {
           return sum + Math.floor((endMinutes - startMinutes) / 50);
         }, 0);
 
-      const bookedSlots = weeklyBookings.filter(
+      const bookedSlots = (weeklyBookings || []).filter(
         (b) =>
-          b.Instructor?.id === instructor.id &&
+          (b.Instructor as { id: string } | null)?.id === instructor.id &&
           new Date(b.startTime).toDateString() === day.toDateString()
       ).length;
 
-      coachesData[instructor.User.name ?? "Ukjent"] = {
+      coachesData[(instructor.User as { name: string | null }).name ?? "Ukjent"] = {
         booked: bookedSlots,
         total: totalSlots,
       };
@@ -162,9 +166,9 @@ export async function getCapacityData(): Promise<CapacityData> {
   weeklyTotal.occupancy = weeklyTotal.slots > 0 ? weeklyTotal.booked / weeklyTotal.slots : 0;
 
   const monthlyTotal = {
-    revenue: monthlyBookings.reduce((sum, b) => sum + b.ServiceType.price, 0),
+    revenue: (monthlyBookings || []).reduce((sum, b) => sum + ((b.ServiceType as { price: number } | null)?.price ?? 0), 0),
     maxRevenue: weeklyTotal.maxRevenue * 4, // Estimat
-    bookedCount: monthlyBookings.length,
+    bookedCount: (monthlyBookings || []).length,
   };
 
   return {

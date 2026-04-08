@@ -2,12 +2,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { ServiceCard } from "../../components/ServiceCard";
 import { getCategoryBySlug, isRecommended, type BookingCategory } from "@/lib/booking-config";
-import { ServiceCategory } from "@prisma/client";
 import type { Metadata } from "next";
 
 interface Props {
@@ -36,18 +35,19 @@ export default async function CategoryPage({ params }: Props) {
     notFound();
   }
 
+  const supabase = await createServerSupabase();
+
   // Fetch services for this category
-  const services = await prisma.serviceType.findMany({
-    where: {
-      isActive: true,
-      isPublic: true,
-      category: { in: category.serviceCategories as ServiceCategory[] },
-    },
-    orderBy: { sortOrder: "asc" },
-  });
+  const { data: services } = await supabase
+    .from("ServiceType")
+    .select("*")
+    .eq("isActive", true)
+    .eq("isPublic", true)
+    .in("category", category.serviceCategories)
+    .order("sortOrder", { ascending: true });
 
   // Sort: recommended first
-  const sortedServices = [...services].sort((a, b) => {
+  const sortedServices = [...(services ?? [])].sort((a, b) => {
     const aRec = isRecommended(a.name, slug as BookingCategory);
     const bRec = isRecommended(b.name, slug as BookingCategory);
     if (aRec && !bRec) return -1;
@@ -118,7 +118,7 @@ export default async function CategoryPage({ params }: Props) {
               </>
             )}
 
-            {services.length === 0 && (
+            {(services?.length ?? 0) === 0 && (
               <div className="text-center py-16 bg-grey-100 rounded-[20px]">
                 <p className="text-grey-500">
                   Ingen tjenester tilgjengelig i denne kategorien.

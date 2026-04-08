@@ -1,5 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { StartRoundClient } from "./start-round-client";
 
 export const dynamic = "force-dynamic";
@@ -7,18 +7,12 @@ export const dynamic = "force-dynamic";
 export default async function NyRundePage() {
   await requirePortalUser();
 
-  const courses = await prisma.course.findMany({
-    where: { country: "NO" },
-    orderBy: { name: "asc" },
-    select: {
-      id: true,
-      name: true,
-      location: true,
-      par: true,
-      courseRating: true,
-      slopeRating: true,
-    },
-  });
+  const supabase = await createServerSupabase();
+  const { data: courses } = await supabase
+    .from("Course")
+    .select("id, name, location, par, courseRating, slopeRating")
+    .eq("country", "NO")
+    .order("name", { ascending: true });
 
   return (
     <div className="max-w-lg mx-auto space-y-6">
@@ -31,7 +25,7 @@ export default async function NyRundePage() {
         </p>
       </div>
 
-      <StartRoundClient courses={courses} />
+      <StartRoundClient courses={courses ?? []} />
     </div>
   );
 }

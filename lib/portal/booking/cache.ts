@@ -3,8 +3,7 @@
  */
 
 import { unstable_cache } from "next/cache";
-import { prisma } from "@/lib/portal/prisma";
-import { BookingStatus } from "@prisma/client";
+import { createServiceClient } from "@/lib/supabase/server";
 import { generateSlotsWithOverrides } from "@/lib/portal/slots";
 
 export const CACHE_TTL = {
@@ -28,17 +27,15 @@ export const getCachedSlots = unstable_cache(
     date: Date,
     serviceTypeId: string
   ): Promise<string[]> => {
-    const serviceType = await prisma.serviceType.findUnique({
-      where: { id: serviceTypeId },
-      select: {
-        duration: true,
-        bufferAfter: true,
-        bufferBefore: true,
-        minNoticeHours: true,
-      },
-    });
+    const supabase = createServiceClient();
+    
+    const { data: serviceType, error } = await supabase
+      .from("ServiceType")
+      .select("duration, bufferAfter, bufferBefore, minNoticeHours")
+      .eq("id", serviceTypeId)
+      .single();
 
-    if (!serviceType) return [];
+    if (error || !serviceType) return [];
 
     return generateSlotsWithOverrides({
       instructorId,

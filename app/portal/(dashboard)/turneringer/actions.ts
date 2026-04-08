@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import {
   getTournamentsWithPlans,
@@ -28,7 +28,8 @@ export async function getTournaments(options?: {
   const user = await requirePortalUser();
   if (!user?.id) return [];
 
-  return getTournamentsWithPlans(prisma, user.id, options);
+  const supabase = await createServerSupabase();
+  return getTournamentsWithPlans(supabase, user.id, options);
 }
 
 // ── Registrer / oppdater turneringsplan ────────────────────────
@@ -43,8 +44,10 @@ export async function registerForTournament(input: {
   const user = await requirePortalUser();
   if (!user?.id) return { success: false, error: "Ikke innlogget" };
 
+  const supabase = await createServerSupabase();
+
   try {
-    await planTournament(prisma, {
+    await planTournament(supabase, {
       studentId: user.id,
       tournamentId: input.tournamentId,
       goalType: input.goalType,
@@ -66,7 +69,8 @@ export async function getTournamentPrepAction(
   const user = await requirePortalUser();
   if (!user?.id) return null;
 
-  return getTournamentPrep(prisma, tournamentId, user.id);
+  const supabase = await createServerSupabase();
+  return getTournamentPrep(supabase, tournamentId, user.id);
 }
 
 // ── Lagre turneringsforberedelse ───────────────────────────────
@@ -82,8 +86,10 @@ export async function saveTournamentPrepAction(input: {
   const user = await requirePortalUser();
   if (!user?.id) return { success: false, error: "Ikke innlogget" };
 
+  const supabase = await createServerSupabase();
+
   try {
-    await savePrepAction(prisma, {
+    await savePrepAction(supabase, {
       tournamentId: input.tournamentId,
       userId: user.id,
       courseStrategy: input.courseStrategy,

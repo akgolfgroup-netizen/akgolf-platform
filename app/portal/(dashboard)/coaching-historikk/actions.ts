@@ -1,8 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { isStaff } from "@/lib/portal/rbac";
 import { nanoid } from "nanoid";
@@ -11,21 +10,32 @@ export async function getCoachingSessions() {
   const user = await requirePortalUser();
   if (!user?.id) return [];
 
+  const supabase = await createServerSupabase();
+
   const where = isStaff(user.role)
     ? {} // Staff sees all sessions
     : { studentId: user.id };
 
-  return prisma.coachingSession.findMany({
-    where,
-    include: {
-      User: { select: { name: true, image: true } },
-      Instructor: {
-        select: { User: { select: { name: true } }, title: true },
-      },
-    },
-    orderBy: { sessionDate: "desc" },
-    take: 50,
-  });
+  let query = supabase
+    .from("CoachingSession")
+    .select(`
+      *,
+      User (name, image),
+      Instructor (
+        title,
+        User (name)
+      )
+    `)
+    .order("sessionDate", { ascending: false })
+    .limit(50);
+
+  if (!isStaff(user.role)) {
+    query = query.eq("studentId", user.id);
+  }
+
+  const { data: sessions } = await query;
+
+  return sessions || [];
 }
 
 export async function createCoachingSession(data: {
@@ -42,22 +52,26 @@ export async function createCoachingSession(data: {
     throw new Error("Ikke autorisert");
   }
 
-  const created = await prisma.coachingSession.create({
-    data: {
+  const supabase = await createServerSupabase();
+
+  const { data: created } = await supabase
+    .from("CoachingSession")
+    .insert({
       id: nanoid(),
-      updatedAt: new Date(),
+      updatedAt: new Date().toISOString(),
       bookingId: data.bookingId,
       studentId: data.studentId,
       instructorId: data.instructorId,
-      sessionDate: data.sessionDate,
+      sessionDate: data.sessionDate.toISOString(),
       primaryFocus: data.primaryFocus,
       instructorNotes: data.instructorNotes,
       studentNotes: data.studentNotes,
       techniquesCovered: [],
       drillsAssigned: [],
       videoUrls: [],
-    },
-  });
+    })
+    .select()
+    .single();
 
   revalidatePath("/coaching-historikk");
   return created;
@@ -76,15 +90,17 @@ export async function saveAISummary(
     throw new Error("Ikke autorisert");
   }
 
-  await prisma.coachingSession.update({
-    where: { id: sessionId },
-    data: {
+  const supabase = await createServerSupabase();
+
+  await supabase
+    .from("CoachingSession")
+    .update({
       aiKeyPoints: summary.keyPoints,
       aiFocusAreas: summary.focusAreas,
       aiActionItems: summary.actionItems,
-      aiGeneratedAt: new Date(),
-    },
-  });
+      aiGeneratedAt: new Date().toISOString(),
+    })
+    .eq("id", sessionId);
 
   revalidatePath("/coaching-historikk");
 }

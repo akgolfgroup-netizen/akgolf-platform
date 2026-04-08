@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export const dynamic = "force-dynamic";
@@ -19,15 +19,23 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const resources = await prisma.resource.findMany({
-    where: { locationId },
-    select: {
-      id: true,
-      name: true,
-      type: true,
-    },
-    orderBy: { name: "asc" },
-  });
+  try {
+    // Use service client for public endpoints to bypass RLS
+    const supabase = createServiceClient();
 
-  return NextResponse.json(resources);
+    const { data: resources, error } = await supabase
+      .from("Resource")
+      .select("id, name, type")
+      .eq("locationId", locationId)
+      .order("name", { ascending: true });
+
+    if (error) throw error;
+
+    return NextResponse.json(resources || []);
+  } catch {
+    return NextResponse.json(
+      { error: "Service unavailable" },
+      { status: 503 }
+    );
+  }
 }

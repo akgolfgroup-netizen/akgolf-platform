@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { BookingStatus, FacilityActivityStatus } from "@prisma/client";
 
 export interface ConflictingItem {
@@ -29,92 +29,75 @@ export async function checkFacilityConflicts(
   excludeActivityId?: string,
   excludeBookingId?: string
 ): Promise<ConflictCheckResult> {
+  const supabase = createServiceClient();
   const conflictingItems: ConflictingItem[] = [];
 
   // Sjekk overlappende aktiviteter
-  const overlappingActivities = await prisma.facilityActivity.findMany({
-    where: {
-      facilityId,
-      status: { not: FacilityActivityStatus.CANCELLED },
-      id: excludeActivityId ? { not: excludeActivityId } : undefined,
-      OR: [
-        // Aktivitet starter i tidsrommet
-        {
-          startTime: { gte: startTime, lt: endTime },
-        },
-        // Aktivitet slutter i tidsrommet
-        {
-          endTime: { gt: startTime, lte: endTime },
-        },
-        // Aktivitet omslutter hele tidsrommet
-        {
-          startTime: { lte: startTime },
-          endTime: { gte: endTime },
-        },
-      ],
-    },
-    select: {
-      id: true,
-      title: true,
-      startTime: true,
-      endTime: true,
-    },
-  });
+  let activityQuery = supabase
+    .from("FacilityActivity")
+    .select("id, title, startTime, endTime")
+    .eq("facilityId", facilityId)
+    .neq("status", "CANCELLED" as FacilityActivityStatus)
+    .or(
+      `and(startTime.gte.${startTime.toISOString()},startTime.lt.${endTime.toISOString()}),` +
+      `and(endTime.gt.${startTime.toISOString()},endTime.lte.${endTime.toISOString()}),` +
+      `and(startTime.lte.${startTime.toISOString()},endTime.gte.${endTime.toISOString()})`
+    );
 
-  for (const activity of overlappingActivities) {
+  if (excludeActivityId) {
+    activityQuery = activityQuery.neq("id", excludeActivityId);
+  }
+
+  const { data: overlappingActivities } = await activityQuery;
+
+  for (const activity of overlappingActivities || []) {
     conflictingItems.push({
       type: "activity",
       id: activity.id,
       title: activity.title,
-      startTime: activity.startTime,
-      endTime: activity.endTime,
+      startTime: new Date(activity.startTime),
+      endTime: new Date(activity.endTime),
     });
   }
 
   // Sjekk overlappende bookinger
-  const overlappingBookings = await prisma.booking.findMany({
-    where: {
-      facilityId,
-      status: {
-        in: [BookingStatus.CONFIRMED, BookingStatus.PENDING],
-      },
-      id: excludeBookingId ? { not: excludeBookingId } : undefined,
-      OR: [
-        // Booking starter i tidsrommet
-        {
-          startTime: { gte: startTime, lt: endTime },
-        },
-        // Booking slutter i tidsrommet
-        {
-          endTime: { gt: startTime, lte: endTime },
-        },
-        // Booking omslutter hele tidsrommet
-        {
-          startTime: { lte: startTime },
-          endTime: { gte: endTime },
-        },
-      ],
-    },
-    select: {
-      id: true,
-      startTime: true,
-      endTime: true,
-      User: {
-        select: { name: true },
-      },
-      ServiceType: {
-        select: { name: true },
-      },
-    },
-  });
+  let bookingQuery = supabase
+    .from("Booking")
+    .select(`
+      id,
+      startTime,
+      endTime,
+      User:studentId(name),
+      ServiceType:serviceTypeId(name)
+    `)
+    .eq("facilityId", facilityId)
+    .in("status", ["CONFIRMED", "PENDING"] as BookingStatus[])
+    .or(
+      `and(startTime.gte.${startTime.toISOString()},startTime.lt.${endTime.toISOString()}),` +
+      `and(endTime.gt.${startTime.toISOString()},endTime.lte.${endTime.toISOString()}),` +
+      `and(startTime.lte.${startTime.toISOString()},endTime.gte.${endTime.toISOString()})`
+    );
 
-  for (const booking of overlappingBookings) {
+  if (excludeBookingId) {
+    bookingQuery = bookingQuery.neq("id", excludeBookingId);
+  }
+
+  const { data: overlappingBookings } = await bookingQuery
+    .returns<{
+      id: string;
+      startTime: string;
+      endTime: string;
+      User?: { name: string | null };
+      ServiceType?: { name: string };
+    }[]>();
+
+  for (const booking of overlappingBookings || []) {
     conflictingItems.push({
       type: "booking",
       id: booking.id,
-      title: `${booking.ServiceType.name} - ${booking.User.name ?? "Ukjent"}`,
-      startTime: booking.startTime,
-      endTime: booking.endTime,
+      title: `${booking.ServiceType?.name ?? "Ukjent tjeneste"} - ${booking.User?.name ?? "Ukjent"}`,
+      startTime: new Date(booking.startTime),
+      endTime: new Date(booking.endTime),
     });
   }
 

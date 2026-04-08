@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { nanoid } from "nanoid";
 
@@ -12,17 +12,42 @@ export async function GET() {
     return NextResponse.json({ error: "Ikke innlogget" }, { status: 401 });
   }
 
-  const rounds = await prisma.round.findMany({
-    where: { userId: user.id },
-    orderBy: { date: "desc" },
-    take: 50,
-    include: {
-      Course: { select: { name: true, par: true, location: true } },
-      _count: { select: { HoleResult: true } },
-    },
-  });
+  const supabase = await createServerSupabase();
 
-  return NextResponse.json(rounds);
+  const { data: rounds, error } = await supabase
+    .from("Round")
+    .select(`
+      *,
+      Course (
+        name,
+        par,
+        location
+      ),
+      HoleResult (
+        count
+      )
+    `)
+    .eq("userId", user.id)
+    .order("date", { ascending: false })
+    .limit(50);
+
+  if (error) {
+    return NextResponse.json({ error: "Kunne ikke hente runder" }, { status: 500 });
+  }
+
+  // Transform data to match Prisma's _count format
+  const transformedRounds = (rounds || []).map((round: {
+    HoleResult: { count: number }[];
+    [key: string]: unknown;
+  }) => ({
+    ...round,
+    _count: {
+      HoleResult: round.HoleResult?.length || 0
+    },
+    HoleResult: undefined
+  }));
+
+  return NextResponse.json(transformedRounds);
 }
 
 /**
@@ -41,40 +66,54 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "courseId er paakrevd" }, { status: 400 });
   }
 
-  const course = await prisma.course.findUnique({
-    where: { id: courseId },
-    include: {
-      Hole: {
-        where: { teeColor: teeColor ?? "yellow" },
-        orderBy: { holeNumber: "asc" },
-      },
-    },
-  });
+  const supabase = await createServerSupabase();
 
-  if (!course) {
+  // Fetch course with holes
+  const { data: course, error: courseError } = await supabase
+    .from("Course")
+    .select(`
+      *,
+      Hole (
+        *
+      )
+    `)
+    .eq("id", courseId)
+    .eq("Hole.teeColor", teeColor ?? "yellow")
+    .order("holeNumber", { foreignTable: "Hole", ascending: true })
+    .single();
+
+  if (courseError || !course) {
     return NextResponse.json({ error: "Bane ikke funnet" }, { status: 404 });
   }
 
-  const round = await prisma.round.create({
-    data: {
+  const now = new Date().toISOString();
+
+  const { data: round, error: createError } = await supabase
+    .from("Round")
+    .insert({
       id: nanoid(),
       userId: user.id,
       courseId,
-      date: new Date(),
-      startTime: new Date(),
+      date: now,
+      startTime: now,
       teeColor: teeColor ?? "yellow",
       weather: weather ?? null,
       windSpeed: windSpeed ?? null,
       windDir: windDir ?? null,
       temperature: temperature ?? null,
       source: "LIVE",
-      updatedAt: new Date(),
-    },
-  });
+      updatedAt: now,
+    })
+    .select()
+    .single();
+
+  if (createError) {
+    return NextResponse.json({ error: "Kunne ikke opprette runde" }, { status: 500 });
+  }
 
   return NextResponse.json({
     round,
-    holes: course.Hole,
+    holes: course.Hole || [],
     courseName: course.name,
     coursePar: course.par,
   });

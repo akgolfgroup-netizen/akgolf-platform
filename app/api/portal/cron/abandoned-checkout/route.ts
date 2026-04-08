@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { createServiceClient } from "@/lib/supabase/server";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import { AbandonedCheckoutEmail } from "@/lib/portal/email/templates/abandoned-checkout";
@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const supabase = createServiceClient();
   const now = new Date();
   // Users who started checkout 24-48 hours ago
   const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
@@ -28,38 +29,45 @@ export async function GET(request: NextRequest) {
 
   try {
     // Find users with abandoned checkouts (started 24-48h ago)
-    const abandonedUsers = await prisma.user.findMany({
-      where: {
-        checkoutAbandonedAt: {
-          gte: fortyEightHoursAgo,
-          lt: twentyFourHoursAgo,
-        },
-        lastCheckoutSessionId: { not: null },
-        email: { not: null },
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        lastCheckoutSessionId: true,
-        AppSubscription: {
-          where: { status: { in: ["ACTIVE", "TRIALING"] } },
-          take: 1,
-        },
-      },
-    });
+    const { data: abandonedUsers, error: usersError } = await supabase
+      .from("User")
+      .select(`
+        id,
+        name,
+        email,
+        lastCheckoutSessionId,
+        checkoutAbandonedAt,
+        AppSubscription (id, status)
+      `)
+      .gte("checkoutAbandonedAt", fortyEightHoursAgo.toISOString())
+      .lt("checkoutAbandonedAt", twentyFourHoursAgo.toISOString())
+      .not("lastCheckoutSessionId", "is", null)
+      .not("email", "is", null);
 
-    for (const user of abandonedUsers) {
+    if (usersError) {
+      throw usersError;
+    }
+
+    for (const user of (abandonedUsers ?? [])) {
       if (!user.email || !user.lastCheckoutSessionId) continue;
 
+      // Check if user already has active subscription
+      const subscriptions = (user.AppSubscription as { id: string; status: string }[]) ?? [];
+      const hasActiveSub = subscriptions.some(
+        (sub) => sub.status === "ACTIVE" || sub.status === "TRIALING"
+      );
+
       // Skip if user already has active subscription
-      if (user.AppSubscription.length > 0) {
+      if (hasActiveSub) {
         results.skipped++;
         // Clear abandoned checkout flag
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { checkoutAbandonedAt: null, lastCheckoutSessionId: null },
-        });
+        await supabase
+          .from("User")
+          .update({
+            checkoutAbandonedAt: null,
+            lastCheckoutSessionId: null,
+          })
+          .eq("id", user.id);
         continue;
       }
 
@@ -72,10 +80,13 @@ export async function GET(request: NextRequest) {
         if (session.status === "complete") {
           // Checkout was completed, clear the flag
           results.skipped++;
-          await prisma.user.update({
-            where: { id: user.id },
-            data: { checkoutAbandonedAt: null, lastCheckoutSessionId: null },
-          });
+          await supabase
+            .from("User")
+            .update({
+              checkoutAbandonedAt: null,
+              lastCheckoutSessionId: null,
+            })
+            .eq("id", user.id);
           continue;
         }
 
@@ -103,10 +114,13 @@ export async function GET(request: NextRequest) {
         });
 
         // Clear the abandoned checkout flag so we don't email again
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { checkoutAbandonedAt: null, lastCheckoutSessionId: null },
-        });
+        await supabase
+          .from("User")
+          .update({
+            checkoutAbandonedAt: null,
+            lastCheckoutSessionId: null,
+          })
+          .eq("id", user.id);
 
         results.sent++;
       } catch (error) {

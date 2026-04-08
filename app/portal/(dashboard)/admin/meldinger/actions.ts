@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
@@ -18,36 +18,38 @@ export async function approveMessage(
     const user = await requirePortalUser();
     if (!isStaff(user.role)) redirect("/");
 
-    // Find the AI response for this message
-    const aiResponse = await prisma.aIResponse.findFirst({
-      where: { messageId },
-    });
+    const supabase = await createServerSupabase();
 
-    await prisma.$transaction([
-      ...(aiResponse
-        ? [
-            prisma.aIResponse.update({
-              where: { id: aiResponse.id },
-              data: {
-                finalContent,
-                wasEdited: true,
-                approvedById: user.id,
-                approvedAt: new Date(),
-              },
-            }),
-          ]
-        : []),
-      prisma.unifiedMessage.update({
-        where: { id: messageId },
-        data: { status: "APPROVED" },
-      }),
-    ]);
+    // Find the AI response for this message
+    const { data: aiResponse } = await supabase
+      .from("AIResponse")
+      .select("id")
+      .eq("messageId", messageId)
+      .single();
+
+    if (aiResponse) {
+      await supabase
+        .from("AIResponse")
+        .update({
+          finalContent,
+          wasEdited: true,
+          approvedById: user.id,
+          approvedAt: new Date().toISOString(),
+        })
+        .eq("id", aiResponse.id);
+    }
+
+    await supabase
+      .from("UnifiedMessage")
+      .update({ status: "APPROVED" })
+      .eq("id", messageId);
 
     // Send melding via riktig kanal
-    const message = await prisma.unifiedMessage.findUnique({
-      where: { id: messageId },
-      select: { channel: true, senderHandle: true },
-    });
+    const { data: message } = await supabase
+      .from("UnifiedMessage")
+      .select("channel, senderHandle")
+      .eq("id", messageId)
+      .single();
 
     let sent = false;
     if (message?.channel === "EMAIL" && message.senderHandle) {
@@ -70,10 +72,10 @@ export async function approveMessage(
     }
 
     if (sent) {
-      await prisma.unifiedMessage.update({
-        where: { id: messageId },
-        data: { status: "SENT" },
-      });
+      await supabase
+        .from("UnifiedMessage")
+        .update({ status: "SENT" })
+        .eq("id", messageId);
     }
 
     revalidatePath("/portal/admin/meldinger");
@@ -94,10 +96,12 @@ export async function rejectMessage(
     const user = await requirePortalUser();
     if (!isStaff(user.role)) redirect("/");
 
-    await prisma.unifiedMessage.update({
-      where: { id: messageId },
-      data: { status: "FAILED" },
-    });
+    const supabase = await createServerSupabase();
+
+    await supabase
+      .from("UnifiedMessage")
+      .update({ status: "FAILED" })
+      .eq("id", messageId);
 
     revalidatePath("/portal/admin/meldinger");
 
@@ -117,19 +121,22 @@ export async function regenerateAIResponse(
     const user = await requirePortalUser();
     if (!isStaff(user.role)) redirect("/");
 
-    const message = await prisma.unifiedMessage.findUnique({
-      where: { id: messageId },
-      select: { content: true, senderName: true, channel: true, assignedToId: true },
-    });
+    const supabase = await createServerSupabase();
+
+    const { data: message } = await supabase
+      .from("UnifiedMessage")
+      .select("content, senderName, channel, assignedToId")
+      .eq("id", messageId)
+      .single();
 
     if (!message) {
       return { success: false, error: "Melding ikke funnet" };
     }
 
-    await prisma.unifiedMessage.update({
-      where: { id: messageId },
-      data: { status: "AI_PROCESSING" },
-    });
+    await supabase
+      .from("UnifiedMessage")
+      .update({ status: "AI_PROCESSING" })
+      .eq("id", messageId);
 
     // Generer nytt AI-svar asynkront
     try {
@@ -142,28 +149,26 @@ export async function regenerateAIResponse(
         message.assignedToId ?? user.id
       );
 
-      await prisma.aIResponse.create({
-        data: {
-          id: nanoid(),
-          messageId,
-          draftContent: result.content,
-          confidence: result.confidence,
-          category: result.category,
-          modelUsed: result.modelUsed,
-          updatedAt: new Date(),
-        },
+      await supabase.from("AIResponse").insert({
+        id: nanoid(),
+        messageId,
+        draftContent: result.content,
+        confidence: result.confidence,
+        category: result.category,
+        modelUsed: result.modelUsed,
+        updatedAt: new Date().toISOString(),
       });
 
-      await prisma.unifiedMessage.update({
-        where: { id: messageId },
-        data: { status: "AI_READY" },
-      });
+      await supabase
+        .from("UnifiedMessage")
+        .update({ status: "AI_READY" })
+        .eq("id", messageId);
     } catch (aiError) {
       logger.error("[Meldinger] AI regenerering feilet:", aiError);
-      await prisma.unifiedMessage.update({
-        where: { id: messageId },
-        data: { status: "FAILED" },
-      });
+      await supabase
+        .from("UnifiedMessage")
+        .update({ status: "FAILED" })
+        .eq("id", messageId);
     }
 
     revalidatePath("/portal/admin/meldinger");

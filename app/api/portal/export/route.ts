@@ -1,6 +1,6 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { roundStatsToCsv } from "@/lib/portal/export/csv-stats";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
@@ -18,13 +18,20 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const type = searchParams.get("type");
 
-  if (type === "round-stats") {
-    const stats = await prisma.roundStats.findMany({
-      where: { userId: user.id },
-      orderBy: { date: "desc" },
-    });
+  const supabase = await createServerSupabase();
 
-    const csv = roundStatsToCsv(stats);
+  if (type === "round-stats") {
+    const { data: stats, error } = await supabase
+      .from("RoundStats")
+      .select("*")
+      .eq("userId", user.id)
+      .order("date", { ascending: false });
+
+    if (error) {
+      return NextResponse.json({ error: "Kunne ikke hente statistikk" }, { status: 500 });
+    }
+
+    const csv = roundStatsToCsv(stats || []);
 
     return new NextResponse(csv, {
       headers: {

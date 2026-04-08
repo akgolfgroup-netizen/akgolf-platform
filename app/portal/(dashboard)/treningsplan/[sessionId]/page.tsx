@@ -1,5 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { SessionViewClient } from "./session-view-client";
 import type { TrainingSessionData, ExerciseInstance } from "@/lib/portal/golf/exercise-types";
@@ -66,14 +66,19 @@ export default async function SessionPage({ params }: Props) {
   const { sessionId } = await params;
   await requirePortalUser();
 
-  const dbSession = await prisma.trainingPlanSession.findUnique({
-    where: { id: sessionId },
-    include: {
-      TrainingPlanWeek: {
-        include: { TrainingPlan: true },
-      },
-    },
-  });
+  const supabase = await createServerSupabase();
+
+  const { data: dbSession } = await supabase
+    .from("TrainingPlanSession")
+    .select(`
+      *,
+      TrainingPlanWeek:weekId(
+        *,
+        TrainingPlan:planId(*)
+      )
+    `)
+    .eq("id", sessionId)
+    .single();
 
   if (!dbSession) notFound();
 
@@ -86,7 +91,7 @@ export default async function SessionPage({ params }: Props) {
     description: dbSession.description ?? undefined,
     durationMinutes: dbSession.durationMinutes ?? 60,
     intensity: mapIntensity(dbSession.focusArea),
-    objective: dbSession.TrainingPlanWeek.focus ?? dbSession.description ?? "Treningsokt",
+    objective: dbSession.TrainingPlanWeek?.focus ?? dbSession.description ?? "Treningsokt",
     focusPoints: dbSession.focusArea ? [dbSession.focusArea] : [],
     primaryPyramid: "SLAG",
     primaryArea,
