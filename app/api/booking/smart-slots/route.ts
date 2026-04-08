@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/portal/prisma";
-import {
-  generateSlots,
-  getAvailabilityForDate,
-} from "@/lib/portal/slots";
-import { BookingStatus } from "@prisma/client";
+import { createClient } from "@supabase/supabase-js";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export const dynamic = "force-dynamic";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 // Anbefalte tidspunkter - maks 4 per dag
 const RECOMMENDED_SLOTS = ["10:00", "13:00", "15:00", "17:00"];
@@ -50,38 +48,50 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // Hent service type info
-    const serviceType = await prisma.serviceType.findUnique({
-      where: { id: serviceTypeId },
-      select: { duration: true, bufferAfter: true, minNoticeHours: true },
-    });
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-    if (!serviceType) {
+    // Hent service type info
+    const { data: serviceType, error: serviceError } = await supabase
+      .from("ServiceType")
+      .select("duration, bufferAfter, minNoticeHours")
+      .eq("id", serviceTypeId)
+      .single();
+
+    if (serviceError || !serviceType) {
       return NextResponse.json({ error: "Tjeneste ikke funnet" }, { status: 404, headers: corsHeaders });
     }
 
     // Valider at instructoren tilbyr denne serviceType
-    const instructor = await prisma.instructor.findFirst({
-      where: {
-        id: instructorId,
-        ServiceType: { some: { id: serviceTypeId } },
-      },
-      select: { 
-        id: true,
-        User: { select: { name: true } }
-      },
-    });
+    const { data: instructor, error: instructorError } = await supabase
+      .from("Instructor")
+      .select(`
+        id,
+        User(name)
+      `)
+      .eq("id", instructorId)
+      .single();
 
-    if (!instructor) {
+    if (instructorError || !instructor) {
       return NextResponse.json({ error: "Instruktør ikke funnet" }, { status: 404, headers: corsHeaders });
+    }
+
+    // Sjekk om instructor har serviceType
+    const { data: instructorServiceType } = await supabase
+      .from("_InstructorToServiceType")
+      .select("A")
+      .eq("A", instructorId)
+      .eq("B", serviceTypeId)
+      .single();
+
+    if (!instructorServiceType) {
+      return NextResponse.json({ error: "Instruktør tilbyr ikke denne tjenesten" }, { status: 404, headers: corsHeaders });
     }
 
     // Beregn ukeperiode (mandag til søndag)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    // Finn mandag i denne uken (med offset)
-    const currentDay = today.getDay(); // 0 = søndag, 1 = mandag, etc.
+    const currentDay = today.getDay();
     const daysFromMonday = currentDay === 0 ? 6 : currentDay - 1;
     const weekStart = new Date(today);
     weekStart.setDate(today.getDate() - daysFromMonday + (weekOffset * 7));
@@ -95,45 +105,81 @@ export async function GET(req: NextRequest) {
       date.setDate(weekStart.getDate() + i);
       
       const dateStr = date.toISOString().split("T")[0];
+      const dayOfWeek = date.getDay(); // 0 = søndag, 1 = mandag, etc.
+      const adjustedDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek; // 1-7 (man-søn)
+      
       const nextDay = new Date(date);
       nextDay.setDate(date.getDate() + 1);
-      
+
       // Hent tilgjengelighet for denne dagen
-      const [availabilityWindows, existingBookings, blockedTimes] = await Promise.all([
-        getAvailabilityForDate(instructorId, date),
-        prisma.booking.findMany({
-          where: {
-            instructorId,
-            startTime: { gte: date, lt: nextDay },
-            status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
-          },
-          select: { startTime: true, endTime: true },
-        }),
-        prisma.blockedTime.findMany({
-          where: {
-            OR: [{ instructorId }, { instructorId: null }],
-            startTime: { lt: nextDay },
-            endTime: { gt: date },
-          },
-          select: { startTime: true, endTime: true },
-        }),
-      ]);
+      const { data: availabilityWindows } = await supabase
+        .from("AvailabilityWindow")
+        .select("startTime, endTime")
+        .eq("instructorId", instructorId)
+        .eq("dayOfWeek", adjustedDayOfWeek)
+        .eq("isActive", true);
+
+      // Hent eksisterende bookinger
+      const { data: existingBookings } = await supabase
+        .from("Booking")
+        .select("startTime, endTime")
+        .eq("instructorId", instructorId)
+        .gte("startTime", date.toISOString())
+        .lt("startTime", nextDay.toISOString())
+        .in("status", ["PENDING", "CONFIRMED"]);
+
+      // Hent blokkerte tider
+      const { data: blockedTimes } = await supabase
+        .from("BlockedTime")
+        .select("startTime, endTime")
+        .or(`instructorId.eq.${instructorId},instructorId.is.null`)
+        .lt("startTime", nextDay.toISOString())
+        .gt("endTime", date.toISOString());
 
       // Generer alle slots for dagen
       let allSlots: string[] = [];
-      for (const window of availabilityWindows) {
-        const windowSlots = generateSlots({
-          availStart: window.startTime,
-          availEnd: window.endTime,
-          duration: serviceType.duration,
-          bufferAfter: serviceType.bufferAfter,
-          date,
-          existingBookings,
-          blockedTimes,
-          minNoticeHours: serviceType.minNoticeHours,
-        });
-        allSlots.push(...windowSlots);
+      
+      if (availabilityWindows && availabilityWindows.length > 0) {
+        for (const window of availabilityWindows) {
+          const windowStart = new Date(window.startTime);
+          const windowEnd = new Date(window.endTime);
+          
+          let currentSlot = new Date(windowStart);
+          while (currentSlot < windowEnd) {
+            const slotEnd = new Date(currentSlot);
+            slotEnd.setMinutes(slotEnd.getMinutes() + serviceType.duration);
+            
+            // Sjekk om slot er innenfor vinduet
+            if (slotEnd <= windowEnd) {
+              // Sjekk om slot overlapper med eksisterende bookinger
+              const isBooked = existingBookings?.some(booking => {
+                const bookingStart = new Date(booking.startTime);
+                const bookingEnd = new Date(booking.endTime);
+                return currentSlot < bookingEnd && slotEnd > bookingStart;
+              });
+              
+              // Sjekk om slot overlapper med blokkerte tider
+              const isBlocked = blockedTimes?.some(blocked => {
+                const blockedStart = new Date(blocked.startTime);
+                const blockedEnd = new Date(blocked.endTime);
+                return currentSlot < blockedEnd && slotEnd > blockedStart;
+              });
+              
+              // Sjekk min notice
+              const minNoticeMs = (serviceType.minNoticeHours || 24) * 60 * 60 * 1000;
+              const isTooSoon = new Date(currentSlot.getTime() - minNoticeMs) < new Date();
+              
+              if (!isBooked && !isBlocked && !isTooSoon) {
+                allSlots.push(currentSlot.toISOString());
+              }
+            }
+            
+            // Neste slot (30 min intervaller)
+            currentSlot.setMinutes(currentSlot.getMinutes() + 30);
+          }
+        }
       }
+      
       allSlots.sort();
 
       // Sjekk hvilke anbefalte tidspunkter som er tilgjengelige
@@ -142,14 +188,12 @@ export async function GET(req: NextRequest) {
         const slotDate = new Date(date);
         slotDate.setHours(hours, minutes, 0, 0);
         
-        // Sjekk om dette tidspunktet finnes i available slots
         const isoString = slotDate.toISOString();
         const available = allSlots.some(slot => {
           const slotDate = new Date(slot);
           return slotDate.getHours() === hours && slotDate.getMinutes() === minutes;
         });
         
-        // Ikke vis tidspunkter i fortiden
         const isPast = slotDate < new Date();
         
         return {
@@ -172,7 +216,7 @@ export async function GET(req: NextRequest) {
       weekStart: weekStart.toISOString().split("T")[0],
       instructor: {
         id: instructor.id,
-        name: instructor.User?.name || "Instruktør",
+        name: instructor.User?.[0]?.name || "Instruktør",
       },
       days: weekDays,
     }, { headers: corsHeaders });

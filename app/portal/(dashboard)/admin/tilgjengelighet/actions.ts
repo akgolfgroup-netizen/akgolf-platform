@@ -1,13 +1,14 @@
 "use server";
 
+import { createClient } from "@supabase/supabase-js";
 import { requirePortalUser } from "@/lib/portal/auth";
-
-import { prisma } from "@/lib/portal/prisma";
 import { isStaff } from "@/lib/portal/rbac";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
-import { addMinutes, startOfDay, endOfDay, format } from "date-fns";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 export interface Instructor {
   id: string;
@@ -19,32 +20,47 @@ export async function getInstructors(): Promise<Instructor[]> {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return [];
 
-  const instructors = await prisma.instructor.findMany({
-    include: {
-      User: {
-        select: { name: true, email: true },
-      },
-    },
-    orderBy: {
-      User: { name: "asc" },
-    },
-  });
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  
+  const { data: instructors, error } = await supabase
+    .from("Instructor")
+    .select(`
+      id,
+      User(name, email)
+    `)
+    .order("name", { foreignTable: "User", ascending: true });
 
-  return instructors.map((i) => ({
+  if (error) {
+    logger.error("[getInstructors] Error:", error);
+    return [];
+  }
+
+  return instructors?.map((i) => ({
     id: i.id,
-    name: i.User?.name || "Ukjent",
-    email: i.User?.email || "",
-  }));
+    name: i.User?.[0]?.name || "Ukjent",
+    email: i.User?.[0]?.email || "",
+  })) || [];
 }
 
 export async function getAvailability(instructorId: string) {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return [];
 
-  return prisma.instructorAvailability.findMany({
-    where: { instructorId },
-    orderBy: [{ dayOfWeek: "asc" }, { startTime: "asc" }],
-  });
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  
+  const { data, error } = await supabase
+    .from("AvailabilityWindow")
+    .select("*")
+    .eq("instructorId", instructorId)
+    .eq("isActive", true)
+    .order("dayOfWeek", { ascending: true });
+
+  if (error) {
+    logger.error("[getAvailability] Error:", error);
+    return [];
+  }
+
+  return data || [];
 }
 
 export async function upsertAvailability(
@@ -56,81 +72,104 @@ export async function upsertAvailability(
     throw new Error("Ikke autorisert");
   }
 
-  // Replace all availability for this instructor in a transaction
-  await prisma.$transaction([
-    prisma.instructorAvailability.deleteMany({ where: { instructorId } }),
-    ...slots.map((slot) =>
-      prisma.instructorAvailability.create({
-        data: {
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  // Slett eksisterende tilgjengelighet
+  const { error: deleteError } = await supabase
+    .from("AvailabilityWindow")
+    .delete()
+    .eq("instructorId", instructorId);
+
+  if (deleteError) {
+    logger.error("[upsertAvailability] Delete error:", deleteError);
+    throw new Error("Kunne ikke slette eksisterende tilgjengelighet");
+  }
+
+  // Sett inn nye slots
+  if (slots.length > 0) {
+    const { error: insertError } = await supabase
+      .from("AvailabilityWindow")
+      .insert(
+        slots.map((slot) => ({
           id: nanoid(),
           instructorId,
           dayOfWeek: slot.dayOfWeek,
           startTime: slot.startTime,
           endTime: slot.endTime,
-        },
-      })
-    ),
-  ]);
+          isActive: true,
+        }))
+      );
+
+    if (insertError) {
+      logger.error("[upsertAvailability] Insert error:", insertError);
+      throw new Error("Kunne ikke lagre tilgjengelighet");
+    }
+  }
 
   // Revalidate cache
   revalidatePath("/portal/admin/tilgjengelighet");
-  revalidateTag("slots", {});
-  revalidateTag(`availability:${instructorId}`, {});
-  
-  // Invalidate slots cache for this instructor
-  await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/portal/public/slots`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ instructorId }),
-  }).catch(() => {
-    // Silent fail - cache will expire naturally
-  });
+  revalidateTag("slots");
+  revalidateTag(`availability:${instructorId}`);
 }
 
 export async function getBlockedTimes(instructorId?: string) {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return [];
 
-  return prisma.blockedTime.findMany({
-    where: {
-      ...(instructorId ? { instructorId } : {}),
-      endTime: { gte: new Date() },
-    },
-    orderBy: { startTime: "asc" },
-    take: 50,
-  });
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  
+  let query = supabase
+    .from("BlockedTime")
+    .select("*")
+    .gte("endTime", new Date().toISOString())
+    .order("startTime", { ascending: true })
+    .limit(50);
+
+  if (instructorId) {
+    query = query.eq("instructorId", instructorId);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    logger.error("[getBlockedTimes] Error:", error);
+    return [];
+  }
+
+  return data || [];
 }
 
-export async function createBlockedTime(data: {
-  instructorId?: string;
-  startTime: string;
-  endTime: string;
-  reason?: string;
-}) {
+export async function createBlockedTime(
+  instructorId: string | null,
+  startTime: string,
+  endTime: string,
+  reason?: string
+) {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) {
     throw new Error("Ikke autorisert");
   }
 
-  const blockedTime = await prisma.blockedTime.create({
-    data: {
-      id: nanoid(),
-      instructorId: data.instructorId || null,
-      startTime: new Date(data.startTime),
-      endTime: new Date(data.endTime),
-      reason: data.reason,
-      source: "MANUAL",
-    },
-  });
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
-  // Revalidate cache
-  revalidatePath("/portal/admin/tilgjengelighet");
-  revalidateTag("slots", {});
-  if (data.instructorId) {
-    revalidateTag(`availability:${data.instructorId}`, {});
+  const { error } = await supabase
+    .from("BlockedTime")
+    .insert({
+      id: nanoid(),
+      instructorId,
+      startTime,
+      endTime,
+      reason: reason || null,
+      source: "MANUAL",
+    });
+
+  if (error) {
+    logger.error("[createBlockedTime] Error:", error);
+    throw new Error("Kunne ikke blokkere tid");
   }
 
-  return blockedTime;
+  revalidatePath("/portal/admin/tilgjengelighet");
+  revalidateTag("slots");
 }
 
 export async function deleteBlockedTime(id: string) {
@@ -139,153 +178,29 @@ export async function deleteBlockedTime(id: string) {
     throw new Error("Ikke autorisert");
   }
 
-  const blockedTime = await prisma.blockedTime.delete({ 
-    where: { id },
-    select: { instructorId: true },
-  });
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
-  // Revalidate cache
-  revalidatePath("/portal/admin/tilgjengelighet");
-  revalidateTag("slots", {});
-  if (blockedTime.instructorId) {
-    revalidateTag(`availability:${blockedTime.instructorId}`, {});
+  const { error } = await supabase
+    .from("BlockedTime")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    logger.error("[deleteBlockedTime] Error:", error);
+    throw new Error("Kunne ikke slette blokkert tid");
   }
+
+  revalidatePath("/portal/admin/tilgjengelighet");
+  revalidateTag("slots");
 }
 
-/**
- * Synkroniserer Google Calendar events som blokkerte tider
- * 
- * I en full implementasjon ville dette:
- * 1. Hentet access token fra GoogleCalendarSync
- * 2. Kalt Google Calendar API for å hente events
- * 3. Opprettet BlockedTime records for hver event
- * 
- * For nå simulerer vi en sync med mock data.
- */
-export async function syncGoogleCalendar(
-  instructorId: string
-): Promise<{ success: boolean; count: number; error?: string }> {
+export async function syncGoogleCalendar(instructorId: string) {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) {
-    return { success: false, count: 0, error: "Ikke autorisert" };
+    throw new Error("Ikke autorisert");
   }
 
-  try {
-    // Check if instructor has Google Calendar connected
-    const syncConfig = await prisma.googleCalendarSync.findUnique({
-      where: { instructorId },
-    });
-
-    if (!syncConfig) {
-      return {
-        success: false,
-        count: 0,
-        error: "Ingen Google Calendar koblet for denne instruktøren",
-      };
-    }
-
-    if (!syncConfig.syncEnabled) {
-      return {
-        success: false,
-        count: 0,
-        error: "Synkronisering er deaktivert for denne instruktøren",
-      };
-    }
-
-    // TODO: Implement actual Google Calendar API sync
-    // For now, create some example blocked times
-    const today = new Date();
-    const mockEvents = [
-      {
-        start: addMinutes(startOfDay(addMinutes(today, 24 * 60 * 2)), 9 * 60), // Day after tomorrow 09:00
-        end: addMinutes(startOfDay(addMinutes(today, 24 * 60 * 2)), 12 * 60),
-        reason: "Møte (Google Calendar)",
-        externalId: `gc-${nanoid(8)}`,
-      },
-    ];
-
-    let createdCount = 0;
-
-    for (const event of mockEvents) {
-      // Check if already synced
-      const existing = await prisma.blockedTime.findFirst({
-        where: {
-          instructorId,
-          externalId: event.externalId,
-        },
-      });
-
-      if (!existing) {
-        await prisma.blockedTime.create({
-          data: {
-            id: nanoid(),
-            instructorId,
-            startTime: event.start,
-            endTime: event.end,
-            reason: event.reason,
-            source: "GOOGLE_CALENDAR",
-            externalId: event.externalId,
-          },
-        });
-        createdCount++;
-      }
-    }
-
-    // Update last sync time
-    await prisma.googleCalendarSync.update({
-      where: { instructorId },
-      data: { lastSyncAt: new Date() },
-    });
-
-    // Revalidate cache
-    revalidatePath("/portal/admin/tilgjengelighet");
-    revalidateTag("slots", {});
-    revalidateTag(`availability:${instructorId}`, {});
-
-    logger.info(
-      `[google-calendar-sync] Synced ${createdCount} events for instructor ${instructorId}`
-    );
-
-    return { success: true, count: createdCount };
-  } catch (error) {
-    logger.error("[google-calendar-sync] Error:", error);
-    
-    // Update error log
-    await prisma.googleCalendarSync.update({
-      where: { instructorId },
-      data: {
-        lastError: error instanceof Error ? error.message : "Unknown error",
-        lastErrorAt: new Date(),
-      },
-    }).catch(() => {
-      // Ignore errors updating error log
-    });
-
-    return {
-      success: false,
-      count: 0,
-      error: error instanceof Error ? error.message : "Synkronisering feilet",
-    };
-  }
-}
-
-/**
- * Hent synkroniseringsstatus for Google Calendar
- */
-export async function getGoogleCalendarSyncStatus(instructorId: string) {
-  const user = await requirePortalUser();
-  if (!user?.id || !isStaff(user.role)) return null;
-
-  const sync = await prisma.googleCalendarSync.findUnique({
-    where: { instructorId },
-    select: {
-      syncEnabled: true,
-      lastSyncAt: true,
-      lastError: true,
-      lastErrorAt: true,
-      calendarId: true,
-    },
-  });
-
-  return sync;
+  // TODO: Implementer Google Calendar sync med Supabase
+  logger.info("[syncGoogleCalendar] Not implemented yet");
+  return { success: false, message: "Google Calendar sync ikke implementert ennå" };
 }
