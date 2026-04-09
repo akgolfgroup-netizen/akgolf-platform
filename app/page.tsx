@@ -152,7 +152,7 @@ export default function LandingHomepage() {
             <div className="lg:col-span-5 relative">
               <div className="aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl bg-[#154212]/10">
                 <img 
-                  src="/images/academy/AK-Golf-Academy-1.jpg" 
+                  src="/images/academy/AK-Golf-Academy-15.jpg" 
                   alt="AK Golf Academy fasiliteter"
                   className="w-full h-full object-cover"
                   onError={(e) => {
