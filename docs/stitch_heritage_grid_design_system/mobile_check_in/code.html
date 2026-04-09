@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=390, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .qr-gradient {
+            background: linear-gradient(135deg, #154212 0%, #2d5a27 100%);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#3b6934",
+                      "primary-fixed": "#bcf0ae",
+                      "surface": "#fdf9f0",
+                      "tertiary-fixed": "#bcf0ae",
+                      "tertiary": "#154212",
+                      "surface-container-high": "#ece8df",
+                      "on-tertiary-fixed-variant": "#23501e",
+                      "on-primary-fixed-variant": "#23501e",
+                      "error": "#ba1a1a",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#dddad1",
+                      "outline-variant": "#c2c9bb",
+                      "background": "#fdf9f0",
+                      "primary": "#154212",
+                      "on-primary-fixed": "#002201",
+                      "on-error": "#ffffff",
+                      "secondary-container": "#d0ed00",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "on-background": "#1c1c16",
+                      "tertiary-fixed-dim": "#a1d494",
+                      "surface-container-low": "#f7f3ea",
+                      "surface-bright": "#fdf9f0",
+                      "on-secondary-fixed": "#191e00",
+                      "on-secondary-fixed-variant": "#414c00",
+                      "secondary": "#576500",
+                      "tertiary-container": "#2d5a27",
+                      "inverse-surface": "#31302b",
+                      "primary-fixed-dim": "#a1d494",
+                      "on-surface": "#1c1c16",
+                      "on-secondary-container": "#5b6900",
+                      "on-primary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#2d5a27",
+                      "secondary-fixed": "#d2f000",
+                      "outline": "#72796e",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-container": "#9dd090",
+                      "secondary-fixed-dim": "#b8d300",
+                      "surface-container-highest": "#e6e2d9",
+                      "inverse-on-surface": "#f4f0e7",
+                      "on-primary-container": "#9dd090",
+                      "on-surface-variant": "#42493e",
+                      "on-tertiary-fixed": "#002201",
+                      "surface-container": "#f1eee5",
+                      "surface-variant": "#e6e2d9",
+                      "inverse-primary": "#a1d494"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["DM Sans"],
+                      "body": ["DM Sans"],
+                      "label": ["DM Sans"],
+                      "mono": ["JetBrains Mono"]
+              }
+            },
+          }
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body min-h-screen flex flex-col items-center">
+<div class="w-[390px] min-h-screen bg-background relative overflow-hidden flex flex-col">
+<!-- Header / Close Button -->
+<header class="flex justify-between items-center px-6 py-6 z-10">
+<div class="flex flex-col">
+<span class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/60">Session ID: AK-7729</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest/50 hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-primary text-xl">close</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-6 flex flex-col items-center">
+<!-- Hero Typography -->
+<div class="text-center mt-4 mb-8">
+<h1 class="font-headline font-bold text-3xl tracking-tight text-primary">Scan to Check-in</h1>
+<div class="inline-flex items-center gap-2 mt-2 px-3 py-1 bg-primary/5 rounded-full">
+<span class="material-symbols-outlined text-primary text-[16px]">schedule</span>
+<p class="font-body text-sm font-medium text-primary/80">Session starts in 5 mins</p>
+</div>
+</div>
+<!-- Bento Card for QR Code -->
+<div class="w-full bg-surface-container-lowest rounded-[32px] p-8 shadow-[0_8px_32px_rgba(21,66,18,0.04)] flex flex-col items-center relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary-fixed"></div>
+<!-- QR Code Container -->
+<div class="relative group">
+<div class="absolute inset-0 bg-secondary-fixed/20 blur-2xl rounded-full scale-75 opacity-50"></div>
+<div class="w-56 h-56 bg-surface-container-low rounded-2xl p-4 relative flex items-center justify-center border-[0.5px] border-outline-variant/30">
+<!-- Simulated QR Code Graphics -->
+<div class="w-full h-full relative opacity-90">
+<img alt="Check-in QR Code" class="w-full h-full object-contain" data-alt="Digital QR code displayed on a clean white background with minimal green styling and high contrast for easy scanning" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJtmMEHLlz4Hmi6u5u7_XR785h2RyLPuYvGRg5rzuPWds9megyjbhgb9o5eXSLoDCVIZQwJzdBfeBXXPkljORXtfDpQ8aHOkxf2rnYMVAQVho-eo_6aw6BYyIr6yKa6zNdhX9Wo6BQPLDI6rONd0K8f2lGt-TCJ-Bf7SFV5kNuZVqbmVoS7FeON6TQrxd5UmPlxEyKcKQpTEziF5ZouQqsvFK8Kq1v6LOSfSekcYoxyt3w5tCHofScuc194oQ5y0tC9Zj7-idgPi23"/>
+</div>
+</div>
+</div>
+<!-- Location Verification Status -->
+<div class="mt-8 flex items-center gap-2 px-4 py-2 bg-[#e8f5e9] rounded-full border border-primary/10">
+<span class="material-symbols-outlined text-[#2e7d32] text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-mono text-xs font-bold text-[#2e7d32] uppercase tracking-wider">Location Verified</span>
+</div>
+</div>
+<!-- Interactive Zone -->
+<div class="w-full mt-8 space-y-4">
+<button class="w-full py-5 bg-secondary-fixed hover:bg-secondary-fixed-dim text-on-secondary-fixed font-headline font-bold text-lg rounded-2xl shadow-[0_4px_14px_rgba(210,240,0,0.4)] active:scale-[0.98] transition-all uppercase tracking-tight">
+                    I'm Here
+                </button>
+<p class="text-center font-mono text-[10px] text-on-surface-variant uppercase tracking-widest px-8">
+                    Your location was verified via GPS within 50m of AK Sports Hub
+                </p>
+</div>
+<!-- Subtle Post-Check-In Hint (Hidden state representation) -->
+<div class="mt-auto mb-10 text-center opacity-40">
+<div class="w-8 h-[1px] bg-outline-variant mx-auto mb-4"></div>
+<p class="font-body text-xs text-on-surface-variant italic">
+                    You're checked in! Rate your session later.
+                </p>
+</div>
+</main>
+<!-- Decorative Background Element -->
+<div class="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+<div class="absolute -top-20 -left-20 w-64 h-64 bg-secondary-fixed/10 rounded-full blur-3xl -z-10"></div>
+</div>
+</body></html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#002201",
+                    "on-primary-container": "#9dd090",
+                    "inverse-primary": "#a1d494",
+                    "on-secondary-fixed": "#191e00",
+                    "secondary-container": "#d0ed00",
+                    "primary": "#154212",
+                    "secondary-fixed-dim": "#b8d300",
+                    "background": "#fdf9f0",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#23501e",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#fdf9f0",
+                    "surface-container-highest": "#e6e2d9",
+                    "surface-container": "#f1eee5",
+                    "tertiary-container": "#2d5a27",
+                    "outline": "#72796e",
+                    "on-surface": "#1c1c16",
+                    "surface-container-high": "#ece8df",
+                    "primary-fixed": "#bcf0ae",
+                    "on-tertiary-container": "#9dd090",
+                    "surface": "#fdf9f0",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#a1d494",
+                    "inverse-surface": "#31302b",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e6e2d9",
+                    "surface-container-low": "#f7f3ea",
+                    "surface-tint": "#3b6934",
+                    "on-primary-fixed": "#002201",
+                    "on-background": "#1c1c16",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "on-surface-variant": "#42493e",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary": "#154212",
+                    "primary-container": "#2d5a27",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "tertiary-fixed": "#bcf0ae",
+                    "secondary": "#576500",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-dim": "#dddad1",
+                    "secondary-fixed": "#d2f000",
+                    "outline-variant": "#c2c9bb",
+                    "inverse-on-surface": "#f4f0e7",
+                    "on-secondary-container": "#5b6900"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "technical": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .technical-font { font-family: 'JetBrains Mono', monospace; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background min-h-screen">
+<!-- SideNavBar Shell -->
+<aside class="bg-emerald-950 dark:bg-emerald-950 h-screen w-64 fixed left-0 top-0 flex flex-col h-full py-8 px-4 z-50">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold tracking-tight text-white">AK Sports OS</h1>
+<p class="text-[10px] technical-font text-lime-400/60 uppercase tracking-widest mt-1">Super Admin</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="domain">domain</span>
+<span class="text-sm font-medium">Tenants</span>
+</a>
+<!-- Active State: Features -->
+<a class="flex items-center space-x-3 bg-lime-400/20 text-lime-400 rounded-lg px-4 py-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="toggle_on" style="font-variation-settings: 'FILL' 1;">toggle_on</span>
+<span class="text-sm font-semibold">Features</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-sm font-medium">Billing</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-white/10 pt-6 space-y-1">
+<button class="w-full mb-4 bg-lime-400 text-emerald-950 text-xs font-bold py-3 px-4 rounded-lg flex items-center justify-between hover:bg-lime-300 transition-all">
+<span>System Health</span>
+<span class="w-2 h-2 rounded-full bg-emerald-950 animate-pulse"></span>
+</button>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-2 transition-colors text-xs" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="menu_book">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-2 transition-colors text-xs" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="pl-64 min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-md flex justify-between items-center px-8 w-full border-b border-stone-200/20 z-40">
+<div class="flex items-center space-x-8">
+<h2 class="text-lg font-semibold text-emerald-900">Admin Portal</h2>
+<div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+<a class="text-stone-500 hover:text-emerald-800 transition-all" href="#">Global Metrics</a>
+<a class="text-stone-500 hover:text-emerald-800 transition-all" href="#">System Logs</a>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-lg" data-icon="search">search</span>
+<input class="bg-surface-container-high/50 border-none rounded-full py-1.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-lime-400 w-64 transition-all" placeholder="Search flags..." type="text"/>
+</div>
+<div class="flex items-center space-x-3 border-l border-stone-200 pl-6">
+<button class="material-symbols-outlined text-emerald-900 hover:bg-stone-200/50 p-2 rounded-md transition-all" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined text-emerald-900 hover:bg-stone-200/50 p-2 rounded-md transition-all" data-icon="apps">apps</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-stone-200 ml-2">
+<img alt="Super Admin Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a senior tech executive with salt and pepper hair in a minimalist studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ5BH2yGFFGPx_UDYlxgMxn5Sc4aaUhkA-sFowgUz-dwytz3e81Tt42_Rzg6Dqubx4pxUTIUzeJGl4ySAJiFj24ALk2fQimO37oWtmkOTkFj-HD395EAtmviEPfd7jQNVUnMgfArbhyJqm3NekCtFsLsUDKITDLNEZCxEim1seba8pvLtbkVFLwcD7gXEdUi__FIn89MA8iMKXjQ_5BnWrNoOv6cbpxzhj1_JGWeViszy-LRi8vrsjJGrzZI6_0rlKo0qsUlMqmChA"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Feature Content -->
+<div class="pt-24 px-8 pb-12">
+<!-- Header Row -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<span class="technical-font text-[10px] text-primary/60 uppercase tracking-[0.2em]">Management Console</span>
+<h1 class="text-4xl font-bold text-primary mt-1 tracking-tight">Feature Flags</h1>
+</div>
+<button class="bg-secondary-fixed text-on-secondary-fixed text-xs font-bold px-6 py-3 rounded-xl uppercase tracking-wider flex items-center space-x-2 hover:scale-[1.02] transition-transform shadow-sm">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+<span>Create Tenant Feature</span>
+</button>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Main Feature List (Left Column) -->
+<div class="col-span-8 space-y-6">
+<!-- Section Title -->
+<div class="flex items-center justify-between px-2">
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary/40">Active Feature Deployments</h3>
+<span class="technical-font text-[10px] text-primary/40">Count: 04</span>
+</div>
+<!-- Feature Card 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-outline-variant/10 group hover:shadow-md transition-all">
+<div class="flex justify-between items-start">
+<div class="flex space-x-4">
+<div class="w-12 h-12 bg-primary/5 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="biotech">biotech</span>
+</div>
+<div>
+<h4 class="text-lg font-bold text-primary group-hover:text-secondary transition-colors">Advanced Player Analytics</h4>
+<p class="text-sm text-stone-500 mt-1 max-w-md">Enable proprietary kinematic tracking modules for professional league tenants.</p>
+</div>
+</div>
+<div class="flex flex-col items-end space-y-2">
+<div class="flex items-center bg-lime-400/20 text-emerald-900 px-3 py-1 rounded-full space-x-1.5">
+<span class="w-1.5 h-1.5 bg-emerald-600 rounded-full"></span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Active</span>
+</div>
+<span class="technical-font text-[10px] text-stone-400 uppercase">v2.4.0-stable</span>
+</div>
+</div>
+<div class="mt-8 flex items-center space-x-6">
+<div class="flex-1">
+<div class="flex justify-between text-[10px] uppercase font-bold text-stone-400 mb-2">
+<span>Rollout Coverage</span>
+<span class="text-primary">65%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-stone-100 flex items-center justify-center text-[10px] font-bold">PL</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-stone-100 flex items-center justify-center text-[10px] font-bold">ML</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-stone-200 flex items-center justify-center text-[10px] font-bold text-stone-500">+12</div>
+</div>
+<button class="material-symbols-outlined text-stone-400 hover:text-primary transition-colors" data-icon="more_vert">more_vert</button>
+</div>
+</div>
+<!-- Feature Card 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-outline-variant/10 group">
+<div class="flex justify-between items-start">
+<div class="flex space-x-4">
+<div class="w-12 h-12 bg-primary/5 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="currency_exchange">currency_exchange</span>
+</div>
+<div>
+<h4 class="text-lg font-bold text-primary">Multi-Currency Settlement</h4>
+<p class="text-sm text-stone-500 mt-1 max-w-md">Automated FX conversion for international ticket sales and merchandise.</p>
+</div>
+</div>
+<div class="flex flex-col items-end space-y-2">
+<div class="flex items-center bg-stone-100 text-stone-500 px-3 py-1 rounded-full space-x-1.5">
+<span class="w-1.5 h-1.5 bg-stone-400 rounded-full"></span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Inactive</span>
+</div>
+<span class="technical-font text-[10px] text-stone-400 uppercase">v3.1.0-beta</span>
+</div>
+</div>
+<div class="mt-8 flex items-center space-x-6">
+<div class="flex-1">
+<div class="flex justify-between text-[10px] uppercase font-bold text-stone-400 mb-2">
+<span>Rollout Coverage</span>
+<span class="text-stone-400">0%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-stone-200 rounded-full" style="width: 0%"></div>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<span class="text-[10px] font-bold uppercase text-stone-400">Internal Only</span>
+</div>
+<button class="material-symbols-outlined text-stone-400" data-icon="more_vert">more_vert</button>
+</div>
+</div>
+<!-- Feature Card 3 -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-outline-variant/10 group">
+<div class="flex justify-between items-start">
+<div class="flex space-x-4">
+<div class="w-12 h-12 bg-primary/5 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+</div>
+<div>
+<h4 class="text-lg font-bold text-primary">Edge Cache Streaming</h4>
+<p class="text-sm text-stone-500 mt-1 max-w-md">Low-latency video delivery using edge computing for stadium replays.</p>
+</div>
+</div>
+<div class="flex flex-col items-end space-y-2">
+<div class="flex items-center bg-lime-400/20 text-emerald-900 px-3 py-1 rounded-full space-x-1.5">
+<span class="w-1.5 h-1.5 bg-emerald-600 rounded-full"></span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Active</span>
+</div>
+<span class="technical-font text-[10px] text-stone-400 uppercase">v1.9.4</span>
+</div>
+</div>
+<div class="mt-8 flex items-center space-x-6">
+<div class="flex-1">
+<div class="flex justify-between text-[10px] uppercase font-bold text-stone-400 mb-2">
+<span>Rollout Coverage</span>
+<span class="text-primary">100%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 100%"></div>
+</div>
+</div>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-stone-100 flex items-center justify-center text-[10px] font-bold">ALL</div>
+</div>
+<button class="material-symbols-outlined text-stone-400" data-icon="more_vert">more_vert</button>
+</div>
+</div>
+</div>
+<!-- Right Sidebar (Configuration & Monitoring) -->
+<div class="col-span-4 space-y-6">
+<!-- Performance Monitoring Card -->
+<div class="bg-primary p-6 rounded-2xl text-white shadow-xl overflow-hidden relative">
+<div class="absolute top-0 right-0 w-32 h-32 bg-lime-400/10 rounded-full -mr-16 -mt-16"></div>
+<h3 class="text-xs font-bold uppercase tracking-widest text-lime-400/60 mb-6">Clinical Performance</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-[10px] text-white/50 technical-font uppercase">Avg Latency Impact</p>
+<p class="text-3xl font-bold mt-1">+1.4ms</p>
+</div>
+<span class="material-symbols-outlined text-lime-400 text-3xl" data-icon="pulse" style="font-variation-settings: 'FILL' 1;">pulse_alert</span>
+</div>
+<div class="h-16 w-full flex items-end space-x-1">
+<div class="flex-1 bg-lime-400/20 h-4 rounded-sm"></div>
+<div class="flex-1 bg-lime-400/30 h-8 rounded-sm"></div>
+<div class="flex-1 bg-lime-400/20 h-6 rounded-sm"></div>
+<div class="flex-1 bg-lime-400/40 h-10 rounded-sm"></div>
+<div class="flex-1 bg-lime-400/60 h-14 rounded-sm"></div>
+<div class="flex-1 bg-lime-400 h-12 rounded-sm"></div>
+<div class="flex-1 bg-lime-400/80 h-9 rounded-sm"></div>
+</div>
+<div class="pt-4 border-t border-white/10 flex justify-between">
+<div class="text-center">
+<p class="text-[10px] text-white/50">Stability</p>
+<p class="text-sm font-bold">99.98%</p>
+</div>
+<div class="text-center">
+<p class="text-[10px] text-white/50">CPU Load</p>
+<p class="text-sm font-bold">14.2%</p>
+</div>
+<div class="text-center">
+<p class="text-[10px] text-white/50">Err Rate</p>
+<p class="text-sm font-bold text-lime-400">0.00%</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Target Groups Selector -->
+<div class="bg-surface-container-low rounded-2xl p-6">
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary/40 mb-4">Target Groups</h3>
+<div class="space-y-2">
+<label class="flex items-center p-3 bg-white rounded-xl border border-outline-variant/10 hover:border-lime-400/50 cursor-pointer transition-colors group">
+<input checked="" class="rounded text-primary focus:ring-lime-400 w-4 h-4 border-stone-300" type="checkbox"/>
+<div class="ml-3">
+<span class="text-sm font-bold block leading-none">Premier League Teams</span>
+<span class="text-[10px] technical-font text-stone-400 uppercase mt-1 block">Internal Segment: PRM-01</span>
+</div>
+</label>
+<label class="flex items-center p-3 bg-white rounded-xl border border-outline-variant/10 hover:border-lime-400/50 cursor-pointer transition-colors">
+<input checked="" class="rounded text-primary focus:ring-lime-400 w-4 h-4 border-stone-300" type="checkbox"/>
+<div class="ml-3">
+<span class="text-sm font-bold block leading-none">Beta Testers (Staff)</span>
+<span class="text-[10px] technical-font text-stone-400 uppercase mt-1 block">Email Domain: *.aksports.os</span>
+</div>
+</label>
+<label class="flex items-center p-3 bg-white rounded-xl border border-outline-variant/10 hover:border-lime-400/50 cursor-pointer transition-colors">
+<input class="rounded text-primary focus:ring-lime-400 w-4 h-4 border-stone-300" type="checkbox"/>
+<div class="ml-3">
+<span class="text-sm font-bold block leading-none">APAC Regional Nodes</span>
+<span class="text-[10px] technical-font text-stone-400 uppercase mt-1 block">Geo: SG, JP, AU</span>
+</div>
+</label>
+</div>
+<button class="w-full mt-4 py-2 border-2 border-dashed border-stone-300 text-stone-400 text-xs font-bold rounded-xl hover:border-stone-400 hover:text-stone-600 transition-all uppercase tracking-widest">
+                            Define New Group
+                        </button>
+</div>
+<!-- A/B Test Configuration Panel -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/20">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary/40">A/B Experiments</h3>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="science">science</span>
+</div>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-blue-500"></div>
+<span class="text-xs font-bold">Variant Alpha</span>
+</div>
+<span class="technical-font text-xs">50%</span>
+</div>
+<div class="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden">
+<div class="h-full bg-blue-500 rounded-full" style="width: 50%"></div>
+</div>
+<p class="text-[10px] text-stone-400 mt-2 italic">Standard dashboard layout with original metrics.</p>
+</div>
+<div>
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-secondary-fixed"></div>
+<span class="text-xs font-bold">Variant Bravo</span>
+</div>
+<span class="technical-font text-xs">50%</span>
+</div>
+<div class="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed rounded-full" style="width: 50%"></div>
+</div>
+<p class="text-[10px] text-stone-400 mt-2 italic">New Bento-Grid interface with predictive insights.</p>
+</div>
+<button class="w-full bg-primary text-white text-[10px] font-bold py-3 rounded-xl uppercase tracking-widest hover:opacity-90 transition-opacity">
+                                Run Configuration Sync
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

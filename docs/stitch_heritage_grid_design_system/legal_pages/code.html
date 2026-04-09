@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#154212",
+                    "secondary": "#576500",
+                    "on-primary-container": "#9dd090",
+                    "background": "#fdf9f0",
+                    "surface-container": "#f1eee5",
+                    "surface-container-low": "#f7f3ea",
+                    "inverse-primary": "#a1d494",
+                    "primary-fixed-dim": "#a1d494",
+                    "outline-variant": "#c2c9bb",
+                    "surface-container-high": "#ece8df",
+                    "surface": "#fdf9f0",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#42493e",
+                    "primary": "#154212",
+                    "on-primary-fixed-variant": "#23501e",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed-dim": "#b8d300",
+                    "secondary-container": "#d0ed00",
+                    "surface-dim": "#dddad1",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "surface-tint": "#3b6934",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#bcf0ae",
+                    "on-tertiary-fixed": "#002201",
+                    "inverse-surface": "#31302b",
+                    "tertiary-container": "#2d5a27",
+                    "on-tertiary-container": "#9dd090",
+                    "error-container": "#ffdad6",
+                    "outline": "#72796e",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e6e2d9",
+                    "on-surface": "#1c1c16",
+                    "primary-fixed": "#bcf0ae",
+                    "secondary-fixed": "#d2f000",
+                    "primary-container": "#2d5a27",
+                    "on-background": "#1c1c16",
+                    "inverse-on-surface": "#f4f0e7",
+                    "surface-variant": "#e6e2d9",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#fdf9f0",
+                    "on-primary-fixed": "#002201",
+                    "on-secondary-fixed": "#191e00",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-container": "#5b6900"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; }
+    </style>
+</head>
+<body class="text-on-surface selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="bg-[#154212] h-screen w-64 fixed left-0 top-0 flex flex-col h-full py-6 shadow-[0_4px_16px_rgba(45,90,39,0.06)] z-50">
+<div class="px-6 mb-10">
+<h1 class="text-xl font-bold text-white tracking-tight">AK Sports OS</h1>
+<p class="text-[0.65rem] text-emerald-300/60 font-['JetBrains_Mono'] uppercase tracking-[0.2em] mt-1">Admin Suite</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<!-- Branding -->
+<a class="text-emerald-100/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-colors duration-200 font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+                Branding
+            </a>
+<!-- Themes -->
+<a class="text-emerald-100/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-colors duration-200 font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+                Themes
+            </a>
+<!-- Templates -->
+<a class="text-emerald-100/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-colors duration-200 font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard_customize">dashboard_customize</span>
+                Templates
+            </a>
+<!-- System (Active: Legal falls under System management) -->
+<a class="bg-[#d2f000] text-[#154212] rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors duration-200 font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+                System
+            </a>
+<!-- Analytics -->
+<a class="text-emerald-100/70 hover:text-white px-4 py-3 flex items-center gap-3 transition-colors duration-200 font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem]" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+                Analytics
+            </a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full bg-[#d2f000] text-[#154212] font-bold py-3 rounded-xl flex items-center justify-center gap-2 mb-8 hover:opacity-90 transition-all">
+                Publish Changes
+            </button>
+<div class="space-y-4">
+<a class="flex items-center gap-3 text-emerald-100/60 hover:text-white transition-colors text-[0.75rem] uppercase tracking-wider font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+                    Support
+                </a>
+<a class="flex items-center gap-3 text-emerald-100/60 hover:text-white transition-colors text-[0.75rem] uppercase tracking-wider font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+                    Logs
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar (Authority: JSON) -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-[#fdf9f0]/80 backdrop-blur-md flex items-center justify-between px-8 z-40">
+<div class="flex items-center gap-6">
+<span class="font-['DM_Sans'] font-semibold text-[#154212] text-sm">Admin Console</span>
+<div class="flex items-center bg-surface-container-highest px-3 py-1.5 rounded-lg w-64 group focus-within:ring-1 focus-within:ring-primary/20 transition-all">
+<span class="material-symbols-outlined text-outline text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-['DM_Sans'] w-full placeholder:text-outline" placeholder="Search system legalities..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="text-stone-500 hover:text-[#154212] transition-all"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+<button class="text-stone-500 hover:text-[#154212] transition-all"><span class="material-symbols-outlined" data-icon="help">help</span></button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-xs font-bold text-primary leading-none">AK Admin</p>
+<p class="text-[10px] text-outline font-['JetBrains_Mono']">SECURE SESSION</p>
+</div>
+<img class="w-10 h-10 rounded-full object-cover border-2 border-surface-container-highest" data-alt="close up professional portrait of a tech executive with subtle neutral lighting and high-end editorial feel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbNldFdg9GDe5fNigZnxEO0VXIw1TJUaZJQh48sd6PcCEMMA4fQGxQbmc-axpZPgPAcV1IqYlU-PvHGkOiI48Ws54MpeQAYwAYb76BDQAsGTaxdl4d71lGKiAl5cyCI7VaII9IYmpCz-IC0xqPOekF4yVU9IgMV2S92r113VX52xUAao7KPg1Rr0IfLxz3a1rMol7jC5yYyLK-X6f4yxjPJlWPpKek5xQg4Vt4u1N2DUvnwMf4w7KXHt597TV3fc4Fd9vaKPSbznRL"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="pt-24 pb-16 px-12">
+<!-- Headline Section -->
+<section class="mb-12 flex items-end justify-between">
+<div>
+<p class="mono text-[0.7rem] uppercase tracking-[0.3em] text-secondary mb-2 font-bold">System Integrity</p>
+<h2 class="text-5xl font-['Manrope'] font-extrabold text-primary tracking-tight">Compliance &amp; Legal</h2>
+</div>
+<div class="text-right">
+<p class="mono text-[0.65rem] text-outline uppercase tracking-widest mb-1">Last Synchronized</p>
+<div class="flex items-center gap-2 text-primary font-['JetBrains_Mono'] font-medium text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="update">update</span>
+<span>OCT 24, 2023 — 14:32:01 UTC</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="bento-grid">
+<!-- 1. Terms of Service Editor (Large Span) -->
+<div class="col-span-8 bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/10 shadow-sm flex flex-col h-[500px]">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+</div>
+<h3 class="text-xl font-bold tracking-tight text-primary">Terms of Service Editor</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-surface-container-low rounded-full text-[10px] mono font-bold text-outline">v2.4.1</span>
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="open_in_full">open_in_full</span>
+</button>
+</div>
+</div>
+<div class="flex-1 bg-surface-container-low rounded-2xl p-6 overflow-y-auto border border-outline-variant/10">
+<div class="space-y-6 text-on-surface/80 leading-relaxed font-['DM_Sans'] text-sm">
+<p class="font-bold text-primary">1. ACCEPTANCE OF TERMS</p>
+<p>By accessing and using AK Sports OS (the "Service"), you agree to be bound by these Terms of Service. If you do not agree, you are prohibited from using the platform. We reserve the right to modify these terms at any period without prior formal notice.</p>
+<p class="font-bold text-primary">2. INTELLECTUAL PROPERTY</p>
+<p>All laboratory data, algorithmic structures, and proprietary branding assets housed within the AK Sports OS ecosystem remain the exclusive property of AK Sports Group. Unauthorized replication, reverse engineering, or data scraping is strictly forbidden under federal compliance laws.</p>
+<p class="font-bold text-primary">3. DATA UTILIZATION</p>
+<p>User-generated data is processed through our proprietary Curated Laboratory environment. While we do not claim ownership of raw inputs, the processed analytical outputs are licensed exclusively for use within this interface.</p>
+</div>
+</div>
+<div class="mt-6 pt-6 border-t border-outline-variant/20 flex justify-between items-center">
+<p class="text-xs text-outline italic">Draft saved 2 minutes ago</p>
+<button class="px-6 py-2 bg-primary text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all">Edit Structure</button>
+</div>
+</div>
+<!-- 2. Privacy Policy Snippet (Asymmetric Vertical) -->
+<div class="col-span-4 bg-surface-container rounded-3xl p-8 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-8">
+<div class="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-secondary-fixed">
+<span class="material-symbols-outlined" data-icon="policy">policy</span>
+</div>
+<span class="mono text-[0.6rem] text-primary bg-secondary-fixed/30 px-3 py-1 rounded-full font-bold">LIVE STATUS</span>
+</div>
+<h3 class="text-2xl font-extrabold text-primary mb-4 leading-tight">Privacy Policy Framework</h3>
+<p class="text-sm text-outline-variant/80 text-on-surface-variant mb-6 leading-relaxed">
+                            Our "Alabaster Precision" privacy framework ensures that all telemetry data is anonymized before entering the permanent archival layer.
+                        </p>
+<div class="space-y-4">
+<div class="p-4 bg-surface-container-lowest rounded-2xl flex items-start gap-4 border border-outline-variant/10">
+<span class="material-symbols-outlined text-secondary" data-icon="encrypted">encrypted</span>
+<div>
+<p class="text-xs font-bold text-primary">End-to-End Encryption</p>
+<p class="text-[10px] text-outline">Active on all data pipelines</p>
+</div>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-2xl flex items-start gap-4 border border-outline-variant/10">
+<span class="material-symbols-outlined text-secondary" data-icon="delete_sweep">delete_sweep</span>
+<div>
+<p class="text-xs font-bold text-primary">Auto-Purge Cycles</p>
+<p class="text-[10px] text-outline">90-day archival rotation</p>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-4 border-2 border-primary/10 rounded-2xl text-primary font-bold text-xs uppercase tracking-widest hover:bg-primary/5 transition-colors">Configure Endpoints</button>
+</div>
+<!-- 3. Cookie Policy Consent (Bottom Left) -->
+<div class="col-span-5 bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/10 flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="cookie">cookie</span>
+<h3 class="text-lg font-bold text-primary">Cookie Consent Text</h3>
+</div>
+<div class="p-5 bg-primary rounded-2xl">
+<p class="text-xs text-white/90 font-['DM_Sans'] leading-relaxed">
+                            "We use refined analytical cookies to enhance your laboratory experience. By clicking 'Accept All', you permit AK Sports to leverage telemetry data for performance orchestration."
+                        </p>
+</div>
+<div class="flex gap-2">
+<div class="flex-1 h-12 rounded-xl bg-surface-container-low border border-outline-variant/20 flex items-center px-4 text-[10px] font-bold text-outline">REJECT ACTION</div>
+<div class="flex-1 h-12 rounded-xl bg-secondary-fixed flex items-center px-4 text-[10px] font-bold text-primary">ACCEPT ACTION</div>
+</div>
+</div>
+<!-- 4. GDPR Compliance Checklist (Bottom Right) -->
+<div class="col-span-7 bg-white rounded-3xl p-8 border border-outline-variant/10 relative overflow-hidden">
+<!-- Heritage Grid Accent -->
+<div class="absolute top-0 right-0 w-32 h-32 opacity-[0.03] pointer-events-none">
+<div class="w-full h-full border-r border-b border-primary grid grid-cols-4 grid-rows-4">
+<div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div>
+<div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div>
+<div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div>
+<div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div><div class="border-l border-t border-primary"></div>
+</div>
+</div>
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="text-xl font-bold text-primary">GDPR Compliance Checklist</h3>
+<p class="mono text-[0.6rem] text-outline mt-1 uppercase tracking-widest">Global Regulatory Standards</p>
+</div>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full bg-blue-50 border-2 border-white flex items-center justify-center"><span class="text-[10px] font-bold text-blue-600">EU</span></div>
+<div class="w-8 h-8 rounded-full bg-emerald-50 border-2 border-white flex items-center justify-center"><span class="text-[10px] font-bold text-emerald-600">UK</span></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-container-low border-l-4 border-secondary transition-all hover:translate-x-1">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill">check_circle</span>
+<span class="text-xs font-bold text-primary">Right to Access Modules</span>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-container-low border-l-4 border-secondary transition-all hover:translate-x-1">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill">check_circle</span>
+<span class="text-xs font-bold text-primary">Data Portability Engine</span>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-container-low border-l-4 border-secondary transition-all hover:translate-x-1">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill">check_circle</span>
+<span class="text-xs font-bold text-primary">Opt-out Mechanism</span>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-container-low border-l-4 border-outline-variant transition-all hover:translate-x-1">
+<span class="material-symbols-outlined text-outline-variant text-xl" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+<span class="text-xs font-bold text-outline">Erasure Automation</span>
+</div>
+</div>
+<div class="mt-8 flex items-center gap-3 bg-secondary-fixed/10 p-4 rounded-2xl">
+<span class="material-symbols-outlined text-primary" data-icon="verified_user">verified_user</span>
+<p class="text-[11px] font-medium text-primary leading-tight">Your current system configuration is <span class="font-bold">92% compliant</span> with European Union data regulations. One action required.</p>
+</div>
+</div>
+</div>
+<!-- Sticky Save Bar -->
+<div class="fixed bottom-8 right-12 flex items-center gap-4 z-50">
+<div class="bg-primary/95 backdrop-blur shadow-xl rounded-2xl px-6 py-4 flex items-center gap-8 border border-white/10">
+<div class="flex flex-col">
+<span class="mono text-[0.6rem] text-secondary-fixed uppercase tracking-widest font-bold">Status</span>
+<span class="text-white text-xs font-medium">Unpublished Changes Present</span>
+</div>
+<div class="h-8 w-[1px] bg-white/20"></div>
+<div class="flex items-center gap-4">
+<button class="text-white/60 hover:text-white text-xs font-bold uppercase tracking-widest transition-colors">Discard</button>
+<button class="bg-secondary-fixed text-primary px-8 py-3 rounded-xl text-xs font-extrabold uppercase tracking-widest flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_4px_12px_rgba(210,240,0,0.3)]">
+<span class="material-symbols-outlined text-sm" data-icon="cloud_upload">cloud_upload</span>
+                            Save &amp; Publish
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Overlay Decoration -->
+<div class="fixed top-0 right-0 w-[40%] h-[100%] pointer-events-none opacity-[0.02] z-0">
+<div class="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary via-transparent to-transparent"></div>
+</div>
+</body></html>

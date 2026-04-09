@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Global Settings | AK Sports OS</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#002201",
+                    "on-primary-container": "#9dd090",
+                    "inverse-primary": "#a1d494",
+                    "on-secondary-fixed": "#191e00",
+                    "secondary-container": "#d0ed00",
+                    "primary": "#154212",
+                    "secondary-fixed-dim": "#b8d300",
+                    "background": "#fdf9f0",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#23501e",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#fdf9f0",
+                    "surface-container-highest": "#e6e2d9",
+                    "surface-container": "#f1eee5",
+                    "tertiary-container": "#2d5a27",
+                    "outline": "#72796e",
+                    "on-surface": "#1c1c16",
+                    "surface-container-high": "#ece8df",
+                    "primary-fixed": "#bcf0ae",
+                    "on-tertiary-container": "#9dd090",
+                    "surface": "#fdf9f0",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#a1d494",
+                    "inverse-surface": "#31302b",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e6e2d9",
+                    "surface-container-low": "#f7f3ea",
+                    "surface-tint": "#3b6934",
+                    "on-primary-fixed": "#002201",
+                    "on-background": "#1c1c16",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "on-surface-variant": "#42493e",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary": "#154212",
+                    "primary-container": "#2d5a27",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "tertiary-fixed": "#bcf0ae",
+                    "secondary": "#576500",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-dim": "#dddad1",
+                    "secondary-fixed": "#d2f000",
+                    "outline-variant": "#c2c9bb",
+                    "inverse-on-surface": "#f4f0e7",
+                    "on-secondary-container": "#5b6900"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { backdrop-filter: blur(12px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="bg-emerald-950 dark:bg-emerald-950 h-screen w-64 fixed left-0 top-0 flex flex-col h-full py-8 px-4 z-50">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold tracking-tight text-white">AK Sports OS</h1>
+<p class="text-[10px] font-mono uppercase tracking-[0.2em] text-lime-400/60 mt-1">Super Admin</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Inactive -->
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined transition-transform group-active:scale-95">dashboard</span>
+<span class="text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined transition-transform group-active:scale-95">domain</span>
+<span class="text-sm font-medium">Tenants</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined transition-transform group-active:scale-95">toggle_on</span>
+<span class="text-sm font-medium">Features</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined transition-transform group-active:scale-95">payments</span>
+<span class="text-sm font-medium">Billing</span>
+</a>
+<!-- Active: Settings -->
+<a class="flex items-center space-x-3 bg-lime-400/20 text-lime-400 rounded-lg px-4 py-3 transition-colors group" href="#">
+<span class="material-symbols-outlined transition-transform group-active:scale-95" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="text-sm font-bold">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-white/5 pt-6 space-y-1">
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+<span class="text-xs uppercase tracking-wider font-medium">Documentation</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-sm">contact_support</span>
+<span class="text-xs uppercase tracking-wider font-medium">Support</span>
+</a>
+<div class="mt-6 px-4 py-4 bg-lime-400 rounded-xl flex items-center justify-between">
+<span class="text-emerald-950 text-xs font-bold uppercase">System Health</span>
+<span class="h-2 w-2 bg-emerald-900 rounded-full animate-pulse"></span>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-stone-50/80 backdrop-blur-md flex justify-between items-center px-8 w-full z-40 transition-all">
+<div class="flex items-center space-x-8">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-lg">search</span>
+<input class="bg-surface-container-high border-none rounded-lg pl-10 pr-4 py-1.5 text-sm w-64 focus:ring-1 focus:ring-primary focus:bg-white transition-all outline-none" placeholder="Global Search..." type="text"/>
+</div>
+<nav class="flex items-center space-x-6 text-xs font-bold uppercase tracking-widest">
+<a class="text-stone-500 hover:text-emerald-800 transition-all" href="#">Global Metrics</a>
+<a class="text-stone-500 hover:text-emerald-800 transition-all" href="#">System Logs</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<button class="material-symbols-outlined text-stone-500 hover:bg-stone-200/50 p-2 rounded-md transition-all">notifications</button>
+<button class="material-symbols-outlined text-stone-500 hover:bg-stone-200/50 p-2 rounded-md transition-all">apps</button>
+<div class="h-8 w-[1px] bg-stone-200 mx-2"></div>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all flex items-center space-x-2">
+<span>Create Tenant</span>
+</button>
+<img alt="Super Admin Profile" class="h-8 w-8 rounded-full object-cover ring-2 ring-lime-400/20" data-alt="Professional portrait of a male executive with a focused expression in a modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLbkVjJsDfti93kJ4J5q9koBabuSNMOiyuXcmcrXdKhqZ_e5btgMsx2E_jZ2_9BNJk95M2g50S4pDxVNeinsM7nSJPFaWE4M1CpLFsFD-tlHb9vBx0ZK50Q49HKpi75emFsSB8FUbSpvpk3a6CEV74xQ5uJmSyd1sCcFBOE6KGnu_Tk0ZgLE6zyu-BvaC2Hsuy0zbAFHRFHEeEfd3f9MBYsDSbkdLuFxOgaknqVd2MnNNiaTA6zvn7XdqdmQkqZaFwG-3df7fZosr7"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 px-12 pb-16 min-h-screen">
+<div class="max-w-6xl mx-auto">
+<!-- Header Section -->
+<div class="mb-12">
+<h2 class="text-4xl font-semibold tracking-tight text-primary mb-2">Platform Settings</h2>
+<p class="text-stone-500 font-medium">Configure global parameters and administrative defaults for AK Sports OS.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Section 1: Localization Controls (Large Left) -->
+<section class="col-span-12 lg:col-span-7 bg-surface-container-lowest rounded-[24px] p-8 shadow-sm">
+<div class="flex items-center space-x-3 mb-8">
+<div class="p-3 bg-primary-fixed text-primary rounded-xl">
+<span class="material-symbols-outlined">language</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-primary">Global Localization</h3>
+<p class="text-xs font-mono text-stone-400">LOC-001 / SYSTEM_DEFAULTS</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="font-mono text-[10px] text-stone-500 uppercase tracking-widest">Default Language</label>
+<select class="w-full bg-surface-container-low border-none rounded-xl py-4 px-4 text-primary font-medium focus:ring-2 focus:ring-lime-400 appearance-none">
+<option>English (United Kingdom)</option>
+<option>English (United States)</option>
+<option>Deutsch (Deutschland)</option>
+<option>Español (España)</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-mono text-[10px] text-stone-500 uppercase tracking-widest">Base Currency</label>
+<select class="w-full bg-surface-container-low border-none rounded-xl py-4 px-4 text-primary font-medium focus:ring-2 focus:ring-lime-400 appearance-none">
+<option>GBP (£) - British Pound</option>
+<option>USD ($) - US Dollar</option>
+<option>EUR (€) - Euro</option>
+</select>
+</div>
+<div class="md:col-span-2 space-y-2">
+<label class="font-mono text-[10px] text-stone-500 uppercase tracking-widest">Global Time Zone</label>
+<select class="w-full bg-surface-container-low border-none rounded-xl py-4 px-4 text-primary font-medium focus:ring-2 focus:ring-lime-400 appearance-none">
+<option>(UTC+00:00) London, Lisbon, Dublin</option>
+<option>(UTC-05:00) Eastern Time (US &amp; Canada)</option>
+<option>(UTC+01:00) Berlin, Madrid, Paris</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Section 2: Quick Actions (Tall Right) -->
+<aside class="col-span-12 lg:col-span-5 flex flex-col gap-8">
+<div class="bg-primary text-white rounded-[24px] p-8 relative overflow-hidden group">
+<div class="relative z-10">
+<h4 class="text-xl font-bold mb-2">Audit Logs</h4>
+<p class="text-emerald-100/60 text-sm mb-6">Monitor platform-wide configuration changes in real-time.</p>
+<a class="inline-flex items-center text-lime-400 font-bold uppercase text-xs tracking-widest group-hover:translate-x-2 transition-transform" href="#">
+<span>View System Records</span>
+<span class="material-symbols-outlined ml-2 text-sm">arrow_forward</span>
+</a>
+</div>
+<!-- Abstract Background Detail -->
+<div class="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-lime-400/10 rounded-full blur-3xl"></div>
+</div>
+<div class="bg-surface-container-low rounded-[24px] p-8 flex-1">
+<h4 class="text-primary font-bold mb-4 flex items-center">
+<span class="material-symbols-outlined mr-2">security</span>
+<span>Security Override</span>
+</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-white/50 rounded-xl">
+<span class="text-sm font-medium">Force MFA</span>
+<div class="w-10 h-5 bg-stone-300 rounded-full relative cursor-pointer">
+<div class="absolute right-1 top-1 w-3 h-3 bg-white rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-white/50 rounded-xl">
+<span class="text-sm font-medium">Developer Mode</span>
+<div class="w-10 h-5 bg-primary rounded-full relative cursor-pointer">
+<div class="absolute right-1 top-1 w-3 h-3 bg-lime-400 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Section 3: Email Templates Editor (Full Width) -->
+<section class="col-span-12 bg-surface-container-lowest rounded-[24px] p-8 shadow-sm">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div class="flex items-center space-x-3">
+<div class="p-3 bg-secondary-fixed text-on-secondary-fixed rounded-xl">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-primary">Global Email Templates</h3>
+<p class="text-xs font-mono text-stone-400">EDITOR-X / LIQUID ENGINE</p>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button class="px-4 py-2 bg-surface-container text-stone-600 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-stone-200 transition-all">Preview</button>
+<button class="px-4 py-2 bg-secondary-fixed text-on-secondary-fixed rounded-lg text-xs font-bold uppercase tracking-wider hover:brightness-105 transition-all">Save Template</button>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<div class="col-span-12 md:col-span-3 space-y-2">
+<label class="font-mono text-[10px] text-stone-500 uppercase tracking-widest">Select Template</label>
+<div class="space-y-2">
+<button class="w-full text-left p-4 bg-primary text-white rounded-xl text-sm font-bold">New Tenant Welcome</button>
+<button class="w-full text-left p-4 bg-surface-container hover:bg-surface-container-high transition-all rounded-xl text-sm font-medium text-stone-600">Password Recovery</button>
+<button class="w-full text-left p-4 bg-surface-container hover:bg-surface-container-high transition-all rounded-xl text-sm font-medium text-stone-600">Subscription Alert</button>
+<button class="w-full text-left p-4 bg-surface-container hover:bg-surface-container-high transition-all rounded-xl text-sm font-medium text-stone-600">System Maintenance</button>
+</div>
+</div>
+<div class="col-span-12 md:col-span-9 bg-surface-container-low rounded-2xl p-0 overflow-hidden border border-stone-200/20">
+<div class="bg-stone-200/50 px-4 py-2 border-b border-stone-300/30 flex items-center space-x-4">
+<span class="material-symbols-outlined text-stone-500 text-sm">code</span>
+<span class="text-[10px] font-mono text-stone-500 uppercase tracking-widest">Editor: welcome_new_tenant.liquid</span>
+</div>
+<div class="p-6 font-mono text-sm leading-relaxed text-primary bg-white/50 h-80 overflow-y-auto no-scrollbar">
+<span class="text-stone-400">&lt;!-- Global Header --&gt;</span><br/>
+<span class="text-primary-container font-bold">&lt;div style="font-family: 'DM Sans', sans-serif;"&gt;</span><br/>
+                                  &lt;h1&gt;Welcome to {{ tenant_name }}, {{ user_first_name }}&lt;/h1&gt;<br/>
+                                  &lt;p&gt;We are thrilled to have you onboard AK Sports OS.&lt;/p&gt;<br/>
+                                  <span class="text-stone-400">&lt;!-- CTA --&gt;</span><br/>
+                                  &lt;a href="{{ platform_url }}" class="button"&gt;Initialize Dashboard&lt;/a&gt;<br/>
+<span class="text-primary-container font-bold">&lt;/div&gt;</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Terms of Service Editor (Asymmetric Layout) -->
+<section class="col-span-12 lg:col-span-8 bg-surface-container-low rounded-[24px] p-8">
+<div class="flex items-center space-x-3 mb-8">
+<div class="p-3 bg-primary-container text-white rounded-xl">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-primary">Terms of Service</h3>
+<p class="text-xs font-mono text-stone-400">LEGAL_REV-2024.11</p>
+</div>
+</div>
+<div class="bg-white rounded-2xl shadow-sm border border-stone-200/30">
+<div class="flex items-center space-x-2 p-3 border-b border-stone-100">
+<button class="p-2 hover:bg-stone-50 rounded material-symbols-outlined text-stone-600">format_bold</button>
+<button class="p-2 hover:bg-stone-50 rounded material-symbols-outlined text-stone-600">format_italic</button>
+<button class="p-2 hover:bg-stone-50 rounded material-symbols-outlined text-stone-600">format_list_bulleted</button>
+<div class="w-[1px] h-4 bg-stone-200 mx-2"></div>
+<button class="p-2 hover:bg-stone-50 rounded material-symbols-outlined text-stone-600">link</button>
+</div>
+<div class="p-8 h-96 overflow-y-auto no-scrollbar text-stone-700 leading-loose">
+<h2 class="text-xl font-bold text-primary mb-4">1. Acceptance of Terms</h2>
+<p class="mb-6">By accessing and using the AK Sports OS Platform, you agree to be bound by these Global Terms of Service. These terms apply across all federated tenants within the ecosystem.</p>
+<h2 class="text-xl font-bold text-primary mb-4">2. Platform Governance</h2>
+<p class="mb-6">The Platform reserves the right to modify system architecture, performance protocols, and data residency locations without prior notice, provided that system integrity is maintained.</p>
+<h2 class="text-xl font-bold text-primary mb-4">3. Data Integrity</h2>
+<p>Super Admins are responsible for the hierarchical accuracy of tenant data. All telemetry is recorded for audit purposes.</p>
+</div>
+</div>
+</section>
+<!-- Section 5: Platform Health Snapshot (Small Right) -->
+<section class="col-span-12 lg:col-span-4 bg-surface-container-highest rounded-[24px] p-8 flex flex-col justify-between">
+<div>
+<h4 class="text-xs font-mono text-stone-500 uppercase tracking-widest mb-8">Infrastructure Status</h4>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<span class="text-sm font-bold text-primary">Core Engine</span>
+<span class="px-2 py-1 bg-lime-400/20 text-primary text-[10px] font-bold rounded">OPERATIONAL</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-bold text-primary">Database Cluster</span>
+<span class="px-2 py-1 bg-lime-400/20 text-primary text-[10px] font-bold rounded">STABLE</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-bold text-primary">Asset CDN</span>
+<span class="px-2 py-1 bg-lime-400/20 text-primary text-[10px] font-bold rounded">99.9%</span>
+</div>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-stone-300/30">
+<div class="flex items-center space-x-4 mb-6">
+<div class="h-12 w-12 rounded-full overflow-hidden bg-stone-200">
+<img alt="System Health Graphic" class="h-full w-full object-cover grayscale opacity-50" data-alt="Abstract data visualization showing clean lines and dots representing network connections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKC-Ffi2hsRF5KSEcI95XZXm8V8Cq82GESR0IySD7LxNoN7e7w0R6EHiUer-VJsEbXQejWaQTe_zK3nzXiIGdKRi-OJ5GN1dI0b5ny_lPiif1VjU3qfDGREv6rvtXbz20fqOGXo0BvFSQMI1pMLcOz8TTVkLBI5NEGtkUVz4-DEsfb2MF8j4fU3b822IxGbV1dejmSaGp015gDLL6Dub7EXtSBIdHP4qpWX-ys0DO7fIP7hocYyRQrNc5Yfi-Ecx537Kj5ko8jntfg"/>
+</div>
+<div>
+<p class="text-[10px] font-mono text-stone-500">VERSION_HASH</p>
+<p class="text-sm font-bold text-primary">v2.4.12-premium</p>
+</div>
+</div>
+<button class="w-full py-4 bg-primary text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all">
+                            Update Core Modules
+                        </button>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Floating Global Footer Info -->
+<footer class="ml-64 px-12 py-6 border-t border-stone-200/20 flex justify-between items-center text-stone-400">
+<div class="flex items-center space-x-4">
+<span class="text-[10px] font-mono tracking-widest">© 2024 AK SPORTS OS</span>
+<span class="h-1 w-1 bg-stone-300 rounded-full"></span>
+<span class="text-[10px] font-mono tracking-widest uppercase">Precision Governance Module</span>
+</div>
+<div class="flex space-x-6 text-[10px] font-mono uppercase tracking-widest">
+<a class="hover:text-primary transition-colors" href="#">Privacy Archival</a>
+<a class="hover:text-primary transition-colors" href="#">System Schema</a>
+</div>
+</footer>
+</body></html>

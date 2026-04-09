@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Financial | AK Sports OS Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-layering {
+            background-color: #f7f3ea;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #d2f000 0%, #b8d300 100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#bcf0ae",
+                        "surface-tint": "#3b6934",
+                        "tertiary-fixed": "#bcf0ae",
+                        "surface": "#fdf9f0",
+                        "tertiary": "#154212",
+                        "surface-container-high": "#ece8df",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dddad1",
+                        "outline-variant": "#c2c9bb",
+                        "background": "#fdf9f0",
+                        "on-primary-fixed": "#002201",
+                        "on-error": "#ffffff",
+                        "primary": "#154212",
+                        "secondary-container": "#d0ed00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1c1c16",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-bright": "#fdf9f0",
+                        "on-secondary-fixed": "#191e00",
+                        "tertiary-container": "#2d5a27",
+                        "secondary": "#576500",
+                        "inverse-surface": "#31302b",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-surface": "#1c1c16",
+                        "on-secondary-container": "#5b6900",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#72796e",
+                        "secondary-fixed": "#d2f000",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9dd090",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-container-highest": "#e6e2d9",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-surface-variant": "#42493e",
+                        "on-primary-container": "#9dd090",
+                        "surface-container": "#f1eee5",
+                        "on-tertiary-fixed": "#002201",
+                        "surface-variant": "#e6e2d9",
+                        "inverse-primary": "#a1d494"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background font-body text-on-surface flex overflow-hidden h-screen">
+<!-- SideNavBar (Predicted from JSON) -->
+<aside class="flex flex-col h-full py-8 px-4 h-screen w-64 border-r-0 bg-green-950 dark:bg-green-950 shrink-0">
+<div class="mb-10 px-2">
+<h1 class="text-xl font-bold text-white tracking-tight">AK Sports OS</h1>
+<p class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-green-200/60 mt-1">Elite Analytics</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-lime-400 bg-green-900/50 rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg">monitoring</span>
+                Performance
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg">groups</span>
+                Roster
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg">query_stats</span>
+                Analytics
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg">travel_explore</span>
+                Scouting
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="mt-auto px-2">
+<button class="w-full py-3 px-4 hero-gradient text-primary font-bold rounded-xl flex items-center justify-center gap-2 hover:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">New Report</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- TopNavBar (Predicted from JSON) -->
+<header class="flex justify-between items-center px-8 w-full border-b border-[#154212]/10 bg-[#fdf9f0]/80 backdrop-blur-xl h-16 shrink-0 z-10">
+<div class="flex items-center gap-6 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-green-700/50">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-sm focus:ring-1 ring-lime-400/20 font-['DM_Sans']" placeholder="Search analytics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-mono text-[10px] text-green-700/50 uppercase tracking-widest mr-4">System Live // v2.4.0</span>
+<div class="flex items-center gap-3">
+<button class="p-2 text-green-700/50 hover:text-green-900"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 text-green-700/50 hover:text-green-900"><span class="material-symbols-outlined">help</span></button>
+<div class="h-8 w-8 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden border border-outline-variant/20">
+<img alt="Analyst Profile" class="h-full w-full object-cover" data-alt="professional male financial analyst portrait in a modern architectural setting with soft natural window lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR-teCFPrt6wP0qJwIs-95AvtVkoi7QvsZ4DsgKpMa301ToJDTNh864oIGhZkbIbyj1AfL_sfPi-BBSdmMEV8l5qXwgeJLNyn7WI9JS7iISycgaXysnpaVIfTGNH0NQ5JTfAOLdZqlYNc9tLntnlhxxTQ2LOOTcVX5yw9RvN9nyxrW0MCmjMdKdjzeZc24AwVPcE1UlRluEJWaNlTYIJ_GYYeG5rQCHHZ4vnWKBVcRSbAw7jHCXZ2zLasKDSVJqyeDr9vGDPeXCuCu"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8">
+<!-- Header Section -->
+<section class="flex justify-between items-end">
+<div>
+<h2 class="text-4xl font-headline font-semibold text-primary tracking-tight">Financial</h2>
+<p class="text-green-700/60 font-mono text-xs mt-1 uppercase tracking-widest">Revenue Analytics &amp; Projections Cluster</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-low px-4 py-2 rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<span class="font-['DM_Sans'] font-semibold text-sm">Fiscal Q3 2024</span>
+</div>
+<button class="bg-primary text-white px-6 py-2 rounded-lg font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span> Export CSV
+                    </button>
+</div>
+</section>
+<!-- Top Row: Metrics Grid -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- MRR Card -->
+<div class="bg-surface-container-lowest p-6 rounded-[24px] border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<p class="font-['DM_Sans'] font-semibold text-green-700/50 text-[11px] uppercase tracking-widest">Monthly Recurring</p>
+<span class="px-2 py-1 bg-lime-400/20 text-primary font-mono text-[10px] rounded-full font-bold">+12.4%</span>
+</div>
+<div class="flex items-baseline gap-1 mb-4">
+<span class="text-2xl font-headline font-bold text-primary">$428.5k</span>
+<span class="text-xs text-green-700/40 font-mono">/mo</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary w-3/4"></div>
+</div>
+</div>
+<!-- ARR Card -->
+<div class="bg-surface-container-lowest p-6 rounded-[24px] border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<p class="font-['DM_Sans'] font-semibold text-green-700/50 text-[11px] uppercase tracking-widest">Annual Run Rate</p>
+<span class="px-2 py-1 bg-lime-400/20 text-primary font-mono text-[10px] rounded-full font-bold">+8.2%</span>
+</div>
+<div class="flex items-baseline gap-1 mb-4">
+<span class="text-2xl font-headline font-bold text-primary">$5.14M</span>
+<span class="text-xs text-green-700/40 font-mono">/yr</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary w-1/2"></div>
+</div>
+</div>
+<!-- Average Order Value (Sparkline) -->
+<div class="bg-surface-container-lowest p-6 rounded-[24px] border border-outline-variant/10">
+<div class="flex justify-between items-start mb-2">
+<p class="font-['DM_Sans'] font-semibold text-green-700/50 text-[11px] uppercase tracking-widest">Avg Order Value</p>
+<span class="material-symbols-outlined text-green-700/30 text-sm">trending_up</span>
+</div>
+<div class="text-2xl font-headline font-bold text-primary">$2,440</div>
+<div class="mt-4 h-10 flex items-end gap-1">
+<div class="flex-1 bg-surface-container-low h-4 rounded-sm"></div>
+<div class="flex-1 bg-surface-container-low h-6 rounded-sm"></div>
+<div class="flex-1 bg-surface-container-low h-5 rounded-sm"></div>
+<div class="flex-1 bg-primary h-8 rounded-sm"></div>
+<div class="flex-1 bg-primary h-10 rounded-sm"></div>
+<div class="flex-1 bg-lime-400 h-9 rounded-sm"></div>
+</div>
+</div>
+<!-- Refund Rate -->
+<div class="bg-surface-container-lowest p-6 rounded-[24px] border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<p class="font-['DM_Sans'] font-semibold text-green-700/50 text-[11px] uppercase tracking-widest">Refund Rate</p>
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+</div>
+<div class="text-2xl font-headline font-bold text-error">0.82%</div>
+<p class="text-[10px] font-mono text-green-700/40 mt-2">Target benchmark: &lt; 1.0%</p>
+</div>
+</section>
+<!-- Middle Row: Bento Grid Charts -->
+<section class="grid grid-cols-12 gap-6">
+<!-- Main Bar Chart: Revenue by Month -->
+<div class="col-span-8 bg-surface-container-lowest p-8 rounded-[32px] border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="text-xl font-headline font-bold text-primary">Revenue Velocity</h3>
+<p class="text-green-700/60 text-xs font-mono">Last 12 Month Performance Cycle</p>
+</div>
+<div class="flex gap-2">
+<span class="flex items-center gap-1 font-mono text-[10px] uppercase text-green-700/60"><span class="w-2 h-2 rounded-full bg-primary"></span> Actual</span>
+<span class="flex items-center gap-1 font-mono text-[10px] uppercase text-green-700/60"><span class="w-2 h-2 rounded-full border border-primary border-dashed bg-white"></span> Projected</span>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-4">
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container-high h-32 rounded-lg"></div>
+<span class="font-mono text-[10px] text-green-700/40">JAN</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container-high h-40 rounded-lg"></div>
+<span class="font-mono text-[10px] text-green-700/40">FEB</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container-high h-36 rounded-lg"></div>
+<span class="font-mono text-[10px] text-green-700/40">MAR</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container-high h-44 rounded-lg"></div>
+<span class="font-mono text-[10px] text-green-700/40">APR</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary h-48 rounded-lg shadow-lg"></div>
+<span class="font-mono text-[10px] text-green-700/40 font-bold">MAY</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary h-52 rounded-lg shadow-lg relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-0.5 rounded-full">$428k</div>
+</div>
+<span class="font-mono text-[10px] text-green-700/40 font-bold">JUN</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full border-2 border-primary border-dashed h-56 rounded-lg"></div>
+<span class="font-mono text-[10px] text-green-700/40 italic">JUL*</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full border-2 border-primary border-dashed h-60 rounded-lg bg-primary/5"></div>
+<span class="font-mono text-[10px] text-green-700/40 italic">AUG*</span>
+</div>
+</div>
+</div>
+<!-- Donut Chart: Service Type -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-[32px] border border-outline-variant/10 flex flex-col">
+<h3 class="text-xl font-headline font-bold text-primary mb-2">Service Mix</h3>
+<p class="text-green-700/60 text-xs font-mono mb-8">Revenue Contribution by Category</p>
+<div class="relative flex-1 flex items-center justify-center">
+<svg class="w-40 h-40 transform -rotate-90">
+<circle cx="80" cy="80" fill="transparent" r="70" stroke="#154212" stroke-dasharray="219 219" stroke-dashoffset="0" stroke-width="20"></circle>
+<circle cx="80" cy="80" fill="transparent" r="70" stroke="#d2f000" stroke-dasharray="100 339" stroke-dashoffset="-219" stroke-width="20"></circle>
+<circle cx="80" cy="80" fill="transparent" r="70" stroke="#f1eee5" stroke-dasharray="120 319" stroke-dashoffset="-319" stroke-width="20"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-headline font-bold text-primary">100%</span>
+<span class="text-[9px] font-mono text-green-700/40 uppercase">Total Alloc</span>
+</div>
+</div>
+<div class="mt-8 space-y-3">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-sm font-['DM_Sans'] text-on-surface">Academy Fees</span>
+</div>
+<span class="font-mono text-xs font-bold">65%</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-lime-400"></span>
+<span class="text-sm font-['DM_Sans'] text-on-surface">Elite Scouting</span>
+</div>
+<span class="font-mono text-xs font-bold">25%</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-surface-container"></span>
+<span class="text-sm font-['DM_Sans'] text-on-surface">Merchandise</span>
+</div>
+<span class="font-mono text-xs font-bold">10%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Row: Detailed Projections & Recent Ledger -->
+<section class="grid grid-cols-12 gap-6">
+<!-- Forecast Projection -->
+<div class="col-span-12 bg-surface-container p-8 rounded-[32px]">
+<div class="flex items-start justify-between mb-10">
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 bg-white rounded-xl flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">auto_graph</span>
+</div>
+<div>
+<h4 class="text-2xl font-headline font-bold text-primary tracking-tight">Q4 Forecast Projection</h4>
+<p class="text-green-900/60 text-sm">Monte Carlo simulation based on current MRR growth velocity</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-mono text-xs text-green-900/40 block mb-1">PROBABILITY: HIGH</span>
+<span class="text-3xl font-headline font-bold text-primary">$1.42M <span class="text-lg text-green-900/60">est.</span></span>
+</div>
+</div>
+<div class="relative h-48 w-full border-b border-l border-primary/10">
+<svg class="w-full h-full" viewbox="0 0 1000 200">
+<path d="M0,180 L100,170 L200,165 L300,150 L400,140 L500,130" fill="none" stroke="#154212" stroke-width="3"></path>
+<path d="M500,130 L600,110 L700,80 L800,60 L900,40 L1000,20" fill="none" stroke="#154212" stroke-dasharray="8,8" stroke-width="3"></path>
+<circle cx="500" cy="130" fill="#154212" r="5"></circle>
+<text class="font-mono text-[24px] fill-primary" font-weight="bold" x="515" y="135">CURRENT POINT</text>
+</svg>
+<div class="absolute top-0 right-0 w-64 h-full bg-gradient-to-l from-lime-400/10 to-transparent pointer-events-none"></div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Contextual FAB (Suppressed as per rules for Analytics/Financial detail screen) -->
+</body></html>

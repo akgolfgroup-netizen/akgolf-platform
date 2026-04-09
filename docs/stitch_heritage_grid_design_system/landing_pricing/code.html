@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#9dd090",
+                        "tertiary": "#154212",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "inverse-on-surface": "#f4f0e7",
+                        "primary": "#154212",
+                        "on-secondary-container": "#5b6900",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-container-high": "#ece8df",
+                        "on-surface": "#1c1c16",
+                        "surface-tint": "#3b6934",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "inverse-surface": "#31302b",
+                        "surface-dim": "#dddad1",
+                        "outline-variant": "#c2c9bb",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#191e00",
+                        "background": "#fdf9f0",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#2d5a27",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e6e2d9",
+                        "surface-bright": "#fdf9f0",
+                        "secondary": "#576500",
+                        "tertiary-fixed": "#bcf0ae",
+                        "outline": "#72796e",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#f1eee5",
+                        "surface": "#fdf9f0",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#1c1c16",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary-fixed": "#002201",
+                        "secondary-fixed-dim": "#b8d300",
+                        "primary-fixed": "#bcf0ae",
+                        "on-primary-fixed-variant": "#23501e",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f7f3ea",
+                        "on-surface-variant": "#42493e",
+                        "secondary-container": "#d0ed00",
+                        "on-primary-fixed": "#002201",
+                        "on-primary-container": "#9dd090",
+                        "inverse-primary": "#a1d494",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "secondary-fixed": "#d2f000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; }
+        .bento-glow { position: relative; }
+        .bento-glow::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(210, 240, 0, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+            border-radius: inherit;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#fdf9f0] dark:bg-[#1c1c16]/95 backdrop-blur-md bg-gradient-to-b from-[#fdf9f0] to-transparent">
+<div class="flex justify-between items-center px-8 py-6 max-w-[1440px] mx-auto w-full">
+<div class="text-2xl font-bold tracking-tighter text-[#154212] dark:text-[#fdf9f0]">
+                AK Sports OS
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] text-[#154212]/70 hover:text-[#154212] transition-colors" href="#">Features</a>
+<a class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] text-[#154212] border-b-2 border-[#d2f000] pb-1" href="#">Pricing</a>
+<a class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] text-[#154212]/70 hover:text-[#154212] transition-colors" href="#">About</a>
+<a class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] text-[#154212]/70 hover:text-[#154212] transition-colors" href="#">Contact</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] text-[#154212]/70 hover:text-[#154212] transition-all">Log In</button>
+<button class="bg-[#d2f000] text-[#154212] font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] px-6 py-2 rounded-lg hover:opacity-80 transition-all scale-95 active:scale-90">Join Now</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 max-w-[1280px] mx-auto">
+<!-- Hero Section -->
+<header class="text-center mb-16">
+<span class="font-mono text-xs uppercase tracking-[0.3em] text-primary opacity-60 mb-4 block">Engineered for Precision</span>
+<h1 class="text-5xl md:text-6xl font-bold tracking-tight text-primary mb-6 leading-tight">Investment in Excellence</h1>
+<p class="text-on-surface-variant max-w-2xl mx-auto text-lg leading-relaxed">
+                Choose the architectural foundation for your athletic ecosystem. From individual performance to global enterprise management.
+            </p>
+<!-- Toggle -->
+<div class="mt-12 flex justify-center items-center gap-4">
+<span class="text-sm font-medium uppercase tracking-wide opacity-60">Monthly</span>
+<div class="w-14 h-7 bg-surface-container-highest rounded-full p-1 cursor-pointer flex items-center">
+<div class="w-5 h-5 bg-primary rounded-full translate-x-7 transition-transform"></div>
+</div>
+<span class="text-sm font-medium uppercase tracking-wide text-primary">Annual</span>
+<span class="bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ml-2 tracking-tighter">Save 20%</span>
+</div>
+</header>
+<!-- Pricing Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
+<!-- Starter Plan -->
+<div class="bg-surface-container-low rounded-[1.5rem] p-8 flex flex-col h-full border border-transparent transition-all hover:bg-surface-container-high">
+<div class="mb-8">
+<h3 class="font-mono text-xs uppercase tracking-widest text-primary/60 mb-2">Fundamental</h3>
+<div class="text-4xl font-bold text-primary mb-1">Starter</div>
+<div class="flex items-baseline gap-1 mt-4">
+<span class="text-3xl font-bold text-primary">$99</span>
+<span class="text-on-surface-variant opacity-60 text-sm">/mo</span>
+</div>
+</div>
+<div class="flex-grow space-y-4 mb-10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Advanced Performance Analytics</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Single Organization Core</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Real-time Biometric Feed</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Standard Support Protocol</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Cloud Data Storage (10GB)</span>
+</div>
+</div>
+<button class="w-full py-4 border-2 border-primary text-primary font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-primary hover:text-white transition-all duration-300">
+                    Choose Plan
+                </button>
+</div>
+<!-- Pro Plan (Popular) -->
+<div class="bg-surface-container-lowest rounded-[1.5rem] p-8 flex flex-col h-[105%] border-2 border-secondary shadow-[0_4px_32px_rgba(45,90,39,0.08)] relative z-10 bento-glow">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-secondary text-on-secondary-fixed font-bold text-[10px] uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-lg">
+                    Most Popular
+                </div>
+<div class="mb-8">
+<h3 class="font-mono text-xs uppercase tracking-widest text-primary/60 mb-2">Integrated</h3>
+<div class="text-4xl font-bold text-primary mb-1">Pro</div>
+<div class="flex items-baseline gap-1 mt-4">
+<span class="text-3xl font-bold text-primary">$199</span>
+<span class="text-on-surface-variant opacity-60 text-sm">/mo</span>
+</div>
+</div>
+<div class="flex-grow space-y-4 mb-10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface font-semibold">Everything in Starter</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Multi-Team Synchronization</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Predictive Injury Modeling</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">24/7 Priority Concierge</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Custom API Integrations</span>
+</div>
+</div>
+<button class="w-full py-4 bg-secondary text-on-secondary-fixed font-bold uppercase text-xs tracking-widest rounded-xl hover:shadow-[0_0_20px_rgba(210,240,0,0.4)] transition-all duration-300 transform hover:scale-[1.02]">
+                    Choose Plan
+                </button>
+</div>
+<!-- Elite Plan -->
+<div class="bg-surface-container-low rounded-[1.5rem] p-8 flex flex-col h-full border border-transparent transition-all hover:bg-surface-container-high">
+<div class="mb-8">
+<h3 class="font-mono text-xs uppercase tracking-widest text-primary/60 mb-2">Institutional</h3>
+<div class="text-4xl font-bold text-primary mb-1">Elite</div>
+<div class="flex items-baseline gap-1 mt-4">
+<span class="text-3xl font-bold text-primary">$499</span>
+<span class="text-on-surface-variant opacity-60 text-sm">/mo</span>
+</div>
+</div>
+<div class="flex-grow space-y-4 mb-10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface font-semibold">Full Organizational Suite</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Global Franchise Network</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">White-label OS Customization</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Dedicated Systems Engineer</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm text-on-surface">Unlimited Data Archiving</span>
+</div>
+</div>
+<button class="w-full py-4 bg-secondary text-on-secondary-fixed font-bold uppercase text-xs tracking-widest rounded-xl hover:shadow-[0_0_20px_rgba(210,240,0,0.4)] transition-all duration-300 transform hover:scale-[1.02]">
+                    Choose Plan
+                </button>
+</div>
+</div>
+<!-- FAQ Section -->
+<section class="mt-40 max-w-3xl mx-auto">
+<h2 class="text-3xl font-bold text-primary mb-12 text-center">Frequently Asked Questions</h2>
+<div class="space-y-4">
+<!-- Q1 -->
+<div class="bg-surface-container-low rounded-xl p-6 cursor-pointer group hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-center">
+<h4 class="font-bold text-primary">Can I migrate my existing team data?</h4>
+<span class="material-symbols-outlined text-primary group-hover:rotate-180 transition-transform" data-icon="expand_more">expand_more</span>
+</div>
+<p class="mt-4 text-sm text-on-surface-variant leading-relaxed hidden group-hover:block transition-all">
+                        Yes, our Elite and Pro plans include dedicated migration assistance. We support CSV, JSON, and direct API imports from all major legacy athletic management platforms.
+                    </p>
+</div>
+<!-- Q2 -->
+<div class="bg-surface-container-low rounded-xl p-6 cursor-pointer group hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-center">
+<h4 class="font-bold text-primary">What is the "Predictive Injury Modeling"?</h4>
+<span class="material-symbols-outlined text-primary group-hover:rotate-180 transition-transform" data-icon="expand_more">expand_more</span>
+</div>
+<p class="mt-4 text-sm text-on-surface-variant leading-relaxed hidden group-hover:block transition-all">
+                        It is a proprietary AI layer that analyzes biometric trends and workload history to flag potential over-exertion before clinical symptoms manifest in the athlete.
+                    </p>
+</div>
+<!-- Q3 -->
+<div class="bg-surface-container-low rounded-xl p-6 cursor-pointer group hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-center">
+<h4 class="font-bold text-primary">Are there any hidden implementation fees?</h4>
+<span class="material-symbols-outlined text-primary group-hover:rotate-180 transition-transform" data-icon="expand_more">expand_more</span>
+</div>
+<p class="mt-4 text-sm text-on-surface-variant leading-relaxed hidden group-hover:block transition-all">
+                        Transparency is our core value. The monthly subscription covers all server costs, core updates, and standard onboarding. Only bespoke hardware integration incurs extra one-time costs.
+                    </p>
+</div>
+<!-- Q4 -->
+<div class="bg-surface-container-low rounded-xl p-6 cursor-pointer group hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-center">
+<h4 class="font-bold text-primary">Is our data stored securely?</h4>
+<span class="material-symbols-outlined text-primary group-hover:rotate-180 transition-transform" data-icon="expand_more">expand_more</span>
+</div>
+<p class="mt-4 text-sm text-on-surface-variant leading-relaxed hidden group-hover:block transition-all">
+                        AK Sports OS utilizes AES-256 encryption at rest and TLS 1.3 in transit. We are fully HIPAA compliant for medical data and GDPR compliant for global organizational needs.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Final CTA Banner -->
+<section class="mt-32 relative overflow-hidden rounded-[2rem] bg-primary p-12 text-center">
+<div class="absolute inset-0 opacity-10">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary to-transparent"></div>
+</div>
+<div class="relative z-10">
+<h2 class="text-3xl font-bold text-on-primary mb-6">Ready to scale your athletic legacy?</h2>
+<p class="text-primary-fixed-dim max-w-xl mx-auto mb-10 text-lg">Join 400+ professional organizations already leveraging the OS.</p>
+<button class="bg-secondary text-on-secondary-fixed px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform">
+                    Start Free 14-Day Trial
+                </button>
+<p class="mt-6 font-mono text-[10px] text-white/40 tracking-[0.2em]">NO CREDIT CARD REQUIRED FOR TRIAL</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-[#154212]/5 bg-[#f7f3ea] dark:bg-[#154212]">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8 w-full">
+<div class="font-['DM_Sans'] font-semibold text-[#154212] dark:text-[#fdf9f0] text-xl">
+                AK Sports OS
+            </div>
+<div class="flex gap-8">
+<a class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60 hover:text-[#d2f000] transition-colors" href="#">Privacy Policy</a>
+<a class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60 hover:text-[#d2f000] transition-colors" href="#">Terms of Service</a>
+<a class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60 hover:text-[#d2f000] transition-colors" href="#">Cookie Settings</a>
+<a class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60 hover:text-[#d2f000] transition-colors" href="#">Support</a>
+<a class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60 hover:text-[#d2f000] transition-colors" href="#">Careers</a>
+</div>
+<div class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60">
+                © 2024 AK Sports OS. Engineered for Precision.
+            </div>
+</div>
+</footer>
+</body></html>

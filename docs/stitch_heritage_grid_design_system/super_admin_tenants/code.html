@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Sports OS - Tenant Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#002201",
+                    "on-primary-container": "#9dd090",
+                    "inverse-primary": "#a1d494",
+                    "on-secondary-fixed": "#191e00",
+                    "secondary-container": "#d0ed00",
+                    "primary": "#154212",
+                    "secondary-fixed-dim": "#b8d300",
+                    "background": "#fdf9f0",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#23501e",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#fdf9f0",
+                    "surface-container-highest": "#e6e2d9",
+                    "surface-container": "#f1eee5",
+                    "tertiary-container": "#2d5a27",
+                    "outline": "#72796e",
+                    "on-surface": "#1c1c16",
+                    "surface-container-high": "#ece8df",
+                    "primary-fixed": "#bcf0ae",
+                    "on-tertiary-container": "#9dd090",
+                    "surface": "#fdf9f0",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#a1d494",
+                    "inverse-surface": "#31302b",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e6e2d9",
+                    "surface-container-low": "#f7f3ea",
+                    "surface-tint": "#3b6934",
+                    "on-primary-fixed": "#002201",
+                    "on-background": "#1c1c16",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "on-surface-variant": "#42493e",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary": "#154212",
+                    "primary-container": "#2d5a27",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "tertiary-fixed": "#bcf0ae",
+                    "secondary": "#576500",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-dim": "#dddad1",
+                    "secondary-fixed": "#d2f000",
+                    "outline-variant": "#c2c9bb",
+                    "inverse-on-surface": "#f4f0e7",
+                    "on-secondary-container": "#5b6900"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "technical": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .technical { font-family: 'JetBrains Mono', monospace; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-emerald-950 dark:bg-emerald-950 flex flex-col py-8 px-4 z-50">
+<div class="mb-10 px-2">
+<h1 class="text-xl font-bold tracking-tight text-white">AK Sports OS</h1>
+<p class="text-[10px] font-medium tracking-widest text-lime-400/60 uppercase mt-1">Super Admin</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Overview (Inactive) -->
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium tracking-wide">Overview</span>
+</a>
+<!-- Tenants (Active - Intent match for Management) -->
+<a class="flex items-center space-x-3 bg-lime-400/20 text-lime-400 rounded-lg px-4 py-3 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">domain</span>
+<span class="text-sm font-bold tracking-wide">Tenants</span>
+</a>
+<!-- Features (Inactive) -->
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">toggle_on</span>
+<span class="text-sm font-medium tracking-wide">Features</span>
+</a>
+<!-- Billing (Inactive) -->
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="text-sm font-medium tracking-wide">Billing</span>
+</a>
+<!-- Settings (Inactive) -->
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium tracking-wide">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-white/10 space-y-1">
+<button class="w-full flex items-center justify-between bg-lime-400 text-emerald-950 px-4 py-2.5 rounded-lg mb-6 font-bold text-xs uppercase tracking-wider transition-transform active:scale-95">
+<span>System Health</span>
+<span class="material-symbols-outlined text-sm">bolt</span>
+</button>
+<a class="flex items-center space-x-3 text-emerald-100/50 hover:text-white px-4 py-2 transition-colors text-xs font-medium uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/50 hover:text-white px-4 py-2 transition-colors text-xs font-medium uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-sm">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-md flex justify-between items-center px-8 w-full z-40">
+<div class="flex items-center space-x-8">
+<span class="text-lg font-semibold text-emerald-900 uppercase tracking-tight">Admin Portal</span>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-lg">search</span>
+<input class="w-full bg-surface-container-highest/50 border-none rounded-full py-1.5 pl-10 text-sm focus:ring-1 focus:ring-primary/20 placeholder:text-stone-400" placeholder="Search tenants..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<nav class="flex items-center space-x-6">
+<a class="text-stone-500 hover:text-emerald-800 text-xs font-bold uppercase tracking-widest transition-all" href="#">Global Metrics</a>
+<a class="text-stone-500 hover:text-emerald-800 text-xs font-bold uppercase tracking-widest transition-all" href="#">System Logs</a>
+</nav>
+<div class="h-4 w-[1px] bg-stone-200"></div>
+<div class="flex items-center space-x-4">
+<button class="material-symbols-outlined text-stone-500 hover:bg-stone-200/50 p-2 rounded-full transition-all">notifications</button>
+<button class="material-symbols-outlined text-stone-500 hover:bg-stone-200/50 p-2 rounded-full transition-all">apps</button>
+<div class="flex items-center space-x-3 pl-2">
+<img class="w-8 h-8 rounded-full object-cover ring-2 ring-lime-400/30" data-alt="close-up portrait of a professional male executive with a confident expression in a well-lit modern office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX0cjgZl6pELJbOsaY9GYTV1M6ypoGH0sQytCO6yXn659TJwDq_UAFSkqeaWsOkDNeKEDs4rXq0DLpHYuSL2i1W-x0_nKKn7LXFcQ73O1gE_P6UluHsqgXfr-DBMU_qD8MDlV59QkxA1KQwCNxh82u-CDjTBhCWdr6eRlTg-Os_u-K5EuFRnPbMeykxEVgILZgX18Ah9tnFjJ4ugZ8A4hH8OQNRt2UzGCpz6PxitA9DUA1J8_wAva1yTLizuCfaR5532X_DAb-HtqF"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 pt-24 pb-12 px-8">
+<div class="max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<span class="text-xs font-bold tracking-[0.2em] text-primary uppercase block mb-2">Management Console</span>
+<h2 class="text-4xl font-semibold tracking-tight text-on-surface">Customers</h2>
+</div>
+<button class="bg-secondary-fixed text-on-secondary-fixed px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wider flex items-center space-x-2 transition-all hover:scale-[1.02] active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-lg">add</span>
+<span>Create Tenant</span>
+</button>
+</div>
+<!-- Dashboard Layout (Bento Grid Style) -->
+<div class="grid grid-cols-12 gap-8 items-start">
+<!-- Filter Sidebar -->
+<aside class="col-span-3 space-y-8 sticky top-28">
+<div class="bg-surface-container-low rounded-2xl p-6 space-y-6">
+<div>
+<h3 class="text-[10px] font-bold tracking-[0.2em] text-on-surface-variant uppercase mb-4">Subscription Plan</h3>
+<div class="space-y-3">
+<label class="flex items-center justify-between cursor-pointer group">
+<div class="flex items-center space-x-3">
+<div class="w-4 h-4 rounded border border-outline-variant bg-white flex items-center justify-center group-hover:border-primary transition-colors">
+<div class="w-2 h-2 bg-primary rounded-sm opacity-100"></div>
+</div>
+<span class="text-sm font-medium text-on-surface">Enterprise</span>
+</div>
+<span class="technical text-[10px] text-on-surface-variant bg-surface-container-high px-1.5 py-0.5 rounded">12</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<div class="flex items-center space-x-3">
+<div class="w-4 h-4 rounded border border-outline-variant bg-white flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<span class="text-sm font-medium text-stone-500">Professional</span>
+</div>
+<span class="technical text-[10px] text-stone-400 bg-surface-container-high px-1.5 py-0.5 rounded">48</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<div class="flex items-center space-x-3">
+<div class="w-4 h-4 rounded border border-outline-variant bg-white flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<span class="text-sm font-medium text-stone-500">Standard</span>
+</div>
+<span class="technical text-[10px] text-stone-400 bg-surface-container-high px-1.5 py-0.5 rounded">156</span>
+</label>
+</div>
+</div>
+<div class="h-[1px] bg-outline-variant/20"></div>
+<div>
+<h3 class="text-[10px] font-bold tracking-[0.2em] text-on-surface-variant uppercase mb-4">Status</h3>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-bold transition-all">Active</button>
+<button class="px-3 py-1.5 bg-white border border-outline-variant/30 text-on-surface-variant rounded-lg text-xs font-medium hover:border-primary transition-all">Provisioning</button>
+<button class="px-3 py-1.5 bg-white border border-outline-variant/30 text-on-surface-variant rounded-lg text-xs font-medium hover:border-primary transition-all">Suspended</button>
+</div>
+</div>
+</div>
+<div class="bg-primary p-6 rounded-2xl overflow-hidden relative">
+<div class="relative z-10">
+<h4 class="text-lime-400 text-xs font-bold tracking-widest uppercase mb-1">Infrastructure</h4>
+<p class="text-white font-semibold text-lg mb-4">System Performance</p>
+<div class="technical text-[10px] text-emerald-100/60 mb-2">UPTIME: 99.998%</div>
+<div class="w-full bg-emerald-900 h-1.5 rounded-full overflow-hidden">
+<div class="bg-lime-400 h-full w-[99%]"></div>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-8xl text-white">query_stats</span>
+</div>
+</div>
+</aside>
+<!-- Table Content -->
+<div class="col-span-9 space-y-6">
+<!-- Bulk Actions Bar -->
+<div class="bg-surface-container-lowest rounded-2xl px-6 py-4 flex items-center justify-between shadow-[0_4px_24px_rgba(21,66,18,0.03)] border border-white">
+<div class="flex items-center space-x-4">
+<span class="text-xs font-bold text-primary technical">03 SELECTED</span>
+<div class="h-4 w-[1px] bg-outline-variant/40"></div>
+<button class="flex items-center space-x-2 text-stone-500 hover:text-primary transition-colors text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-lg">edit</span>
+<span>Bulk Edit</span>
+</button>
+<button class="flex items-center space-x-2 text-stone-500 hover:text-primary transition-colors text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-lg">sync</span>
+<span>Re-Sync</span>
+</button>
+<button class="flex items-center space-x-2 text-error hover:text-error/80 transition-colors text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-lg">delete</span>
+<span>Suspend</span>
+</button>
+</div>
+<div class="flex items-center space-x-2">
+<span class="text-xs font-medium text-stone-400">Showing 1-10 of 216</span>
+<div class="flex space-x-1">
+<button class="p-1 rounded-lg hover:bg-surface-container text-stone-400"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-1 rounded-lg hover:bg-surface-container text-stone-400"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Main Table -->
+<div class="bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(21,66,18,0.04)] border border-white">
+<table class="w-full border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="p-5 text-left w-12"><input class="rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/></th>
+<th class="p-5 text-left text-[10px] font-bold tracking-[0.2em] text-on-surface-variant uppercase">Tenant Name</th>
+<th class="p-5 text-left text-[10px] font-bold tracking-[0.2em] text-on-surface-variant uppercase">Plan</th>
+<th class="p-5 text-left text-[10px] font-bold tracking-[0.2em] text-on-surface-variant uppercase">Users</th>
+<th class="p-5 text-left text-[10px] font-bold tracking-[0.2em] text-on-surface-variant uppercase">Status</th>
+<th class="p-5 text-right text-[10px] font-bold tracking-[0.2em] text-on-surface-variant uppercase">MRR</th>
+<th class="p-5 w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="p-5"><input checked="" class="rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/></td>
+<td class="p-5">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-xl bg-primary-fixed flex items-center justify-center text-primary font-bold">VS</div>
+<div>
+<div class="text-sm font-semibold text-on-surface">Vanguard Sports</div>
+<div class="technical text-[10px] text-stone-400 uppercase">vanguard-sports.os</div>
+</div>
+</div>
+</td>
+<td class="p-5">
+<span class="text-xs font-bold text-primary bg-primary-fixed/30 px-3 py-1 rounded-full">Enterprise</span>
+</td>
+<td class="p-5">
+<div class="technical text-sm text-on-surface">1,248</div>
+<div class="w-24 bg-surface-container-high h-1 rounded-full mt-2">
+<div class="bg-primary h-full w-[85%] rounded-full"></div>
+</div>
+</td>
+<td class="p-5">
+<div class="flex items-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-lime-500 animate-pulse"></div>
+<span class="text-xs font-semibold text-on-surface">Active</span>
+</div>
+</td>
+<td class="p-5 text-right">
+<div class="technical font-bold text-on-surface">$12,450</div>
+<div class="technical text-[10px] text-emerald-600">+4.2%</div>
+</td>
+<td class="p-5">
+<button class="material-symbols-outlined text-stone-300 hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="p-5"><input checked="" class="rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/></td>
+<td class="p-5">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-stone-500 font-bold">PL</div>
+<div>
+<div class="text-sm font-semibold text-on-surface">Peak Performance Ltd</div>
+<div class="technical text-[10px] text-stone-400 uppercase">peak-perf.os</div>
+</div>
+</div>
+</td>
+<td class="p-5">
+<span class="text-xs font-bold text-stone-600 bg-stone-100 px-3 py-1 rounded-full">Professional</span>
+</td>
+<td class="p-5">
+<div class="technical text-sm text-on-surface">432</div>
+<div class="w-24 bg-surface-container-high h-1 rounded-full mt-2">
+<div class="bg-stone-400 h-full w-[45%] rounded-full"></div>
+</div>
+</td>
+<td class="p-5">
+<div class="flex items-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-lime-500"></div>
+<span class="text-xs font-semibold text-on-surface">Active</span>
+</div>
+</td>
+<td class="p-5 text-right">
+<div class="technical font-bold text-on-surface">$4,200</div>
+<div class="technical text-[10px] text-stone-400">0.0%</div>
+</td>
+<td class="p-5">
+<button class="material-symbols-outlined text-stone-300 hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="p-5"><input checked="" class="rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/></td>
+<td class="p-5">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed/30 flex items-center justify-center text-secondary font-bold">NA</div>
+<div>
+<div class="text-sm font-semibold text-on-surface">Nova Athletics</div>
+<div class="technical text-[10px] text-stone-400 uppercase">nova-ath.os</div>
+</div>
+</div>
+</td>
+<td class="p-5">
+<span class="text-xs font-bold text-primary bg-primary-fixed/30 px-3 py-1 rounded-full">Enterprise</span>
+</td>
+<td class="p-5">
+<div class="technical text-sm text-on-surface">2,890</div>
+<div class="w-24 bg-surface-container-high h-1 rounded-full mt-2">
+<div class="bg-primary h-full w-[95%] rounded-full"></div>
+</div>
+</td>
+<td class="p-5">
+<div class="flex items-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></div>
+<span class="text-xs font-semibold text-on-surface">Provisioning</span>
+</div>
+</td>
+<td class="p-5 text-right">
+<div class="technical font-bold text-on-surface">$22,800</div>
+<div class="technical text-[10px] text-emerald-600">+12.4%</div>
+</td>
+<td class="p-5">
+<button class="material-symbols-outlined text-stone-300 hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-surface-container-low/30 transition-colors opacity-60">
+<td class="p-5"><input class="rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/></td>
+<td class="p-5">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-xl bg-error-container flex items-center justify-center text-error font-bold">UC</div>
+<div>
+<div class="text-sm font-semibold text-on-surface">Urban Club Inc</div>
+<div class="technical text-[10px] text-stone-400 uppercase">urban-club.os</div>
+</div>
+</div>
+</td>
+<td class="p-5">
+<span class="text-xs font-bold text-stone-400 bg-stone-100 px-3 py-1 rounded-full">Standard</span>
+</td>
+<td class="p-5">
+<div class="technical text-sm text-on-surface">12</div>
+<div class="w-24 bg-surface-container-high h-1 rounded-full mt-2">
+<div class="bg-error h-full w-[5%] rounded-full"></div>
+</div>
+</td>
+<td class="p-5">
+<div class="flex items-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="text-xs font-semibold text-on-surface">Suspended</span>
+</div>
+</td>
+<td class="p-5 text-right">
+<div class="technical font-bold text-on-surface">$299</div>
+<div class="technical text-[10px] text-error">-100%</div>
+</td>
+<td class="p-5">
+<button class="material-symbols-outlined text-stone-300 hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Table Footer -->
+<div class="p-6 bg-surface-container-low/30 flex justify-between items-center">
+<div class="flex items-center space-x-4">
+<span class="text-xs font-medium text-stone-500">Rows per page:</span>
+<select class="bg-transparent border-none text-xs font-bold text-on-surface focus:ring-0">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+</select>
+</div>
+<div class="flex items-center space-x-6">
+<span class="text-xs font-medium text-stone-500">Page 1 of 22</span>
+<div class="flex space-x-2">
+<button class="w-8 h-8 rounded-lg border border-outline-variant/30 flex items-center justify-center text-stone-400 hover:bg-white hover:text-primary transition-all">
+<span class="material-symbols-outlined text-sm">first_page</span>
+</button>
+<button class="w-8 h-8 rounded-lg border border-outline-variant/30 flex items-center justify-center text-stone-400 hover:bg-white hover:text-primary transition-all">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded-lg border border-outline-variant/30 flex items-center justify-center text-stone-500 hover:bg-white hover:text-primary transition-all text-xs font-bold">2</button>
+<button class="w-8 h-8 rounded-lg border border-outline-variant/30 flex items-center justify-center text-stone-500 hover:bg-white hover:text-primary transition-all text-xs font-bold">3</button>
+<button class="w-8 h-8 rounded-lg border border-outline-variant/30 flex items-center justify-center text-stone-400 hover:bg-white hover:text-primary transition-all">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="w-8 h-8 rounded-lg border border-outline-variant/30 flex items-center justify-center text-stone-400 hover:bg-white hover:text-primary transition-all">
+<span class="material-symbols-outlined text-sm">last_page</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Insight Card -->
+<div class="grid grid-cols-3 gap-6">
+<div class="bg-surface-container-high/40 p-5 rounded-2xl border border-white/50">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-bold tracking-widest text-stone-500 uppercase">Total Revenue</span>
+<span class="material-symbols-outlined text-emerald-600 text-lg">trending_up</span>
+</div>
+<div class="technical text-2xl font-bold text-on-surface">$842,900.00</div>
+<div class="technical text-[10px] text-emerald-600 mt-1">+1.2% VS LAST MONTH</div>
+</div>
+<div class="bg-surface-container-high/40 p-5 rounded-2xl border border-white/50">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-bold tracking-widest text-stone-500 uppercase">New Tenants</span>
+<span class="material-symbols-outlined text-stone-400 text-lg">group_add</span>
+</div>
+<div class="technical text-2xl font-bold text-on-surface">14</div>
+<div class="technical text-[10px] text-stone-400 mt-1">THIS BILLING PERIOD</div>
+</div>
+<div class="bg-surface-container-high/40 p-5 rounded-2xl border border-white/50">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-bold tracking-widest text-stone-500 uppercase">Avg Churn Rate</span>
+<span class="material-symbols-outlined text-emerald-600 text-lg">check_circle</span>
+</div>
+<div class="technical text-2xl font-bold text-on-surface">0.82%</div>
+<div class="technical text-[10px] text-emerald-600 mt-1">HEALTHY RANGE</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

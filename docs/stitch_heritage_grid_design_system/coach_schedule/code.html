@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Sports OS - Coach Schedule</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#fdf9f0",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#e6e2d9",
+                    "surface-container": "#f1eee5",
+                    "on-secondary-container": "#5b6900",
+                    "on-tertiary-container": "#9dd090",
+                    "on-secondary-fixed": "#191e00",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed": "#002201",
+                    "inverse-on-surface": "#f4f0e7",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "on-surface-variant": "#42493e",
+                    "outline": "#72796e",
+                    "outline-variant": "#c2c9bb",
+                    "tertiary": "#154212",
+                    "surface-tint": "#3b6934",
+                    "secondary-container": "#d0ed00",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "surface-dim": "#dddad1",
+                    "on-surface": "#1c1c16",
+                    "surface-container-high": "#ece8df",
+                    "error": "#ba1a1a",
+                    "on-background": "#1c1c16",
+                    "secondary-fixed": "#d2f000",
+                    "secondary-fixed-dim": "#b8d300",
+                    "tertiary-fixed": "#bcf0ae",
+                    "on-primary-fixed-variant": "#23501e",
+                    "on-primary": "#ffffff",
+                    "background": "#fdf9f0",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#bcf0ae",
+                    "inverse-surface": "#31302b",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "primary-container": "#2d5a27",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e6e2d9",
+                    "surface-container-low": "#f7f3ea",
+                    "secondary": "#576500",
+                    "primary-fixed-dim": "#a1d494",
+                    "on-primary-fixed": "#002201",
+                    "surface": "#fdf9f0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#9dd090",
+                    "inverse-primary": "#a1d494",
+                    "tertiary-container": "#2d5a27",
+                    "primary": "#154212"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .calendar-grid-line {
+            background-image: linear-gradient(to bottom, #e6e2d9 1px, transparent 1px);
+            background-size: 100% 64px;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen flex">
+<!-- SideNavBar (Authority Source: JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] dark:bg-stone-950 flex flex-col py-6 gap-2 shadow-[4px_0_16px_rgba(45,90,39,0.06)] z-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#d2f000] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#154212]" data-icon="sports_golf">sports_golf</span>
+</div>
+<div>
+<div class="text-white font-semibold text-lg">Coach Portal</div>
+<div class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest text-white/50">Precision Performance</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 bg-[#d2f000] text-[#154212] rounded-xl px-4 py-3 mx-2 hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Schedule</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Players</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Drills</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Messages</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Earnings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto space-y-4">
+<button class="w-full bg-[#d2f000] text-[#154212] font-semibold py-3 rounded-xl flex items-center justify-center gap-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">New Session</span>
+</button>
+<div class="space-y-1 pt-4 border-t border-white/10">
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-2 hover:bg-white/10 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Support</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-2 hover:bg-white/10 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col min-w-0">
+<!-- TopNavBar (Authority Source: JSON) -->
+<header class="w-full h-16 sticky top-0 z-40 bg-[#fdf9f0]/80 dark:bg-stone-900/80 backdrop-blur-md flex justify-between items-center px-8">
+<div class="flex items-center gap-6">
+<h1 class="text-xl font-bold tracking-tighter text-[#154212] dark:text-[#d2f000]">AK Sports OS</h1>
+<div class="flex items-center gap-6 font-['DM_Sans'] text-sm tracking-tight">
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors" href="#">Overview</a>
+<a class="text-[#154212] font-semibold border-b-2 border-[#d2f000] pb-1" href="#">Schedule</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors" href="#">Performance</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-[#f7f3ea] dark:bg-stone-800 rounded-full">
+<span class="material-symbols-outlined text-sm opacity-60" data-icon="search">search</span>
+<input class="bg-transparent border-none text-xs focus:ring-0 w-32 p-0" placeholder="Search sessions..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-[#f7f3ea] dark:hover:bg-stone-800 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#154212]" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-[#f7f3ea] dark:hover:bg-stone-800 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#154212]" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-[#d2f000]">
+<img alt="Coach Profile" class="w-full h-full object-cover" data-alt="professional male athletic coach portrait in high-end golf apparel with soft outdoor natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKsaq8UM9sBorMpM6nOw30SlNenvc3-VKm_RWUp4wZzBiZM5KQ120rcK1wdN0bScbDtbDOXbcmR8_lN75FwnDF7hC36SLACRNdEvm-_kBs5PKEX9PCBzVEfdBLg0NpkNeWLEEbcdfpEll7zNvAohK4I3jlQyPEWaotpI2hNFs2GJG-6_fnDXZyUASQvyiFzYqhPyAvXd_suXaqrmLZHjLWKOY6OziEiG3IIQsi-iq0aOrveUkDUERQo8jHLLT8KPPpzIxd4L1EEaTa"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Calendar Header -->
+<section class="px-8 py-6 bg-surface flex items-center justify-between">
+<div>
+<h2 class="text-3xl font-semibold tracking-tight text-primary">Weekly Schedule</h2>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-mono text-xs text-on-surface-variant">OCT 23 - OCT 29, 2023</span>
+<span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+<span class="font-mono text-xs text-on-surface-variant uppercase">Pacific Daylight Time</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex bg-surface-container-low rounded-xl p-1">
+<button class="px-4 py-2 bg-surface-container-lowest rounded-lg shadow-sm text-xs font-semibold uppercase tracking-wider">Week</button>
+<button class="px-4 py-2 hover:bg-surface-container-high rounded-lg text-xs font-medium uppercase tracking-wider text-on-surface-variant">Day</button>
+<button class="px-4 py-2 hover:bg-surface-container-high rounded-lg text-xs font-medium uppercase tracking-wider text-on-surface-variant">Month</button>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 border border-outline-variant rounded-xl flex items-center justify-center hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-10 h-10 border border-outline-variant rounded-xl flex items-center justify-center hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<button class="flex items-center gap-2 bg-primary text-white px-6 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-widest active:scale-95 duration-200">
+<span class="material-symbols-outlined text-base" data-icon="event_busy">event_busy</span>
+                    Block Time
+                </button>
+</div>
+</section>
+<!-- Heritage Grid Calendar Content -->
+<div class="flex-1 overflow-hidden flex flex-col bg-surface px-8 pb-8">
+<div class="rounded-2xl bg-surface-container-low border border-outline-variant/10 overflow-hidden flex flex-col h-full shadow-[0_4px_16px_rgba(45,90,39,0.06)]">
+<!-- Day Labels -->
+<div class="grid grid-cols-[80px_1fr] border-b border-outline-variant/20">
+<div class="h-16 flex items-center justify-center bg-surface-container">
+<span class="material-symbols-outlined opacity-30" data-icon="schedule">schedule</span>
+</div>
+<div class="grid grid-cols-7 divide-x divide-outline-variant/20">
+<div class="h-16 flex flex-col items-center justify-center">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Mon</span>
+<span class="text-xl font-semibold">23</span>
+</div>
+<div class="h-16 flex flex-col items-center justify-center">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Tue</span>
+<span class="text-xl font-semibold">24</span>
+</div>
+<div class="h-16 flex flex-col items-center justify-center bg-surface-container-highest/30">
+<span class="text-[10px] font-bold text-primary uppercase tracking-widest">Wed</span>
+<span class="text-xl font-bold text-primary">25</span>
+</div>
+<div class="h-16 flex flex-col items-center justify-center">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Thu</span>
+<span class="text-xl font-semibold">26</span>
+</div>
+<div class="h-16 flex flex-col items-center justify-center">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Fri</span>
+<span class="text-xl font-semibold">27</span>
+</div>
+<div class="h-16 flex flex-col items-center justify-center">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Sat</span>
+<span class="text-xl font-semibold text-primary/40">28</span>
+</div>
+<div class="h-16 flex flex-col items-center justify-center">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Sun</span>
+<span class="text-xl font-semibold text-primary/40">29</span>
+</div>
+</div>
+</div>
+<!-- Calendar Scroll Area -->
+<div class="flex-1 overflow-y-auto no-scrollbar relative">
+<div class="grid grid-cols-[80px_1fr] relative calendar-grid-line h-[1152px]">
+<!-- Time Markers -->
+<div class="flex flex-col">
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">08:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">09:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">10:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">11:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">12:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">13:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">14:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">15:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">16:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">17:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">18:00</div>
+<div class="h-16 flex justify-center pt-2 font-mono text-[10px] opacity-40">19:00</div>
+</div>
+<!-- Grid Columns -->
+<div class="grid grid-cols-7 divide-x divide-outline-variant/20 relative">
+<!-- Column Lines Background -->
+<div class="absolute inset-0 grid grid-cols-7 pointer-events-none divide-x divide-outline-variant/10"></div>
+<!-- Column 1 (Mon) -->
+<div class="relative h-full">
+<!-- Availability Gaps (Indicated by subtle background shift) -->
+<div class="absolute top-[64px] left-0 right-0 h-[64px] bg-tertiary-fixed/20 border-l-2 border-primary/20"></div>
+<!-- Session: Trackman (Blue variant for specialized) -->
+<div class="absolute top-[128px] left-1 right-1 h-[96px] bg-sky-100/90 border border-sky-300 rounded-lg p-2 group cursor-grab active:cursor-grabbing hover:shadow-md transition-all">
+<div class="flex justify-between items-start">
+<span class="font-mono text-[9px] text-sky-800">10:00 - 11:30</span>
+<span class="material-symbols-outlined text-xs text-sky-400 group-hover:scale-125 transition-transform" data-icon="drag_indicator">drag_indicator</span>
+</div>
+<div class="font-bold text-sky-900 text-xs mt-1 truncate">Trackman Analysis</div>
+<div class="text-[10px] text-sky-700">Marcus Thorne</div>
+</div>
+</div>
+<!-- Column 2 (Tue) -->
+<div class="relative h-full">
+<!-- Session: Coaching (Primary) -->
+<div class="absolute top-[256px] left-1 right-1 h-[64px] bg-primary text-white rounded-lg p-2 group cursor-grab active:cursor-grabbing hover:bg-primary/95 transition-all">
+<div class="flex justify-between items-start">
+<span class="font-mono text-[9px] opacity-70">12:00 - 13:00</span>
+<span class="material-symbols-outlined text-xs text-secondary group-hover:scale-125 transition-transform" data-icon="drag_indicator">drag_indicator</span>
+</div>
+<div class="font-bold text-xs mt-1 truncate uppercase tracking-tighter">Private Coaching</div>
+<div class="text-[10px] opacity-80">Elena Rodriguez</div>
+</div>
+</div>
+<!-- Column 3 (Wed - Active) -->
+<div class="relative h-full bg-surface-container/30">
+<!-- Current Time Indicator Line -->
+<div class="absolute top-[288px] left-0 right-0 h-0.5 bg-error z-10">
+<div class="absolute -left-1.5 -top-1.5 w-3 h-3 bg-error rounded-full border-2 border-surface"></div>
+</div>
+<!-- Session: Workshop (Secondary) -->
+<div class="absolute top-[384px] left-1 right-1 h-[128px] bg-secondary-fixed text-primary rounded-lg p-3 group cursor-grab active:cursor-grabbing hover:shadow-xl transition-all border border-secondary/20">
+<div class="flex justify-between items-start">
+<span class="font-mono text-[9px] font-bold">14:00 - 16:00</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-xs opacity-50" data-icon="groups">groups</span>
+<span class="material-symbols-outlined text-xs group-hover:scale-125 transition-transform" data-icon="drag_indicator">drag_indicator</span>
+</div>
+</div>
+<div class="font-bold text-xs mt-1 uppercase tracking-tight">Putting Precision Workshop</div>
+<div class="text-[10px] opacity-80 mt-1">12 Attendees • Academy Green</div>
+</div>
+</div>
+<!-- Column 4 (Thu) -->
+<div class="relative h-full">
+<!-- Blocked Time -->
+<div class="absolute top-[64px] left-0 right-0 h-[192px] bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#e6e2d9_10px,#e6e2d9_11px)] opacity-40"></div>
+<div class="absolute top-[64px] left-3 top-2 flex items-center gap-1.5 opacity-60">
+<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
+<span class="font-mono text-[10px] uppercase font-bold">Staff Training</span>
+</div>
+</div>
+<!-- Column 5 (Fri) -->
+<div class="relative h-full">
+<!-- Availability Gaps -->
+<div class="absolute top-[512px] left-0 right-0 h-[128px] bg-tertiary-fixed/20 border-l-2 border-primary/20"></div>
+<!-- Coaching Session -->
+<div class="absolute top-[256px] left-1 right-1 h-[64px] bg-primary text-white rounded-lg p-2 group cursor-grab transition-all">
+<div class="flex justify-between items-start">
+<span class="font-mono text-[9px] opacity-70">12:00 - 13:00</span>
+<span class="material-symbols-outlined text-xs text-secondary" data-icon="drag_indicator">drag_indicator</span>
+</div>
+<div class="font-bold text-xs mt-1 truncate uppercase tracking-tighter">Private Coaching</div>
+</div>
+</div>
+<!-- Weekend Columns (Sat/Sun) -->
+<div class="relative h-full bg-surface-container-low/50"></div>
+<div class="relative h-full bg-surface-container-low/50"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Quick View Bento -->
+<div class="fixed bottom-12 right-12 w-80 bg-surface-container-lowest border border-outline-variant/20 rounded-2xl shadow-2xl p-6 z-50">
+<div class="flex justify-between items-start mb-4">
+<div>
+<span class="font-mono text-[10px] text-primary uppercase font-bold tracking-widest">Next Up</span>
+<h3 class="text-lg font-bold leading-tight">Private Coaching</h3>
+</div>
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="timer">timer</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<img alt="Student" class="w-12 h-12 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500" data-alt="professional portrait of a young woman smiling, natural outdoor lighting, athletic context" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGDTUmttHmgrbVwCGABqlzGnyYdC7e99peqqoTM2JhdbGxZ1UsRlwZSSxVFEJXcSm6LAs9NR_p4aXRCUj40uRNhEB51lv9xlPtrwM4kx4AZ_9NQfv9NLQSWYLxjOKjyEqFklzV50VNqR-twCeKxKmRz77Uz1jC_xbaB2WD7Vlfw0W91W53Ec5jeF44KKNv0Qvj2PJsv0PaFHBVSfNaS_lNMWMvm1-rv2U98YUH9S5dLvQsgV5wy4k5UX_EWlvYOadkS0_TURqRn8id"/>
+<div>
+<div class="text-sm font-bold">Elena Rodriguez</div>
+<div class="text-[11px] text-on-surface-variant">Focus: Short Game Alignment</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container-low p-3 rounded-xl">
+<div class="text-[9px] font-bold uppercase opacity-50">Starts In</div>
+<div class="font-mono text-lg font-bold text-primary">12:00</div>
+</div>
+<div class="bg-surface-container-low p-3 rounded-xl">
+<div class="text-[9px] font-bold uppercase opacity-50">Location</div>
+<div class="text-xs font-bold">Studio B</div>
+</div>
+</div>
+<button class="w-full py-3 bg-primary text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-colors">
+                    Check-in Player
+                </button>
+</div>
+</div>
+</main>
+</body></html>

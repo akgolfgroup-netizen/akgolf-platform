@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "surface-container-high": "#ece8df",
+                    "primary-fixed": "#bcf0ae",
+                    "on-secondary-container": "#5b6900",
+                    "tertiary": "#154212",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#9dd090",
+                    "secondary-fixed": "#d2f000",
+                    "on-primary-fixed-variant": "#23501e",
+                    "on-background": "#1c1c16",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#a1d494",
+                    "background": "#fdf9f0",
+                    "secondary-fixed-dim": "#b8d300",
+                    "surface": "#fdf9f0",
+                    "primary": "#154212",
+                    "surface-container": "#f1eee5",
+                    "on-surface": "#1c1c16",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#9dd090",
+                    "surface-tint": "#3b6934",
+                    "surface-container-low": "#f7f3ea",
+                    "inverse-surface": "#31302b",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#191e00",
+                    "primary-container": "#2d5a27",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "surface-bright": "#fdf9f0",
+                    "secondary-container": "#d0ed00",
+                    "outline-variant": "#c2c9bb",
+                    "on-primary-fixed": "#002201",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "secondary": "#576500",
+                    "tertiary-fixed": "#bcf0ae",
+                    "primary-fixed-dim": "#a1d494",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#2d5a27",
+                    "surface-dim": "#dddad1",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#002201",
+                    "outline": "#72796e",
+                    "on-surface-variant": "#42493e",
+                    "surface-variant": "#e6e2d9",
+                    "inverse-on-surface": "#f4f0e7",
+                    "surface-container-highest": "#e6e2d9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Integration -->
+<aside class="bg-[#154212] h-screen w-64 fixed left-0 top-0 flex flex-col py-8 z-50">
+<div class="px-6 mb-10">
+<h1 class="text-xl font-bold text-[#d2f000] tracking-tighter">AK Sports OS</h1>
+<p class="font-['DM_Sans'] uppercase tracking-wider text-[0.7rem] font-medium text-white/50">Developer Suite</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Navigation Items Mapping -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span> Directory
+            </a>
+<a class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="extension">extension</span> Connectors
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="vpn_key">vpn_key</span> SSO Config
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="settings_ethernet">settings_ethernet</span> Webhooks
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span> API Docs
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span> Console
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="biotech">biotech</span> Sandbox
+            </a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full bg-[#d2f000] text-[#154212] py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all">
+                Deploy Integration
+            </button>
+<div class="mt-8 space-y-4">
+<a class="flex items-center gap-3 text-white/50 hover:text-white text-xs uppercase font-medium tracking-tighter transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help_outline">help_outline</span> Support
+                </a>
+<a class="flex items-center gap-3 text-white/50 hover:text-white text-xs uppercase font-medium tracking-tighter transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="dns">dns</span> System Status
+                </a>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Integration -->
+<header class="fixed top-0 right-0 left-64 h-16 z-40 bg-[#fdf9f0]/80 backdrop-blur-md flex justify-between items-center px-8 border-none">
+<div class="flex items-center gap-4">
+<span class="text-[#154212] font-mono text-xs uppercase tracking-widest opacity-60">System // SMTP Portal</span>
+<h2 class="font-['DM_Sans'] text-sm font-semibold text-[#154212]">Admin Console</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="bg-surface-container-high border-none rounded-full py-1.5 pl-9 pr-4 text-xs w-64 focus:ring-1 focus:ring-primary outline-none" placeholder="Search provider logs..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#154212] hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-[#154212] hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 pb-12 px-10 max-w-[1280px]">
+<!-- Page Header -->
+<section class="mb-12 flex justify-between items-end">
+<div>
+<p class="font-mono text-[0.65rem] uppercase tracking-[0.3em] text-primary mb-2">Service Node: Email</p>
+<h1 class="text-4xl font-semibold tracking-tight text-on-surface">Deliverability Center</h1>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 border border-primary/10 rounded-xl text-primary font-bold text-[0.65rem] uppercase tracking-widest hover:bg-primary/5 transition-colors">
+                    Sync All Logs
+                </button>
+<button class="px-6 py-2 bg-secondary text-on-secondary rounded-xl font-bold text-[0.65rem] uppercase tracking-widest shadow-sm hover:brightness-110">
+                    Test Connection
+                </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Stats Row -->
+<div class="col-span-12 grid grid-cols-4 gap-6">
+<!-- Sent -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono text-[0.65rem] text-on-surface-variant uppercase tracking-widest">Sent Total</span>
+<span class="material-symbols-outlined text-primary" data-icon="outgoing_mail">outgoing_mail</span>
+</div>
+<div class="text-3xl font-bold text-on-surface">142,891</div>
+<p class="text-xs text-primary font-medium mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span> +12.4% <span class="opacity-50 text-on-surface-variant font-normal">vs last month</span>
+</p>
+</div>
+<!-- Delivered -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono text-[0.65rem] text-on-surface-variant uppercase tracking-widest">Delivered</span>
+<span class="material-symbols-outlined text-secondary" data-icon="check_circle">check_circle</span>
+</div>
+<div class="text-3xl font-bold text-on-surface">99.82%</div>
+<p class="text-xs text-on-surface-variant mt-2 font-normal">
+                        Active throughput: 4.2k/min
+                    </p>
+</div>
+<!-- Bounced -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono text-[0.65rem] text-on-surface-variant uppercase tracking-widest">Bounced</span>
+<span class="material-symbols-outlined text-error" data-icon="error_outline">error_outline</span>
+</div>
+<div class="text-3xl font-bold text-on-surface">0.14%</div>
+<p class="text-xs text-error font-medium mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="trending_down">trending_down</span> -0.02% <span class="opacity-50 text-on-surface-variant font-normal">improvement</span>
+</p>
+</div>
+<!-- Spam Score -->
+<div class="bg-primary text-white rounded-2xl p-6 overflow-hidden relative">
+<div class="flex justify-between items-start mb-4 relative z-10">
+<span class="font-mono text-[0.65rem] text-white/60 uppercase tracking-widest">Reputation</span>
+<span class="material-symbols-outlined text-secondary" data-icon="verified_user">verified_user</span>
+</div>
+<div class="text-3xl font-bold relative z-10">Good (0.2)</div>
+<div class="w-full bg-white/20 h-1.5 rounded-full mt-4 relative z-10">
+<div class="bg-secondary h-full w-[15%] rounded-full"></div>
+</div>
+<p class="text-[0.6rem] text-white/60 mt-2 uppercase tracking-tighter relative z-10">Low Spam Risk Detected</p>
+<!-- Background aesthetic -->
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-9xl" data-icon="shield">shield</span>
+</div>
+</div>
+</div>
+<!-- Configuration & Preview -->
+<div class="col-span-7 space-y-6">
+<!-- Provider Setup -->
+<div class="bg-surface-container-lowest rounded-2xl p-8 border border-outline-variant/10">
+<h3 class="text-lg font-semibold mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="settings_input_component">settings_input_component</span>
+                        Provider Configuration
+                    </h3>
+<div class="grid grid-cols-3 gap-4 mb-10">
+<button class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-primary bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-primary mb-2" data-icon="cloud_done">cloud_done</span>
+<span class="font-bold text-[0.6rem] uppercase tracking-widest text-primary">AWS SES</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl border border-outline-variant hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mb-2" data-icon="alternate_email">alternate_email</span>
+<span class="font-bold text-[0.6rem] uppercase tracking-widest text-on-surface-variant">SendGrid</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl border border-outline-variant hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mb-2" data-icon="forward_to_inbox">forward_to_inbox</span>
+<span class="font-bold text-[0.6rem] uppercase tracking-widest text-on-surface-variant">Mailgun</span>
+</button>
+</div>
+<form class="space-y-6">
+<div class="grid grid-cols-2 gap-6">
+<div>
+<label class="block font-mono text-[0.6rem] uppercase tracking-widest text-on-surface-variant mb-2">SMTP Server</label>
+<input class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary outline-none font-mono" type="text" value="email-smtp.us-east-1.amazonaws.com"/>
+</div>
+<div>
+<label class="block font-mono text-[0.6rem] uppercase tracking-widest text-on-surface-variant mb-2">SMTP Port</label>
+<input class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary outline-none font-mono" type="text" value="587"/>
+</div>
+</div>
+<div>
+<label class="block font-mono text-[0.6rem] uppercase tracking-widest text-on-surface-variant mb-2">Access Key ID</label>
+<input class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary outline-none font-mono" type="password" value="AKIA2QW4E5R6T7Y8U9I0"/>
+</div>
+<div>
+<label class="block font-mono text-[0.6rem] uppercase tracking-widest text-on-surface-variant mb-2">Secret Access Key</label>
+<input class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary outline-none font-mono" type="password" value="••••••••••••••••••••••••••••••••"/>
+</div>
+<div class="flex items-center gap-4 pt-4">
+<button class="bg-primary text-white px-8 py-3 rounded-xl text-[0.7rem] font-bold uppercase tracking-widest hover:brightness-125 transition-all" type="submit">
+                                Update SMTP Nodes
+                            </button>
+<span class="text-xs text-on-surface-variant/60 flex items-center gap-1 italic">
+<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
+                                Encrypted at rest
+                            </span>
+</div>
+</form>
+</div>
+</div>
+<!-- Template Preview Area -->
+<div class="col-span-5">
+<div class="bg-surface-container-low rounded-2xl p-8 h-full border border-outline-variant/10 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-semibold flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="preview">preview</span>
+                            Template Preview
+                        </h3>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-lg" data-icon="smartphone">smartphone</span>
+</button>
+<button class="p-2 bg-white shadow-sm rounded-lg transition-colors">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="laptop">laptop</span>
+</button>
+</div>
+</div>
+<div class="bg-white rounded-xl shadow-sm overflow-hidden flex-1 border border-outline-variant/20">
+<div class="bg-surface-container-low p-4 border-b border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</div>
+<div class="text-[0.65rem] text-on-surface-variant">
+<p><span class="font-semibold">Subject:</span> Your Weekly Performance Report // AK Sports OS</p>
+<p><span class="font-semibold">From:</span> system@aksports.io</p>
+</div>
+</div>
+<div class="p-8">
+<div class="max-w-[320px] mx-auto text-center">
+<div class="bg-primary text-secondary w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-3xl" data-icon="analytics">analytics</span>
+</div>
+<h4 class="text-xl font-bold text-on-surface mb-2">Performance Summary</h4>
+<p class="text-sm text-on-surface-variant mb-8 leading-relaxed">Your athletes' engagement metrics for the period of Oct 20 - Oct 27 are now ready for review.</p>
+<div class="aspect-video w-full mb-8 overflow-hidden rounded-xl bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="abstract professional data dashboard with vibrant green and lime charts and clean layout on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOLFCtvSjzKyi8N0njqkue8Sljxq-VQ06FFiKOLFUy9TNE_xsIdMVjDUHpC6jvADJM7bd_UgRep4Q5HtpfnRw9-KLgqnbC-W4fKHUmHRPFe33u6RJREH6XuV59idohZw-A2ctOQxzgP8vYe5DvIhsWIjEYOosG0eWmq63YSdrzi75KUF7HV83iRReNI21nUdD0nqXxZf30Apm852UY2NyJfJZm8RFj-OK1WBNfNa2g-1y4EuGKeTYzKSgV8CjMaFWV5uZp5oNfmY4V"/>
+</div>
+<button class="w-full bg-primary text-white py-3 rounded-lg text-xs font-bold uppercase tracking-widest">
+                                    View Full Analytics
+                                </button>
+<p class="mt-8 text-[0.6rem] text-on-surface-variant/50 uppercase tracking-tighter">
+                                    AK Sports OS • 124 Innovation Dr, Suite 500
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Logs Section -->
+<div class="col-span-12">
+<div class="bg-surface-container-lowest rounded-2xl p-8 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-lg font-semibold flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="list_alt">list_alt</span>
+                            Recent Deliverability Logs
+                        </h3>
+<span class="font-mono text-[0.6rem] text-on-surface-variant uppercase tracking-widest bg-surface-container-high px-3 py-1 rounded-full">Real-time Stream</span>
+</div>
+<div class="overflow-hidden">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline-variant/10">
+<th class="pb-4 font-mono text-[0.6rem] uppercase tracking-widest text-on-surface-variant">Timestamp</th>
+<th class="pb-4 font-mono text-[0.6rem] uppercase tracking-widest text-on-surface-variant">Recipient</th>
+<th class="pb-4 font-mono text-[0.6rem] uppercase tracking-widest text-on-surface-variant">Status</th>
+<th class="pb-4 font-mono text-[0.6rem] uppercase tracking-widest text-on-surface-variant text-right">Provider Trace ID</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr>
+<td class="py-4 font-mono text-xs">2023-10-27 14:22:01</td>
+<td class="py-4 text-sm font-medium">m.phelps@olympic.org</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-tighter bg-secondary-container text-on-secondary-container">
+                                            Delivered
+                                        </span>
+</td>
+<td class="py-4 font-mono text-[0.65rem] text-on-surface-variant text-right">SES-4291-B772-XT90</td>
+</tr>
+<tr>
+<td class="py-4 font-mono text-xs">2023-10-27 14:21:45</td>
+<td class="py-4 text-sm font-medium">coach_smith@varsity.edu</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-tighter bg-secondary-container text-on-secondary-container">
+                                            Delivered
+                                        </span>
+</td>
+<td class="py-4 font-mono text-[0.65rem] text-on-surface-variant text-right">SES-1102-L093-PR12</td>
+</tr>
+<tr>
+<td class="py-4 font-mono text-xs">2023-10-27 14:19:12</td>
+<td class="py-4 text-sm font-medium">inactive@bounce-test.com</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-tighter bg-error-container text-on-error-container">
+                                            Bounced
+                                        </span>
+</td>
+<td class="py-4 font-mono text-[0.65rem] text-on-surface-variant text-right">SES-9921-X221-BK45</td>
+</tr>
+<tr>
+<td class="py-4 font-mono text-xs">2023-10-27 14:18:55</td>
+<td class="py-4 text-sm font-medium">team_ops@fiba.com</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-tighter bg-secondary-container text-on-secondary-container">
+                                            Delivered
+                                        </span>
+</td>
+<td class="py-4 font-mono text-[0.65rem] text-on-surface-variant text-right">SES-7762-P002-ML11</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

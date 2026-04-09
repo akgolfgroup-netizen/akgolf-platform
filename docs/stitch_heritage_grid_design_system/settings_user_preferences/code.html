@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-low": "#f7f3ea",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-primary-fixed": "#002201",
+                        "tertiary": "#154212",
+                        "surface-bright": "#fdf9f0",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e6e2d9",
+                        "on-secondary-container": "#5b6900",
+                        "surface-tint": "#3b6934",
+                        "outline-variant": "#c2c9bb",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#d2f000",
+                        "on-secondary-fixed": "#191e00",
+                        "surface-dim": "#dddad1",
+                        "secondary": "#576500",
+                        "inverse-primary": "#a1d494",
+                        "surface": "#fdf9f0",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "on-surface-variant": "#42493e",
+                        "background": "#fdf9f0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#9dd090",
+                        "primary": "#154212",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-primary-container": "#9dd090",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-container": "#f1eee5",
+                        "primary-container": "#2d5a27",
+                        "on-background": "#1c1c16",
+                        "tertiary-fixed": "#bcf0ae",
+                        "inverse-surface": "#31302b",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#d0ed00",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#002201",
+                        "surface-container-high": "#ece8df",
+                        "outline": "#72796e",
+                        "tertiary-container": "#2d5a27",
+                        "on-surface": "#1c1c16",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#bcf0ae",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "inverse-on-surface": "#f4f0e7",
+                        "secondary-fixed-dim": "#b8d300"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.7); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col py-6 z-50">
+<div class="px-8 mb-10">
+<h1 class="text-white font-bold text-lg tracking-tighter">AK Sports OS</h1>
+<p class="text-[#d2f000] text-[10px] font-mono uppercase tracking-[0.2em] mt-1 opacity-80">Elite Performance</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-stone-300 mx-4 py-3 px-4 flex items-center gap-3 hover:bg-[#154212]/50 hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="font-medium uppercase text-[11px] tracking-widest">Dashboard</span>
+</a>
+<a class="text-stone-300 mx-4 py-3 px-4 flex items-center gap-3 hover:bg-[#154212]/50 hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-xl">analytics</span>
+<span class="font-medium uppercase text-[11px] tracking-widest">Analytics</span>
+</a>
+<a class="text-stone-300 mx-4 py-3 px-4 flex items-center gap-3 hover:bg-[#154212]/50 hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-xl">group</span>
+<span class="font-medium uppercase text-[11px] tracking-widest">Team</span>
+</a>
+<a class="text-stone-300 mx-4 py-3 px-4 flex items-center gap-3 hover:bg-[#154212]/50 hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-xl">calendar_today</span>
+<span class="font-medium uppercase text-[11px] tracking-widest">Schedule</span>
+</a>
+<!-- Active State: Settings -->
+<a class="bg-[#d2f000] text-[#154212] rounded-lg mx-4 py-3 px-4 flex items-center gap-3 translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-medium uppercase text-[11px] tracking-widest">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 space-y-1 border-t border-white/10 pt-6">
+<a class="text-stone-300 py-3 px-4 flex items-center gap-3 hover:bg-[#154212]/50 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-xl">help</span>
+<span class="font-medium uppercase text-[11px] tracking-widest">Support</span>
+</a>
+<a class="text-stone-300 py-3 px-4 flex items-center gap-3 hover:bg-[#154212]/50 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-xl">logout</span>
+<span class="font-medium uppercase text-[11px] tracking-widest">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 bg-[#fdf9f0] min-h-screen relative overflow-y-auto no-scrollbar">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-[#fdf9f0] px-12 py-8 flex justify-between items-end backdrop-blur-md bg-opacity-90">
+<div>
+<span class="text-primary font-mono text-[10px] uppercase tracking-[0.3em] mb-2 block">System Configuration</span>
+<h2 class="text-4xl font-bold text-primary tracking-tight">User Preferences</h2>
+</div>
+<div class="flex gap-4">
+<button class="bg-[#d2f000] text-[#154212] px-8 py-3 rounded-xl font-medium uppercase text-xs tracking-widest shadow-sm active:scale-95 transition-all">
+                    Save Changes
+                </button>
+</div>
+</header>
+<!-- Content Grid -->
+<div class="px-12 pb-20">
+<!-- Settings Tabs -->
+<nav class="flex gap-12 border-b border-surface-container-high mb-12">
+<button class="pb-4 border-b-2 border-secondary-fixed text-primary font-semibold text-sm tracking-wide">Profile</button>
+<button class="pb-4 border-b-2 border-transparent text-stone-400 font-medium text-sm tracking-wide hover:text-primary transition-colors">Notifications</button>
+<button class="pb-4 border-b-2 border-transparent text-stone-400 font-medium text-sm tracking-wide hover:text-primary transition-colors">Billing</button>
+<button class="pb-4 border-b-2 border-transparent text-stone-400 font-medium text-sm tracking-wide hover:text-primary transition-colors">Security</button>
+</nav>
+<div class="grid grid-cols-12 gap-8">
+<!-- Profile: Avatar & Identity (Large Bento Card) -->
+<section class="col-span-8 bg-surface-container-lowest rounded-[24px] p-8 shadow-[0_4px_16px_rgba(45,90,39,0.04)]">
+<div class="flex items-start gap-10">
+<div class="relative group">
+<div class="w-32 h-32 rounded-2xl overflow-hidden bg-surface-container-low border-4 border-surface-container-lowest shadow-lg">
+<img class="w-full h-full object-cover" data-alt="professional headshot of a focused athletic man in a minimal studio setting with soft directional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM9hKhjLRIstwtRLOoo_ZN3KjBu_qrzmDvlkNF9GDumzk61fMYDBIRRe0rfn1jGD7pzn9hpXnhjJ9KWw_gR29MomdcSlhmK9gn1H4j_68JHyH01gd6uJFAzCODEzbqjMiNYEwkbShfb73HpsrhXDjjZDyDuFg4p8628EVdqJzPPoSN4IKXtHqkVlFhj8VoKJv_Xih7m3LDH6rUmnSvifAxlS8TMARdGMyG0uWScga9zK9h3p0yhQMuJ5iScauiUAq3QoOzIWfK2ka0"/>
+</div>
+<button class="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-lg shadow-xl hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-base">photo_camera</span>
+</button>
+</div>
+<div class="flex-1 grid grid-cols-2 gap-6">
+<div class="col-span-1">
+<label class="block text-[10px] font-mono uppercase tracking-widest text-stone-500 mb-2">Full Name</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary/20 text-primary font-medium" type="text" value="Alexander Knight"/>
+</div>
+<div class="col-span-1">
+<label class="block text-[10px] font-mono uppercase tracking-widest text-stone-500 mb-2">Primary Email</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary/20 text-primary font-medium" type="email" value="a.knight@ak-sports.com"/>
+</div>
+<div class="col-span-1">
+<label class="block text-[10px] font-mono uppercase tracking-widest text-stone-500 mb-2">Phone Number</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary/20 text-primary font-medium" type="text" value="+1 (555) 012-3456"/>
+</div>
+<div class="col-span-1">
+<label class="block text-[10px] font-mono uppercase tracking-widest text-stone-500 mb-2">Official Handicap</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary/20 text-primary font-mono font-bold" type="text" value="4.2"/>
+<span class="absolute right-4 top-3 text-[10px] text-stone-400 font-mono">USGA</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-surface-container">
+<label class="block text-[10px] font-mono uppercase tracking-widest text-stone-500 mb-2">Professional Bio</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary/20 text-primary leading-relaxed" rows="4">Dedicated performance coach and elite athlete management specialist. Currently optimizing team workflow through data-driven performance metrics and biomechanical analysis.</textarea>
+</div>
+</section>
+<!-- Notifications Toggle Section (Side Bento Card) -->
+<section class="col-span-4 flex flex-col gap-8">
+<div class="bg-primary-container text-white rounded-[24px] p-8 shadow-xl">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary-fixed">notifications_active</span>
+<h3 class="font-bold text-lg tracking-tight">System Alerts</h3>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-medium">Email Updates</p>
+<p class="text-[10px] text-stone-300 font-mono uppercase tracking-tighter mt-1">Weekly reports &amp; insights</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-white/20 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-secondary-fixed after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-medium">SMS Notifications</p>
+<p class="text-[10px] text-stone-300 font-mono uppercase tracking-tighter mt-1">Direct performance alerts</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-white/20 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary-fixed"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-medium">Marketing Communications</p>
+<p class="text-[10px] text-stone-300 font-mono uppercase tracking-tighter mt-1">New features &amp; partners</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-white/20 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-secondary-fixed after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Decorative/Status Card -->
+<div class="bg-surface-container-low rounded-[24px] p-8 flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest flex items-center justify-center mb-4 shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
+</div>
+<h4 class="text-primary font-bold text-sm">Account Security: High</h4>
+<p class="text-[11px] text-stone-500 mt-2 font-body max-w-[180px]">Your account is protected by 2FA and biometric encryption.</p>
+<button class="mt-6 text-primary font-mono text-[10px] uppercase tracking-widest underline decoration-secondary-fixed decoration-2 underline-offset-4">Review Security</button>
+</div>
+</section>
+<!-- Data & Activity (Asymmetric Bottom Row) -->
+<section class="col-span-12 grid grid-cols-3 gap-8">
+<div class="bg-surface-container-lowest rounded-[24px] p-6 flex items-center gap-5 shadow-[0_4px_16px_rgba(45,90,39,0.02)]">
+<div class="bg-stone-50 w-12 h-12 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">schedule</span>
+</div>
+<div>
+<p class="text-[10px] font-mono uppercase text-stone-400 tracking-wider">Last Sync</p>
+<p class="text-sm font-bold text-primary">14 MINS AGO</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-[24px] p-6 flex items-center gap-5 shadow-[0_4px_16px_rgba(45,90,39,0.02)]">
+<div class="bg-stone-50 w-12 h-12 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">cloud_done</span>
+</div>
+<div>
+<p class="text-[10px] font-mono uppercase text-stone-400 tracking-wider">Storage Used</p>
+<p class="text-sm font-bold text-primary">1.2GB / 10GB</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-[24px] p-6 flex items-center gap-5 shadow-[0_4px_16px_rgba(45,90,39,0.02)]">
+<div class="bg-stone-50 w-12 h-12 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">language</span>
+</div>
+<div>
+<p class="text-[10px] font-mono uppercase text-stone-400 tracking-wider">Region</p>
+<p class="text-sm font-bold text-primary">NORTH AMERICA</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Subtle branding footer -->
+<footer class="px-12 py-8 flex justify-between border-t border-surface-container items-center">
+<span class="text-[10px] font-mono text-stone-400 uppercase tracking-widest">AK Sports OS — v4.12.0</span>
+<div class="flex gap-6">
+<a class="text-[10px] font-mono text-stone-400 uppercase tracking-widest hover:text-primary" href="#">Privacy Protocol</a>
+<a class="text-[10px] font-mono text-stone-400 uppercase tracking-widest hover:text-primary" href="#">Terms of Service</a>
+</div>
+</footer>
+</main>
+</body></html>

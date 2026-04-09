@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Sports OS - Select Date &amp; Time</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#bcf0ae",
+                    "surface-dim": "#dddad1",
+                    "on-secondary-fixed": "#191e00",
+                    "on-surface": "#1c1c16",
+                    "on-secondary-container": "#5b6900",
+                    "secondary-fixed": "#d2f000",
+                    "outline-variant": "#c2c9bb",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#ece8df",
+                    "primary-container": "#2d5a27",
+                    "on-surface-variant": "#42493e",
+                    "secondary": "#576500",
+                    "surface-tint": "#3b6934",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "surface-container-low": "#f7f3ea",
+                    "on-primary-container": "#9dd090",
+                    "tertiary": "#154212",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e6e2d9",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1c1c16",
+                    "inverse-surface": "#31302b",
+                    "tertiary-container": "#2d5a27",
+                    "on-primary-fixed": "#002201",
+                    "surface-bright": "#fdf9f0",
+                    "surface-container": "#f1eee5",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "inverse-primary": "#a1d494",
+                    "surface": "#fdf9f0",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#b8d300",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "on-tertiary-fixed": "#002201",
+                    "on-tertiary-container": "#9dd090",
+                    "primary-fixed-dim": "#a1d494",
+                    "surface-container-highest": "#e6e2d9",
+                    "secondary-container": "#d0ed00",
+                    "outline": "#72796e",
+                    "on-primary-fixed-variant": "#23501e",
+                    "inverse-on-surface": "#f4f0e7",
+                    "primary": "#154212",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#bcf0ae",
+                    "background": "#fdf9f0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active { color: #154212; font-weight: 700; border-bottom: 2px solid #d2f000; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen">
+<!-- TopNavBar (Shared Component Override for Booking) -->
+<header class="bg-[#fdf9f0] dark:bg-[#fdf9f0] docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-bold text-[#154212] tracking-tighter">AK Sports OS</div>
+<nav class="hidden md:flex items-center space-x-8 font-['DM_Sans'] font-semibold uppercase tracking-wider">
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors duration-200" href="#">Services</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors duration-200" href="#">Coaches</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors duration-200" href="#">My Bookings</a>
+</nav>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-[#154212]" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+<div class="bg-[#f7f3ea] h-[1px] w-full"></div>
+</header>
+<div class="flex max-w-7xl mx-auto">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col py-8 z-40">
+<div class="px-8 mb-12">
+<div class="text-white font-black text-lg">AK Sports OS Logo</div>
+<div class="text-[#d2f000] font-['DM_Sans'] font-medium uppercase text-[10px] tracking-widest mt-1">Precision Sports Management</div>
+</div>
+<nav class="flex flex-col space-y-2">
+<div class="text-white/70 py-3 px-8 font-['DM_Sans'] font-medium uppercase text-[12px] flex items-center gap-3">
+<span class="material-symbols-outlined text-sm" data-icon="sports_golf">sports_golf</span> Services
+                </div>
+<!-- ACTIVE STEP -->
+<div class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 py-3 px-8 font-['DM_Sans'] font-medium uppercase text-[12px] flex items-center gap-3 shadow-md">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span> Schedule
+                </div>
+<div class="text-white/70 py-3 px-8 font-['DM_Sans'] font-medium uppercase text-[12px] flex items-center gap-3">
+<span class="material-symbols-outlined text-sm" data-icon="person_search">person_search</span> Coaches
+                </div>
+<div class="text-white/70 py-3 px-8 font-['DM_Sans'] font-medium uppercase text-[12px] flex items-center gap-3">
+<span class="material-symbols-outlined text-sm" data-icon="receipt_long">receipt_long</span> Summary
+                </div>
+<div class="text-white/70 py-3 px-8 font-['DM_Sans'] font-medium uppercase text-[12px] flex items-center gap-3">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span> Confirm
+                </div>
+</nav>
+<div class="mt-auto px-8">
+<div class="p-4 rounded-xl bg-white/5 border border-white/10">
+<p class="text-white/40 text-[10px] font-mono uppercase mb-2">Selected Coach</p>
+<p class="text-white font-semibold text-sm">Marcus V. Thorne</p>
+<p class="text-[#d2f000] text-xs">PGA Master Instructor</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 p-12 bg-background min-h-screen">
+<!-- Step Indicator Bento -->
+<section class="mb-12">
+<div class="flex items-center justify-between mb-8">
+<div>
+<span class="font-mono text-xs text-primary uppercase tracking-widest">Step 02/05</span>
+<h1 class="text-4xl font-bold text-primary tracking-tight mt-1">Select Date &amp; Time</h1>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-1 bg-primary/10 rounded-full"></div>
+<div class="w-12 h-1 bg-secondary rounded-full"></div>
+<div class="w-12 h-1 bg-primary/10 rounded-full"></div>
+<div class="w-12 h-1 bg-primary/10 rounded-full"></div>
+<div class="w-12 h-1 bg-primary/10 rounded-full"></div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Left: Calendar (The Lab Aesthetic) -->
+<div class="col-span-12 lg:col-span-7">
+<div class="bg-surface-container-lowest rounded-2xl p-8 border border-outline-variant/10 shadow-[0_4px_16px_rgba(45,90,39,0.04)]">
+<div class="flex justify-between items-center mb-8">
+<h2 class="text-xl font-bold text-primary">October 2023</h2>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined text-primary">chevron_left</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined text-primary">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="calendar-grid text-center mb-4">
+<div class="text-[10px] font-mono uppercase text-on-surface-variant py-2">Sun</div>
+<div class="text-[10px] font-mono uppercase text-on-surface-variant py-2">Mon</div>
+<div class="text-[10px] font-mono uppercase text-on-surface-variant py-2">Tue</div>
+<div class="text-[10px] font-mono uppercase text-on-surface-variant py-2">Wed</div>
+<div class="text-[10px] font-mono uppercase text-on-surface-variant py-2">Thu</div>
+<div class="text-[10px] font-mono uppercase text-on-surface-variant py-2">Fri</div>
+<div class="text-[10px] font-mono uppercase text-on-surface-variant py-2">Sat</div>
+<!-- Week 1 -->
+<div class="py-4 text-on-surface-variant/30 text-sm">24</div>
+<div class="py-4 text-on-surface-variant/30 text-sm">25</div>
+<div class="py-4 text-on-surface-variant/30 text-sm">26</div>
+<div class="py-4 text-on-surface-variant/30 text-sm">27</div>
+<div class="py-4 text-on-surface-variant/30 text-sm">28</div>
+<div class="py-4 text-on-surface-variant/30 text-sm">29</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">1</div>
+<!-- Week 2 -->
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">2</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">3</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">4</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">5</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">6</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">7</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">8</div>
+<!-- Week 3 (Selection) -->
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">9</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">10</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">11</div>
+<div class="py-4 text-sm font-bold bg-primary text-white rounded-lg cursor-pointer shadow-lg ring-4 ring-primary/10">12</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">13</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">14</div>
+<div class="py-4 text-sm font-medium hover:bg-secondary/10 rounded-lg cursor-pointer">15</div>
+</div>
+<div class="mt-6 flex items-center gap-4 text-xs font-mono">
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-primary"></span> Selected</div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-surface-container-high border border-outline-variant"></span> Available</div>
+</div>
+</div>
+</div>
+<!-- Right: Slot Picker -->
+<div class="col-span-12 lg:col-span-5 space-y-8">
+<!-- Morning -->
+<div>
+<h3 class="text-xs font-mono uppercase tracking-[0.2em] text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">wb_twilight</span> Morning (09-12)
+                            </h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-container-lowest border border-outline-variant/20 p-4 rounded-xl text-center font-mono text-sm opacity-40 cursor-not-allowed">09:00</div>
+<div class="bg-surface-container-lowest border border-outline-variant/20 p-4 rounded-xl text-center font-mono text-sm hover:border-secondary hover:shadow-sm cursor-pointer transition-all">10:30</div>
+</div>
+</div>
+<!-- Afternoon -->
+<div>
+<h3 class="text-xs font-mono uppercase tracking-[0.2em] text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">sunny</span> Afternoon (13-17)
+                            </h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-secondary-container text-on-secondary-container p-4 rounded-xl text-center font-mono text-sm font-bold shadow-md ring-2 ring-secondary/20">14:00</div>
+<div class="bg-surface-container-lowest border border-outline-variant/20 p-4 rounded-xl text-center font-mono text-sm hover:border-secondary hover:shadow-sm cursor-pointer transition-all">15:30</div>
+<div class="bg-surface-container-lowest border border-outline-variant/20 p-4 rounded-xl text-center font-mono text-sm hover:border-secondary hover:shadow-sm cursor-pointer transition-all">16:00</div>
+<div class="bg-surface-container-lowest border border-outline-variant/20 p-4 rounded-xl text-center font-mono text-sm opacity-40 cursor-not-allowed">16:30</div>
+</div>
+</div>
+<!-- Evening -->
+<div>
+<h3 class="text-xs font-mono uppercase tracking-[0.2em] text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">nights_stay</span> Evening (18-20)
+                            </h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-container-lowest border border-outline-variant/20 p-4 rounded-xl text-center font-mono text-sm hover:border-secondary hover:shadow-sm cursor-pointer transition-all">18:00</div>
+<div class="bg-surface-container-lowest border border-outline-variant/20 p-4 rounded-xl text-center font-mono text-sm hover:border-secondary hover:shadow-sm cursor-pointer transition-all">19:30</div>
+</div>
+</div>
+<!-- Summary & CTA Card -->
+<div class="bg-primary p-6 rounded-2xl text-white shadow-xl mt-8">
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="text-white/60 font-mono text-[10px] uppercase tracking-widest">Booking Preview</p>
+<p class="text-xl font-bold mt-1">Oct 12, 14:00</p>
+</div>
+<span class="material-symbols-outlined text-secondary">verified</span>
+</div>
+<button class="w-full bg-secondary text-primary font-bold uppercase tracking-widest py-4 rounded-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all">
+                                Next Step <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Heritage Detail Accent -->
+<div class="mt-12 border-t border-outline-variant/10 pt-12 flex items-center justify-between">
+<div class="flex items-center gap-12">
+<div class="flex flex-col">
+<span class="text-[10px] font-mono text-on-surface-variant uppercase">Timezone</span>
+<span class="text-sm font-semibold">Greenwich Mean Time (GMT+1)</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-mono text-on-surface-variant uppercase">Session Duration</span>
+<span class="text-sm font-semibold">60 Minutes / Precise</span>
+</div>
+</div>
+<div class="flex gap-4">
+<img class="w-24 h-16 object-cover rounded-lg border border-outline-variant/20" data-alt="professional golf green with morning dew and precise grass pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBggeJfV7ndye3Tu_9pj8ol_vPstx79dIy2K24KBi_V1X12saRNa0HnmaikNIler7Hri0qmMgk_Q7tpEiGyNJMDFJKIu24zJl_s-aV_s4ZDAanwCV_RGwxQ1y8I0F4q_YCQguZ2Zn3ooZJUliPaq7DTm2tEanxRZPNft-PuFjid4xA-AXJHtfgir7XhQ97HuvoB1_kzvdNzmkWVYeFX2TiaEpeENqKcFGv2w7hRYaBHx8Ul95hyzG66UVm9KqsYp6idAy06cgekIpCu"/>
+<img class="w-24 h-16 object-cover rounded-lg border border-outline-variant/20" data-alt="high-end tennis court surface with professional net and warm sun lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ-EicHv_SbNNF31jxnQYOohE68D0Uoy-zKc-W0ZxEguHxEyh_el1-6LonSNWkHDDTtLcUhHqme0cy6NDCmroY17VNektpR57I5go8SqTLG3ZGBR_F23SPsOz7R_xj4UmsB80wpDk57f3T-k_fvbsNXq2wLQ6UN_Ny4pMyFec73O7tdB_UnirSF6AfrcNL9v-LQvFrPvmQhS_Is1oneqZyzDrULmQ6ZSYt1p0e8egdRF1vxWT6A1XClY0t47Y_8GqzlOp6ywh7KeWg"/>
+</div>
+</div>
+</main>
+</div>
+</body></html>

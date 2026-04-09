@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Utilization Analytics | AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#bcf0ae",
+                        "surface-tint": "#3b6934",
+                        "tertiary-fixed": "#bcf0ae",
+                        "surface": "#fdf9f0",
+                        "tertiary": "#154212",
+                        "surface-container-high": "#ece8df",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dddad1",
+                        "outline-variant": "#c2c9bb",
+                        "background": "#fdf9f0",
+                        "on-primary-fixed": "#002201",
+                        "on-error": "#ffffff",
+                        "primary": "#154212",
+                        "secondary-container": "#d0ed00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1c1c16",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-bright": "#fdf9f0",
+                        "on-secondary-fixed": "#191e00",
+                        "tertiary-container": "#2d5a27",
+                        "secondary": "#576500",
+                        "inverse-surface": "#31302b",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-surface": "#1c1c16",
+                        "on-secondary-container": "#5b6900",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#72796e",
+                        "secondary-fixed": "#d2f000",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9dd090",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-container-highest": "#e6e2d9",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-surface-variant": "#42493e",
+                        "on-primary-container": "#9dd090",
+                        "surface-container": "#f1eee5",
+                        "on-tertiary-fixed": "#002201",
+                        "surface-variant": "#e6e2d9",
+                        "inverse-primary": "#a1d494"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Manrope', sans-serif; background-color: #fdf9f0; }
+        .mono-data { font-family: 'JetBrains Mono', monospace; }
+        .dm-sans { font-family: 'DM Sans', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar (Execution from JSON) -->
+<aside class="flex flex-col h-full py-8 px-4 bg-green-950 dark:bg-green-950 h-screen w-64 border-r-0 fixed left-0 top-0 z-50">
+<div class="mb-10 px-2">
+<h1 class="text-xl font-bold text-white tracking-tight">AK Sports OS</h1>
+<p class="text-[10px] font-['DM_Sans'] font-medium uppercase tracking-widest text-green-200/40 mt-1">Elite Analytics</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-green-200/60 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-green-900/30 hover:text-lime-300 transition-colors scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-green-200/60 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-green-900/30 hover:text-lime-300 transition-colors scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span> Performance
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-green-200/60 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-green-900/30 hover:text-lime-300 transition-colors scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span> Roster
+            </a>
+<!-- ACTIVE TAB: Analytics (Semantic Mapping) -->
+<a class="flex items-center gap-3 px-3 py-2 text-lime-400 bg-green-900/50 rounded-lg font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span> Analytics
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-green-200/60 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-green-900/30 hover:text-lime-300 transition-colors scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="travel_explore">travel_explore</span> Scouting
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-green-200/60 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-green-900/30 hover:text-lime-300 transition-colors scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Settings
+            </a>
+</nav>
+<div class="mt-auto px-2">
+<button class="w-full py-3 bg-secondary-container text-on-secondary-container font-['DM_Sans'] font-semibold text-xs uppercase tracking-widest rounded-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span> New Report
+            </button>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="flex-1 ml-64 min-w-0">
+<!-- TopNavBar (Execution from JSON) -->
+<header class="flex justify-between items-center px-8 w-full h-16 bg-[#fdf9f0]/80 backdrop-blur-xl sticky top-0 z-40 border-b border-[#154212]/10">
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded-full text-sm focus:ring-1 ring-lime-400/20 w-64" placeholder="Search analytics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-primary font-['DM_Sans'] font-semibold text-sm">
+<span class="text-primary/40">ANALYTICS SUITE</span>
+<span class="h-4 w-[1px] bg-primary/10"></span>
+<span class="text-primary">Utilization Report</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-green-900 hover:opacity-70 transition-opacity"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+<button class="p-2 text-green-900 hover:opacity-70 transition-opacity"><span class="material-symbols-outlined" data-icon="help">help</span></button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content: Utilization Analytics -->
+<div class="p-8 space-y-8">
+<!-- Header Section -->
+<section class="flex justify-between items-end">
+<div>
+<span class="mono-data text-[10px] text-primary/60 uppercase tracking-widest">System Live • 01/04 Utilization</span>
+<h2 class="text-4xl font-bold text-on-surface tracking-tight mt-2">Utilization Metrics</h2>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-surface-container-highest text-primary font-['DM_Sans'] text-[11px] font-bold uppercase tracking-wider rounded-lg">Last 30 Days</button>
+<button class="px-4 py-2 bg-primary text-white font-['DM_Sans'] text-[11px] font-bold uppercase tracking-wider rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span> Export Data
+                    </button>
+</div>
+</section>
+<!-- Bento Grid: Top Stats -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-[24px] flex flex-col justify-between h-40">
+<span class="mono-data text-[10px] text-primary/60 uppercase tracking-widest">No-Show Rate</span>
+<div>
+<div class="text-4xl font-bold text-primary tracking-tighter">4.2%</div>
+<div class="flex items-center gap-1 text-error text-xs font-bold mt-1">
+<span class="material-symbols-outlined text-xs" data-icon="trending_up">trending_up</span> +0.8%
+                        </div>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-[24px] flex flex-col justify-between h-40">
+<span class="mono-data text-[10px] text-primary/60 uppercase tracking-widest">Average Fill Rate</span>
+<div>
+<div class="text-4xl font-bold text-primary tracking-tighter">88.4%</div>
+<div class="flex items-center gap-1 text-secondary text-xs font-bold mt-1">
+<span class="material-symbols-outlined text-xs" data-icon="trending_up">trending_up</span> +12%
+                        </div>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-[24px] flex flex-col justify-between h-40">
+<span class="mono-data text-[10px] text-primary/60 uppercase tracking-widest">Revenue Leakage</span>
+<div>
+<div class="text-4xl font-bold text-primary tracking-tighter">$1.2k</div>
+<div class="flex items-center gap-1 text-secondary text-xs font-bold mt-1">
+<span class="material-symbols-outlined text-xs" data-icon="trending_down">trending_down</span> -4.1%
+                        </div>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="bg-primary p-6 rounded-[24px] flex flex-col justify-between h-40">
+<span class="mono-data text-[10px] text-white/60 uppercase tracking-widest">Peak Utilization</span>
+<div>
+<div class="text-3xl font-bold text-lime-400 tracking-tighter leading-none">TUE &amp; THU</div>
+<div class="text-white/80 text-[11px] font-medium mt-2">17:00 - 20:00 HOURS</div>
+</div>
+</div>
+</section>
+<!-- Main Analytics Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Utilization Heatmap (Large Section) -->
+<section class="lg:col-span-2 bg-surface-container-lowest rounded-[24px] p-8">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="text-xl font-bold text-primary">Hourly Utilization Heatmap</h3>
+<p class="text-sm text-primary/60">Intensity mapping of session activity across operating hours.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-primary/5 rounded-sm"></span>
+<span class="text-[10px] mono-data">0%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-primary rounded-sm"></span>
+<span class="text-[10px] mono-data">100%</span>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto no-scrollbar">
+<div class="min-w-[600px]">
+<!-- Heatmap Header (Days) -->
+<div class="grid grid-cols-8 gap-1 mb-2">
+<div class="col-span-1"></div>
+<div class="text-center mono-data text-[10px] text-primary/40 uppercase">Mon</div>
+<div class="text-center mono-data text-[10px] text-primary/40 uppercase">Tue</div>
+<div class="text-center mono-data text-[10px] text-primary/40 uppercase">Wed</div>
+<div class="text-center mono-data text-[10px] text-primary/40 uppercase">Thu</div>
+<div class="text-center mono-data text-[10px] text-primary/40 uppercase">Fri</div>
+<div class="text-center mono-data text-[10px] text-primary/40 uppercase">Sat</div>
+<div class="text-center mono-data text-[10px] text-primary/40 uppercase">Sun</div>
+</div>
+<!-- Heatmap Rows -->
+<div class="space-y-1">
+<!-- 08:00 Row Example -->
+<div class="grid grid-cols-8 gap-1">
+<div class="text-right mono-data text-[10px] text-primary/40 pr-3 flex items-center justify-end">08:00</div>
+<div class="h-8 bg-primary/20 rounded-sm"></div>
+<div class="h-8 bg-primary/40 rounded-sm"></div>
+<div class="h-8 bg-primary/10 rounded-sm"></div>
+<div class="h-8 bg-primary/30 rounded-sm"></div>
+<div class="h-8 bg-primary/50 rounded-sm"></div>
+<div class="h-8 bg-primary/60 rounded-sm"></div>
+<div class="h-8 bg-primary/10 rounded-sm"></div>
+</div>
+<div class="grid grid-cols-8 gap-1">
+<div class="text-right mono-data text-[10px] text-primary/40 pr-3 flex items-center justify-end">10:00</div>
+<div class="h-8 bg-primary/40 rounded-sm"></div>
+<div class="h-8 bg-primary/70 rounded-sm"></div>
+<div class="h-8 bg-primary/50 rounded-sm"></div>
+<div class="h-8 bg-primary/80 rounded-sm"></div>
+<div class="h-8 bg-primary/60 rounded-sm"></div>
+<div class="h-8 bg-primary/20 rounded-sm"></div>
+<div class="h-8 bg-primary/10 rounded-sm"></div>
+</div>
+<div class="grid grid-cols-8 gap-1">
+<div class="text-right mono-data text-[10px] text-primary/40 pr-3 flex items-center justify-end">12:00</div>
+<div class="h-8 bg-primary/10 rounded-sm"></div>
+<div class="h-8 bg-primary/20 rounded-sm"></div>
+<div class="h-8 bg-primary/10 rounded-sm"></div>
+<div class="h-8 bg-primary/30 rounded-sm"></div>
+<div class="h-8 bg-primary/40 rounded-sm"></div>
+<div class="h-8 bg-primary/10 rounded-sm"></div>
+<div class="h-8 bg-primary/5 rounded-sm"></div>
+</div>
+<div class="grid grid-cols-8 gap-1">
+<div class="text-right mono-data text-[10px] text-primary/40 pr-3 flex items-center justify-end">14:00</div>
+<div class="h-8 bg-primary/60 rounded-sm"></div>
+<div class="h-8 bg-primary/80 rounded-sm"></div>
+<div class="h-8 bg-primary/70 rounded-sm"></div>
+<div class="h-primary/90 bg-primary rounded-sm"></div>
+<div class="h-8 bg-primary/80 rounded-sm"></div>
+<div class="h-8 bg-primary/40 rounded-sm"></div>
+<div class="h-8 bg-primary/20 rounded-sm"></div>
+</div>
+<div class="grid grid-cols-8 gap-1">
+<div class="text-right mono-data text-[10px] text-primary/40 pr-3 flex items-center justify-end">16:00</div>
+<div class="h-8 bg-primary rounded-sm"></div>
+<div class="h-8 bg-primary rounded-sm"></div>
+<div class="h-8 bg-primary/90 rounded-sm"></div>
+<div class="h-8 bg-primary rounded-sm"></div>
+<div class="h-8 bg-primary/90 rounded-sm"></div>
+<div class="h-8 bg-primary/60 rounded-sm"></div>
+<div class="h-8 bg-primary/40 rounded-sm"></div>
+</div>
+<div class="grid grid-cols-8 gap-1">
+<div class="text-right mono-data text-[10px] text-primary/40 pr-3 flex items-center justify-end">18:00</div>
+<div class="h-8 bg-primary rounded-sm"></div>
+<div class="h-8 bg-primary rounded-sm"></div>
+<div class="h-8 bg-primary rounded-sm"></div>
+<div class="h-8 bg-primary rounded-sm"></div>
+<div class="h-8 bg-primary rounded-sm"></div>
+<div class="h-8 bg-primary/90 rounded-sm"></div>
+<div class="h-8 bg-primary/80 rounded-sm"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Popular Session Types (Pie Chart Visualization) -->
+<section class="bg-surface-container-lowest rounded-[24px] p-8 flex flex-col">
+<h3 class="text-xl font-bold text-primary mb-2">Session Distro</h3>
+<p class="text-sm text-primary/60 mb-10">Popularity by session category.</p>
+<div class="relative w-48 h-48 mx-auto mb-10">
+<!-- Custom CSS SVG Pie Chart simulation -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#154212" stroke-dasharray="75, 100" stroke-width="4"></path>
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#d2f000" stroke-dasharray="15, 100" stroke-dashoffset="-75" stroke-width="4"></path>
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#2d5a27" stroke-dasharray="10, 100" stroke-dashoffset="-90" stroke-width="4"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="mono-data text-xl font-bold">1.4k</span>
+<span class="text-[8px] uppercase tracking-tighter text-primary/40">Total Sessions</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-xs font-semibold text-primary">High-Intensity Interval</span>
+</div>
+<span class="mono-data text-xs font-bold text-primary">75%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-xs font-semibold text-primary">Elite Scouting Drills</span>
+</div>
+<span class="mono-data text-xs font-bold text-primary">15%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="text-xs font-semibold text-primary">Recovery &amp; Rehab</span>
+</div>
+<span class="mono-data text-xs font-bold text-primary">10%</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Lower Section: Cancellation Trends & Peak Info -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Cancellation Rate Trend -->
+<section class="bg-surface-container-lowest rounded-[24px] p-8">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="text-xl font-bold text-primary">Cancellation Trend Line</h3>
+<p class="text-sm text-primary/60">Volatility analysis for the current quarter.</p>
+</div>
+<div class="text-right">
+<span class="mono-data text-[10px] text-primary/40 uppercase">Current Avg</span>
+<div class="text-2xl font-bold text-primary tracking-tight">3.82%</div>
+</div>
+</div>
+<div class="h-48 flex items-end gap-2 px-2 border-b border-primary/5">
+<!-- Custom Trend Line Representation -->
+<div class="flex-1 bg-surface-container-high h-1/2 rounded-t-sm relative group">
+<div class="absolute inset-0 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+</div>
+<div class="flex-1 bg-surface-container-high h-2/3 rounded-t-sm relative group">
+<div class="absolute inset-0 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+</div>
+<div class="flex-1 bg-surface-container-high h-1/3 rounded-t-sm relative group">
+<div class="absolute inset-0 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+</div>
+<div class="flex-1 bg-surface-container-high h-3/4 rounded-t-sm relative group">
+<div class="absolute inset-0 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+</div>
+<div class="flex-1 bg-surface-container-high h-1/2 rounded-t-sm relative group">
+<div class="absolute inset-0 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+</div>
+<div class="flex-1 bg-surface-container-high h-2/5 rounded-t-sm relative group">
+<div class="absolute inset-0 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+</div>
+<div class="flex-1 bg-surface-container-high h-4/5 rounded-t-sm relative group">
+<div class="absolute inset-0 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+</div>
+<div class="flex-1 bg-surface-container-high h-2/3 rounded-t-sm relative group">
+<div class="absolute inset-0 bg-primary/20 group-hover:bg-primary transition-colors"></div>
+</div>
+</div>
+<div class="flex justify-between mt-4 mono-data text-[10px] text-primary/30 uppercase px-2">
+<span>JAN 01</span>
+<span>FEB 01</span>
+<span>MAR 01</span>
+<span>APR 01</span>
+</div>
+</section>
+<!-- Peak Hours & Optimization Suggestions -->
+<section class="bg-surface-container-low rounded-[24px] p-8 relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-xl font-bold text-primary mb-6">Optimization Insights</h3>
+<div class="space-y-4">
+<div class="p-4 bg-white/60 rounded-xl border border-primary/5">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-secondary" data-icon="lightbulb">lightbulb</span>
+<span class="font-bold text-primary text-sm uppercase">Peak Hour Identified</span>
+</div>
+<p class="text-xs text-primary/70">Tuesday evenings at 18:00 are consistently at 98% capacity. Consider adding a parallel session in Studio B.</p>
+</div>
+<div class="p-4 bg-white/60 rounded-xl border border-primary/5">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="event_busy">event_busy</span>
+<span class="font-bold text-primary text-sm uppercase">Slack Period Detected</span>
+</div>
+<p class="text-xs text-primary/70">Monday 10:00 - 12:00 shows &lt; 20% utilization. Recommend dynamic pricing or staff training slots.</p>
+</div>
+</div>
+<button class="mt-8 w-full py-4 bg-primary text-white text-xs font-bold uppercase tracking-widest rounded-xl">Generate Full Action Plan</button>
+</div>
+<!-- Decorative Graphic -->
+<div class="absolute -right-16 -bottom-16 w-64 h-64 bg-secondary-container/20 rounded-full blur-3xl"></div>
+</section>
+</div>
+<!-- Detailed Grid (Clinical Precision) -->
+<section class="bg-surface-container-lowest rounded-[24px] overflow-hidden">
+<div class="p-8 border-b border-primary/5">
+<h3 class="text-xl font-bold text-primary">Session Breakdown</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low border-b border-primary/5">
+<th class="px-8 py-4 mono-data text-[10px] text-primary/40 uppercase tracking-widest">Session ID</th>
+<th class="px-8 py-4 mono-data text-[10px] text-primary/40 uppercase tracking-widest">Type</th>
+<th class="px-8 py-4 mono-data text-[10px] text-primary/40 uppercase tracking-widest">Coach</th>
+<th class="px-8 py-4 mono-data text-[10px] text-primary/40 uppercase tracking-widest">Cap.</th>
+<th class="px-8 py-4 mono-data text-[10px] text-primary/40 uppercase tracking-widest">Status</th>
+<th class="px-8 py-4 mono-data text-[10px] text-primary/40 uppercase tracking-widest">Fill %</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/5">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-4 mono-data text-xs text-primary font-bold">#SN-8821</td>
+<td class="px-8 py-4 text-sm font-semibold text-primary">Vertical Leap Prep</td>
+<td class="px-8 py-4 text-sm text-primary/60">Marcus Thorne</td>
+<td class="px-8 py-4 text-sm text-primary/60">12/12</td>
+<td class="px-8 py-4">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded">Full</span>
+</td>
+<td class="px-8 py-4">
+<div class="flex items-center gap-3">
+<div class="w-24 h-1.5 bg-primary/10 rounded-full overflow-hidden">
+<div class="w-full h-full bg-primary"></div>
+</div>
+<span class="mono-data text-xs font-bold">100%</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-4 mono-data text-xs text-primary font-bold">#SN-8822</td>
+<td class="px-8 py-4 text-sm font-semibold text-primary">Agility Foundations</td>
+<td class="px-8 py-4 text-sm text-primary/60">Sarah Jenkins</td>
+<td class="px-8 py-4 text-sm text-primary/60">08/15</td>
+<td class="px-8 py-4">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase rounded">Available</span>
+</td>
+<td class="px-8 py-4">
+<div class="flex items-center gap-3">
+<div class="w-24 h-1.5 bg-primary/10 rounded-full overflow-hidden">
+<div class="w-[53%] h-full bg-primary"></div>
+</div>
+<span class="mono-data text-xs font-bold">53%</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-4 mono-data text-xs text-primary font-bold">#SN-8823</td>
+<td class="px-8 py-4 text-sm font-semibold text-primary">Core Stability II</td>
+<td class="px-8 py-4 text-sm text-primary/60">Elena Rodriguez</td>
+<td class="px-8 py-4 text-sm text-primary/60">15/15</td>
+<td class="px-8 py-4">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded">Full</span>
+</td>
+<td class="px-8 py-4">
+<div class="flex items-center gap-3">
+<div class="w-24 h-1.5 bg-primary/10 rounded-full overflow-hidden">
+<div class="w-full h-full bg-primary"></div>
+</div>
+<span class="mono-data text-xs font-bold">100%</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 bg-surface-container-low flex justify-center">
+<button class="text-[10px] font-bold text-primary uppercase tracking-widest hover:underline">View All Session Details</button>
+</div>
+</section>
+</div>
+</main>
+</body></html>

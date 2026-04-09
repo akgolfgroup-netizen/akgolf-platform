@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Access Control - AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #fdf9f0;
+            color: #1c1c16;
+            margin: 0;
+        }
+        .technical-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        /* Custom scrollbar for a premium feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1eee5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c2c9bb;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#002201",
+                      "on-primary-container": "#9dd090",
+                      "inverse-primary": "#a1d494",
+                      "on-secondary-fixed": "#191e00",
+                      "secondary-container": "#d0ed00",
+                      "primary": "#154212",
+                      "secondary-fixed-dim": "#b8d300",
+                      "background": "#fdf9f0",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed-variant": "#23501e",
+                      "error-container": "#ffdad6",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#fdf9f0",
+                      "surface-container-highest": "#e6e2d9",
+                      "surface-container": "#f1eee5",
+                      "tertiary-container": "#2d5a27",
+                      "outline": "#72796e",
+                      "on-surface": "#1c1c16",
+                      "surface-container-high": "#ece8df",
+                      "primary-fixed": "#bcf0ae",
+                      "on-tertiary-container": "#9dd090",
+                      "surface": "#fdf9f0",
+                      "on-error-container": "#93000a",
+                      "primary-fixed-dim": "#a1d494",
+                      "inverse-surface": "#31302b",
+                      "error": "#ba1a1a",
+                      "surface-variant": "#e6e2d9",
+                      "surface-container-low": "#f7f3ea",
+                      "surface-tint": "#3b6934",
+                      "on-primary-fixed": "#002201",
+                      "on-background": "#1c1c16",
+                      "tertiary-fixed-dim": "#a1d494",
+                      "on-surface-variant": "#42493e",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "tertiary": "#154212",
+                      "primary-container": "#2d5a27",
+                      "on-tertiary-fixed-variant": "#23501e",
+                      "on-secondary-fixed-variant": "#414c00",
+                      "tertiary-fixed": "#bcf0ae",
+                      "secondary": "#576500",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-dim": "#dddad1",
+                      "secondary-fixed": "#d2f000",
+                      "outline-variant": "#c2c9bb",
+                      "inverse-on-surface": "#f4f0e7",
+                      "on-secondary-container": "#5b6900"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["DM Sans"],
+                      "body": ["DM Sans"],
+                      "label": ["DM Sans"]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="bg-emerald-950 dark:bg-emerald-950 h-screen w-64 fixed left-0 top-0 flex flex-col py-8 px-4 z-50">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold tracking-tight text-white">AK Sports OS</h1>
+<p class="text-xs text-emerald-100/50 uppercase tracking-widest mt-1">Super Admin</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="domain">domain</span>
+<span class="text-sm font-medium">Tenants</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="toggle_on">toggle_on</span>
+<span class="text-sm font-medium">Features</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-sm font-medium">Billing</span>
+</a>
+<a class="flex items-center space-x-3 bg-lime-400/20 text-lime-400 rounded-lg px-4 py-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-8 border-t border-emerald-900/30">
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="text-sm">Documentation</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span class="text-sm">Support</span>
+</a>
+<button class="mt-4 w-full bg-lime-400 text-emerald-950 font-bold py-3 rounded-xl flex items-center justify-center space-x-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="health_and_safety">health_and_safety</span>
+<span class="text-xs uppercase tracking-tighter">System Health</span>
+</button>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-md flex justify-between items-center px-8 w-full z-40">
+<div class="flex items-center space-x-8">
+<span class="text-lg font-semibold text-emerald-900 dark:text-emerald-50">Admin Portal</span>
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 material-symbols-outlined text-sm" data-icon="search">search</span>
+<input class="bg-stone-200/50 border-none rounded-md py-1.5 pl-10 pr-4 text-sm w-64 focus:ring-2 focus:ring-primary/20 technical-font" placeholder="Search system resources..." type="text"/>
+</div>
+</div>
+<nav class="flex items-center space-x-6">
+<a class="text-stone-500 hover:text-emerald-800 text-sm font-medium uppercase tracking-tight" href="#">Global Metrics</a>
+<a class="text-emerald-900 font-bold border-b-2 border-lime-400 pb-1 text-sm font-medium uppercase tracking-tight" href="#">System Logs</a>
+<div class="h-6 w-px bg-stone-200"></div>
+<div class="flex items-center space-x-4">
+<button class="p-2 hover:bg-stone-200/50 rounded-md transition-all text-stone-600">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-stone-200/50 rounded-md transition-all text-stone-600">
+<span class="material-symbols-outlined" data-icon="apps">apps</span>
+</button>
+<div class="flex items-center space-x-3 ml-2 cursor-pointer group">
+<img alt="Super Admin Profile" class="w-8 h-8 rounded-full border border-stone-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ0taV2Ch3wnaygKgNHS3BvFL4VV0YnZ9zN1WbmAuo6qx6MAuHZJHT0JvXhyHIKjAeGfc3qIgHCabAxOtkkVvTAte5mAI8x9fUGMyI7RgytqE2EZTo4k7mfGdXbm9y5XRNlMdT3HSPP0G7JfBToyonXWbk6_GItMAk-ouZ6827EJQyGqMmrzE31lxncP3MIdCg-_nVZhHRRyU8oM9NZeBuNQEJc2Iam1_UY2Sw_lmKo14Z_Nb8_1pYkg1w_a0EHFAFkNjU5YkyhB2S"/>
+<span class="material-symbols-outlined text-stone-400 group-hover:text-primary" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</nav>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 pb-12 px-10 max-w-7xl">
+<!-- Header Section -->
+<header class="mb-12">
+<div class="flex items-end justify-between">
+<div>
+<span class="technical-font text-xs text-primary font-medium tracking-widest uppercase mb-2 block">Security Protocol 09-AC</span>
+<h2 class="text-4xl font-bold text-primary tracking-tight">Access Control</h2>
+<p class="text-on-surface-variant mt-2 max-w-2xl leading-relaxed">Manage global connectivity permissions through advanced whitelisting and regional blocking. These settings override individual tenant configurations.</p>
+</div>
+<div class="flex space-x-3">
+<button class="px-6 py-2.5 bg-primary text-white font-medium rounded-lg hover:shadow-lg transition-all text-sm uppercase tracking-tight">
+                        Apply Changes
+                    </button>
+</div>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-8">
+<!-- IP Management (Main Bento Card) -->
+<div class="col-span-8 bg-surface-container-lowest rounded-[24px] p-8 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="text-xl font-bold text-primary">IP Whitelist / Blacklist</h3>
+<p class="text-sm text-stone-500 mt-1">Configure individual addresses or CIDR ranges.</p>
+</div>
+<button class="flex items-center space-x-2 bg-secondary text-primary px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-tighter">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span>Add Entry</span>
+</button>
+</div>
+<div class="space-y-4">
+<!-- Table Header -->
+<div class="grid grid-cols-12 px-4 py-2 border-b border-stone-100 text-[10px] uppercase font-bold tracking-widest text-stone-400">
+<div class="col-span-5">Network Identifier</div>
+<div class="col-span-2">Type</div>
+<div class="col-span-3">Status</div>
+<div class="col-span-2 text-right">Actions</div>
+</div>
+<!-- Entry 1 -->
+<div class="grid grid-cols-12 px-4 py-4 bg-surface-container-low rounded-xl items-center hover:bg-surface-container transition-colors">
+<div class="col-span-5 technical-font text-sm font-medium">192.168.1.1/24</div>
+<div class="col-span-2">
+<span class="text-[10px] font-bold uppercase bg-primary-fixed text-on-primary-fixed px-2 py-1 rounded">Whitelist</span>
+</div>
+<div class="col-span-3 flex items-center space-x-2">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+<span class="text-xs text-stone-600">Active - High Priority</span>
+</div>
+<div class="col-span-2 text-right">
+<button class="material-symbols-outlined text-stone-400 hover:text-error transition-colors" data-icon="delete">delete</button>
+</div>
+</div>
+<!-- Entry 2 -->
+<div class="grid grid-cols-12 px-4 py-4 bg-surface-container-low rounded-xl items-center hover:bg-surface-container transition-colors">
+<div class="col-span-5 technical-font text-sm font-medium">10.0.0.42</div>
+<div class="col-span-2">
+<span class="text-[10px] font-bold uppercase bg-error-container text-on-error-container px-2 py-1 rounded">Blacklist</span>
+</div>
+<div class="col-span-3 flex items-center space-x-2">
+<div class="w-1.5 h-1.5 rounded-full bg-stone-300"></div>
+<span class="text-xs text-stone-500">Scheduled Purge</span>
+</div>
+<div class="col-span-2 text-right">
+<button class="material-symbols-outlined text-stone-400 hover:text-error transition-colors" data-icon="delete">delete</button>
+</div>
+</div>
+<!-- Entry 3 -->
+<div class="grid grid-cols-12 px-4 py-4 bg-surface-container-low rounded-xl items-center hover:bg-surface-container transition-colors">
+<div class="col-span-5 technical-font text-sm font-medium">2001:0db8:85a3::8a2e:0370:7334</div>
+<div class="col-span-2">
+<span class="text-[10px] font-bold uppercase bg-primary-fixed text-on-primary-fixed px-2 py-1 rounded">Whitelist</span>
+</div>
+<div class="col-span-3 flex items-center space-x-2">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+<span class="text-xs text-stone-600">Active</span>
+</div>
+<div class="col-span-2 text-right">
+<button class="material-symbols-outlined text-stone-400 hover:text-error transition-colors" data-icon="delete">delete</button>
+</div>
+</div>
+</div>
+</div>
+<!-- VPN & Proxy Toggle (Side Bento) -->
+<div class="col-span-4 flex flex-col space-y-8">
+<div class="bg-primary text-white rounded-[24px] p-8 shadow-xl shadow-primary/10">
+<div class="flex items-center justify-between mb-6">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="shield_person">shield_person</span>
+<div class="relative inline-block w-12 h-6 rounded-full bg-secondary cursor-pointer transition-colors duration-200">
+<div class="absolute right-1 top-1 bg-primary w-4 h-4 rounded-full transition-all"></div>
+</div>
+</div>
+<h3 class="text-lg font-bold mb-2">VPN Detection</h3>
+<p class="text-emerald-100/60 text-sm leading-relaxed mb-6">Automatically block users connecting via commercial VPN providers or Tor exit nodes.</p>
+<div class="flex items-center justify-between technical-font text-[10px] text-emerald-100/40 uppercase tracking-widest">
+<span>Database v2.4</span>
+<span>Updated: 12m ago</span>
+</div>
+</div>
+<div class="bg-secondary-container rounded-[24px] p-8">
+<h3 class="text-lg font-bold text-primary mb-4">Quick Stats</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-primary/10 pb-3">
+<span class="text-sm font-medium text-primary">Blocked Today</span>
+<span class="technical-font font-bold text-primary">1,429</span>
+</div>
+<div class="flex justify-between items-center border-b border-primary/10 pb-3">
+<span class="text-sm font-medium text-primary">Active Whitelists</span>
+<span class="technical-font font-bold text-primary">84</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-primary">Bypass Requests</span>
+<span class="technical-font font-bold text-primary">0</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Email Restrictions (Bottom Left) -->
+<div class="col-span-5 bg-surface-container-low rounded-[24px] p-8">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-xl font-bold text-primary">Email Domains</h3>
+<span class="material-symbols-outlined text-primary/40" data-icon="alternate_email">alternate_email</span>
+</div>
+<div class="space-y-3">
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between group">
+<div class="flex items-center space-x-3">
+<span class="technical-font text-sm text-stone-700">@competitor.com</span>
+</div>
+<span class="text-[10px] font-bold text-error uppercase border border-error/20 px-2 py-0.5 rounded">Restricted</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between group">
+<div class="flex items-center space-x-3">
+<span class="technical-font text-sm text-stone-700">@temp-mail.org</span>
+</div>
+<span class="text-[10px] font-bold text-error uppercase border border-error/20 px-2 py-0.5 rounded">Restricted</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between group">
+<div class="flex items-center space-x-3">
+<span class="technical-font text-sm text-stone-700">@trusted-partner.net</span>
+</div>
+<span class="text-[10px] font-bold text-primary uppercase border border-primary/20 px-2 py-0.5 rounded">Pre-Verified</span>
+</div>
+</div>
+<div class="mt-6 flex items-center p-1 bg-surface-container-highest rounded-xl">
+<input class="bg-transparent border-none focus:ring-0 flex-1 technical-font text-sm px-3" placeholder="Add domain..." type="text"/>
+<button class="bg-primary text-white rounded-lg p-2 hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Country Map (Bottom Right) -->
+<div class="col-span-7 bg-surface-container-lowest rounded-[24px] p-8 relative overflow-hidden">
+<div class="flex justify-between items-center mb-6 relative z-10">
+<div>
+<h3 class="text-xl font-bold text-primary">Geographic Blocking</h3>
+<p class="text-sm text-stone-500">Restrict access by country or continent.</p>
+</div>
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-3 py-1 text-[10px] font-bold uppercase rounded-md bg-white shadow-sm">Map View</button>
+<button class="px-3 py-1 text-[10px] font-bold uppercase rounded-md text-stone-400">List View</button>
+</div>
+</div>
+<div class="relative h-[280px] rounded-2xl overflow-hidden bg-stone-100">
+<!-- Map Graphic with decorative overlay -->
+<img class="w-full h-full object-cover opacity-60 grayscale" data-alt="abstract minimalist world map with clean lines on a light beige background for data visualization and territory selection" data-location="Global" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB372mfqe0Gpa-bTS_NA8i4oBHhcLOgLzUXPz-TYEGYKuwnkLB_-XJju4IVER-mktoB3txUd-eVnigq8uxRw6b_2aWL2sWTQs1lbubq26IAuKCxT9HLYncduSFzSMFnElAobC65ILG6lW799UUCeowu43WXYiq_mdE6wn44CPR35_Z_ndzQf28hl5FdqMA8MEfYw5KPxb1sKs8sQlz875fkcSCkBfvz81D8dh8aJT5Eut6rtrYn-ToakXuE2RVSbOKqXnEiYkMeOQEE"/>
+<!-- Map Interaction Overlays (Mock) -->
+<div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+<!-- Selected Country Callout -->
+<div class="absolute top-1/2 left-1/4 -translate-y-1/2 bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-2xl border border-stone-200 w-48 animate-pulse">
+<div class="flex items-center space-x-2 mb-2">
+<span class="text-lg">🇳🇱</span>
+<span class="font-bold text-primary">Netherlands</span>
+</div>
+<div class="flex items-center justify-between text-[10px] uppercase font-bold text-stone-400 mb-3">
+<span>Status</span>
+<span class="text-primary">Allowed</span>
+</div>
+<button class="w-full py-2 bg-error text-white text-[10px] font-bold uppercase rounded-lg tracking-widest">
+                            Block Region
+                        </button>
+</div>
+<!-- Floating Legend -->
+<div class="absolute bottom-4 right-4 bg-white p-3 rounded-xl border border-stone-100 shadow-sm flex flex-col space-y-2">
+<div class="flex items-center space-x-2">
+<div class="w-3 h-3 rounded-sm bg-primary opacity-20"></div>
+<span class="text-[9px] uppercase font-bold text-stone-500">Allowed Area</span>
+</div>
+<div class="flex items-center space-x-2">
+<div class="w-3 h-3 rounded-sm bg-error opacity-40"></div>
+<span class="text-[9px] uppercase font-bold text-stone-500">Blocked Area</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Accent -->
+<footer class="mt-16 flex items-center justify-between border-t border-stone-200/40 pt-8">
+<div class="flex items-center space-x-4">
+<span class="technical-font text-[10px] text-stone-400">SESSION_ID: OS-992-SEC</span>
+<span class="technical-font text-[10px] text-stone-400">ENCRYPTION: AES-256-GCM</span>
+</div>
+<div class="flex space-x-6">
+<a class="text-[10px] font-bold uppercase tracking-widest text-primary/60 hover:text-primary" href="#">Security Policy</a>
+<a class="text-[10px] font-bold uppercase tracking-widest text-primary/60 hover:text-primary" href="#">Audit Log</a>
+</div>
+</footer>
+</main>
+</body></html>

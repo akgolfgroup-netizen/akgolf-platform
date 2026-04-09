@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fdf9f0",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-container": "#f1eee5",
+                        "on-secondary-container": "#5b6900",
+                        "on-tertiary-container": "#9dd090",
+                        "on-secondary-fixed": "#191e00",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#42493e",
+                        "outline": "#72796e",
+                        "outline-variant": "#c2c9bb",
+                        "tertiary": "#154212",
+                        "surface-tint": "#3b6934",
+                        "secondary-container": "#d0ed00",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-dim": "#dddad1",
+                        "on-surface": "#1c1c16",
+                        "surface-container-high": "#ece8df",
+                        "error": "#ba1a1a",
+                        "on-background": "#1c1c16",
+                        "secondary-fixed": "#d2f000",
+                        "secondary-fixed-dim": "#b8d300",
+                        "tertiary-fixed": "#bcf0ae",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-primary": "#ffffff",
+                        "background": "#fdf9f0",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#bcf0ae",
+                        "inverse-surface": "#31302b",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-low": "#f7f3ea",
+                        "secondary": "#576500",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-primary-fixed": "#002201",
+                        "surface": "#fdf9f0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#9dd090",
+                        "inverse-primary": "#a1d494",
+                        "tertiary-container": "#2d5a27",
+                        "primary": "#154212"
+                    },
+                    "fontFamily": {
+                        "sans": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+        .chart-bar { transition: height 0.3s ease; }
+    </style>
+</head>
+<body class="bg-surface">
+<!-- SideNavBar from JSON -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col py-6 gap-2 shadow-[4px_0_16px_rgba(45,90,39,0.06)] z-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-secondary-fixed rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+</div>
+<div>
+<h2 class="text-white font-semibold text-lg leading-none">Coach Portal</h2>
+<p class="text-white/50 text-[10px] uppercase tracking-widest font-medium mt-1">Precision Performance</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Schedule</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Players</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Drills</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Messages</span>
+</a>
+<!-- ACTIVE TAB: Earnings maps to Earnings -->
+<a class="flex items-center gap-3 bg-[#d2f000] text-[#154212] rounded-xl px-4 py-3 mx-2 font-semibold shadow-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Earnings</span>
+</a>
+</nav>
+<div class="mt-auto px-2 flex flex-col gap-1">
+<button class="bg-[#d2f000] text-[#154212] mx-2 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest mb-4 hover:scale-[1.02] transition-transform active:scale-95">
+                New Session
+            </button>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Support</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar from JSON -->
+<header class="w-full h-16 sticky top-0 z-40 bg-[#fdf9f0]/80 backdrop-blur-md flex justify-between items-center px-8">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-[#154212]">AK Sports OS</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-[#154212]/60 hover:text-[#154212] font-['DM_Sans'] text-sm tracking-tight transition-colors" href="#">Overview</a>
+<a class="text-[#154212] font-semibold border-b-2 border-[#d2f000] font-['DM_Sans'] text-sm tracking-tight" href="#">Income</a>
+<a class="text-[#154212]/60 hover:text-[#154212] font-['DM_Sans'] text-sm tracking-tight transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined text-[#154212] p-2 hover:bg-[#f7f3ea] rounded-full transition-colors cursor-pointer" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+</div>
+<span class="material-symbols-outlined text-[#154212] p-2 hover:bg-[#f7f3ea] rounded-full transition-colors cursor-pointer" data-icon="settings">settings</span>
+<div class="h-8 w-[1px] bg-[#f7f3ea]"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<img alt="Coach Profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-transparent group-hover:ring-secondary-fixed transition-all" data-alt="Close up portrait of a professional athletic coach with a confident expression in a bright modern gym setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJCmOrl8sUbhMezpApNMmTgicCNruFb0Yf1yIaEl9Beuc75kKPUojEUySWByzwSZ8Oc7pCHjGijpUg3k61Nw9WaqXatKnwvBAzMBfI_ncicPdgRwjxre1y7HyfgrSxo1y6FWnmUvwneKcj3nj8p14pRpbBSahkNkpaLV6Uy5m372IHqcQbLXndTFO0Wq9qIPr2n-WsfULxOD41B0cw6UgNIUye9A_o8KsEt_9UVxUcYFz5nlsAz4RxVsY-rBfHkJo9v4uyBfLaeaWy"/>
+<span class="font-['DM_Sans'] text-sm font-bold text-primary">Coach Aris</span>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-8 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h1 class="text-4xl font-extrabold tracking-tight text-primary font-['DM_Sans']">Earnings Overview</h1>
+<p class="text-on-surface-variant mt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span>
+                        Performance data for October 1 – October 24, 2024
+                    </p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 bg-surface-container-low text-primary border-outline-variant/20 border rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-surface-container-high transition-colors">
+                        Export CSV
+                    </button>
+<button class="px-6 py-2 bg-secondary-fixed text-primary rounded-lg font-bold text-xs uppercase tracking-widest shadow-sm hover:translate-y-[-2px] transition-all">
+                        Request Payout
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Section -->
+<div class="bento-grid">
+<!-- Summary Cards -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/10 group hover:bg-white transition-colors duration-500">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-surface-container-low rounded-xl text-primary">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<span class="font-mono text-xs text-primary font-bold bg-secondary-fixed/30 px-2 py-1 rounded">+12.4%</span>
+</div>
+<p class="font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-on-surface-variant mb-1">This Month</p>
+<h3 class="text-4xl font-bold text-primary tracking-tighter mb-4">$12,450.00</h3>
+<div class="h-1 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-3/4"></div>
+</div>
+</div>
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/10 group hover:bg-white transition-colors duration-500">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-surface-container-low rounded-xl text-primary">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+</div>
+<span class="font-mono text-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded">Pending</span>
+</div>
+<p class="font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-on-surface-variant mb-1">Pending Clearance</p>
+<h3 class="text-4xl font-bold text-primary tracking-tighter mb-4">$1,820.00</h3>
+<p class="text-xs text-on-surface-variant italic">Next clearance: Oct 28</p>
+</div>
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/10 group hover:bg-white transition-colors duration-500">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-primary rounded-xl text-secondary-fixed">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+</div>
+<span class="font-mono text-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded">YTD</span>
+</div>
+<p class="font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-on-surface-variant mb-1">Total Career Earnings</p>
+<h3 class="text-4xl font-bold text-primary tracking-tighter mb-4">$142,900.00</h3>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white bg-primary"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-secondary-fixed"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-surface-container-highest"></div>
+</div>
+</div>
+<!-- Main Chart Area -->
+<div class="col-span-8 bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/10">
+<div class="flex justify-between items-center mb-10">
+<h4 class="font-bold text-primary text-lg">Growth Analytics</h4>
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-1.5 bg-white shadow-sm rounded-md text-xs font-bold text-primary">WEEKLY</button>
+<button class="px-4 py-1.5 text-xs font-bold text-on-surface-variant hover:text-primary">MONTHLY</button>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-4 px-4">
+<div class="flex flex-col items-center gap-4 group flex-1">
+<div class="w-full bg-surface-container rounded-t-lg relative flex items-end h-full">
+<div class="bg-primary-container/20 w-full h-[40%] rounded-t-lg group-hover:bg-primary-container/30 transition-colors"></div>
+<div class="absolute bottom-0 bg-primary w-full h-[25%] rounded-t-lg"></div>
+</div>
+<span class="font-mono text-[10px] text-on-surface-variant">MON</span>
+</div>
+<div class="flex flex-col items-center gap-4 group flex-1">
+<div class="w-full bg-surface-container rounded-t-lg relative flex items-end h-full">
+<div class="bg-primary-container/20 w-full h-[65%] rounded-t-lg group-hover:bg-primary-container/30 transition-colors"></div>
+<div class="absolute bottom-0 bg-primary w-full h-[45%] rounded-t-lg"></div>
+</div>
+<span class="font-mono text-[10px] text-on-surface-variant">TUE</span>
+</div>
+<div class="flex flex-col items-center gap-4 group flex-1">
+<div class="w-full bg-surface-container rounded-t-lg relative flex items-end h-full">
+<div class="bg-primary-container/20 w-full h-[85%] rounded-t-lg group-hover:bg-primary-container/30 transition-colors"></div>
+<div class="absolute bottom-0 bg-primary w-full h-[70%] rounded-t-lg"></div>
+</div>
+<span class="font-mono text-[10px] text-on-surface-variant">WED</span>
+</div>
+<div class="flex flex-col items-center gap-4 group flex-1">
+<div class="w-full bg-surface-container rounded-t-lg relative flex items-end h-full">
+<div class="bg-primary-container/20 w-full h-[55%] rounded-t-lg group-hover:bg-primary-container/30 transition-colors"></div>
+<div class="absolute bottom-0 bg-primary w-full h-[35%] rounded-t-lg"></div>
+</div>
+<span class="font-mono text-[10px] text-on-surface-variant">THU</span>
+</div>
+<div class="flex flex-col items-center gap-4 group flex-1">
+<div class="w-full bg-surface-container rounded-t-lg relative flex items-end h-full">
+<div class="bg-primary-container/20 w-full h-[95%] rounded-t-lg group-hover:bg-primary-container/30 transition-colors"></div>
+<div class="absolute bottom-0 bg-secondary-fixed w-full h-[85%] rounded-t-lg"></div>
+</div>
+<span class="font-mono text-[10px] text-primary font-bold">FRI</span>
+</div>
+<div class="flex flex-col items-center gap-4 group flex-1">
+<div class="w-full bg-surface-container rounded-t-lg relative flex items-end h-full">
+<div class="bg-primary-container/20 w-full h-[45%] rounded-t-lg group-hover:bg-primary-container/30 transition-colors"></div>
+<div class="absolute bottom-0 bg-primary w-full h-[20%] rounded-t-lg"></div>
+</div>
+<span class="font-mono text-[10px] text-on-surface-variant">SAT</span>
+</div>
+<div class="flex flex-col items-center gap-4 group flex-1">
+<div class="w-full bg-surface-container rounded-t-lg relative flex items-end h-full">
+<div class="bg-primary-container/20 w-full h-[35%] rounded-t-lg group-hover:bg-primary-container/30 transition-colors"></div>
+<div class="absolute bottom-0 bg-primary w-full h-[15%] rounded-t-lg"></div>
+</div>
+<span class="font-mono text-[10px] text-on-surface-variant">SUN</span>
+</div>
+</div>
+</div>
+<!-- Tax Info Section -->
+<div class="col-span-4 bg-primary text-white p-8 rounded-2xl relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-8">
+<span class="material-symbols-outlined text-secondary-fixed" data-icon="description">description</span>
+<h4 class="font-bold text-lg">Tax &amp; Compliance</h4>
+</div>
+<p class="text-white/70 text-sm mb-6 leading-relaxed">Your 1099-K for the 2023 tax year is now available for download. Ensure your business details are up to date to avoid payout delays.</p>
+<div class="flex flex-col gap-3">
+<a class="flex items-center justify-between p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-all border border-white/10" href="#">
+<span class="font-bold text-sm">Download 1099-K</span>
+<span class="material-symbols-outlined" data-icon="download">download</span>
+</a>
+<a class="flex items-center justify-between p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-all border border-white/10" href="#">
+<span class="font-bold text-sm">Update Tax Info</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Decorative Background Element -->
+<div class="absolute -bottom-10 -right-10 w-48 h-48 bg-secondary-fixed/10 rounded-full blur-3xl"></div>
+</div>
+<!-- Session Breakdown Table -->
+<div class="col-span-12 bg-surface-container-lowest rounded-2xl border border-outline-variant/10 overflow-hidden">
+<div class="p-8 border-b border-surface-container-low flex justify-between items-center">
+<div>
+<h4 class="font-bold text-primary text-lg">Recent Session Breakdown</h4>
+<p class="text-on-surface-variant text-sm">Individual and team training sessions</p>
+</div>
+<div class="flex items-center gap-2 border border-outline-variant/20 rounded-lg px-4 py-2">
+<span class="material-symbols-outlined text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none p-0 text-sm focus:ring-0 w-32" placeholder="Filter by player..." type="text"/>
+</div>
+</div>
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low/50">
+<tr>
+<th class="px-8 py-4 font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-on-surface-variant">Date</th>
+<th class="px-8 py-4 font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-on-surface-variant">Player/Team</th>
+<th class="px-8 py-4 font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-on-surface-variant">Service</th>
+<th class="px-8 py-4 font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-on-surface-variant">Duration</th>
+<th class="px-8 py-4 font-['DM_Sans'] uppercase text-[10px] font-bold tracking-widest text-on-surface-variant text-right">Earnings</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<tr class="hover:bg-surface-container-low/20 transition-colors">
+<td class="px-8 py-4 font-mono text-xs text-on-surface-variant">OCT 24, 2024</td>
+<td class="px-8 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary text-xs">JD</div>
+<span class="text-sm font-bold text-primary">Jordan D.</span>
+</div>
+</td>
+<td class="px-8 py-4">
+<span class="text-xs bg-surface-container-high px-2 py-1 rounded">1-on-1 Drill Session</span>
+</td>
+<td class="px-8 py-4 text-sm">90 min</td>
+<td class="px-8 py-4 font-mono text-sm font-bold text-primary text-right">$150.00</td>
+</tr>
+<tr class="hover:bg-surface-container-low/20 transition-colors">
+<td class="px-8 py-4 font-mono text-xs text-on-surface-variant">OCT 23, 2024</td>
+<td class="px-8 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed/20 flex items-center justify-center font-bold text-primary text-xs">SV</div>
+</div>
+</td>
+<td class="px-8 py-4">
+<span class="text-xs bg-surface-container-high px-2 py-1 rounded">Viper Elite Squad Training</span>
+</td>
+<td class="px-8 py-4 text-sm">120 min</td>
+<td class="px-8 py-4 font-mono text-sm font-bold text-primary text-right">$450.00</td>
+</tr>
+<tr class="hover:bg-surface-container-low/20 transition-colors">
+<td class="px-8 py-4 font-mono text-xs text-on-surface-variant">OCT 22, 2024</td>
+<td class="px-8 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary text-xs">LM</div>
+<span class="text-sm font-bold text-primary">Lucas M.</span>
+</div>
+</td>
+<td class="px-8 py-4">
+<span class="text-xs bg-surface-container-high px-2 py-1 rounded">Performance Assessment</span>
+</td>
+<td class="px-8 py-4 text-sm">60 min</td>
+<td class="px-8 py-4 font-mono text-sm font-bold text-primary text-right">$85.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Payout History -->
+<div class="col-span-12 bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/10">
+<h4 class="font-bold text-primary text-lg mb-6">Payout History</h4>
+<div class="grid grid-cols-4 gap-6">
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<div class="flex justify-between items-center mb-4">
+<span class="font-mono text-[10px] text-on-surface-variant">PAID OCT 15</span>
+<span class="material-symbols-outlined text-green-600 text-sm" data-icon="check_circle">check_circle</span>
+</div>
+<h5 class="text-2xl font-bold text-primary tracking-tight">$4,200.00</h5>
+<p class="text-xs text-on-surface-variant mt-2 font-mono">ID: PY-00245-12</p>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<div class="flex justify-between items-center mb-4">
+<span class="font-mono text-[10px] text-on-surface-variant">PAID OCT 01</span>
+<span class="material-symbols-outlined text-green-600 text-sm" data-icon="check_circle">check_circle</span>
+</div>
+<h5 class="text-2xl font-bold text-primary tracking-tight">$3,850.00</h5>
+<p class="text-xs text-on-surface-variant mt-2 font-mono">ID: PY-00244-09</p>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<div class="flex justify-between items-center mb-4">
+<span class="font-mono text-[10px] text-on-surface-variant">PAID SEP 15</span>
+<span class="material-symbols-outlined text-green-600 text-sm" data-icon="check_circle">check_circle</span>
+</div>
+<h5 class="text-2xl font-bold text-primary tracking-tight">$5,100.00</h5>
+<p class="text-xs text-on-surface-variant mt-2 font-mono">ID: PY-00243-15</p>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/10 flex flex-col justify-center items-center gap-2 border-dashed border-2">
+<span class="material-symbols-outlined text-primary/30 text-3xl" data-icon="history">history</span>
+<span class="text-[10px] font-bold text-primary uppercase tracking-widest">View All History</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Spacing -->
+<footer class="mt-20 py-12 border-t border-surface-container-high flex justify-between items-center">
+<p class="text-on-surface-variant text-xs">© 2024 AK Sports OS Financial Services. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-on-surface-variant text-xs hover:text-primary underline" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant text-xs hover:text-primary underline" href="#">Terms of Service</a>
+</div>
+</footer>
+</div>
+</main>
+</body></html>

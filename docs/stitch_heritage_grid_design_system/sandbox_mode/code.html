@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sandbox Console | AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "surface-container-high": "#ece8df",
+                        "primary-fixed": "#bcf0ae",
+                        "on-secondary-container": "#5b6900",
+                        "tertiary": "#154212",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#9dd090",
+                        "secondary-fixed": "#d2f000",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-background": "#1c1c16",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#a1d494",
+                        "background": "#fdf9f0",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface": "#fdf9f0",
+                        "surface-container": "#f1eee5",
+                        "on-surface": "#1c1c16",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#9dd090",
+                        "surface-tint": "#3b6934",
+                        "surface-container-low": "#f7f3ea",
+                        "inverse-surface": "#31302b",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#191e00",
+                        "primary-container": "#2d5a27",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-bright": "#fdf9f0",
+                        "secondary-container": "#d0ed00",
+                        "outline-variant": "#c2c9bb",
+                        "on-primary-fixed": "#002201",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "secondary": "#576500",
+                        "tertiary-fixed": "#bcf0ae",
+                        "primary-fixed-dim": "#a1d494",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#2d5a27",
+                        "surface-dim": "#dddad1",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#002201",
+                        "outline": "#72796e",
+                        "on-surface-variant": "#42493e",
+                        "surface-variant": "#e6e2d9",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-container-highest": "#e6e2d9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col py-8 z-50">
+<div class="px-6 mb-12">
+<h1 class="text-xl font-bold text-[#d2f000] tracking-tighter">AK Sports OS</h1>
+<p class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium text-white/50">Developer Suite</p>
+</div>
+<nav class="flex-1 space-y-1 overflow-y-auto no-scrollbar">
+<!-- Directory -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">Directory</span>
+</a>
+<!-- Connectors -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">extension</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">Connectors</span>
+</a>
+<!-- SSO Config -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">vpn_key</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">SSO Config</span>
+</a>
+<!-- Webhooks -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings_ethernet</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">Webhooks</span>
+</a>
+<!-- API Docs -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">API Docs</span>
+</a>
+<!-- Console -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">Console</span>
+</a>
+<!-- Sandbox (ACTIVE) -->
+<a class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 flex items-center gap-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">biotech</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">Sandbox</span>
+</a>
+<!-- Calendar -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">Calendar</span>
+</a>
+<!-- Payments -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">Payments</span>
+</a>
+<!-- Analytics -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">Analytics</span>
+</a>
+<!-- Settings -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-6 py-4 space-y-2 border-t border-white/10 pt-8">
+<button class="w-full bg-[#d2f000] text-[#154212] py-2 rounded-lg font-bold text-xs uppercase tracking-widest scale-95 active:scale-90 transition-transform">
+                Deploy Integration
+            </button>
+<a class="text-white/70 hover:text-white py-2 flex items-center gap-3 text-[0.7rem] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-sm">help_outline</span> Support
+            </a>
+<a class="text-white/70 hover:text-white py-2 flex items-center gap-3 text-[0.7rem] uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-sm">dns</span> System Status
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 z-40 bg-[#fdf9f0]/80 backdrop-blur-md flex justify-between items-center px-8">
+<div class="flex items-center gap-4">
+<span class="font-['DM_Sans'] text-sm font-semibold text-[#154212]">Admin Console</span>
+<div class="h-4 w-[1px] bg-outline-variant/30"></div>
+<span class="font-mono text-[0.7rem] text-primary bg-primary-fixed px-2 py-0.5 rounded uppercase tracking-tighter">Testing Environment</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#154212]/50 text-xl">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-1.5 text-sm focus:ring-1 focus:ring-primary w-64" placeholder="Search test data..." type="text"/>
+</div>
+<div class="flex items-center gap-4 text-[#154212]">
+<button class="material-symbols-outlined hover:opacity-70">notifications</button>
+<button class="material-symbols-outlined hover:opacity-70">account_circle</button>
+</div>
+</div>
+</header>
+<!-- Sandbox Body -->
+<div class="pt-24 px-12 pb-12 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="text-4xl font-semibold tracking-tight text-on-surface mb-2 font-headline">Sandbox Mode</h2>
+<p class="text-on-surface-variant font-body">Manage your virtual laboratory and simulate system behaviors.</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3 bg-surface-container-high px-4 py-2 rounded-xl">
+<span class="font-mono text-[0.7rem] uppercase tracking-wider font-bold">Status:</span>
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary shadow-[0_0_8px_#d2f000]"></div>
+<span class="text-secondary font-bold uppercase text-xs tracking-widest">Active</span>
+</div>
+<button class="ml-4 px-3 py-1 bg-on-surface text-white rounded-lg text-[0.65rem] uppercase font-bold tracking-widest hover:bg-on-surface/80">Toggle</button>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Test Data Generator (Large) -->
+<div class="col-span-8 bg-surface-container-lowest rounded-[24px] p-8 border border-outline-variant/10 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 opacity-5 pointer-events-none p-4">
+<span class="material-symbols-outlined text-[120px]">database</span>
+</div>
+<div class="relative z-10">
+<h3 class="text-xl font-bold font-headline mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                            Data Population
+                        </h3>
+<div class="grid grid-cols-3 gap-6">
+<button class="flex flex-col items-center gap-4 p-8 rounded-2xl bg-surface-container-low hover:bg-secondary-container transition-all group border border-transparent hover:border-secondary">
+<span class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">groups</span>
+<div class="text-center">
+<span class="block font-bold uppercase text-[0.7rem] tracking-widest mb-1">Generate</span>
+<span class="text-lg font-headline font-semibold">Players</span>
+</div>
+</button>
+<button class="flex flex-col items-center gap-4 p-8 rounded-2xl bg-surface-container-low hover:bg-secondary-container transition-all group border border-transparent hover:border-secondary">
+<span class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">confirmation_number</span>
+<div class="text-center">
+<span class="block font-bold uppercase text-[0.7rem] tracking-widest mb-1">Generate</span>
+<span class="text-lg font-headline font-semibold">Bookings</span>
+</div>
+</button>
+<button class="flex flex-col items-center gap-4 p-8 rounded-2xl bg-surface-container-low hover:bg-secondary-container transition-all group border border-transparent hover:border-secondary">
+<span class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">receipt_long</span>
+<div class="text-center">
+<span class="block font-bold uppercase text-[0.7rem] tracking-widest mb-1">Generate</span>
+<span class="text-lg font-headline font-semibold">Transactions</span>
+</div>
+</button>
+</div>
+<div class="mt-10 flex items-center justify-between p-4 bg-surface-container-high rounded-xl">
+<p class="text-sm text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">info</span>
+                                All generated data is isolated to Sandbox ID: <span class="font-mono text-xs font-bold text-primary">SBX-9921-X</span>
+</p>
+<button class="bg-[#d2f000] text-[#154212] px-6 py-2 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 active:scale-95 transition-all">
+                                Reset Sandbox
+                            </button>
+</div>
+</div>
+</div>
+<!-- Webhook Testing Tool -->
+<div class="col-span-4 bg-surface-container-low rounded-[24px] p-8 border border-outline-variant/10 flex flex-col">
+<h3 class="text-xl font-bold font-headline mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">webhook</span>
+                        Webhook Tester
+                    </h3>
+<p class="text-sm text-on-surface-variant mb-6">Fire events manually to your configured endpoint URLs.</p>
+<div class="space-y-4 flex-1">
+<div>
+<label class="block text-[0.65rem] font-bold uppercase tracking-widest mb-2 opacity-60">Event Type</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-xl text-sm py-3 focus:ring-2 focus:ring-primary/20">
+<option>payment.succeeded</option>
+<option>booking.created</option>
+<option>player.verified</option>
+<option>system.maintenance</option>
+</select>
+</div>
+<div>
+<label class="block text-[0.65rem] font-bold uppercase tracking-widest mb-2 opacity-60">Payload Template</label>
+<div class="font-mono text-[0.7rem] bg-on-surface text-white p-4 rounded-xl h-48 overflow-y-auto no-scrollbar">
+                                {<br/>
+                                  "id": "evt_72183",<br/>
+                                  "type": "payment.succeeded",<br/>
+                                  "data": {<br/>
+                                    "amount": 4200,<br/>
+                                    "currency": "usd"<br/>
+                                  }<br/>
+                                }
+                            </div>
+</div>
+</div>
+<button class="mt-6 w-full py-4 bg-primary text-white rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-primary/90 flex items-center justify-center gap-2 group transition-all">
+                        Fire Test Hook
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">send</span>
+</button>
+</div>
+<!-- Mock Response Configuration -->
+<div class="col-span-12 bg-surface-container-lowest rounded-[24px] p-8 border border-outline-variant/10 shadow-sm">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="text-xl font-bold font-headline mb-1">Mock Responses</h3>
+<p class="text-sm text-on-surface-variant">Configure how the API should respond to specific simulated scenarios.</p>
+</div>
+<div class="flex gap-2">
+<span class="font-mono text-[0.7rem] px-3 py-1 bg-surface-container-high rounded-full uppercase font-bold">API V2.4</span>
+<span class="font-mono text-[0.7rem] px-3 py-1 bg-secondary/20 text-secondary-container rounded-full uppercase font-bold">STABLE</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/20">
+<th class="pb-4 font-mono text-[0.65rem] uppercase tracking-widest opacity-50">API Endpoint</th>
+<th class="pb-4 font-mono text-[0.65rem] uppercase tracking-widest opacity-50">Simulated Case</th>
+<th class="pb-4 font-mono text-[0.65rem] uppercase tracking-widest opacity-50">Status Code</th>
+<th class="pb-4 font-mono text-[0.65rem] uppercase tracking-widest opacity-50">Latency</th>
+<th class="pb-4"></th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="border-b border-outline-variant/10 group hover:bg-surface-container-low/50">
+<td class="py-5 font-mono text-xs">POST /v1/payments</td>
+<td class="py-5 font-headline font-medium">Insufficient Funds</td>
+<td class="py-5">
+<span class="px-2 py-1 bg-error-container text-on-error-container rounded text-xs font-mono font-bold">402</span>
+</td>
+<td class="py-5 text-on-surface-variant">420ms</td>
+<td class="py-5 text-right">
+<button class="material-symbols-outlined text-primary/40 hover:text-primary transition-colors">edit</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/10 group hover:bg-surface-container-low/50">
+<td class="py-5 font-mono text-xs">GET /v1/players/{id}</td>
+<td class="py-5 font-headline font-medium">Standard Success</td>
+<td class="py-5">
+<span class="px-2 py-1 bg-primary-fixed text-primary rounded text-xs font-mono font-bold">200</span>
+</td>
+<td class="py-5 text-on-surface-variant">12ms</td>
+<td class="py-5 text-right">
+<button class="material-symbols-outlined text-primary/40 hover:text-primary transition-colors">edit</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/10 group hover:bg-surface-container-low/50">
+<td class="py-5 font-mono text-xs">POST /v1/bookings</td>
+<td class="py-5 font-headline font-medium">Rate Limit Spike</td>
+<td class="py-5">
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface-variant rounded text-xs font-mono font-bold">429</span>
+</td>
+<td class="py-5 text-on-surface-variant">850ms</td>
+<td class="py-5 text-right">
+<button class="material-symbols-outlined text-primary/40 hover:text-primary transition-colors">edit</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Debug Console Log -->
+<div class="col-span-12 mt-4">
+<div class="bg-inverse-surface text-inverse-on-surface rounded-2xl p-6 font-mono text-xs overflow-hidden relative">
+<div class="flex justify-between items-center mb-4 border-b border-white/10 pb-4">
+<span class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                                LIVE SANDBOX LOGS
+                            </span>
+<div class="flex gap-4">
+<button class="hover:underline">Clear</button>
+<button class="hover:underline">Export CSV</button>
+</div>
+</div>
+<div class="space-y-1 h-32 overflow-y-auto no-scrollbar opacity-80">
+<p><span class="text-secondary">[14:22:01]</span> INFO: Received webhook request for payment.succeeded</p>
+<p><span class="text-secondary">[14:22:01]</span> DEBUG: Verifying payload signature...</p>
+<p><span class="text-primary-fixed">[14:22:02]</span> SUCCESS: Webhook delivered to https://api.client.app/hooks/os</p>
+<p><span class="text-secondary">[14:25:44]</span> INFO: Generating batch: 50 players</p>
+<p><span class="text-error">[14:25:46]</span> WARN: Player generator timed out for sequence 12-14. Retrying...</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action for Quick Add -->
+<button class="fixed bottom-8 right-8 w-16 h-16 bg-[#154212] text-[#d2f000] rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</body></html>

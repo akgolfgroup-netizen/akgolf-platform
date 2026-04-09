@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#3b6934",
+                        "primary-fixed": "#bcf0ae",
+                        "surface": "#fdf9f0",
+                        "tertiary-fixed": "#bcf0ae",
+                        "tertiary": "#154212",
+                        "surface-container-high": "#ece8df",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dddad1",
+                        "outline-variant": "#c2c9bb",
+                        "background": "#fdf9f0",
+                        "primary": "#154212",
+                        "on-primary-fixed": "#002201",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d0ed00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1c1c16",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-container-low": "#f7f3ea",
+                        "surface-bright": "#fdf9f0",
+                        "on-secondary-fixed": "#191e00",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "secondary": "#576500",
+                        "tertiary-container": "#2d5a27",
+                        "inverse-surface": "#31302b",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-surface": "#1c1c16",
+                        "on-secondary-container": "#5b6900",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#2d5a27",
+                        "secondary-fixed": "#d2f000",
+                        "outline": "#72796e",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9dd090",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-container-highest": "#e6e2d9",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-primary-container": "#9dd090",
+                        "on-surface-variant": "#42493e",
+                        "on-tertiary-fixed": "#002201",
+                        "surface-container": "#f1eee5",
+                        "surface-variant": "#e6e2d9",
+                        "inverse-primary": "#a1d494"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body max-w-[390px] mx-auto min-h-screen overflow-x-hidden selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- Top Navigation (Shell Implementation) -->
+<header class="bg-[#fdf9f0]/80 backdrop-blur-md dark:bg-stone-900/80 fixed top-0 z-50 w-full max-w-[390px]">
+<div class="flex justify-between items-center w-full px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#154212]" data-icon="arrow_back">arrow_back</span>
+<span class="text-xl font-bold uppercase tracking-widest text-[#154212] dark:text-white">AK Sports OS</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#154212]/60" data-icon="share">share</span>
+<span class="material-symbols-outlined text-[#154212]" data-icon="notifications">notifications</span>
+</div>
+</div>
+</header>
+<main class="pt-[72px] pb-40">
+<!-- Video Player Section -->
+<section class="px-4 mt-2">
+<div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-surface-container-highest shadow-sm group">
+<img alt="Athletic drill demonstration" class="w-full h-full object-cover" data-alt="Athletic trainer demonstrating a precise pivot movement on a professional green indoor sports court with cinematic natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADDwkhEoXtN83dABjIo3xGf9dqMe9RgUxupfxYVsYatJLD3tLgbUEX1m-aadIuny80s8lVXL12cq1pvoYCbFMpVDAKp4sJvaiDEc_vfAVH0eE2MV0T6DeYQu5KfjcP1Ij8GnnC2GTk9qSOuAMAzoP1OlgeLsFiG3RYS34kBSRa0vlfeiC6b-3Nn2v-b9QxCc-RI9lVqRJ1Uz8seKCA0pYSHqkUkt3r15avdOCgDzPL07J02CrrBd9drkPItl_YZyPCeEffBLuKhKQE"/>
+<div class="absolute inset-0 bg-primary/20 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-secondary-fixed flex items-center justify-center shadow-xl transform group-active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-on-secondary-fixed text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-4 right-4 bg-primary/80 backdrop-blur-sm px-3 py-1 rounded-full">
+<span class="font-mono text-[10px] text-white tracking-widest">04:20</span>
+</div>
+</div>
+</section>
+<!-- Header Info -->
+<section class="px-6 mt-8">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-primary/60">Practice Session</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-mono text-xs text-on-surface">4.9</span>
+</div>
+</div>
+<h1 class="font-headline text-3xl font-bold text-primary tracking-tight leading-tight">The Perfect Pivot Drill</h1>
+<div class="flex gap-3 mt-4">
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="schedule">schedule</span>
+<span class="font-mono text-xs font-medium uppercase">15 Mins</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="fitness_center">fitness_center</span>
+<span class="font-mono text-xs font-medium uppercase">Intermediate</span>
+</div>
+</div>
+</section>
+<!-- Bento Instructions -->
+<section class="px-6 mt-10">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline text-lg font-bold text-primary uppercase tracking-widest">Execution Steps</h2>
+<span class="font-mono text-xs text-primary/40">Step 01/04</span>
+</div>
+<div class="space-y-4">
+<!-- Step 1 (Active) -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl border border-primary/5 shadow-sm">
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center shrink-0">
+<span class="font-mono text-sm font-bold text-on-secondary-fixed">01</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-primary mb-1">Stance Alignment</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Position feet shoulder-width apart, weight centered on the balls of your feet.</p>
+</div>
+<div class="mt-1">
+<div class="w-6 h-6 rounded-md border-2 border-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm font-bold hidden" data-icon="check">check</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface-container-low p-5 rounded-2xl opacity-80">
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="font-mono text-sm font-bold text-primary/40">02</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-primary/60 mb-1">Lead Foot Pivot</h3>
+<p class="text-sm text-on-surface-variant/60 leading-relaxed">Rotate your lead hip while maintaining eye contact with the target mark.</p>
+</div>
+<div class="mt-1">
+<div class="w-6 h-6 rounded-md border-2 border-primary/10"></div>
+</div>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface-container-low p-5 rounded-2xl opacity-60">
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="font-mono text-sm font-bold text-primary/40">03</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-primary/60 mb-1">Power Transfer</h3>
+<p class="text-sm text-on-surface-variant/60 leading-relaxed">Shift 70% of energy through the core into the rotation point.</p>
+</div>
+<div class="mt-1">
+<div class="w-6 h-6 rounded-md border-2 border-primary/10"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Action & Timer (Custom Implementation) -->
+<footer class="fixed bottom-0 left-0 w-full z-50 bg-[#fdf9f0]/95 backdrop-blur-xl border-t-[0.5px] border-[#154212]/10 max-w-[390px] mx-auto">
+<!-- Drill Timer Component -->
+<div class="px-6 pt-4">
+<div class="bg-primary p-4 rounded-2xl shadow-xl">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-fixed animate-pulse" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-mono text-sm text-white/80 uppercase tracking-widest">Active Drill</span>
+</div>
+<span class="font-mono text-xl font-black text-secondary-fixed">08:42</span>
+</div>
+<!-- Progress Bar -->
+<div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed w-[62%]"></div>
+</div>
+</div>
+</div>
+<!-- CTA Button -->
+<div class="px-6 py-4 pb-8">
+<button class="w-full bg-secondary-fixed text-on-secondary-fixed font-headline font-bold uppercase tracking-widest py-5 rounded-xl flex items-center justify-center gap-3 shadow-lg active:scale-95 transition-transform">
+<span>Complete Drill</span>
+<span class="material-symbols-outlined font-bold" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</footer>
+<!-- Background Pattern Accent -->
+<div class="fixed inset-0 pointer-events-none -z-10 opacity-[0.03]">
+<svg height="100%" width="100%">
+<pattern height="40" id="grid" patternunits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="#154212" stroke-width="0.5"></path>
+</pattern>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+</body></html>

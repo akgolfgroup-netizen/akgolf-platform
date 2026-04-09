@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fdf9f0",
+                        "tertiary-fixed": "#bcf0ae",
+                        "primary-fixed": "#bcf0ae",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#f1eee5",
+                        "tertiary": "#154212",
+                        "surface-container-highest": "#e6e2d9",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#002201",
+                        "tertiary-container": "#2d5a27",
+                        "surface": "#fdf9f0",
+                        "outline-variant": "#c2c9bb",
+                        "surface-tint": "#3b6934",
+                        "on-surface-variant": "#42493e",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-high": "#ece8df",
+                        "secondary-container": "#d0ed00",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "on-tertiary-container": "#9dd090",
+                        "on-surface": "#1c1c16",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#9dd090",
+                        "on-primary-fixed-variant": "#23501e",
+                        "secondary-fixed": "#d2f000",
+                        "on-secondary-fixed": "#191e00",
+                        "surface-bright": "#fdf9f0",
+                        "secondary": "#576500",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "inverse-surface": "#31302b",
+                        "primary": "#154212",
+                        "inverse-primary": "#a1d494",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-container": "#5b6900",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dddad1",
+                        "primary-container": "#2d5a27",
+                        "outline": "#72796e",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002201",
+                        "inverse-on-surface": "#f4f0e7",
+                        "secondary-fixed-dim": "#b8d300",
+                        "on-background": "#1c1c16"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        .bento-card:hover {
+            background-color: #f7f3ea;
+        }
+        .chart-lime-glow {
+            filter: drop-shadow(0 0 8px rgba(210, 240, 0, 0.4));
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-72 flex flex-col fixed left-0 top-0 bg-[#154212] z-50">
+<div class="flex flex-col h-full py-8">
+<div class="px-8 mb-10">
+<h1 class="text-xl font-bold tracking-tighter text-[#fdf9f0]">AK Sports OS</h1>
+<p class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-[#fdf9f0]/60">Mission Control</p>
+</div>
+<nav class="flex-1 overflow-y-auto space-y-1">
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">dashboard</span> Command Center
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">sensors</span> Live Ops
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">insights</span> Pulse
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">health_and_safety</span> System Health
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">notifications</span> Alerts
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">emergency_home</span> Incidents
+                </a>
+<!-- ACTIVE TAB: CAPACITY -->
+<a class="flex items-center bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]" href="#">
+<span class="material-symbols-outlined mr-4">data_usage</span> Capacity
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">leaderboard</span> Metrics
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">security</span> Security
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">history_edu</span> Audit
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">settings_backup_restore</span> Backups
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">rocket_launch</span> Deploy
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">payments</span> Costs
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">support_agent</span> CS Health
+                </a>
+<a class="flex items-center text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">visibility</span> CEO View
+                </a>
+</nav>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-0 h-16 bg-[#fdf9f0]/80 backdrop-blur-md flex justify-between items-center pl-80 pr-8 z-40 border-b border-[#154212]/10 shadow-sm shadow-[#2d5a27]/05">
+<div class="flex items-center space-x-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/60 text-sm">search</span>
+<input class="bg-surface-container-high border-none rounded-full py-1.5 pl-10 pr-4 text-xs font-['JetBrains_Mono'] focus:ring-1 focus:ring-primary/20 w-64" placeholder="Global capacity search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<nav class="flex items-center space-x-8">
+<a class="text-[#154212]/60 hover:text-[#154212] transition-opacity font-['JetBrains_Mono'] text-sm" href="#">Overview</a>
+<a class="text-[#154212] font-bold border-b-2 border-[#154212] font-['JetBrains_Mono'] text-sm" href="#">Forecast</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-opacity font-['JetBrains_Mono'] text-sm" href="#">Allocation</a>
+</nav>
+<div class="flex items-center space-x-4">
+<button class="material-symbols-outlined text-[#154212] hover:opacity-70">account_circle</button>
+<button class="material-symbols-outlined text-[#154212] hover:opacity-70">settings</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pl-72 pt-16 min-h-screen">
+<div class="p-10 max-w-7xl mx-auto">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-12">
+<div class="space-y-1">
+<p class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest text-primary/50">Predictive Engine • v4.2</p>
+<h2 class="text-4xl font-extrabold tracking-tight text-primary">CAPACITY FORECAST</h2>
+</div>
+<div class="flex space-x-3">
+<div class="bg-surface-container-low px-4 py-2 rounded-xl flex items-center space-x-3 border border-outline-variant/10">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-xs font-['JetBrains_Mono'] text-on-surface/80">90-Day Confidence: 94.2%</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Server Load Forecast (Primary) -->
+<div class="col-span-8 bento-card border border-outline-variant/5">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="font-['DM_Sans'] font-semibold text-lg text-primary">Server Load Projection</h3>
+<p class="text-sm text-on-surface-variant">Cluster average utilization vs available throughput</p>
+</div>
+<span class="text-[10px] font-['JetBrains_Mono'] bg-secondary/10 text-secondary px-2 py-1 rounded">PREDICTIVE DATA</span>
+</div>
+<div class="h-64 relative flex items-end space-x-1">
+<!-- Simulated Chart -->
+<div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+<span class="material-symbols-outlined scale-[5] text-primary">monitoring</span>
+</div>
+<!-- Chart Bars/Lines placeholder -->
+<div class="flex-1 flex items-end space-x-2 h-full">
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[40%]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[45%]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[52%]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[48%]"></div>
+<div class="flex-1 bg-primary rounded-t-sm h-[60%]"></div>
+<div class="flex-1 bg-primary rounded-t-sm h-[65%]"></div>
+<div class="flex-1 bg-secondary chart-lime-glow rounded-t-sm h-[72%] relative group">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-[#fdf9f0] text-[10px] px-2 py-1 rounded hidden group-hover:block font-['JetBrains_Mono']">72% EXPECTED</div>
+</div>
+<div class="flex-1 bg-secondary chart-lime-glow rounded-t-sm h-[78%] opacity-80"></div>
+<div class="flex-1 bg-secondary chart-lime-glow rounded-t-sm h-[85%] opacity-60"></div>
+<div class="flex-1 bg-secondary chart-lime-glow rounded-t-sm h-[92%] opacity-40"></div>
+</div>
+</div>
+<div class="mt-6 flex justify-between border-t border-outline-variant/10 pt-4">
+<div class="flex space-x-6">
+<div class="flex flex-col">
+<span class="text-[10px] font-['JetBrains_Mono'] text-on-surface/50">HISTORICAL</span>
+<span class="text-sm font-bold text-primary">Avg 54%</span>
+</div>
+<div class="flex flex-col border-l border-outline-variant/20 pl-6">
+<span class="text-[10px] font-['JetBrains_Mono'] text-on-surface/50">PROJECTED MAX</span>
+<span class="text-sm font-bold text-secondary">92% (Q4)</span>
+</div>
+</div>
+<button class="text-xs font-['DM_Sans'] font-medium uppercase tracking-wider text-primary hover:underline">Download Dataset</button>
+</div>
+</div>
+<!-- User Growth Projection -->
+<div class="col-span-4 bento-card bg-primary text-[#fdf9f0]">
+<h3 class="font-['DM_Sans'] font-semibold text-lg mb-2">User Growth</h3>
+<p class="text-sm text-[#fdf9f0]/60 mb-8">Next 6-Month Trajectory</p>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-2xl font-bold font-['JetBrains_Mono']">+24.5%</span>
+<span class="text-[10px] opacity-60 uppercase">Aggressive Case</span>
+</div>
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<div class="relative h-2 bg-[#fdf9f0]/10 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-secondary w-[70%]"></div>
+</div>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-[#fdf9f0]/10">
+<div>
+<span class="block text-[10px] opacity-60">NEW USERS</span>
+<span class="font-['JetBrains_Mono'] text-sm">1.2M</span>
+</div>
+<div>
+<span class="block text-[10px] opacity-60">CHURN EST.</span>
+<span class="font-['JetBrains_Mono'] text-sm">1.2%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Scaling Recommendations -->
+<div class="col-span-12 lg:col-span-5 bento-card border border-outline-variant/10">
+<div class="flex items-center space-x-2 mb-6">
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+<h3 class="font-['DM_Sans'] font-semibold text-lg text-primary">Scaling Protocols</h3>
+</div>
+<div class="space-y-4">
+<div class="p-4 rounded-xl bg-surface-container-low border border-primary/5 flex items-start space-x-4">
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-sm">storage</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Expand US-EAST-1 Cluster</p>
+<p class="text-xs text-on-surface/70 mt-1">Required by Oct 15 to prevent latency spikes above 200ms.</p>
+<button class="mt-2 px-3 py-1 bg-secondary text-primary text-[10px] font-bold rounded-md uppercase">Approve Action</button>
+</div>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-primary/5 flex items-start space-x-4">
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-sm">memory</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Upgrade Node Instances</p>
+<p class="text-xs text-on-surface/70 mt-1">Transition from t3.medium to m5.large for core processing units.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Cost Estimator Module -->
+<div class="col-span-12 lg:col-span-7 bento-card border border-outline-variant/10 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-['DM_Sans'] font-semibold text-lg text-primary">Monthly Cost Estimator</h3>
+<p class="text-sm text-on-surface-variant">Predicted infrastructure expenditure</p>
+</div>
+<div class="flex bg-surface-container-high rounded-full p-1">
+<button class="px-4 py-1 text-[10px] font-bold bg-white text-primary rounded-full shadow-sm">ESTIMATED</button>
+<button class="px-4 py-1 text-[10px] font-bold text-primary/40">ACTUAL</button>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-8 mb-8">
+<div class="space-y-1">
+<span class="block text-[10px] font-['JetBrains_Mono'] text-on-surface/50 uppercase">Current Burn</span>
+<span class="text-2xl font-bold text-primary">$42.8k</span>
+</div>
+<div class="space-y-1">
+<span class="block text-[10px] font-['JetBrains_Mono'] text-on-surface/50 uppercase">Forecast Q4</span>
+<span class="text-2xl font-bold text-secondary">$58.2k</span>
+</div>
+<div class="space-y-1">
+<span class="block text-[10px] font-['JetBrains_Mono'] text-on-surface/50 uppercase">Efficiency</span>
+<span class="text-2xl font-bold text-primary-container">88%</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">savings</span>
+</div>
+<div>
+<p class="text-xs font-bold text-primary">Optimization Opportunity</p>
+<p class="text-[10px] text-on-surface/60">Switch to reserved instances for US-WEST cluster.</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-primary">-$4.2k</p>
+<p class="text-[10px] text-secondary font-bold uppercase">Potential Savings</p>
+</div>
+</div>
+</div>
+<!-- Resource Needs Matrix -->
+<div class="col-span-12 bento-card border border-outline-variant/10 overflow-hidden">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-['DM_Sans'] font-semibold text-lg text-primary">Resource Needs Matrix</h3>
+<div class="flex space-x-2">
+<span class="flex items-center space-x-1 text-[10px] font-bold"><span class="w-2 h-2 rounded-full bg-secondary"></span> <span>CRITICAL</span></span>
+<span class="flex items-center space-x-1 text-[10px] font-bold"><span class="w-2 h-2 rounded-full bg-primary-container"></span> <span>STABLE</span></span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] font-['JetBrains_Mono'] text-on-surface/40 uppercase tracking-widest border-b border-outline-variant/10">
+<th class="pb-4 font-medium">Resource Category</th>
+<th class="pb-4 font-medium">Current Allocation</th>
+<th class="pb-4 font-medium">Forecasted Need (90d)</th>
+<th class="pb-4 font-medium">Shortfall Gap</th>
+<th class="pb-4 font-medium">Priority</th>
+</tr>
+</thead>
+<tbody class="text-sm font-['DM_Sans']">
+<tr class="border-b border-outline-variant/5">
+<td class="py-4 font-bold text-primary">Compute Blocks (vCPU)</td>
+<td class="py-4">1,450 Units</td>
+<td class="py-4">2,100 Units</td>
+<td class="py-4 text-error font-['JetBrains_Mono']">650 Units</td>
+<td class="py-4"><span class="px-2 py-1 bg-error/10 text-error text-[10px] font-bold rounded uppercase">Immediate</span></td>
+</tr>
+<tr class="border-b border-outline-variant/5">
+<td class="py-4 font-bold text-primary">Data Warehouse (Cold)</td>
+<td class="py-4">42 TB</td>
+<td class="py-4">48 TB</td>
+<td class="py-4 text-on-surface/40 font-['JetBrains_Mono']">6 TB</td>
+<td class="py-4"><span class="px-2 py-1 bg-surface-container-highest text-on-surface/50 text-[10px] font-bold rounded uppercase">Low</span></td>
+</tr>
+<tr class="border-b border-outline-variant/5">
+<td class="py-4 font-bold text-primary">Load Balancer Groups</td>
+<td class="py-4">12 Clusters</td>
+<td class="py-4">18 Clusters</td>
+<td class="py-4 text-secondary font-['JetBrains_Mono']">6 Clusters</td>
+<td class="py-4"><span class="px-2 py-1 bg-secondary/10 text-secondary text-[10px] font-bold rounded uppercase">Strategic</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating AI Prompt (Simplified for this view) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 bg-secondary text-primary rounded-full shadow-xl shadow-primary/20 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">auto_awesome</span>
+</button>
+</div>
+</body></html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AthletaCore Support | The Curated Laboratory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#fdf9f0",
+                        "secondary-fixed-dim": "#b8d300",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-dim": "#dddad1",
+                        "on-tertiary-fixed": "#002201",
+                        "secondary": "#576500",
+                        "surface-bright": "#fdf9f0",
+                        "surface-tint": "#3b6934",
+                        "tertiary": "#154212",
+                        "on-primary-fixed": "#002201",
+                        "inverse-primary": "#a1d494",
+                        "primary-fixed": "#bcf0ae",
+                        "on-primary-container": "#9dd090",
+                        "on-error-container": "#93000a",
+                        "background": "#fdf9f0",
+                        "tertiary-fixed": "#bcf0ae",
+                        "outline": "#72796e",
+                        "on-secondary-container": "#5b6900",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "surface-container": "#f1eee5",
+                        "surface-container-low": "#f7f3ea",
+                        "error": "#ba1a1a",
+                        "primary": "#154212",
+                        "tertiary-container": "#2d5a27",
+                        "secondary-container": "#d0ed00",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-background": "#1c1c16",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary-container": "#9dd090",
+                        "outline-variant": "#c2c9bb",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "on-surface": "#1c1c16",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#d2f000",
+                        "on-secondary-fixed": "#191e00",
+                        "inverse-surface": "#31302b",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#a1d494",
+                        "surface-container-high": "#ece8df",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-container-highest": "#e6e2d9",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#42493e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { backdrop-filter: blur(12px); background-color: rgba(255, 255, 255, 0.7); }
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #154212; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+<!-- SideNavBar (AthletaCore Shared Component) -->
+<aside class="h-screen w-64 bg-[#154212] flex flex-col h-full py-6 shadow-[4px_0_16px_rgba(45,90,39,0.06)] z-20 overflow-y-auto">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 bg-[#d2f000] rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-[#154212]" data-icon="shield_with_heart">shield_with_heart</span>
+</div>
+<div>
+<h1 class="text-white font-bold tracking-tight text-lg">Elite Sports Mgmt</h1>
+<p class="text-white/50 font-['DM_Sans'] uppercase text-[10px] tracking-widest font-medium">Premium Tier</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Conversations</span>
+</a>
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Campaigns</span>
+</a>
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined" data-icon="videocam">videocam</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Video Hub</span>
+</a>
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Announcements</span>
+</a>
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined" data-icon="poll">poll</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Surveys</span>
+</a>
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Reports</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full bg-[#d2f000] text-[#154212] font-['DM_Sans'] uppercase text-[11px] tracking-widest font-bold py-3 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                New Message
+            </button>
+<div class="mt-6 border-t border-white/10 pt-6 space-y-1">
+<a class="bg-[#d2f000] text-[#154212] rounded-lg mx-0 my-1 px-4 py-3 flex items-center gap-3 active:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Support</span>
+</a>
+<a class="text-white/70 hover:text-white mx-0 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined" data-icon="archive">archive</span>
+<span class="font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium">Archive</span>
+</a>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- TopNavBar (AthletaCore Shared Component) -->
+<header class="bg-[#fdf9f0] text-[#154212] font-['DM_Sans'] tracking-tight flex justify-between items-center px-8 py-4 w-full z-10">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-[#154212] uppercase">AthletaCore</span>
+<nav class="hidden md:flex gap-6 text-[13px] font-medium uppercase tracking-wider">
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors" href="#">Inbox</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors" href="#">Marketing</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors" href="#">Channels</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-[#f7f3ea] transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-[#f7f3ea] transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Professional user profile headshot of a middle-aged male executive in a neutral business studio setting with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs_nCYsorXaHA2XI66F_mFMIhSZXOAt8A9G6p_Gz-I7D7Pz9ZOTwzUCfPL4q_49gdYJYW5Btanqe0kfaIEAinRekZ4418dp1rMRnwQ5rP6BdCNQfj0Dh4f7Rc7qrSRA4FneCswesiI7wKZNDL8KoEOlSv0w1jwafrqlYaUaAx4J77y16VA_OTR3AR6p7mmeSbxy-vNxefQkirlMiIMPU4H68TEmrFaq3SmBWKDisvqc4a6i1yqKXEo1GDhM9rnSklS_31EdFXazN5H"/>
+</div>
+</div>
+</header>
+<section class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<!-- Hero Title -->
+<div class="mb-10">
+<p class="font-mono text-[10px] text-primary/60 tracking-widest uppercase mb-2">Service ID: ATH-SUP-0982</p>
+<h2 class="text-4xl font-bold text-primary tracking-tight font-headline">Concierge Support</h2>
+<p class="text-on-surface/60 max-w-2xl mt-2 font-body">Expert technical assistance and strategic guidance for elite athletic management. Our laboratory is at your disposal.</p>
+</div>
+<!-- Heritage Grid / Bento Layout -->
+<div class="bento-grid">
+<!-- Active Chat Module (Primary Focus) -->
+<div class="col-span-8 bg-surface-container-lowest rounded-[24px] shadow-[4px_0_16px_rgba(45,90,39,0.06)] flex flex-col h-[600px] overflow-hidden">
+<div class="px-6 py-4 flex items-center justify-between border-b border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Portrait of a female support specialist with a friendly expression in a modern, brightly lit professional office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG1UOeNzpzL_XyTSVYonwAtxxOLb3N9Gta8UnjQzMlC4KrSDkMpvMjnZXK7FdCmz8mZu2r3sbEwyL2YbSAQXIXN5s_hDzO80FhOLDnAdqM6O81Q9-kEDl_bTMd0HFz1RUbiVfBMleN7GPvicR2ZiyNEQ6QUEQIpjU5qXpL2VQvhIqqdYXwryEdhLYD2wlcYhAkRrSxGslYzEaQbdi0KnBeJJnjZi_EHWaK0uX6r4kJxsVsseN70lMhB6RJEiELaAR9ZrGyL1r4hd0j"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-secondary rounded-full border-2 border-white"></div>
+</div>
+<div>
+<p class="font-bold text-primary leading-tight">Sloane Bennett</p>
+<p class="text-[11px] font-mono uppercase text-secondary font-semibold">Senior Strategist • Active Now</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-surface-container text-primary font-mono text-[10px] uppercase tracking-widest rounded-lg hover:bg-surface-variant transition-all">
+                                Request Transfer
+                            </button>
+<button class="p-2 text-primary/60 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar bg-surface/30">
+<div class="flex justify-center">
+<span class="bg-surface-container px-3 py-1 rounded-full text-[10px] font-mono uppercase text-primary/40">Today, Oct 24th</span>
+</div>
+<!-- Incoming Message -->
+<div class="flex gap-4 max-w-[80%]">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="space-y-1">
+<div class="bg-surface-container-high px-4 py-3 rounded-2xl rounded-tl-none">
+<p class="text-sm leading-relaxed">Welcome back to AthletaCore, Marcus. I've analyzed your recent Campaign report. There's a 14% drop in engagement in the 'Video Hub' section. Would you like me to connect you with a content specialist?</p>
+</div>
+<p class="text-[10px] font-mono text-on-surface/40 px-1">10:42 AM • AI ANALYST</p>
+</div>
+</div>
+<!-- Outgoing Message -->
+<div class="flex flex-row-reverse gap-4 max-w-[80%] ml-auto">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="person">person</span>
+</div>
+<div class="space-y-1 text-right">
+<div class="bg-primary text-white px-4 py-3 rounded-2xl rounded-tr-none">
+<p class="text-sm leading-relaxed text-left">Yes, please. I also need to verify the payout schedule for the Elite Tier members. Can Sloane help with that?</p>
+</div>
+<p class="text-[10px] font-mono text-on-surface/40 px-1">10:45 AM • SENT</p>
+</div>
+</div>
+<!-- Human Specialist Incoming -->
+<div class="flex gap-4 max-w-[80%]">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Female professional specialist face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAefmRy-KOoC-WxLLMLQvZCpPmoYQ35MIhhei-NVk2VCsGqsBwoEjXfmAEGH0znDdk-6BIl14Sy6HhuEl5A-3H1I3HSv0jAsEiuElIBr5LDrUJfvz-ZSW4nPBYyv8nzna0-wtRuwp8Fiz2ueLkKdOXUCRIsQF6myEsGCGmAcVbklLPgSx_jaWtMtbjJf7d6gcLYbzJvKjlBd8J5QkrPg_EG-xOF3RtwzaQVydOetRrC-p67bRjsUo9VfcTeYseWFtwmw5DJ3QQROcEL"/>
+<div class="space-y-1">
+<div class="bg-white border border-outline-variant/20 px-4 py-3 rounded-2xl rounded-tl-none shadow-sm">
+<p class="text-sm leading-relaxed">Hi Marcus! Sloane here. I'm pulling up your payout schedules now. It looks like the Oct 25th batch is pending a final signature. I'll send the Docusign link right here in a second.</p>
+</div>
+<p class="text-[10px] font-mono text-on-surface/40 px-1">10:46 AM • SLOANE BENNETT</p>
+</div>
+</div>
+</div>
+<div class="p-6 bg-white border-t border-outline-variant/10">
+<div class="flex items-center gap-3 bg-surface-container-low p-2 pl-4 rounded-xl">
+<button class="text-primary/60 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="attach_file">attach_file</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-sm placeholder:text-on-surface/40" placeholder="Type your message..." type="text"/>
+<button class="bg-secondary-fixed text-on-secondary-fixed px-6 py-2 rounded-lg font-bold text-[11px] uppercase tracking-widest flex items-center gap-2 hover:brightness-105 active:scale-95 transition-all">
+                                Send
+                                <span class="material-symbols-outlined text-[16px]" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Knowledge Base Suggestions -->
+<div class="col-span-4 flex flex-col gap-6">
+<div class="bg-white rounded-[24px] p-6 shadow-[4px_0_16px_rgba(45,90,39,0.06)] border border-outline-variant/5">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-primary tracking-tight">Suggested Solutions</h3>
+<span class="material-symbols-outlined text-secondary" data-icon="lightbulb">lightbulb</span>
+</div>
+<div class="space-y-4">
+<div class="group cursor-pointer">
+<p class="text-[11px] font-mono uppercase text-primary/40 mb-1">Documentation</p>
+<p class="text-sm font-semibold group-hover:text-secondary transition-colors">Elite Tier Payout Calendars 2024</p>
+<div class="h-[1px] w-full bg-outline-variant/10 mt-3"></div>
+</div>
+<div class="group cursor-pointer">
+<p class="text-[11px] font-mono uppercase text-primary/40 mb-1">Video Guide</p>
+<p class="text-sm font-semibold group-hover:text-secondary transition-colors">Optimizing Video Hub Engagement</p>
+<div class="h-[1px] w-full bg-outline-variant/10 mt-3"></div>
+</div>
+<div class="group cursor-pointer">
+<p class="text-[11px] font-mono uppercase text-primary/40 mb-1">Security</p>
+<p class="text-sm font-semibold group-hover:text-secondary transition-colors">Digital Signature Verification Steps</p>
+</div>
+</div>
+<button class="w-full mt-6 py-3 border border-primary/10 rounded-xl text-[11px] font-bold uppercase tracking-widest text-primary hover:bg-surface-container transition-all">
+                            View Full Archive
+                        </button>
+</div>
+<!-- Satisfaction Rating (Bento Card) -->
+<div class="bg-primary text-white rounded-[24px] p-6 shadow-xl relative overflow-hidden">
+<div class="absolute -top-4 -right-4 w-24 h-24 bg-secondary-fixed/10 rounded-full blur-2xl"></div>
+<p class="font-mono text-[10px] text-secondary tracking-widest uppercase mb-1">Post-Session Rating</p>
+<h3 class="text-lg font-bold mb-4">How are we doing?</h3>
+<p class="text-xs text-white/70 mb-6 leading-relaxed">Your feedback fuels our laboratory's continuous evolution.</p>
+<div class="flex justify-between items-center bg-white/5 rounded-2xl p-4">
+<button class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-secondary-fixed hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="sentiment_very_dissatisfied">sentiment_very_dissatisfied</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-secondary-fixed hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="sentiment_neutral">sentiment_neutral</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-secondary-fixed hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="sentiment_satisfied">sentiment_satisfied</span>
+</button>
+<button class="w-12 h-12 rounded-lg bg-secondary-fixed text-primary flex items-center justify-center shadow-lg active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="sentiment_very_satisfied" style="font-variation-settings: 'FILL' 1;">sentiment_very_satisfied</span>
+</button>
+</div>
+</div>
+<!-- Support Availability Card -->
+<div class="bg-surface-container-low rounded-[24px] p-6 flex items-center gap-4 border border-outline-variant/10">
+<div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="schedule">schedule</span>
+</div>
+<div>
+<p class="text-xs font-bold text-primary">Priority Queue Active</p>
+<p class="text-[10px] text-on-surface/60">Estimated wait: <span class="font-mono text-secondary font-bold">1.4 MINS</span></p>
+</div>
+</div>
+</div>
+<!-- Chat History (Bottom Bento Row) -->
+<div class="col-span-12 bg-white rounded-[24px] p-8 shadow-[4px_0_16px_rgba(45,90,39,0.06)]">
+<div class="flex justify-between items-end mb-8">
+<div>
+<p class="font-mono text-[10px] text-primary/40 tracking-widest uppercase mb-1">Archival Access</p>
+<h3 class="text-2xl font-bold text-primary tracking-tight">Recent Dialogue History</h3>
+</div>
+<div class="flex gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 text-[18px]" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-xs w-64 focus:ring-1 focus:ring-secondary/20 transition-all" placeholder="Search history..." type="text"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-6">
+<!-- History Item 1 -->
+<div class="group p-5 rounded-2xl bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer border border-transparent hover:border-outline-variant/20">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-1 bg-white text-[9px] font-mono text-primary/60 rounded">OCT 22, 2024</span>
+<span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors" data-icon="open_in_new">open_in_new</span>
+</div>
+<h4 class="font-bold text-sm mb-2">Campaign Performance Dip</h4>
+<p class="text-xs text-on-surface/60 line-clamp-2">Discussed the sudden drop in CTR for the Fall Collection marketing push. Specialist recommended A/B testing on hero graphics...</p>
+<div class="mt-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] text-white font-mono">EB</div>
+<p class="text-[10px] font-bold text-primary uppercase tracking-tight">Elias Burke</p>
+</div>
+</div>
+<!-- History Item 2 -->
+<div class="group p-5 rounded-2xl bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer border border-transparent hover:border-outline-variant/20">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-1 bg-white text-[9px] font-mono text-primary/60 rounded">OCT 18, 2024</span>
+<span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors" data-icon="open_in_new">open_in_new</span>
+</div>
+<h4 class="font-bold text-sm mb-2">Technical API Integration</h4>
+<p class="text-xs text-on-surface/60 line-clamp-2">Successfully synced the Athlete CRM with external analytics provider. Tokens refreshed and webhooks verified for uptime...</p>
+<div class="mt-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-fixed flex items-center justify-center text-[10px] text-primary font-mono font-bold">SD</div>
+<p class="text-[10px] font-bold text-primary uppercase tracking-tight">Sarah Drane</p>
+</div>
+</div>
+<!-- History Item 3 -->
+<div class="group p-5 rounded-2xl bg-surface-container-low hover:bg-surface-container-high transition-all cursor-pointer border border-transparent hover:border-outline-variant/20">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-1 bg-white text-[9px] font-mono text-primary/60 rounded">OCT 12, 2024</span>
+<span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors" data-icon="open_in_new">open_in_new</span>
+</div>
+<h4 class="font-bold text-sm mb-2">Account Billing Correction</h4>
+<p class="text-xs text-on-surface/60 line-clamp-2">Resolved double-billing error on the Premium Tier subscription. Refund processed and credited to November invoice...</p>
+<div class="mt-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] text-white font-mono">JC</div>
+<p class="text-[10px] font-bold text-primary uppercase tracking-tight">John Chen</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Help Button (Contextual Suppression Logic - Only if needed, but per system, FABs suppressed on Details/Dashboard unless main action) -->
+<!-- Suppressed for Dashboard focus as requested -->
+</body></html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Sports OS - Developers</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#bcf0ae",
+                        "surface-tint": "#3b6934",
+                        "tertiary-fixed": "#bcf0ae",
+                        "surface": "#fdf9f0",
+                        "tertiary": "#154212",
+                        "surface-container-high": "#ece8df",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dddad1",
+                        "outline-variant": "#c2c9bb",
+                        "background": "#fdf9f0",
+                        "on-primary-fixed": "#002201",
+                        "on-error": "#ffffff",
+                        "primary": "#154212",
+                        "secondary-container": "#d0ed00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1c1c16",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-bright": "#fdf9f0",
+                        "on-secondary-fixed": "#191e00",
+                        "tertiary-container": "#2d5a27",
+                        "secondary": "#576500",
+                        "inverse-surface": "#31302b",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-surface": "#1c1c16",
+                        "on-secondary-container": "#5b6900",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#72796e",
+                        "secondary-fixed": "#d2f000",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9dd090",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-container-highest": "#e6e2d9",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-surface-variant": "#42493e",
+                        "on-primary-container": "#9dd090",
+                        "surface-container": "#f1eee5",
+                        "on-tertiary-fixed": "#002201",
+                        "surface-variant": "#e6e2d9",
+                        "inverse-primary": "#a1d494"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                        "brand": ["DM Sans", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased flex min-h-screen overflow-hidden">
+<!-- SideNavBar Implementation -->
+<aside class="h-screen w-64 border-r-0 bg-green-950 dark:bg-green-950 flex flex-col py-8 px-4 flex-shrink-0">
+<div class="flex flex-col gap-1 mb-10 px-2">
+<div class="text-xl font-bold text-white tracking-tight font-brand">AK Sports OS</div>
+<div class="text-[10px] font-brand font-medium uppercase tracking-widest text-green-200/60">Elite Analytics</div>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Navigation Items map to JSON tab_labels and style_inactive_navigation -->
+<a class="flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-green-900/30 hover:text-lime-300 scale-95 duration-200 text-green-200/60 font-brand font-medium uppercase tracking-wider text-[11px]" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-green-900/30 hover:text-lime-300 scale-95 duration-200 text-green-200/60 font-brand font-medium uppercase tracking-wider text-[11px]" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="monitoring">monitoring</span>
+                Performance
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-green-900/30 hover:text-lime-300 scale-95 duration-200 text-green-200/60 font-brand font-medium uppercase tracking-wider text-[11px]" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="groups">groups</span>
+                Roster
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-green-900/30 hover:text-lime-300 scale-95 duration-200 text-green-200/60 font-brand font-medium uppercase tracking-wider text-[11px]" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="query_stats">query_stats</span>
+                Analytics
+            </a>
+<!-- Active State: Analytics/Scouting/Settings - Mapping "Scouting" as the active context for API Explorer -->
+<a class="flex items-center gap-3 px-3 py-2.5 transition-colors scale-95 duration-200 text-lime-400 bg-green-900/50 rounded-lg font-brand font-medium uppercase tracking-wider text-[11px]" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="travel_explore">travel_explore</span>
+                Scouting
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-green-900/30 hover:text-lime-300 scale-95 duration-200 text-green-200/60 font-brand font-medium uppercase tracking-wider text-[11px]" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="mt-auto px-2">
+<button class="w-full bg-secondary-fixed text-on-secondary-fixed font-brand font-bold uppercase text-[12px] py-3 rounded-xl tracking-tight flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                New Report
+            </button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col overflow-y-auto">
+<!-- TopNavBar Implementation -->
+<header class="w-full h-16 flex justify-between items-center px-8 flex-shrink-0 bg-[#fdf9f0]/80 backdrop-blur-xl border-b border-[#154212]/10 sticky top-0 z-10">
+<div class="flex items-center gap-8">
+<div class="font-mono text-xs uppercase tracking-widest text-primary/50">Developers / API Usage</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 text-lg" data-icon="search">search</span>
+<input class="bg-[#f7f3ea] border-none rounded-full pl-10 pr-4 py-1.5 text-sm w-64 focus:ring-1 ring-lime-400/20 font-body placeholder:text-primary/30" placeholder="Search documentation..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary/60 cursor-pointer hover:text-primary transition-opacity" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-primary/60 cursor-pointer hover:text-primary transition-opacity" data-icon="help">help</span>
+</div>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-primary/10">
+<img class="w-full h-full object-cover" data-alt="close-up portrait of a professional system administrator in a clean office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3TMWkOiy8SdePiMByyXXnNtOjGwnrI4zCyDIxkqY4KbEmcm7APPi5KfxmI6OmDX3yhayb_4Ds3Lu_Ff9Zg_xqKKy8BFigl_XAfzs2k_wuRkvzYiohIaoHFY8vJg3ZJtthCDW530MG_rt0fwJZYOtK5kkT8RVwDh_gqjIVbVyHutJxh9eN9sxjZ6NJNNn8WoRARS8esMsIKukuRrfe565KzWCfwY6hoZDIVCJ760O7sUpGsDBsgEvlJwCjo035oki0oUhTRPAx4oMf"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-8 space-y-8 max-w-7xl mx-auto w-full">
+<!-- Hero Header & Global Status -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-4xl font-headline font-extrabold text-primary tracking-tight mb-2">Analytics Suite API</h1>
+<p class="text-on-surface-variant font-body max-w-xl">Monitor your integration performance, manage authentication keys, and track real-time endpoint consumption.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 border-2 border-primary text-primary font-brand font-bold uppercase text-xs rounded-xl hover:bg-primary/5 transition-colors">
+                        View Documentation
+                    </button>
+<button class="px-6 py-3 bg-primary text-white font-brand font-bold uppercase text-xs rounded-xl shadow-lg shadow-primary/10">
+                        Create API Key
+                    </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- API Calls Line Chart (Main Card) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-[24px] p-8 border border-outline-variant/10">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="text-xs font-mono uppercase tracking-widest text-primary/40 mb-1">Traffic Monitor</h3>
+<h2 class="text-xl font-headline font-bold text-primary">API Request Volume</h2>
+</div>
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-3 py-1 text-[10px] font-brand font-bold uppercase rounded-md bg-white text-primary shadow-sm">24H</button>
+<button class="px-3 py-1 text-[10px] font-brand font-bold uppercase rounded-md text-primary/40">7D</button>
+<button class="px-3 py-1 text-[10px] font-brand font-bold uppercase rounded-md text-primary/40">30D</button>
+</div>
+</div>
+<div class="h-[300px] w-full relative">
+<!-- Simulated Chart -->
+<div class="absolute inset-0 flex items-end justify-between px-2">
+<!-- Visualization of line chart points with area fill -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M0,100 L0,70 L10,65 L20,80 L30,40 L40,45 L50,20 L60,35 L70,15 L80,25 L90,10 L100,5 L100,100 Z" fill="url(#grad1)"></path>
+<path d="M0,70 L10,65 L20,80 L30,40 L40,45 L50,20 L60,35 L70,15 L80,25 L90,10 L100,5" fill="none" stroke="#d2f000" stroke-width="2"></path>
+<defs>
+<lineargradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#d2f000;stop-opacity:0.2"></stop>
+<stop offset="100%" style="stop-color:#d2f000;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<!-- Chart Labels -->
+<div class="absolute bottom-0 w-full flex justify-between font-mono text-[10px] text-primary/30 pt-4">
+<span>00:00</span><span>04:00</span><span>08:00</span><span>12:00</span><span>16:00</span><span>20:00</span><span>23:59</span>
+</div>
+</div>
+</div>
+<!-- Rate Limit Progress (Side Card) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<div class="bg-primary rounded-[24px] p-8 text-white flex-1">
+<div class="flex justify-between items-start mb-6">
+<h3 class="text-xs font-mono uppercase tracking-widest text-primary-fixed-dim/60">Quota Usage</h3>
+<span class="material-symbols-outlined text-secondary-fixed" data-icon="bolt">bolt</span>
+</div>
+<div class="mb-8">
+<span class="text-4xl font-headline font-extrabold tracking-tight">84.2%</span>
+<div class="text-xs font-mono text-primary-fixed-dim/60 mt-1 uppercase">Monthly Rate Limit</div>
+</div>
+<div class="w-full bg-white/10 h-2.5 rounded-full overflow-hidden mb-4">
+<div class="bg-secondary-fixed h-full rounded-full" style="width: 84.2%"></div>
+</div>
+<p class="text-sm font-body text-primary-fixed-dim/80">421,020 / 500,000 requests used. Resets in 4 days.</p>
+</div>
+<div class="bg-surface-container-high rounded-[24px] p-8 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="text-xs font-mono uppercase tracking-widest text-primary/40 mb-1">Performance</h3>
+<h2 class="text-xl font-headline font-bold text-primary">Avg. Latency</h2>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-headline font-extrabold text-primary">124</span>
+<span class="text-lg font-headline font-bold text-primary/40">ms</span>
+</div>
+<div class="flex items-center gap-2 text-green-700 text-xs font-bold uppercase">
+<span class="material-symbols-outlined text-sm" data-icon="trending_down">trending_down</span>
+                            12% lower than avg.
+                        </div>
+</div>
+</div>
+<!-- Endpoint Breakdown (Bar Chart Card) -->
+<div class="col-span-12 lg:col-span-5 bg-surface-container-lowest rounded-[24px] p-8 border border-outline-variant/10">
+<h3 class="text-xs font-mono uppercase tracking-widest text-primary/40 mb-1">Architecture</h3>
+<h2 class="text-xl font-headline font-bold text-primary mb-8">Endpoint Utilization</h2>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between font-mono text-[11px] uppercase text-primary/60">
+<span>GET /v1/players</span>
+<span>142k calls</span>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-mono text-[11px] uppercase text-primary/60">
+<span>GET /v1/stats/realtime</span>
+<span>88k calls</span>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-mono text-[11px] uppercase text-primary/60">
+<span>POST /v1/scouting/reports</span>
+<span>34k calls</span>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 25%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-mono text-[11px] uppercase text-primary/60">
+<span>GET /v1/teams/roster</span>
+<span>12k calls</span>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 10%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- API Key Cards -->
+<div class="col-span-12 lg:col-span-7 bg-surface-container-low rounded-[24px] p-8">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="text-xs font-mono uppercase tracking-widest text-primary/40 mb-1">Authentication</h3>
+<h2 class="text-xl font-headline font-bold text-primary">Active API Keys</h2>
+</div>
+<span class="material-symbols-outlined text-primary/30 p-2 hover:bg-white rounded-lg cursor-pointer" data-icon="more_horiz">more_horiz</span>
+</div>
+<div class="space-y-4">
+<!-- Key Card 1 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl flex items-center justify-between border border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="key">key</span>
+</div>
+<div>
+<div class="font-headline font-bold text-primary">Production Main</div>
+<div class="font-mono text-[10px] text-primary/40">LAST USED: 2 MINUTES AGO</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="font-mono text-sm tracking-widest text-primary/40">•••• •••• •••• 8492</div>
+<button class="flex items-center gap-2 text-primary hover:text-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="refresh">refresh</span>
+<span class="font-brand font-bold uppercase text-[10px]">Regenerate</span>
+</button>
+</div>
+</div>
+<!-- Key Card 2 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl flex items-center justify-between border border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary/40">
+<span class="material-symbols-outlined" data-icon="science">science</span>
+</div>
+<div>
+<div class="font-headline font-bold text-primary">Staging / Sandbox</div>
+<div class="font-mono text-[10px] text-primary/40">LAST USED: 4 DAYS AGO</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="font-mono text-sm tracking-widest text-primary/40">•••• •••• •••• 1039</div>
+<button class="flex items-center gap-2 text-primary hover:text-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="refresh">refresh</span>
+<span class="font-brand font-bold uppercase text-[10px]">Regenerate</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Webhook Logs Table (Full Width) -->
+<div class="col-span-12 bg-surface-container-lowest rounded-[24px] border border-outline-variant/10 overflow-hidden">
+<div class="p-8 border-b border-surface-container-low flex justify-between items-center">
+<div>
+<h3 class="text-xs font-mono uppercase tracking-widest text-primary/40 mb-1">Event Logs</h3>
+<h2 class="text-xl font-headline font-bold text-primary">Webhook Activity</h2>
+</div>
+<button class="px-4 py-2 bg-surface-container-low text-primary font-brand font-bold uppercase text-[10px] rounded-lg border border-outline-variant/20">
+                            Export Logs
+                        </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-wider text-primary/40">Event ID</th>
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-wider text-primary/40">Endpoint</th>
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-wider text-primary/40">Status</th>
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-wider text-primary/40">Response Time</th>
+<th class="px-8 py-4 font-mono text-[10px] uppercase tracking-wider text-primary/40">Timestamp</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-8 py-4 font-mono text-sm text-primary">evt_94k28sx</td>
+<td class="px-8 py-4 text-sm text-on-surface-variant">player.stats.updated</td>
+<td class="px-8 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-100 text-green-800 text-[10px] font-bold uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> 200 OK
+                                        </span>
+</td>
+<td class="px-8 py-4 font-mono text-sm text-primary/60">42ms</td>
+<td class="px-8 py-4 font-mono text-sm text-primary/40">Oct 24, 14:21:02</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-8 py-4 font-mono text-sm text-primary">evt_32m91pw</td>
+<td class="px-8 py-4 text-sm text-on-surface-variant">team.roster.change</td>
+<td class="px-8 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-100 text-green-800 text-[10px] font-bold uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> 200 OK
+                                        </span>
+</td>
+<td class="px-8 py-4 font-mono text-sm text-primary/60">156ms</td>
+<td class="px-8 py-4 font-mono text-sm text-primary/40">Oct 24, 14:18:45</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-8 py-4 font-mono text-sm text-primary">evt_11z44qq</td>
+<td class="px-8 py-4 text-sm text-on-surface-variant">scout.report.generated</td>
+<td class="px-8 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-100 text-red-800 text-[10px] font-bold uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> 500 ERR
+                                        </span>
+</td>
+<td class="px-8 py-4 font-mono text-sm text-primary/60">842ms</td>
+<td class="px-8 py-4 font-mono text-sm text-primary/40">Oct 24, 14:15:20</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-8 py-4 bg-surface-container-low/20 flex items-center justify-center border-t border-surface-container-low">
+<button class="text-[11px] font-brand font-bold uppercase text-primary/60 hover:text-primary tracking-widest flex items-center gap-2">
+                            Load previous activities <span class="material-symbols-outlined text-sm" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

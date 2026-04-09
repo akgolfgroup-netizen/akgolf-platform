@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#fdf9f0",
+                        "secondary-fixed-dim": "#b8d300",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-dim": "#dddad1",
+                        "on-tertiary-fixed": "#002201",
+                        "secondary": "#576500",
+                        "surface-bright": "#fdf9f0",
+                        "surface-tint": "#3b6934",
+                        "tertiary": "#154212",
+                        "on-primary-fixed": "#002201",
+                        "inverse-primary": "#a1d494",
+                        "primary-fixed": "#bcf0ae",
+                        "on-primary-container": "#9dd090",
+                        "on-error-container": "#93000a",
+                        "background": "#fdf9f0",
+                        "tertiary-fixed": "#bcf0ae",
+                        "outline": "#72796e",
+                        "on-secondary-container": "#5b6900",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "surface-container": "#f1eee5",
+                        "surface-container-low": "#f7f3ea",
+                        "error": "#ba1a1a",
+                        "primary": "#154212",
+                        "tertiary-container": "#2d5a27",
+                        "secondary-container": "#d0ed00",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-background": "#1c1c16",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary-container": "#9dd090",
+                        "outline-variant": "#c2c9bb",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "on-surface": "#1c1c16",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#d2f000",
+                        "on-secondary-fixed": "#191e00",
+                        "inverse-surface": "#31302b",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#a1d494",
+                        "surface-container-high": "#ece8df",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-container-highest": "#e6e2d9",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#42493e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shifts {
+            background: linear-gradient(180deg, #154212 0%, #0d2b0b 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex">
+<!-- SideNavBar (Authority Source: JSON) -->
+<aside class="h-screen w-64 border-r-0 bg-[#154212] flex flex-col py-6 shadow-[4px_0_16px_rgba(45,90,39,0.06)] sticky top-0 shrink-0">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="hub">hub</span>
+</div>
+<div>
+<h2 class="text-white font-bold text-sm tracking-tight">Elite Sports Mgmt</h2>
+<p class="text-white/50 text-[10px] font-mono tracking-widest uppercase">Premium Tier</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Navigation Items Mapping -->
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+                Conversations
+            </a>
+<a class="bg-[#d2f000] text-[#154212] rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 font-['DM_Sans'] uppercase text-[11px] tracking-widest font-bold translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+                Campaigns
+            </a>
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="videocam">videocam</span>
+                Video Hub
+            </a>
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+                Announcements
+            </a>
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="poll">poll</span>
+                Surveys
+            </a>
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                Reports
+            </a>
+</nav>
+<div class="px-4 mt-auto space-y-4">
+<button class="w-full bg-secondary-fixed text-on-secondary-fixed py-3 rounded-xl font-bold uppercase text-[11px] tracking-widest flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-lg shadow-secondary-fixed/20">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                New Message
+            </button>
+<div class="pt-4 border-t border-white/10">
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                    Support
+                </a>
+<a class="text-white/70 hover:text-white mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/10 font-['DM_Sans'] uppercase text-[11px] tracking-widest font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="archive">archive</span>
+                    Archive
+                </a>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar (Authority Source: JSON) -->
+<header class="fixed top-0 right-0 left-64 bg-[#fdf9f0] backdrop-blur-md z-50 flex justify-between items-center px-8 py-4 w-full h-20">
+<div class="flex items-center gap-8 flex-1">
+<span class="text-xl font-bold tracking-tighter text-[#154212] uppercase font-['DM_Sans']">AthletaCore</span>
+<div class="relative w-full max-w-md ml-4">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 text-sm" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary/20 placeholder:text-primary/30" placeholder="Search templates..." type="text"/>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors font-['DM_Sans'] tracking-tight text-sm" href="#">Inbox</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors font-['DM_Sans'] tracking-tight text-sm" href="#">Marketing</a>
+<a class="text-[#154212] border-b-2 border-[#d2f000] pb-1 font-semibold font-['DM_Sans'] tracking-tight text-sm" href="#">Channels</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-colors font-['DM_Sans'] tracking-tight text-sm" href="#">Analytics</a>
+</nav>
+<div class="flex items-center gap-4 ml-8">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#f7f3ea] transition-all text-primary">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#f7f3ea] transition-all text-primary">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-secondary-fixed">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="professional headshot of a female director with a neutral background and clean lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi83yNtj2O7tuEVtAX6hXCrxfWbmvrAg9aizqDX7DvYFMhehK0kZ1cE-1gjNAaaJ54hrpLnMqIXFcvHQhS_eoWjqAZSIt1Xl9u2gjQUSMsCGaTQBZ_RkxuX2yNLXg4mxfeRJLJ5PADfAT5iMFHOn1EKV3MfW1ODZF3XZpZ3KJJjCqL4PYSrcvcrcGVZ15UeBTD9L49eT5LBsXYvd3cmQAnQSCpnx6EY7GS-hssKY-mTFig1pASn6mqV7LbKDWT_rLxf0EtHL9uTubV"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<div class="mt-20 p-8 flex flex-col gap-8">
+<!-- Header Section -->
+<div class="flex justify-between items-end">
+<div>
+<span class="text-[10px] font-mono tracking-[0.2em] text-primary/50 uppercase mb-2 block">Central Asset Hub</span>
+<h1 class="text-4xl font-headline font-semibold text-primary tracking-tight">Template Library</h1>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-6 py-3 border border-primary/10 rounded-xl hover:bg-primary/5 transition-all text-sm font-medium">
+<span class="material-symbols-outlined text-lg" data-icon="share">share</span>
+                        Share Library
+                    </button>
+<button class="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl hover:shadow-xl hover:shadow-primary/10 transition-all text-sm font-medium">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+                        Create Template
+                    </button>
+</div>
+</div>
+<!-- Category Pills -->
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-5 py-2 rounded-full bg-secondary-fixed text-on-secondary-fixed text-xs font-bold uppercase tracking-wider">All Assets</button>
+<button class="px-5 py-2 rounded-full bg-white text-primary/60 border border-primary/5 hover:border-primary/20 text-xs font-bold uppercase tracking-wider transition-all">Onboarding</button>
+<button class="px-5 py-2 rounded-full bg-white text-primary/60 border border-primary/5 hover:border-primary/20 text-xs font-bold uppercase tracking-wider transition-all">Sponsorships</button>
+<button class="px-5 py-2 rounded-full bg-white text-primary/60 border border-primary/5 hover:border-primary/20 text-xs font-bold uppercase tracking-wider transition-all">Match Updates</button>
+<button class="px-5 py-2 rounded-full bg-white text-primary/60 border border-primary/5 hover:border-primary/20 text-xs font-bold uppercase tracking-wider transition-all">Fan Engagement</button>
+<button class="px-5 py-2 rounded-full bg-white text-primary/60 border border-primary/5 hover:border-primary/20 text-xs font-bold uppercase tracking-wider transition-all">Internal</button>
+</div>
+<!-- Heritage Grid (Bento Style) -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Sidebar Variables Panel -->
+<div class="col-span-12 lg:col-span-3 flex flex-col gap-6">
+<div class="bg-surface-container-low rounded-2xl p-6 border border-white">
+<h3 class="text-[11px] font-mono tracking-widest uppercase text-primary/40 mb-4">Active Variables</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-white rounded-xl group hover:shadow-sm transition-all cursor-copy">
+<span class="text-xs font-mono text-primary/70">[[athlete_name]]</span>
+<span class="material-symbols-outlined text-sm text-primary/30 group-hover:text-primary" data-icon="content_copy">content_copy</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white rounded-xl group hover:shadow-sm transition-all cursor-copy">
+<span class="text-xs font-mono text-primary/70">[[event_date]]</span>
+<span class="material-symbols-outlined text-sm text-primary/30 group-hover:text-primary" data-icon="content_copy">content_copy</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white rounded-xl group hover:shadow-sm transition-all cursor-copy">
+<span class="text-xs font-mono text-primary/70">[[contract_total]]</span>
+<span class="material-symbols-outlined text-sm text-primary/30 group-hover:text-primary" data-icon="content_copy">content_copy</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white rounded-xl group hover:shadow-sm transition-all cursor-copy">
+<span class="text-xs font-mono text-primary/70">[[venue_location]]</span>
+<span class="material-symbols-outlined text-sm text-primary/30 group-hover:text-primary" data-icon="content_copy">content_copy</span>
+</div>
+</div>
+<button class="mt-6 w-full text-[10px] font-bold text-primary uppercase tracking-widest py-2 border-t border-primary/5 hover:text-secondary-fixed transition-colors">
+                            Manage All Variables
+                        </button>
+</div>
+<div class="bg-primary p-6 rounded-2xl text-white relative overflow-hidden group">
+<div class="relative z-10">
+<h3 class="text-lg font-headline font-semibold mb-2">Team Sync</h3>
+<p class="text-white/60 text-xs leading-relaxed mb-6">Instantly publish your latest templates to the shared organizational library.</p>
+<button class="bg-secondary-fixed text-primary px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider group-hover:scale-105 transition-transform">Sync Library</button>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px]" data-icon="cloud_sync" style="font-variation-settings: 'FILL' 1;">cloud_sync</span>
+</div>
+</div>
+</div>
+<!-- Template Grid (Main Content) -->
+<div class="col-span-12 lg:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Template Card 1 -->
+<div class="bg-white rounded-2xl p-6 border border-primary/5 flex flex-col hover:shadow-[0_8px_30px_rgb(21,66,18,0.04)] transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-surface-container-low rounded-xl group-hover:bg-secondary-fixed/20 transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+</div>
+<span class="px-3 py-1 bg-surface-container-low text-[10px] font-mono text-primary/50 rounded-full">v2.4</span>
+</div>
+<h4 class="text-lg font-bold text-primary mb-2">Sponsorship Inquiry</h4>
+<p class="text-on-surface-variant text-sm line-clamp-3 mb-6">"Dear [[sponsor_contact]], I'm reaching out regarding [[athlete_name]]'s recent performance at [[event_name]]. We've identified a unique alignment with your..."</p>
+<div class="mt-auto flex items-center justify-between pt-6 border-t border-primary/5">
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-white" data-alt="portrait of a male designer with minimalist lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA8Xtl__S53p2qhzSmyrG7gyoxCJMCuR0hWak4HRKm4-L-aDhOxqPNjaXiqXHDKjNpsaESI12AySUaza56PyRAyFKlJ7W61CHS3n_JM1hvEAElY4NVRVOW6ml_dlypqM6QV6yLP2q4Umi484ps0IVl051owUfSLhfUZRO-Ku4FNDbFPOsSBjzKQNyvZTEkxXQzfu4bVbywA2Cw_bOxzca0jlKn-b1DMBdQDqr5D_vUktmqfM8HSsFEndQQXChpvUbOvdJtFpWG3YA8"/>
+<img class="w-6 h-6 rounded-full border-2 border-white" data-alt="close-up portrait of a woman smiling with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0awqkr_E3B_xVEePqMPszbl4YtyKyUzE7hrVUyXA6jV-sk_f646jV1--K3ZED528_X8t1P9osAn875EpCUOp6ckevl1FInVHqcuQvvkBNDnExUGCv524Ny3CqdXNZfzJpPIwbqujDg3BVlvA1_IeXwRoGYXC1kLtkD5JuOu7-QsOs8o2hGQFs_AdKhXJlWcP50bUcJgreRbnk1JDIWKeh4O2KcrOPGVABDsWLIFZyvqgP7tcak3QADSMYJGzqwsFBJ7OliUxbMcP9"/>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg text-primary/40 hover:text-primary hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="edit">edit</span>
+</button>
+<button class="px-4 py-2 bg-secondary-fixed text-on-secondary-fixed rounded-lg text-xs font-bold uppercase tracking-wider">Use Now</button>
+</div>
+</div>
+</div>
+<!-- Template Card 2 -->
+<div class="bg-white rounded-2xl p-6 border border-primary/5 flex flex-col hover:shadow-[0_8px_30px_rgb(21,66,18,0.04)] transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-surface-container-low rounded-xl group-hover:bg-secondary-fixed/20 transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="mark_email_read">mark_email_read</span>
+</div>
+<span class="px-3 py-1 bg-surface-container-low text-[10px] font-mono text-primary/50 rounded-full">v1.1</span>
+</div>
+<h4 class="text-lg font-bold text-primary mb-2">Contract Renewal Notice</h4>
+<p class="text-on-surface-variant text-sm line-clamp-3 mb-6">"This notice confirms the expiration of current terms on [[expiry_date]]. We are prepared to offer a [[renewal_percentage]] increase based on [[performance_metric]]..."</p>
+<div class="mt-auto flex items-center justify-between pt-6 border-t border-primary/5">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] text-white font-bold border-2 border-white">JD</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg text-primary/40 hover:text-primary hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="edit">edit</span>
+</button>
+<button class="px-4 py-2 bg-secondary-fixed text-on-secondary-fixed rounded-lg text-xs font-bold uppercase tracking-wider">Use Now</button>
+</div>
+</div>
+</div>
+<!-- Template Card 3 (Long Horizontal Bento) -->
+<div class="md:col-span-2 bg-white rounded-2xl p-8 border border-primary/5 flex flex-col md:flex-row gap-8 hover:shadow-[0_8px_30px_rgb(21,66,18,0.04)] transition-all">
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-4">
+<span class="px-2 py-1 bg-primary text-white text-[9px] font-bold uppercase tracking-tighter rounded">Featured</span>
+<h4 class="text-xl font-bold text-primary">Media Briefing Pack</h4>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Our most used comprehensive media kit template. Includes automated sections for athlete statistics, recent highlights, and future engagement opportunities. Perfectly formatted for PDF export or direct HTML emailing.</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="px-3 py-1 bg-surface-container rounded text-[10px] font-mono text-primary">#media</span>
+<span class="px-3 py-1 bg-surface-container rounded text-[10px] font-mono text-primary">#stats</span>
+<span class="px-3 py-1 bg-surface-container rounded text-[10px] font-mono text-primary">#press</span>
+</div>
+</div>
+<div class="md:w-64 bg-surface-container-low rounded-xl p-4 flex flex-col justify-center items-center gap-4 text-center border border-white">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="insights">insights</span>
+</div>
+<div>
+<p class="text-[10px] font-mono uppercase text-primary/40 mb-1">Efficiency Score</p>
+<p class="text-2xl font-bold text-primary">94%</p>
+</div>
+<button class="w-full py-2 bg-primary text-white rounded-lg text-[10px] font-bold uppercase tracking-widest">Open Preview</button>
+</div>
+</div>
+<!-- Template Card 4 -->
+<div class="bg-white rounded-2xl p-6 border border-primary/5 flex flex-col hover:shadow-[0_8px_30px_rgb(21,66,18,0.04)] transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-surface-container-low rounded-xl group-hover:bg-secondary-fixed/20 transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="chat_bubble">chat_bubble</span>
+</div>
+<span class="px-3 py-1 bg-surface-container-low text-[10px] font-mono text-primary/50 rounded-full">v0.9</span>
+</div>
+<h4 class="text-lg font-bold text-primary mb-2">Fan Direct Message</h4>
+<p class="text-on-surface-variant text-sm line-clamp-3 mb-6">"Thanks for the support at [[game_location]]! [[athlete_name]] really appreciated the energy. As a token of thanks..."</p>
+<div class="mt-auto flex items-center justify-between pt-6 border-t border-primary/5">
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-white" data-alt="professional male profile photo with warm sunset lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDctQCpZBUt0ugPfu_F9soLFla4zCNAKo2imZDOF0f8hxOXpDa_2PkqHWakun9tRuWSE3R1dq-6pGo84xAnI6QjgyDNRTVsACdWqU7mAdiQTE4fITi808INbRXnlL_ZqpLbm179wKGmClubfdkz36K8zE1F-0wpFFgnyZwYiSqzEIhhU-92p7QW3xInX6Re0XwQSIhP6dBt5HXkCA0hmU6s8MfmoCYm5sgCOJw7MNjXD-ZJbbMICOQeYI4_EvPoL-JY2BadDqSYQyK7"/>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg text-primary/40 hover:text-primary hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="edit">edit</span>
+</button>
+<button class="px-4 py-2 bg-secondary-fixed text-on-secondary-fixed rounded-lg text-xs font-bold uppercase tracking-wider">Use Now</button>
+</div>
+</div>
+</div>
+<!-- Template Card 5 -->
+<div class="bg-white rounded-2xl p-6 border border-primary/5 flex flex-col hover:shadow-[0_8px_30px_rgb(21,66,18,0.04)] transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-surface-container-low rounded-xl group-hover:bg-secondary-fixed/20 transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="clinical_notes">clinical_notes</span>
+</div>
+<span class="px-3 py-1 bg-surface-container-low text-[10px] font-mono text-primary/50 rounded-full">v4.0</span>
+</div>
+<h4 class="text-lg font-bold text-primary mb-2">Medical Clearance Form</h4>
+<p class="text-on-surface-variant text-sm line-clamp-3 mb-6">"Official medical release for [[athlete_name]] following the [[injury_type]] assessment on [[date]]. Recommend..."</p>
+<div class="mt-auto flex items-center justify-between pt-6 border-t border-primary/5">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center text-[10px] text-primary/40 font-bold border-2 border-white">+8</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg text-primary/40 hover:text-primary hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="edit">edit</span>
+</button>
+<button class="px-4 py-2 bg-secondary-fixed text-on-secondary-fixed rounded-lg text-xs font-bold uppercase tracking-wider">Use Now</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Help Button -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-secondary-fixed rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform z-[60]">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+</button>
+</body></html>

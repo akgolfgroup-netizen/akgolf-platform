@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#154212",
+                        "secondary": "#576500",
+                        "on-primary-container": "#9dd090",
+                        "background": "#fdf9f0",
+                        "surface-container": "#f1eee5",
+                        "surface-container-low": "#f7f3ea",
+                        "inverse-primary": "#a1d494",
+                        "primary-fixed-dim": "#a1d494",
+                        "outline-variant": "#c2c9bb",
+                        "surface-container-high": "#ece8df",
+                        "surface": "#fdf9f0",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#42493e",
+                        "primary": "#154212",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#b8d300",
+                        "secondary-container": "#d0ed00",
+                        "surface-dim": "#dddad1",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-tint": "#3b6934",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#bcf0ae",
+                        "on-tertiary-fixed": "#002201",
+                        "inverse-surface": "#31302b",
+                        "tertiary-container": "#2d5a27",
+                        "on-tertiary-container": "#9dd090",
+                        "error-container": "#ffdad6",
+                        "outline": "#72796e",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e6e2d9",
+                        "on-surface": "#1c1c16",
+                        "primary-fixed": "#bcf0ae",
+                        "secondary-fixed": "#d2f000",
+                        "primary-container": "#2d5a27",
+                        "on-background": "#1c1c16",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-variant": "#e6e2d9",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#fdf9f0",
+                        "on-primary-fixed": "#002201",
+                        "on-secondary-fixed": "#191e00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#5b6900"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .syntax-string { color: #576500; }
+        .syntax-prop { color: #154212; font-weight: 600; }
+        .syntax-val { color: #3b6934; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] dark:bg-emerald-950 flex flex-col h-full py-6 shadow-[0_4px_16px_rgba(45,90,39,0.06)] z-50">
+<div class="px-6 mb-10">
+<h1 class="text-xl font-bold text-white tracking-tight">AK Sports OS</h1>
+<p class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem] text-emerald-100/70">Admin Suite</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center text-emerald-100/70 hover:text-white px-4 py-3 hover:bg-emerald-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="palette">palette</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem]">Branding</span>
+</a>
+<a class="flex items-center bg-[#d2f000] text-[#154212] rounded-lg mx-2 my-1 px-4 py-3 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="style">style</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem]">Themes</span>
+</a>
+<a class="flex items-center text-emerald-100/70 hover:text-white px-4 py-3 hover:bg-emerald-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard_customize">dashboard_customize</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem]">Templates</span>
+</a>
+<a class="flex items-center text-emerald-100/70 hover:text-white px-4 py-3 hover:bg-emerald-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings_suggest">settings_suggest</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem]">System</span>
+</a>
+<a class="flex items-center text-emerald-100/70 hover:text-white px-4 py-3 hover:bg-emerald-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="monitoring">monitoring</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.75rem]">Analytics</span>
+</a>
+</nav>
+<div class="px-4 mt-auto pt-6 border-t border-emerald-800/30">
+<button class="w-full bg-[#d2f000] text-[#154212] font-bold py-3 rounded-lg text-xs uppercase tracking-widest mb-6">
+                Publish Changes
+            </button>
+<a class="flex items-center text-emerald-100/70 hover:text-white px-4 py-2 text-xs uppercase font-medium" href="#">
+<span class="material-symbols-outlined mr-3 text-sm" data-icon="help_outline">help_outline</span>
+                Support
+            </a>
+<a class="flex items-center text-emerald-100/70 hover:text-white px-4 py-2 text-xs uppercase font-medium" href="#">
+<span class="material-symbols-outlined mr-3 text-sm" data-icon="history_edu">history_edu</span>
+                Logs
+            </a>
+</div>
+</aside>
+<!-- TopNavBar Component -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-[#fdf9f0]/80 backdrop-blur-md flex items-center justify-between px-8 z-40">
+<div class="flex items-center space-x-6">
+<span class="font-['DM_Sans'] font-semibold text-[#154212]">Admin Console</span>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-lg">search</span>
+<input class="bg-surface-container-highest border-none rounded-full py-1.5 pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary w-64" placeholder="Search parameters..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="text-stone-500 hover:text-[#154212] transition-all p-2">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-stone-500 hover:text-[#154212] transition-all p-2">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant/20">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="Professional administrator headshot in a clean office setting with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCg3-vXu5CUTeaRnzeSM0eeW_oafM7qjtx37O1Wb59CqTkLdAAhB5qb4GiExuFxxjWnK2Yc2aMsRP_Xte4Di3QZdrT2emfgNHdXZ-j9g_lftX7XJYSTijHhOYRUsxrfXP8IsYd0Du0FroU0xAW2IJQ7W1TMzYfwTWkiLK4TpBs9D3OquF0x3qoEah7RbfNWpCXosEkagDkH6Quu_ZBircabReECnWDJnk0W0mc6CSMRytXpPbyxc4-_cilokRO0ZFwn8mnwwwnv6geA"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pl-64 pt-16 min-h-screen">
+<div class="p-10 max-w-7xl mx-auto">
+<!-- Page Header -->
+<div class="mb-12">
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.2em] text-secondary mb-2 block">System Configuration / Interface</span>
+<h2 class="text-4xl font-extrabold text-primary tracking-tight font-headline">Visual Themes</h2>
+<div class="h-1 w-20 bg-secondary mt-4"></div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- 1. Mode Selection Card -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-8 rounded-[24px] flex flex-col justify-between shadow-sm border border-outline-variant/10">
+<div>
+<h3 class="text-lg font-bold text-primary mb-1">Appearance Mode</h3>
+<p class="text-sm text-on-surface-variant mb-6">Define the base luminance of your interface.</p>
+</div>
+<div class="bg-surface-container-low p-1.5 rounded-xl flex">
+<button class="flex-1 bg-white shadow-sm py-3 rounded-lg flex items-center justify-center space-x-2 text-primary font-bold transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="light_mode">light_mode</span>
+<span class="text-xs uppercase tracking-wider">Light</span>
+</button>
+<button class="flex-1 py-3 rounded-lg flex items-center justify-center space-x-2 text-stone-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="dark_mode">dark_mode</span>
+<span class="text-xs uppercase tracking-wider font-semibold">Dark</span>
+</button>
+</div>
+</div>
+<!-- 2. Theme Presets Card -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-8 rounded-[24px] shadow-sm border border-outline-variant/10">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-lg font-bold text-primary mb-1">Theme Presets</h3>
+<p class="text-sm text-on-surface-variant">Curated palettes designed for specific brand voices.</p>
+</div>
+<span class="font-['JetBrains_Mono'] text-[10px] bg-secondary-container px-3 py-1 rounded-full text-on-secondary-container">VERSION 4.2.0</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<!-- Heritage (Default) -->
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-2xl bg-[#fdf9f0] border-4 border-secondary p-3 flex flex-col justify-end transition-transform hover:scale-[1.02]">
+<div class="flex space-x-1 mb-2">
+<div class="w-4 h-4 rounded-full bg-[#154212]"></div>
+<div class="w-4 h-4 rounded-full bg-[#d2f000]"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-primary">Heritage</span>
+</div>
+<div class="mt-2 text-center">
+<span class="text-[9px] text-secondary font-bold uppercase tracking-widest">Active</span>
+</div>
+</div>
+<!-- Classic -->
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-2xl bg-slate-50 border border-outline-variant p-3 flex flex-col justify-end transition-transform hover:scale-[1.02] hover:border-primary">
+<div class="flex space-x-1 mb-2">
+<div class="w-4 h-4 rounded-full bg-slate-900"></div>
+<div class="w-4 h-4 rounded-full bg-blue-600"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-800">Classic</span>
+</div>
+</div>
+<!-- Modern -->
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-2xl bg-zinc-900 border border-outline-variant p-3 flex flex-col justify-end transition-transform hover:scale-[1.02] hover:border-primary">
+<div class="flex space-x-1 mb-2">
+<div class="w-4 h-4 rounded-full bg-white"></div>
+<div class="w-4 h-4 rounded-full bg-orange-500"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-white">Modern</span>
+</div>
+</div>
+<!-- High Contrast -->
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-2xl bg-white border-2 border-black p-3 flex flex-col justify-end transition-transform hover:scale-[1.02] hover:border-primary">
+<div class="flex space-x-1 mb-2">
+<div class="w-4 h-4 rounded-full bg-black"></div>
+<div class="w-4 h-4 rounded-full bg-yellow-400"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-black">Contrast</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. Custom CSS Editor -->
+<div class="col-span-12 lg:col-span-5 bg-surface-container-lowest p-0 rounded-[24px] shadow-sm border border-outline-variant/10 overflow-hidden flex flex-col">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="code">code</span>
+<h3 class="text-sm font-bold text-primary uppercase tracking-wider">Custom CSS Editor</h3>
+</div>
+<div class="flex space-x-1">
+<div class="w-2.5 h-2.5 rounded-full bg-red-400/30"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-amber-400/30"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-green-400/30"></div>
+</div>
+</div>
+<div class="flex-1 bg-surface-container-low p-6 font-['JetBrains_Mono'] text-xs leading-relaxed overflow-auto min-h-[300px]">
+<div class="opacity-80">
+<p><span class="syntax-prop">:root</span> {</p>
+<p class="pl-4"><span class="syntax-prop">--primary-brand</span>: <span class="syntax-val">#154212</span>;</p>
+<p class="pl-4"><span class="syntax-prop">--accent-glow</span>: <span class="syntax-val">#d2f000</span>;</p>
+<p class="pl-4"><span class="syntax-prop">--border-radius-xl</span>: <span class="syntax-val">24px</span>;</p>
+<p class="pl-4"><span class="syntax-prop">--glass-blur</span>: <span class="syntax-val">12px</span>;</p>
+<p>}</p>
+<p class="mt-4"><span class="syntax-prop">.btn-hero</span> {</p>
+<p class="pl-4"><span class="syntax-prop">background</span>: <span class="syntax-val">linear-gradient(135deg, var(--accent-glow), #b8d300)</span>;</p>
+<p class="pl-4"><span class="syntax-prop">transition</span>: <span class="syntax-val">all 0.3s cubic-bezier(0.4, 0, 0.2, 1)</span>;</p>
+<p>}</p>
+</div>
+</div>
+</div>
+<!-- 4. Live Preview Window -->
+<div class="col-span-12 lg:col-span-7 flex flex-col gap-6">
+<div class="flex-1 bg-surface-container-high rounded-[24px] p-8 border border-outline-variant/20 relative overflow-hidden">
+<div class="absolute top-4 right-6 flex items-center space-x-2">
+<div class="w-2 h-2 bg-green-500 rounded-full"></div>
+<span class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-widest text-on-surface-variant">Live Preview Environment</span>
+</div>
+<div class="h-full flex flex-col justify-center items-center space-y-10">
+<!-- Sample Card -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-lg w-full max-w-md border border-white/40">
+<div class="flex items-center space-x-4 mb-6">
+<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-3xl" data-icon="monitoring">monitoring</span>
+</div>
+<div>
+<h4 class="font-bold text-primary">Performance Metrics</h4>
+<p class="text-xs text-on-surface-variant">Quarterly engagement stats</p>
+</div>
+</div>
+<div class="h-24 bg-surface-container-low rounded-lg mb-4 flex items-end justify-between p-4 space-x-2">
+<div class="w-full bg-secondary-container h-3/4 rounded-sm"></div>
+<div class="w-full bg-secondary h-full rounded-sm"></div>
+<div class="w-full bg-secondary-container h-1/2 rounded-sm"></div>
+<div class="w-full bg-secondary-container h-2/3 rounded-sm"></div>
+</div>
+<button class="w-full bg-secondary-fixed text-on-secondary-fixed font-bold py-3 rounded-xl uppercase tracking-widest text-[10px] shadow-sm hover:scale-[1.02] transition-transform">
+                                    Analyze Data Stream
+                                </button>
+</div>
+<!-- Sample UI Elements -->
+<div class="flex space-x-4">
+<button class="px-6 py-3 bg-primary text-white rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-md">Secondary Action</button>
+<button class="px-6 py-3 border border-primary text-primary rounded-xl text-[10px] font-bold uppercase tracking-widest">Ghost Outline</button>
+</div>
+</div>
+</div>
+<!-- 5. Border Radius Slider -->
+<div class="bg-surface-container-lowest p-8 rounded-[24px] shadow-sm border border-outline-variant/10">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-sm font-bold text-primary uppercase tracking-wider">Component Geometry</h3>
+<span class="font-['JetBrains_Mono'] text-xs font-bold text-secondary">16px (xl)</span>
+</div>
+<div class="relative flex items-center h-6 mb-2">
+<div class="absolute w-full h-1 bg-surface-container-highest rounded-full"></div>
+<div class="absolute w-[60%] h-1 bg-secondary rounded-full"></div>
+<div class="absolute left-[60%] w-5 h-5 bg-white border-2 border-secondary rounded-full shadow-md cursor-pointer hover:scale-110 transition-transform"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-[9px] uppercase font-bold text-stone-400">Sharp (0px)</span>
+<span class="text-[9px] uppercase font-bold text-stone-400">Organic (48px)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Apply Button -->
+<div class="fixed bottom-10 right-10 flex space-x-4">
+<button class="bg-white text-primary border border-outline-variant px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-xs shadow-xl hover:bg-surface-container transition-colors">
+                    Discard Changes
+                </button>
+<button class="bg-[#d2f000] text-[#154212] px-10 py-4 rounded-xl font-bold uppercase tracking-[0.2em] text-xs shadow-[0_10px_30px_rgba(210,240,0,0.3)] hover:translate-y-[-2px] transition-all active:scale-95">
+                    Apply Theme
+                </button>
+</div>
+</div>
+</main>
+</body></html>

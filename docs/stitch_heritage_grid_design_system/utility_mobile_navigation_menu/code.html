@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=390, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#002201",
+                        "background": "#fdf9f0",
+                        "on-tertiary-container": "#9dd090",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#002201",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#154212",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-variant": "#e6e2d9",
+                        "on-secondary-container": "#5b6900",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#576500",
+                        "on-surface": "#1c1c16",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-dim": "#dddad1",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-container-high": "#ece8df",
+                        "primary-container": "#2d5a27",
+                        "secondary-container": "#d0ed00",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#a1d494",
+                        "on-primary-container": "#9dd090",
+                        "surface-container-low": "#f7f3ea",
+                        "secondary-fixed": "#d2f000",
+                        "outline-variant": "#c2c9bb",
+                        "surface-tint": "#3b6934",
+                        "on-background": "#1c1c16",
+                        "on-secondary-fixed": "#191e00",
+                        "primary-fixed": "#bcf0ae",
+                        "surface-bright": "#fdf9f0",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "on-surface-variant": "#42493e",
+                        "error-container": "#ffdad6",
+                        "surface": "#fdf9f0",
+                        "primary": "#154212",
+                        "tertiary-container": "#2d5a27",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-container": "#f1eee5",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#bcf0ae",
+                        "outline": "#72796e",
+                        "inverse-surface": "#31302b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .heritage-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(210, 240, 0, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(210, 240, 0, 0.05) 1px, transparent 1px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body antialiased">
+<!-- Full-Screen Mobile Navigation Overlay -->
+<div class="fixed inset-0 z-[100] bg-primary heritage-grid flex flex-col overflow-hidden">
+<!-- Header / Top Bar -->
+<div class="flex justify-between items-center px-6 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-2xl" data-weight="fill">sports_handball</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline font-black text-white text-lg tracking-tighter leading-none">AK Sports</span>
+<span class="font-mono text-[10px] text-secondary-fixed uppercase tracking-widest">OS Utilities</span>
+</div>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 text-white active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+</div>
+<!-- User Profile Summary (Top Focus) -->
+<div class="px-6 py-8">
+<div class="bg-primary-container rounded-2xl p-6 flex items-center gap-4 shadow-[0_4px_16px_rgba(45,90,39,0.2)]">
+<img alt="User Profile" class="w-16 h-16 rounded-full border-2 border-secondary-fixed object-cover" data-alt="Close up portrait of a professional athletic director in a dark green polo shirt with subtle stadium background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBg47GNOiMhpaL12_iFRlbXDl_6k3Oj97y0tToDoLGpZVEyrufzuU9xfxrMNBAtlp48gllCSXhnVmak-oyxj-Ska5qYVxzhzr4KxQUZ8MvnVzfvngMmaouxJvwQhVeOVZuyEZmKIS0kWns85pOBxa0WpPJ6QbFNlqqfL4XuBeA4L5zKXPF7gMfPwldSr1LMEOtdh3SlXVJqgdBCrhkSkH28VPasffi9oS_Krl7e0qrJWBMgsbB1oG7qPL8MZNc13YZ6TWJx0g62fYqg"/>
+<div>
+<h3 class="text-white font-headline font-bold text-xl">Arthur Kings</h3>
+<p class="font-mono text-secondary-fixed text-xs uppercase tracking-wider">Executive Director</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
+<span class="text-white/60 text-[10px] uppercase font-medium">System Online</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Navigation Links (The Core List) -->
+<nav class="flex-grow px-6 overflow-y-auto">
+<ul class="space-y-2">
+<!-- Dashboard - Active State -->
+<li>
+<a class="bg-secondary-fixed text-primary rounded-xl px-6 py-5 flex items-center justify-between transition-all active:scale-95" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined" data-weight="fill">dashboard</span>
+<span class="font-headline font-bold uppercase tracking-wider text-sm">Dashboard</span>
+</div>
+<span class="font-mono text-xs opacity-60">01</span>
+</a>
+</li>
+<!-- Files -->
+<li>
+<a class="text-white/70 hover:text-white hover:bg-white/5 rounded-xl px-6 py-5 flex items-center justify-between transition-all group" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-headline font-semibold uppercase tracking-wider text-sm">Files</span>
+</div>
+<span class="font-mono text-xs text-white/30 group-hover:text-secondary-fixed">02</span>
+</a>
+</li>
+<!-- Notifications -->
+<li>
+<a class="text-white/70 hover:text-white hover:bg-white/5 rounded-xl px-6 py-5 flex items-center justify-between transition-all group" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-headline font-semibold uppercase tracking-wider text-sm">Notifications</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="bg-error text-white text-[10px] font-bold px-2 py-0.5 rounded-full">12</span>
+<span class="font-mono text-xs text-white/30 group-hover:text-secondary-fixed">03</span>
+</div>
+</a>
+</li>
+<!-- Roster (New Extension) -->
+<li>
+<a class="text-white/70 hover:text-white hover:bg-white/5 rounded-xl px-6 py-5 flex items-center justify-between transition-all group" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-headline font-semibold uppercase tracking-wider text-sm">Roster</span>
+</div>
+<span class="font-mono text-xs text-white/30 group-hover:text-secondary-fixed">04</span>
+</a>
+</li>
+<!-- Analytics (New Extension) -->
+<li>
+<a class="text-white/70 hover:text-white hover:bg-white/5 rounded-xl px-6 py-5 flex items-center justify-between transition-all group" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-headline font-semibold uppercase tracking-wider text-sm">Analytics</span>
+</div>
+<span class="font-mono text-xs text-white/30 group-hover:text-secondary-fixed">05</span>
+</a>
+</li>
+<!-- Settings -->
+<li>
+<a class="text-white/70 hover:text-white hover:bg-white/5 rounded-xl px-6 py-5 flex items-center justify-between transition-all group" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-headline font-semibold uppercase tracking-wider text-sm">Settings</span>
+</div>
+<span class="font-mono text-xs text-white/30 group-hover:text-secondary-fixed">06</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Bottom Actions (Footer) -->
+<div class="p-6 border-t border-white/5 space-y-4 mb-safe">
+<div class="grid grid-cols-2 gap-4">
+<a class="flex items-center justify-center gap-2 py-4 bg-white/5 rounded-xl text-white/70 font-headline text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all" href="#">
+<span class="material-symbols-outlined text-lg">help_outline</span>
+                    Help
+                </a>
+<a class="flex items-center justify-center gap-2 py-4 bg-white/5 rounded-xl text-white/70 font-headline text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all" href="#">
+<span class="material-symbols-outlined text-lg">build</span>
+                    Utilities
+                </a>
+</div>
+<button class="w-full py-5 bg-white text-primary rounded-2xl flex items-center justify-center gap-3 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined font-bold">logout</span>
+<span class="font-headline font-black uppercase tracking-widest text-sm">Logout</span>
+</button>
+<div class="text-center">
+<p class="font-mono text-[9px] text-white/20 uppercase tracking-widest">AK Sports OS • Version 4.2.1-Lab</p>
+</div>
+</div>
+</div>
+<!-- Background Content (Simulating the screen behind the menu) -->
+<main class="p-6 pt-24 opacity-20 pointer-events-none">
+<h1 class="text-4xl font-headline font-black text-primary uppercase tracking-tighter mb-8">Performance Metrics</h1>
+<div class="grid grid-cols-1 gap-6">
+<div class="h-40 bg-surface-container-high rounded-2xl"></div>
+<div class="h-64 bg-surface-container-high rounded-2xl"></div>
+<div class="h-40 bg-surface-container-high rounded-2xl"></div>
+</div>
+</main>
+</body></html>
