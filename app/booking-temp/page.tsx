@@ -77,7 +77,7 @@ export default function TemporaryBookingPage() {
               </div>
               <h3 className="text-lg font-bold text-[#154212] mb-2">Gamle Fredrikstad GK</h3>
               <p className="text-[#42493e] text-sm">
-                Stevnsgt. 135, 1605 Fredrikstad
+                Kongleveien 142, 1615 Fredrikstad
               </p>
             </div>
 

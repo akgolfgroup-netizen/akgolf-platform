@@ -152,12 +152,12 @@ export const SERVICES = {
 export const LOCATIONS = {
   gfgk: {
     name: "Gamle Fredrikstad Golfklubb",
-    address: "Golfveien 1, 1605 Fredrikstad",
+    address: "Kongleveien 142, 1615 Fredrikstad",
     description: "Hovedlokasjon for AK Golf Academy. Driving range, short game area og 18-hulls bane.",
   },
   miklagard: {
-    name: "Miklagard Golf",
-    address: "Miklagardveien 1, 2004 Lillestrøm",
+    name: "Miklagard Golfklubb",
+    address: "Svingen 120, 2114 Disenå",
     description: "Sekundærlokasjon. Anders tilgjengelig annenhver fredag 13:00-19:00.",
   },
   mulligan: {
