@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="light" lang="no"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#e4e2e2",
+                        "primary-container": "#e4e2e1",
+                        "tertiary-fixed-dim": "#c2def0",
+                        "tertiary-dim": "#3c5666",
+                        "surface-tint": "#5f5e5e",
+                        "on-tertiary-fixed": "#2c4655",
+                        "outline-variant": "#adb3b4",
+                        "surface-container-highest": "#dde4e5",
+                        "error-container": "#fe8983",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary-container": "#525252",
+                        "primary": "#5f5e5e",
+                        "on-tertiary": "#f4faff",
+                        "inverse-primary": "#ffffff",
+                        "surface-variant": "#dde4e5",
+                        "tertiary": "#486272",
+                        "on-error-container": "#752121",
+                        "error": "#9f403d",
+                        "surface-container": "#ebeeef",
+                        "primary-dim": "#535252",
+                        "outline": "#757c7d",
+                        "on-surface-variant": "#5a6061",
+                        "on-primary": "#faf7f6",
+                        "primary-fixed": "#e4e2e1",
+                        "inverse-on-surface": "#9c9d9d",
+                        "on-secondary-fixed": "#3f3f3f",
+                        "surface-dim": "#d4dbdd",
+                        "on-secondary": "#faf8f8",
+                        "inverse-surface": "#0c0f0f",
+                        "on-secondary-fixed-variant": "#5b5b5b",
+                        "secondary-dim": "#535353",
+                        "surface": "#f9f9f9",
+                        "on-surface": "#2d3435",
+                        "surface-container-low": "#f2f4f4",
+                        "on-background": "#2d3435",
+                        "secondary-container": "#e4e2e2",
+                        "tertiary-container": "#d0ecff",
+                        "on-error": "#fff7f6",
+                        "on-tertiary-fixed-variant": "#486272",
+                        "on-primary-fixed-variant": "#5c5b5b",
+                        "tertiary-fixed": "#d0ecff",
+                        "background": "#f9f9f9",
+                        "secondary-fixed-dim": "#d6d4d4",
+                        "error-dim": "#4e0309",
+                        "surface-container-high": "#e4e9ea",
+                        "primary-fixed-dim": "#d6d4d3",
+                        "on-primary-container": "#525251",
+                        "on-tertiary-container": "#3e5868",
+                        "on-primary-fixed": "#3f3f3f",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#5f5f5f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-stone-50 dark:bg-stone-950 flex flex-col p-6 space-y-2 z-40 hidden md:flex">
+<div class="mb-10 px-2">
+<h1 class="text-lg font-black text-neutral-800 dark:text-neutral-100">AK Golf</h1>
+<p class="text-[10px] uppercase tracking-widest text-neutral-500 font-medium">The Architectural Clubhouse</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span> Trening
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span> Statistikk
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="event_available">event_available</span> Bookinger
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span> Dagbok
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span> Kalender
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="radar">radar</span> TrackMan
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl transition-all duration-300 ease-out font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="sports_score">sports_score</span> Øvelser
+            </a>
+<!-- Active Tab: Profil -->
+<a class="flex items-center gap-3 px-4 py-3 bg-neutral-800 text-white dark:bg-neutral-100 dark:text-neutral-900 rounded-xl shadow-lg transition-all duration-300 ease-out font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span> Profil
+            </a>
+</nav>
+<div class="pt-6 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User Profile Avatar" data-alt="close-up portrait of a professional man in a clean white golf polo shirt with a friendly expression and natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh4FfbLFQYlXNMwqeEwCBIkFSwZyOcueVqsZpUEe_NW2VSt1_eA4mAOcWB2dmpU3FxYYRqQZPuEVQAyNCD1nSOgPqOlfOX6ZQ5mwJfSL8kFkOm4v2UW_KYHd4gdw6kcJsMLPPH44JRybooHcuUxN6vnOMOheWNdPQ4hMo2_RYYq365Gx0iq1xkVnUPRkvy_9lRh7sugnFs1fv1wYT6kXEpC4p1MfvvAL9kZZ9zI2_fyxubs1VvrUBkzxiuoyVWVRPViJnoUC4MtJw"/>
+</div>
+<div>
+<p class="text-sm font-bold">Anders K.</p>
+<p class="text-[10px] text-neutral-500 uppercase tracking-widest">HCP 12.4</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Anchor (Mobile) -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl dark:bg-stone-900/80 shadow-[0_40px_40px_-15px_rgba(45,52,53,0.04)] md:hidden">
+<div class="flex justify-between items-center w-full px-6 py-4">
+<h1 class="text-xl font-bold tracking-tighter text-neutral-800 dark:text-neutral-100">AK Golf Portal</h1>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-neutral-700 dark:text-neutral-300" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-neutral-700 dark:text-neutral-300" data-icon="menu">menu</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-20 md:pt-0 pb-32 min-h-screen transition-all duration-300">
+<div class="max-w-5xl mx-auto px-6 py-12">
+<!-- Page Header -->
+<header class="mb-12">
+<h2 class="text-[36px] font-bold tracking-tight text-on-surface">Din profil</h2>
+<div class="h-1 w-12 bg-primary mt-2 rounded-full"></div>
+</header>
+<!-- Profile Bento Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Profile Card Hero (Left Column) -->
+<section class="lg:col-span-4 flex flex-col gap-8">
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_40px_40px_-15px_rgba(45,52,53,0.04)] flex flex-col items-center text-center">
+<div class="relative group">
+<div class="w-32 h-32 rounded-full overflow-hidden mb-6 ring-4 ring-surface-container">
+<img alt="Anders K." data-alt="professional male portrait with soft studio lighting and neutral grey background high-end aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj43W8sba1NgJyVyOwhkBSbvKsO2DBaDCN-YcX-9JDgKL8iIZiQ15iC4Tfw3FVVjgL8FkMr06CncBxnnc4ZHOhcvN0B3Ow6wXlgOAhsqOyRst0m3iIGn8Ega4e4QZytsXpbU22P4cIl4VXH-JPBdTp53QHSx_6gAKa4BOHMml6JwOeTPROhERiQurRhZokQ4wd1Y0ljPZsEAPFtRslhG6_ZogxvcxOEuycpG0DeUVk4_Z2UkY40PkgNE_4SIVbjZu1eRgAU_ZP-8c"/>
+</div>
+<button class="absolute bottom-4 right-0 bg-primary text-on-primary p-2 rounded-full shadow-lg hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+<h3 class="headline-lg text-2xl font-bold">Anders K.</h3>
+<p class="text-neutral-500 text-sm mb-4">Medlem siden 2023</p>
+<div class="flex flex-col items-center gap-2 w-full mt-4">
+<div class="bg-tertiary-container px-6 py-3 rounded-xl w-full">
+<span class="label-sm uppercase tracking-wider text-on-tertiary-container block">Handicap</span>
+<span class="display-md text-[2.75rem] font-bold text-on-tertiary-container leading-none">12.4</span>
+</div>
+<button class="mt-4 text-sm font-semibold text-primary hover:text-primary-dim transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="photo_camera">photo_camera</span>
+                                Endre bilde
+                            </button>
+</div>
+</div>
+<!-- Security Section -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_40px_40px_-15px_rgba(45,52,53,0.04)]">
+<h4 class="text-sm font-bold uppercase tracking-widest text-neutral-400 mb-6">Sikkerhet</h4>
+<div class="space-y-6">
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-high rounded-xl hover:bg-surface-container-highest transition-colors group">
+<span class="font-medium">Endre passord</span>
+<span class="material-symbols-outlined text-neutral-400 group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</button>
+<div class="flex items-center justify-between p-4 border-t border-outline-variant/10">
+<div>
+<p class="font-medium">2FA Autentisering</p>
+<p class="text-xs text-neutral-500">Ekstra sikkerhetslag</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Form Sections (Right Column) -->
+<section class="lg:col-span-8 flex flex-col gap-8">
+<!-- Personlig informasjon -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_40px_40px_-15px_rgba(45,52,53,0.04)]">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary" data-icon="person_outline">person_outline</span>
+<h4 class="text-lg font-bold">Personlig informasjon</h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="label-md font-bold text-xs uppercase tracking-wider text-neutral-500">Fornavn</label>
+<input class="w-full bg-surface-container-high rounded-xl border-none p-4 focus:ring-0 focus:bg-surface-container-highest transition-all" type="text" value="Anders"/>
+</div>
+<div class="space-y-2">
+<label class="label-md font-bold text-xs uppercase tracking-wider text-neutral-500">Etternavn</label>
+<input class="w-full bg-surface-container-high rounded-xl border-none p-4 focus:ring-0 focus:bg-surface-container-highest transition-all" type="text" value="K."/>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="label-md font-bold text-xs uppercase tracking-wider text-neutral-500">E-post</label>
+<div class="relative">
+<input class="w-full bg-surface-container-high rounded-xl border-none p-4 focus:ring-0 focus:bg-surface-container-highest transition-all pr-12" type="email" value="anders.k@golf.no"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500 text-sm" data-icon="verified" data-weight="fill">verified</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="label-md font-bold text-xs uppercase tracking-wider text-neutral-500">Telefon</label>
+<input class="w-full bg-surface-container-high rounded-xl border-none p-4 focus:ring-0 focus:bg-surface-container-highest transition-all" type="tel" value="+47 900 00 000"/>
+</div>
+<div class="space-y-2">
+<label class="label-md font-bold text-xs uppercase tracking-wider text-neutral-500">Fødselsdato</label>
+<input class="w-full bg-surface-container-high rounded-xl border-none p-4 focus:ring-0 focus:bg-surface-container-highest transition-all" type="date" value="1990-05-15"/>
+</div>
+</div>
+</div>
+<!-- Golf-informasjon -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_40px_40px_-15px_rgba(45,52,53,0.04)]">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary" data-icon="sports_golf">sports_golf</span>
+<h4 class="text-lg font-bold">Golf-informasjon</h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="label-md font-bold text-xs uppercase tracking-wider text-neutral-500">Nåværende Handicap</label>
+<input class="w-full bg-surface-container-high rounded-xl border-none p-4 focus:ring-0 focus:bg-surface-container-highest transition-all font-mono font-bold" type="text" value="12.4"/>
+</div>
+<div class="space-y-2">
+<label class="label-md font-bold text-xs uppercase tracking-wider text-neutral-500">Målhandicap</label>
+<input class="w-full bg-surface-container-high rounded-xl border-none p-4 focus:ring-0 focus:bg-surface-container-highest transition-all font-mono font-bold text-primary" type="text" value="9.9"/>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="label-md font-bold text-xs uppercase tracking-wider text-neutral-500">Hjemmebane</label>
+<select class="w-full bg-surface-container-high rounded-xl border-none p-4 focus:ring-0 focus:bg-surface-container-highest transition-all appearance-none">
+<option>Oslo Golfklubb</option>
+<option>Miklagard Golf</option>
+<option>Losby Golfpark</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="label-md font-bold text-xs uppercase tracking-wider text-neutral-500">Spillefrekvens</label>
+<select class="w-full bg-surface-container-high rounded-xl border-none p-4 focus:ring-0 focus:bg-surface-container-highest transition-all">
+<option>2-3 ganger i uken</option>
+<option>Ukentlig</option>
+<option>Månedlig</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="label-md font-bold text-xs uppercase tracking-wider text-neutral-500">Høyre/venstrehendt</label>
+<div class="flex gap-2">
+<button class="flex-1 py-3 rounded-xl bg-primary text-on-primary font-bold text-sm">Høyre</button>
+<button class="flex-1 py-3 rounded-xl bg-surface-container-high text-neutral-600 font-bold text-sm hover:bg-surface-container-highest">Venstre</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Kontaktpreferanser -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_40px_40px_-15px_rgba(45,52,53,0.04)]">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary" data-icon="notifications_active">notifications_active</span>
+<h4 class="text-lg font-bold">Kontaktpreferanser</h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-neutral-400" data-icon="mail">mail</span>
+<span class="font-medium text-sm">E-post</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-10 h-5 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-neutral-400" data-icon="sms">sms</span>
+<span class="font-medium text-sm">SMS</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-10 h-5 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-neutral-400" data-icon="alarm">alarm</span>
+<span class="font-medium text-sm">Påminnelser</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-10 h-5 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-neutral-400" data-icon="newspaper">newspaper</span>
+<span class="font-medium text-sm">Nyhetsbrev</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-10 h-5 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Danger Zone -->
+<div class="p-8 border border-error/20 rounded-xl bg-error/5 flex items-center justify-between">
+<div>
+<p class="font-bold text-error">Slett konto</p>
+<p class="text-xs text-error/70">Dette kan ikke angres. All din data vil bli permanent slettet.</p>
+</div>
+<button class="text-sm font-bold text-error hover:underline px-4 py-2">Slett konto</button>
+</div>
+</section>
+</div>
+<!-- Footer Actions -->
+<div class="mt-12 flex flex-col md:flex-row items-center justify-end gap-4 border-t border-outline-variant/10 pt-8">
+<button class="w-full md:w-auto px-8 py-3 text-neutral-500 font-bold hover:text-on-surface transition-colors">
+                    Avbryt
+                </button>
+<button class="w-full md:w-auto px-12 py-4 bg-primary text-on-primary rounded-xl font-bold shadow-lg hover:bg-primary-dim transition-all active:scale-95 duration-200">
+                    Lagre endringer
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full bg-surface/80 backdrop-blur-xl border-t border-outline-variant/10 flex justify-around items-center py-4 px-2 md:hidden z-50">
+<button class="flex flex-col items-center gap-1 text-neutral-500">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Hjem</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-neutral-500">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Stats</span>
+</button>
+<button class="flex flex-col items-center gap-1 bg-primary text-on-primary p-3 rounded-full -mt-10 shadow-xl">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-neutral-500">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Booking</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="person" data-weight="fill">person</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Profil</span>
+</button>
+</nav>
+</body></html>

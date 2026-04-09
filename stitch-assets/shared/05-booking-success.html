@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="no"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f9f9f9",
+                    "primary-fixed": "#6bff8f",
+                    "outline-variant": "#bccbb9",
+                    "surface-dim": "#dadada",
+                    "on-tertiary-fixed-variant": "#7f2a21",
+                    "surface-container-highest": "#e2e2e2",
+                    "secondary": "#2f6a3c",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#afefb4",
+                    "tertiary-fixed-dim": "#ffb4a9",
+                    "on-tertiary-fixed": "#410001",
+                    "inverse-surface": "#2f3131",
+                    "surface-container-low": "#f3f3f3",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#145126",
+                    "outline": "#6d7b6c",
+                    "on-surface": "#1a1c1c",
+                    "tertiary-container": "#ff8b7c",
+                    "surface-bright": "#f9f9f9",
+                    "surface-container": "#eeeeee",
+                    "on-secondary-container": "#346e40",
+                    "surface-variant": "#e2e2e2",
+                    "on-secondary-fixed": "#002109",
+                    "on-primary-fixed": "#002109",
+                    "tertiary-fixed": "#ffdad5",
+                    "background": "#f9f9f9",
+                    "primary-container": "#22c55e",
+                    "primary": "#006e2f",
+                    "surface-tint": "#006e2f",
+                    "on-background": "#1a1c1c",
+                    "primary-fixed-dim": "#4ae176",
+                    "on-primary-fixed-variant": "#005321",
+                    "inverse-on-surface": "#f1f1f1",
+                    "surface-container-high": "#e8e8e8",
+                    "on-tertiary-container": "#76231b",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#3d4a3d",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#4ae176",
+                    "tertiary": "#9e4036",
+                    "on-primary-container": "#004b1e",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#b2f2b7",
+                    "secondary-fixed-dim": "#96d59d",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .success-gradient { background: linear-gradient(135deg, #006e2f 0%, #22c55e 100%); }
+        .tonal-layer { background-color: #f3f3f3; }
+        .card-shadow { box-shadow: 0 40px 40px -12px rgba(26, 28, 28, 0.06); }
+    </style>
+</head>
+<body class="antialiased text-on-surface">
+<!-- TopAppBar Section -->
+<header class="fixed top-0 w-full z-50 bg-white/70 dark:bg-zinc-950/70 backdrop-blur-xl">
+<div class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+<span class="text-xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50">AK Golf</span>
+<nav class="hidden md:flex gap-8 items-center">
+<span class="text-zinc-500 dark:text-zinc-400 font-medium cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors px-3 py-1 rounded-full">Home</span>
+<span class="text-zinc-500 dark:text-zinc-400 font-medium cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors px-3 py-1 rounded-full">Bookings</span>
+<span class="text-zinc-500 dark:text-zinc-400 font-medium cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors px-3 py-1 rounded-full">Courses</span>
+<span class="text-green-700 dark:text-green-500 font-semibold cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors px-3 py-1 rounded-full">Profile</span>
+</nav>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-zinc-900">menu</span>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-4 md:px-8">
+<div class="max-w-4xl mx-auto space-y-12">
+<!-- Success Card -->
+<section class="bg-surface-container-lowest rounded-lg card-shadow p-12 md:p-16 text-center relative overflow-hidden">
+<!-- Subtle Topographic Decorative Element -->
+<div class="absolute top-0 right-0 opacity-5 pointer-events-none -translate-y-1/4 translate-x-1/4">
+<img alt="" class="w-96 h-96" data-alt="abstract minimalist topographic map contour lines in soft green and grey on white background clean golf aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqstrNQj6O_uPgmcTZDEu0Fw3hR4HrEtvtjQCrU8pLojYhPb9BOmFBQg9fg-mICC-CKWl83ibJPjLHWSyQjscm53iXBknIvqojfKz1_nwRF8L9L9WE6vIfmLnUkrAy5sLox6FYhH-ZnJ5_-MaTzFrqyZTr-U2x5ubqmi4Qa_mhL1ICp5V7IY4_NW274wznaLsJDsUqFwhtz-7g1WVeJT5ijm8GyVjP4nYSTCulntmiVKI1T1o_0c59NrwFAM76CWHUrZy5l6RLivE"/>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-24 h-24 success-gradient rounded-full flex items-center justify-center mb-8 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-5xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h1 class="text-[3.5rem] leading-none font-extrabold tracking-tighter text-primary-container mb-4">Booking bekreftet!</h1>
+<p class="text-lg text-on-surface-variant max-w-md mx-auto leading-relaxed">
+                        Takk for din booking. Vi gleder oss til å se deg!
+                    </p>
+</div>
+</section>
+<!-- Booking Summary & Next Steps Bento-ish Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Summary Table -->
+<section class="md:col-span-7 bg-surface-container-lowest rounded-lg p-10 card-shadow">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<h2 class="text-xl font-bold tracking-tight">Tee Time Details</h2>
+</div>
+<div class="space-y-6">
+<div class="flex justify-between items-center py-2">
+<span class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">Service</span>
+<span class="text-lg font-semibold">Coaching Session</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">Date</span>
+<span class="text-lg font-semibold">Torsdag 8. mai 2026</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">Time</span>
+<span class="text-lg font-semibold">10:00 - 11:00</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">Location</span>
+<span class="text-lg font-semibold">AK Golf Academy</span>
+</div>
+<div class="pt-6 mt-6 border-t border-outline-variant/20 flex justify-between items-center">
+<span class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">Total</span>
+<span class="text-2xl font-black text-primary">kr 1.250,-</span>
+</div>
+</div>
+<div class="mt-10 p-6 bg-surface-container-low rounded-xl">
+<p class="text-sm text-on-surface-variant mb-6">
+                            En bekreftelse er sendt til: <span class="font-semibold text-on-surface">ola@example.com</span>
+</p>
+<div class="flex flex-wrap gap-4">
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-primary text-sm font-semibold hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-xl">event</span>
+                                Google Calendar
+                            </button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-primary text-sm font-semibold hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-xl">calendar_add_on</span>
+                                iCal
+                            </button>
+</div>
+</div>
+</section>
+<!-- Next Steps & QR Section -->
+<div class="md:col-span-5 space-y-8">
+<section class="bg-surface-container-lowest rounded-lg p-10 card-shadow">
+<h2 class="text-xl font-bold tracking-tight mb-8">Hva skjer nå?</h2>
+<ul class="space-y-6">
+<li class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container text-sm">notifications</span>
+</div>
+<p class="text-on-surface-variant leading-snug">Reminder 24h before your session starts.</p>
+</li>
+<li class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container text-sm">schedule</span>
+</div>
+<p class="text-on-surface-variant leading-snug">Arrive 10 min early to warm up.</p>
+</li>
+<li class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container text-sm">sports_golf</span>
+</div>
+<p class="text-on-surface-variant leading-snug">Bring gear or borrow from us at the academy.</p>
+</li>
+</ul>
+</section>
+<section class="bg-surface-container-lowest rounded-lg p-10 card-shadow text-center">
+<div class="inline-block p-6 bg-white border border-outline-variant/10 rounded-xl mb-4">
+<img alt="QR Code" class="w-32 h-32 opacity-80" data-alt="minimal modern qr code stylized for a premium golf brand green and white flat design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO5CgP1mHEaL9VbLAf71AxsKRtM8kF7B1w6u2-TlfCG3B5ZLPX-2D3BJoNbCRcLyifCxOhcw-jVCyn95tnzRQpz61-QTzufsQfWTPmK14RiUGxGoraCSEWrI8iop1afWVjR2B69XXXpUPcr8CCvF_7h5GM_aMUMKy3Ob19rABidTO9FS07fNbZNzaHCJiOLtm0IT0rVyoFtypvd1S8Y9bv0Em9gNQy4SYkNwffvEeJTmLkW3fFuBCKjorOo2-n-SdB4C4HL6W_cmA"/>
+</div>
+<p class="text-xs font-bold tracking-widest text-on-surface-variant uppercase">Vis denne koden ved ankomst</p>
+</section>
+</div>
+</div>
+<!-- Global Actions -->
+<div class="flex flex-col md:flex-row gap-4 items-center justify-center pt-8">
+<button class="w-full md:w-auto px-12 py-5 rounded-full success-gradient text-white font-bold tracking-tight shadow-xl shadow-primary/30 hover:scale-105 transition-transform duration-200">
+                    Gå til din konto
+                </button>
+<button class="w-full md:w-auto px-12 py-5 rounded-full bg-surface-container-high text-on-surface-variant font-bold tracking-tight hover:bg-surface-variant transition-colors">
+                    Book flere timer
+                </button>
+</div>
+<!-- Support Footer -->
+<footer class="text-center pt-12 pb-8">
+<div class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-surface-container text-on-surface-variant text-sm font-medium">
+<span class="material-symbols-outlined text-lg">support_agent</span>
+                    Spørsmål? Kontakt oss: <span class="font-bold text-on-surface ml-1">+47 123 45 678</span>
+</div>
+</footer>
+</div>
+</main>
+<!-- BottomNavBar Section (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/70 dark:bg-zinc-950/70 backdrop-blur-xl flex justify-around items-center px-4 pb-6 pt-3 z-50 rounded-t-[24px] shadow-[0_-8px_40px_-12px_rgba(0,0,0,0.06)]">
+<div class="flex flex-col items-center justify-center text-zinc-500 dark:text-zinc-400 px-5 py-1.5 transition-transform active:scale-90 duration-200">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[11px] font-medium tracking-wide uppercase mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-500 dark:text-zinc-400 px-5 py-1.5 transition-transform active:scale-90 duration-200">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[11px] font-medium tracking-wide uppercase mt-1">Bookings</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-500 dark:text-zinc-400 px-5 py-1.5 transition-transform active:scale-90 duration-200">
+<span class="material-symbols-outlined">golf_course</span>
+<span class="text-[11px] font-medium tracking-wide uppercase mt-1">Courses</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full px-5 py-1.5 transition-transform active:scale-90 duration-200">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[11px] font-medium tracking-wide uppercase mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

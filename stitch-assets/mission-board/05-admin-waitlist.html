@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="nb"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#06201b",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#ceb3ff",
+                        "on-tertiary-fixed-variant": "#591fb0",
+                        "on-surface-variant": "#3f4946",
+                        "on-tertiary-fixed": "#260058",
+                        "inverse-on-surface": "#f4f0e9",
+                        "outline-variant": "#bec9c5",
+                        "outline": "#6f7976",
+                        "surface-bright": "#fdf9f2",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e6e2db",
+                        "surface-container": "#f1ede6",
+                        "on-secondary-container": "#506963",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#cce9e0",
+                        "on-background": "#1c1c18",
+                        "secondary-fixed-dim": "#b1ccc4",
+                        "surface-dim": "#dddad3",
+                        "tertiary": "#49009e",
+                        "surface-tint": "#1e6a5c",
+                        "secondary-container": "#cce9e0",
+                        "on-secondary-fixed-variant": "#334c45",
+                        "on-surface": "#1c1c18",
+                        "surface-container-high": "#ece8e1",
+                        "tertiary-fixed-dim": "#d4bbff",
+                        "inverse-surface": "#31302c",
+                        "surface-variant": "#e6e2db",
+                        "primary-container": "#00594c",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ebdcff",
+                        "background": "#fdf9f2",
+                        "on-primary-fixed-variant": "#005145",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#a9f0df",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#87cdbd",
+                        "inverse-primary": "#8dd4c3",
+                        "tertiary-container": "#612ab7",
+                        "primary": "#004036",
+                        "surface-container-low": "#f7f3ec",
+                        "secondary": "#4a635d",
+                        "primary-fixed-dim": "#8dd4c3",
+                        "on-primary-fixed": "#00201a",
+                        "surface": "#fdf9f2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shift-low { background-color: #f7f3ec; }
+        .tonal-shift-surface-low { background-color: rgba(253, 249, 242, 0.8); }
+        .no-border { border: none !important; }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 hidden lg:flex flex-col bg-[#f7f3ec] dark:bg-[#1c1c18] tonal-shift-low z-40">
+<div class="px-6 py-8">
+<div class="flex items-center gap-3 mb-10">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">golf_course</span>
+</div>
+<div>
+<h2 class="text-emerald-900 dark:text-emerald-50 font-bold tracking-tighter uppercase text-lg leading-tight">AK Golf</h2>
+<p class="font-inter uppercase tracking-widest text-[10px] font-bold text-secondary">Premium Admin</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#4a635d] dark:text-[#bec9c5] mx-2 font-inter uppercase tracking-widest text-[10px] font-bold hover:bg-[#bec9c5]/20 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Live Queue (ACTIVE) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-[#004036] text-[#fdf9f2] rounded-lg mx-2 font-inter uppercase tracking-widest text-[10px] font-bold transition-all scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">hourglass_empty</span>
+<span>Live Queue</span>
+</a>
+<!-- Member Registry -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#4a635d] dark:text-[#bec9c5] mx-2 font-inter uppercase tracking-widest text-[10px] font-bold hover:bg-[#bec9c5]/20 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Member Registry</span>
+</a>
+<!-- Facility Status -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#4a635d] dark:text-[#bec9c5] mx-2 font-inter uppercase tracking-widest text-[10px] font-bold hover:bg-[#bec9c5]/20 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">stadium</span>
+<span>Facility Status</span>
+</a>
+<!-- AI Insights -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#4a635d] dark:text-[#bec9c5] mx-2 font-inter uppercase tracking-widest text-[10px] font-bold hover:bg-[#bec9c5]/20 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-tertiary">auto_awesome</span>
+<span>AI Insights</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto px-6 py-8 border-t border-outline-variant/10">
+<button class="w-full bg-primary text-white py-3 rounded-xl font-bold text-xs uppercase tracking-widest mb-6 flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm">add</span>
+                Manual Entry
+            </button>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-[#4a635d] font-inter uppercase tracking-widest text-[10px] font-bold hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">help_outline</span> Support
+                </a>
+<a class="flex items-center gap-3 px-4 py-2 text-[#4a635d] font-inter uppercase tracking-widest text-[10px] font-bold hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">history</span> Archive
+                </a>
+</nav>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 lg:ml-64 min-h-screen relative">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 lg:left-64 z-30 flex justify-between items-center px-8 h-16 w-full bg-[#fdf9f2]/80 dark:bg-[#1c1c18]/80 backdrop-blur-md shadow-xl shadow-[#1c1c18]/5 no-border">
+<div class="flex items-center gap-8">
+<h1 class="text-xl font-bold tracking-tighter text-[#004036] dark:text-[#fdf9f2] uppercase font-inter">Mission Control</h1>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-[#4a635d] dark:text-[#bec9c5] font-medium font-inter tracking-tight hover:text-[#004036] transition-colors" href="#">Waitlist</a>
+<a class="text-[#4a635d] dark:text-[#bec9c5] font-medium font-inter tracking-tight hover:text-[#004036] transition-colors" href="#">Tee Times</a>
+<a class="text-[#4a635d] dark:text-[#bec9c5] font-medium font-inter tracking-tight hover:text-[#004036] transition-colors" href="#">Members</a>
+<a class="text-[#4a635d] dark:text-[#bec9c5] font-medium font-inter tracking-tight hover:text-[#004036] transition-colors" href="#">Reports</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="absolute inset-y-0 left-3 flex items-center text-outline">
+<span class="material-symbols-outlined text-lg">search</span>
+</span>
+<input class="bg-surface-container-high border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 w-64 transition-all" placeholder="Search entries..." type="text"/>
+</div>
+<button class="w-10 h-10 flex items-center justify-center text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<img alt="Admin profile avatar" class="w-8 h-8 rounded-full border border-outline-variant/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFpKum4q914WkgnJzvXa9ERCQy13ZkUd-9N3qjIVR70zm2S-bhf1_KjYOc5YE25yt-a6yTnazR5Eb6TV5Zav-mvQdwssiCMSjG68aWZ2A6LyJjCN6pHy9_eE23qmZE2vn5qP8aNN0KqHE2B3Zr553orKAw9FEL5dNdgQWm9XDLML-6AOD-mXHf8rUcjX36dUzn6PKhOYl9POJBcT_uOSNc-ohI7mWcT1_lNFgNyuo36wfdKi1KLeYGBaDA3ROUpLXAtI2PnrKJayU"/>
+</div>
+</header>
+<!-- Content Area -->
+<div class="pt-24 px-8 pb-12">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+<div>
+<div class="flex items-center gap-4 mb-2">
+<h2 class="text-3xl font-bold tracking-tight text-primary font-headline">Venteliste &amp; Forespørsler</h2>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">5 venter på svar</span>
+</div>
+<p class="text-secondary max-w-xl">Håndter innkommende forespørsler og optimaliser klubbens kapasitet med AI-drevne tidsforslag.</p>
+</div>
+<div class="flex gap-2 bg-surface-container-low p-1 rounded-xl">
+<button class="px-6 py-2 rounded-lg bg-surface-container-lowest shadow-sm text-primary font-bold text-xs uppercase tracking-widest">Venteliste</button>
+<button class="px-6 py-2 rounded-lg text-secondary hover:text-primary font-bold text-xs uppercase tracking-widest transition-colors">Avvist</button>
+<button class="px-6 py-2 rounded-lg text-secondary hover:text-primary font-bold text-xs uppercase tracking-widest transition-colors">Historikk</button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 shadow-sm relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-1">Konverteringsrate</p>
+<h3 class="text-4xl font-extrabold text-primary tracking-tighter">75%</h3>
+<p class="text-xs text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-emerald-600">trending_up</span>
+                            +5% fra forrige uke
+                        </p>
+</div>
+<!-- Sparkline SVG placeholder -->
+<svg class="absolute bottom-0 left-0 w-full h-12 text-primary opacity-5" preserveaspectratio="none" viewbox="0 0 100 20">
+<path d="M0,20 Q25,5 50,15 T100,5 V20 H0 Z" fill="currentColor"></path>
+</svg>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 shadow-sm">
+<p class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-1">Gjennomsnittlig ventetid</p>
+<h3 class="text-4xl font-extrabold text-primary tracking-tighter">2 dager</h3>
+<p class="text-xs text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                        Optimalisert flyt
+                    </p>
+</div>
+<div class="bg-tertiary/5 p-6 rounded-xl border border-tertiary/10 shadow-sm flex flex-col justify-between">
+<div>
+<p class="text-[10px] font-bold uppercase tracking-widest text-tertiary mb-1">AI Insight</p>
+<p class="text-sm font-medium text-on-surface leading-tight">Ledig kapasitet fredag ettermiddag. Tilby Kari Olsen tid kl 14:00.</p>
+</div>
+<button class="text-tertiary text-xs font-bold uppercase tracking-widest flex items-center gap-1 mt-4">
+                        Se detaljer <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Filters Bar -->
+<div class="flex flex-wrap gap-4 mb-8 items-center">
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-lg border border-outline-variant/10">
+<span class="material-symbols-outlined text-lg text-secondary">calendar_today</span>
+<span class="text-sm font-medium">8. Mai - 15. Mai</span>
+</div>
+<select class="bg-surface-container-low border-outline-variant/10 rounded-lg text-sm font-medium focus:ring-primary focus:border-primary px-4 py-2 pr-10">
+<option>Alle tjenester</option>
+<option>Privattimer</option>
+<option>Simulator</option>
+</select>
+<select class="bg-surface-container-low border-outline-variant/10 rounded-lg text-sm font-medium focus:ring-primary focus:border-primary px-4 py-2 pr-10">
+<option>Status: Venter</option>
+<option>Status: Alle</option>
+</select>
+<div class="flex-1"></div>
+<p class="text-xs text-secondary font-medium">Viser 2 av 5 forespørsler</p>
+</div>
+<!-- Table -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant/5">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-secondary">Elev</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-secondary">Ønsket tid</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-secondary">Alternativer</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-secondary">Status</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-secondary text-right">Handlinger</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-6">
+<div class="flex items-center gap-3">
+<img alt="Kari Olsen" class="w-10 h-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD993ebxQIXUNJrlW1EbgbBHQQmbH3soGkSfkbWulVywa69cjx7morfMQ1O0UDbpcVHFopX_u6nOHA_OJAtxOSEomWBpIVWKnYwEPVs5VbeG0AMiROEH-o6ngQrhKFwZIBanJKswr_CqFrsiVu-RTlc3WexwIbjcwmQv_Do19C3gTH29J-adroEvsNykEzTY2sQdSIOcVqRCbtq2dYhCyOOqPIaS8Qz1b5-mXTVnGp6M2vWzHmwxWXt53eHfw3tXCrHJbHeU7SjOhU"/>
+<div>
+<p class="font-bold text-sm text-primary">Kari Olsen</p>
+<p class="text-xs text-secondary">Medlem siden 2021</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<p class="text-sm font-semibold">Tor 8. mai, 10:00</p>
+<p class="text-xs text-secondary">Pro: Anders Knudsen</p>
+</td>
+<td class="px-6 py-6">
+<span class="bg-secondary/5 text-secondary px-2 py-1 rounded text-xs">Ons/Fre også OK</span>
+</td>
+<td class="px-6 py-6">
+<span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide">Venter</span>
+</td>
+<td class="px-6 py-6 text-right">
+<div class="flex justify-end gap-2">
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold transition-all hover:shadow-md active:scale-95">Tilby annen tid</button>
+<button class="text-secondary hover:text-error px-3 py-2 rounded-lg text-xs font-bold transition-colors">Avvis</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-6">
+<div class="flex items-center gap-3">
+<img alt="Per Nielsen" class="w-10 h-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDglY2HJ7h4OqPcv2y-6S1hEUnk8-SfELRrksTA-4k64zi1Y56dWLats4V97bVz1mLjWhaxPYzynrGLnvC7ZeQh1E5CzsoPstb-Qd1-KjBismgwzKeyANVQoJCBaX6VzCRr5_yjJadT4qsuLxCySGqr51RDJrzjsjKbG0hpiP8PwGAAuxHEaIU4uPudoq1tTLZoU0IfIpclqQgL70_9iZgze1M3KO7hG1368TOWDnIGTRJ-uE8PBS78M0-sIWd3KL07xUDgpMiYYyQ"/>
+<div>
+<p class="font-bold text-sm text-primary">Per Nielsen</p>
+<p class="text-xs text-secondary">Gjestespiller</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<p class="text-sm font-semibold">Fre 10. mai, ettermiddag</p>
+<p class="text-xs text-secondary">Simulator 1</p>
+</td>
+<td class="px-6 py-6">
+<span class="bg-secondary/5 text-secondary px-2 py-1 rounded text-xs">Når som helst</span>
+</td>
+<td class="px-6 py-6">
+<span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide">Venter</span>
+</td>
+<td class="px-6 py-6 text-right">
+<div class="flex justify-end gap-2">
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold transition-all hover:shadow-md active:scale-95">Tilby annen tid</button>
+<button class="text-secondary hover:text-error px-3 py-2 rounded-lg text-xs font-bold transition-colors">Avvis</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Quick Action Modal (Overlay) -->
+<div class="fixed inset-0 bg-on-background/20 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+<div class="bg-surface-container-lowest w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-outline-variant/10">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-low/30">
+<h3 class="text-lg font-bold text-primary">Tilby alternativ tid til Kari Olsen</h3>
+<button class="text-secondary hover:text-on-surface">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-8">
+<label class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-3">Anbefalte ledige tider</label>
+<div class="grid grid-cols-2 gap-3 mb-8">
+<button class="border-2 border-primary bg-primary/5 p-4 rounded-xl text-left transition-all">
+<p class="text-xs font-bold text-primary mb-1 uppercase">Beste match (AI)</p>
+<p class="font-bold text-sm">Fre 9. mai</p>
+<p class="text-xs text-secondary">kl. 11:00</p>
+</button>
+<button class="border border-outline-variant/30 hover:border-primary p-4 rounded-xl text-left transition-all">
+<p class="text-xs font-bold text-secondary mb-1 uppercase">Alternativ</p>
+<p class="font-bold text-sm">Man 12. mai</p>
+<p class="text-xs text-secondary">kl. 09:30</p>
+</button>
+</div>
+<div class="mb-8">
+<label class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-3">Melding til kunden</label>
+<div class="relative">
+<textarea class="w-full bg-surface-container-low border-none rounded-xl p-4 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 resize-none" rows="4">Hei Kari! Vi har dessverre fullt på torsdag, men vi har ledig tid fredag 9. mai kl 11:00 som vi tror passer deg godt. Ønsker du å booke denne?</textarea>
+<button class="absolute bottom-3 right-3 text-tertiary flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+                                Regenerer
+                            </button>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-primary text-white py-4 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                            Send tilbud
+                        </button>
+<button class="px-6 py-4 rounded-xl font-bold uppercase tracking-widest text-xs text-secondary hover:bg-surface-container-low transition-all">
+                            Avbryt
+                        </button>
+</div>
+</div>
+<div class="px-8 py-4 bg-tertiary/5 border-t border-tertiary/10 flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="text-[10px] font-semibold text-tertiary/80 uppercase tracking-wider leading-relaxed">Systemet sender automatisk SMS og E-post ved bekreftelse.</p>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="nb"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#fefcff",
+                        "on-secondary-fixed": "#001a41",
+                        "primary-container": "#2d6a4f",
+                        "surface-tint": "#2c694e",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#b1f0ce",
+                        "surface-variant": "#e2e2e2",
+                        "outline-variant": "#bfc9c1",
+                        "tertiary-fixed-dim": "#ffb3b3",
+                        "on-primary-container": "#a8e7c5",
+                        "surface-container-highest": "#e2e2e2",
+                        "tertiary-container": "#8d4d4e",
+                        "secondary": "#0058bc",
+                        "tertiary": "#713638",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#6f3537",
+                        "on-primary": "#ffffff",
+                        "outline": "#707973",
+                        "error-container": "#ffdad6",
+                        "background": "#f9f9f9",
+                        "tertiary-fixed": "#ffdad9",
+                        "inverse-primary": "#95d4b3",
+                        "on-primary-fixed-variant": "#0e5138",
+                        "surface-container-high": "#e8e8e8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#004493",
+                        "primary-fixed-dim": "#95d4b3",
+                        "surface": "#f9f9f9",
+                        "secondary-container": "#0070eb",
+                        "on-tertiary-container": "#ffcfce",
+                        "on-background": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#eeeeee",
+                        "inverse-surface": "#2f3131",
+                        "surface-dim": "#dadada",
+                        "surface-bright": "#f9f9f9",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f3f3f3",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-tertiary-fixed": "#390b0e",
+                        "on-primary-fixed": "#002114",
+                        "primary": "#0f5238",
+                        "on-surface": "#1a1c1c",
+                        "on-surface-variant": "#404943",
+                        "secondary-fixed-dim": "#adc6ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f9f9f9]/80 backdrop-blur-xl flex justify-between items-center px-8 py-4 max-w-full">
+<div class="flex items-center gap-12">
+<span class="text-xl font-black tracking-tighter text-[#0f5238]">The Clubhouse</span>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#1a1c1c]/60 font-medium hover:text-[#0f5238] transition-colors duration-300" href="#">Dashboard</a>
+<a class="text-[#0f5238] font-bold border-b-2 border-[#0f5238] pb-1" href="#">Bookings</a>
+<a class="text-[#1a1c1c]/60 font-medium hover:text-[#0f5238] transition-colors duration-300" href="#">Coaching</a>
+<a class="text-[#1a1c1c]/60 font-medium hover:text-[#0f5238] transition-colors duration-300" href="#">Handicap</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-[#0f5238] cursor-pointer transition-all active:scale-95">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-[#0f5238] cursor-pointer transition-all active:scale-95">settings</span>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant/15">
+<img alt="Player Profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a professional male golfer in a white polo shirt, outdoor setting with soft sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVmlf_isDp2r97nRiUZGwnUiCvMYlPYd5jN959LxJKUwLOn3DBbCUz-RI53GAhxC6Z2coUkYqpRRG4nYuEG7WrkMnw4DoySDqSysU59ZIN53hOvPuKXDkMrnTPz9MbeKlWGr-pDo6a1mCv4Cy3zP5hPUL1iHgzF--jXucvhiZCj391UPyc2kC49a6EY-RvTCWm_ce160rafM28hxvJnW6Pw9TUZfXgUZZmhwzifJpbAqLlsD8CWlZfvC737ETIZwMRzlwu2m-INhI"/>
+</div>
+</div>
+</nav>
+<!-- Content Canvas -->
+<main class="pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto">
+<!-- Back Link -->
+<a class="inline-flex items-center gap-2 mb-10 text-on-surface-variant hover:text-primary transition-colors font-medium" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            Tilbake til kalender
+        </a>
+<!-- Asymmetric Layout Container -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left Column: Primary Info -->
+<div class="lg:col-span-8 space-y-12">
+<!-- Session Header Card -->
+<section class="bg-surface-container-lowest rounded-xl p-8 shadow-[0px_12px_32px_rgba(26,28,28,0.06)] relative overflow-hidden">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+<div class="space-y-2">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant text-[11px] font-bold uppercase tracking-[0.05em]">
+                                Kommende
+                            </span>
+<h1 class="text-4xl font-extrabold tracking-tight text-on-surface mt-4">Coaching Session</h1>
+<p class="text-xl text-on-surface-variant font-medium">8. mai • Torsdag, 10:00 - 11:00</p>
+</div>
+<div class="flex flex-col items-end">
+<div class="bg-primary-fixed text-on-primary-fixed-variant px-6 py-4 rounded-xl text-center">
+<p class="text-[11px] font-bold uppercase tracking-widest opacity-80 mb-1">Starter om</p>
+<p class="text-3xl font-black tracking-tighter">2 dager</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Details Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Location Card -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0px_12px_32px_rgba(26,28,28,0.06)] flex flex-col justify-between">
+<div>
+<p class="text-[11px] font-bold uppercase tracking-[0.05em] text-on-surface-variant mb-4">Lokasjon</p>
+<h3 class="text-2xl font-bold text-on-surface">AK Golf Academy</h3>
+<p class="text-on-surface-variant mt-1 mb-6">Golfveien 12, 0123 Oslo</p>
+</div>
+<div class="rounded-lg overflow-hidden h-40 mb-4 border border-outline-variant/10">
+<img alt="Map location" class="w-full h-full object-cover" data-alt="A stylized minimalist map showing the golf course area with green patches and winding paths" data-location="Oslo, Norway" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpWmPgBbPtB2_yAIT22FoUCmyGa2hMjONoPSVTzM52EBG8hTWd_JgUViaAwt9SNkGd0_HMRNvYWdeMGy0cRccjlGiFjYgmVcwESj3YBXrPH18ieyaE9NpKkgSDjqX3n_GeIZ2OjxqprNGnrRlLyt2uWnEyxGi4GW60ieGnuc-Y2z7kUvDmNG1iVWgduNHtGO3uTQz9fDS5B7kwvr1IvJkmxHUM9nXBRo6eByvh3PA8xebzlOq-npCP98NDg1cDm1cHxIXqnSwvb90"/>
+</div>
+<button class="inline-flex items-center gap-2 text-secondary font-bold text-[14px] hover:underline uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">map</span>
+                            Åpne i kart
+                        </button>
+</div>
+<!-- Coach & Transaction Card -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0px_12px_32px_rgba(26,28,28,0.06)] space-y-8">
+<div>
+<p class="text-[11px] font-bold uppercase tracking-[0.05em] text-on-surface-variant mb-4">Trener</p>
+<div class="flex items-center gap-4">
+<img alt="Anders Kristiansen" class="w-16 h-16 rounded-full object-cover border-2 border-primary/10" data-alt="Portrait of a friendly male professional golf coach wearing a performance visor and green polo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1k2ZC6m_XXQYlS3uB7PV8JVefajEH0bfw01PF64TyY0bJ7YhTFRoRwZPqqdsObiXPJxicpieZ_tpiPeACs5PjE5ObzL3oDURxKefmorA-8695k5uSF8BB94NE3Ju5nZ84L90BvLGcYGjg39dfGEeE9K0T3dBjzSyFlCB1IKz5kRrRLUTIXG0MW34XsZdqSWEeRb9jo5YE1QwvYQNiL6zxT9GimfvlGjwNCCiySfbbVom2rwtKA1I6IV8zAyvTx3D4d0BcM8E4YUA"/>
+<div>
+<h4 class="text-xl font-bold">Anders Kristiansen</h4>
+<p class="text-on-surface-variant text-sm">PGA Pro &amp; Head Coach</p>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-outline-variant/15 space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">Varighet</span>
+<span class="font-bold">60 min</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">Pris</span>
+<span class="font-bold">kr 1.250,-</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">Betaling</span>
+<span class="text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                    Betalt
+                                </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Preparation & Notes -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Preparation -->
+<section class="bg-surface-container rounded-xl p-8">
+<p class="text-[11px] font-bold uppercase tracking-[0.05em] text-on-surface-variant mb-6">Forberedelser</p>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-primary">check</span>
+<span class="text-on-surface-variant leading-relaxed">Komfortable klær og golfsko</span>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-primary">check</span>
+<span class="text-on-surface-variant leading-relaxed">Egne køller (valgfritt)</span>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<span class="text-on-surface-variant leading-relaxed">Møt opp 10 min før for oppvarming</span>
+</li>
+</ul>
+</section>
+<!-- User Notes -->
+<section class="bg-surface-container rounded-xl p-8 relative group">
+<p class="text-[11px] font-bold uppercase tracking-[0.05em] text-on-surface-variant mb-6">Dine Notater</p>
+<p class="text-on-surface italic leading-relaxed pr-8">
+                            "Ønsker å jobbe med svingtempo og stabilitet med hybrider."
+                        </p>
+<button class="absolute top-8 right-8 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</section>
+</div>
+</div>
+<!-- Right Column: Actions & Check-in -->
+<div class="lg:col-span-4 space-y-8">
+<!-- QR Check-in Card -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0px_12px_32px_rgba(26,28,28,0.06)] text-center">
+<p class="text-[11px] font-bold uppercase tracking-[0.05em] text-on-surface-variant mb-6">Check-in</p>
+<div class="bg-surface-container p-6 rounded-xl inline-block mb-4">
+<!-- Simulated QR Code -->
+<div class="w-48 h-48 bg-white p-3 rounded-lg flex items-center justify-center">
+<img alt="QR Code" class="w-full h-full opacity-80" data-alt="Abstract geometric QR code pattern in black and white with clean sharp edges" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH2kYalwBFMu5qtPiZ5cDU9C6KdLHn8Sug0ECnGOChbstKJ8NcFh2uPH7BBpg0wL7iCeKJvA9zVXHgAIiCcnxYaupKllwd2B8to7GKRj-hgbzM7Qfsxqlz9r4r4OssSYGgqUcbx9WdEYewemzkYPUNyYD1Q1VDjYVDzdeJ_K2fE2JH6eniMoZfmLQkSs0vY1MjMy9LzPOSuOITov3_BxQkp345Ihd1OJL4O0weeWxxBbjYZAxRJAmZ6uloNcq2FwsXWASDgGfVUHY"/>
+</div>
+</div>
+<p class="text-sm text-on-surface-variant font-medium">Vis denne ved ankomst til resepsjonen</p>
+</div>
+<!-- Action Stack -->
+<div class="space-y-4">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-5 rounded-md font-bold flex items-center justify-center gap-3 shadow-lg transition-transform active:scale-95 border-t border-white/10">
+<span class="material-symbols-outlined">event</span>
+                        Legg til i kalender
+                    </button>
+<button class="w-full bg-transparent border border-outline-variant/30 text-on-surface py-5 rounded-md font-bold hover:bg-surface-container transition-colors">
+                        Endre booking
+                    </button>
+<button class="w-full bg-transparent text-tertiary py-4 rounded-md font-bold hover:bg-tertiary/5 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+                        Avbestill
+                    </button>
+</div>
+<!-- Helpful Tips (Bonus High-End Detail) -->
+<div class="p-6 border border-outline-variant/15 rounded-xl bg-surface-container-low/50">
+<h5 class="font-bold text-sm mb-3">Værforhold</h5>
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary">wb_sunny</span>
+<span class="text-sm">Skyfri himmel, 14°C • Lett vind</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#ffffff]/80 backdrop-blur-lg flex justify-around items-center px-6 py-3 z-50 rounded-t-xl shadow-[0px_-12px_32px_rgba(26,28,28,0.06)]">
+<a class="flex flex-col items-center justify-center text-[#1a1c1c]/40 p-3 hover:bg-[#eeeeee] transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[11px] font-bold uppercase tracking-[0.05em] mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#0f5238] text-white rounded-2xl p-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="text-[11px] font-bold uppercase tracking-[0.05em] mt-1">Bookings</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1a1c1c]/40 p-3 hover:bg-[#eeeeee] transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="text-[11px] font-bold uppercase tracking-[0.05em] mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#1a1c1c]/40 p-3 hover:bg-[#eeeeee] transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[11px] font-bold uppercase tracking-[0.05em] mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

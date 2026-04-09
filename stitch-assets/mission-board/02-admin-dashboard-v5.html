@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="light" lang="no"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Golf Admin Dashboard v5.0 - Mission Control</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#591fb0",
+                    "secondary": "#4a635d",
+                    "primary-container": "#00594c",
+                    "on-primary-container": "#87cdbd",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "tertiary": "#49009e",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "background": "#fdf9f2",
+                    "secondary-fixed": "#cce9e0",
+                    "on-secondary-fixed-variant": "#334c45",
+                    "surface-container-high": "#ece8e1",
+                    "on-tertiary-fixed": "#260058",
+                    "on-background": "#1c1c18",
+                    "on-primary-fixed": "#00201a",
+                    "on-secondary-fixed": "#06201b",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#3f4946",
+                    "surface-dim": "#dddad3",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-container": "#506963",
+                    "surface-container-low": "#f7f3ec",
+                    "primary-fixed": "#a9f0df",
+                    "tertiary-fixed-dim": "#d4bbff",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#1c1c18",
+                    "surface-variant": "#e6e2db",
+                    "surface-container-highest": "#e6e2db",
+                    "surface-tint": "#1e6a5c",
+                    "outline-variant": "#bec9c5",
+                    "surface-bright": "#fdf9f2",
+                    "inverse-surface": "#31302c",
+                    "secondary-container": "#cce9e0",
+                    "outline": "#6f7976",
+                    "primary": "#004036",
+                    "inverse-on-surface": "#f4f0e9",
+                    "primary-fixed-dim": "#8dd4c3",
+                    "secondary-fixed-dim": "#b1ccc4",
+                    "surface": "#fdf9f2",
+                    "inverse-primary": "#8dd4c3",
+                    "on-primary-fixed-variant": "#005145",
+                    "on-tertiary-container": "#ceb3ff",
+                    "tertiary-fixed": "#ebdcff",
+                    "surface-container": "#f1ede6",
+                    "tertiary-container": "#612ab7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdf9f2;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen bg-background text-on-background">
+<!-- SideNavBar Integration -->
+<aside class="flex flex-col h-full py-8 px-4 h-screen w-64 bg-[#fdf9f2] dark:bg-[#121212] sticky top-0 hidden md:flex">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-black text-[#004036] dark:text-[#00594c] tracking-tighter">AK Golf</h1>
+<p class="font-inter tracking-tight font-medium uppercase text-[10px] text-[#4a635d]">Elite Performance</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#004036] dark:text-[#00594c] font-bold border-l-4 border-[#004036] bg-[#ffffff]/50 translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-inter tracking-tight font-medium uppercase text-[10px]">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#4a635d] dark:text-[#8a9a97] hover:bg-[#ffffff]/30 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-inter tracking-tight font-medium uppercase text-[10px]">Elever</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#4a635d] dark:text-[#8a9a97] hover:bg-[#ffffff]/30 transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-inter tracking-tight font-medium uppercase text-[10px]">Bookinger</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#4a635d] dark:text-[#8a9a97] hover:bg-[#ffffff]/30 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-inter tracking-tight font-medium uppercase text-[10px]">Økonomi</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#4a635d] dark:text-[#8a9a97] hover:bg-[#ffffff]/30 transition-colors" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-inter tracking-tight font-medium uppercase text-[10px]">Kurs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#4a635d] dark:text-[#8a9a97] hover:bg-[#ffffff]/30 transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-inter tracking-tight font-medium uppercase text-[10px]">Rapporter</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#4a635d] dark:text-[#8a9a97] hover:bg-[#ffffff]/30 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-inter tracking-tight font-medium uppercase text-[10px]">Instillinger</span>
+</a>
+</nav>
+<div class="mt-auto px-4 py-4 rounded-xl bg-surface-container-low flex items-center gap-3">
+<img alt="Admin profile photo" class="w-10 h-10 rounded-full object-cover" data-alt="professional portrait of a middle-aged male golf instructor wearing a white athletic polo shirt with a clean outdoor background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9NKN2SQf9g-7GDZqKmktFgRMhzp-uVIlJ2P0cqGRbdwrqKO-UvD2EcBIPqmJUrhElzDUc8HnM9v4CCi6ROOwz7uqEC3YoIAeq0d2JlO5QHOSMVk2aG0nZNaxckHQPDBm-ashm8_jn8VDvns3VpWyT1MhQUHgdUiN3Hfyy6ICmcTDqZwqrb8swAals-aXtuiGuXwXwT3nw-bfqv6CQruCxucJLxIWDsuzGiyouV1GWwWgtULGalzQZC6SGoJzieLE0J6QOb9kjLt8"/>
+<div>
+<p class="text-xs font-bold text-on-surface">Erik Solbakken</p>
+<p class="text-[10px] text-secondary">PGA Admin</p>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0 bg-[#fdf9f2]">
+<!-- TopAppBar Integration -->
+<header class="flex justify-between items-center w-full px-8 py-6 bg-[#fdf9f2]/80 dark:bg-[#121212]/80 backdrop-blur-md sticky top-0 z-10">
+<div>
+<h1 class="font-inter text-2xl font-bold tracking-tight text-[#004036]">Mission Control</h1>
+<p class="text-secondary text-sm font-medium">Mandag 6. april 2026</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="bg-surface-container-high border-none rounded-full py-2 pl-10 pr-4 text-sm w-64 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" placeholder="Søk i systemet..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#4a635d] hover:opacity-80 transition-opacity">notifications</button>
+<button class="material-symbols-outlined text-[#4a635d] hover:opacity-80 transition-opacity">calendar_today</button>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<button class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm">add</span>
+                        Ny booking
+                    </button>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="px-8 py-6 space-y-8 max-w-7xl mx-auto w-full">
+<!-- Notifications/Alerts Section -->
+<div class="space-y-3">
+<div class="flex items-center justify-between bg-[#FF9500]/10 p-4 rounded-xl border border-[#FF9500]/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#FF9500]">warning</span>
+<p class="text-sm font-medium text-on-surface">3 utestående fakturaer over 30 dager</p>
+</div>
+<button class="text-xs font-bold underline">Se detaljer</button>
+</div>
+<div class="flex items-center justify-between bg-primary-container/10 p-4 rounded-xl border border-primary-container/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<p class="text-sm font-medium text-on-surface">Alle rapporter for mars er generert</p>
+</div>
+<button class="text-xs font-bold underline">Last ned</button>
+</div>
+</div>
+<!-- Stats Row: Metric Heroes -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Månedsinntekt -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/10 relative overflow-hidden group">
+<div class="relative z-10">
+<p class="font-inter tracking-tight font-medium uppercase text-[10px] text-secondary mb-1">Månedsinntekt</p>
+<h3 class="text-2xl font-bold text-primary">142.500 kr</h3>
+<div class="flex items-center gap-1 text-[#34C759] mt-2">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+<span class="text-[10px] font-bold">+12.4% fra feb</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-12 opacity-10 group-hover:opacity-20 transition-opacity">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 20">
+<path class="text-primary" d="M0,20 L10,15 L20,18 L30,12 L40,14 L50,8 L60,10 L70,4 L80,6 L90,2 L100,20 Z" fill="currentColor"></path>
+</svg>
+</div>
+</div>
+<!-- Aktive elever -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/10">
+<p class="font-inter tracking-tight font-medium uppercase text-[10px] text-secondary mb-1">Aktive elever</p>
+<h3 class="text-2xl font-bold text-secondary">248</h3>
+<div class="flex items-center gap-2 mt-2">
+<div class="flex -space-x-2">
+<img class="w-5 h-5 rounded-full border border-white object-cover" data-alt="close-up of a young man smiling with natural lighting in a studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDONQz-2KyFIW7_TFu5ORuKW2-qkCWhWkvaszvjwarNdV1D73higwK8MzI-_4s_I6qbMrXcYEgR_MNxhNh_EbZz9yjl1T9ABJ5Epnof5-2GkKpkIDi5c7t7Mx9mDz4tQ7NXMYtmI9FpMdCoEP21pMKwls8wJbEBHo8fFsoNLlMl1-cYR0XG4neKDs4AgB3XpOn-WY8hTK8uCEBuCP4vYLPKgOcVabheWJtFIxAb7jGN2CPpD82-XaoaF8WAoABN-FCu-Dr5SSoCbCQ"/>
+<img class="w-5 h-5 rounded-full border border-white object-cover" data-alt="professional headshot of a smiling young woman with soft focus green background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHWfpFexqgQo9G3yfqI0jC1S04kcfoT8hSm1TGFjKYWlpaBJez5h9W017Vk2MutQW3-D5pH3o96_odVtxcZ86wpSKhgFTFe4Wb5TAT-l4AZnsxam_Z67k77SEOvkqLKpmUIZDTtjzuiQZx51nSrJrg3h-OJvLoFM-apk8M94YfO3paeEmWwdWv_u0Uioxj5cSrK1TXgErNeoFMAGKAngZrJJbDy7gpX5h0eQuMsiLV0vVnNhFp-B8oNkclsZBuiXyxD-8TXsEmkas"/>
+<img class="w-5 h-5 rounded-full border border-white object-cover" data-alt="portrait of a man with short hair and glasses looking at camera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKHEKQ_l1RVqzEA8jD530mZUFM7FZyqw4uJVoErTbgrh6sn3wJdbxnPqwpgmUGXNzVao0HOQYMO_UpfPiPr5nIanm5y9CNchpI0WQ_RjshXhJrjCs0XlYPvNfQ-Gx9h_RL2q6OkE7jOqZhVZHWPA_O9-hjo-C3E81-DhDYtTPIoWrqmo-p_K7jZ-i6Ok_MrTrBaUSpt_Ob8xVxdLbdNedw_9dsynx6pKqidKgZzdMUBHSQhIYAj7AguVmK1mphyMmqh2oYCqaqpDI"/>
+</div>
+<span class="text-[10px] font-medium text-outline">+5 i dag</span>
+</div>
+</div>
+<!-- Nye bookinger -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/10 flex justify-between items-start">
+<div>
+<p class="font-inter tracking-tight font-medium uppercase text-[10px] text-secondary mb-1">Nye bookinger</p>
+<h3 class="text-2xl font-bold text-on-surface">14</h3>
+<p class="text-[10px] text-outline mt-2 font-medium">Siste 24 timer</p>
+</div>
+<div class="w-2.5 h-2.5 rounded-full bg-[#34C759] shadow-[0_0_8px_#34C759]"></div>
+</div>
+<!-- Kapasitet -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/10 flex items-center justify-between">
+<div>
+<p class="font-inter tracking-tight font-medium uppercase text-[10px] text-secondary mb-1">Kapasitet</p>
+<h3 class="text-2xl font-bold text-primary">84%</h3>
+<p class="text-[10px] text-outline mt-2 font-medium">Fullbooket uke 15</p>
+</div>
+<div class="relative w-14 h-14">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="28" cy="28" fill="transparent" r="24" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary" cx="28" cy="28" fill="transparent" r="24" stroke="currentColor" stroke-dasharray="150.8" stroke-dashoffset="24.1" stroke-width="4"></circle>
+</svg>
+</div>
+</div>
+</div>
+<!-- Main Content Area: Bento Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Inntektsoversikt (Left 2/3) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-low p-8 rounded-2xl">
+<div class="flex items-center justify-between mb-10">
+<div>
+<h4 class="text-xl font-bold text-primary">Inntektsoversikt</h4>
+<p class="text-xs text-secondary mt-1 tracking-wide">Januar – Juni 2026</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-[10px] font-bold border border-outline-variant/20 shadow-sm">UKE</button>
+<button class="px-3 py-1.5 rounded-lg bg-primary text-white text-[10px] font-bold shadow-sm">MÅNED</button>
+</div>
+</div>
+<div class="flex items-end justify-between h-64 gap-4 px-2">
+<div class="flex flex-col items-center flex-1 gap-3 group">
+<div class="w-full bg-primary-container/20 rounded-t-lg h-[40%] group-hover:h-[45%] transition-all duration-300"></div>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-wider">Jan</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-3 group">
+<div class="w-full bg-primary-container/40 rounded-t-lg h-[65%] group-hover:h-[70%] transition-all duration-300"></div>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-wider">Feb</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-3 group">
+<div class="w-full bg-primary-container/60 rounded-t-lg h-[55%] group-hover:h-[60%] transition-all duration-300"></div>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-wider">Mar</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-3 group">
+<div class="w-full bg-primary rounded-t-lg h-[90%] group-hover:h-[95%] transition-all duration-300 relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-background text-white text-[9px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">142.5k</div>
+</div>
+<span class="text-[10px] font-bold text-primary uppercase tracking-wider">Apr</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-3 group">
+<div class="w-full bg-primary-container/30 rounded-t-lg h-[75%] group-hover:h-[80%] transition-all duration-300"></div>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-wider">Mai</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-3 group">
+<div class="w-full bg-primary-container/20 rounded-t-lg h-[60%] group-hover:h-[65%] transition-all duration-300"></div>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-wider">Jun</span>
+</div>
+</div>
+</div>
+<!-- Elevtrender (Right 1/3) -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-low p-8 rounded-2xl flex flex-col">
+<div class="mb-8">
+<h4 class="text-xl font-bold text-on-surface">Elevtrender</h4>
+<p class="text-xs text-secondary mt-1 tracking-wide">Vekst i aktive medlemskap</p>
+</div>
+<div class="flex-1 relative flex items-center justify-center min-h-[200px]">
+<!-- Svg for Line Chart with dots -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 200 100">
+<path d="M0,80 Q50,70 100,40 T200,10" fill="none" stroke="#4a635d" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<circle cx="50" cy="73" fill="#49009e" r="3"></circle>
+<circle cx="100" cy="40" fill="#49009e" r="3"></circle>
+<circle cx="150" cy="20" fill="#49009e" r="3"></circle>
+<circle cx="200" cy="10" fill="#49009e" r="3"></circle>
+</svg>
+<!-- AI Insight Toast Overlay -->
+<div class="absolute bottom-4 left-0 right-0 p-4 bg-surface-container-lowest/80 backdrop-blur-md rounded-xl border border-tertiary/10 shadow-lg">
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary/10 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-tertiary text-lg">auto_awesome</span>
+</div>
+<div>
+<p class="text-[10px] font-black text-tertiary uppercase tracking-widest">AI INSIGHT</p>
+<p class="text-xs text-on-surface mt-1 leading-relaxed">Optimaliser helgetimer; trender viser 18% økt etterspørsel i mai.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Actions & Specialized Admin List -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
+<div class="lg:col-span-1 space-y-4">
+<h5 class="text-sm font-black uppercase tracking-widest text-secondary">Quick Actions</h5>
+<button class="w-full bg-primary-container text-white py-4 px-6 rounded-xl font-bold flex items-center justify-between hover:scale-[0.98] transition-transform">
+<span>Ny booking</span>
+<span class="material-symbols-outlined">event_available</span>
+</button>
+<button class="w-full bg-secondary text-white py-4 px-6 rounded-xl font-bold flex items-center justify-between hover:scale-[0.98] transition-transform">
+<span>Legg til elev</span>
+<span class="material-symbols-outlined">person_add</span>
+</button>
+<button class="w-full border border-primary text-primary py-4 px-6 rounded-xl font-bold flex items-center justify-between hover:bg-primary/5 transition-colors">
+<span>Se kalender</span>
+<span class="material-symbols-outlined">calendar_month</span>
+</button>
+</div>
+<div class="lg:col-span-2 bg-surface-container-lowest p-8 rounded-2xl shadow-sm border border-outline-variant/5">
+<div class="flex items-center justify-between mb-6">
+<h5 class="text-sm font-black uppercase tracking-widest text-secondary">Siste Bookinger</h5>
+<button class="text-[10px] font-bold text-primary flex items-center gap-1">SE ALLE <span class="material-symbols-outlined text-xs">arrow_forward</span></button>
+</div>
+<div class="divide-y divide-outline-variant/10">
+<div class="py-4 flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">golf_course</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Thomas Berg</p>
+<p class="text-xs text-outline">Swing Analyse • Kl. 14:00</p>
+</div>
+</div>
+<div class="text-right">
+<span class="px-2 py-1 bg-secondary-fixed text-on-secondary-fixed-variant text-[9px] font-black rounded uppercase tracking-tighter">Bekreftet</span>
+</div>
+</div>
+<div class="py-4 flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">sports_score</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Lise Kristiansen</p>
+<p class="text-xs text-outline">Putter-kurs • Kl. 15:30</p>
+</div>
+</div>
+<div class="text-right">
+<span class="px-2 py-1 bg-surface-variant text-on-surface-variant text-[9px] font-black rounded uppercase tracking-tighter">Venter</span>
+</div>
+</div>
+<div class="py-4 flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">golf_course</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Morten Sand</p>
+<p class="text-xs text-outline">Privattime • Kl. 17:00</p>
+</div>
+</div>
+<div class="text-right">
+<span class="px-2 py-1 bg-secondary-fixed text-on-secondary-fixed-variant text-[9px] font-black rounded uppercase tracking-tighter">Bekreftet</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB for Home/Dashboard (only on smaller screens where SideNav is hidden or as a primary action) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center md:hidden z-50">
+<span class="material-symbols-outlined">add</span>
+</button>
+</body></html>

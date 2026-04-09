@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="light" lang="no"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Din kalender | AK Golf</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-primary-fixed": "#3f3f3f",
+                "on-tertiary-fixed": "#00452d",
+                "on-surface": "#26343d",
+                "primary-fixed-dim": "#d6d4d3",
+                "surface-container-high": "#ddeaf3",
+                "on-tertiary-container": "#005a3c",
+                "on-background": "#26343d",
+                "surface-dim": "#cadde9",
+                "surface-bright": "#f6fafe",
+                "surface-container": "#e5eff7",
+                "inverse-surface": "#0a0f12",
+                "primary-dim": "#535252",
+                "surface-container-highest": "#d5e5ef",
+                "error-dim": "#4e0309",
+                "secondary": "#00649a",
+                "inverse-primary": "#ffffff",
+                "on-primary": "#faf7f6",
+                "tertiary-dim": "#005f40",
+                "on-secondary-container": "#005685",
+                "surface-tint": "#5f5e5e",
+                "primary-container": "#e4e2e1",
+                "secondary-dim": "#005787",
+                "primary-fixed": "#e4e2e1",
+                "error": "#9f403d",
+                "inverse-on-surface": "#999da1",
+                "secondary-fixed": "#cde5ff",
+                "on-surface-variant": "#52616a",
+                "secondary-fixed-dim": "#b2d9ff",
+                "primary": "#5f5e5e",
+                "on-secondary": "#f6f9ff",
+                "surface-container-low": "#eef4fa",
+                "on-secondary-fixed-variant": "#006094",
+                "surface-container-lowest": "#ffffff",
+                "on-error-container": "#752121",
+                "on-error": "#fff7f6",
+                "surface": "#f6fafe",
+                "secondary-container": "#cde5ff",
+                "on-tertiary": "#e6ffee",
+                "tertiary": "#006d4a",
+                "tertiary-container": "#69f6b8",
+                "on-primary-fixed-variant": "#5c5b5b",
+                "background": "#f6fafe",
+                "tertiary-fixed": "#69f6b8",
+                "on-tertiary-fixed-variant": "#006544",
+                "error-container": "#fe8983",
+                "outline": "#6e7d86",
+                "on-secondary-fixed": "#004369",
+                "on-primary-container": "#525251",
+                "tertiary-fixed-dim": "#58e7ab",
+                "outline-variant": "#a4b4be",
+                "surface-variant": "#d5e5ef"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: 64px repeat(7, 1fr);
+            grid-template-rows: 48px repeat(16, 60px);
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-background min-h-screen flex overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 bg-[#EEF4FA] dark:bg-[#121A21] flex flex-col py-6 px-4 flex-shrink-0">
+<div class="mb-8 px-2">
+<h1 class="text-xl font-bold text-[#5F5E5E] dark:text-[#FAF7F6]">AK Golf</h1>
+<p class="font-['Inter'] text-[11px] font-semibold uppercase tracking-[0.05em] text-[#52616A] dark:text-[#94A3B8]">Player Portal</p>
+</div>
+<nav class="flex-1 space-y-1 overflow-y-auto scrollbar-hide">
+<a class="flex items-center px-4 py-3 space-x-3 text-[#52616A] dark:text-[#94A3B8] font-['Inter'] text-[11px] font-semibold uppercase tracking-[0.05em] hover:bg-[#D5E5EF]/50 dark:hover:bg-[#26343D]/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 space-x-3 text-[#52616A] dark:text-[#94A3B8] font-['Inter'] text-[11px] font-semibold uppercase tracking-[0.05em] hover:bg-[#D5E5EF]/50 dark:hover:bg-[#26343D]/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span>Trening</span>
+</a>
+<a class="flex items-center px-4 py-3 space-x-3 text-[#52616A] dark:text-[#94A3B8] font-['Inter'] text-[11px] font-semibold uppercase tracking-[0.05em] hover:bg-[#D5E5EF]/50 dark:hover:bg-[#26343D]/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span>Statistikk</span>
+</a>
+<a class="flex items-center px-4 py-3 space-x-3 text-[#52616A] dark:text-[#94A3B8] font-['Inter'] text-[11px] font-semibold uppercase tracking-[0.05em] hover:bg-[#D5E5EF]/50 dark:hover:bg-[#26343D]/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="event_available">event_available</span>
+<span>Bookinger</span>
+</a>
+<a class="flex items-center px-4 py-3 space-x-3 text-[#52616A] dark:text-[#94A3B8] font-['Inter'] text-[11px] font-semibold uppercase tracking-[0.05em] hover:bg-[#D5E5EF]/50 dark:hover:bg-[#26343D]/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span>Dagbok</span>
+</a>
+<a class="flex items-center px-4 py-3 space-x-3 text-[#5F5E5E] dark:text-[#FAF7F6] bg-[#D5E5EF] dark:bg-[#26343D] font-bold border-l-4 border-[#5F5E5E] font-['Inter'] text-[11px] uppercase tracking-[0.05em] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span>Kalender</span>
+</a>
+<a class="flex items-center px-4 py-3 space-x-3 text-[#52616A] dark:text-[#94A3B8] font-['Inter'] text-[11px] font-semibold uppercase tracking-[0.05em] hover:bg-[#D5E5EF]/50 dark:hover:bg-[#26343D]/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>TrackMan</span>
+</a>
+<a class="flex items-center px-4 py-3 space-x-3 text-[#52616A] dark:text-[#94A3B8] font-['Inter'] text-[11px] font-semibold uppercase tracking-[0.05em] hover:bg-[#D5E5EF]/50 dark:hover:bg-[#26343D]/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="sports_score">sports_score</span>
+<span>Øvelser</span>
+</a>
+<a class="flex items-center px-4 py-3 space-x-3 text-[#52616A] dark:text-[#94A3B8] font-['Inter'] text-[11px] font-semibold uppercase tracking-[0.05em] hover:bg-[#D5E5EF]/50 dark:hover:bg-[#26343D]/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span>Profil</span>
+</a>
+</nav>
+<div class="mt-auto px-2">
+<button class="w-full bg-tertiary text-on-tertiary py-3 rounded-full font-bold flex items-center justify-center space-x-2 shadow-lg hover:brightness-110 transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>Ny hendelse</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-surface-container-lowest">
+<!-- TopAppBar Component -->
+<header class="bg-white dark:bg-[#1A1A1A] flex justify-between items-center w-full px-8 py-4 relative">
+<div class="flex items-center space-x-6">
+<h2 class="text-2xl font-black text-[#5F5E5E] dark:text-[#FAF7F6] uppercase tracking-wider font-['Inter']">Din kalender</h2>
+<div class="h-6 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center space-x-2">
+<button class="p-1 hover:bg-surface-container rounded-md transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_left">chevron_left</span>
+</button>
+<span class="font-semibold text-lg text-primary min-w-[120px] text-center">April 2026</span>
+<button class="p-1 hover:bg-surface-container rounded-md transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<button class="px-4 py-1.5 border border-outline-variant/50 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">I dag</button>
+</div>
+<div class="flex items-center space-x-6">
+<!-- Toggle [Dag] [Uke] [Måned] -->
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-1 text-xs font-bold uppercase tracking-wider text-on-surface-variant">Dag</button>
+<button class="px-4 py-1 text-xs font-bold uppercase tracking-wider bg-white shadow-sm rounded-md text-primary">Uke</button>
+<button class="px-4 py-1 text-xs font-bold uppercase tracking-wider text-on-surface-variant">Måned</button>
+</div>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-[#52616A] dark:text-[#D5E5EF] cursor-pointer" data-icon="notifications">notifications</span>
+<img alt="User Profile Avatar" class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIeov0zd2dP76Gv2J2ZSUBPY7SQ4mDGFPtygPDn0OUhfN1wlK52O1ZoZrWYZg7sx16MEnyJ7mbzkQ2naMhfUfPUv97LbU3yGBHCkpgUZwqycrhV1-Ctjj_wvoj5h873wTNgym0cb2doYV40UwNXLbNbeYa9c3hdY7nmZ6s37XuGmxwJy6vyf0Tf60znXb3jgWOq4u_JMgXZN-6T_5kyZ_VYkFHqebVf781ifLHaxPLrbiS6LUqlLvvlChLNKLngRvaHIKBZK-ZW7g"/>
+</div>
+</div>
+<!-- Separation Line -->
+<div class="absolute bottom-0 left-0 bg-[#EEF4FA] dark:bg-[#26343D] h-[1px] w-full"></div>
+</header>
+<!-- Calendar Canvas -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Weekly Grid -->
+<div class="flex-1 overflow-y-auto scrollbar-hide bg-white p-5">
+<div class="max-w-[1400px] mx-auto border-t border-l border-outline-variant/10">
+<div class="calendar-grid">
+<!-- Header Empty -->
+<div class="border-b border-r border-outline-variant/10"></div>
+<!-- Days Header -->
+<div class="flex flex-col items-center justify-center border-b border-r border-outline-variant/10 py-2">
+<span class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant/60">Man</span>
+<span class="text-xl font-bold text-on-surface">13</span>
+</div>
+<div class="flex flex-col items-center justify-center border-b border-r border-outline-variant/10 py-2">
+<span class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant/60">Tir</span>
+<span class="text-xl font-bold text-on-surface">14</span>
+</div>
+<div class="flex flex-col items-center justify-center border-b border-r border-outline-variant/10 py-2 bg-surface-container-low">
+<span class="text-[11px] font-bold uppercase tracking-widest text-primary font-black">Ons</span>
+<span class="text-xl font-bold text-primary font-black">15</span>
+</div>
+<div class="flex flex-col items-center justify-center border-b border-r border-outline-variant/10 py-2">
+<span class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant/60">Tor</span>
+<span class="text-xl font-bold text-on-surface">16</span>
+</div>
+<div class="flex flex-col items-center justify-center border-b border-r border-outline-variant/10 py-2">
+<span class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant/60">Fre</span>
+<span class="text-xl font-bold text-on-surface">17</span>
+</div>
+<div class="flex flex-col items-center justify-center border-b border-r border-outline-variant/10 py-2">
+<span class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant/60">Lør</span>
+<span class="text-xl font-bold text-on-surface">18</span>
+</div>
+<div class="flex flex-col items-center justify-center border-b border-r border-outline-variant/10 py-2">
+<span class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant/60">Søn</span>
+<span class="text-xl font-bold text-on-surface">19</span>
+</div>
+<!-- Time Rows & Grid Cells -->
+<!-- 06:00 - 22:00 -->
+<!-- Loop logic placeholder: generating cells manually for visual representation -->
+<!-- Row 10:00 - 11:00 (Tuesday) -->
+<div class="flex items-start justify-end pr-2 py-1 border-b border-r border-outline-variant/10 text-[10px] font-bold text-on-surface-variant/40">10:00</div>
+<div class="border-b border-r border-outline-variant/10"></div> <!-- Mon -->
+<div class="border-b border-r border-outline-variant/10 relative p-1">
+<!-- Booking Event Card -->
+<div class="absolute inset-x-1 h-full z-10 bg-primary text-on-primary rounded-lg p-3 shadow-md border-l-4 border-primary-dim">
+<p class="text-[10px] font-bold uppercase tracking-wider opacity-80">Booking</p>
+<h4 class="font-bold text-xs truncate">Coaching Session - Anders</h4>
+<p class="text-[10px] truncate opacity-80 mt-1">Oslo Golfklubb</p>
+</div>
+</div>
+<div class="border-b border-r border-outline-variant/10 bg-surface-container-low"></div> <!-- Wed (Today Highlight) -->
+<div class="border-b border-r border-outline-variant/10"></div>
+<div class="border-b border-r border-outline-variant/10"></div>
+<div class="border-b border-r border-outline-variant/10"></div>
+<div class="border-b border-r border-outline-variant/10"></div>
+<!-- Row 16:00 - 17:00 (Wednesday Today) -->
+<div class="flex items-start justify-end pr-2 py-1 border-b border-r border-outline-variant/10 text-[10px] font-bold text-on-surface-variant/40 mt-[300px]">16:00</div>
+<div class="border-b border-r border-outline-variant/10 mt-[300px]"></div>
+<div class="border-b border-r border-outline-variant/10 mt-[300px]"></div>
+<div class="border-b border-r border-outline-variant/10 bg-surface-container-low relative p-1 mt-[300px]">
+<!-- Current Time Indicator -->
+<div class="absolute top-[15px] left-0 right-0 z-30 flex items-center">
+<div class="w-2 h-2 rounded-full bg-error -ml-1"></div>
+<div class="h-[1px] flex-1 bg-error"></div>
+</div>
+<!-- Training Event Card -->
+<div class="absolute top-[20px] inset-x-1 h-[60px] z-10 bg-secondary-container text-on-secondary-container rounded-lg p-3 shadow-sm border-l-4 border-secondary">
+<p class="text-[10px] font-bold uppercase tracking-wider opacity-70">Trening</p>
+<h4 class="font-bold text-xs truncate">Egen trening - Putting</h4>
+<p class="text-[10px] truncate opacity-70 mt-1">Green #16</p>
+</div>
+</div>
+<div class="border-b border-r border-outline-variant/10 mt-[300px]"></div>
+<div class="border-b border-r border-outline-variant/10 mt-[300px]"></div>
+<div class="border-b border-r border-outline-variant/10 mt-[300px]"></div>
+<div class="border-b border-r border-outline-variant/10 mt-[300px]"></div>
+<!-- Personal Event - Friday All Day or Large Slot -->
+<div class="flex items-start justify-end pr-2 py-1 border-b border-r border-outline-variant/10 text-[10px] font-bold text-on-surface-variant/40 mt-[60px]">08:00</div>
+<div class="border-b border-r border-outline-variant/10 mt-[60px]"></div>
+<div class="border-b border-r border-outline-variant/10 mt-[60px]"></div>
+<div class="border-b border-r border-outline-variant/10 bg-surface-container-low mt-[60px]"></div>
+<div class="border-b border-r border-outline-variant/10 mt-[60px]"></div>
+<div class="border-b border-r border-outline-variant/10 relative p-1 mt-[60px]">
+<div class="absolute top-0 inset-x-1 h-[300px] z-10 bg-surface-container text-on-surface-variant rounded-lg p-3 shadow-sm border-l-4 border-outline-variant/50">
+<p class="text-[10px] font-bold uppercase tracking-wider opacity-70">Turnering</p>
+<h4 class="font-bold text-sm">Golfturnering</h4>
+<p class="text-[10px] opacity-70 mt-1">Heldagsarrangement</p>
+</div>
+</div>
+<div class="border-b border-r border-outline-variant/10 mt-[60px]"></div>
+<div class="border-b border-r border-outline-variant/10 mt-[60px]"></div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar -->
+<aside class="w-[300px] bg-surface-container-low flex-shrink-0 flex flex-col p-6 space-y-8 overflow-y-auto border-l border-outline-variant/10">
+<!-- Mini Calendar -->
+<div class="bg-white rounded-xl p-4 shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<h5 class="text-xs font-black uppercase tracking-widest text-on-surface-variant">April 2026</h5>
+<div class="flex space-x-2">
+<span class="material-symbols-outlined text-sm cursor-pointer" data-icon="arrow_back_ios">arrow_back_ios</span>
+<span class="material-symbols-outlined text-sm cursor-pointer" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-y-2 text-center text-[10px]">
+<span class="font-bold opacity-40">M</span><span class="font-bold opacity-40">T</span><span class="font-bold opacity-40">O</span><span class="font-bold opacity-40">T</span><span class="font-bold opacity-40">F</span><span class="font-bold opacity-40">L</span><span class="font-bold opacity-40">S</span>
+<!-- Row 1 -->
+<span class="py-1">30</span><span class="py-1">31</span><span class="py-1 text-on-surface">1</span><span class="py-1 text-on-surface">2</span><span class="py-1 text-on-surface">3</span><span class="py-1 text-on-surface">4</span><span class="py-1 text-on-surface">5</span>
+<!-- Row 2 -->
+<span class="py-1 text-on-surface">6</span><span class="py-1 text-on-surface">7</span><span class="py-1 text-on-surface">8</span><span class="py-1 text-on-surface">9</span><span class="py-1 text-on-surface">10</span><span class="py-1 text-on-surface">11</span><span class="py-1 text-on-surface">12</span>
+<!-- Row 3 Active -->
+<span class="py-1 text-on-surface">13</span><span class="py-1 text-on-surface">14</span><span class="py-1 bg-primary text-on-primary rounded-full font-bold">15</span><span class="py-1 text-on-surface">16</span><span class="py-1 text-on-surface">17</span><span class="py-1 text-on-surface">18</span><span class="py-1 text-on-surface">19</span>
+</div>
+</div>
+<!-- Filters -->
+<div class="space-y-4">
+<h5 class="text-[11px] font-black uppercase tracking-[0.1em] text-on-surface-variant">Filter</h5>
+<div class="space-y-3">
+<label class="flex items-center space-x-3 cursor-pointer group">
+<div class="w-4 h-4 rounded border-2 border-primary-dim bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white" data-icon="check" data-weight="fill">check</span>
+</div>
+<span class="text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Bookinger</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<div class="w-4 h-4 rounded border-2 border-secondary bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white" data-icon="check" data-weight="fill">check</span>
+</div>
+<span class="text-sm font-medium text-on-surface group-hover:text-secondary transition-colors">Trening</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<div class="w-4 h-4 rounded border-2 border-outline-variant/30 bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-on-surface-variant" data-icon="check" data-weight="fill">check</span>
+</div>
+<span class="text-sm font-medium text-on-surface group-hover:text-on-surface-variant transition-colors">Personlig</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<div class="w-4 h-4 rounded border-2 border-tertiary-dim bg-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white" data-icon="check" data-weight="fill">check</span>
+</div>
+<span class="text-sm font-medium text-on-surface group-hover:text-tertiary transition-colors">Turneringer</span>
+</label>
+</div>
+</div>
+<!-- Upcoming Events -->
+<div class="space-y-4 pt-4 border-t border-outline-variant/20">
+<h5 class="text-[11px] font-black uppercase tracking-[0.1em] text-on-surface-variant">Kommende hendelser</h5>
+<div class="space-y-4">
+<div class="flex space-x-4 group cursor-pointer">
+<div class="flex flex-col items-center justify-center w-10 h-10 bg-white rounded-lg shadow-sm border border-outline-variant/10">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant/60">Apr</span>
+<span class="text-sm font-black text-on-surface">16</span>
+</div>
+<div class="flex-1 min-w-0">
+<h6 class="text-xs font-bold text-on-surface truncate group-hover:text-primary transition-colors">Teknikk-sjekk</h6>
+<p class="text-[10px] text-on-surface-variant mt-0.5">09:00 • TrackMan Studio</p>
+</div>
+</div>
+<div class="flex space-x-4 group cursor-pointer">
+<div class="flex flex-col items-center justify-center w-10 h-10 bg-white rounded-lg shadow-sm border border-outline-variant/10">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant/60">Apr</span>
+<span class="text-sm font-black text-on-surface">17</span>
+</div>
+<div class="flex-1 min-w-0">
+<h6 class="text-xs font-bold text-on-surface truncate group-hover:text-secondary transition-colors">Fysisk økt</h6>
+<p class="text-[10px] text-on-surface-variant mt-0.5">15:00 • Sats Storo</p>
+</div>
+</div>
+<div class="flex space-x-4 group cursor-pointer">
+<div class="flex flex-col items-center justify-center w-10 h-10 bg-white rounded-lg shadow-sm border border-outline-variant/10">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant/60">Apr</span>
+<span class="text-sm font-black text-on-surface">20</span>
+</div>
+<div class="flex-1 min-w-0">
+<h6 class="text-xs font-bold text-on-surface truncate group-hover:text-tertiary transition-colors">Kvalifisering</h6>
+<p class="text-[10px] text-on-surface-variant mt-0.5">08:00 • Miklagard</p>
+</div>
+</div>
+<div class="flex space-x-4 group cursor-pointer opacity-50 hover:opacity-100 transition-opacity">
+<div class="flex flex-col items-center justify-center w-10 h-10 bg-white rounded-lg shadow-sm border border-outline-variant/10">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant/60">Apr</span>
+<span class="text-sm font-black text-on-surface">22</span>
+</div>
+<div class="flex-1 min-w-0">
+<h6 class="text-xs font-bold text-on-surface truncate">Møte med Sponsor</h6>
+<p class="text-[10px] text-on-surface-variant mt-0.5">11:30 • Oslo sentrum</p>
+</div>
+</div>
+<div class="flex space-x-4 group cursor-pointer opacity-50 hover:opacity-100 transition-opacity">
+<div class="flex flex-col items-center justify-center w-10 h-10 bg-white rounded-lg shadow-sm border border-outline-variant/10">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant/60">Apr</span>
+<span class="text-sm font-black text-on-surface">25</span>
+</div>
+<div class="flex-1 min-w-0">
+<h6 class="text-xs font-bold text-on-surface truncate">Range session</h6>
+<p class="text-[10px] text-on-surface-variant mt-0.5">18:00 • Drøbak GK</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- FAB for mobile or quick access (although Sidebar has CTA, this follows the Design System "Ny" Action) -->
+<div class="fixed bottom-6 right-8 md:hidden">
+<button class="w-14 h-14 bg-tertiary text-on-tertiary rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+</div>
+</body></html>

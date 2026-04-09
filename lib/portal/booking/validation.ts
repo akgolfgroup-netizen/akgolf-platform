@@ -82,6 +82,7 @@ export interface ValidationInput {
   studentId?: string;
   endTime?: Date; // Beregnes hvis ikke angitt
   ignoreBookingId?: string; // For reschedule
+  isAdmin?: boolean; // Admin kan overgå tidsbegrensninger
 }
 
 // -----------------------------------------------------------------------------
@@ -148,8 +149,8 @@ export async function validateBooking(
     // 3. Beregn endTime
     const endTime = input.endTime || new Date(startTime.getTime() + serviceType.duration * 60000);
 
-    // 4. Valider tidsbegrensninger
-    const timeValidation = validateTimeConstraints(startTime, serviceType);
+    // 4. Valider tidsbegrensninger (admin kan overgå)
+    const timeValidation = validateTimeConstraints(startTime, serviceType, input.isAdmin);
     errors.push(...timeValidation.errors);
     warnings.push(...timeValidation.warnings);
     if (timeValidation.maxAdvanceDate) metadata.maxAdvanceDate = timeValidation.maxAdvanceDate;
@@ -264,7 +265,8 @@ function validateTimeConstraints(
   serviceType: {
     minNoticeHours: number;
     maxAdvanceDays: number;
-  }
+  },
+  isAdmin?: boolean
 ): {
   errors: ValidationError[];
   warnings: ValidationWarning[];
@@ -275,6 +277,11 @@ function validateTimeConstraints(
   const warnings: ValidationWarning[] = [];
 
   const now = new Date();
+
+  // Admin kan overgå tidsbegrensninger
+  if (isAdmin) {
+    return { errors, warnings };
+  }
 
   // Sjekk minimum varsel
   const minStartTime = addHours(now, serviceType.minNoticeHours);

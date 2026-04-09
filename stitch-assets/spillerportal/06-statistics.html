@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html class="light" lang="no"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Golf Portal - Statistikk</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#757c7d",
+                        "on-error-container": "#752121",
+                        "tertiary-container": "#cfdef5",
+                        "on-tertiary-fixed": "#2e3d4e",
+                        "on-surface": "#2d3435",
+                        "secondary-container": "#6bff8f",
+                        "tertiary-fixed": "#cfdef5",
+                        "on-secondary-fixed": "#004a1d",
+                        "on-tertiary": "#f7f9ff",
+                        "primary": "#5f5e5e",
+                        "background": "#f9f9f9",
+                        "on-background": "#2d3435",
+                        "primary-dim": "#535252",
+                        "secondary-fixed-dim": "#5bf083",
+                        "surface-container": "#ebeeef",
+                        "surface-container-high": "#e4e9ea",
+                        "outline-variant": "#adb3b4",
+                        "inverse-primary": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "surface-container-low": "#f2f4f4",
+                        "tertiary": "#526073",
+                        "error-dim": "#4e0309",
+                        "on-secondary-fixed-variant": "#006a2d",
+                        "on-tertiary-fixed-variant": "#4a596c",
+                        "on-error": "#fff7f6",
+                        "inverse-surface": "#0c0f0f",
+                        "surface-dim": "#d4dbdd",
+                        "surface-container-highest": "#dde4e5",
+                        "on-primary-fixed": "#3f3f3f",
+                        "on-tertiary-container": "#414f62",
+                        "on-secondary-container": "#005f28",
+                        "surface-tint": "#5f5e5e",
+                        "on-primary-fixed-variant": "#5c5b5b",
+                        "secondary-fixed": "#6bff8f",
+                        "surface-variant": "#dde4e5",
+                        "primary-container": "#e4e2e1",
+                        "error-container": "#fe8983",
+                        "on-secondary": "#e9ffe6",
+                        "secondary-dim": "#006128",
+                        "surface": "#f9f9f9",
+                        "on-primary-container": "#525251",
+                        "primary-fixed-dim": "#d6d4d3",
+                        "error": "#9f403d",
+                        "secondary": "#006e2f",
+                        "on-primary": "#faf7f6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#5a6061",
+                        "inverse-on-surface": "#9c9d9d",
+                        "tertiary-fixed-dim": "#c1d0e6",
+                        "primary-fixed": "#e4e2e1",
+                        "tertiary-dim": "#465467"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.25rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-header { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-background min-h-screen flex">
+<!-- SideNavBar (Authority: JSON & Design System) -->
+<aside class="hidden md:flex flex-col h-screen w-64 bg-stone-50 dark:bg-stone-950 p-4 gap-2 fixed left-0 top-0 z-40 border-r-0">
+<div class="mb-8 px-4">
+<h1 class="font-['Manrope'] font-extrabold text-stone-900 dark:text-white text-xl tracking-tighter">Pro Performance</h1>
+<p class="text-xs text-stone-500 uppercase tracking-widest font-bold">Elite Analytics</p>
+</div>
+<nav class="flex flex-col gap-1 flex-grow">
+<!-- Mapping JSON tab_labels & tab_icons -->
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 transition-all duration-200 ease-in-out font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 transition-all duration-200 ease-in-out font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">fitness_center</span>
+                Trening
+            </a>
+<!-- ACTIVE: Statistikk -->
+<a class="flex items-center gap-3 px-4 py-3 text-emerald-700 dark:text-emerald-400 bg-white dark:bg-stone-900 rounded-lg font-bold transition-all duration-200 ease-in-out font-['Inter'] text-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">query_stats</span>
+                Statistikk
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 transition-all duration-200 ease-in-out font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">event_available</span>
+                Bookinger
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 transition-all duration-200 ease-in-out font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+                Dagbok
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 transition-all duration-200 ease-in-out font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+                Kalender
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 transition-all duration-200 ease-in-out font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">biotech</span>
+                TrackMan
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 transition-all duration-200 ease-in-out font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">sports_golf</span>
+                Øvelser
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 transition-all duration-200 ease-in-out font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">person</span>
+                Profil
+            </a>
+</nav>
+<button class="mt-auto bg-secondary text-on-secondary py-3 px-4 rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+            Add Round
+        </button>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-grow md:ml-64 bg-surface-container-low min-h-screen overflow-x-hidden">
+<!-- TopAppBar (Authority: JSON & Design System) -->
+<header class="fixed top-0 right-0 left-0 md:left-64 z-50 bg-white/70 backdrop-blur-md shadow-sm flex justify-between items-center px-6 py-3">
+<div class="flex items-center gap-4">
+<span class="md:hidden material-symbols-outlined text-on-background">menu</span>
+<span class="font-['Manrope'] font-bold text-lg text-stone-800">AK Golf Portal</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden sm:flex items-center bg-stone-100 dark:bg-stone-800 px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-sm text-stone-500 mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-32 md:w-48 text-stone-800" placeholder="Search data..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-stone-800 hover:bg-stone-100 p-2 rounded-full cursor-pointer transition-colors">notifications</span>
+<img alt="User profile photo" class="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" data-alt="Professional male golfer portrait with soft focused green grass background and warm cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDF-7R3Ns3g0BlAJpolgRPS0_WAvOgIIgq2hlZdh5vJRE2Nzp_4dPGLQzhxHbJQyNn4LZuajp9Yj_kgyy3nx5B-32YcNJUliwwbSaEweLxG7-LOtv7FEx_rg_sHbS-9a-jCzwpSWyhtPyHE4l3YidbL7FrxTvPZsH-UGCHqqkRdPOw9TZMruCIANgU1LLeMQqaaz4v5OoOaLf6pBmWeKQjy-IEDgOZJ0jQh3k10Tvs-QCgCv0kMwfifa0m3zqMno_QqH9P3pcKdGY"/>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="mt-20 p-6 md:p-8 max-w-7xl mx-auto space-y-8">
+<!-- 1. TITLE SECTION -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-4xl font-extrabold text-on-background tracking-tight">Din statistikk</h2>
+<p class="text-on-surface-variant mt-1">Sist oppdatert: I dag kl. 09:12</p>
+</div>
+<div class="flex bg-surface-container-highest p-1 rounded-xl">
+<button class="px-4 py-2 text-sm font-semibold text-on-surface-variant hover:text-on-background transition-colors">7 dager</button>
+<button class="px-4 py-2 text-sm font-bold bg-surface-container-lowest text-on-background rounded-lg shadow-sm">30 dager</button>
+<button class="px-4 py-2 text-sm font-semibold text-on-surface-variant hover:text-on-background transition-colors">3 måneder</button>
+<button class="px-4 py-2 text-sm font-semibold text-on-surface-variant hover:text-on-background transition-colors">1 år</button>
+</div>
+</section>
+<!-- 2. KEY METRICS ROW -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Handicap Card -->
+<div class="bg-surface-container-lowest p-6 rounded-lg flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-sm font-medium">Handicap</span>
+<div class="flex items-center text-secondary font-bold text-xs bg-secondary-container/20 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-xs mr-1">trending_down</span>
+                            0.8
+                        </div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-5xl font-extrabold text-on-background font-headline">12.4</span>
+</div>
+<div class="h-8 w-full">
+<!-- Mini Sparkline Placeholder -->
+<div class="w-full h-full flex items-end gap-1">
+<div class="bg-secondary/20 w-full h-[40%] rounded-sm"></div>
+<div class="bg-secondary/40 w-full h-[60%] rounded-sm"></div>
+<div class="bg-secondary/30 w-full h-[50%] rounded-sm"></div>
+<div class="bg-secondary/50 w-full h-[70%] rounded-sm"></div>
+<div class="bg-secondary/40 w-full h-[65%] rounded-sm"></div>
+<div class="bg-secondary w-full h-[90%] rounded-sm"></div>
+</div>
+</div>
+</div>
+<!-- Scoring Average -->
+<div class="bg-surface-container-lowest p-6 rounded-lg flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-sm font-medium">Scoring Snitt</span>
+<div class="flex items-center text-secondary font-bold text-xs bg-secondary-container/20 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-xs mr-1">trending_down</span>
+                            2.1
+                        </div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-5xl font-extrabold text-on-background font-headline">78.2</span>
+</div>
+<p class="text-xs text-on-surface-variant">Sammenlignet med 30 dager</p>
+</div>
+<!-- Rounds Played -->
+<div class="bg-surface-container-lowest p-6 rounded-lg flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-sm font-medium">Antall runder</span>
+<span class="material-symbols-outlined text-primary opacity-50">calendar_today</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-5xl font-extrabold text-on-background font-headline">24</span>
+</div>
+<p class="text-xs font-bold text-secondary uppercase tracking-tight">Denne sesongen</p>
+</div>
+<!-- Fairway Hit % -->
+<div class="bg-surface-container-lowest p-6 rounded-lg flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-sm font-medium">Fairway Treff</span>
+<div class="flex items-center text-secondary font-bold text-xs bg-secondary-container/20 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-xs mr-1">trending_up</span>
+                            5%
+                        </div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-5xl font-extrabold text-on-background font-headline">62%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 62%"></div>
+</div>
+</div>
+</section>
+<!-- 3. MAIN CHART: Bento Grid Style -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<section class="lg:col-span-2 bg-surface-container-lowest p-8 rounded-lg">
+<div class="flex justify-between items-center mb-10">
+<h3 class="text-xl font-bold text-on-background">Score utvikling over tid</h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span class="w-3 h-3 rounded-full bg-secondary"></span> Trend
+                            </div>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span class="w-3 h-3 rounded-full bg-primary opacity-30"></span> Snitt
+                            </div>
+</div>
+</div>
+<div class="relative h-64 w-full flex items-end justify-between px-2">
+<!-- Custom Data Viz Placeholder -->
+<div class="absolute inset-0 border-b border-outline-variant/20 flex flex-col justify-between pointer-events-none">
+<div class="border-t border-dashed border-outline-variant/10 w-full"></div>
+<div class="border-t border-dashed border-outline-variant/10 w-full"></div>
+<div class="border-t border-dashed border-outline-variant/10 w-full"></div>
+</div>
+<!-- Simulated Line Chart Points -->
+<div class="flex-grow h-full flex items-end justify-between z-10">
+<div class="group relative w-full h-[60%] flex justify-center">
+<div class="w-2 h-2 rounded-full bg-secondary ring-4 ring-secondary/10 absolute top-0"></div>
+<span class="hidden group-hover:block absolute -top-8 bg-on-background text-white text-[10px] py-1 px-2 rounded">82</span>
+</div>
+<div class="group relative w-full h-[75%] flex justify-center">
+<div class="w-2 h-2 rounded-full bg-secondary ring-4 ring-secondary/10 absolute top-0"></div>
+<span class="hidden group-hover:block absolute -top-8 bg-on-background text-white text-[10px] py-1 px-2 rounded">78</span>
+</div>
+<div class="group relative w-full h-[55%] flex justify-center">
+<div class="w-2 h-2 rounded-full bg-secondary ring-4 ring-secondary/10 absolute top-0"></div>
+<span class="hidden group-hover:block absolute -top-8 bg-on-background text-white text-[10px] py-1 px-2 rounded">84</span>
+</div>
+<div class="group relative w-full h-[90%] flex justify-center">
+<div class="w-3 h-3 rounded-full bg-secondary ring-8 ring-secondary/20 absolute top-0 scale-110"></div>
+<span class="absolute -top-10 font-bold text-xs text-secondary">Best: 72</span>
+</div>
+<div class="group relative w-full h-[70%] flex justify-center">
+<div class="w-2 h-2 rounded-full bg-secondary ring-4 ring-secondary/10 absolute top-0"></div>
+<span class="hidden group-hover:block absolute -top-8 bg-on-background text-white text-[10px] py-1 px-2 rounded">80</span>
+</div>
+<div class="group relative w-full h-[80%] flex justify-center">
+<div class="w-2 h-2 rounded-full bg-secondary ring-4 ring-secondary/10 absolute top-0"></div>
+<span class="hidden group-hover:block absolute -top-8 bg-on-background text-white text-[10px] py-1 px-2 rounded">76</span>
+</div>
+</div>
+<!-- Average Line -->
+<div class="absolute w-full h-[1px] bg-primary/40 bottom-[68%] z-0"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-bold text-on-surface-variant px-2 uppercase tracking-tighter">
+<span>Runde 1</span>
+<span>Runde 5</span>
+<span>Runde 10</span>
+<span>Runde 15</span>
+<span>Runde 20</span>
+<span>Siste</span>
+</div>
+</section>
+<!-- 4. CATEGORY BREAKDOWN -->
+<section class="bg-surface-container-lowest p-8 rounded-lg flex flex-col">
+<h3 class="text-xl font-bold text-on-background mb-6">Slag per kategori</h3>
+<div class="space-y-6 flex-grow flex flex-col justify-center">
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold text-on-background uppercase">
+<span>Driving</span>
+<span>14.2</span>
+</div>
+<div class="h-3 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[85%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold text-on-background uppercase">
+<span>Jern</span>
+<span>32.1</span>
+</div>
+<div class="h-3 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[70%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold text-on-background uppercase">
+<span>Chipping</span>
+<span>8.4</span>
+</div>
+<div class="h-3 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[45%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold text-on-background uppercase">
+<span>Putting</span>
+<span>28.5</span>
+</div>
+<div class="h-3 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[65%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold text-on-background uppercase">
+<span>Bunker</span>
+<span>2.1</span>
+</div>
+<div class="h-3 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[15%]"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- 5. RECENT ROUNDS & 6. GOALS -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- RECENT ROUNDS TABLE -->
+<section class="lg:col-span-2 bg-surface-container-lowest rounded-lg overflow-hidden">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center">
+<h3 class="text-xl font-bold text-on-background">Siste runder</h3>
+<button class="text-secondary text-sm font-bold flex items-center hover:underline">Se alle <span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/10">
+<th class="px-6 py-4">Dato</th>
+<th class="px-6 py-4">Bane</th>
+<th class="px-6 py-4">Score</th>
+<th class="px-6 py-4">+/-</th>
+<th class="px-6 py-4">Handicap</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 text-on-surface-variant">12. Okt</td>
+<td class="px-6 py-4 font-bold">Oslo Golfklubb</td>
+<td class="px-6 py-4 font-headline font-bold">74</td>
+<td class="px-6 py-4 text-secondary font-bold">+2</td>
+<td class="px-6 py-4 font-medium">12.4</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 text-on-surface-variant">08. Okt</td>
+<td class="px-6 py-4 font-bold">Miklagard Golf</td>
+<td class="px-6 py-4 font-headline font-bold">81</td>
+<td class="px-6 py-4 text-error font-bold">+9</td>
+<td class="px-6 py-4 font-medium">12.6</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 text-on-surface-variant">03. Okt</td>
+<td class="px-6 py-4 font-bold">Lofoten Links</td>
+<td class="px-6 py-4 font-headline font-bold">78</td>
+<td class="px-6 py-4 text-on-background font-bold">+6</td>
+<td class="px-6 py-4 font-medium">12.6</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 text-on-surface-variant">28. Sep</td>
+<td class="px-6 py-4 font-bold">Nøtterøy GK</td>
+<td class="px-6 py-4 font-headline font-bold">75</td>
+<td class="px-6 py-4 text-secondary font-bold">+3</td>
+<td class="px-6 py-4 font-medium">12.8</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 text-on-surface-variant">15. Sep</td>
+<td class="px-6 py-4 font-bold">Stavanger GK</td>
+<td class="px-6 py-4 font-headline font-bold">82</td>
+<td class="px-6 py-4 text-error font-bold">+10</td>
+<td class="px-6 py-4 font-medium">12.9</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- GOALS SECTION -->
+<section class="flex flex-col gap-6">
+<div class="bg-surface-container-lowest p-8 rounded-lg flex-grow shadow-sm">
+<h3 class="text-xl font-bold text-on-background mb-8">Dine mål</h3>
+<div class="space-y-10">
+<div>
+<div class="flex justify-between items-center mb-3">
+<span class="text-sm font-bold">Handicap 10.0</span>
+<span class="text-sm font-black text-secondary">60%</span>
+</div>
+<div class="h-4 bg-surface-container-high rounded-full overflow-hidden p-1">
+<div class="bg-secondary h-full rounded-full" style="width: 60%"></div>
+</div>
+<p class="text-[10px] text-on-surface-variant mt-2 font-medium uppercase tracking-wider">Mangler 2.4 poeng for mål</p>
+</div>
+<div>
+<div class="flex justify-between items-center mb-3">
+<span class="text-sm font-bold">100 runder i år</span>
+<span class="text-sm font-black text-primary">24%</span>
+</div>
+<div class="h-4 bg-surface-container-high rounded-full overflow-hidden p-1">
+<div class="bg-primary h-full rounded-full" style="width: 24%"></div>
+</div>
+<p class="text-[10px] text-on-surface-variant mt-2 font-medium uppercase tracking-wider">24/100 runder spilt</p>
+</div>
+</div>
+</div>
+<!-- 7. COMPARE SECTION -->
+<div class="bg-surface-container p-6 rounded-lg">
+<h4 class="text-sm font-black text-on-background uppercase tracking-widest mb-4">Sammenlign med:</h4>
+<div class="flex flex-col gap-2">
+<button class="w-full text-left px-4 py-3 bg-surface-container-lowest rounded-lg border border-transparent hover:border-secondary transition-all font-bold text-sm flex justify-between items-center group">
+                                Forrige år
+                                <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">add</span>
+</button>
+<button class="w-full text-left px-4 py-3 bg-surface-container-lowest rounded-lg border border-transparent hover:border-secondary transition-all font-bold text-sm flex justify-between items-center group">
+                                Snitt
+                                <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">add</span>
+</button>
+<button class="w-full text-left px-4 py-3 bg-secondary text-on-secondary rounded-lg font-bold text-sm flex justify-between items-center">
+                                Elite
+                                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Footer / Space -->
+<footer class="p-8 text-center text-on-surface-variant text-xs font-medium border-t border-outline-variant/10 mt-12">
+            © 2024 AK Golf Portal • Designet for prestasjon
+        </footer>
+</main>
+</body></html>

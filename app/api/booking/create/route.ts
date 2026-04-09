@@ -52,12 +52,14 @@ export async function POST(req: NextRequest) {
 
     const supabase = await createServerSupabase();
 
-    // Validate booking
+    // Validate booking (admin kan overgå tidsbegrensninger)
+    const isAdmin = user.role === "ADMIN" || user.role === "INSTRUCTOR";
     const validation = await validateBooking({
       serviceTypeId,
       instructorId,
       startTime: start,
       studentId: user.id,
+      isAdmin,
     });
 
     if (!validation.valid) {

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html class="light" lang="nb"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-dim": "#535252",
+                      "secondary-fixed-dim": "#c7d5ed",
+                      "on-tertiary-fixed": "#004a1d",
+                      "inverse-primary": "#ffffff",
+                      "surface-tint": "#5f5e5e",
+                      "inverse-surface": "#010f1f",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#eef4ff",
+                      "tertiary-fixed-dim": "#5bf083",
+                      "tertiary-fixed": "#6bff8f",
+                      "error-dim": "#4e0309",
+                      "on-tertiary-fixed-variant": "#006a2d",
+                      "on-tertiary": "#e9ffe6",
+                      "inverse-on-surface": "#8f9eb3",
+                      "primary": "#5f5e5e",
+                      "on-primary-container": "#525251",
+                      "outline": "#4e7eb2",
+                      "primary-fixed-dim": "#d6d4d3",
+                      "on-secondary-container": "#455367",
+                      "surface": "#f8f9ff",
+                      "on-error": "#fff7f6",
+                      "surface-container-high": "#dbe9ff",
+                      "primary-container": "#e4e2e1",
+                      "primary-fixed": "#e4e2e1",
+                      "on-background": "#00345b",
+                      "surface-container": "#e5efff",
+                      "on-surface": "#00345b",
+                      "on-secondary-fixed-variant": "#4e5c71",
+                      "tertiary-dim": "#006128",
+                      "on-secondary-fixed": "#324053",
+                      "on-surface-variant": "#2f6294",
+                      "secondary": "#526074",
+                      "tertiary-container": "#6bff8f",
+                      "on-tertiary-container": "#005f28",
+                      "on-secondary": "#f8f8ff",
+                      "on-primary": "#faf7f6",
+                      "outline-variant": "#86b5ed",
+                      "secondary-container": "#d5e3fc",
+                      "on-primary-fixed": "#3f3f3f",
+                      "background": "#f8f9ff",
+                      "surface-bright": "#f8f9ff",
+                      "surface-container-highest": "#d1e4ff",
+                      "tertiary": "#006e2f",
+                      "on-error-container": "#752121",
+                      "on-primary-fixed-variant": "#5c5b5b",
+                      "surface-variant": "#d1e4ff",
+                      "error-container": "#fe8983",
+                      "surface-dim": "#c2dcff",
+                      "secondary-dim": "#465468",
+                      "secondary-fixed": "#d5e3fc",
+                      "error": "#9f403d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Inter"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Sidebar Wrapper -->
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar (JSON Derived) -->
+<aside class="hidden md:flex flex-col h-full py-8 px-6 border-r border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 docked left-0 h-screen w-72">
+<div class="mb-10">
+<h2 class="text-lg font-black text-zinc-800 dark:text-zinc-100">AK Intelligence</h2>
+<p class="text-xs font-medium text-zinc-500 uppercase tracking-widest mt-1">Admin Console</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 hover:pl-2 rounded-lg font-medium text-sm" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Executive Summary
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 hover:pl-2 rounded-lg font-medium text-sm" href="#">
+<span class="material-symbols-outlined">groups</span>
+                    Coach Performance
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 hover:pl-2 rounded-lg font-medium text-sm" href="#">
+<span class="material-symbols-outlined">person_book</span>
+                    Student Roster
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 hover:pl-2 rounded-lg font-medium text-sm" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+                    Booking Engine
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 hover:pl-2 rounded-lg font-medium text-sm" href="#">
+<span class="material-symbols-outlined">payments</span>
+                    Fiscal Trends
+                </a>
+<!-- ACTIVE TAB: Facility Analytics (Maps to overall Analytics context) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white rounded-lg shadow-sm font-bold scale-95 transition-transform text-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+                    Facility Analytics
+                </a>
+</nav>
+<div class="mt-auto space-y-2 pt-6 border-t border-zinc-100">
+<button class="w-full bg-primary text-on-primary py-3 rounded-xl font-semibold flex items-center justify-center gap-2 mb-6">
+<span class="material-symbols-outlined text-sm">add</span>
+                    Schedule Lesson
+                </button>
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-500 hover:text-zinc-900 text-sm font-medium" href="#">
+<span class="material-symbols-outlined">cloud_done</span>
+                    System Status
+                </a>
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-500 hover:text-zinc-900 text-sm font-medium" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+                    Support
+                </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-y-auto bg-surface">
+<!-- TopAppBar (JSON Derived) -->
+<header class="flex justify-between items-center w-full px-10 h-16 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md sticky top-0 z-40 transition-all">
+<div class="flex items-center gap-8">
+<h1 class="text-xl font-bold tracking-tighter text-zinc-800 dark:text-zinc-100">AK Golf Academy</h1>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-zinc-500 dark:text-zinc-400 font-medium hover:text-zinc-900 transition-colors duration-200 text-sm" href="#">Academy Overview</a>
+<a class="text-zinc-500 dark:text-zinc-400 font-medium hover:text-zinc-900 transition-colors duration-200 text-sm" href="#">Pro Shop</a>
+<a class="text-zinc-500 dark:text-zinc-400 font-medium hover:text-zinc-900 transition-colors duration-200 text-sm" href="#">Student Portals</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded-full text-sm focus:ring-1 focus:ring-primary-dim w-64" placeholder="Søk i rapporter..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-zinc-500 hover:text-zinc-900 p-2">notifications</button>
+<button class="material-symbols-outlined text-zinc-500 hover:text-zinc-900 p-2">settings</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-zinc-200 ml-2">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="Administrator Profile professional headshot with neutral background and soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATRT7k79OIvoJPJkO9MF4TbOBB4F0Fq0_kKaka8ZPyo6yxE4BMdF5i7tbGyVDfg4AkY7-y0lpkMreoG_S40lKKn0-dmRa-ae0IVZ0yQ-teBP75_jSJa-mlkP4qlnYa49XeOkOBHnWBpK21zu8at3kbVOHycD6QWOWd10WVByfaAucJ-32fut_2VD9uOFXCfOPCM5MguBiX0BCu2SHblQXLL5KA1g3u0REEGVqtgRnZy00uhfiWe1w89XAkZeLd_HfVILAI2btBQB0"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-10 max-w-7xl mx-auto w-full">
+<!-- Page Header & Filter -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<span class="text-[0.6875rem] font-bold tracking-[0.05em] text-primary uppercase mb-2 block">Facility Intelligence</span>
+<h2 class="text-[2.25rem] font-extrabold tracking-tighter text-on-surface leading-tight">Rapporter &amp; Innsikt</h2>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low p-1.5 rounded-xl">
+<button class="px-4 py-2 text-xs font-semibold rounded-lg bg-surface-container-lowest text-on-surface shadow-sm transition-all">Siste 7 dager</button>
+<button class="px-4 py-2 text-xs font-medium rounded-lg text-secondary-dim hover:bg-surface-container-high transition-all">Denne måned</button>
+<button class="px-4 py-2 text-xs font-medium rounded-lg text-secondary-dim hover:bg-surface-container-high transition-all">Siste 3 måneder</button>
+<button class="px-4 py-2 text-xs font-medium rounded-lg text-secondary-dim hover:bg-surface-container-high transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                            Egendefinert
+                        </button>
+</div>
+</div>
+<!-- Key Metrics Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-white/50 transition-transform hover:scale-[1.02]">
+<p class="text-[0.6875rem] font-bold text-secondary uppercase tracking-widest mb-1">Inntekt</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-black text-on-surface">kr 125.000</h3>
+</div>
+<div class="mt-4 flex items-center gap-1 text-error text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+                            12% vs. forrige uke
+                        </div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-white/50 transition-transform hover:scale-[1.02]">
+<p class="text-[0.6875rem] font-bold text-secondary uppercase tracking-widest mb-1">Antall bookinger</p>
+<h3 class="text-2xl font-black text-on-surface">156</h3>
+<div class="mt-4 flex items-center gap-1 text-tertiary text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                            8% vs. forrige uke
+                        </div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-white/50 transition-transform hover:scale-[1.02]">
+<p class="text-[0.6875rem] font-bold text-secondary uppercase tracking-widest mb-1">Snitt ordreverdi</p>
+<h3 class="text-2xl font-black text-on-surface">kr 1.250</h3>
+<div class="mt-4 text-zinc-400 text-xs font-medium">Stabilt trend</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-white/50 transition-transform hover:scale-[1.02]">
+<p class="text-[0.6875rem] font-bold text-secondary uppercase tracking-widest mb-1">Nye elever</p>
+<h3 class="text-2xl font-black text-on-surface">12</h3>
+<div class="mt-4 flex items-center gap-1 text-tertiary text-xs font-bold">
+<span class="material-symbols-outlined text-sm">person_add</span>
+                            +3 i dag
+                        </div>
+</div>
+<!-- Metric 5 -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-white/50 transition-transform hover:scale-[1.02]">
+<p class="text-[0.6875rem] font-bold text-secondary uppercase tracking-widest mb-1">Gjennomføring</p>
+<h3 class="text-2xl font-black text-on-surface">94%</h3>
+<div class="mt-4 w-full bg-surface-container-low h-1 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[94%]"></div>
+</div>
+</div>
+</div>
+<!-- Main Data Grid -->
+<div class="grid grid-cols-12 gap-6 mb-6">
+<!-- Revenue Chart: Bento Style Large -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-8 rounded-3xl min-h-[400px] flex flex-col">
+<div class="flex justify-between items-start mb-10">
+<div>
+<h4 class="text-lg font-bold text-on-surface">Inntektsutvikling</h4>
+<p class="text-sm text-secondary-dim mt-1">Siste 7 dagers daglig omsetning sammenlignet med forrige periode</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-xs font-medium text-secondary-dim">Denne perioden</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-zinc-200"></span>
+<span class="text-xs font-medium text-secondary-dim">Forrige</span>
+</div>
+</div>
+</div>
+<!-- Mock Chart Placeholder -->
+<div class="flex-1 flex items-end gap-2 px-2">
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="bg-zinc-100 w-full h-[40%] rounded-t-lg transition-all group-hover:bg-zinc-200"></div>
+<div class="bg-primary w-full h-[55%] rounded-t-lg"></div>
+<span class="text-[10px] font-bold text-center mt-2 text-zinc-400">MAN</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="bg-zinc-100 w-full h-[60%] rounded-t-lg"></div>
+<div class="bg-primary w-full h-[45%] rounded-t-lg"></div>
+<span class="text-[10px] font-bold text-center mt-2 text-zinc-400">TIR</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="bg-zinc-100 w-full h-[30%] rounded-t-lg"></div>
+<div class="bg-primary w-full h-[75%] rounded-t-lg"></div>
+<span class="text-[10px] font-bold text-center mt-2 text-zinc-400">ONS</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="bg-zinc-100 w-full h-[50%] rounded-t-lg"></div>
+<div class="bg-primary w-full h-[85%] rounded-t-lg"></div>
+<span class="text-[10px] font-bold text-center mt-2 text-zinc-400">TOR</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="bg-zinc-100 w-full h-[45%] rounded-t-lg"></div>
+<div class="bg-primary w-full h-[65%] rounded-t-lg"></div>
+<span class="text-[10px] font-bold text-center mt-2 text-zinc-400">FRE</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="bg-zinc-100 w-full h-[80%] rounded-t-lg"></div>
+<div class="bg-primary w-full h-[95%] rounded-t-lg"></div>
+<span class="text-[10px] font-bold text-center mt-2 text-zinc-400">LØR</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="bg-zinc-100 w-full h-[25%] rounded-t-lg"></div>
+<div class="bg-primary w-full h-[40%] rounded-t-lg"></div>
+<span class="text-[10px] font-bold text-center mt-2 text-zinc-400">SØN</span>
+</div>
+</div>
+</div>
+<!-- Service Breakdown -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-8 rounded-3xl flex flex-col">
+<h4 class="text-lg font-bold text-on-surface mb-8">Inntekt per tjeneste</h4>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">Coaching</span>
+<span class="text-secondary-dim">45% (kr 56.250)</span>
+</div>
+<div class="h-2 bg-surface-container-low rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">Trackman Studio</span>
+<span class="text-secondary-dim">25% (kr 31.250)</span>
+</div>
+<div class="h-2 bg-surface-container-low rounded-full">
+<div class="h-full bg-primary rounded-full opacity-80" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">Short Game Area</span>
+<span class="text-secondary-dim">15% (kr 18.750)</span>
+</div>
+<div class="h-2 bg-surface-container-low rounded-full">
+<div class="h-full bg-primary rounded-full opacity-60" style="width: 15%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">Junior Program</span>
+<span class="text-secondary-dim">10% (kr 12.500)</span>
+</div>
+<div class="h-2 bg-surface-container-low rounded-full">
+<div class="h-full bg-primary rounded-full opacity-40" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">B2B Events</span>
+<span class="text-secondary-dim">5% (kr 6.250)</span>
+</div>
+<div class="h-2 bg-surface-container-low rounded-full">
+<div class="h-full bg-primary rounded-full opacity-20" style="width: 5%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Lower Analytics Row -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Booking Trends Heatmap -->
+<div class="col-span-12 lg:col-span-7 bg-surface-container-lowest p-8 rounded-3xl">
+<div class="flex justify-between items-center mb-6">
+<h4 class="text-lg font-bold text-on-surface">Peak Hours Heatmap</h4>
+<span class="text-xs text-secondary-dim">Intensitet i antall bookinger</span>
+</div>
+<div class="grid grid-cols-12 gap-1">
+<!-- Header Row Hours -->
+<div class="col-span-1"></div>
+<div class="text-[9px] text-center text-zinc-400 font-bold">08</div>
+<div class="text-[9px] text-center text-zinc-400 font-bold">10</div>
+<div class="text-[9px] text-center text-zinc-400 font-bold">12</div>
+<div class="text-[9px] text-center text-zinc-400 font-bold">14</div>
+<div class="text-[9px] text-center text-zinc-400 font-bold">16</div>
+<div class="text-[9px] text-center text-zinc-400 font-bold">18</div>
+<div class="text-[9px] text-center text-zinc-400 font-bold">20</div>
+<div class="text-[9px] text-center text-zinc-400 font-bold">22</div>
+<div class="col-span-3"></div>
+<!-- Mock Heatmap Rows -->
+<div class="text-[10px] font-bold text-zinc-500 py-1">Man</div>
+<div class="bg-primary/10 rounded-sm h-6"></div>
+<div class="bg-primary/30 rounded-sm h-6"></div>
+<div class="bg-primary/50 rounded-sm h-6"></div>
+<div class="bg-primary/80 rounded-sm h-6"></div>
+<div class="bg-primary/90 rounded-sm h-6"></div>
+<div class="bg-primary/60 rounded-sm h-6"></div>
+<div class="bg-primary/40 rounded-sm h-6"></div>
+<div class="bg-primary/10 rounded-sm h-6"></div>
+<div class="col-span-3"></div>
+<div class="text-[10px] font-bold text-zinc-500 py-1">Lør</div>
+<div class="bg-primary/40 rounded-sm h-6"></div>
+<div class="bg-primary/80 rounded-sm h-6"></div>
+<div class="bg-primary/100 rounded-sm h-6"></div>
+<div class="bg-primary/100 rounded-sm h-6"></div>
+<div class="bg-primary/90 rounded-sm h-6"></div>
+<div class="bg-primary/70 rounded-sm h-6"></div>
+<div class="bg-primary/30 rounded-sm h-6"></div>
+<div class="bg-primary/10 rounded-sm h-6"></div>
+<div class="col-span-3"></div>
+</div>
+<p class="text-xs text-secondary-dim mt-4">Analysen viser høyest trykk lørdager mellom 12:00 og 15:00.</p>
+</div>
+<!-- Student Analytics -->
+<div class="col-span-12 lg:col-span-5 bg-surface-container-lowest p-8 rounded-3xl">
+<h4 class="text-lg font-bold text-on-surface mb-6">Elevanalyse</h4>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface rounded-2xl border border-zinc-100">
+<span class="text-[10px] font-bold text-primary-dim uppercase block mb-1">Retention Rate</span>
+<div class="text-xl font-black">82%</div>
+<div class="text-[10px] text-tertiary font-bold mt-1">↑ 2.4%</div>
+</div>
+<div class="p-4 bg-surface rounded-2xl border border-zinc-100">
+<span class="text-[10px] font-bold text-primary-dim uppercase block mb-1">Avg. Sessions</span>
+<div class="text-xl font-black">4.8</div>
+<div class="text-[10px] text-zinc-400 font-medium mt-1">Per mnd / elev</div>
+</div>
+<div class="p-4 bg-surface rounded-2xl border border-zinc-100">
+<span class="text-[10px] font-bold text-primary-dim uppercase block mb-1">Churn Rate</span>
+<div class="text-xl font-black">5.1%</div>
+<div class="text-[10px] text-error font-bold mt-1">↓ 0.8%</div>
+</div>
+<div class="p-4 bg-surface rounded-2xl border border-zinc-100">
+<span class="text-[10px] font-bold text-primary-dim uppercase block mb-1">Active Students</span>
+<div class="text-xl font-black">248</div>
+<div class="text-[10px] text-tertiary font-bold mt-1">+12 nye</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Export Action Bar -->
+<div class="mt-12 pt-8 border-t border-zinc-100 flex flex-col sm:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-3">
+<img class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="Portrait of a young executive male coach for professional profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9PVns-8pAeSLi7ufuHuqykEShvBH4ETC83UXnOVD57HBwQYjPl0LA1AwoNnrnNeq3MkztCjV63ueBW-k6vny_iVm4A-emYIXEw-0gu0rSugttuI4-Qveo1DZIoezJw7mUXPKBuwEguxihzH6LSvPEIqSvjcp6FCJXh9QK2UOhlbZgBecFS3YVe3rR-CLEpRbik8r2WaxIqK-gl8o0wnaqxZzI3881X8oqoye4LOXZ-XQh_HY4y4txXxZRXMFJnRTSI8rQKJS0P70"/>
+<img class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="Female coach professional headshot for golf academy dashboard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZP9IMRcjQYD-i_-6Pp2MaGy68V3jiOPdIB_eEvBfH9TrR2T766UoVzAL7GyzJNVJNTbwSbew2wBmsicWZZVC4G6geEeVfYSSMDEGQtolrmxlw0ACQlV1nzA1meZeDwD0m9QrTyxrovZOx0QrU7RX-1zNw-Lu5qO7pvqFyCZAt-8Mh-p2zZigi7A0VdAp8d8w4vnQeOqJIJ5PLiTRx67v0d1dT8LcOhQUWsYqSG7zcrxA6shRIPNA0f8JqI-SNOztFaR7bwu4UCPs"/>
+<img class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="Mature male lead coach with a friendly smile for profile display" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdPHnsVAJd0LcpiWf8LvhBi50CPF3kyWtytKkZNVtyGQj6CuBZ3Jzphu22A-gdihnf8OmUlwCMvrxR_h6kTlQalRsBU3Am8IFsdzQShm4zN4lTIQePcemrJKrWhoQT-nIYa64QMxA1i10skgsWsxTIK73F2mQlNPDbI0m-NngQxnDZoYKMuJpYfoVVaIi7ODUgpXmjJsF6QJHYTpqG8nriW4LhNdfyy0J9slbUkj4dRqn9YDgJIWIDtZdhxPl3saKeRz_VF7Yxs1Y"/>
+</div>
+<p class="text-sm text-secondary-dim"><span class="font-bold text-on-surface">3 administratorer</span> har tilgang til denne rapporten</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-6 py-3 bg-white text-on-surface border border-zinc-200 rounded-xl font-bold text-sm hover:bg-zinc-50 transition-all shadow-sm">
+<span class="material-symbols-outlined text-sm">share</span>
+                            Del rapport
+                        </button>
+<div class="relative group">
+<button class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-xl font-bold text-sm hover:bg-primary-dim transition-all shadow-lg">
+<span class="material-symbols-outlined text-sm">download</span>
+                                Last ned rapport
+                                <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<!-- Dropdown menu -->
+<div class="absolute right-0 bottom-full mb-2 w-48 bg-white rounded-xl shadow-2xl border border-zinc-100 py-2 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all transform translate-y-2 group-hover:translate-y-0">
+<button class="w-full text-left px-4 py-2 text-sm hover:bg-zinc-50 font-medium">Export PDF</button>
+<button class="w-full text-left px-4 py-2 text-sm hover:bg-zinc-50 font-medium">Export Excel (.xlsx)</button>
+<button class="w-full text-left px-4 py-2 text-sm hover:bg-zinc-50 font-medium">Export CSV</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Meta -->
+<footer class="mt-auto px-10 py-6 bg-white border-t border-zinc-50">
+<div class="flex justify-between items-center text-[10px] text-zinc-400 font-bold uppercase tracking-widest">
+<span>© 2024 AK Golf Academy | Rapportering v2.4.0</span>
+<span class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                        Live Data: Sist oppdatert kl 14:32:01
+                    </span>
+</div>
+</footer>
+</main>
+</div>
+</body></html>
