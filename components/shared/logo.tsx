@@ -64,7 +64,7 @@ export function Logo({
       {/* Text */}
       {showText && (
         <div className={`font-bold tracking-tighter ${textSize}`} style={{ color: text }}>
-          AK Golf Academy
+          AK Golf
         </div>
       )}
     </Link>
