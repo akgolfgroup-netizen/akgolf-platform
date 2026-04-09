@@ -8,60 +8,48 @@ export const NAV_LINKS = [
 // ─── Hero ───
 export const HERO = {
   eyebrow: "AK GOLF ACADEMY",
-  heading: "Presisjon i hvert slag.",
-  greenWord: "slag.",
-  subheading: "Individuell coaching med TrackMan-analyse og personlig utviklingsplan. Fra 18 til singel-handicap med system.",
+  heading: "Effektiv 1-til-1 coaching.",
+  greenWord: "coaching.",
+  subheading: "Personlig veiledning støttet av TrackMan og videoanalyse. Du får en treningsplan som gir målbare resultater. For å sikre tett oppfølging og god tilgjengelighet i kalenderen, har akademiet et strengt tak på 65 plasser.",
   ctaPrimary: "Se coaching-pakker",
   ctaSecondary: "Book Flex-sesjon",
   // Keep existing fields for backward compat
   statusBadge: "Sesong 2026 — begrenset kapasitet",
   trustItems: [
     { label: "TrackMan-analyse hver sesjon" },
-    { label: "Personlig utviklingsplan (IUP)" },
-    { label: "Dokumentert handicap-forbedring" },
+    { label: "Personlig treningsplan" },
+    { label: "Maks 65 plasser" },
   ],
   stats: [
-    { value: "500+", label: "Spillere utviklet" },
-    { value: "12+", label: "Års erfaring" },
-    { value: "Tour-nivå", label: "Metodikk" },
+    { value: "65", label: "Plasser totalt" },
+    { value: "20 min", label: "Fokuserte økter" },
+    { value: "Resultater", label: "Dokumentert" },
   ],
 } as const;
 
 // ─── The Foundation Method ───
 export const FOUNDATION_METHOD = {
   eyebrow: "Vår metodikk",
-  heading: "The Foundation Method",
-  description: "Vår metodikk er bygget på 12 års erfaring og hundrevis av spillere. Fem faser som tar deg fra grunnmur til prestasjon.",
+  heading: "Varig endring. Ikke quick fixes.",
+  description: "Vår tilnærming bygger på The Foundation Method.",
   phases: [
     {
-      id: "BUILD",
-      name: "BUILD",
-      title: "Bygg grunnmuren",
-      description: "Teknikk, grep, setup. De fundamentale bevegelsene som alt annet bygges på.",
+      id: "ANALYSE",
+      name: "01",
+      title: "Analyse",
+      description: "Vi kartlegger teknikken din med TrackMan-data og videoanalyse. Du ser nøyaktig hva vi jobber med – ingen gjetning.",
     },
     {
-      id: "STAB",
-      name: "STAB",
-      title: "Stabiliser under press",
-      description: "Repetisjon og mestring. Gjør de riktige bevegelsene automatiske.",
+      id: "PLAN",
+      name: "02",
+      title: "Plan",
+      description: "Du får en personlig treningsplan i appen, skreddersydd for ditt unike svingmønster.",
     },
     {
-      id: "TEST",
-      name: "TEST",
-      title: "Test under stressor",
-      description: "Variasjon og utfordring. Simuler presset du møter på banen.",
-    },
-    {
-      id: "TRANSFER",
-      name: "TRANSFER",
-      title: "Overfør til banen",
-      description: "Fra range til spill. Bruk teknikkene i ekte spillsituasjoner.",
-    },
-    {
-      id: "PERFORM",
-      name: "PERFORM",
-      title: "Prestér i konkurranse",
-      description: "Når det gjelder. Fokus på mental styrke og strategisk spill.",
+      id: "OPPFOLGING",
+      name: "03",
+      title: "Oppfølging",
+      description: "Jevnlige 1-til-1 økter sikrer at du holder rett kurs. Planen justeres løpende basert på din utvikling.",
     },
   ],
 } as const;
@@ -145,20 +133,41 @@ export const FOUNDATION_TEST = {
 // ─── Coaching Packages (Abonnement) ───
 export const COACHING_PACKAGES = [
   {
-    name: "Performance Pro",
-    price: "1 999",
+    name: "Performance",
+    price: "1 600",
     period: "kr/mnd",
-    tagline: "Dobbel frekvens — raskere utvikling",
-    description: "4 × 20 min individuell coaching per måned med prioritert booking. Full spillerportal. For deg som vil utvikle deg raskt.",
-    whoIsItFor: "Passer for: Ambisiøse spillere som trener 3+ ganger i uken.",
+    tagline: "For deg som ønsker struktur og jevnlig oppfølging.",
+    description: "2 x 20 min 1-til-1 coaching per måned. TrackMan og videoanalyse. Full portaltilgang og treningsplan. 7 dagers booking-vindu.",
+    whoIsItFor: "For deg som ønsker struktur og jevnlig oppfølging.",
     features: [
-      "4 × 20 min individuell coaching/mnd",
-      "Selvbooking 14 dager frem",
-      "Prioritert booking foran Performance",
-      "Maks 2 bookinger per uke",
-      "TrackMan-data logget i profilen",
-      "Full spillerportal med treningsplan",
-      "Coaching-notater etter hver sesjon",
+      "2 x 20 min 1-til-1 coaching per måned",
+      "TrackMan og videoanalyse",
+      "Full portaltilgang og treningsplan",
+      "7 dagers booking-vindu",
+    ],
+    highlighted: false,
+    badge: null,
+    stripeMetadata: {
+      type: "subscription",
+      sessions_per_month: 2,
+      session_duration: 20,
+      booking_window_days: 7,
+      max_per_week: 1,
+      max_capacity: 24,
+    },
+  },
+  {
+    name: "Performance Pro",
+    price: "2 000",
+    period: "kr/mnd",
+    tagline: "For den ambisiøse som vil ha raskere fremgang og prioritert booking.",
+    description: "4 x 20 min 1-til-1 coaching per måned. TrackMan og videoanalyse. Full portaltilgang og treningsplan. 14 dagers prioritert booking.",
+    whoIsItFor: "For den ambisiøse som vil ha raskere fremgang og prioritert booking.",
+    features: [
+      "4 x 20 min 1-til-1 coaching per måned",
+      "TrackMan og videoanalyse",
+      "Full portaltilgang og treningsplan",
+      "14 dagers prioritert booking",
     ],
     highlighted: true,
     badge: "Mest populær",
@@ -171,55 +180,50 @@ export const COACHING_PACKAGES = [
       max_capacity: 10,
     },
   },
-  {
-    name: "Performance",
-    price: "1 599",
-    period: "kr/mnd",
-    tagline: "Strukturert utvikling med jevnlig coaching",
-    description: "2 × 20 min individuell coaching per måned med selvbooking. Full tilgang til spillerportalen med treningsplan, øvelsesbank og progresjonslogging.",
-    whoIsItFor: "Passer for: Klubbspillere som spiller 1–2 ganger i uken.",
-    features: [
-      "2 × 20 min individuell coaching/mnd",
-      "Selvbooking 7 dager frem",
-      "TrackMan-data logget i profilen",
-      "Full spillerportal med treningsplan",
-      "Øvelsesbank med HD-video",
-      "Treningsdagbok og statistikk",
-      "AI-analyse og benchmarking",
-    ],
-    highlighted: false,
-    stripeMetadata: {
-      type: "subscription",
-      sessions_per_month: 2,
-      session_duration: 20,
-      booking_window_days: 7,
-      max_per_week: 1,
-      max_capacity: 24,
-    },
-  },
 ] as const;
 
 // ─── Onboarding Package ───
 export const ONBOARDING_PACKAGE = {
-  name: "Start",
-  price: "3 000",
-  period: "kr",
-  tagline: "Din inngang til strukturert coaching",
-  description: "3 × 20 min individuelle sesjoner over 30 dager. TrackMan spredningsanalyse med 7-jern og driver, personlig teknisk plan og 30 dagers tilgang til spillerportalen.",
-  whoIsItFor: "Passer for: Alle som vil prøve AK Golf-metoden før de forplikter seg til abonnement.",
+  name: "Performance",
+  price: "1 600",
+  period: "kr/mnd",
+  tagline: "Månedlig coaching-abonnement",
+  description: "Inkluderer 2x20 minutter 1-til-1 veiledning med TrackMan/video, pluss oppdatert treningsplan i app. Ingen bindingstid.",
+  whoIsItFor: "For deg som ønsker struktur og jevnlig oppfølging.",
   features: [
-    "3 × 20 min coaching over 30 dager",
-    "TrackMan spredningsanalyse",
-    "Personlig teknisk plan",
-    "30 dagers portaltilgang"
+    "2 x 20 min 1-til-1 coaching per måned",
+    "TrackMan og videoanalyse",
+    "Full portaltilgang og treningsplan",
+    "7 dagers booking-vindu",
   ],
-  nextStep: "Etter Start anbefaler vi overgang til Performance eller Performance Pro.",
+  nextStep: "Oppgrader til Performance Pro for raskere fremgang.",
   stripeMetadata: {
-    type: "onboarding",
-    sessions: 3,
+    type: "subscription",
+    tier: "performance",
+    sessions_per_month: 2,
     session_duration: 20,
-    portal_days: 30,
-    includes_trackman_baseline: true,
+    booking_window_days: 7,
+    includes_trackman: true,
+    includes_video: true,
+    includes_portal: true,
+  },
+} as const;
+
+// ─── Product Descriptions for Booking System / Stripe ───
+export const PRODUCT_DESCRIPTIONS = {
+  subscription: {
+    performance: "Månedlig coaching-abonnement. Inkluderer 2x20 minutter 1-til-1 veiledning med TrackMan/video, pluss oppdatert treningsplan i app. Ingen bindingstid.",
+    performancePro: "Vårt mest populære abonnement. Inkluderer 4x20 minutter 1-til-1 veiledning med TrackMan/video, oppdatert treningsplan i app, og 14 dagers prioritert booking. Ingen bindingstid.",
+  },
+  flex: {
+    flex50Solo: "50 minutters 1-til-1 coaching med Anders. Dypdykk i teknikken din med TrackMan og videoanalyse. Inkluderer 30 dagers tilgang til treningsportalen.",
+    flex50Duo: "50 minutters coaching for 2 personer. Del økten og prisen med en venn. TrackMan, videoanalyse og 30 dagers portaltilgang for begge.",
+    flex90Solo: "90 minutters intensiv 1-til-1 coaching. Perfekt for total gjennomgang av bagen. Inkluderer 30 dagers portaltilgang.",
+  },
+  bane: {
+    onCourse9: "Ca. 2,5 timer strategisk veiledning på banen for opptil 2 spillere. Vi fokuserer på course management, rutiner og valg av slag. Greenfee kommer i tillegg om du ikke er medlem i GFGK.",
+    onCoursePar3: "90 minutter effektiv nærspills- og banetrening på korthullsbanen. Maks 4 spillere. Ledet av Markus.",
+    gameday: "En hel dag (09:00 - 16:00) dedikert til din utvikling. Maks 12 spillere. Formiddagen brukes på teknikk og analyse, ettermiddagen på bane med coaching. Lunsj inkludert.",
   },
 } as const;
 
@@ -258,52 +262,27 @@ export const SINGLE_SESSIONS = {
 // ─── Drop-in / Flex ───
 export const FLEX_PACKAGES = [
   {
-    name: "Flex 50",
-    price: "1 500",
+    name: "Flex-sesjon",
+    price: "Fra 1 500",
     period: "kr",
-    duration: "50 min",
-    tagline: "50 minutter coaching — ingen binding",
-    description: "Én coaching-sesjon på 50 minutter. Book ledige tider 48 timer i forveien. Betal per sesjon, ingen abonnement. Du får coaching-notater i appen etterpå.",
+    duration: "50 eller 90 min",
+    tagline: "Enkeltøkter for deg som vil prøve først, eller kun trenger en rask justering.",
+    description: "50 eller 90 min 1-til-1 coaching. TrackMan og videoanalyse. 30 dagers portaltilgang inkludert. 48 timers booking-vindu (usolgte tider).",
     includes: [
-      "1 × 50 min individuell coaching",
-      "TrackMan tilgjengelig i sesjonen",
-      "Coaching-notater i appen etter sesjonen",
+      "50 eller 90 min 1-til-1 coaching",
+      "TrackMan og videoanalyse",
+      "30 dagers portaltilgang inkludert",
+      "48 timers booking-vindu (usolgte tider)",
     ],
     notIncluded: [
-      "Spillerportal (treningsplaner, øvelsesbank, statistikk)",
-      "Booking mer enn 48 timer frem",
+      "Prioritert booking",
     ],
     stripeMetadata: {
       type: "drop_in",
       session_duration: 50,
       booking_window_hours: 48,
       slots_required: 2,
-      includes_portal: false,
-      includes_coaching_notes: true,
-    },
-  },
-  {
-    name: "Flex 90",
-    price: "2 500",
-    period: "kr",
-    duration: "90 min",
-    tagline: "90 minutter dypdykk — ingen binding",
-    description: "Én coaching-sesjon på 90 minutter. Grundig gjennomgang av spillet ditt med full TrackMan-analyse. Book ledige tider 48 timer i forveien.",
-    includes: [
-      "1 × 90 min individuell coaching",
-      "Full TrackMan-analyse med gjennomgang",
-      "Coaching-notater i appen etter sesjonen",
-    ],
-    notIncluded: [
-      "Spillerportal (treningsplaner, øvelsesbank, statistikk)",
-      "Booking mer enn 48 timer frem",
-    ],
-    stripeMetadata: {
-      type: "drop_in",
-      session_duration: 90,
-      booking_window_hours: 48,
-      slots_required: 4,
-      includes_portal: false,
+      includes_portal: true,
       includes_coaching_notes: true,
     },
   },
@@ -609,15 +588,12 @@ export const DROPIN_VS_SUBSCRIPTION = {
 
 // ─── Coaching FAQ ───
 export const COACHING_FAQ = [
-  { q: "Hvordan booker jeg tid?", a: "Logg inn i appen og gå til «Book sesjon». Du ser ledige tider basert på din pakke. Velg tid, bekreft, ferdig." },
-  { q: "Hva skjer om jeg ikke bruker alle sesjonene mine?", a: "Ubrukte sesjoner forfaller ved månedslutt. Du får en påminnelse 10 dager før." },
-  { q: "Kan jeg avbestille en booket tid?", a: "Ja, innen 24 timer før sesjonen. Etter det telles den som brukt." },
-  { q: "Hva er forskjellen på Performance og Performance Pro?", a: "Dobbel frekvens (4 vs 2 sesjoner/mnd) og prioritert booking — du ser ledige tider 14 dager frem mot 7 dager." },
-  { q: "Hva inkluderer Flex?", a: "En enkeltstående coaching-sesjon på 50 eller 90 minutter. Du får coaching-notater i appen etterpå, men ikke tilgang til spillerportalen." },
-  { q: "Er det bindingstid?", a: "Nei. Alle abonnement er månedlige og kan sies opp når som helst." },
-  { q: "Hva er Junior Elite?", a: "Et eliteprogram for maks 5 ambisiøse juniorer. 2 treninger per uke med faste tider. Begrenset plasser — ta kontakt for å søke." },
-  { q: "Hvilken pakke passer for meg?", a: "Spiller du golf 1–2 ganger i uken og vil ha noe struktur? Performance. Trener du 3+ ganger i uken og vil utvikle deg raskt? Performance Pro. Vil du bare prøve først? Book en Flex-sesjon." },
-  { q: "Hvor holder dere til?", a: "Vi holder til på Glåmdal Golf & Aktiv (GFGK) i Vinger. Vi har tilgang til driving range, nærspillsområde, putting green og full 18-hulls bane." },
+  { q: "Hvordan fungerer bookingen?", a: "Logg inn i appen, finn en ledig tid i kalenderen som passer ditt booking-vindu, og bekreft." },
+  { q: "Er det bindingstid?", a: "Nei. Alle abonnement løper månedlig og kan sies opp når som helst." },
+  { q: "Hva skjer om jeg ikke får brukt øktene mine?", a: "Ubrukte økter forfaller ved månedslutt. Vi minner deg på å booke i god tid." },
+  { q: "Hva er avbestillingsfristen?", a: "Du kan avbestille eller endre timen din direkte i appen inntil 2 timer før oppstart." },
+  { q: "Er det lett å finne ledige tider?", a: "Vi har satt et tak på maksimalt 65 medlemmer for å holde tilgjengeligheten høy. Dette gjør at du som abonnent har svært gode muligheter til å booke tidene som passer deg. Er akademiet fullt, kan du sette deg på venteliste." },
+  { q: "Hvor foregår treningen?", a: "Vi holder til ved Gamle Fredrikstad Golfklubb (GFGK). Vi benytter både utendørsanlegget og TrackMan-simulator innendørs, avhengig av sesong." },
 ] as const;
 
 // ─── Final CTA ───
@@ -662,11 +638,10 @@ export const METHOD_PILLARS = [
 // ─── Founder ───
 export const FOUNDER = {
   name: "Anders Kristiansen",
-  title: "Grunnlegger & Head Coach",
+  title: "Grunnlegger og hovedcoach",
   bio: [
-    "Grunnlegger av AK Golf Group. Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. Kombinerer teknisk veiledning etter plan med TrackMan-analyse.",
-    "Hver spiller får en individuell utviklingsplan som oppdateres etter hver sesjon — ikke bare data fra TrackMan, men konkret retning og nøyaktig hva du skal jobbe med til neste gang.",
-    "Min filosofi er enkel: coaching-sesjonen er kontaktpunktet, spillerportalen er motoren. Alt henger sammen — trening mellom sesjoner, statistikk, og progresjon over tid.",
+    "15 års erfaring med spillerutvikling fra nybegynner til PGA Tour.",
+    "Utvikler av The Foundation Method – et system bygget for å gi spillere på alle nivåer et bunnsolid fundament og varig progresjon.",
   ],
 } as const;
 
@@ -1023,9 +998,9 @@ export const ACADEMY_CTA = {
 
 // ─── Academy Hero ───
 export const ACADEMY_HERO = {
-  eyebrow: "AK Golf Academy",
-  heading: "Ditt spill. Din plan. Dine resultater.",
-  description: "Individuell coaching og skreddersydde utviklingsplaner for voksne spillere som vil ta spillet til neste nivå. Evidensbasert, personlig og med dokumenterte resultater.",
+  eyebrow: "PRISER & PAKKER",
+  heading: "Velg ditt nivå.",
+  description: "Samme kvalitet på veiledningen. Du velger hvor ofte vi møtes. Alle abonnement inkluderer personlig treningsplan i app, TrackMan, videoanalyse og ingen bindingstid.",
 } as const;
 
 // ─── Academy Philosophy Section ───
