@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { CreditCard, AlertCircle, Loader2, ShieldCheck } from "lucide-react";
+import { CreditCard, AlertCircle, Loader2, ShieldCheck, Smartphone } from "lucide-react";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -100,6 +100,21 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
         )}
       </motion.button>
 
+      {/* Payment Methods Info */}
+      <div className="flex items-center justify-center gap-4 text-xs text-[#86868B]">
+        <div className="flex items-center gap-1.5">
+          <Smartphone size={14} />
+          <span>Apple Pay</span>
+        </div>
+        <span>•</span>
+        <div className="flex items-center gap-1.5">
+          <Smartphone size={14} />
+          <span>Google Pay</span>
+        </div>
+        <span>•</span>
+        <span>Kort</span>
+      </div>
+
       {/* Security Note */}
       <p className="text-xs text-center text-[#AEAEB2]">
         Sikker betaling via Stripe. AK Golf Academy lagrer ikke kortinformasjon.
@@ -141,7 +156,7 @@ export function StripePaymentPage({
             Fullfør betaling
           </h1>
           <p className="text-[#86868B]">
-            Sikker kortbetaling med Stripe
+            Apple Pay, Google Pay eller kort
           </p>
         </div>
 

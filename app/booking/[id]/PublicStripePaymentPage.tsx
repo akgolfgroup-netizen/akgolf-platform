@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { CreditCard, AlertCircle, Loader2, ShieldCheck, Mail } from "lucide-react";
+import { CreditCard, AlertCircle, Loader2, ShieldCheck, Mail, Smartphone } from "lucide-react";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -154,6 +154,24 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
         )}
       </motion.button>
 
+      {/* Payment Methods Info */}
+      <div 
+        className="flex items-center justify-center gap-3 text-xs"
+        style={{ color: THEME.textMuted }}
+      >
+        <div className="flex items-center gap-1">
+          <Smartphone size={12} />
+          <span>Apple Pay</span>
+        </div>
+        <span>•</span>
+        <div className="flex items-center gap-1">
+          <Smartphone size={12} />
+          <span>Google Pay</span>
+        </div>
+        <span>•</span>
+        <span>Kort</span>
+      </div>
+
       {/* Security Note */}
       <p 
         className="text-xs text-center"
@@ -221,7 +239,7 @@ export function PublicStripePaymentPage({
             Fullfør betaling
           </h1>
           <p style={{ color: THEME.textMuted }}>
-            Sikker kortbetaling med Stripe
+            Apple Pay, Google Pay eller kort
           </p>
         </div>
 
