@@ -181,74 +181,54 @@ export default function LandingAboutPage() {
             <h2 className="text-4xl md:text-5xl font-bold text-[#154212] tracking-tight">To baner, ett system</h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Gamle Fredrikstad GK */}
-            <div className="bg-white rounded-[32px] overflow-hidden border border-[#154212]/5 shadow-lg">
-              <div className="aspect-[16/9] bg-[#f7f3ea]">
-                <img 
-                  src="/images/academy/AK-Golf-Academy-5.jpg" 
-                  alt="Gamle Fredrikstad Golfklubb"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-[#154212] mb-2">Gamle Fredrikstad Golfklubb</h3>
-                <p className="text-[#576500] font-medium mb-4">Hovedlokasjon</p>
-                <p className="text-[#42493e] mb-6">
-                  Vår hovedlokasjon med full tilgang til driving range, korthullsbane, 
-                  18-hullsbanen og putting green. TrackMan 4i er tilgjengelig for alle coaching-sesjoner.
-                </p>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-sm text-[#42493e]">
-                    <MapPin className="w-4 h-4 text-[#d2f000]" />
-                    <span>Stevnsgt. 135, 1605 Fredrikstad</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-[#42493e]">
-                    <Calendar className="w-4 h-4 text-[#d2f000]" />
-                    <span>Driving range, 18 hull, korthullsbane</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-[#42493e]">
-                    <TrendingUp className="w-4 h-4 text-[#d2f000]" />
-                    <span>TrackMan 4i</span>
+            <div className="bg-white rounded-2xl p-6 border border-[#154212]/5 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#154212] flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-6 h-6 text-[#d2f000]" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-bold text-[#154212] mb-1">Gamle Fredrikstad GK</h3>
+                  <p className="text-[#576500] text-sm font-medium mb-3">Hovedlokasjon</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm text-[#42493e]">
+                      <span className="truncate">Kongleveien 142, 1615 Fredrikstad</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-[#42493e]">
+                      <Calendar className="w-4 h-4 text-[#d2f000] flex-shrink-0" />
+                      <span>18 hull, korthullsbane</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-[#42493e]">
+                      <TrendingUp className="w-4 h-4 text-[#d2f000] flex-shrink-0" />
+                      <span>TrackMan 4i</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Miklagard GK */}
-            <div className="bg-white rounded-[32px] overflow-hidden border border-[#154212]/5 shadow-lg">
-              <div className="aspect-[16/9] bg-[#f7f3ea]">
-                <img 
-                  src="/images/academy/AK-Golf-Academy-20.jpg" 
-                  alt="Miklagard Golfklubb"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-[#154212] mb-2">Miklagard Golfklubb</h3>
-                <p className="text-[#576500] font-medium mb-4">Samarbeidslokasjon</p>
-                <p className="text-[#42493e] mb-6">
-                  Samarbeid med Miklagard Golfklubb gir våre medlemmer tilgang til en av 
-                  Norges beste baner. Perfekt for on-course coaching og turneringsforberedelser.
-                </p>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-sm text-[#42493e]">
-                    <MapPin className="w-4 h-4 text-[#d2f000]" />
-                    <span>Hvam, 2114 Disenå</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-[#42493e]">
-                    <Calendar className="w-4 h-4 text-[#d2f000]" />
-                    <span>18 hull, øvingsområde</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-[#42493e]">
-                    <Target className="w-4 h-4 text-[#d2f000]" />
-                    <span>Banecoaching tilgjengelig</span>
+            <div className="bg-white rounded-2xl p-6 border border-[#154212]/5 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#154212] flex items-center justify-center flex-shrink-0">
+                  <Target className="w-6 h-6 text-[#d2f000]" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-bold text-[#154212] mb-1">Miklagard Golfklubb</h3>
+                  <p className="text-[#576500] text-sm font-medium mb-3">Samarbeidslokasjon</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm text-[#42493e]">
+                      <span className="truncate">Svingen 120, 2114 Disenå</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-[#42493e]">
+                      <Calendar className="w-4 h-4 text-[#d2f000] flex-shrink-0" />
+                      <span>18 hull</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-[#42493e]">
+                      <Target className="w-4 h-4 text-[#d2f000] flex-shrink-0" />
+                      <span>Banecoaching</span>
+                    </div>
                   </div>
                 </div>
               </div>

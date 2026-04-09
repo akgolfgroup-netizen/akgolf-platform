@@ -131,14 +131,24 @@ export default function LandingHomepage() {
               <p className="text-lg text-[#42493e] leading-relaxed mb-8">
                 Hver spiller får en individuell utviklingsplan som oppdateres etter hver sesjon, slik at du alltid vet hva du skal jobbe med og hvorfor.
               </p>
-              <div className="flex flex-wrap gap-4">
-                <div className="flex items-center gap-2 text-[#154212]">
-                  <span className="material-symbols-outlined">location_on</span>
-                  <span className="font-medium">Gamle Fredrikstad GK</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                <div className="flex items-start gap-3 bg-white rounded-xl p-4 border border-[#154212]/5 shadow-sm">
+                  <div className="w-10 h-10 rounded-lg bg-[#154212] flex items-center justify-center flex-shrink-0">
+                    <span className="material-symbols-outlined text-[#d2f000] text-xl">location_on</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#154212] text-sm">Gamle Fredrikstad GK</h4>
+                    <p className="text-[#42493e] text-xs mt-1">Kongleveien 142, 1615 Fredrikstad</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-[#154212]">
-                  <span className="material-symbols-outlined">location_on</span>
-                  <span className="font-medium">Miklagard Golfklubb</span>
+                <div className="flex items-start gap-3 bg-white rounded-xl p-4 border border-[#154212]/5 shadow-sm">
+                  <div className="w-10 h-10 rounded-lg bg-[#154212] flex items-center justify-center flex-shrink-0">
+                    <span className="material-symbols-outlined text-[#d2f000] text-xl">location_on</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#154212] text-sm">Miklagard Golfklubb</h4>
+                    <p className="text-[#42493e] text-xs mt-1">Svingen 120, 2114 Disenå</p>
+                  </div>
                 </div>
               </div>
             </div>

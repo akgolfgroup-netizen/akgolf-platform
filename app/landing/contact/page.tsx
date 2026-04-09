@@ -45,12 +45,12 @@ export default function LandingContactPage() {
   const locations = [
     {
       name: "Gamle Fredrikstad Golfklubb",
-      address: "Stevnsgt. 135, 1605 Fredrikstad",
+      address: "Kongleveien 142, 1615 Fredrikstad",
       features: ["Driving range", "18 hull", "Korthullsbane", "TrackMan 4i"],
     },
     {
       name: "Miklagard Golfklubb",
-      address: "Hvam, 2114 Disenå",
+      address: "Svingen 120, 2114 Disenå",
       features: ["18 hull", "Banecoaching", "Øvingsområde"],
     },
   ];
