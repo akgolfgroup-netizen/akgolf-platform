@@ -297,7 +297,7 @@ export async function POST(req: NextRequest) {
                 name: serviceType?.name || "Coaching",
                 description: `Coaching-time ${serviceType?.duration || 50} min`,
               },
-              unit_amount: booking.amount, // Already in øre
+              unit_amount: booking.amount * 100, // Convert from kroner to øre
             },
             quantity: 1,
           },
