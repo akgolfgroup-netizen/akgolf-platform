@@ -92,24 +92,15 @@ interface NavSection {
   roles: UserRole[];
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// LAUNCH MODE: Kun aktiverte funksjoner vises
+// ═══════════════════════════════════════════════════════════════════════════════
 const navigationConfig: NavSection[] = [
   {
     title: "Oversikt",
     roles: ["STUDENT", "INSTRUCTOR", "ADMIN"],
     items: [
-      { label: "Dashboard", href: "/portal", icon: LayoutDashboard, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
-      { label: "Kalender", href: "/portal/kalender", icon: Calendar, badge: 2, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
       { label: "Mine bookinger", href: "/portal/bookinger", icon: BookOpen, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
-    ],
-  },
-  {
-    title: "Utvikling",
-    roles: ["STUDENT", "INSTRUCTOR", "ADMIN"],
-    items: [
-      { label: "TrackMan Data", href: "/portal/trackman", icon: Target, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
-      { label: "Coaching-historikk", href: "/portal/coaching-historikk", icon: ClipboardList, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
-      { label: "Statistikk", href: "/portal/statistikk", icon: TrendingUp, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
-      { label: "Treningsdagbok", href: "/portal/dagbok", icon: Award, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
     ],
   },
   {
@@ -117,21 +108,60 @@ const navigationConfig: NavSection[] = [
     roles: ["STUDENT", "INSTRUCTOR", "ADMIN"],
     items: [
       { label: "Treningsplan", href: "/portal/treningsplan", icon: Zap, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
-      { label: "Turneringsplan", href: "/portal/turneringer", icon: Trophy, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
-      { label: "AI Coach", href: "/portal/ai-coach", icon: Sparkles, badge: 1, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
     ],
   },
+  // Admin-seksjon kun for instruktører
   {
-    title: "Admin — Mission Control",
+    title: "Admin",
     roles: ["INSTRUCTOR", "ADMIN"],
     items: [
-      { label: "Analytics", href: "/portal/admin/analytics", icon: BarChart3, roles: ["INSTRUCTOR", "ADMIN"] },
+      { label: "Administrer bookinger", href: "/portal/admin/bookinger", icon: Calendar, roles: ["INSTRUCTOR", "ADMIN"] },
       { label: "Elever", href: "/portal/admin/elever", icon: Users, roles: ["INSTRUCTOR", "ADMIN"] },
-      { label: "Administrer bookinger", href: "/portal/admin/bookinger", icon: Calendar, badge: 5, roles: ["INSTRUCTOR", "ADMIN"] },
-      { label: "Meldinger", href: "/portal/admin/meldinger", icon: MessageSquare, badge: 3, roles: ["INSTRUCTOR", "ADMIN"] },
     ],
   },
 ];
+
+// TODO: Full navigasjon (aktiver etter launch)
+// const fullNavigationConfig: NavSection[] = [
+//   {
+//     title: "Oversikt",
+//     roles: ["STUDENT", "INSTRUCTOR", "ADMIN"],
+//     items: [
+//       { label: "Dashboard", href: "/portal", icon: LayoutDashboard, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+//       { label: "Kalender", href: "/portal/kalender", icon: Calendar, badge: 2, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+//       { label: "Mine bookinger", href: "/portal/bookinger", icon: BookOpen, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+//     ],
+//   },
+//   {
+//     title: "Utvikling",
+//     roles: ["STUDENT", "INSTRUCTOR", "ADMIN"],
+//     items: [
+//       { label: "TrackMan Data", href: "/portal/trackman", icon: Target, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+//       { label: "Coaching-historikk", href: "/portal/coaching-historikk", icon: ClipboardList, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+//       { label: "Statistikk", href: "/portal/statistikk", icon: TrendingUp, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+//       { label: "Treningsdagbok", href: "/portal/dagbok", icon: Award, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+//     ],
+//   },
+//   {
+//     title: "Planlegging",
+//     roles: ["STUDENT", "INSTRUCTOR", "ADMIN"],
+//     items: [
+//       { label: "Treningsplan", href: "/portal/treningsplan", icon: Zap, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+//       { label: "Turneringsplan", href: "/portal/turneringer", icon: Trophy, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+//       { label: "AI Coach", href: "/portal/ai-coach", icon: Sparkles, badge: 1, roles: ["STUDENT", "INSTRUCTOR", "ADMIN"] },
+//     ],
+//   },
+//   {
+//     title: "Admin — Mission Control",
+//     roles: ["INSTRUCTOR", "ADMIN"],
+//     items: [
+//       { label: "Analytics", href: "/portal/admin/analytics", icon: BarChart3, roles: ["INSTRUCTOR", "ADMIN"] },
+//       { label: "Elever", href: "/portal/admin/elever", icon: Users, roles: ["INSTRUCTOR", "ADMIN"] },
+//       { label: "Administrer bookinger", href: "/portal/admin/bookinger", icon: Calendar, badge: 5, roles: ["INSTRUCTOR", "ADMIN"] },
+//       { label: "Meldinger", href: "/portal/admin/meldinger", icon: MessageSquare, badge: 3, roles: ["INSTRUCTOR", "ADMIN"] },
+//     ],
+//   },
+// ];
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // COMPONENT INTERFACES
@@ -432,7 +462,7 @@ export function DashboardSidebar({
           ))}
         </nav>
 
-        {/* Settings Link */}
+        {/* Min Profil Link */}
         <div className="px-3 py-4 border-t" style={{ borderColor: colors.silverLight }}>
           <Link href="/portal/profil" className="block">
             <motion.div
@@ -455,7 +485,7 @@ export function DashboardSidebar({
                     exit={{ opacity: 0, width: 0 }}
                     className="text-sm whitespace-overflow font-light"
                   >
-                    Innstillinger
+                    Min profil
                   </motion.span>
                 )}
               </AnimatePresence>
