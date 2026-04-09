@@ -230,9 +230,7 @@ export async function POST(req: NextRequest) {
         paymentStatus: paymentMethod === "STRIPE" ? "PENDING" : "PAID",
         amount: serviceType?.price || 0,
         vatAmount: 0,
-        guestEmail: email,
-        guestName: name || null,
-        guestPhone: phone || null,
+        // TODO: Enable after migration: guestEmail, guestName, guestPhone
       })
       .select(`
         *,
