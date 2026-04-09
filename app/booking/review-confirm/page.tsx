@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Flag, User, Calendar, Receipt, UserCircle, AlertCircle, Check, CreditCard, Smartphone, ArrowRight, Shield, CalendarCheck } from "@/components/shared/icons";
+import { Flag, User, Calendar, Receipt, UserCircle, AlertCircle, Check, CreditCard, ArrowRight, Shield, CalendarCheck } from "@/components/shared/icons";
 
 interface ServiceType {
   id: string;
@@ -39,7 +39,7 @@ export default function BookingReviewConfirmPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [handicap, setHandicap] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState<"STRIPE" | "VIPPS">("STRIPE");
+  const [paymentMethod, setPaymentMethod] = useState<"STRIPE">("STRIPE");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   const [submitting, setSubmitting] = useState(false);
@@ -334,7 +334,7 @@ export default function BookingReviewConfirmPage() {
                 <div className="mb-6">
                   <h4 className="text-lg font-bold text-[#154212] uppercase tracking-tight">Betalingsmåte</h4>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4">
                   <div 
                     onClick={() => setPaymentMethod("STRIPE")}
                     className={`border-2 ${paymentMethod === "STRIPE" ? 'border-[#d2f000] bg-[#d2f000]/5' : 'border-[#f1eee5]'} rounded-2xl p-5 flex items-center gap-4 cursor-pointer relative transition-all`}
@@ -345,21 +345,6 @@ export default function BookingReviewConfirmPage() {
                       <p className="text-xs text-[#154212]/60">Visa/Mastercard</p>
                     </div>
                     {paymentMethod === "STRIPE" && (
-                      <div className="w-5 h-5 bg-[#154212] rounded-full flex items-center justify-center">
-                        <Check className="w-3 h-3 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <div 
-                    onClick={() => service.allowVipps && setPaymentMethod("VIPPS")}
-                    className={`border-2 ${paymentMethod === "VIPPS" ? 'border-[#d2f000] bg-[#d2f000]/5' : 'border-[#f1eee5]'} ${!service.allowVipps ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-[#f7f3ea]'} rounded-2xl p-5 flex items-center gap-4 transition-all`}
-                  >
-                    <Smartphone className="w-6 h-6 text-[#42493e]" />
-                    <div className="flex-1">
-                      <p className="font-bold text-[#42493e] text-sm">Vipps</p>
-                      <p className="text-xs text-[#42493e]/60">{service.allowVipps ? "Mobilbetaling" : "Ikke tilgjengelig"}</p>
-                    </div>
-                    {paymentMethod === "VIPPS" && (
                       <div className="w-5 h-5 bg-[#154212] rounded-full flex items-center justify-center">
                         <Check className="w-3 h-3 text-white" />
                       </div>
