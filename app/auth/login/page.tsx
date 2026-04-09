@@ -7,45 +7,45 @@ import { Card } from "@/components/ui/card";
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-[#F5F1E8] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#f7f3ea] flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <Card className="p-8 bg-white border-[#e5e1d8]">
+        <Card className="p-8 bg-white border-[#154212]/10">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-[#2D5A27] rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Zap className="w-8 h-8 text-[#DFFF00]" />
+            <div className="w-16 h-16 bg-[#154212] rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Zap className="w-8 h-8 text-[#d2f000]" />
             </div>
-            <h1 className="text-2xl font-bold text-[#333333]">AK Sports OS</h1>
-            <p className="text-[#666666]">Sign in to your account</p>
+            <h1 className="text-2xl font-bold text-[#154212]">AK Golf Academy</h1>
+            <p className="text-[#666666]">Logg inn på din konto</p>
           </div>
 
           <form className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-[#333333] mb-1">Email</label>
+              <label className="block text-sm font-medium text-[#154212] mb-1">E-post</label>
               <input
                 type="email"
                 placeholder="coach@akgolf.no"
-                className="w-full px-4 py-3 bg-[#F5F1E8] border border-[#e5e1d8] rounded-xl text-[#333333] focus:outline-none focus:ring-2 focus:ring-[#DFFF00]"
+                className="w-full px-4 py-3 bg-[#f7f3ea] border border-[#154212]/10 rounded-xl text-[#154212] focus:outline-none focus:ring-2 focus:ring-[#d2f000]"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#333333] mb-1">Password</label>
+              <label className="block text-sm font-medium text-[#154212] mb-1">Passord</label>
               <input
                 type="password"
                 placeholder="••••••••"
-                className="w-full px-4 py-3 bg-[#F5F1E8] border border-[#e5e1d8] rounded-xl text-[#333333] focus:outline-none focus:ring-2 focus:ring-[#DFFF00]"
+                className="w-full px-4 py-3 bg-[#f7f3ea] border border-[#154212]/10 rounded-xl text-[#154212] focus:outline-none focus:ring-2 focus:ring-[#d2f000]"
               />
             </div>
-            <Button className="w-full bg-[#2D5A27] hover:bg-[#1a3d16] text-[#F5F1E8] font-bold py-3 rounded-xl">
-              Sign In
+            <Button className="w-full bg-[#154212] hover:bg-[#0f3d0a] text-white font-bold py-3 rounded-xl">
+              Logg inn
             </Button>
           </form>
 
           <div className="mt-6 text-center">
-            <a href="#" className="text-[#2D5A27] hover:underline text-sm">Forgot password?</a>
+            <a href="#" className="text-[#154212] hover:underline text-sm">Glemt passord?</a>
           </div>
         </Card>
       </motion.div>

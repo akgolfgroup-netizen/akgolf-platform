@@ -9,11 +9,11 @@ const Progress = React.forwardRef<
 >(({ className, value, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("relative h-2 w-full overflow-hidden rounded-full bg-[#F5F1E8]", className)}
+    className={cn("relative h-2 w-full overflow-hidden rounded-full bg-[#f7f3ea]", className)}
     {...props}
   >
     <div
-      className="h-full bg-[#DFFF00] transition-all duration-300"
+      className="h-full bg-[#d2f000] transition-all duration-300"
       style={{ width: `${value || 0}%` }}
     />
   </div>

@@ -15,29 +15,45 @@ import {
   ArrowRight,
   Trophy,
   Clock,
+  ChevronRight,
+  Award,
+  TrendingUp as TrendingUpIcon,
+  Activity,
 } from "lucide-react";
-import { StatCard } from "@/components/portal/heritage/stat-card";
-import { QuickAction } from "@/components/portal/heritage/quick-action";
-import { ProgressChart } from "@/components/portal/heritage/progress-chart";
 
-/* ── Animation variants ── */
-const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+/* ── AK GOLF DESIGN TOKENS v5.0 ── */
+const colors = {
+  primary: '#00594C',
+  primaryLight: '#E6F3F1',
+  primaryDark: '#004940',
+  secondary: '#627C75',
+  background: '#EBE7E0',
+  surface: '#FFFFFF',
+  textPrimary: '#000000',
+  textSecondary: '#36454F',
+  textMuted: '#86868B',
+  aiPurple: '#8E5CE6',
+  aiPurpleLight: '#F3EEFC',
+  success: '#34C759',
+  warning: '#FF9500',
+};
 
-const blurReveal = {
-  hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
+const EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: EASE },
+    transition: { duration: 0.6, ease: EASE },
   },
 };
 
-const staggerGrid = {
+const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
   },
 };
 
@@ -91,151 +107,248 @@ export function DashboardClient({
     return <OnboardingView userName={userName} />;
   }
 
-  // Mock data for handicap chart
-  const handicapData = [
-    { date: "2024-01", value: handicap.current ? handicap.current + 2 : 18 },
-    { date: "2024-02", value: handicap.current ? handicap.current + 1.5 : 17 },
-    { date: "2024-03", value: handicap.current ? handicap.current + 1 : 16 },
-    { date: "2024-04", value: handicap.current ? handicap.current + 0.5 : 15 },
-    { date: "2024-05", value: handicap.current ? handicap.current : 14 },
-    { date: "2024-06", value: handicap.current ? handicap.current - 0.5 : 13.5 },
-  ];
-
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* ── Hero Section ── */}
       <motion.div
         initial="hidden"
         animate="visible"
-        variants={blurReveal}
-        className="bg-gradient-to-br from-[#154212] to-[#0d2e0c] rounded-3xl p-6 lg:p-8 text-white"
+        variants={fadeInUp}
+        className="bg-white rounded-[24px] p-6 lg:p-8 border border-[#000000]/5"
       >
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
-            <p className="text-[#d2f000] text-sm font-medium mb-1">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#00594C] mb-2">
               {format(now, "EEEE d. MMMM yyyy", { locale: nb })}
             </p>
-            <h1 className="text-3xl lg:text-4xl font-bold tracking-tight">
+            <h1 
+              className="text-3xl lg:text-4xl font-bold text-black tracking-tight"
+              style={{ letterSpacing: '-0.025em' }}
+            >
               {greeting}
               {firstName ? `, ${firstName}` : ""}
             </h1>
-            <p className="text-white/70 mt-2 max-w-md">
+            <p className="text-[#36454F] mt-2 max-w-md">
               Her er din ukentlige oppdatering. Du er på rett spor mot å nå dine mål!
             </p>
           </div>
 
-          {nextBooking && (
-            <div className="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-[#d2f000] flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-[#1c1c16]" />
+          {nextBooking ? (
+            <div className="bg-[#E6F3F1] rounded-2xl p-5">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#00594C] flex items-center justify-center">
+                  <Calendar className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-xs text-white/60 uppercase tracking-wider font-semibold">
+                  <p className="text-xs text-[#627C75] uppercase tracking-wider font-semibold">
                     Neste økt
                   </p>
-                  <p className="font-semibold">{nextBooking.serviceName}</p>
-                  <p className="text-sm text-white/70">
+                  <p className="font-semibold text-black">{nextBooking.serviceName}</p>
+                  <p className="text-sm text-[#36454F]">
                     {formatBookingDate(new Date(nextBooking.startTime))} kl{" "}
                     {format(new Date(nextBooking.startTime), "HH:mm")}
                   </p>
                 </div>
               </div>
             </div>
+          ) : (
+            <Link
+              href="/booking"
+              className="inline-flex items-center gap-2 bg-[#00594C] text-white px-6 py-4 rounded-full font-semibold hover:bg-[#004940] transition-colors"
+            >
+              <Calendar className="w-5 h-5" />
+              Book din første økt
+            </Link>
           )}
         </div>
       </motion.div>
 
-      {/* ── Stats Grid ── */}
+      {/* ── Bento Stats Grid ── */}
       <motion.div
         className="grid grid-cols-2 lg:grid-cols-4 gap-4"
         initial="hidden"
         animate="visible"
-        variants={staggerGrid}
+        variants={staggerContainer}
       >
-        <StatCard
-          label="Handicap"
-          value={handicap.current !== null ? handicap.current.toFixed(1) : "—"}
-          trend={
-            handicap.trend !== null
-              ? {
-                  value: handicap.trend,
-                  label: "siste 30 dager",
-                }
-              : undefined
-          }
-          icon={handicap.trend !== null && handicap.trend < 0 ? TrendingDown : TrendingUp}
-          iconColor={handicap.trend !== null && handicap.trend < 0 ? "#22c55e" : "#ef4444"}
-          delay={0}
-        />
+        {/* Handicap Card - Large */}
+        <motion.div
+          variants={fadeInUp}
+          className="col-span-2 bg-white rounded-[24px] p-6 border border-[#000000]/5"
+        >
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#86868B] mb-1">
+                Handicap
+              </p>
+              <p className="text-4xl font-bold text-black tabular-nums">
+                {handicap.current !== null ? handicap.current.toFixed(1) : "—"}
+              </p>
+            </div>
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+              handicap.trend !== null && handicap.trend < 0 
+                ? 'bg-[#34C759]/10' 
+                : 'bg-[#FF3B30]/10'
+            }`}>
+              {handicap.trend !== null && handicap.trend < 0 ? (
+                <TrendingDown className="w-5 h-5 text-[#34C759]" />
+              ) : (
+                <TrendingUp className="w-5 h-5 text-[#FF3B30]" />
+              )}
+            </div>
+          </div>
+          
+          {handicap.trend !== null && (
+            <div className="flex items-center gap-2">
+              <span className={`text-sm font-medium ${
+                handicap.trend < 0 ? 'text-[#34C759]' : 'text-[#FF3B30]'
+              }`}>
+                {handicap.trend > 0 ? '+' : ''}{handicap.trend.toFixed(1)}
+              </span>
+              <span className="text-sm text-[#86868B]">siste 30 dager</span>
+            </div>
+          )}
+          
+          {/* Mini chart placeholder */}
+          <div className="mt-4 h-16 flex items-end gap-1">
+            {[40, 60, 45, 70, 55, 80, 65].map((h, i) => (
+              <div
+                key={i}
+                className="flex-1 bg-[#00594C]/10 rounded-t"
+                style={{ height: `${h}%` }}
+              />
+            ))}
+          </div>
+        </motion.div>
 
-        <StatCard
-          label="Treningsøkter"
-          value={stats.sessionsCount}
-          icon={Target}
-          iconColor="#154212"
-          delay={0.1}
-        />
+        {/* Sessions Card */}
+        <motion.div
+          variants={fadeInUp}
+          className="bg-white rounded-[24px] p-6 border border-[#000000]/5"
+        >
+          <div className="w-10 h-10 rounded-xl bg-[#E6F3F1] flex items-center justify-center mb-4">
+            <Target className="w-5 h-5 text-[#00594C]" />
+          </div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#86868B] mb-1">
+            Treningsøkter
+          </p>
+          <p className="text-3xl font-bold text-black tabular-nums">
+            {stats.sessionsCount}
+          </p>
+        </motion.div>
 
-        <StatCard
-          label="Runder spilt"
-          value={stats.roundsCount}
-          icon={Trophy}
-          iconColor="#f59e0b"
-          delay={0.2}
-        />
-
-        <StatCard
-          label="Streak"
-          value={`${Math.min(stats.sessionsCount, 14)} dager`}
-          icon={Clock}
-          iconColor="#d2f000"
-          delay={0.3}
-        />
+        {/* Rounds Card */}
+        <motion.div
+          variants={fadeInUp}
+          className="bg-white rounded-[24px] p-6 border border-[#000000]/5"
+        >
+          <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] flex items-center justify-center mb-4">
+            <Trophy className="w-5 h-5 text-[#FF9500]" />
+          </div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#86868B] mb-1">
+            Runder spilt
+          </p>
+          <p className="text-3xl font-bold text-black tabular-nums">
+            {stats.roundsCount}
+          </p>
+        </motion.div>
       </motion.div>
 
-      {/* ── Charts & AI Row ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Handicap Chart */}
+      {/* ── Second Row: AI Insight & Quick Stats ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* AI Insight Card */}
         <motion.div
-          className="lg:col-span-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
+          className="lg:col-span-2"
         >
-          <ProgressChart
-            data={handicapData}
-            title="Handicap-utvikling"
-            color="#154212"
-            height={180}
-          />
-        </motion.div>
-
-        {/* AI Insight */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-        >
-          <div className="bg-[#f7f3ea] rounded-2xl p-6 border border-[#c2c9bb]/50 h-full">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-[#8b5cf6]/10 flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-[#8b5cf6]" />
+          <div className="bg-[#F3EEFC] rounded-[24px] p-6 border border-[#8E5CE6]/10 h-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-[#8E5CE6] flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-white" />
               </div>
-              <h3 className="font-semibold text-[#1c1c16]">AI-innsikt</h3>
+              <div>
+                <h3 className="font-semibold text-black">AI-innsikt</h3>
+                <p className="text-xs text-[#8E5CE6]">Basert på din treningshistorikk</p>
+              </div>
             </div>
-            <p className="text-sm text-[#42493e] leading-relaxed">
+            
+            <p className="text-[#36454F] leading-relaxed mb-4">
               {aiInsight?.focusTip ||
                 coachInsight?.summary ||
                 "Basert på din treningshistorikk anbefaler vi å fokusere på putting denne uken. Din statistikk viser potensial for forbedring innen kortspill."}
             </p>
+            
+            {aiInsight?.strengths && aiInsight.strengths.length > 0 && (
+              <div className="mb-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#8E5CE6] mb-2">
+                  Dine styrker
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {aiInsight.strengths.map((strength, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 bg-white rounded-full text-sm text-[#36454F]"
+                    >
+                      {strength}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            
             <Link
               href="/portal/ai-coach"
-              className="inline-flex items-center gap-1 text-sm font-medium text-[#154212] mt-4 hover:underline"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-[#8E5CE6] hover:underline"
             >
               Snakk med AI Coach
               <ArrowRight className="w-4 h-4" />
             </Link>
+          </div>
+        </motion.div>
+
+        {/* Streak & Goals */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="space-y-4"
+        >
+          {/* Streak Card */}
+          <div className="bg-white rounded-[24px] p-6 border border-[#000000]/5">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-[#E6F3F1] flex items-center justify-center">
+                <Activity className="w-6 h-6 text-[#00594C]" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#86868B]">
+                  Streak
+                </p>
+                <p className="text-2xl font-bold text-black">
+                  {Math.min(stats.sessionsCount, 14)} dager
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Goal Progress */}
+          <div className="bg-white rounded-[24px] p-6 border border-[#000000]/5">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#86868B]">
+                Mål: Handicap 10
+              </p>
+              <span className="text-sm font-semibold text-[#00594C]">
+                {handicap.current ? Math.round(((handicap.current - 10) / (handicap.current - 10 + 5)) * 100) : 0}%
+              </span>
+            </div>
+            <div className="h-2 bg-[#E6F3F1] rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-[#00594C] rounded-full transition-all"
+                style={{ 
+                  width: `${handicap.current ? Math.max(0, Math.min(100, ((handicap.current - 10) / (handicap.current - 10 + 5)) * 100)) : 0}%` 
+                }}
+              />
+            </div>
           </div>
         </motion.div>
       </div>
@@ -246,36 +359,32 @@ export function DashboardClient({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
-        <h3 className="text-sm font-semibold text-[#1c1c16] mb-4">Snarveier</h3>
+        <h3 className="text-sm font-semibold text-black mb-4">Snarveier</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <QuickAction
-            href="/portal/bookinger/ny"
+            href="/booking"
             icon={Calendar}
             label="Book coaching"
             description="Planlegg ny økt"
             variant="primary"
-            delay={0.5}
           />
           <QuickAction
             href="/portal/statistikk/ny-runde"
             icon={BarChart3}
             label="Logg runde"
             description="Registrer score"
-            delay={0.55}
           />
           <QuickAction
             href="/portal/dagbok"
             icon={BookOpen}
             label="Treningsdagbok"
             description="Logg økt"
-            delay={0.6}
           />
           <QuickAction
             href="/portal/treningsplan"
             icon={Target}
             label="Treningsplan"
             description="Se ukens plan"
-            delay={0.65}
           />
         </div>
       </motion.div>
@@ -283,18 +392,78 @@ export function DashboardClient({
   );
 }
 
+function QuickAction({
+  href,
+  icon: Icon,
+  label,
+  description,
+  variant = 'default',
+}: {
+  href: string;
+  icon: React.ElementType;
+  label: string;
+  description: string;
+  variant?: 'primary' | 'default';
+}) {
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-4 p-4 rounded-[20px] transition-all duration-300 group ${
+        variant === 'primary'
+          ? 'bg-[#00594C] text-white hover:bg-[#004940]'
+          : 'bg-white border border-[#000000]/5 hover:border-[#00594C]/20 hover:shadow-lg'
+      }`}
+    >
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+        variant === 'primary'
+          ? 'bg-white/10'
+          : 'bg-[#E6F3F1]'
+      }`}>
+        <Icon className={`w-6 h-6 ${
+          variant === 'primary' ? 'text-white' : 'text-[#00594C]'
+        }`} />
+      </div>
+      <div className="flex-1">
+        <p className={`font-semibold ${
+          variant === 'primary' ? 'text-white' : 'text-black'
+        }`}>
+          {label}
+        </p>
+        <p className={`text-sm ${
+          variant === 'primary' ? 'text-white/70' : 'text-[#86868B]'
+        }`}>
+          {description}
+        </p>
+      </div>
+      <ChevronRight className={`w-5 h-5 ${
+        variant === 'primary' ? 'text-white/50' : 'text-[#86868B]'
+      }`} />
+    </Link>
+  );
+}
+
 function OnboardingView({ userName }: { userName: string | null }) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-br from-[#154212] to-[#0d2e0c] rounded-3xl p-6 lg:p-8 text-white"
+        className="bg-white rounded-[24px] p-6 lg:p-8 border border-[#000000]/5"
       >
-        <h1 className="text-3xl font-bold tracking-tight">
-          Velkommen{userName ? `, ${userName.split(" ")[0]}` : ""}!
-        </h1>
-        <p className="text-white/70 mt-2 max-w-md">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-12 h-12 rounded-xl bg-[#E6F3F1] flex items-center justify-center">
+            <Award className="w-6 h-6 text-[#00594C]" />
+          </div>
+          <div>
+            <h1 
+              className="text-2xl lg:text-3xl font-bold text-black tracking-tight"
+              style={{ letterSpacing: '-0.025em' }}
+            >
+              Velkommen{userName ? `, ${userName.split(" ")[0]}` : ""}!
+            </h1>
+          </div>
+        </div>
+        <p className="text-[#36454F] max-w-md">
           La oss komme i gang med din golf-reise. Her er tre enkle steg:
         </p>
       </motion.div>
@@ -306,7 +475,7 @@ function OnboardingView({ userName }: { userName: string | null }) {
             icon: Calendar,
             title: "Book en time",
             description: "Start med en coaching-økt for å få din første analyse",
-            href: "/portal/bookinger/ny",
+            href: "/booking",
           },
           {
             step: 2,
@@ -331,16 +500,20 @@ function OnboardingView({ userName }: { userName: string | null }) {
           >
             <Link
               href={item.href}
-              className="block p-6 bg-white rounded-2xl border border-[#c2c9bb]/50 hover:border-[#154212]/30 hover:shadow-lg transition-all duration-300 group"
+              className="block p-6 bg-white rounded-[24px] border border-[#000000]/5 hover:border-[#00594C]/20 hover:shadow-lg transition-all duration-300 group h-full"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-8 h-8 rounded-full bg-[#154212] text-white text-sm font-bold flex items-center justify-center">
+                <span className="w-8 h-8 rounded-full bg-[#00594C] text-white text-sm font-bold flex items-center justify-center">
                   {item.step}
                 </span>
-                <item.icon className="w-5 h-5 text-[#8a9385] group-hover:text-[#154212] transition-colors" />
+                <item.icon className="w-5 h-5 text-[#86868B] group-hover:text-[#00594C] transition-colors" />
               </div>
-              <h3 className="font-semibold text-[#1c1c16]">{item.title}</h3>
-              <p className="text-sm text-[#6b7366] mt-1">{item.description}</p>
+              <h3 className="font-semibold text-black text-lg">{item.title}</h3>
+              <p className="text-sm text-[#36454F] mt-1">{item.description}</p>
+              <div className="flex items-center gap-1 mt-4 text-sm font-medium text-[#00594C]">
+                Kom i gang
+                <ArrowRight className="w-4 h-4" />
+              </div>
             </Link>
           </motion.div>
         ))}
