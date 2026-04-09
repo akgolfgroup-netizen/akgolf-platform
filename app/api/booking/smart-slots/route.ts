@@ -138,8 +138,22 @@ export async function GET(req: NextRequest) {
       // Generer alle slots for dagen
       let allSlots: string[] = [];
       
-      if (availabilityWindows && availabilityWindows.length > 0) {
-        for (const window of availabilityWindows) {
+      // Default tilgjengelighet: 10:00-18:00 på hverdager (man-fre), 10:00-14:00 på lør, ingen på søn
+      let windowsToUse = availabilityWindows;
+      if (!availabilityWindows || availabilityWindows.length === 0) {
+        const dayOfWeekAdjusted = dayOfWeek === 0 ? 7 : dayOfWeek; // 1=man, 7=søn
+        if (dayOfWeekAdjusted >= 1 && dayOfWeekAdjusted <= 5) {
+          // Mandag-fredag: 10:00-18:00
+          windowsToUse = [{ startTime: "10:00", endTime: "18:00" }];
+        } else if (dayOfWeekAdjusted === 6) {
+          // Lørdag: 10:00-14:00
+          windowsToUse = [{ startTime: "10:00", endTime: "14:00" }];
+        }
+        // Søndag: ingen tilgjengelighet
+      }
+      
+      if (windowsToUse && windowsToUse.length > 0) {
+        for (const window of windowsToUse) {
           // InstructorAvailability lagrer tid som "HH:MM" string
           const [startH, startM] = window.startTime.split(':').map(Number);
           const [endH, endM] = window.endTime.split(':').map(Number);
