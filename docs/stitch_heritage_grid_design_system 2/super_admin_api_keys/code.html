@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #fdf9f0;
+            color: #1c1c16;
+            margin: 0;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        /* Custom scrollbar for premium feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fdf9f0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e6e2d9;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed": "#002201",
+                        "on-primary-container": "#9dd090",
+                        "inverse-primary": "#a1d494",
+                        "on-secondary-fixed": "#191e00",
+                        "secondary-container": "#d0ed00",
+                        "primary": "#154212",
+                        "secondary-fixed-dim": "#b8d300",
+                        "background": "#fdf9f0",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#fdf9f0",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-container": "#f1eee5",
+                        "tertiary-container": "#2d5a27",
+                        "outline": "#72796e",
+                        "on-surface": "#1c1c16",
+                        "surface-container-high": "#ece8df",
+                        "primary-fixed": "#bcf0ae",
+                        "on-tertiary-container": "#9dd090",
+                        "surface": "#fdf9f0",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#a1d494",
+                        "inverse-surface": "#31302b",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-low": "#f7f3ea",
+                        "surface-tint": "#3b6934",
+                        "on-primary-fixed": "#002201",
+                        "on-background": "#1c1c16",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "on-surface-variant": "#42493e",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#154212",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "tertiary-fixed": "#bcf0ae",
+                        "secondary": "#576500",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dddad1",
+                        "secondary-fixed": "#d2f000",
+                        "outline-variant": "#c2c9bb",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-secondary-container": "#5b6900"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-emerald-950 flex flex-col py-8 px-4 z-50">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold tracking-tight text-white">AK Sports OS</h1>
+<p class="text-[10px] mono uppercase tracking-widest text-lime-400/60 mt-1">Super Admin</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="domain">domain</span>
+<span class="text-sm font-medium">Tenants</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="toggle_on">toggle_on</span>
+<span class="text-sm font-medium">Features</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-sm font-medium">Billing</span>
+</a>
+<a class="flex items-center space-x-3 bg-lime-400/20 text-lime-400 rounded-lg px-4 py-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-white/10 space-y-1">
+<div class="flex items-center px-4 mb-4">
+<div class="w-8 h-8 rounded-full bg-lime-400 flex items-center justify-center text-emerald-950 font-bold text-xs mr-3">AS</div>
+<div class="overflow-hidden">
+<p class="text-xs font-semibold text-white truncate">AK Admin</p>
+<p class="text-[10px] text-emerald-100/50 truncate">Health: Optimal</p>
+</div>
+</div>
+<a class="flex items-center space-x-3 text-emerald-100/50 hover:text-white px-4 py-2 text-xs transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="menu_book">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/50 hover:text-white px-4 py-2 text-xs transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-stone-50/80 backdrop-blur-md flex justify-between items-center px-8 z-40">
+<div class="flex items-center space-x-8">
+<span class="text-lg font-semibold text-emerald-900">Admin Portal</span>
+<div class="relative group">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-stone-400 text-sm" data-icon="search">search</span>
+</span>
+<input class="bg-stone-200/50 border-none rounded-md py-1.5 pl-10 pr-4 text-sm focus:ring-1 focus:ring-lime-400 w-64 transition-all" placeholder="Search keys or logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<nav class="hidden md:flex items-center space-x-6 mr-6">
+<a class="text-stone-500 hover:text-emerald-800 text-xs font-bold uppercase tracking-wider" href="#">Global Metrics</a>
+<a class="text-stone-500 hover:text-emerald-800 text-xs font-bold uppercase tracking-wider" href="#">System Logs</a>
+</nav>
+<div class="flex items-center space-x-3">
+<button class="p-2 text-stone-500 hover:bg-stone-200/50 rounded-md transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-tight hover:opacity-90 transition-all">
+                    Create Tenant
+                </button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-stone-200">
+<img alt="Super Admin Profile" data-alt="Professional headshot of a senior executive man with glasses in a clean modern studio setting with neutral tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2jw_e3_L4hYoIxcuteAH0r0xEQ7e8ER-68wEjr4b4F20NgE3Tlo-42_qNbLKwGbePV8S1l3dWuc8bjRSd8_jwINUsLkwyTgcZ7wttC0rPV23weqbf7oNkBjFW7ZVRMbEN7AvHbTwFThDjCoDE6BaxS2eai4aVoAB1idXTXT2XuDYWeh1iwA4BzfBpKYZGgoqlH_SPLF1X1Z_p_g2OV6ODK8qtA2MmFT2IaMfUFAPNrYztmU1PHfEpxeJxnYN1Anf6n3gsDaSJAfJH"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pl-64 pt-16 min-h-screen">
+<div class="max-w-6xl mx-auto p-10">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<span class="mono text-[10px] text-primary/60 uppercase tracking-[0.2em] mb-2 block">Developer Infrastructure</span>
+<h2 class="text-4xl font-bold tracking-tight text-primary">API Management</h2>
+<p class="text-on-surface-variant mt-2 max-w-xl">Configure and monitor your programmatic access points. Ensure high-fidelity integration with heritage-grade security protocols.</p>
+</div>
+<div class="flex items-center space-x-4">
+<div class="flex flex-col items-end mr-4">
+<span class="text-[10px] mono text-primary/40 uppercase font-bold">API Version</span>
+<div class="flex items-center bg-surface-container p-1 rounded-full mt-1">
+<button class="px-3 py-1 text-[10px] font-bold bg-white rounded-full shadow-sm text-primary">v2.4.0</button>
+<button class="px-3 py-1 text-[10px] font-bold text-on-surface-variant">v1.8.0</button>
+</div>
+</div>
+<button class="bg-secondary-fixed text-on-secondary-fixed px-6 py-3 rounded-xl font-bold uppercase text-xs flex items-center space-x-2 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-sm">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span>Generate New Key</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-12 gap-6 mb-12">
+<!-- Primary API Keys Table Container -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-[24px] p-8 shadow-[0_4px_16px_rgba(45,90,39,0.04)]">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-lg font-bold text-primary">Active API Credentials</h3>
+<div class="flex space-x-2">
+<span class="px-3 py-1 bg-surface-container text-[10px] mono text-primary font-bold rounded-full">3 ACTIVE</span>
+<span class="px-3 py-1 bg-surface-container text-[10px] mono text-on-surface-variant rounded-full">1 DEPRECATED</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] mono uppercase text-primary/40 tracking-widest border-b border-outline-variant/10">
+<th class="pb-4 font-bold">Label</th>
+<th class="pb-4 font-bold">API Key Prefix</th>
+<th class="pb-4 font-bold text-center">Last Used</th>
+<th class="pb-4 font-bold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-primary">Production - Web App</span>
+<span class="text-[10px] text-on-surface-variant">Created Oct 12, 2023</span>
+</div>
+</td>
+<td class="py-5">
+<div class="bg-surface-container-high px-3 py-1.5 rounded-lg inline-flex items-center space-x-2">
+<span class="mono text-xs text-primary font-medium tracking-tight">ak_live_7x82...</span>
+<span class="material-symbols-outlined text-xs text-stone-400 cursor-pointer hover:text-primary" data-icon="content_copy">content_copy</span>
+</div>
+</td>
+<td class="py-5 text-center">
+<span class="mono text-xs font-medium text-emerald-600">2 minutes ago</span>
+</td>
+<td class="py-5 text-right">
+<button class="p-2 text-stone-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-primary">Staging Environment</span>
+<span class="text-[10px] text-on-surface-variant">Created Sep 28, 2023</span>
+</div>
+</td>
+<td class="py-5">
+<div class="bg-surface-container-high px-3 py-1.5 rounded-lg inline-flex items-center space-x-2">
+<span class="mono text-xs text-primary font-medium tracking-tight">ak_test_3m11...</span>
+<span class="material-symbols-outlined text-xs text-stone-400 cursor-pointer hover:text-primary" data-icon="content_copy">content_copy</span>
+</div>
+</td>
+<td class="py-5 text-center">
+<span class="mono text-xs font-medium text-on-surface-variant">14 hours ago</span>
+</td>
+<td class="py-5 text-right">
+<button class="p-2 text-stone-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-primary">Legacy Mobile Sync</span>
+<span class="text-[10px] text-on-surface-variant">Created Jan 05, 2023</span>
+</div>
+</td>
+<td class="py-5">
+<div class="bg-surface-container-high px-3 py-1.5 rounded-lg inline-flex items-center space-x-2 opacity-60">
+<span class="mono text-xs text-primary font-medium tracking-tight">ak_live_0p44...</span>
+<span class="material-symbols-outlined text-xs text-stone-400" data-icon="lock">lock</span>
+</div>
+</td>
+<td class="py-5 text-center">
+<span class="mono text-xs font-medium text-error/60 uppercase">Deprecating</span>
+</td>
+<td class="py-5 text-right">
+<button class="p-2 text-stone-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Secondary Column: Quotas & Webhooks -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- Rate Limits Card -->
+<div class="bg-surface-container-low rounded-[24px] p-6">
+<div class="flex items-center justify-between mb-6">
+<h4 class="text-xs mono font-bold uppercase tracking-widest text-primary">Usage Quotas</h4>
+<span class="material-symbols-outlined text-primary" data-icon="bolt" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-[10px] font-bold text-primary/60 mb-2 uppercase mono">
+<span>Requests / sec</span>
+<span>842 / 1,000</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-lime-400 w-[84.2%] rounded-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[10px] font-bold text-primary/60 mb-2 uppercase mono">
+<span>Monthly Tier</span>
+<span>7.2M / 10M</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[72%] rounded-full"></div>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 border border-primary/10 rounded-lg text-[10px] mono font-bold uppercase tracking-widest text-primary hover:bg-primary/5 transition-all">
+                            Review Billing Details
+                        </button>
+</div>
+<!-- Webhook Card -->
+<div class="bg-surface-container-low rounded-[24px] p-6 border-l-4 border-lime-400">
+<h4 class="text-xs mono font-bold uppercase tracking-widest text-primary mb-4">Webhook Health</h4>
+<div class="flex items-center space-x-4 mb-4">
+<div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-emerald-700" data-icon="hub">hub</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">2 Active Endpoints</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Last success 0.4s ago</p>
+</div>
+</div>
+<div class="bg-white/40 p-3 rounded-lg mb-4">
+<p class="mono text-[10px] text-primary truncate italic">https://api.aksports.io/hooks/v1/prod</p>
+</div>
+<button class="text-[10px] mono font-bold uppercase tracking-widest text-primary flex items-center space-x-1 hover:underline">
+<span>Manage Endpoints</span>
+<span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Technical Logs Section -->
+<div class="bg-white rounded-[24px] overflow-hidden shadow-[0_4px_16px_rgba(45,90,39,0.04)]">
+<div class="px-8 py-6 border-b border-surface-container flex justify-between items-center bg-surface-container-low">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-primary" data-icon="terminal">terminal</span>
+<h3 class="text-sm font-bold text-primary uppercase tracking-widest">Real-time Stream</h3>
+</div>
+<div class="flex items-center space-x-4">
+<span class="flex items-center space-x-2">
+<span class="w-2 h-2 bg-lime-400 rounded-full"></span>
+<span class="text-[10px] mono text-primary font-bold">CONNECTED</span>
+</span>
+<button class="p-1 hover:bg-stone-200 rounded transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+</button>
+</div>
+</div>
+<div class="p-8 mono text-[11px] space-y-3 leading-relaxed">
+<div class="flex space-x-4">
+<span class="text-primary/30">14:22:01</span>
+<span class="text-emerald-700 font-bold">GET</span>
+<span class="text-primary">/v2/tenants/active</span>
+<span class="bg-emerald-100 text-emerald-800 px-2 rounded">200 OK</span>
+<span class="text-primary/40 ml-auto">id: logs_8829...</span>
+</div>
+<div class="flex space-x-4">
+<span class="text-primary/30">14:21:55</span>
+<span class="text-emerald-700 font-bold">POST</span>
+<span class="text-primary">/v2/webhooks/re-verify</span>
+<span class="bg-emerald-100 text-emerald-800 px-2 rounded">202 ACCEPTED</span>
+<span class="text-primary/40 ml-auto">id: logs_8812...</span>
+</div>
+<div class="flex space-x-4">
+<span class="text-primary/30">14:21:42</span>
+<span class="text-blue-700 font-bold">GET</span>
+<span class="text-primary">/v1/legacy/metrics</span>
+<span class="bg-blue-100 text-blue-800 px-2 rounded">200 OK</span>
+<span class="text-primary/40 ml-auto">id: logs_8801...</span>
+</div>
+<div class="flex space-x-4">
+<span class="text-primary/30">14:21:30</span>
+<span class="text-amber-700 font-bold">DELETE</span>
+<span class="text-primary">/v2/tokens/expired</span>
+<span class="bg-amber-100 text-amber-800 px-2 rounded">204 NO CONTENT</span>
+<span class="text-primary/40 ml-auto">id: logs_8795...</span>
+</div>
+</div>
+<div class="px-8 py-4 bg-stone-50 border-t border-surface-container flex justify-center">
+<button class="text-[10px] mono font-bold text-primary/60 hover:text-primary uppercase tracking-widest transition-all">
+                        Load History (30 Days)
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB Suppression: FAB not rendered as per instructions for Details/Settings screens -->
+</body></html>

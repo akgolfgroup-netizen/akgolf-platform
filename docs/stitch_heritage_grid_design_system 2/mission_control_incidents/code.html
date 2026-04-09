@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Incident Management | AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fdf9f0",
+                        "tertiary-fixed": "#bcf0ae",
+                        "primary-fixed": "#bcf0ae",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#f1eee5",
+                        "tertiary": "#154212",
+                        "surface-container-highest": "#e6e2d9",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#002201",
+                        "tertiary-container": "#2d5a27",
+                        "surface": "#fdf9f0",
+                        "outline-variant": "#c2c9bb",
+                        "surface-tint": "#3b6934",
+                        "on-surface-variant": "#42493e",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-high": "#ece8df",
+                        "secondary-container": "#d0ed00",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "on-tertiary-container": "#9dd090",
+                        "on-surface": "#1c1c16",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#9dd090",
+                        "on-primary-fixed-variant": "#23501e",
+                        "secondary-fixed": "#d2f000",
+                        "on-secondary-fixed": "#191e00",
+                        "surface-bright": "#fdf9f0",
+                        "secondary": "#576500",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "inverse-surface": "#31302b",
+                        "primary": "#154212",
+                        "inverse-primary": "#a1d494",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-container": "#5b6900",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dddad1",
+                        "primary-container": "#2d5a27",
+                        "outline": "#72796e",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002201",
+                        "inverse-on-surface": "#f4f0e7",
+                        "secondary-fixed-dim": "#b8d300",
+                        "on-background": "#1c1c16"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-72 flex flex-col fixed left-0 top-0 bg-[#154212] z-50">
+<div class="flex flex-col h-full py-8">
+<div class="px-6 mb-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-[#d2f000] rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-[#154212]" style="font-variation-settings: 'FILL' 1;">sports_soccer</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tighter text-[#fdf9f0]">AK Sports OS</h1>
+<p class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-[#fdf9f0]/60">Mission Control</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1 overflow-y-auto custom-scrollbar">
+<!-- Command Center to CEO View Navigation -->
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span> Command Center
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">sensors</span> Live Ops
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">insights</span> Pulse
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">health_and_safety</span> System Health
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">notifications</span> Alerts
+                </a>
+<!-- ACTIVE ITEM: Incidents -->
+<a class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">emergency_home</span> Incidents
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">data_usage</span> Capacity
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">leaderboard</span> Metrics
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">security</span> Security
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">history_edu</span> Audit
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings_backup_restore</span> Backups
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">rocket_launch</span> Deploy
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">payments</span> Costs
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">support_agent</span> CS Health
+                </a>
+<a class="text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 flex items-center gap-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] hover:bg-[#fdf9f0]/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">visibility</span> CEO View
+                </a>
+</nav>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 h-16 bg-[#fdf9f0]/80 backdrop-blur-md z-40 flex justify-between items-center w-full pl-80 pr-8 border-b border-[#154212]/10 shadow-sm shadow-[#2d5a27]/05">
+<div class="flex items-center flex-1">
+<div class="relative w-96 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#154212]/40">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 font-['JetBrains_Mono'] text-sm focus:ring-1 focus:ring-[#154212]/20 placeholder-[#154212]/30" placeholder="Search incidents, logs, or responders..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<button class="text-[#154212]/60 hover:text-[#154212] transition-all"><span class="material-symbols-outlined">account_circle</span></button>
+<button class="text-[#154212]/60 hover:text-[#154212] transition-all"><span class="material-symbols-outlined">settings</span></button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-72 pt-24 pb-12 px-10 max-w-[1280px]">
+<!-- Header Section with Editorial Weight -->
+<section class="mb-12 flex items-end justify-between">
+<div>
+<span class="font-mono text-xs uppercase tracking-[0.2em] text-primary mb-2 block">System Ops</span>
+<h2 class="text-5xl font-bold text-on-surface tracking-tight leading-none">Incidents</h2>
+<p class="text-on-surface-variant mt-4 max-w-lg font-body">Manage critical system disruptions and coordinate real-time response efforts across the global sports network.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 bg-secondary-fixed text-on-secondary-fixed rounded-xl font-['DM_Sans'] font-medium uppercase tracking-widest text-xs flex items-center gap-2 hover:opacity-90 transition-all shadow-lg shadow-secondary/10">
+<span class="material-symbols-outlined text-sm">emergency_share</span>
+                    Initiate War Room
+                </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Active Incidents Table: The Core Focus -->
+<div class="col-span-8 space-y-6">
+<div class="bg-surface-container-lowest rounded-3xl p-8 shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-xl font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">table_rows</span>
+                            Active Registry
+                        </h3>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-error-container text-on-error-container rounded-full text-[10px] font-bold uppercase tracking-wider">3 Critical</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full text-[10px] font-bold uppercase tracking-wider">12 Total</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline-variant/10">
+<th class="pb-4 font-mono text-[11px] uppercase tracking-widest text-outline">ID</th>
+<th class="pb-4 font-mono text-[11px] uppercase tracking-widest text-outline">Severity</th>
+<th class="pb-4 font-mono text-[11px] uppercase tracking-widest text-outline">Incident</th>
+<th class="pb-4 font-mono text-[11px] uppercase tracking-widest text-outline">Assigned</th>
+<th class="pb-4 font-mono text-[11px] uppercase tracking-widest text-outline">Time</th>
+<th class="pb-4 font-mono text-[11px] uppercase tracking-widest text-outline text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5 font-mono text-xs text-primary">#INC-9021</td>
+<td class="py-5">
+<span class="flex items-center gap-1.5 text-error font-bold text-xs uppercase tracking-tighter">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span> SEV-0
+                                        </span>
+</td>
+<td class="py-5">
+<p class="font-bold text-sm text-on-surface">API Gateway Timeout - US-East</p>
+<p class="text-[10px] text-outline uppercase tracking-wider">Degraded Performance</p>
+</td>
+<td class="py-5">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-primary-container flex items-center justify-center text-[10px] text-white">AK</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-tertiary flex items-center justify-center text-[10px] text-white">LS</div>
+</div>
+</td>
+<td class="py-5 font-mono text-xs text-outline">14:02 PM</td>
+<td class="py-5 text-right">
+<button class="text-primary hover:bg-primary/5 p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined">open_in_new</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5 font-mono text-xs text-primary">#INC-8832</td>
+<td class="py-5">
+<span class="flex items-center gap-1.5 text-amber-600 font-bold text-xs uppercase tracking-tighter">
+<span class="w-2 h-2 rounded-full bg-amber-600"></span> SEV-1
+                                        </span>
+</td>
+<td class="py-5">
+<p class="font-bold text-sm text-on-surface">Main Stadium Ticketing Queue</p>
+<p class="text-[10px] text-outline uppercase tracking-wider">Operational Delay</p>
+</td>
+<td class="py-5">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-secondary-container flex items-center justify-center text-[10px] text-on-secondary-container font-bold">JD</div>
+</div>
+</td>
+<td class="py-5 font-mono text-xs text-outline">12:45 PM</td>
+<td class="py-5 text-right">
+<button class="text-primary hover:bg-primary/5 p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined">open_in_new</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5 font-mono text-xs text-primary">#INC-8740</td>
+<td class="py-5">
+<span class="flex items-center gap-1.5 text-secondary font-bold text-xs uppercase tracking-tighter">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> SEV-2
+                                        </span>
+</td>
+<td class="py-5">
+<p class="font-bold text-sm text-on-surface">CDN Cache Purge Failure</p>
+<p class="text-[10px] text-outline uppercase tracking-wider">Minor Issue</p>
+</td>
+<td class="py-5">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-surface-container text-outline text-[10px] italic">?</div>
+</td>
+<td class="py-5 font-mono text-xs text-outline">11:20 AM</td>
+<td class="py-5 text-right">
+<button class="text-primary hover:bg-primary/5 p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined">open_in_new</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Post-Mortem Template Section -->
+<div class="bg-primary text-on-primary-fixed rounded-3xl p-10 overflow-hidden relative">
+<div class="relative z-10 max-w-lg">
+<span class="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary-fixed mb-4 block">Knowledge Base</span>
+<h3 class="text-3xl font-bold mb-4 text-[#fdf9f0]">Post-Mortem Engine</h3>
+<p class="text-on-primary-container text-sm mb-8 leading-relaxed">Turn system failures into institutional intelligence. Use our structured templates to capture timelines, root causes, and prevention strategies.</p>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 bg-surface-container-lowest text-primary rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-white transition-colors">Draft Report</button>
+<button class="px-6 py-2.5 border border-on-primary-container/30 text-on-primary-container rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-white/5 transition-colors">View Library</button>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -bottom-10 -right-10 text-[200px] text-[#ffffff]/05 select-none" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+</div>
+</div>
+<!-- Side Sidebar: Form & Metrics -->
+<div class="col-span-4 space-y-8">
+<!-- Create Incident Form -->
+<div class="bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10">
+<h3 class="text-lg font-bold text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                        Report Incident
+                    </h3>
+<form class="space-y-4">
+<div>
+<label class="block font-mono text-[10px] uppercase tracking-widest text-outline mb-2">Title</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-xl p-3 text-sm focus:ring-1 focus:ring-primary/20 placeholder-[#1c1c16]/30" placeholder="e.g. Load Balancer CPU Spike" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-mono text-[10px] uppercase tracking-widest text-outline mb-2">Severity</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-xl p-3 text-sm focus:ring-1 focus:ring-primary/20 appearance-none">
+<option>SEV-0 (Critical)</option>
+<option>SEV-1 (High)</option>
+<option>SEV-2 (Medium)</option>
+<option>SEV-3 (Low)</option>
+</select>
+</div>
+<div>
+<label class="block font-mono text-[10px] uppercase tracking-widest text-outline mb-2">Sub-system</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-xl p-3 text-sm focus:ring-1 focus:ring-primary/20 appearance-none">
+<option>Network</option>
+<option>Database</option>
+<option>App API</option>
+<option>External</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block font-mono text-[10px] uppercase tracking-widest text-outline mb-2">Description</label>
+<textarea class="w-full bg-surface-container-lowest border-none rounded-xl p-3 text-sm focus:ring-1 focus:ring-primary/20 placeholder-[#1c1c16]/30" placeholder="Summary of observations..." rows="3"></textarea>
+</div>
+<button class="w-full py-4 bg-primary text-white rounded-xl font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-primary/90 transition-all">Submit Report</button>
+</form>
+</div>
+<!-- Incident Stats / Health Radar -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 shadow-sm">
+<h3 class="text-sm font-bold text-primary uppercase tracking-widest mb-6">Service Health Radar</h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-on-surface-variant">Core Ticketing</span>
+<div class="w-32 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed w-[98%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-on-surface-variant">Live Broadcast</span>
+<div class="w-32 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error w-[45%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-on-surface-variant">Data Pipeline</span>
+<div class="w-32 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed w-[100%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-on-surface-variant">User Auth</span>
+<div class="w-32 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-amber-500 w-[85%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- On-Call Roster -->
+<div class="bg-tertiary-container rounded-3xl p-8 text-on-tertiary-container">
+<div class="flex items-center justify-between mb-4">
+<h4 class="font-mono text-[10px] uppercase tracking-widest opacity-80">On-Call Level 1</h4>
+<span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-fixed-dim flex items-center justify-center text-primary font-bold">AM</div>
+<div>
+<p class="font-bold text-[#fdf9f0]">Alex M. Sterling</p>
+<p class="text-xs opacity-70">Senior SRE • Active Now</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Analysis Card (Asymmetric) -->
+<section class="mt-12">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-2xl font-bold tracking-tight text-primary">Trends &amp; Analysis</h3>
+<button class="font-mono text-[10px] uppercase tracking-widest text-primary border-b border-primary/20 pb-1">Export Analytics</button>
+</div>
+<div class="grid grid-cols-3 gap-8">
+<div class="col-span-2 bg-surface-container-low rounded-3xl h-64 relative p-10 overflow-hidden flex items-center">
+<div class="z-10">
+<h4 class="text-4xl font-bold text-primary mb-2">99.98%</h4>
+<p class="text-on-surface-variant font-mono text-[10px] uppercase tracking-widest mb-6">Uptime Last 30 Days</p>
+<div class="flex gap-1">
+<div class="w-3 h-10 bg-primary/20 rounded-t-sm"></div>
+<div class="w-3 h-12 bg-primary/20 rounded-t-sm"></div>
+<div class="w-3 h-8 bg-primary/20 rounded-t-sm"></div>
+<div class="w-3 h-14 bg-primary/20 rounded-t-sm"></div>
+<div class="w-3 h-16 bg-primary rounded-t-sm"></div>
+<div class="w-3 h-10 bg-primary/20 rounded-t-sm"></div>
+<div class="w-3 h-9 bg-primary/20 rounded-t-sm"></div>
+</div>
+</div>
+<img class="absolute right-0 top-0 h-full w-1/2 object-cover opacity-10 mix-blend-multiply grayscale" data-alt="clean abstract visualization of data waves with soft minimal lines and forest green color accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDetys3YlsuvjiNESioSnTrQCfxEhpsrkp1lN7OQRjJXkGcJilDeyur6NvfxZRy-qltljdNVz1K-Xxp-G_OtfvVO7GLCMJOgKC4rTRZPdMi4sPP9KDiFd_ZEbhcDvjgOYedsTRw0R8JEcMcuuG59rHix4C0aE9qOpwKI3UexBgIOfEgebQESo8zWu2r7vjpuWfJSSTNPn33FDB970RdHsboeginfCAvTdkeh5xLSaJWntjSCBMqvWxb57yrYJq7RVrQsVHDU8HR-th3"/>
+</div>
+<div class="bg-secondary-fixed rounded-3xl p-8 flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-4xl mb-4 text-on-secondary-fixed">timer</span>
+<h4 class="text-lg font-bold text-on-secondary-fixed">MTTR 42m</h4>
+<p class="text-xs text-on-secondary-fixed/70 mt-2">Mean Time To Resolution has improved by 12% this quarter.</p>
+</div>
+<button class="w-full py-2 border border-on-secondary-fixed/20 rounded-xl text-[10px] font-bold uppercase tracking-widest text-on-secondary-fixed">Details</button>
+</div>
+</div>
+</section>
+</main>
+</body></html>

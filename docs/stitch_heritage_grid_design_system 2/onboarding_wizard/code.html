@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#a1d494",
+                        "on-surface": "#1c1c16",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#bcf0ae",
+                        "tertiary-container": "#2d5a27",
+                        "primary-fixed-dim": "#a1d494",
+                        "surface": "#fdf9f0",
+                        "primary-fixed": "#bcf0ae",
+                        "surface-variant": "#e6e2d9",
+                        "tertiary": "#154212",
+                        "on-secondary-fixed": "#191e00",
+                        "inverse-primary": "#a1d494",
+                        "on-background": "#1c1c16",
+                        "primary": "#154212",
+                        "inverse-surface": "#31302b",
+                        "surface-dim": "#dddad1",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "outline-variant": "#c2c9bb",
+                        "secondary-fixed": "#d2f000",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-container": "#f1eee5",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#9dd090",
+                        "on-secondary-container": "#5b6900",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#3b6934",
+                        "primary-container": "#2d5a27",
+                        "surface-bright": "#fdf9f0",
+                        "on-surface-variant": "#42493e",
+                        "secondary": "#576500",
+                        "on-secondary": "#ffffff",
+                        "outline": "#72796e",
+                        "secondary-fixed-dim": "#b8d300",
+                        "on-primary-fixed": "#002201",
+                        "on-primary-container": "#9dd090",
+                        "surface-container-highest": "#e6e2d9",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-tertiary-fixed": "#002201",
+                        "background": "#fdf9f0",
+                        "secondary-container": "#d0ed00",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#ece8df",
+                        "surface-container-low": "#f7f3ea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased">
+<!-- Progress Navigation Shell (Minimalist for Onboarding) -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-12 h-20 bg-background/80 backdrop-blur-md">
+<div class="flex items-center gap-4">
+<span class="font-['DM_Sans'] font-bold text-xl uppercase tracking-widest text-primary">AK Sports OS</span>
+</div>
+<!-- Step Indicator -->
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-3">
+<div class="w-16 h-1 rounded-full bg-secondary"></div>
+<div class="w-16 h-1 rounded-full bg-surface-container-highest"></div>
+<div class="w-16 h-1 rounded-full bg-surface-container-highest"></div>
+<div class="w-16 h-1 rounded-full bg-surface-container-highest"></div>
+<div class="w-16 h-1 rounded-full bg-surface-container-highest"></div>
+</div>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-2 text-primary/60">Step 01 / 05: Initiation</span>
+</div>
+<button class="font-['DM_Sans'] font-medium text-xs uppercase tracking-widest text-primary/60 hover:text-primary transition-colors">
+            Skip for now
+        </button>
+</header>
+<main class="max-w-[1280px] mx-auto px-8 py-12">
+<div class="bento-grid min-h-[700px]">
+<!-- Hero Illustration Card (The Heritage Anchor) -->
+<div class="col-span-7 relative overflow-hidden rounded-[24px] bg-primary group">
+<img alt="Professional golfer swing" class="absolute inset-0 w-full h-full object-cover mix-blend-soft-light opacity-60 transition-transform duration-700 group-hover:scale-105" data-alt="cinematic wide shot of a professional golfer performing a perfect swing on a mist-covered luxury golf course at dawn with soft atmospheric lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeKGXlqoaZNv4UjN1DR3TQwfkVjnkccbgGTWufzE4HSajh-_1vGtQLg0Xs2_zM3dUukaVNXl8ADWORU14nXbk_vGdUSTJoLgJtzFh1f_uybUVr_d6S9qOVZIrtqLmyXWuWW5yj63qLjoctucL0cWdn_VxOmzjgng9UheAAX4EbxWhvrjGT-fWsKMVsArLeqMDs9T9ldKI-ZMJWcoehernZqSXsxr44PTtN-cj14Zp6nI6W-2ybGOmpfNJsoz2reRAICc2z1GJ53VJg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent"></div>
+<div class="relative h-full flex flex-col justify-end p-12">
+<div class="mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-fixed text-4xl" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="font-['JetBrains_Mono'] text-secondary-fixed text-sm tracking-widest">EST. 2024</span>
+</div>
+<h1 class="font-['DM_Sans'] font-bold text-6xl text-white leading-[1.1] mb-6 max-w-xl">
+                        Welcome to the Performance Collective
+                    </h1>
+<p class="text-white/80 text-lg max-w-md font-light leading-relaxed">
+                        Experience the next evolution of sports management. Precision-engineered for athletes who demand data-driven excellence.
+                    </p>
+</div>
+</div>
+<!-- Onboarding Content Card (The Laboratory) -->
+<div class="col-span-5 flex flex-col justify-between p-12 bg-surface-container-lowest rounded-[24px] shadow-[4px_0_16px_rgba(45,90,39,0.06)]">
+<div class="space-y-12">
+<div class="space-y-4">
+<span class="font-['JetBrains_Mono'] text-primary text-xs uppercase tracking-[0.2em] opacity-60">System Ready</span>
+<h2 class="font-['DM_Sans'] font-semibold text-3xl text-primary tracking-tight">
+                            Let's get your account set up for precision.
+                        </h2>
+</div>
+<!-- Setup Modules -->
+<div class="space-y-6">
+<div class="flex items-start gap-5 p-5 bg-surface-container-low rounded-xl border border-primary/5">
+<div class="bg-primary-container p-3 rounded-lg">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="person_add">person_add</span>
+</div>
+<div class="space-y-1">
+<h3 class="font-['DM_Sans'] font-bold text-sm text-primary uppercase tracking-wide">Secure Profile</h3>
+<p class="text-on-surface-variant text-sm leading-snug">Calibrate your personal metrics and organizational role.</p>
+</div>
+</div>
+<div class="flex items-start gap-5 p-5 bg-surface-container-low/50 rounded-xl">
+<div class="bg-surface-container-highest p-3 rounded-lg opacity-60">
+<span class="material-symbols-outlined text-primary" data-icon="calendar_month">calendar_month</span>
+</div>
+<div class="space-y-1 opacity-60">
+<h3 class="font-['DM_Sans'] font-bold text-sm text-primary uppercase tracking-wide">Schedule Sync</h3>
+<p class="text-on-surface-variant text-sm leading-snug">Connect your professional calendar for automated booking flows.</p>
+</div>
+</div>
+<div class="flex items-start gap-5 p-5 bg-surface-container-low/50 rounded-xl">
+<div class="bg-surface-container-highest p-3 rounded-lg opacity-60">
+<span class="material-symbols-outlined text-primary" data-icon="group">group</span>
+</div>
+<div class="space-y-1 opacity-60">
+<h3 class="font-['DM_Sans'] font-bold text-sm text-primary uppercase tracking-wide">Team Integration</h3>
+<p class="text-on-surface-variant text-sm leading-snug">Invite your coaches, analysts, and teammates to the collective.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Section -->
+<div class="space-y-6 mt-12">
+<button class="w-full bg-secondary-fixed text-on-secondary-fixed font-['DM_Sans'] font-bold uppercase tracking-widest py-5 rounded-xl flex items-center justify-center gap-3 shadow-[0_4px_12px_rgba(210,240,0,0.3)] hover:scale-[1.01] active:scale-[0.98] transition-all">
+                        Get Started
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<div class="flex justify-between items-center text-[11px] font-['JetBrains_Mono'] uppercase tracking-widest text-primary/40">
+<span>Status: Operational</span>
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></div>
+<span>Connected to AK-Cloud</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footnote Cards (Bento Detail) -->
+<div class="col-span-4 bg-surface-container-high p-8 rounded-[24px] flex flex-col justify-between">
+<div class="flex flex-col gap-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="security">security</span>
+<h4 class="font-['DM_Sans'] font-bold text-primary text-sm uppercase tracking-wider">Privacy Guaranteed</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Your performance data is encrypted with military-grade protocols and strictly owned by you.</p>
+</div>
+<a class="text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest text-primary font-bold hover:underline" href="#">View Security Manifest</a>
+</div>
+<div class="col-span-4 bg-surface-container-low p-8 rounded-[24px] flex items-center gap-6">
+<div class="flex -space-x-4">
+<img alt="Coach avatar" class="w-12 h-12 rounded-full border-2 border-surface shadow-sm object-cover" data-alt="close up headshot of a mature sports coach with grey hair and focused expression in professional athletic gear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB04dV1K1aR-wv1sSsVU8UZ3iG-8VYyRdPiutJNDDfGqZ065R9Ayc1z53FsVMs5p8vi1-NwWS04cLoGfsH2oh1k14cqvgrFPYB39Zk7vLJyV694c34gIkKRWw4JckxMtPFi_Qkk-5kxwPAar_nau35p7ZIO587m4fbimD2QjGZOnxsPv7zoOUHwohHyA-625UYSBbBWC5XlJIyWBnosW6gextSAyDcb-G7ItZSilR9ZKVwdu7m3IlfVn1Klsdwec-hxAM_DP-y7jvUi"/>
+<img alt="Athlete avatar" class="w-12 h-12 rounded-full border-2 border-surface shadow-sm object-cover" data-alt="smiling young female athlete with hair tied back in natural outdoor lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2v53LVOKi9FV0q06NzSMEqeTF5_4ZSnQoVHnjr6DRx37Lo3d8jFjWOhsN5Aw86pqR9uKWkbdjWkCVDyJbaDi2ARGk18sbF48Id3AzEh6t8tPg0gBRlMB1zD5iTGfVI6oZeu89lfxRgz-C8KdYgUSSBs67yJXNGI8nproFsJkeZjoI-r4SZvRmyKp-T8aAJkWohTyXdZxK4sK8iduhPxWd9cXhrQqFasupaQmEe-JPjmaz9MXAfRtYFfysEM9xpEOyXHyHoXcXw54G"/>
+<div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center border-2 border-surface shadow-sm">
+<span class="text-[10px] text-white font-bold">+12k</span>
+</div>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant leading-tight">Join <span class="text-primary font-bold">12,000+</span> elite performers already using the OS.</p>
+</div>
+</div>
+<div class="col-span-4 bg-white p-8 rounded-[24px] border border-primary/5 flex flex-col justify-center">
+<div class="flex items-center gap-4">
+<div class="h-10 w-1 bg-secondary rounded-full"></div>
+<div>
+<p class="font-['JetBrains_Mono'] text-[10px] uppercase text-primary/40">Quick Action</p>
+<p class="font-['DM_Sans'] font-bold text-primary text-sm">Need help with migration?</p>
+</div>
+<button class="ml-auto w-10 h-10 rounded-full border border-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">support_agent</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Visual Accents -->
+<div class="fixed bottom-0 left-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -z-10 -translate-x-1/2 translate-y-1/2"></div>
+<div class="fixed top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10 translate-x-1/3 -translate-y-1/3"></div>
+</body></html>

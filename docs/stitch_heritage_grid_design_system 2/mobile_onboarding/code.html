@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#3b6934",
+                        "primary-fixed": "#bcf0ae",
+                        "surface": "#fdf9f0",
+                        "tertiary-fixed": "#bcf0ae",
+                        "tertiary": "#154212",
+                        "surface-container-high": "#ece8df",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dddad1",
+                        "outline-variant": "#c2c9bb",
+                        "background": "#fdf9f0",
+                        "primary": "#154212",
+                        "on-primary-fixed": "#002201",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d0ed00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1c1c16",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-container-low": "#f7f3ea",
+                        "surface-bright": "#fdf9f0",
+                        "on-secondary-fixed": "#191e00",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "secondary": "#576500",
+                        "tertiary-container": "#2d5a27",
+                        "inverse-surface": "#31302b",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-surface": "#1c1c16",
+                        "on-secondary-container": "#5b6900",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#2d5a27",
+                        "secondary-fixed": "#d2f000",
+                        "outline": "#72796e",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9dd090",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-container-highest": "#e6e2d9",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-primary-container": "#9dd090",
+                        "on-surface-variant": "#42493e",
+                        "on-tertiary-fixed": "#002201",
+                        "surface-container": "#f1eee5",
+                        "surface-variant": "#e6e2d9",
+                        "inverse-primary": "#a1d494"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #fdf9f0;
+            color: #1c1c16;
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 16px rgba(45,90,39,0.06);
+        }
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex items-center justify-center min-h-screen">
+<!-- Mobile Frame (390px) -->
+<main class="w-[390px] h-[844px] bg-background relative flex flex-col overflow-hidden">
+<!-- Top Navigation Area -->
+<header class="flex justify-between items-center px-8 py-6 z-20">
+<div class="text-[#154212] font-mono text-[10px] tracking-[0.2em] uppercase">
+                System v1.0.4
+            </div>
+<button class="text-[#154212]/60 hover:text-[#154212] transition-colors font-label font-medium uppercase text-[12px] tracking-widest">
+                Skip
+            </button>
+</header>
+<!-- Main Content Area -->
+<section class="flex-1 px-8 flex flex-col justify-between pb-12">
+<!-- Illustration Block (Editorial Centered) -->
+<div class="relative w-full h-[380px] rounded-[32px] overflow-hidden mt-4 group">
+<div class="absolute inset-0 bg-primary/5 z-10 transition-colors group-hover:bg-transparent"></div>
+<img alt="Clinical Golf Lab Illustration" class="w-full h-full object-cover grayscale-[20%] contrast-[1.1]" data-alt="high-end minimalist indoor golf performance lab with technical sensor cameras, clinical white lighting, and natural wood accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdneckaF-SQ6dY1BjjvV58Hpc4n6NnC4UN6yHpeQRqeXvL6vsRoYCE10wLvdKTyYiay9Coa79htTlmr3-oIepvkJY1dkATLIoYPnaSC-NB9hkEsOrJz1vPFgeSJP0WXYGM65yLfmiDu1h4-1nJwd8-qkPWvCJcT28LTq5CtOxeYlH51fzkj6XK54l7PPgOnGGeLkVTqYvDkpbxXpcV7xDIRl5wsDXmzVVKE02Gg1_V6mA3KVSubeAQh27E7Cb9ZfrsWK5rlxZ74ovc"/>
+<!-- Mono Data Accent -->
+<div class="absolute bottom-4 left-4 z-20 bg-background/80 glass-effect px-3 py-1.5 rounded-lg">
+<span class="font-mono text-[10px] text-primary tracking-tighter uppercase">Calibration Active: 100%</span>
+</div>
+</div>
+<!-- Content Block -->
+<div class="mt-8 space-y-6">
+<div class="space-y-4">
+<span class="font-mono text-[11px] text-primary/40 uppercase tracking-[0.3em]">Phase 01 — Initiation</span>
+<h1 class="text-[#154212] text-4xl font-headline font-bold leading-[1.1] tracking-tight">
+                        Welcome to AK Sports OS
+                    </h1>
+<p class="text-on-surface-variant text-base font-body leading-relaxed max-w-[280px]">
+                        The first clinical operating system for elite athletic performance.
+                    </p>
+</div>
+<!-- Page Indicators -->
+<div class="flex items-center gap-2 pt-2">
+<div class="h-1.5 w-8 rounded-full bg-secondary-fixed"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-primary/10"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-primary/10"></div>
+</div>
+</div>
+<!-- Action Block -->
+<div class="mt-auto flex items-center justify-between gap-4 pt-10">
+<button class="flex-1 bg-secondary-fixed text-on-secondary-fixed py-4 px-6 rounded-xl font-label font-bold uppercase text-sm tracking-widest shadow-sm active:scale-95 transition-transform flex items-center justify-center gap-2 group">
+                    Next
+                    <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Decorative Background Elements -->
+<div class="absolute -top-20 -right-20 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none"></div>
+<div class="absolute -bottom-20 -left-20 w-80 h-80 bg-secondary-fixed/10 rounded-full blur-[100px] pointer-events-none"></div>
+</main>
+</body></html>

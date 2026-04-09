@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Invite Team Member - AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#bcf0ae",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#ece8df",
+                        "on-secondary-fixed": "#191e00",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#f1eee5",
+                        "surface-variant": "#e6e2d9",
+                        "on-surface-variant": "#42493e",
+                        "on-primary-container": "#9dd090",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-tertiary-container": "#9dd090",
+                        "on-primary-fixed-variant": "#23501e",
+                        "surface-bright": "#fdf9f0",
+                        "inverse-surface": "#31302b",
+                        "outline": "#72796e",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d2f000",
+                        "primary-fixed": "#bcf0ae",
+                        "tertiary-container": "#2d5a27",
+                        "surface-dim": "#dddad1",
+                        "primary-container": "#2d5a27",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "on-secondary-container": "#5b6900",
+                        "surface-tint": "#3b6934",
+                        "on-primary-fixed": "#002201",
+                        "background": "#fdf9f0",
+                        "secondary": "#576500",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#002201",
+                        "outline-variant": "#c2c9bb",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#fdf9f0",
+                        "secondary-container": "#d0ed00",
+                        "surface-container-highest": "#e6e2d9",
+                        "on-surface": "#1c1c16",
+                        "on-background": "#1c1c16",
+                        "primary": "#154212",
+                        "secondary-fixed-dim": "#b8d300",
+                        "inverse-primary": "#a1d494",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#a1d494",
+                        "tertiary": "#154212",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-fixed-variant": "#414c00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #fdf9f0;
+            color: #1c1c16;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col h-full p-6 gap-8 z-50">
+<div class="flex flex-col gap-1">
+<span class="font-['DM_Sans'] text-xl font-bold text-[#d2f000] tracking-tighter">AK Sports OS</span>
+<span class="font-['DM_Sans'] uppercase tracking-wider text-[11px] font-medium text-white/50">Admin Console</span>
+</div>
+<nav class="flex flex-col gap-2 flex-grow">
+<a class="text-white/60 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/5 font-['DM_Sans'] uppercase tracking-wider text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="text-white/60 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/5 font-['DM_Sans'] uppercase tracking-wider text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="security">security</span>
+                Security
+            </a>
+<a class="text-white/60 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/5 font-['DM_Sans'] uppercase tracking-wider text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="notifications">notifications</span>
+                Notifications
+            </a>
+<a class="text-white/60 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/5 font-['DM_Sans'] uppercase tracking-wider text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="payments">payments</span>
+                Billing
+            </a>
+<!-- Active State: Team Management maps to "Invite" intent -->
+<a class="bg-[#d2f000] text-[#154212] rounded-lg px-4 py-2 flex items-center gap-3 transition-all duration-300 font-['DM_Sans'] uppercase tracking-wider text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="group_add">group_add</span>
+                Team Management
+            </a>
+<a class="text-white/60 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/5 font-['DM_Sans'] uppercase tracking-wider text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="mt-auto flex flex-col gap-4 border-t border-white/10 pt-6">
+<button class="bg-[#d2f000] text-[#154212] py-3 rounded-lg font-['DM_Sans'] text-[11px] uppercase tracking-widest font-bold hover:opacity-90 transition-opacity">
+                Invite Member
+            </button>
+<div class="flex flex-col gap-2">
+<a class="text-white/60 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors text-[11px] font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help_outline">help_outline</span>
+                    Support
+                </a>
+<a class="text-white/60 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors text-[11px] font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+                    Sign Out
+                </a>
+</div>
+</div>
+</aside>
+<!-- TopAppBar (Authority: JSON) -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-[#fdf9f0]/80 backdrop-blur-xl flex justify-between items-center px-8 z-40">
+<div class="flex items-center gap-4">
+<h1 class="font-['DM_Sans'] font-bold text-[#154212] text-lg">User Management</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#154212]/50 text-xl" data-icon="search">search</span>
+<input class="bg-surface-container-high border-none rounded-full py-1.5 pl-10 pr-4 text-sm w-64 focus:ring-1 focus:ring-primary/20" placeholder="Search members..." type="text"/>
+</div>
+<div class="flex items-center gap-4 text-[#154212]">
+<span class="material-symbols-outlined cursor-pointer hover:opacity-80" data-icon="notifications_none">notifications_none</span>
+<div class="flex items-center gap-2 group cursor-pointer">
+<img alt="Administrator" class="w-8 h-8 rounded-full border border-primary/10" data-alt="portrait of a professional administrator in a clean office environment with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChFLHWu0jVvYHv8rbVy8oSZlPui6uXMl48vAUyymXNvAWL3ytcNl6zfC7XY21hFTDAb5TBFr5Ku7qhsTEdTwk0G7lM-3jCH4m-C77aMclehzkcb05nKwY8SKjQ_jw3ILETQQepvi7dqn6Q9DGrO0VG1-_y2DL3fSvP4dtwfnajIzWB7T8g91wHoB1V6v6Q34Q4YlZfLfl2n1J3E3TR_RQ3xXicGPUSohKYih6-Joga5_oP8ZjF8uR66_jsBapUfJempvAri-WgF0pQ"/>
+<span class="font-['DM_Sans'] text-sm font-semibold">Admin</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 px-12 pb-12 min-h-screen flex flex-col items-center">
+<div class="max-w-4xl w-full">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-8 font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">
+<span>Network</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+<span>Team Management</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-bold">Invite Member</span>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6 items-start">
+<!-- Main Form Section -->
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<div class="bg-surface-container-lowest p-10 rounded-[24px] shadow-sm">
+<h2 class="text-4xl font-bold text-primary mb-2 tracking-tight">Invite Team Member</h2>
+<p class="text-on-surface-variant mb-10 text-sm">Expand your laboratory. Define roles and permissions for your new collaborator.</p>
+<div class="space-y-8">
+<!-- Email Multi-Select Logic -->
+<div>
+<label class="block font-mono text-[11px] font-bold uppercase tracking-widest text-primary/70 mb-3">Email Address</label>
+<div class="bg-surface-container-highest rounded-xl p-4 flex flex-wrap gap-2 focus-within:ring-1 focus-within:ring-primary/20 transition-all">
+<div class="bg-primary text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 group">
+                                        marcus.v@aksports.com
+                                        <span class="material-symbols-outlined text-[14px] cursor-pointer opacity-50 group-hover:opacity-100" data-icon="close">close</span>
+</div>
+<input class="bg-transparent border-none focus:ring-0 text-sm flex-grow min-w-[200px]" placeholder="Enter emails separated by comma..." type="text"/>
+</div>
+</div>
+<!-- Role Selector -->
+<div>
+<label class="block font-mono text-[11px] font-bold uppercase tracking-widest text-primary/70 mb-3">Assign Role</label>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<button class="flex flex-col items-center gap-3 p-4 rounded-xl border border-primary/10 hover:bg-primary/5 transition-all text-left">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="shield_person">shield_person</span>
+<span class="font-bold text-xs uppercase tracking-tight">Admin</span>
+</button>
+<button class="flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-secondary bg-surface-container-low transition-all text-left">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="sports">sports</span>
+<span class="font-bold text-xs uppercase tracking-tight">Coach</span>
+</button>
+<button class="flex flex-col items-center gap-3 p-4 rounded-xl border border-primary/10 hover:bg-primary/5 transition-all text-left">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="person">person</span>
+<span class="font-bold text-xs uppercase tracking-tight">Player</span>
+</button>
+<button class="flex flex-col items-center gap-3 p-4 rounded-xl border border-primary/10 hover:bg-primary/5 transition-all text-left">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="visibility">visibility</span>
+<span class="font-bold text-xs uppercase tracking-tight">Viewer</span>
+</button>
+</div>
+</div>
+<!-- Message -->
+<div>
+<label class="block font-mono text-[11px] font-bold uppercase tracking-widest text-primary/70 mb-3">Custom Message (Optional)</label>
+<textarea class="w-full bg-surface-container-highest border-none rounded-xl p-4 text-sm focus:ring-1 focus:ring-primary/20 placeholder:text-on-surface-variant/40" placeholder="Welcome to the AK Sports high-performance unit. Looking forward to your insights." rows="4"></textarea>
+</div>
+<button class="w-full py-4 bg-secondary-fixed text-on-secondary-fixed rounded-xl font-bold uppercase tracking-[0.2em] text-sm hover:opacity-90 transition-all flex items-center justify-center gap-3">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+                                Send Invites
+                            </button>
+</div>
+</div>
+</div>
+<!-- Secondary Info Section (Editorial Sidebar) -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- Invite Link Card -->
+<div class="bg-surface-container-low p-8 rounded-[24px]">
+<h3 class="text-xs font-mono font-bold uppercase tracking-[0.2em] text-primary/70 mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="link">link</span>
+                            Quick Link
+                        </h3>
+<p class="text-xs text-on-surface-variant mb-4 leading-relaxed">Share this temporary registration link with your team members directly.</p>
+<div class="flex items-center gap-2 bg-surface-container-lowest border border-primary/5 p-3 rounded-lg overflow-hidden mb-6">
+<span class="text-[10px] font-mono text-primary truncate">aksports.os/invite/hq-29-338x</span>
+<button class="ml-auto p-1.5 hover:bg-surface-container-highest rounded-md transition-colors">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<div class="bg-primary/5 rounded-xl p-4 border border-primary/10">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="info_outline">help_outline</span>
+<p class="text-[10px] text-primary leading-normal font-medium">Link expires in 24 hours for security protocol compliance.</p>
+</div>
+</div>
+</div>
+<!-- Role Permissions Preview Card -->
+<div class="bg-primary p-8 rounded-[24px] text-white overflow-hidden relative group">
+<div class="absolute -right-4 -top-4 opacity-10 transform rotate-12 transition-transform group-hover:rotate-6">
+<span class="material-symbols-outlined text-[120px]" data-icon="verified_user">verified_user</span>
+</div>
+<h3 class="text-xs font-mono font-bold uppercase tracking-[0.2em] text-on-secondary-fixed mb-6 relative z-10">Role Overview</h3>
+<div class="space-y-4 relative z-10">
+<div class="flex items-center justify-between text-[11px] border-b border-white/10 pb-2">
+<span class="opacity-70">Data Analysis</span>
+<span class="font-mono text-secondary-fixed">Full Access</span>
+</div>
+<div class="flex items-center justify-between text-[11px] border-b border-white/10 pb-2">
+<span class="opacity-70">Team Rosters</span>
+<span class="font-mono text-secondary-fixed">Edit Mode</span>
+</div>
+<div class="flex items-center justify-between text-[11px] border-b border-white/10 pb-2">
+<span class="opacity-70">Billing Access</span>
+<span class="font-mono text-red-300">Restricted</span>
+</div>
+<div class="flex items-center justify-between text-[11px]">
+<span class="opacity-70">Performance Logs</span>
+<span class="font-mono text-secondary-fixed">Read/Write</span>
+</div>
+</div>
+</div>
+<!-- Visual Accent Card -->
+<div class="rounded-[24px] overflow-hidden aspect-[4/3] relative">
+<img alt="Professional stadium environment" class="w-full h-full object-cover grayscale brightness-75" data-alt="dramatic wide angle shot of an empty state-of-the-art sports stadium at twilight with architectural lighting and dark moody atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiwNHOkUVaQKXQoLLb_I_Gs2FHfG0jZKU7CnsyA6NkSP8daiyKoOBfVa1zAQxFsW7Pm9y63Z0QYKwHqUva8VyWBSW42YNKiPPssD4UQVAQ8Ro9S8Q77tHUcoAN-FMx4bPQlSl5l0a2L0zvbQ2hfAWNYZLD17f3RIsKh6MIo98SOvHNelOzYZsPzpeWSKdPKpLUqTyg2YJTdWylnMoaKGGMJwB0xURs2rYwe43veFOO47Wh6a65H_uHlMS9x5wP3T08LORDgnKh8XVP"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-6">
+<span class="text-[9px] font-mono font-bold text-secondary-fixed uppercase tracking-widest mb-1">Laboratory Precision</span>
+<p class="text-white text-xs font-medium">Data-driven excellence through collaborative intelligence.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Invitations Log (Bottom Section) -->
+<div class="mt-12 bg-surface-container-high rounded-[24px] p-8">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-xs font-mono font-bold uppercase tracking-[0.2em] text-primary/70">Pending Invitations</h3>
+<span class="text-[10px] font-mono bg-white/50 px-2 py-1 rounded text-primary">03 Total</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] font-mono text-on-surface-variant/60 uppercase tracking-widest">
+<th class="pb-4 font-normal">Candidate</th>
+<th class="pb-4 font-normal">Role</th>
+<th class="pb-4 font-normal">Date Sent</th>
+<th class="pb-4 font-normal">Status</th>
+<th class="pb-4 font-normal text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="text-xs">
+<tr class="border-t border-primary/5">
+<td class="py-4">
+<div class="font-bold">Sarah Jenkins</div>
+<div class="text-[10px] opacity-60">s.jenkins@vanguard.io</div>
+</td>
+<td class="py-4 font-mono">COACH</td>
+<td class="py-4 font-mono">12.05.2024</td>
+<td class="py-4">
+<span class="px-2 py-1 bg-primary/10 text-primary rounded text-[10px] font-bold">SENT</span>
+</td>
+<td class="py-4 text-right">
+<button class="text-primary/50 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="border-t border-primary/5">
+<td class="py-4">
+<div class="font-bold">Leo Martinez</div>
+<div class="text-[10px] opacity-60">martinez.l@proclub.com</div>
+</td>
+<td class="py-4 font-mono">PLAYER</td>
+<td class="py-4 font-mono">11.05.2024</td>
+<td class="py-4">
+<span class="px-2 py-1 bg-secondary-fixed text-on-secondary-fixed rounded text-[10px] font-bold">VIEWED</span>
+</td>
+<td class="py-4 text-right">
+<button class="text-primary/50 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</body></html>

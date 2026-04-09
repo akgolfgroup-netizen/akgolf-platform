@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Build Report | AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#bcf0ae",
+                        "surface-tint": "#3b6934",
+                        "tertiary-fixed": "#bcf0ae",
+                        "surface": "#fdf9f0",
+                        "tertiary": "#154212",
+                        "surface-container-high": "#ece8df",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dddad1",
+                        "outline-variant": "#c2c9bb",
+                        "background": "#fdf9f0",
+                        "on-primary-fixed": "#002201",
+                        "on-error": "#ffffff",
+                        "primary": "#154212",
+                        "secondary-container": "#d0ed00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1c1c16",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-bright": "#fdf9f0",
+                        "on-secondary-fixed": "#191e00",
+                        "tertiary-container": "#2d5a27",
+                        "secondary": "#576500",
+                        "inverse-surface": "#31302b",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-surface": "#1c1c16",
+                        "on-secondary-container": "#5b6900",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#72796e",
+                        "secondary-fixed": "#d2f000",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9dd090",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-container-highest": "#e6e2d9",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-surface-variant": "#42493e",
+                        "on-primary-container": "#9dd090",
+                        "surface-container": "#f1eee5",
+                        "on-tertiary-fixed": "#002201",
+                        "surface-variant": "#e6e2d9",
+                        "inverse-primary": "#a1d494"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"],
+                        "technical": ["JetBrains Mono", "monospace"],
+                        "brand": ["DM Sans", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased min-h-screen flex overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="flex flex-col h-full py-8 px-4 bg-green-950 dark:bg-green-950 h-screen w-64 border-r-0 fixed left-0 top-0 z-50">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold text-white tracking-tight font-brand">AK Sports OS</h1>
+<p class="text-[10px] font-brand font-medium uppercase tracking-wider text-green-200/60 mt-1">Elite Analytics</p>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="flex items-center px-4 py-3 text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors rounded-lg group cursor-pointer">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-brand font-medium uppercase tracking-wider text-[11px]">Dashboard</span>
+</div>
+<div class="flex items-center px-4 py-3 text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors rounded-lg group cursor-pointer">
+<span class="material-symbols-outlined mr-3">monitoring</span>
+<span class="font-brand font-medium uppercase tracking-wider text-[11px]">Performance</span>
+</div>
+<div class="flex items-center px-4 py-3 text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors rounded-lg group cursor-pointer">
+<span class="material-symbols-outlined mr-3">groups</span>
+<span class="font-brand font-medium uppercase tracking-wider text-[11px]">Roster</span>
+</div>
+<div class="flex items-center px-4 py-3 text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors rounded-lg group cursor-pointer">
+<span class="material-symbols-outlined mr-3">query_stats</span>
+<span class="font-brand font-medium uppercase tracking-wider text-[11px]">Analytics</span>
+</div>
+<!-- ACTIVE: Scouting (Assumed based on "New Report" intent) -->
+<div class="flex items-center px-4 py-3 text-lime-400 bg-green-900/50 rounded-lg group cursor-pointer">
+<span class="material-symbols-outlined mr-3">travel_explore</span>
+<span class="font-brand font-medium uppercase tracking-wider text-[11px]">Scouting</span>
+</div>
+<div class="flex items-center px-4 py-3 text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors rounded-lg group cursor-pointer">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-brand font-medium uppercase tracking-wider text-[11px]">Settings</span>
+</div>
+</nav>
+<div class="mt-auto px-2">
+<button class="w-full py-3 px-4 bg-lime-400 text-green-950 font-brand font-bold uppercase text-[12px] rounded-xl hover:bg-lime-300 transition-all active:scale-95 duration-200">
+                New Report
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 flex flex-col h-screen">
+<!-- TopNavBar Component -->
+<header class="flex justify-between items-center px-8 w-full h-16 bg-[#fdf9f0]/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-[#154212]/10 sticky top-0 z-40">
+<div class="flex items-center space-x-6">
+<span class="font-brand font-semibold text-green-900">Analytics Suite</span>
+<div class="relative flex items-center group">
+<span class="material-symbols-outlined absolute left-3 text-green-700/50">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-[#f7f3ea] border-none rounded-full text-sm focus:ring-1 ring-lime-400/20 w-64 font-body" placeholder="Search reports..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="p-2 text-green-700/50 hover:text-green-900 transition-opacity">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-green-700/50 hover:text-green-900 transition-opacity">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-green-900 overflow-hidden ring-2 ring-lime-400/20">
+<img alt="Analyst Profile" class="w-full h-full object-cover" data-alt="Professional sports analyst headshot in studio setting with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4-GdF0mTQeTf_ImFjg21sKIiE1nnkIvMD-SwnAucGUEu4gWmXZvsU-ETxOiemKVn17YLFLeWYaINX56F_26qkENlF6peF53qtfVA0WwEoxFPkkcCvDii1jXnXzH46YKVKoNuv8-ASdXtBzb27M9hBJB14FGiqZxw3rZUDzpJ0p-dHEZd9f6LQ9uDeWqrxmFXsEdk7GUUy6WEPilp-kWEgZ5GQvvLW55p9QJgI2vBvO3lgimFJs9O7U8iqjDqcxdSPn-1HPiNbvYbV"/>
+</div>
+</div>
+</header>
+<!-- Builder Workspace -->
+<section class="flex-1 overflow-y-auto p-8 space-y-8 no-scrollbar">
+<!-- Contextual Header -->
+<div class="flex justify-between items-end">
+<div>
+<span class="font-technical text-[10px] text-green-900/50 uppercase tracking-widest">Builder Module / v2.4</span>
+<h2 class="text-4xl font-headline font-bold text-primary tracking-tight mt-1">Build Report</h2>
+</div>
+<div class="flex items-center space-x-6 pb-1">
+<a class="text-primary font-brand font-bold uppercase text-[11px] border-b-2 border-transparent hover:border-lime-400 transition-all" href="#">Save Template</a>
+<button class="px-8 py-3 bg-secondary-fixed text-on-secondary-fixed font-brand font-bold uppercase text-[12px] rounded-xl shadow-[0_4px_16px_rgba(45,90,39,0.06)] hover:brightness-105 active:scale-95 transition-all">
+                        Generate Report
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="bento-grid">
+<!-- Sidebar: Components (3 columns) -->
+<div class="col-span-3 space-y-6">
+<div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10">
+<h3 class="font-label font-bold uppercase text-[11px] text-primary mb-6 tracking-widest">Chart Components</h3>
+<div class="grid grid-cols-1 gap-3">
+<div class="flex items-center p-4 bg-surface-container-lowest rounded-xl cursor-grab hover:shadow-sm border border-transparent hover:border-lime-400/30 transition-all">
+<span class="material-symbols-outlined text-primary mr-4" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
+<span class="font-brand font-medium text-sm">Bar Chart</span>
+</div>
+<div class="flex items-center p-4 bg-surface-container-lowest rounded-xl cursor-grab hover:shadow-sm border border-transparent hover:border-lime-400/30 transition-all">
+<span class="material-symbols-outlined text-primary mr-4" style="font-variation-settings: 'FILL' 1;">show_chart</span>
+<span class="font-brand font-medium text-sm">Line Graph</span>
+</div>
+<div class="flex items-center p-4 bg-surface-container-lowest rounded-xl cursor-grab hover:shadow-sm border border-transparent hover:border-lime-400/30 transition-all">
+<span class="material-symbols-outlined text-primary mr-4" style="font-variation-settings: 'FILL' 1;">pie_chart</span>
+<span class="font-brand font-medium text-sm">Pie Distribution</span>
+</div>
+<div class="flex items-center p-4 bg-surface-container-lowest rounded-xl cursor-grab hover:shadow-sm border border-transparent hover:border-lime-400/30 transition-all">
+<span class="material-symbols-outlined text-primary mr-4" style="font-variation-settings: 'FILL' 1;">radar</span>
+<span class="font-brand font-medium text-sm">Radar Profile</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/10">
+<h3 class="font-label font-bold uppercase text-[11px] text-primary mb-6 tracking-widest">Data Dimensions</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between group cursor-pointer">
+<span class="text-sm font-body text-on-surface-variant group-hover:text-primary transition-colors">Physical Load</span>
+<span class="material-symbols-outlined text-xs text-outline-variant group-hover:text-lime-500">add_circle</span>
+</div>
+<div class="flex items-center justify-between group cursor-pointer">
+<span class="text-sm font-body text-on-surface-variant group-hover:text-primary transition-colors">Tactical Accuracy</span>
+<span class="material-symbols-outlined text-xs text-outline-variant group-hover:text-lime-500">add_circle</span>
+</div>
+<div class="flex items-center justify-between group cursor-pointer">
+<span class="text-sm font-body text-on-surface-variant group-hover:text-primary transition-colors">Sleep Quality</span>
+<span class="material-symbols-outlined text-xs text-outline-variant group-hover:text-lime-500">add_circle</span>
+</div>
+<div class="flex items-center justify-between group cursor-pointer">
+<span class="text-sm font-body text-on-surface-variant group-hover:text-primary transition-colors">Heatmap Density</span>
+<span class="material-symbols-outlined text-xs text-outline-variant group-hover:text-lime-500">add_circle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Configuration & Preview (9 columns) -->
+<div class="col-span-9 space-y-6">
+<!-- Heritage Grid Controls -->
+<div class="grid grid-cols-3 gap-6">
+<div class="bg-surface-container-low rounded-2xl p-6">
+<label class="font-technical text-[10px] text-primary/60 uppercase block mb-2">Data Source</label>
+<div class="relative">
+<select class="w-full bg-surface-container-highest border-none rounded-lg font-brand font-semibold text-primary appearance-none focus:ring-1 ring-lime-400/20 py-3 pl-4 pr-10">
+<option>Players</option>
+<option>Sessions</option>
+<option>Finance</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-primary/40">expand_more</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-6 col-span-2">
+<label class="font-technical text-[10px] text-primary/60 uppercase block mb-2">Analysis Period</label>
+<div class="flex items-center space-x-4">
+<div class="flex-1 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 text-sm">calendar_today</span>
+<input class="w-full bg-surface-container-highest border-none rounded-lg font-brand font-semibold text-primary focus:ring-1 ring-lime-400/20 py-3 pl-10 pr-4" type="text" value="OCT 01, 2023"/>
+</div>
+<span class="text-primary/30 font-technical">TO</span>
+<div class="flex-1 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 text-sm">calendar_today</span>
+<input class="w-full bg-surface-container-highest border-none rounded-lg font-brand font-semibold text-primary focus:ring-1 ring-lime-400/20 py-3 pl-10 pr-4" type="text" value="OCT 28, 2023"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Canvas Preview -->
+<div class="bg-surface-container-lowest rounded-[24px] min-h-[500px] border border-outline-variant/10 p-10 flex flex-col shadow-[0_4px_32px_rgba(45,90,39,0.04)]">
+<div class="flex items-center justify-between mb-12">
+<h4 class="font-brand font-bold text-xl text-primary">Preview Canvas</h4>
+<div class="flex space-x-2">
+<div class="h-2 w-8 bg-primary rounded-full"></div>
+<div class="h-2 w-2 bg-surface-container-highest rounded-full"></div>
+<div class="h-2 w-2 bg-surface-container-highest rounded-full"></div>
+</div>
+</div>
+<!-- Empty State / Placeholder Layout -->
+<div class="flex-1 border-2 border-dashed border-outline-variant/30 rounded-3xl flex flex-col items-center justify-center text-center p-12 bg-surface-container-low/30">
+<div class="w-16 h-16 bg-surface-container-highest rounded-2xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary/30 text-3xl">add_chart</span>
+</div>
+<p class="font-brand font-bold text-primary text-lg mb-2">Drag charts from the left to start building</p>
+<p class="text-on-surface-variant/60 max-w-xs text-sm">Select metrics and visualizations to create your bespoke analytics dashboard.</p>
+</div>
+<div class="mt-12 grid grid-cols-2 gap-8 opacity-20 pointer-events-none">
+<div class="h-40 bg-surface-container-low rounded-2xl"></div>
+<div class="h-40 bg-surface-container-low rounded-2xl"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Footer Overlay -->
+<footer class="h-10 border-t border-outline-variant/10 bg-surface flex items-center justify-between px-8 text-[10px] font-technical uppercase tracking-widest text-primary/40">
+<div>System Status: <span class="text-lime-600">Optimal</span></div>
+<div>Build Version: AKS-v2.04.18-PRO</div>
+<div>Auto-save: <span class="text-primary/60">2 minutes ago</span></div>
+</footer>
+</main>
+</body></html>

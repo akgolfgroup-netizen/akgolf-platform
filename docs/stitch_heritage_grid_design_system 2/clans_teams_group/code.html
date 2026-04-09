@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-tint": "#3b6934",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-fixed": "#191e00",
+                        "on-surface-variant": "#42493e",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dddad1",
+                        "on-surface": "#1c1c16",
+                        "inverse-on-surface": "#f4f0e7",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002201",
+                        "tertiary-container": "#2d5a27",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#31302b",
+                        "inverse-primary": "#a1d494",
+                        "primary-container": "#2d5a27",
+                        "surface-container-highest": "#e6e2d9",
+                        "outline-variant": "#c2c9bb",
+                        "on-tertiary-container": "#9dd090",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-primary-container": "#9dd090",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-variant": "#e6e2d9",
+                        "surface-bright": "#fdf9f0",
+                        "on-background": "#1c1c16",
+                        "background": "#fdf9f0",
+                        "on-secondary-container": "#5b6900",
+                        "surface": "#fdf9f0",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#bcf0ae",
+                        "secondary": "#576500",
+                        "surface-container": "#f1eee5",
+                        "primary-fixed": "#bcf0ae",
+                        "outline": "#72796e",
+                        "on-primary-fixed": "#002201",
+                        "surface-container-high": "#ece8df",
+                        "secondary-fixed": "#d2f000",
+                        "primary": "#154212",
+                        "tertiary": "#154212",
+                        "secondary-fixed-dim": "#b8d300",
+                        "secondary-container": "#d0ed00"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.875rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+        .bento-card { transition: transform 0.2s ease-in-out; }
+        .bento-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex min-h-screen">
+<!-- SideNavBar (The Anchor) -->
+<aside class="bg-[#154212] dark:bg-emerald-950 text-[#d2f000] font-['DM_Sans'] font-medium uppercase tracking-widest text-[11px] h-screen w-72 left-0 top-0 fixed flex flex-col h-full py-8 shadow-[4px_0_16px_rgba(45,90,39,0.06)] z-40">
+<div class="px-8 mb-12">
+<h1 class="text-[#fdf9f0] font-semibold text-lg tracking-tight normal-case mb-1">AK Sports OS</h1>
+<p class="text-[#fdf9f0]/60 text-[10px] tracking-[0.2em]">Elite Performance</p>
+</div>
+<nav class="flex-1 overflow-y-auto">
+<a class="text-[#fdf9f0]/70 flex items-center px-8 py-4 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">military_tech</span>
+                Achievements
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-8 py-4 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">leaderboard</span>
+                Leaderboard
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-8 py-4 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">emoji_events</span>
+                Challenges
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-8 py-4 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">local_fire_department</span>
+                Streaks
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-8 py-4 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">shopping_basket</span>
+                Points Shop
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-8 py-4 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">sports_score</span>
+                Tournaments
+            </a>
+<!-- Active Navigation: Social Feed (Closest match to Clans/Teams) -->
+<a class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 my-1 flex items-center px-8 py-4 font-bold scale-100 active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined mr-4">group</span>
+                Social Feed
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center px-8 py-4 my-1 hover:text-[#fdf9f0] hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-4">confirmation_number</span>
+                Season Pass
+            </a>
+</nav>
+<div class="px-8 pt-6 border-t border-white/10 mt-auto">
+<button class="w-full bg-[#d2f000] text-[#154212] font-bold py-3 rounded-lg hover:brightness-110 transition-all mb-6">
+                View Milestones
+            </button>
+<a class="text-[#fdf9f0]/70 flex items-center py-2 hover:text-[#fdf9f0] text-[10px]" href="#">
+<span class="material-symbols-outlined mr-3 text-sm">settings</span> Settings
+            </a>
+<a class="text-[#fdf9f0]/70 flex items-center py-2 hover:text-[#fdf9f0] text-[10px]" href="#">
+<span class="material-symbols-outlined mr-3 text-sm">help_outline</span> Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-72 flex-1 relative min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-[#fdf9f0] dark:bg-stone-900 text-[#154212] flex justify-between items-center h-16 px-8 w-full sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-primary/40">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-secondary" placeholder="Search teams or members..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-[#154212]/60 font-medium text-sm tracking-tight">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-[#f7f3ea] p-2 rounded-full transition-all duration-300">notifications</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-[#f7f3ea] p-2 rounded-full transition-all duration-300">workspace_premium</span>
+</div>
+<div class="h-8 w-8 rounded-full bg-primary-fixed overflow-hidden border-2 border-secondary">
+<img alt="Athlete Profile" class="w-full h-full object-cover" data-alt="professional athlete profile headshot with focused expression and athletic gear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFcquBawFM0LqE19sYCO4i7WiRzKt7bq00JHuAA9XEzaxYWyY6WnJuTjaZZyZTaSkFH26qteZ0v3G3Hlg1tWXf7jsSgzm3YwYSPsl2x1M-kFqXYnpJuEeq77BBIFCwWXLXtBdkJG__qYrYPpRZzexJjDvaItUQrgWIjz-MJDDzLAxhgrm4D_HIdBf3tiUkZzCJS4SbTeFQh44DhhgmbUWcX9kFrT_HRnmbDmaLhVlbp1aBgZZCcj1_s3O3GqPj-8rMqGyjURUi1YRi"/>
+</div>
+</div>
+</header>
+<div class="p-10 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-12">
+<div class="flex items-center gap-6">
+<div class="w-32 h-32 rounded-2xl bg-primary flex items-center justify-center shadow-xl overflow-hidden">
+<img alt="Team Logo" class="w-full h-full object-cover opacity-90" data-alt="minimalist sports crest logo with emerald and gold geometric eagle silhouette" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxY5yLn7cKaRd5nIvTA4kgSuYQXFkk2PAH-i685f957ffX9Sd5LYJx6_gsDFOkC_qCbauPrErqfIvotLF_AzJ1GL17NnTHArtbPwl0OatBZbtCsj1VTwH0ILz67o8odwCHnspyoXRNhJWlES9gFg8CeTzBT_XuSUszNKIOjZDyz_C0vGJ2AWOcS0c6SVzfZ2asoLu-Fy5xWxs6DdM0b72bHnAFgTD93fPGIGsMYrHgW6AnPFCAJveIaGcsr70PUaqv4eb3-H_Ggazq"/>
+</div>
+<div>
+<div class="flex items-center gap-3 mb-2">
+<h2 class="text-4xl font-extrabold text-primary tracking-tighter">Emerald Strykers</h2>
+<span class="px-3 py-1 bg-secondary-container text-primary font-mono text-[10px] rounded-full font-bold">LVL 42</span>
+</div>
+<p class="text-on-surface-variant font-medium max-w-md">The premier cross-country collective focused on elite endurance and performance analytics.</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-3">
+<div class="flex gap-2">
+<button class="px-6 py-3 bg-secondary-fixed text-on-secondary-fixed font-bold rounded-xl text-xs uppercase tracking-widest hover:brightness-105 transition-all shadow-sm">Manage Team</button>
+<button class="px-6 py-3 bg-white text-primary border border-primary/10 font-bold rounded-xl text-xs uppercase tracking-widest hover:bg-surface-container-low transition-all">Invite</button>
+</div>
+<a class="text-error font-medium text-xs hover:underline flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-sm">logout</span> Leave team
+                    </a>
+</div>
+</div>
+<!-- Bento Grid Content -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Stats Overview -->
+<div class="col-span-8 grid grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl bento-card flex flex-col justify-between border border-primary/5">
+<span class="font-mono text-[10px] text-primary/40 uppercase tracking-widest">Global Rank</span>
+<div>
+<p class="text-4xl font-extrabold text-primary">#14</p>
+<p class="text-xs text-secondary font-bold flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> Top 1% this season
+                            </p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl bento-card flex flex-col justify-between border border-primary/5">
+<span class="font-mono text-[10px] text-primary/40 uppercase tracking-widest">Total Points</span>
+<div>
+<p class="text-4xl font-extrabold text-primary">842.1K</p>
+<p class="text-xs text-on-surface-variant mt-1">Next milestone: 1M</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl bento-card flex flex-col justify-between border border-primary/5">
+<span class="font-mono text-[10px] text-primary/40 uppercase tracking-widest">Win Streak</span>
+<div>
+<p class="text-4xl font-extrabold text-primary">12D</p>
+<p class="text-xs text-on-surface-variant mt-1">Personal Best: 18D</p>
+</div>
+</div>
+<!-- Challenges Progress (Large Card) -->
+<div class="col-span-3 bg-surface-container-low rounded-xl p-8 relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="text-xl font-bold text-primary mb-1">Seasonal Challenge</h3>
+<p class="text-sm text-on-surface-variant">The 10,000 KM Continental Relay</p>
+</div>
+<span class="bg-primary text-white px-3 py-1 rounded-full text-[10px] font-mono">ACTIVE</span>
+</div>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-xs font-bold text-primary mb-2 uppercase tracking-tight">
+<span>Team Progress</span>
+<span class="font-mono">7,420 / 10,000 KM</span>
+</div>
+<div class="w-full bg-surface-container-highest h-3 rounded-full overflow-hidden">
+<div class="bg-secondary-fixed h-full w-[74%] rounded-full shadow-[0_0_8px_#d2f000]"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white/40 backdrop-blur-sm p-4 rounded-lg">
+<p class="font-mono text-[10px] text-primary/60 mb-1 uppercase">Time Remaining</p>
+<p class="font-bold text-primary">14 Days</p>
+</div>
+<div class="bg-white/40 backdrop-blur-sm p-4 rounded-lg">
+<p class="font-mono text-[10px] text-primary/60 mb-1 uppercase">Estimated Reward</p>
+<p class="font-bold text-primary">2,500 pts</p>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute -right-10 -bottom-10 opacity-5">
+<span class="material-symbols-outlined text-[160px]">emoji_events</span>
+</div>
+</div>
+</div>
+<!-- Members List (Right Column) -->
+<div class="col-span-4 bg-surface-container-lowest rounded-xl p-6 border border-primary/5 flex flex-col h-full">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-bold text-primary uppercase text-xs tracking-widest">Active Roster (18)</h3>
+<button class="text-primary/60 hover:text-primary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="space-y-4 overflow-y-auto max-h-[500px] pr-2">
+<!-- Member Row -->
+<div class="flex items-center justify-between group cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="close up profile of focused athletic woman with natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmfB6_bvBzfJN-62Q1XIPZJuMEc_xcHAWlyorhLUiOMEMcYzMbqy6KJST9n8WSmsV4j_WoEWXjhzETP6I-FF_CHpGKjoq1CVYp9moesXLq97kcCUg4PDUaPjyXz_9zeWnm5o6JzHM1NxEcf-0QxtbydKZuddRlcbdO1eLYNLaqO2ub_7800ceyVJnajNGV0bJasmZXosyFoNf7QYfQOUoZyv52Lt0AFwHYytUDD60XzsMXmPuxtlpI6qWJdtO8jLfVGP0QgklGpmjk"/>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Marcus Jensen</p>
+<p class="text-[10px] font-mono text-primary/40 uppercase">Team Captain</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</div>
+<div class="flex items-center justify-between group cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors border-l-4 border-secondary-fixed">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="professional male profile headshot with modern clean lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBARJFmpJVfXoN6ciTMjQgjJ6mOu0ixWisSYxC-g8TgR1FAq9-nvb_zYwwwve26uX1vH2_1P5sza-odIr8LobjmUL1PL2m7g5QpInabQcJAR2KREwBwG06pEL5CYhK61rv2BBpL6FdzNwLWrnKlORanThiIAI9C-78Impbnzg2HfHBM7dwyOHpUMPg0yMlQhxY_-DEMAUMK7aIdUuY5aj6NFSPYlTbw4nPjAh11_XxBmBc7le5bI3MwUCQcDsO5yc71J_p9fz0kxWEt"/>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Alex Kim (You)</p>
+<p class="text-[10px] font-mono text-primary/40 uppercase">Lead Analyst</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between group cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="outdoor sports portrait of a young woman smiling with a nature background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQBIorkuQJLtewhwTMGCE9PNYmtgVgfn8MR5zEYzmkMxT3uWbvMvt91RyjyNib0uNfeqmxdhbi2f_mmgU2rZZxaaWbsgnMmUq7Vh72G70Jp6AaxL9ldofUIAnujLflUGTtTPqEZjKNW5LMZ_joBDsgXExpezaMrDGiY2qpreESXuSSUbY-JaBjXldMgK-TriOz7DL8GvuIzaZunRxaBOVL5RnUx4X3AzrifyZwSEBpJs1yG6fmRn-NQAGhWol3dWRk0yzyMaN1haoI"/>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Sarah Chen</p>
+<p class="text-[10px] font-mono text-primary/40 uppercase">Striker</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between group cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="close up of a man with athletic gear and outdoor setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBukFksa5rphljuDcNYi675_rYXJiXbiwhjGvaed2duJuA9RmYV-Wx_z_gM-i3_5x1dpFInWknr-Ye4oTySowZgW860a8GNAPH-Gy3yfX1JW_eUsOx8ZDKwWm5Im6ilq0Ap9IEUwpl3lsd2kQw3Vyrd-F1Ktpe4MjdrmTvGoHWrztElghUnsB_PMx8lPZJX5fakl80rBefNo_UI0Kibpycyw7SxrtTZFVvX1yV6Ktq6B6SMzGzIKL_e8Pn-nZP5r9iRDwE1s4w2XmYs"/>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">David Wilson</p>
+<p class="text-[10px] font-mono text-primary/40 uppercase">Striker</p>
+</div>
+</div>
+</div>
+</div>
+<button class="mt-auto w-full py-3 border border-dashed border-primary/20 rounded-xl text-primary/40 text-xs font-bold uppercase tracking-widest hover:border-primary/40 hover:text-primary transition-all">
+                        View Full List
+                    </button>
+</div>
+<!-- Admin Section: Join Requests -->
+<div class="col-span-8 bg-surface-container-high/50 rounded-xl p-8 border border-primary/5">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="text-xl font-bold text-primary mb-1">Join Requests</h3>
+<p class="text-sm text-on-surface-variant">Review pending membership applications</p>
+</div>
+<div class="bg-secondary-fixed text-primary px-3 py-1 rounded-full font-bold text-xs">3 NEW</div>
+</div>
+<div class="space-y-4">
+<!-- Request Card -->
+<div class="bg-surface-container-lowest p-5 rounded-xl flex items-center justify-between border border-primary/5 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="portrait of an athletic man in a urban setting with soft depth of field" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2dbtdIFkpZMRi7yqrVnVQRjrFhjEN3srlMNUY9Fu8QkH1t8y18tzaey5oRbfi2KPEwohGYfMmtkOV6P88vML4H8rMJhusXUGLc0HNjGSB8PRVCy7C1NAg1_6T5Ytcwrssl3gRUmT8hbZB4LmR-9cETInFdJIPvuNWzV4jPoMiDyTtpPzbfdUNapWWkJB93XeOQ1E5_6NHjr53h37oTM97BnRt2Ja-zfRytDyNKWfoqrLIr9iM7-aSSkRmhxRgFbWCATlezhm3c5Dn"/>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<p class="font-bold text-primary">Jordan Pierce</p>
+<span class="text-[10px] bg-primary/5 text-primary px-2 py-0.5 rounded uppercase font-mono">Tier II</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1 italic">"Former varsity runner looking for a competitive group to push limits."</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-error hover:bg-error/5 rounded-full transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<button class="p-2 text-primary-container hover:bg-primary/5 rounded-full transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl flex items-center justify-between border border-primary/5 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="sporty woman profile picture with natural sun flare" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGyl9zcQveOrRVuas_COUld17sbOoExqPqXS4i1Hd7xx0CzEedo44xk45uU0ZyphF4LvYGyuMYFThZoRBG2a0XjY6-NsNUI1uxk9NFNqgyQFd-qAZ3WFJXnQWbVfWEKySYZzFx5BDasQvp_CSJJzEvcAyb0xEK3K4DCHe8ncLjDiK4rfmiZ3od3OBAlKdk_Yq-Ka7hJ2FiD5-zpTXgtwPZAI4n6U3WGKdHFzUxoQkxDNJNdrVUqsWUJ4VsO6-a3UIGa_x7_V_tUira"/>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<p class="font-bold text-primary">Elena Rodriguez</p>
+<span class="text-[10px] bg-primary/5 text-primary px-2 py-0.5 rounded uppercase font-mono">Elite</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1 italic">"Triathlete training for regional championships. Heard great things about your stats."</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-error hover:bg-error/5 rounded-full transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<button class="p-2 text-primary-container hover:bg-primary/5 rounded-full transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Feed (Mini) -->
+<div class="col-span-4 bg-surface-container-low rounded-xl p-6">
+<h3 class="font-bold text-primary uppercase text-xs tracking-widest mb-6">Recent Team Activity</h3>
+<div class="space-y-6 relative before:content-[''] before:absolute before:left-3 before:top-2 before:bottom-2 before:w-[1px] before:bg-primary/10">
+<div class="relative pl-8">
+<div class="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-secondary-fixed border-2 border-surface-container-low"></div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+<span class="font-bold text-primary">Marcus Jensen</span> completed the morning sprint module. 
+                                <span class="text-primary font-mono block text-[10px] mt-1">+450 XP for Team</span>
+</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-primary/40 border-2 border-surface-container-low"></div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                                Team achieved <span class="font-bold text-primary">Gold Tier</span> in the National Endurance Bracket.
+                                <span class="text-primary font-mono block text-[10px] mt-1">2h ago</span>
+</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-primary/40 border-2 border-surface-container-low"></div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+<span class="font-bold text-primary">Sarah Chen</span> shared a new performance route.
+                                <span class="text-primary font-mono block text-[10px] mt-1">5h ago</span>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

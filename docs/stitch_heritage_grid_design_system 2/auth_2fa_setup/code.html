@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>2FA Setup - AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#bcf0ae",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#ece8df",
+                        "on-secondary-fixed": "#191e00",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#f1eee5",
+                        "surface-variant": "#e6e2d9",
+                        "on-surface-variant": "#42493e",
+                        "on-primary-container": "#9dd090",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-tertiary-container": "#9dd090",
+                        "on-primary-fixed-variant": "#23501e",
+                        "surface-bright": "#fdf9f0",
+                        "inverse-surface": "#31302b",
+                        "outline": "#72796e",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d2f000",
+                        "primary-fixed": "#bcf0ae",
+                        "tertiary-container": "#2d5a27",
+                        "surface-dim": "#dddad1",
+                        "primary-container": "#2d5a27",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "on-secondary-container": "#5b6900",
+                        "surface-tint": "#3b6934",
+                        "on-primary-fixed": "#002201",
+                        "background": "#fdf9f0",
+                        "secondary": "#576500",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#002201",
+                        "outline-variant": "#c2c9bb",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#fdf9f0",
+                        "secondary-container": "#d0ed00",
+                        "surface-container-highest": "#e6e2d9",
+                        "on-surface": "#1c1c16",
+                        "on-background": "#1c1c16",
+                        "primary": "#154212",
+                        "secondary-fixed-dim": "#b8d300",
+                        "inverse-primary": "#a1d494",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#a1d494",
+                        "tertiary": "#154212",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-fixed-variant": "#414c00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fdf9f0;
+            color: #1c1c16;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .bento-glow {
+            background: linear-gradient(135deg, #d2f000 0%, #b8d300 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 lg:p-12">
+<!-- Sidebar Suppression: Page is Transactional/Focused Journey -->
+<main class="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Header Branding (Editorial Voice) -->
+<div class="lg:col-span-12 mb-4">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="shield_lock">shield_lock</span>
+<span class="font-headline font-bold text-xl text-primary tracking-tighter">AK Sports OS</span>
+</div>
+<div class="h-[1px] w-12 bg-primary/20"></div>
+</div>
+<!-- Left Column: Instructions (The Laboratory Aesthetic) -->
+<div class="lg:col-span-5 flex flex-col gap-8">
+<section>
+<span class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/60 mb-2 block">Security Protocol 02</span>
+<h1 class="font-headline text-4xl font-bold text-primary leading-tight mb-4">Set Up Two-Factor Authentication</h1>
+<p class="text-on-surface-variant leading-relaxed font-body">Protect your administrative console with an additional layer of scientific precision. Follow the steps to secure your credentials.</p>
+</section>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="font-mono text-xs font-bold text-primary">01</span>
+</div>
+<div>
+<h3 class="font-headline font-semibold text-primary mb-1">Download Authenticator</h3>
+<p class="text-sm text-on-surface-variant">Install Google Authenticator or Microsoft Authenticator from your app store.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="font-mono text-xs font-bold text-primary">02</span>
+</div>
+<div>
+<h3 class="font-headline font-semibold text-primary mb-1">Scan or Enter Key</h3>
+<p class="text-sm text-on-surface-variant">Scan the QR code on the right, or manually enter the secret alphanumeric key.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="font-mono text-xs font-bold text-primary">03</span>
+</div>
+<div>
+<h3 class="font-headline font-semibold text-primary mb-1">Verify Device</h3>
+<p class="text-sm text-on-surface-variant">Enter the 6-digit verification code generated by your app to finalize setup.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Interactive Card (Bento Philosophy) -->
+<div class="lg:col-span-7">
+<div class="bg-surface-container-lowest rounded-[24px] p-8 lg:p-10 border border-outline-variant/10 shadow-sm relative overflow-hidden">
+<!-- Decorative Monospaced Accent -->
+<div class="absolute top-6 right-8 opacity-20 select-none">
+<span class="font-mono text-[10px] tracking-tighter">SEC_TYPE: TOTP_AUTH</span>
+</div>
+<div class="flex flex-col items-center">
+<!-- QR Code Placeholder (The Curated Lab) -->
+<div class="p-4 bg-white rounded-xl border border-surface-container shadow-inner mb-8">
+<div class="w-48 h-48 bg-surface-container-low flex items-center justify-center relative rounded-lg group">
+<img alt="Two-factor authentication QR code for AK Sports OS security setup" class="w-40 h-40 object-contain grayscale" data-alt="high contrast minimalist black and white qr code centered on a clean studio background with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwxcTACJJQ5bSlBnOFp1sCU-EF4r56d9m1fWev2ILnqNChn0QOFkfVVnu35l6YOkijSWReLPowfeUyzd8K7NcHzJKVsbAb2whDojlRE1rEds1Lf53VZyvRFD8p8PtRGuHTdNFW4F6pyiumD-gA1MxVXXSVKTAW_vUFMyu_DSR8Q_JFJS1SNaz5fN_lnGAyyEb9why5KD4ekfWPRb7fkkmrxNePUcv1tqo4weKLgXrj741z9AIAljuLJqRzDmO_2NlmCBrdFLLfCTpC"/>
+<div class="absolute inset-0 border-[2px] border-secondary/20 rounded-lg pointer-events-none"></div>
+</div>
+</div>
+<!-- Secret Key Display (Technical Precision) -->
+<div class="w-full space-y-2 mb-10">
+<label class="font-mono text-[11px] uppercase tracking-wider text-primary/60 px-1">Manual Entry Secret Key</label>
+<div class="flex items-center gap-2 bg-surface-container-low rounded-xl px-4 py-3 border border-outline-variant/20">
+<code class="font-mono text-sm font-semibold text-primary flex-grow tracking-widest">AKSP-7732-XPL9-9921</code>
+<button class="flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-lg text-primary text-xs font-bold hover:bg-surface-variant transition-colors group">
+<span class="material-symbols-outlined text-sm" data-icon="content_copy">content_copy</span>
+                                COPY
+                            </button>
+</div>
+</div>
+<!-- 6-Digit Code Input -->
+<div class="w-full space-y-4">
+<label class="font-headline font-semibold text-primary text-center block">Verification Code</label>
+<div class="flex justify-between gap-3">
+<input class="w-full h-14 text-center font-mono text-2xl font-bold bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/20 transition-all" maxlength="1" placeholder="•" type="text"/>
+<input class="w-full h-14 text-center font-mono text-2xl font-bold bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/20 transition-all" maxlength="1" placeholder="•" type="text"/>
+<input class="w-full h-14 text-center font-mono text-2xl font-bold bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/20 transition-all" maxlength="1" placeholder="•" type="text"/>
+<input class="w-full h-14 text-center font-mono text-2xl font-bold bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/20 transition-all" maxlength="1" placeholder="•" type="text"/>
+<input class="w-full h-14 text-center font-mono text-2xl font-bold bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/20 transition-all" maxlength="1" placeholder="•" type="text"/>
+<input class="w-full h-14 text-center font-mono text-2xl font-bold bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/20 transition-all" maxlength="1" placeholder="•" type="text"/>
+</div>
+<!-- CTA: The High-Contrast Pulse -->
+<button class="w-full bento-glow text-on-secondary-fixed py-4 rounded-xl font-headline font-bold text-sm uppercase tracking-widest mt-6 hover:opacity-90 active:scale-[0.98] transition-all shadow-lg shadow-secondary/10 flex items-center justify-center gap-2">
+                            Verify &amp; Activate
+                            <span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+</button>
+<p class="text-center text-[11px] font-mono text-on-surface-variant uppercase tracking-tighter opacity-60 pt-2">
+                            Secure Handshake: TLS 1.3 Active
+                        </p>
+</div>
+</div>
+</div>
+<!-- Contextual Helper -->
+<div class="mt-6 flex justify-center">
+<button class="flex items-center gap-2 text-primary/60 hover:text-primary transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="help_outline">help_outline</span>
+                    I'm having trouble scanning the code
+                </button>
+</div>
+</div>
+</main>
+<!-- Footer Identity (Discrete) -->
+<footer class="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-6 pointer-events-none opacity-40">
+<span class="font-mono text-[10px] uppercase tracking-widest text-primary">AK Sports OS // Admin Console</span>
+<span class="w-1 h-1 rounded-full bg-primary"></span>
+<span class="font-mono text-[10px] uppercase tracking-widest text-primary">v2.4.0-Final</span>
+</footer>
+</body></html>

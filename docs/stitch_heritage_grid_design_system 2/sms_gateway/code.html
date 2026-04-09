@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SMS Gateway - AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .dm-sans { font-family: 'DM_Sans', sans-serif; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                "on-tertiary-fixed-variant": "#23501e",
+                "surface-container-high": "#ece8df",
+                "primary-fixed": "#bcf0ae",
+                "on-secondary-container": "#5b6900",
+                "tertiary": "#154212",
+                "on-primary": "#ffffff",
+                "error": "#ba1a1a",
+                "on-tertiary-container": "#9dd090",
+                "secondary-fixed": "#d2f000",
+                "on-primary-fixed-variant": "#23501e",
+                "on-background": "#1c1c16",
+                "on-secondary": "#ffffff",
+                "inverse-primary": "#a1d494",
+                "background": "#fdf9f0",
+                "secondary-fixed-dim": "#b8d300",
+                "surface": "#fdf9f0",
+                "surface-container": "#f1eee5",
+                "on-surface": "#1c1c16",
+                "on-error": "#ffffff",
+                "on-primary-container": "#9dd090",
+                "surface-tint": "#3b6934",
+                "surface-container-low": "#f7f3ea",
+                "inverse-surface": "#31302b",
+                "on-tertiary": "#ffffff",
+                "on-error-container": "#93000a",
+                "on-secondary-fixed": "#191e00",
+                "primary-container": "#2d5a27",
+                "on-secondary-fixed-variant": "#414c00",
+                "surface-bright": "#fdf9f0",
+                "secondary-container": "#d0ed00",
+                "outline-variant": "#c2c9bb",
+                "on-primary-fixed": "#002201",
+                "tertiary-fixed-dim": "#a1d494",
+                "secondary": "#576500",
+                "tertiary-fixed": "#bcf0ae",
+                "primary-fixed-dim": "#a1d494",
+                "surface-container-lowest": "#ffffff",
+                "tertiary-container": "#2d5a27",
+                "surface-dim": "#dddad1",
+                "error-container": "#ffdad6",
+                "on-tertiary-fixed": "#002201",
+                "outline": "#72796e",
+                "on-surface-variant": "#42493e",
+                "surface-variant": "#e6e2d9",
+                "inverse-on-surface": "#f4f0e7",
+                "surface-container-highest": "#e6e2d9"
+              },
+              borderRadius: {
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "2xl": "1rem",
+                "3xl": "1.5rem"
+              }
+            }
+          }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface overflow-hidden">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col py-8 z-50">
+<div class="px-6 mb-10">
+<h1 class="text-xl font-bold text-[#d2f000] tracking-tighter uppercase">AK Sports OS</h1>
+<p class="font-['DM_Sans'] uppercase tracking-wider text-[0.65rem] font-medium text-[#d2f000]/60">Developer Suite</p>
+</div>
+<nav class="flex-1 flex flex-col overflow-y-auto no-scrollbar">
+<!-- Directory -->
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="hub">hub</span>
+                Directory
+            </a>
+<!-- Connectors (Active for SMS Gateway) -->
+<a class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 flex items-center gap-3 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="extension">extension</span>
+                Connectors
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="vpn_key">vpn_key</span>
+                SSO Config
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings_ethernet">settings_ethernet</span>
+                Webhooks
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="description">description</span>
+                API Docs
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="terminal">terminal</span>
+                Console
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="biotech">biotech</span>
+                Sandbox
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="calendar_today">calendar_today</span>
+                Calendar
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="payments">payments</span>
+                Payments
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="analytics">analytics</span>
+                Analytics
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="mt-auto px-6 border-t border-white/10 pt-6">
+<a class="text-white/50 hover:text-white flex items-center gap-3 text-[0.7rem] uppercase tracking-widest font-medium mb-4 transition-colors" href="#">
+<span class="material-symbols-outlined text-base" data-icon="help_outline">help_outline</span>
+                Support
+            </a>
+<a class="text-white/50 hover:text-white flex items-center gap-3 text-[0.7rem] uppercase tracking-widest font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-base" data-icon="dns">dns</span>
+                System Status
+            </a>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-16 z-40 flex justify-between items-center px-8 bg-[#fdf9f0]/80 backdrop-blur-md">
+<div class="flex items-center gap-4">
+<nav class="flex gap-8 font-['DM_Sans'] text-sm font-semibold">
+<a class="text-[#154212] border-b-2 border-[#154212] pb-1" href="#">SMS Gateway</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-opacity" href="#">Voice</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-opacity" href="#">Email</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<input class="bg-surface-container-low border-none rounded-full px-5 py-2 text-sm w-64 focus:ring-1 focus:ring-primary/20 placeholder:text-on-surface-variant/40" placeholder="Search parameters..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-on-surface-variant/40 text-lg" data-icon="search">search</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#154212] transition-opacity opacity-80 hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-[#154212] transition-opacity opacity-80 hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-64 pt-16 h-screen overflow-y-auto bg-background p-8">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Hero / Breadcrumb Section -->
+<section class="flex justify-between items-end">
+<div>
+<div class="flex items-center gap-2 text-xs uppercase tracking-widest text-on-surface-variant/60 font-medium mb-2 mono">
+<span>Infrastructure</span>
+<span class="material-symbols-outlined text-[10px]" data-icon="chevron_right">chevron_right</span>
+<span>Communications</span>
+</div>
+<h2 class="text-4xl font-bold tracking-tight text-primary leading-none">Gateway Engine</h2>
+</div>
+<button class="bg-secondary px-6 py-3 rounded-xl text-white font-['DM_Sans'] font-semibold text-sm hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+                    TEST CONNECTION
+                </button>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- SMS Configuration Card (High Importance) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/10">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="text-lg font-bold text-primary mb-1">Provider Integration</h3>
+<p class="text-sm text-on-surface-variant/70">Connect and manage your third-party SMS providers.</p>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-primary/5 text-primary text-[10px] font-bold rounded-full uppercase tracking-widest border border-primary/10">Active: 02</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Twilio Bento -->
+<div class="bg-surface-container-low rounded-2xl p-6 border border-transparent hover:border-primary/10 transition-all cursor-pointer group">
+<div class="flex justify-between items-center mb-4">
+<div class="w-10 h-10 rounded-xl bg-[#F22F46]/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#F22F46]" data-icon="cell_tower" data-weight="fill" style="font-variation-settings: 'FILL' 1;">cell_tower</span>
+</div>
+<span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded">HEALTHY</span>
+</div>
+<h4 class="font-bold text-primary text-base mb-2">Twilio Cloud API</h4>
+<div class="space-y-1 mb-4">
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold mono">Account SID</p>
+<p class="text-sm text-primary mono truncate">AC7829...9102X</p>
+</div>
+<div class="flex items-center justify-between text-xs font-semibold text-primary/60 group-hover:text-primary transition-colors">
+<span>Manage keys</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- MessageBird Bento -->
+<div class="bg-surface-container-low rounded-2xl p-6 border border-transparent hover:border-primary/10 transition-all cursor-pointer group">
+<div class="flex justify-between items-center mb-4">
+<div class="w-10 h-10 rounded-xl bg-[#3E7DE7]/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#3E7DE7]" data-icon="chat_bubble" data-weight="fill" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+</div>
+<span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded">HEALTHY</span>
+</div>
+<h4 class="font-bold text-primary text-base mb-2">MessageBird Flow</h4>
+<div class="space-y-1 mb-4">
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold mono">Workspace ID</p>
+<p class="text-sm text-primary mono truncate">MB_PROD_9982</p>
+</div>
+<div class="flex items-center justify-between text-xs font-semibold text-primary/60 group-hover:text-primary transition-colors">
+<span>Configure endpoints</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Delivery Chart Card -->
+<div class="col-span-12 lg:col-span-4 bg-primary text-white rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative">
+<div class="z-10">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-secondary" data-icon="query_stats">query_stats</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-white/60">Live Throughput</span>
+</div>
+<h3 class="text-3xl font-bold mb-1">98.4%</h3>
+<p class="text-sm text-white/50 mb-8">Delivery Success Rate (24h)</p>
+</div>
+<!-- Abstract Chart Visual -->
+<div class="h-32 flex items-end gap-1 mb-4 z-10">
+<div class="flex-1 bg-secondary/20 rounded-t-md h-[40%]"></div>
+<div class="flex-1 bg-secondary/30 rounded-t-md h-[60%]"></div>
+<div class="flex-1 bg-secondary/50 rounded-t-md h-[55%]"></div>
+<div class="flex-1 bg-secondary/70 rounded-t-md h-[85%]"></div>
+<div class="flex-1 bg-secondary rounded-t-md h-[100%]"></div>
+<div class="flex-1 bg-secondary/80 rounded-t-md h-[75%]"></div>
+<div class="flex-1 bg-secondary/40 rounded-t-md h-[50%]"></div>
+<div class="flex-1 bg-secondary/60 rounded-t-md h-[90%]"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] mono text-white/40 z-10">
+<span>08:00 AM</span>
+<span>12:00 PM</span>
+<span>04:00 PM</span>
+</div>
+<!-- Subtle Decorative Glow -->
+<div class="absolute -bottom-10 -right-10 w-48 h-48 bg-secondary/20 blur-3xl rounded-full"></div>
+</div>
+<!-- Verification Status (Asymmetric) -->
+<div class="col-span-12 lg:col-span-5 bg-surface-container-highest rounded-3xl p-8">
+<h3 class="text-lg font-bold text-primary mb-6">Verification Hub</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-2xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-700 text-sm" data-icon="check_circle">check_circle</span>
+</div>
+<span class="text-sm font-bold text-primary">+1 (888) 293-1002</span>
+</div>
+<span class="text-[10px] uppercase font-bold text-primary/40 mono tracking-tighter">Production Ready</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-2xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-700 text-sm" data-icon="check_circle">check_circle</span>
+</div>
+<span class="text-sm font-bold text-primary">+44 20 7946 0958</span>
+</div>
+<span class="text-[10px] uppercase font-bold text-primary/40 mono tracking-tighter">Verified (UK)</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border border-dashed border-primary/20 rounded-2xl group cursor-pointer hover:bg-primary hover:text-white transition-all">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/5 group-hover:bg-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary group-hover:text-white text-sm" data-icon="add">add</span>
+</div>
+<span class="text-sm font-bold">Register New Originator</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Cost Tracking -->
+<div class="col-span-12 lg:col-span-3 bg-surface-container-lowest rounded-3xl p-8 flex flex-col justify-between border border-outline-variant/10">
+<div>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold mb-4">Expenditure Insight</p>
+<h3 class="text-4xl font-bold text-primary mb-2">$0.0075</h3>
+<p class="text-xs text-on-surface-variant font-medium">Avg. Cost / Message (MT)</p>
+</div>
+<div class="mt-8 space-y-3">
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface-variant/70">Daily Spend</span>
+<span class="text-primary font-bold mono">$42.80</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1">
+<div class="bg-secondary h-1 rounded-full" style="width: 65%;"></div>
+</div>
+<p class="text-[10px] text-on-surface-variant/50">84% of monthly budget utilized</p>
+</div>
+</div>
+<!-- SMS Templates List (List with high-end feel) -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/10 overflow-hidden">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold text-primary">Templates</h3>
+<span class="material-symbols-outlined text-primary/40 cursor-pointer hover:text-primary" data-icon="more_horiz">more_horiz</span>
+</div>
+<div class="space-y-6">
+<div class="group cursor-pointer">
+<div class="flex items-center gap-3 mb-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">OTP_VERIFICATION</span>
+</div>
+<p class="text-sm text-on-surface-variant line-clamp-2 italic font-serif pl-5">"Your security code for AK Sports is {{code}}. Valid for 5 mins."</p>
+</div>
+<div class="group cursor-pointer">
+<div class="flex items-center gap-3 mb-2">
+<span class="w-2 h-2 rounded-full bg-primary/20"></span>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">BOOKING_CONFIRM</span>
+</div>
+<p class="text-sm text-on-surface-variant line-clamp-2 italic font-serif pl-5">"Hey {{name}}! Your slot for {{session}} is confirmed. See you soon!"</p>
+</div>
+<div class="group cursor-pointer">
+<div class="flex items-center gap-3 mb-2">
+<span class="w-2 h-2 rounded-full bg-primary/20"></span>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">REMINDER_SESSION</span>
+</div>
+<p class="text-sm text-on-surface-variant line-clamp-2 italic font-serif pl-5">"Reminder: You have a scheduled session in 1 hour. Get ready!"</p>
+</div>
+</div>
+</div>
+<!-- Bottom Detailed Log / Asymmetric Data Table -->
+<div class="col-span-12 bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-lg font-bold text-primary">Transaction Registry</h3>
+<div class="flex gap-4">
+<button class="text-xs font-bold uppercase tracking-widest text-primary/60 hover:text-primary">Download CSV</button>
+<button class="text-xs font-bold uppercase tracking-widest text-primary/60 hover:text-primary">Filter</button>
+</div>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant/40 border-b border-surface-container">
+<th class="pb-4 font-bold">Timestamp</th>
+<th class="pb-4 font-bold">Recipient</th>
+<th class="pb-4 font-bold">Provider</th>
+<th class="pb-4 font-bold">Status</th>
+<th class="pb-4 font-bold">Latency</th>
+<th class="pb-4 text-right font-bold">Fee</th>
+</tr>
+</thead>
+<tbody class="text-sm text-primary divide-y divide-surface-container/50">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 mono text-[12px]">2023-11-24 14:02:11</td>
+<td class="py-4 font-semibold">+1 415 555 2671</td>
+<td class="py-4">Twilio</td>
+<td class="py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold">
+<span class="w-1 h-1 rounded-full bg-green-700"></span> DELIVERED
+                                    </span>
+</td>
+<td class="py-4 mono text-[12px]">482ms</td>
+<td class="py-4 text-right mono font-bold">$0.0075</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 mono text-[12px]">2023-11-24 13:58:45</td>
+<td class="py-4 font-semibold">+44 7700 900077</td>
+<td class="py-4">MessageBird</td>
+<td class="py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold">
+<span class="w-1 h-1 rounded-full bg-green-700"></span> DELIVERED
+                                    </span>
+</td>
+<td class="py-4 mono text-[12px]">512ms</td>
+<td class="py-4 text-right mono font-bold">$0.0068</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 mono text-[12px]">2023-11-24 13:45:02</td>
+<td class="py-4 font-semibold">+61 491 570 156</td>
+<td class="py-4">Twilio</td>
+<td class="py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-error-container text-error text-[10px] font-bold">
+<span class="w-1 h-1 rounded-full bg-error"></span> FAILED
+                                    </span>
+</td>
+<td class="py-4 mono text-[12px]">--</td>
+<td class="py-4 text-right mono font-bold">$0.0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Footer Meta -->
+<div class="flex justify-between items-center pt-8 border-t border-surface-container-highest">
+<div class="flex items-center gap-8">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/40 mono tracking-widest">Active Nodes</span>
+<span class="text-sm font-bold text-primary">AWS US-EAST-1, US-WEST-2</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/40 mono tracking-widest">Protocol</span>
+<span class="text-sm font-bold text-primary">REST / SMPP v3.4</span>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+<span class="text-xs font-bold text-primary/60 mono">SYSTEMS NOMINAL : 100.0% UPTIME</span>
+</div>
+</div>
+</div>
+</main>
+</body></html>

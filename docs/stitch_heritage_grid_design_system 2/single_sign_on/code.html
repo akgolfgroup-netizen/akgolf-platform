@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "surface-container-high": "#ece8df",
+                        "primary-fixed": "#bcf0ae",
+                        "on-secondary-container": "#5b6900",
+                        "tertiary": "#154212",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#9dd090",
+                        "secondary-fixed": "#d2f000",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-background": "#1c1c16",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#a1d494",
+                        "background": "#fdf9f0",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface": "#fdf9f0",
+                        "surface-container": "#f1eee5",
+                        "on-surface": "#1c1c16",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#9dd090",
+                        "surface-tint": "#3b6934",
+                        "surface-container-low": "#f7f3ea",
+                        "inverse-surface": "#31302b",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#191e00",
+                        "primary-container": "#2d5a27",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-bright": "#fdf9f0",
+                        "secondary-container": "#d0ed00",
+                        "outline-variant": "#c2c9bb",
+                        "on-primary-fixed": "#002201",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "secondary": "#576500",
+                        "tertiary-fixed": "#bcf0ae",
+                        "primary-fixed-dim": "#a1d494",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#2d5a27",
+                        "surface-dim": "#dddad1",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#002201",
+                        "outline": "#72796e",
+                        "on-surface-variant": "#42493e",
+                        "surface-variant": "#e6e2d9",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-container-highest": "#e6e2d9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { backdrop-filter: blur(12px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background min-h-screen">
+<!-- SideNavBar -->
+<aside class="bg-[#154212] h-screen w-64 fixed left-0 top-0 flex flex-col py-8 z-50">
+<div class="px-6 mb-12">
+<h1 class="text-xl font-bold text-[#d2f000] tracking-tighter">AK Sports OS</h1>
+<p class="font-['DM_Sans'] uppercase tracking-wider text-[0.7rem] font-medium text-white/50">Developer Suite</p>
+</div>
+<nav class="flex-1 overflow-y-auto no-scrollbar space-y-1">
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span> Directory
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="extension">extension</span> Connectors
+            </a>
+<a class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 flex items-center gap-3 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="vpn_key">vpn_key</span> SSO Config
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="settings_ethernet">settings_ethernet</span> Webhooks
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span> API Docs
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span> Console
+            </a>
+<a class="text-white/70 hover:text-white px-6 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors duration-200 font-['DM_Sans'] uppercase tracking-wider text-[0.75rem] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="biotech">biotech</span> Sandbox
+            </a>
+</nav>
+<div class="mt-auto px-6 space-y-4">
+<button class="w-full bg-[#d2f000] text-[#154212] py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:scale-[0.98] transition-transform">
+                Deploy Integration
+            </button>
+<div class="pt-6 border-t border-white/10 space-y-2">
+<a class="text-white/50 hover:text-white flex items-center gap-3 text-xs uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help_outline">help_outline</span> Support
+                </a>
+<a class="text-white/50 hover:text-white flex items-center gap-3 text-xs uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="dns">dns</span> System Status
+                </a>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 z-40 bg-[#fdf9f0]/80 backdrop-blur-md flex justify-between items-center px-8 border-b border-surface-container-high">
+<div class="flex items-center gap-4">
+<span class="font-headline font-bold text-primary text-lg">SSO Configuration</span>
+<span class="text-xs font-mono bg-secondary-container px-2 py-0.5 rounded text-on-secondary-fixed">v2.4.0-stable</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined text-primary/60 cursor-pointer hover:text-primary transition-colors" data-icon="search">search</span>
+</div>
+<span class="material-symbols-outlined text-primary/60 cursor-pointer hover:text-primary transition-colors" data-icon="notifications">notifications</span>
+<div class="flex items-center gap-3 pl-4 border-l border-surface-container-high">
+<div class="text-right">
+<p class="text-[0.7rem] font-bold text-primary uppercase leading-none">Super Admin</p>
+<p class="text-[0.6rem] text-primary/60 font-mono">ID: 882-X90</p>
+</div>
+<span class="material-symbols-outlined text-3xl text-primary" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 pt-16 p-8 min-h-screen">
+<div class="max-w-6xl mx-auto space-y-8">
+<!-- Hero Header Section -->
+<section class="grid grid-cols-12 gap-6 items-end mb-12">
+<div class="col-span-8">
+<p class="font-mono text-xs uppercase tracking-[0.2em] text-primary/40 mb-2">Security Framework</p>
+<h2 class="text-5xl font-semibold text-primary tracking-tight leading-tight">Identity &amp; Access <br/>Management (IAM)</h2>
+</div>
+<div class="col-span-4 text-right">
+<div class="inline-flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/10">
+<span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Active Gateway: SAML 2.0</span>
+</div>
+</div>
+</section>
+<!-- Configuration Bento Grid -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Primary Form Area (OAuth/SAML) -->
+<div class="col-span-8 space-y-6">
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/5 shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="text-xl font-bold text-primary">Protocol Configuration</h3>
+<p class="text-sm text-primary/60 mt-1">Configure your primary identity provider credentials.</p>
+</div>
+<div class="flex gap-2 p-1 bg-surface-container-low rounded-xl">
+<button class="px-4 py-2 bg-primary text-white text-xs font-bold rounded-lg uppercase tracking-wider">SAML</button>
+<button class="px-4 py-2 text-primary/40 text-xs font-bold rounded-lg uppercase tracking-wider hover:bg-surface-container-high transition-colors">OAuth 2.0</button>
+<button class="px-4 py-2 text-primary/40 text-xs font-bold rounded-lg uppercase tracking-wider hover:bg-surface-container-high transition-colors">OIDC</button>
+</div>
+</div>
+<form class="space-y-6">
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-mono text-[10px] uppercase font-bold text-primary/60 ml-1">ACS URL (Assertion Consumer Service)</label>
+<div class="flex items-center bg-surface-container-low rounded-xl px-4 py-3 border border-transparent focus-within:border-primary/20 transition-all">
+<input class="bg-transparent border-none focus:ring-0 w-full text-sm font-mono text-primary" readonly="" type="text" value="https://api.aksports.io/sso/saml/acs"/>
+<span class="material-symbols-outlined text-primary/40 cursor-pointer hover:text-primary transition-colors text-lg" data-icon="content_copy">content_copy</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-mono text-[10px] uppercase font-bold text-primary/60 ml-1">Entity ID / Audience URI</label>
+<div class="flex items-center bg-surface-container-low rounded-xl px-4 py-3 border border-transparent focus-within:border-primary/20 transition-all">
+<input class="bg-transparent border-none focus:ring-0 w-full text-sm font-mono text-primary" readonly="" type="text" value="urn:aksports:production:sso"/>
+<span class="material-symbols-outlined text-primary/40 cursor-pointer hover:text-primary transition-colors text-lg" data-icon="content_copy">content_copy</span>
+</div>
+</div>
+</div>
+<div class="space-y-2 pt-4 border-t border-outline-variant/10">
+<label class="font-mono text-[10px] uppercase font-bold text-primary/60 ml-1">IDP Metadata XML Upload</label>
+<div class="border-2 border-dashed border-outline-variant/30 rounded-2xl p-10 flex flex-col items-center justify-center bg-surface-container-low/30 hover:bg-surface-container-low transition-colors group cursor-pointer">
+<span class="material-symbols-outlined text-4xl text-primary/20 group-hover:text-primary/40 mb-4 transition-colors" data-icon="upload_file">upload_file</span>
+<p class="text-sm font-bold text-primary">Drop XML file here or <span class="text-secondary-fixed-dim underline underline-offset-4">browse local files</span></p>
+<p class="text-xs text-primary/40 mt-2">Maximum file size: 2MB (.xml, .metadata)</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-6">
+<div class="flex items-center gap-2">
+<input checked="" class="rounded border-outline-variant/40 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<label class="text-xs font-medium text-primary/70">Enable Just-in-Time (JIT) Provisioning</label>
+</div>
+<button class="bg-secondary-fixed text-on-secondary-fixed px-8 py-3 rounded-xl font-bold uppercase text-xs tracking-widest hover:brightness-105 transition-all shadow-lg shadow-secondary-fixed/20" type="submit">Save Configuration</button>
+</div>
+</form>
+</div>
+<!-- Trusted Providers List -->
+<div class="grid grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-3xl border border-outline-variant/5 text-center group cursor-pointer hover:border-secondary transition-all">
+<div class="w-12 h-12 mx-auto mb-4 bg-surface-container-low rounded-xl flex items-center justify-center overflow-hidden">
+<img alt="Google Logo" class="w-6 h-6" data-alt="Official Google G color logo icon on clean white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZjarJ_MIE3gc3NzO-VR1lCN28VX2BAov6I0fDs91kCCR-JEJQtFfmwVzk7S1TVIcQ5gZaHzUNm5PdfokGMnjcji2NnK2mYE0lKUbhr0QKz93V3rk2bdTSUzs335aF-0S2hIZ7Rfj_7MxRcSdhx2kKirMAwCZtKPSCmncyTHQUUUfE67AiMEDC6aChHaqMybzPj3P17OAVVRMcOrWJTrbs3tMQotEgZVdUZZ3ayK0jJfZNYPUsUvj6qdprQ9Q1wRvp0TRzWy7p8uYo"/>
+</div>
+<p class="font-bold text-xs uppercase tracking-wider text-primary">Google Workspace</p>
+<p class="text-[10px] font-mono text-primary/40 mt-1">CONNECTED</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-3xl border border-outline-variant/5 text-center group cursor-pointer hover:border-secondary transition-all">
+<div class="w-12 h-12 mx-auto mb-4 bg-surface-container-low rounded-xl flex items-center justify-center overflow-hidden">
+<img alt="Azure Logo" class="w-6 h-6" data-alt="Microsoft Azure official blue cloud logo icon minimalist style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBREI2rpkUZEYztR5Yhm2rIn8cNHSda6QSiZBcbBvX9P5s3-nBFuItIVFygq7vYfmVCCMqkHvZ7e4oZ69U0BNv3ZjQFepyOuiX7otT5OpPGiwFYb4N_oHutsuyBpHjbP18RFlbWC3tLzJa8W3RY3BhblprTmt2WRMgcdJTfCYdOY29VRumC5hl-snzrokrB8jNcB2-vmkyzCyaAhNsabd7mX0DD_nQhvDP2u17eqlM6ZHNW8g8WAfxWXpkZMjwrwRulL_BKzq7uEvi5"/>
+</div>
+<p class="font-bold text-xs uppercase tracking-wider text-primary">Azure AD</p>
+<p class="text-[10px] font-mono text-primary/40 mt-1">NOT CONFIGURED</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-3xl border border-outline-variant/5 text-center group cursor-pointer hover:border-secondary transition-all">
+<div class="w-12 h-12 mx-auto mb-4 bg-surface-container-low rounded-xl flex items-center justify-center overflow-hidden">
+<img alt="Okta Logo" class="w-6 h-6" data-alt="Okta minimalist blue circle logo icon professional identity provider branding" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0_Wzqc-40CkMV3NKKV2hUxsu8NCR85anwzdXKO-SUyunSiwHLBwGE-hXgu0f0pqsrmzJL6PHRX4-Uk6oIzVnS9rKHGw46s1xfjwciL6n57SaTKbkp8YakTBjdUtoknsOfWQ2TfJpv__8WLJKXXP5iFlHnh6e6h2Uy76z1Is3BpaoUocMjMC4ej8ASwN5y0vEPbgPcuDH8AeIhkFaCQZNJOIO8meKNVTHqDueNdsYcEuB3LZZSvoY9XYdAxSNAk122LCFw0Ef4R7N-"/>
+</div>
+<p class="font-bold text-xs uppercase tracking-wider text-primary">Okta Enterprise</p>
+<p class="text-[10px] font-mono text-primary/40 mt-1">PAUSED</p>
+</div>
+</div>
+</div>
+<!-- Secondary Info Column -->
+<div class="col-span-4 space-y-6">
+<!-- Status Card -->
+<div class="bg-primary text-white p-8 rounded-3xl shadow-xl shadow-primary/20 relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-[#d2f000]" data-icon="security">security</span>
+<span class="font-mono text-[10px] uppercase tracking-widest">Live Security Audit</span>
+</div>
+<h4 class="text-2xl font-semibold mb-4">SSO Health Score: 98%</h4>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-[10px] uppercase font-bold text-white/60">Certificate Validity</span>
+<span class="text-[10px] font-mono">Expires in 112 days</span>
+</div>
+<div class="h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed w-[70%]"></div>
+</div>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]" data-icon="shield">shield</span>
+</div>
+</div>
+<!-- Quick Links/Docs -->
+<div class="bg-surface-container-high/50 p-8 rounded-3xl border border-outline-variant/10">
+<h4 class="font-bold text-xs uppercase tracking-[0.2em] text-primary mb-6">Integration Guides</h4>
+<ul class="space-y-4">
+<li>
+<a class="flex items-center justify-between group" href="#">
+<span class="text-sm text-primary/80 group-hover:text-primary transition-colors">Setting up SAML for G-Suite</span>
+<span class="material-symbols-outlined text-sm text-primary/40 group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</li>
+<li>
+<a class="flex items-center justify-between group" href="#">
+<span class="text-sm text-primary/80 group-hover:text-primary transition-colors">Configuring Okta SCIM 2.0</span>
+<span class="material-symbols-outlined text-sm text-primary/40 group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</li>
+<li>
+<a class="flex items-center justify-between group" href="#">
+<span class="text-sm text-primary/80 group-hover:text-primary transition-colors">OAuth Client Secret Rotation</span>
+<span class="material-symbols-outlined text-sm text-primary/40 group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</li>
+</ul>
+<div class="mt-8 pt-8 border-t border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center border border-outline-variant/10 shadow-sm">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="history">history</span>
+</div>
+<div>
+<p class="text-[10px] font-bold uppercase text-primary/60 leading-none mb-1">Last Deployment</p>
+<p class="text-[11px] font-mono text-primary">2023.10.24 — 14:32 UTC</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Visual Accent Card -->
+<div class="rounded-3xl h-48 relative overflow-hidden group">
+<img alt="Security Visualization" class="w-full h-full object-cover grayscale brightness-50 group-hover:scale-105 transition-transform duration-700" data-alt="Cinematic macro shot of intricate glass fiber optics with green and lime light glowing through, modern tech aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx1_JYT0obQqrD9ere4lVa7faf-HWLdx7ND9PskklJX3Kge6LGmkaeUKgqOjCFfxbd57F-JetdKCggurKTKlHUWWTSkTkvNrllHbKZ4d1iypLh9mnCcPXCJgK-0OrRvEk11bIzOEl5M3Z74LJyIwWiI3mCjj1i_356sSEgl9zLF9E1MsOlTfGMN6hx7SyVNkCaQ31OxJf3QUya_HtKEECoINc_g9ykH3uM2oUyut5SG4EOvVo2EL_PA1UvXp_HbbgcPzVIXwdJBoYX"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-6">
+<p class="text-white font-bold text-sm tracking-tight">Zero-Trust Network Access Enabled</p>
+<p class="text-white/60 text-[10px] uppercase font-mono mt-1">Infrastructure Tier 04</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Meta -->
+<footer class="pt-12 border-t border-surface-container-high flex justify-between items-center text-primary/40">
+<div class="flex items-center gap-8">
+<p class="font-mono text-[10px] uppercase tracking-widest">© 2024 AK Sports Intelligence Systems</p>
+<p class="font-mono text-[10px] uppercase tracking-widest">Privacy Policy</p>
+<p class="font-mono text-[10px] uppercase tracking-widest">Terms of Service</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-secondary-fixed rounded-full"></span>
+<p class="font-mono text-[10px] uppercase tracking-widest">Nodes Optimized</p>
+</div>
+</footer>
+</div>
+</main>
+</body></html>

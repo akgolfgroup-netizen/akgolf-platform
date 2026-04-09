@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#002201",
+                    "background": "#fdf9f0",
+                    "on-tertiary-container": "#9dd090",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#002201",
+                    "primary-fixed-dim": "#a1d494",
+                    "on-primary": "#ffffff",
+                    "tertiary": "#154212",
+                    "inverse-on-surface": "#f4f0e7",
+                    "surface-variant": "#e6e2d9",
+                    "on-secondary-container": "#5b6900",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#576500",
+                    "on-surface": "#1c1c16",
+                    "surface-container-highest": "#e6e2d9",
+                    "surface-dim": "#dddad1",
+                    "secondary-fixed-dim": "#b8d300",
+                    "surface-container-high": "#ece8df",
+                    "primary-container": "#2d5a27",
+                    "secondary-container": "#d0ed00",
+                    "on-error-container": "#93000a",
+                    "inverse-primary": "#a1d494",
+                    "on-primary-container": "#9dd090",
+                    "surface-container-low": "#f7f3ea",
+                    "secondary-fixed": "#d2f000",
+                    "outline-variant": "#c2c9bb",
+                    "surface-tint": "#3b6934",
+                    "on-background": "#1c1c16",
+                    "on-secondary-fixed": "#191e00",
+                    "primary-fixed": "#bcf0ae",
+                    "surface-bright": "#fdf9f0",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "on-surface-variant": "#42493e",
+                    "error-container": "#ffdad6",
+                    "surface": "#fdf9f0",
+                    "primary": "#154212",
+                    "tertiary-container": "#2d5a27",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "surface-container": "#f1eee5",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#23501e",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#bcf0ae",
+                    "outline": "#72796e",
+                    "inverse-surface": "#31302b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["DM Sans", "sans-serif"],
+                    "body": ["DM Sans", "sans-serif"],
+                    "label": ["DM Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .heritage-grid {
+            background-image: 
+                linear-gradient(to right, rgba(21, 66, 18, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(21, 66, 18, 0.05) 1px, transparent 1px);
+            background-size: 48px 48px;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(253, 249, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container">
+<!-- Top Navigation Shell (Suppressed for focused landing, but kept branding per system) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-8 py-4 w-full bg-[#f5f1e8] dark:bg-stone-900">
+<div class="text-xl font-bold tracking-tighter text-[#2d5a27] dark:text-[#f5f1e8]">AK Sports OS</div>
+<div class="flex items-center gap-6">
+<span class="font-mono text-[10px] uppercase tracking-widest text-primary/40">v.0.9 Beta</span>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-[#2d5a27]/60 cursor-pointer hover:bg-[#d2f000]/10 transition-colors p-2 rounded-full">notifications</span>
+<span class="material-symbols-outlined text-[#2d5a27]/60 cursor-pointer hover:bg-[#d2f000]/10 transition-colors p-2 rounded-full">account_circle</span>
+</div>
+</div>
+</header>
+<main class="min-h-screen pt-24 pb-12 heritage-grid relative overflow-hidden">
+<div class="max-w-[1440px] mx-auto px-8 lg:px-16 grid grid-cols-12 gap-6">
+<!-- Left Column: Hero Content -->
+<div class="col-span-12 lg:col-span-7 flex flex-col justify-center py-12">
+<div class="mb-6 flex items-center gap-3">
+<span class="bg-secondary-container text-on-secondary-fixed px-4 py-1 rounded-full text-[10px] font-mono font-bold tracking-[0.2em] uppercase">Launching Soon</span>
+<div class="h-[1px] w-24 bg-primary/20"></div>
+</div>
+<h1 class="text-6xl lg:text-8xl font-bold tracking-tighter text-primary leading-[0.9] mb-8">
+                    The Future of <br/>
+<span class="text-secondary italic">Performance</span> Engineering.
+                </h1>
+<p class="text-xl text-on-surface-variant max-w-xl mb-12 leading-relaxed">
+                    We're building the first truly integrated operating system for professional sports organizations. Precise data, heritage design, and scientific rigor—launching in 2024.
+                </p>
+<!-- Waitlist Module -->
+<div class="relative max-w-md group">
+<div class="flex flex-col sm:flex-row gap-2 bg-surface-container-lowest p-2 rounded-xl shadow-[0_4px_16px_rgba(45,90,39,0.06)] border border-outline-variant/10 focus-within:ring-2 ring-secondary-fixed/50 transition-all">
+<input class="flex-grow bg-transparent border-none focus:ring-0 font-mono text-sm px-4 py-3 placeholder:text-on-surface-variant/30 uppercase tracking-widest" placeholder="ENTER YOUR EMAIL" type="email"/>
+<button class="bg-secondary-fixed text-on-secondary-fixed font-bold uppercase text-xs tracking-widest px-8 py-4 rounded-lg hover:brightness-105 active:scale-95 transition-all shadow-sm">
+                            Notify Me
+                        </button>
+</div>
+<p class="mt-4 font-mono text-[10px] text-on-surface-variant/60 flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                        YOUR DATA IS ENCRYPTED. NO SPAM, JUST PRECISION UPDATES.
+                    </p>
+</div>
+<!-- Social Proof/Share -->
+<div class="mt-16 flex items-center gap-8">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-background overflow-hidden bg-surface-container-high">
+<img alt="Avatar" data-alt="close-up portrait of professional athlete with focus on determined expression and clean studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANh7zQzeuPADeueC63TkYC_Q98-6O5QUdr6kvNmsZEv_xSkFyAtz5xkiNtyMfNvjDCmaaKgCXjWCeh1xvlIaAOty2oY2fx5fWI3YIH-Hdg-Lj1IysWz1tvlJLitWWETE4BHdumglWO9Jyr65oKQ5MUteZF4V3IhngaDf_I3UUJKr_m3Nb3Bp2MFYYalMAZhORcQCqG3hlHXMwtlVrDKEH0JJFBog9Dk4kR_fG9rwLTQdputZYAnoqnoBKVh9Si4BrYIsCLWHnyzaMn"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-background overflow-hidden bg-surface-container-high">
+<img alt="Avatar" data-alt="portrait of female performance coach in modern gym environment with soft ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeBHJmbCYvA3CuGHecdGJNMVxpYmbjKg3yyyhxf3dqnXxQUZjXELkl7uX1hwJ3AQxO1F2p78oN7BIFJKEloJ767vATFn9OLT_kkFfp7Gwdu_lUdze4NhEPWWvF1dmy3vTutvpGtc6qQ-PEaju89ERx4HhQtcxabH2iszyMTLCOfXhyyT6ozF0i_SpV5U5Pqziy7wWx15JQfW1AnwqpTN3WmRyRBv1XrA4A5CT_Yx1FoAMlfaPsZfYqr7lEbdP-rpadpdcHVXqPZrF-"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-background overflow-hidden bg-surface-container-high">
+<img alt="Avatar" data-alt="professional sports scientist in a high-tech lab setting with technical equipment in soft focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-_5XpDSXiMS7h_Gt5z4XK4ZTyfMNs9btIhgw3sbx73icAECUay1Y6ZT2UfkhlH2seGepPkVPwBLpuj_76C6SknlV5gwxEsja_FTeR9jpUuiwIu8JSBAr7JtjyNAcoEhliz5qHmmOCa9zCDCLu6NMGhbW1aV0b5ihmMypGBGW0GUiGddSf-CGexPTz36SPME5ywZPBjzSwlyFqux-3jpiuYW9mDhcIM--VGcC_u6xTGKWGLosmfIbYDiY9E_-fcSLq5gqNDD5wDV_d"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-background overflow-hidden bg-primary-container flex items-center justify-center">
+<span class="text-[10px] text-on-primary-container font-mono">+1.2k</span>
+</div>
+</div>
+<span class="text-xs font-mono text-on-surface-variant/80 uppercase tracking-widest">Early access queue active</span>
+</div>
+</div>
+<!-- Right Column: Bento Feature Grid -->
+<div class="col-span-12 lg:col-span-5 flex items-center">
+<div class="grid grid-cols-2 grid-rows-4 gap-4 w-full h-[600px]">
+<!-- Large Feature Card -->
+<div class="col-span-2 row-span-2 bg-surface-container-lowest rounded-2xl p-8 relative overflow-hidden group shadow-[0_4px_16px_rgba(45,90,39,0.04)] border border-outline-variant/10">
+<div class="relative z-10 h-full flex flex-col justify-between">
+<span class="material-symbols-outlined text-4xl text-secondary-fixed fill" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<div>
+<h3 class="font-bold text-2xl text-primary tracking-tight mb-2">Scientific Performance</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Advanced biometric tracking integrated with legacy scouting records for unprecedented clarity.</p>
+</div>
+</div>
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-secondary-fixed/10 rounded-full blur-3xl"></div>
+</div>
+<!-- Tech Detail Card -->
+<div class="col-span-1 row-span-2 bg-primary text-white rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+<span class="material-symbols-outlined text-3xl text-secondary-fixed">calendar_today</span>
+<div>
+<span class="font-mono text-[10px] opacity-60 uppercase block mb-1">Target Launch</span>
+<div class="text-3xl font-bold font-mono">Q4 2024</div>
+</div>
+</div>
+<!-- Decorative/Image Card -->
+<div class="col-span-1 row-span-2 rounded-2xl overflow-hidden relative group">
+<img alt="Sports Tech" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" data-alt="cinematic close-up of high-tech sports watch and training equipment on a textured surface with deep shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmBXv3ITq8leCaU5GQ9OdRjLNhQQMV8ciVdFlAfpjBeKGi7A3_9y4uYGlULj_7zFpsbX8Y_EVHxqhhLPmT5hIHNcgbrQJafgFE-icdwUTlRg-zlv6jmRqfQqyXeQVxCSH1DOZhdMxeVAr2yc46IkinIBwvPPBX3NkmSgYWm_E-_QbUqgYCICbeevKwq9297z59vP5lDh4SPlHWvpbdKjICglnjGTCf2JMUPW1S3MLOj-sAUmynLB7d-7B5oFrORl8eKDxYsOtIfPj9"/>
+<div class="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+<div class="absolute bottom-4 left-4">
+<div class="w-8 h-8 rounded-full glass-panel flex items-center justify-center">
+<span class="material-symbols-outlined text-xs text-primary">sensors</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer / Share Bar -->
+<footer class="fixed bottom-0 left-0 w-full p-6 z-40">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-12 glass-panel px-8 py-3 rounded-full shadow-sm border border-outline-variant/5">
+<div class="flex items-center gap-2 group cursor-pointer">
+<span class="material-symbols-outlined text-sm text-on-surface-variant group-hover:text-primary transition-colors">share</span>
+<span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">Share Project</span>
+</div>
+<div class="w-[1px] h-4 bg-primary/10"></div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-lg text-on-surface-variant hover:text-primary transition-colors cursor-pointer">social_leaderboard</span>
+<span class="material-symbols-outlined text-lg text-on-surface-variant hover:text-primary transition-colors cursor-pointer">public</span>
+<span class="material-symbols-outlined text-lg text-on-surface-variant hover:text-primary transition-colors cursor-pointer">alternate_email</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-4 font-mono text-[10px] text-on-surface-variant/40 uppercase tracking-[0.3em]">
+<span>Precision</span>
+<span class="w-1 h-1 rounded-full bg-secondary-fixed"></span>
+<span>Performance</span>
+<span class="w-1 h-1 rounded-full bg-secondary-fixed"></span>
+<span>Heritage</span>
+</div>
+</div>
+</footer>
+<!-- Background Elements -->
+<div class="fixed top-0 right-0 -z-10 w-[600px] h-[600px] bg-secondary-fixed/5 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
+<div class="fixed bottom-0 left-0 -z-10 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] -translate-x-1/2 translate-y-1/2"></div>
+</body></html>

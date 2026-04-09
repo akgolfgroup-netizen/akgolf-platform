@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Sports OS - Tenant Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#002201",
+                        "on-primary-container": "#9dd090",
+                        "inverse-primary": "#a1d494",
+                        "on-secondary-fixed": "#191e00",
+                        "secondary-container": "#d0ed00",
+                        "primary": "#154212",
+                        "secondary-fixed-dim": "#b8d300",
+                        "background": "#fdf9f0",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#23501e",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#fdf9f0",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-container": "#f1eee5",
+                        "tertiary-container": "#2d5a27",
+                        "outline": "#72796e",
+                        "on-surface": "#1c1c16",
+                        "surface-container-high": "#ece8df",
+                        "primary-fixed": "#bcf0ae",
+                        "on-tertiary-container": "#9dd090",
+                        "surface": "#fdf9f0",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#a1d494",
+                        "inverse-surface": "#31302b",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-low": "#f7f3ea",
+                        "surface-tint": "#3b6934",
+                        "on-primary-fixed": "#002201",
+                        "on-background": "#1c1c16",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "on-surface-variant": "#42493e",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#154212",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "tertiary-fixed": "#bcf0ae",
+                        "secondary": "#576500",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dddad1",
+                        "secondary-fixed": "#d2f000",
+                        "outline-variant": "#c2c9bb",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-secondary-container": "#5b6900"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .technical-font { font-family: 'JetBrains Mono', monospace; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- SIDE NAVIGATION SHELL -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-emerald-950 dark:bg-emerald-950 flex flex-col h-full py-8 px-4 z-50 overflow-y-auto">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold tracking-tight text-white">AK Sports OS</h1>
+<p class="text-[10px] technical-font uppercase tracking-widest text-lime-400/60 mt-1">Super Admin</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined">domain</span>
+<span class="text-sm font-medium">Tenants</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined">toggle_on</span>
+<span class="text-sm font-medium">Features</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-3 transition-colors hover:bg-white/10 rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Billing</span>
+</a>
+<a class="flex items-center space-x-3 bg-lime-400/20 text-lime-400 rounded-lg px-4 py-3 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1 pt-6 border-t border-white/5">
+<button class="w-full flex items-center justify-between bg-lime-400 text-emerald-950 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-tight mb-6 hover:brightness-110 transition-all">
+                System Health
+                <span class="material-symbols-outlined text-sm">bolt</span>
+</button>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-2 transition-colors text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-lg">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center space-x-3 text-emerald-100/70 hover:text-white px-4 py-2 transition-colors text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-lg">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- TOP NAVIGATION SHELL -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-md flex justify-between items-center px-8 w-full z-40 border-b border-stone-200/20">
+<div class="flex items-center space-x-8">
+<span class="text-lg font-semibold text-emerald-900 dark:text-emerald-50">Admin Portal</span>
+<div class="h-4 w-px bg-stone-300"></div>
+<nav class="flex space-x-6">
+<a class="text-stone-500 hover:text-emerald-800 text-xs font-medium uppercase tracking-widest" href="#">Global Metrics</a>
+<a class="text-stone-500 hover:text-emerald-800 text-xs font-medium uppercase tracking-widest" href="#">System Logs</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<button class="material-symbols-outlined text-stone-500 hover:bg-stone-200/50 p-2 rounded-md transition-all">notifications</button>
+<button class="material-symbols-outlined text-stone-500 hover:bg-stone-200/50 p-2 rounded-md transition-all">apps</button>
+<div class="h-8 w-8 rounded-full bg-emerald-900 overflow-hidden ring-2 ring-emerald-50">
+<img alt="Super Admin Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a professional male administrator with a confident expression in a bright modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkURnTe4Cr1IDxapflicxzayhoydUsqpqKqMKBG3BvbINEQ4IEfSh3MweVE8opBZkeO_Yv-LMc-lfRb8qfh9E8enrWrwMOkCc7BnwqhIp3b_ATFV3iHbQ8LaFuIh-gSXNglHwb2nfqXcrLnDzCf6lycDjicBEUd1pBndEyjcXGdGVC_YW8XKBZ-fsaLOIT4KfBEWBNl6QsLxasciJWl0I7WQl45qhyKY0yszUZfuRtAsH6V3aoJGrQU3NUzK7XcX6HYbCUvKOU6e26"/>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-tight hover:opacity-90 transition-all">
+                Create Tenant
+            </button>
+</div>
+</header>
+<!-- MAIN CONTENT CANVAS -->
+<main class="ml-64 pt-24 pb-16 px-12 min-h-screen">
+<!-- BENTO HEADER SECTION -->
+<div class="mb-12">
+<div class="flex items-baseline justify-between mb-2">
+<h2 class="text-4xl font-semibold tracking-tight text-on-surface">Tenant Settings</h2>
+<span class="technical-font text-xs text-stone-400">UUID: 8823-XJ-9921</span>
+</div>
+<p class="text-stone-500 max-w-2xl">Refine the architectural configuration for <span class="font-bold text-emerald-900">Meridian Athletic Club</span>. These settings govern global behavior and brand identity for this specific tenant instance.</p>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- LEFT COLUMN: CORE CONFIGURATION -->
+<div class="col-span-8 space-y-8">
+<!-- BENTO SECTION: BRANDING & DOMAIN -->
+<section class="bg-surface-container-lowest rounded-3xl p-8 border border-transparent">
+<h3 class="text-xs font-bold uppercase tracking-widest text-stone-400 mb-8 flex items-center">
+<span class="material-symbols-outlined mr-2 text-lg">palette</span>
+                        Identity &amp; Access
+                    </h3>
+<div class="grid grid-cols-2 gap-10">
+<!-- Custom Domain -->
+<div class="space-y-2">
+<label class="technical-font text-[10px] uppercase text-stone-500 tracking-tighter">Custom Domain Endpoint</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary/20 transition-all technical-font text-emerald-900" type="text" value="meridian.aksports.io"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-emerald-600">
+<span class="material-symbols-outlined text-lg">verified</span>
+</div>
+</div>
+<p class="text-[11px] text-stone-400">SSL Certificate active until 2025-10-12</p>
+</div>
+<!-- Branding Color -->
+<div class="space-y-2">
+<label class="technical-font text-[10px] uppercase text-stone-500 tracking-tighter">Primary Brand Accent</label>
+<div class="flex items-center space-x-3 bg-surface-container-highest p-2 rounded-xl border-none">
+<div class="h-9 w-16 rounded-lg bg-emerald-700 shadow-inner"></div>
+<input class="bg-transparent border-none focus:ring-0 technical-font text-sm text-stone-700 p-0" type="text" value="#065F46"/>
+<span class="material-symbols-outlined text-stone-400 cursor-pointer hover:text-stone-600">colorize</span>
+</div>
+</div>
+</div>
+<div class="mt-10 pt-10 border-t border-stone-100 grid grid-cols-2 gap-10">
+<div class="space-y-4">
+<h4 class="text-sm font-semibold text-stone-800">Interface Language</h4>
+<select class="w-full bg-surface-container-highest border-none rounded-xl px-4 py-3 text-sm appearance-none focus:ring-1 focus:ring-primary/20">
+<option>English (United Kingdom)</option>
+<option>English (United States)</option>
+<option>German (DE)</option>
+</select>
+</div>
+<div class="space-y-4">
+<h4 class="text-sm font-semibold text-stone-800">Timezone Preference</h4>
+<select class="w-full bg-surface-container-highest border-none rounded-xl px-4 py-3 text-sm appearance-none focus:ring-1 focus:ring-primary/20">
+<option>GMT+00:00 London</option>
+<option>GMT+01:00 Berlin</option>
+<option>GMT-05:00 New York</option>
+</select>
+</div>
+</div>
+</section>
+<!-- BENTO SECTION: FEATURES & ENTITLEMENTS -->
+<section class="bg-surface-container-lowest rounded-3xl p-8">
+<h3 class="text-xs font-bold uppercase tracking-widest text-stone-400 mb-8 flex items-center">
+<span class="material-symbols-outlined mr-2 text-lg">extension</span>
+                        Feature Entitlements
+                    </h3>
+<div class="space-y-4">
+<!-- Feature Row -->
+<div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-low/40 border border-stone-100 hover:border-lime-400/30 transition-all">
+<div class="flex items-center space-x-4">
+<div class="bg-primary-fixed/30 p-3 rounded-xl">
+<span class="material-symbols-outlined text-primary">groups</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-emerald-900">Advanced Member Analytics</h4>
+<p class="text-xs text-stone-500">Real-time engagement tracking and churn prediction.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-low/40 border border-stone-100">
+<div class="flex items-center space-x-4">
+<div class="bg-primary-fixed/30 p-3 rounded-xl">
+<span class="material-symbols-outlined text-primary">video_call</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-emerald-900">Virtual Training Suite</h4>
+<p class="text-xs text-stone-500">Live streaming capabilities for home workouts.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-low/40 border border-stone-100">
+<div class="flex items-center space-x-4">
+<div class="bg-stone-200 p-3 rounded-xl">
+<span class="material-symbols-outlined text-stone-500">storefront</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-stone-400">Enterprise POS Integration</h4>
+<p class="text-xs text-stone-500">Native connection to existing facility hardware.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN: STATUS & SUBSCRIPTION -->
+<div class="col-span-4 space-y-8">
+<!-- BENTO SECTION: PLAN & BILLING -->
+<section class="bg-emerald-900 rounded-3xl p-8 text-white relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-lime-400 opacity-10 rounded-full blur-3xl"></div>
+<h3 class="text-xs font-bold uppercase tracking-widest text-lime-400/80 mb-6 flex items-center">
+<span class="material-symbols-outlined mr-2 text-lg">workspace_premium</span>
+                        Subscription Plan
+                    </h3>
+<div class="mb-8">
+<div class="text-3xl font-bold mb-1 tracking-tight">Enterprise Pro</div>
+<p class="text-emerald-100/60 text-xs">Billed annually since June 2023</p>
+</div>
+<div class="space-y-4">
+<div class="space-y-1">
+<label class="technical-font text-[10px] uppercase text-emerald-200/50">Modify Tier</label>
+<select class="w-full bg-white/10 border-none rounded-xl px-4 py-3 text-sm text-white appearance-none focus:ring-1 focus:ring-lime-400 transition-all cursor-pointer">
+<option class="text-stone-900">Enterprise Pro ($2,400/yr)</option>
+<option class="text-stone-900">Advanced Tier ($1,200/yr)</option>
+<option class="text-stone-900">Custom Agreement</option>
+</select>
+</div>
+<button class="w-full bg-secondary-fixed text-on-secondary-fixed font-bold py-3 rounded-xl text-xs uppercase tracking-tighter hover:scale-[1.02] active:scale-[0.98] transition-all">
+                            Review Billing History
+                        </button>
+</div>
+</section>
+<!-- BENTO SECTION: SYSTEM ACTIONS -->
+<section class="bg-surface-container-low rounded-3xl p-8">
+<h3 class="text-xs font-bold uppercase tracking-widest text-stone-400 mb-8 flex items-center">
+<span class="material-symbols-outlined mr-2 text-lg">admin_panel_settings</span>
+                        System Controls
+                    </h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between group">
+<div>
+<h4 class="text-sm font-semibold text-on-surface">Instance Suspension</h4>
+<p class="text-[11px] text-stone-500">Revoke all user access immediately</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-emerald-700/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-error"></div>
+</label>
+</div>
+<div class="pt-6 border-t border-stone-200/50">
+<button class="w-full text-left flex items-center justify-between text-error hover:bg-error/5 p-3 rounded-xl transition-all">
+<div>
+<span class="text-xs font-bold uppercase tracking-tight">Purge Tenant Data</span>
+<p class="text-[10px] technical-font opacity-60">CRITICAL ACTION: NO RECOVERY</p>
+</div>
+<span class="material-symbols-outlined">delete_forever</span>
+</button>
+</div>
+</div>
+</section>
+<!-- BENTO SECTION: MINI STATUS -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-2xl border border-stone-100">
+<span class="technical-font text-[10px] text-stone-400 uppercase">Latency</span>
+<div class="text-lg font-bold text-primary mt-1">24ms</div>
+<div class="h-1 w-full bg-emerald-50 rounded-full mt-2 overflow-hidden">
+<div class="h-full bg-emerald-500 w-[92%]"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-2xl border border-stone-100">
+<span class="technical-font text-[10px] text-stone-400 uppercase">Uptime</span>
+<div class="text-lg font-bold text-primary mt-1">99.98%</div>
+<div class="h-1 w-full bg-emerald-50 rounded-full mt-2 overflow-hidden">
+<div class="h-full bg-emerald-500 w-[99%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- STICKY ACTION BAR -->
+<div class="fixed bottom-8 left-64 right-12 z-40 px-12 pointer-events-none">
+<div class="max-w-4xl mx-auto pointer-events-auto bg-primary text-white rounded-2xl p-4 flex items-center justify-between shadow-2xl shadow-emerald-900/20 border border-white/10 backdrop-blur-sm">
+<div class="flex items-center space-x-4 pl-4">
+<div class="h-2 w-2 rounded-full bg-lime-400 animate-pulse"></div>
+<span class="text-xs font-medium text-emerald-100">Unsaved configuration changes detected</span>
+</div>
+<div class="flex items-center space-x-3">
+<button class="px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest text-emerald-100 hover:text-white transition-colors">Discard</button>
+<button class="bg-secondary-fixed text-on-secondary-fixed px-8 py-2 rounded-xl text-xs font-extrabold uppercase tracking-widest hover:brightness-110 transition-all">Apply Configuration</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

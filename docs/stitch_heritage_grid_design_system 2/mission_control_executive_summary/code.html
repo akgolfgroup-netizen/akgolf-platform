@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fdf9f0",
+                        "tertiary-fixed": "#bcf0ae",
+                        "primary-fixed": "#bcf0ae",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#f1eee5",
+                        "tertiary": "#154212",
+                        "surface-container-highest": "#e6e2d9",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#002201",
+                        "tertiary-container": "#2d5a27",
+                        "surface": "#fdf9f0",
+                        "outline-variant": "#c2c9bb",
+                        "surface-tint": "#3b6934",
+                        "on-surface-variant": "#42493e",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-high": "#ece8df",
+                        "secondary-container": "#d0ed00",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "on-tertiary-container": "#9dd090",
+                        "on-surface": "#1c1c16",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#9dd090",
+                        "on-primary-fixed-variant": "#23501e",
+                        "secondary-fixed": "#d2f000",
+                        "on-secondary-fixed": "#191e00",
+                        "surface-bright": "#fdf9f0",
+                        "secondary": "#576500",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "inverse-surface": "#31302b",
+                        "primary": "#154212",
+                        "inverse-primary": "#a1d494",
+                        "surface-container-low": "#f7f3ea",
+                        "on-secondary-container": "#5b6900",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dddad1",
+                        "primary-container": "#2d5a27",
+                        "outline": "#72796e",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002201",
+                        "inverse-on-surface": "#f4f0e7",
+                        "secondary-fixed-dim": "#b8d300",
+                        "on-background": "#1c1c16"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-shadow-subtle {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .bento-card {
+            transition: transform 0.3s ease;
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- SideNavBar Integration -->
+<aside class="h-screen w-72 flex flex-col fixed left-0 top-0 bg-[#154212] z-50">
+<div class="flex flex-col h-full py-8">
+<div class="px-8 mb-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-secondary-fixed rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tighter text-[#fdf9f0] leading-none">AK Sports OS</h1>
+<p class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-[#fdf9f0]/60 mt-1">Mission Control</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto scrollbar-hide space-y-1">
+<div class="px-6 py-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] transition-colors duration-200 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 cursor-pointer scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Command Center</span>
+</div>
+<div class="px-6 py-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] transition-colors duration-200 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 cursor-pointer scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+<span>Live Ops</span>
+</div>
+<div class="px-6 py-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] transition-colors duration-200 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 cursor-pointer scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span>Pulse</span>
+</div>
+<!-- ... other items skipped for brevity in active state demonstration ... -->
+<div class="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] flex items-center gap-4 cursor-pointer scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="visibility" style="font-variation-settings: 'FILL' 1;">visibility</span>
+<span>CEO View</span>
+</div>
+</nav>
+<div class="mt-auto px-8 pt-6 border-t border-white/10">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="CEO Avatar" class="w-full h-full object-cover" data-alt="professional corporate headshot of a refined executive in a minimalist studio setting with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbZxZCeNVgxhLdGQQvuXPfAzsa8X3lNzfC_RFiI1ZgBBUaCF70o19hOrClJV3DuiKmqVlz6qyX1M15V2gnJE6HKTcoytmFBY0iQI-Pw12ptJMmJXj-iBu6LR5LIatUELa9i69PHPnoPxysDsUr6JMpO_XXtusPFIV5Os7m58fAvjodeMQ2QidDco7HrvE0xdFV6KLzRiVxnkACnsopf_-90CL54SasEsz52H9h9enaLDli5AnSS3DhnUZk0ZCUoPIHNNCeUzpHQI8k"/>
+</div>
+<div class="flex flex-col">
+<span class="text-[12px] font-bold text-[#fdf9f0]">Alex Sterling</span>
+<span class="text-[10px] text-[#fdf9f0]/50 uppercase tracking-widest">Executive Principal</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Integration -->
+<header class="fixed top-0 right-0 left-0 h-16 bg-[#fdf9f0]/80 backdrop-blur-md border-b border-[#154212]/10 shadow-sm shadow-[#2d5a27]/05 z-40 flex justify-between items-center w-full pl-80 pr-8">
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#154212]/40 text-lg" data-icon="search">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-1.5 text-sm font-['JetBrains_Mono'] focus:ring-1 focus:ring-primary/20 w-64 placeholder:text-primary/30" placeholder="Explore metrics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-8 font-['JetBrains_Mono'] text-sm">
+<span class="text-[#154212] font-bold border-b-2 border-[#154212] py-5 cursor-pointer">EXECUTIVE SUMMARY</span>
+<span class="text-[#154212]/60 hover:text-[#154212] transition-opacity cursor-pointer py-5">STRATEGIC GOALS</span>
+<span class="text-[#154212]/60 hover:text-[#154212] transition-opacity cursor-pointer py-5">QUARTERLY DECK</span>
+</div>
+<div class="flex items-center gap-3 ml-4">
+<button class="p-2 text-[#154212]/60 hover:text-[#154212] transition-all">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+<button class="p-2 text-[#154212]/60 hover:text-[#154212] transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-72 pt-16 min-h-screen">
+<div class="max-w-[1200px] mx-auto px-10 py-12">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="font-['JetBrains_Mono'] text-[12px] text-primary/50 uppercase tracking-[0.2em]">System Status: Optimal</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed animate-pulse"></span>
+</div>
+<h2 class="text-5xl font-['DM_Sans'] font-semibold text-primary tracking-tight">CEO View</h2>
+<p class="text-primary/60 mt-2 font-['DM_Sans'] max-w-md">Weekly performance trajectory and critical operational health signals across the enterprise.</p>
+</div>
+<button class="bg-secondary-fixed text-on-secondary-fixed px-8 py-4 rounded-xl font-['DM_Sans'] font-bold uppercase tracking-wider text-xs flex items-center gap-3 hover:shadow-lg transition-all active:scale-95 group">
+<span>Download Report</span>
+<span class="material-symbols-outlined text-lg group-hover:translate-y-0.5 transition-transform" data-icon="download">download</span>
+</button>
+</div>
+<!-- Primary Bento Grid -->
+<div class="grid grid-cols-12 gap-6">
+<!-- MRR Card - Hero Scale -->
+<div class="col-span-8 bg-surface-container-lowest rounded-3xl p-8 bento-card flex flex-col justify-between min-h-[400px]">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-['JetBrains_Mono'] text-[10px] text-primary/40 uppercase tracking-[0.3em]">Financial Authority</span>
+<h3 class="text-2xl font-bold text-primary mt-1">Monthly Recurring Revenue</h3>
+</div>
+<div class="bg-surface-container-low px-4 py-2 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="trending_up">trending_up</span>
+<span class="font-['JetBrains_Mono'] text-xs font-bold text-primary">+12.4% vs PW</span>
+</div>
+</div>
+<div class="my-8">
+<div class="flex items-baseline gap-4">
+<span class="text-7xl font-bold tracking-tighter text-primary">$4,892,110</span>
+<span class="font-['JetBrains_Mono'] text-primary/30 text-xl">USD</span>
+</div>
+<div class="mt-8 h-32 w-full relative">
+<!-- Visual placeholder for sparkline/chart -->
+<svg class="w-full h-full stroke-secondary-fixed fill-none stroke-[3] overflow-visible" viewbox="0 0 400 100">
+<path d="M0,80 Q20,85 40,70 T80,40 T120,60 T160,20 T200,50 T240,10 T280,45 T320,15 T360,30 T400,5" stroke-linecap="round"></path>
+<path d="M0,80 Q20,85 40,70 T80,40 T120,60 T160,20 T200,50 T240,10 T280,45 T320,15 T360,30 T400,5 V100 H0 Z" fill="url(#grad1)" opacity="0.1" stroke="none"></path>
+<defs>
+<lineargradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#d2f000;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#d2f000;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-8 pt-8 border-t border-outline-variant/10">
+<div>
+<p class="text-[10px] uppercase font-bold text-primary/30 tracking-widest">New Logos</p>
+<p class="text-xl font-bold text-primary mt-1">142</p>
+</div>
+<div>
+<p class="text-[10px] uppercase font-bold text-primary/30 tracking-widest">Expansion</p>
+<p class="text-xl font-bold text-primary mt-1">$284K</p>
+</div>
+<div>
+<p class="text-[10px] uppercase font-bold text-primary/30 tracking-widest">Avg Contract</p>
+<p class="text-xl font-bold text-primary mt-1">$34.5K</p>
+</div>
+</div>
+</div>
+<!-- Growth % Card -->
+<div class="col-span-4 bg-primary text-white rounded-3xl p-8 bento-card relative overflow-hidden">
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div>
+<span class="font-['JetBrains_Mono'] text-[10px] text-white/40 uppercase tracking-[0.3em]">Velocity Meter</span>
+<h3 class="text-2xl font-bold text-white mt-1">Growth Index</h3>
+</div>
+<div class="mb-4">
+<span class="text-8xl font-black text-secondary-fixed leading-none">24<span class="text-4xl ml-2">%</span></span>
+<p class="text-white/60 font-['DM_Sans'] mt-4">Accelerating at +4% above quarterly forecast. Projected EOY: 118%.</p>
+</div>
+<div class="h-1 bg-white/10 rounded-full w-full overflow-hidden">
+<div class="h-full bg-secondary-fixed w-[78%]"></div>
+</div>
+</div>
+<!-- Aesthetic backdrop graphic -->
+<div class="absolute -bottom-10 -right-10 w-48 h-48 bg-secondary-fixed/10 rounded-full blur-3xl"></div>
+</div>
+<!-- NPS Card -->
+<div class="col-span-4 bg-surface-container-low rounded-3xl p-8 bento-card flex flex-col justify-between h-[280px]">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-['JetBrains_Mono'] text-[10px] text-primary/40 uppercase tracking-[0.3em]">Sentiment</span>
+<span class="material-symbols-outlined text-primary/40" data-icon="stars">stars</span>
+</div>
+<h3 class="text-xl font-bold text-primary">NPS Score</h3>
+</div>
+<div class="flex items-end gap-3">
+<span class="text-6xl font-bold text-primary">78</span>
+<div class="mb-2 flex items-center text-secondary font-bold text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_drop_up">arrow_drop_up</span>
+<span>2pts</span>
+</div>
+</div>
+<div class="flex gap-1">
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary/20 rounded-full"></div>
+</div>
+<p class="text-xs text-primary/40 font-['JetBrains_Mono']">Sample Size: 1,204 | Confidence: 98%</p>
+</div>
+<!-- Churn Card -->
+<div class="col-span-4 bg-surface-container-lowest border border-outline-variant/20 rounded-3xl p-8 bento-card flex flex-col justify-between h-[280px]">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-['JetBrains_Mono'] text-[10px] text-primary/40 uppercase tracking-[0.3em]">Retention</span>
+<span class="material-symbols-outlined text-error/40" data-icon="do_not_disturb_on">do_not_disturb_on</span>
+</div>
+<h3 class="text-xl font-bold text-primary">Revenue Churn</h3>
+</div>
+<div class="flex items-end gap-3">
+<span class="text-6xl font-bold text-primary">0.82<span class="text-2xl">%</span></span>
+</div>
+<div class="p-3 bg-error-container/20 rounded-xl flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="text-xs font-bold text-on-error-container">Watch: Enterprise Tier Churn (+0.2%)</span>
+</div>
+</div>
+<!-- Mini Alerts/Feeds Bento -->
+<div class="col-span-4 grid grid-rows-2 gap-4">
+<div class="bg-secondary-fixed rounded-3xl p-6 flex flex-col justify-center">
+<p class="text-[10px] uppercase font-bold text-primary/50 tracking-widest mb-1">Upcoming Milestone</p>
+<h4 class="text-lg font-bold text-primary leading-tight">Series C Roadshow starts in 14 days</h4>
+</div>
+<div class="bg-surface-container-highest/50 rounded-3xl p-6 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</div>
+<div>
+<p class="text-xs font-bold text-primary">New Efficiency Record</p>
+<p class="text-[10px] text-primary/50 font-['JetBrains_Mono']">LTV:CAC 8.4x (All-time high)</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Details -->
+<div class="mt-16 flex justify-between items-center border-t border-primary/5 pt-8">
+<div class="flex gap-12">
+<div>
+<p class="text-[10px] font-bold text-primary/30 uppercase tracking-widest mb-1">Snapshot Period</p>
+<p class="text-sm font-['JetBrains_Mono'] text-primary/60">Oct 24 — Oct 31, 2023</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-primary/30 uppercase tracking-widest mb-1">Data Freshness</p>
+<p class="text-sm font-['JetBrains_Mono'] text-primary/60">Updated 4 mins ago</p>
+</div>
+</div>
+<div class="flex gap-2">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center hover:bg-surface-container-highest cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="share">share</span>
+</div>
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center hover:bg-surface-container-highest cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="more_horiz">more_horiz</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Background texture/aesthetic layer -->
+<div class="fixed inset-0 pointer-events-none opacity-20 mix-blend-multiply z-0">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/p6.png')]"></div>
+</div>
+</body></html>

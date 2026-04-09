@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Coach Availability Setup | AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fdf9f0",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-container": "#f1eee5",
+                        "on-secondary-container": "#5b6900",
+                        "on-tertiary-container": "#9dd090",
+                        "on-secondary-fixed": "#191e00",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#002201",
+                        "inverse-on-surface": "#f4f0e7",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "on-surface-variant": "#42493e",
+                        "outline": "#72796e",
+                        "outline-variant": "#c2c9bb",
+                        "tertiary": "#154212",
+                        "surface-tint": "#3b6934",
+                        "secondary-container": "#d0ed00",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-dim": "#dddad1",
+                        "on-surface": "#1c1c16",
+                        "surface-container-high": "#ece8df",
+                        "error": "#ba1a1a",
+                        "on-background": "#1c1c16",
+                        "secondary-fixed": "#d2f000",
+                        "secondary-fixed-dim": "#b8d300",
+                        "tertiary-fixed": "#bcf0ae",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-primary": "#ffffff",
+                        "background": "#fdf9f0",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#bcf0ae",
+                        "inverse-surface": "#31302b",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e6e2d9",
+                        "surface-container-low": "#f7f3ea",
+                        "secondary": "#576500",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-primary-fixed": "#002201",
+                        "surface": "#fdf9f0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#9dd090",
+                        "inverse-primary": "#a1d494",
+                        "tertiary-container": "#2d5a27",
+                        "primary": "#154212"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "sans-serif"],
+                        "body": ["DM Sans", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 80px repeat(7, 1fr);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#154212] flex flex-col py-6 gap-2 shadow-[4px_0_16px_rgba(45,90,39,0.06)] z-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-secondary-fixed rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="sports_and_outdoors">sports_and_outdoors</span>
+</div>
+<div>
+<h2 class="text-white font-semibold text-lg leading-tight">Coach Portal</h2>
+<p class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest text-white/50">Precision Performance</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 bg-[#d2f000] text-[#154212] rounded-xl px-4 py-3 mx-2 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Schedule</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Players</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Drills</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Messages</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 mx-2 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Earnings</span>
+</a>
+</nav>
+<div class="mt-auto px-2 space-y-1">
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Support</span>
+</a>
+<a class="flex items-center gap-3 text-white/70 hover:text-white px-4 py-3 hover:bg-white/10 rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-['DM_Sans'] uppercase text-[10px] font-medium tracking-widest">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 p-8">
+<!-- Top Header Area -->
+<header class="flex justify-between items-end mb-10">
+<div class="space-y-1">
+<p class="font-mono text-[10px] text-primary/60 uppercase tracking-widest">Availability Module / v2.4</p>
+<h1 class="text-4xl font-bold tracking-tight text-primary">Set Hours</h1>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-xl">
+<span class="material-symbols-outlined text-primary/60 text-sm" data-icon="public">public</span>
+<select class="bg-transparent border-none text-xs font-medium focus:ring-0 text-on-surface py-0">
+<option>Europe/London (GMT +1)</option>
+<option>America/New_York (EST)</option>
+<option>Asia/Tokyo (JST)</option>
+</select>
+</div>
+<button class="bg-secondary-fixed text-primary px-6 py-2 rounded-xl font-bold text-xs uppercase tracking-widest shadow-sm hover:scale-[1.02] active:scale-95 transition-all">
+                    Save Schedule
+                </button>
+</div>
+</header>
+<div class="bento-grid">
+<!-- Left Column: Controls -->
+<div class="col-span-4 space-y-6">
+<!-- Recurring Pattern Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-lg text-primary tracking-tight">Recurring Pattern</h3>
+<span class="material-symbols-outlined text-primary/40" data-icon="sync">sync</span>
+</div>
+<div class="space-y-4">
+<label class="flex items-center gap-4 p-4 rounded-xl border border-outline-variant/10 hover:bg-surface-container-low transition-colors cursor-pointer">
+<input checked="" class="text-primary focus:ring-primary h-4 w-4" name="pattern" type="radio"/>
+<div class="flex-1">
+<p class="text-sm font-semibold">Weekly Routine</p>
+<p class="text-[11px] text-on-surface-variant font-mono">Resets every Monday morning</p>
+</div>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-xl border border-outline-variant/10 hover:bg-surface-container-low transition-colors cursor-pointer">
+<input class="text-primary focus:ring-primary h-4 w-4" name="pattern" type="radio"/>
+<div class="flex-1">
+<p class="text-sm font-semibold">Bi-Weekly Shift</p>
+<p class="text-[11px] text-on-surface-variant font-mono">Alternating A/B schedules</p>
+</div>
+</label>
+</div>
+</div>
+<!-- Exception Dates -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-lg text-primary tracking-tight">Exception Dates</h3>
+<button class="text-[10px] font-bold text-primary px-3 py-1 bg-surface-container-low rounded-full uppercase tracking-tighter">Add New</button>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-sm" data-icon="event_busy">event_busy</span>
+</div>
+<div>
+<p class="text-xs font-bold">Annual Retreat</p>
+<p class="text-[10px] text-on-surface-variant font-mono">Nov 12 - Nov 15</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer text-sm" data-icon="close">close</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-sm" data-icon="beach_access">beach_access</span>
+</div>
+<div>
+<p class="text-xs font-bold">Winter Vacation</p>
+<p class="text-[10px] text-on-surface-variant font-mono">Dec 24 - Jan 02</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer text-sm" data-icon="close">close</span>
+</div>
+</div>
+</div>
+<!-- Coach Stats Sidebar -->
+<div class="relative overflow-hidden rounded-[24px] aspect-[4/3] group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Athletic training facility interior with high ceilings and specialized equipment in soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4jnzqcP5dF_3KR7D2Hc0hCnkK3dlGzoOpQSLsIFN_3kb1rbMufSWfv7mDwFvEFQ1dbFFTSYyVSt0XFffawx-FT3ww0R0akIDunR-444u0Vb3SrbISfuVkW3Gr4rfQL4R9NbH2ObQRvnhY843Ta9xLLnhz1eQH2qha5JyHauIoo2TxWVT1t_j66ZGIVKrfO8sVFPm_jazaIE6IAbdAD2ytTsnwsRj3VXtDvsJ77B1-sxiZuO6kJKmvdguURH467qLO_YJ1LtuLlg9f"/>
+<div class="absolute inset-0 bg-primary/40 backdrop-blur-[2px] p-6 flex flex-col justify-end">
+<p class="text-white/60 font-mono text-[10px] uppercase tracking-[0.2em] mb-1">Weekly Load</p>
+<h4 class="text-white text-2xl font-bold leading-none">24.5 Hours Available</h4>
+<div class="mt-4 h-1 w-full bg-white/20 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed w-[65%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Calendar Grid -->
+<div class="col-span-8">
+<div class="bg-surface-container-lowest rounded-[32px] overflow-hidden">
+<!-- Day Headers -->
+<div class="schedule-grid bg-primary text-white py-4 text-center">
+<div class="text-[10px] font-mono text-white/40 self-center uppercase">Time</div>
+<div class="space-y-0.5">
+<p class="text-[10px] font-mono text-white/50 uppercase tracking-widest">Mon</p>
+<p class="text-sm font-bold">12</p>
+</div>
+<div class="space-y-0.5">
+<p class="text-[10px] font-mono text-white/50 uppercase tracking-widest">Tue</p>
+<p class="text-sm font-bold">13</p>
+</div>
+<div class="space-y-0.5">
+<p class="text-[10px] font-mono text-white/50 uppercase tracking-widest">Wed</p>
+<p class="text-sm font-bold text-secondary-fixed">14</p>
+</div>
+<div class="space-y-0.5">
+<p class="text-[10px] font-mono text-white/50 uppercase tracking-widest">Thu</p>
+<p class="text-sm font-bold">15</p>
+</div>
+<div class="space-y-0.5">
+<p class="text-[10px] font-mono text-white/50 uppercase tracking-widest">Fri</p>
+<p class="text-sm font-bold">16</p>
+</div>
+<div class="space-y-0.5">
+<p class="text-[10px] font-mono text-white/50 uppercase tracking-widest">Sat</p>
+<p class="text-sm font-bold">17</p>
+</div>
+<div class="space-y-0.5">
+<p class="text-[10px] font-mono text-white/50 uppercase tracking-widest">Sun</p>
+<p class="text-sm font-bold">18</p>
+</div>
+</div>
+<!-- Grid Rows -->
+<div class="max-h-[600px] overflow-y-auto schedule-body custom-scrollbar">
+<!-- 08:00 AM -->
+<div class="schedule-grid group border-b border-surface-container-high/30">
+<div class="p-4 text-[11px] font-mono text-primary/40 bg-surface-container-low text-right pr-6 uppercase self-stretch flex items-center justify-end">08:00</div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer transition-all hover:brightness-95 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer transition-all hover:brightness-95 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer transition-all hover:brightness-95 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg hover:bg-surface-container transition-colors cursor-pointer"></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg hover:bg-surface-container transition-colors cursor-pointer"></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-surface-container-low/50 cursor-not-allowed"></div></div>
+<div class="p-1"><div class="h-10 w-full rounded-lg bg-surface-container-low/50 cursor-not-allowed"></div></div>
+</div>
+<!-- 09:00 AM -->
+<div class="schedule-grid group border-b border-surface-container-high/30">
+<div class="p-4 text-[11px] font-mono text-primary/40 bg-surface-container-low text-right pr-6 uppercase self-stretch flex items-center justify-end">09:00</div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer transition-all flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer transition-all flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg hover:bg-surface-container transition-colors cursor-pointer"></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer transition-all flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg hover:bg-surface-container transition-colors cursor-pointer"></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-surface-container-low/50"></div></div>
+<div class="p-1"><div class="h-10 w-full rounded-lg bg-surface-container-low/50"></div></div>
+</div>
+<!-- 10:00 AM -->
+<div class="schedule-grid group border-b border-surface-container-high/30">
+<div class="p-4 text-[11px] font-mono text-primary/40 bg-surface-container-low text-right pr-6 uppercase self-stretch flex items-center justify-end">10:00</div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-primary/5 text-primary text-[9px] font-mono flex items-center justify-center border border-primary/20">BOOKED</div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer transition-all flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer transition-all flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg hover:bg-surface-container cursor-pointer"></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer transition-all flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-surface-container-low/50"></div></div>
+<div class="p-1"><div class="h-10 w-full rounded-lg bg-surface-container-low/50"></div></div>
+</div>
+<!-- 11:00 AM -->
+<div class="schedule-grid group border-b border-surface-container-high/30">
+<div class="p-4 text-[11px] font-mono text-primary/40 bg-surface-container-low text-right pr-6 uppercase self-stretch flex items-center justify-end">11:00</div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg hover:bg-surface-container cursor-pointer"></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-primary/5 text-primary text-[9px] font-mono flex items-center justify-center border border-primary/20">BOOKED</div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg hover:bg-surface-container cursor-pointer"></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+</div>
+<!-- 12:00 PM (Break) -->
+<div class="schedule-grid group border-b border-surface-container-high/30 opacity-60">
+<div class="p-4 text-[11px] font-mono text-primary/40 bg-surface-container-low text-right pr-6 uppercase self-stretch flex items-center justify-end">12:00</div>
+<div class="col-span-7 bg-surface-container p-2 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="restaurant">restaurant</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Midday Buffer</span>
+</div>
+</div>
+<!-- Afternoon Blocks -->
+<div class="schedule-grid group border-b border-surface-container-high/30">
+<div class="p-4 text-[11px] font-mono text-primary/40 bg-surface-container-low text-right pr-6 uppercase self-stretch flex items-center justify-end">01:00</div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg hover:bg-surface-container cursor-pointer"></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg hover:bg-surface-container cursor-pointer"></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg bg-secondary-fixed/20 border border-secondary-fixed cursor-pointer flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span></div></div>
+<div class="p-1 border-r border-surface-container-high/30"><div class="h-10 w-full rounded-lg hover:bg-surface-container cursor-pointer"></div></div>
+<div class="p-1"><div class="h-10 w-full rounded-lg bg-surface-container-low/50"></div></div>
+</div>
+</div>
+</div>
+<!-- Legend & Assistant -->
+<div class="mt-8 flex items-center justify-between">
+<div class="flex gap-6 items-center">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-sm bg-secondary-fixed/20 border border-secondary-fixed"></div>
+<span class="text-[11px] font-mono uppercase tracking-tight text-on-surface-variant">Available</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-sm bg-primary/5 border border-primary/20"></div>
+<span class="text-[11px] font-mono uppercase tracking-tight text-on-surface-variant">Booked</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-sm bg-surface-container-low/50"></div>
+<span class="text-[11px] font-mono uppercase tracking-tight text-on-surface-variant">Restricted</span>
+</div>
+</div>
+<div class="flex items-center gap-3 text-xs bg-surface-container-low p-2 rounded-xl pr-4">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+<p class="font-medium">Pro Tip: Click and drag to select multiple slots</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

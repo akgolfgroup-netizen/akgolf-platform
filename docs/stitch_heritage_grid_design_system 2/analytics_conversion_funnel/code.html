@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#bcf0ae",
+                    "surface-tint": "#3b6934",
+                    "tertiary-fixed": "#bcf0ae",
+                    "surface": "#fdf9f0",
+                    "tertiary": "#154212",
+                    "surface-container-high": "#ece8df",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "on-primary-fixed-variant": "#23501e",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#dddad1",
+                    "outline-variant": "#c2c9bb",
+                    "background": "#fdf9f0",
+                    "on-primary-fixed": "#002201",
+                    "on-error": "#ffffff",
+                    "primary": "#154212",
+                    "secondary-container": "#d0ed00",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1c1c16",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "surface-container-low": "#f7f3ea",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "surface-bright": "#fdf9f0",
+                    "on-secondary-fixed": "#191e00",
+                    "tertiary-container": "#2d5a27",
+                    "secondary": "#576500",
+                    "inverse-surface": "#31302b",
+                    "primary-fixed-dim": "#a1d494",
+                    "on-surface": "#1c1c16",
+                    "on-secondary-container": "#5b6900",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#2d5a27",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#72796e",
+                    "secondary-fixed": "#d2f000",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#9dd090",
+                    "secondary-fixed-dim": "#b8d300",
+                    "surface-container-highest": "#e6e2d9",
+                    "inverse-on-surface": "#f4f0e7",
+                    "on-surface-variant": "#42493e",
+                    "on-primary-container": "#9dd090",
+                    "surface-container": "#f1eee5",
+                    "on-tertiary-fixed": "#002201",
+                    "surface-variant": "#e6e2d9",
+                    "inverse-primary": "#a1d494"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope", "sans-serif"],
+                    "body": ["Manrope", "sans-serif"],
+                    "label": ["Manrope", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 bg-green-950 dark:bg-green-950 flex flex-col py-8 px-4 flex-shrink-0">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold text-white tracking-tight">AK Sports OS</h1>
+<p class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-green-200/60 mt-1">Elite Analytics</p>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Analytics is the active context for Funnel Analysis -->
+<div class="flex items-center gap-3 px-4 py-3 text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors cursor-pointer transition-all duration-200 scale-95">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors cursor-pointer transition-all duration-200 scale-95">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Performance</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors cursor-pointer transition-all duration-200 scale-95">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Roster</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-lime-400 bg-green-900/50 rounded-lg cursor-pointer transition-all duration-200 scale-95">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Analytics</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors cursor-pointer transition-all duration-200 scale-95">
+<span class="material-symbols-outlined" data-icon="travel_explore">travel_explore</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Scouting</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 transition-colors cursor-pointer transition-all duration-200 scale-95">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Settings</span>
+</div>
+</nav>
+<div class="mt-auto px-4">
+<button class="w-full bg-secondary-fixed text-primary px-4 py-3 rounded-xl font-['DM_Sans'] font-bold text-[12px] uppercase tracking-widest hover:brightness-110 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                New Report
+            </button>
+</div>
+</aside>
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- TopNavBar Component -->
+<header class="w-full h-16 bg-[#fdf9f0]/80 backdrop-blur-xl flex justify-between items-center px-8 border-b border-[#154212]/10 z-10">
+<div class="flex items-center gap-6 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40" data-icon="search">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-1 ring-lime-400/20 font-['DM_Sans']" placeholder="Search conversion metrics..." type="text"/>
+</div>
+<div class="flex items-center gap-6 h-full ml-4">
+<span class="font-['DM_Sans'] font-semibold text-green-900 border-b-2 border-lime-400 h-16 flex items-center px-2">Funnel Analysis</span>
+<span class="font-['DM_Sans'] font-semibold text-green-700/50 hover:text-green-900 transition-opacity cursor-pointer h-16 flex items-center px-2">Retention</span>
+<span class="font-['DM_Sans'] font-semibold text-green-700/50 hover:text-green-900 transition-opacity cursor-pointer h-16 flex items-center px-2">Acquisition</span>
+</div>
+</div>
+<div class="flex items-center gap-5">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-70" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-70" data-icon="help">help</span>
+<div class="flex items-center gap-2 pl-4 border-l border-outline-variant/30">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8 bg-surface">
+<!-- Header Section -->
+<section class="flex justify-between items-end">
+<div>
+<span class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/60 mb-2 block">Performance Intelligence</span>
+<h2 class="text-4xl font-extrabold text-primary tracking-tight font-headline">User Conversion Funnel</h2>
+</div>
+<div class="flex gap-3">
+<button class="bg-surface-container-lowest border border-outline-variant/20 px-5 py-2.5 rounded-xl text-primary font-medium text-sm flex items-center gap-2 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_today">calendar_today</span>
+                        Last 30 Days
+                    </button>
+<button class="bg-primary text-white px-6 py-2.5 rounded-xl font-bold text-sm uppercase tracking-widest shadow-sm hover:brightness-110 transition-all">
+                        Export Report
+                    </button>
+</div>
+</section>
+<!-- Funnel Visualization Area -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Main Funnel Card -->
+<div class="col-span-12 bg-surface-container-lowest rounded-3xl p-10 border border-outline-variant/10 relative overflow-hidden">
+<div class="flex justify-between items-start mb-16">
+<div class="space-y-1">
+<h3 class="text-xl font-bold text-primary">Live Conversion Pipeline</h3>
+<p class="text-sm text-on-surface-variant font-['DM_Sans']">Tracking the journey from initial touchpoint to transaction completion.</p>
+</div>
+<div class="text-right">
+<span class="font-mono text-3xl font-bold text-primary">14.2%</span>
+<p class="text-[10px] font-mono text-primary/60 uppercase tracking-wider">Overall Conversion</p>
+</div>
+</div>
+<!-- The Funnel Visual -->
+<div class="relative h-80 flex items-end gap-2">
+<!-- Stage 1: Visitors -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary h-[100%] rounded-t-2xl relative">
+<div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="absolute top-4 left-0 right-0 text-center">
+<span class="font-mono text-white text-lg font-bold">245,000</span>
+</div>
+</div>
+<div class="mt-4 text-center">
+<p class="font-['DM_Sans'] font-bold text-[11px] uppercase tracking-widest text-primary">Visitors</p>
+</div>
+</div>
+<!-- Drop-off 1 -->
+<div class="w-12 h-full flex flex-col justify-center items-center">
+<div class="h-0.5 w-full bg-error/20 relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2">
+<span class="text-error font-mono text-xs font-bold">-45.2%</span>
+</div>
+</div>
+</div>
+<!-- Stage 2: Signups -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary/80 h-[54.8%] rounded-t-xl relative">
+<div class="absolute top-4 left-0 right-0 text-center">
+<span class="font-mono text-white text-lg font-bold">134,260</span>
+</div>
+</div>
+<div class="mt-4 text-center">
+<p class="font-['DM_Sans'] font-bold text-[11px] uppercase tracking-widest text-primary">Signups</p>
+</div>
+</div>
+<!-- Drop-off 2 -->
+<div class="w-12 h-full flex flex-col justify-center items-center">
+<div class="h-0.5 w-full bg-error/20 relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2">
+<span class="text-error font-mono text-xs font-bold">-62.8%</span>
+</div>
+</div>
+</div>
+<!-- Stage 3: Bookings -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary/60 h-[20.4%] rounded-t-xl relative">
+<div class="absolute -top-8 left-0 right-0 text-center">
+<span class="font-mono text-primary text-lg font-bold">49,940</span>
+</div>
+</div>
+<div class="mt-4 text-center">
+<p class="font-['DM_Sans'] font-bold text-[11px] uppercase tracking-widest text-primary">Bookings</p>
+</div>
+</div>
+<!-- Drop-off 3 -->
+<div class="w-12 h-full flex flex-col justify-center items-center">
+<div class="h-0.5 w-full bg-error/20 relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2">
+<span class="text-error font-mono text-xs font-bold">-30.1%</span>
+</div>
+</div>
+</div>
+<!-- Stage 4: Completed -->
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-secondary-fixed h-[14.2%] rounded-t-xl relative">
+<div class="absolute -top-8 left-0 right-0 text-center">
+<span class="font-mono text-primary text-lg font-bold">34,790</span>
+</div>
+</div>
+<div class="mt-4 text-center">
+<p class="font-['DM_Sans'] font-bold text-[11px] uppercase tracking-widest text-primary">Completed</p>
+</div>
+</div>
+<!-- Benchmark Line -->
+<div class="absolute left-0 right-0 border-t-2 border-dashed border-lime-400/40 bottom-[12%] z-0 flex items-center justify-end pr-4">
+<span class="bg-lime-400 text-primary text-[9px] font-mono font-bold px-2 py-0.5 rounded-full -mt-2.5">BENCHMARK: 12%</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Metrics -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary mb-4" data-icon="speed">speed</span>
+<h4 class="text-primary font-bold mb-1">Velocity to Conversion</h4>
+<p class="text-sm text-on-surface-variant mb-6 font-['DM_Sans']">Average time from visitor to completion.</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold font-mono">4.2</span>
+<span class="text-on-surface-variant font-['DM_Sans']">days</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary font-bold text-xs">
+<span class="material-symbols-outlined text-xs" data-icon="trending_down">trending_down</span>
+<span>12% improvement vs LY</span>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary mb-4" data-icon="group_work">group_work</span>
+<h4 class="text-primary font-bold mb-1">Top Referral Channel</h4>
+<p class="text-sm text-on-surface-variant mb-6 font-['DM_Sans']">Highest converting traffic source.</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="ads_click">ads_click</span>
+</div>
+<div>
+<span class="text-xl font-bold font-['DM_Sans']">Social Media</span>
+<p class="text-[10px] font-mono text-primary/60 uppercase">18.4% CVR</p>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 bg-surface-container-low rounded-3xl p-8 border border-outline-variant/10">
+<span class="material-symbols-outlined text-error mb-4" data-icon="warning">warning</span>
+<h4 class="text-primary font-bold mb-1">Biggest Friction Point</h4>
+<p class="text-sm text-on-surface-variant mb-6 font-['DM_Sans']">Where most users drop off the path.</p>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center text-sm">
+<span class="font-['DM_Sans'] font-medium">Signup → Booking</span>
+<span class="text-error font-mono font-bold">62.8% loss</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="w-[62.8%] h-full bg-error"></div>
+</div>
+</div>
+</div>
+<!-- Secondary Data Module -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-3xl p-8 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<h4 class="text-lg font-bold text-primary">Cohort Comparison</h4>
+<button class="text-xs font-mono font-bold text-primary flex items-center gap-1 uppercase tracking-widest hover:underline">
+                            View Full Dataset <span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-['DM_Sans']">
+<thead>
+<tr class="text-[10px] uppercase tracking-widest text-primary/60 border-b border-outline-variant/10">
+<th class="pb-4 font-bold">Audience Segment</th>
+<th class="pb-4 font-bold">Entrants</th>
+<th class="pb-4 font-bold">Conversion</th>
+<th class="pb-4 font-bold text-right">Trend</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="border-b border-outline-variant/5">
+<td class="py-4 font-semibold">U18 Regional Scouts</td>
+<td class="py-4 font-mono">12,450</td>
+<td class="py-4 font-mono font-bold">22.4%</td>
+<td class="py-4 text-right text-primary">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/5">
+<td class="py-4 font-semibold">Elite Academy Coaches</td>
+<td class="py-4 font-mono">8,100</td>
+<td class="py-4 font-mono font-bold">19.1%</td>
+<td class="py-4 text-right text-primary">
+<span class="material-symbols-outlined" data-icon="trending_flat">trending_flat</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/5">
+<td class="py-4 font-semibold">Independent Agents</td>
+<td class="py-4 font-mono">45,200</td>
+<td class="py-4 font-mono font-bold">8.6%</td>
+<td class="py-4 text-right text-error">
+<span class="material-symbols-outlined" data-icon="trending_down">trending_down</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Analysis Sidebar (Bento Style) -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<div class="bg-primary text-white rounded-3xl p-8 relative overflow-hidden group">
+<div class="relative z-10">
+<h4 class="text-xl font-bold mb-4">Strategic Insights</h4>
+<p class="text-sm text-green-100/80 mb-6 leading-relaxed font-['DM_Sans']">
+                                "The significant drop-off between Signup and Booking is primarily due to friction in the payment verification step."
+                            </p>
+<button class="bg-secondary-fixed text-primary px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest hover:scale-105 transition-transform">
+                                Read Solution Proposal
+                            </button>
+</div>
+<span class="material-symbols-outlined absolute -bottom-6 -right-6 text-[120px] opacity-10 group-hover:scale-110 transition-transform" data-icon="lightbulb">lightbulb</span>
+</div>
+<div class="bg-surface-container-highest rounded-3xl p-8 border border-outline-variant/10">
+<h4 class="text-primary font-bold mb-4 text-sm uppercase tracking-widest">Next Scheduled Sync</h4>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary" data-icon="history">history</span>
+</div>
+<div>
+<p class="text-xs font-mono font-bold">IN 02:45:12</p>
+<p class="text-[10px] text-on-surface-variant font-['DM_Sans'] uppercase tracking-tight">Data Refresh Cycle</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

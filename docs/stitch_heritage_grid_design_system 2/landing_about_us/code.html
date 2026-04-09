@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us | AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#9dd090",
+                        "tertiary": "#154212",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "inverse-on-surface": "#f4f0e7",
+                        "primary": "#154212",
+                        "on-secondary-container": "#5b6900",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-container-high": "#ece8df",
+                        "on-surface": "#1c1c16",
+                        "surface-tint": "#3b6934",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "inverse-surface": "#31302b",
+                        "surface-dim": "#dddad1",
+                        "outline-variant": "#c2c9bb",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#191e00",
+                        "background": "#fdf9f0",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#2d5a27",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e6e2d9",
+                        "surface-bright": "#fdf9f0",
+                        "secondary": "#576500",
+                        "tertiary-fixed": "#bcf0ae",
+                        "outline": "#72796e",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#f1eee5",
+                        "surface": "#fdf9f0",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#1c1c16",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary-fixed": "#002201",
+                        "secondary-fixed-dim": "#b8d300",
+                        "primary-fixed": "#bcf0ae",
+                        "on-primary-fixed-variant": "#23501e",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f7f3ea",
+                        "on-surface-variant": "#42493e",
+                        "secondary-container": "#d0ed00",
+                        "on-primary-fixed": "#002201",
+                        "on-primary-container": "#9dd090",
+                        "inverse-primary": "#a1d494",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "secondary-fixed": "#d2f000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "Manrope", "sans-serif"],
+                        "body": ["DM Sans", "Manrope", "sans-serif"],
+                        "label": ["DM Sans", "Manrope", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        body { font-family: 'DM Sans', sans-serif; background-color: #fdf9f0; color: #1c1c16; }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#fdf9f0] dark:bg-[#1c1c16]/95 backdrop-blur-md bg-gradient-to-b from-[#fdf9f0] to-transparent">
+<div class="flex justify-between items-center px-8 py-6 max-w-[1440px] mx-auto w-full">
+<div class="text-2xl font-bold tracking-tighter text-[#154212] dark:text-[#fdf9f0]">AK Sports OS</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] text-[#154212]/70 hover:text-[#154212] transition-colors" href="#">Features</a>
+<a class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] text-[#154212]/70 hover:text-[#154212] transition-colors" href="#">Pricing</a>
+<a class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] text-[#154212] border-b-2 border-[#d2f000] pb-1" href="#">About</a>
+<a class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] text-[#154212]/70 hover:text-[#154212] transition-colors" href="#">Contact</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[0.875rem] text-[#154212] hover:opacity-80 transition-all">Log In</button>
+<button class="bg-secondary-fixed text-primary px-6 py-2.5 rounded-xl font-['DM_Sans'] font-bold uppercase tracking-wider text-[0.875rem] hover:opacity-90 transition-all scale-95 active:scale-90">Join Now</button>
+</div>
+</div>
+</nav>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="relative h-[716px] w-full overflow-hidden mb-24">
+<img class="w-full h-full object-cover" data-alt="Wide shot of a minimalist, high-tech indoor golf simulator facility with floor-to-ceiling glass, lush turf, and advanced data visualization screens in soft warm lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ7YJIuPtkfjKJn1lIBynbW3FjIH4S-Pq3EW9mPQOKLvWXq7KFijkIJtO_ikpuYPrB25DwxEeEFVfibqqOYMPi_X2foVjyM9qcL-jDcEpvFNNA5vcYBIlsP9GycgHWVnQc28XBRXgX8BEThTlfenmqpROPwkYNFx0uLe3yRw2yu-O2iBo5UO6DB4AQmbBioZX9X3MnhFTK2CEp1oB1bdFwKIQ0jiubAKHZoacfQ4fzhrS_xE82xaiYCF4Zr1GrOSjkrcIdcqoJCO-X"/>
+<div class="absolute inset-0 bg-gradient-to-r from-primary/40 to-transparent"></div>
+<div class="absolute bottom-16 left-16 max-w-2xl">
+<span class="font-mono text-secondary-fixed uppercase tracking-widest text-sm mb-4 block">01 / Introduction</span>
+<h1 class="text-6xl font-bold text-surface-bright leading-tight tracking-tighter">Redefining the<br/>Anatomy of the Swing.</h1>
+</div>
+</section>
+<!-- Mission Statement -->
+<section class="max-w-4xl mx-auto px-8 mb-32 text-center">
+<div class="mb-12 flex justify-center">
+<div class="w-px h-16 bg-primary/20"></div>
+</div>
+<p class="text-3xl md:text-5xl font-semibold leading-[1.2] text-primary">
+                Our mission is to bridge the gap between biological intuition and technological precision, empowering every golfer with elite-level data and coaching.
+            </p>
+</section>
+<!-- Values Grid (Bento Style) -->
+<section class="max-w-[1280px] mx-auto px-8 mb-32">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-container-low p-10 rounded-[24px] group hover:bg-surface-container-lowest transition-colors duration-500">
+<span class="material-symbols-outlined text-4xl text-primary mb-6 group-hover:text-secondary transition-colors" data-icon="biotech">biotech</span>
+<h3 class="text-2xl font-bold mb-4 text-primary uppercase tracking-tight">Precision</h3>
+<p class="text-on-surface-variant leading-relaxed">Leveraging aerospace-grade telemetry to analyze the micro-movements of every drive, chip, and putt.</p>
+</div>
+<div class="bg-surface-container-low p-10 rounded-[24px] group hover:bg-surface-container-lowest transition-colors duration-500">
+<span class="material-symbols-outlined text-4xl text-primary mb-6 group-hover:text-secondary transition-colors" data-icon="account_balance">account_balance</span>
+<h3 class="text-2xl font-bold mb-4 text-primary uppercase tracking-tight">Heritage</h3>
+<p class="text-on-surface-variant leading-relaxed">Respecting the timeless principles of the game while evolving the methods used to master them.</p>
+</div>
+<div class="bg-surface-container-low p-10 rounded-[24px] group hover:bg-surface-container-lowest transition-colors duration-500">
+<span class="material-symbols-outlined text-4xl text-primary mb-6 group-hover:text-secondary transition-colors" data-icon="star">star</span>
+<h3 class="text-2xl font-bold mb-4 text-primary uppercase tracking-tight">Excellence</h3>
+<p class="text-on-surface-variant leading-relaxed">A commitment to providing a premium experience that transforms practice into focused progress.</p>
+</div>
+</div>
+</section>
+<!-- Stats Row -->
+<section class="bg-primary py-24 mb-32 overflow-hidden relative">
+<div class="max-w-[1280px] mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-16 relative z-10">
+<div class="text-center">
+<div class="font-mono text-secondary-fixed text-5xl font-bold mb-2">10+</div>
+<div class="text-on-primary-container text-sm font-medium uppercase tracking-[0.2em]">Years Experience</div>
+</div>
+<div class="text-center">
+<div class="font-mono text-secondary-fixed text-5xl font-bold mb-2">2K+</div>
+<div class="text-on-primary-container text-sm font-medium uppercase tracking-[0.2em]">Players Coached</div>
+</div>
+<div class="text-center">
+<div class="font-mono text-secondary-fixed text-5xl font-bold mb-2">50K+</div>
+<div class="text-on-primary-container text-sm font-medium uppercase tracking-[0.2em]">Sessions Completed</div>
+</div>
+</div>
+<!-- Decorative accent -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+</section>
+<!-- Team Section -->
+<section class="max-w-[1280px] mx-auto px-8 mb-32">
+<div class="flex justify-between items-end mb-16">
+<div>
+<span class="font-mono text-secondary uppercase tracking-widest text-sm mb-2 block">Our Experts</span>
+<h2 class="text-4xl font-bold text-primary">The Coaching Collective</h2>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Team Member 1 -->
+<div class="group">
+<div class="aspect-[3/4] rounded-2xl overflow-hidden mb-6 relative bg-surface-container-highest">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Professional headshot of a female golf instructor in premium athletic wear, soft studio lighting, neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1FN8RgL1MxskYR6MrFVRzDknao4PxH8UVWGDQT799R33C-IyuNMHlMIHM89ZtIvqsD1nbhIuL-gYMaoI8d9o0wD1xV0OY8eUmDBG9bIfIElo6ywLTL7dwhR84EHQWInH-4BCyvVULzoN1_B4pEKlDOxz1E5_s4kSxFocpZyYZ8E679wMY0o05gP7F-HlwTDygOzx88Vbee_RQs8jT_uhomuWcSCbsNlwiKmymuGtI4sqekiLgO2LdNi8nwtv2os1UECvNSHkxU_ZL"/>
+</div>
+<h4 class="text-xl font-bold text-primary mb-1">Sarah Jensen</h4>
+<p class="text-sm font-mono text-secondary uppercase tracking-tighter">Lead Instructor - Biomechanics</p>
+</div>
+<!-- Team Member 2 -->
+<div class="group">
+<div class="aspect-[3/4] rounded-2xl overflow-hidden mb-6 relative bg-surface-container-highest">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Professional headshot of a male golf coach with a focused expression, wearing a tailored polo shirt, soft natural light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB-TgYaXG57fcy1beAyrHDrVz4ZzZkv-FtWo7JOeUuLxxbrriBslJQs9v3_yLujTDSypnyoldFuf3-TVimFlupqnye8zbPXEPy9qnbk9QoJC-aHLqS6QWRt_Ii1yLhCC5ueTYy4xNp0T4nsgvZKNNh0Ajr8mj2w2EHabW08bHdwXukLGfClBcn5DK379FzKWtftUWLMpLTP9vdyNb_FLDJha1zv3a20o-mYCht7tJ7J4uzle2qCdeVVFxRkEllPtuNs5kGs0TtfftH"/>
+</div>
+<h4 class="text-xl font-bold text-primary mb-1">David Vance</h4>
+<p class="text-sm font-mono text-secondary uppercase tracking-tighter">Lead Instructor - Short Game</p>
+</div>
+<!-- Team Member 3 -->
+<div class="group">
+<div class="aspect-[3/4] rounded-2xl overflow-hidden mb-6 relative bg-surface-container-highest">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Professional headshot of a female coach, confident smile, clean editorial style photography, warm lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4jSUWbVRI8krnVcs6jn6MeLh7bDGq2dPAcwAX3OC7ZtCLGaFR3_gtSvCcMwo824358p-FMQ2I7yRtmIJWnZFjjJzq_B02skZMV1x9ZEly0Xi3ck2j2Ik1Cj2cfHoFQNP9n1kWE_xk49Jt8G1Dh2m_8rrERSrqQzezRO-mcs5KzLR31a27EnzUAsU3iG4AI6XPscTQ5dTShhCGojCNNGclEliB7Uf0WKRaxgJZkkndzuf0NRRRE3qajp-Z0umB5kTnhb2dngN_xoU7"/>
+</div>
+<h4 class="text-xl font-bold text-primary mb-1">Elena Ruiz</h4>
+<p class="text-sm font-mono text-secondary uppercase tracking-tighter">Lead Instructor - Strategy</p>
+</div>
+<!-- Team Member 4 -->
+<div class="group">
+<div class="aspect-[3/4] rounded-2xl overflow-hidden mb-6 relative bg-surface-container-highest">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Professional headshot of a senior male golf expert, sophisticated look, studio lighting with soft shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA36ASdwP0Lzr5q4BoR5kXMQv2vrYO949Nj4TyYvApWGKvl1WClD_DiBKeOjhPyudZ_xbRVOl6RAAvo8HAzwNm9XooKOO1S84GNWV3WTPbYKLKYM-oI0UpQMbgS60POjPqhUQHS6y8VN3n7LcEv6ky8X_q3B_4xNPfQRYxXh88YkRJAZqOaHfScUEB2cEh2yNF01bujd4aNLETe5t2399XKgww3BM15xtVcI-mrZ34VAb5ED-E9i0vimOeZf_QP6WFQIbU8lxG-tEML"/>
+</div>
+<h4 class="text-xl font-bold text-primary mb-1">Marcus Thorne</h4>
+<p class="text-sm font-mono text-secondary uppercase tracking-tighter">Lead Instructor - Analytics</p>
+</div>
+</div>
+</section>
+<!-- Milestone Timeline -->
+<section class="max-w-[1280px] mx-auto px-8 mb-48">
+<h2 class="text-center text-primary font-bold text-3xl mb-20 uppercase tracking-widest">Our Evolution</h2>
+<div class="relative">
+<!-- Line -->
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-primary/10 hidden md:block"></div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
+<!-- Milestone 1 -->
+<div class="bg-surface p-6">
+<div class="font-mono text-secondary text-sm mb-4">2014</div>
+<div class="w-4 h-4 rounded-full bg-primary mb-6 border-4 border-surface ring-2 ring-primary/20 hidden md:block mx-auto md:mx-0"></div>
+<h5 class="font-bold text-primary text-lg mb-2">Genesis</h5>
+<p class="text-sm text-on-surface-variant">Founded in a private garage with a single high-speed camera and a vision for data.</p>
+</div>
+<!-- Milestone 2 -->
+<div class="bg-surface p-6">
+<div class="font-mono text-secondary text-sm mb-4">2017</div>
+<div class="w-4 h-4 rounded-full bg-primary mb-6 border-4 border-surface ring-2 ring-primary/20 hidden md:block mx-auto md:mx-0"></div>
+<h5 class="font-bold text-primary text-lg mb-2">Algorithm V1</h5>
+<p class="text-sm text-on-surface-variant">Developed our proprietary swing analysis AI, tested by PGA professionals.</p>
+</div>
+<!-- Milestone 3 -->
+<div class="bg-surface p-6">
+<div class="font-mono text-secondary text-sm mb-4">2021</div>
+<div class="w-4 h-4 rounded-full bg-primary mb-6 border-4 border-surface ring-2 ring-primary/20 hidden md:block mx-auto md:mx-0"></div>
+<h5 class="font-bold text-primary text-lg mb-2">The Lab Opens</h5>
+<p class="text-sm text-on-surface-variant">Opened our flagship facility featuring unified sports telemetry integration.</p>
+</div>
+<!-- Milestone 4 -->
+<div class="bg-surface p-6">
+<div class="font-mono text-secondary text-sm mb-4">2024</div>
+<div class="w-4 h-4 rounded-full bg-secondary-fixed mb-6 border-4 border-surface ring-2 ring-secondary/20 hidden md:block mx-auto md:mx-0"></div>
+<h5 class="font-bold text-primary text-lg mb-2">Global Scale</h5>
+<p class="text-sm text-on-surface-variant">Launching the OS platform to bring precision analytics to golfers worldwide.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-[#154212]/5 bg-[#f7f3ea] dark:bg-[#154212]">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8 w-full max-w-[1440px] mx-auto">
+<div class="font-['DM_Sans'] font-semibold text-[#154212] text-xl">AK Sports OS</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60 hover:text-[#d2f000] transition-colors" href="#">Privacy Policy</a>
+<a class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60 hover:text-[#d2f000] transition-colors" href="#">Terms of Service</a>
+<a class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60 hover:text-[#d2f000] transition-colors" href="#">Cookie Settings</a>
+<a class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60 hover:text-[#d2f000] transition-colors" href="#">Support</a>
+<a class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60 hover:text-[#d2f000] transition-colors" href="#">Careers</a>
+</div>
+<div class="font-['DM_Sans'] text-sm tracking-normal text-[#154212]/60">
+                © 2024 AK Sports OS. Engineered for Precision.
+            </div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "background": "#fdf9f0",
+            "tertiary-fixed": "#bcf0ae",
+            "primary-fixed": "#bcf0ae",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-container": "#f1eee5",
+            "tertiary": "#154212",
+            "surface-container-highest": "#e6e2d9",
+            "on-error-container": "#93000a",
+            "error-container": "#ffdad6",
+            "on-primary-fixed": "#002201",
+            "tertiary-container": "#2d5a27",
+            "surface": "#fdf9f0",
+            "outline-variant": "#c2c9bb",
+            "surface-tint": "#3b6934",
+            "on-surface-variant": "#42493e",
+            "tertiary-fixed-dim": "#a1d494",
+            "surface-variant": "#e6e2d9",
+            "surface-container-high": "#ece8df",
+            "secondary-container": "#d0ed00",
+            "on-secondary-fixed-variant": "#414c00",
+            "on-tertiary-container": "#9dd090",
+            "on-surface": "#1c1c16",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#9dd090",
+            "on-primary-fixed-variant": "#23501e",
+            "secondary-fixed": "#d2f000",
+            "on-secondary-fixed": "#191e00",
+            "surface-bright": "#fdf9f0",
+            "secondary": "#576500",
+            "primary-fixed-dim": "#a1d494",
+            "on-tertiary-fixed-variant": "#23501e",
+            "inverse-surface": "#31302b",
+            "primary": "#154212",
+            "inverse-primary": "#a1d494",
+            "surface-container-low": "#f7f3ea",
+            "on-secondary-container": "#5b6900",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#dddad1",
+            "primary-container": "#2d5a27",
+            "outline": "#72796e",
+            "on-error": "#ffffff",
+            "on-primary": "#ffffff",
+            "on-tertiary-fixed": "#002201",
+            "inverse-on-surface": "#f4f0e7",
+            "secondary-fixed-dim": "#b8d300",
+            "on-background": "#1c1c16"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "xxl": "1.5rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["DM Sans", "sans-serif"],
+            "body": ["DM Sans", "sans-serif"],
+            "label": ["DM Sans", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+    }
+    .text-shadow-soft {
+      text-shadow: 0 2px 4px rgba(21, 66, 18, 0.1);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f7f3ea;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #154212;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-72 flex flex-col fixed left-0 top-0 bg-[#154212] z-50">
+<div class="flex flex-col h-full py-8">
+<div class="px-8 mb-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-secondary-fixed rounded-xl flex items-center justify-center text-[#154212]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tighter text-[#fdf9f0]">AK Sports OS</h1>
+<p class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] text-[#fdf9f0]/60">Mission Control</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Exact navigation strings from JSON -->
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span> Command Center
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">sensors</span> Live Ops
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">insights</span> Pulse
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">health_and_safety</span> System Health
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">notifications</span> Alerts
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">emergency_home</span> Incidents
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">data_usage</span> Capacity
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">leaderboard</span> Metrics
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">security</span> Security
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">history_edu</span> Audit
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings_backup_restore</span> Backups
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">rocket_launch</span> Deploy
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">payments</span> Costs
+        </a>
+<!-- Active Tab: CS Health -->
+<a class="flex items-center gap-3 bg-[#d2f000] text-[#154212] rounded-r-full mr-4 px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] scale-95 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">support_agent</span> CS Health
+        </a>
+<a class="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-[#fdf9f0] px-6 py-3 font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">visibility</span> CEO View
+        </a>
+</nav>
+<div class="px-8 mt-auto pt-6 border-t border-[#fdf9f0]/10">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User Profile" data-alt="Close up portrait of a professional woman with a confident expression in a high-end corporate setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7qAd1mJjc-rsAN8MUJXIGoXNTcq4cBSuRp5cyTFVQnOuoePhEw27_D_XI9QCVr33Ub3vb5E01p1l0RSWL85-Vw3wpqKJKPSIome4V780epnVPOb2dhARtNtEdTvyeRxwNoKkkPBU9ukWmSWIYAh05m_248D1Y5YlYHcfMplrHiKfm6vacts0W6lRvaZMqxdueb9QWVpuROL6YAfJsQjDhE5xM2c-9KvkkoaZr8kH8JGox6JAIaEesPpoFx1XlYovENtKfB7c3yYgU"/>
+</div>
+<div class="flex flex-col">
+<span class="text-[12px] font-bold text-[#fdf9f0]">Alex Sterling</span>
+<span class="text-[10px] text-[#fdf9f0]/50 font-mono">ID: OPS-8821</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Anchor -->
+<header class="fixed top-0 h-16 w-full pl-80 pr-8 bg-[#fdf9f0]/80 backdrop-blur-md border-b border-[#154212]/10 flex justify-between items-center z-40 shadow-sm shadow-[#2d5a27]/05">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container-highest px-4 py-2 rounded-full flex items-center gap-3 min-w-[320px]">
+<span class="material-symbols-outlined text-[#154212]/60">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-['JetBrains_Mono'] w-full placeholder-[#154212]/40" placeholder="Search accounts, health metrics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="flex items-center gap-8 font-['JetBrains_Mono'] text-sm">
+<a class="text-[#154212] font-bold border-b-2 border-[#154212] transition-all" href="#">Overview</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-opacity" href="#">Churn Forecast</a>
+<a class="text-[#154212]/60 hover:text-[#154212] transition-opacity" href="#">Global Trends</a>
+</nav>
+<div class="flex items-center gap-4 text-[#154212]">
+<button class="hover:bg-surface-container-low p-2 rounded-full transition-colors"><span class="material-symbols-outlined">settings</span></button>
+<button class="hover:bg-surface-container-low p-2 rounded-full transition-colors"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="pl-80 pr-8 pt-24 pb-12 min-h-screen">
+<!-- Hero / Headline Section -->
+<section class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="text-4xl font-headline font-bold text-primary tracking-tight mb-2">CS Health Intelligence</h2>
+<p class="text-on-surface-variant font-mono text-sm max-w-xl">Laboratory-grade diagnostics for your ecosystem. Real-time intervention modeling and lifecycle monitoring.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-primary text-on-primary px-5 py-2.5 rounded-lg font-label text-[12px] font-bold uppercase tracking-widest flex items-center gap-2 hover:bg-tertiary-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">file_download</span> Export Analytics
+        </button>
+<button class="bg-secondary-fixed text-on-secondary-fixed px-5 py-2.5 rounded-lg font-label text-[12px] font-bold uppercase tracking-widest flex items-center gap-2 hover:brightness-105 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">bolt</span> Trigger Intervention
+        </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Critical Alerts / At-Risk Accounts (Large Bento) -->
+<div class="col-span-8 bg-surface-container-lowest rounded-xxl p-8 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<div>
+<span class="font-mono text-[10px] uppercase text-primary/60 tracking-[0.2em] mb-1 block">Critical Diagnostics</span>
+<h3 class="text-2xl font-bold text-primary tracking-tight">At-Risk Ecosystems</h3>
+</div>
+<div class="flex items-center gap-2 bg-error-container/20 text-error px-4 py-1.5 rounded-full border border-error/10">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-mono text-xs font-bold">12 CRITICAL ENTITIES</span>
+</div>
+</div>
+<div class="space-y-4">
+<!-- Account Row -->
+<div class="group flex items-center justify-between p-5 rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-all border-l-4 border-error">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center">
+<img alt="Account Logo" class="w-8 h-8 object-contain mix-blend-multiply" data-alt="Minimalist company logo for a financial technology firm with clean purple lines and geometric shapes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMOGe_LV3c3CTJb9NkuiVLYQMVTbva-9X8FXfKPTCWpx0fhpTd4rLVY3ppVlnQvb_ceuNzPr1fL8iEPlIHRz7N24bOp5DJgcx-vw9reZC3dhvm_1YR8nr-osBizhAXsua1wGOaPx1T3TQkE-4J4Il0lKmEpIJpJMmAnlNMZXxY3iuQ0IY3OH_bNjmzrc49lvh0axXOagBqPopsJ8Q73erJXWfz2F8THXarep_3KeYfAn6RiOnvUz3EVQPvcsQWx_dQZBrt-7pjOmh_"/>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Stripe International</h4>
+<p class="text-xs text-on-surface-variant font-mono">Premium Enterprise • <span class="text-error">Churn Risk: 78%</span></p>
+</div>
+</div>
+<div class="flex items-center gap-12">
+<div class="text-right">
+<span class="block text-[10px] font-mono uppercase text-primary/40 mb-1">Health Score</span>
+<span class="text-2xl font-mono font-bold text-error">24/100</span>
+</div>
+<div class="w-32 h-12 bg-surface-container-highest rounded-lg overflow-hidden relative">
+<!-- Sparkline Placeholder -->
+<div class="absolute inset-0 bg-gradient-to-r from-error/0 to-error/10"></div>
+<div class="absolute bottom-0 left-0 w-full h-1/2 bg-error/20" style="clip-path: polygon(0 100%, 15% 85%, 30% 95%, 45% 60%, 60% 75%, 75% 30%, 90% 40%, 100% 0, 100% 100%);"></div>
+</div>
+<button class="bg-primary-container text-on-primary-container p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Account Row -->
+<div class="group flex items-center justify-between p-5 rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-all border-l-4 border-error/40">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center">
+<img alt="Account Logo" class="w-8 h-8 object-contain mix-blend-multiply" data-alt="Corporate logo of a travel and hospitality brand featuring a soft red geometric icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAesJU-XMWkk-mn_DgqRQa7oFqh-APyRrA6jd4TuPU7COomk5zi9YQi34ABifJtkCspGWMZCF0awkjF_j4SR332GJy-saZwoJQvUniEJX8BNzDVJ5eiK_YLQh2pich9jgWjupUD7IYCx3iKF3nzZrHXWiPy9TwOu_TjhWClnkTbjWvNIUy-PA2F7pi1EOedhFI987rl09inTOfihfaY-67loGhrERAtWLqlw1msfwljJU1sLvsFRO0VKjI1UAMPl3u3ERNaWe7XX501"/>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Global Stays Ltd.</h4>
+<p class="text-xs text-on-surface-variant font-mono">Standard Growth • <span class="text-error/80">Churn Risk: 42%</span></p>
+</div>
+</div>
+<div class="flex items-center gap-12">
+<div class="text-right">
+<span class="block text-[10px] font-mono uppercase text-primary/40 mb-1">Health Score</span>
+<span class="text-2xl font-mono font-bold text-on-surface">48/100</span>
+</div>
+<div class="w-32 h-12 bg-surface-container-highest rounded-lg overflow-hidden relative">
+<div class="absolute bottom-0 left-0 w-full h-1/2 bg-primary/20" style="clip-path: polygon(0 100%, 20% 70%, 40% 80%, 60% 40%, 80% 50%, 100% 10%);"></div>
+</div>
+<button class="bg-primary-container text-on-primary-container p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Churn Prediction (Small Bento) -->
+<div class="col-span-4 bg-primary text-[#fdf9f0] rounded-xxl p-8 flex flex-col justify-between overflow-hidden relative">
+<div class="relative z-10">
+<span class="font-mono text-[10px] uppercase text-secondary-fixed tracking-[0.2em] mb-1 block">Predictive Modeling</span>
+<h3 class="text-3xl font-bold tracking-tight mb-6 leading-tight">Churn Forecast Q3</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-xs font-mono mb-2">
+<span>Estimated At-Risk Revenue</span>
+<span class="text-secondary-fixed">$1.2M</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest/20 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed" style="width: 65%;"></div>
+</div>
+</div>
+<div class="bg-[#23501e] p-5 rounded-xl border border-white/5">
+<p class="text-sm font-mono leading-relaxed text-[#fdf9f0]/80">
+<span class="text-secondary-fixed">●</span> Our AI models suggest a <span class="text-secondary-fixed font-bold">12% decrease</span> in churn risk if high-priority intervention steps are followed this month.
+              </p>
+</div>
+</div>
+</div>
+<div class="mt-12 flex items-center justify-between relative z-10">
+<div class="flex -space-x-3">
+<img alt="CSM" class="w-10 h-10 rounded-full border-2 border-primary" data-alt="Portrait of a smiling corporate man with glasses, professional business attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC13eZhss7k419aF0rsp7XGTo--3d6RFtpcHatZJ5_CPWl-NouwrghDkG7V47AKxPxuvpq94HUundu98XuxWC4O7-75YJenhLuIIMFthUo0gLfcYHQ-cmZArxCAhhmMWGItFxEQlQ7PqUK0phjhDsI5lMKvEWV4zjdGfdyeshM3ASeR8Mt88ftuT_c588DAirqOGEBnxs2ZxtW0d68NFJ6XMnC3dKG_3SVcZkqPNGxLVn2Z3O73mhPjnVD37xtylSMsKJLyHEV8sIx5"/>
+<img alt="CSM" class="w-10 h-10 rounded-full border-2 border-primary" data-alt="Close up portrait of a young professional woman with a bright smile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCow5Dnm23i4F-zCIIeGG4itLxDjBFFptjp0_xxtEnqChqm81Kj_8i3qfD31JQE9AGHjTX1Rvh74ikmQP9ZpkwqLBWT9pe5vdIZkmiyZ_y_modjko4zaEIWJ1tfU3K5WKCmN-TPo-_nDYj_GUaI04vGwaHixr1TAoYEpfWH9YWC4NzUSN-547XpzX3gdgtQpI5u7xaEJHnJCPkcdaqvWaWnBRsXtGzUl4bt1Dix4cS0QZBNLW98bU3DDSoomMx02K99Jbt23T12pyBT"/>
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-primary flex items-center justify-center text-xs font-bold border-2 border-primary">+4</div>
+</div>
+<span class="text-xs font-mono uppercase text-[#fdf9f0]/40">Active CSMs Assigned</span>
+</div>
+<!-- Decorative background shape -->
+<div class="absolute -right-20 -bottom-20 w-64 h-64 bg-secondary-fixed/10 rounded-full blur-3xl"></div>
+</div>
+<!-- Usage Trend Chart (Mid Bento) -->
+<div class="col-span-7 bg-surface-container-low rounded-xxl p-8">
+<div class="flex justify-between items-start mb-8">
+<div>
+<span class="font-mono text-[10px] uppercase text-primary/60 tracking-[0.2em] mb-1 block">Lifecycle Analytics</span>
+<h3 class="text-2xl font-bold text-primary tracking-tight">Ecosystem Usage Velocity</h3>
+</div>
+<select class="bg-surface-container-highest border-none rounded-lg text-xs font-mono focus:ring-primary/20 cursor-pointer">
+<option>Last 30 Days</option>
+<option>Last 90 Days</option>
+</select>
+</div>
+<div class="h-64 flex items-end justify-between gap-2 px-2">
+<!-- Stylized Bar Chart -->
+<div class="w-full flex flex-col items-center gap-2 group">
+<div class="w-full bg-surface-container-highest rounded-t-lg transition-all duration-500 group-hover:bg-primary-container" style="height: 40%"></div>
+<span class="text-[9px] font-mono text-primary/40">MON</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group">
+<div class="w-full bg-surface-container-highest rounded-t-lg transition-all duration-500 group-hover:bg-primary-container" style="height: 60%"></div>
+<span class="text-[9px] font-mono text-primary/40">TUE</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group">
+<div class="w-full bg-surface-container-highest rounded-t-lg transition-all duration-500 group-hover:bg-primary-container" style="height: 35%"></div>
+<span class="text-[9px] font-mono text-primary/40">WED</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group">
+<div class="w-full bg-secondary-fixed rounded-t-lg transition-all duration-500" style="height: 85%"></div>
+<span class="text-[9px] font-mono text-primary/80 font-bold">THU</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group">
+<div class="w-full bg-surface-container-highest rounded-t-lg transition-all duration-500 group-hover:bg-primary-container" style="height: 55%"></div>
+<span class="text-[9px] font-mono text-primary/40">FRI</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group">
+<div class="w-full bg-surface-container-highest rounded-t-lg transition-all duration-500 group-hover:bg-primary-container" style="height: 45%"></div>
+<span class="text-[9px] font-mono text-primary/40">SAT</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2 group">
+<div class="w-full bg-surface-container-highest rounded-t-lg transition-all duration-500 group-hover:bg-primary-container" style="height: 70%"></div>
+<span class="text-[9px] font-mono text-primary/40">SUN</span>
+</div>
+</div>
+</div>
+<!-- Intervention Suggestions (Mid Bento) -->
+<div class="col-span-5 bg-surface-container-highest rounded-xxl p-8 border border-outline-variant/30">
+<div class="mb-8">
+<span class="font-mono text-[10px] uppercase text-primary/60 tracking-[0.2em] mb-1 block">Laboratory Protocols</span>
+<h3 class="text-2xl font-bold text-primary tracking-tight">Active Interventions</h3>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-surface-container-lowest rounded-xl flex gap-4 items-start border border-outline-variant/10 shadow-sm">
+<div class="bg-tertiary-fixed p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div>
+<h5 class="font-bold text-sm">Review Lifecycle Event: Drop-off</h5>
+<p class="text-xs text-on-surface-variant mt-1 leading-relaxed">System detected 30% drop in Stripe Int'l API calls. Recommend scheduling a Technical Audit.</p>
+<button class="mt-3 text-[10px] font-bold text-primary underline underline-offset-4 uppercase tracking-wider">Execute Action</button>
+</div>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-xl flex gap-4 items-start border border-outline-variant/10 shadow-sm opacity-60">
+<div class="bg-surface-container-highest p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">chat_bubble</span>
+</div>
+<div>
+<h5 class="font-bold text-sm">Sentiment Shift Detected</h5>
+<p class="text-xs text-on-surface-variant mt-1 leading-relaxed">Negative feedback from Global Stays CTO regarding dashboard latency.</p>
+<button class="mt-3 text-[10px] font-bold text-primary underline underline-offset-4 uppercase tracking-wider">Log Response</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Health Score Matrix (Asymmetric Table-style Bento) -->
+<div class="col-span-12 bg-white rounded-xxl p-8 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-10">
+<div>
+<h3 class="text-2xl font-bold text-primary tracking-tight">Entity Health Matrix</h3>
+<p class="text-xs font-mono text-primary/60 uppercase mt-1">Cross-sectional Diagnostic View • Aggregated Data Points</p>
+</div>
+<div class="flex gap-4">
+<button class="px-4 py-2 bg-surface-container-low rounded-lg text-xs font-bold text-primary hover:bg-surface-container-high transition-colors">Filters</button>
+<button class="px-4 py-2 bg-surface-container-low rounded-lg text-xs font-bold text-primary hover:bg-surface-container-high transition-colors">Columns</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body">
+<thead>
+<tr class="border-b border-surface-container-highest">
+<th class="pb-4 font-mono text-[10px] uppercase text-primary/40 tracking-widest px-4">Account Entity</th>
+<th class="pb-4 font-mono text-[10px] uppercase text-primary/40 tracking-widest px-4">Usage Index</th>
+<th class="pb-4 font-mono text-[10px] uppercase text-primary/40 tracking-widest px-4">Engagement</th>
+<th class="pb-4 font-mono text-[10px] uppercase text-primary/40 tracking-widest px-4">License Cap</th>
+<th class="pb-4 font-mono text-[10px] uppercase text-primary/40 tracking-widest px-4 text-right">Agg. Score</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-6 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low border border-outline-variant/10 flex items-center justify-center font-bold text-primary text-xs">P</div>
+<div>
+<span class="font-bold block">Peleton Interactive</span>
+<span class="text-[10px] font-mono text-primary/60">Tier: Enterprise Platinum</span>
+</div>
+</div>
+</td>
+<td class="py-6 px-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-sm font-mono">High Velocity</span>
+</div>
+</td>
+<td class="py-6 px-4">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white bg-tertiary-fixed"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-tertiary-fixed-dim"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-surface-container-highest"></div>
+</div>
+</td>
+<td class="py-6 px-4 font-mono text-sm">8,200 / 10,000</td>
+<td class="py-6 px-4 text-right">
+<span class="text-lg font-mono font-bold text-primary">94.2</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-6 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low border border-outline-variant/10 flex items-center justify-center font-bold text-primary text-xs">N</div>
+<div>
+<span class="font-bold block">Nike Retail Systems</span>
+<span class="text-[10px] font-mono text-primary/60">Tier: Enterprise Gold</span>
+</div>
+</div>
+</td>
+<td class="py-6 px-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+<span class="text-sm font-mono">Stable</span>
+</div>
+</td>
+<td class="py-6 px-4">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white bg-tertiary-fixed"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-tertiary-fixed-dim"></div>
+</div>
+</td>
+<td class="py-6 px-4 font-mono text-sm">12,400 / 15,000</td>
+<td class="py-6 px-4 text-right">
+<span class="text-lg font-mono font-bold text-primary">82.8</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-6 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low border border-outline-variant/10 flex items-center justify-center font-bold text-primary text-xs">U</div>
+<div>
+<span class="font-bold block">Under Armour APAC</span>
+<span class="text-[10px] font-mono text-primary/60">Tier: Regional Pro</span>
+</div>
+</div>
+</td>
+<td class="py-6 px-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-sm font-mono">Decelerating</span>
+</div>
+</td>
+<td class="py-6 px-4">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white bg-surface-container-highest"></div>
+</div>
+</td>
+<td class="py-6 px-4 font-mono text-sm">1,200 / 5,000</td>
+<td class="py-6 px-4 text-right">
+<span class="text-lg font-mono font-bold text-error">31.4</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button Anchor -->
+<button class="fixed bottom-10 right-10 w-16 h-16 bg-secondary-fixed text-on-secondary-fixed rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined text-[28px] group-hover:rotate-90 transition-transform duration-300" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>

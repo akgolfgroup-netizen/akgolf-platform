@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Demographics - Analytics Suite</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#bcf0ae",
+                    "surface-tint": "#3b6934",
+                    "tertiary-fixed": "#bcf0ae",
+                    "surface": "#fdf9f0",
+                    "tertiary": "#154212",
+                    "surface-container-high": "#ece8df",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#23501e",
+                    "on-primary-fixed-variant": "#23501e",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#dddad1",
+                    "outline-variant": "#c2c9bb",
+                    "background": "#fdf9f0",
+                    "on-primary-fixed": "#002201",
+                    "on-error": "#ffffff",
+                    "primary": "#154212",
+                    "secondary-container": "#d0ed00",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1c1c16",
+                    "tertiary-fixed-dim": "#a1d494",
+                    "surface-container-low": "#f7f3ea",
+                    "on-secondary-fixed-variant": "#414c00",
+                    "surface-bright": "#fdf9f0",
+                    "on-secondary-fixed": "#191e00",
+                    "tertiary-container": "#2d5a27",
+                    "secondary": "#576500",
+                    "inverse-surface": "#31302b",
+                    "primary-fixed-dim": "#a1d494",
+                    "on-surface": "#1c1c16",
+                    "on-secondary-container": "#5b6900",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#2d5a27",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#72796e",
+                    "secondary-fixed": "#d2f000",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#9dd090",
+                    "secondary-fixed-dim": "#b8d300",
+                    "surface-container-highest": "#e6e2d9",
+                    "inverse-on-surface": "#f4f0e7",
+                    "on-surface-variant": "#42493e",
+                    "on-primary-container": "#9dd090",
+                    "surface-container": "#f1eee5",
+                    "on-tertiary-fixed": "#002201",
+                    "surface-variant": "#e6e2d9",
+                    "inverse-primary": "#a1d494"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope", "sans-serif"],
+                    "body": ["Manrope", "sans-serif"],
+                    "label": ["Manrope", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-layering { background-color: var(--surface-container-low); }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation (SideNavBar JSON implementation) -->
+<aside class="flex flex-col h-screen w-64 bg-green-950 dark:bg-green-950 py-8 px-4 flex-shrink-0 sticky top-0 overflow-y-auto">
+<div class="mb-10 px-4">
+<span class="text-xl font-bold text-white tracking-tight">AK Sports OS</span>
+<p class="text-[11px] font-['DM_Sans'] font-medium uppercase tracking-wider text-green-200/60 mt-1">Elite Analytics</p>
+</div>
+<nav class="flex-1 space-y-2">
+<div class="flex items-center gap-3 py-3 px-4 transition-colors text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 rounded-lg group">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 transition-colors text-lime-400 bg-green-900/50 rounded-lg group">
+<span class="material-symbols-outlined text-lg">monitoring</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Performance</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 transition-colors text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 rounded-lg group">
+<span class="material-symbols-outlined text-lg">groups</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Roster</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 transition-colors text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 rounded-lg group">
+<span class="material-symbols-outlined text-lg">query_stats</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Analytics</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 transition-colors text-green-200/60 hover:bg-green-900/30 hover:text-lime-300 rounded-lg group">
+<span class="material-symbols-outlined text-lg">travel_explore</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Scouting</span>
+</div>
+</nav>
+<div class="mt-auto px-4 space-y-6">
+<button class="w-full bg-secondary-fixed text-on-secondary-fixed py-3 rounded-xl font-bold uppercase text-[11px] tracking-widest shadow-lg shadow-lime-900/20 active:scale-95 transition-transform">
+                    New Report
+                </button>
+<div class="flex items-center gap-3 py-3 text-green-200/60 hover:text-lime-300 transition-colors">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span class="font-['DM_Sans'] font-medium uppercase tracking-wider text-[11px]">Settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 min-w-0 flex flex-col bg-background">
+<!-- Top Navigation (TopNavBar JSON implementation) -->
+<header class="flex justify-between items-center px-8 w-full h-16 bg-[#fdf9f0]/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-[#154212]/10 sticky top-0 z-10">
+<div class="flex items-center gap-6 flex-1">
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-[#f7f3ea] border-none rounded-full py-2 pl-10 pr-4 text-sm font-['DM_Sans'] focus:ring-1 ring-lime-400/20 placeholder-primary/30" placeholder="Search analytics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 px-4 h-16 border-b-2 border-lime-400">
+<span class="text-green-900 font-['DM_Sans'] font-semibold text-sm">Demographics</span>
+</div>
+<div class="flex items-center gap-4 text-green-700/50">
+<span class="material-symbols-outlined hover:text-green-900 transition-opacity cursor-pointer">notifications</span>
+<span class="material-symbols-outlined hover:text-green-900 transition-opacity cursor-pointer">help</span>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-surface-container-highest flex items-center justify-center border border-primary/10">
+<img alt="Analyst Profile" class="w-full h-full object-cover" data-alt="professional portrait of a data analyst in a minimalist office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVaM6Z1Pqdv7QIePHHGETqlRWKFf-Dhf76dnqjAfPEZNAFMZ77XrlwOfoU_lGRhV5WCD0VPHsM_bqDDOHb7ZdZENA-jSKGY5b3KRBnlgfhryt19RpBYn_zB3lR81_6PlBfRNRecUh8segRozIylLZRFye-5btZa5KfFRvIOv2c-1-DzJh8Pu6gqO-y_yeWh1wsFyS1AUuad2xYdiV-SjYZAwnAbEsAPuCjiJdqbrd_3nYruOGl-s_Gw10pwLFxpiLOz1cr-oexwpKK"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 max-w-[1280px] mx-auto w-full">
+<!-- Page Header -->
+<div class="mb-10 flex justify-between items-end">
+<div>
+<span class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/60 mb-2 block">Analytical Overview — 2024</span>
+<h1 class="text-4xl font-bold text-primary tracking-tight font-headline">Player Demographics</h1>
+</div>
+<div class="flex gap-3">
+<div class="bg-surface-container-low px-4 py-2 rounded-lg flex items-center gap-2 cursor-pointer border border-transparent hover:border-outline-variant transition-all">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span class="text-sm font-medium font-mono">LAST 12 MONTHS</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+<button class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-tertiary transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+                            EXPORT CSV
+                        </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="bento-grid">
+<!-- Primary Metric: Retention Rate -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-[24px] flex flex-col justify-between min-h-[240px] relative overflow-hidden group">
+<div class="relative z-10">
+<span class="font-mono text-[11px] uppercase tracking-widest text-primary/50">Engagement Index</span>
+<h3 class="text-sm font-bold text-primary mt-1">Retention Rate</h3>
+</div>
+<div class="relative z-10">
+<div class="flex items-baseline gap-2">
+<span class="text-6xl font-bold tracking-tighter text-primary">84.2</span>
+<span class="text-2xl font-bold text-primary/60">%</span>
+</div>
+<div class="flex items-center gap-2 mt-4 text-emerald-600">
+<span class="material-symbols-outlined text-lg">trending_up</span>
+<span class="text-xs font-bold font-mono">+2.4% vs prev. year</span>
+</div>
+</div>
+<!-- Background Accents -->
+<div class="absolute -right-8 -bottom-8 w-48 h-48 bg-secondary-container/20 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700"></div>
+</div>
+<!-- Churn Analysis -->
+<div class="col-span-8 bg-primary p-8 rounded-[24px] text-white flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-mono text-[11px] uppercase tracking-widest text-white/50">Risk Assessment</span>
+<h3 class="text-xl font-bold mt-1">Churn Analysis Metrics</h3>
+</div>
+<span class="material-symbols-outlined text-secondary-fixed text-4xl">analytics</span>
+</div>
+<div class="grid grid-cols-3 gap-8 mt-8">
+<div class="border-l border-white/10 pl-4">
+<p class="text-white/60 text-xs font-mono uppercase">Voluntary Churn</p>
+<p class="text-2xl font-bold font-mono">12.4%</p>
+</div>
+<div class="border-l border-white/10 pl-4">
+<p class="text-white/60 text-xs font-mono uppercase">Inactivity Gap</p>
+<p class="text-2xl font-bold font-mono">42 Days</p>
+</div>
+<div class="border-l border-white/10 pl-4">
+<p class="text-white/60 text-xs font-mono uppercase">Win-back Rate</p>
+<p class="text-2xl font-bold font-mono">28.9%</p>
+</div>
+</div>
+</div>
+<!-- Growth Trend Line Chart -->
+<div class="col-span-7 bg-surface-container-lowest p-8 rounded-[24px] border border-outline-variant/10">
+<div class="flex justify-between items-center mb-10">
+<h3 class="font-bold text-primary flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                                User Base Growth Trend
+                            </h3>
+<div class="flex gap-4">
+<span class="text-[10px] font-mono flex items-center gap-1"><span class="w-2 h-2 bg-primary rounded-full"></span> ACTUAL</span>
+<span class="text-[10px] font-mono flex items-center gap-1"><span class="w-2 h-2 bg-secondary rounded-full"></span> PROJECTED</span>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-2 relative">
+<!-- SVG for Line Graph Simulated -->
+<svg class="absolute inset-0 w-full h-full opacity-20" preserveaspectratio="none">
+<path class="text-primary" d="M0,150 Q100,120 200,160 T400,80 T600,100 T800,40" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-secondary" d="M0,160 Q100,150 200,170 T400,120 T600,110 T800,90" fill="none" stroke="currentColor" stroke-dasharray="8,4" stroke-width="2"></path>
+</svg>
+<div class="w-full flex justify-between h-full items-end z-10 px-4">
+<div class="h-1/2 w-px bg-primary/10"></div>
+<div class="h-2/3 w-px bg-primary/10"></div>
+<div class="h-1/3 w-px bg-primary/10"></div>
+<div class="h-4/5 w-px bg-primary/10"></div>
+<div class="h-3/4 w-px bg-primary/10"></div>
+<div class="h-full w-px bg-primary/10"></div>
+</div>
+</div>
+<div class="flex justify-between mt-4 px-4 text-[10px] font-mono text-primary/40">
+<span>JAN</span><span>MAR</span><span>MAY</span><span>JUL</span><span>SEP</span><span>NOV</span>
+</div>
+</div>
+<!-- Location Heat Map -->
+<div class="col-span-5 bg-surface-container-low p-8 rounded-[24px] flex flex-col">
+<div class="mb-6">
+<h3 class="font-bold text-primary">Geographic Density</h3>
+<p class="text-xs text-primary/60 font-mono mt-1">High-concentration clusters identified in 14 regions.</p>
+</div>
+<div class="flex-1 rounded-xl overflow-hidden grayscale contrast-125 brightness-95 border border-primary/5 relative">
+<img alt="Location Map" class="w-full h-full object-cover" data-location="London" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3EJgD8-FkVK2NkDMr2UHoWaYT1SPvRbKEs1qo3kV_2_63FKEluOKL4pe6NyQjKfGtMBB96rjaOxpW4XUVzS933E3IcVTs5NROEJkFfh2GeCk4xRdWiWeNFLkWZ9XM-66lz7QoU-GD9qn-3jZxrtwkn8ZDSbktpf_H9dbRDOP5ZGe1kkwIiMlVrJdEUcFDo_wHs5htB7jx3KwaQmcLnu22s3RV3G0mF02ju6XhtAORQUw083mSuRDZolmkiQS0yaoMYyMxxrP1UJkY"/>
+<!-- Overlay markers -->
+<div class="absolute top-1/4 left-1/3 w-6 h-6 bg-secondary/60 rounded-full blur-md"></div>
+<div class="absolute bottom-1/3 right-1/4 w-10 h-10 bg-secondary/80 rounded-full blur-lg"></div>
+<div class="absolute top-1/2 left-1/2 w-4 h-4 bg-primary/40 rounded-full blur-sm"></div>
+</div>
+</div>
+<!-- Gender Split Donut Chart -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-[24px] border border-outline-variant/10">
+<h3 class="font-bold text-primary mb-8">Gender Distribution</h3>
+<div class="relative w-48 h-48 mx-auto flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-primary" cx="18" cy="18" fill="none" r="16" stroke-dasharray="65, 100" stroke-width="4"></circle>
+<circle class="stroke-secondary" cx="18" cy="18" fill="none" r="16" stroke-dasharray="25, 100" stroke-dashoffset="-65" stroke-width="4"></circle>
+<circle class="stroke-surface-container-highest" cx="18" cy="18" fill="none" r="16" stroke-dasharray="10, 100" stroke-dashoffset="-90" stroke-width="4"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="text-3xl font-bold font-mono">65%</span>
+<span class="text-[10px] font-mono text-primary/40">MALE</span>
+</div>
+</div>
+<div class="mt-8 space-y-3">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-xs font-medium">Male</span>
+</div>
+<span class="text-xs font-mono font-bold">6,842</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-xs font-medium">Female</span>
+</div>
+<span class="text-xs font-mono font-bold">2,109</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-surface-container-highest"></div>
+<span class="text-xs font-medium">Other</span>
+</div>
+<span class="text-xs font-mono font-bold">942</span>
+</div>
+</div>
+</div>
+<!-- Age Distribution Bar Chart -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-[24px] border border-outline-variant/10">
+<h3 class="font-bold text-primary mb-8">Age Brackets</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-[10px] font-mono uppercase tracking-tighter">18 — 24</span>
+<span class="text-[10px] font-mono">14%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary/20 w-[14%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-[10px] font-mono uppercase tracking-tighter font-bold">25 — 34</span>
+<span class="text-[10px] font-mono font-bold">42%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[42%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-[10px] font-mono uppercase tracking-tighter">35 — 44</span>
+<span class="text-[10px] font-mono">28%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary/60 w-[28%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-[10px] font-mono uppercase tracking-tighter">45+</span>
+<span class="text-[10px] font-mono">16%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary/30 w-[16%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Handicap Distribution Histogram -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-[24px] border border-outline-variant/10">
+<h3 class="font-bold text-primary mb-8">Skill Distribution</h3>
+<div class="h-40 flex items-end gap-1">
+<div class="flex-1 bg-primary/10 h-[20%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/20 h-[35%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/40 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/80 h-[85%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary h-full rounded-t-sm"></div>
+<div class="flex-1 bg-primary/70 h-[70%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/40 h-[45%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/20 h-[30%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-[15%] rounded-t-sm"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-mono text-primary/40">
+<span>PRO</span>
+<span>AMATEUR</span>
+<span>NOVICE</span>
+</div>
+<div class="mt-6 pt-6 border-t border-primary/5 flex items-center justify-between">
+<span class="text-xs text-primary/60">Median Handicap</span>
+<span class="text-lg font-bold font-mono">12.4</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Meta Info -->
+<footer class="p-8 border-t border-primary/5 mt-auto">
+<div class="flex justify-between items-center text-[10px] font-mono text-primary/40 uppercase tracking-widest">
+<p>© 2024 AK SPORTS SYSTEMS — PROPRIETARY DATA ENGINE</p>
+<div class="flex gap-6">
+<span>DATA SYNC: 100%</span>
+<span>LATENCY: 14MS</span>
+<span>SECURITY: AES-256</span>
+</div>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inbox - AK Sports OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#002201",
+                        "background": "#fdf9f0",
+                        "on-tertiary-container": "#9dd090",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#002201",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#154212",
+                        "inverse-on-surface": "#f4f0e7",
+                        "surface-variant": "#e6e2d9",
+                        "on-secondary-container": "#5b6900",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#576500",
+                        "on-surface": "#1c1c16",
+                        "surface-container-highest": "#e6e2d9",
+                        "surface-dim": "#dddad1",
+                        "secondary-fixed-dim": "#b8d300",
+                        "surface-container-high": "#ece8df",
+                        "primary-container": "#2d5a27",
+                        "secondary-container": "#d0ed00",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#a1d494",
+                        "on-primary-container": "#9dd090",
+                        "surface-container-low": "#f7f3ea",
+                        "secondary-fixed": "#d2f000",
+                        "outline-variant": "#c2c9bb",
+                        "surface-tint": "#3b6934",
+                        "on-background": "#1c1c16",
+                        "on-secondary-fixed": "#191e00",
+                        "primary-fixed": "#bcf0ae",
+                        "surface-bright": "#fdf9f0",
+                        "tertiary-fixed-dim": "#a1d494",
+                        "on-surface-variant": "#42493e",
+                        "error-container": "#ffdad6",
+                        "surface": "#fdf9f0",
+                        "primary": "#154212",
+                        "tertiary-container": "#2d5a27",
+                        "on-secondary-fixed-variant": "#414c00",
+                        "surface-container": "#f1eee5",
+                        "on-tertiary-fixed-variant": "#23501e",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#23501e",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#bcf0ae",
+                        "outline": "#72796e",
+                        "inverse-surface": "#31302b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans", "Manrope"],
+                        "body": ["DM Sans", "Manrope"],
+                        "label": ["DM Sans", "Manrope"],
+                        "mono": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface antialiased overflow-x-hidden">
+<!-- SideNavBar (Authority: Shared Components JSON) -->
+<aside class="h-full w-64 fixed left-0 top-0 bg-[#154212] dark:bg-stone-950 flex flex-col py-8 shadow-[4px_0_16px_rgba(45,90,39,0.06)] z-40">
+<div class="px-6 mb-12">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-[#d2f000] rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-[#154212]" data-icon="sports_tennis">sports_tennis</span>
+</div>
+<div>
+<h1 class="text-lg font-black text-[#fdf9f0] leading-none">AK Sports</h1>
+<p class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-widest text-[#fdf9f0]/60 mt-1">OS Utilities</p>
+</div>
+</div>
+</div>
+<nav class="flex-1">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-4 text-[#fdf9f0]/70 p-3 mx-4 hover:text-[#d2f000] transition-all font-['DM_Sans'] text-xs font-medium uppercase tracking-widest active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-[#fdf9f0]/70 p-3 mx-4 hover:text-[#d2f000] transition-all font-['DM_Sans'] text-xs font-medium uppercase tracking-widest active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+<span>Files</span>
+</a>
+</li>
+<li>
+<!-- Active State: Notifications -->
+<a class="flex items-center gap-4 bg-[#d2f000] text-[#154212] rounded-r-full mr-4 p-3 font-['DM_Sans'] text-xs font-medium uppercase tracking-widest transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span>Notifications</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-[#fdf9f0]/70 p-3 mx-4 hover:text-[#d2f000] transition-all font-['DM_Sans'] text-xs font-medium uppercase tracking-widest active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-[#fdf9f0]/70 p-3 mx-4 hover:text-[#d2f000] transition-all font-['DM_Sans'] text-xs font-medium uppercase tracking-widest active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span>Utilities</span>
+</a>
+</li>
+</ul>
+</nav>
+<div class="mt-auto pt-8 border-t border-[#fdf9f0]/10">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-4 text-[#fdf9f0]/70 p-3 mx-4 hover:text-[#d2f000] transition-all font-['DM_Sans'] text-xs font-medium uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span>Help</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-[#fdf9f0]/70 p-3 mx-4 hover:text-[#d2f000] transition-all font-['DM_Sans'] text-xs font-medium uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</li>
+</ul>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen p-12">
+<!-- Header Section: Editorial Rhythm -->
+<header class="flex justify-between items-end mb-16">
+<div>
+<p class="font-['DM_Sans'] text-xs font-semibold uppercase tracking-[0.2em] text-primary/60 mb-3">Communications</p>
+<h1 class="text-6xl font-bold tracking-tight text-primary">Inbox</h1>
+</div>
+<div class="flex items-center gap-6 pb-2">
+<div class="relative">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="absolute -top-1 -right-1 w-5 h-5 bg-secondary text-on-secondary-fixed text-[10px] font-bold rounded-full flex items-center justify-center font-mono">12</span>
+</div>
+<div class="h-10 w-[1px] bg-outline-variant/30"></div>
+<a class="font-['DM_Sans'] text-xs font-medium uppercase tracking-widest text-primary hover:text-secondary transition-colors" href="#">Mark all read</a>
+<a class="flex items-center gap-2 p-2 rounded-full hover:bg-surface-container-low transition-colors text-primary" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="settings">settings</span>
+</a>
+</div>
+</header>
+<!-- Bento Grid Notification Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Featured Notification Card (Large) -->
+<div class="col-span-8 bg-surface-container-lowest rounded-[24px] p-8 border border-outline-variant/10 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-secondary/20 text-on-secondary-fixed text-[10px] font-bold font-mono px-2 py-1 rounded">URGENT</span>
+</div>
+<div class="flex gap-6">
+<div class="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center text-secondary shadow-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="security">security</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<h2 class="text-2xl font-bold text-primary">Security Alert: New Login</h2>
+<span class="font-mono text-xs text-on-surface-variant/60">09:42 AM</span>
+</div>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-6">A new login was detected from a Chrome browser on a MacOS device in Munich, Germany. If this wasn't you, please secure your account immediately.</p>
+<div class="flex gap-4">
+<button class="bg-secondary text-on-secondary-fixed px-6 py-3 rounded-xl font-['DM_Sans'] font-semibold text-xs uppercase tracking-wider hover:brightness-105 transition-all">Review Activity</button>
+<button class="border border-outline-variant/30 text-primary px-6 py-3 rounded-xl font-['DM_Sans'] font-semibold text-xs uppercase tracking-wider hover:bg-surface-container-low transition-all">It was me</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats/Summary Card -->
+<div class="col-span-4 bg-primary rounded-[24px] p-8 flex flex-col justify-between text-on-primary shadow-xl">
+<div>
+<h3 class="font-mono text-[10px] uppercase tracking-[0.3em] opacity-60 mb-6">Activity Volume</h3>
+<div class="flex items-baseline gap-2">
+<span class="text-6xl font-bold text-secondary">84</span>
+<span class="text-lg opacity-60 font-medium">Alerts this week</span>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-white/10">
+<div class="flex justify-between items-center mb-4">
+<span class="text-sm opacity-80">System Health</span>
+<span class="font-mono text-secondary text-xs">99.9%</span>
+</div>
+<div class="w-full bg-white/10 h-1 rounded-full overflow-hidden">
+<div class="bg-secondary w-[99%] h-full"></div>
+</div>
+</div>
+</div>
+<!-- Main Notification List (Heritage List) -->
+<div class="col-span-12 space-y-4">
+<!-- Notification Row: Unread -->
+<div class="group flex items-center gap-6 p-6 bg-surface-container-lowest rounded-2xl hover:bg-surface-container-low transition-all cursor-pointer relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary rounded-l-2xl"></div>
+<div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<div class="flex-1 grid grid-cols-4 items-center">
+<div class="col-span-1">
+<h4 class="font-bold text-primary">Payout Successful</h4>
+</div>
+<div class="col-span-2">
+<p class="text-sm text-on-surface-variant truncate pr-8">Your revenue share for 'Autumn Classic Series' has been deposited into your account.</p>
+</div>
+<div class="col-span-1 flex justify-end items-center gap-4">
+<span class="font-mono text-[10px] text-on-surface-variant/60 uppercase">14:20 PM</span>
+<div class="w-2 h-2 bg-secondary rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Notification Row: Read -->
+<div class="group flex items-center gap-6 p-6 bg-transparent border border-outline-variant/10 rounded-2xl hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary/40 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<div class="flex-1 grid grid-cols-4 items-center">
+<div class="col-span-1">
+<h4 class="font-bold text-primary/60">Upload Complete</h4>
+</div>
+<div class="col-span-2">
+<p class="text-sm text-on-surface-variant/60 truncate pr-8">Archive-2023-Final.zip (4.2GB) is now available in your cloud storage.</p>
+</div>
+<div class="col-span-1 flex justify-end items-center gap-4">
+<span class="font-mono text-[10px] text-on-surface-variant/40 uppercase">Yesterday</span>
+<div class="w-2 h-2 bg-transparent"></div>
+</div>
+</div>
+</div>
+<!-- Notification Row: Unread -->
+<div class="group flex items-center gap-6 p-6 bg-surface-container-lowest rounded-2xl hover:bg-surface-container-low transition-all cursor-pointer relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary rounded-l-2xl"></div>
+<div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</div>
+<div class="flex-1 grid grid-cols-4 items-center">
+<div class="col-span-1">
+<h4 class="font-bold text-primary">New Comment</h4>
+</div>
+<div class="col-span-2">
+<p class="text-sm text-on-surface-variant truncate pr-8">Julian requested a revision on the "Tournament Schedule" draft.</p>
+</div>
+<div class="col-span-1 flex justify-end items-center gap-4">
+<span class="font-mono text-[10px] text-on-surface-variant/60 uppercase">Yesterday</span>
+<div class="w-2 h-2 bg-secondary rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Notification Row: Read -->
+<div class="group flex items-center gap-6 p-6 bg-transparent border border-outline-variant/10 rounded-2xl hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary/40 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="event_available">event_available</span>
+</div>
+<div class="flex-1 grid grid-cols-4 items-center">
+<div class="col-span-1">
+<h4 class="font-bold text-primary/60">Meeting Reminder</h4>
+</div>
+<div class="col-span-2">
+<p class="text-sm text-on-surface-variant/60 truncate pr-8">Weekly Sync starting in 15 minutes. Join via Google Meet link.</p>
+</div>
+<div class="col-span-1 flex justify-end items-center gap-4">
+<span class="font-mono text-[10px] text-on-surface-variant/40 uppercase">Oct 12</span>
+<div class="w-2 h-2 bg-transparent"></div>
+</div>
+</div>
+</div>
+<!-- Notification Row: Read -->
+<div class="group flex items-center gap-6 p-6 bg-transparent border border-outline-variant/10 rounded-2xl hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary/40 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="update">update</span>
+</div>
+<div class="flex-1 grid grid-cols-4 items-center">
+<div class="col-span-1">
+<h4 class="font-bold text-primary/60">System Update</h4>
+</div>
+<div class="col-span-2">
+<p class="text-sm text-on-surface-variant/60 truncate pr-8">AK Sports OS version 4.2.0 has been deployed with performance improvements.</p>
+</div>
+<div class="col-span-1 flex justify-end items-center gap-4">
+<span class="font-mono text-[10px] text-on-surface-variant/40 uppercase">Oct 11</span>
+<div class="w-2 h-2 bg-transparent"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More Section -->
+<div class="mt-16 flex flex-col items-center">
+<button class="group flex items-center gap-3 bg-primary text-on-primary px-8 py-4 rounded-xl font-['DM_Sans'] font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition-all shadow-lg active:scale-95">
+<span>Load older notifications</span>
+<span class="material-symbols-outlined group-hover:translate-y-1 transition-transform" data-icon="expand_more">expand_more</span>
+</button>
+<p class="mt-6 font-mono text-[10px] text-on-surface-variant/40 uppercase tracking-[0.2em]">Viewing 05 of 142 total items</p>
+</div>
+</main>
+<!-- Visual Accent: Premium Background Elements -->
+<div class="fixed top-0 right-0 w-1/3 h-screen -z-10 opacity-[0.03] pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="abstract architectural patterns with clean lines and soft shadows on beige concrete surface in daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFegGsNxgjhj17ljVM2Pnc9yRT7rwlsq_KCK05f60NcqXlzRpOuuMsAomWJNhB_SWvWYH-3kClCqSnH1K3SbKJuIb1DSAkk00yXKmj5SsDQnmkcxmljTHhDl0GaAR6UM6-pjDChhmuyaK0KT1b_8YBfr5c_XBN19-bEBZ9A_EL3ISSyqbugWjPJQlkMA3ec80OWG7_xPesTaZiXSsSAySi3cJUCz3fHJjMDiVHDzWAGu3YwZ7mN_Ers6SrsZzSOocKm_dhO7IvhpFJ"/>
+</div>
+</body></html>

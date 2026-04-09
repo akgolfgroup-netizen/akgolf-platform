@@ -12,6 +12,6 @@ export async function POST(request: NextRequest) {
   await supabase.auth.signOut();
 
   return NextResponse.redirect(
-    new URL("/treningsplan", process.env.NEXT_PUBLIC_SITE_URL || "https://akgolf.no")
+    new URL("/portal/login", process.env.NEXT_PUBLIC_SITE_URL || "https://akgolf.no")
   );
 }
