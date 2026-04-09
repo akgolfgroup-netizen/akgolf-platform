@@ -58,9 +58,7 @@ export default function LandingHomepage() {
                     (e.target as HTMLImageElement).style.display = 'none';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#2d5a27]/10 to-transparent flex items-center justify-center">
-                  <GolfIcon className="w-48 h-48 text-[#154212]/10" />
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#2d5a27]/10 to-transparent"></div>
               </div>
               <div className="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-xl flex items-center gap-6 border border-[#154212]/5">
                 <div className="w-16 h-16 rounded-2xl bg-[#154212] flex items-center justify-center">

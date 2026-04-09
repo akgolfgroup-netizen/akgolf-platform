@@ -50,10 +50,7 @@ export function BookingNavSidebar({
     <>
       {/* Mobile Header */}
       <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#154212]">
-        <div className="flex items-center justify-between px-4 py-3">
-          <Link href="/" className="text-white font-bold text-lg tracking-tight">
-            AK Golf
-          </Link>
+        <div className="flex items-center justify-end px-4 py-3">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="text-white p-2"
@@ -135,19 +132,7 @@ export function BookingNavSidebar({
 
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex h-screen w-64 fixed left-0 top-0 bg-[#154212] flex-col py-8 z-40">
-        {/* Logo */}
-        <div className="px-6 mb-10">
-          <Link href="/" className="block group">
-            <span className="text-white font-black text-xl tracking-tight group-hover:text-[#d2f000] transition-colors">
-              AK Golf
-            </span>
-            <span className="block text-white/50 font-medium uppercase text-[10px] tracking-widest mt-1">
-              Academy
-            </span>
-          </Link>
-        </div>
-
-        {/* Back to main site link */}
+        {/* Back to main site link -->
         <div className="px-6 mb-6">
           <Link
             href="/"
