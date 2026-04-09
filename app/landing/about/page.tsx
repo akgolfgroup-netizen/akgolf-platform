@@ -109,8 +109,8 @@ export default function LandingAboutPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {/* Anders */}
-              <div className="bg-white rounded-[32px] overflow-hidden border border-[#154212]/5 shadow-lg">
-                <div className="aspect-[4/3] bg-[#f7f3ea] relative">
+              <div className="text-center">
+                <div className="aspect-[4/3] bg-[#f7f3ea] rounded-[32px] overflow-hidden mb-6">
                   <img 
                     src="/images/team/anders-kristiansen.jpg" 
                     alt="Anders Kristiansen"
@@ -120,51 +120,17 @@ export default function LandingAboutPage() {
                     }}
                   />
                 </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-[#154212] mb-1">Anders Kristiansen</h3>
-                  <p className="font-mono text-xs uppercase tracking-widest text-[#576500] mb-4">Hovedcoach & Grunnlegger</p>
-                  <p className="text-[#42493e] mb-6">
-                    Har coachet spillere på PGA Tour, DP World Tour og Ladies European Tour. 
-                    Norges beste og dyreste golftrener per time. Kombinerer teknisk veiledning 
-                    etter plan med TrackMan-analyse.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#154212]/60 border border-[#154212]/10 px-2 py-1 rounded">PGA Tour erfaring</span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#154212]/60 border border-[#154212]/10 px-2 py-1 rounded">TrackMan sertifisert</span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#154212]/60 border border-[#154212]/10 px-2 py-1 rounded">DECADE-strategi</span>
-                  </div>
-                  <div className="bg-[#f7f3ea] rounded-xl p-4">
-                    <p className="font-mono text-[10px] uppercase tracking-widest text-[#154212]/40 mb-2">Tilgjengelighet</p>
-                    <p className="text-sm text-[#154212]">Man 12-20, Tirs 13-20, Ons 12-16, Tors 13-20, Fre 10-14</p>
-                  </div>
-                </div>
+                <h3 className="text-2xl font-bold text-[#154212]">Anders Kristiansen</h3>
               </div>
 
               {/* Markus */}
-              <div className="bg-white rounded-[32px] overflow-hidden border border-[#154212]/5 shadow-lg">
-                <div className="aspect-[4/3] bg-[#f7f3ea] flex items-center justify-center">
+              <div className="text-center">
+                <div className="aspect-[4/3] bg-[#f7f3ea] rounded-[32px] overflow-hidden mb-6 flex items-center justify-center">
                   <div className="w-32 h-32 rounded-full bg-[#154212] flex items-center justify-center">
                     <span className="text-[#d2f000] text-4xl font-bold">M</span>
                   </div>
                 </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-[#154212] mb-1">Markus</h3>
-                  <p className="font-mono text-xs uppercase tracking-widest text-[#576500] mb-4">Assistentcoach</p>
-                  <p className="text-[#42493e] mb-6">
-                    College-golf fra USA med bachelor i business. Spesialisert på 
-                    gruppetrening, banecoaching og nybegynneropplæring. Halv pris av Anders, 
-                    samme engasjement.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#154212]/60 border border-[#154212]/10 px-2 py-1 rounded">College-golf USA</span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#154212]/60 border border-[#154212]/10 px-2 py-1 rounded">Gruppetrening</span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#154212]/60 border border-[#154212]/10 px-2 py-1 rounded">Nybegynnere</span>
-                  </div>
-                  <div className="bg-[#f7f3ea] rounded-xl p-4">
-                    <p className="font-mono text-[10px] uppercase tracking-widest text-[#154212]/40 mb-2">Tilgjengelighet</p>
-                    <p className="text-sm text-[#154212]">Etter avtale</p>
-                  </div>
-                </div>
+                <h3 className="text-2xl font-bold text-[#154212]">Markus R. Pedersen</h3>
               </div>
             </div>
           </div>
