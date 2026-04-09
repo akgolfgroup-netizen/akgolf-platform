@@ -110,11 +110,13 @@ function CheckoutForm({
 
       {/* Discount Code */}
       <div>
-        <label className="text-xs font-semibold uppercase tracking-wider text-grey-500 mb-2 block">
+        <label htmlFor="discountCode" className="text-xs font-semibold uppercase tracking-wider text-grey-500 mb-2 block">
           Rabattkode
         </label>
         <div className="flex gap-2">
           <input
+            id="discountCode"
+            name="discountCode"
             type="text"
             value={discountCode}
             onChange={(e) => setDiscountCode(e.target.value)}

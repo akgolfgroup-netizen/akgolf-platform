@@ -106,6 +106,7 @@ export function CustomerForm({ onSubmit }: Props) {
             </label>
             <input
               id="firstName"
+              name="firstName"
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
@@ -127,6 +128,7 @@ export function CustomerForm({ onSubmit }: Props) {
             </label>
             <input
               id="lastName"
+              name="lastName"
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
@@ -148,6 +150,7 @@ export function CustomerForm({ onSubmit }: Props) {
             </label>
             <input
               id="email"
+              name="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -172,6 +175,7 @@ export function CustomerForm({ onSubmit }: Props) {
             </label>
             <input
               id="phone"
+              name="phone"
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -196,6 +200,7 @@ export function CustomerForm({ onSubmit }: Props) {
             </label>
             <input
               id="handicap"
+              name="handicap"
               type="text"
               value={handicap}
               onChange={(e) => setHandicap(e.target.value)}

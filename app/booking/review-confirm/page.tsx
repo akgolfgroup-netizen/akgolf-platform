@@ -294,8 +294,10 @@ export default function BookingReviewConfirmPage() {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">Navn *</label>
+                      <label htmlFor="name" className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">Navn *</label>
                       <input 
+                        id="name"
+                        name="name"
                         className="w-full bg-[#f7f3ea] border-none rounded-xl px-4 py-3 text-[#1c1c16] text-sm"
                         placeholder="Ola Nordmann"
                         type="text"
@@ -305,8 +307,10 @@ export default function BookingReviewConfirmPage() {
                       />
                     </div>
                     <div>
-                      <label className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">E-post *</label>
+                      <label htmlFor="email" className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">E-post *</label>
                       <input 
+                        id="email"
+                        name="email"
                         className="w-full bg-[#f7f3ea] border-none rounded-xl px-4 py-3 text-[#1c1c16] text-sm"
                         placeholder="ola@epost.no"
                         type="email"
@@ -316,8 +320,10 @@ export default function BookingReviewConfirmPage() {
                       />
                     </div>
                     <div>
-                      <label className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">Telefon</label>
+                      <label htmlFor="phone" className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">Telefon</label>
                       <input 
+                        id="phone"
+                        name="phone"
                         className="w-full bg-[#f7f3ea] border-none rounded-xl px-4 py-3 text-[#1c1c16] text-sm"
                         placeholder="+47 000 00 000"
                         type="tel"
@@ -326,8 +332,10 @@ export default function BookingReviewConfirmPage() {
                       />
                     </div>
                     <div>
-                      <label className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">Handicap</label>
+                      <label htmlFor="handicap" className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">Handicap</label>
                       <input 
+                        id="handicap"
+                        name="handicap"
                         className="w-full bg-[#f7f3ea] border-none rounded-xl px-4 py-3 text-[#1c1c16] text-sm"
                         placeholder="f.eks. 12.5"
                         type="text"
@@ -367,6 +375,7 @@ export default function BookingReviewConfirmPage() {
                       checked={acceptedTerms}
                       onChange={(e) => setAcceptedTerms(e.target.checked)}
                       id="terms"
+                      name="terms"
                     />
                     <label htmlFor="terms" className="text-xs text-[#42493e] leading-relaxed">
                       Jeg godtar <a className="underline font-medium text-[#154212]" href="#">vilkårene</a> og bekrefter at jeg har lest <a className="underline font-medium text-[#154212]" href="#">kanselleringspolicyen</a>. Sessioner må kanselleres minst 24 timer i forveien.
