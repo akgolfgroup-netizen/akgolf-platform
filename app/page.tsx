@@ -34,7 +34,7 @@ export default function LandingHomepage() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link 
-                  href="/booking-temp"
+                  href="/booking"
                   className="bg-[#d2f000] text-[#154212] px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:opacity-90 transition-all flex items-center gap-2 shadow-[inset_0_1px_2px_rgba(255,255,255,0.5)]"
                 >
                   Se pakker og priser

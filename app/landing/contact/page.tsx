@@ -311,7 +311,7 @@ export default function LandingContactPage() {
               ingen telefonkø — bare velg tid som passer deg.
             </p>
             <Link
-              href="/booking-temp"
+              href="/booking"
               className="inline-flex items-center gap-2 bg-[#d2f000] text-[#154212] px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform"
             >
               Book nå

@@ -34,7 +34,7 @@ export default function SpillerportalLandingPage() {
 
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                href="/booking-temp"
+                href="/booking"
                 className="bg-[#d2f000] text-[#154212] px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform"
               >
                 Book coaching
@@ -91,7 +91,7 @@ export default function SpillerportalLandingPage() {
               Inntil videre kan du booke coaching og vi sender deg informasjon på e-post.
             </p>
             <Link
-              href="/booking-temp"
+              href="/booking"
               className="inline-flex items-center gap-2 bg-[#d2f000] text-[#154212] px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform"
             >
               Book coaching nå

@@ -188,7 +188,7 @@ export default function BookingReviewConfirmPage() {
             href={`/booking/select-service?serviceTypeId=${serviceTypeId}`}
             className="text-white/70 py-3 px-6 font-medium uppercase text-xs hover:bg-white/10 transition-all flex items-center gap-3"
           >
-            <Flag className="w-5 h-5" /><span>Pakke</span>
+            <Calendar className="w-5 h-5" /><span>Coaching</span>
           </Link>
 
           <Link 

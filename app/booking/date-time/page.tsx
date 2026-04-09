@@ -243,7 +243,7 @@ export default function BookingDateTimePage() {
               href={`/booking/select-service?serviceTypeId=${serviceTypeId}`}
               className="text-white/70 py-3 px-8 font-medium uppercase text-xs flex items-center gap-3 hover:bg-white/10 transition-all"
             >
-              <Flag className="w-4 h-4" />Pakke
+              <Calendar className="w-4 h-4" />Coaching
             </Link>
             <div className="bg-[#d2f000] text-[#154212] rounded-r-full mr-4 py-3 px-8 font-medium uppercase text-xs flex items-center gap-3 shadow-md">
               <Calendar className="w-4 h-4" />Tid

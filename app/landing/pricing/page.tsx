@@ -95,7 +95,7 @@ export default function LandingPricingPage() {
               </div>
               <p className="text-sm text-[#42493e] mb-6 italic">Passer for: Ambisiøse spillere som trener 3+ ganger i uken.</p>
               <Link 
-                href="/booking-temp"
+                href="/booking"
                 className="w-full py-4 bg-[#d2f000] text-[#154212] font-bold uppercase text-xs tracking-widest rounded-xl hover:shadow-[0_0_20px_rgba(210,240,0,0.4)] transition-all duration-300 transform hover:scale-[1.02] text-center block"
               >
                 Velg Performance Pro
@@ -122,7 +122,7 @@ export default function LandingPricingPage() {
               </div>
               <p className="text-sm text-[#42493e] mb-6 italic">Passer for: Klubbspillere som spiller 1–2 ganger i uken.</p>
               <Link 
-                href="/booking-temp"
+                href="/booking"
                 className="w-full py-4 border-2 border-[#154212] text-[#154212] font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-[#154212] hover:text-white transition-all duration-300 text-center block"
               >
                 Velg Performance
@@ -154,7 +154,7 @@ export default function LandingPricingPage() {
               </div>
               <p className="text-sm text-[#42493e] mb-6 italic">Passer for: Alle som vil prøve AK Golf-metoden før de forplikter seg til abonnement. Etter Start anbefaler vi overgang til Performance eller Performance Pro.</p>
               <Link 
-                href="/booking-temp"
+                href="/booking"
                 className="w-full py-4 bg-[#154212] text-white font-bold uppercase text-xs tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 text-center block"
               >
                 Start nå
@@ -187,7 +187,7 @@ export default function LandingPricingPage() {
               </div>
               <p className="text-xs text-[#ba1a1a] mb-4">Ingen spillerportal inkludert</p>
               <Link 
-                href="/booking-temp"
+                href="/booking"
                 className="w-full py-4 border-2 border-[#154212] text-[#154212] font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-[#154212] hover:text-white transition-all duration-300 text-center block"
               >
                 Book Flex 50
@@ -214,7 +214,7 @@ export default function LandingPricingPage() {
               </div>
               <p className="text-xs text-[#ba1a1a] mb-4">Ingen spillerportal inkludert</p>
               <Link 
-                href="/booking-temp"
+                href="/booking"
                 className="w-full py-4 border-2 border-[#154212] text-[#154212] font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-[#154212] hover:text-white transition-all duration-300 text-center block"
               >
                 Book Flex 90
@@ -245,7 +245,7 @@ export default function LandingPricingPage() {
                 ))}
               </div>
               <Link 
-                href="/booking-temp"
+                href="/booking"
                 className="w-full py-4 bg-[#154212] text-white font-bold uppercase text-xs tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 text-center block"
               >
                 Book On-Course 9
@@ -270,7 +270,7 @@ export default function LandingPricingPage() {
                 ))}
               </div>
               <Link 
-                href="/booking-temp"
+                href="/booking"
                 className="w-full py-4 bg-[#154212] text-white font-bold uppercase text-xs tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 text-center block"
               >
                 Book Par 3

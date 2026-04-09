@@ -9,7 +9,7 @@ export default function LandingHomepage() {
         </div>
         <div className="hidden md:flex items-center gap-8">
           <a className="font-medium uppercase tracking-wider text-sm text-[#154212] border-b-2 border-[#d2f000] pb-1" href="#">Hjem</a>
-          <a className="font-medium uppercase tracking-wider text-sm text-[#154212]/70 hover:text-[#154212] transition-colors" href="/booking-temp">Book nå</a>
+          <a className="font-medium uppercase tracking-wider text-sm text-[#154212]/70 hover:text-[#154212] transition-colors" href="/booking">Book nå</a>
           <a className="font-medium uppercase tracking-wider text-sm text-[#154212]/70 hover:text-[#154212] transition-colors" href="/landing/about">Om oss</a>
           <a className="font-medium uppercase tracking-wider text-sm text-[#154212]/70 hover:text-[#154212] transition-colors" href="/landing/contact">Kontakt</a>
         </div>
@@ -41,7 +41,7 @@ export default function LandingHomepage() {
                 AK Golf Academy kombinerer individuell coaching med en digital treningsplattform som følger deg mellom sesjonene. Strukturert utvikling for golfspillere på alle nivåer.
               </p>
               <div className="flex flex-wrap gap-4">
-                <a href="/booking-temp" className="bg-[#d2f000] text-[#154212] px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:opacity-90 transition-all flex items-center gap-2 shadow-[inset_0_1px_2px_rgba(255,255,255,0.5)]">
+                <a href="/booking" className="bg-[#d2f000] text-[#154212] px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:opacity-90 transition-all flex items-center gap-2 shadow-[inset_0_1px_2px_rgba(255,255,255,0.5)]">
                   Book nå
                   <span className="material-symbols-outlined text-xl">arrow_forward</span>
                 </a>
@@ -177,7 +177,7 @@ export default function LandingHomepage() {
               Start med et 3-sesjers Start-pakke, eller gå rett på Performance-abonnement. Du velger.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="/booking-temp" className="bg-[#d2f000] text-[#154212] px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform inline-flex items-center">
+              <a href="/booking" className="bg-[#d2f000] text-[#154212] px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform inline-flex items-center">
                 Book nå
               </a>
               <a href="/landing/contact" className="border-2 border-white/30 text-white px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-white/10 transition-all inline-flex items-center">
