@@ -111,13 +111,12 @@ export async function GET(req: NextRequest) {
       const nextDay = new Date(date);
       nextDay.setDate(date.getDate() + 1);
 
-      // Hent tilgjengelighet for denne dagen
+      // Hent tilgjengelighet for denne dagen (fra InstructorAvailability)
       const { data: availabilityWindows } = await supabase
-        .from("AvailabilityWindow")
+        .from("InstructorAvailability")
         .select("startTime, endTime")
         .eq("instructorId", instructorId)
-        .eq("dayOfWeek", adjustedDayOfWeek)
-        .eq("isActive", true);
+        .eq("dayOfWeek", dayOfWeek);
 
       // Hent eksisterende bookinger
       const { data: existingBookings } = await supabase
@@ -141,8 +140,14 @@ export async function GET(req: NextRequest) {
       
       if (availabilityWindows && availabilityWindows.length > 0) {
         for (const window of availabilityWindows) {
-          const windowStart = new Date(window.startTime);
-          const windowEnd = new Date(window.endTime);
+          // InstructorAvailability lagrer tid som "HH:MM" string
+          const [startH, startM] = window.startTime.split(':').map(Number);
+          const [endH, endM] = window.endTime.split(':').map(Number);
+          
+          const windowStart = new Date(date);
+          windowStart.setHours(startH, startM, 0, 0);
+          const windowEnd = new Date(date);
+          windowEnd.setHours(endH, endM, 0, 0);
           
           let currentSlot = new Date(windowStart);
           while (currentSlot < windowEnd) {
