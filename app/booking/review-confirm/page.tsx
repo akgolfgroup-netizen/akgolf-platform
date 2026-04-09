@@ -396,7 +396,7 @@ export default function BookingReviewConfirmPage() {
                       <div>
                         <p className="text-xs text-white/40 uppercase font-mono mb-1">Total</p>
                         <p className="text-3xl lg:text-4xl font-bold tracking-tighter text-[#d2f000]">
-                          {service.price === 0 ? "Gratis" : `${service.price.toLocaleString("nb-NO")},00 kr`}
+                          {service.price === 0 ? "Gratis" : `${service.price.toLocaleString("nb-NO")} kr`}
                         </p>
                       </div>
                       {service.name.includes("Performance") && <span className="text-xs text-white/40">per mnd</span>}
@@ -424,7 +424,7 @@ export default function BookingReviewConfirmPage() {
                         </>
                       )}
                     </button>
-                    <p className="mt-3 lg:mt-4 text-xs text-center text-white/40">Coaching-tjenester er MVA-fritatt</p>
+                    
                   </div>
 
                   {/* Trust Badges */}
