@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, Calendar, Clock, GolfIcon, Rocket, Star, Timer } from "@/components/shared/icons";
+import { ArrowRight, Clock, Star, Zap } from "lucide-react";
 
 interface ServiceType {
   id: string;
@@ -27,34 +27,34 @@ interface ServiceType {
   }[];
 }
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  "Performance Pro": Star,
-  "Performance": Star,
-  "Start": Rocket,
-  "Start (Onboarding)": Rocket,
-  "Flex 50": Clock,
-  "Flex 90": Timer,
-  "On-Course 9": GolfIcon,
-  "On-Course Par 3": GolfIcon,
+// Brand colors - konsistente gjennom hele opplevelsen
+const BRAND = {
+  green: "#154212",
+  lime: "#d2f000",
+  cream: "#fdf9f0",
+  creamDark: "#f7f3ea",
+  text: "#1a1a1a",
+  textMuted: "#666666",
+  white: "#ffffff",
 };
 
 function getServiceFeatures(service: ServiceType): string[] {
-  const baseFeatures = [`${service.duration} minutter`];
-  
-  if (service.name.includes("Performance")) {
-    const sessions = service.name.includes("Pro") ? "4 sesjoner" : "2 sesjoner";
-    return [sessions + " per måned", "TrackMan analyse", service.name.includes("Pro") ? "14 dagers booking" : "7 dagers booking", "Full spillerportal"];
+  if (service.name.includes("Performance Pro")) {
+    return ["4 sesjoner per måned", "TrackMan analyse", "14 dagers booking", "Full spillerportal"];
   }
-  if (service.name.includes("Start")) {
-    return ["3 sesjoner", "TrackMan analyse", "Personlig plan", "30 dager portal"];
+  if (service.name.includes("Performance")) {
+    return ["2 sesjoner per måned", "TrackMan analyse", "7 dagers booking", "Full spillerportal"];
   }
   if (service.name.includes("Flex")) {
     return [`${service.duration} minutter`, "Ingen binding", "Book 48t i forveien", "Coaching-notater"];
   }
-  if (service.name.includes("On-Course")) {
-    return ["Banecoaching", "DECADE-strategi", "Course management"];
-  }
-  return baseFeatures;
+  return [`${service.duration} minutter`];
+}
+
+function getIcon(name: string) {
+  if (name.includes("Performance Pro")) return Star;
+  if (name.includes("Performance")) return Zap;
+  return Clock;
 }
 
 export default function BookingSelectServicePage() {
@@ -62,26 +62,32 @@ export default function BookingSelectServicePage() {
   const [services, setServices] = useState<ServiceType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/portal/public/service-types")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
-          const sorted = data.sort((a, b) => {
-            const order = ["Performance Pro", "Performance", "Start", "Flex 50", "Flex 90", "On-Course"];
-            const aIndex = order.findIndex(o => a.name.includes(o));
-            const bIndex = order.findIndex(o => b.name.includes(o));
-            if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
-            if (aIndex !== -1) return -1;
-            if (bIndex !== -1) return 1;
-            return 0;
+          // Filtrer ut Foundation Test og Start
+          const filtered = data.filter(s => 
+            !s.name.includes("Foundation") && 
+            !s.name.includes("Start") &&
+            !s.name.includes("On-Course")
+          );
+          
+          // Sorter: Performance først, så Flex
+          const sorted = filtered.sort((a, b) => {
+            const getPriority = (name: string) => {
+              if (name.includes("Performance Pro")) return 1;
+              if (name.includes("Performance")) return 2;
+              if (name.includes("Flex 50")) return 3;
+              if (name.includes("Flex 90")) return 4;
+              return 5;
+            };
+            return getPriority(a.name) - getPriority(b.name);
           });
+          
           setServices(sorted);
-          if (sorted.length > 0) {
-            setSelectedId(sorted[0].id);
-          }
         } else {
           setError("Kunne ikke laste tjenester");
         }
@@ -93,29 +99,27 @@ export default function BookingSelectServicePage() {
       });
   }, []);
 
-  const handleContinue = () => {
-    if (selectedId) {
-      // Gå direkte til date-time med default coach (første tilgjengelige)
-      router.push(`/booking/date-time?serviceTypeId=${selectedId}`);
-    }
+  const handleSelect = (serviceId: string) => {
+    router.push(`/booking/date-time?serviceTypeId=${serviceId}`);
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#fdf9f0] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#154212]"></div>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: BRAND.cream }}>
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#154212] border-t-transparent"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#fdf9f0] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: BRAND.cream }}>
         <div className="text-center">
-          <p className="text-[#ba1a1a] mb-4">{error}</p>
+          <p className="text-red-600 mb-4">{error}</p>
           <button 
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-[#154212] text-white rounded-lg"
+            className="px-6 py-3 text-white rounded-lg font-medium"
+            style={{ backgroundColor: BRAND.green }}
           >
             Prøv igjen
           </button>
@@ -124,157 +128,217 @@ export default function BookingSelectServicePage() {
     );
   }
 
-  const mainServices = services.filter(s => !s.name.includes("Flex") && !s.name.includes("On-Course"));
+  const performanceServices = services.filter(s => s.name.includes("Performance"));
   const flexServices = services.filter(s => s.name.includes("Flex"));
-  const onCourseServices = services.filter(s => s.name.includes("On-Course"));
 
   return (
     <>
-      <nav className="bg-[#fdf9f0] sticky top-0 z-50">
-        <div className="flex justify-between items-center w-full px-8 py-6 max-w-7xl mx-auto">
-          <Link href="/" className="text-xl font-bold text-[#154212] tracking-tighter uppercase">AK Golf Academy</Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/landing/pricing" className="font-semibold uppercase tracking-wider text-xs text-[#154212]/60 hover:text-[#154212] transition-colors">Priser</Link>
-            <Link href="/booking/select-service" className="font-semibold uppercase tracking-wider text-xs text-[#154212] border-b-2 border-[#d2f000] pb-1">Book nå</Link>
+      {/* Header */}
+      <nav style={{ backgroundColor: BRAND.cream }} className="sticky top-0 z-50 border-b" style={{ borderColor: "rgba(21, 66, 18, 0.1)" }}>
+        <div className="flex justify-between items-center w-full px-6 py-4 max-w-5xl mx-auto">
+          <Link href="/" className="text-lg font-semibold tracking-tight" style={{ color: BRAND.green }}>
+            AK Golf
+          </Link>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: BRAND.lime }}></span>
+            <span className="text-xs font-medium uppercase tracking-wider" style={{ color: BRAND.textMuted }}>Steg 1 av 3</span>
           </div>
         </div>
-        <div className="bg-[#f7f3ea] h-px w-full"></div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-8 pt-12 pb-24">
-        <header className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
-          <div className="max-w-2xl">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#154212]/60 mb-2 block">Steg 01 / 03</span>
-            <h1 className="text-5xl font-bold text-[#154212] tracking-tight leading-[1.1]">Velg din <span className="italic text-[#154212]/80">pakke</span></h1>
-            <p className="mt-4 text-[#42493e] text-lg leading-relaxed">Alle pakker inkluderer full tilgang til AK Golf spillerportalen.</p>
-          </div>
-          <div className="flex items-center gap-4 bg-[#f7f3ea] p-2 rounded-full px-6">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-full bg-[#154212] text-[#d2f000] flex items-center justify-center font-mono text-sm font-bold">1</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#154212]">Pakke</span>
-            </div>
-            <div className="w-8 h-px bg-[#c2c9bb]/30"></div>
-            <div className="flex items-center gap-2 opacity-30">
-              <span className="w-8 h-8 rounded-full bg-[#e6e2d9] flex items-center justify-center font-mono text-sm">2</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest">Tid</span>
-            </div>
-            <div className="w-8 h-px bg-[#c2c9bb]/30"></div>
-            <div className="flex items-center gap-2 opacity-30">
-              <span className="w-8 h-8 rounded-full bg-[#e6e2d9] flex items-center justify-center font-mono text-sm">3</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest">Betal</span>
-            </div>
-          </div>
-        </header>
+      <main className="max-w-5xl mx-auto px-6 py-12">
+        {/* Tittel */}
+        <div className="text-center mb-12">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3" style={{ color: BRAND.text }}>
+            Velg din <span style={{ color: BRAND.green }}>coaching</span>
+          </h1>
+          <p className="text-base" style={{ color: BRAND.textMuted }}>
+            Abonnement for løpende oppfølging, eller Flex for enkelt-timer
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {mainServices.map((service) => {
-            const isSelected = selectedId === service.id;
-            const features = getServiceFeatures(service);
-            const IconComponent = iconMap[service.name] || Star;
-            const priceFormatted = service.price === 0 ? "Gratis" : 
-              service.name.includes("Performance") ? `${service.price.toLocaleString("nb-NO")} kr/mnd` :
-              `${service.price.toLocaleString("nb-NO")} kr`;
+        {/* Performance-seksjon */}
+        {performanceServices.length > 0 && (
+          <div className="mb-10">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: BRAND.green }}>
+                <Star className="w-4 h-4 text-white" />
+              </div>
+              <h2 className="text-sm font-semibold uppercase tracking-wider" style={{ color: BRAND.green }}>
+                Abonnement
+              </h2>
+            </div>
             
-            return (
-              <div 
-                key={service.id} 
-                onClick={() => setSelectedId(service.id)}
-                className={`group relative bg-white rounded-xl p-8 transition-all duration-300 flex flex-col cursor-pointer ${isSelected ? 'ring-2 ring-[#d2f000] shadow-[0_4px_16px_rgba(45,90,39,0.06)]' : 'hover:scale-[1.02] shadow-[0_4px_16px_rgba(45,90,39,0.04)]'}`}
-              >
-                <div>
-                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-6 ${isSelected ? 'bg-[#154212]' : 'bg-[#f7f3ea]'}`}>
-                    <IconComponent className={`w-6 h-6 ${isSelected ? 'text-[#d2f000]' : 'text-[#154212]'}`} />
-                  </div>
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="font-bold text-2xl text-[#154212]">{service.name}</h3>
-                    <span className="font-mono text-lg font-bold text-[#154212]">{priceFormatted}</span>
-                  </div>
-                  <p className="text-[#42493e] text-sm leading-relaxed mb-6">{service.description || "Coaching med AK Golf Academy"}</p>
-                  <div className="space-y-2 mb-8">
-                    {features.map((feature, j) => (
-                      <div key={j} className="flex items-center gap-2 text-sm">
-                        <div className="w-4 h-4 rounded-full bg-[#d2f000] flex items-center justify-center flex-shrink-0">
-                          <svg className="w-3 h-3 text-[#154212]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <span className="text-[#42493e]">{feature}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {performanceServices.map((service) => {
+                const features = getServiceFeatures(service);
+                const Icon = getIcon(service.name);
+                const isPro = service.name.includes("Pro");
+                
+                return (
+                  <div 
+                    key={service.id}
+                    className="group relative rounded-2xl p-6 transition-all duration-200 hover:shadow-lg cursor-pointer"
+                    style={{ 
+                      backgroundColor: BRAND.white,
+                      border: `1px solid ${isPro ? BRAND.lime : "rgba(21, 66, 18, 0.1)"}`,
+                      boxShadow: isPro ? `0 0 0 2px ${BRAND.lime}` : "none"
+                    }}
+                    onClick={() => handleSelect(service.id)}
+                  >
+                    {isPro && (
+                      <div 
+                        className="absolute -top-3 left-6 px-3 py-1 rounded-full text-xs font-semibold"
+                        style={{ backgroundColor: BRAND.lime, color: BRAND.green }}
+                      >
+                        Mest populær
                       </div>
-                    ))}
+                    )}
+                    
+                    <div className="flex items-start justify-between mb-4">
+                      <div 
+                        className="w-10 h-10 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: isPro ? BRAND.green : BRAND.creamDark }}
+                      >
+                        <Icon className="w-5 h-5" style={{ color: isPro ? BRAND.lime : BRAND.green }} />
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl font-semibold" style={{ color: BRAND.green }}>
+                          {service.price.toLocaleString("nb-NO")}
+                        </span>
+                        <span className="text-sm" style={{ color: BRAND.textMuted }}> kr/mnd</span>
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-lg font-semibold mb-2" style={{ color: BRAND.text }}>
+                      {service.name}
+                    </h3>
+                    
+                    <p className="text-sm mb-4 leading-relaxed" style={{ color: BRAND.textMuted }}>
+                      {service.description || "Coaching med full spillerportal og progresjonssporing"}
+                    </p>
+                    
+                    <ul className="space-y-2 mb-6">
+                      {features.map((feature, i) => (
+                        <li key={i} className="flex items-center gap-2 text-sm" style={{ color: BRAND.text }}>
+                          <div 
+                            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: BRAND.lime }}
+                          />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <button 
+                      className="w-full py-3 rounded-xl font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2 group-hover:gap-3"
+                      style={{ 
+                        backgroundColor: isPro ? BRAND.green : BRAND.creamDark,
+                        color: isPro ? BRAND.white : BRAND.green
+                      }}
+                      onClick={(e) => { e.stopPropagation(); handleSelect(service.id); }}
+                    >
+                      Velg
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
                   </div>
-                </div>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); setSelectedId(service.id); }}
-                  className={`w-full py-4 rounded-lg font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-2 transition-all mt-auto ${isSelected ? 'bg-[#d2f000] text-[#154212]' : 'bg-[#f7f3ea] text-[#154212] hover:bg-[#d2f000]'}`}
-                >
-                  {isSelected ? 'Valgt' : 'Velg'}
-                </button>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Flex og On-Course */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          {flexServices.slice(0, 1).map((service) => (
-            <div key={service.id} className="bg-[#f7f3ea] rounded-xl p-8">
-              <div className="flex items-center gap-3 mb-4">
-                <Timer className="w-8 h-8 text-[#154212]" />
-                <h3 className="font-bold text-xl text-[#154212]">{service.name}</h3>
-              </div>
-              <p className="text-[#42493e] text-sm mb-4">{service.description}</p>
-              <div className="flex justify-between items-center">
-                <span className="font-mono text-lg font-bold text-[#154212]">{service.price.toLocaleString("nb-NO")} kr</span>
-                <button 
-                  onClick={() => router.push(`/booking/date-time?serviceTypeId=${service.id}`)}
-                  className="px-6 py-3 bg-[#154212] text-white rounded-lg font-bold uppercase text-xs tracking-wider hover:opacity-90 transition-all"
-                >
-                  Velg
-                </button>
-              </div>
+                );
+              })}
             </div>
-          ))}
-          
-          <div className="bg-[#154212] rounded-xl p-8 text-white">
-            <div className="flex items-center gap-3 mb-4">
-              <GolfIcon className="w-8 h-8 text-[#d2f000]" />
-              <h3 className="font-bold text-xl">Banecoaching</h3>
-            </div>
-            <p className="text-white/70 text-sm mb-4">On-Course 9 hull med Anders (3 000 kr) eller Par 3 med Markus (500 kr). DECADE-strategi i praksis.</p>
-            <button 
-              onClick={() => {
-                const onCourse = onCourseServices[0];
-                if (onCourse) router.push(`/booking/date-time?serviceTypeId=${onCourse.id}`);
-              }}
-              className="w-full py-3 bg-[#d2f000] text-[#154212] rounded-lg font-bold uppercase text-xs tracking-wider hover:opacity-90 transition-all"
-            >
-              Se banecoaching
-            </button>
-          </div>
-        </div>
-
-        {/* Fortsett-knapp */}
-        {selectedId && (
-          <div className="mt-12 flex justify-end">
-            <button
-              onClick={handleContinue}
-              className="px-12 py-4 bg-[#154212] text-white rounded-xl font-bold uppercase tracking-widest text-sm flex items-center gap-3 hover:scale-[1.02] transition-transform"
-            >
-              Fortsett til tid
-              <ArrowRight className="w-5 h-5" />
-            </button>
           </div>
         )}
 
-        {/* Info om Drop-in */}
-        <div className="mt-16 bg-[#f7f3ea] rounded-xl p-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div>
-            <h4 className="text-[#154212] font-bold text-lg mb-2">Viktig om Drop-in (Flex)</h4>
-            <p className="text-[#42493e] text-sm">Flex gir deg coaching uten forpliktelser. Men du får kun coaching-notater — ikke spillerportalen. Ingen treningsplan mellom sesjonene, ingen statistikk, ingen progresjon.</p>
+        {/* Flex-seksjon */}
+        {flexServices.length > 0 && (
+          <div className="mb-10">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: BRAND.creamDark }}>
+                <Clock className="w-4 h-4" style={{ color: BRAND.green }} />
+              </div>
+              <h2 className="text-sm font-semibold uppercase tracking-wider" style={{ color: BRAND.textMuted }}>
+                Flex — Enkelt-timer
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {flexServices.map((service) => {
+                const features = getServiceFeatures(service);
+                
+                return (
+                  <div 
+                    key={service.id}
+                    className="group rounded-2xl p-6 transition-all duration-200 hover:shadow-md cursor-pointer"
+                    style={{ 
+                      backgroundColor: BRAND.creamDark,
+                      border: "1px solid transparent"
+                    }}
+                    onClick={() => handleSelect(service.id)}
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div 
+                        className="w-10 h-10 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: BRAND.white }}
+                      >
+                        <Clock className="w-5 h-5" style={{ color: BRAND.green }} />
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl font-semibold" style={{ color: BRAND.green }}>
+                          {service.price.toLocaleString("nb-NO")}
+                        </span>
+                        <span className="text-sm" style={{ color: BRAND.textMuted }}> kr</span>
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-lg font-semibold mb-2" style={{ color: BRAND.text }}>
+                      {service.name}
+                    </h3>
+                    
+                    <p className="text-sm mb-4 leading-relaxed" style={{ color: BRAND.textMuted }}>
+                      {service.description || "Coaching uten forpliktelser"}
+                    </p>
+                    
+                    <ul className="space-y-2 mb-6">
+                      {features.map((feature, i) => (
+                        <li key={i} className="flex items-center gap-2 text-sm" style={{ color: BRAND.text }}>
+                          <div 
+                            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: BRAND.green, opacity: 0.4 }}
+                          />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <button 
+                      className="w-full py-3 rounded-xl font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2 group-hover:gap-3"
+                      style={{ 
+                        backgroundColor: BRAND.white,
+                        color: BRAND.green,
+                        border: "1px solid rgba(21, 66, 18, 0.2)"
+                      }}
+                      onClick={(e) => { e.stopPropagation(); handleSelect(service.id); }}
+                    >
+                      Velg
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="shrink-0">
-            <span className="bg-[#ba1a1a]/10 text-[#ba1a1a] px-4 py-2 rounded-full text-xs font-bold uppercase">Ingen portal inkludert</span>
-          </div>
+        )}
+
+        {/* Info */}
+        <div 
+          className="rounded-xl p-6 text-center"
+          style={{ backgroundColor: BRAND.creamDark }}
+        >
+          <p className="text-sm" style={{ color: BRAND.textMuted }}>
+            Har du spørsmål? Kontakt oss på{" "}
+            <a href="mailto:post@akgolf.no" className="underline" style={{ color: BRAND.green }}>
+              post@akgolf.no
+            </a>
+          </p>
         </div>
       </main>
     </>

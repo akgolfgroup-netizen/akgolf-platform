@@ -259,7 +259,7 @@ export function GolfWeatherDemo() {
     rainProbability: 20,
     sunrise: "06:15",
     sunset: "19:45",
-    location: "Sarpsborg Golfklubb",
+    location: "Gamle Fredrikstad Golfklubb",
   };
 
   return <GolfWeather weather={mockWeather} />;
