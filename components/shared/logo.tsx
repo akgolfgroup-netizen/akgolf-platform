@@ -12,7 +12,7 @@ interface LogoProps {
 export function Logo({ 
   variant = "dark", 
   size = "md", 
-  showText = true,
+  showText = false,
   className = "" 
 }: LogoProps) {
   // Size configurations

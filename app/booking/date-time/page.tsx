@@ -222,7 +222,7 @@ export default function BookingDateTimePage() {
         <div className="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
           <Link href="/" className="text-xl font-bold text-[#154212] tracking-tighter">AK Golf Academy</Link>
           <nav className="hidden md:flex items-center space-x-8 font-semibold uppercase tracking-wider">
-            <Link href="/landing/pricing" className="text-[#154212]/60 hover:text-[#154212] transition-colors">Pakker</Link>
+            <Link href="/landing/pricing" className="text-[#154212]/60 hover:text-[#154212] transition-colors">Coaching</Link>
             <Link href="/booking/select-service" className="text-[#154212]">Booking</Link>
           </nav>
           <div className="flex items-center space-x-4">
