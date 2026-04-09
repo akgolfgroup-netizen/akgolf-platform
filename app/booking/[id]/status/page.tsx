@@ -143,6 +143,7 @@ export default async function BookingStatusPage({ params }: Props) {
         date: capitalizedDate,
         timeRange: formattedTimeRange,
         price: priceDisplay,
+        amount: typedBooking.amount ?? 0,
         studentNotes: typedBooking.studentNotes,
         adminNotes: typedBooking.adminNotes,
         cancelReason: typedBooking.cancelReason,
@@ -150,7 +151,7 @@ export default async function BookingStatusPage({ params }: Props) {
         cancelledAt: formattedCancelledAt,
       }}
       isAuthenticated={!!user?.id}
-      isOwner={isOwner}
+      isOwner={!!isOwner}
     />
   );
 }

@@ -8,6 +8,10 @@ import { validateBooking } from "@/lib/portal/booking/validation";
 import { invalidateSlotsCache, invalidateBookingsCache } from "@/lib/portal/booking/cache";
 import { syncBookingToCalendar } from "@/lib/portal/calendar/google-calendar";
 import { broadcastUpdate } from "@/app/api/portal/bookings/live/route";
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 class ConflictError extends Error {
   constructor(message: string) {
@@ -16,24 +20,106 @@ class ConflictError extends Error {
   }
 }
 
+/**
+ * Get or create a user for booking.
+ * If user is logged in, return existing user.
+ * If not logged in, create or find user by email (guest booking).
+ */
+async function getOrCreateUser(
+  email: string,
+  name?: string,
+  phone?: string
+): Promise<{ id: string; email: string; name: string | null; stripeCustomerId: string | null } | null> {
+  // First check if user is logged in
+  const loggedInUser = await getPortalUser();
+  if (loggedInUser?.id) {
+    return {
+      id: loggedInUser.id,
+      email: loggedInUser.email,
+      name: loggedInUser.name,
+      stripeCustomerId: loggedInUser.stripeCustomerId,
+    };
+  }
+
+  // Not logged in - find or create user by email
+  if (!email) {
+    return null;
+  }
+
+  const serviceSupabase = createClient(supabaseUrl, supabaseKey);
+
+  // Try to find existing user by email
+  const { data: existingUser, error: findError } = await serviceSupabase
+    .from("User")
+    .select("id, email, name, stripeCustomerId")
+    .eq("email", email.toLowerCase().trim())
+    .single();
+
+  if (existingUser) {
+    // Update name/phone if provided and different
+    if ((name && name !== existingUser.name) || phone) {
+      await serviceSupabase
+        .from("User")
+        .update({
+          ...(name && { name }),
+          ...(phone && { phone }),
+          updatedAt: new Date().toISOString(),
+        })
+        .eq("id", existingUser.id);
+    }
+    return existingUser;
+  }
+
+  // Create new user (guest)
+  const newUserId = randomUUID();
+  const { data: newUser, error: createError } = await serviceSupabase
+    .from("User")
+    .insert({
+      id: newUserId,
+      email: email.toLowerCase().trim(),
+      name: name || email.split("@")[0],
+      phone: phone || null,
+      role: "USER",
+      isActive: true,
+      subscriptionTier: "FREE",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    })
+    .select("id, email, name, stripeCustomerId")
+    .single();
+
+  if (createError || !newUser) {
+    console.error("[getOrCreateUser] Failed to create user:", createError);
+    return null;
+  }
+
+  return newUser;
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const user = await getPortalUser();
-    
-    if (!user?.id) {
-      return NextResponse.json(
-        { error: "Du må være logget inn for å booke" },
-        { status: 401 }
-      );
-    }
-
     const body = await req.json();
-    const { serviceTypeId, instructorId, startTime, paymentMethod = "STRIPE" } = body;
+    const { 
+      serviceTypeId, 
+      instructorId, 
+      startTime, 
+      paymentMethod = "STRIPE", 
+      email, 
+      name, 
+      phone 
+    } = body;
 
     // Validate required fields
     if (!serviceTypeId || !instructorId || !startTime) {
       return NextResponse.json(
         { error: "Mangler påkrevde felter" },
+        { status: 400 }
+      );
+    }
+
+    if (!email) {
+      return NextResponse.json(
+        { error: "E-post er påkrevd" },
         { status: 400 }
       );
     }
@@ -52,14 +138,33 @@ export async function POST(req: NextRequest) {
 
     const supabase = await createServerSupabase();
 
-    // Validate booking (admin kan overgå tidsbegrensninger)
-    const isAdmin = user.role === "ADMIN" || user.role === "INSTRUCTOR";
+    // Get or create user
+    const user = await getOrCreateUser(email, name, phone);
+    if (!user?.id) {
+      return NextResponse.json(
+        { error: "Kunne ikke opprette bruker" },
+        { status: 500 }
+      );
+    }
+
+    // Get service type details
+    const { data: serviceType, error: serviceError } = await supabase
+      .from("ServiceType")
+      .select("*")
+      .eq("id", serviceTypeId)
+      .single();
+
+    if (serviceError || !serviceType) {
+      return NextResponse.json({ error: "Tjeneste ikke funnet" }, { status: 404 });
+    }
+
+    // Validate booking
     const validation = await validateBooking({
       serviceTypeId,
       instructorId,
       startTime: start,
       studentId: user.id,
-      isAdmin,
+      isAdmin: false,
     });
 
     if (!validation.valid) {
@@ -67,7 +172,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: errorMessage }, { status: 400 });
     }
 
-    const serviceType = validation.serviceType;
     const end = new Date(start.getTime() + (serviceType?.duration || 50) * 60000);
 
     // Check for conflicts in the time window
@@ -126,6 +230,9 @@ export async function POST(req: NextRequest) {
         paymentStatus: paymentMethod === "STRIPE" ? "PENDING" : "PAID",
         amount: serviceType?.price || 0,
         vatAmount: 0,
+        guestEmail: email,
+        guestName: name || null,
+        guestPhone: phone || null,
       })
       .select(`
         *,
@@ -158,8 +265,30 @@ export async function POST(req: NextRequest) {
     if (paymentMethod === "STRIPE" && booking.amount > 0) {
       const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://book.akgolf.no";
       
+      // Get or create Stripe customer
+      let customerId: string | undefined;
+      
+      if (user.stripeCustomerId) {
+        customerId = user.stripeCustomerId;
+      } else {
+        // Create new Stripe customer
+        const customer = await stripe.customers.create({
+          email: user.email,
+          name: user.name || undefined,
+          phone: phone || undefined,
+        });
+        customerId = customer.id;
+        
+        // Save to database
+        await supabase
+          .from("User")
+          .update({ stripeCustomerId: customer.id })
+          .eq("id", user.id);
+      }
+      
       const checkoutSession = await stripe.checkout.sessions.create({
         mode: "payment",
+        customer: customerId,
         line_items: [
           {
             price_data: {
@@ -173,9 +302,11 @@ export async function POST(req: NextRequest) {
             quantity: 1,
           },
         ],
+        payment_intent_data: {
+          setup_future_usage: 'off_session', // Save payment method for future use
+        },
         success_url: `${baseUrl}/booking/${booking.id}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${baseUrl}/booking/${booking.id}/cancel`,
-        customer_email: user.email,
         metadata: {
           bookingId: booking.id,
           userId: user.id,

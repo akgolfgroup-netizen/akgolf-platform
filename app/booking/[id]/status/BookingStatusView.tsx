@@ -31,20 +31,21 @@ interface BookingData {
   paymentStatus: PaymentStatus;
   paymentMethod: PaymentMethod;
   serviceName: string;
-  serviceDescription: string | null;
+  serviceDescription: string | null | undefined;
   duration: number;
   instructorName: string;
-  instructorTitle: string | null;
-  locationName: string | null;
-  locationAddress: string | null;
+  instructorTitle: string | null | undefined;
+  locationName: string | null | undefined;
+  locationAddress: string | null | undefined;
   date: string;
   timeRange: string;
   price: string | null;
-  studentNotes: string | null;
-  adminNotes: string | null;
-  cancelReason: string | null;
+  amount: number;
+  studentNotes: string | null | undefined;
+  adminNotes: string | null | undefined;
+  cancelReason: string | null | undefined;
   createdAt: string;
-  cancelledAt: string | null;
+  cancelledAt: string | null | undefined;
 }
 
 interface BookingStatusViewProps {
