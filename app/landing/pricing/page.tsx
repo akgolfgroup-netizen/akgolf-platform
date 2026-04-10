@@ -230,7 +230,7 @@ export default function LandingPricingPage() {
             <div className="bg-white rounded-[1.5rem] p-8 border border-[#154212]/10">
               <div className="mb-6">
                 <h3 className="font-mono text-xs uppercase tracking-widest text-[#154212]/60 mb-2">Banecoaching</h3>
-                <div className="text-3xl font-bold text-[#154212] mb-1">On-Course 9</div>
+                <div className="text-3xl font-bold text-[#154212] mb-1">Banecoaching 9 hull</div>
                 <div className="flex items-baseline gap-1 mt-2">
                   <span className="text-2xl font-bold text-[#154212]">3 000 kr</span>
                   <span className="text-[#42493e] opacity-60 text-sm">/per spiller</span>
@@ -248,14 +248,14 @@ export default function LandingPricingPage() {
                 href="/booking"
                 className="w-full py-4 bg-[#154212] text-white font-bold uppercase text-xs tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 text-center block"
               >
-                Book On-Course 9
+                Book Banecoaching 9 hull
               </Link>
             </div>
 
             <div className="bg-white rounded-[1.5rem] p-8 border border-[#154212]/10">
               <div className="mb-6">
                 <h3 className="font-mono text-xs uppercase tracking-widest text-[#154212]/60 mb-2">Banecoaching</h3>
-                <div className="text-3xl font-bold text-[#154212] mb-1">On-Course Par 3</div>
+                <div className="text-3xl font-bold text-[#154212] mb-1">Banecoaching Par 3</div>
                 <div className="flex items-baseline gap-1 mt-2">
                   <span className="text-2xl font-bold text-[#154212]">500 kr</span>
                   <span className="text-[#42493e] opacity-60 text-sm">/per spiller</span>

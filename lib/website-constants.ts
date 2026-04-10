@@ -291,42 +291,28 @@ export const FLEX_PACKAGES = [
 // ─── Banecoaching ───
 export const BANECOACHING = [
   {
-    name: "On-Course 9",
+    name: "Banecoaching 9 hull",
     price: "3 000",
     period: "kr/spiller",
     coach: "Anders",
-    description: "9 hull på 18-hullsbanen med Anders. Strategi i praksis — du lærer å velge riktig slag basert på din faktiske spredning.",
-    details: "Maks 2 spillere. Varighet ca. 2,5 timer. Inkluderer greenfee.",
+    description: "9 hull pa 18-hullsbanen med Anders. Strategi i praksis — du laerer a velge riktig slag basert pa din faktiske spredning.",
+    details: "Maks 2 spillere. Varighet ca. 2,5 timer. 1 mnd portaltilgang inkludert.",
     stripeMetadata: {
       type: "playing_lesson",
       holes: 9,
       course: "18-hull",
       max_participants: 2,
-      includes_greenfee: true,
-    },
-  },
-  {
-    name: "On-Course Par 3",
-    price: "500",
-    period: "kr/spiller",
-    coach: "Markus",
-    description: "9 hull på korthullsbanen med Markus. Fokus på kort spill, banemanagement og scoring.",
-    details: "Grupper à 4 spillere. Lav terskel, høyt læringsutbytte. Perfekt som neste steg etter Første Sesong.",
-    stripeMetadata: {
-      type: "playing_lesson",
-      holes: 9,
-      course: "par3",
-      max_participants: 4,
+      portalAccessDays: 30,
     },
   },
 ] as const;
 
-// ─── Markus Coaching ───
+// ─── Flex 20 (Markus) ───
 export const MARKUS_SESSIONS = {
-  name: "Markus 20 min",
+  name: "Flex 20",
   price: "300",
   period: "kr",
-  description: "Individuell coaching med Markus. Samme 20-minutters format som Anders, men til halv pris. Perfekt for spillere som vil ha hyppigere oppfølging uten å øke budsjettet.",
+  description: "20 minutters coaching med Markus. Korte, effektive okter for raske justeringer eller oppfolging. 1 mnd portaltilgang inkludert.",
   bookingNote: "Book via appen.",
 } as const;
 

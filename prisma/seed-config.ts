@@ -1,7 +1,7 @@
 // =============================================================================
 // AK Golf Booking - Seed Konfigurasjon
 // =============================================================================
-// Oppdatert: 2026-03-26 — AK Golf Academy 2026 konsept
+// Oppdatert: 2026-04-10 — Konsistent tjenestenavn og nye pakker
 //
 // ENDRE KUN VERDIENE I DENNE FILEN
 // Etter endring: kjør `npx prisma db seed`
@@ -34,16 +34,17 @@ export const COACHES = {
 // Fra AK Golf Academy 2026 konsept
 
 export const SERVICES = {
-  // ─── Onboarding ───
+  // ─── Onboarding (Anders) ───
   start: {
     name: "Start",
     description: "3 × 20-minutters økter over 3 uker + 30 dagers portal. Kartlegging og utviklingsplan.",
     duration: 20, // per økt
     price: 3000, // 3 000 kr
     maxStudents: 1,
-    color: "#B07D4F",
+    color: "#2D6A4F",
     coachId: "anders",
     active: true,
+    portalAccessDays: 30,
   },
   foundationTest: {
     name: "Foundation Test",
@@ -51,88 +52,111 @@ export const SERVICES = {
     duration: 50,
     price: 995, // 995 kr
     maxStudents: 1,
-    color: "#B07D4F",
+    color: "#2D6A4F",
     coachId: "anders",
     active: true,
+    portalAccessDays: 30,
   },
 
-  // ─── Drop-in / Flex (48t booking-vindu) ───
-  flex50Solo: {
-    name: "Flex 50 Solo",
-    description: "50 min intensiv én-til-én coaching med videoanalyse.",
+  // ─── Flex — enkeltbetaling, ingen binding (Anders) ───
+  flex50: {
+    name: "Flex 50",
+    description: "50 min intensiv én-til-én coaching med videoanalyse. Ingen binding.",
     duration: 50,
     price: 1500, // 1 500 kr
     maxStudents: 1,
-    color: "#B07D4F",
+    color: "#2D6A4F",
     coachId: "anders",
     active: true,
+    portalAccessDays: 30,
   },
   flex50Duo: {
     name: "Flex 50 Duo",
-    description: "50 min coaching for to spillere. 850 kr per person.",
+    description: "50 min coaching for to spillere. 850 kr per person. Ingen binding.",
     duration: 50,
     price: 1700, // 1 700 kr totalt (850 × 2)
     maxStudents: 2,
-    color: "#1565C0",
+    color: "#2D6A4F",
     coachId: "anders",
     active: true,
+    portalAccessDays: 30,
   },
-  flex90Solo: {
-    name: "Flex 90 Solo",
-    description: "90 min dybdecoaching én-til-én. Flere fokusområder + on-range praksis.",
+  flex90: {
+    name: "Flex 90",
+    description: "90 min dybdecoaching én-til-én. Flere fokusområder + on-range praksis. Ingen binding.",
     duration: 90,
     price: 2500, // 2 500 kr
     maxStudents: 1,
-    color: "#B07D4F",
+    color: "#2D6A4F",
     coachId: "anders",
     active: true,
+    portalAccessDays: 30,
   },
   flex90Duo: {
     name: "Flex 90 Duo",
-    description: "90 min dybdecoaching for to spillere. 1 400 kr per person.",
+    description: "90 min dybdecoaching for to spillere. 1 400 kr per person. Ingen binding.",
     duration: 90,
     price: 2800, // 2 800 kr totalt (1400 × 2)
     maxStudents: 2,
-    color: "#1565C0",
+    color: "#2D6A4F",
     coachId: "anders",
     active: true,
+    portalAccessDays: 30,
   },
 
-  // ─── Banecoaching ───
-  onCourse9: {
-    name: "On-Course 9",
-    description: "Banecoaching 9 hull med Anders. Live kursmanagement med DECADE-prinsipper. Maks 2 spillere.",
-    duration: 150, // ~2.5 timer
-    price: 3000, // 3 000 kr/spiller
-    maxStudents: 2, // Maks 2 spillere
-    color: "#2E7D32",
-    coachId: "anders",
-    active: true,
-  },
-  onCoursePar3: {
-    name: "On-Course Par 3",
-    description: "9 hull på korthullsbanen med Markus. Grunnleggende banemanagement. Grupper à 4.",
-    duration: 90, // ~90 min
-    price: 500, // 500 kr/spiller
-    maxStudents: 4,
-    color: "#2E7D32",
-    coachId: "markus",
-    active: true,
-  },
-
-  // ─── Markus individuell ───
-  markus20: {
-    name: "Markus 20 min",
-    description: "Kort treningsøkt med Markus. Raske justeringer eller oppfølging.",
+  // ─── Flex — enkeltbetaling (Markus) ───
+  flex20: {
+    name: "Flex 20",
+    description: "20 min kort treningsøkt med Markus. Raske justeringer eller oppfølging. Ingen binding.",
     duration: 20,
     price: 300, // 300 kr
     maxStudents: 1,
-    color: "#E65100",
+    color: "#2D6A4F",
     coachId: "markus",
     active: true,
+    portalAccessDays: 30,
   },
 
-  // ─── Junior (Markus) ───
+  // ─── Banecoaching ───
+  banecoaching9hull: {
+    name: "Banecoaching 9 hull",
+    description: "Banecoaching 9 hull med Anders. Live kursmanagement med DECADE-prinsipper. Maks 2 spillere.",
+    duration: 150, // ~2.5 timer
+    price: 3000, // 3 000 kr/spiller
+    maxStudents: 2,
+    color: "#2D6A4F",
+    coachId: "anders",
+    active: true,
+    portalAccessDays: 30,
+  },
+
+  // ─── Gruppecoaching (Anders) ───
+  gruppecoaching: {
+    name: "Gruppecoaching",
+    description: "60 min gruppecoaching med Anders. Maks 5 deltakere. Del av Gruppe-abonnement.",
+    duration: 60,
+    price: 500, // 500 kr enkeltpris
+    maxStudents: 5,
+    color: "#2D6A4F",
+    coachId: "anders",
+    active: true,
+    portalAccessDays: 0, // Portal via abonnement
+  },
+
+  // ─── Digital ───
+  spillerportal: {
+    name: "Spillerportal",
+    description: "Månedlig tilgang til spillerportalen. Ingen coaching inkludert.",
+    duration: 0,
+    price: 299, // 299 kr/mnd
+    maxStudents: 1,
+    color: "#2D6A4F",
+    coachId: null,
+    active: true,
+    portalAccessDays: 30,
+  },
+
+  // ─── Junior (deaktivert, pris TBD) ───
   juniorGroup: {
     name: "Junior Gruppetrening",
     description: "GFGK junior treningsgrupper. Treningsavgift TBD.",
@@ -141,7 +165,8 @@ export const SERVICES = {
     maxStudents: 8,
     color: "#1565C0",
     coachId: "markus",
-    active: false, // Aktiveres når pris er satt
+    active: false,
+    portalAccessDays: 0,
   },
 };
 
@@ -228,6 +253,7 @@ export const AVAILABILITY = {
 // Fra AK Golf Academy 2026 konsept
 
 export const PACKAGES = {
+  // ─── Anders — Abonnement (løpende portaltilgang) ───
   performance: {
     name: "Performance",
     description: "2 × 20 min/mnd. 7 dagers booking-vindu. Maks 1/uke.",
@@ -236,6 +262,8 @@ export const PACKAGES = {
     sessionDurationMin: 20,
     bookingWindowDays: 7,
     maxPerWeek: 1,
+    coachId: "anders",
+    portalAccessDays: null, // Løpende — aktiv så lenge abo er aktivt
     active: true,
   },
   performancePro: {
@@ -246,6 +274,61 @@ export const PACKAGES = {
     sessionDurationMin: 20,
     bookingWindowDays: 14,
     maxPerWeek: 2,
+    coachId: "anders",
+    portalAccessDays: null, // Løpende
+    active: true,
+  },
+  gruppe: {
+    name: "Gruppe",
+    description: "2 × 60 min gruppecoaching/mnd med Anders. Maks 5 deltakere per økt.",
+    monthlyPrice: 900, // 900 kr/mnd
+    sessionsPerMonth: 2,
+    sessionDurationMin: 60,
+    bookingWindowDays: 14,
+    maxPerWeek: 1,
+    maxPlayersPerSlot: 5,
+    coachId: "anders",
+    portalAccessDays: 90, // 3 mnd fra oppstart
+    active: true,
+  },
+
+  // ─── Markus — Abonnement (3 mnd portaltilgang) ───
+  express: {
+    name: "Express",
+    description: "2 × 20 min/mnd med Markus. Korte, effektive økter.",
+    monthlyPrice: 550, // 550 kr/mnd
+    sessionsPerMonth: 2,
+    sessionDurationMin: 20,
+    bookingWindowDays: 7,
+    maxPerWeek: 1,
+    coachId: "markus",
+    portalAccessDays: 90, // 3 mnd fra oppstart
+    active: true,
+  },
+  expressPro: {
+    name: "Express Pro",
+    description: "4 × 20 min/mnd med Markus. Raskere progresjon.",
+    monthlyPrice: 1000, // 1 000 kr/mnd
+    sessionsPerMonth: 4,
+    sessionDurationMin: 20,
+    bookingWindowDays: 14,
+    maxPerWeek: 2,
+    coachId: "markus",
+    portalAccessDays: 90, // 3 mnd fra oppstart
+    active: true,
+  },
+
+  // ─── Markus — Kurs (engangskjøp, 3 mnd portaltilgang) ───
+  firstTee: {
+    name: "First Tee",
+    description: "Nybegynnerkurs: 3 × 60 min gruppetrening + 1 × banespill Par 3. Maks 8 deltakere.",
+    oneTimePrice: 1295, // 1 295 kr
+    sessionsPerMonth: null,
+    sessionDurationMin: 60,
+    totalSessions: 4, // 3 gruppe + 1 bane
+    maxPlayersPerSlot: 8,
+    coachId: "markus",
+    portalAccessDays: 90, // 3 mnd fra oppstart
     active: true,
   },
 };
@@ -445,7 +528,7 @@ export const INSTRUCTOR_FACILITY_DEFAULTS = [
   {
     instructorSlug: "markus",
     facilitySlug: "driving-range-1",
-    serviceTypeSlug: "markus20",
+    serviceTypeSlug: "flex20",
     priority: 10,
   },
   {

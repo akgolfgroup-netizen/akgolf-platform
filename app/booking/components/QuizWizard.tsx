@@ -75,12 +75,12 @@ function getResult(state: QuizState): { service: string; url: string } {
     if (answer2 === "ukentlig") return { service: "Performance", url: "/booking/kategori/abonnement" };
 
     // Sporadisk/engang
-    if (answer3 === "alene") return { service: "Flex 50 Solo", url: "/booking/kategori/individuell" };
+    if (answer3 === "alene") return { service: "Flex 50", url: "/booking/kategori/individuell" };
     if (answer3 === "duo") return { service: "Flex 50 Duo", url: "/booking/kategori/gruppe" };
     if (answer3 === "gruppe") {
       return answer2 === "sporadisk"
-        ? { service: "9 Hull Social", url: "/booking/kategori/gruppe" }
-        : { service: "On-Course Par 3", url: "/booking/kategori/bane" };
+        ? { service: "Gruppecoaching", url: "/booking/kategori/gruppe" }
+        : { service: "Banecoaching 9 hull", url: "/booking/kategori/bane" };
     }
   }
 

@@ -88,7 +88,7 @@ const services: Service[] = [
   },
   {
     id: "on-course",
-    name: "On-Course Par 3",
+    name: "Banecoaching 9 hull",
     category: "bane",
     price: 1500,
     duration: "90 min",

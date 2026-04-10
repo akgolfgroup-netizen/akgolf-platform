@@ -1,26 +1,8 @@
 # AK Golf Coaching-pakker
 
-## Abonnement
+Oppdatert: 2026-04-10
 
-### Performance
-
-| | |
-|---|---|
-| **Pris** | 1 600 kr/mnd |
-| **Okter** | 2 x 20 min per maned |
-| **Booking-vindu** | 7 dager |
-| **Maks bookinger/uke** | 1 |
-| **Malgruppe** | Klubbspillere som trener 1-2 ganger i uken |
-
-**Inkludert:**
-- TrackMan-analyse hver okt
-- Personlig treningsplan (oppdateres etter hver okt)
-- Full tilgang til spillerportal
-- Treningsdagbok
-- Ovelsesbank
-- Coaching-notater i appen
-
----
+## Anders — Abonnement (lopende portaltilgang)
 
 ### Performance Pro
 
@@ -30,98 +12,148 @@
 | **Okter** | 4 x 20 min per maned |
 | **Booking-vindu** | 14 dager |
 | **Maks bookinger/uke** | 2 |
-| **Malgruppe** | Ambitiose spillere som trener 3+ ganger i uken |
+| **Portal** | Lopende (aktiv sa lenge abo er aktivt) |
 
 **Inkludert:**
-- Alt i Performance
-- Dobbelt sa mange okter
-- Lengre booking-vindu (planlegg 2 uker frem)
-- Prioritert tilgang
+- TrackMan-analyse hver okt
+- Personlig treningsplan
+- Full spillerportal
+- Prioritert booking
+- Ingen binding
 
 ---
 
-## Flex / Drop-in (Enkeltbetaling)
+### Performance
 
-| Tjeneste | Pris | Varighet | Format |
-|----------|------|----------|--------|
-| Foundation Test | 995 kr | 50 min | 1:1 |
-| Flex 50 Solo | 1 500 kr | 50 min | 1:1 |
-| Flex 50 Duo | 1 700 kr | 50 min | 2 personer |
-| Flex 90 Solo | 2 500 kr | 90 min | 1:1 |
-| Flex 90 Duo | 2 800 kr | 90 min | 2 personer |
-| Markus 20 min | 300 kr | 20 min | 1:1 |
+| | |
+|---|---|
+| **Pris** | 1 600 kr/mnd |
+| **Okter** | 2 x 20 min per maned |
+| **Booking-vindu** | 7 dager |
+| **Maks bookinger/uke** | 1 |
+| **Portal** | Lopende (aktiv sa lenge abo er aktivt) |
+
+**Inkludert:**
+- TrackMan-analyse hver okt
+- Personlig treningsplan
+- Full spillerportal
+- Ingen binding
+
+---
+
+### Gruppe
+
+| | |
+|---|---|
+| **Pris** | 900 kr/mnd |
+| **Okter** | 2 x 60 min per maned |
+| **Maks deltakere** | 5 per okt |
+| **Booking-vindu** | 14 dager |
+| **Portal** | 3 mnd fra oppstart |
+
+**Inkludert:**
+- Gruppecoaching med Anders
+- TrackMan-analyse
+- 3 mnd spillerportal fra oppstart
+- Ingen binding
+
+---
+
+## Markus — Abonnement (3 mnd portaltilgang)
+
+### Express Pro
+
+| | |
+|---|---|
+| **Pris** | 1 000 kr/mnd |
+| **Okter** | 4 x 20 min per maned |
+| **Booking-vindu** | 14 dager |
+| **Maks bookinger/uke** | 2 |
+| **Portal** | 3 mnd fra oppstart |
+
+---
+
+### Express
+
+| | |
+|---|---|
+| **Pris** | 550 kr/mnd |
+| **Okter** | 2 x 20 min per maned |
+| **Booking-vindu** | 7 dager |
+| **Maks bookinger/uke** | 1 |
+| **Portal** | 3 mnd fra oppstart |
+
+---
+
+## Markus — Kurs (engangskjop)
+
+### First Tee
+
+| | |
+|---|---|
+| **Pris** | 1 295 kr |
+| **Innhold** | 3 x 60 min gruppetrening + 1 x banespill Par 3 |
+| **Maks deltakere** | 8 |
+| **Portal** | 3 mnd fra oppstart |
+
+---
+
+## Flex — Enkeltbetaling (1 mnd portaltilgang)
+
+| Tjeneste | Pris | Varighet | Format | Coach |
+|----------|------|----------|--------|-------|
+| Flex 90 | 2 500 kr | 90 min | 1:1 | Anders |
+| Flex 90 Duo | 2 800 kr | 90 min | 2 pers | Anders |
+| Flex 50 | 1 500 kr | 50 min | 1:1 | Anders |
+| Flex 50 Duo | 1 700 kr | 50 min | 2 pers | Anders |
+| Flex 20 | 300 kr | 20 min | 1:1 | Markus |
 
 **Booking-vindu:** 48 timer (drop-in)
+**Portal:** 1 mnd fra oktdato
 
 ---
 
-## Bane og Spesial
+## Banecoaching (1 mnd portaltilgang)
 
 | Tjeneste | Pris | Varighet | Maks | Coach |
 |----------|------|----------|------|-------|
-| On-Course 9 | 3 000 kr/spiller | ca 2,5 timer | 2 | Anders |
-| On-Course Par 3 | 500 kr/spiller | ca 90 min | 4 | Markus |
-| Gameday | 2 500 kr/person | 09-16 (hel dag) | 12 | Anders |
+| Banecoaching 9 hull | 3 000 kr/spiller | ca 2,5 timer | 2 | Anders |
 
-**On-Course 9 inkluderer:**
+**Inkluderer:**
 - 9 hull pa 18-hullsbane
 - DECADE-strategi
-- Greenfee
-
-**Gameday inkluderer:**
-- Felles briefing
-- 4 timer teknikk/kort spill/banemanagement
-- 9 hull under press
-- Komplett rapport i app
-- Lunsj
+- 1 mnd spillerportal
 
 ---
 
-## Nybegynner og Sosial
+## Onboarding
 
-| Tjeneste | Pris | Format | Varighet |
-|----------|------|--------|----------|
-| Forste Sesong | 4 500 kr | Gruppe (maks 8) | 8 uker |
-| 9 Hull Social | 250 kr/kveld eller 3 500 kr sesongkort | Gruppe | ca 2 timer |
-| 9 Hull Challenge | 250 kr/kveld eller 3 500 kr sesongkort | Gruppe | ca 2 timer |
-| Vintertrening | 3 500 kr | Gruppe (maks 6) | 6 uker |
-
-**Forste Sesong inkluderer:**
-- 8 gruppetreninger a 90 min
-- 3 guidede runder pa korthullsbanen
-- Utstyrslån
-- 30 dagers portal-tilgang
+| Tjeneste | Pris | Varighet | Coach |
+|----------|------|----------|-------|
+| Start | 3 000 kr | 3 x 20 min over 3 uker | Anders |
+| Foundation Test | 995 kr | 50 min | Anders |
 
 ---
 
-## Bedrift
+## Portaltilgang — oppsummering
 
-| Tjeneste | Pris | Varighet | Maks | Coach |
-|----------|------|----------|------|-------|
-| After Work | 500 kr/person | 17-20 (3 timer) | 24 | Markus |
-| Bedriftsgolf | 2 500 kr/person | Halvdag | 16 | Anders |
-
-**After Work inkluderer:**
-- Introduksjon
-- Range-instruksjon
-- 9 hull i grupper
-- Premieutdeling
-- Utstyr inkludert
-
-**Bedriftsgolf inkluderer:**
-- TrackMan-stasjon
-- Instruksjon
-- 9 hull scramble
-- Lunsj
-- Premieutdeling
+| Type | Portal |
+|------|--------|
+| Performance / Performance Pro | Lopende (aktiv med abo) |
+| Gruppe / Express / Express Pro | 3 mnd fra oppstart |
+| First Tee | 3 mnd fra oppstart |
+| Flex 20 / 50 / 50 Duo / 90 / 90 Duo | 1 mnd fra oktdato |
+| Banecoaching 9 hull | 1 mnd fra oktdato |
+| Start | 30 dager |
+| Foundation Test | 30 dager |
 
 ---
 
 ## Generelle vilkar
 
-- **Ingen binding** - avslutt nar som helst
-- **Avbestilling** - minimum 2 timer for okt
-- **Lokasjon** - GFGK (Gamle Fredrikstad Golfklubb)
+- **Ingen binding** — avslutt nar som helst
+- **Avbestilling** — minimum 2 timer for okt
+- **Lokasjon** — GFGK (Gamle Fredrikstad Golfklubb)
 
 ---
 
@@ -129,5 +161,5 @@
 
 | Trener | Rolle | Tjenester |
 |--------|-------|-----------|
-| Anders Kristiansen | Head Coach | Alle abonnement, Flex, On-Course 9, Gameday, Bedriftsgolf |
-| Markus Hatlelid | Assistant Coach | Markus 20 min, On-Course Par 3, After Work, 9 Hull, Junior |
+| Anders Kristiansen | Head Coach | Performance, Performance Pro, Gruppe, Flex 50/90, Banecoaching 9 hull |
+| Markus Hatlelid | Assistant Coach | Express, Express Pro, First Tee, Flex 20 |

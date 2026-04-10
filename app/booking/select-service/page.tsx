@@ -73,7 +73,7 @@ export default function BookingSelectServicePage() {
           const filtered = data.filter(s => 
             !s.name.includes("Foundation") && 
             !s.name.includes("Start") &&
-            !s.name.includes("On-Course")
+            !s.name.includes("Banecoaching")
           );
           
           // Sorter: Performance først, så Flex

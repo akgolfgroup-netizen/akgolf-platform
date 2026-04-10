@@ -267,6 +267,9 @@ model CoachingPackage {
   createdAt          DateTime            @default(now())
   updatedAt          DateTime
   vatRate            Int                 @default(25)
+  portalAccessDays   Int?
+  instructorId       String?
+  Instructor         Instructor?         @relation(fields: [instructorId], references: [id])
   UserSubscription   UserSubscription[]
 }
 
@@ -577,6 +580,7 @@ model Instructor {
   InstructorAvailability     InstructorAvailability[]
   InstructorDateAvailability InstructorDateAvailability[]
   InstructorFacilityDefault  InstructorFacilityDefault[]
+  CoachingPackage            CoachingPackage[]
   ServiceType                ServiceType[]                @relation("InstructorToServiceType")
 }
 

@@ -84,11 +84,9 @@ export async function GET(_request: NextRequest) {
       onboarding: serviceTypes?.filter((s) => ["Start", "Foundation Test"].includes(s.name)) || [],
       subscription: serviceTypes?.filter((s) => ["Performance Pro", "Performance"].includes(s.name)) || [],
       portal: serviceTypes?.filter((s) => s.name === "Spillerportal") || [],
-      flex: serviceTypes?.filter((s) => s.name.startsWith("Flex") || s.name === "Markus 20 min") || [],
-      playing: serviceTypes?.filter((s) => s.name.startsWith("On-Course")) || [],
-      // NOTE: Gruppe- og juniortjenester midlertidig deaktivert
-      // group: serviceTypes.filter(s => [...]),
-      // junior: serviceTypes.filter(s => s.name.startsWith("Junior")),
+      flex: serviceTypes?.filter((s) => s.name.startsWith("Flex")) || [],
+      playing: serviceTypes?.filter((s) => s.name.startsWith("Banecoaching")) || [],
+      group: serviceTypes?.filter((s) => s.name === "Gruppecoaching") || [],
     };
 
     // Formater response

@@ -272,7 +272,7 @@ Konen jobber nattevakt på turnus. Når hun jobber natt fredag/lørdag/søndag k
 
 ### Drop-in
 
-**AK Flex 50 Solo — 1 500 kr**
+**AK Flex 50 — 1 500 kr**
 - 50 min coaching, ingen portal
 - Booking: Kun ledige tider 48 timer frem
 - Coach: Anders
@@ -282,7 +282,7 @@ Konen jobber nattevakt på turnus. Når hun jobber natt fredag/lørdag/søndag k
 - +10% totalinntekt vs solo (1 700 kr totalt)
 - Coach: Anders
 
-**AK Flex 90 Solo — 2 500 kr**
+**AK Flex 90 — 2 500 kr**
 - 90 min coaching, ingen portal
 - Booking: Kun ledige tider 48 timer frem
 - Coach: Anders

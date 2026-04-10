@@ -6,11 +6,11 @@
  * - Performance: 1 600 kr/mnd, 2×20 min, 7 dager booking, Anders
  * 
  * Drop-in/Flex (5):
- * - Flex 50 Solo: 1 500 kr, 50 min, 48t vindu, Anders
+ * - Flex 50: 1 500 kr, 50 min, 48t vindu, Anders
  * - Flex 50 Duo: 1 700 kr (850×2), 50 min, 48t vindu, Anders
- * - Flex 90 Solo: 2 500 kr, 90 min, 48t vindu, Anders
+ * - Flex 90: 2 500 kr, 90 min, 48t vindu, Anders
  * - Flex 90 Duo: 2 800 kr (1 400×2), 90 min, 48t vindu, Anders
- * - Markus 20 min: 300 kr, 20 min, 12t vindu, Markus
+ * - Flex 20: 300 kr, 20 min, 12t vindu, Markus
  * 
  * Kjør: npx tsx prisma/seed-booking-implementation.ts
  */
@@ -171,7 +171,7 @@ async function main() {
   }
 
   // Flex tjenester -> Anders
-  const flexServices = ["Flex 50 Solo", "Flex 50 Duo", "Flex 90 Solo", "Flex 90 Duo"];
+  const flexServices = ["Flex 50", "Flex 50 Duo", "Flex 90", "Flex 90 Duo"];
   for (const serviceName of flexServices) {
     const service = await prisma.serviceType.findFirst({
       where: { name: serviceName },
@@ -203,9 +203,9 @@ async function main() {
     }
   }
 
-  // Markus 20 min -> Markus
+  // Flex 20 -> Markus
   const markusService = await prisma.serviceType.findFirst({
-    where: { name: "Markus 20 min" },
+    where: { name: "Flex 20" },
   });
 
   if (markusService) {
@@ -227,9 +227,9 @@ async function main() {
           },
         },
       });
-      console.log(`  ✓ Markus 20 min → Markus`);
+      console.log(`  ✓ Flex 20 → Markus`);
     } else {
-      console.log(`  ⏩ Markus 20 min allerede koblet til Markus`);
+      console.log(`  ⏩ Flex 20 allerede koblet til Markus`);
     }
   }
 
@@ -371,7 +371,7 @@ async function main() {
   console.log(`  Tilgjengelighet (Markus): ${(await prisma.instructorAvailability.count({ where: { instructorId: markus.id } }))} slots`);
   console.log("\n🎯 Klar for booking!");
   console.log("   Abonnement: Performance Pro, Performance");
-  console.log("   Drop-in: Flex 50/90 Solo/Duo, Markus 20 min");
+  console.log("   Drop-in: Flex 50/90 Solo/Duo, Flex 20");
   console.log("\n" + "=".repeat(60));
 }
 

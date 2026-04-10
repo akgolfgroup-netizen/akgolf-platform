@@ -51,7 +51,7 @@ export const RECOMMENDED_PATTERNS: Record<BookingCategory, string> = {
   individuell: "Foundation Test",
   gruppe: "Flex 50 Duo",
   abonnement: "Performance",
-  bane: "On-Course Par 3",
+  bane: "Banecoaching 9 hull",
 };
 
 export function isRecommended(serviceName: string, category: BookingCategory): boolean {

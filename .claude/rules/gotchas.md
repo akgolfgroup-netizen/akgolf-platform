@@ -34,7 +34,10 @@ Inter via `next/font/google`. Ikke lokal font-fil.
 ## Innhold
 - Markedsside-tekst i `lib/website-constants.ts`, aldri hardkodet.
 - Aldri vis trenersertifiseringer (PGA, TrackMan, TPI, etc.).
-- Coaching-pakker: Performance 1600 kr/mnd (2x20min), Performance Pro 2000 kr/mnd (4x20min).
+- Anders-pakker: Performance 1600 kr/mnd (2x20min), Performance Pro 2000 kr/mnd (4x20min), Gruppe 900 kr/mnd (2x60min).
+- Markus-pakker: Express 550 kr/mnd (2x20min), Express Pro 1000 kr/mnd (4x20min), First Tee 1295 kr (kurs).
+- Flex = enkeltbetaling uten binding. Flex 20/50/90 + Duo-varianter + Banecoaching 9 hull.
+- Portal: Abo-pakker = lopende. Gruppe/Express/First Tee = 3 mnd. Flex/Bane = 1 mnd fra oktdato.
 
 ## Mission Control
 - Admin: `/portal/admin/` med RBAC via `canAccessMissionControl()` og `canAccessMCPage()`.

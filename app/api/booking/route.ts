@@ -7,11 +7,11 @@
  * - Spillerportal: 299 kr/mnd, kun portaltilgang (ingen coaching)
  * 
  * Drop-in/Flex (Pay-per-session):
- * - Flex 50 Solo: 1 500 kr, 50 min, Anders
+ * - Flex 50: 1 500 kr, 50 min, Anders
  * - Flex 50 Duo: 1 700 kr, 50 min, Anders
- * - Flex 90 Solo: 2 500 kr, 90 min, Anders
+ * - Flex 90: 2 500 kr, 90 min, Anders
  * - Flex 90 Duo: 2 800 kr, 90 min, Anders
- * - Markus 20 min: 300 kr, 20 min, Markus
+ * - Flex 20: 300 kr, 20 min, Markus
  */
 
 import { NextRequest, NextResponse } from "next/server";
