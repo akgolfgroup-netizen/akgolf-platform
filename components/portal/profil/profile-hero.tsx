@@ -18,13 +18,13 @@ const roleLabelMap: Record<string, string> = {
 };
 
 const tierConfig: Record<string, { label: string; color: string; bg: string; border: string }> = {
-  FREE: { label: "Free", color: "#8a9bb0", bg: "rgba(138,155,176,0.1)", border: "rgba(138,155,176,0.2)" },
+  VISITOR: { label: "Gjest", color: "#8a9bb0", bg: "rgba(138,155,176,0.1)", border: "rgba(138,155,176,0.2)" },
   PRO: { label: "Pro", color: "#38BDF8", bg: "rgba(56,189,248,0.1)", border: "rgba(56,189,248,0.25)" },
   ELITE: { label: "Elite", color: "var(--color-grey-900)", bg: "var(--color-grey-200)", border: "var(--color-grey-200)" },
 };
 
 export function ProfileHero({ name, image, role, subscriptionTier, currentHandicap }: ProfileHeroProps) {
-  const tier = tierConfig[subscriptionTier] ?? tierConfig.FREE;
+  const tier = tierConfig[subscriptionTier] ?? tierConfig.VISITOR;
   const initials = name
     ? name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()
     : "?";

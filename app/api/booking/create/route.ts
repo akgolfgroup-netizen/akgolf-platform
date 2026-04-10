@@ -81,7 +81,7 @@ async function getOrCreateUser(
       phone: phone || null,
       role: "USER",
       isActive: true,
-      subscriptionTier: "FREE",
+      subscriptionTier: "VISITOR",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })

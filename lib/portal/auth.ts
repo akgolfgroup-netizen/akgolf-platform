@@ -47,7 +47,7 @@ export async function getPortalUser(): Promise<PortalUser | null> {
         name: supabaseUser.user_metadata?.name || supabaseUser.email.split("@")[0],
         role: supabaseUser.user_metadata?.role || "USER",
         isActive: true,
-        subscriptionTier: "FREE",
+        subscriptionTier: "VISITOR",
       })
       .select()
       .single();
@@ -63,7 +63,7 @@ export async function getPortalUser(): Promise<PortalUser | null> {
       email: newUser.email,
       image: newUser.image,
       role: newUser.role,
-      subscriptionTier: newUser.subscriptionTier || "FREE",
+      subscriptionTier: newUser.subscriptionTier || "VISITOR",
       stripeCustomerId: newUser.stripeCustomerId,
       subscriptionStatus: null,
       subscriptionExpiresAt: null,
@@ -88,7 +88,7 @@ export async function getPortalUser(): Promise<PortalUser | null> {
     email: user.email,
     image: user.image,
     role: user.role,
-    subscriptionTier: user.subscriptionTier || "FREE",
+    subscriptionTier: user.subscriptionTier || "VISITOR",
     stripeCustomerId: user.stripeCustomerId,
     subscriptionStatus: subscription?.status || null,
     subscriptionExpiresAt: subscription?.billingPeriodEnd ? new Date(subscription.billingPeriodEnd) : null,
@@ -127,7 +127,7 @@ export async function logout() {
 
 export async function getUserSubscriptionTier(): Promise<string> {
   const user = await getPortalUser();
-  return user?.subscriptionTier || "FREE";
+  return user?.subscriptionTier || "VISITOR";
 }
 
 export async function hasActiveSubscription(): Promise<boolean> {
