@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Flag, User, Calendar, Receipt, UserCircle, AlertCircle, Check, CreditCard, ArrowRight, Shield, CalendarCheck } from "@/components/shared/icons";
+import { Flag, Target, User, Calendar, Receipt, UserCircle, AlertCircle, Check, CreditCard, ArrowRight, Shield, CalendarCheck } from "@/components/shared/icons";
+import { CircleDot, Circle } from "lucide-react";
 import { BookingProgress } from "../components/BookingProgress";
 import { BookingNavSidebar } from "../components/BookingNavSidebar";
 import { createClient } from "@/lib/supabase/client";
@@ -42,6 +43,8 @@ export default function BookingReviewConfirmPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [handicap, setHandicap] = useState("");
+  const [focusArea, setFocusArea] = useState<string | null>(null);
+  const [playerNotes, setPlayerNotes] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<"STRIPE">("STRIPE");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -139,6 +142,8 @@ export default function BookingReviewConfirmPage() {
           email,
           name,
           phone,
+          focusArea: focusArea || undefined,
+          playerNotes: playerNotes.trim() || undefined,
         }),
       });
 
@@ -295,6 +300,56 @@ export default function BookingReviewConfirmPage() {
                         </ul>
                       </div>
                     </div>
+                  </div>
+                </section>
+
+                {/* Focus Area Selection */}
+                <section className="bg-white rounded-2xl lg:rounded-3xl p-5 lg:p-8 border border-primary/10">
+                  <div className="mb-4 lg:mb-6">
+                    <h4 className="text-base lg:text-lg font-bold text-primary uppercase tracking-tight">Hva vil du jobbe med?</h4>
+                    <p className="text-xs text-muted mt-1">Velg fokusområde for timen (valgfritt)</p>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {([
+                      { id: "TEE_TOTAL", label: "Tee Total", Icon: Flag, desc: "Langt spill" },
+                      { id: "APPROACH", label: "Approach", Icon: Target, desc: "Innspill" },
+                      { id: "SHORT_GAME", label: "Nærspill", Icon: CircleDot, desc: "Chipping & pitching" },
+                      { id: "PUTTING", label: "Putting", Icon: Circle, desc: "Putt" },
+                    ] as const).map((area) => (
+                      <button
+                        key={area.id}
+                        type="button"
+                        onClick={() => setFocusArea(focusArea === area.id ? null : area.id)}
+                        className={`flex flex-col items-center text-center p-4 rounded-xl border-2 transition-all ${
+                          focusArea === area.id
+                            ? "border-accent-cta bg-accent-cta/5"
+                            : "border-primary/10 hover:border-primary/20"
+                        }`}
+                      >
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2 ${
+                          focusArea === area.id ? "bg-primary" : "bg-surface"
+                        }`}>
+                          <area.Icon className={`w-5 h-5 ${focusArea === area.id ? "text-white" : "text-primary"}`} />
+                        </div>
+                        <span className="text-sm font-semibold text-primary">{area.label}</span>
+                        <span className="text-[10px] text-muted">{area.desc}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="mt-4">
+                    <label htmlFor="playerNotes" className="font-mono text-[10px] uppercase text-muted block mb-1">
+                      Beskriv utfordringen din (valgfritt)
+                    </label>
+                    <textarea
+                      id="playerNotes"
+                      className="w-full bg-surface border-none rounded-xl px-4 py-3 text-text text-sm resize-none"
+                      rows={3}
+                      placeholder="F.eks. 'Sliter med slice fra tee' eller 'Vil bli bedre på 50-80 meter innspill'"
+                      value={playerNotes}
+                      onChange={(e) => setPlayerNotes(e.target.value)}
+                      maxLength={500}
+                    />
+                    <p className="text-[10px] text-muted mt-1 text-right">{playerNotes.length}/500</p>
                   </div>
                 </section>
 

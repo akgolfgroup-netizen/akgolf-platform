@@ -131,7 +131,9 @@ export async function POST(req: NextRequest) {
       paymentMethod = "STRIPE",
       email,
       name,
-      phone
+      phone,
+      focusArea,
+      playerNotes,
     } = body;
 
     // Validate required fields
@@ -252,6 +254,18 @@ export async function POST(req: NextRequest) {
 
     if (fetchError || !booking) {
       throw new Error("Booking opprettet, men kunne ikke hentes");
+    }
+
+    // Save focus area and player notes if provided
+    if (focusArea || playerNotes) {
+      await serviceSupabase
+        .from("Booking")
+        .update({
+          ...(focusArea && { focusArea }),
+          ...(playerNotes && { playerNotes: playerNotes.slice(0, 500) }),
+          updatedAt: new Date().toISOString(),
+        })
+        .eq("id", bookingId);
     }
 
     // Invalidate cache and broadcast
