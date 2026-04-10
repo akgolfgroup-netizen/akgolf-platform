@@ -305,7 +305,7 @@ function validateTimeConstraints(
   }
 
   // Sjekk om det er helg (for advarsler)
-  const dayOfWeek = startTime.getDay();
+  const dayOfWeek = startTime.getUTCDay();
   if (dayOfWeek === 0 || dayOfWeek === 6) {
     warnings.push({
       code: "WEEKEND_BOOKING",
@@ -352,7 +352,7 @@ async function checkInstructorAvailability(
   const userData = instructor.User as { name: string | null } | null;
 
   // Sjekk ukedag-tilgjengelighet (InstructorAvailability)
-  const dayOfWeek = startTime.getDay();
+  const dayOfWeek = startTime.getUTCDay();
   const timeString = format(startTime, "HH:mm");
 
   const { data: availability, error: availError } = await supabase
