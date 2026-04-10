@@ -81,7 +81,7 @@ async function getOrCreateUser(
       email: email.toLowerCase().trim(),
       name: name || email.split("@")[0],
       phone: phone || null,
-      role: "USER",
+      role: "STUDENT",
       isActive: true,
       subscriptionTier: "VISITOR",
       createdAt: new Date().toISOString(),
