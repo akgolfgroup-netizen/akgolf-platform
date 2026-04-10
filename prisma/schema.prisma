@@ -1811,6 +1811,13 @@ enum NotificationType {
   AI_INSIGHT
 }
 
+enum FocusArea {
+  TEE_TOTAL
+  APPROACH
+  SHORT_GAME
+  PUTTING
+}
+
 enum PaymentMethod {
   STRIPE
   VIPPS
