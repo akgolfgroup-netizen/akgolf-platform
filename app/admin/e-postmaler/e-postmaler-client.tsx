@@ -14,6 +14,14 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminButton,
+  AdminInput,
+  AdminTextarea,
+  AdminBadge,
+  AdminEmptyState,
+} from "@/components/portal/mission-control/ui";
 import { createTemplate, updateTemplate, deleteTemplate } from "./actions";
 
 interface EmailTemplate {
@@ -42,10 +50,18 @@ function getCategory(name: string): string {
   const lower = name.toLowerCase();
   if (lower.includes("velkom") || lower.includes("onboarding"))
     return "Onboarding";
-  if (lower.includes("booking") || lower.includes("bekreft") || lower.includes("påminn"))
+  if (
+    lower.includes("booking") ||
+    lower.includes("bekreft") ||
+    lower.includes("påminn")
+  )
     return "Booking";
   if (lower.includes("oppfølg")) return "Oppfølging";
-  if (lower.includes("marked") || lower.includes("kampanje") || lower.includes("nyhetsbrev"))
+  if (
+    lower.includes("marked") ||
+    lower.includes("kampanje") ||
+    lower.includes("nyhetsbrev")
+  )
     return "Markedsføring";
   return "Alle";
 }
@@ -70,7 +86,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
 
   const [selectedCategory, setSelectedCategory] = useState("Alle");
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
-    null
+    null,
   );
 
   // Form state for the editor
@@ -129,7 +145,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
   function handleDelete() {
     if (!selectedTemplateId) return;
     const confirmed = window.confirm(
-      "Er du sikker på at du vil slette denne malen?"
+      "Er du sikker på at du vil slette denne malen?",
     );
     if (!confirmed) return;
     startTransition(async () => {
@@ -147,37 +163,35 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
         onMenuClick={toggle}
       />
 
-      <div className="p-5">
-        <div
-          className="hg-card overflow-hidden"
+      <div className="p-6">
+        <AdminCard
+          className="p-0 overflow-hidden"
           style={{ minHeight: "calc(100vh - 180px)" }}
         >
           <div className="flex h-full">
             {/* Sidebar - Template List */}
             <div
               className={cn(
-                "w-full lg:w-80 border-r border-[var(--hg-border)] flex flex-col",
-                selectedTemplateId && "hidden lg:flex"
+                "w-full lg:w-80 border-r border-[var(--color-grey-200)] flex flex-col",
+                selectedTemplateId && "hidden lg:flex",
               )}
             >
               {/* Header */}
-              <div className="p-4 border-b border-[var(--hg-border)]">
-                <button
-                  className="hg-btn hg-btn-primary w-full"
+              <div className="p-4 border-b border-[var(--color-grey-200)]">
+                <AdminButton
+                  variant="primary"
+                  className="w-full"
                   onClick={handleNewTemplate}
                   disabled={isPending}
+                  loading={isPending}
+                  icon={!isPending ? <Plus className="w-4 h-4" /> : undefined}
                 >
-                  {isPending ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Plus className="w-4 h-4" />
-                  )}
                   Ny mal
-                </button>
+                </AdminButton>
               </div>
 
               {/* Categories */}
-              <div className="p-3 border-b border-[var(--hg-border)]">
+              <div className="p-3 border-b border-[var(--color-grey-200)]">
                 <div className="flex flex-wrap gap-1">
                   {categories.map((cat) => (
                     <button
@@ -186,8 +200,8 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                       className={cn(
                         "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors",
                         selectedCategory === cat
-                          ? "bg-[var(--hg-primary)] text-[var(--hg-bg)]"
-                          : "bg-[var(--hg-surface-raised)] text-[var(--hg-text-secondary)] hover:text-[var(--hg-text)]"
+                          ? "bg-[var(--color-primary)] text-white"
+                          : "bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:text-[var(--color-text)]",
                       )}
                     >
                       {cat}
@@ -199,7 +213,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               {/* Templates */}
               <div className="flex-1 overflow-y-auto">
                 {filteredTemplates.length === 0 ? (
-                  <div className="p-6 text-center text-sm text-[var(--hg-text-muted)]">
+                  <div className="p-6 text-center text-sm text-[var(--color-muted)]">
                     Ingen maler funnet
                   </div>
                 ) : (
@@ -208,27 +222,27 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                       key={t.id}
                       onClick={() => selectTemplate(t)}
                       className={cn(
-                        "w-full p-4 text-left hover:bg-[var(--hg-surface-raised)] transition-colors border-b border-[var(--hg-border-subtle)]",
+                        "w-full p-4 text-left hover:bg-[var(--color-grey-100)] transition-colors border-b border-[var(--color-grey-100)]",
                         selectedTemplateId === t.id &&
-                          "bg-[var(--hg-surface-raised)]"
+                          "bg-[var(--color-grey-100)]",
                       )}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-[var(--hg-primary)]/10 flex items-center justify-center flex-shrink-0">
-                          <Mail className="w-5 h-5 text-[var(--hg-primary)]" />
+                        <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                          <Mail className="w-5 h-5 text-[var(--color-primary)]" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium text-[var(--hg-text)] truncate">
+                          <h4 className="text-sm font-medium text-[var(--color-text)] truncate">
                             {t.name}
                           </h4>
-                          <p className="text-xs text-[var(--hg-text-muted)] truncate">
+                          <p className="text-xs text-[var(--color-muted)] truncate">
                             {t.subject}
                           </p>
                           <div className="flex items-center gap-2 mt-2">
-                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--hg-surface)] text-[var(--hg-text-muted)]">
+                            <AdminBadge variant="muted">
                               {getCategory(t.name)}
-                            </span>
-                            <span className="text-[10px] text-[var(--hg-text-muted)]">
+                            </AdminBadge>
+                            <span className="text-[10px] text-[var(--color-muted)]">
                               {formatDate(t.updatedAt)}
                             </span>
                           </div>
@@ -244,110 +258,96 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
             <div
               className={cn(
                 "flex-1 flex flex-col",
-                !selectedTemplateId && "hidden lg:flex"
+                !selectedTemplateId && "hidden lg:flex",
               )}
             >
               {selectedTemplate ? (
                 <>
                   {/* Editor Header */}
-                  <div className="p-4 border-b border-[var(--hg-border)] flex items-center justify-between">
+                  <div className="p-4 border-b border-[var(--color-grey-200)] flex items-center justify-between gap-3 flex-wrap">
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => setSelectedTemplateId(null)}
-                        className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-[var(--hg-surface-raised)]"
+                        className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-[var(--color-grey-100)]"
+                        aria-label="Lukk"
                       >
-                        <X className="w-5 h-5 text-[var(--hg-text)]" />
+                        <X className="w-5 h-5 text-[var(--color-text)]" />
                       </button>
                       <div>
-                        <h3 className="text-sm font-semibold text-[var(--hg-text)]">
+                        <h3 className="text-sm font-semibold text-[var(--color-text)]">
                           {editName}
                         </h3>
-                        <p className="text-xs text-[var(--hg-text-muted)]">
+                        <p className="text-xs text-[var(--color-muted)]">
                           Sist redigert {formatDate(selectedTemplate.updatedAt)}
                         </p>
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <button
+                      <AdminButton
+                        variant="danger"
                         onClick={handleDelete}
                         disabled={isPending}
-                        className="hg-btn hg-btn-secondary text-sm text-[var(--color-error)]"
+                        icon={<Trash2 className="w-4 h-4" />}
                       >
-                        <Trash2 className="w-4 h-4" />
                         Slett
-                      </button>
-                      <button
-                        className="hg-btn hg-btn-secondary text-sm"
+                      </AdminButton>
+                      <AdminButton
+                        variant="secondary"
+                        icon={<Eye className="w-4 h-4" />}
                       >
-                        <Eye className="w-4 h-4" />
                         Forhåndsvis
-                      </button>
-                      <button
+                      </AdminButton>
+                      <AdminButton
+                        variant="primary"
                         onClick={handleSave}
                         disabled={isPending}
-                        className="hg-btn hg-btn-primary text-sm"
+                        loading={isPending}
+                        icon={
+                          !isPending ? <Save className="w-4 h-4" /> : undefined
+                        }
                       >
-                        {isPending ? (
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                        ) : (
-                          <Save className="w-4 h-4" />
-                        )}
                         Lagre
-                      </button>
+                      </AdminButton>
                     </div>
                   </div>
 
                   {/* Editor Form */}
                   <div className="flex-1 overflow-y-auto p-6 space-y-5">
                     {/* Template Name */}
-                    <div>
-                      <label className="block text-sm font-medium text-[var(--hg-text)] mb-2">
-                        Mal-navn
-                      </label>
-                      <input
-                        type="text"
-                        value={editName}
-                        onChange={(e) => setEditName(e.target.value)}
-                        className="w-full bg-[var(--hg-surface)] border border-[var(--hg-border)] rounded-lg px-4 py-2.5 text-[var(--hg-text)] focus:border-[var(--hg-primary)] outline-none"
-                      />
-                    </div>
+                    <AdminInput
+                      label="Mal-navn"
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                    />
 
                     {/* Subject */}
-                    <div>
-                      <label className="block text-sm font-medium text-[var(--hg-text)] mb-2">
-                        Emne
-                      </label>
-                      <input
-                        type="text"
-                        value={editSubject}
-                        onChange={(e) => setEditSubject(e.target.value)}
-                        className="w-full bg-[var(--hg-surface)] border border-[var(--hg-border)] rounded-lg px-4 py-2.5 text-[var(--hg-text)] focus:border-[var(--hg-primary)] outline-none"
-                      />
-                    </div>
+                    <AdminInput
+                      label="Emne"
+                      value={editSubject}
+                      onChange={(e) => setEditSubject(e.target.value)}
+                    />
 
                     {/* Variables */}
                     <div>
-                      <label className="block text-sm font-medium text-[var(--hg-text)] mb-2 flex items-center gap-2">
+                      <div className="admin-label flex items-center gap-2 mb-1.5">
                         <Variable className="w-4 h-4" />
                         Tilgjengelige variabler
-                      </label>
-                      <div className="flex flex-wrap gap-2 p-3 rounded-lg bg-[var(--hg-surface-raised)]">
+                      </div>
+                      <div className="flex flex-wrap gap-2 p-3 rounded-lg bg-[var(--color-grey-100)]">
                         {editVariables.length > 0 ? (
                           editVariables.map((v) => (
                             <button
                               key={v}
                               onClick={() => {
-                                setEditHtmlContent(
-                                  (prev) => prev + v
-                                );
+                                setEditHtmlContent((prev) => prev + v);
                               }}
-                              className="text-xs px-2 py-1 rounded bg-[var(--hg-surface)] text-[var(--hg-primary)] hover:bg-[var(--hg-primary)] hover:text-[var(--hg-bg)] transition-colors"
+                              className="text-xs px-2 py-1 rounded bg-white border border-[var(--color-grey-200)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition-colors"
                             >
                               {v}
                             </button>
                           ))
                         ) : (
-                          <span className="text-xs text-[var(--hg-text-muted)]">
+                          <span className="text-xs text-[var(--color-muted)]">
                             Ingen variabler definert
                           </span>
                         )}
@@ -355,35 +355,28 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                     </div>
 
                     {/* Body */}
-                    <div>
-                      <label className="block text-sm font-medium text-[var(--hg-text)] mb-2">
-                        E-postinnhold
-                      </label>
-                      <textarea
-                        value={editHtmlContent}
-                        onChange={(e) => setEditHtmlContent(e.target.value)}
-                        rows={12}
-                        className="w-full bg-[var(--hg-surface)] border border-[var(--hg-border)] rounded-lg px-4 py-3 text-[var(--hg-text)] focus:border-[var(--hg-primary)] outline-none resize-none font-mono text-sm"
-                      />
-                    </div>
+                    <AdminTextarea
+                      label="E-postinnhold"
+                      value={editHtmlContent}
+                      onChange={(e) => setEditHtmlContent(e.target.value)}
+                      rows={12}
+                      className="font-mono text-sm"
+                    />
                   </div>
                 </>
               ) : (
-                <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
-                  <div className="w-16 h-16 rounded-2xl bg-[var(--hg-surface-raised)] flex items-center justify-center mb-4">
-                    <Mail className="w-8 h-8 text-[var(--hg-text-muted)]" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-[var(--hg-text)] mb-2">
-                    Velg en mal
-                  </h3>
-                  <p className="text-sm text-[var(--hg-text-muted)] max-w-xs">
-                    Klikk på en mal i listen for å redigere, eller opprett en ny
-                  </p>
+                <div className="flex-1 flex items-center justify-center p-8">
+                  <AdminEmptyState
+                    icon={<Mail className="w-6 h-6" />}
+                    title="Velg en mal"
+                    description="Klikk på en mal i listen for å redigere, eller opprett en ny"
+                    className="border-0 shadow-none bg-transparent"
+                  />
                 </div>
               )}
             </div>
           </div>
-        </div>
+        </AdminCard>
       </div>
     </>
   );

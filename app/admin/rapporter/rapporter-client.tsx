@@ -11,10 +11,16 @@ import {
   Trophy,
   BarChart3,
   Download,
-  Calendar,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar, HGStatCard } from "@/components/portal/mission-control";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminButton,
+  AdminStatCard,
+  AdminPageHeader,
+  AdminEmptyState,
+} from "@/components/portal/mission-control/ui";
 
 interface ReportData {
   totalStudents: number;
@@ -41,12 +47,13 @@ const tierLabels: Record<string, string> = {
   ELITE: "Elite",
 };
 
-const tierColors: Record<string, string> = {
-  VISITOR: "#7A8C85",
-  ACADEMY: "#007AFF",
-  STARTER: "#C48A32",
-  PRO: "#d2f000",
-  ELITE: "#005840",
+// Bruk kun var(--color-*)-tokens. Alle tiers mappes til brand-palette.
+const tierColorVars: Record<string, string> = {
+  VISITOR: "var(--color-muted)",
+  ACADEMY: "var(--color-info)",
+  STARTER: "var(--color-warning)",
+  PRO: "var(--color-accent-cta)",
+  ELITE: "var(--color-primary)",
 };
 
 const timeRanges = [
@@ -54,14 +61,19 @@ const timeRanges = [
   { label: "Siste 30 dager", value: "30d" },
   { label: "Siste 3 måneder", value: "3m" },
   { label: "År til dato", value: "ytd" },
-];
+] as const;
+
+type TimeRange = (typeof timeRanges)[number]["value"];
 
 export function RapporterClient({ data }: RapporterClientProps) {
   const { toggle } = useMCSidebar();
-  const [timeRange, setTimeRange] = useState("30d");
+  const [timeRange, setTimeRange] = useState<TimeRange>("30d");
 
   const maxBookings = Math.max(...data.bookingTrends.map((t) => t.count), 1);
-  const totalTier = data.tierDistribution.reduce((sum, t) => sum + t.count, 0);
+  const totalTier = data.tierDistribution.reduce(
+    (sum, t) => sum + t.count,
+    0,
+  );
 
   return (
     <>
@@ -71,198 +83,241 @@ export function RapporterClient({ data }: RapporterClientProps) {
         onMenuClick={toggle}
       />
 
-      <div className="p-5 space-y-5">
-        {/* Time Range & Export */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="hg-tabs">
-            {timeRanges.map((range) => (
+      <div className="p-6 space-y-6">
+        <AdminPageHeader
+          title="Rapporter"
+          subtitle="KPIer og analyse av akademiets ytelse"
+          actions={
+            <AdminButton
+              variant="secondary"
+              icon={<Download className="w-4 h-4" />}
+            >
+              Eksporter rapport
+            </AdminButton>
+          }
+        />
+
+        {/* Time Range tabs */}
+        <div className="flex flex-wrap gap-2">
+          {timeRanges.map((range) => {
+            const isActive = timeRange === range.value;
+            return (
               <button
                 key={range.value}
+                type="button"
                 onClick={() => setTimeRange(range.value)}
-                className={cn("hg-tab", timeRange === range.value && "active")}
+                className={cn(
+                  "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
+                  isActive
+                    ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
+                    : "bg-white border-[var(--color-grey-200)] text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
+                )}
               >
                 {range.label}
               </button>
-            ))}
-          </div>
-          <button className="hg-btn hg-btn-secondary">
-            <Download className="w-4 h-4" />
-            Eksporter rapport
-          </button>
+            );
+          })}
         </div>
 
         {/* Student KPIs */}
         <div>
-          <h2 className="text-sm font-medium text-[var(--hg-text-muted)] uppercase tracking-wider mb-3">Elever</h2>
+          <h2 className="text-xs font-semibold text-[var(--color-muted)] uppercase tracking-wider mb-3">
+            Elever
+          </h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <HGStatCard
+            <AdminStatCard
               label="Totalt"
               value={data.totalStudents}
-              icon={Users}
+              icon={<Users className="w-5 h-5" />}
             />
-            <HGStatCard
+            <AdminStatCard
               label="Nye (30d)"
               value={`+${data.newStudents}`}
-              trend={{ value: 12, direction: "up" }}
-              icon={UserPlus}
+              change={{ value: 12, positive: true }}
+              icon={<UserPlus className="w-5 h-5" />}
             />
-            <HGStatCard
+            <AdminStatCard
               label="Aktive (30d)"
               value={data.activeStudents}
-              icon={UserCheck}
+              icon={<UserCheck className="w-5 h-5" />}
             />
-            <HGStatCard
+            <AdminStatCard
               label="Retensjon"
               value={`${data.retentionRate}%`}
-              icon={BarChart3}
+              icon={<BarChart3 className="w-5 h-5" />}
             />
           </div>
         </div>
 
         {/* Session KPIs */}
         <div>
-          <h2 className="text-sm font-medium text-[var(--hg-text-muted)] uppercase tracking-wider mb-3">Økter (siste 30 dager)</h2>
+          <h2 className="text-xs font-semibold text-[var(--color-muted)] uppercase tracking-wider mb-3">
+            Økter (siste 30 dager)
+          </h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <HGStatCard
+            <AdminStatCard
               label="Fullførte"
               value={data.completedSessions}
-              trend={{ value: 8, direction: "up" }}
-              icon={CalendarCheck}
+              change={{ value: 8, positive: true }}
+              icon={<CalendarCheck className="w-5 h-5" />}
             />
-            <HGStatCard
+            <AdminStatCard
               label="Kansellerte"
               value={data.cancelledSessions}
-              trend={{ value: 5, direction: "down" }}
-              icon={XCircle}
-              variant={data.cancelledSessions > 10 ? "warning" : "default"}
+              change={{ value: 5, positive: false }}
+              icon={<XCircle className="w-5 h-5" />}
             />
-            <HGStatCard
+            <AdminStatCard
               label="Kanselleringsrate"
               value={`${data.cancellationRate}%`}
-              icon={TrendingDown}
-              variant={data.cancellationRate > 10 ? "warning" : "default"}
+              icon={<TrendingDown className="w-5 h-5" />}
             />
-            <HGStatCard
+            <AdminStatCard
               label="HCP-forbedring"
               value={data.handicapImprovement}
-              trend={{ value: 15, direction: "up" }}
-              icon={Trophy}
+              change={{ value: 15, positive: true }}
+              icon={<Trophy className="w-5 h-5" />}
             />
           </div>
         </div>
 
         {/* Charts Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Booking Trends */}
-          <div className="hg-card overflow-hidden">
-            <div className="px-4 py-3 border-b border-[var(--hg-border)]">
-              <h3 className="hg-section-title">Booking-trend</h3>
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[var(--color-grey-200)]">
+              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                Booking-trend
+              </h3>
             </div>
-            <div className="p-4 space-y-4">
+            <div className="p-5 space-y-4">
               {data.bookingTrends.length > 0 ? (
                 data.bookingTrends.map((trend, index) => (
                   <div key={index}>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm text-[var(--hg-text)]">
+                      <span className="text-sm text-[var(--color-text)]">
                         Uke fra {trend.week}
                       </span>
-                      <span className="text-sm text-[var(--hg-text-muted)]">
+                      <span className="text-sm text-[var(--color-muted)]">
                         {trend.count} bookinger
                       </span>
                     </div>
-                    <div className="h-2 bg-[var(--hg-surface-raised)] rounded-full overflow-hidden">
+                    <div className="h-2 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-[var(--hg-primary)] rounded-full transition-all"
-                        style={{ width: `${(trend.count / maxBookings) * 100}%` }}
+                        className="h-full bg-[var(--color-primary)] rounded-full transition-all"
+                        style={{
+                          width: `${(trend.count / maxBookings) * 100}%`,
+                        }}
                       />
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="text-center py-8 text-[var(--hg-text-muted)]">
+                <div className="py-4 text-center text-sm text-[var(--color-muted)]">
                   Ingen bookinger i perioden
                 </div>
               )}
             </div>
-          </div>
+          </AdminCard>
 
           {/* Tier Distribution */}
-          <div className="hg-card overflow-hidden">
-            <div className="px-4 py-3 border-b border-[var(--hg-border)]">
-              <h3 className="hg-section-title">Fordeling per tier</h3>
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[var(--color-grey-200)]">
+              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                Fordeling per tier
+              </h3>
             </div>
-            <div className="p-4 space-y-4">
+            <div className="p-5 space-y-4">
               {data.tierDistribution.length > 0 ? (
                 data.tierDistribution.map((tier) => {
-                  const percentage = totalTier > 0 ? (tier.count / totalTier) * 100 : 0;
-                  const color = tierColors[tier.tier] || "#7A8C85";
+                  const percentage =
+                    totalTier > 0 ? (tier.count / totalTier) * 100 : 0;
+                  const colorVar =
+                    tierColorVars[tier.tier] ?? "var(--color-muted)";
                   return (
                     <div key={tier.tier}>
                       <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
                           <span
                             className="w-2 h-2 rounded-sm"
-                            style={{ backgroundColor: color }}
+                            style={{ backgroundColor: colorVar }}
                           />
-                          <span className="text-sm text-[var(--hg-text)]">
-                            {tierLabels[tier.tier] || tier.tier}
+                          <span className="text-sm text-[var(--color-text)]">
+                            {tierLabels[tier.tier] ?? tier.tier}
                           </span>
                         </div>
-                        <span className="text-sm text-[var(--hg-text-muted)]">
+                        <span className="text-sm text-[var(--color-muted)]">
                           {tier.count} ({percentage.toFixed(1)}%)
                         </span>
                       </div>
-                      <div className="h-2 bg-[var(--hg-surface-raised)] rounded-full overflow-hidden">
+                      <div className="h-2 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
                         <div
                           className="h-full rounded-full transition-all"
-                          style={{ width: `${percentage}%`, backgroundColor: color }}
+                          style={{
+                            width: `${percentage}%`,
+                            backgroundColor: colorVar,
+                          }}
                         />
                       </div>
                     </div>
                   );
                 })
               ) : (
-                <div className="text-center py-8 text-[var(--hg-text-muted)]">
-                  Ingen elever funnet
-                </div>
+                <AdminEmptyState
+                  icon={<Users className="w-6 h-6" />}
+                  title="Ingen elever funnet"
+                  description="Fordeling per tier vil vises når data er tilgjengelig."
+                  className="border-0"
+                />
               )}
             </div>
-          </div>
+          </AdminCard>
         </div>
 
         {/* Additional Insights */}
-        <div className="hg-card p-4">
-          <h3 className="hg-section-title mb-4">Innsikt og anbefalinger</h3>
+        <AdminCard>
+          <h3 className="text-sm font-semibold text-[var(--color-text)] mb-4">
+            Innsikt og anbefalinger
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-[var(--hg-surface-raised)]">
+            <div className="p-4 rounded-xl bg-[var(--color-grey-100)]">
               <div className="flex items-center gap-2 mb-2">
-                <Users className="w-4 h-4 text-[var(--hg-primary)]" />
-                <span className="text-sm font-medium text-[var(--hg-text)]">Vekst</span>
+                <Users className="w-4 h-4 text-[var(--color-primary)]" />
+                <span className="text-sm font-medium text-[var(--color-text)]">
+                  Vekst
+                </span>
               </div>
-              <p className="text-xs text-[var(--hg-text-secondary)]">
-                {data.newStudents} nye elever denne måneden. Fortsett markedsføringen på Instagram.
+              <p className="text-xs text-[var(--color-muted)]">
+                {data.newStudents} nye elever denne måneden. Fortsett
+                markedsføringen på Instagram.
               </p>
             </div>
-            <div className="p-4 rounded-xl bg-[var(--hg-surface-raised)]">
+            <div className="p-4 rounded-xl bg-[var(--color-grey-100)]">
               <div className="flex items-center gap-2 mb-2">
-                <CalendarCheck className="w-4 h-4 text-[var(--hg-success)]" />
-                <span className="text-sm font-medium text-[var(--hg-text)]">Oppmøte</span>
+                <CalendarCheck className="w-4 h-4 text-[var(--color-success)]" />
+                <span className="text-sm font-medium text-[var(--color-text)]">
+                  Oppmøte
+                </span>
               </div>
-              <p className="text-xs text-[var(--hg-text-secondary)]">
-                {data.cancellationRate}% kanselleringsrate er innenfor normalen. Send påminnelser dagen før.
+              <p className="text-xs text-[var(--color-muted)]">
+                {data.cancellationRate}% kanselleringsrate er innenfor normalen.
+                Send påminnelser dagen før.
               </p>
             </div>
-            <div className="p-4 rounded-xl bg-[var(--hg-surface-raised)]">
+            <div className="p-4 rounded-xl bg-[var(--color-grey-100)]">
               <div className="flex items-center gap-2 mb-2">
-                <Trophy className="w-4 h-4 text-[var(--hg-warning)]" />
-                <span className="text-sm font-medium text-[var(--hg-text)]">Fremskritt</span>
+                <Trophy className="w-4 h-4 text-[var(--color-warning)]" />
+                <span className="text-sm font-medium text-[var(--color-text)]">
+                  Fremskritt
+                </span>
               </div>
-              <p className="text-xs text-[var(--hg-text-secondary)]">
-                Elevene forbedrer i snitt {data.handicapImprovement} i handicap. Godt arbeid!
+              <p className="text-xs text-[var(--color-muted)]">
+                Elevene forbedrer i snitt {data.handicapImprovement} i handicap.
+                Godt arbeid!
               </p>
             </div>
           </div>
-        </div>
+        </AdminCard>
       </div>
     </>
   );

@@ -2,10 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Calendar, Circle, CheckCircle2, Clock, TrendingUp, Users, Target } from "lucide-react";
+import {
+  Calendar,
+  Circle,
+  Clock,
+  TrendingUp,
+  Users,
+  Target,
+} from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminButton,
+  AdminBadge,
+} from "@/components/portal/mission-control/ui";
 
 // Mock data
 const MOCK_PROJECTS = {
@@ -26,12 +37,12 @@ const MOCK_PROJECTS = {
 
 const MOCK_TASKS = {
   coaching: [
-    { id: "t1", text: "Ring Maria L. — oppfølging", priority: "urgent" },
+    { id: "t1", text: "Ring Maria L. — oppfolging", priority: "urgent" },
     { id: "t2", text: "Oppdater Erik S. pakke", priority: "important" },
     { id: "t3", text: "Forbered TrackMan-rapport", priority: "normal" },
   ],
   junior: [
-    { id: "t4", text: "Godkjenn 2 nye påmeldinger", priority: "urgent" },
+    { id: "t4", text: "Godkjenn 2 nye pameldinger", priority: "urgent" },
     { id: "t5", text: "Send foreldre-nyhetsbrev", priority: "important" },
   ],
   gfgk: [
@@ -52,26 +63,33 @@ const MOCK_SESSIONS = {
   gfgk: [{ id: "s5", time: "14:00", name: "Gruppetrening", type: "Gruppe A" }],
 };
 
-const priorityColors = {
-  urgent: "bg-[var(--hg-error)] text-white",
-  important: "bg-[var(--hg-warning)] text-[var(--hg-bg)]",
-  normal: "bg-[var(--hg-primary)] text-[var(--hg-bg)]",
+const priorityVariant: Record<string, "error" | "warning" | "info"> = {
+  urgent: "error",
+  important: "warning",
+  normal: "info",
 };
 
-const priorityLabels = {
+const priorityLabels: Record<string, string> = {
   urgent: "Haster",
   important: "Viktig",
   normal: "Normal",
 };
 
 export default function FocusPage() {
-  const [selectedDivision, setSelectedDivision] = useState<"coaching" | "junior" | "gfgk">("coaching");
-  const router = useRouter();
+  const [selectedDivision, setSelectedDivision] = useState<
+    "coaching" | "junior" | "gfgk"
+  >("coaching");
   const { toggle } = useMCSidebar();
 
   const projects = MOCK_PROJECTS[selectedDivision];
   const tasks = MOCK_TASKS[selectedDivision];
   const sessions = MOCK_SESSIONS[selectedDivision];
+
+  const divisions = [
+    { id: "coaching", label: "Coaching", icon: Target },
+    { id: "junior", label: "Junior", icon: Users },
+    { id: "gfgk", label: "GFGK", icon: TrendingUp },
+  ] as const;
 
   return (
     <>
@@ -81,140 +99,156 @@ export default function FocusPage() {
         onMenuClick={toggle}
       />
 
-      <div className="p-5 space-y-5">
+      <div className="p-6 space-y-6">
         {/* Division Selector */}
-        <div className="hg-tabs">
-          {[
-            { id: "coaching", label: "Coaching", icon: Target },
-            { id: "junior", label: "Junior", icon: Users },
-            { id: "gfgk", label: "GFGK", icon: TrendingUp },
-          ].map((div) => (
-            <button
-              key={div.id}
-              onClick={() => setSelectedDivision(div.id as typeof selectedDivision)}
-              className={cn("hg-tab flex items-center gap-2", selectedDivision === div.id && "active")}
-            >
-              <div.icon className="w-4 h-4" />
-              {div.label}
-            </button>
-          ))}
+        <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-white border border-[var(--color-grey-200)]">
+          {divisions.map((div) => {
+            const Icon = div.icon;
+            const isActive = selectedDivision === div.id;
+            return (
+              <button
+                key={div.id}
+                type="button"
+                onClick={() => setSelectedDivision(div.id)}
+                className={cn(
+                  "inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                  isActive
+                    ? "bg-[var(--color-primary)] text-white"
+                    : "text-[var(--color-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
+                )}
+              >
+                <Icon className="w-4 h-4" />
+                {div.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* Focus Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Projects Column */}
-          <div className="hg-card">
-            <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-              <h3 className="hg-section-title">Prosjekter</h3>
-              <span className="text-xs text-[var(--hg-text-muted)]">
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-6 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+              <h3 className="admin-section-title">Prosjekter</h3>
+              <span className="text-xs text-[var(--color-muted)]">
                 {projects.length} aktive
               </span>
             </div>
             <div className="p-4 space-y-3">
               {projects.map((project) => (
-                <div key={project.id} className="p-3 rounded-xl bg-[var(--hg-surface-raised)]">
+                <div
+                  key={project.id}
+                  className="p-3 rounded-xl bg-[var(--color-grey-50)]"
+                >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-[var(--hg-text)]">
+                    <span className="text-sm font-semibold text-[var(--color-text)]">
                       {project.name}
                     </span>
-                    <span className="text-xs text-[var(--hg-text-muted)]">
+                    <span className="text-xs text-[var(--color-muted)]">
                       {project.dueDate}
                     </span>
                   </div>
-                  <div className="h-2 bg-[var(--hg-surface)] rounded-full overflow-hidden">
+                  <div className="h-2 bg-white rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[var(--hg-primary)] rounded-full transition-all"
+                      className="h-full bg-[var(--color-primary)] rounded-full transition-all"
                       style={{ width: `${project.progress}%` }}
                     />
                   </div>
-                  <div className="text-xs text-[var(--hg-text-muted)] mt-1">
-                    {project.progress}% fullført
+                  <div className="text-xs text-[var(--color-muted)] mt-1.5 tabular-nums">
+                    {project.progress}% fullfort
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </AdminCard>
 
           {/* Tasks Column */}
-          <div className="hg-card">
-            <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-              <h3 className="hg-section-title">Oppgaver</h3>
-              <span className="text-xs text-[var(--hg-text-muted)]">
-                {tasks.length} å gjøre
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-6 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+              <h3 className="admin-section-title">Oppgaver</h3>
+              <span className="text-xs text-[var(--color-muted)]">
+                {tasks.length} a gjore
               </span>
             </div>
             <div className="p-4 space-y-2">
               {tasks.map((task) => (
                 <div
                   key={task.id}
-                  className="flex items-start gap-3 p-3 rounded-xl hover:bg-[var(--hg-surface-raised)] transition-colors cursor-pointer group"
+                  className="flex items-start gap-3 p-3 rounded-xl hover:bg-[var(--color-grey-50)] transition-colors cursor-pointer group"
                 >
-                  <Circle className="w-5 h-5 text-[var(--hg-text-muted)] group-hover:text-[var(--hg-primary)] mt-0.5 flex-shrink-0" />
+                  <Circle className="w-5 h-5 text-[var(--color-muted)] group-hover:text-[var(--color-primary)] mt-0.5 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm text-[var(--hg-text)]">{task.text}</div>
+                    <div className="text-sm text-[var(--color-text)]">
+                      {task.text}
+                    </div>
                   </div>
-                  <span
-                    className={cn(
-                      "px-2 py-0.5 text-[10px] font-medium rounded-full flex-shrink-0",
-                      priorityColors[task.priority as keyof typeof priorityColors]
-                    )}
-                  >
-                    {priorityLabels[task.priority as keyof typeof priorityLabels]}
-                  </span>
+                  <AdminBadge variant={priorityVariant[task.priority] ?? "info"}>
+                    {priorityLabels[task.priority] ?? task.priority}
+                  </AdminBadge>
                 </div>
               ))}
             </div>
-          </div>
+          </AdminCard>
 
           {/* Today's Schedule */}
-          <div className="hg-card">
-            <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-              <h3 className="hg-section-title">I dag</h3>
-              <Calendar className="w-4 h-4 text-[var(--hg-text-muted)]" />
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-6 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+              <h3 className="admin-section-title">I dag</h3>
+              <Calendar className="w-4 h-4 text-[var(--color-muted)]" />
             </div>
             <div className="p-4 space-y-2">
               {sessions.map((session) => (
                 <div
                   key={session.id}
-                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--hg-surface-raised)] transition-colors"
+                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--color-grey-50)] transition-colors"
                 >
-                  <div className="flex items-center justify-center w-14 h-8 bg-[var(--hg-primary)] text-[var(--hg-bg)] rounded-lg text-xs font-semibold">
+                  <div className="flex items-center justify-center w-14 h-9 bg-[var(--color-primary)] text-white rounded-lg text-xs font-semibold tabular-nums">
                     {session.time}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-semibold text-[var(--hg-text)] truncate">
+                    <div className="text-sm font-semibold text-[var(--color-text)] truncate">
                       {session.name}
                     </div>
-                    <div className="text-xs text-[var(--hg-text-muted)]">{session.type}</div>
+                    <div className="text-xs text-[var(--color-muted)]">
+                      {session.type}
+                    </div>
                   </div>
                 </div>
               ))}
               {sessions.length === 0 && (
-                <div className="text-center py-8 text-[var(--hg-text-muted)]">
+                <div className="text-center py-8 text-[var(--color-muted)]">
                   <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                  <p className="text-sm">Ingen økter i dag</p>
+                  <p className="text-sm">Ingen okter i dag</p>
                 </div>
               )}
             </div>
-          </div>
+          </AdminCard>
         </div>
 
         {/* Quick Actions */}
-        <div className="hg-card p-4">
+        <AdminCard>
           <div className="flex flex-wrap gap-3">
-            <Link href="/admin" className="hg-btn hg-btn-secondary">
-              Tilbake til Hub
+            <Link href="/admin">
+              <AdminButton variant="secondary">Tilbake til Hub</AdminButton>
             </Link>
-            <Link href="/admin/elever" className="hg-btn hg-btn-secondary">
-              <Users className="w-4 h-4" />
-              Elever
+            <Link href="/admin/elever">
+              <AdminButton
+                variant="secondary"
+                icon={<Users className="w-4 h-4" />}
+              >
+                Elever
+              </AdminButton>
             </Link>
-            <Link href="/admin/bookinger/ny" className="hg-btn hg-btn-primary">
-              <Calendar className="w-4 h-4" />
-              Ny booking
+            <Link href="/admin/bookinger/ny">
+              <AdminButton
+                variant="primary"
+                icon={<Calendar className="w-4 h-4" />}
+              >
+                Ny booking
+              </AdminButton>
             </Link>
           </div>
-        </div>
+        </AdminCard>
       </div>
     </>
   );

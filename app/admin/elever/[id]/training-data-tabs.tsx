@@ -9,8 +9,22 @@ import {
   Target,
   Zap,
   MessageCircle,
-  ChevronDown,
 } from "lucide-react";
+import { cn } from "@/lib/portal/utils/cn";
+import {
+  AdminCard,
+  AdminButton,
+  AdminInput,
+  AdminBadge,
+  AdminSelect,
+  AdminTable,
+  AdminTableHead,
+  AdminTableBody,
+  AdminTableRow,
+  AdminTableHeaderCell,
+  AdminTableCell,
+  AdminEmptyState,
+} from "@/components/portal/mission-control/ui";
 import {
   getStudentTrainingPlan,
   getStudentTrainingLogs,
@@ -41,7 +55,15 @@ const TABS: { id: TabId; label: string; icon: typeof Calendar }[] = [
 const L_PHASES = ["KROPP", "ARM", "KOLLE", "BALL", "AUTO"] as const;
 const SHOT_TYPES = ["DRIVER", "IRON", "WEDGE", "PUTT"] as const;
 
-export function TrainingDataTabs({ studentId, studentName }: Props) {
+const FOCUS_BADGE_VARIANT: Record<string, "info" | "success" | "warning" | "error" | "muted"> = {
+  FYS: "info",
+  TEK: "success",
+  SLAG: "warning",
+  SPILL: "info",
+  TURN: "error",
+};
+
+export function TrainingDataTabs({ studentId }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>("plan");
   const [isPending, startTransition] = useTransition();
   const [data, setData] = useState<Record<string, unknown>>({});
@@ -81,28 +103,32 @@ export function TrainingDataTabs({ studentId, studentName }: Props) {
   return (
     <div className="space-y-4">
       {/* Tab bar */}
-      <div className="flex gap-1 overflow-x-auto pb-1 -mx-1 px-1">
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
-              activeTab === tab.id
-                ? "bg-[var(--color-grey-900)] text-white"
-                : "text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)]"
-            }`}
-          >
-            <tab.icon className="h-3.5 w-3.5" />
-            {tab.label}
-          </button>
-        ))}
+      <div className="flex gap-1 overflow-x-auto pb-1 border-b border-[var(--color-grey-200)]">
+        {TABS.map((tab) => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={cn(
+                "flex items-center gap-1.5 px-3 py-2 text-sm font-medium whitespace-nowrap border-b-2 transition-colors -mb-px",
+                activeTab === tab.id
+                  ? "border-[var(--color-primary)] text-[var(--color-primary)]"
+                  : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-text)]",
+              )}
+            >
+              <Icon className="h-3.5 w-3.5" />
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
 
       {/* Content */}
-      <div className="bg-white rounded-xl border border-[var(--color-grey-200)] p-4 min-h-[200px]">
+      <AdminCard className="min-h-[200px]">
         {isPending ? (
           <div className="flex items-center justify-center py-12">
-            <div className="h-6 w-6 border-2 border-[var(--color-grey-300)] border-t-[var(--color-brand)] rounded-full animate-spin" />
+            <div className="h-6 w-6 border-2 border-[var(--color-grey-200)] border-t-[var(--color-primary)] rounded-full animate-spin" />
           </div>
         ) : (
           <>
@@ -118,7 +144,7 @@ export function TrainingDataTabs({ studentId, studentName }: Props) {
             {activeTab === "trackman" && <TrackManTab data={data.trackman} />}
           </>
         )}
-      </div>
+      </AdminCard>
     </div>
   );
 }
@@ -148,7 +174,7 @@ function PlanTab({ data }: { data: unknown }) {
 
   if (!plan) {
     return (
-      <p className="text-[var(--color-grey-500)] text-sm py-8 text-center">
+      <p className="text-[var(--color-muted)] text-sm py-8 text-center">
         Ingen aktiv treningsplan
       </p>
     );
@@ -157,25 +183,56 @@ function PlanTab({ data }: { data: unknown }) {
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="font-semibold text-[var(--color-grey-900)]">{plan.title}</h3>
-        <p className="text-sm text-[var(--color-grey-500)]">
-          {plan.periodType} — {plan.goals}
+        <h3 className="font-semibold text-[var(--color-text)]">{plan.title}</h3>
+        <p className="text-sm text-[var(--color-muted)]">
+          {plan.periodType} {plan.goals ? `— ${plan.goals}` : ""}
         </p>
       </div>
       {plan.TrainingPlanWeek.map((week) => (
-        <div key={week.weekNumber} className="border border-[var(--color-grey-100)] rounded-lg p-3">
-          <div className="text-sm font-medium text-[var(--color-grey-700)] mb-2">
-            Uke {week.weekNumber} {week.focus && `— ${week.focus}`}
+        <div
+          key={week.weekNumber}
+          className="border border-[var(--color-grey-200)] rounded-lg p-3 bg-white"
+        >
+          <div className="text-sm font-medium text-[var(--color-text)] mb-2 flex items-center gap-2">
+            Uke {week.weekNumber}
+            {week.focus && (
+              <AdminBadge variant="info">{week.focus}</AdminBadge>
+            )}
           </div>
           <div className="space-y-1">
             {week.TrainingPlanSession.map((session, i) => {
-              const days = ["", "Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"];
+              const days = [
+                "",
+                "Man",
+                "Tir",
+                "Ons",
+                "Tor",
+                "Fre",
+                "Lør",
+                "Søn",
+              ];
               return (
-                <div key={i} className="flex items-center gap-2 text-sm">
-                  <span className="text-[var(--color-grey-400)] w-8">{days[session.dayOfWeek]}</span>
-                  <span className="text-[var(--color-grey-900)]">{session.title}</span>
+                <div
+                  key={i}
+                  className="flex items-center gap-2 text-sm"
+                >
+                  <span className="text-[var(--color-muted)] w-8">
+                    {days[session.dayOfWeek]}
+                  </span>
+                  <span className="text-[var(--color-text)] flex-1">
+                    {session.title}
+                  </span>
+                  {session.focusArea && (
+                    <AdminBadge
+                      variant={FOCUS_BADGE_VARIANT[session.focusArea] ?? "muted"}
+                    >
+                      {session.focusArea}
+                    </AdminBadge>
+                  )}
                   {session.durationMinutes && (
-                    <span className="text-[var(--color-grey-400)]">{session.durationMinutes}min</span>
+                    <span className="text-[var(--color-muted)] text-xs tabular-nums">
+                      {session.durationMinutes} min
+                    </span>
                   )}
                 </div>
               );
@@ -191,7 +248,13 @@ function PlanTab({ data }: { data: unknown }) {
 // TAB: Dagbok
 // ═══════════════════════════════════════════════════════════
 
-function DagbokTab({ data, studentId }: { data: unknown; studentId: string }) {
+function DagbokTab({
+  data,
+  studentId,
+}: {
+  data: unknown;
+  studentId: string;
+}) {
   const [isPending, startTransition] = useTransition();
   const [feedbackId, setFeedbackId] = useState<string | null>(null);
   const [feedbackText, setFeedbackText] = useState("");
@@ -219,76 +282,85 @@ function DagbokTab({ data, studentId }: { data: unknown; studentId: string }) {
   }
 
   if (logs.length === 0) {
-    return <p className="text-[var(--color-grey-500)] text-sm py-8 text-center">Ingen treningslogger</p>;
+    return (
+      <p className="text-[var(--color-muted)] text-sm py-8 text-center">
+        Ingen treningslogger
+      </p>
+    );
   }
 
   return (
     <div className="space-y-3">
       {logs.map((log) => (
-        <div key={log.id} className="border border-[var(--color-grey-100)] rounded-lg p-3">
+        <div
+          key={log.id}
+          className="border border-[var(--color-grey-200)] rounded-lg p-3 bg-white"
+        >
           <div className="flex items-center justify-between">
-            <div className="text-sm font-medium text-[var(--color-grey-900)]">
-              {new Date(log.date).toLocaleDateString("nb-NO", { day: "numeric", month: "short" })}
+            <div className="text-sm font-medium text-[var(--color-text)]">
+              {new Date(log.date).toLocaleDateString("nb-NO", {
+                day: "numeric",
+                month: "short",
+              })}
               {log.focusArea && ` — ${log.focusArea}`}
             </div>
-            <div className="flex items-center gap-2 text-xs text-[var(--color-grey-400)]">
-              {log.durationMinutes && `${log.durationMinutes}min`}
+            <div className="flex items-center gap-2 text-xs text-[var(--color-muted)]">
+              {log.durationMinutes && `${log.durationMinutes} min`}
               {log.rating && ` — ${log.rating}/5`}
             </div>
           </div>
-          {(log.primaryLPhase || log.primaryEnvironment || log.primaryPressLevel) && (
-            <div className="flex gap-1 mt-1">
+          {(log.primaryLPhase ||
+            log.primaryEnvironment ||
+            log.primaryPressLevel) && (
+            <div className="flex gap-1.5 mt-2">
               {log.primaryLPhase && (
-                <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--color-grey-100)] text-[var(--color-grey-600)]">
-                  L-{log.primaryLPhase}
-                </span>
+                <AdminBadge variant="muted">L-{log.primaryLPhase}</AdminBadge>
               )}
               {log.primaryEnvironment && (
-                <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--color-grey-100)] text-[var(--color-grey-600)]">
-                  M{log.primaryEnvironment}
-                </span>
+                <AdminBadge variant="muted">M{log.primaryEnvironment}</AdminBadge>
               )}
               {log.primaryPressLevel && (
-                <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--color-grey-100)] text-[var(--color-grey-600)]">
-                  PR{log.primaryPressLevel}
-                </span>
+                <AdminBadge variant="muted">PR{log.primaryPressLevel}</AdminBadge>
               )}
             </div>
           )}
           {log.deviatedFromPlan && (
-            <div className="text-xs text-[var(--color-warning)] mt-1">Avvik fra plan</div>
+            <div className="text-xs text-[var(--color-warning)] mt-2">
+              Avvik fra plan
+            </div>
           )}
-          {log.notes && <p className="text-sm text-[var(--color-grey-600)] mt-1">{log.notes}</p>}
+          {log.notes && (
+            <p className="text-sm text-[var(--color-text)] mt-2">{log.notes}</p>
+          )}
 
-          {/* Coach feedback */}
           {log.coachFeedback && (
-            <div className="mt-2 p-2 rounded bg-[var(--color-brand)]/5 text-sm text-[var(--color-brand)]">
-              <MessageCircle className="h-3 w-3 inline mr-1" />
-              {log.coachFeedback}
+            <div className="mt-2 p-2 rounded bg-[var(--color-primary)]/5 text-sm text-[var(--color-primary)] flex items-start gap-1.5">
+              <MessageCircle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+              <span>{log.coachFeedback}</span>
             </div>
           )}
 
           {feedbackId === log.id ? (
-            <div className="mt-2 flex gap-2">
-              <input
+            <div className="mt-3 flex gap-2">
+              <AdminInput
                 type="text"
                 value={feedbackText}
                 onChange={(e) => setFeedbackText(e.target.value)}
                 placeholder="Skriv tilbakemelding..."
-                className="flex-1 text-sm px-2 py-1.5 rounded border border-[var(--color-grey-200)]"
+                containerClassName="flex-1"
               />
-              <button
+              <AdminButton
                 onClick={() => handleSaveFeedback(log.id)}
                 disabled={isPending || !feedbackText}
-                className="text-xs px-3 py-1.5 rounded bg-[var(--color-brand)] text-white disabled:opacity-50"
+                loading={isPending}
               >
                 Lagre
-              </button>
+              </AdminButton>
             </div>
           ) : (
             <button
               onClick={() => setFeedbackId(log.id)}
-              className="mt-2 text-xs text-[var(--color-brand)] hover:underline"
+              className="mt-2 text-xs text-[var(--color-primary)] hover:underline"
             >
               Legg til tilbakemelding
             </button>
@@ -327,59 +399,76 @@ function RunderTab({ data }: { data: unknown }) {
   }>;
 
   if (rounds.length === 0) {
-    return <p className="text-[var(--color-grey-500)] text-sm py-8 text-center">Ingen runder registrert</p>;
+    return (
+      <p className="text-[var(--color-muted)] text-sm py-8 text-center">
+        Ingen runder registrert
+      </p>
+    );
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="text-[var(--color-grey-500)] border-b border-[var(--color-grey-100)]">
-            <th className="text-left pb-2 font-medium">Dato</th>
-            <th className="text-left pb-2 font-medium">Bane</th>
-            <th className="text-right pb-2 font-medium">Score</th>
-            <th className="text-right pb-2 font-medium">SG</th>
-            <th className="text-right pb-2 font-medium">FW%</th>
-            <th className="text-right pb-2 font-medium">GIR</th>
-            <th className="text-right pb-2 font-medium">Putts</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rounds.map((r) => (
-            <tr key={r.id} className="border-b border-[var(--color-grey-50)]">
-              <td className="py-2 text-[var(--color-grey-600)]">
-                {new Date(r.date).toLocaleDateString("nb-NO", { day: "numeric", month: "short" })}
-              </td>
-              <td className="py-2 text-[var(--color-grey-900)] font-medium">
-                {r.courseName ?? "-"}
-              </td>
-              <td className="py-2 text-right font-semibold text-[var(--color-grey-900)]">
-                {r.totalScore ?? "-"}
-                {r.scoreToPar !== null && r.scoreToPar !== undefined && (
-                  <span className={`ml-1 text-xs ${(r.scoreToPar ?? 0) > 0 ? "text-[var(--color-error)]" : "text-[var(--color-success-text)]"}`}>
-                    {(r.scoreToPar ?? 0) > 0 ? "+" : ""}{r.scoreToPar}
-                  </span>
-                )}
-              </td>
-              <td className="py-2 text-right text-[var(--color-grey-600)]">
-                {r.sgTotal !== null ? r.sgTotal.toFixed(1) : "-"}
-              </td>
-              <td className="py-2 text-right text-[var(--color-grey-600)]">
-                {r.fairwaysHit !== null && r.fairwaysTotal
-                  ? `${Math.round((r.fairwaysHit / r.fairwaysTotal) * 100)}%`
-                  : "-"}
-              </td>
-              <td className="py-2 text-right text-[var(--color-grey-600)]">
-                {r.gir ?? "-"}
-              </td>
-              <td className="py-2 text-right text-[var(--color-grey-600)]">
-                {r.totalPutts ?? "-"}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <AdminTable>
+      <AdminTableHead>
+        <AdminTableRow>
+          <AdminTableHeaderCell>Dato</AdminTableHeaderCell>
+          <AdminTableHeaderCell>Bane</AdminTableHeaderCell>
+          <AdminTableHeaderCell className="text-right">
+            Score
+          </AdminTableHeaderCell>
+          <AdminTableHeaderCell className="text-right">SG</AdminTableHeaderCell>
+          <AdminTableHeaderCell className="text-right">FW%</AdminTableHeaderCell>
+          <AdminTableHeaderCell className="text-right">GIR</AdminTableHeaderCell>
+          <AdminTableHeaderCell className="text-right">
+            Putts
+          </AdminTableHeaderCell>
+        </AdminTableRow>
+      </AdminTableHead>
+      <AdminTableBody>
+        {rounds.map((r) => (
+          <AdminTableRow key={r.id}>
+            <AdminTableCell className="text-[var(--color-muted)]">
+              {new Date(r.date).toLocaleDateString("nb-NO", {
+                day: "numeric",
+                month: "short",
+              })}
+            </AdminTableCell>
+            <AdminTableCell className="font-medium">
+              {r.courseName ?? "—"}
+            </AdminTableCell>
+            <AdminTableCell className="text-right font-semibold">
+              {r.totalScore ?? "—"}
+              {r.scoreToPar !== null && r.scoreToPar !== undefined && (
+                <span
+                  className={cn(
+                    "ml-1 text-xs",
+                    (r.scoreToPar ?? 0) > 0
+                      ? "text-[var(--color-error)]"
+                      : "text-[var(--color-success)]",
+                  )}
+                >
+                  {(r.scoreToPar ?? 0) > 0 ? "+" : ""}
+                  {r.scoreToPar}
+                </span>
+              )}
+            </AdminTableCell>
+            <AdminTableCell className="text-right text-[var(--color-muted)]">
+              {r.sgTotal !== null ? r.sgTotal.toFixed(1) : "—"}
+            </AdminTableCell>
+            <AdminTableCell className="text-right text-[var(--color-muted)]">
+              {r.fairwaysHit !== null && r.fairwaysTotal
+                ? `${Math.round((r.fairwaysHit / r.fairwaysTotal) * 100)}%`
+                : "—"}
+            </AdminTableCell>
+            <AdminTableCell className="text-right text-[var(--color-muted)]">
+              {r.gir ?? "—"}
+            </AdminTableCell>
+            <AdminTableCell className="text-right text-[var(--color-muted)]">
+              {r.totalPutts ?? "—"}
+            </AdminTableCell>
+          </AdminTableRow>
+        ))}
+      </AdminTableBody>
+    </AdminTable>
   );
 }
 
@@ -387,19 +476,56 @@ function RunderTab({ data }: { data: unknown }) {
 // TAB: Foundation Method
 // ═══════════════════════════════════════════════════════════
 
-function FoundationTab({ data, studentId }: { data: unknown; studentId: string }) {
+function FoundationTab({
+  data,
+  studentId,
+}: {
+  data: unknown;
+  studentId: string;
+}) {
   const [isPending, startTransition] = useTransition();
   const foundationData = data as {
     degradation: {
-      curves: Array<{ shotType: string; trend: string; averageDegradationPerLevel: number; points: Array<{ level: string; avgScore: number | null; dataPoints: number }> }>;
-      gaps: Array<{ shotType: string; totalDegradation: number | null; tekScore: number | null; slagScore: number | null; spillScore: number | null; turnScore: number | null }>;
-      envDistribution: Array<{ environment: number; name: string; count: number; percentage: number; averageScore: number | null }>;
+      curves: Array<{
+        shotType: string;
+        trend: string;
+        averageDegradationPerLevel: number;
+        points: Array<{
+          level: string;
+          avgScore: number | null;
+          dataPoints: number;
+        }>;
+      }>;
+      gaps: Array<{
+        shotType: string;
+        totalDegradation: number | null;
+        tekScore: number | null;
+        slagScore: number | null;
+        spillScore: number | null;
+        turnScore: number | null;
+      }>;
+      envDistribution: Array<{
+        environment: number;
+        name: string;
+        count: number;
+        percentage: number;
+        averageScore: number | null;
+      }>;
     };
-    lPhases: Array<{ shotType: string; lPhase: string; setAt: string; setBy: string | null }>;
+    lPhases: Array<{
+      shotType: string;
+      lPhase: string;
+      setAt: string;
+      setBy: string | null;
+    }>;
   } | null;
 
   if (!foundationData) {
-    return <p className="text-[var(--color-grey-500)] text-sm py-8 text-center">Laster...</p>;
+    return (
+      <p className="text-[var(--color-muted)] text-sm py-8 text-center">
+        Laster...
+      </p>
+    );
   }
 
   function handleSetPhase(shotType: string, lPhase: string) {
@@ -412,26 +538,32 @@ function FoundationTab({ data, studentId }: { data: unknown; studentId: string }
     <div className="space-y-6">
       {/* L-faser */}
       <div>
-        <h3 className="text-sm font-semibold text-[var(--color-grey-700)] mb-3">L-faser per slagtype</h3>
-        <div className="grid grid-cols-2 gap-2">
+        <h3 className="admin-section-title mb-3">L-faser per slagtype</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
           {SHOT_TYPES.map((st) => {
-            const phase = foundationData.lPhases.find((p) => p.shotType === st);
+            const phase = foundationData.lPhases.find(
+              (p) => p.shotType === st,
+            );
             return (
-              <div key={st} className="border border-[var(--color-grey-100)] rounded-lg p-3">
-                <div className="text-xs text-[var(--color-grey-500)]">{st}</div>
-                <div className="flex items-center gap-2 mt-1">
-                  <select
-                    value={phase?.lPhase ?? ""}
-                    onChange={(e) => handleSetPhase(st, e.target.value)}
-                    disabled={isPending}
-                    className="text-sm font-medium bg-transparent border-none p-0 text-[var(--color-grey-900)] cursor-pointer"
-                  >
-                    <option value="">Ikke satt</option>
-                    {L_PHASES.map((lp) => (
-                      <option key={lp} value={lp}>{lp}</option>
-                    ))}
-                  </select>
+              <div
+                key={st}
+                className="border border-[var(--color-grey-200)] rounded-lg p-3 bg-white"
+              >
+                <div className="text-xs text-[var(--color-muted)] mb-1.5">
+                  {st}
                 </div>
+                <AdminSelect
+                  value={phase?.lPhase ?? ""}
+                  onChange={(e) => handleSetPhase(st, e.target.value)}
+                  disabled={isPending}
+                >
+                  <option value="">Ikke satt</option>
+                  {L_PHASES.map((lp) => (
+                    <option key={lp} value={lp}>
+                      {lp}
+                    </option>
+                  ))}
+                </AdminSelect>
               </div>
             );
           })}
@@ -440,30 +572,52 @@ function FoundationTab({ data, studentId }: { data: unknown; studentId: string }
 
       {/* Degraderingskurver */}
       <div>
-        <h3 className="text-sm font-semibold text-[var(--color-grey-700)] mb-3">Degraderingskurver</h3>
+        <h3 className="admin-section-title mb-3">Degraderingskurver</h3>
         <div className="space-y-3">
           {foundationData.degradation.curves.map((curve) => (
-            <div key={curve.shotType} className="border border-[var(--color-grey-100)] rounded-lg p-3">
+            <div
+              key={curve.shotType}
+              className="border border-[var(--color-grey-200)] rounded-lg p-3 bg-white"
+            >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-[var(--color-grey-900)]">{curve.shotType}</span>
-                <span className={`text-xs px-2 py-0.5 rounded ${
-                  curve.trend === "improving" ? "bg-[var(--color-success)]/10 text-[var(--color-success-text)]" :
-                  curve.trend === "degrading" ? "bg-[var(--color-error)]/10 text-[var(--color-error)]" :
-                  "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]"
-                }`}>
-                  {curve.trend === "improving" ? "Forbedring" : curve.trend === "degrading" ? "Degradering" : curve.trend === "stable" ? "Stabil" : "For lite data"}
+                <span className="text-sm font-medium text-[var(--color-text)]">
+                  {curve.shotType}
                 </span>
+                <AdminBadge
+                  variant={
+                    curve.trend === "improving"
+                      ? "success"
+                      : curve.trend === "degrading"
+                        ? "error"
+                        : "muted"
+                  }
+                >
+                  {curve.trend === "improving"
+                    ? "Forbedring"
+                    : curve.trend === "degrading"
+                      ? "Degradering"
+                      : curve.trend === "stable"
+                        ? "Stabil"
+                        : "For lite data"}
+                </AdminBadge>
               </div>
               <div className="flex gap-2">
                 {["TEK", "SLAG", "SPILL", "TURN"].map((level) => {
                   const point = curve.points.find((p) => p.level === level);
                   return (
                     <div key={level} className="flex-1 text-center">
-                      <div className="text-lg font-bold text-[var(--color-grey-900)]">
-                        {point?.avgScore !== null && point?.avgScore !== undefined ? point.avgScore.toFixed(1) : "-"}
+                      <div className="text-lg font-bold text-[var(--color-text)] tabular-nums">
+                        {point?.avgScore !== null &&
+                        point?.avgScore !== undefined
+                          ? point.avgScore.toFixed(1)
+                          : "—"}
                       </div>
-                      <div className="text-xs text-[var(--color-grey-400)]">{level}</div>
-                      <div className="text-xs text-[var(--color-grey-300)]">{point?.dataPoints ?? 0}p</div>
+                      <div className="text-xs text-[var(--color-muted)]">
+                        {level}
+                      </div>
+                      <div className="text-[10px] text-[var(--color-muted)] opacity-60">
+                        {point?.dataPoints ?? 0}p
+                      </div>
                     </div>
                   );
                 })}
@@ -475,18 +629,23 @@ function FoundationTab({ data, studentId }: { data: unknown; studentId: string }
 
       {/* M-fordeling */}
       <div>
-        <h3 className="text-sm font-semibold text-[var(--color-grey-700)] mb-3">Treningmiljo-fordeling</h3>
-        <div className="space-y-1">
+        <h3 className="admin-section-title mb-3">Treningsmiljø-fordeling</h3>
+        <div className="space-y-2">
           {foundationData.degradation.envDistribution.map((env) => (
-            <div key={env.environment} className="flex items-center gap-2">
-              <span className="text-xs text-[var(--color-grey-500)] w-24">M{env.environment}: {env.name}</span>
-              <div className="flex-1 h-4 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
+            <div
+              key={env.environment}
+              className="flex items-center gap-2"
+            >
+              <span className="text-xs text-[var(--color-muted)] w-24">
+                M{env.environment}: {env.name}
+              </span>
+              <div className="flex-1 h-2 bg-[var(--color-grey-200)] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[var(--color-brand)] rounded-full"
+                  className="h-full bg-[var(--color-primary)] rounded-full"
                   style={{ width: `${env.percentage}%` }}
                 />
               </div>
-              <span className="text-xs text-[var(--color-grey-600)] w-12 text-right">
+              <span className="text-xs text-[var(--color-text)] w-12 text-right tabular-nums">
                 {env.percentage}%
               </span>
             </div>
@@ -510,45 +669,60 @@ function TrackManTab({ data }: { data: unknown }) {
   }>;
 
   if (sessions.length === 0) {
-    return <p className="text-[var(--color-grey-500)] text-sm py-8 text-center">Ingen TrackMan-data</p>;
+    return (
+      <AdminEmptyState
+        icon={<Zap className="w-6 h-6" />}
+        title="Ingen TrackMan-data"
+        description="Ingen TrackMan-økter registrert for denne eleven."
+      />
+    );
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="text-[var(--color-grey-500)] border-b border-[var(--color-grey-100)]">
-            <th className="text-left pb-2 font-medium">Dato</th>
-            <th className="text-left pb-2 font-medium">Klubb</th>
-            <th className="text-right pb-2 font-medium">Carry</th>
-            <th className="text-right pb-2 font-medium">Total</th>
-            <th className="text-right pb-2 font-medium">Offline</th>
-            <th className="text-right pb-2 font-medium">Slag</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sessions.map((s) => (
-            <tr key={s.id} className="border-b border-[var(--color-grey-50)]">
-              <td className="py-2 text-[var(--color-grey-600)]">
-                {new Date(s.sessionDate).toLocaleDateString("nb-NO", { day: "numeric", month: "short" })}
-              </td>
-              <td className="py-2 font-medium text-[var(--color-grey-900)]">{s.club}</td>
-              <td className="py-2 text-right text-[var(--color-grey-600)]">
-                {s.averages.avgCarry ? `${Math.round(s.averages.avgCarry)}m` : "-"}
-              </td>
-              <td className="py-2 text-right text-[var(--color-grey-600)]">
-                {s.averages.avgTotal ? `${Math.round(s.averages.avgTotal)}m` : "-"}
-              </td>
-              <td className="py-2 text-right text-[var(--color-grey-600)]">
-                {s.averages.avgOffline ? `${Math.round(s.averages.avgOffline)}m` : "-"}
-              </td>
-              <td className="py-2 text-right text-[var(--color-grey-400)]">
-                {s.averages.count ?? "-"}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <AdminTable>
+      <AdminTableHead>
+        <AdminTableRow>
+          <AdminTableHeaderCell>Dato</AdminTableHeaderCell>
+          <AdminTableHeaderCell>Klubb</AdminTableHeaderCell>
+          <AdminTableHeaderCell className="text-right">
+            Carry
+          </AdminTableHeaderCell>
+          <AdminTableHeaderCell className="text-right">
+            Total
+          </AdminTableHeaderCell>
+          <AdminTableHeaderCell className="text-right">
+            Offline
+          </AdminTableHeaderCell>
+          <AdminTableHeaderCell className="text-right">Slag</AdminTableHeaderCell>
+        </AdminTableRow>
+      </AdminTableHead>
+      <AdminTableBody>
+        {sessions.map((s) => (
+          <AdminTableRow key={s.id}>
+            <AdminTableCell className="text-[var(--color-muted)]">
+              {new Date(s.sessionDate).toLocaleDateString("nb-NO", {
+                day: "numeric",
+                month: "short",
+              })}
+            </AdminTableCell>
+            <AdminTableCell className="font-medium">{s.club}</AdminTableCell>
+            <AdminTableCell className="text-right text-[var(--color-muted)]">
+              {s.averages.avgCarry ? `${Math.round(s.averages.avgCarry)}m` : "—"}
+            </AdminTableCell>
+            <AdminTableCell className="text-right text-[var(--color-muted)]">
+              {s.averages.avgTotal ? `${Math.round(s.averages.avgTotal)}m` : "—"}
+            </AdminTableCell>
+            <AdminTableCell className="text-right text-[var(--color-muted)]">
+              {s.averages.avgOffline
+                ? `${Math.round(s.averages.avgOffline)}m`
+                : "—"}
+            </AdminTableCell>
+            <AdminTableCell className="text-right text-[var(--color-muted)]">
+              {s.averages.count ?? "—"}
+            </AdminTableCell>
+          </AdminTableRow>
+        ))}
+      </AdminTableBody>
+    </AdminTable>
   );
 }

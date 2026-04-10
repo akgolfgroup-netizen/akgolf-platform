@@ -4,29 +4,56 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   Search,
-  Filter,
   Download,
   UserPlus,
-  ChevronDown,
   Mail,
-  MoreHorizontal,
   Calendar,
+  Users,
+  UserCheck,
+  UserX,
+  AlertCircle,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
-import { MCTopbar, useMCSidebar, HGStudentListItem } from "@/components/portal/mission-control";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminButton,
+  AdminInput,
+  AdminBadge,
+  AdminTable,
+  AdminTableHead,
+  AdminTableBody,
+  AdminTableRow,
+  AdminTableHeaderCell,
+  AdminTableCell,
+  AdminStatCard,
+  AdminPageHeader,
+  AdminEmptyState,
+} from "@/components/portal/mission-control/ui";
 
 // Mock data - replace with actual data fetching
-const mockStudents = [
+type StudentStatus = "active" | "inactive" | "at-risk";
+type TierKey = "elite" | "pro" | "starter" | "junior";
+
+interface MockStudent {
+  id: string;
+  name: string;
+  email: string;
+  initials: string;
+  tier: TierKey;
+  status: StudentStatus;
+  lastActive: string;
+  nextBooking?: string;
+}
+
+const mockStudents: MockStudent[] = [
   {
     id: "1",
     name: "Olav Hansen",
     email: "olav@example.com",
     initials: "OH",
-    tags: [
-      { label: "Elite", variant: "primary" as const },
-      { label: "Coaching", variant: "default" as const },
-    ],
-    status: "active" as const,
+    tier: "elite",
+    status: "active",
     lastActive: "2 timer siden",
     nextBooking: "I morgen 10:00",
   },
@@ -35,11 +62,8 @@ const mockStudents = [
     name: "Mari Kristiansen",
     email: "mari@example.com",
     initials: "MK",
-    tags: [
-      { label: "Pro", variant: "success" as const },
-      { label: "Junior", variant: "default" as const },
-    ],
-    status: "active" as const,
+    tier: "pro",
+    status: "active",
     lastActive: "1 dag siden",
     nextBooking: "Fredag 14:00",
   },
@@ -48,22 +72,17 @@ const mockStudents = [
     name: "Erik Johansen",
     email: "erik@example.com",
     initials: "EJ",
-    tags: [
-      { label: "Starter", variant: "warning" as const },
-    ],
-    status: "at-risk" as const,
+    tier: "starter",
+    status: "at-risk",
     lastActive: "14 dager siden",
-    nextBooking: undefined,
   },
   {
     id: "4",
     name: "Sofie Berg",
     email: "sofie@example.com",
     initials: "SB",
-    tags: [
-      { label: "Pro", variant: "success" as const },
-    ],
-    status: "active" as const,
+    tier: "pro",
+    status: "active",
     lastActive: "3 timer siden",
     nextBooking: "I dag 16:00",
   },
@@ -72,24 +91,20 @@ const mockStudents = [
     name: "Anders Pettersen",
     email: "anders@example.com",
     initials: "AP",
-    tags: [
-      { label: "Elite", variant: "primary" as const },
-      { label: "Coaching", variant: "default" as const },
-    ],
-    status: "inactive" as const,
+    tier: "elite",
+    status: "inactive",
     lastActive: "2 måneder siden",
-    nextBooking: undefined,
   },
 ];
 
-const filters = [
+const statusFilters: Array<{ label: string; value: "all" | StudentStatus; count: number }> = [
   { label: "Alle", value: "all", count: 142 },
   { label: "Aktive", value: "active", count: 128 },
   { label: "Inaktive", value: "inactive", count: 14 },
   { label: "Trenger oppfølging", value: "at-risk", count: 5 },
 ];
 
-const subscriptionFilters = [
+const tierFilters: Array<{ label: string; value: "all" | TierKey }> = [
   { label: "Alle typer", value: "all" },
   { label: "Elite", value: "elite" },
   { label: "Pro", value: "pro" },
@@ -97,17 +112,56 @@ const subscriptionFilters = [
   { label: "Junior", value: "junior" },
 ];
 
+const TIER_LABEL: Record<TierKey, string> = {
+  elite: "Elite",
+  pro: "Pro",
+  starter: "Starter",
+  junior: "Junior",
+};
+
+const STATUS_LABEL: Record<StudentStatus, string> = {
+  active: "Aktiv",
+  inactive: "Inaktiv",
+  "at-risk": "Oppfølging",
+};
+
+const STATUS_VARIANT: Record<StudentStatus, "success" | "muted" | "warning"> = {
+  active: "success",
+  inactive: "muted",
+  "at-risk": "warning",
+};
+
 export default function StudentsPage() {
   const { toggle } = useMCSidebar();
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [activeSubFilter, setActiveSubFilter] = useState("all");
-  const [selectedStudents, setSelectedStudents] = useState<Set<string>>(new Set());
+  const [activeFilter, setActiveFilter] = useState<"all" | StudentStatus>("all");
+  const [activeTierFilter, setActiveTierFilter] = useState<"all" | TierKey>(
+    "all",
+  );
+  const [selectedStudents, setSelectedStudents] = useState<Set<string>>(
+    new Set(),
+  );
+
+  const filteredStudents = mockStudents.filter((student) => {
+    const q = searchQuery.toLowerCase();
+    const matchesSearch =
+      !searchQuery ||
+      student.name.toLowerCase().includes(q) ||
+      student.email.toLowerCase().includes(q);
+    const matchesStatus =
+      activeFilter === "all" || student.status === activeFilter;
+    const matchesTier =
+      activeTierFilter === "all" || student.tier === activeTierFilter;
+    return matchesSearch && matchesStatus && matchesTier;
+  });
 
   function handleExport() {
     const csv = [
       "Navn,E-post,Status,Sist aktiv",
-      ...filteredStudents.map((s) => `"${s.name}","${s.email}","${s.status}","${s.lastActive}"`),
+      ...filteredStudents.map(
+        (s) =>
+          `"${s.name}","${s.email}","${STATUS_LABEL[s.status]}","${s.lastActive}"`,
+      ),
     ].join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
@@ -118,22 +172,22 @@ export default function StudentsPage() {
     URL.revokeObjectURL(url);
   }
 
-  const filteredStudents = mockStudents.filter((student) => {
-    const matchesSearch = student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         student.email?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = activeFilter === "all" || student.status === activeFilter;
-    return matchesSearch && matchesFilter;
-  });
+  function toggleSelection(id: string) {
+    setSelectedStudents((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
-  const toggleSelection = (id: string) => {
-    const newSelection = new Set(selectedStudents);
-    if (newSelection.has(id)) {
-      newSelection.delete(id);
+  function toggleAll() {
+    if (selectedStudents.size === filteredStudents.length) {
+      setSelectedStudents(new Set());
     } else {
-      newSelection.add(id);
+      setSelectedStudents(new Set(filteredStudents.map((s) => s.id)));
     }
-    setSelectedStudents(newSelection);
-  };
+  }
 
   return (
     <>
@@ -143,154 +197,219 @@ export default function StudentsPage() {
         onMenuClick={toggle}
       />
 
-      <div className="p-5 space-y-5">
-        {/* Stats Row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="hg-card p-4">
-            <span className="hg-label">Totalt</span>
-            <span className="text-2xl font-bold text-[var(--hg-text)] tabular-nums block mt-1">142</span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Aktive</span>
-            <span className="text-2xl font-bold text-[var(--hg-success)] tabular-nums block mt-1">128</span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Nye denne måned</span>
-            <span className="text-2xl font-bold text-[var(--hg-primary)] tabular-nums block mt-1">12</span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Trenger oppfølging</span>
-            <span className="text-2xl font-bold text-[var(--hg-warning)] tabular-nums block mt-1">5</span>
-          </div>
-        </div>
-
-        {/* Search and Filters */}
-        <div className="hg-card p-4 space-y-4">
-          <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search */}
-            <div className="flex-1 flex items-center gap-2 bg-[var(--hg-surface)] border border-[var(--hg-border)] rounded-lg px-3 py-2.5 focus-within:border-[var(--hg-primary)] focus-within:shadow-[0_0_0_3px_var(--hg-primary-glow)] transition-all">
-              <Search className="w-4 h-4 text-[var(--hg-text-muted)]" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Søk etter navn, e-post..."
-                className="flex-1 bg-transparent text-sm text-[var(--hg-text)] placeholder:text-[var(--hg-text-muted)] outline-none"
-              />
-            </div>
-
-            {/* Filter Dropdown */}
-            <div className="relative group">
-              <button className="hg-btn hg-btn-secondary">
-                <Filter className="w-4 h-4" />
-                <span>Filter</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Actions */}
-            <div className="flex gap-2">
-              <button onClick={handleExport} className="hg-btn hg-btn-secondary">
-                <Download className="w-4 h-4" />
-                <span className="hidden sm:inline">Eksporter</span>
-              </button>
-              <Link href="/admin/elever/ny" className="hg-btn hg-btn-primary">
-                <UserPlus className="w-4 h-4" />
-                <span className="hidden sm:inline">Ny elev</span>
+      <div className="p-6 space-y-6">
+        <AdminPageHeader
+          title="Elever"
+          subtitle="Oversikt over aktive elever, medlemskap og coaching"
+          actions={
+            <>
+              <AdminButton
+                variant="secondary"
+                icon={<Download className="w-4 h-4" />}
+                onClick={handleExport}
+              >
+                Eksporter
+              </AdminButton>
+              <Link href="/admin/elever/ny">
+                <AdminButton
+                  variant="primary"
+                  icon={<UserPlus className="w-4 h-4" />}
+                >
+                  Ny elev
+                </AdminButton>
               </Link>
-            </div>
-          </div>
+            </>
+          }
+        />
 
-          {/* Filter Pills */}
-          <div className="flex flex-wrap gap-2">
-            {filters.map((filter) => (
-              <button
-                key={filter.value}
-                onClick={() => setActiveFilter(filter.value)}
-                className={cn(
-                  "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors",
-                  activeFilter === filter.value
-                    ? "bg-[var(--hg-primary)] text-[var(--hg-bg)]"
-                    : "bg-[var(--hg-surface-raised)] text-[var(--hg-text-secondary)] hover:text-[var(--hg-text)]"
-                )}
-              >
-                {filter.label}
-                <span className="ml-1.5 opacity-60">({filter.count})</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Subscription Filters */}
-          <div className="flex flex-wrap gap-2">
-            {subscriptionFilters.map((filter) => (
-              <button
-                key={filter.value}
-                onClick={() => setActiveSubFilter(filter.value)}
-                className={cn(
-                  "px-2.5 py-1 text-[11px] font-medium rounded-md transition-colors border",
-                  activeSubFilter === filter.value
-                    ? "border-[var(--hg-primary)] text-[var(--hg-primary)] bg-[var(--hg-primary-glow)]"
-                    : "border-[var(--hg-border)] text-[var(--hg-text-muted)] hover:border-[var(--hg-border-hover)]"
-                )}
-              >
-                {filter.label}
-              </button>
-            ))}
-          </div>
+        {/* Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <AdminStatCard
+            label="Totalt"
+            value={142}
+            icon={<Users className="w-5 h-5" />}
+          />
+          <AdminStatCard
+            label="Aktive"
+            value={128}
+            icon={<UserCheck className="w-5 h-5" />}
+            change={{ value: 4, positive: true }}
+          />
+          <AdminStatCard
+            label="Nye denne måneden"
+            value={12}
+            icon={<UserPlus className="w-5 h-5" />}
+          />
+          <AdminStatCard
+            label="Trenger oppfølging"
+            value={5}
+            icon={<AlertCircle className="w-5 h-5" />}
+          />
         </div>
 
-        {/* Bulk Actions (when selections exist) */}
-        {selectedStudents.size > 0 && (
-          <div className="hg-card p-3 flex items-center justify-between bg-[var(--hg-primary-glow)] border-[var(--hg-primary)]">
-            <span className="text-sm text-[var(--hg-primary)]">
-              {selectedStudents.size} elev{selectedStudents.size !== 1 ? "er" : ""} valgt
-            </span>
-            <div className="flex gap-2">
-              <button className="hg-btn hg-btn-ghost text-[var(--hg-primary)]">
-                <Mail className="w-4 h-4" />
-                Send e-post
-              </button>
-              <button className="hg-btn hg-btn-ghost text-[var(--hg-primary)]">
-                <Calendar className="w-4 h-4" />
-                Book for
-              </button>
+        {/* Filters & Search */}
+        <AdminCard>
+          <div className="space-y-4">
+            <div className="flex flex-col lg:flex-row gap-3">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] pointer-events-none" />
+                <AdminInput
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Søk etter navn eller e-post..."
+                  className="pl-9"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {statusFilters.map((filter) => (
+                <button
+                  key={filter.value}
+                  onClick={() => setActiveFilter(filter.value)}
+                  className={cn(
+                    "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
+                    activeFilter === filter.value
+                      ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
+                      : "bg-white border-[var(--color-grey-200)] text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
+                  )}
+                >
+                  {filter.label}
+                  <span className="ml-1.5 opacity-70">({filter.count})</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {tierFilters.map((filter) => (
+                <button
+                  key={filter.value}
+                  onClick={() => setActiveTierFilter(filter.value)}
+                  className={cn(
+                    "px-2.5 py-1 text-[11px] font-medium rounded-md transition-colors border",
+                    activeTierFilter === filter.value
+                      ? "border-[var(--color-primary)] text-[var(--color-primary)] bg-[var(--color-primary)]/5"
+                      : "border-[var(--color-grey-200)] text-[var(--color-muted)] hover:border-[var(--color-grey-300)]",
+                  )}
+                >
+                  {filter.label}
+                </button>
+              ))}
             </div>
           </div>
+        </AdminCard>
+
+        {/* Bulk Actions */}
+        {selectedStudents.size > 0 && (
+          <AdminCard className="border-[var(--color-primary)]/40 bg-[var(--color-primary)]/5">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-[var(--color-primary)]">
+                {selectedStudents.size}{" "}
+                {selectedStudents.size === 1 ? "elev" : "elever"} valgt
+              </span>
+              <div className="flex gap-2">
+                <AdminButton
+                  variant="ghost"
+                  icon={<Mail className="w-4 h-4" />}
+                >
+                  Send e-post
+                </AdminButton>
+                <AdminButton
+                  variant="ghost"
+                  icon={<Calendar className="w-4 h-4" />}
+                >
+                  Book for
+                </AdminButton>
+              </div>
+            </div>
+          </AdminCard>
         )}
 
-        {/* Student List */}
-        <div className="hg-card overflow-hidden">
-          <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-            <h3 className="hg-section-title">
-              {filteredStudents.length} elev{filteredStudents.length !== 1 ? "er" : ""}
-            </h3>
-            <button className="p-1.5 rounded-md hover:bg-[var(--hg-surface-raised)] text-[var(--hg-text-muted)]">
-              <MoreHorizontal className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="divide-y divide-[var(--hg-border-subtle)]">
-            {filteredStudents.map((student) => (
-              <div key={student.id} className="flex items-center px-4">
-                <input
-                  type="checkbox"
-                  checked={selectedStudents.has(student.id)}
-                  onChange={() => toggleSelection(student.id)}
-                  className="w-4 h-4 rounded border-[var(--hg-border)] bg-[var(--hg-surface)] text-[var(--hg-primary)] focus:ring-[var(--hg-primary)] focus:ring-offset-0 mr-3"
-                />
-                <div className="flex-1">
-                  <HGStudentListItem {...student} />
-                </div>
-              </div>
-            ))}
-          </div>
-          {filteredStudents.length === 0 && (
-            <div className="py-12 text-center">
-              <span className="text-sm text-[var(--hg-text-muted)]">
-                Ingen elever funnet
-              </span>
-            </div>
-          )}
-        </div>
+        {/* Student Table */}
+        {filteredStudents.length === 0 ? (
+          <AdminEmptyState
+            icon={<Users className="w-6 h-6" />}
+            title="Ingen elever funnet"
+            description="Prøv å justere søk eller filter for å finne det du leter etter."
+          />
+        ) : (
+          <AdminTable>
+            <AdminTableHead>
+              <AdminTableRow>
+                <AdminTableHeaderCell className="w-10">
+                  <input
+                    type="checkbox"
+                    checked={
+                      selectedStudents.size === filteredStudents.length &&
+                      filteredStudents.length > 0
+                    }
+                    onChange={toggleAll}
+                    className="w-4 h-4 rounded border-[var(--color-grey-300)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]/20"
+                  />
+                </AdminTableHeaderCell>
+                <AdminTableHeaderCell>Navn</AdminTableHeaderCell>
+                <AdminTableHeaderCell>Medlemskap</AdminTableHeaderCell>
+                <AdminTableHeaderCell>Status</AdminTableHeaderCell>
+                <AdminTableHeaderCell>Sist aktiv</AdminTableHeaderCell>
+                <AdminTableHeaderCell>Neste booking</AdminTableHeaderCell>
+              </AdminTableRow>
+            </AdminTableHead>
+            <AdminTableBody>
+              {filteredStudents.map((student) => (
+                <AdminTableRow
+                  key={student.id}
+                  className="hover:bg-[var(--color-grey-100)] transition-colors"
+                >
+                  <AdminTableCell onClick={(e) => e.stopPropagation()}>
+                    <input
+                      type="checkbox"
+                      checked={selectedStudents.has(student.id)}
+                      onChange={() => toggleSelection(student.id)}
+                      className="w-4 h-4 rounded border-[var(--color-grey-300)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]/20"
+                    />
+                  </AdminTableCell>
+                  <AdminTableCell>
+                    <Link
+                      href={`/admin/elever/${student.id}`}
+                      className="flex items-center gap-3 group"
+                    >
+                      <div className="w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center text-xs font-semibold">
+                        {student.initials}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-medium text-[var(--color-text)] group-hover:text-[var(--color-primary)] transition-colors">
+                          {student.name}
+                        </div>
+                        <div className="text-xs text-[var(--color-muted)] truncate">
+                          {student.email}
+                        </div>
+                      </div>
+                    </Link>
+                  </AdminTableCell>
+                  <AdminTableCell>
+                    <AdminBadge variant="info">
+                      {TIER_LABEL[student.tier]}
+                    </AdminBadge>
+                  </AdminTableCell>
+                  <AdminTableCell>
+                    <AdminBadge variant={STATUS_VARIANT[student.status]}>
+                      {STATUS_LABEL[student.status]}
+                    </AdminBadge>
+                  </AdminTableCell>
+                  <AdminTableCell className="text-sm text-[var(--color-muted)]">
+                    {student.lastActive}
+                  </AdminTableCell>
+                  <AdminTableCell className="text-sm text-[var(--color-text)]">
+                    {student.nextBooking ?? (
+                      <span className="text-[var(--color-muted)]">—</span>
+                    )}
+                  </AdminTableCell>
+                </AdminTableRow>
+              ))}
+            </AdminTableBody>
+          </AdminTable>
+        )}
       </div>
     </>
   );

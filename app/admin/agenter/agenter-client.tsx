@@ -9,7 +9,12 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar, HGStatCard } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminPageHeader,
+  AdminStatCard,
+  AdminEmptyState,
+} from "@/components/portal/mission-control/ui";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
@@ -22,12 +27,10 @@ import type { AgentTeam } from "@prisma/client";
 const TEAM_LABELS: Record<AgentTeam, string> = {
   LEADERSHIP: "Ledergruppen",
   DEV: "Utviklingsteam",
-  OPS: "Drift & Operasjon",
+  OPS: "Drift og operasjon",
   COACHING: "Coaching",
-  CONTENT: "Innhold & Merkevare",
+  CONTENT: "Innhold og merkevare",
 };
-
-// ── Team order for display ─────────────────────────────────────────────
 
 const TEAM_ORDER: AgentTeam[] = [
   "LEADERSHIP",
@@ -37,25 +40,12 @@ const TEAM_ORDER: AgentTeam[] = [
   "OPS",
 ];
 
-// ── Color by team ──────────────────────────────────────────────────────
-
-const TEAM_COLORS: Record<AgentTeam, string> = {
-  LEADERSHIP: "#005840",
-  COACHING: "#d2f000",
-  CONTENT: "#00d2ff",
-  DEV: "#8B5CF6",
-  OPS: "#ff9500",
-};
-
-// ── Component ──────────────────────────────────────────────────────────
-
 interface AgenterClientProps {
   agents: AgentData[];
   stats: AgentStats;
 }
 
 export function AgenterClient({ agents, stats }: AgenterClientProps) {
-  const { toggle } = useMCSidebar();
   const [isPending, startTransition] = useTransition();
 
   const handleToggle = (agentId: string, currentState: boolean) => {
@@ -76,157 +66,150 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
   }
 
   return (
-    <>
-      <MCTopbar
-        title="AI Agenter"
+    <div className="p-6 md:p-8">
+      <AdminPageHeader
+        title="AI-agenter"
         subtitle="Administrer autonome AI-agenter"
-        onMenuClick={toggle}
       />
 
-      <div className="p-5 space-y-5">
-        {/* Summary Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <HGStatCard label="Totalt" value={stats.total} icon={Bot} />
-          <HGStatCard
-            label="Aktive"
-            value={stats.active}
-            trend={
-              stats.total > 0
-                ? {
-                    value: Math.round((stats.active / stats.total) * 100),
-                    direction: "up" as const,
-                  }
-                : undefined
-            }
-            icon={CheckCircle}
-          />
-          <HGStatCard
-            label="Handlinger i dag"
-            value={stats.actionsToday}
-            icon={Zap}
-          />
-          <HGStatCard
-            label="Kostnader MTD"
-            value={`$${stats.costMtd.toFixed(2)}`}
-            icon={TrendingUp}
-          />
-        </div>
+      {/* Summary Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <AdminStatCard
+          label="Totalt"
+          value={stats.total}
+          icon={<Bot className="w-5 h-5" />}
+        />
+        <AdminStatCard
+          label="Aktive"
+          value={stats.active}
+          change={
+            stats.total > 0
+              ? {
+                  value: Math.round((stats.active / stats.total) * 100),
+                  positive: true,
+                }
+              : undefined
+          }
+          icon={<CheckCircle className="w-5 h-5" />}
+        />
+        <AdminStatCard
+          label="Handlinger i dag"
+          value={stats.actionsToday}
+          icon={<Zap className="w-5 h-5" />}
+        />
+        <AdminStatCard
+          label="Kostnader MTD"
+          value={`$${stats.costMtd.toFixed(2)}`}
+          icon={<TrendingUp className="w-5 h-5" />}
+        />
+      </div>
 
-        {/* Agents by Team */}
+      {/* Agents by Team */}
+      <div className="space-y-8">
         {TEAM_ORDER.filter((team) => agentsByTeam.has(team)).map((team) => (
-          <div key={team}>
-            <h2 className="text-sm font-medium text-[var(--hg-text-muted)] uppercase tracking-wider mb-3">
-              {TEAM_LABELS[team]}
-            </h2>
+          <section key={team}>
+            <h2 className="admin-label mb-3">{TEAM_LABELS[team]}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {agentsByTeam.get(team)?.map((agent) => {
-                const color = TEAM_COLORS[agent.team];
-
-                return (
-                  <div
-                    key={agent.id}
-                    className={cn(
-                      "hg-card p-4 transition-all",
-                      !agent.isActive && "opacity-60",
-                      isPending && "pointer-events-none"
-                    )}
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div
-                        className="w-12 h-12 rounded-xl flex items-center justify-center"
-                        style={{ backgroundColor: `${color}20` }}
-                      >
-                        <Bot
-                          className="w-6 h-6"
-                          style={{ color }}
-                        />
-                      </div>
-                      <button
-                        onClick={() => handleToggle(agent.id, agent.isActive)}
-                        disabled={isPending}
-                        className={cn(
-                          "w-10 h-6 rounded-full transition-colors relative",
-                          agent.isActive
-                            ? "bg-[var(--hg-primary)]"
-                            : "bg-[var(--hg-surface-raised)]"
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            "absolute top-1 w-4 h-4 rounded-full bg-[var(--hg-bg)] transition-all",
-                            agent.isActive ? "left-5" : "left-1"
-                          )}
-                        />
-                      </button>
+              {agentsByTeam.get(team)?.map((agent) => (
+                <AdminCard
+                  key={agent.id}
+                  className={cn(
+                    "transition-all",
+                    !agent.isActive && "opacity-60",
+                    isPending && "pointer-events-none",
+                  )}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center">
+                      <Bot className="w-6 h-6 text-[var(--color-primary)]" />
                     </div>
-
-                    <h3 className="font-semibold text-[var(--hg-text)] mb-1">
-                      {agent.displayName}
-                    </h3>
-                    <p className="text-sm text-[var(--hg-text-muted)] mb-2">
-                      {agent.model}
-                    </p>
-                    <p className="text-xs text-[var(--hg-text-secondary)] mb-4">
-                      {agent.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-1">
-                      {agent.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--hg-surface-raised)] text-[var(--hg-text-muted)]"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="mt-4 pt-3 border-t border-[var(--hg-border)] flex items-center justify-between text-xs">
+                    <button
+                      onClick={() => handleToggle(agent.id, agent.isActive)}
+                      disabled={isPending}
+                      aria-label={
+                        agent.isActive
+                          ? "Deaktiver agent"
+                          : "Aktiver agent"
+                      }
+                      className={cn(
+                        "w-11 h-6 rounded-full transition-colors relative",
+                        agent.isActive
+                          ? "bg-[var(--color-primary)]"
+                          : "bg-[var(--color-grey-200)]",
+                      )}
+                    >
                       <span
                         className={cn(
-                          "flex items-center gap-1",
-                          agent.isActive
-                            ? "text-[var(--hg-success)]"
-                            : "text-[var(--hg-text-muted)]"
+                          "absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-all",
+                          agent.isActive ? "left-[22px]" : "left-0.5",
                         )}
-                      >
-                        {agent.isActive ? (
-                          <>
-                            <CheckCircle className="w-3 h-3" />
-                            Aktiv
-                          </>
-                        ) : (
-                          <>
-                            <XCircle className="w-3 h-3" />
-                            Inaktiv
-                          </>
-                        )}
-                      </span>
-                      <span className="text-[var(--hg-text-muted)]">
-                        {agent.lastActionAt
-                          ? `Siste: ${formatDistanceToNow(new Date(agent.lastActionAt), { locale: nb, addSuffix: true })}`
-                          : "Ingen handlinger"}
-                      </span>
-                    </div>
+                      />
+                    </button>
                   </div>
-                );
-              })}
-            </div>
-          </div>
-        ))}
 
-        {/* Empty state */}
-        {agents.length === 0 && (
-          <div className="hg-card flex flex-col items-center justify-center py-16 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-[var(--hg-surface-raised)] flex items-center justify-center mb-4">
-              <Bot className="w-8 h-8 text-[var(--hg-text-muted)]" />
+                  <h3 className="font-semibold text-[var(--color-text)] mb-1">
+                    {agent.displayName}
+                  </h3>
+                  <p className="text-xs text-[var(--color-muted)] mb-2">
+                    {agent.model}
+                  </p>
+                  <p className="text-sm text-[var(--color-text)]/80 mb-4">
+                    {agent.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1 mb-4">
+                    {agent.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="pt-3 border-t border-[var(--color-grey-200)] flex items-center justify-between text-xs">
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-1 font-medium",
+                        agent.isActive
+                          ? "text-[var(--color-success)]"
+                          : "text-[var(--color-muted)]",
+                      )}
+                    >
+                      {agent.isActive ? (
+                        <>
+                          <CheckCircle className="w-3 h-3" />
+                          Aktiv
+                        </>
+                      ) : (
+                        <>
+                          <XCircle className="w-3 h-3" />
+                          Inaktiv
+                        </>
+                      )}
+                    </span>
+                    <span className="text-[var(--color-muted)]">
+                      {agent.lastActionAt
+                        ? `Sist: ${formatDistanceToNow(new Date(agent.lastActionAt), { locale: nb, addSuffix: true })}`
+                        : "Ingen handlinger"}
+                    </span>
+                  </div>
+                </AdminCard>
+              ))}
             </div>
-            <p className="text-sm text-[var(--hg-text-muted)]">
-              Ingen agenter konfigurert
-            </p>
-          </div>
-        )}
+          </section>
+        ))}
       </div>
-    </>
+
+      {/* Empty state */}
+      {agents.length === 0 && (
+        <AdminEmptyState
+          icon={<Bot className="w-6 h-6" />}
+          title="Ingen agenter konfigurert"
+          description="Det er ikke lagt til noen AI-agenter ennå."
+        />
+      )}
+    </div>
   );
 }

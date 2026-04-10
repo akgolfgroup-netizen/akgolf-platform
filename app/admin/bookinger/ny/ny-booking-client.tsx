@@ -9,21 +9,19 @@ import {
   Briefcase,
   Calendar,
   Check,
-  Zap,
   Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  MCTopbar,
-  useMCSidebar,
-} from "@/components/portal/mission-control";
+  AdminCard,
+  AdminButton,
+  AdminInput,
+} from "@/components/portal/mission-control/ui";
 import Link from "next/link";
 import { format, addDays, startOfWeek } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  adminCreateBooking,
-  searchStudentsForBooking,
-} from "../actions";
+import { adminCreateBooking, searchStudentsForBooking } from "../actions";
 import type {
   ServiceTypeOption,
   InstructorOption,
@@ -46,10 +44,17 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
 
   // Steg-state
   const [step, setStep] = useState(1);
-  const [selectedStudent, setSelectedStudent] = useState<StudentOption | null>(null);
-  const [selectedService, setSelectedService] = useState<ServiceTypeOption | null>(null);
-  const [selectedInstructor, setSelectedInstructor] = useState<InstructorOption | null>(null);
-  const [selectedSlot, setSelectedSlot] = useState<{ date: Date; time: string } | null>(null);
+  const [selectedStudent, setSelectedStudent] = useState<StudentOption | null>(
+    null,
+  );
+  const [selectedService, setSelectedService] =
+    useState<ServiceTypeOption | null>(null);
+  const [selectedInstructor, setSelectedInstructor] =
+    useState<InstructorOption | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<{
+    date: Date;
+    time: string;
+  } | null>(null);
 
   // Elevsøk
   const [searchQuery, setSearchQuery] = useState("");
@@ -99,7 +104,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
         setSlotsLoading(false);
       }
     },
-    [selectedService, selectedInstructor]
+    [selectedService, selectedInstructor],
   );
 
   useEffect(() => {
@@ -111,7 +116,13 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
   // ── Submit ──
 
   const handleSubmit = () => {
-    if (!selectedStudent || !selectedService || !selectedInstructor || !selectedSlot) return;
+    if (
+      !selectedStudent ||
+      !selectedService ||
+      !selectedInstructor ||
+      !selectedSlot
+    )
+      return;
     setError(null);
 
     startTransition(async () => {
@@ -175,7 +186,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
         </Link>
 
         {/* Steg-indikator */}
-        <div className="rounded-xl border border-[var(--color-grey-200)] bg-white p-4 mb-5">
+        <AdminCard compact className="mb-5">
           <div className="flex items-center gap-2">
             {steps.map((s, i) => (
               <div key={i} className="flex items-center gap-2">
@@ -186,7 +197,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                       ? "bg-[var(--color-success)] text-white"
                       : step === i + 1
                         ? "bg-[var(--color-primary)] text-white"
-                        : "bg-[var(--color-grey-200)] text-[var(--color-muted)]"
+                        : "bg-[var(--color-grey-200)] text-[var(--color-muted)]",
                   )}
                 >
                   {s.complete ? <Check className="w-4 h-4" /> : i + 1}
@@ -196,7 +207,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                     "text-xs font-medium hidden sm:block",
                     step === i + 1
                       ? "text-[var(--color-text)]"
-                      : "text-[var(--color-muted)]"
+                      : "text-[var(--color-muted)]",
                   )}
                 >
                   {s.label}
@@ -207,17 +218,17 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                       "w-8 h-0.5 mx-1 hidden sm:block",
                       s.complete
                         ? "bg-[var(--color-success)]"
-                        : "bg-[var(--color-grey-200)]"
+                        : "bg-[var(--color-grey-200)]",
                     )}
                   />
                 )}
               </div>
             ))}
           </div>
-        </div>
+        </AdminCard>
 
         {/* Steg-innhold */}
-        <div className="rounded-xl border border-[var(--color-grey-200)] bg-white p-5">
+        <AdminCard>
           {/* Steg 1: Velg elev */}
           {step === 1 && (
             <div className="space-y-4">
@@ -225,18 +236,18 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                 Velg elev
               </h2>
 
-              <div className="flex items-center gap-2 bg-[var(--color-surface)] border border-[var(--color-grey-200)] rounded-lg px-3 py-2.5">
-                <Search className="w-4 h-4 text-[var(--color-muted)]" />
-                <input
+              <div className="relative">
+                <Search className="w-4 h-4 text-[var(--color-muted)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <AdminInput
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Sok etter elev..."
-                  className="flex-1 bg-transparent text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none"
+                  className="pl-9"
                   autoFocus
                 />
                 {searchLoading && (
-                  <Loader2 className="w-4 h-4 text-[var(--color-muted)] animate-spin" />
+                  <Loader2 className="w-4 h-4 text-[var(--color-muted)] animate-spin absolute right-3 top-1/2 -translate-y-1/2" />
                 )}
               </div>
 
@@ -252,7 +263,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                       "w-full flex items-center gap-3 p-3 rounded-lg transition-colors text-left",
                       selectedStudent?.id === student.id
                         ? "bg-[var(--color-primary)]/10 border border-[var(--color-primary)]"
-                        : "hover:bg-[var(--color-surface)]"
+                        : "hover:bg-[var(--color-grey-100)]",
                     )}
                   >
                     <div className="w-8 h-8 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center text-xs font-semibold">
@@ -307,7 +318,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                       "p-4 rounded-lg border text-left transition-all",
                       selectedService?.id === service.id
                         ? "bg-[var(--color-primary)]/10 border-[var(--color-primary)]"
-                        : "bg-[var(--color-surface)] border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]"
+                        : "bg-[var(--color-grey-100)] border-[var(--color-grey-200)] hover:border-[var(--color-primary)]/40",
                     )}
                   >
                     <div className="flex items-start justify-between mb-2">
@@ -358,7 +369,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                       "w-full flex items-center gap-3 p-4 rounded-lg border transition-all text-left",
                       selectedInstructor?.id === instructor.id
                         ? "bg-[var(--color-primary)]/10 border-[var(--color-primary)]"
-                        : "bg-[var(--color-surface)] border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]"
+                        : "bg-[var(--color-grey-100)] border-[var(--color-grey-200)] hover:border-[var(--color-primary)]/40",
                     )}
                   >
                     <div className="w-10 h-10 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center text-sm font-semibold">
@@ -411,7 +422,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                     >
                       {day}
                     </div>
-                  )
+                  ),
                 )}
                 {Array.from({ length: 35 }).map((_, i) => {
                   const date = addDays(weekStart, i);
@@ -434,8 +445,8 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                         isSelected
                           ? "bg-[var(--color-primary)] text-white"
                           : isPast
-                            ? "bg-[var(--color-surface)] text-[var(--color-grey-400)] cursor-not-allowed"
-                            : "bg-[var(--color-surface)] text-[var(--color-text)] hover:bg-[var(--color-grey-200)]"
+                            ? "bg-[var(--color-grey-100)] text-[var(--color-grey-400)] cursor-not-allowed"
+                            : "bg-[var(--color-grey-100)] text-[var(--color-text)] hover:bg-[var(--color-grey-200)]",
                       )}
                     >
                       <span className="font-medium">{format(date, "d")}</span>
@@ -474,7 +485,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                             selectedSlot?.time === time &&
                               selectedSlot.date === selectedDate
                               ? "bg-[var(--color-primary)] text-white"
-                              : "bg-[var(--color-surface)] text-[var(--color-text)] hover:bg-[var(--color-grey-200)]"
+                              : "bg-[var(--color-grey-100)] text-[var(--color-text)] hover:bg-[var(--color-grey-200)]",
                           )}
                         >
                           {time}
@@ -486,14 +497,14 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
               )}
             </div>
           )}
-        </div>
+        </AdminCard>
 
         {/* Oppsummering og bekreft */}
         {selectedStudent &&
           selectedService &&
           selectedInstructor &&
           selectedSlot && (
-            <div className="rounded-xl border border-[var(--color-grey-200)] bg-white shadow-sm mt-5 p-5">
+            <AdminCard className="mt-5">
               <h3 className="text-sm font-medium text-[var(--color-text)] mb-4">
                 Oppsummering
               </h3>
@@ -541,25 +552,16 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                     {selectedService.price.toLocaleString("nb-NO")} kr
                   </div>
                 </div>
-                <button
+                <AdminButton
+                  variant="primary"
                   onClick={handleSubmit}
-                  disabled={isPending}
-                  className={cn(
-                    "inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-colors",
-                    isPending
-                      ? "bg-[var(--color-primary)]/60 cursor-not-allowed"
-                      : "bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90"
-                  )}
+                  loading={isPending}
+                  icon={<Check className="w-4 h-4" />}
                 >
-                  {isPending ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Check className="w-4 h-4" />
-                  )}
                   {isPending ? "Oppretter..." : "Bekreft booking"}
-                </button>
+                </AdminButton>
               </div>
-            </div>
+            </AdminCard>
           )}
       </div>
     </>

@@ -3,38 +3,58 @@
 import { useState, useTransition } from "react";
 import {
   Search,
-  Filter,
   CheckCircle,
   XCircle,
   AlertCircle,
   Edit3,
+  ClipboardList,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminButton,
+  AdminInput,
+  AdminTextarea,
+  AdminBadge,
+  AdminStatCard,
+  AdminPageHeader,
+  AdminEmptyState,
+} from "@/components/portal/mission-control/ui";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import type { SessionItem, SessionStats } from "./actions";
 import { saveSessionNotes } from "./actions";
 import { BookingStatus } from "@prisma/client";
 
+type StatusVariant = "success" | "error" | "muted";
+
 const statusConfig: Record<
   string,
-  { label: string; icon: typeof CheckCircle; className: string }
+  {
+    label: string;
+    icon: typeof CheckCircle;
+    variant: StatusVariant;
+    iconClass: string;
+  }
 > = {
   COMPLETED: {
-    label: "Fullfort",
+    label: "Fullført",
     icon: CheckCircle,
-    className: "text-[var(--color-success)] bg-[var(--color-success)]/10",
+    variant: "success",
+    iconClass: "bg-[var(--color-success)]/10 text-[var(--color-success)]",
   },
   CANCELLED: {
     label: "Avlyst",
     icon: XCircle,
-    className: "text-[var(--color-error)] bg-[var(--color-error)]/10",
+    variant: "error",
+    iconClass: "bg-[var(--color-error)]/10 text-[var(--color-error)]",
   },
   NO_SHOW: {
     label: "No-show",
     icon: AlertCircle,
-    className: "text-[var(--color-muted)] bg-[var(--color-grey-200)]",
+    variant: "muted",
+    iconClass: "bg-[var(--color-grey-100)] text-[var(--color-muted)]",
   },
 };
 
@@ -59,7 +79,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
 
   const filters: FilterItem[] = [
     { label: "Alle", value: "all", count: stats.total },
-    { label: "Fullfort", value: "completed", count: stats.completed },
+    { label: "Fullført", value: "completed", count: stats.completed },
     { label: "Avlyst", value: "cancelled", count: stats.cancelled },
     { label: "No-show", value: "no-show", count: stats.noShow },
   ];
@@ -83,7 +103,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
   });
 
   const selectedSessionData = initialSessions.find(
-    (s) => s.id === selectedSession
+    (s) => s.id === selectedSession,
   );
 
   function handleSelectSession(session: SessionItem) {
@@ -104,168 +124,178 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
   return (
     <>
       <MCTopbar
-        title="Okter"
-        subtitle="Registrer resultater og notater fra okter"
+        title="Økter"
+        subtitle="Registrer resultater og notater fra økter"
         onMenuClick={toggle}
       />
 
-      <div className="p-5 space-y-5">
+      <div className="p-6 space-y-6">
+        <AdminPageHeader
+          title="Økter"
+          subtitle="Gjennomgå fullførte økter, avlysninger og no-shows"
+        />
+
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="hg-card p-4">
-            <span className="hg-label">Fullfort totalt</span>
-            <span className="text-2xl font-bold text-[var(--color-success)] tabular-nums block mt-1">
-              {stats.completed}
-            </span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Avlyst</span>
-            <span className="text-2xl font-bold text-[var(--color-error)] tabular-nums block mt-1">
-              {stats.cancelled}
-            </span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">No-show</span>
-            <span className="text-2xl font-bold text-[var(--color-muted)] tabular-nums block mt-1">
-              {stats.noShow}
-            </span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Oppmoeterate</span>
-            <span className="text-2xl font-bold text-[var(--color-primary)] tabular-nums block mt-1">
-              {stats.attendanceRate}%
-            </span>
-          </div>
+          <AdminStatCard
+            label="Fullført totalt"
+            value={stats.completed}
+            icon={<CheckCircle className="w-5 h-5" />}
+          />
+          <AdminStatCard
+            label="Avlyst"
+            value={stats.cancelled}
+            icon={<XCircle className="w-5 h-5" />}
+          />
+          <AdminStatCard
+            label="No-show"
+            value={stats.noShow}
+            icon={<AlertCircle className="w-5 h-5" />}
+          />
+          <AdminStatCard
+            label="Oppmøterate"
+            value={`${stats.attendanceRate}%`}
+          />
         </div>
 
         {/* Filters & Search */}
-        <div className="hg-card p-4">
-          <div className="flex flex-col lg:flex-row gap-4">
+        <AdminCard>
+          <div className="flex flex-col lg:flex-row gap-3">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] pointer-events-none" />
+              <AdminInput
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Søk etter elev..."
+                className="pl-9"
+              />
+            </div>
             <div className="flex gap-2 flex-wrap">
               {filters.map((filter) => (
                 <button
                   key={filter.value}
                   onClick={() => setActiveFilter(filter.value)}
                   className={cn(
-                    "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors",
+                    "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
                     activeFilter === filter.value
-                      ? "bg-[var(--color-primary)] text-white"
-                      : "bg-[var(--color-grey-200)] text-[var(--color-text)] hover:bg-[var(--color-grey-300)]"
+                      ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
+                      : "bg-white border-[var(--color-grey-200)] text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
                   )}
                 >
                   {filter.label}
-                  <span className="ml-1.5 opacity-60">({filter.count})</span>
+                  <span className="ml-1.5 opacity-70">({filter.count})</span>
                 </button>
               ))}
             </div>
-            <div className="flex-1 flex items-center gap-2 bg-[var(--color-surface)] border border-[var(--color-grey-300)] rounded-lg px-3 py-2">
-              <Search className="w-4 h-4 text-[var(--color-muted)]" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Sok etter elev..."
-                className="flex-1 bg-transparent text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none"
-              />
-            </div>
-            <button className="hg-btn hg-btn-secondary">
-              <Filter className="w-4 h-4" />
-            </button>
           </div>
-        </div>
+        </AdminCard>
 
         {/* Sessions List */}
-        <div className="hg-card overflow-hidden">
-          <div className="px-4 py-3 border-b border-[var(--color-grey-300)] flex items-center justify-between">
-            <h3 className="hg-section-title">Okter</h3>
-            <span className="text-xs text-[var(--color-muted)]">
-              {filteredSessions.length} resultater
-            </span>
-          </div>
-          <div className="divide-y divide-[var(--color-grey-200)]">
-            {filteredSessions.length === 0 && (
-              <div className="p-8 text-center text-sm text-[var(--color-muted)]">
-                Ingen okter funnet
-              </div>
-            )}
-            {filteredSessions.map((session) => {
-              const config = statusConfig[session.status] ?? statusConfig.COMPLETED;
-              const StatusIcon = config.icon;
-              return (
-                <div
-                  key={session.id}
-                  onClick={() => handleSelectSession(session)}
-                  className={cn(
-                    "p-4 flex items-start gap-4 hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer",
-                    selectedSession === session.id && "bg-[var(--color-grey-100)]"
-                  )}
-                >
+        {filteredSessions.length === 0 ? (
+          <AdminEmptyState
+            icon={<ClipboardList className="w-6 h-6" />}
+            title="Ingen økter funnet"
+            description="Prøv å justere filter eller søk for å finne det du leter etter."
+          />
+        ) : (
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-4 py-3 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                Økter
+              </h3>
+              <span className="text-xs text-[var(--color-muted)]">
+                {filteredSessions.length} resultater
+              </span>
+            </div>
+            <div className="divide-y divide-[var(--color-grey-200)]">
+              {filteredSessions.map((session) => {
+                const config =
+                  statusConfig[session.status] ?? statusConfig.COMPLETED;
+                const StatusIcon = config.icon;
+                return (
                   <div
+                    key={session.id}
+                    onClick={() => handleSelectSession(session)}
                     className={cn(
-                      "p-2 rounded-lg shrink-0",
-                      config.className
+                      "p-4 flex items-start gap-4 hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer",
+                      selectedSession === session.id &&
+                        "bg-[var(--color-grey-100)]",
                     )}
                   >
-                    <StatusIcon className="w-4 h-4" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-semibold text-[var(--color-text)]">
-                        {format(new Date(session.startTime), "d. MMM HH:mm", {
-                          locale: nb,
-                        })}
-                      </span>
-                      <span
-                        className={cn(
-                          "px-1.5 py-0.5 text-[10px] rounded-full",
-                          config.className
-                        )}
-                      >
-                        {config.label}
-                      </span>
+                    <div
+                      className={cn(
+                        "p-2 rounded-lg shrink-0",
+                        config.iconClass,
+                      )}
+                    >
+                      <StatusIcon className="w-4 h-4" />
                     </div>
-                    <h4 className="text-sm text-[var(--color-text)]">
-                      {session.student?.name ?? session.student?.email ?? "Ukjent"}
-                    </h4>
-                    <p className="text-xs text-[var(--color-muted)]">
-                      {session.service?.name ?? "Ukjent tjeneste"}
-                      {session.instructor?.name
-                        ? ` \u2022 ${session.instructor.name}`
-                        : ""}
-                    </p>
-                    {session.adminNotes && (
-                      <p className="text-xs text-[var(--color-text)] mt-2 line-clamp-2">
-                        {session.adminNotes}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm font-semibold text-[var(--color-text)]">
+                          {format(new Date(session.startTime), "d. MMM HH:mm", {
+                            locale: nb,
+                          })}
+                        </span>
+                        <AdminBadge variant={config.variant}>
+                          {config.label}
+                        </AdminBadge>
+                      </div>
+                      <h4 className="text-sm text-[var(--color-text)]">
+                        {session.student?.name ??
+                          session.student?.email ??
+                          "Ukjent"}
+                      </h4>
+                      <p className="text-xs text-[var(--color-muted)]">
+                        {session.service?.name ?? "Ukjent tjeneste"}
+                        {session.instructor?.name
+                          ? ` \u2022 ${session.instructor.name}`
+                          : ""}
                       </p>
-                    )}
+                      {session.adminNotes && (
+                        <p className="text-xs text-[var(--color-text)] mt-2 line-clamp-2">
+                          {session.adminNotes}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      className="p-1.5 rounded-md hover:bg-[var(--color-grey-200)] text-[var(--color-muted)]"
+                      aria-label="Rediger notater"
+                    >
+                      <Edit3 className="w-4 h-4" />
+                    </button>
                   </div>
-                  <button className="p-1.5 rounded-md hover:bg-[var(--color-grey-300)] text-[var(--color-muted)]">
-                    <Edit3 className="w-4 h-4" />
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+                );
+              })}
+            </div>
+          </AdminCard>
+        )}
 
         {/* Notes Panel */}
         {selectedSessionData && (
-          <div className="hg-card p-4">
+          <AdminCard>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="hg-section-title">Notater</h3>
+              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                Notater
+              </h3>
               <button
+                type="button"
                 onClick={() => setSelectedSession(null)}
-                className="p-1.5 rounded-md hover:bg-[var(--color-grey-200)]"
+                className="p-1.5 rounded-md hover:bg-[var(--color-grey-100)]"
+                aria-label="Lukk"
               >
                 <XCircle className="w-4 h-4 text-[var(--color-muted)]" />
               </button>
             </div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="hg-avatar hg-avatar-sm">
+              <div className="w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center text-xs font-semibold">
                 {(selectedSessionData.student?.name ?? "?")
                   .split(" ")
                   .map((n) => n[0])
-                  .join("")}
+                  .join("")
+                  .slice(0, 2)}
               </div>
               <div>
                 <h4 className="text-sm font-medium text-[var(--color-text)]">
@@ -276,28 +306,28 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
                 </p>
               </div>
             </div>
-            <textarea
-              placeholder="Legg til notater fra okten..."
+            <AdminTextarea
+              placeholder="Legg til notater fra økten..."
               value={notesValue}
               onChange={(e) => setNotesValue(e.target.value)}
-              className="w-full h-24 p-3 bg-[var(--color-surface)] border border-[var(--color-grey-300)] rounded-lg text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none focus:border-[var(--color-primary)] resize-none"
+              rows={4}
             />
             <div className="flex justify-end gap-2 mt-3">
-              <button
+              <AdminButton
+                variant="secondary"
                 onClick={() => setSelectedSession(null)}
-                className="hg-btn hg-btn-secondary text-sm"
               >
                 Avbryt
-              </button>
-              <button
+              </AdminButton>
+              <AdminButton
+                variant="primary"
                 onClick={handleSaveNotes}
-                disabled={isPending}
-                className="hg-btn hg-btn-primary text-sm"
+                loading={isPending}
               >
                 {isPending ? "Lagrer..." : "Lagre notater"}
-              </button>
+              </AdminButton>
             </div>
-          </div>
+          </AdminCard>
         )}
       </div>
     </>

@@ -2,6 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { Send, Users, Bell, Loader2, CheckCircle } from "lucide-react";
+import {
+  AdminCard,
+  AdminButton,
+  AdminInput,
+  AdminTextarea,
+  AdminStatCard,
+} from "@/components/portal/mission-control/ui";
 
 interface PushStats {
   totalSubscriptions: number;
@@ -10,7 +17,6 @@ interface PushStats {
 
 export function NotificationManager() {
   const [stats, setStats] = useState<PushStats | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({
@@ -20,7 +26,6 @@ export function NotificationManager() {
     broadcast: false,
   });
 
-  // Fetch stats on mount
   useEffect(() => {
     fetchStats();
   }, []);
@@ -29,7 +34,7 @@ export function NotificationManager() {
     try {
       const res = await fetch("/api/admin/push");
       if (res.ok) {
-        const data = await res.json();
+        const data: PushStats = await res.json();
         setStats(data);
       }
     } catch (error) {
@@ -63,111 +68,82 @@ export function NotificationManager() {
   return (
     <div className="space-y-6">
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="rounded-2xl p-5 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]">
-          <div className="flex items-center gap-2 mb-2">
-            <Bell className="w-4 h-4 text-[var(--color-grey-500)]" />
-            <span className="text-sm text-[var(--color-grey-500)]">Push-abonnementer</span>
-          </div>
-          <p className="text-2xl font-bold text-[var(--color-grey-900)]">
-            {stats?.totalSubscriptions ?? "—"}
-          </p>
-        </div>
-        <div className="rounded-2xl p-5 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)]">
-          <div className="flex items-center gap-2 mb-2">
-            <Users className="w-4 h-4 text-[var(--color-grey-500)]" />
-            <span className="text-sm text-[var(--color-grey-500)]">Unike brukere</span>
-          </div>
-          <p className="text-2xl font-bold text-[var(--color-grey-900)]">
-            {stats?.uniqueUsers ?? "—"}
-          </p>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <AdminStatCard
+          label="Push-abonnementer"
+          value={stats?.totalSubscriptions ?? "—"}
+          icon={<Bell className="w-5 h-5" />}
+        />
+        <AdminStatCard
+          label="Unike brukere"
+          value={stats?.uniqueUsers ?? "—"}
+          icon={<Users className="w-5 h-5" />}
+        />
       </div>
 
       {/* Send form */}
-      <form onSubmit={handleSubmit} className="rounded-2xl p-6 bg-white border border-[var(--color-grey-200)]">
-        <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-4">
-          Send notifikasjon
-        </h2>
+      <AdminCard>
+        <h2 className="admin-section-title mb-5">Send notifikasjon</h2>
 
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-grey-700)] mb-1">
-              Tittel
-            </label>
-            <input
-              type="text"
-              value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
-              placeholder="F.eks. Ny funksjon tilgjengelig!"
-              className="w-full px-3 py-2 rounded-lg border border-[var(--color-grey-200)] focus:border-[var(--color-brand)] focus:outline-none text-[var(--color-grey-900)]"
-              required
-            />
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <AdminInput
+            label="Tittel"
+            type="text"
+            value={form.title}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+            placeholder="F.eks. Ny funksjon tilgjengelig!"
+            required
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-grey-700)] mb-1">
-              Melding
-            </label>
-            <textarea
-              value={form.body}
-              onChange={(e) => setForm({ ...form, body: e.target.value })}
-              placeholder="Skriv din melding her..."
-              rows={3}
-              className="w-full px-3 py-2 rounded-lg border border-[var(--color-grey-200)] focus:border-[var(--color-brand)] focus:outline-none text-[var(--color-grey-900)] resize-none"
-              required
-            />
-          </div>
+          <AdminTextarea
+            label="Melding"
+            value={form.body}
+            onChange={(e) => setForm({ ...form, body: e.target.value })}
+            placeholder="Skriv din melding her..."
+            rows={3}
+            required
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-grey-700)] mb-1">
-              Lenke (valgfritt)
-            </label>
-            <input
-              type="text"
-              value={form.url}
-              onChange={(e) => setForm({ ...form, url: e.target.value })}
-              placeholder="/portal"
-              className="w-full px-3 py-2 rounded-lg border border-[var(--color-grey-200)] focus:border-[var(--color-brand)] focus:outline-none text-[var(--color-grey-900)]"
-            />
-          </div>
+          <AdminInput
+            label="Lenke (valgfritt)"
+            type="text"
+            value={form.url}
+            onChange={(e) => setForm({ ...form, url: e.target.value })}
+            placeholder="/portal"
+            helper="Hvor brukeren sendes når de klikker på notifikasjonen"
+          />
 
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
               checked={form.broadcast}
-              onChange={(e) => setForm({ ...form, broadcast: e.target.checked })}
-              className="w-4 h-4 rounded border-[var(--color-grey-300)] text-[var(--color-brand)] focus:ring-[var(--color-brand)]"
+              onChange={(e) =>
+                setForm({ ...form, broadcast: e.target.checked })
+              }
+              className="w-4 h-4 rounded border-[var(--color-grey-300)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
             />
-            <span className="text-sm text-[var(--color-grey-700)]">
+            <span className="text-sm text-[var(--color-text)]">
               Send til alle brukere (broadcast)
             </span>
           </label>
 
-          <button
+          <AdminButton
             type="submit"
             disabled={isSending || !form.title || !form.body}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-grey-900)] text-white font-semibold hover:bg-[var(--color-grey-800)] transition-colors disabled:opacity-50"
-          >
-            {isSending ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Sender...
-              </>
-            ) : sent ? (
-              <>
+            icon={
+              sent ? (
                 <CheckCircle className="w-4 h-4" />
-                Sendt!
-              </>
-            ) : (
-              <>
+              ) : isSending ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
                 <Send className="w-4 h-4" />
-                Send notifikasjon
-              </>
-            )}
-          </button>
-        </div>
-      </form>
+              )
+            }
+          >
+            {isSending ? "Sender..." : sent ? "Sendt!" : "Send notifikasjon"}
+          </AdminButton>
+        </form>
+      </AdminCard>
     </div>
   );
 }

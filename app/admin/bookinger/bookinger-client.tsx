@@ -24,6 +24,14 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminButton,
+  AdminBadge,
+  AdminStatCard,
+  AdminEmptyState,
+  AdminInput,
+} from "@/components/portal/mission-control/ui";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
@@ -45,55 +53,51 @@ const STATUS_CONFIG: Record<
   {
     label: string;
     icon: typeof CheckCircle;
-    className: string;
-    dot: string;
+    variant: "success" | "warning" | "error";
   }
 > = {
   CONFIRMED: {
     label: "Bekreftet",
     icon: CheckCircle,
-    className: "text-[var(--color-success)] bg-[var(--color-success)]/10",
-    dot: "bg-[var(--color-success)]",
+    variant: "success",
   },
   PENDING: {
     label: "Venter",
     icon: AlertCircle,
-    className: "text-[var(--color-warning)] bg-[var(--color-warning)]/10",
-    dot: "bg-[var(--color-warning)]",
+    variant: "warning",
   },
   CANCELLED: {
     label: "Avbestilt",
     icon: XCircle,
-    className: "text-[var(--color-error)] bg-[var(--color-error)]/10",
-    dot: "bg-[var(--color-error)]",
+    variant: "error",
   },
 };
 
 // ---------------------------------------------------------------------------
-// Fokusområde
+// Fokusomrade
 // ---------------------------------------------------------------------------
 
 type FocusAreaKey = "TEE_TOTAL" | "APPROACH" | "SHORT_GAME" | "PUTTING";
 
 const FOCUS_AREA_CONFIG: Record<
   FocusAreaKey,
-  { label: string; className: string }
+  { label: string; variant: "info" | "success" | "warning" | "muted" }
 > = {
   TEE_TOTAL: {
     label: "Langt spill",
-    className: "text-[var(--color-primary)] bg-[var(--color-primary)]/10",
+    variant: "info",
   },
   APPROACH: {
     label: "Innspill",
-    className: "text-[var(--color-success)] bg-[var(--color-success)]/10",
+    variant: "success",
   },
   SHORT_GAME: {
     label: "Nærspill",
-    className: "text-[var(--color-warning)] bg-[var(--color-warning)]/10",
+    variant: "warning",
   },
   PUTTING: {
     label: "Putting",
-    className: "text-[var(--color-ai)] bg-[var(--color-ai)]/10",
+    variant: "muted",
   },
 };
 
@@ -121,10 +125,10 @@ function SessionPlanPanel({ bookingId }: { bookingId: string }) {
         body: JSON.stringify({ bookingId }),
       });
       if (!res.ok) {
-        const data = await res.json() as { error?: string };
+        const data = (await res.json()) as { error?: string };
         throw new Error(data.error ?? "Noe gikk galt");
       }
-      const data = await res.json() as { plan: SessionPlan };
+      const data = (await res.json()) as { plan: SessionPlan };
       setPlan(data.plan);
       setExpanded(true);
     } catch (err) {
@@ -136,7 +140,7 @@ function SessionPlanPanel({ bookingId }: { bookingId: string }) {
 
   if (!plan) {
     return (
-      <div className="mt-3 pt-3 border-t border-[var(--color-grey-200)]">
+      <div className="mt-3 pt-3 border-t border-[var(--color-grey-100)]">
         <button
           onClick={handleGenerate}
           disabled={loading}
@@ -157,7 +161,7 @@ function SessionPlanPanel({ bookingId }: { bookingId: string }) {
   }
 
   return (
-    <div className="mt-3 pt-3 border-t border-[var(--color-grey-200)]">
+    <div className="mt-3 pt-3 border-t border-[var(--color-grey-100)]">
       <button
         onClick={() => setExpanded((v) => !v)}
         className="flex items-center gap-2 text-xs font-medium text-[var(--color-ai)] hover:text-[var(--color-ai)]/80 transition-colors w-full text-left"
@@ -194,7 +198,10 @@ function SessionPlanPanel({ bookingId }: { bookingId: string }) {
                 Hoveddrill
               </p>
               {plan.mainDrills.map((drill, i) => (
-                <div key={i} className="bg-[var(--color-surface)] rounded-lg p-2.5">
+                <div
+                  key={i}
+                  className="bg-[var(--color-grey-50)] border border-[var(--color-grey-100)] rounded-lg p-2.5"
+                >
                   <div className="flex items-center gap-2 mb-1">
                     <Dumbbell className="w-3.5 h-3.5 text-[var(--color-primary)] shrink-0" />
                     <span className="text-xs font-semibold text-[var(--color-text)]">
@@ -232,13 +239,16 @@ function SessionPlanPanel({ bookingId }: { bookingId: string }) {
 
           {/* Nøkkelpunkter */}
           {plan.keyPoints.length > 0 && (
-            <div className="bg-[var(--color-surface)] rounded-lg p-2.5">
+            <div className="bg-[var(--color-grey-50)] border border-[var(--color-grey-100)] rounded-lg p-2.5">
               <p className="text-[10px] font-semibold uppercase tracking-wide text-[var(--color-muted)] mb-1.5">
                 Nøkkelpunkter
               </p>
               <ul className="space-y-1">
                 {plan.keyPoints.map((kp, i) => (
-                  <li key={i} className="flex items-start gap-1.5 text-xs text-[var(--color-text)]">
+                  <li
+                    key={i}
+                    className="flex items-start gap-1.5 text-xs text-[var(--color-text)]"
+                  >
                     <Target className="w-3 h-3 text-[var(--color-primary)] shrink-0 mt-0.5" />
                     {kp}
                   </li>
@@ -255,7 +265,7 @@ function SessionPlanPanel({ bookingId }: { bookingId: string }) {
             </div>
           )}
 
-          {/* Generer på nytt */}
+          {/* Generer pa nytt */}
           <button
             onClick={handleGenerate}
             disabled={loading}
@@ -325,20 +335,13 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
   // Sok og filter via server action
   // ---------------------------------------------------------------------------
 
-  const doSearch = useCallback(
-    (query: string, status: StatusKey | null) => {
-      startTransition(async () => {
-        const result = await searchBookings(
-          query,
-          status ?? undefined,
-          1
-        );
-        setBookings(result.bookings);
-        setTotal(result.total);
-      });
-    },
-    []
-  );
+  const doSearch = useCallback((query: string, status: StatusKey | null) => {
+    startTransition(async () => {
+      const result = await searchBookings(query, status ?? undefined, 1);
+      setBookings(result.bookings);
+      setTotal(result.total);
+    });
+  }, []);
 
   function handleSearchChange(value: string) {
     setSearchQuery(value);
@@ -360,7 +363,6 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
     setCancellingId(bookingId);
     try {
       await adminCancelBooking(bookingId, "Avbestilt av admin", true);
-      // Oppdater lokal state
       doSearch(searchQuery, statusFilter);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Noe gikk galt";
@@ -397,59 +399,46 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
       <div className="p-5 space-y-5">
         {/* Stats Row */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="hg-card p-4">
-            <span className="hg-label">I dag</span>
-            <span className="text-2xl font-bold text-[var(--color-text)] tabular-nums block mt-1">
-              {dayBookings.length}
-            </span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Bekreftet</span>
-            <span className="text-2xl font-bold text-[var(--color-success)] tabular-nums block mt-1">
-              {confirmedCount}
-            </span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Venter</span>
-            <span className="text-2xl font-bold text-[var(--color-warning)] tabular-nums block mt-1">
-              {pendingCount}
-            </span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Omsetning i dag</span>
-            <span className="text-2xl font-bold text-[var(--color-primary)] tabular-nums block mt-1">
-              {todayRevenue.toLocaleString("nb-NO")} kr
-            </span>
-          </div>
+          <AdminStatCard label="I dag" value={dayBookings.length} />
+          <AdminStatCard label="Bekreftet" value={confirmedCount} />
+          <AdminStatCard label="Venter" value={pendingCount} />
+          <AdminStatCard
+            label="Omsetning i dag"
+            value={`${todayRevenue.toLocaleString("nb-NO")} kr`}
+          />
         </div>
 
         {/* Controls */}
-        <div className="hg-card p-4 space-y-4">
-          <div className="flex flex-col lg:flex-row gap-4">
+        <AdminCard compact>
+          <div className="flex flex-col lg:flex-row gap-3">
             {/* Search */}
-            <div className="flex-1 flex items-center gap-2 bg-[var(--color-surface)] border border-[var(--color-grey-300)] rounded-lg px-3 py-2.5 focus-within:border-[var(--color-primary)] focus-within:shadow-[0_0_0_3px_rgba(0,88,64,0.15)] transition-all">
-              <Search className="w-4 h-4 text-[var(--color-muted)]" />
-              <input
-                type="text"
+            <div className="flex-1 relative">
+              <Search className="w-4 h-4 text-[var(--color-muted)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <AdminInput
                 value={searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder="Sok etter elev, tjeneste..."
-                className="flex-1 bg-transparent text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none"
+                className="pl-9"
               />
-              {isPending && <Loader2 className="w-4 h-4 text-[var(--color-muted)] animate-spin" />}
+              {isPending && (
+                <Loader2 className="w-4 h-4 text-[var(--color-muted)] animate-spin absolute right-3 top-1/2 -translate-y-1/2" />
+              )}
             </div>
 
             {/* View Mode Toggle */}
-            <div className="hg-tabs">
+            <div className="inline-flex rounded-lg border border-[var(--color-grey-200)] bg-white p-1">
               {VIEW_MODES.map((mode) => {
                 const Icon = mode.icon;
+                const isActive = viewMode === mode.value;
                 return (
                   <button
                     key={mode.value}
                     onClick={() => setViewMode(mode.value)}
                     className={cn(
-                      "hg-tab flex items-center gap-1.5",
-                      viewMode === mode.value && "active"
+                      "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors",
+                      isActive
+                        ? "bg-[var(--color-primary)] text-white"
+                        : "text-[var(--color-muted)] hover:text-[var(--color-text)]"
                     )}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -464,90 +453,93 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
               type="date"
               value={format(selectedDate, "yyyy-MM-dd")}
               onChange={(e) => setSelectedDate(new Date(e.target.value))}
-              className="hg-input w-auto"
+              className="admin-input w-auto"
             />
 
             {/* Actions */}
             <div className="flex gap-2">
-              <button className="hg-btn hg-btn-secondary">
-                <Download className="w-4 h-4" />
-                <span className="hidden sm:inline">Eksporter</span>
-              </button>
-              <Link
-                href="/admin/bookinger/ny"
-                className="hg-btn hg-btn-primary"
+              <AdminButton
+                variant="secondary"
+                icon={<Download className="w-4 h-4" />}
               >
-                <Plus className="w-4 h-4" />
-                <span className="hidden sm:inline">Ny booking</span>
+                <span className="hidden sm:inline">Eksporter</span>
+              </AdminButton>
+              <Link href="/admin/bookinger/ny">
+                <AdminButton variant="primary" icon={<Plus className="w-4 h-4" />}>
+                  <span className="hidden sm:inline">Ny booking</span>
+                </AdminButton>
               </Link>
             </div>
           </div>
 
           {/* Status Filters */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mt-4">
             <button
               onClick={() => handleStatusFilter(null)}
               className={cn(
-                "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors",
+                "px-3 py-1.5 text-xs font-medium rounded-full transition-colors",
                 !statusFilter
                   ? "bg-[var(--color-primary)] text-white"
-                  : "bg-[var(--color-surface)] text-[var(--color-muted)] hover:text-[var(--color-text)]"
+                  : "bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:text-[var(--color-text)]"
               )}
             >
               Alle ({total})
             </button>
-            {(Object.entries(STATUS_CONFIG) as [StatusKey, (typeof STATUS_CONFIG)[StatusKey]][]).map(
-              ([status, config]) => {
-                const Icon = config.icon;
-                return (
-                  <button
-                    key={status}
-                    onClick={() =>
-                      handleStatusFilter(statusFilter === status ? null : status)
-                    }
-                    className={cn(
-                      "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5",
-                      statusFilter === status
-                        ? config.className
-                        : "bg-[var(--color-surface)] text-[var(--color-muted)] hover:text-[var(--color-text)]"
-                    )}
-                  >
-                    <Icon className="w-3.5 h-3.5" />
-                    {config.label}
-                  </button>
-                );
-              }
-            )}
+            {(
+              Object.entries(STATUS_CONFIG) as [
+                StatusKey,
+                (typeof STATUS_CONFIG)[StatusKey],
+              ][]
+            ).map(([status, config]) => {
+              const Icon = config.icon;
+              const isActive = statusFilter === status;
+              return (
+                <button
+                  key={status}
+                  onClick={() =>
+                    handleStatusFilter(statusFilter === status ? null : status)
+                  }
+                  className={cn(
+                    "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-colors",
+                    isActive
+                      ? "bg-[var(--color-primary)] text-white"
+                      : "bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:text-[var(--color-text)]"
+                  )}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {config.label}
+                </button>
+              );
+            })}
           </div>
-        </div>
+        </AdminCard>
 
         {/* Bookings List */}
-        <div className="hg-card overflow-hidden">
-          <div className="px-4 py-3 border-b border-[var(--color-grey-300)] flex items-center justify-between">
-            <div>
-              <h3 className="hg-section-title">
-                {format(selectedDate, "EEEE d. MMMM", { locale: nb })}
-              </h3>
-              <span className="text-xs text-[var(--color-muted)]">
-                {dayBookings.length} booking{dayBookings.length !== 1 ? "er" : ""}
-              </span>
-            </div>
+        <div className="bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
+          <div className="px-4 py-3 border-b border-[var(--color-grey-200)]">
+            <h3 className="admin-section-title capitalize">
+              {format(selectedDate, "EEEE d. MMMM", { locale: nb })}
+            </h3>
+            <span className="text-xs text-[var(--color-muted)]">
+              {dayBookings.length} booking{dayBookings.length !== 1 ? "er" : ""}
+            </span>
           </div>
 
-          <div className="divide-y divide-[var(--color-grey-200)]">
+          <div className="divide-y divide-[var(--color-grey-100)]">
             {dayBookings.length === 0 ? (
-              <div className="py-12 text-center">
-                <Calendar className="w-12 h-12 text-[var(--color-muted)] mx-auto mb-3 opacity-50" />
-                <span className="text-sm text-[var(--color-muted)]">
-                  Ingen bookinger denne dagen
-                </span>
-              </div>
+              <AdminEmptyState
+                icon={<Calendar className="w-6 h-6" />}
+                title="Ingen bookinger denne dagen"
+                description="Velg en annen dato eller opprett en ny booking."
+                className="border-0"
+              />
             ) : (
               dayBookings.map((booking) => {
                 const statusKey = isStatusKey(booking.status)
                   ? booking.status
                   : "PENDING";
                 const statusCfg = STATUS_CONFIG[statusKey];
+                const StatusIcon = statusCfg.icon;
                 const duration = booking.ServiceType?.duration ?? 0;
                 const isCancelling = cancellingId === booking.id;
                 const focusCfg =
@@ -558,7 +550,7 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
                 return (
                   <div
                     key={booking.id}
-                    className="p-4 hover:bg-[var(--color-surface)] transition-colors group"
+                    className="p-4 hover:bg-[var(--color-grey-50)] transition-colors group"
                   >
                     <div className="flex items-start gap-4">
                       {/* Time */}
@@ -577,30 +569,19 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
                           <h4 className="text-sm font-semibold text-[var(--color-text)]">
                             {booking.ServiceType?.name ?? "Ukjent tjeneste"}
                           </h4>
-                          <div
-                            className={cn(
-                              "px-2 py-0.5 text-[10px] font-medium rounded-full flex items-center gap-1",
-                              statusCfg.className
-                            )}
+                          <AdminBadge
+                            variant={statusCfg.variant}
+                            icon={<StatusIcon className="w-3 h-3" />}
                           >
-                            <div
-                              className={cn(
-                                "w-1.5 h-1.5 rounded-full",
-                                statusCfg.dot
-                              )}
-                            />
                             {statusCfg.label}
-                          </div>
+                          </AdminBadge>
                           {focusCfg && (
-                            <div
-                              className={cn(
-                                "px-2 py-0.5 text-[10px] font-medium rounded-full flex items-center gap-1",
-                                focusCfg.className
-                              )}
+                            <AdminBadge
+                              variant={focusCfg.variant}
+                              icon={<Target className="w-3 h-3" />}
                             >
-                              <Target className="w-2.5 h-2.5" />
                               {focusCfg.label}
-                            </div>
+                            </AdminBadge>
                           )}
                         </div>
                         <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--color-muted)]">
@@ -610,7 +591,8 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
                           </span>
                           <span className="flex items-center gap-1">
                             <Clock className="w-3.5 h-3.5" />
-                            {booking.Instructor?.User?.name ?? "Ukjent instruktør"}
+                            {booking.Instructor?.User?.name ??
+                              "Ukjent instruktør"}
                           </span>
                         </div>
                         {/* Spillernotater */}
@@ -620,7 +602,7 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
                             {booking.playerNotes}
                           </p>
                         )}
-                        {/* AI-øktplan-knapp (kun om fokusområde er satt) */}
+                        {/* AI-oktplan-knapp (kun om fokusomrade er satt) */}
                         {booking.focusArea && booking.status !== "CANCELLED" && (
                           <SessionPlanPanel bookingId={booking.id} />
                         )}
@@ -646,7 +628,10 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
                               )}
                             </button>
                           )}
-                          <button className="p-1.5 rounded-md hover:bg-[var(--color-grey-200)] text-[var(--color-muted)]">
+                          <button
+                            className="p-1.5 rounded-md hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+                            title="Flere handlinger"
+                          >
                             <MoreHorizontal className="w-4 h-4" />
                           </button>
                         </div>

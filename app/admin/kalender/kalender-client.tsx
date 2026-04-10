@@ -16,7 +16,15 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
-import { MCTopbar, useMCSidebar, HGCapacityBar } from "@/components/portal/mission-control";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminButton,
+  AdminBadge,
+  AdminSelect,
+  AdminTextarea,
+  AdminEmptyState,
+} from "@/components/portal/mission-control/ui";
 import {
   format,
   startOfMonth,
@@ -63,16 +71,25 @@ const viewModes = [
 type ViewMode = (typeof viewModes)[number]["value"];
 
 // — Status styles —
-
-const statusStyles: Record<string, string> = {
+// Pill/kort i kalender-cellene bruker myke bakgrunner og accent-border
+const statusCellStyles: Record<string, string> = {
   PENDING:
-    "bg-[color-mix(in_srgb,var(--color-warning)_15%,transparent)] border-[var(--color-warning)] text-[var(--color-warning)]",
+    "bg-[var(--color-warning)]/10 border-[var(--color-warning)]/40 text-[var(--color-warning)]",
   CONFIRMED:
-    "bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] border-[var(--color-primary)] text-[var(--color-primary)]",
+    "bg-[var(--color-primary)]/10 border-[var(--color-primary)]/30 text-[var(--color-primary)]",
   COMPLETED:
-    "bg-[color-mix(in_srgb,var(--color-success)_15%,transparent)] border-[var(--color-success)] text-[var(--color-success)]",
+    "bg-[var(--color-success)]/10 border-[var(--color-success)]/30 text-[var(--color-success)]",
   NO_SHOW:
-    "bg-[color-mix(in_srgb,var(--color-error)_15%,transparent)] border-[var(--color-error)] text-[var(--color-error)]",
+    "bg-[var(--color-error)]/10 border-[var(--color-error)]/30 text-[var(--color-error)]",
+};
+
+type StatusKey = "PENDING" | "CONFIRMED" | "COMPLETED" | "NO_SHOW";
+
+const statusBadgeVariant: Record<StatusKey, "warning" | "info" | "success" | "error"> = {
+  PENDING: "warning",
+  CONFIRMED: "info",
+  COMPLETED: "success",
+  NO_SHOW: "error",
 };
 
 const statusLabels: Record<string, string> = {
@@ -81,6 +98,10 @@ const statusLabels: Record<string, string> = {
   COMPLETED: "Fullfort",
   NO_SHOW: "Ikke mott",
 };
+
+function isStatusKey(s: string): s is StatusKey {
+  return s === "PENDING" || s === "CONFIRMED" || s === "COMPLETED" || s === "NO_SHOW";
+}
 
 // — Component —
 
@@ -185,8 +206,6 @@ export default function KalenderClient({
     ? getBookingsForDate(selectedDate)
     : [];
 
-  const todayBookings = getBookingsForDate(new Date());
-
   // — Render helpers —
 
   const formatTime = (date: Date) => format(new Date(date), "HH:mm");
@@ -203,41 +222,44 @@ export default function KalenderClient({
 
       <div className="p-5 space-y-5">
         {/* Controls */}
-        <div className="hg-card p-4">
+        <AdminCard compact>
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => handleNavigate(subMonths(currentDate, 1))}
-                className="p-2 rounded-lg hover:bg-[var(--hg-surface-raised)] text-[var(--hg-text-muted)]"
+                className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-muted)] transition-colors"
+                aria-label="Forrige maned"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <h2 className="text-lg font-semibold text-[var(--hg-text)] min-w-[150px] text-center">
+              <h2 className="text-lg font-semibold text-[var(--color-text)] min-w-[150px] text-center capitalize">
                 {format(currentDate, "MMMM yyyy", { locale: nb })}
               </h2>
               <button
                 onClick={() => handleNavigate(addMonths(currentDate, 1))}
-                className="p-2 rounded-lg hover:bg-[var(--hg-surface-raised)] text-[var(--hg-text-muted)]"
+                className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-muted)] transition-colors"
+                aria-label="Neste maned"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
-              <button
+              <AdminButton
+                variant="secondary"
                 onClick={() => handleNavigate(new Date())}
-                className="ml-2 hg-btn hg-btn-secondary text-xs"
+                className="ml-2"
               >
                 I dag
-              </button>
+              </AdminButton>
               {isPending && (
-                <Loader2 className="w-4 h-4 animate-spin text-[var(--hg-text-muted)]" />
+                <Loader2 className="w-4 h-4 animate-spin text-[var(--color-muted)]" />
               )}
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
               {/* Instructor filter */}
-              <select
+              <AdminSelect
                 value={selectedInstructorId}
                 onChange={(e) => handleInstructorFilter(e.target.value)}
-                className="hg-input text-sm py-1.5 px-3"
+                containerClassName="min-w-[180px]"
               >
                 <option value="">Alle instruktorer</option>
                 {instructors.map((inst) => (
@@ -245,19 +267,22 @@ export default function KalenderClient({
                     {inst.user.name || "Ukjent"}
                   </option>
                 ))}
-              </select>
+              </AdminSelect>
 
               {/* View Mode Toggle */}
-              <div className="hg-tabs">
+              <div className="inline-flex rounded-lg border border-[var(--color-grey-200)] bg-white p-1">
                 {viewModes.map((mode) => {
                   const Icon = mode.icon;
+                  const isActive = viewMode === mode.value;
                   return (
                     <button
                       key={mode.value}
                       onClick={() => handleViewChange(mode.value)}
                       className={cn(
-                        "hg-tab flex items-center gap-1.5",
-                        viewMode === mode.value && "active"
+                        "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors",
+                        isActive
+                          ? "bg-[var(--color-primary)] text-white"
+                          : "text-[var(--color-muted)] hover:text-[var(--color-text)]"
                       )}
                     >
                       <Icon className="w-3.5 h-3.5" />
@@ -267,28 +292,27 @@ export default function KalenderClient({
                 })}
               </div>
 
-              <button className="hg-btn hg-btn-secondary">
-                <Filter className="w-4 h-4" />
-              </button>
-              <button className="hg-btn hg-btn-primary">
-                <Plus className="w-4 h-4" />
+              <AdminButton variant="secondary" icon={<Filter className="w-4 h-4" />}>
+                <span className="hidden sm:inline">Filter</span>
+              </AdminButton>
+              <AdminButton variant="primary" icon={<Plus className="w-4 h-4" />}>
                 <span className="hidden sm:inline">Ny</span>
-              </button>
+              </AdminButton>
             </div>
           </div>
-        </div>
+        </AdminCard>
 
         {/* Calendar Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
           {/* Main Calendar */}
-          <div className="lg:col-span-3 hg-card overflow-hidden">
+          <div className="lg:col-span-3 bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
             {/* Weekday Headers */}
-            <div className="grid grid-cols-7 border-b border-[var(--hg-border)]">
+            <div className="grid grid-cols-7 border-b border-[var(--color-grey-200)] bg-[var(--color-grey-50)]">
               {["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"].map(
                 (dayLabel) => (
                   <div
                     key={dayLabel}
-                    className="px-3 py-2 text-center text-xs font-semibold text-[var(--hg-text-muted)] uppercase tracking-wider"
+                    className="px-3 py-2.5 text-center text-xs font-semibold text-[var(--color-muted)] uppercase tracking-wider"
                   >
                     {dayLabel}
                   </div>
@@ -310,13 +334,13 @@ export default function KalenderClient({
                     key={i}
                     onClick={() => setSelectedDate(date)}
                     className={cn(
-                      "min-h-[100px] p-2 border-b border-r border-[var(--hg-border-subtle)] text-left transition-colors",
+                      "min-h-[110px] p-2 border-b border-r border-[var(--color-grey-100)] text-left transition-colors",
                       !isCurrentMonth &&
-                        "bg-[var(--hg-surface-sunken)] opacity-50",
-                      isToday && "bg-[var(--hg-primary-glow)]",
+                        "bg-[var(--color-grey-50)] opacity-60",
+                      isToday && "bg-[var(--color-primary)]/5",
                       isSelected &&
-                        "ring-2 ring-[var(--hg-primary)] ring-inset",
-                      "hover:bg-[var(--hg-surface-raised)]"
+                        "ring-2 ring-[var(--color-primary)] ring-inset",
+                      "hover:bg-[var(--color-grey-50)]"
                     )}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -324,14 +348,14 @@ export default function KalenderClient({
                         className={cn(
                           "text-sm font-medium w-7 h-7 flex items-center justify-center rounded-full",
                           isToday
-                            ? "bg-[var(--hg-primary)] text-[var(--hg-bg)]"
-                            : "text-[var(--hg-text)]"
+                            ? "bg-[var(--color-primary)] text-white"
+                            : "text-[var(--color-text)]"
                         )}
                       >
                         {format(date, "d")}
                       </span>
                       {dayBookings.length > 0 && (
-                        <span className="text-[10px] text-[var(--hg-text-muted)]">
+                        <span className="text-[10px] text-[var(--color-muted)] tabular-nums">
                           {dayBookings.length}
                         </span>
                       )}
@@ -342,7 +366,8 @@ export default function KalenderClient({
                           key={booking.id}
                           className={cn(
                             "px-1.5 py-0.5 text-[10px] rounded border truncate",
-                            statusStyles[booking.status] || statusStyles.CONFIRMED
+                            statusCellStyles[booking.status] ||
+                              statusCellStyles.CONFIRMED
                           )}
                         >
                           {formatTime(booking.startTime)}{" "}
@@ -350,7 +375,7 @@ export default function KalenderClient({
                         </div>
                       ))}
                       {dayBookings.length > 3 && (
-                        <div className="text-[10px] text-[var(--hg-text-muted)] pl-1">
+                        <div className="text-[10px] text-[var(--color-muted)] pl-1">
                           +{dayBookings.length - 3} flere
                         </div>
                       )}
@@ -364,181 +389,168 @@ export default function KalenderClient({
           {/* Sidebar */}
           <div className="space-y-4">
             {/* Selected Date Details */}
-            <div className="hg-card p-4">
-              <h3 className="hg-section-title mb-3">
+            <AdminCard compact>
+              <h3 className="admin-section-title mb-3 capitalize">
                 {selectedDate
                   ? format(selectedDate, "EEEE d. MMMM", { locale: nb })
                   : "Velg en dato"}
               </h3>
               {selectedDateBookings.length === 0 ? (
                 <div className="py-8 text-center">
-                  <CalendarIcon className="w-10 h-10 text-[var(--hg-text-muted)] mx-auto mb-2 opacity-50" />
-                  <span className="text-sm text-[var(--hg-text-muted)]">
+                  <CalendarIcon className="w-10 h-10 text-[var(--color-muted)] mx-auto mb-2 opacity-50" />
+                  <span className="text-sm text-[var(--color-muted)]">
                     Ingen bookinger
                   </span>
                 </div>
               ) : (
                 <div className="space-y-2">
-                  {selectedDateBookings.map((booking) => (
-                    <div
-                      key={booking.id}
-                      className={cn(
-                        "p-3 rounded-lg border",
-                        statusStyles[booking.status] || statusStyles.CONFIRMED
-                      )}
-                    >
-                      <div className="flex items-center gap-2 mb-1">
-                        <Clock className="w-3.5 h-3.5" />
-                        <span className="text-xs font-medium">
-                          {formatTime(booking.startTime)} -{" "}
-                          {formatTime(booking.endTime)}
-                        </span>
-                        <span className="text-[10px] opacity-70">
-                          ({formatDuration(booking)})
-                        </span>
-                      </div>
-                      <div className="text-sm font-medium">
-                        {booking.serviceType.name}
-                      </div>
-                      <div className="text-xs opacity-70 mt-0.5">
-                        {booking.student.name || booking.student.email || "Ukjent elev"}
-                      </div>
-                      {booking.instructor.user.name && (
-                        <div className="text-xs opacity-70">
-                          Med {booking.instructor.user.name}
+                  {selectedDateBookings.map((booking) => {
+                    const statusKey = isStatusKey(booking.status)
+                      ? booking.status
+                      : "CONFIRMED";
+                    return (
+                      <div
+                        key={booking.id}
+                        className="p-3 rounded-lg border border-[var(--color-grey-200)] bg-white"
+                      >
+                        <div className="flex items-center justify-between mb-1.5">
+                          <div className="flex items-center gap-1.5 text-[var(--color-text)]">
+                            <Clock className="w-3.5 h-3.5 text-[var(--color-muted)]" />
+                            <span className="text-xs font-medium tabular-nums">
+                              {formatTime(booking.startTime)}–
+                              {formatTime(booking.endTime)}
+                            </span>
+                            <span className="text-[10px] text-[var(--color-muted)]">
+                              ({formatDuration(booking)})
+                            </span>
+                          </div>
+                          <AdminBadge variant={statusBadgeVariant[statusKey]}>
+                            {statusLabels[booking.status] || booking.status}
+                          </AdminBadge>
                         </div>
-                      )}
-                      {booking.location && (
-                        <div className="text-xs opacity-60">
-                          {booking.location.name}
+                        <div className="text-sm font-medium text-[var(--color-text)]">
+                          {booking.serviceType.name}
                         </div>
-                      )}
-                      <div className="text-[10px] mt-1">
-                        {statusLabels[booking.status] || booking.status}
-                      </div>
+                        <div className="text-xs text-[var(--color-muted)] mt-0.5">
+                          {booking.student.name ||
+                            booking.student.email ||
+                            "Ukjent elev"}
+                        </div>
+                        {booking.instructor.user.name && (
+                          <div className="text-xs text-[var(--color-muted)]">
+                            Med {booking.instructor.user.name}
+                          </div>
+                        )}
+                        {booking.location && (
+                          <div className="text-xs text-[var(--color-muted)]">
+                            {booking.location.name}
+                          </div>
+                        )}
 
-                      {/* Action buttons */}
-                      <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-current/10">
-                        {booking.status !== "NO_SHOW" &&
-                          booking.status !== "COMPLETED" && (
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMarkNoShow(booking.id);
-                              }}
-                              disabled={isNoShowPending}
-                              className="flex items-center gap-1 text-[10px] px-2 py-1 rounded hover:bg-black/5 transition-colors"
-                              title="Merk som ikke mott"
-                            >
-                              <AlertTriangle className="w-3 h-3" />
-                              Ikke mott
-                            </button>
-                          )}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setNoteText(booking.adminNotes || "");
-                            setNoteModalBookingId(booking.id);
-                          }}
-                          className="flex items-center gap-1 text-[10px] px-2 py-1 rounded hover:bg-black/5 transition-colors"
-                          title="Legg til notat"
-                        >
-                          <MessageSquare className="w-3 h-3" />
-                          Notat
-                        </button>
+                        {/* Action buttons */}
+                        <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-[var(--color-grey-100)]">
+                          {booking.status !== "NO_SHOW" &&
+                            booking.status !== "COMPLETED" && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleMarkNoShow(booking.id);
+                                }}
+                                disabled={isNoShowPending}
+                                className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded hover:bg-[var(--color-error)]/10 text-[var(--color-muted)] hover:text-[var(--color-error)] transition-colors disabled:opacity-50"
+                                title="Merk som ikke mott"
+                              >
+                                <AlertTriangle className="w-3 h-3" />
+                                Ikke mott
+                              </button>
+                            )}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setNoteText(booking.adminNotes || "");
+                              setNoteModalBookingId(booking.id);
+                            }}
+                            className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded hover:bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
+                            title="Legg til notat"
+                          >
+                            <MessageSquare className="w-3 h-3" />
+                            Notat
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
-              <button className="w-full mt-3 hg-btn hg-btn-primary text-sm">
-                <Plus className="w-4 h-4" />
+              <AdminButton
+                variant="primary"
+                className="w-full mt-3"
+                icon={<Plus className="w-4 h-4" />}
+              >
                 Legg til hendelse
-              </button>
-            </div>
+              </AdminButton>
+            </AdminCard>
 
             {/* Status Legend */}
-            <div className="hg-card p-4">
-              <h3 className="hg-section-title mb-3">Status</h3>
+            <AdminCard compact>
+              <h3 className="admin-section-title mb-3">Status</h3>
               <div className="space-y-2">
                 {Object.entries(statusLabels).map(([status, label]) => (
                   <div key={status} className="flex items-center gap-2">
                     <div
                       className={cn(
                         "w-3 h-3 rounded border",
-                        statusStyles[status]
+                        statusCellStyles[status]
                       )}
                     />
-                    <span className="text-sm text-[var(--hg-text-secondary)]">
+                    <span className="text-sm text-[var(--color-text)]">
                       {label}
                     </span>
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Capacity */}
-            <div className="hg-card p-4">
-              <h3 className="hg-section-title mb-3">Kapasitet</h3>
-              <HGCapacityBar
-                current={todayBookings.length}
-                max={8}
-                label="I dag"
-                size="sm"
-              />
-              <HGCapacityBar
-                current={bookings.length}
-                max={40}
-                label={viewMode === "month" ? "Denne maneden" : "Denne perioden"}
-                size="sm"
-                className="mt-3"
-              />
-            </div>
+            </AdminCard>
           </div>
         </div>
       </div>
 
       {/* Note Modal */}
       {noteModalBookingId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="hg-card p-6 w-full max-w-md mx-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <AdminCard className="w-full max-w-md">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-[var(--hg-text)]">
-                Admin-notat
-              </h3>
+              <h3 className="admin-section-title">Admin-notat</h3>
               <button
                 onClick={() => setNoteModalBookingId(null)}
-                className="p-1 rounded hover:bg-[var(--hg-surface-raised)]"
+                className="p-1 rounded hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+                aria-label="Lukk"
               >
-                <X className="w-5 h-5 text-[var(--hg-text-muted)]" />
+                <X className="w-5 h-5" />
               </button>
             </div>
-            <textarea
+            <AdminTextarea
               value={noteText}
               onChange={(e) => setNoteText(e.target.value)}
-              className="hg-input w-full h-32 resize-none text-sm"
+              rows={5}
               placeholder="Skriv et notat..."
             />
             <div className="flex justify-end gap-2 mt-4">
-              <button
+              <AdminButton
+                variant="secondary"
                 onClick={() => setNoteModalBookingId(null)}
-                className="hg-btn hg-btn-secondary text-sm"
               >
                 Avbryt
-              </button>
-              <button
+              </AdminButton>
+              <AdminButton
+                variant="primary"
                 onClick={handleAddNote}
-                disabled={isNotePending || !noteText.trim()}
-                className="hg-btn hg-btn-primary text-sm"
+                loading={isNotePending}
+                disabled={!noteText.trim()}
               >
-                {isNotePending ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  "Lagre"
-                )}
-              </button>
+                Lagre
+              </AdminButton>
             </div>
-          </div>
+          </AdminCard>
         </div>
       )}
     </>

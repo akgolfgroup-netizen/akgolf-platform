@@ -3,16 +3,30 @@
 import { useState } from "react";
 import { Search, X, Check, Plus } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
+import { AdminBadge, AdminButton, AdminInput } from "@/components/portal/mission-control/ui";
 import type { DrillOption, ManualPlanExercise } from "../actions";
 
-const PYRAMID_LEVELS = [
+type PyramidLevel = "" | "FYS" | "TEK" | "SLAG" | "SPILL" | "TURN";
+
+const PYRAMID_LEVELS: Array<{ value: PyramidLevel; label: string }> = [
   { value: "", label: "Alle" },
   { value: "FYS", label: "FYS" },
   { value: "TEK", label: "TEK" },
   { value: "SLAG", label: "SLAG" },
   { value: "SPILL", label: "SPILL" },
   { value: "TURN", label: "TURN" },
-] as const;
+];
+
+const PYRAMID_VARIANT: Record<
+  Exclude<PyramidLevel, "">,
+  "info" | "success" | "warning" | "error" | "muted"
+> = {
+  FYS: "info",
+  TEK: "success",
+  SLAG: "warning",
+  SPILL: "error",
+  TURN: "muted",
+};
 
 const DIFFICULTY_LABELS: Record<number, string> = {
   1: "Lett",
@@ -30,15 +44,18 @@ interface DrillPickerProps {
 
 export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [pyramidFilter, setPyramidFilter] = useState("");
-  const [selected, setSelected] = useState<Map<string, ManualPlanExercise>>(new Map());
+  const [pyramidFilter, setPyramidFilter] = useState<PyramidLevel>("");
+  const [selected, setSelected] = useState<Map<string, ManualPlanExercise>>(
+    new Map(),
+  );
 
   const filteredDrills = drills.filter((d) => {
+    const q = searchQuery.toLowerCase();
     const matchesSearch =
       !searchQuery ||
-      d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      d.area.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      d.description?.toLowerCase().includes(searchQuery.toLowerCase());
+      d.name.toLowerCase().includes(q) ||
+      d.area.toLowerCase().includes(q) ||
+      d.description?.toLowerCase().includes(q);
 
     const matchesPyramid = !pyramidFilter || d.pyramid === pyramidFilter;
 
@@ -66,21 +83,23 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-2xl w-full max-w-xl max-h-[80vh] flex flex-col shadow-xl mx-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+      <div className="admin-card w-full max-w-xl max-h-[80vh] flex flex-col shadow-xl p-0">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-grey-200)]">
           <div>
             <h3 className="text-base font-semibold text-[var(--color-text)]">
-              Velg ovelser
+              Velg øvelser
             </h3>
             <p className="text-xs text-[var(--color-muted)]">
               {selected.size} valgt
             </p>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
+            className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors"
+            aria-label="Lukk"
           >
             <X className="w-5 h-5 text-[var(--color-muted)]" />
           </button>
@@ -89,26 +108,27 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
         {/* Search & filters */}
         <div className="px-5 py-3 border-b border-[var(--color-grey-200)] space-y-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)]" />
-            <input
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] pointer-events-none" />
+            <AdminInput
               type="text"
-              placeholder="Sok etter ovelse..."
+              placeholder="Søk etter øvelse..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               autoFocus
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-[var(--color-grey-200)] bg-white text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+              className="pl-9"
             />
           </div>
           <div className="flex gap-1.5 flex-wrap">
             {PYRAMID_LEVELS.map((pl) => (
               <button
                 key={pl.value}
+                type="button"
                 onClick={() => setPyramidFilter(pl.value)}
                 className={cn(
-                  "px-2.5 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer",
+                  "px-2.5 py-1 rounded-md text-xs font-medium transition-colors border",
                   pyramidFilter === pl.value
-                    ? "bg-[var(--color-primary)] text-white"
-                    : "bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:bg-[var(--color-grey-200)]"
+                    ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
+                    : "bg-white border-[var(--color-grey-200)] text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
                 )}
               >
                 {pl.label}
@@ -121,20 +141,25 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
         <div className="flex-1 overflow-y-auto p-3 space-y-1">
           {filteredDrills.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-sm text-[var(--color-muted)]">Ingen ovelser funnet</p>
+              <p className="text-sm text-[var(--color-muted)]">
+                Ingen øvelser funnet
+              </p>
             </div>
           ) : (
             filteredDrills.map((drill) => {
               const isSelected = selected.has(drill.id);
+              const pyramidKey = drill.pyramid as Exclude<PyramidLevel, "">;
+              const variant = PYRAMID_VARIANT[pyramidKey] ?? "muted";
               return (
                 <button
                   key={drill.id}
+                  type="button"
                   onClick={() => toggleDrill(drill)}
                   className={cn(
-                    "w-full text-left px-4 py-3 rounded-lg border transition-colors cursor-pointer",
+                    "w-full text-left px-4 py-3 rounded-lg border transition-colors",
                     isSelected
                       ? "border-[var(--color-primary)] bg-[var(--color-primary)]/5"
-                      : "border-transparent hover:bg-[var(--color-grey-100)]"
+                      : "border-transparent hover:bg-[var(--color-grey-100)]",
                   )}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -143,9 +168,7 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
                         <p className="text-sm font-medium text-[var(--color-text)] truncate">
                           {drill.name}
                         </p>
-                        <span className="flex-shrink-0 px-1.5 py-0.5 rounded text-[10px] font-medium bg-[var(--color-grey-100)] text-[var(--color-muted)]">
-                          {drill.pyramid}
-                        </span>
+                        <AdminBadge variant={variant}>{drill.pyramid}</AdminBadge>
                       </div>
                       {drill.description && (
                         <p className="text-xs text-[var(--color-muted)] mt-0.5 line-clamp-1">
@@ -154,8 +177,13 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
                       )}
                       <div className="flex items-center gap-3 mt-1 text-xs text-[var(--color-muted)]">
                         <span>{drill.area}</span>
-                        <span>{drill.minDurationMinutes}-{drill.maxDurationMinutes} min</span>
-                        <span>{DIFFICULTY_LABELS[drill.difficulty] ?? `Nivå ${drill.difficulty}`}</span>
+                        <span>
+                          {drill.minDurationMinutes}-{drill.maxDurationMinutes} min
+                        </span>
+                        <span>
+                          {DIFFICULTY_LABELS[drill.difficulty] ??
+                            `Nivå ${drill.difficulty}`}
+                        </span>
                       </div>
                     </div>
                     <div
@@ -163,7 +191,7 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
                         "w-5 h-5 rounded border flex items-center justify-center flex-shrink-0 mt-0.5",
                         isSelected
                           ? "bg-[var(--color-primary)] border-[var(--color-primary)]"
-                          : "border-[var(--color-grey-300)]"
+                          : "border-[var(--color-grey-300)]",
                       )}
                     >
                       {isSelected && <Check className="w-3 h-3 text-white" />}
@@ -177,25 +205,17 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
 
         {/* Footer */}
         <div className="flex items-center justify-between px-5 py-4 border-t border-[var(--color-grey-200)]">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 rounded-lg border border-[var(--color-grey-200)] text-sm font-medium text-[var(--color-text)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
-          >
+          <AdminButton variant="secondary" onClick={onClose}>
             Avbryt
-          </button>
-          <button
+          </AdminButton>
+          <AdminButton
+            variant="primary"
             onClick={handleConfirm}
             disabled={selected.size === 0}
-            className={cn(
-              "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer",
-              selected.size > 0
-                ? "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)]/90"
-                : "bg-[var(--color-grey-200)] text-[var(--color-muted)] cursor-not-allowed"
-            )}
+            icon={<Plus className="w-4 h-4" />}
           >
-            <Plus className="w-4 h-4" />
             Legg til {selected.size > 0 ? `(${selected.size})` : ""}
-          </button>
+          </AdminButton>
         </div>
       </div>
     </div>

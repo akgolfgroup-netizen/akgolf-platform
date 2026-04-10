@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   Building2,
   Plus,
@@ -9,11 +10,19 @@ import {
   AlertCircle,
   CheckCircle,
   MapPin,
+  Settings,
 } from "lucide-react";
-import { cn } from "@/lib/portal/utils/cn";
-import { MCTopbar, useMCSidebar, HGCapacityBar } from "@/components/portal/mission-control";
+import { cn } from "@/lib/utils";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminButton,
+  AdminBadge,
+  AdminStatCard,
+  AdminPageHeader,
+  AdminEmptyState,
+} from "@/components/portal/mission-control/ui";
 import { format } from "date-fns";
-import { nb } from "date-fns/locale";
 
 // ─── Typer basert på Prisma-modeller ───
 
@@ -55,13 +64,22 @@ export interface FasiliteterClientProps {
   bookingCounts: Record<string, number>;
 }
 
-const statusConfig = {
-  active: { label: "Aktiv", className: "text-[var(--color-success)] bg-[var(--color-success)]/10", icon: CheckCircle },
-  maintenance: { label: "Vedlikehold", className: "text-[var(--color-warning)] bg-[var(--color-warning)]/10", icon: Wrench },
-  inactive: { label: "Inaktiv", className: "text-[var(--color-error)] bg-[var(--color-error)]/10", icon: AlertCircle },
+type FacilityStatus = "active" | "maintenance" | "inactive";
+
+const statusConfig: Record<
+  FacilityStatus,
+  {
+    label: string;
+    variant: "success" | "warning" | "error";
+    icon: React.ComponentType<{ className?: string }>;
+  }
+> = {
+  active: { label: "Aktiv", variant: "success", icon: CheckCircle },
+  maintenance: { label: "Vedlikehold", variant: "warning", icon: Wrench },
+  inactive: { label: "Inaktiv", variant: "error", icon: AlertCircle },
 };
 
-function getFacilityStatus(facility: FacilityData): "active" | "maintenance" | "inactive" {
+function getFacilityStatus(facility: FacilityData): FacilityStatus {
   if (!facility.isActive) return "inactive";
   return "active";
 }
@@ -73,15 +91,24 @@ export default function FasiliteterClient({
 }: FasiliteterClientProps) {
   const { toggle } = useMCSidebar();
   const [selectedFacility, setSelectedFacility] = useState<string | null>(
-    facilities[0]?.id ?? null
+    facilities[0]?.id ?? null,
   );
 
-  const selectedFacilityData = facilities.find((f) => f.id === selectedFacility);
+  const selectedFacilityData = facilities.find(
+    (f) => f.id === selectedFacility,
+  );
 
-  const totalBookings = Object.values(bookingCounts).reduce((sum, c) => sum + c, 0);
+  const totalBookings = Object.values(bookingCounts).reduce(
+    (sum, c) => sum + c,
+    0,
+  );
+
+  const pendingCount = todaySchedule.filter(
+    (s) => s.status === "PENDING",
+  ).length;
 
   const facilitySchedule = todaySchedule.filter(
-    (s) => s.facilityId === selectedFacility
+    (s) => s.facilityId === selectedFacility,
   );
 
   return (
@@ -92,108 +119,144 @@ export default function FasiliteterClient({
         onMenuClick={toggle}
       />
 
-      <div className="p-5 space-y-5">
+      <div className="p-6 space-y-6">
+        <AdminPageHeader
+          title="Fasiliteter"
+          subtitle="Administrer anlegg, aktiviteter og bookinger"
+          actions={
+            <>
+              <Link href="/admin/fasiliteter/innstillinger">
+                <AdminButton
+                  variant="secondary"
+                  icon={<Settings className="w-4 h-4" />}
+                >
+                  Innstillinger
+                </AdminButton>
+              </Link>
+              <Link href="/admin/fasiliteter/ny-aktivitet">
+                <AdminButton
+                  variant="primary"
+                  icon={<Plus className="w-4 h-4" />}
+                >
+                  Ny aktivitet
+                </AdminButton>
+              </Link>
+            </>
+          }
+        />
+
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="hg-card p-4">
-            <span className="hg-label">Anlegg</span>
-            <span className="text-2xl font-bold text-[var(--hg-text)] tabular-nums block mt-1">
-              {facilities.length}
-            </span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Bookinger i dag</span>
-            <span className="text-2xl font-bold text-[var(--hg-primary)] tabular-nums block mt-1">
-              {totalBookings}
-            </span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Aktiviteter i dag</span>
-            <span className="text-2xl font-bold text-[var(--hg-success)] tabular-nums block mt-1">
-              {todaySchedule.length}
-            </span>
-          </div>
-          <div className="hg-card p-4">
-            <span className="hg-label">Ventende</span>
-            <span className="text-2xl font-bold text-[var(--hg-warning)] tabular-nums block mt-1">
-              {todaySchedule.filter((s) => s.status === "PENDING").length}
-            </span>
-          </div>
+          <AdminStatCard
+            label="Anlegg"
+            value={facilities.length}
+            icon={<Building2 className="w-5 h-5" />}
+          />
+          <AdminStatCard
+            label="Bookinger i dag"
+            value={totalBookings}
+            icon={<Clock className="w-5 h-5" />}
+          />
+          <AdminStatCard
+            label="Aktiviteter i dag"
+            value={todaySchedule.length}
+            icon={<CheckCircle className="w-5 h-5" />}
+          />
+          <AdminStatCard
+            label="Ventende"
+            value={pendingCount}
+            icon={<AlertCircle className="w-5 h-5" />}
+          />
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Facilities List */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="hg-section-title">Anlegg</h3>
-              <button className="hg-btn hg-btn-primary text-sm">
-                <Plus className="w-4 h-4" />
-                Legg til
-              </button>
+              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                Anlegg
+              </h3>
             </div>
 
-            {facilities.map((facility) => {
-              const facilityStatus = getFacilityStatus(facility);
-              const status = statusConfig[facilityStatus];
-              const StatusIcon = status.icon;
-              const bookingCount = bookingCounts[facility.id] ?? 0;
-              return (
-                <div
-                  key={facility.id}
-                  onClick={() => setSelectedFacility(facility.id)}
-                  className={cn(
-                    "hg-card p-4 cursor-pointer transition-all",
-                    selectedFacility === facility.id && "ring-2 ring-[var(--hg-primary)]"
-                  )}
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <div className="p-2 rounded-lg bg-[var(--hg-surface-raised)]">
-                        <Building2 className="w-5 h-5 text-[var(--hg-primary)]" />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-semibold text-[var(--hg-text)]">
-                          {facility.name}
-                        </h4>
-                        <span className="text-xs text-[var(--hg-text-muted)]">
-                          {facility.Location.name}
-                        </span>
-                      </div>
-                    </div>
-                    <div
-                      className={cn(
-                        "px-1.5 py-0.5 rounded-full text-[10px] flex items-center gap-1",
-                        status.className
-                      )}
-                    >
-                      <StatusIcon className="w-3 h-3" />
-                      {status.label}
-                    </div>
-                  </div>
-                  {facility.Location.address && (
-                    <div className="flex items-center gap-1 text-xs text-[var(--hg-text-muted)] mb-3">
-                      <MapPin className="w-3 h-3" />
-                      {facility.Location.address}
-                    </div>
-                  )}
-                  {facility.capacity && facility.capacity > 0 && (
-                    <HGCapacityBar
-                      current={bookingCount}
-                      max={facility.capacity}
-                      showPercentage={false}
-                      size="sm"
-                    />
-                  )}
-                </div>
-              );
-            })}
+            {facilities.length === 0 ? (
+              <AdminEmptyState
+                icon={<Building2 className="w-6 h-6" />}
+                title="Ingen aktive anlegg"
+                description="Legg til et nytt anlegg for å komme i gang."
+              />
+            ) : (
+              facilities.map((facility) => {
+                const facilityStatus = getFacilityStatus(facility);
+                const status = statusConfig[facilityStatus];
+                const StatusIcon = status.icon;
+                const bookingCount = bookingCounts[facility.id] ?? 0;
+                const capacity = facility.capacity ?? 0;
+                const capacityPct =
+                  capacity > 0
+                    ? Math.min(100, Math.round((bookingCount / capacity) * 100))
+                    : 0;
+                const isSelected = selectedFacility === facility.id;
 
-            {facilities.length === 0 && (
-              <div className="hg-card p-8 text-center">
-                <Building2 className="w-10 h-10 text-[var(--hg-text-muted)] mx-auto mb-2 opacity-50" />
-                <p className="text-sm text-[var(--hg-text-muted)]">Ingen aktive anlegg</p>
-              </div>
+                return (
+                  <AdminCard
+                    key={facility.id}
+                    hover
+                    onClick={() => setSelectedFacility(facility.id)}
+                    className={cn(
+                      "cursor-pointer transition-all",
+                      isSelected &&
+                        "ring-2 ring-[var(--color-primary)] border-[var(--color-primary)]",
+                    )}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <div className="p-2 rounded-lg bg-[var(--color-primary)]/10 shrink-0">
+                          <Building2 className="w-5 h-5 text-[var(--color-primary)]" />
+                        </div>
+                        <div className="min-w-0">
+                          <h4 className="text-sm font-semibold text-[var(--color-text)] truncate">
+                            {facility.name}
+                          </h4>
+                          <span className="text-xs text-[var(--color-muted)] truncate block">
+                            {facility.Location.name}
+                          </span>
+                        </div>
+                      </div>
+                      <AdminBadge
+                        variant={status.variant}
+                        icon={<StatusIcon className="w-3 h-3" />}
+                      >
+                        {status.label}
+                      </AdminBadge>
+                    </div>
+
+                    {facility.Location.address && (
+                      <div className="flex items-center gap-1 text-xs text-[var(--color-muted)] mb-3">
+                        <MapPin className="w-3 h-3" />
+                        {facility.Location.address}
+                      </div>
+                    )}
+
+                    {capacity > 0 && (
+                      <div>
+                        <div className="flex items-center justify-between text-xs text-[var(--color-muted)] mb-1">
+                          <span>Kapasitet</span>
+                          <span className="tabular-nums">
+                            {bookingCount} / {capacity}
+                          </span>
+                        </div>
+                        <div className="h-1.5 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-[var(--color-primary)] rounded-full transition-all"
+                            style={{ width: `${capacityPct}%` }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </AdminCard>
+                );
+              })
             )}
           </div>
 
@@ -202,112 +265,127 @@ export default function FasiliteterClient({
             {selectedFacilityData ? (
               <>
                 {/* Today's Schedule */}
-                <div className="hg-card overflow-hidden">
-                  <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-                    <h3 className="hg-section-title">Dagens timeplan</h3>
-                    <span className="text-xs text-[var(--hg-text-muted)]">
+                <AdminCard className="p-0 overflow-hidden">
+                  <div className="px-5 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+                    <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                      Dagens timeplan
+                    </h3>
+                    <span className="text-xs text-[var(--color-muted)]">
                       {selectedFacilityData.name}
                     </span>
                   </div>
-                  <div className="divide-y divide-[var(--hg-border-subtle)]">
+                  <div className="divide-y divide-[var(--color-grey-200)]">
                     {facilitySchedule.length > 0 ? (
                       facilitySchedule.map((slot) => (
-                        <div key={slot.id} className="p-3 flex items-center gap-3">
-                          <span className="text-sm font-medium text-[var(--hg-text)] w-14">
+                        <div
+                          key={slot.id}
+                          className="p-4 flex items-center gap-3"
+                        >
+                          <span className="text-sm font-medium text-[var(--color-text)] w-14 tabular-nums">
                             {format(new Date(slot.startTime), "HH:mm")}
                           </span>
-                          <div className="flex-1">
-                            <span className="text-sm text-[var(--hg-text)]">
+                          <div className="flex-1 min-w-0">
+                            <span className="text-sm text-[var(--color-text)]">
                               {slot.title}
                             </span>
                             {slot.CreatedBy.name && (
-                              <span className="text-xs text-[var(--hg-text-muted)] ml-2">
+                              <span className="text-xs text-[var(--color-muted)] ml-2">
                                 {slot.CreatedBy.name}
                               </span>
                             )}
                           </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs text-[var(--hg-text-muted)]">
+                          <div className="flex items-center gap-3">
+                            <span className="text-xs text-[var(--color-muted)] tabular-nums">
                               {format(new Date(slot.startTime), "HH:mm")}
                               {" - "}
                               {format(new Date(slot.endTime), "HH:mm")}
                             </span>
-                            <div
-                              className={cn(
-                                "px-2 py-0.5 rounded-full text-[10px]",
+                            <AdminBadge
+                              variant={
                                 slot.status === "CONFIRMED"
-                                  ? "bg-[var(--hg-success-bg)] text-[var(--hg-success)]"
-                                  : "bg-[var(--hg-warning-bg)] text-[var(--hg-warning)]"
-                              )}
+                                  ? "success"
+                                  : "warning"
+                              }
                             >
-                              {slot.status === "CONFIRMED" ? "Bekreftet" : "Venter"}
-                            </div>
+                              {slot.status === "CONFIRMED"
+                                ? "Bekreftet"
+                                : "Venter"}
+                            </AdminBadge>
                           </div>
                         </div>
                       ))
                     ) : (
-                      <div className="p-6 text-center">
-                        <Clock className="w-8 h-8 text-[var(--hg-text-muted)] mx-auto mb-2 opacity-50" />
-                        <p className="text-sm text-[var(--hg-text-muted)]">
+                      <div className="py-10 text-center">
+                        <Clock className="w-8 h-8 text-[var(--color-muted)] mx-auto mb-2 opacity-50" />
+                        <p className="text-sm text-[var(--color-muted)]">
                           Ingen aktiviteter i dag
                         </p>
                       </div>
                     )}
                   </div>
-                </div>
+                </AdminCard>
 
                 {/* Info */}
-                <div className="hg-card p-4">
-                  <h3 className="hg-section-title mb-3">Detaljer</h3>
+                <AdminCard>
+                  <h3 className="text-sm font-semibold text-[var(--color-text)] mb-3">
+                    Detaljer
+                  </h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-[var(--hg-text-muted)]">Lokasjon</span>
-                      <span className="text-[var(--hg-text)]">
+                      <span className="text-[var(--color-muted)]">
+                        Lokasjon
+                      </span>
+                      <span className="text-[var(--color-text)]">
                         {selectedFacilityData.Location.name}
                       </span>
                     </div>
                     {selectedFacilityData.Location.address && (
                       <div className="flex justify-between">
-                        <span className="text-[var(--hg-text-muted)]">Adresse</span>
-                        <span className="text-[var(--hg-text)]">
+                        <span className="text-[var(--color-muted)]">
+                          Adresse
+                        </span>
+                        <span className="text-[var(--color-text)] text-right">
                           {selectedFacilityData.Location.address}
                         </span>
                       </div>
                     )}
-                    {selectedFacilityData.capacity && (
+                    {selectedFacilityData.capacity != null && (
                       <div className="flex justify-between">
-                        <span className="text-[var(--hg-text-muted)]">Kapasitet</span>
-                        <span className="text-[var(--hg-text)]">
+                        <span className="text-[var(--color-muted)]">
+                          Kapasitet
+                        </span>
+                        <span className="text-[var(--color-text)]">
                           {selectedFacilityData.capacity} plasser
                         </span>
                       </div>
                     )}
                     {selectedFacilityData.description && (
-                      <div className="flex justify-between">
-                        <span className="text-[var(--hg-text-muted)]">Beskrivelse</span>
-                        <span className="text-[var(--hg-text)]">
+                      <div className="flex justify-between gap-4">
+                        <span className="text-[var(--color-muted)]">
+                          Beskrivelse
+                        </span>
+                        <span className="text-[var(--color-text)] text-right">
                           {selectedFacilityData.description}
                         </span>
                       </div>
                     )}
                     <div className="flex justify-between">
-                      <span className="text-[var(--hg-text-muted)]">Bookinger i dag</span>
-                      <span className="text-[var(--hg-text)] font-medium">
+                      <span className="text-[var(--color-muted)]">
+                        Bookinger i dag
+                      </span>
+                      <span className="text-[var(--color-text)] font-medium tabular-nums">
                         {bookingCounts[selectedFacilityData.id] ?? 0}
                       </span>
                     </div>
                   </div>
-                </div>
+                </AdminCard>
               </>
             ) : (
-              <div className="hg-card h-full flex items-center justify-center">
-                <div className="text-center">
-                  <Building2 className="w-12 h-12 text-[var(--hg-text-muted)] mx-auto mb-3 opacity-50" />
-                  <p className="text-sm text-[var(--hg-text-muted)]">
-                    Velg et anlegg for a se detaljer
-                  </p>
-                </div>
-              </div>
+              <AdminEmptyState
+                icon={<Building2 className="w-6 h-6" />}
+                title="Velg et anlegg"
+                description="Velg et anlegg fra listen for å se detaljer og dagens timeplan."
+              />
             )}
           </div>
         </div>

@@ -9,13 +9,14 @@ import {
   Download,
   FileText,
 } from "lucide-react";
-import { cn } from "@/lib/portal/utils/cn";
+import { cn } from "@/lib/utils";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  MCTopbar,
-  useMCSidebar,
-  HGStatCard,
-  HGRevenueChart,
-} from "@/components/portal/mission-control";
+  AdminCard,
+  AdminButton,
+  AdminBadge,
+  AdminStatCard,
+} from "@/components/portal/mission-control/ui";
 import type { OkonomiData } from "./actions";
 
 // ── Constants ────────────────────────────────────────────────────────────────
@@ -56,6 +57,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
 
   const currentRevenue = data.revenue[timeRange];
   const yearTotal = formatKr(data.revenue.year);
+  const maxTrend = Math.max(...data.monthlyTrend.map((d) => d.value), 1);
 
   return (
     <>
@@ -65,75 +67,122 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
         onMenuClick={toggle}
       />
 
-      <div className="p-5 space-y-5">
+      <div className="p-6 space-y-6">
         {/* Tidsperiode og handlinger */}
         <div className="flex items-center justify-between flex-wrap gap-3">
-          <div className="hg-tabs">
+          <div className="inline-flex items-center bg-[var(--color-grey-100)] rounded-lg p-1">
             {timeRanges.map((range) => (
               <button
                 key={range.value}
                 onClick={() => setTimeRange(range.value)}
-                className={cn("hg-tab", timeRange === range.value && "active")}
+                className={cn(
+                  "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+                  timeRange === range.value
+                    ? "bg-white text-[var(--color-text)] shadow-sm"
+                    : "text-[var(--color-muted)] hover:text-[var(--color-text)]",
+                )}
               >
                 {range.label}
               </button>
             ))}
           </div>
           <div className="flex gap-2">
-            <button className="hg-btn hg-btn-secondary">
-              <Download className="w-4 h-4" />
+            <AdminButton
+              variant="secondary"
+              icon={<Download className="w-4 h-4" />}
+            >
               Eksporter
-            </button>
-            <button className="hg-btn hg-btn-primary">
-              <FileText className="w-4 h-4" />
+            </AdminButton>
+            <AdminButton
+              variant="primary"
+              icon={<FileText className="w-4 h-4" />}
+            >
               Ny faktura
-            </button>
+            </AdminButton>
           </div>
         </div>
 
         {/* KPI-kort */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <HGStatCard
+          <AdminStatCard
             label="Omsetning"
             value={formatKr(currentRevenue)}
-            icon={DollarSign}
+            icon={<DollarSign className="w-5 h-5" />}
           />
-          <HGStatCard
+          <AdminStatCard
             label="Netto (est.)"
             value={formatKr(Math.round(currentRevenue * 0.75))}
-            icon={CreditCard}
-            subtitle="Etter MVA og avgifter"
+            icon={<CreditCard className="w-5 h-5" />}
           />
-          <HGStatCard
+          <AdminStatCard
             label="Utestående"
             value={formatKr(data.totalUnpaid)}
-            icon={AlertCircle}
-            variant={data.totalUnpaid > 0 ? "warning" : "default"}
+            icon={<AlertCircle className="w-5 h-5" />}
           />
-          <HGStatCard
+          <AdminStatCard
             label="Refusjoner"
             value={formatKr(data.totalRefunds)}
-            icon={RotateCcw}
+            icon={<RotateCcw className="w-5 h-5" />}
           />
         </div>
 
         {/* Hovedinnhold */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Inntektsgraf */}
-          <div className="lg:col-span-2">
-            <HGRevenueChart
-              data={data.monthlyTrend}
-              title="Inntektstrend"
-              period={new Date().getFullYear().toString()}
-              total={yearTotal}
-            />
-          </div>
+          <AdminCard className="lg:col-span-2 p-0 overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)]">
+              <div>
+                <h3 className="admin-section-title">Inntektstrend</h3>
+                <span className="text-xs text-[var(--color-muted)]">
+                  {new Date().getFullYear()}
+                </span>
+              </div>
+              <div className="text-right">
+                <span className="text-lg font-bold text-[var(--color-primary)] tabular-nums">
+                  {yearTotal}
+                </span>
+                <span className="text-xs text-[var(--color-muted)] block">
+                  totalt
+                </span>
+              </div>
+            </div>
+            <div className="p-6">
+              {data.monthlyTrend.length === 0 ? (
+                <p className="text-sm text-[var(--color-muted)] text-center py-10">
+                  Ingen trenddata ennå.
+                </p>
+              ) : (
+                <div className="flex items-end gap-2 h-48">
+                  {data.monthlyTrend.map((point) => {
+                    const heightPct = (point.value / maxTrend) * 100;
+                    return (
+                      <div
+                        key={point.label}
+                        className="flex-1 flex flex-col items-center gap-2"
+                      >
+                        <div className="w-full flex-1 flex items-end">
+                          <div
+                            className="w-full bg-[var(--color-primary)] rounded-t-md transition-all hover:bg-[var(--color-primary)]/90"
+                            style={{ height: `${heightPct}%` }}
+                            title={formatKr(point.value)}
+                          />
+                        </div>
+                        <span className="text-[10px] text-[var(--color-muted)]">
+                          {point.label}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </AdminCard>
 
           {/* Inntekt per tjeneste */}
-          <div className="hg-card p-4">
-            <h3 className="hg-section-title mb-4">Inntekt per tjeneste</h3>
+          <AdminCard>
+            <h3 className="admin-section-title mb-4">Inntekt per tjeneste</h3>
             {data.revenueByService.length === 0 ? (
-              <p className="text-sm text-[var(--hg-text-muted)]">
+              <p className="text-sm text-[var(--color-muted)]">
                 Ingen betalinger denne måneden ennå.
               </p>
             ) : (
@@ -141,109 +190,115 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
                 {data.revenueByService.map((service) => (
                   <div key={service.name}>
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-sm text-[var(--hg-text)]">
+                      <span className="text-sm text-[var(--color-text)]">
                         {service.name}
                       </span>
-                      <span className="text-sm font-semibold text-[var(--hg-text)] tabular-nums">
+                      <span className="text-sm font-semibold text-[var(--color-text)] tabular-nums">
                         {formatKr(service.amount)}
                       </span>
                     </div>
-                    <div className="h-2 bg-[var(--hg-surface-raised)] rounded-full overflow-hidden">
+                    <div className="h-2 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-[var(--hg-primary)] rounded-full transition-all"
+                        className="h-full bg-[var(--color-primary)] rounded-full transition-all"
                         style={{ width: `${service.percentage}%` }}
                       />
                     </div>
-                    <span className="text-xs text-[var(--hg-text-muted)] mt-1 block">
+                    <span className="text-xs text-[var(--color-muted)] mt-1 block">
                       {service.percentage}% av totalen
                     </span>
                   </div>
                 ))}
               </div>
             )}
-          </div>
+          </AdminCard>
         </div>
 
         {/* Bunn-grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Ubetalte bookinger */}
-          <div className="hg-card overflow-hidden">
-            <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-              <h3 className="hg-section-title">Ubetalte bookinger</h3>
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-6 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+              <h3 className="admin-section-title">Ubetalte bookinger</h3>
               {data.unpaid.length > 0 && (
-                <span className="hg-badge hg-badge-warning">
+                <AdminBadge variant="warning">
                   {data.unpaid.length} stk
-                </span>
+                </AdminBadge>
               )}
             </div>
             {data.unpaid.length === 0 ? (
-              <div className="p-4 text-sm text-[var(--hg-text-muted)]">
+              <div className="p-6 text-sm text-[var(--color-muted)]">
                 Ingen ubetalte bookinger.
               </div>
             ) : (
-              <div className="divide-y divide-[var(--hg-border-subtle)]">
+              <div className="divide-y divide-[var(--color-grey-100)]">
                 {data.unpaid.map((booking) => (
-                  <div key={booking.id} className="p-4 flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-[var(--hg-warning-bg)]">
-                      <AlertCircle className="w-4 h-4 text-[var(--hg-warning)]" />
+                  <div
+                    key={booking.id}
+                    className="px-6 py-4 flex items-center gap-3"
+                  >
+                    <div className="p-2 rounded-lg bg-[var(--color-warning)]/10">
+                      <AlertCircle className="w-4 h-4 text-[var(--color-warning)]" />
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-[var(--hg-text)]">
+                        <span className="text-sm font-medium text-[var(--color-text)] truncate">
                           {booking.customerName}
                         </span>
-                        <span className="text-xs text-[var(--hg-text-muted)]">
+                        <span className="text-xs text-[var(--color-muted)] truncate">
                           {booking.serviceName}
                         </span>
                       </div>
-                      <div className="text-xs text-[var(--hg-text-muted)]">
+                      <div className="text-xs text-[var(--color-muted)]">
                         Opprettet: {formatRelativeDate(booking.createdAt)}
                       </div>
                     </div>
-                    <span className="text-sm font-semibold text-[var(--hg-text)] tabular-nums">
+                    <span className="text-sm font-semibold text-[var(--color-text)] tabular-nums">
                       {formatKr(booking.amount)}
                     </span>
                   </div>
                 ))}
               </div>
             )}
-          </div>
+          </AdminCard>
 
           {/* Refusjoner */}
-          <div className="hg-card overflow-hidden">
-            <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-              <h3 className="hg-section-title">Refusjoner</h3>
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-6 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+              <h3 className="admin-section-title">Refusjoner</h3>
               {data.refunds.length > 0 && (
-                <span className="hg-badge hg-badge-error">
+                <AdminBadge variant="error">
                   {data.refunds.length} totalt
-                </span>
+                </AdminBadge>
               )}
             </div>
             {data.refunds.length === 0 ? (
-              <div className="p-4 text-sm text-[var(--hg-text-muted)]">
+              <div className="p-6 text-sm text-[var(--color-muted)]">
                 Ingen refusjoner.
               </div>
             ) : (
-              <div className="divide-y divide-[var(--hg-border-subtle)]">
+              <div className="divide-y divide-[var(--color-grey-100)]">
                 {data.refunds.map((refund) => (
-                  <div key={refund.id} className="p-4 flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-[var(--hg-error-bg)]">
-                      <RotateCcw className="w-4 h-4 text-[var(--hg-error)]" />
+                  <div
+                    key={refund.id}
+                    className="px-6 py-4 flex items-center gap-3"
+                  >
+                    <div className="p-2 rounded-lg bg-[var(--color-error)]/10">
+                      <RotateCcw className="w-4 h-4 text-[var(--color-error)]" />
                     </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-[var(--hg-text)]">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium text-[var(--color-text)] truncate">
                         {refund.customerName}
                       </div>
-                      <div className="text-xs text-[var(--hg-text-muted)]">
+                      <div className="text-xs text-[var(--color-muted)] truncate">
                         {refund.serviceName}
                       </div>
                     </div>
                     <div className="text-right">
-                      <span className="text-sm font-semibold text-[var(--hg-error)] tabular-nums block">
+                      <span className="text-sm font-semibold text-[var(--color-error)] tabular-nums block">
                         -{formatKr(refund.grossAmount)}
                       </span>
                       {refund.refundedAt && (
-                        <span className="text-xs text-[var(--hg-text-muted)]">
+                        <span className="text-xs text-[var(--color-muted)]">
                           {formatRelativeDate(refund.refundedAt)}
                         </span>
                       )}
@@ -252,7 +307,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
                 ))}
               </div>
             )}
-          </div>
+          </AdminCard>
         </div>
       </div>
     </>

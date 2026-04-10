@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LogOut, X } from "lucide-react";
 import { createBrowserClient } from "@supabase/ssr";
-import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { cn } from "@/lib/portal/utils/cn";
+import { cn } from "@/lib/utils";
 import { MC_NAV_CONFIG, MC_ICON_MAP, type NavGroup, type NavItem } from "./mc-nav-config";
 import { canAccessMCPage, isAdmin, isStaff } from "@/lib/portal/rbac";
 import { AKLogo } from "@/components/website/AKLogo";
@@ -39,12 +38,30 @@ function NavLink({
       href={item.href}
       onClick={onClick}
       className={cn(
-        "hg-sidebar-link",
-        isActive && "active"
+        "relative flex items-center gap-2.5 px-3 py-2.5 mx-2 rounded-lg text-sm font-medium transition-colors",
+        isActive
+          ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+          : "text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
       )}
+      aria-current={isActive ? "page" : undefined}
     >
-      {Icon && <Icon className="w-[18px] h-[18px]" />}
-      <span>{item.label}</span>
+      {isActive && (
+        <span
+          className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-r-full bg-[var(--color-primary)]"
+          aria-hidden="true"
+        />
+      )}
+      {Icon && (
+        <Icon
+          className={cn(
+            "w-[18px] h-[18px] shrink-0",
+            isActive
+              ? "text-[var(--color-primary)]"
+              : "text-[var(--color-muted)]",
+          )}
+        />
+      )}
+      <span className="truncate">{item.label}</span>
     </Link>
   );
 }
@@ -60,7 +77,6 @@ function NavGroupComponent({
   userRole?: string;
   onClick?: () => void;
 }) {
-  // Filter items based on user role
   const accessibleItems = group.items.filter((item) => {
     const pageName = item.href.split("/").pop() || "hub";
     return canAccessMCPage(userRole, pageName as never);
@@ -69,18 +85,79 @@ function NavGroupComponent({
   if (accessibleItems.length === 0) return null;
 
   return (
-    <div className="mb-4">
-      <div className="px-5 py-2 text-[10px] font-semibold text-[var(--hg-text-muted)] uppercase tracking-[0.05em]">
-        {group.label}
+    <div className="mb-5">
+      <div className="admin-label px-5 py-1.5">{group.label}</div>
+      <div className="space-y-0.5">
+        {accessibleItems.map((item) => {
+          const isActive =
+            pathname === item.href ||
+            (item.href !== "/admin" && pathname.startsWith(`${item.href}/`));
+          return (
+            <NavLink
+              key={item.href}
+              item={item}
+              isActive={isActive}
+              onClick={onClick}
+            />
+          );
+        })}
       </div>
-      {accessibleItems.map((item) => {
-        const isActive =
-          pathname === item.href ||
-          (item.href !== "/admin" && pathname.startsWith(`${item.href}/`));
-        return (
-          <NavLink key={item.href} item={item} isActive={isActive} onClick={onClick} />
-        );
-      })}
+    </div>
+  );
+}
+
+function SidebarHeader() {
+  return (
+    <div className="px-5 py-4 border-b border-[var(--color-grey-200)] flex items-center gap-3">
+      <AKLogo variant="neutral" size={32} />
+      <div className="min-w-0">
+        <span className="block text-sm font-bold text-[var(--color-text)] truncate">
+          AK Golf
+        </span>
+        <p className="text-[10px] text-[var(--color-primary)] uppercase tracking-wider font-semibold">
+          Mission Control
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function SidebarUserFooter({
+  user,
+  onSignOut,
+}: {
+  user: MCSidebarProps["user"];
+  onSignOut: () => void;
+}) {
+  const initial = (user.name ?? user.email ?? "U")[0].toUpperCase();
+  const roleLabel = isAdmin(user.role)
+    ? "Admin"
+    : isStaff(user.role)
+      ? "Instruktor"
+      : "Invitert";
+
+  return (
+    <div className="p-3 border-t border-[var(--color-grey-200)]">
+      <div className="flex items-center gap-2.5 p-2 rounded-lg">
+        <div className="w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center text-sm font-semibold shrink-0">
+          {initial}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-semibold text-[var(--color-text)] truncate">
+            {user.name ?? "Bruker"}
+          </div>
+          <div className="text-xs text-[var(--color-muted)] truncate">
+            {user.email ?? roleLabel}
+          </div>
+        </div>
+      </div>
+      <button
+        onClick={onSignOut}
+        className="mt-1 w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[var(--color-muted)] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10 transition-colors cursor-pointer"
+      >
+        <LogOut className="w-4 h-4" />
+        <span>Logg ut</span>
+      </button>
     </div>
   );
 }
@@ -98,8 +175,7 @@ function SidebarContent({
 }) {
   return (
     <>
-      {/* Navigation */}
-      <nav className="flex-1 py-3 overflow-y-auto">
+      <nav className="flex-1 py-4 overflow-y-auto">
         {MC_NAV_CONFIG.map((group) => (
           <NavGroupComponent
             key={group.label}
@@ -110,30 +186,7 @@ function SidebarContent({
           />
         ))}
       </nav>
-
-      {/* User Footer */}
-      <div className="p-4 border-t border-[var(--hg-border)]">
-        <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-[var(--hg-surface-raised)] transition-colors cursor-pointer">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--hg-surface-raised)] to-[var(--hg-border)] flex items-center justify-center text-[var(--hg-text)] text-[10px] font-semibold border border-[var(--hg-border)]">
-            {(user.name ?? user.email ?? "U")[0].toUpperCase()}
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="text-[11px] font-semibold text-[var(--hg-text)] truncate">
-              {user.name ?? "Bruker"}
-            </div>
-            <div className={`text-[9px] ${isAdmin(user.role) ? "text-[var(--hg-primary)] font-semibold" : "text-[var(--hg-text-muted)]"}`}>
-              {isAdmin(user.role) ? "Admin" : isStaff(user.role) ? "Instruktor" : "Invitert"}
-            </div>
-          </div>
-        </div>
-        <button
-          onClick={onSignOut}
-          className="w-full flex items-center gap-2 px-2 py-2 mt-2 text-[11px] text-[var(--hg-text-muted)] hover:text-[var(--hg-error)] hover:bg-[var(--hg-error-bg)] rounded-lg transition-colors cursor-pointer"
-        >
-          <LogOut className="w-4 h-4" />
-          <span>Logg ut</span>
-        </button>
-      </div>
+      <SidebarUserFooter user={user} onSignOut={onSignOut} />
     </>
   );
 }
@@ -145,7 +198,7 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
   async function handleSignOut() {
     const supabase = createBrowserClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     );
     await supabase.auth.signOut();
     router.push("/admin/login");
@@ -154,52 +207,48 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-[220px] hidden lg:flex flex-col z-20 hg-sidebar">
-        {/* Header */}
-        <div className="px-5 py-4 border-b border-[var(--hg-border)] flex items-center gap-3">
-          <AKLogo variant="neutral" size={32} />
-          <div>
-            <span className="text-[14px] font-bold text-[var(--hg-text)]">AK Golf</span>
-            <p className="text-[9px] text-[var(--hg-primary)] uppercase tracking-wider font-bold">Mission Control</p>
-          </div>
-        </div>
-
-        <SidebarContent user={user} pathname={pathname} onSignOut={handleSignOut} />
+      <aside className="fixed left-0 top-0 h-full w-[240px] hidden lg:flex flex-col z-20 bg-white border-r border-[var(--color-grey-200)]">
+        <SidebarHeader />
+        <SidebarContent
+          user={user}
+          pathname={pathname}
+          onSignOut={handleSignOut}
+        />
       </aside>
 
       {/* Mobile Drawer */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={onClose}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-[var(--color-text)]/40 backdrop-blur-sm z-40 lg:hidden"
             />
-
-            {/* Drawer */}
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden hg-sidebar"
+              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-[var(--color-grey-200)]"
             >
-              {/* Header with close button */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--hg-border)]">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-grey-200)]">
                 <div className="flex items-center gap-3">
                   <AKLogo variant="neutral" size={32} />
-                  <div>
-                    <span className="text-[14px] font-bold text-[var(--hg-text)]">AK Golf</span>
-                    <p className="text-[9px] text-[var(--hg-primary)] uppercase tracking-wider font-bold">Mission Control</p>
+                  <div className="min-w-0">
+                    <span className="block text-sm font-bold text-[var(--color-text)] truncate">
+                      AK Golf
+                    </span>
+                    <p className="text-[10px] text-[var(--color-primary)] uppercase tracking-wider font-semibold">
+                      Mission Control
+                    </p>
                   </div>
                 </div>
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-lg text-[var(--hg-text-muted)] hover:text-[var(--hg-text)] hover:bg-[var(--hg-surface-raised)] transition-colors cursor-pointer"
+                  className="p-2 rounded-lg text-[var(--color-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
                   aria-label="Lukk meny"
                 >
                   <X className="w-5 h-5" />

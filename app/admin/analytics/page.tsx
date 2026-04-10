@@ -3,24 +3,27 @@
 import { useState } from "react";
 import {
   TrendingUp,
-  TrendingDown,
   Users,
   Clock,
   RotateCcw,
   AlertCircle,
   Activity,
   Target,
-  Calendar,
-  ChevronDown,
 } from "lucide-react";
-import { cn } from "@/lib/portal/utils/cn";
+import { cn } from "@/lib/utils";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  MCTopbar,
-  useMCSidebar,
-  HGStatCard,
-  HGCapacityBar,
-  HGRevenueChart,
-} from "@/components/portal/mission-control";
+  AdminCard,
+  AdminButton,
+  AdminBadge,
+  AdminStatCard,
+  AdminTable,
+  AdminTableHead,
+  AdminTableBody,
+  AdminTableRow,
+  AdminTableHeaderCell,
+  AdminTableCell,
+} from "@/components/portal/mission-control/ui";
 
 // Mock data
 const kpiData = {
@@ -34,7 +37,18 @@ const kpiData = {
   capacityTrend: 5,
 };
 
-const studentHealthData = [
+type StudentStatus = "good" | "warning" | "critical";
+
+interface StudentHealth {
+  id: string;
+  name: string;
+  status: StudentStatus;
+  lastSession: string;
+  nextSession: string | null;
+  sessionsThisMonth: number;
+}
+
+const studentHealthData: StudentHealth[] = [
   { id: "1", name: "Olav Hansen", status: "good", lastSession: "2 dager siden", nextSession: "I morgen", sessionsThisMonth: 8 },
   { id: "2", name: "Mari Kristiansen", status: "good", lastSession: "1 uke siden", nextSession: "Fredag", sessionsThisMonth: 6 },
   { id: "3", name: "Erik Johansen", status: "warning", lastSession: "2 uker siden", nextSession: null, sessionsThisMonth: 2 },
@@ -43,16 +57,19 @@ const studentHealthData = [
 ];
 
 const revenueData = [
-  { label: "Uke 1", value: 45000, previousValue: 42000 },
-  { label: "Uke 2", value: 52000, previousValue: 48000 },
-  { label: "Uke 3", value: 48000, previousValue: 51000 },
-  { label: "Uke 4", value: 58000, previousValue: 49000 },
+  { label: "Uke 1", value: 45000 },
+  { label: "Uke 2", value: 52000 },
+  { label: "Uke 3", value: 48000 },
+  { label: "Uke 4", value: 58000 },
 ];
 
-const statusConfig = {
-  good: { label: "God", className: "text-[var(--hg-success)] bg-[var(--hg-success-bg)]", icon: TrendingUp },
-  warning: { label: "Oppfølging", className: "text-[var(--hg-warning)] bg-[var(--hg-warning-bg)]", icon: AlertCircle },
-  critical: { label: "Kritisk", className: "text-[var(--hg-error)] bg-[var(--hg-error-bg)]", icon: RotateCcw },
+const statusConfig: Record<
+  StudentStatus,
+  { label: string; variant: "success" | "warning" | "error" }
+> = {
+  good: { label: "God", variant: "success" },
+  warning: { label: "Oppfølging", variant: "warning" },
+  critical: { label: "Kritisk", variant: "error" },
 };
 
 const timeRanges = [
@@ -62,13 +79,20 @@ const timeRanges = [
   { label: "År til dato", value: "ytd" },
 ];
 
+function formatKr(amount: number): string {
+  return `${amount.toLocaleString("nb-NO")} kr`;
+}
+
 export default function AnalyticsPage() {
   const { toggle } = useMCSidebar();
   const [timeRange, setTimeRange] = useState("30d");
 
   const studentsNeedingFollowUp = studentHealthData.filter(
-    (s) => s.status === "warning" || s.status === "critical"
+    (s) => s.status === "warning" || s.status === "critical",
   );
+
+  const totalRevenue = revenueData.reduce((sum, d) => sum + d.value, 0);
+  const maxValue = Math.max(...revenueData.map((d) => d.value));
 
   return (
     <>
@@ -78,188 +102,252 @@ export default function AnalyticsPage() {
         onMenuClick={toggle}
       />
 
-      <div className="p-5 space-y-5">
+      <div className="p-6 space-y-6">
         {/* Time Range Selector */}
-        <div className="flex items-center justify-between">
-          <div className="hg-tabs">
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div className="inline-flex items-center bg-[var(--color-grey-100)] rounded-lg p-1">
             {timeRanges.map((range) => (
               <button
                 key={range.value}
                 onClick={() => setTimeRange(range.value)}
-                className={cn("hg-tab", timeRange === range.value && "active")}
+                className={cn(
+                  "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+                  timeRange === range.value
+                    ? "bg-white text-[var(--color-text)] shadow-sm"
+                    : "text-[var(--color-muted)] hover:text-[var(--color-text)]",
+                )}
               >
                 {range.label}
               </button>
             ))}
           </div>
-          <button className="hg-btn hg-btn-secondary text-sm">
-            Eksporter rapport
-          </button>
+          <AdminButton variant="secondary">Eksporter rapport</AdminButton>
         </div>
 
         {/* KPI Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <HGStatCard
+          <AdminStatCard
             label="Aktive elever"
             value={kpiData.activeStudents}
-            trend={{ value: kpiData.activeStudentsTrend, direction: "up" }}
-            icon={Users}
+            icon={<Users className="w-5 h-5" />}
+            change={{ value: kpiData.activeStudentsTrend, positive: true }}
           />
-          <HGStatCard
+          <AdminStatCard
             label="Gj.snitt timer/uke"
             value={kpiData.avgHoursPerWeek}
-            trend={{ value: Math.abs(kpiData.avgHoursTrend), direction: kpiData.avgHoursTrend > 0 ? "up" : "down" }}
-            icon={Clock}
+            icon={<Clock className="w-5 h-5" />}
+            change={{
+              value: Math.abs(kpiData.avgHoursTrend),
+              positive: kpiData.avgHoursTrend > 0,
+            }}
           />
-          <HGStatCard
+          <AdminStatCard
             label="Churn rate"
             value={`${kpiData.churnRate}%`}
-            trend={{ value: Math.abs(kpiData.churnTrend), direction: kpiData.churnTrend > 0 ? "up" : "down" }}
-            icon={RotateCcw}
-            variant={kpiData.churnRate > 5 ? "warning" : "default"}
+            icon={<RotateCcw className="w-5 h-5" />}
+            change={{
+              value: Math.abs(kpiData.churnTrend),
+              positive: kpiData.churnTrend < 0,
+            }}
           />
-          <HGStatCard
+          <AdminStatCard
             label="Kapasitetsutnyttelse"
             value={`${kpiData.capacityUtilization}%`}
-            trend={{ value: kpiData.capacityTrend, direction: "up" }}
-            icon={Activity}
+            icon={<Activity className="w-5 h-5" />}
+            change={{ value: kpiData.capacityTrend, positive: true }}
           />
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Revenue Chart */}
-          <div className="lg:col-span-2">
-            <HGRevenueChart
-              data={revenueData}
-              title="Omsetning"
-              period="Siste 4 uker"
-              total="203 000 kr"
-            />
-          </div>
+          <AdminCard className="lg:col-span-2 p-0 overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)]">
+              <div>
+                <h3 className="admin-section-title">Omsetning</h3>
+                <span className="text-xs text-[var(--color-muted)]">
+                  Siste 4 uker
+                </span>
+              </div>
+              <div className="text-right">
+                <span className="text-lg font-bold text-[var(--color-primary)] tabular-nums">
+                  {formatKr(totalRevenue)}
+                </span>
+                <span className="text-xs text-[var(--color-muted)] block">
+                  totalt
+                </span>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="flex items-end justify-between gap-4 h-48">
+                {revenueData.map((point) => {
+                  const heightPct = (point.value / maxValue) * 100;
+                  return (
+                    <div
+                      key={point.label}
+                      className="flex-1 flex flex-col items-center gap-2"
+                    >
+                      <div className="w-full flex-1 flex items-end">
+                        <div
+                          className="w-full bg-[var(--color-primary)] rounded-t-md transition-all"
+                          style={{ height: `${heightPct}%` }}
+                        />
+                      </div>
+                      <span className="text-xs text-[var(--color-muted)]">
+                        {point.label}
+                      </span>
+                      <span className="text-xs font-semibold text-[var(--color-text)] tabular-nums">
+                        {formatKr(point.value)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </AdminCard>
 
           {/* Capacity Overview */}
-          <div className="hg-card p-4">
-            <h3 className="hg-section-title mb-4">Kapasitet</h3>
+          <AdminCard>
+            <h3 className="admin-section-title mb-4">Kapasitet</h3>
             <div className="space-y-4">
-              <HGCapacityBar
-                current={6}
-                max={8}
-                label="Anders Kristiansen"
-                showPercentage
-              />
-              <HGCapacityBar
-                current={4}
-                max={6}
-                label="Maria Hansen"
-                showPercentage
-              />
-              <HGCapacityBar
-                current={28}
-                max={40}
-                label="Total denne uken"
-                showPercentage
-              />
+              {[
+                { label: "Anders Kristiansen", current: 6, max: 8 },
+                { label: "Maria Hansen", current: 4, max: 6 },
+                { label: "Total denne uken", current: 28, max: 40 },
+              ].map((row) => {
+                const pct = Math.round((row.current / row.max) * 100);
+                return (
+                  <div key={row.label}>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-sm text-[var(--color-text)]">
+                        {row.label}
+                      </span>
+                      <span className="text-xs font-semibold text-[var(--color-text)] tabular-nums">
+                        {row.current}/{row.max} ({pct}%)
+                      </span>
+                    </div>
+                    <div className="h-2 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-[var(--color-primary)] rounded-full transition-all"
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="mt-6 pt-4 border-t border-[var(--hg-border)]">
-              <h4 className="text-xs font-medium text-[var(--hg-text-secondary)] uppercase tracking-wider mb-3">
+            <div className="mt-6 pt-4 border-t border-[var(--color-grey-200)]">
+              <h4 className="text-xs font-medium text-[var(--color-muted)] uppercase tracking-wider mb-3">
                 Sesong-trender
               </h4>
-              <div className="flex items-center gap-2 text-sm text-[var(--hg-text)]">
-                <TrendingUp className="w-4 h-4 text-[var(--hg-success)]" />
+              <div className="flex items-center gap-2 text-sm text-[var(--color-text)]">
+                <TrendingUp className="w-4 h-4 text-[var(--color-success)]" />
                 <span>18% økning fra i fjor</span>
               </div>
             </div>
-          </div>
+          </AdminCard>
         </div>
 
         {/* Student Health */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Student Health Table */}
-          <div className="hg-card overflow-hidden">
-            <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-              <h3 className="hg-section-title">Elev-status</h3>
-              <span className="text-xs text-[var(--hg-text-muted)]">
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-6 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+              <h3 className="admin-section-title">Elev-status</h3>
+              <span className="text-xs text-[var(--color-muted)]">
                 Hvordan går det med hver elev?
               </span>
             </div>
-            <div className="overflow-x-auto">
-              <table className="hg-table">
-                <thead>
-                  <tr>
-                    <th>Elev</th>
-                    <th>Status</th>
-                    <th>Siste økt</th>
-                    <th>Neste økt</th>
-                    <th>Måned</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {studentHealthData.map((student) => {
-                    const status = statusConfig[student.status as keyof typeof statusConfig];
-                    const StatusIcon = status.icon;
-                    return (
-                      <tr key={student.id}>
-                        <td>
-                          <span className="font-medium text-[var(--hg-text)]">{student.name}</span>
-                        </td>
-                        <td>
-                          <div className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium", status.className)}>
-                            <StatusIcon className="w-3 h-3" />
-                            {status.label}
-                          </div>
-                        </td>
-                        <td className="text-[var(--hg-text-secondary)]">{student.lastSession}</td>
-                        <td className={cn(!student.nextSession && "text-[var(--hg-error)]")}>
-                          {student.nextSession || "Ikke booket"}
-                        </td>
-                        <td className="tabular-nums">{student.sessionsThisMonth}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
+            <AdminTable containerClassName="border-0 rounded-none">
+              <AdminTableHead>
+                <AdminTableRow>
+                  <AdminTableHeaderCell>Elev</AdminTableHeaderCell>
+                  <AdminTableHeaderCell>Status</AdminTableHeaderCell>
+                  <AdminTableHeaderCell>Siste økt</AdminTableHeaderCell>
+                  <AdminTableHeaderCell>Neste økt</AdminTableHeaderCell>
+                  <AdminTableHeaderCell>Måned</AdminTableHeaderCell>
+                </AdminTableRow>
+              </AdminTableHead>
+              <AdminTableBody>
+                {studentHealthData.map((student) => {
+                  const status = statusConfig[student.status];
+                  return (
+                    <AdminTableRow key={student.id}>
+                      <AdminTableCell>
+                        <span className="font-medium text-[var(--color-text)]">
+                          {student.name}
+                        </span>
+                      </AdminTableCell>
+                      <AdminTableCell>
+                        <AdminBadge variant={status.variant}>
+                          {status.label}
+                        </AdminBadge>
+                      </AdminTableCell>
+                      <AdminTableCell className="text-[var(--color-muted)]">
+                        {student.lastSession}
+                      </AdminTableCell>
+                      <AdminTableCell
+                        className={cn(
+                          !student.nextSession && "text-[var(--color-error)]",
+                        )}
+                      >
+                        {student.nextSession || "Ikke booket"}
+                      </AdminTableCell>
+                      <AdminTableCell className="tabular-nums">
+                        {student.sessionsThisMonth}
+                      </AdminTableCell>
+                    </AdminTableRow>
+                  );
+                })}
+              </AdminTableBody>
+            </AdminTable>
+          </AdminCard>
 
           {/* Students Needing Follow-up */}
-          <div className="hg-card overflow-hidden">
-            <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-              <h3 className="hg-section-title">Trenger oppfølging</h3>
-              <span className="hg-badge hg-badge-warning">
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-6 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+              <h3 className="admin-section-title">Trenger oppfølging</h3>
+              <AdminBadge variant="warning">
                 {studentsNeedingFollowUp.length} elever
-              </span>
+              </AdminBadge>
             </div>
-            <div className="divide-y divide-[var(--hg-border-subtle)]">
+            <div className="divide-y divide-[var(--color-grey-100)]">
               {studentsNeedingFollowUp.map((student) => (
-                <div key={student.id} className="p-4 flex items-center gap-3">
-                  <div className="hg-avatar hg-avatar-sm">
-                    {student.name.split(" ").map((n) => n[0]).join("")}
+                <div
+                  key={student.id}
+                  className="px-6 py-4 flex items-center gap-3"
+                >
+                  <div className="w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-xs font-semibold flex items-center justify-center">
+                    {student.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
                   </div>
                   <div className="flex-1">
-                    <div className="text-sm font-medium text-[var(--hg-text)]">
+                    <div className="text-sm font-medium text-[var(--color-text)]">
                       {student.name}
                     </div>
-                    <div className="text-xs text-[var(--hg-text-muted)]">
+                    <div className="text-xs text-[var(--color-muted)] flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
                       Sist aktiv: {student.lastSession}
                     </div>
                   </div>
-                  <button className="hg-btn hg-btn-primary text-xs py-1.5">
+                  <AdminButton variant="primary" className="text-xs py-1.5">
                     Ta kontakt
-                  </button>
+                  </AdminButton>
                 </div>
               ))}
               {studentsNeedingFollowUp.length === 0 && (
-                <div className="py-8 text-center">
-                  <Target className="w-10 h-10 text-[var(--hg-success)] mx-auto mb-2" />
-                  <span className="text-sm text-[var(--hg-text-muted)]">
-                    Alle elever er aktive! 🎉
+                <div className="py-10 text-center">
+                  <Target className="w-10 h-10 text-[var(--color-success)] mx-auto mb-2" />
+                  <span className="text-sm text-[var(--color-muted)]">
+                    Alle elever er aktive
                   </span>
                 </div>
               )}
             </div>
-          </div>
+          </AdminCard>
         </div>
       </div>
     </>

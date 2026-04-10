@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
   Search,
-  Filter,
   Mail,
   MessageSquare,
   Phone,
@@ -13,14 +12,18 @@ import {
   MoreHorizontal,
   Paperclip,
   Smile,
-  Clock,
   CheckCheck,
   Star,
-  Trash2,
   Archive,
 } from "lucide-react";
-import { cn } from "@/lib/portal/utils/cn";
+import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminButton,
+  AdminBadge,
+  AdminEmptyState,
+} from "@/components/portal/mission-control/ui";
 
 // Mock data
 const mockConversations = [
@@ -66,14 +69,16 @@ const mockMessages = [
   {
     id: "1",
     sender: "Olav Hansen",
-    content: "Hei! Jeg lurte på om vi kunne gjennomgå putting-teknikken min litt mer neste gang. Jeg føler jeg har problemer med avstandskontrollen.",
+    content:
+      "Hei! Jeg lurte på om vi kunne gjennomgå putting-teknikken min litt mer neste gang. Jeg føler jeg har problemer med avstandskontrollen.",
     timestamp: "10:20",
     incoming: true,
   },
   {
     id: "2",
     sender: "Meg",
-    content: "Hei Olav! Selvfølgelig, vi kan fokusere på det. Jeg skal forberede noen øvelser som kan hjelpe deg med å få bedre følelse for avstand.",
+    content:
+      "Hei Olav! Selvfølgelig, vi kan fokusere på det. Jeg skal forberede noen øvelser som kan hjelpe deg med å få bedre følelse for avstand.",
     timestamp: "10:22",
     incoming: false,
   },
@@ -99,23 +104,37 @@ const templates = [
   { id: "4", name: "Oppfølging", subject: "Hvordan går det med treningen?" },
 ];
 
+type FilterType = "all" | "unread" | "starred";
+
+const FILTERS: { value: FilterType; label: string }[] = [
+  { value: "all", label: "Alle" },
+  { value: "unread", label: "Ulest" },
+  { value: "starred", label: "Favoritter" },
+];
+
 export default function MeldingerPage() {
   const { toggle } = useMCSidebar();
-  const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
+  const [selectedConversation, setSelectedConversation] = useState<string | null>(
+    null,
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [messageText, setMessageText] = useState("");
-  const [activeFilter, setActiveFilter] = useState<"all" | "unread" | "starred">("all");
+  const [activeFilter, setActiveFilter] = useState<FilterType>("all");
 
   const filteredConversations = mockConversations.filter((conv) => {
-    const matchesSearch = conv.contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         conv.lastMessage.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = activeFilter === "all" || 
-                         (activeFilter === "unread" && conv.unread > 0) ||
-                         (activeFilter === "starred" && conv.starred);
+    const matchesSearch =
+      conv.contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      conv.lastMessage.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFilter =
+      activeFilter === "all" ||
+      (activeFilter === "unread" && conv.unread > 0) ||
+      (activeFilter === "starred" && conv.starred);
     return matchesSearch && matchesFilter;
   });
 
-  const selectedConversationData = mockConversations.find((c) => c.id === selectedConversation);
+  const selectedConversationData = mockConversations.find(
+    (c) => c.id === selectedConversation,
+  );
 
   return (
     <>
@@ -125,53 +144,60 @@ export default function MeldingerPage() {
         onMenuClick={toggle}
       />
 
-      <div className="p-5">
-        <div className="hg-card overflow-hidden" style={{ minHeight: "calc(100vh - 180px)" }}>
+      <div className="p-6">
+        <AdminCard
+          className="p-0 overflow-hidden"
+          style={{ minHeight: "calc(100vh - 180px)" }}
+        >
           <div className="flex h-full">
             {/* Sidebar - Conversations List */}
-            <div className={cn(
-              "w-full lg:w-80 border-r border-[var(--hg-border)] flex flex-col",
-              selectedConversation && "hidden lg:flex"
-            )}>
+            <div
+              className={cn(
+                "w-full lg:w-80 border-r border-[var(--color-grey-200)] flex flex-col",
+                selectedConversation && "hidden lg:flex",
+              )}
+            >
               {/* Search & Filters */}
-              <div className="p-3 border-b border-[var(--hg-border)] space-y-3">
+              <div className="p-3 border-b border-[var(--color-grey-200)] space-y-3">
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 flex items-center gap-2 bg-[var(--hg-surface)] border border-[var(--hg-border)] rounded-lg px-3 py-2">
-                    <Search className="w-4 h-4 text-[var(--hg-text-muted)]" />
+                  <div className="flex-1 flex items-center gap-2 bg-white border border-[var(--color-grey-200)] rounded-lg px-3 py-2 focus-within:border-[var(--color-primary)]">
+                    <Search className="w-4 h-4 text-[var(--color-muted)]" />
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Søk..."
-                      className="flex-1 bg-transparent text-sm text-[var(--hg-text)] placeholder:text-[var(--hg-text-muted)] outline-none"
+                      className="flex-1 bg-transparent text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none"
                     />
                   </div>
-                  <button className="hg-btn hg-btn-primary p-2">
+                  <AdminButton
+                    variant="primary"
+                    className="!p-2"
+                    aria-label="Ny samtale"
+                  >
                     <Plus className="w-4 h-4" />
-                  </button>
+                  </AdminButton>
                 </div>
                 <div className="flex gap-1">
-                  {(["all", "unread", "starred"] as const).map((filter) => (
+                  {FILTERS.map((filter) => (
                     <button
-                      key={filter}
-                      onClick={() => setActiveFilter(filter)}
+                      key={filter.value}
+                      onClick={() => setActiveFilter(filter.value)}
                       className={cn(
-                        "flex-1 px-2 py-1.5 text-[11px] font-medium rounded-md transition-colors capitalize",
-                        activeFilter === filter
-                          ? "bg-[var(--hg-surface-raised)] text-[var(--hg-text)]"
-                          : "text-[var(--hg-text-muted)] hover:text-[var(--hg-text)]"
+                        "flex-1 px-2 py-1.5 text-[11px] font-medium rounded-md transition-colors",
+                        activeFilter === filter.value
+                          ? "bg-[var(--color-primary)] text-white"
+                          : "text-[var(--color-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
                       )}
                     >
-                      {filter === "all" && "Alle"}
-                      {filter === "unread" && "Ulest"}
-                      {filter === "starred" && "Favoritter"}
+                      {filter.label}
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Conversations */}
-              <div className="flex-1 overflow-y-auto hg-scrollbar">
+              <div className="flex-1 overflow-y-auto">
                 {filteredConversations.map((conv) => {
                   const ChannelIcon = channelIcons[conv.channel];
                   return (
@@ -179,33 +205,46 @@ export default function MeldingerPage() {
                       key={conv.id}
                       onClick={() => setSelectedConversation(conv.id)}
                       className={cn(
-                        "w-full p-3 flex items-start gap-3 text-left hover:bg-[var(--hg-surface-raised)] transition-colors border-b border-[var(--hg-border-subtle)]",
-                        selectedConversation === conv.id && "bg-[var(--hg-surface-raised)]"
+                        "w-full p-3 flex items-start gap-3 text-left hover:bg-[var(--color-grey-100)] transition-colors border-b border-[var(--color-grey-100)]",
+                        selectedConversation === conv.id &&
+                          "bg-[var(--color-grey-100)]",
                       )}
                     >
-                      <div className="hg-avatar hg-avatar-sm shrink-0">{conv.contact.initials}</div>
+                      <div className="w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-xs font-semibold flex items-center justify-center shrink-0">
+                        {conv.contact.initials}
+                      </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className={cn(
-                            "text-sm truncate",
-                            conv.unread > 0 ? "font-semibold text-[var(--hg-text)]" : "text-[var(--hg-text)]"
-                          )}>
+                          <span
+                            className={cn(
+                              "text-sm truncate text-[var(--color-text)]",
+                              conv.unread > 0 && "font-semibold",
+                            )}
+                          >
                             {conv.contact.name}
                           </span>
-                          <ChannelIcon className="w-3 h-3 text-[var(--hg-text-muted)]" />
-                          {conv.starred && <Star className="w-3 h-3 text-[var(--hg-warning)] fill-current" />}
+                          <ChannelIcon className="w-3 h-3 text-[var(--color-muted)]" />
+                          {conv.starred && (
+                            <Star className="w-3 h-3 text-[var(--color-warning)] fill-current" />
+                          )}
                         </div>
-                        <p className={cn(
-                          "text-xs truncate mt-0.5",
-                          conv.unread > 0 ? "text-[var(--hg-text)]" : "text-[var(--hg-text-muted)]"
-                        )}>
+                        <p
+                          className={cn(
+                            "text-xs truncate mt-0.5",
+                            conv.unread > 0
+                              ? "text-[var(--color-text)]"
+                              : "text-[var(--color-muted)]",
+                          )}
+                        >
                           {conv.lastMessage}
                         </p>
                       </div>
                       <div className="flex flex-col items-end gap-1">
-                        <span className="text-[10px] text-[var(--hg-text-muted)]">{conv.timestamp}</span>
+                        <span className="text-[10px] text-[var(--color-muted)]">
+                          {conv.timestamp}
+                        </span>
                         {conv.unread > 0 && (
-                          <span className="w-5 h-5 rounded-full bg-[var(--hg-primary)] text-[var(--hg-bg)] text-[10px] font-semibold flex items-center justify-center">
+                          <span className="w-5 h-5 rounded-full bg-[var(--color-primary)] text-white text-[10px] font-semibold flex items-center justify-center">
                             {conv.unread}
                           </span>
                         )}
@@ -217,68 +256,86 @@ export default function MeldingerPage() {
             </div>
 
             {/* Main Content - Chat */}
-            <div className={cn(
-              "flex-1 flex flex-col",
-              !selectedConversation && "hidden lg:flex"
-            )}>
+            <div
+              className={cn(
+                "flex-1 flex flex-col",
+                !selectedConversation && "hidden lg:flex",
+              )}
+            >
               {selectedConversationData ? (
                 <>
                   {/* Chat Header */}
-                  <div className="p-3 border-b border-[var(--hg-border)] flex items-center gap-3">
+                  <div className="p-3 border-b border-[var(--color-grey-200)] flex items-center gap-3">
                     <button
                       onClick={() => setSelectedConversation(null)}
-                      className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-[var(--hg-surface-raised)]"
+                      className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-[var(--color-grey-100)]"
+                      aria-label="Tilbake"
                     >
-                      <ChevronLeft className="w-5 h-5 text-[var(--hg-text)]" />
+                      <ChevronLeft className="w-5 h-5 text-[var(--color-text)]" />
                     </button>
-                    <div className="hg-avatar hg-avatar-sm">{selectedConversationData.contact.initials}</div>
+                    <div className="w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-xs font-semibold flex items-center justify-center">
+                      {selectedConversationData.contact.initials}
+                    </div>
                     <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-[var(--hg-text)]">
+                      <h3 className="text-sm font-semibold text-[var(--color-text)]">
                         {selectedConversationData.contact.name}
                       </h3>
-                      <span className="text-xs text-[var(--hg-text-muted)]">
+                      <span className="text-xs text-[var(--color-muted)]">
                         {selectedConversationData.contact.email}
                       </span>
                     </div>
                     <div className="flex gap-1">
-                      <button className="p-2 rounded-lg hover:bg-[var(--hg-surface-raised)] text-[var(--hg-text-muted)]">
+                      <button
+                        className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+                        aria-label="Favoriser"
+                      >
                         <Star className="w-4 h-4" />
                       </button>
-                      <button className="p-2 rounded-lg hover:bg-[var(--hg-surface-raised)] text-[var(--hg-text-muted)]">
+                      <button
+                        className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+                        aria-label="Arkiver"
+                      >
                         <Archive className="w-4 h-4" />
                       </button>
-                      <button className="p-2 rounded-lg hover:bg-[var(--hg-surface-raised)] text-[var(--hg-text-muted)]">
+                      <button
+                        className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+                        aria-label="Flere valg"
+                      >
                         <MoreHorizontal className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
 
                   {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[var(--color-grey-50)]">
                     {mockMessages.map((msg) => (
                       <div
                         key={msg.id}
                         className={cn(
                           "flex gap-3",
-                          msg.incoming ? "" : "flex-row-reverse"
+                          msg.incoming ? "" : "flex-row-reverse",
                         )}
                       >
-                        <div className="hg-avatar hg-avatar-sm shrink-0">
-                          {msg.incoming ? selectedConversationData.contact.initials : "ME"}
+                        <div className="w-8 h-8 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-[10px] font-semibold flex items-center justify-center shrink-0">
+                          {msg.incoming
+                            ? selectedConversationData.contact.initials
+                            : "ME"}
                         </div>
                         <div
                           className={cn(
                             "max-w-[70%] p-3 rounded-2xl text-sm",
                             msg.incoming
-                              ? "bg-[var(--hg-surface-raised)] text-[var(--hg-text)] rounded-tl-sm"
-                              : "bg-[var(--hg-primary)] text-[var(--hg-bg)] rounded-tr-sm"
+                              ? "bg-white border border-[var(--color-grey-200)] text-[var(--color-text)] rounded-tl-sm"
+                              : "bg-[var(--color-primary)] text-white rounded-tr-sm",
                           )}
                         >
                           {msg.content}
                           <div
                             className={cn(
                               "text-[10px] mt-1 flex items-center gap-1",
-                              msg.incoming ? "text-[var(--hg-text-muted)]" : "text-[var(--hg-bg)]/70"
+                              msg.incoming
+                                ? "text-[var(--color-muted)]"
+                                : "text-white/70",
                             )}
                           >
                             {msg.timestamp}
@@ -290,9 +347,12 @@ export default function MeldingerPage() {
                   </div>
 
                   {/* Input */}
-                  <div className="p-3 border-t border-[var(--hg-border)]">
-                    <div className="flex items-end gap-2 bg-[var(--hg-surface)] border border-[var(--hg-border)] rounded-xl p-2">
-                      <button className="p-2 rounded-lg hover:bg-[var(--hg-surface-raised)] text-[var(--hg-text-muted)]">
+                  <div className="p-3 border-t border-[var(--color-grey-200)] bg-white">
+                    <div className="flex items-end gap-2 bg-white border border-[var(--color-grey-200)] rounded-xl p-2 focus-within:border-[var(--color-primary)]">
+                      <button
+                        className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+                        aria-label="Legg ved fil"
+                      >
                         <Paperclip className="w-4 h-4" />
                       </button>
                       <textarea
@@ -300,51 +360,52 @@ export default function MeldingerPage() {
                         onChange={(e) => setMessageText(e.target.value)}
                         placeholder="Skriv en melding..."
                         rows={1}
-                        className="flex-1 bg-transparent text-sm text-[var(--hg-text)] placeholder:text-[var(--hg-text-muted)] outline-none resize-none py-2"
+                        className="flex-1 bg-transparent text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none resize-none py-2"
                         style={{ minHeight: "20px", maxHeight: "100px" }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter" && !e.shiftKey) {
                             e.preventDefault();
-                            // Send message
                           }
                         }}
                       />
-                      <button className="p-2 rounded-lg hover:bg-[var(--hg-surface-raised)] text-[var(--hg-text-muted)]">
+                      <button
+                        className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+                        aria-label="Legg til emoji"
+                      >
                         <Smile className="w-4 h-4" />
                       </button>
-                      <button className="p-2 rounded-lg bg-[var(--hg-primary)] text-[var(--hg-bg)] hover:opacity-90 transition-opacity">
+                      <button
+                        className="p-2 rounded-lg bg-[var(--color-primary)] text-white hover:opacity-90 transition-opacity"
+                        aria-label="Send melding"
+                      >
                         <Send className="w-4 h-4" />
                       </button>
                     </div>
                     <div className="flex items-center gap-2 mt-2">
-                      <span className="text-xs text-[var(--hg-text-muted)]">Maler:</span>
+                      <span className="text-xs text-[var(--color-muted)]">
+                        Maler:
+                      </span>
                       {templates.slice(0, 3).map((t) => (
-                        <button
-                          key={t.id}
-                          className="text-[10px] px-2 py-1 rounded bg-[var(--hg-surface-raised)] text-[var(--hg-text-secondary)] hover:text-[var(--hg-text)] transition-colors"
-                        >
+                        <AdminBadge key={t.id} variant="muted">
                           {t.name}
-                        </button>
+                        </AdminBadge>
                       ))}
                     </div>
                   </div>
                 </>
               ) : (
-                <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
-                  <div className="w-16 h-16 rounded-full bg-[var(--hg-surface-raised)] flex items-center justify-center mb-4">
-                    <MessageSquare className="w-8 h-8 text-[var(--hg-text-muted)]" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-[var(--hg-text)] mb-2">
-                    Velg en samtale
-                  </h3>
-                  <p className="text-sm text-[var(--hg-text-muted)] max-w-xs">
-                    Klikk på en samtale i listen for å se meldinger og svare
-                  </p>
+                <div className="flex-1 flex items-center justify-center p-8">
+                  <AdminEmptyState
+                    icon={<MessageSquare className="w-6 h-6" />}
+                    title="Velg en samtale"
+                    description="Klikk på en samtale i listen for å se meldinger og svare"
+                    className="border-0 shadow-none bg-transparent"
+                  />
                 </div>
               )}
             </div>
           </div>
-        </div>
+        </AdminCard>
       </div>
     </>
   );

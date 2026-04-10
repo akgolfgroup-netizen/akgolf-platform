@@ -11,10 +11,13 @@ import {
 import {
   MCTopbar,
   useMCSidebar,
-  HGStatCard,
-  HGCapacityBar,
   HGAlert,
 } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+  AdminStatCard,
+  AdminBadge,
+} from "@/components/portal/mission-control/ui";
 import type { CapacityData } from "./actions";
 
 interface KapasitetClientProps {
@@ -89,82 +92,86 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <HGStatCard
+          <AdminStatCard
             label="Denne uken"
             value={`${occupancyPct}%`}
-            icon={Gauge}
+            icon={<Gauge className="w-5 h-5" />}
           />
-          <HGStatCard
+          <AdminStatCard
             label="Ledige sloter"
             value={freeSlots}
-            icon={Clock}
+            icon={<Clock className="w-5 h-5" />}
           />
-          <HGStatCard
+          <AdminStatCard
             label="Potensiell inntekt"
             value={formatKr(potentialRevenue)}
-            icon={DollarSign}
-            variant="success"
+            icon={<DollarSign className="w-5 h-5" />}
           />
-          <HGStatCard
+          <AdminStatCard
             label="Ukentlig inntekt"
             value={formatKr(weeklyTotal.revenue)}
-            icon={TrendingUp}
+            icon={<TrendingUp className="w-5 h-5" />}
           />
         </div>
 
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {/* Coach Capacity */}
-          <div className="lg:col-span-2 hg-card p-4">
-            <h3 className="hg-section-title mb-4">Kapasitet per coach</h3>
+          <AdminCard className="lg:col-span-2">
+            <h3 className="admin-section-title mb-4">Kapasitet per coach</h3>
             <div className="space-y-5">
-              {coaches.map((coach) => (
-                <div
-                  key={coach.id}
-                  className="p-4 bg-[var(--hg-surface-raised)] rounded-lg"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <h4 className="text-sm font-semibold text-[var(--hg-text)]">
-                        {coach.name}
-                      </h4>
-                      <span className="text-xs text-[var(--hg-text-muted)]">
-                        {coach.bookedSlots} av {coach.weeklySlots} sloter booket
+              {coaches.map((coach) => {
+                const coachPct = Math.round(coach.occupancy * 100);
+                return (
+                  <div
+                    key={coach.id}
+                    className="p-4 bg-[var(--color-grey-100)] rounded-lg"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <h4 className="text-sm font-semibold text-[var(--color-text)]">
+                          {coach.name}
+                        </h4>
+                        <span className="text-xs text-[var(--color-muted)]">
+                          {coach.bookedSlots} av {coach.weeklySlots} sloter
+                          booket
+                        </span>
+                      </div>
+                      <span className="text-lg font-bold text-[var(--color-text)] tabular-nums">
+                        {coachPct}%
                       </span>
                     </div>
-                    <span className="text-lg font-bold text-[var(--hg-text)] tabular-nums">
-                      {Math.round(coach.occupancy * 100)}%
-                    </span>
+                    <div className="h-2 bg-[var(--color-grey-200)] rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-[var(--color-primary)] transition-all"
+                        style={{ width: `${coachPct}%` }}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between mt-3 text-xs text-[var(--color-muted)]">
+                      <span>{formatKr(coach.weeklyRevenue)} inntekt</span>
+                      <span>
+                        {coach.weeklySlots - coach.bookedSlots} ledige sloter
+                      </span>
+                    </div>
                   </div>
-                  <HGCapacityBar
-                    current={coach.bookedSlots}
-                    max={coach.weeklySlots}
-                    showPercentage={false}
-                  />
-                  <div className="flex items-center justify-between mt-3 text-xs text-[var(--hg-text-muted)]">
-                    <span>{formatKr(coach.weeklyRevenue)} inntekt</span>
-                    <span>
-                      {coach.weeklySlots - coach.bookedSlots} ledige sloter
-                    </span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Daily Breakdown */}
-            <div className="mt-6 pt-6 border-t border-[var(--hg-border)]">
-              <h4 className="text-sm font-medium text-[var(--hg-text)] mb-4">
+            <div className="mt-6 pt-6 border-t border-[var(--color-grey-200)]">
+              <h4 className="text-sm font-medium text-[var(--color-text)] mb-4">
                 Daglig oversikt
               </h4>
               <div className="flex items-end gap-2 h-24">
                 {dailyBreakdown.map((day, i) => {
                   const totalSlots = Object.values(day.coaches).reduce(
                     (s, c) => s + c.total,
-                    0
+                    0,
                   );
                   const bookedSlots = Object.values(day.coaches).reduce(
                     (s, c) => s + c.booked,
-                    0
+                    0,
                   );
                   const pct =
                     totalSlots > 0
@@ -177,14 +184,14 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                     >
                       <div className="relative w-full flex justify-center">
                         <div
-                          className="w-8 bg-[var(--hg-primary)] rounded-t transition-all"
+                          className="w-8 bg-[var(--color-primary)] rounded-t transition-all"
                           style={{ height: `${(pct / 100) * 80}px` }}
                         />
                       </div>
-                      <span className="text-[10px] text-[var(--hg-text-muted)] capitalize">
+                      <span className="text-[10px] text-[var(--color-muted)] capitalize">
                         {day.day.slice(0, 3)}
                       </span>
-                      <span className="text-[10px] text-[var(--hg-text-muted)] tabular-nums">
+                      <span className="text-[10px] text-[var(--color-muted)] tabular-nums">
                         {pct}%
                       </span>
                     </div>
@@ -192,35 +199,35 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                 })}
               </div>
             </div>
-          </div>
+          </AdminCard>
 
           {/* Empty Slots */}
-          <div className="hg-card p-4">
-            <h3 className="hg-section-title mb-4">Ledige sloter</h3>
-            <p className="text-xs text-[var(--hg-text-muted)] mb-3">
+          <AdminCard>
+            <h3 className="admin-section-title mb-4">Ledige sloter</h3>
+            <p className="text-xs text-[var(--color-muted)] mb-3">
               Ledige tider denne uken som kan fylles
             </p>
             <div className="space-y-2">
               {emptySlotsList.length === 0 ? (
-                <p className="text-sm text-[var(--hg-text-muted)] py-4 text-center">
+                <p className="text-sm text-[var(--color-muted)] py-4 text-center">
                   Ingen ledige sloter denne uken
                 </p>
               ) : (
                 emptySlotsList.slice(0, 8).map((slot, i) => (
                   <div
                     key={i}
-                    className="p-3 bg-[var(--hg-surface-raised)] rounded-lg flex items-center justify-between hover:bg-[var(--hg-border)] transition-colors cursor-pointer"
+                    className="p-3 bg-[var(--color-grey-100)] rounded-lg flex items-center justify-between hover:bg-[var(--color-grey-200)] transition-colors cursor-pointer"
                   >
                     <div>
-                      <div className="text-sm font-medium text-[var(--hg-text)] capitalize">
+                      <div className="text-sm font-medium text-[var(--color-text)] capitalize">
                         {slot.day}
                       </div>
-                      <div className="text-xs text-[var(--hg-text-muted)]">
+                      <div className="text-xs text-[var(--color-muted)]">
                         {slot.coach} — {slot.free}{" "}
                         {slot.free === 1 ? "ledig slot" : "ledige sloter"}
                       </div>
                     </div>
-                    <button className="p-1.5 rounded-md hover:bg-[var(--hg-surface)] text-[var(--hg-primary)]">
+                    <button className="p-1.5 rounded-md hover:bg-white text-[var(--color-primary)]">
                       <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -228,77 +235,77 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
               )}
             </div>
             {emptySlotsList.length > 8 && (
-              <p className="text-xs text-[var(--hg-text-muted)] mt-2 text-center">
+              <p className="text-xs text-[var(--color-muted)] mt-2 text-center">
                 + {emptySlotsList.length - 8} flere
               </p>
             )}
-          </div>
+          </AdminCard>
         </div>
 
         {/* AI Recommendations (statisk foreløpig) */}
-        <div className="hg-card p-4">
+        <AdminCard>
           <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="w-5 h-5 text-[var(--hg-primary)]" />
-            <h3 className="hg-section-title">AI-anbefalinger</h3>
+            <Sparkles className="w-5 h-5 text-[var(--color-ai)]" />
+            <h3 className="admin-section-title">AI-anbefalinger</h3>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {recommendations.map((rec) => (
               <div
                 key={rec.title}
-                className="p-4 bg-[var(--hg-surface-raised)] rounded-lg border border-[var(--hg-border)] hover:border-[var(--hg-border-hover)] transition-colors"
+                className="p-4 bg-[var(--color-grey-100)] rounded-lg border border-[var(--color-grey-200)] hover:border-[var(--color-primary)]/40 transition-colors"
               >
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="text-sm font-semibold text-[var(--hg-text)]">
+                <div className="flex items-start justify-between mb-2 gap-2">
+                  <h4 className="text-sm font-semibold text-[var(--color-text)]">
                     {rec.title}
                   </h4>
-                  <span className="text-xs font-medium text-[var(--hg-success)] bg-[var(--hg-success-bg)] px-1.5 py-0.5 rounded">
+                  <AdminBadge variant="success">
                     {rec.confidence}% sikkert
-                  </span>
+                  </AdminBadge>
                 </div>
-                <p className="text-xs text-[var(--hg-text-secondary)] mb-3 leading-relaxed">
+                <p className="text-xs text-[var(--color-muted)] mb-3 leading-relaxed">
                   {rec.description}
                 </p>
-                <div className="flex items-center justify-between pt-3 border-t border-[var(--hg-border)]">
-                  <span className="text-sm font-bold text-[var(--hg-primary)]">
+                <div className="flex items-center justify-between pt-3 border-t border-[var(--color-grey-200)]">
+                  <span className="text-sm font-bold text-[var(--color-primary)]">
                     {rec.impact}
                   </span>
-                  <button className="text-xs text-[var(--hg-primary)] hover:underline">
+                  <button className="text-xs text-[var(--color-primary)] hover:underline">
                     Implementer
                   </button>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </AdminCard>
 
         {/* Monthly summary */}
-        <div className="hg-card p-4">
-          <h3 className="hg-section-title mb-3">
+        <AdminCard>
+          <h3 className="admin-section-title mb-3">
             Denne måneden ({data.monthRange.from} – {data.monthRange.to})
           </h3>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <p className="text-xs text-[var(--hg-text-muted)]">Inntekt</p>
-              <p className="text-lg font-bold text-[var(--hg-text)] tabular-nums">
+              <p className="text-xs text-[var(--color-muted)]">Inntekt</p>
+              <p className="text-lg font-bold text-[var(--color-text)] tabular-nums">
                 {formatKr(data.monthlyTotal.revenue)}
               </p>
             </div>
             <div>
-              <p className="text-xs text-[var(--hg-text-muted)]">
+              <p className="text-xs text-[var(--color-muted)]">
                 Maks potensiell
               </p>
-              <p className="text-lg font-bold text-[var(--hg-text)] tabular-nums">
+              <p className="text-lg font-bold text-[var(--color-text)] tabular-nums">
                 {formatKr(data.monthlyTotal.maxRevenue)}
               </p>
             </div>
             <div>
-              <p className="text-xs text-[var(--hg-text-muted)]">Bookinger</p>
-              <p className="text-lg font-bold text-[var(--hg-text)] tabular-nums">
+              <p className="text-xs text-[var(--color-muted)]">Bookinger</p>
+              <p className="text-lg font-bold text-[var(--color-text)] tabular-nums">
                 {data.monthlyTotal.bookedCount}
               </p>
             </div>
           </div>
-        </div>
+        </AdminCard>
       </div>
     </>
   );

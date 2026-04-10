@@ -2,12 +2,10 @@
 
 import { useState, useEffect, useCallback } from "react";
 import {
-  Clock,
   Calendar,
   Plus,
   Trash2,
   Repeat,
-  AlertCircle,
   CheckCircle,
   ChevronLeft,
   ChevronRight,
@@ -17,7 +15,13 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
-import { format, startOfWeek, addDays, parseISO } from "date-fns";
+import {
+  AdminCard,
+  AdminButton,
+  AdminBadge,
+  AdminInput,
+} from "@/components/portal/mission-control/ui";
+import { format, startOfWeek, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { useSuccessToast, useErrorToast } from "@/components/portal/ui/toast";
 import {
@@ -65,7 +69,9 @@ export default function TilgjengelighetPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
-  const [editingSlots, setEditingSlots] = useState<Record<number, Array<{ start: string; end: string }>>>({});
+  const [editingSlots, setEditingSlots] = useState<
+    Record<number, Array<{ start: string; end: string }>>
+  >({});
   const [showAddException, setShowAddException] = useState(false);
   const [exceptionForm, setExceptionForm] = useState({
     date: "",
@@ -87,7 +93,7 @@ export default function TilgjengelighetPage() {
   // Load data when instructor changes
   const loadData = useCallback(async () => {
     if (!selectedInstructor) return;
-    
+
     setIsLoading(true);
     try {
       const [availData, blockedData] = await Promise.all([
@@ -97,23 +103,28 @@ export default function TilgjengelighetPage() {
 
       setAvailability(availData);
       // Map Prisma Date to strings for BlockedTime interface
-      setBlockedTimes(blockedData.map(bt => ({
-        ...bt,
-        startTime: bt.startTime.toISOString(),
-        endTime: bt.endTime.toISOString(),
-      })));
+      setBlockedTimes(
+        blockedData.map((bt) => ({
+          ...bt,
+          startTime: bt.startTime.toISOString(),
+          endTime: bt.endTime.toISOString(),
+        })),
+      );
 
       // Convert to editing format
       const slots: Record<number, Array<{ start: string; end: string }>> = {};
       dayIndices.forEach((dayIdx) => {
         slots[dayIdx] = [];
       });
-      
+
       availData.forEach((slot) => {
         if (!slots[slot.dayOfWeek]) slots[slot.dayOfWeek] = [];
-        slots[slot.dayOfWeek].push({ start: slot.startTime, end: slot.endTime });
+        slots[slot.dayOfWeek].push({
+          start: slot.startTime,
+          end: slot.endTime,
+        });
       });
-      
+
       setEditingSlots(slots);
     } catch (error) {
       showError("Kunne ikke laste tilgjengelighet");
@@ -129,7 +140,7 @@ export default function TilgjengelighetPage() {
 
   const handleSaveAvailability = async () => {
     if (!selectedInstructor) return;
-    
+
     setIsSaving(true);
     try {
       // Convert editingSlots to array format
@@ -146,7 +157,7 @@ export default function TilgjengelighetPage() {
 
       await upsertAvailability(selectedInstructor, slots);
       showSuccess("Tilgjengelighet lagret");
-      
+
       // Trigger cache revalidation
       await fetch("/api/portal/public/slots", {
         method: "POST",
@@ -179,12 +190,12 @@ export default function TilgjengelighetPage() {
     dayIndex: number,
     slotIndex: number,
     field: "start" | "end",
-    value: string
+    value: string,
   ) => {
     setEditingSlots((prev) => ({
       ...prev,
       [dayIndex]: prev[dayIndex].map((slot, i) =>
-        i === slotIndex ? { ...slot, [field]: value } : slot
+        i === slotIndex ? { ...slot, [field]: value } : slot,
       ),
     }));
   };
@@ -193,8 +204,12 @@ export default function TilgjengelighetPage() {
     if (!selectedInstructor || !exceptionForm.date) return;
 
     try {
-      const startTime = new Date(`${exceptionForm.date}T${exceptionForm.startTime}`);
-      const endTime = new Date(`${exceptionForm.date}T${exceptionForm.endTime}`);
+      const startTime = new Date(
+        `${exceptionForm.date}T${exceptionForm.startTime}`,
+      );
+      const endTime = new Date(
+        `${exceptionForm.date}T${exceptionForm.endTime}`,
+      );
 
       await createBlockedTime({
         instructorId: selectedInstructor,
@@ -205,7 +220,12 @@ export default function TilgjengelighetPage() {
 
       showSuccess("Unntak lagt til");
       setShowAddException(false);
-      setExceptionForm({ date: "", startTime: "09:00", endTime: "17:00", reason: "" });
+      setExceptionForm({
+        date: "",
+        startTime: "09:00",
+        endTime: "17:00",
+        reason: "",
+      });
       loadData();
     } catch (error) {
       showError("Kunne ikke legge til unntak");
@@ -226,12 +246,14 @@ export default function TilgjengelighetPage() {
 
   const handleSyncGoogleCalendar = async () => {
     if (!selectedInstructor) return;
-    
+
     setIsSyncing(true);
     try {
       const result = await syncGoogleCalendar(selectedInstructor);
       if (result.success) {
-        showSuccess(`Synkronisert ${result.count} hendelser fra Google Calendar`);
+        showSuccess(
+          `Synkronisert ${result.count} hendelser fra Google Calendar`,
+        );
         loadData();
       } else {
         showError(result.error || "Synkronisering feilet");
@@ -244,7 +266,9 @@ export default function TilgjengelighetPage() {
     }
   };
 
-  const selectedInstructorData = instructors.find((i) => i.id === selectedInstructor);
+  const selectedInstructorData = instructors.find(
+    (i) => i.id === selectedInstructor,
+  );
   const weekStart = startOfWeek(currentWeek, { weekStartsOn: 1 });
 
   return (
@@ -257,9 +281,11 @@ export default function TilgjengelighetPage() {
 
       <div className="p-5 space-y-5">
         {/* Instructor Selector */}
-        <div className="hg-card p-4">
+        <AdminCard compact>
           <div className="flex items-center gap-4 flex-wrap">
-            <span className="text-sm text-[var(--hg-text-muted)]">Velg instruktør:</span>
+            <span className="text-sm text-[var(--color-muted)]">
+              Velg instruktør:
+            </span>
             <div className="flex gap-2 flex-wrap">
               {instructors.map((instructor) => (
                 <button
@@ -268,78 +294,77 @@ export default function TilgjengelighetPage() {
                   className={cn(
                     "flex items-center gap-2 px-3 py-2 rounded-lg transition-colors",
                     selectedInstructor === instructor.id
-                      ? "bg-[var(--hg-surface-raised)] ring-2 ring-[var(--hg-primary)]"
-                      : "hover:bg-[var(--hg-surface-raised)]"
+                      ? "bg-[var(--color-primary)]/10 ring-2 ring-[var(--color-primary)]"
+                      : "hover:bg-[var(--color-grey-100)]",
                   )}
                 >
-                  <div className="w-2 h-2 rounded-full bg-[var(--hg-primary)]" />
-                  <span className="text-sm text-[var(--hg-text)]">{instructor.name}</span>
+                  <div className="w-2 h-2 rounded-full bg-[var(--color-primary)]" />
+                  <span className="text-sm text-[var(--color-text)]">
+                    {instructor.name}
+                  </span>
                 </button>
               ))}
             </div>
             <div className="ml-auto flex gap-2">
-              <button
+              <AdminButton
+                variant="secondary"
                 onClick={handleSyncGoogleCalendar}
-                disabled={isSyncing || !selectedInstructor}
-                className="hg-btn hg-btn-secondary text-sm flex items-center gap-2"
+                disabled={!selectedInstructor}
+                loading={isSyncing}
+                icon={<RefreshCw className="w-4 h-4" />}
               >
-                {isSyncing ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <RefreshCw className="w-4 h-4" />
-                )}
                 Sync Google Calendar
-              </button>
-              <button
+              </AdminButton>
+              <AdminButton
+                variant="primary"
                 onClick={() => setShowAddException(true)}
                 disabled={!selectedInstructor}
-                className="hg-btn hg-btn-primary text-sm flex items-center gap-2"
+                icon={<Plus className="w-4 h-4" />}
               >
-                <Plus className="w-4 h-4" />
                 Legg til unntak
-              </button>
+              </AdminButton>
             </div>
           </div>
-        </div>
+        </AdminCard>
 
         {isLoading ? (
-          <div className="hg-card p-8 flex items-center justify-center">
-            <Loader2 className="w-8 h-8 animate-spin text-[var(--hg-primary)]" />
-          </div>
+          <AdminCard>
+            <div className="flex items-center justify-center py-8">
+              <Loader2 className="w-8 h-8 animate-spin text-[var(--color-primary)]" />
+            </div>
+          </AdminCard>
         ) : (
           <>
             {/* Weekly Schedule */}
-            <div className="hg-card overflow-hidden">
-              <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-                <h3 className="hg-section-title">Faste arbeidstider</h3>
+            <div className="bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
+              <div className="px-4 py-3 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+                <h3 className="admin-section-title">Faste arbeidstider</h3>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
-                    <Repeat className="w-4 h-4 text-[var(--hg-text-muted)]" />
-                    <span className="text-xs text-[var(--hg-text-muted)]">Gjentas ukentlig</span>
+                    <Repeat className="w-4 h-4 text-[var(--color-muted)]" />
+                    <span className="text-xs text-[var(--color-muted)]">
+                      Gjentas ukentlig
+                    </span>
                   </div>
-                  <button
+                  <AdminButton
+                    variant="primary"
                     onClick={handleSaveAvailability}
-                    disabled={isSaving}
-                    className="hg-btn hg-btn-primary text-sm flex items-center gap-2"
+                    loading={isSaving}
+                    icon={<CheckCircle className="w-4 h-4" />}
                   >
-                    {isSaving ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <CheckCircle className="w-4 h-4" />
-                    )}
                     Lagre
-                  </button>
+                  </AdminButton>
                 </div>
               </div>
-              <div className="grid grid-cols-7 divide-x divide-[var(--hg-border)]">
+              <div className="grid grid-cols-7 divide-x divide-[var(--color-grey-200)]">
                 {days.map((day, i) => {
                   const dayIndex = dayIndices[i];
                   const slots = editingSlots[dayIndex] || [];
-                  
+
                   return (
                     <div key={day} className="p-4">
                       <div className="text-center mb-3">
-                        <span className="text-xs font-medium text-[var(--hg-text-muted)] uppercase">
+                        <span className="text-xs font-medium text-[var(--color-muted)] uppercase">
                           {day}
                         </span>
                       </div>
@@ -348,46 +373,60 @@ export default function TilgjengelighetPage() {
                           slots.map((slot, j) => (
                             <div
                               key={j}
-                              className="p-2 bg-[var(--hg-success-bg)] rounded text-center space-y-1"
+                              className="p-2 bg-[var(--color-success)]/10 rounded text-center space-y-1"
                             >
                               <div className="flex items-center justify-center gap-1">
                                 <input
                                   type="time"
                                   value={slot.start}
                                   onChange={(e) =>
-                                    handleUpdateSlot(dayIndex, j, "start", e.target.value)
+                                    handleUpdateSlot(
+                                      dayIndex,
+                                      j,
+                                      "start",
+                                      e.target.value,
+                                    )
                                   }
-                                  className="w-16 text-xs bg-transparent border-0 p-0 text-[var(--hg-success)] text-center"
+                                  className="w-16 text-xs bg-transparent border-0 p-0 text-[var(--color-success)] text-center"
                                 />
-                                <span className="text-xs text-[var(--hg-success)]">-</span>
+                                <span className="text-xs text-[var(--color-success)]">
+                                  -
+                                </span>
                                 <input
                                   type="time"
                                   value={slot.end}
                                   onChange={(e) =>
-                                    handleUpdateSlot(dayIndex, j, "end", e.target.value)
+                                    handleUpdateSlot(
+                                      dayIndex,
+                                      j,
+                                      "end",
+                                      e.target.value,
+                                    )
                                   }
-                                  className="w-16 text-xs bg-transparent border-0 p-0 text-[var(--hg-success)] text-center"
+                                  className="w-16 text-xs bg-transparent border-0 p-0 text-[var(--color-success)] text-center"
                                 />
                               </div>
                               <button
                                 onClick={() => handleRemoveSlot(dayIndex, j)}
-                                className="text-[10px] text-[var(--hg-error)] hover:underline"
+                                className="text-[10px] text-[var(--color-error)] hover:underline"
                               >
                                 Fjern
                               </button>
                             </div>
                           ))
                         ) : (
-                          <div className="p-2 bg-[var(--hg-surface-raised)] rounded text-center">
-                            <span className="text-xs text-[var(--hg-text-muted)]">Fri</span>
+                          <div className="p-2 bg-[var(--color-grey-100)] rounded text-center">
+                            <span className="text-xs text-[var(--color-muted)]">
+                              Fri
+                            </span>
                           </div>
                         )}
                       </div>
                       <button
                         onClick={() => handleAddSlot(dayIndex)}
-                        className="w-full mt-2 p-1.5 rounded border border-dashed border-[var(--hg-border)] hover:border-[var(--hg-primary)] hover:text-[var(--hg-primary)] transition-colors"
+                        className="w-full mt-2 p-1.5 rounded border border-dashed border-[var(--color-grey-200)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors"
                       >
-                        <Plus className="w-3.5 h-3.5 mx-auto text-[var(--hg-text-muted)]" />
+                        <Plus className="w-3.5 h-3.5 mx-auto text-[var(--color-muted)]" />
                       </button>
                     </div>
                   );
@@ -396,31 +435,37 @@ export default function TilgjengelighetPage() {
             </div>
 
             {/* Exceptions */}
-            <div className="hg-card overflow-hidden">
-              <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-                <h3 className="hg-section-title">Unntak (ferie, sykdom, blokkeringer)</h3>
-                <span className="hg-badge hg-badge-warning">
+            <div className="bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
+              <div className="px-4 py-3 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+                <h3 className="admin-section-title">
+                  Unntak (ferie, sykdom, blokkeringer)
+                </h3>
+                <AdminBadge variant="warning">
                   {blockedTimes.length} kommende
-                </span>
+                </AdminBadge>
               </div>
-              <div className="divide-y divide-[var(--hg-border-subtle)]">
+              <div className="divide-y divide-[var(--color-grey-100)]">
                 {blockedTimes.length === 0 ? (
-                  <div className="p-4 text-center text-sm text-[var(--hg-text-muted)]">
+                  <div className="p-4 text-center text-sm text-[var(--color-muted)]">
                     Ingen kommende unntak
                   </div>
                 ) : (
                   blockedTimes.map((exception) => {
                     const startDate = new Date(exception.startTime);
-                    const isGoogleCalendar = exception.source === "GOOGLE_CALENDAR";
-                    
+                    const isGoogleCalendar =
+                      exception.source === "GOOGLE_CALENDAR";
+
                     return (
-                      <div key={exception.id} className="p-4 flex items-center gap-4">
+                      <div
+                        key={exception.id}
+                        className="p-4 flex items-center gap-4"
+                      >
                         <div
                           className={cn(
                             "p-2 rounded-lg",
                             isGoogleCalendar
-                              ? "bg-[var(--hg-info-bg)] text-[var(--hg-info)]"
-                              : "bg-[var(--hg-warning-bg)] text-[var(--hg-warning)]"
+                              ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                              : "bg-[var(--color-warning)]/10 text-[var(--color-warning)]",
                           )}
                         >
                           {isGoogleCalendar ? (
@@ -431,19 +476,23 @@ export default function TilgjengelighetPage() {
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-[var(--hg-text)]">
+                            <span className="text-sm font-medium text-[var(--color-text)]">
                               {exception.reason || "Blokkert tid"}
                             </span>
                             {isGoogleCalendar && (
-                              <span className="px-1.5 py-0.5 text-[10px] rounded-full bg-[var(--hg-info-bg)] text-[var(--hg-info)]">
+                              <AdminBadge variant="info">
                                 Google Calendar
-                              </span>
+                              </AdminBadge>
                             )}
                           </div>
-                          <div className="text-xs text-[var(--hg-text-muted)]">
-                            {format(startDate, "EEEE d. MMMM HH:mm", { locale: nb })}
+                          <div className="text-xs text-[var(--color-muted)]">
+                            {format(startDate, "EEEE d. MMMM HH:mm", {
+                              locale: nb,
+                            })}
                             {" - "}
-                            {format(new Date(exception.endTime), "HH:mm", { locale: nb })}
+                            {format(new Date(exception.endTime), "HH:mm", {
+                              locale: nb,
+                            })}
                             {" • "}
                             {selectedInstructorData?.name}
                           </div>
@@ -451,7 +500,7 @@ export default function TilgjengelighetPage() {
                         {!isGoogleCalendar && (
                           <button
                             onClick={() => handleDeleteException(exception.id)}
-                            className="p-1.5 rounded-md hover:bg-[var(--hg-error-bg)] text-[var(--hg-text-muted)] hover:text-[var(--hg-error)] transition-colors"
+                            className="p-1.5 rounded-md hover:bg-[var(--color-error)]/10 text-[var(--color-muted)] hover:text-[var(--color-error)] transition-colors"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -464,25 +513,25 @@ export default function TilgjengelighetPage() {
             </div>
 
             {/* Calendar Preview */}
-            <div className="hg-card overflow-hidden">
-              <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
-                <h3 className="hg-section-title">Kalendervisning</h3>
+            <div className="bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
+              <div className="px-4 py-3 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+                <h3 className="admin-section-title">Kalendervisning</h3>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setCurrentWeek(addDays(currentWeek, -7))}
-                    className="p-1.5 rounded-lg hover:bg-[var(--hg-surface-raised)]"
+                    className="p-1.5 rounded-lg hover:bg-[var(--color-grey-100)]"
                   >
-                    <ChevronLeft className="w-4 h-4 text-[var(--hg-text-muted)]" />
+                    <ChevronLeft className="w-4 h-4 text-[var(--color-muted)]" />
                   </button>
-                  <span className="text-sm text-[var(--hg-text)]">
+                  <span className="text-sm text-[var(--color-text)]">
                     {format(weekStart, "d. MMM", { locale: nb })} -{" "}
                     {format(addDays(weekStart, 6), "d. MMM", { locale: nb })}
                   </span>
                   <button
                     onClick={() => setCurrentWeek(addDays(currentWeek, 7))}
-                    className="p-1.5 rounded-lg hover:bg-[var(--hg-surface-raised)]"
+                    className="p-1.5 rounded-lg hover:bg-[var(--color-grey-100)]"
                   >
-                    <ChevronRight className="w-4 h-4 text-[var(--hg-text-muted)]" />
+                    <ChevronRight className="w-4 h-4 text-[var(--color-muted)]" />
                   </button>
                 </div>
               </div>
@@ -499,21 +548,23 @@ export default function TilgjengelighetPage() {
 
                     return (
                       <div key={day} className="text-center">
-                        <span className="text-xs text-[var(--hg-text-muted)]">{day}</span>
+                        <span className="text-xs text-[var(--color-muted)]">
+                          {day}
+                        </span>
                         <div
                           className={cn(
                             "mt-1 p-3 rounded-lg border min-h-[80px]",
                             isBlocked
-                              ? "bg-[var(--hg-error-bg)] border-[var(--hg-error)]"
-                              : "bg-[var(--hg-surface-raised)] border-[var(--hg-border)]"
+                              ? "bg-[var(--color-error)]/10 border-[var(--color-error)]"
+                              : "bg-[var(--color-grey-100)] border-[var(--color-grey-200)]",
                           )}
                         >
-                          <span className="text-sm font-medium text-[var(--hg-text)]">
+                          <span className="text-sm font-medium text-[var(--color-text)]">
                             {format(date, "d")}
                           </span>
                           {isBlocked && (
                             <div className="mt-1">
-                              <span className="text-[10px] text-[var(--hg-error)]">
+                              <span className="text-[10px] text-[var(--color-error)]">
                                 {dayBlockedTimes.length} blokkering
                                 {dayBlockedTimes.length > 1 ? "er" : ""}
                               </span>
@@ -532,87 +583,78 @@ export default function TilgjengelighetPage() {
 
       {/* Add Exception Modal */}
       {showAddException && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="hg-card w-full max-w-md p-6 space-y-4">
-            <h3 className="hg-section-title">Legg til unntak</h3>
-            
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <AdminCard className="w-full max-w-md space-y-4">
+            <h3 className="admin-section-title">Legg til unntak</h3>
+
             <div className="space-y-3">
-              <div>
-                <label className="block text-sm text-[var(--hg-text-muted)] mb-1">
-                  Dato
-                </label>
-                <input
-                  type="date"
-                  value={exceptionForm.date}
-                  onChange={(e) =>
-                    setExceptionForm((prev) => ({ ...prev, date: e.target.value }))
-                  }
-                  className="w-full hg-input"
-                  min={format(new Date(), "yyyy-MM-dd")}
-                />
-              </div>
-              
+              <AdminInput
+                label="Dato"
+                type="date"
+                value={exceptionForm.date}
+                onChange={(e) =>
+                  setExceptionForm((prev) => ({ ...prev, date: e.target.value }))
+                }
+                min={format(new Date(), "yyyy-MM-dd")}
+              />
+
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm text-[var(--hg-text-muted)] mb-1">
-                    Fra kl
-                  </label>
-                  <input
-                    type="time"
-                    value={exceptionForm.startTime}
-                    onChange={(e) =>
-                      setExceptionForm((prev) => ({ ...prev, startTime: e.target.value }))
-                    }
-                    className="w-full hg-input"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm text-[var(--hg-text-muted)] mb-1">
-                    Til kl
-                  </label>
-                  <input
-                    type="time"
-                    value={exceptionForm.endTime}
-                    onChange={(e) =>
-                      setExceptionForm((prev) => ({ ...prev, endTime: e.target.value }))
-                    }
-                    className="w-full hg-input"
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-sm text-[var(--hg-text-muted)] mb-1">
-                  Årsak (valgfritt)
-                </label>
-                <input
-                  type="text"
-                  value={exceptionForm.reason}
+                <AdminInput
+                  label="Fra kl"
+                  type="time"
+                  value={exceptionForm.startTime}
                   onChange={(e) =>
-                    setExceptionForm((prev) => ({ ...prev, reason: e.target.value }))
+                    setExceptionForm((prev) => ({
+                      ...prev,
+                      startTime: e.target.value,
+                    }))
                   }
-                  placeholder="F.eks. Ferie, Sykdom..."
-                  className="w-full hg-input"
+                />
+                <AdminInput
+                  label="Til kl"
+                  type="time"
+                  value={exceptionForm.endTime}
+                  onChange={(e) =>
+                    setExceptionForm((prev) => ({
+                      ...prev,
+                      endTime: e.target.value,
+                    }))
+                  }
                 />
               </div>
+
+              <AdminInput
+                label="Årsak (valgfritt)"
+                type="text"
+                value={exceptionForm.reason}
+                onChange={(e) =>
+                  setExceptionForm((prev) => ({
+                    ...prev,
+                    reason: e.target.value,
+                  }))
+                }
+                placeholder="F.eks. Ferie, Sykdom..."
+              />
             </div>
 
             <div className="flex gap-3 pt-2">
-              <button
+              <AdminButton
+                variant="secondary"
                 onClick={() => setShowAddException(false)}
-                className="flex-1 hg-btn hg-btn-secondary"
+                className="flex-1"
               >
                 Avbryt
-              </button>
-              <button
+              </AdminButton>
+              <AdminButton
+                variant="primary"
                 onClick={handleAddException}
                 disabled={!exceptionForm.date}
-                className="flex-1 hg-btn hg-btn-primary"
+                className="flex-1"
               >
                 Lagre
-              </button>
+              </AdminButton>
             </div>
-          </div>
+          </AdminCard>
         </div>
       )}
     </>
