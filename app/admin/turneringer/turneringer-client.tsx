@@ -315,7 +315,7 @@ export function TurneringerClient({ initialTournaments, stats }: TurneringerClie
                 </div>
                 <div className="flex gap-2">
                   <Link
-                    href={`/portal/admin/turneringer/${tournament.id}`}
+                    href={`/admin/turneringer/${tournament.id}`}
                     className="hg-btn hg-btn-secondary text-sm"
                   >
                     Se plan

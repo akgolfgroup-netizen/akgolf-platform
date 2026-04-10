@@ -41,7 +41,7 @@ export default function NyAktivitetPage() {
     setLoading(false);
     setSuccess(true);
     setTimeout(() => {
-      router.push("/portal/admin/fasiliteter");
+      router.push("/admin/fasiliteter");
     }, 1500);
   };
 
@@ -77,7 +77,7 @@ export default function NyAktivitetPage() {
       <div className="p-5 max-w-2xl mx-auto">
         {/* Back Link */}
         <Link
-          href="/portal/admin/fasiliteter"
+          href="/admin/fasiliteter"
           className="inline-flex items-center gap-2 text-sm text-[var(--hg-text-muted)] hover:text-[var(--hg-text)] transition-colors mb-5"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -241,7 +241,7 @@ export default function NyAktivitetPage() {
           {/* Actions */}
           <div className="flex gap-3 pt-4">
             <Link
-              href="/portal/admin/fasiliteter"
+              href="/admin/fasiliteter"
               className="hg-btn hg-btn-secondary flex-1"
             >
               Avbryt

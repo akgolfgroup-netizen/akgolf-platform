@@ -274,7 +274,7 @@ export async function saveWeekOverride(data: {
     }
 
     revalidatePath("/booking");
-    revalidatePath("/portal/admin/kapasitet");
+    revalidatePath("/admin/kapasitet");
 
     return { success: true };
   } catch {
@@ -306,7 +306,7 @@ export async function deleteWeekOverride(
       .eq("date", dayStart.toISOString());
 
     revalidatePath("/booking");
-    revalidatePath("/portal/admin/kapasitet");
+    revalidatePath("/admin/kapasitet");
 
     return { success: true };
   } catch {

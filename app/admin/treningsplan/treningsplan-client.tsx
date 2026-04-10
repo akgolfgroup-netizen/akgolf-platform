@@ -142,7 +142,7 @@ function PlanOverview({
         onMenuClick={toggle}
       >
         <Link
-          href="/portal/admin/treningsplan/ny"
+          href="/admin/treningsplan/ny"
           className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-primary)] text-white text-sm font-medium hover:bg-[var(--color-primary)]/90 transition-colors"
         >
           <Plus className="w-4 h-4" />
@@ -365,7 +365,7 @@ function StudentPlanEditor({
       <div className="p-5 space-y-5">
         {/* Back link */}
         <Link
-          href={`/portal/admin/elever/${studentId}`}
+          href={`/admin/elever/${studentId}`}
           className="inline-flex items-center gap-1 text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />

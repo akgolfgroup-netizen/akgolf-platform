@@ -115,8 +115,8 @@ const navigationConfig: NavSection[] = [
     title: "Admin",
     roles: ["INSTRUCTOR", "ADMIN"],
     items: [
-      { label: "Administrer bookinger", href: "/portal/admin/bookinger", icon: Calendar, roles: ["INSTRUCTOR", "ADMIN"] },
-      { label: "Elever", href: "/portal/admin/elever", icon: Users, roles: ["INSTRUCTOR", "ADMIN"] },
+      { label: "Administrer bookinger", href: "/admin/bookinger", icon: Calendar, roles: ["INSTRUCTOR", "ADMIN"] },
+      { label: "Elever", href: "/admin/elever", icon: Users, roles: ["INSTRUCTOR", "ADMIN"] },
     ],
   },
 ];
@@ -155,10 +155,10 @@ const navigationConfig: NavSection[] = [
 //     title: "Admin — Mission Control",
 //     roles: ["INSTRUCTOR", "ADMIN"],
 //     items: [
-//       { label: "Analytics", href: "/portal/admin/analytics", icon: BarChart3, roles: ["INSTRUCTOR", "ADMIN"] },
-//       { label: "Elever", href: "/portal/admin/elever", icon: Users, roles: ["INSTRUCTOR", "ADMIN"] },
-//       { label: "Administrer bookinger", href: "/portal/admin/bookinger", icon: Calendar, badge: 5, roles: ["INSTRUCTOR", "ADMIN"] },
-//       { label: "Meldinger", href: "/portal/admin/meldinger", icon: MessageSquare, badge: 3, roles: ["INSTRUCTOR", "ADMIN"] },
+//       { label: "Analytics", href: "/admin/analytics", icon: BarChart3, roles: ["INSTRUCTOR", "ADMIN"] },
+//       { label: "Elever", href: "/admin/elever", icon: Users, roles: ["INSTRUCTOR", "ADMIN"] },
+//       { label: "Administrer bookinger", href: "/admin/bookinger", icon: Calendar, badge: 5, roles: ["INSTRUCTOR", "ADMIN"] },
+//       { label: "Meldinger", href: "/admin/meldinger", icon: MessageSquare, badge: 3, roles: ["INSTRUCTOR", "ADMIN"] },
 //     ],
 //   },
 // ];

@@ -202,14 +202,14 @@ export default function FocusPage() {
         {/* Quick Actions */}
         <div className="hg-card p-4">
           <div className="flex flex-wrap gap-3">
-            <Link href="/portal/admin" className="hg-btn hg-btn-secondary">
+            <Link href="/admin" className="hg-btn hg-btn-secondary">
               Tilbake til Hub
             </Link>
-            <Link href="/portal/admin/elever" className="hg-btn hg-btn-secondary">
+            <Link href="/admin/elever" className="hg-btn hg-btn-secondary">
               <Users className="w-4 h-4" />
               Elever
             </Link>
-            <Link href="/portal/admin/bookinger/ny" className="hg-btn hg-btn-primary">
+            <Link href="/admin/bookinger/ny" className="hg-btn hg-btn-primary">
               <Calendar className="w-4 h-4" />
               Ny booking
             </Link>

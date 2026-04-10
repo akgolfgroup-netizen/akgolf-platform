@@ -285,7 +285,7 @@ export function CoachKPIClient() {
                     <tr
                       key={student.id}
                       onClick={() =>
-                        router.push(`/portal/admin/elever/${student.id}`)
+                        router.push(`/admin/elever/${student.id}`)
                       }
                       className="hover:bg-[var(--color-grey-100)] cursor-pointer transition-colors"
                     >

@@ -10,8 +10,8 @@ import { getTwilioClient } from "@/lib/portal/sms/twilio";
 import { logger } from "@/lib/logger";
 import { nanoid } from "nanoid";
 import { prisma } from "@/lib/portal/prisma";
-import type { Channel } from "@/components/portal/admin/meldinger/ChannelFilter";
-import type { MessageStatus } from "@/components/portal/admin/meldinger/MessageList";
+import type { Channel } from "@/components/admin/meldinger/ChannelFilter";
+import type { MessageStatus } from "@/components/admin/meldinger/MessageList";
 
 // ── Typer ──────────────────────────────────────────────
 
@@ -157,7 +157,7 @@ export async function approveMessage(
         .eq("id", messageId);
     }
 
-    revalidatePath("/portal/admin/meldinger");
+    revalidatePath("/admin/meldinger");
 
     return { success: true };
   } catch (error) {
@@ -182,7 +182,7 @@ export async function rejectMessage(
       .update({ status: "FAILED" })
       .eq("id", messageId);
 
-    revalidatePath("/portal/admin/meldinger");
+    revalidatePath("/admin/meldinger");
 
     return { success: true };
   } catch (error) {
@@ -250,7 +250,7 @@ export async function regenerateAIResponse(
         .eq("id", messageId);
     }
 
-    revalidatePath("/portal/admin/meldinger");
+    revalidatePath("/admin/meldinger");
 
     return { success: true };
   } catch (error) {

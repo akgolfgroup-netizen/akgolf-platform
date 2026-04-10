@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect, useTransition } from "react";
-import { WeekSelector } from "@/components/portal/admin/week-selector";
-import { CapacityGauge } from "@/components/portal/admin/capacity-gauge";
-import { WeekAdjustmentGrid } from "@/components/portal/admin/week-adjustment-grid";
-import { OverbookingAlert } from "@/components/portal/admin/overbooking-alert";
+import { WeekSelector } from "@/components/admin/week-selector";
+import { CapacityGauge } from "@/components/admin/capacity-gauge";
+import { WeekAdjustmentGrid } from "@/components/admin/week-adjustment-grid";
+import { OverbookingAlert } from "@/components/admin/overbooking-alert";
 import { User } from "lucide-react";
 import {
   getWeekCapacityWithOverrides,

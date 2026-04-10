@@ -27,7 +27,7 @@ export function NotificationManager() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("/api/portal/admin/push");
+      const res = await fetch("/api/admin/push");
       if (res.ok) {
         const data = await res.json();
         setStats(data);
@@ -42,7 +42,7 @@ export function NotificationManager() {
     setIsSending(true);
 
     try {
-      const res = await fetch("/api/portal/admin/push", {
+      const res = await fetch("/api/admin/push", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

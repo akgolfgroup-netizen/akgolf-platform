@@ -50,7 +50,7 @@ export default function FasilitetInnstillingerPage() {
       <div className="p-5 max-w-4xl mx-auto space-y-5">
         {/* Back Link */}
         <Link
-          href="/portal/admin/fasiliteter"
+          href="/admin/fasiliteter"
           className="inline-flex items-center gap-2 text-sm text-[var(--hg-text-muted)] hover:text-[var(--hg-text)] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />

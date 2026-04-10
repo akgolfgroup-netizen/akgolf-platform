@@ -24,7 +24,7 @@ import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar, HGStatCard, HGAlert } from "@/components/portal/mission-control";
 import { format, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { getOrCreateConversation } from "@/app/portal/(dashboard)/admin/meldinger/chat-actions";
+import { getOrCreateConversation } from "@/app/admin/meldinger/chat-actions";
 
 // Mock data
 const studentData = {
@@ -91,7 +91,7 @@ export default function StudentDetailPage({ params }: { params: { id: string } }
     startSendingMessage(async () => {
       const result = await getOrCreateConversation(params.id);
       if (result.conversationId) {
-        router.push("/portal/admin/meldinger");
+        router.push("/admin/meldinger");
       }
     });
   }
@@ -107,7 +107,7 @@ export default function StudentDetailPage({ params }: { params: { id: string } }
       <div className="p-5 space-y-5">
         {/* Back Link */}
         <Link
-          href="/portal/admin/elever"
+          href="/admin/elever"
           className="inline-flex items-center gap-1 text-sm text-[var(--hg-text-muted)] hover:text-[var(--hg-text)] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -174,7 +174,7 @@ export default function StudentDetailPage({ params }: { params: { id: string } }
                 {isSendingMessage ? "Starter samtale..." : "Send melding"}
               </button>
               <Link
-                href={`/portal/admin/treningsplan?studentId=${params.id}`}
+                href={`/admin/treningsplan?studentId=${params.id}`}
                 className="hg-btn hg-btn-secondary text-sm"
               >
                 <FileText className="w-4 h-4" />
@@ -264,7 +264,7 @@ export default function StudentDetailPage({ params }: { params: { id: string } }
             <div className="hg-card overflow-hidden">
               <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
                 <h3 className="hg-section-title">Kommende bookinger</h3>
-                <Link href="/portal/admin/bookinger/ny" className="text-xs text-[var(--hg-primary)] hover:underline">
+                <Link href="/admin/bookinger/ny" className="text-xs text-[var(--hg-primary)] hover:underline">
                   + Ny
                 </Link>
               </div>

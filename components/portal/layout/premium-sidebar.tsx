@@ -55,16 +55,16 @@ const accountItems = [
 ];
 
 const staffItems = [
-  { href: "/portal/admin/kalender", label: "Kalender", icon: CalendarDays },
-  { href: "/portal/admin/bookinger", label: "Bookinger", icon: CalendarPlus },
-  { href: "/portal/admin/fasiliteter", label: "Fasiliteter", icon: MapPin },
-  { href: "/portal/admin/elever", label: "Elever", icon: UsersIcon },
-  { href: "/portal/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
-  { href: "/portal/admin/kapasitet", label: "Kapasitet", icon: BarChart3 },
-  { href: "/portal/admin/analytics", label: "Analyse", icon: TrendingUp },
-  { href: "/portal/admin/denne-uken", label: "Denne uken", icon: CalendarCheck },
-  { href: "/portal/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
-  { href: "/portal/admin/notifications", label: "Notifikasjoner", icon: Bell },
+  { href: "/admin/kalender", label: "Kalender", icon: CalendarDays },
+  { href: "/admin/bookinger", label: "Bookinger", icon: CalendarPlus },
+  { href: "/admin/fasiliteter", label: "Fasiliteter", icon: MapPin },
+  { href: "/admin/elever", label: "Elever", icon: UsersIcon },
+  { href: "/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
+  { href: "/admin/kapasitet", label: "Kapasitet", icon: BarChart3 },
+  { href: "/admin/analytics", label: "Analyse", icon: TrendingUp },
+  { href: "/admin/denne-uken", label: "Denne uken", icon: CalendarCheck },
+  { href: "/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
+  { href: "/admin/notifications", label: "Notifikasjoner", icon: Bell },
 ];
 
 interface SidebarProps {

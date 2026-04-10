@@ -474,7 +474,7 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
                 <span className="hidden sm:inline">Eksporter</span>
               </button>
               <Link
-                href="/portal/admin/bookinger/ny"
+                href="/admin/bookinger/ny"
                 className="hg-btn hg-btn-primary"
               >
                 <Plus className="w-4 h-4" />

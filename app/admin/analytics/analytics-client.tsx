@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { BarChart3, RefreshCw, Loader2 } from "lucide-react";
-import { KPICards } from "@/components/portal/admin/analytics/kpi-cards";
-import { RevenueChart } from "@/components/portal/admin/analytics/revenue-chart";
-import { StudentMetrics } from "@/components/portal/admin/analytics/student-metrics";
+import { KPICards } from "@/components/admin/analytics/kpi-cards";
+import { RevenueChart } from "@/components/admin/analytics/revenue-chart";
+import { StudentMetrics } from "@/components/admin/analytics/student-metrics";
 import { getAnalyticsData, type AnalyticsData, type AnalyticsPeriod } from "./actions";
 
 const PERIOD_OPTIONS: { value: AnalyticsPeriod; label: string }[] = [

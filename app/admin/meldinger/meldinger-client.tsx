@@ -5,13 +5,13 @@ import { Inbox, AlertCircle, X } from "lucide-react";
 import {
   ChannelFilter,
   type Channel,
-} from "@/components/portal/admin/meldinger/ChannelFilter";
+} from "@/components/admin/meldinger/ChannelFilter";
 import {
   MessageList,
   type Message,
   type MessageStatus,
-} from "@/components/portal/admin/meldinger/MessageList";
-import { MessageDetail } from "@/components/portal/admin/meldinger/MessageDetail";
+} from "@/components/admin/meldinger/MessageList";
+import { MessageDetail } from "@/components/admin/meldinger/MessageDetail";
 import {
   approveMessage,
   rejectMessage,
