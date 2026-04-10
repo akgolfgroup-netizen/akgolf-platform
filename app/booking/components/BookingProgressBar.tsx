@@ -34,17 +34,17 @@ export function BookingProgressBar({ currentStep }: Props) {
                   backgroundColor: isCompleted
                     ? "var(--color-brand)"
                     : isCurrent
-                    ? "#0A1F18"
+                    ? "#005840"
                     : "#ECF0EF",
                   borderColor: isCompleted
                     ? "var(--color-brand)"
                     : isCurrent
-                    ? "#0A1F18"
+                    ? "#005840"
                     : "#D5DFDB",
                 }}
                 className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold border-2"
                 style={{
-                  color: isCompleted || isCurrent ? "#FFFFFF" : "#7A8C85",
+                  color: isCompleted || isCurrent ? "#FFFFFF" : "#A5B2AD",
                 }}
               >
                 {isCompleted ? (

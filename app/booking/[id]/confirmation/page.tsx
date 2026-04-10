@@ -10,9 +10,9 @@ import { Loader2, AlertCircle } from "lucide-react";
 const THEME = {
   bg: "#ECF0EF",
   bgElevated: "#FFFFFF",
-  primary: "#0A1F18",
-  text: "#0A1F18",
-  textMuted: "#7A8C85",
+  primary: "#005840",
+  text: "#005840",
+  textMuted: "#A5B2AD",
   border: "#D5DFDB",
 };
 

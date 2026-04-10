@@ -671,6 +671,7 @@ model PaymentTransaction {
   updatedAt     DateTime
   Booking       Booking       @relation(fields: [bookingId], references: [id])
 
+  @@unique([providerRef])
   @@index([paidAt])
   @@index([paymentMethod])
   @@index([status])

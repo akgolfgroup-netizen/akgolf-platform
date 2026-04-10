@@ -3,10 +3,20 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { stripe } from "@/lib/portal/stripe";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { logger } from "@/lib/logger";
-import { nanoid } from "nanoid";
 
+/**
+ * POST /api/booking/confirm-payment
+ *
+ * Read-only status check called by the confirmation page after Stripe Checkout.
+ * The actual booking confirmation + PaymentTransaction creation is handled by
+ * the Stripe webhook (payment_intent.succeeded + checkout.session.completed).
+ *
+ * This endpoint:
+ * 1. Verifies the PaymentIntent status with Stripe
+ * 2. Returns the current booking status
+ * 3. Does NOT write to the database (webhook handles that)
+ */
 export async function POST(req: NextRequest) {
-  // Rate limiting to prevent abuse
   const clientIp = getClientIp(req);
   const rateLimit = checkRateLimit(`confirm-payment:${clientIp}`, RATE_LIMITS.BOOKING_CREATE);
   if (!rateLimit.allowed) {
@@ -24,98 +34,66 @@ export async function POST(req: NextRequest) {
   }
 
   const { bookingId, paymentIntentId } = body;
-  if (!bookingId || !paymentIntentId) {
+  if (!bookingId) {
     return NextResponse.json(
-      { error: "Mangler bookingId eller paymentIntentId" },
+      { error: "Mangler bookingId" },
       { status: 400 }
     );
   }
 
   try {
-    // Verifiser betaling med Stripe
-    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-
-    if (paymentIntent.status !== "succeeded") {
-      return NextResponse.json(
-        { error: "Betalingen er ikke fullført", status: paymentIntent.status },
-        { status: 400 }
-      );
-    }
-
-    // Sjekk at bookingId matcher metadata
-    if (paymentIntent.metadata.bookingId !== bookingId) {
-      return NextResponse.json(
-        { error: "Booking-ID stemmer ikke med betalingen" },
-        { status: 400 }
-      );
-    }
-
     const supabase = await createServerSupabase();
 
-    // Idempotens-guard: sjekk om allerede prosessert (av webhook eller tidligere kall)
-    const { data: existingBooking, error: fetchError } = await supabase
+    // Hent booking-status fra database
+    const { data: booking, error: fetchError } = await supabase
       .from("Booking")
-      .select(`
-        id,
-        amount,
-        vatAmount,
-        paymentMethod,
-        ServiceType:serviceTypeId (vatRate)
-      `)
+      .select("id, status, paymentStatus, stripePaymentId")
       .eq("id", bookingId)
-      .neq("paymentStatus", "PAID")
       .single();
 
-    if (fetchError || !existingBooking) {
-      // Allerede bekreftet av webhook — returner suksess uten å gjøre noe
+    if (fetchError || !booking) {
+      return NextResponse.json({ error: "Booking ikke funnet" }, { status: 404 });
+    }
+
+    // Allerede bekreftet av webhook
+    if (booking.paymentStatus === "PAID") {
       return NextResponse.json({ success: true, status: "CONFIRMED" });
     }
 
-    // Beregn VAT rate
-    const serviceTypeArray = existingBooking.ServiceType as unknown as Array<{ vatRate?: number }>;
-    const serviceType = serviceTypeArray?.[0] ?? null;
-    const vatRate = serviceType?.vatRate ?? 25;
-    const netAmount = existingBooking.amount - existingBooking.vatAmount;
+    // Hvis paymentIntentId er gitt, verifiser med Stripe
+    if (paymentIntentId) {
+      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
-    // Atomisk oppdatering: booking + PaymentTransaction via RPC eller to separate kall
-    const { error: updateError } = await supabase
-      .from("Booking")
-      .update({
-        status: "CONFIRMED",
-        paymentStatus: "PAID",
-        stripePaymentId: paymentIntentId,
-        updatedAt: new Date().toISOString(),
-      })
-      .eq("id", bookingId);
+      if (paymentIntent.status === "succeeded") {
+        // Betaling vellykket i Stripe — webhook vil snart bekrefte i DB.
+        // Returner "processing" slik at klienten kan polle.
+        return NextResponse.json({
+          success: true,
+          status: "PROCESSING",
+          message: "Betalingen er mottatt. Bookingen bekreftes snart.",
+        });
+      }
 
-    if (updateError) {
-      throw updateError;
-    }
+      if (paymentIntent.status === "requires_payment_method" || paymentIntent.status === "canceled") {
+        return NextResponse.json({
+          success: false,
+          status: "FAILED",
+          message: "Betalingen feilet. Prøv igjen.",
+        });
+      }
 
-    const { error: transactionError } = await supabase
-      .from("PaymentTransaction")
-      .insert({
-        id: nanoid(),
-        bookingId,
-        paymentMethod: existingBooking.paymentMethod ?? "STRIPE",
-        grossAmount: existingBooking.amount,
-        vatAmount: existingBooking.vatAmount,
-        vatRate,
-        netAmount,
-        providerRef: paymentIntentId,
-        status: "PAID",
-        paidAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+      return NextResponse.json({
+        success: false,
+        status: paymentIntent.status.toUpperCase(),
+        message: "Betalingen behandles. Vent litt.",
       });
-
-    if (transactionError) {
-      throw transactionError;
     }
 
-    // E-post og SMS sendes av Stripe webhook (payment_intent.succeeded)
-    // for å unngå duplikater. Denne ruten oppdaterer kun status.
-
-    return NextResponse.json({ success: true, status: "CONFIRMED" });
+    // Ingen paymentIntentId — returner nåværende status
+    return NextResponse.json({
+      success: booking.paymentStatus === "PAID",
+      status: booking.status,
+    });
   } catch (error) {
     logger.error("[confirm-payment] Error:", error);
     return NextResponse.json({ error: "Intern feil" }, { status: 500 });
