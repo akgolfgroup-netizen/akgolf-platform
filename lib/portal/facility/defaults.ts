@@ -91,8 +91,7 @@ export async function getFacilityBySlug(slug: string): Promise<(Facility & { Loc
       Location:locationId(id, name)
     `)
     .eq("slug", slug)
-    .single()
-    .returns<Facility & { Location?: { id: string; name: string } }>();
+    .single();
 
-  return data;
+  return (data as unknown as (Facility & { Location?: { id: string; name: string } }) | null);
 }

@@ -126,7 +126,7 @@ export async function GET(req: NextRequest) {
 
   // Ingen spesifikk test — vis oversikt over alle tester med brukerens ranking
   const overview = await Promise.all(
-    (testDefinitions || []).map(async (testDef: { testNumber: number; comparison: string | null }) => {
+    (testDefinitions || []).map(async (testDef: { testNumber: number; name: string; unit: string; comparison: string | null }) => {
       let userBestQuery = supabase
         .from("TestResult")
         .select("value, passed, createdAt")

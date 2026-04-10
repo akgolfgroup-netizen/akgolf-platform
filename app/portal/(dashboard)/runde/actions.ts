@@ -163,9 +163,10 @@ export async function completeRound(roundId: string) {
 
   if (!round || round.userId !== user.id) throw new Error("Runde ikke funnet");
 
-  const holes = round.HoleResult as { score: number; putts: number; gir: boolean; fairwayHit: boolean | null; sgTotal: number | null; sgTee: number | null; sgApproach: number | null; sgShortGame: number | null; sgPutting: number | null }[];
+  const holes = (round.HoleResult as unknown as { score: number; putts: number; gir: boolean; fairwayHit: boolean | null; sgTotal: number | null; sgTee: number | null; sgApproach: number | null; sgShortGame: number | null; sgPutting: number | null }[]) ?? [];
   const totalScore = holes.reduce((sum, h) => sum + h.score, 0);
-  const scoreToPar = totalScore - ((round.Course as { par: number } | null)?.par ?? 72);
+  const courseArr = round.Course as unknown as Array<{ par: number }>;
+  const scoreToPar = totalScore - (courseArr?.[0]?.par ?? 72);
   const totalPutts = holes.reduce((sum, h) => sum + h.putts, 0);
   const girCount = holes.filter((h) => h.gir).length;
   const fairwayHoles = holes.filter((h) => h.fairwayHit !== null);

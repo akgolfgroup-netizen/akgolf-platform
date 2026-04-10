@@ -24,9 +24,15 @@ export default async function RoundSummaryPage({ params }: Props) {
   const round = await getRoundDetail(id);
   if (!round) notFound();
 
-  const holes = round.HoleResult ?? [];
-  const courseName = round.Course?.name ?? "Ukjent bane";
-  const coursePar = round.Course?.par ?? 72;
+  type HoleResultRow = {
+    scoreToPar: number;
+    gir: boolean;
+    fairwayHit: boolean | null;
+    putts: number;
+  };
+  const holes = (round.HoleResult ?? []) as HoleResultRow[];
+  const courseName = (round.Course as { name?: string } | null)?.name ?? "Ukjent bane";
+  const coursePar = (round.Course as { par?: number } | null)?.par ?? 72;
 
   const eagles = holes.filter((h) => h.scoreToPar <= -2).length;
   const birdies = holes.filter((h) => h.scoreToPar === -1).length;
@@ -94,7 +100,7 @@ export default async function RoundSummaryPage({ params }: Props) {
             { label: "Birdie", count: birdies, color: "#EF4444" },
             { label: "Par", count: pars, color: "#005840" },
             { label: "Bogey", count: bogeys, color: "#5A6E66" },
-            { label: "Dobbel+", count: doubles, color: "#D2D2D7" },
+            { label: "Dobbel+", count: doubles, color: "#A5B2AD" },
           ].map((item) => {
             const maxCount = Math.max(eagles, birdies, pars, bogeys, doubles, 1);
             const height = Math.max(4, (item.count / maxCount) * 80);

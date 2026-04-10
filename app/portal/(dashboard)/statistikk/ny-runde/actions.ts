@@ -6,46 +6,39 @@ import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 
 export async function saveRound(data: {
-  courseId: string;
   date: string;
-  scores: Array<{
-    holeNumber: number;
-    score: number;
-    putts?: number;
-    fairway?: boolean;
-    greenInRegulation?: boolean;
-  }>;
+  courseName?: string;
+  totalScore: number;
+  scoreToPar: number;
+  fairwaysHit?: number;
+  fairwaysTotal?: number;
+  gir?: number;
+  girTotal?: number;
+  totalPutts?: number;
+  notes?: string;
 }) {
   const user = await requirePortalUser();
   const supabase = await createServerSupabase();
 
-  const roundId = nanoid();
-  
-  await supabase.from("Round").insert({
-    id: roundId,
+  await supabase.from("RoundStats").insert({
+    id: nanoid(),
     userId: user.id,
-    courseId: data.courseId,
     date: data.date,
-    status: "COMPLETED",
+    courseName: data.courseName ?? null,
+    totalScore: data.totalScore,
+    scoreToPar: data.scoreToPar,
+    fairwaysHit: data.fairwaysHit ?? null,
+    fairwaysTotal: data.fairwaysTotal ?? null,
+    gir: data.gir ?? null,
+    girTotal: data.girTotal ?? null,
+    totalPutts: data.totalPutts ?? null,
+    notes: data.notes ?? null,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   });
 
-  // Insert scores
-  if (data.scores.length > 0) {
-    await supabase.from("HoleScore").insert(
-      data.scores.map((s) => ({
-        id: nanoid(),
-        roundId,
-        holeNumber: s.holeNumber,
-        score: s.score,
-        putts: s.putts ?? 0,
-        fairway: s.fairway ?? null,
-        greenInRegulation: s.greenInRegulation ?? null,
-      }))
-    );
-  }
-
   revalidatePath("/portal/statistikk");
-  return { roundId };
+  return { success: true };
 }
 
 export async function getCourses() {

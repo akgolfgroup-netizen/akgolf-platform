@@ -60,16 +60,19 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Kunne ikke hente bookinger" }, { status: 500 });
   }
 
-  // Beregn kapasitet per instruktor
-  const coaches = (instructors || []).map((instructor: {
+  type InstructorRow = {
     id: string;
-    User: { name: string | null };
+    User: Array<{ name: string | null }>;
     InstructorAvailability: Array<{
       dayOfWeek: number;
       startTime: string;
       endTime: string;
     }>;
-  }) => {
+  };
+
+  // Beregn kapasitet per instruktor
+  const coaches = (instructors as unknown as InstructorRow[] || []).map((instructor) => {
+    const instructorUser = instructor.User?.[0] ?? null;
     let weeklySlots = 0;
     let maxWeeklyRevenue = 0;
     const avgPricePerHour = 1500;
@@ -83,15 +86,15 @@ export async function GET(req: NextRequest) {
     }
 
     const instructorBookings = (weeklyBookings || []).filter(
-      (b: { Instructor: { id: string } | null }) => b.Instructor?.id === instructor.id
+      (b: { Instructor: Array<{ id: string }> | null }) => b.Instructor?.[0]?.id === instructor.id
     );
     const bookedSlots = instructorBookings.length;
 
-    const weeklyRevenue = instructorBookings.reduce((sum: number, b: { ServiceType: { price: number } | null }) => 
-      sum + (b.ServiceType?.price || 0), 0);
+    const weeklyRevenue = instructorBookings.reduce((sum: number, b: { ServiceType: Array<{ price: number }> | null }) =>
+      sum + (b.ServiceType?.[0]?.price || 0), 0);
 
     return {
-      name: instructor.User?.name ?? "Ukjent",
+      name: instructorUser?.name ?? "Ukjent",
       weeklySlots,
       bookedSlots,
       occupancy: weeklySlots > 0 ? Math.round((bookedSlots / weeklySlots) * 1000) / 1000 : 0,
@@ -109,7 +112,8 @@ export async function GET(req: NextRequest) {
     const dayOfWeek = day.getDay();
     const dayData: Record<string, { booked: number; total: number }> = {};
 
-    for (const instructor of instructors || []) {
+    for (const instructor of (instructors as unknown as InstructorRow[]) || []) {
+      const instructorUser = instructor.User?.[0] ?? null;
       const totalSlots = (instructor.InstructorAvailability || [])
         .filter((a: { dayOfWeek: number }) => a.dayOfWeek === dayOfWeek)
         .reduce((sum: number, a: { startTime: string; endTime: string }) => {
@@ -119,12 +123,12 @@ export async function GET(req: NextRequest) {
         }, 0);
 
       const bookedSlots = (weeklyBookings || []).filter(
-        (b: { Instructor: { id: string } | null; startTime: string }) =>
-          b.Instructor?.id === instructor.id &&
+        (b: { Instructor: Array<{ id: string }> | null; startTime: string }) =>
+          b.Instructor?.[0]?.id === instructor.id &&
           new Date(b.startTime).toDateString() === day.toDateString()
       ).length;
 
-      const name = instructor.User?.name ?? "Ukjent";
+      const name = instructorUser?.name ?? "Ukjent";
       dayData[name] = { booked: bookedSlots, total: totalSlots };
     }
 

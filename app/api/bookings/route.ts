@@ -46,10 +46,13 @@ export async function GET(req: NextRequest) {
   }
 
   const { user, supabase } = auth;
+  if (!supabase || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   try {
     const { searchParams } = new URL(req.url);
-    
+
     const instructorId = searchParams.get("instructorId");
     const status = searchParams.get("status");
 
@@ -103,6 +106,9 @@ export async function POST(req: NextRequest) {
   }
 
   const { user, supabase } = auth;
+  if (!supabase || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   try {
     const body = await req.json();

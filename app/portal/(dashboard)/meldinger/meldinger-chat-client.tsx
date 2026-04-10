@@ -74,8 +74,9 @@ export function MeldingerChatClient({
       id: `temp-${Date.now()}`,
       senderId: currentUserId,
       senderName: "Deg",
+      senderImage: null,
       content,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
       readAt: null,
     };
     setMessages((prev) => [...prev, optimisticMessage]);

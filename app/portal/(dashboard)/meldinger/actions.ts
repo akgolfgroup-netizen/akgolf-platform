@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { revalidatePath } from "next/cache";
+import { nanoid } from "nanoid";
 
 export async function getConversationMessages(conversationId: string) {
   const user = await requirePortalUser();
@@ -11,7 +12,7 @@ export async function getConversationMessages(conversationId: string) {
   const conversation = await prisma.conversation.findFirst({
     where: {
       id: conversationId,
-      participants: { some: { id: user.id } },
+      User: { some: { id: user.id } },
     },
   });
 
@@ -19,7 +20,7 @@ export async function getConversationMessages(conversationId: string) {
 
   const messages = await prisma.message.findMany({
     where: { conversationId },
-    include: { Sender: { select: { id: true, name: true, image: true } } },
+    include: { User: { select: { id: true, name: true, image: true } } },
     orderBy: { createdAt: "asc" },
   });
 
@@ -27,8 +28,8 @@ export async function getConversationMessages(conversationId: string) {
     id: m.id,
     content: m.content,
     senderId: m.senderId,
-    senderName: m.Sender?.name ?? "Ukjent",
-    senderImage: m.Sender?.image ?? null,
+    senderName: m.User?.name ?? "Ukjent",
+    senderImage: m.User?.image ?? null,
     createdAt: m.createdAt.toISOString(),
     readAt: m.readAt?.toISOString() ?? null,
   }));
@@ -45,7 +46,7 @@ export async function sendDirectMessage(
   const conversation = await prisma.conversation.findFirst({
     where: {
       id: conversationId,
-      participants: { some: { id: user.id } },
+      User: { some: { id: user.id } },
     },
   });
 
@@ -53,9 +54,10 @@ export async function sendDirectMessage(
 
   await prisma.message.create({
     data: {
+      id: nanoid(),
       content: content.trim(),
-      Conversation: { connect: { id: conversationId } },
-      Sender: { connect: { id: user.id } },
+      conversationId,
+      senderId: user.id,
     },
   });
 
@@ -84,10 +86,10 @@ export async function getMyConversations(): Promise<ConversationSummary[]> {
 
   const conversations = await prisma.conversation.findMany({
     where: {
-      participants: { some: { id: user.id } },
+      User: { some: { id: user.id } },
     },
     include: {
-      participants: { select: { id: true, name: true } },
+      User: { select: { id: true, name: true } },
       Message: {
         orderBy: { createdAt: "desc" },
         take: 1,
@@ -100,7 +102,7 @@ export async function getMyConversations(): Promise<ConversationSummary[]> {
   const summaries: ConversationSummary[] = [];
 
   for (const conv of conversations) {
-    const otherUser = conv.participants.find((u) => u.id !== user.id);
+    const otherUser = conv.User.find((u: { id: string; name: string | null }) => u.id !== user.id);
     if (!otherUser) continue;
 
     const unreadCount = await prisma.message.count({

@@ -240,7 +240,7 @@ export function BookingStatusView({ booking, isAuthenticated, isOwner }: Booking
   if (booking.status === "CANCELLED") {
     timelineSteps[2] = {
       label: "Booking avbestilt",
-      date: booking.cancelledAt,
+      date: booking.cancelledAt ?? null,
       completed: true,
       icon: <XCircle className="w-4 h-4" />,
       isCancelled: true,

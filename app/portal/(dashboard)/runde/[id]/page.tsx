@@ -20,20 +20,24 @@ export default async function LiveRundePage({ params }: Props) {
     redirect(`/portal/runde/${id}/oppsummering`);
   }
 
-  const holes = round.Course?.Hole ?? [];
-  const existingResults = round.HoleResult ?? [];
+  type HoleRow = { id: string; holeNumber: number; par: number; handicap: number | null; lengthMeter: number | null };
+  type HoleResultRow = { holeNumber: number; score: number; putts: number; fairwayHit: boolean | null; gir: boolean };
+
+  const courseData = round.Course as { name?: string; par?: number; Hole?: HoleRow[] } | null;
+  const holes = (courseData?.Hole ?? []) as HoleRow[];
+  const existingResults = (round.HoleResult ?? []) as HoleResultRow[];
 
   return (
     <LiveRoundClient
       roundId={round.id}
-      courseName={round.Course?.name ?? "Ukjent bane"}
-      coursePar={round.Course?.par ?? 72}
+      courseName={courseData?.name ?? "Ukjent bane"}
+      coursePar={courseData?.par ?? 72}
       holes={holes.map((h) => ({
         id: h.id,
         holeNumber: h.holeNumber,
         par: h.par,
         handicap: h.handicap,
-        lengthMeter: h.lengthMeter,
+        lengthMeter: h.lengthMeter ?? 0,
       }))}
       existingResults={existingResults.map((r) => ({
         holeNumber: r.holeNumber,

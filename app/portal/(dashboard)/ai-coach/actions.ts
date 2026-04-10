@@ -128,11 +128,15 @@ export async function getChatContext(): Promise<ChatContext> {
       club: t.club,
       averages: t.averages as Record<string, unknown>,
     })),
-    upcomingTournaments: (tournamentPlans || []).map((tp) => ({
-      name: (tp.Tournament as { name: string }).name,
-      startDate: new Date((tp.Tournament as { startDate: string }).startDate).toISOString(),
-      course: (tp.Tournament as { course: string | null }).course,
-    })),
+    upcomingTournaments: (tournamentPlans || []).map((tp) => {
+      const tournamentArr = tp.Tournament as unknown as Array<{ name: string; startDate: string; course: string | null }>;
+      const tournament = tournamentArr?.[0];
+      return {
+        name: tournament?.name ?? "",
+        startDate: new Date(tournament?.startDate ?? new Date()).toISOString(),
+        course: tournament?.course ?? null,
+      };
+    }),
   };
 }
 

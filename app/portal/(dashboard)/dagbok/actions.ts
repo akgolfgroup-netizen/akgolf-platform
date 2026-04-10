@@ -6,6 +6,53 @@ import { revalidatePath } from "next/cache";
 import { startOfMonth, endOfMonth } from "date-fns";
 import { checkAchievements } from "@/lib/portal/achievements/check-achievements";
 import { nanoid } from "nanoid";
+import { z } from "zod";
+
+// --- Zod-skjemaer for validering ---
+
+const VALID_FOCUS_AREAS = [
+  "TEE_TOTAL",
+  "APPROACH",
+  "SHORT_GAME",
+  "PUTTING",
+  "DRIVING",
+  "IRON_PLAY",
+  "CHIPPING",
+  "PITCHING",
+  "BUNKER",
+  "COURSE_MANAGEMENT",
+  "MENTAL",
+  "FITNESS",
+  "OTHER",
+] as const;
+
+const logSessionSchema = z.object({
+  planSessionId: z.string().min(1).optional(),
+  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Ugyldig datoformat",
+  }),
+  durationMinutes: z
+    .number()
+    .int("Varighet må være et heltall")
+    .min(1, "Varighet må være minst 1 minutt")
+    .max(480, "Varighet kan ikke overstige 480 minutter (8 timer)")
+    .optional(),
+  focusArea: z
+    .string()
+    .refine((val) => VALID_FOCUS_AREAS.includes(val as (typeof VALID_FOCUS_AREAS)[number]), {
+      message: "Ugyldig fokusområde",
+    })
+    .optional(),
+  notes: z.string().max(2000, "Notater kan ikke overstige 2000 tegn").optional(),
+  rating: z
+    .number()
+    .int("Vurdering må være et heltall")
+    .min(1, "Vurdering må være mellom 1 og 10")
+    .max(10, "Vurdering må være mellom 1 og 10")
+    .optional(),
+  deviatedFromPlan: z.boolean().optional(),
+  deviationReason: z.string().max(500, "Avviksgrunn kan ikke overstige 500 tegn").optional(),
+});
 
 export async function getTrainingLogs(month?: Date) {
   const user = await requirePortalUser();
@@ -47,7 +94,7 @@ export async function getTrainingLogs(month?: Date) {
   }));
 }
 
-export async function logSession(data: {
+export async function logSession(input: {
   planSessionId?: string;
   date: string;
   durationMinutes?: number;
@@ -60,6 +107,13 @@ export async function logSession(data: {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Unauthorized");
 
+  const parsed = logSessionSchema.safeParse(input);
+  if (!parsed.success) {
+    const firstError = parsed.error.issues[0];
+    throw new Error(firstError?.message ?? "Ugyldig input");
+  }
+
+  const data = parsed.data;
   const supabase = await createServerSupabase();
 
   await supabase.from("TrainingLog").insert({
@@ -226,43 +280,43 @@ export async function getLastSession() {
 
 // === NEW FUNCTIONS FOR EXERCISE LOGGING ===
 
-interface ExerciseInput {
-  exerciseId?: string;
-  name: string;
-  plannedSets?: number;
-  plannedReps?: number;
-  actualSets?: number;
-  actualReps?: number;
-  lPhase?: string;
-  clubSpeed?: number;
-  environment?: number;
-  pressLevel?: number;
-  successRate?: number;
-  score?: number;
-  notes?: string;
-  sortOrder?: number;
-}
+const exerciseInputSchema = z.object({
+  exerciseId: z.string().min(1).optional(),
+  name: z.string().min(1, "Øvelsesnavn er påkrevd").max(200),
+  plannedSets: z.number().int().min(0).max(100).optional(),
+  plannedReps: z.number().int().min(0).max(1000).optional(),
+  actualSets: z.number().int().min(0).max(100).optional(),
+  actualReps: z.number().int().min(0).max(1000).optional(),
+  lPhase: z.string().max(50).optional(),
+  clubSpeed: z.number().min(0).max(250).optional(),
+  environment: z.number().int().min(1).max(10).optional(),
+  pressLevel: z.number().int().min(1).max(10).optional(),
+  successRate: z.number().min(0).max(100).optional(),
+  score: z.number().min(0).max(1000).optional(),
+  notes: z.string().max(1000).optional(),
+  sortOrder: z.number().int().min(0).optional(),
+});
 
-interface SessionWithExercisesInput {
-  planSessionId?: string;
-  date: string;
-  durationMinutes?: number;
-  focusArea?: string;
-  notes?: string;
-  rating?: number;
-  deviatedFromPlan?: boolean;
-  deviationReason?: string;
-  // AK-formel fields
-  primaryLPhase?: string;
-  primaryEnvironment?: number;
-  primaryPressLevel?: number;
-  // Exercises
-  exercises: ExerciseInput[];
-}
+const sessionWithExercisesSchema = logSessionSchema.extend({
+  primaryLPhase: z.string().max(50).optional(),
+  primaryEnvironment: z.number().int().min(1).max(10).optional(),
+  primaryPressLevel: z.number().int().min(1).max(10).optional(),
+  exercises: z.array(exerciseInputSchema).max(50, "Maks 50 øvelser per økt"),
+});
 
-export async function logSessionWithExercises(data: SessionWithExercisesInput) {
+type SessionWithExercisesInput = z.infer<typeof sessionWithExercisesSchema>;
+
+export async function logSessionWithExercises(input: SessionWithExercisesInput) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Unauthorized");
+
+  const parsed = sessionWithExercisesSchema.safeParse(input);
+  if (!parsed.success) {
+    const firstError = parsed.error.issues[0];
+    throw new Error(firstError?.message ?? "Ugyldig input");
+  }
+
+  const data = parsed.data;
 
   const supabase = await createServerSupabase();
   const sessionId = nanoid();
@@ -387,7 +441,9 @@ export async function updateExerciseLog(
     .single();
 
   if (!exercise) throw new Error("Not found");
-  if ((exercise.TrainingLog as { userId: string }).userId !== user.id) throw new Error("Unauthorized");
+  const trainingLogArr = exercise.TrainingLog as unknown as Array<{ userId: string }>;
+  const trainingLog = trainingLogArr?.[0];
+  if (trainingLog?.userId !== user.id) throw new Error("Unauthorized");
 
   await supabase
     .from("TrainingLogExercise")

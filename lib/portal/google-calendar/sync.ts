@@ -263,7 +263,8 @@ export async function syncGoogleCalendar(
     };
   }
 
-  const userData = instructor.User as { id: string; googleCalendarTokens: unknown } | null;
+  const userArr = instructor.User as unknown as Array<{ id: string; googleCalendarTokens: unknown }>;
+  const userData = userArr?.[0] ?? null;
   
   if (!userData?.googleCalendarTokens) {
     return {
@@ -409,7 +410,8 @@ export async function syncAllGoogleCalendars(): Promise<{
 
   // Filtrer bare de med Google Calendar tokens
   const instructorsWithTokens = instructors.filter((inst) => {
-    const userData = inst.User as { googleCalendarTokens: unknown } | null;
+    const userArr = inst.User as unknown as Array<{ googleCalendarTokens: unknown }>;
+    const userData = userArr?.[0] ?? null;
     return !!userData?.googleCalendarTokens;
   });
 
@@ -465,10 +467,11 @@ export async function getSyncStatus(instructorId: string) {
     return null;
   }
 
-  const userData = instructor.User as { 
-    googleCalendarTokens: unknown; 
+  const userArr = instructor.User as unknown as Array<{
+    googleCalendarTokens: unknown;
     googleCalendarId: string | null;
-  } | null;
+  }>;
+  const userData = userArr?.[0] ?? null;
 
   // Tell antall blokkerte tider fra Google Calendar
   const { count: blockedCount } = await supabase

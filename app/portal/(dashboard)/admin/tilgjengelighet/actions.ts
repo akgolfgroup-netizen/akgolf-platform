@@ -108,8 +108,8 @@ export async function upsertAvailability(
 
   // Revalidate cache
   revalidatePath("/portal/admin/tilgjengelighet");
-  revalidateTag("slots");
-  revalidateTag(`availability:${instructorId}`);
+  revalidateTag("slots", {});
+  revalidateTag(`availability:${instructorId}`, {});
 }
 
 export async function getBlockedTimes(instructorId?: string) {
@@ -139,12 +139,13 @@ export async function getBlockedTimes(instructorId?: string) {
   return data || [];
 }
 
-export async function createBlockedTime(
-  instructorId: string | null,
-  startTime: string,
-  endTime: string,
-  reason?: string
-) {
+export async function createBlockedTime(params: {
+  instructorId: string | null;
+  startTime: string;
+  endTime: string;
+  reason?: string;
+}) {
+  const { instructorId, startTime, endTime, reason } = params;
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) {
     throw new Error("Ikke autorisert");
@@ -169,7 +170,7 @@ export async function createBlockedTime(
   }
 
   revalidatePath("/portal/admin/tilgjengelighet");
-  revalidateTag("slots");
+  revalidateTag("slots", {});
 }
 
 export async function deleteBlockedTime(id: string) {
@@ -191,7 +192,7 @@ export async function deleteBlockedTime(id: string) {
   }
 
   revalidatePath("/portal/admin/tilgjengelighet");
-  revalidateTag("slots");
+  revalidateTag("slots", {});
 }
 
 export async function syncGoogleCalendar(instructorId: string) {
@@ -202,5 +203,5 @@ export async function syncGoogleCalendar(instructorId: string) {
 
   // TODO: Implementer Google Calendar sync med Supabase
   logger.info("[syncGoogleCalendar] Not implemented yet");
-  return { success: false, message: "Google Calendar sync ikke implementert ennå" };
+  return { success: false, message: "Google Calendar sync ikke implementert ennå", count: 0, error: "Ikke implementert ennå" };
 }
