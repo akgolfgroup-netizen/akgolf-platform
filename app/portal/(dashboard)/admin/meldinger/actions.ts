@@ -9,6 +9,85 @@ import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { getTwilioClient } from "@/lib/portal/sms/twilio";
 import { logger } from "@/lib/logger";
 import { nanoid } from "nanoid";
+import { prisma } from "@/lib/portal/prisma";
+import type { Channel } from "@/components/portal/admin/meldinger/ChannelFilter";
+import type { MessageStatus } from "@/components/portal/admin/meldinger/MessageList";
+
+// ── Typer ──────────────────────────────────────────────
+
+export type AIResponseData = {
+  draftContent: string;
+  confidence: number;
+  category: string;
+  modelUsed: string;
+};
+
+export type MessageWithAI = {
+  id: string;
+  channel: Channel;
+  senderName: string;
+  senderHandle: string;
+  subject: string | null;
+  content: string;
+  receivedAt: Date;
+  status: MessageStatus;
+  aiResponse: AIResponseData | null;
+};
+
+export type ChannelCounts = Record<string, number>;
+
+// ── Fetch-funksjoner ───────────────────────────────────
+
+/** Hent alle innkommende meldinger med siste AI-svar, for meldingslisten */
+export async function getInboxMessages(): Promise<{
+  messages: MessageWithAI[];
+  channelCounts: ChannelCounts;
+}> {
+  const user = await requirePortalUser();
+  if (!isStaff(user.role)) redirect("/");
+
+  const rows = await prisma.unifiedMessage.findMany({
+    where: { direction: "incoming" },
+    orderBy: { createdAt: "desc" },
+    take: 100,
+    include: {
+      AIResponses: {
+        take: 1,
+        orderBy: { createdAt: "desc" },
+      },
+    },
+  });
+
+  // Telle meldinger per kanal
+  const channelCounts: ChannelCounts = { ALL: rows.length };
+  for (const r of rows) {
+    channelCounts[r.channel] = (channelCounts[r.channel] ?? 0) + 1;
+  }
+
+  const messages: MessageWithAI[] = rows.map((r) => {
+    const ai = r.AIResponses[0];
+    return {
+      id: r.id,
+      channel: r.channel as Channel,
+      senderName: r.senderName ?? "Ukjent",
+      senderHandle: r.senderHandle ?? "",
+      subject: r.subject,
+      content: r.content,
+      receivedAt: r.receivedAt,
+      status: r.status as MessageStatus,
+      aiResponse: ai
+        ? {
+            draftContent: ai.draftContent,
+            confidence: ai.confidence ?? 0,
+            category: ai.category ?? "Ukjent",
+            modelUsed: ai.modelUsed ?? "Ukjent",
+          }
+        : null,
+    };
+  });
+
+  return { messages, channelCounts };
+}
 
 export async function approveMessage(
   messageId: string,

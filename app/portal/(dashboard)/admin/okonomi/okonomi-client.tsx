@@ -1,284 +1,259 @@
 "use client";
 
-import { TrendingUp, TrendingDown, CreditCard, Users, Wallet } from "lucide-react";
+import { useState } from "react";
+import {
+  DollarSign,
+  CreditCard,
+  AlertCircle,
+  RotateCcw,
+  Download,
+  FileText,
+} from "lucide-react";
+import { cn } from "@/lib/portal/utils/cn";
 import {
   MCTopbar,
-  MCCard,
-  MCCardHeader,
-  MCCardTitle,
-  MCCardBody,
-  MCTable,
-  MCTableHeader,
-  MCTableBody,
-  MCTableRow,
-  MCTableHead,
-  MCTableCell,
-  MCBadge,
   useMCSidebar,
+  HGStatCard,
+  HGRevenueChart,
 } from "@/components/portal/mission-control";
+import type { OkonomiData } from "./actions";
 
-interface Transaction {
-  id: string;
-  amount: number;
-  type: string;
-  status: string;
-  createdAt: string;
-  customerName: string;
-  customerEmail: string;
-  serviceName: string;
+// ── Constants ────────────────────────────────────────────────────────────────
+
+const timeRanges = [
+  { label: "Dag", value: "day" as const },
+  { label: "Uke", value: "week" as const },
+  { label: "Måned", value: "month" as const },
+  { label: "År", value: "year" as const },
+];
+
+type TimeRange = "day" | "week" | "month" | "year";
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+function formatKr(amount: number): string {
+  return `${amount.toLocaleString("nb-NO")} kr`;
 }
 
-interface FinanceData {
-  mtdRevenue: number;
-  mtdTransactions: number;
-  lastMonthRevenue: number;
-  activeSubscriptions: number;
-  recentTransactions: Transaction[];
-  revenueByService: { type: string; amount: number }[];
+function formatRelativeDate(isoDate: string): string {
+  const date = new Date(isoDate);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return "I dag";
+  if (diffDays === 1) return "I går";
+  if (diffDays < 7) return `${diffDays} dager siden`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)} uker siden`;
+  return date.toLocaleDateString("nb-NO", { day: "numeric", month: "short" });
 }
 
-interface OkonomiClientProps {
-  data: FinanceData;
-}
+// ── Component ────────────────────────────────────────────────────────────────
 
-export function OkonomiClient({ data }: OkonomiClientProps) {
+export function OkonomiClient({ data }: { data: OkonomiData }) {
   const { toggle } = useMCSidebar();
+  const [timeRange, setTimeRange] = useState<TimeRange>("month");
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("nb-NO", {
-      style: "currency",
-      currency: "NOK",
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("nb-NO", {
-      day: "numeric",
-      month: "short",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
-  const revenueChange = data.lastMonthRevenue > 0
-    ? ((data.mtdRevenue - data.lastMonthRevenue) / data.lastMonthRevenue) * 100
-    : 0;
-
-  const isPositiveChange = revenueChange >= 0;
+  const currentRevenue = data.revenue[timeRange];
+  const yearTotal = formatKr(data.revenue.year);
 
   return (
     <>
       <MCTopbar
-        title="Okonomi"
-        subtitle="Finansiell oversikt"
+        title="Økonomi"
+        subtitle="Oversikt over inntekter, fakturaer og refusjoner"
         onMenuClick={toggle}
-        notificationCount={0}
       />
 
-      <div className="p-5 space-y-6">
-        {/* KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <MCCard>
-            <MCCardBody>
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px]">
-                    Omsetning MTD
-                  </div>
-                  <div className="text-2xl font-bold text-[#0A1F18] mt-1">
-                    {formatCurrency(data.mtdRevenue)}
-                  </div>
-                  <div className="flex items-center gap-1 mt-1">
-                    {isPositiveChange ? (
-                      <TrendingUp className="w-3 h-3 text-[var(--color-success)]" />
-                    ) : (
-                      <TrendingDown className="w-3 h-3 text-[var(--color-error)]" />
-                    )}
-                    <span
-                      className={`text-[10px] ${
-                        isPositiveChange ? "text-[var(--color-success)]" : "text-[var(--color-error)]"
-                      }`}
-                    >
-                      {Math.abs(revenueChange).toFixed(1)}% vs forrige mnd
-                    </span>
-                  </div>
-                </div>
-                <div className="w-10 h-10 rounded-lg bg-[var(--color-success-light)] flex items-center justify-center">
-                  <Wallet className="w-5 h-5 text-[var(--color-success)]" />
-                </div>
-              </div>
-            </MCCardBody>
-          </MCCard>
-
-          <MCCard>
-            <MCCardBody>
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px]">
-                    Transaksjoner
-                  </div>
-                  <div className="text-2xl font-bold text-[#0A1F18] mt-1">
-                    {data.mtdTransactions}
-                  </div>
-                  <div className="text-[10px] text-[#7A8C85] mt-1">Denne maneden</div>
-                </div>
-                <div className="w-10 h-10 rounded-lg bg-[#DBEAFE] flex items-center justify-center">
-                  <CreditCard className="w-5 h-5 text-[#007AFF]" />
-                </div>
-              </div>
-            </MCCardBody>
-          </MCCard>
-
-          <MCCard>
-            <MCCardBody>
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px]">
-                    Aktive abonnementer
-                  </div>
-                  <div className="text-2xl font-bold text-[#0A1F18] mt-1">
-                    {data.activeSubscriptions}
-                  </div>
-                  <div className="text-[10px] text-[#7A8C85] mt-1">
-                    Coaching-pakker
-                  </div>
-                </div>
-                <div className="w-10 h-10 rounded-lg bg-[#F3E8FF] flex items-center justify-center">
-                  <Users className="w-5 h-5 text-[#8B5CF6]" />
-                </div>
-              </div>
-            </MCCardBody>
-          </MCCard>
-
-          <MCCard>
-            <MCCardBody>
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px]">
-                    Gj.snitt per transaksjon
-                  </div>
-                  <div className="text-2xl font-bold text-[#0A1F18] mt-1">
-                    {data.mtdTransactions > 0
-                      ? formatCurrency(data.mtdRevenue / data.mtdTransactions)
-                      : formatCurrency(0)}
-                  </div>
-                  <div className="text-[10px] text-[#7A8C85] mt-1">MTD</div>
-                </div>
-                <div className="w-10 h-10 rounded-lg bg-[#FEF3C7] flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5 text-[#F59E0B]" />
-                </div>
-              </div>
-            </MCCardBody>
-          </MCCard>
+      <div className="p-5 space-y-5">
+        {/* Tidsperiode og handlinger */}
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div className="hg-tabs">
+            {timeRanges.map((range) => (
+              <button
+                key={range.value}
+                onClick={() => setTimeRange(range.value)}
+                className={cn("hg-tab", timeRange === range.value && "active")}
+              >
+                {range.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <button className="hg-btn hg-btn-secondary">
+              <Download className="w-4 h-4" />
+              Eksporter
+            </button>
+            <button className="hg-btn hg-btn-primary">
+              <FileText className="w-4 h-4" />
+              Ny faktura
+            </button>
+          </div>
         </div>
 
-        {/* Revenue by Service Type */}
-        <MCCard>
-          <MCCardHeader>
-            <MCCardTitle>Omsetning per tjeneste</MCCardTitle>
-          </MCCardHeader>
-          <MCCardBody>
-            <div className="space-y-3">
-              {data.revenueByService.length > 0 ? (
-                data.revenueByService.map((service) => {
-                  const percentage =
-                    data.mtdRevenue > 0
-                      ? (service.amount / data.mtdRevenue) * 100
-                      : 0;
-                  return (
-                    <div key={service.type}>
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-[11px] font-medium text-[#0A1F18]">
-                          {service.type}
-                        </span>
-                        <span className="text-[11px] text-[#5A6E66]">
-                          {formatCurrency(service.amount)} ({percentage.toFixed(1)}%)
-                        </span>
-                      </div>
-                      <div className="h-2 bg-[#D5DFDB] rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-[#0A1F18] rounded-full"
-                          style={{ width: `${percentage}%` }}
-                        />
-                      </div>
+        {/* KPI-kort */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <HGStatCard
+            label="Omsetning"
+            value={formatKr(currentRevenue)}
+            icon={DollarSign}
+          />
+          <HGStatCard
+            label="Netto (est.)"
+            value={formatKr(Math.round(currentRevenue * 0.75))}
+            icon={CreditCard}
+            subtitle="Etter MVA og avgifter"
+          />
+          <HGStatCard
+            label="Utestående"
+            value={formatKr(data.totalUnpaid)}
+            icon={AlertCircle}
+            variant={data.totalUnpaid > 0 ? "warning" : "default"}
+          />
+          <HGStatCard
+            label="Refusjoner"
+            value={formatKr(data.totalRefunds)}
+            icon={RotateCcw}
+          />
+        </div>
+
+        {/* Hovedinnhold */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          {/* Inntektsgraf */}
+          <div className="lg:col-span-2">
+            <HGRevenueChart
+              data={data.monthlyTrend}
+              title="Inntektstrend"
+              period={new Date().getFullYear().toString()}
+              total={yearTotal}
+            />
+          </div>
+
+          {/* Inntekt per tjeneste */}
+          <div className="hg-card p-4">
+            <h3 className="hg-section-title mb-4">Inntekt per tjeneste</h3>
+            {data.revenueByService.length === 0 ? (
+              <p className="text-sm text-[var(--hg-text-muted)]">
+                Ingen betalinger denne måneden ennå.
+              </p>
+            ) : (
+              <div className="space-y-4">
+                {data.revenueByService.map((service) => (
+                  <div key={service.name}>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-sm text-[var(--hg-text)]">
+                        {service.name}
+                      </span>
+                      <span className="text-sm font-semibold text-[var(--hg-text)] tabular-nums">
+                        {formatKr(service.amount)}
+                      </span>
                     </div>
-                  );
-                })
-              ) : (
-                <div className="text-[10px] text-[#7A8C85] text-center py-4">
-                  Ingen transaksjoner denne maneden
-                </div>
+                    <div className="h-2 bg-[var(--hg-surface-raised)] rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-[var(--hg-primary)] rounded-full transition-all"
+                        style={{ width: `${service.percentage}%` }}
+                      />
+                    </div>
+                    <span className="text-xs text-[var(--hg-text-muted)] mt-1 block">
+                      {service.percentage}% av totalen
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Bunn-grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* Ubetalte bookinger */}
+          <div className="hg-card overflow-hidden">
+            <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
+              <h3 className="hg-section-title">Ubetalte bookinger</h3>
+              {data.unpaid.length > 0 && (
+                <span className="hg-badge hg-badge-warning">
+                  {data.unpaid.length} stk
+                </span>
               )}
             </div>
-          </MCCardBody>
-        </MCCard>
+            {data.unpaid.length === 0 ? (
+              <div className="p-4 text-sm text-[var(--hg-text-muted)]">
+                Ingen ubetalte bookinger.
+              </div>
+            ) : (
+              <div className="divide-y divide-[var(--hg-border-subtle)]">
+                {data.unpaid.map((booking) => (
+                  <div key={booking.id} className="p-4 flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-[var(--hg-warning-bg)]">
+                      <AlertCircle className="w-4 h-4 text-[var(--hg-warning)]" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-[var(--hg-text)]">
+                          {booking.customerName}
+                        </span>
+                        <span className="text-xs text-[var(--hg-text-muted)]">
+                          {booking.serviceName}
+                        </span>
+                      </div>
+                      <div className="text-xs text-[var(--hg-text-muted)]">
+                        Opprettet: {formatRelativeDate(booking.createdAt)}
+                      </div>
+                    </div>
+                    <span className="text-sm font-semibold text-[var(--hg-text)] tabular-nums">
+                      {formatKr(booking.amount)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
-        {/* Recent Transactions */}
-        <MCCard>
-          <MCCardHeader>
-            <MCCardTitle>Siste transaksjoner</MCCardTitle>
-          </MCCardHeader>
-          <MCCardBody className="p-0">
-            <MCTable>
-              <MCTableHeader>
-                <MCTableRow>
-                  <MCTableHead>Kunde</MCTableHead>
-                  <MCTableHead>Tjeneste</MCTableHead>
-                  <MCTableHead>Belop</MCTableHead>
-                  <MCTableHead>Status</MCTableHead>
-                  <MCTableHead>Dato</MCTableHead>
-                </MCTableRow>
-              </MCTableHeader>
-              <MCTableBody>
-                {data.recentTransactions.length > 0 ? (
-                  data.recentTransactions.map((tx) => (
-                    <MCTableRow key={tx.id}>
-                      <MCTableCell>
-                        <div>
-                          <div className="font-medium">{tx.customerName}</div>
-                          <div className="text-[9px] text-[#7A8C85]">
-                            {tx.customerEmail}
-                          </div>
-                        </div>
-                      </MCTableCell>
-                      <MCTableCell>{tx.serviceName}</MCTableCell>
-                      <MCTableCell className="font-medium">
-                        {formatCurrency(tx.amount)}
-                      </MCTableCell>
-                      <MCTableCell>
-                        <MCBadge
-                          variant={
-                            tx.status === "COMPLETED"
-                              ? "success"
-                              : tx.status === "PENDING"
-                              ? "warning"
-                              : "error"
-                          }
-                        >
-                          {tx.status === "COMPLETED"
-                            ? "Fullfort"
-                            : tx.status === "PENDING"
-                            ? "Venter"
-                            : tx.status}
-                        </MCBadge>
-                      </MCTableCell>
-                      <MCTableCell className="text-[#7A8C85]">
-                        {formatDate(tx.createdAt)}
-                      </MCTableCell>
-                    </MCTableRow>
-                  ))
-                ) : (
-                  <MCTableRow>
-                    <MCTableCell colSpan={5} className="text-center py-8 text-[#7A8C85]">
-                      Ingen transaksjoner funnet
-                    </MCTableCell>
-                  </MCTableRow>
-                )}
-              </MCTableBody>
-            </MCTable>
-          </MCCardBody>
-        </MCCard>
+          {/* Refusjoner */}
+          <div className="hg-card overflow-hidden">
+            <div className="px-4 py-3 border-b border-[var(--hg-border)] flex items-center justify-between">
+              <h3 className="hg-section-title">Refusjoner</h3>
+              {data.refunds.length > 0 && (
+                <span className="hg-badge hg-badge-error">
+                  {data.refunds.length} totalt
+                </span>
+              )}
+            </div>
+            {data.refunds.length === 0 ? (
+              <div className="p-4 text-sm text-[var(--hg-text-muted)]">
+                Ingen refusjoner.
+              </div>
+            ) : (
+              <div className="divide-y divide-[var(--hg-border-subtle)]">
+                {data.refunds.map((refund) => (
+                  <div key={refund.id} className="p-4 flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-[var(--hg-error-bg)]">
+                      <RotateCcw className="w-4 h-4 text-[var(--hg-error)]" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-[var(--hg-text)]">
+                        {refund.customerName}
+                      </div>
+                      <div className="text-xs text-[var(--hg-text-muted)]">
+                        {refund.serviceName}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-sm font-semibold text-[var(--hg-error)] tabular-nums block">
+                        -{formatKr(refund.grossAmount)}
+                      </span>
+                      {refund.refundedAt && (
+                        <span className="text-xs text-[var(--hg-text-muted)]">
+                          {formatRelativeDate(refund.refundedAt)}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );

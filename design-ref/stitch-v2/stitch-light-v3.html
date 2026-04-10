@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="no"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pro Golf Performance Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-lowest": "#0d0f0e",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#ffdbcc",
+                        "tertiary-container": "#4e1b00",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "background": "#E8EDEB",
+                        "surface-container-low": "#1a1c1b",
+                        "surface-container-high": "#282a29",
+                        "on-secondary-fixed": "#002201",
+                        "secondary": "#4ce346",
+                        "primary-fixed-dim": "#b4ccc1",
+                        "tertiary": "#ffb694",
+                        "on-surface": "#e2e3e0",
+                        "inverse-on-surface": "#2f3130",
+                        "inverse-surface": "#e2e3e0",
+                        "surface-bright": "#383a38",
+                        "secondary-fixed-dim": "#4ce346",
+                        "surface": "#121413",
+                        "error": "#ffb4ab",
+                        "primary": "#b4ccc1",
+                        "on-secondary-fixed-variant": "#005306",
+                        "on-primary-container": "#80978e",
+                        "on-primary-fixed": "#0a1f19",
+                        "on-primary": "#1f342d",
+                        "tertiary-fixed-dim": "#ffb694",
+                        "on-tertiary-container": "#e37237",
+                        "secondary-container": "#04b71a",
+                        "secondary-fixed": "#75ff68",
+                        "on-tertiary": "#561f00",
+                        "surface-container": "#1e201f",
+                        "outline": "#8c928e",
+                        "on-surface-variant": "#c2c8c4",
+                        "primary-fixed": "#d0e8dd",
+                        "surface-tint": "#b4ccc1",
+                        "on-tertiary-fixed": "#351000",
+                        "primary-container": "#1a2f28",
+                        "surface-dim": "#121413",
+                        "outline-variant": "#424845",
+                        "on-primary-fixed-variant": "#364b43",
+                        "on-error": "#690005",
+                        "on-background": "#e2e3e0",
+                        "surface-container-highest": "#333534",
+                        "inverse-primary": "#4d635b",
+                        "surface-variant": "#333534",
+                        "on-secondary-container": "#003f03",
+                        "on-secondary": "#003a03"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(26, 47, 40, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #E8EDEB;
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-16 md:w-64 bg-[#1A2F28] border-r border-white/10 shadow-2xl shadow-black/40 flex flex-col h-full z-50">
+<div class="p-6">
+<span class="text-xl font-black text-[#4CE346] tracking-tighter">Pro Golf</span>
+</div>
+<nav class="flex-1 px-3 space-y-2">
+<a class="flex items-center space-x-3 p-3 transition-all duration-300 ease-in-out bg-white/10 text-[#4CE346] border-l-4 border-[#4CE346]" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="hidden md:block font-inter text-sm tracking-wide uppercase font-medium">Oversikt</span>
+</a>
+<a class="flex items-center space-x-3 p-3 transition-all duration-300 ease-in-out text-white/60 hover:text-white/90 hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">golf_course</span>
+<span class="hidden md:block font-inter text-sm tracking-wide uppercase font-medium">Svinganalyse</span>
+</a>
+<a class="flex items-center space-x-3 p-3 transition-all duration-300 ease-in-out text-white/60 hover:text-white/90 hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="hidden md:block font-inter text-sm tracking-wide uppercase font-medium">Statistikk</span>
+</a>
+<a class="flex items-center space-x-3 p-3 transition-all duration-300 ease-in-out text-white/60 hover:text-white/90 hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">sports_golf</span>
+<span class="hidden md:block font-inter text-sm tracking-wide uppercase font-medium">Utstyr</span>
+</a>
+<a class="flex items-center space-x-3 p-3 transition-all duration-300 ease-in-out text-white/60 hover:text-white/90 hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="hidden md:block font-inter text-sm tracking-wide uppercase font-medium">Innstillinger</span>
+</a>
+</nav>
+<div class="p-4 mt-auto">
+<button class="w-full py-3 bg-[#4CE346] text-[#1A2F28] rounded-xl font-bold flex items-center justify-center space-x-2 transition-all duration-300 hover:scale-95 active:scale-90">
+<span class="material-symbols-outlined">add</span>
+<span class="hidden md:block">Ny økt</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-16 md:ml-64 min-h-screen relative">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-16 md:left-64 h-16 z-40 bg-emerald-950/70 backdrop-blur-xl flex justify-between items-center px-8 w-full shadow-lg">
+<div class="flex items-center space-x-8">
+<h1 class="font-inter text-base font-bold text-white uppercase tracking-widest">Dashboard</h1>
+<nav class="hidden lg:flex space-x-6">
+<a class="text-[#4CE346] border-b-2 border-[#4CE346] pb-1 font-inter text-sm font-bold" href="#">Siste runder</a>
+<a class="text-white/70 hover:text-white transition-all font-inter text-sm font-bold" href="#">Baneguider</a>
+<a class="text-white/70 hover:text-white transition-all font-inter text-sm font-bold" href="#">Trening</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<button class="px-4 py-1.5 bg-tertiary-container text-on-tertiary-container text-xs font-bold rounded-full uppercase tracking-tighter transition-all hover:brightness-110">Oppgrader</button>
+<span class="material-symbols-outlined text-white/70 cursor-pointer hover:text-white">notifications</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/20">
+<img class="w-full h-full object-cover" data-alt="professional male golfer headshot in high quality outdoor lighting with greenery background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7Tc4lhGVi9gMkhRLiwrwlPaw999tE_HhAR6kv5LIo2WYlLmJE8Zlctw3t2OU0E4QNx6ItRmdSfeDfNE23BjN5xQQE1eXVIZtaJvFcJWKQI1D_HPDxSLeZ6anwuqNhT2od7a4WCBb9qbi6QmCB09cGtlqUdkGopsXX4Iqad6SRuAevTQDXIchnL_p6Vd0g5XzrBD1TeCuOHutXU8ffkkVcJ28jZT-G_Ok7kqK_EBCSPMwuTCoWnn5LOkf0Oh4JGuAICD-z5xO_2-M"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="pt-24 px-8 pb-12">
+<div class="grid grid-cols-12 gap-6">
+<!-- Left Column: Player Profile (Taller/Prominent) -->
+<div class="col-span-12 lg:col-span-4 xl:col-span-3 space-y-6">
+<div class="rounded-xl overflow-hidden shadow-2xl bg-surface-container-low flex flex-col h-full border-none">
+<!-- High Impact Photo -->
+<div class="relative h-[450px]">
+<img class="w-full h-full object-cover" data-alt="tall athletic golfer in professional attire holding a driver on a pristine green fairway during golden hour" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdfccUXd9W4_7q26rOc0IvBSexXd3K2ukKXYerd0gyBQyKeHZR7IwLvHy-6wN4nVCO-5F0xk2BTeZYEsC24Kk3PZOpWG_iP2BS7IJxMwhPr5V8AXzgrwH1Bvgxsxxgm0yPA7qAK5IMg-xk-shg1W75Ws6gnW4p6ZEF6VKk7BPnh7AArj9uPlKkuNFciEm3ToJ8geDsjuXjgSVh7XNjWG4-4965rLjAChT12V4hI7UYJVoU-CdhIW4huHyjxqC-hawDTEDIVfh_ML4"/>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#1A2F28] to-transparent">
+<span class="bg-[#4CE346] text-[#1A2F28] px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-2 inline-block">Performance Pro</span>
+<h2 class="text-3xl font-black text-white leading-tight uppercase italic">Erik Magnussen</h2>
+</div>
+</div>
+<!-- Bottom Stats Section -->
+<div class="bg-[#1A2F28] p-6 space-y-6 flex-1">
+<div class="grid grid-cols-3 gap-4">
+<div class="text-center">
+<div class="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">HCP</div>
+<div class="text-2xl font-black text-[#4CE346]">12.4</div>
+</div>
+<div class="text-center">
+<div class="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">Runder</div>
+<div class="text-2xl font-black text-white">42</div>
+</div>
+<div class="text-center">
+<div class="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">Beste</div>
+<div class="text-2xl font-black text-white">74</div>
+</div>
+</div>
+<!-- Coaching Card (Existing) -->
+<div class="bg-tertiary-container p-4 rounded-xl border-l-4 border-tertiary">
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-tertiary">psychology</span>
+<div>
+<h4 class="text-xs font-black text-tertiary uppercase tracking-widest mb-1">Coach Insight</h4>
+<p class="text-white text-xs leading-relaxed font-medium">Fokuser på rotasjon i hoftene under backswing i dag.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Grid of Cards -->
+<div class="col-span-12 lg:col-span-8 xl:col-span-9 space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Treningsplan Card -->
+<div class="bg-surface-container-low rounded-xl p-6 shadow-sm relative overflow-hidden">
+<div class="w-1 h-8 bg-secondary absolute left-0 top-6"></div>
+<h3 class="headline-sm text-on-surface-variant font-black uppercase tracking-widest text-xs mb-6">Treningsplan</h3>
+<!-- Weekly Calendar -->
+<div class="flex justify-between mb-8">
+<div class="text-center">
+<span class="block text-[10px] text-white/40 font-bold mb-2">MAN</span>
+<div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/60 text-xs">12</div>
+</div>
+<div class="text-center">
+<span class="block text-[10px] text-white/40 font-bold mb-2">TIR</span>
+<div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/60 text-xs">13</div>
+</div>
+<div class="text-center">
+<span class="block text-[10px] text-white/40 font-bold mb-2">ONS</span>
+<div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/60 text-xs">14</div>
+</div>
+<div class="text-center">
+<span class="block text-[10px] text-white/40 font-bold mb-2">TOR</span>
+<div class="w-8 h-8 rounded-full bg-secondary text-primary-container flex items-center justify-center text-xs font-bold shadow-lg shadow-secondary/20">15</div>
+</div>
+<div class="text-center">
+<span class="block text-[10px] text-white/40 font-bold mb-2">FRE</span>
+<div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/60 text-xs">16</div>
+</div>
+<div class="text-center">
+<span class="block text-[10px] text-white/40 font-bold mb-2">LØR</span>
+<div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/60 text-xs">17</div>
+</div>
+<div class="text-center">
+<span class="block text-[10px] text-white/40 font-bold mb-2">SØN</span>
+<div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/60 text-xs">18</div>
+</div>
+</div>
+<!-- Checklist -->
+<div class="space-y-3">
+<div class="flex items-center space-x-3 text-white/90">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="text-xs font-medium">Oppvarming - 15 min</span>
+</div>
+<div class="flex items-center space-x-3 text-white/90">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="text-xs font-medium">Driver fokus - 20 baller</span>
+</div>
+<div class="flex items-center space-x-3 text-white/90">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="text-xs font-medium">Jern-trening - 30 baller</span>
+</div>
+<div class="flex items-center space-x-3 text-white/40">
+<span class="material-symbols-outlined text-white/20 text-sm">radio_button_unchecked</span>
+<span class="text-xs font-medium">Putting (kort) - 10 min</span>
+</div>
+<div class="flex items-center space-x-3 text-white/40">
+<span class="material-symbols-outlined text-white/20 text-sm">radio_button_unchecked</span>
+<span class="text-xs font-medium">Uttøying</span>
+</div>
+</div>
+</div>
+<!-- Strokes Gained Card -->
+<div class="bg-surface-container-low rounded-xl p-6 shadow-sm relative overflow-hidden">
+<div class="w-1 h-8 bg-secondary absolute left-0 top-6"></div>
+<h3 class="headline-sm text-on-surface-variant font-black uppercase tracking-widest text-xs mb-8">Strokes Gained</h3>
+<div class="flex flex-col items-center justify-center flex-1 py-4">
+<div class="text-5xl font-black text-secondary mb-8 tracking-tighter">+3.5</div>
+<!-- Dot-based Meter -->
+<div class="w-full flex items-center justify-between px-2">
+<div class="flex space-x-1">
+<div class="w-1.5 h-1.5 rounded-full bg-white/10"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-white/10"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-white/10"></div>
+</div>
+<div class="flex-1 h-[2px] bg-white/10 mx-4 relative">
+<div class="absolute left-3/4 top-1/2 -translate-y-1/2 w-4 h-4 bg-secondary rounded-full border-4 border-surface-container-low shadow-lg shadow-secondary/40"></div>
+</div>
+<div class="flex space-x-1">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+</div>
+</div>
+<div class="flex justify-between w-full mt-2 px-2 text-[10px] font-black uppercase tracking-widest text-white/40">
+<span>Under Par</span>
+<span>Elite Nivå</span>
+</div>
+</div>
+</div>
+<!-- Putts/runde Card -->
+<div class="bg-surface-container-low rounded-xl p-6 shadow-sm relative overflow-hidden">
+<div class="w-1 h-8 bg-tertiary absolute left-0 top-6"></div>
+<h3 class="headline-sm text-on-surface-variant font-black uppercase tracking-widest text-xs mb-8">Putts Per Runde</h3>
+<div class="h-40 flex items-end justify-between space-x-2">
+<div class="flex-1 bg-tertiary/20 rounded-t-sm h-[60%] transition-all hover:bg-tertiary/40"></div>
+<div class="flex-1 bg-tertiary/30 rounded-t-sm h-[75%] transition-all hover:bg-tertiary/50"></div>
+<div class="flex-1 bg-tertiary rounded-t-sm h-[85%] transition-all hover:brightness-110"></div>
+<div class="flex-1 bg-tertiary/50 rounded-t-sm h-[65%] transition-all hover:bg-tertiary/70"></div>
+<div class="flex-1 bg-tertiary/40 rounded-t-sm h-[55%] transition-all hover:bg-tertiary/60"></div>
+<div class="flex-1 bg-tertiary/30 rounded-t-sm h-[70%] transition-all hover:bg-tertiary/50"></div>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<div class="text-3xl font-black text-white">29.4</div>
+<div class="flex items-center text-tertiary text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+<span>-1.2 snitt</span>
+</div>
+</div>
+</div>
+<!-- Handicap Chart Card -->
+<div class="bg-surface-container-low rounded-xl p-6 shadow-sm relative overflow-hidden md:col-span-2">
+<div class="flex justify-between items-center mb-8">
+<h3 class="headline-sm text-on-surface-variant font-black uppercase tracking-widest text-xs">Handicap Utvikling</h3>
+<span class="px-3 py-1 bg-secondary text-primary-container text-[10px] font-black rounded-full uppercase tracking-widest">Mål: 10.0</span>
+</div>
+<!-- Simulated Chart -->
+<div class="h-48 relative w-full">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 200">
+<path d="M0,150 L200,140 L400,160 L600,120 L800,100 L1000,85" fill="none" stroke="#4CE346" stroke-linecap="round" stroke-width="4"></path>
+<path d="M0,150 L200,140 L400,160 L600,120 L800,100 L1000,85 L1000,200 L0,200 Z" fill="url(#gradient)" opacity="0.1"></path>
+<defs>
+<lineargradient id="gradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#4CE346;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#1A2F28;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="absolute right-0 top-[85px] w-4 h-4 bg-secondary rounded-full border-4 border-surface-container-low"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-black uppercase tracking-widest text-white/30">
+<span>Januar</span>
+<span>Mars</span>
+<span>Mai</span>
+<span>Juli</span>
+<span>September</span>
+<span>Nå</span>
+</div>
+</div>
+<!-- Trackman Waveform (Existing) -->
+<div class="bg-surface-container-low rounded-xl p-6 shadow-sm relative overflow-hidden flex flex-col">
+<h3 class="headline-sm text-on-surface-variant font-black uppercase tracking-widest text-xs mb-4">Trackman Live</h3>
+<div class="flex-1 flex items-center justify-center">
+<svg class="w-full h-16 text-tertiary" viewbox="0 0 200 60">
+<path d="M0 30 Q 25 10 50 30 T 100 30 T 150 30 T 200 30" fill="none" stroke="currentColor" stroke-width="2">
+<animate attributename="d" dur="3s" repeatcount="indefinite" values="M0 30 Q 25 10 50 30 T 100 30 T 150 30 T 200 30; M0 30 Q 25 50 50 30 T 100 30 T 150 30 T 200 30; M0 30 Q 25 10 50 30 T 100 30 T 150 30 T 200 30"></animate>
+</path>
+</svg>
+</div>
+<div class="mt-4 flex justify-between">
+<div>
+<span class="text-[10px] text-white/40 block font-bold">CLUB SPEED</span>
+<span class="text-lg font-black text-white tracking-tighter">112.4 MPH</span>
+</div>
+<div class="text-right">
+<span class="text-[10px] text-white/40 block font-bold">CARRY</span>
+<span class="text-lg font-black text-secondary tracking-tighter">264 M</span>
+</div>
+</div>
+</div>
+<!-- Purple AI-insight Card (Existing) -->
+<div class="bg-[#2D1B3D] rounded-xl p-6 shadow-sm relative overflow-hidden border-l-4 border-purple-400 md:col-span-1">
+<div class="flex items-start space-x-4">
+<div class="bg-purple-400/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-purple-400">auto_awesome</span>
+</div>
+<div>
+<h3 class="headline-sm text-purple-400 font-black uppercase tracking-widest text-xs mb-2">AI-Analyse</h3>
+<p class="text-white text-xs leading-relaxed font-medium">Basert på dine siste 10 runder, taper du mest slag på innspill fra 50-80 meter. Vi har generert en ny øvelse for dette.</p>
+<button class="mt-4 text-[10px] font-black text-purple-400 uppercase tracking-widest border border-purple-400/30 px-3 py-1 rounded-full hover:bg-purple-400/10 transition-all">Se øvelse</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

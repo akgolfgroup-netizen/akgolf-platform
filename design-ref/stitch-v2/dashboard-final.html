@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html lang="no"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Golf — Spillerportal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#1A2F28",
+                        "accent-lime": "#B2F746",
+                        "accent-orange": "#E8763A",
+                        "accent-purple": "#5D3FD3",
+                        "page-bg": "#E8EDEB"
+                    },
+                    "borderRadius": {
+                        "card": "16px"
+                    },
+                    "fontFamily": {
+                        "sans": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #E8EDEB; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: minmax(160px, auto);
+            gap: 1.5rem;
+        }
+        .card-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -10px rgba(0,0,0,0.1); }
+        .glass { backdrop-filter: blur(12px); background: rgba(245, 250, 248, 0.7); }
+    </style>
+</head>
+<body class="text-slate-900">
+<!-- SideNavBar: Narrower (64px), dark green, icon-only -->
+<aside class="fixed left-0 top-0 h-full w-16 z-50 flex flex-col items-center py-6 bg-[#1A2F28]">
+<div class="mb-10">
+<div class="w-10 h-10 bg-[#B2F746] rounded flex items-center justify-center">
+<span class="text-[#1A2F28] font-bold text-sm">AK</span>
+</div>
+</div>
+<nav class="flex flex-col space-y-6 flex-1 items-center">
+<button class="w-10 h-10 rounded-xl bg-white/10 text-[#B2F746] flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+</button>
+<button class="w-10 h-10 rounded-xl text-white/40 hover:text-white hover:bg-white/5 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined" data-icon="video_camera_front">video_camera_front</span>
+</button>
+<button class="w-10 h-10 rounded-xl text-white/40 hover:text-white hover:bg-white/5 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</button>
+<button class="w-10 h-10 rounded-xl text-white/40 hover:text-white hover:bg-white/5 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+</button>
+</nav>
+<button class="w-10 h-10 rounded-xl text-white/40 hover:text-white mt-auto flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</aside>
+<main class="ml-16 min-h-screen">
+<!-- TopNavBar: Glassmorphism, Pill tabs, and action buttons -->
+<header class="fixed top-0 right-0 left-16 z-40 flex justify-between items-center px-8 h-16 glass">
+<div class="flex items-center gap-8">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="bg-slate-100 border-none rounded-full py-1.5 pl-10 pr-4 text-xs focus:ring-1 focus:ring-primary w-48" placeholder="Søk..." type="text"/>
+</div>
+<nav class="bg-slate-200/50 p-1 rounded-full flex gap-1">
+<a class="bg-primary text-white px-4 py-1.5 rounded-full text-xs font-medium" href="#">Oversikt</a>
+<a class="text-slate-600 hover:text-primary px-4 py-1.5 rounded-full text-xs font-medium transition-colors" href="#">Aktiviteter</a>
+<a class="text-slate-600 hover:text-primary px-4 py-1.5 rounded-full text-xs font-medium transition-colors" href="#">Statistikk</a>
+<a class="text-slate-600 hover:text-primary px-4 py-1.5 rounded-full text-xs font-medium transition-colors" href="#">Plan</a>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-medium hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span>
+<span>Kalender</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-medium hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="smart_toy">smart_toy</span>
+<span>AI Coach</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary overflow-hidden ml-2">
+<img alt="Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbJnuQCwZlfAxF88Z4iq7_qLS0-AkvtOeOq5dKq0CeXtcNa9QT9fi-yKQC56UEubu4RFPycT5ebUAHXN91uhckiT9QM7Yqj6coP-gp2QnEVa1js7B1g6ewLjOTn5TKOetmLsNcYH-eZwK054dLKU7OJ7XA-e5zKzTuxVJ3nc2ftUe0nptsHuPE0nYsdazcUQMNbdwZpt9CzpWqkHHWSe9bE-A6rEM616D82ptfmEoFQBELtakMvzdcWpOzfDnOSRuCPVNzyILGxrc"/>
+</div>
+</div>
+</header>
+<div class="pt-24 px-10 pb-12 max-w-[1500px] mx-auto">
+<header class="mb-10">
+<h1 class="text-4xl font-light text-primary">Hei, <span class="font-bold">Erik</span></h1>
+<p class="text-slate-500 mt-1">Klar for dagens økt på banen?</p>
+</header>
+<div class="bento-grid">
+<!-- 3. TRENINGSAKTIVITET CARD: Light mint gradient, streak banner, stacked bar chart -->
+<section class="col-span-3 row-span-3 bg-gradient-to-br from-[#E1F0E8] to-[#D4E8DC] rounded-card p-6 flex flex-col justify-between card-lift shadow-sm">
+<div>
+<div class="flex justify-between items-start mb-6">
+<h2 class="text-primary font-bold">Treningsaktivitet</h2>
+</div>
+<div class="bg-[#B2F746] text-[#1A2F28] px-4 py-2 rounded-lg text-xs font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="local_fire_department">local_fire_department</span>
+                        Du er på en streak! 21 dager
+                    </div>
+<div class="flex items-end gap-2.5 h-44 mb-4">
+<!-- Stacked Bars: lime, orange, light green -->
+<div class="flex-1 flex flex-col-reverse gap-0.5 h-full justify-end">
+<div class="w-full bg-[#B2F746] rounded-sm" style="height: 30%"></div>
+<div class="w-full bg-[#E8763A] rounded-sm" style="height: 15%"></div>
+<div class="w-full bg-emerald-100 rounded-sm" style="height: 15%"></div>
+</div>
+<div class="flex-1 flex flex-col-reverse gap-0.5 h-full justify-end">
+<div class="w-full bg-[#B2F746] rounded-sm" style="height: 40%"></div>
+<div class="w-full bg-[#E8763A] rounded-sm" style="height: 25%"></div>
+<div class="w-full bg-emerald-100 rounded-sm" style="height: 20%"></div>
+</div>
+<div class="flex-1 flex flex-col-reverse gap-0.5 h-full justify-end">
+<div class="w-full bg-[#B2F746] rounded-sm" style="height: 20%"></div>
+<div class="w-full bg-[#E8763A] rounded-sm" style="height: 10%"></div>
+<div class="w-full bg-emerald-100 rounded-sm" style="height: 10%"></div>
+</div>
+<div class="flex-1 flex flex-col-reverse gap-0.5 h-full justify-end">
+<div class="w-full bg-[#B2F746] rounded-sm" style="height: 50%"></div>
+<div class="w-full bg-[#E8763A] rounded-sm" style="height: 30%"></div>
+<div class="w-full bg-emerald-100 rounded-sm" style="height: 15%"></div>
+</div>
+<div class="flex-1 flex flex-col-reverse gap-0.5 h-full justify-end">
+<div class="w-full bg-[#B2F746] rounded-sm" style="height: 45%"></div>
+<div class="w-full bg-[#E8763A] rounded-sm" style="height: 20%"></div>
+<div class="w-full bg-emerald-100 rounded-sm" style="height: 15%"></div>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-black/5">
+<p class="text-3xl font-bold text-primary">8.5 t</p>
+<p class="text-xs text-slate-600 font-medium">treningstid denne uken</p>
+</div>
+</section>
+<!-- 4. TRACKMAN WAVE: Audio-visualizer waveform -->
+<section class="col-span-6 row-span-2 bg-white rounded-card p-8 card-lift shadow-sm">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-primary font-bold">TrackMan Driver Data</h3>
+<div class="flex gap-4">
+<div class="text-right">
+<p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Club Speed</p>
+<p class="text-xl font-bold text-primary">142 <span class="text-[10px] font-normal">mph</span></p>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Carry</p>
+<p class="text-xl font-bold text-primary">245 <span class="text-[10px] font-normal">m</span></p>
+</div>
+</div>
+</div>
+<div class="relative h-28 flex items-center justify-center gap-[2px]" id="tmWave"></div>
+<div class="flex justify-between mt-2 text-[10px] text-slate-400 font-bold px-2 uppercase tracking-widest">
+<span>0s</span>
+<span>1.5s</span>
+<span>3.0s</span>
+</div>
+</section>
+<!-- 5. PLAYER PROFILE: Top image, bottom dark green, stat boxes -->
+<section class="col-span-3 row-span-4 bg-[#1A2F28] rounded-card overflow-hidden card-lift shadow-sm flex flex-col">
+<div class="h-[45%] relative">
+<img alt="Erik Golf" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC70i38Ig9U6uPJaFUuVuvsUxboUSN8B1QDi5xUb11cuCCSb5qWEyIYpc5go_V9Xe_brIDuM6-iYZiQrXbx9fpGFM8eU6s21TewRzw4yN_RsqV82SUfE4LPd0acyVvpscE5PXFh6Vt7nGLKtEczHnsK_-nIbyl_f3tMSzE0-WliAMt2ki5m4cctF5GdpZmgTBFfeVCAeUMrgKra7lE78WazcdGtDdoUQL6p8g4CwTvF_hP-wDpGuQN8fx9_WCjB9fME9rvqsiP7m78"/>
+<div class="absolute bottom-3 left-3 bg-black/40 backdrop-blur-md px-2 py-1 rounded-full flex items-center gap-1.5 border border-white/10">
+<div class="w-2 h-2 rounded-full bg-[#B2F746]"></div>
+<span class="text-white text-[10px] font-bold uppercase tracking-tight">Performance Pro</span>
+</div>
+</div>
+<div class="flex-1 p-6 flex flex-col justify-between">
+<div>
+<h4 class="text-white text-xl font-bold">Erik Hansen</h4>
+<p class="text-white/50 text-xs">Medlem siden 2025 — Gamle Fredrikstad GK</p>
+</div>
+<div class="grid grid-cols-2 gap-3 mt-4">
+<div class="bg-white/5 p-3 rounded-lg">
+<p class="text-white/40 text-[9px] uppercase font-bold mb-1">HCP</p>
+<p class="text-[#B2F746] text-xl font-bold">14.2</p>
+</div>
+<div class="bg-white/5 p-3 rounded-lg">
+<p class="text-white/40 text-[9px] uppercase font-bold mb-1">Runder</p>
+<p class="text-[#E8763A] text-xl font-bold">24</p>
+</div>
+<div class="bg-white/5 p-3 rounded-lg col-span-2">
+<p class="text-white/40 text-[9px] uppercase font-bold mb-1">Beste Score</p>
+<p class="text-white text-xl font-bold">78 (+6)</p>
+</div>
+</div>
+<button class="w-full bg-white/10 hover:bg-white/20 text-white text-xs font-bold py-3 rounded-xl transition-colors mt-6 border border-white/10">Rediger Profil</button>
+</div>
+</section>
+<!-- 8. HANDICAP CHART: Line chart with trend and goal -->
+<section class="col-span-3 row-span-2 bg-white rounded-card p-6 card-lift shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-slate-400 text-xs font-bold uppercase mb-1">Handicap-utvikling</h3>
+<p class="text-3xl font-bold text-primary">14.2</p>
+</div>
+<div class="bg-primary/5 text-primary text-[10px] font-bold px-2 py-1 rounded">
+                        Mål: 10.0
+                    </div>
+</div>
+<div class="relative flex-1 mt-4">
+<svg class="w-full h-full" viewbox="0 0 100 50">
+<defs>
+<lineargradient id="grad" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#B2F746;stop-opacity:0.3"></stop>
+<stop offset="100%" style="stop-color:#B2F746;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+<path d="M0 45 Q 20 40, 40 25 T 70 15 T 100 5 L 100 50 L 0 50 Z" fill="url(#grad)"></path>
+<path d="M0 45 Q 20 40, 40 25 T 70 15 T 100 5" fill="none" stroke="#1A2F28" stroke-width="2"></path>
+<circle cx="100" cy="5" fill="#B2F746" r="2.5"></circle>
+</svg>
+<div class="flex justify-between mt-1 text-[9px] text-slate-400 font-medium">
+<span>Jan</span>
+<span>Jun</span>
+<span>Des</span>
+</div>
+</div>
+</section>
+<!-- 7. AI-INNSINKT CARD: Purple accent card, metrics -->
+<section class="col-span-6 row-span-1 bg-[#F1EEFF] rounded-card p-5 card-lift shadow-[0_8px_30px_rgb(93,63,211,0.1)] flex items-center justify-between border border-[#5D3FD3]/10">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-[#5D3FD3]/10 flex items-center justify-center text-[#5D3FD3]">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</div>
+<div>
+<h3 class="text-xs font-bold text-[#5D3FD3] uppercase tracking-wider">AI-innsikt</h3>
+<p class="text-sm font-semibold text-primary">Kort spill er ditt største potensial</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="bg-[#5D3FD3] px-3 py-2 rounded-lg text-white text-center min-w-[70px]">
+<p class="text-[8px] font-bold uppercase opacity-70">Kort Spill</p>
+<p class="text-sm font-bold">-2.1</p>
+</div>
+<div class="bg-white px-3 py-2 rounded-lg text-primary text-center min-w-[70px] border border-[#5D3FD3]/10">
+<p class="text-[8px] font-bold uppercase text-slate-400">Driving</p>
+<p class="text-sm font-bold">+1.4</p>
+</div>
+<div class="bg-white px-3 py-2 rounded-lg text-primary text-center min-w-[70px] border border-[#5D3FD3]/10">
+<p class="text-[8px] font-bold uppercase text-slate-400">Putting</p>
+<p class="text-sm font-bold">+0.8</p>
+</div>
+</div>
+</section>
+<!-- 6. COACHING CARD: Orange gradient -->
+<section class="col-span-3 row-span-1 bg-gradient-to-br from-[#E8763A] to-[#D4622A] rounded-card p-5 card-lift shadow-sm flex items-center gap-4">
+<div class="w-12 h-12 rounded-full border-2 border-white/30 overflow-hidden shrink-0">
+<img alt="Coach" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-xRlxWPNlEQmFliSslGMUp20Zi3y0usu7v2rN90Fs1mEN5HkP9MPMmWp298bAfSMDzJC6txak9L-qpyJasoiaSGYpVwBgwU2d2MlRf8HhKu2TXzlLdmVUSYibhqNovsOP7n1QvrvZVtzOl3P_zIhpTF_WK1EtADxgbVoWKRW9OitL_78OSfXr5EFf-l8rOb7VdatVwJXQYq3LupyMcs8MXXCDhoUTxwdBc84J2UwIBNUJ9L9uaJxAqkt11ZSlZ1AP2CMB8lp9baA"/>
+</div>
+<div class="text-white">
+<p class="text-[9px] font-bold uppercase opacity-80 tracking-widest mb-0.5">Neste coaching</p>
+<p class="text-sm font-bold">Tirsdag 15. april, kl. 10:00</p>
+<p class="text-[10px] opacity-70">Gamle Fredrikstad GK — Range</p>
+</div>
+</section>
+<!-- Siste Runde Section -->
+<section class="col-span-6 row-span-1 bg-white rounded-card p-6 card-lift shadow-sm flex items-center justify-between">
+<div>
+<h3 class="text-primary font-bold mb-1">Siste Runde: Gamle Fredrikstad GK</h3>
+<p class="text-xs text-slate-400">8. april 2026 — Beste score i ar</p>
+</div>
+<div class="flex gap-8 items-center">
+<div class="text-center">
+<p class="text-3xl font-extrabold text-primary">78</p>
+<p class="text-[9px] font-bold uppercase text-slate-400">Total Score</p>
+</div>
+<div class="flex gap-2">
+<div class="w-1 bg-[#B2F746] h-8 rounded-full"></div>
+<div class="w-1 bg-[#B2F746] h-10 rounded-full"></div>
+<div class="w-1 bg-[#E8763A] h-6 rounded-full"></div>
+<div class="w-1 bg-primary h-12 rounded-full"></div>
+<div class="w-1 bg-[#B2F746] h-10 rounded-full"></div>
+</div>
+<button class="bg-primary/5 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined text-base" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- TRENINGSPLAN CARD -->
+<section class="col-span-6 row-span-2 bg-white rounded-card p-6 card-lift shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-primary font-bold">Treningsplan — Uke 16</h3>
+<span class="bg-[#D6EDE2] text-[#1B6B4A] text-[9px] font-bold px-2 py-1 rounded">3 av 5 fullfort</span>
+</div>
+<div class="grid grid-cols-7 gap-1 mb-4">
+<div class="text-center py-1.5 rounded-lg relative"><p class="text-[8px] text-slate-400">Ma</p><p class="text-xs font-bold">7</p><div class="w-1 h-1 bg-emerald-400 rounded-full mx-auto mt-0.5"></div></div>
+<div class="text-center py-1.5 rounded-lg relative"><p class="text-[8px] text-slate-400">Ti</p><p class="text-xs font-bold">8</p><div class="w-1 h-1 bg-emerald-400 rounded-full mx-auto mt-0.5"></div></div>
+<div class="text-center py-1.5 rounded-lg relative"><p class="text-[8px] text-slate-400">On</p><p class="text-xs font-bold">9</p><div class="w-1 h-1 bg-emerald-400 rounded-full mx-auto mt-0.5"></div></div>
+<div class="text-center py-1.5 rounded-lg bg-[#1A2F28] text-white"><p class="text-[8px] text-white/60">To</p><p class="text-xs font-bold">10</p></div>
+<div class="text-center py-1.5 rounded-lg"><p class="text-[8px] text-slate-400">Fr</p><p class="text-xs font-bold text-slate-400">11</p></div>
+<div class="text-center py-1.5 rounded-lg"><p class="text-[8px] text-slate-400">Lo</p><p class="text-xs font-bold text-slate-400">12</p></div>
+<div class="text-center py-1.5 rounded-lg"><p class="text-[8px] text-slate-400">So</p><p class="text-xs font-bold text-slate-400">13</p></div>
+</div>
+<div class="space-y-1.5">
+<div class="flex items-center gap-3 p-2 rounded-lg bg-slate-50 opacity-50"><div class="w-4 h-4 rounded bg-[#1B6B4A] flex items-center justify-center"><span class="material-symbols-outlined text-white text-[10px]">check</span></div><span class="text-[11px]">Putting — 10-footer</span><span class="ml-auto text-[9px] text-slate-400">20 min</span></div>
+<div class="flex items-center gap-3 p-2 rounded-lg bg-slate-50 opacity-50"><div class="w-4 h-4 rounded bg-[#1B6B4A] flex items-center justify-center"><span class="material-symbols-outlined text-white text-[10px]">check</span></div><span class="text-[11px]">Approach 50-100m</span><span class="ml-auto text-[9px] text-slate-400">15 min</span></div>
+<div class="flex items-center gap-3 p-2 rounded-lg bg-slate-50 opacity-50"><div class="w-4 h-4 rounded bg-[#1B6B4A] flex items-center justify-center"><span class="material-symbols-outlined text-white text-[10px]">check</span></div><span class="text-[11px]">Driving range — tempo</span><span class="ml-auto text-[9px] text-slate-400">30 min</span></div>
+<div class="flex items-center gap-3 p-2 rounded-lg border border-[#E8763A]/20 bg-[#FFF0E8]/50"><div class="w-4 h-4 rounded border-2 border-slate-300"></div><span class="text-[11px] font-semibold">Chip shots 20-40m</span><span class="ml-auto text-[9px] text-[#E8763A] font-bold">I dag</span></div>
+<div class="flex items-center gap-3 p-2 rounded-lg"><div class="w-4 h-4 rounded border-2 border-slate-200"></div><span class="text-[11px] text-slate-500">9 hull — Gamle Fredrikstad</span><span class="ml-auto text-[9px] text-slate-400">Lordag</span></div>
+</div>
+</section>
+
+<!-- STROKES GAINED + PUTTS ROW -->
+<section class="col-span-3 row-span-1 bg-white rounded-card p-5 card-lift shadow-sm">
+<h3 class="text-slate-400 text-[9px] font-bold uppercase tracking-wider mb-2">Strokes Gained</h3>
+<p class="text-3xl font-black text-[#1B6B4A]">+3.5</p>
+<p class="text-[10px] text-slate-400 mt-1">Total — siste 5 runder</p>
+<div class="flex gap-1 mt-3">
+<div class="w-2 h-2 rounded-sm bg-[#1B6B4A]"></div><div class="w-2 h-2 rounded-sm bg-[#1B6B4A]"></div><div class="w-2 h-2 rounded-sm bg-[#1B6B4A]"></div><div class="w-2 h-2 rounded-sm bg-[#1B6B4A]"></div><div class="w-2 h-2 rounded-sm bg-[#1B6B4A]"></div><div class="w-2 h-2 rounded-sm bg-[#E8763A]"></div><div class="w-2 h-2 rounded-sm bg-slate-100"></div><div class="w-2 h-2 rounded-sm bg-slate-100"></div><div class="w-2 h-2 rounded-sm bg-slate-100"></div><div class="w-2 h-2 rounded-sm bg-slate-100"></div>
+</div>
+</section>
+
+<section class="col-span-3 row-span-1 bg-white rounded-card p-5 card-lift shadow-sm">
+<h3 class="text-slate-400 text-[9px] font-bold uppercase tracking-wider mb-2">Putts per runde</h3>
+<div class="flex items-end gap-1 h-12 mb-2" id="puttBars"></div>
+<p class="text-lg font-extrabold text-primary">1.8 <span class="text-[10px] font-normal text-slate-400">putts/hull snitt</span></p>
+</section>
+
+<!-- SISTE RUNDER LIST -->
+<section class="col-span-3 row-span-2 bg-white rounded-card p-5 card-lift shadow-sm">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-slate-400 text-[9px] font-bold uppercase tracking-wider">Siste runder</h3>
+<span class="text-[9px] text-slate-400 font-medium cursor-pointer hover:text-primary">Se alle</span>
+</div>
+<div class="space-y-1.5">
+<div class="flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5"><div class="w-7 h-7 rounded-lg bg-[#D6EDE2] flex items-center justify-center"><span class="material-symbols-outlined text-[#1B6B4A] text-sm">flag</span></div><div><p class="text-[11px] font-semibold">Gamle Fredrikstad</p><p class="text-[9px] text-slate-400">8. april</p></div></div>
+<div class="text-right"><p class="text-base font-black text-[#1B6B4A]">78</p><p class="text-[8px] font-semibold text-emerald-500">+6</p></div>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5"><div class="w-7 h-7 rounded-lg bg-[#FFF0E8] flex items-center justify-center"><span class="material-symbols-outlined text-[#E8763A] text-sm">flag</span></div><div><p class="text-[11px] font-semibold">Miklagard</p><p class="text-[9px] text-slate-400">2. april</p></div></div>
+<div class="text-right"><p class="text-base font-black">82</p><p class="text-[8px] font-semibold text-[#E8763A]">+10</p></div>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5"><div class="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center"><span class="material-symbols-outlined text-slate-400 text-sm">flag</span></div><div><p class="text-[11px] font-semibold">Losby</p><p class="text-[9px] text-slate-400">28. mars</p></div></div>
+<div class="text-right"><p class="text-base font-black">80</p><p class="text-[8px] font-semibold text-slate-400">+8</p></div>
+</div>
+</div>
+</section>
+
+<!-- RUNDE-ANALYSE -->
+<section class="col-span-3 row-span-2 bg-white rounded-card p-5 card-lift shadow-sm">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-slate-400 text-[9px] font-bold uppercase tracking-wider">Runde-analyse</h3>
+<span class="text-[9px] text-slate-400">Gamle Fredrikstad — 8. apr</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="p-2.5 rounded-lg border border-slate-100"><p class="text-[8px] text-slate-400 font-medium">Score</p><p class="text-base font-black">78</p><div class="h-1 bg-slate-100 rounded-full mt-2 overflow-hidden"><div class="h-full bg-[#1B6B4A] rounded-full" style="width:78%"></div></div></div>
+<div class="p-2.5 rounded-lg border border-slate-100"><p class="text-[8px] text-slate-400 font-medium">Fairway</p><p class="text-base font-black">9/14</p><div class="h-1 bg-slate-100 rounded-full mt-2 overflow-hidden"><div class="h-full bg-[#C8E640] rounded-full" style="width:64%"></div></div></div>
+<div class="p-2.5 rounded-lg border border-slate-100"><p class="text-[8px] text-slate-400 font-medium">GIR</p><p class="text-base font-black">11/18</p><div class="h-1 bg-slate-100 rounded-full mt-2 overflow-hidden"><div class="h-full bg-[#E8763A] rounded-full" style="width:61%"></div></div></div>
+<div class="p-2.5 rounded-lg border border-slate-100"><p class="text-[8px] text-slate-400 font-medium">Putts</p><p class="text-base font-black">31</p><div class="h-1 bg-slate-100 rounded-full mt-2 overflow-hidden"><div class="h-full bg-[#1B6B4A] rounded-full" style="width:57%"></div></div></div>
+</div>
+<div class="grid grid-cols-3 gap-1.5 mt-3">
+<div class="p-2 rounded bg-slate-50 text-center"><p class="text-[7px] text-slate-400">Scrambling</p><p class="text-xs font-bold">67%</p></div>
+<div class="p-2 rounded bg-slate-50 text-center"><p class="text-[7px] text-slate-400">Par saves</p><p class="text-xs font-bold">44%</p></div>
+<div class="p-2 rounded bg-slate-50 text-center"><p class="text-[7px] text-slate-400">Sand saves</p><p class="text-xs font-bold">33%</p></div>
+</div>
+</section>
+
+</div>
+</div>
+</main>
+<script>
+// TrackMan waveform (70+ bars)
+const tw=document.getElementById('tmWave');
+for(let i=0;i<70;i++){
+  const b=document.createElement('div');
+  b.style.cssText='width:3px;border-radius:9px;flex-shrink:0;';
+  const h=8+Math.sin(i*.22)*28+Math.random()*20;
+  b.style.height=h+'%';
+  const c=i>15&&i<50;
+  b.style.background='#E8763A';
+  b.style.opacity=c?(.35+Math.random()*.55):(.1+Math.random()*.12);
+  tw.appendChild(b);
+}
+// Putt bars
+const pb=document.getElementById('puttBars');
+[36,60,46,76,40,100,50,66,34,80,44,56].forEach((h,i)=>{
+  const b=document.createElement('div');
+  b.style.cssText='flex:1;border-radius:2px;';
+  b.style.height=h+'%';
+  b.style.background=i===5?'#E8763A':'#1B6B4A';
+  b.style.opacity=i===5?'1':'.2';
+  pb.appendChild(b);
+});
+</script>
+</body></html>

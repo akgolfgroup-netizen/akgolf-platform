@@ -1,33 +1,42 @@
-"use client";
-
+import { requirePortalUser } from "@/lib/portal/auth";
+import { isStaff } from "@/lib/portal/rbac";
+import { redirect } from "next/navigation";
+import { getPendingItems } from "./actions";
 import { GodkjenningerClient } from "./godkjenninger-client";
 
-// Mock data
-const mockPendingItems = [
-  {
-    id: "1",
-    type: "booking" as const,
-    studentName: "Olav Hansen",
-    studentEmail: "olav@example.com",
-    serviceName: "Privat Coaching",
-    price: 1200,
-    requestedTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-    createdAt: new Date(),
-  },
-  {
-    id: "2",
-    type: "activity" as const,
-    studentName: "Maria Hansen",
-    studentEmail: "maria@example.com",
-    serviceName: "Junior Academy",
-    price: 0,
-    requestedTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
-    facilityName: "TrackMan Simulator 1",
-    conflictNote: "Overlapp med eksisterende booking",
-  },
-];
+export default async function GodkjenningerPage() {
+  const user = await requirePortalUser();
+  if (!user?.id || !isStaff(user.role)) {
+    redirect("/");
+  }
 
-export default function GodkjenningerPage() {
-  return <GodkjenningerClient pendingItems={mockPendingItems} />;
+  const { pendingBookings, pendingActivities } = await getPendingItems();
+
+  const pendingItems = [
+    ...pendingBookings.map((b) => ({
+      id: b.id,
+      type: "booking" as const,
+      studentName: b.User.name ?? "Ukjent",
+      studentEmail: b.User.email ?? "",
+      serviceName: b.ServiceType.name,
+      price: b.ServiceType.price,
+      requestedTime: b.startTime,
+      createdAt: b.createdAt,
+    })),
+    ...pendingActivities.map((a) => ({
+      id: a.id,
+      type: "activity" as const,
+      studentName: a.CreatedBy.name ?? "Ukjent",
+      studentEmail: a.CreatedBy.email ?? "",
+      serviceName: a.title,
+      price: 0,
+      requestedTime: a.startTime,
+      createdAt: a.createdAt,
+      facilityName: a.Facility.name,
+      activityType: a.activityType,
+      conflictNote: a.conflictNote,
+    })),
+  ];
+
+  return <GodkjenningerClient pendingItems={pendingItems} />;
 }

@@ -13,10 +13,14 @@ export async function GET(request: NextRequest) {
   if (!rateLimit.allowed) {
     return NextResponse.json({ error: "For mange forespørsler" }, { status: 429 });
   }
-  
+
   try {
+    const { searchParams } = new URL(request.url);
+    const excludeParam = searchParams.get("exclude");
+    const excludePatterns = excludeParam ? excludeParam.split(",").map(s => s.trim().toLowerCase()) : [];
+
     const supabase = createClient(supabaseUrl, supabaseKey);
-    
+
     // Hent service types med tilhørende instruktører
     const { data: types, error } = await supabase
       .from("ServiceType")
@@ -53,7 +57,14 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    return NextResponse.json(types || [], {
+    let filteredTypes = types || [];
+    if (excludePatterns.length > 0) {
+      filteredTypes = filteredTypes.filter(
+        (t: { name: string }) => !excludePatterns.some(pattern => t.name.toLowerCase().includes(pattern))
+      );
+    }
+
+    return NextResponse.json(filteredTypes, {
       headers: {
         "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no",
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",

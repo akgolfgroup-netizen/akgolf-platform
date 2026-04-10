@@ -5,6 +5,75 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff, isAdmin } from "@/lib/portal/rbac";
 import { checkFacilityConflicts } from "@/lib/portal/facility/conflict-check";
 import { revalidatePath } from "next/cache";
+import { prisma } from "@/lib/portal/prisma";
+
+// ─── Fetch-funksjoner ───
+
+export async function getFacilities() {
+  const user = await requirePortalUser();
+  if (!isStaff(user.role)) {
+    throw new Error("Ikke tilgang");
+  }
+
+  return prisma.facility.findMany({
+    where: { isActive: true },
+    include: { Location: true },
+    orderBy: { name: "asc" },
+  });
+}
+
+export async function getTodaySchedule() {
+  const user = await requirePortalUser();
+  if (!isStaff(user.role)) {
+    throw new Error("Ikke tilgang");
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  return prisma.facilityActivity.findMany({
+    where: {
+      startTime: { gte: today, lt: tomorrow },
+      status: { not: "CANCELLED" },
+    },
+    include: {
+      Facility: true,
+      CreatedBy: { select: { id: true, name: true, email: true } },
+    },
+    orderBy: { startTime: "asc" },
+  });
+}
+
+export async function getTodayBookingCounts() {
+  const user = await requirePortalUser();
+  if (!isStaff(user.role)) {
+    throw new Error("Ikke tilgang");
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const bookings = await prisma.booking.groupBy({
+    by: ["facilityId"],
+    where: {
+      startTime: { gte: today, lt: tomorrow },
+      status: { notIn: ["CANCELLED", "NO_SHOW"] },
+    },
+    _count: { id: true },
+  });
+
+  const countMap: Record<string, number> = {};
+  for (const b of bookings) {
+    if (b.facilityId) {
+      countMap[b.facilityId] = b._count.id;
+    }
+  }
+  return countMap;
+}
 
 export interface CreateActivityInput {
   facilityId: string;

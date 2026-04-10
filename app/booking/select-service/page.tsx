@@ -65,19 +65,12 @@ export default function BookingSelectServicePage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/portal/public/service-types")
+    fetch("/api/portal/public/service-types?exclude=Foundation,Start,Banecoaching")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
-          // Filtrer ut Foundation Test og Start
-          const filtered = data.filter(s => 
-            !s.name.includes("Foundation") && 
-            !s.name.includes("Start") &&
-            !s.name.includes("Banecoaching")
-          );
-          
           // Sorter: Performance først, så Flex
-          const sorted = filtered.sort((a, b) => {
+          const sorted = data.sort((a, b) => {
             const getPriority = (name: string) => {
               if (name.includes("Performance Pro")) return 1;
               if (name.includes("Performance")) return 2;
@@ -87,7 +80,7 @@ export default function BookingSelectServicePage() {
             };
             return getPriority(a.name) - getPriority(b.name);
           });
-          
+
           setServices(sorted);
         } else {
           setError("Kunne ikke laste tjenester");

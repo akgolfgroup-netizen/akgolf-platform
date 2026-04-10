@@ -10,7 +10,7 @@ import { processRefund } from "@/lib/portal/booking/refund";
 import { evaluateCancellationPolicy } from "@/lib/portal/booking/cancellation-policy";
 import { logger } from "@/lib/logger";
 
-const bookingSelect = `
+const BOOKING_SELECT = `
   id,
   startTime,
   endTime,
@@ -22,13 +22,40 @@ const bookingSelect = `
   cancelReason,
   adminNotes,
   createdAt,
-  User (id, name, email, phone),
-  ServiceType (name, color, duration),
-  Instructor (id, User (name)),
-  Location (name)
+  User:studentId(id, name, email, phone),
+  ServiceType:serviceTypeId(name, color, duration),
+  Instructor:instructorId(id, User(name)),
+  Location:locationId(name)
 `;
 
-export async function searchBookings(query: string, status?: string, page = 1) {
+export type AdminBooking = {
+  id: string;
+  startTime: string;
+  endTime: string;
+  status: string;
+  amount: number;
+  paymentMethod: string | null;
+  paymentStatus: string | null;
+  cancelledAt: string | null;
+  cancelReason: string | null;
+  adminNotes: string | null;
+  createdAt: string;
+  User: { id: string; name: string | null; email: string; phone: string | null } | null;
+  ServiceType: { name: string; color: string | null; duration: number } | null;
+  Instructor: { id: string; User: { name: string | null } | null } | null;
+  Location: { name: string } | null;
+};
+
+export type SearchBookingsResult = {
+  bookings: AdminBooking[];
+  total: number;
+};
+
+export async function searchBookings(
+  query: string,
+  status?: string,
+  page = 1
+): Promise<SearchBookingsResult> {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return { bookings: [], total: 0 };
 
@@ -36,21 +63,34 @@ export async function searchBookings(query: string, status?: string, page = 1) {
   const pageSize = 20;
   const skip = (page - 1) * pageSize;
 
-  let baseQuery = supabase.from("Booking").select("*", { count: "exact" });
+  let baseQuery = supabase
+    .from("Booking")
+    .select(BOOKING_SELECT, { count: "exact" });
 
   if (status && status !== "ALL") {
     baseQuery = baseQuery.eq("status", status);
   }
 
-  if (query) {
-    baseQuery = baseQuery.or(`User.name.ilike.%${query}%,User.email.ilike.%${query}%,ServiceType.name.ilike.%${query}%`);
-  }
-
-  const { data: bookings, count: total } = await baseQuery
-    .order("createdAt", { ascending: false })
+  // Supabase .or() på relasjoner krever !inner join — for nå filtrerer vi etter fetch
+  const { data, count: total } = await baseQuery
+    .order("startTime", { ascending: false })
     .range(skip, skip + pageSize - 1);
 
-  return { bookings: bookings || [], total: total ?? 0 };
+  let bookings = (data as AdminBooking[] | null) ?? [];
+
+  // Klient-side filtrering på søkeord (Supabase støtter ikke .or() på relasjonsfelt uten !inner)
+  if (query) {
+    const q = query.toLowerCase();
+    bookings = bookings.filter(
+      (b) =>
+        b.User?.name?.toLowerCase().includes(q) ||
+        b.User?.email?.toLowerCase().includes(q) ||
+        b.ServiceType?.name?.toLowerCase().includes(q) ||
+        b.Instructor?.User?.name?.toLowerCase().includes(q)
+    );
+  }
+
+  return { bookings, total: total ?? 0 };
 }
 
 export async function adminCancelBooking(

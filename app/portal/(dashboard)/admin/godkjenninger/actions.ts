@@ -7,6 +7,33 @@ import { isStaff, isAdmin } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { sendBookingConfirmation, sendBookingCancellation } from "@/lib/portal/email/send-booking-email";
 import { logger } from "@/lib/logger";
+import { prisma } from "@/lib/portal/prisma";
+
+export async function getPendingItems() {
+  const user = await requirePortalUser();
+  if (!user?.id || !isStaff(user.role)) {
+    redirect("/");
+  }
+
+  const [pendingBookings, pendingActivities] = await Promise.all([
+    prisma.booking.findMany({
+      where: { status: "PENDING" },
+      include: {
+        User: { select: { name: true, email: true } },
+        ServiceType: { select: { name: true, price: true } },
+        Instructor: { include: { User: { select: { name: true } } } },
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.facilityActivity.findMany({
+      where: { status: "PENDING" },
+      include: { Facility: true, CreatedBy: true },
+      orderBy: { createdAt: "desc" },
+    }),
+  ]);
+
+  return { pendingBookings, pendingActivities };
+}
 
 export async function approveBooking(
   bookingId: string

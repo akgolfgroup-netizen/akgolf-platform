@@ -17,6 +17,12 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  approveBooking,
+  rejectBooking,
+  approveActivity,
+  rejectActivity,
+} from "./actions";
 
 interface PendingItem {
   id: string;
@@ -30,31 +36,6 @@ interface PendingItem {
   facilityName?: string;
   activityType?: string;
   conflictNote?: string | null;
-}
-
-interface GodkjenningerClientProps {
-  pendingItems: PendingItem[];
-}
-
-// Mock actions
-async function approveBooking(id: string) {
-  await new Promise(r => setTimeout(r, 500));
-  return { success: true };
-}
-
-async function rejectBooking(id: string) {
-  await new Promise(r => setTimeout(r, 500));
-  return { success: true };
-}
-
-async function approveActivity(id: string) {
-  await new Promise(r => setTimeout(r, 500));
-  return { success: true };
-}
-
-async function rejectActivity(id: string) {
-  await new Promise(r => setTimeout(r, 500));
-  return { success: true };
 }
 
 export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) {
