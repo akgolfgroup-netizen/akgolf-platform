@@ -305,10 +305,10 @@ export async function POST(req: Request) {
 type CoachingTier = "PERFORMANCE_PRO" | "PERFORMANCE" | "START";
 
 function mapPriceToTier(priceId: string): CoachingTier | null {
-  if (priceId === process.env.STRIPE_PRICE_PRO) {
+  if (priceId === process.env.STRIPE_PRICE_PERFORMANCE_PRO) {
     return "PERFORMANCE_PRO";
   }
-  if (priceId === process.env.STRIPE_PRICE_TRAINING_ABO) {
+  if (priceId === process.env.STRIPE_PRICE_PERFORMANCE) {
     return "PERFORMANCE";
   }
   if (priceId === process.env.STRIPE_PRICE_STARTER) {
@@ -318,8 +318,8 @@ function mapPriceToTier(priceId: string): CoachingTier | null {
   // Log warning for unmapped price IDs to catch missing env vars
   logger.warn(
     `[Stripe Webhook] Unmapped price ID: ${priceId}. ` +
-    `Configured: STRIPE_PRICE_PRO=${process.env.STRIPE_PRICE_PRO ? "set" : "MISSING"}, ` +
-    `STRIPE_PRICE_TRAINING_ABO=${process.env.STRIPE_PRICE_TRAINING_ABO ? "set" : "MISSING"}, ` +
+    `Configured: STRIPE_PRICE_PERFORMANCE_PRO=${process.env.STRIPE_PRICE_PERFORMANCE_PRO ? "set" : "MISSING"}, ` +
+    `STRIPE_PRICE_PERFORMANCE=${process.env.STRIPE_PRICE_PERFORMANCE ? "set" : "MISSING"}, ` +
     `STRIPE_PRICE_STARTER=${process.env.STRIPE_PRICE_STARTER ? "set" : "MISSING"}`
   );
   return null;
