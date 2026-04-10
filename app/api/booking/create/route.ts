@@ -187,64 +187,46 @@ export async function POST(req: NextRequest) {
 
     const end = new Date(start.getTime() + (serviceType?.duration || 50) * 60000);
 
-    // Check for conflicts in the time window
-    const { data: conflict, error: conflictError } = await supabase
-      .from("Booking")
-      .select("id")
-      .eq("instructorId", instructorId)
-      .in("status", ["PENDING", "CONFIRMED"])
-      .lt("startTime", end.toISOString())
-      .gt("endTime", start.toISOString())
-      .limit(1)
-      .single();
-
-    if (conflictError && conflictError.code !== "PGRST116") {
-      throw conflictError;
-    }
-
-    if (conflict) {
-      throw new ConflictError("Tidspunktet er ikke lenger tilgjengelig");
-    }
-
-    // Check for blocked times
-    const { data: blocked, error: blockedError } = await supabase
-      .from("BlockedTime")
-      .select("id")
-      .or(`instructorId.eq.${instructorId},instructorId.is.null`)
-      .lt("startTime", end.toISOString())
-      .gt("endTime", start.toISOString())
-      .limit(1)
-      .single();
-
-    if (blockedError && blockedError.code !== "PGRST116") {
-      throw blockedError;
-    }
-
-    if (blocked) {
-      throw new ConflictError("Tidspunktet er ikke tilgjengelig");
-    }
-
-    // Create the booking
-    const now = new Date().toISOString();
+    // Atomisk booking-opprettelse — sjekk + insert i én transaksjon
     const bookingId = randomUUID();
+    const serviceSupabase = createClient(supabaseUrl, supabaseKey);
 
-    const { data: booking, error: createError } = await supabase
+    const { data: rpcResult, error: rpcError } = await serviceSupabase.rpc(
+      "create_booking_atomic",
+      {
+        p_id: bookingId,
+        p_student_id: user.id,
+        p_instructor_id: instructorId,
+        p_service_type_id: serviceTypeId,
+        p_start_time: start.toISOString(),
+        p_end_time: end.toISOString(),
+        p_payment_method: paymentMethod,
+        p_payment_status: paymentMethod === "STRIPE" ? "PENDING" : "PAID",
+        p_amount: serviceType?.price || 0,
+        p_vat_amount: 0,
+      }
+    );
+
+    if (rpcError) {
+      throw rpcError;
+    }
+
+    const atomicResult = rpcResult as {
+      success: boolean;
+      error?: string;
+      message?: string;
+      bookingId?: string;
+    };
+
+    if (!atomicResult.success) {
+      throw new ConflictError(
+        atomicResult.message || "Tidspunktet er ikke tilgjengelig"
+      );
+    }
+
+    // Hent den opprettede bookingen med relasjoner
+    const { data: booking, error: fetchError } = await supabase
       .from("Booking")
-      .insert({
-        id: bookingId,
-        studentId: user.id,
-        instructorId,
-        serviceTypeId,
-        startTime: start.toISOString(),
-        endTime: end.toISOString(),
-        updatedAt: now,
-        status: "PENDING",
-        paymentMethod,
-        paymentStatus: paymentMethod === "STRIPE" ? "PENDING" : "PAID",
-        amount: serviceType?.price || 0,
-        vatAmount: 0,
-        // TODO: Enable after migration: guestEmail, guestName, guestPhone
-      })
       .select(`
         *,
         ServiceType:serviceTypeId(*),
@@ -253,10 +235,11 @@ export async function POST(req: NextRequest) {
           User:userId(name)
         )
       `)
+      .eq("id", bookingId)
       .single();
 
-    if (createError) {
-      throw createError;
+    if (fetchError || !booking) {
+      throw new Error("Booking opprettet, men kunne ikke hentes");
     }
 
     // Invalidate cache and broadcast
