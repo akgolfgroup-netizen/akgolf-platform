@@ -5,14 +5,11 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { stripe } from "@/lib/portal/stripe";
 import { validateBooking } from "@/lib/portal/booking/validation";
+import { checkUserQuota, consumeSession } from "@/lib/portal/booking/subscription-quota";
 import { invalidateSlotsCache, invalidateBookingsCache } from "@/lib/portal/booking/cache";
 import { syncBookingToCalendar } from "@/lib/portal/calendar/google-calendar";
 import { broadcastUpdate } from "@/app/api/portal/bookings/live/route";
 import { createClient } from "@supabase/supabase-js";
-import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
-import { checkUserQuota, consumeSession } from "@/lib/portal/booking/subscription-quota";
-import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
-import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -29,19 +26,11 @@ class ConflictError extends Error {
  * If user is logged in, return existing user.
  * If not logged in, create or find user by email (guest booking).
  */
-interface BookingUser {
-  id: string;
-  email: string;
-  name: string | null;
-  stripeCustomerId: string | null;
-  isLoggedIn: boolean;
-}
-
 async function getOrCreateUser(
   email: string,
   name?: string,
   phone?: string
-): Promise<BookingUser | null> {
+): Promise<{ id: string; email: string; name: string | null; stripeCustomerId: string | null } | null> {
   // First check if user is logged in
   const loggedInUser = await getPortalUser();
   if (loggedInUser?.id) {
@@ -50,7 +39,6 @@ async function getOrCreateUser(
       email: loggedInUser.email,
       name: loggedInUser.name,
       stripeCustomerId: loggedInUser.stripeCustomerId,
-      isLoggedIn: true,
     };
   }
 
@@ -80,7 +68,7 @@ async function getOrCreateUser(
         })
         .eq("id", existingUser.id);
     }
-    return { ...existingUser, isLoggedIn: false };
+    return existingUser;
   }
 
   // Create new user (guest)
@@ -94,7 +82,7 @@ async function getOrCreateUser(
       phone: phone || null,
       role: "USER",
       isActive: true,
-      subscriptionTier: "VISITOR",
+      subscriptionTier: "FREE",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })
@@ -106,34 +94,20 @@ async function getOrCreateUser(
     return null;
   }
 
-  return { ...newUser, isLoggedIn: false };
+  return newUser;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    // Rate limiting
-    const rateLimit = checkRateLimit(
-      `booking-create:${getClientIp(req)}`,
-      RATE_LIMITS.BOOKING_CREATE
-    );
-    if (!rateLimit.allowed) {
-      return NextResponse.json(
-        { error: "For mange forespørsler. Vent litt og prøv igjen." },
-        { status: 429 }
-      );
-    }
-
     const body = await req.json();
-    const {
-      serviceTypeId,
-      instructorId,
-      startTime,
-      paymentMethod = "STRIPE",
-      email,
-      name,
-      phone,
-      focusArea,
-      playerNotes,
+    const { 
+      serviceTypeId, 
+      instructorId, 
+      startTime, 
+      paymentMethod = "STRIPE", 
+      email, 
+      name, 
+      phone 
     } = body;
 
     // Validate required fields
@@ -199,73 +173,101 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: errorMessage }, { status: 400 });
     }
 
-    const end = new Date(start.getTime() + (serviceType?.duration || 50) * 60000);
+    // Check subscription quota for logged-in users
+    // If user has active quota and service price is 0 (subscription-covered), consume a session
+    const quotaCheck = await checkUserQuota(user.id);
+    const isSubscriptionBooking = quotaCheck.hasQuota && serviceType.price === 0;
 
-    // Atomisk booking-opprettelse — sjekk + insert i én transaksjon
-    const bookingId = randomUUID();
-    const serviceSupabase = createClient(supabaseUrl, supabaseKey);
-
-    const { data: rpcResult, error: rpcError } = await serviceSupabase.rpc(
-      "create_booking_atomic",
-      {
-        p_id: bookingId,
-        p_student_id: user.id,
-        p_instructor_id: instructorId,
-        p_service_type_id: serviceTypeId,
-        p_start_time: start.toISOString(),
-        p_end_time: end.toISOString(),
-        p_payment_method: paymentMethod,
-        p_payment_status: paymentMethod === "STRIPE" ? "PENDING" : "PAID",
-        p_amount: serviceType?.price || 0,
-        p_vat_amount: 0,
+    if (isSubscriptionBooking) {
+      const consumed = await consumeSession(user.id);
+      if (!consumed) {
+        return NextResponse.json(
+          { error: "Kunne ikke reservere sesjon fra kvoten din. Prøv igjen." },
+          { status: 400 }
+        );
       }
-    );
-
-    if (rpcError) {
-      throw rpcError;
     }
 
-    const atomicResult = rpcResult as {
-      success: boolean;
-      error?: string;
-      message?: string;
-      bookingId?: string;
-    };
-
-    if (!atomicResult.success) {
-      throw new ConflictError(
-        atomicResult.message || "Tidspunktet er ikke tilgjengelig"
+    // If no subscription and service costs money, Stripe payment is required
+    if (!isSubscriptionBooking && serviceType.price > 0 && paymentMethod !== "STRIPE") {
+      return NextResponse.json(
+        { error: "Betaling kreves for denne tjenesten" },
+        { status: 400 }
       );
     }
 
-    // Hent den opprettede bookingen med relasjoner (inkl. instruktør e-post/telefon for varsling)
-    const { data: booking, error: fetchError } = await supabase
+    const end = new Date(start.getTime() + (serviceType?.duration || 50) * 60000);
+
+    // Check for conflicts in the time window
+    const { data: conflict, error: conflictError } = await supabase
       .from("Booking")
+      .select("id")
+      .eq("instructorId", instructorId)
+      .in("status", ["PENDING", "CONFIRMED"])
+      .lt("startTime", end.toISOString())
+      .gt("endTime", start.toISOString())
+      .limit(1)
+      .single();
+
+    if (conflictError && conflictError.code !== "PGRST116") {
+      throw conflictError;
+    }
+
+    if (conflict) {
+      throw new ConflictError("Tidspunktet er ikke lenger tilgjengelig");
+    }
+
+    // Check for blocked times
+    const { data: blocked, error: blockedError } = await supabase
+      .from("BlockedTime")
+      .select("id")
+      .or(`instructorId.eq.${instructorId},instructorId.is.null`)
+      .lt("startTime", end.toISOString())
+      .gt("endTime", start.toISOString())
+      .limit(1)
+      .single();
+
+    if (blockedError && blockedError.code !== "PGRST116") {
+      throw blockedError;
+    }
+
+    if (blocked) {
+      throw new ConflictError("Tidspunktet er ikke tilgjengelig");
+    }
+
+    // Create the booking
+    const now = new Date().toISOString();
+    const bookingId = randomUUID();
+
+    const { data: booking, error: createError } = await supabase
+      .from("Booking")
+      .insert({
+        id: bookingId,
+        studentId: user.id,
+        instructorId,
+        serviceTypeId,
+        startTime: start.toISOString(),
+        endTime: end.toISOString(),
+        updatedAt: now,
+        status: isSubscriptionBooking ? "CONFIRMED" : "PENDING",
+        paymentMethod: isSubscriptionBooking ? "NONE" : paymentMethod,
+        paymentStatus: isSubscriptionBooking ? "PAID" : (paymentMethod === "STRIPE" ? "PENDING" : "PAID"),
+        amount: isSubscriptionBooking ? 0 : (serviceType?.price || 0),
+        vatAmount: 0,
+        // TODO: Enable after migration: guestEmail, guestName, guestPhone
+      })
       .select(`
         *,
         ServiceType:serviceTypeId(*),
         Instructor:instructorId(
           userId,
-          User:userId(name, email, phone)
+          User:userId(name)
         )
       `)
-      .eq("id", bookingId)
       .single();
 
-    if (fetchError || !booking) {
-      throw new Error("Booking opprettet, men kunne ikke hentes");
-    }
-
-    // Save focus area and player notes if provided
-    if (focusArea || playerNotes) {
-      await serviceSupabase
-        .from("Booking")
-        .update({
-          ...(focusArea && { focusArea }),
-          ...(playerNotes && { playerNotes: playerNotes.slice(0, 500) }),
-          updatedAt: new Date().toISOString(),
-        })
-        .eq("id", bookingId);
+    if (createError) {
+      throw createError;
     }
 
     // Invalidate cache and broadcast
@@ -279,299 +281,86 @@ export async function POST(req: NextRequest) {
       }),
     ]);
 
-    // --- 3-TIER PAYMENT LOGIC ---
-    // 1. Subscription user → book within quota, no payment
-    // 2. Logged-in non-subscription → confirm now, charge after session
-    // 3. Guest → pay now via Stripe Checkout
-
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://book.akgolf.no";
-    const instructorUser = booking.Instructor?.User as { name: string | null; email: string | null; phone: string | null } | null;
+    // Create Stripe checkout if needed
     let redirectUrl: string;
-    let paymentFlow: "subscription" | "deferred" | "stripe_checkout" = "stripe_checkout";
-
-    // Helper: send confirmation email + SMS (non-blocking)
-    const sendConfirmations = () => {
-      sendBookingConfirmation({
-        bookingId: booking.id,
-        studentName: user.name ?? name ?? "Kunde",
-        studentEmail: user.email ?? email,
-        instructorName: instructorUser?.name ?? "Instruktor",
-        instructorEmail: instructorUser?.email ?? "",
-        serviceName: booking.ServiceType?.name ?? "Coaching",
-        startTime: start,
-        duration: serviceType?.duration ?? 50,
-        amount: booking.amount,
-        vatAmount: booking.vatAmount ?? 0,
-        location: "Gamle Fredrikstad Golfklubb",
-      }).catch((err: unknown) => logger.error("Email failed:", err));
-
-      if (instructorUser?.phone) {
-        sendBookingConfirmationSms({
-          instructorPhone: instructorUser.phone,
-          instructorName: instructorUser.name ?? "Instruktor",
-          studentName: user.name ?? name ?? "Kunde",
-          serviceName: booking.ServiceType?.name ?? "Coaching",
-          startTime: start,
-          duration: serviceType?.duration ?? 50,
-        }).catch((err: unknown) => logger.error("SMS failed:", err));
-      }
-    };
-
-    if (user.isLoggedIn) {
-      // Check subscription quota
-      const quotaResult = await checkUserQuota(user.id);
-
-      if (quotaResult.hasQuota && booking.amount >= 0) {
-        // --- TIER 1: SUBSCRIPTION USER ---
-        paymentFlow = "subscription";
-
-        // Consume a session from quota
-        const consumed = await consumeSession(user.id);
-        if (!consumed) {
-          // Quota race condition — fall through to deferred payment
-          logger.warn(`[Booking] Quota consume failed for user ${user.id}, falling back to deferred`);
-        } else {
-          // Update booking to CONFIRMED + PAID
-          await serviceSupabase
-            .from("Booking")
-            .update({
-              status: "CONFIRMED",
-              paymentMethod: "NONE",
-              paymentStatus: "PAID",
-              updatedAt: new Date().toISOString(),
-            })
-            .eq("id", bookingId);
-
-          sendConfirmations();
-
-          redirectUrl = `${baseUrl}/booking/${booking.id}/confirmation`;
-
-          // Sync to Google Calendar
-          if (booking.Instructor?.userId) {
-            syncBookingToCalendar(booking.Instructor.userId, {
-              id: booking.id,
-              serviceName: booking.ServiceType?.name || "",
-              startTime: new Date(booking.startTime),
-              endTime: new Date(booking.endTime),
-              instructorName: instructorUser?.name || "",
-              location: booking.location || undefined,
-            }).catch((err) => logger.error("Google Calendar sync failed:", err));
-          }
-
-          return NextResponse.json({
-            bookingId: booking.id,
-            status: "CONFIRMED",
-            paymentFlow,
-            redirectUrl,
-          });
-        }
-      }
-
-      // --- TIER 2: LOGGED-IN, NO SUBSCRIPTION (or quota failed) ---
-      // Confirm booking immediately, payment deferred (charged after session)
-      paymentFlow = "deferred";
-
-      // Ensure user has Stripe customer
-      let customerId = user.stripeCustomerId;
-      if (!customerId) {
+    
+    if (paymentMethod === "STRIPE" && booking.amount > 0) {
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://book.akgolf.no";
+      
+      // Get or create Stripe customer
+      let customerId: string | undefined;
+      
+      if (user.stripeCustomerId) {
+        customerId = user.stripeCustomerId;
+      } else {
+        // Create new Stripe customer
         const customer = await stripe.customers.create({
           email: user.email,
           name: user.name || undefined,
           phone: phone || undefined,
         });
         customerId = customer.id;
-        await serviceSupabase
+        
+        // Save to database
+        await supabase
           .from("User")
-          .update({ stripeCustomerId: customer.id, updatedAt: new Date().toISOString() })
+          .update({ stripeCustomerId: customer.id })
           .eq("id", user.id);
       }
-
-      // Check if user has a saved payment method
-      const paymentMethods = await stripe.paymentMethods.list({
+      
+      const checkoutSession = await stripe.checkout.sessions.create({
+        mode: "payment",
         customer: customerId,
-        type: "card",
-        limit: 1,
-      });
-
-      if (paymentMethods.data.length === 0) {
-        // No saved card — create SetupIntent for card setup, then confirm
-        const setupIntent = await stripe.setupIntents.create({
-          customer: customerId,
-          usage: "off_session",
-          metadata: {
-            bookingId: booking.id,
-            userId: user.id,
-          },
-        });
-
-        // Update booking to PENDING_CARD_SETUP
-        await serviceSupabase
-          .from("Booking")
-          .update({
-            status: "CONFIRMED",
-            paymentStatus: "PENDING",
-            stripePaymentId: setupIntent.id,
-            updatedAt: new Date().toISOString(),
-          })
-          .eq("id", bookingId);
-
-        // Create a Stripe Checkout in setup mode to collect card
-        const checkoutSession = await stripe.checkout.sessions.create({
-          mode: "setup",
-          customer: customerId,
-          success_url: `${baseUrl}/booking/${booking.id}/confirmation?setup=complete`,
-          cancel_url: `${baseUrl}/booking/${booking.id}/cancel`,
-          metadata: {
-            bookingId: booking.id,
-            userId: user.id,
-          },
-        });
-
-        sendConfirmations();
-
-        redirectUrl = checkoutSession.url!;
-
-        // Sync to Google Calendar
-        if (booking.Instructor?.userId) {
-          syncBookingToCalendar(booking.Instructor.userId, {
-            id: booking.id,
-            serviceName: booking.ServiceType?.name || "",
-            startTime: new Date(booking.startTime),
-            endTime: new Date(booking.endTime),
-            instructorName: instructorUser?.name || "",
-            location: booking.location || undefined,
-          }).catch((err) => logger.error("Google Calendar sync failed:", err));
-        }
-
-        return NextResponse.json({
-          bookingId: booking.id,
-          status: "CONFIRMED",
-          paymentFlow,
-          redirectUrl,
-        });
-      }
-
-      // Has saved card — confirm immediately, charge after session
-      await serviceSupabase
-        .from("Booking")
-        .update({
-          status: "CONFIRMED",
-          paymentStatus: "PENDING",
-          updatedAt: new Date().toISOString(),
-        })
-        .eq("id", bookingId);
-
-      sendConfirmations();
-      redirectUrl = `${baseUrl}/booking/${booking.id}/confirmation`;
-
-      // Sync to Google Calendar
-      if (booking.Instructor?.userId) {
-        syncBookingToCalendar(booking.Instructor.userId, {
-          id: booking.id,
-          serviceName: booking.ServiceType?.name || "",
-          startTime: new Date(booking.startTime),
-          endTime: new Date(booking.endTime),
-          instructorName: instructorUser?.name || "",
-          location: booking.location || undefined,
-        }).catch((err) => logger.error("Google Calendar sync failed:", err));
-      }
-
-      return NextResponse.json({
-        bookingId: booking.id,
-        status: "CONFIRMED",
-        paymentFlow,
-        redirectUrl,
-      });
-    }
-
-    // --- TIER 3: GUEST — Pay now via Stripe Checkout ---
-    paymentFlow = "stripe_checkout";
-
-    // Write guest fields on booking
-    if (email) {
-      await serviceSupabase
-        .from("Booking")
-        .update({
-          guestEmail: email.toLowerCase().trim(),
-          guestName: name || null,
-          guestPhone: phone || null,
-          updatedAt: new Date().toISOString(),
-        })
-        .eq("id", bookingId);
-    }
-
-    // Get or create Stripe customer
-    let customerId: string | undefined;
-    if (user.stripeCustomerId) {
-      customerId = user.stripeCustomerId;
-    } else {
-      const customer = await stripe.customers.create({
-        email: user.email,
-        name: user.name || undefined,
-        phone: phone || undefined,
-      });
-      customerId = customer.id;
-      await serviceSupabase
-        .from("User")
-        .update({ stripeCustomerId: customer.id, updatedAt: new Date().toISOString() })
-        .eq("id", user.id);
-    }
-
-    const checkoutSession = await stripe.checkout.sessions.create({
-      mode: "payment",
-      customer: customerId,
-      line_items: [
-        {
-          price_data: {
-            currency: "nok",
-            product_data: {
-              name: serviceType?.name || "Coaching",
-              description: `Coaching-time ${serviceType?.duration || 50} min`,
+        line_items: [
+          {
+            price_data: {
+              currency: "nok",
+              product_data: {
+                name: serviceType?.name || "Coaching",
+                description: `Coaching-time ${serviceType?.duration || 50} min`,
+              },
+              unit_amount: booking.amount * 100, // Convert from kroner to øre
             },
-            unit_amount: booking.amount * 100, // Kroner til ore
+            quantity: 1,
           },
-          quantity: 1,
+        ],
+        payment_intent_data: {
+          setup_future_usage: 'off_session', // Save payment method for future use
+          metadata: {
+            bookingId: booking.id,
+            userId: user.id,
+          },
         },
-      ],
-      payment_intent_data: {
-        setup_future_usage: "off_session",
-      },
-      success_url: `${baseUrl}/booking/${booking.id}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/booking/${booking.id}/cancel`,
-      metadata: {
-        bookingId: booking.id,
-        userId: user.id,
-      },
-    });
+        success_url: `${baseUrl}/booking/${booking.id}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${baseUrl}/booking/${booking.id}/cancel`,
+        metadata: {
+          bookingId: booking.id,
+          userId: user.id,
+        },
+      });
 
-    // Save Stripe reference on booking
-    const stripeRef = (checkoutSession.payment_intent as string) || checkoutSession.id;
-    await serviceSupabase
-      .from("Booking")
-      .update({
-        stripePaymentId: stripeRef,
-        updatedAt: new Date().toISOString(),
-      })
-      .eq("id", bookingId);
+      redirectUrl = checkoutSession.url!;
+    } else {
+      redirectUrl = `/booking/${booking.id}/confirmation`;
+    }
 
-    redirectUrl = checkoutSession.url!;
-
-    // Sync to Google Calendar (guest confirmation email sent by confirm-payment webhook)
+    // Sync to Google Calendar if instructor has it connected
     if (booking.Instructor?.userId) {
-      syncBookingToCalendar(booking.Instructor.userId, {
+      await syncBookingToCalendar(booking.Instructor.userId, {
         id: booking.id,
         serviceName: booking.ServiceType?.name || "",
         startTime: new Date(booking.startTime),
         endTime: new Date(booking.endTime),
-        instructorName: instructorUser?.name || "",
+        instructorName: booking.Instructor?.User?.name || "",
         location: booking.location || undefined,
-      }).catch((err) => logger.error("Google Calendar sync failed:", err));
+      }).catch((err) => {
+        logger.error("Google Calendar sync failed:", err);
+      });
     }
 
     return NextResponse.json({
       bookingId: booking.id,
       status: booking.status,
-      paymentFlow,
       redirectUrl,
     });
 

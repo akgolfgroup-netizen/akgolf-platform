@@ -55,10 +55,7 @@ export async function POST(req: Request) {
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
     const paymentIntentId = paymentIntent.id;
 
-    // Atomic idempotency guard: only update bookings still in PENDING state
-    const { data: booking } = await supabase
-      .from("Booking")
-      .select(`
+    const bookingSelect = `
         id,
         amount,
         vatAmount,
@@ -67,10 +64,39 @@ export async function POST(req: Request) {
         User:studentId (name, email),
         Instructor:instructorId (User:userId (name, email)),
         Location:locationId (name)
-      `)
+      `;
+
+    // Primary lookup: booking must already have stripePaymentId set
+    let { data: booking } = await supabase
+      .from("Booking")
+      .select(bookingSelect)
       .eq("stripePaymentId", paymentIntentId)
       .neq("paymentStatus", "PAID")
       .single();
+
+    // Fallback: look up by bookingId in payment intent metadata (checkout session flow)
+    if (!booking) {
+      const metadataBookingId = paymentIntent.metadata?.bookingId;
+      if (metadataBookingId) {
+        const { data: metaBooking } = await supabase
+          .from("Booking")
+          .select(bookingSelect)
+          .eq("id", metadataBookingId)
+          .neq("paymentStatus", "PAID")
+          .single();
+
+        if (metaBooking) {
+          // Save stripePaymentId so future lookups (e.g. refunds) work
+          await supabase
+            .from("Booking")
+            .update({ stripePaymentId: paymentIntentId, updatedAt: new Date().toISOString() })
+            .eq("id", metaBooking.id);
+
+          booking = metaBooking;
+          logger.info(`[Stripe Webhook] Resolved booking ${metaBooking.id} via PI metadata fallback`);
+        }
+      }
+    }
 
     if (!booking) {
       logger.info(`[Stripe Webhook] Already processed or not found: ${paymentIntentId}`);
@@ -228,6 +254,34 @@ export async function POST(req: Request) {
     }
   }
 
+  // ─── Checkout Session Events ───
+  else if (event.type === "checkout.session.completed") {
+    const session = event.data.object as Stripe.Checkout.Session;
+    const bookingId = session.metadata?.bookingId;
+
+    if (bookingId && session.mode === "payment") {
+      // Guest payment completed — save payment intent ID on booking so future
+      // webhook lookups (e.g. payment_intent.succeeded, charge.refunded) can find it
+      const paymentIntentId = session.payment_intent as string;
+      if (paymentIntentId) {
+        await supabase
+          .from("Booking")
+          .update({
+            stripePaymentId: paymentIntentId,
+            updatedAt: new Date().toISOString(),
+          })
+          .eq("id", bookingId);
+
+        logger.info(
+          `[Stripe Webhook] Checkout completed: saved pi ${paymentIntentId} on booking ${bookingId}`
+        );
+      }
+    } else if (bookingId && session.mode === "setup") {
+      // Card setup completed for deferred payment — booking already CONFIRMED
+      logger.info(`[Stripe Webhook] Card setup completed for booking ${bookingId}`);
+    }
+  }
+
   // ─── Subscription Events ───
   else if (event.type === "customer.subscription.created") {
     const subscription = event.data.object as Stripe.Subscription;
@@ -251,15 +305,23 @@ export async function POST(req: Request) {
 type CoachingTier = "PERFORMANCE_PRO" | "PERFORMANCE" | "START";
 
 function mapPriceToTier(priceId: string): CoachingTier | null {
-  if (priceId === process.env.STRIPE_PRICE_PERFORMANCE_PRO) {
+  if (priceId === process.env.STRIPE_PRICE_PRO) {
     return "PERFORMANCE_PRO";
   }
-  if (priceId === process.env.STRIPE_PRICE_PERFORMANCE) {
+  if (priceId === process.env.STRIPE_PRICE_TRAINING_ABO) {
     return "PERFORMANCE";
   }
-  if (priceId === process.env.STRIPE_PRICE_START) {
+  if (priceId === process.env.STRIPE_PRICE_STARTER) {
     return "START";
   }
+
+  // Log warning for unmapped price IDs to catch missing env vars
+  logger.warn(
+    `[Stripe Webhook] Unmapped price ID: ${priceId}. ` +
+    `Configured: STRIPE_PRICE_PRO=${process.env.STRIPE_PRICE_PRO ? "set" : "MISSING"}, ` +
+    `STRIPE_PRICE_TRAINING_ABO=${process.env.STRIPE_PRICE_TRAINING_ABO ? "set" : "MISSING"}, ` +
+    `STRIPE_PRICE_STARTER=${process.env.STRIPE_PRICE_STARTER ? "set" : "MISSING"}`
+  );
   return null;
 }
 
