@@ -44,16 +44,27 @@ export default function BookingReviewConfirmPage() {
   const [handicap, setHandicap] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<"STRIPE">("STRIPE");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasSubscription, setHasSubscription] = useState(false);
 
-  // Auto-fill user info from profile if logged in (optional)
+  // Auto-fill user info + detect subscription status
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
-        // Pre-fill user data if logged in, but don't require login
+        setIsLoggedIn(true);
         setName(user.user_metadata?.name || "");
         setEmail(user.email || "");
         setPhone(user.user_metadata?.phone || "");
+
+        // Check if user has active subscription (quota)
+        fetch("/api/portal/public/slots?checkQuota=true", { method: "HEAD" })
+          .catch(() => {});
+        // Simple check: subscription users have subscriptionTier in metadata
+        const tier = user.user_metadata?.subscriptionTier;
+        if (tier && tier !== "VISITOR" && tier !== "FREE") {
+          setHasSubscription(true);
+        }
       }
     });
   }, []);
@@ -378,7 +389,26 @@ export default function BookingReviewConfirmPage() {
                       name="terms"
                     />
                     <label htmlFor="terms" className="text-xs text-text leading-relaxed">
-                      Jeg godtar <a className="underline font-medium text-primary" href="#">vilkårene</a> og bekrefter at jeg har lest <a className="underline font-medium text-primary" href="#">kanselleringspolicyen</a>. Sessioner må kanselleres minst 24 timer i forveien.
+                      {isLoggedIn && !hasSubscription ? (
+                        <>
+                          Jeg godkjenner at beløpet på <strong>{service.price.toLocaleString("nb-NO")} kr</strong> trekkes
+                          automatisk etter endt coaching-time, og bekrefter at jeg har lest{" "}
+                          <a className="underline font-medium text-primary" href="/vilkar">kanselleringspolicyen</a>.
+                          Avbestilling minst 24 timer i forveien.
+                        </>
+                      ) : hasSubscription ? (
+                        <>
+                          Jeg bekrefter bookingen. Denne timen er inkludert i mitt abonnement.
+                          Avbestilling minst 24 timer i forveien.
+                        </>
+                      ) : (
+                        <>
+                          Jeg godtar <a className="underline font-medium text-primary" href="/vilkar">vilkårene</a> og
+                          bekrefter at jeg har lest{" "}
+                          <a className="underline font-medium text-primary" href="/vilkar">kanselleringspolicyen</a>.
+                          Avbestilling minst 24 timer i forveien.
+                        </>
+                      )}
                     </label>
                   </div>
                 </section>
@@ -429,7 +459,7 @@ export default function BookingReviewConfirmPage() {
                         </>
                       ) : (
                         <>
-                          Bekreft og betal <ArrowRight className="w-5 h-5" />
+                          {isLoggedIn ? "Bekreft booking" : "Bekreft og betal"} <ArrowRight className="w-5 h-5" />
                         </>
                       )}
                     </button>
