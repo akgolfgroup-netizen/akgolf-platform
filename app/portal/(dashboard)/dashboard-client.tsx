@@ -18,10 +18,7 @@ import {
   Award,
   Activity,
 } from "lucide-react";
-import { WeekRings } from "@/components/portal/dashboard/week-rings";
-import { DailyChecklist } from "@/components/portal/dashboard/daily-checklist";
-import { AchievementShowcase } from "@/components/portal/dashboard/achievement-showcase";
-import { PersonalInsights } from "@/components/portal/dashboard/personal-insights";
+import { PremiumStatCard, AKActivityRings } from "@/components/portal/premium";
 
 const EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
@@ -148,94 +145,95 @@ export function DashboardClient({
         </div>
       </motion.div>
 
-      {/* ── Bento Stats Grid ── */}
+      {/* ── Bento Stats Grid — Premium ── */}
       <motion.div
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
         initial="hidden"
         animate="visible"
         variants={staggerContainer}
       >
-        {/* Handicap Card - Large */}
-        <motion.div
-          variants={fadeInUp}
-          className="col-span-2 bg-white rounded-[24px] p-6 border border-[#000000]/5"
-        >
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-1">
-                Handicap
-              </p>
-              <p className="text-4xl font-bold text-black tabular-nums">
-                {handicap.current !== null ? handicap.current.toFixed(1) : "—"}
-              </p>
-            </div>
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-              handicap.trend !== null && handicap.trend < 0 
-                ? 'bg-[#2A7D5A]/10' 
-                : 'bg-[#B84233]/10'
-            }`}>
-              {handicap.trend !== null && handicap.trend < 0 ? (
-                <TrendingDown className="w-5 h-5 text-[#2A7D5A]" />
-              ) : (
-                <TrendingUp className="w-5 h-5 text-[#B84233]" />
-              )}
-            </div>
-          </div>
-          
-          {handicap.trend !== null && (
-            <div className="flex items-center gap-2">
-              <span className={`text-sm font-medium ${
-                handicap.trend < 0 ? 'text-[#2A7D5A]' : 'text-[#B84233]'
-              }`}>
-                {handicap.trend > 0 ? '+' : ''}{handicap.trend.toFixed(1)}
-              </span>
-              <span className="text-sm text-[#7A8C85]">siste 30 dager</span>
-            </div>
-          )}
-          
-          {/* Mini chart placeholder */}
-          <div className="mt-4 h-16 flex items-end gap-1">
-            {[40, 60, 45, 70, 55, 80, 65].map((h, i) => (
-              <div
-                key={i}
-                className="flex-1 bg-[#00594C]/10 rounded-t"
-                style={{ height: `${h}%` }}
-              />
-            ))}
-          </div>
+        {/* Handicap Card — spans 2 cols */}
+        <motion.div variants={fadeInUp} className="sm:col-span-2">
+          <PremiumStatCard
+            label="Handicap"
+            value={handicap.current ?? "—"}
+            trend={handicap.trend}
+            trendLabel="siste 30 dager"
+            lowerIsBetter
+            icon={TrendingDown}
+            decimals={1}
+            className="h-full"
+          />
         </motion.div>
 
-        {/* Sessions Card */}
-        <motion.div
-          variants={fadeInUp}
-          className="bg-white rounded-[24px] p-6 border border-[#000000]/5"
-        >
-          <div className="w-10 h-10 rounded-xl bg-[#E6F3F1] flex items-center justify-center mb-4">
-            <Target className="w-5 h-5 text-[#00594C]" />
-          </div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-1">
-            Treningsøkter
-          </p>
-          <p className="text-3xl font-bold text-black tabular-nums">
-            {stats.sessionsCount}
-          </p>
+        {/* Treningsøkter */}
+        <motion.div variants={fadeInUp}>
+          <PremiumStatCard
+            label="Treningsøkter"
+            value={stats.sessionsCount}
+            icon={Target}
+            className="h-full"
+          />
         </motion.div>
 
-        {/* Rounds Card */}
-        <motion.div
-          variants={fadeInUp}
-          className="bg-white rounded-[24px] p-6 border border-[#000000]/5"
-        >
-          <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] flex items-center justify-center mb-4">
-            <Trophy className="w-5 h-5 text-[#C48A32]" />
-          </div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-1">
-            Runder spilt
-          </p>
-          <p className="text-3xl font-bold text-black tabular-nums">
-            {stats.roundsCount}
-          </p>
+        {/* Runder spilt */}
+        <motion.div variants={fadeInUp}>
+          <PremiumStatCard
+            label="Runder spilt"
+            value={stats.roundsCount}
+            icon={Trophy}
+            className="h-full"
+          />
         </motion.div>
+      </motion.div>
+
+      {/* ── Aktivitetsringer ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.5, ease: EASE }}
+        className="bg-white rounded-[24px] p-6 lg:p-8 border border-black/5"
+      >
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-xl font-bold text-[var(--color-text)] tracking-tight">
+              Din uke
+            </h2>
+            <p className="text-sm text-[var(--color-muted)] mt-0.5">
+              Aktivitet sammenlignet med ukentlig mål
+            </p>
+          </div>
+          <div className="hidden sm:flex items-center gap-2 text-xs text-[var(--color-muted)]">
+            <Activity className="w-3.5 h-3.5" />
+            {format(now, "'Uke' w", { locale: nb })}
+          </div>
+        </div>
+        <div className="flex justify-center sm:justify-start">
+          <AKActivityRings
+            training={{
+              label: "Trening",
+              progress: Math.min((stats.sessionsCount / 5) * 100, 100),
+              current: stats.sessionsCount,
+              target: 5,
+              unit: "økter",
+            }}
+            coaching={{
+              label: "Coaching",
+              progress: nextBooking ? 100 : 0,
+              current: nextBooking ? 1 : 0,
+              target: 1,
+              unit: "økt",
+            }}
+            rounds={{
+              label: "Runder",
+              progress: Math.min((stats.roundsCount / 2) * 100, 100),
+              current: stats.roundsCount,
+              target: 2,
+              unit: "runder",
+            }}
+            size={180}
+          />
+        </div>
       </motion.div>
 
       {/* ── Second Row: AI Insight & Quick Stats ── */}
