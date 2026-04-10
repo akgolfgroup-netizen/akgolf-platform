@@ -56,12 +56,24 @@ __pycache__/
 .agents/
 .claude/
 
-# Design assets (keep in repo but manage separately)
-stitch/*.zip
+# Design assets (removed from repo)
+stitch/
+stitch-assets/
+stitch-prompts/
 stitch-export/
+stitch*.zip
+.stitch/
+wireframes/
+debug/
 
 # Test outputs
 playwright-report/
 test-results/
 playwright.config.ts
 e2e/
+
+# Temporary/scratch files
+*.py
+code.html
+check-data.js
+cleanup-data.js

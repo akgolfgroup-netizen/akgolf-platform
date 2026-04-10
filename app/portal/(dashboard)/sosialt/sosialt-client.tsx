@@ -508,10 +508,24 @@ function UtfordringerTab({
     title: "",
     type: "HANDICAP" as ChallengeType,
     metric: "Lavest handicap",
-    startDate: new Date().toISOString().slice(0, 10),
-    endDate: new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10),
+    startDate: "",
+    endDate: "",
     inviteFriendIds: [] as string[],
   });
+
+  useEffect(() => {
+    void Promise.resolve().then(() => {
+      setForm((current) => ({
+        ...current,
+        startDate: current.startDate || new Date().toISOString().slice(0, 10),
+        endDate:
+          current.endDate ||
+          new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10),
+      }));
+    }    new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10),
+      }));
+    });
+  }, []);
 
   const handleCreate = () => {
     startTransition(async () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NotificationPanel } from "./NotificationPanel";
@@ -13,38 +13,51 @@ export function AdminNotificationBell({ className }: AdminNotificationBellProps)
   const [unreadCount, setUnreadCount] = useState(0);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [hasNewNotification, setHasNewNotification] = useState(false);
+  const timeoutRef = useRef<number | null>(null);
 
   // Hent antall uleste notifikasjoner
-  const fetchUnreadCount = useCallback(async () => {
+  const fetchUnreadCount = async () => {
     try {
       const response = await fetch("/api/portal/admin/notifications", {
         method: "HEAD",
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         const newCount = data.unreadCount || 0;
-        
-        // Trigger animasjon hvis det er nye notifikasjoner
-        if (newCount > unreadCount) {
-          setHasNewNotification(true);
-          setTimeout(() => setHasNewNotification(false), 2000);
-        }
-        
-        setUnreadCount(newCount);
+
+        setUnreadCount((current) => {
+          if (newCount > current) {
+            setHasNewNotification(true);
+            timeoutRef.current = window.setTimeout(() => {
+              setHasNewNotification(false);
+              timeoutRef.current = null;
+            }, 2000);
+          }
+
+          return newCount;
+        });
       }
     } catch (error) {
       console.error("Failed to fetch unread count:", error);
     }
-  }, [unreadCount]);
+  };
 
-  // Initial fetch og polling
   useEffect(() => {
-    fetchUnreadCount();
-    
-    const interval = setInterval(fetchUnreadCount, 30000);
-    return () => clearInterval(interval);
-  }, [fetchUnreadCount]);
+    const load = async () => {
+      await fetchUnreadCount();
+    };
+
+    void load();
+    const interval = window.setInterval(load, 30000);
+
+    return () => {
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current);
+      }
+      window.clearInterval(interval);
+    };
+  }, []);
 
   return (
     <>
