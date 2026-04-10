@@ -8,6 +8,7 @@ import { revalidatePath } from "next/cache";
 import { nanoid } from "nanoid";
 import { processRefund } from "@/lib/portal/booking/refund";
 import { evaluateCancellationPolicy } from "@/lib/portal/booking/cancellation-policy";
+import { notifyNextOnWaitlist } from "@/lib/portal/booking/waitlist";
 import { logger } from "@/lib/logger";
 
 const BOOKING_SELECT = `
@@ -107,7 +108,16 @@ export async function adminCancelBooking(
 
   const { data: booking } = await supabase
     .from("Booking")
-    .select("startTime, paymentMethod, stripePaymentId, amount, paymentStatus")
+    .select(`
+      startTime,
+      endTime,
+      paymentMethod,
+      stripePaymentId,
+      amount,
+      paymentStatus,
+      ServiceType:serviceTypeId(name),
+      Instructor:instructorId(User(name))
+    `)
     .eq("id", bookingId)
     .single();
 
@@ -163,6 +173,21 @@ export async function adminCancelBooking(
       .update({ refundedAt: new Date().toISOString() })
       .eq("bookingId", bookingId);
   }
+
+  // Notify waitlist
+  const serviceType = booking.ServiceType as { name: string } | null;
+  const instructor = booking.Instructor as { User: { name: string | null } | null } | null;
+  const serviceName = serviceType?.name ?? "Tjeneste";
+  const instructorName = instructor?.User?.name ?? "Instruktør";
+
+  notifyNextOnWaitlist(
+    bookingId,
+    serviceName,
+    instructorName,
+    new Date(booking.startTime)
+  ).catch((err) =>
+    logger.error("[adminCancelBooking] Waitlist notification failed:", err)
+  );
 
   revalidatePath("/admin/bookinger");
   return { refundResult };

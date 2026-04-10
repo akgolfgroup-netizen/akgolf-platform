@@ -114,22 +114,6 @@ export const HOW_IT_WORKS = {
   ],
 } as const;
 
-// ─── Foundation Test (Intro) ───
-export const FOUNDATION_TEST = {
-  name: "Foundation Test",
-  tagline: "Start her",
-  duration: "50 min",
-  price: "995",
-  description: "Din baseline. TrackMan-analyse, putting-test og konkret anbefaling.",
-  includes: [
-    "Kort samtale om mål og erfaring",
-    "TrackMan-analyse (driver + jern)",
-    "Kort spill og putting-test",
-    "Personlig anbefaling og plan"
-  ],
-  refundNote: "Beløpet trekkes fra første faktura ved oppstart innen 14 dager."
-} as const;
-
 // ─── Coaching Packages (Abonnement) ───
 export const COACHING_PACKAGES = [
   {
@@ -182,33 +166,6 @@ export const COACHING_PACKAGES = [
   },
 ] as const;
 
-// ─── Onboarding Package ───
-export const ONBOARDING_PACKAGE = {
-  name: "Performance",
-  price: "1 600",
-  period: "kr/mnd",
-  tagline: "Månedlig coaching-abonnement",
-  description: "Inkluderer 2x20 minutter 1-til-1 veiledning med TrackMan/video, pluss oppdatert treningsplan i app. Ingen bindingstid.",
-  whoIsItFor: "For deg som ønsker struktur og jevnlig oppfølging.",
-  features: [
-    "2 x 20 min 1-til-1 coaching per måned",
-    "TrackMan og videoanalyse",
-    "Full portaltilgang og treningsplan",
-    "7 dagers booking-vindu",
-  ],
-  nextStep: "Oppgrader til Performance Pro for raskere fremgang.",
-  stripeMetadata: {
-    type: "subscription",
-    tier: "performance",
-    sessions_per_month: 2,
-    session_duration: 20,
-    booking_window_days: 7,
-    includes_trackman: true,
-    includes_video: true,
-    includes_portal: true,
-  },
-} as const;
-
 // ─── Product Descriptions for Booking System / Stripe ───
 export const PRODUCT_DESCRIPTIONS = {
   subscription: {
@@ -243,7 +200,7 @@ export const SINGLE_SESSIONS = {
     role: "Head Coach",
     sessions: [
       { name: "Privat 1:1", duration: "50 min", price: "1 500", priceLabel: "kr", maxParticipants: 1 },
-      { name: "Duo 2:1", duration: "50 min", price: "899", priceLabel: "kr/pers", maxParticipants: 2 },
+      { name: "Duo 2:1", duration: "50 min", price: "850", priceLabel: "kr/pers", maxParticipants: 2 },
       { name: "Gruppetrening", duration: "60 min", price: "499", priceLabel: "kr/pers", maxParticipants: 4 },
       { name: "Playing lesson", duration: "2 timer", price: "2 500", priceLabel: "kr", maxParticipants: 1 }
     ]
@@ -253,8 +210,8 @@ export const SINGLE_SESSIONS = {
     role: "Coach",
     sessions: [
       { name: "Privat 1:1", duration: "50 min", price: "750", priceLabel: "kr", maxParticipants: 1 },
-      { name: "Duo 2:1", duration: "50 min", price: "499", priceLabel: "kr/pers", maxParticipants: 2 },
-      { name: "Gruppetrening", duration: "60 min", price: "349", priceLabel: "kr/pers", maxParticipants: 4 }
+      { name: "Duo 2:1", duration: "50 min", price: "500", priceLabel: "kr/pers", maxParticipants: 2 },
+      { name: "Gruppetrening", duration: "60 min", price: "350", priceLabel: "kr/pers", maxParticipants: 4 }
     ]
   }
 } as const;
@@ -742,6 +699,7 @@ export const JUNIOR_PROGRAMS = [
 
 export const JUNIOR_FAQ = [
   { q: "Hva koster det?", a: "AK Golf Junior Academy koster 3 500 kr/mnd. GFGK Junior har egen treningsavgift gjennom klubben." },
+  { q: "Hva koster det?", a: "AK Golf Junior Academy koster 2 500 kr/mnd. GFGK Junior har egen treningsavgift gjennom klubben." },
   { q: "Hvor trener dere?", a: "På Gamle Fredrikstad Golfklubb." },
   { q: "Hvordan kommer jeg i gang?", a: "Ta kontakt så avtaler vi en samtale." },
 ] as const;
@@ -971,13 +929,12 @@ export const ACADEMY_TESTIMONIALS = [
 // ─── Academy Booking CTA ───
 export const ACADEMY_CTA = {
   eyebrow: "Klar for å starte?",
-  heading: "Book din Foundation Test.",
-  description: "50 minutter. TrackMan-analyse, putting-test og personlig anbefaling. Du får en baseline og vet nøyaktig hvor du står.",
-  primaryCta: "Book Foundation Test",
+  heading: "Start din reise mot et bedre spill.",
+  description: "Velg mellom våre mest populære abonnementer eller start med en Flex-sesjon for en grundig gjennomgang.",
+  primaryCta: "Se coaching-pakker",
   secondaryCta: "Se priser",
   valueProps: [
     "Ingen bindingstid",
-    "Pengene tilbake ved oppstart innen 14 dager",
     "Personlig anbefaling",
   ],
 } as const;
@@ -1136,7 +1093,7 @@ export const JUNIOR_PACKAGES = [
   {
     name: "Junior Elite",
     slug: "junior-elite",
-    price: "2 499",
+    price: "2 500",
     period: "kr/mnd",
     tagline: "For ambisiøse juniorer som satser på konkurransegolf",
     description: "8 individuelle coaching-sesjoner per måned med faste tider. TrackMan-analyse, personlig treningsplan og progresjonslogging — for juniorer som vil nå neste nivå.",
@@ -1190,7 +1147,7 @@ export const JUNIOR_CAMP = {
 export const JUNIOR_ACADEMY_INFO = {
   heading: "AK Golf Junior Academy",
   intro: "Ekstra satsning for juniorer som vil ta golfen til neste nivå.",
-  price: "3 500",
+  price: "2 500",
   priceUnit: "kr/mnd",
 } as const;
 
@@ -1826,3 +1783,25 @@ export const UTVIKLING_CTA_V2 = {
   description: "Ta kontakt for en uforpliktende samtale om hvordan vi kan hjelpe klubben din.",
   ctaPrimary: "Ta kontakt",
 } as const;
+
+// ─── Spillerreisen (Structure) ───
+export const PLAYER_JOURNEY = [
+  {
+    id: "nybegynner",
+    title: "Nybegynner",
+    coach: "Markus",
+    steps: ["After Work", "Veien til Golf", "Første Sesong", "9 Hull Social"]
+  },
+  {
+    id: "mellom",
+    title: "Mellomnivå & Oppfølging",
+    coach: "Markus",
+    steps: ["Flex 20", "Individuell coaching", "9 Hull Challenge", "On-Course Par 3"]
+  },
+  {
+    id: "avansert",
+    title: "Avansert & Systematisk",
+    coach: "Anders",
+    steps: ["Performance (Abonnement)", "Performance Pro (Abonnement)", "Gameday", "On-Course 9"]
+  }
+] as const;
