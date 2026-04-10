@@ -34,10 +34,16 @@ export function DateTimeDrawer({
   useEffect(() => {
     if (!isOpen || !serviceTypeId || !instructorId) return;
 
-    setLoading(true);
-    fetch(`/api/booking/smart-slots?serviceTypeId=${serviceTypeId}&instructorId=${instructorId}&weekOffset=0`)
-      .then((r) => r.json())
-      .then((data: { days?: DayData[] }) => {
+    let cancelled = false;
+    const run = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `/api/booking/smart-slots?serviceTypeId=${serviceTypeId}&instructorId=${instructorId}&weekOffset=0`
+        );
+        const data: { days?: DayData[] } = await res.json();
+        if (cancelled) return;
+
         const allDays = data.days ?? [];
         const availableDays = allDays.filter((d) => d.slots.some((s) => s.available));
         setDays(availableDays);
@@ -48,9 +54,17 @@ export function DateTimeDrawer({
           const firstSlot = firstDay.slots.find((s) => s.available);
           if (firstSlot) setSelectedSlot(firstSlot);
         }
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      } catch {
+        // Silent fail — drawer will show "no available times"
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    void run();
+    return () => {
+      cancelled = true;
+    };
   }, [isOpen, serviceTypeId, instructorId]);
 
   const selectedDay = days.find((d) => d.date === selectedDate);
