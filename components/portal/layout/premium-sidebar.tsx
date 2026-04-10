@@ -25,6 +25,7 @@ import {
   TrendingUp,
   MapPin,
   Bell,
+  CreditCard,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
@@ -49,6 +50,7 @@ const trainingItems = [
 
 const accountItems = [
   { href: "/portal/profil", label: "Profil", icon: User },
+  { href: "/portal/abonnement", label: "Abonnement", icon: CreditCard },
   { href: "/portal/coaching-historikk", label: "Historikk", icon: NotebookPen },
 ];
 
