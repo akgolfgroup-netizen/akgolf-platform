@@ -40,6 +40,12 @@ export interface CapacityData {
   };
 }
 
+/** Supabase returnerer relasjoner som arrays. Hent første element safe. */
+function rel<T>(value: unknown): T | null {
+  if (Array.isArray(value)) return (value[0] as T) ?? null;
+  return (value as T) ?? null;
+}
+
 export async function getCapacityData(): Promise<CapacityData> {
   const supabase = await createServerSupabase();
   const now = new Date();
@@ -98,17 +104,17 @@ export async function getCapacityData(): Promise<CapacityData> {
 
     // Tell bookede slots denne uken
     const bookedSlots = (weeklyBookings || []).filter(
-      (b) => (b.Instructor as { id: string } | null)?.id === instructor.id
+      (b) => rel<{ id: string }>(b.Instructor)?.id === instructor.id
     ).length;
 
     // Beregn faktisk inntekt
     const weeklyRevenue = (weeklyBookings || [])
-      .filter((b) => (b.Instructor as { id: string } | null)?.id === instructor.id)
-      .reduce((sum, b) => sum + ((b.ServiceType as { price: number } | null)?.price ?? 0), 0);
+      .filter((b) => rel<{ id: string }>(b.Instructor)?.id === instructor.id)
+      .reduce((sum, b) => sum + (rel<{ price: number }>(b.ServiceType)?.price ?? 0), 0);
 
     return {
       id: instructor.id,
-      name: (instructor.User as { name: string | null }).name ?? "Ukjent",
+      name: rel<{ name: string | null }>(instructor.User)?.name ?? "Ukjent",
       weeklySlots,
       bookedSlots,
       occupancy: weeklySlots > 0 ? bookedSlots / weeklySlots : 0,
@@ -138,11 +144,11 @@ export async function getCapacityData(): Promise<CapacityData> {
 
       const bookedSlots = (weeklyBookings || []).filter(
         (b) =>
-          (b.Instructor as { id: string } | null)?.id === instructor.id &&
+          rel<{ id: string }>(b.Instructor)?.id === instructor.id &&
           new Date(b.startTime).toDateString() === day.toDateString()
       ).length;
 
-      coachesData[(instructor.User as { name: string | null }).name ?? "Ukjent"] = {
+      coachesData[rel<{ name: string | null }>(instructor.User)?.name ?? "Ukjent"] = {
         booked: bookedSlots,
         total: totalSlots,
       };
@@ -166,7 +172,7 @@ export async function getCapacityData(): Promise<CapacityData> {
   weeklyTotal.occupancy = weeklyTotal.slots > 0 ? weeklyTotal.booked / weeklyTotal.slots : 0;
 
   const monthlyTotal = {
-    revenue: (monthlyBookings || []).reduce((sum, b) => sum + ((b.ServiceType as { price: number } | null)?.price ?? 0), 0),
+    revenue: (monthlyBookings || []).reduce((sum, b) => sum + (rel<{ price: number }>(b.ServiceType)?.price ?? 0), 0),
     maxRevenue: weeklyTotal.maxRevenue * 4, // Estimat
     bookedCount: (monthlyBookings || []).length,
   };

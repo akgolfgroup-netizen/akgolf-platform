@@ -46,7 +46,7 @@ export interface ScheduleItem {
   status: string;
   color: string | null;
   Facility: { id: string; name: string };
-  CreatedBy: { id: string; name: string | null; email: string };
+  CreatedBy: { id: string; name: string | null; email: string | null };
 }
 
 export interface FasiliteterClientProps {

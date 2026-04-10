@@ -14,6 +14,12 @@ import {
 import { nb } from "date-fns/locale";
 import { nanoid } from "nanoid";
 
+/** Supabase returnerer relasjoner som arrays. Hent første element safe. */
+function rel<T>(value: unknown): T | null {
+  if (Array.isArray(value)) return (value[0] as T) ?? null;
+  return (value as T) ?? null;
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // TYPES
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -173,7 +179,7 @@ export async function getWeekCapacityWithOverrides(
       return bookingDay.getTime() === dayStart.getTime();
     });
     const bookedHours = dayBookings.reduce(
-      (sum, b) => sum + ((b.ServiceType as { duration: number } | null)?.duration ?? 50) / 60,
+      (sum, b) => sum + (rel<{ duration: number }>(b.ServiceType)?.duration ?? 50) / 60,
       0
     );
 
@@ -207,7 +213,7 @@ export async function getWeekCapacityWithOverrides(
     weekLabel: `Uke ${format(weekStart, "w")} - ${format(weekStart, "d. MMM", { locale: nb })} - ${format(weekEnd, "d. MMM", { locale: nb })}`,
     instructor: {
       id: instructor.id,
-      name: (instructor.User as { name: string | null }).name ?? "Ukjent",
+      name: rel<{ name: string | null }>(instructor.User)?.name ?? "Ukjent",
     },
     days,
     totalRegularHours,
@@ -332,7 +338,7 @@ export async function getPackageDemand(): Promise<PackageDemand> {
   // sessionsRemaining = sessionsPerMonth - sessionsUsedThisMonth
   let totalSessions = 0;
   for (const sub of subscriptions || []) {
-    const sessionsPerMonth = (sub.CoachingPackage as { sessionsPerMonth: number } | null)?.sessionsPerMonth ?? 0;
+    const sessionsPerMonth = rel<{ sessionsPerMonth: number }>(sub.CoachingPackage)?.sessionsPerMonth ?? 0;
     const sessionsRemaining = Math.max(0, sessionsPerMonth - sub.sessionsUsedThisMonth);
     totalSessions += sessionsRemaining;
   }
@@ -349,7 +355,7 @@ export async function getPackageDemand(): Promise<PackageDemand> {
 
   const instructorDemand = (instructors || []).map((i) => ({
     instructorId: i.id,
-    instructorName: (i.User as { name: string | null }).name ?? "Ukjent",
+    instructorName: rel<{ name: string | null }>(i.User)?.name ?? "Ukjent",
     sessions: sessionsPerInstructor,
   }));
 
@@ -377,6 +383,6 @@ export async function getInstructors(): Promise<
 
   return (instructors || []).map((i) => ({
     id: i.id,
-    name: (i.User as { name: string | null }).name ?? "Ukjent",
+    name: rel<{ name: string | null }>(i.User)?.name ?? "Ukjent",
   }));
 }

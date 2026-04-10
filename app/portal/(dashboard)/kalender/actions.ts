@@ -120,7 +120,7 @@ export async function getCalendarEvents(
     events.push({
       id: b.id,
       type: "booking",
-      title: (b.ServiceType as { name: string }).name,
+      title: (Array.isArray(b.ServiceType) ? b.ServiceType[0]?.name : (b.ServiceType as { name: string } | null)?.name) ?? "Booking",
       startDate: new Date(b.startTime),
       endDate: new Date(b.endTime),
       color: "#38BDF8",
@@ -160,7 +160,8 @@ export async function getCalendarEvents(
 
   // Tournament plans → goal type color
   for (const tp of playerTournaments || []) {
-    const tournament = tp.Tournament as { name: string; startDate: string; endDate: string | null };
+    const rawTournament = Array.isArray(tp.Tournament) ? tp.Tournament[0] : tp.Tournament;
+    const tournament = rawTournament as { name: string; startDate: string; endDate: string | null } | null;
     if (!tournament) continue;
     const goalConfig =
       GOAL_TYPE_CONFIG[tp.goalType as keyof typeof GOAL_TYPE_CONFIG];

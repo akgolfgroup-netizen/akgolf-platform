@@ -13,7 +13,7 @@ export type SessionItem = {
   status: BookingStatus;
   adminNotes: string | null;
   studentNotes: string | null;
-  student: { name: string | null; email: string } | null;
+  student: { name: string | null; email: string | null } | null;
   instructor: { name: string | null } | null;
   service: { name: string; duration: number } | null;
 };

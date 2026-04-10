@@ -13,7 +13,6 @@ import {
   CheckCircle,
   MapPin,
   AlertTriangle,
-  Clock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
@@ -38,9 +37,13 @@ interface PendingItem {
   conflictNote?: string | null;
 }
 
+interface GodkjenningerClientProps {
+  pendingItems: PendingItem[];
+}
+
 export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) {
   const { toggle } = useMCSidebar();
-  const [items, setItems] = useState(pendingItems);
+  const [items, setItems] = useState<PendingItem[]>(pendingItems);
   const [processingId, setProcessingId] = useState<string | null>(null);
 
   const handleApprove = async (id: string, type: string) => {
@@ -49,7 +52,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       ? await approveActivity(id)
       : await approveBooking(id);
     if (result.success) {
-      setItems((prev) => prev.filter((item) => item.id !== id));
+      setItems((prev: PendingItem[]) => prev.filter((item: PendingItem) => item.id !== id));
     }
     setProcessingId(null);
   };
@@ -60,7 +63,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       ? await rejectActivity(id)
       : await rejectBooking(id);
     if (result.success) {
-      setItems((prev) => prev.filter((item) => item.id !== id));
+      setItems((prev: PendingItem[]) => prev.filter((item: PendingItem) => item.id !== id));
     }
     setProcessingId(null);
   };
@@ -97,7 +100,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       />
 
       <div className="p-5 space-y-4">
-        {items.map((item) => (
+        {items.map((item: PendingItem) => (
           <div key={item.id} className="hg-card p-5">
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
               <div className="flex-1">
@@ -120,8 +123,8 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
                 <div className="flex items-center gap-3 mb-4">
                   <div className={cn(
                     "h-10 w-10 rounded-full flex items-center justify-center",
-                    item.type === "activity" 
-                      ? "bg-[var(--hg-primary)]/10" 
+                    item.type === "activity"
+                      ? "bg-[var(--hg-primary)]/10"
                       : "bg-[var(--hg-surface-raised)]"
                   )}>
                     {item.type === "activity" ? (

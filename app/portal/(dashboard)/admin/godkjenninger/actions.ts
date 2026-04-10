@@ -9,6 +9,11 @@ import { sendBookingConfirmation, sendBookingCancellation } from "@/lib/portal/e
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 
+// Hjelpefunksjon: Supabase returnerer relasjoner som arrays — hent første element
+function firstOrSelf<T>(value: T | T[]): T | undefined {
+  return Array.isArray(value) ? value[0] : value;
+}
+
 export async function getPendingItems() {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) {
@@ -74,19 +79,27 @@ export async function approveBooking(
       .update({ status: "CONFIRMED" })
       .eq("id", bookingId);
 
+    // Supabase returnerer relasjoner som arrays — hent første element
+    const bookingUser = firstOrSelf(booking.User);
+    const bookingInstructor = firstOrSelf(booking.Instructor);
+    const instructorUser = bookingInstructor
+      ? firstOrSelf(bookingInstructor.User)
+      : null;
+    const bookingService = firstOrSelf(booking.ServiceType);
+
     // Send bekreftelse til student og instruktør
-    const userEmail = (booking.User as { email: string | null }).email;
-    const instructorEmail = (booking.Instructor as { User: { email: string | null } }).User?.email;
+    const userEmail = bookingUser?.email ?? null;
+    const instructorEmail = instructorUser?.email ?? null;
     if (userEmail && instructorEmail) {
       sendBookingConfirmation({
         bookingId,
-        studentName: (booking.User as { name: string | null }).name ?? "Kunde",
+        studentName: bookingUser?.name ?? "Kunde",
         studentEmail: userEmail,
-        instructorName: (booking.Instructor as { User: { name: string | null } }).User?.name ?? "Instruktør",
+        instructorName: instructorUser?.name ?? "Instruktør",
         instructorEmail,
-        serviceName: (booking.ServiceType as { name: string }).name,
+        serviceName: bookingService?.name ?? "Ukjent tjeneste",
         startTime: new Date(booking.startTime),
-        duration: (booking.ServiceType as { duration: number }).duration,
+        duration: bookingService?.duration ?? 0,
         amount: booking.amount,
         vatAmount: booking.vatAmount,
         location: "Gamle Fredrikstad Golfklubb",
@@ -138,14 +151,22 @@ export async function rejectBooking(
       .update({ status: "CANCELLED" })
       .eq("id", bookingId);
 
+    // Supabase returnerer relasjoner som arrays — hent første element
+    const rejectUser = firstOrSelf(booking.User);
+    const rejectInstructor = firstOrSelf(booking.Instructor);
+    const rejectInstructorUser = rejectInstructor
+      ? firstOrSelf(rejectInstructor.User)
+      : null;
+    const rejectService = firstOrSelf(booking.ServiceType);
+
     // Send avvisnings-e-post til student
-    const userEmail = (booking.User as { email: string | null }).email;
+    const userEmail = rejectUser?.email ?? null;
     if (userEmail) {
       sendBookingCancellation(
         userEmail,
-        (booking.User as { name: string | null }).name ?? "Kunde",
-        (booking.ServiceType as { name: string }).name,
-        (booking.Instructor as { User: { name: string | null } }).User?.name ?? "Instruktør",
+        rejectUser?.name ?? "Kunde",
+        rejectService?.name ?? "Ukjent tjeneste",
+        rejectInstructorUser?.name ?? "Instruktør",
         new Date(booking.startTime),
         "Bookingen ble avvist av instruktør",
         100, // Full refund ved avvisning
