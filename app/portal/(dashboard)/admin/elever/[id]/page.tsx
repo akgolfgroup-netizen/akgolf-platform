@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   Mail,
@@ -23,6 +24,7 @@ import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar, HGStatCard, HGAlert } from "@/components/portal/mission-control";
 import { format, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
+import { getOrCreateConversation } from "@/app/portal/(dashboard)/admin/meldinger/chat-actions";
 
 // Mock data
 const studentData = {
@@ -82,6 +84,17 @@ const tabs = [
 export default function StudentDetailPage({ params }: { params: { id: string } }) {
   const { toggle } = useMCSidebar();
   const [activeTab, setActiveTab] = useState("overview");
+  const router = useRouter();
+  const [isSendingMessage, startSendingMessage] = useTransition();
+
+  function handleSendMessage() {
+    startSendingMessage(async () => {
+      const result = await getOrCreateConversation(params.id);
+      if (result.conversationId) {
+        router.push("/portal/admin/meldinger");
+      }
+    });
+  }
 
   return (
     <>
@@ -152,10 +165,21 @@ export default function StudentDetailPage({ params }: { params: { id: string } }
                 <Calendar className="w-4 h-4" />
                 Book ny time
               </button>
-              <button className="hg-btn hg-btn-secondary text-sm">
+              <button
+                onClick={handleSendMessage}
+                disabled={isSendingMessage}
+                className="hg-btn hg-btn-secondary text-sm"
+              >
                 <MessageSquare className="w-4 h-4" />
-                Send melding
+                {isSendingMessage ? "Starter samtale..." : "Send melding"}
               </button>
+              <Link
+                href={`/portal/admin/treningsplan?studentId=${params.id}`}
+                className="hg-btn hg-btn-secondary text-sm"
+              >
+                <FileText className="w-4 h-4" />
+                Rediger treningsplan
+              </Link>
               <button className="hg-btn hg-btn-ghost text-sm">
                 <Edit3 className="w-4 h-4" />
                 Rediger profil
