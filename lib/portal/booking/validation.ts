@@ -66,7 +66,8 @@ export type ValidationErrorCode =
   | "INVALID_EMAIL"
   | "INVALID_NAME"
   | "RATE_LIMIT_EXCEEDED"
-  | "LOCK_ACQUISITION_FAILED";
+  | "LOCK_ACQUISITION_FAILED"
+  | "INTERNAL_ERROR";
 
 export type ValidationWarningCode =
   | "BOOKING_SOON"
@@ -208,7 +209,7 @@ export async function validateBooking(
   } catch (error) {
     logger.error("[booking/validation] Unexpected error:", error);
     errors.push({
-      code: "RATE_LIMIT_EXCEEDED",
+      code: "INTERNAL_ERROR",
       message: "En uventet feil oppstod under validering. Prøv igjen.",
     });
     return { valid: false, errors, warnings, metadata };
