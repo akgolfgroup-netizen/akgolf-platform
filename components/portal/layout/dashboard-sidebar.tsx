@@ -67,8 +67,8 @@ const colors = {
   silverLight: "#D5DFDB",
   grey400: "#7A8C85",
   grey500: "#5A6E66",
-  grey600: "#48484A",
-  grey800: "#2C2C2E",
+  grey600: "#3D5249",
+  grey800: "#1A3529",
   grey900: "#0A1F18",
 };
 

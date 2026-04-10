@@ -6,6 +6,7 @@ import { logger } from "@/lib/logger";
 import { revalidatePath } from "next/cache";
 import { evaluateCancellationPolicy } from "@/lib/portal/booking/cancellation-policy";
 import { processRefund } from "@/lib/portal/booking/refund";
+import { releaseSession } from "@/lib/portal/booking/subscription-quota";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
@@ -14,6 +15,7 @@ import { isStaff } from "@/lib/portal/rbac";
 import { notifyNextOnWaitlist } from "@/lib/portal/booking/waitlist";
 
 const bookingInclude = `
+  *,
   ServiceType (name, category, color, duration),
   Instructor (
     User (name, image),
@@ -21,6 +23,12 @@ const bookingInclude = `
   ),
   Location (name)
 `;
+
+// Helper to safely extract first element from Supabase nested relation (returned as array)
+function first<T>(val: unknown): T | null {
+  if (Array.isArray(val)) return (val[0] as T) ?? null;
+  return (val as T) ?? null;
+}
 
 export async function getUpcomingBookings(studentId?: string) {
   const user = await requirePortalUser();
@@ -38,16 +46,23 @@ export async function getUpcomingBookings(studentId?: string) {
     .order("startTime", { ascending: true })
     .limit(20);
 
-  return (bookings || []).map((b) => ({
-    id: b.id,
-    serviceName: (b.ServiceType as { name: string }).name,
-    instructorName: ((b.Instructor as { User: { name: string | null } }).User?.name) ?? "Coach",
-    startTime: new Date(b.startTime),
-    duration: (b.ServiceType as { duration: number }).duration,
-    location: (b.Location as { name: string } | null)?.name,
-    status: "upcoming" as const,
-    type: ((b.ServiceType as { category: string }).category === "INDIVIDUAL" ? "coaching" : "training") as "coaching" | "training" | "tournament" | "booking",
-  }));
+  return (bookings || []).map((b) => {
+    const st = first<{ name: string; category: string; duration: number }>(b.ServiceType);
+    const inst = first<{ User: unknown; title: string | null }>(b.Instructor);
+    const instUser = inst ? first<{ name: string | null }>(inst.User) : null;
+    const loc = first<{ name: string }>(b.Location);
+
+    return {
+      id: b.id as string,
+      serviceName: st?.name ?? "Ukjent",
+      instructorName: instUser?.name ?? "Coach",
+      startTime: new Date(b.startTime as string),
+      duration: st?.duration ?? 0,
+      location: loc?.name ?? undefined,
+      status: "upcoming" as const,
+      type: (st?.category === "INDIVIDUAL" ? "coaching" : "training") as "coaching" | "training" | "tournament" | "booking",
+    };
+  });
 }
 
 export async function getPastBookings(studentId?: string) {
@@ -65,16 +80,23 @@ export async function getPastBookings(studentId?: string) {
     .order("startTime", { ascending: false })
     .limit(30);
 
-  return (bookings || []).map((b) => ({
-    id: b.id,
-    serviceName: (b.ServiceType as { name: string }).name,
-    instructorName: ((b.Instructor as { User: { name: string | null } }).User?.name) ?? "Coach",
-    startTime: new Date(b.startTime),
-    duration: (b.ServiceType as { duration: number }).duration,
-    location: (b.Location as { name: string } | null)?.name,
-    status: (b.status === "CANCELLED" ? "cancelled" : "completed") as "upcoming" | "completed" | "cancelled",
-    type: ((b.ServiceType as { category: string }).category === "INDIVIDUAL" ? "coaching" : "training") as "coaching" | "training" | "tournament" | "booking",
-  }));
+  return (bookings || []).map((b) => {
+    const st = first<{ name: string; category: string; duration: number }>(b.ServiceType);
+    const inst = first<{ User: unknown; title: string | null }>(b.Instructor);
+    const instUser = inst ? first<{ name: string | null }>(inst.User) : null;
+    const loc = first<{ name: string }>(b.Location);
+
+    return {
+      id: b.id as string,
+      serviceName: st?.name ?? "Ukjent",
+      instructorName: instUser?.name ?? "Coach",
+      startTime: new Date(b.startTime as string),
+      duration: st?.duration ?? 0,
+      location: loc?.name ?? undefined,
+      status: ((b.status as string) === "CANCELLED" ? "cancelled" : "completed") as "upcoming" | "completed" | "cancelled",
+      type: (st?.category === "INDIVIDUAL" ? "coaching" : "training") as "coaching" | "training" | "tournament" | "booking",
+    };
+  });
 }
 
 export interface CancelBookingResult {
@@ -171,6 +193,13 @@ export async function cancelBooking(
     })
     .eq("id", id);
 
+  // Release subscription quota if cancellation is >24h before start (full refund policy)
+  if (policy.refundPercent === 100 && booking.paymentMethod === "NONE") {
+    releaseSession(booking.studentId).catch((err) =>
+      logger.error("[cancelBooking] Failed to release session quota", err)
+    );
+  }
+
   // Send cancellation email (non-blocking)
   const dateStr = format(new Date(booking.startTime), "EEEE d. MMMM yyyy", {
     locale: nb,
@@ -189,13 +218,18 @@ export async function cancelBooking(
         ? `Delvis refusjon: ${refundAmountFormatted} (${policy.refundPercent}%)`
         : "Ingen refusjon";
 
-  const userEmail = (booking.User as { email: string | null }).email;
+  const bookingUser = first<{ name: string | null; email: string | null }>(booking.User);
+  const bookingSt = first<{ name: string }>(booking.ServiceType);
+  const bookingInst = first<{ User: unknown }>(booking.Instructor);
+  const bookingInstUser = bookingInst ? first<{ name: string | null }>(bookingInst.User) : null;
+
+  const userEmail = bookingUser?.email ?? null;
   if (userEmail) {
     sendCancellationEmail({
       studentEmail: userEmail,
-      studentName: (booking.User as { name: string | null }).name ?? "Kunde",
-      serviceName: (booking.ServiceType as { name: string }).name,
-      instructorName: ((booking.Instructor as { User: { name: string | null } }).User?.name) ?? "Instruktør",
+      studentName: bookingUser?.name ?? "Kunde",
+      serviceName: bookingSt?.name ?? "Ukjent",
+      instructorName: bookingInstUser?.name ?? "Instruktør",
       date: dateStr,
       time: timeStr,
       refundInfo,
@@ -206,8 +240,8 @@ export async function cancelBooking(
   // Notify next person on waitlist (non-blocking)
   notifyNextOnWaitlist(
     id,
-    (booking.ServiceType as { name: string }).name,
-    ((booking.Instructor as { User: { name: string | null } }).User?.name) ?? "Instruktør",
+    bookingSt?.name ?? "Ukjent",
+    bookingInstUser?.name ?? "Instruktør",
     new Date(booking.startTime)
   ).catch((err) => logger.error("[cancelBooking] Waitlist notification failed", err));
 

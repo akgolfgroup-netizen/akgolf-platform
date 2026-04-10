@@ -1,19 +1,33 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import {
-  getRoundStats,
-  getStatsAggregates,
-  getTrainingAreaBreakdown,
+  getFilteredRoundStats,
+  getFilteredAggregates,
+  getFilteredBreakdown,
+  getWeeklyTrainingVolume,
   getLatestHandicap,
 } from "./actions";
 import { StatistikkClient } from "./statistikk-client";
+import type { PeriodKey } from "./actions";
 
-export default async function StatistikkPage() {
+const VALID_PERIODS: PeriodKey[] = ["7d", "30d", "90d", "1y"];
+
+interface StatistikkPageProps {
+  searchParams: Promise<{ period?: string }>;
+}
+
+export default async function StatistikkPage({ searchParams }: StatistikkPageProps) {
   await requirePortalUser();
 
-  const [rounds, aggregates, breakdown, handicap] = await Promise.all([
-    getRoundStats(),
-    getStatsAggregates(),
-    getTrainingAreaBreakdown(),
+  const params = await searchParams;
+  const period: PeriodKey = VALID_PERIODS.includes(params.period as PeriodKey)
+    ? (params.period as PeriodKey)
+    : "30d";
+
+  const [rounds, aggregates, breakdown, weeklyTraining, handicap] = await Promise.all([
+    getFilteredRoundStats(period),
+    getFilteredAggregates(period),
+    getFilteredBreakdown(period),
+    getWeeklyTrainingVolume(period),
     getLatestHandicap(),
   ]);
 
@@ -22,7 +36,9 @@ export default async function StatistikkPage() {
       rounds={rounds}
       aggregates={aggregates}
       breakdown={breakdown}
-      handicap={handicap}
+      weeklyTraining={weeklyTraining}
+      handicap={handicap?.handicapIndex ?? null}
+      currentPeriod={period}
     />
   );
 }

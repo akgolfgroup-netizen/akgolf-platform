@@ -1,18 +1,20 @@
 import React from 'react';
-import { PLAYER_JOURNEY } from '@/lib/website-constants';
-import { CheckCircle2, User, ChevronRight, GraduationCap } from 'lucide-react';
+import { PLAYER_JOURNEY, PLAYER_JOURNEY_SECTION } from '@/lib/website-constants';
+import { CheckCircle2, User, ChevronRight } from 'lucide-react';
 
 export const PlayerJourney = () => {
   return (
-    <section className="py-24 bg-slate-50">
+    <section className="py-24 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-            Spillerreisen: Din vei til bedre golf
+          <span className="text-emerald-600 font-bold tracking-widest text-sm uppercase mb-4 block">
+            {PLAYER_JOURNEY_SECTION.label}
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">
+            {PLAYER_JOURNEY_SECTION.heading}
           </h2>
           <p className="text-lg text-slate-600">
-            Vi har utviklet en systematisk sti fra dine aller første slag til avansert coaching. 
-            Finn ut hvor du er i dag, og se hva som kreves for å nå neste nivå.
+            {PLAYER_JOURNEY_SECTION.description}
           </p>
         </div>
 

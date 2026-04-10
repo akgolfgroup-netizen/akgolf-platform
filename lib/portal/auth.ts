@@ -29,23 +29,53 @@ export async function getPortalUser(): Promise<PortalUser | null> {
   // Bruk service role client for database queries
   const serviceSupabase = createClient(supabaseUrl, supabaseKey);
 
-  // Try to find user by id
-  const { data: user, error } = await serviceSupabase
+  // Søk bruker: først på supabaseId, deretter id, deretter email
+  let user = null;
+
+  const { data: bySupabaseId } = await serviceSupabase
     .from("User")
     .select("*")
-    .eq("id", supabaseUser.id)
+    .eq("supabaseId", supabaseUser.id)
     .single();
 
-  if (error || !user) {
-    // User not found in database, but exists in Auth
-    // Create user record
+  if (bySupabaseId) {
+    user = bySupabaseId;
+  } else {
+    const { data: byId } = await serviceSupabase
+      .from("User")
+      .select("*")
+      .eq("id", supabaseUser.id)
+      .single();
+
+    if (byId) {
+      user = byId;
+    } else {
+      const { data: byEmail } = await serviceSupabase
+        .from("User")
+        .select("*")
+        .eq("email", supabaseUser.email)
+        .single();
+
+      if (byEmail) {
+        // Koble supabaseId til eksisterende bruker
+        await serviceSupabase
+          .from("User")
+          .update({ supabaseId: supabaseUser.id })
+          .eq("id", byEmail.id);
+        user = { ...byEmail, supabaseId: supabaseUser.id };
+      }
+    }
+  }
+
+  if (!user) {
+    // Bruker finnes ikke — opprett ny
     const { data: newUser, error: insertError } = await serviceSupabase
       .from("User")
       .insert({
         id: supabaseUser.id,
         email: supabaseUser.email,
         name: supabaseUser.user_metadata?.name || supabaseUser.email.split("@")[0],
-        role: supabaseUser.user_metadata?.role || "USER",
+        role: "STUDENT",
         isActive: true,
         subscriptionTier: "VISITOR",
       })

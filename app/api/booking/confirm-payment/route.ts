@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { stripe } from "@/lib/portal/stripe";
-import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
-import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { logger } from "@/lib/logger";
 import { nanoid } from "nanoid";
@@ -62,10 +60,7 @@ export async function POST(req: NextRequest) {
         amount,
         vatAmount,
         paymentMethod,
-        startTime,
-        ServiceType:serviceTypeId (name, duration, vatRate),
-        Instructor:instructorId (User:userId (name, email, phone)),
-        User:studentId (name, email)
+        ServiceType:serviceTypeId (vatRate)
       `)
       .eq("id", bookingId)
       .neq("paymentStatus", "PAID")
@@ -77,7 +72,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Beregn VAT rate
-    const serviceTypeArray = existingBooking.ServiceType as unknown as Array<{ vatRate?: number; name: string; duration: number }>;
+    const serviceTypeArray = existingBooking.ServiceType as unknown as Array<{ vatRate?: number }>;
     const serviceType = serviceTypeArray?.[0] ?? null;
     const vatRate = serviceType?.vatRate ?? 25;
     const netAmount = existingBooking.amount - existingBooking.vatAmount;
@@ -117,48 +112,8 @@ export async function POST(req: NextRequest) {
       throw transactionError;
     }
 
-    // Type assertions for nested data
-    const instructorArray = existingBooking.Instructor as unknown as Array<{ 
-      User?: Array<{ name?: string; email?: string; phone?: string }>
-    }>;
-    const instructor = instructorArray?.[0] ?? null;
-    const instructorUser = instructor?.User?.[0] ?? null;
-    const userArray = existingBooking.User as unknown as Array<{ name?: string; email?: string }>;
-    const user = userArray?.[0] ?? null;
-    const service = serviceType;
-
-    // Send bekreftelses-e-post (non-blocking)
-    if (user?.email && instructorUser?.email) {
-      sendBookingConfirmation({
-        bookingId,
-        studentName: user.name ?? "Kunde",
-        studentEmail: user.email,
-        instructorName: instructorUser.name ?? "Instruktør",
-        instructorEmail: instructorUser.email,
-        serviceName: service?.name ?? "Coaching",
-        startTime: existingBooking.startTime,
-        duration: service?.duration ?? 60,
-        amount: existingBooking.amount,
-        vatAmount: existingBooking.vatAmount,
-        location: "Gamle Fredrikstad Golfklubb",
-      }).catch((err: unknown) =>
-        logger.error("[confirm-payment] Email failed:", err)
-      );
-    }
-
-    // Send SMS til instruktør (non-blocking)
-    if (instructorUser?.phone) {
-      sendBookingConfirmationSms({
-        instructorPhone: instructorUser.phone,
-        instructorName: instructorUser.name ?? "Instruktør",
-        studentName: user?.name ?? "Kunde",
-        serviceName: service?.name ?? "Coaching",
-        startTime: existingBooking.startTime,
-        duration: service?.duration ?? 60,
-      }).catch((err: unknown) =>
-        logger.error("[confirm-payment] SMS failed:", err)
-      );
-    }
+    // E-post og SMS sendes av Stripe webhook (payment_intent.succeeded)
+    // for å unngå duplikater. Denne ruten oppdaterer kun status.
 
     return NextResponse.json({ success: true, status: "CONFIRMED" });
   } catch (error) {

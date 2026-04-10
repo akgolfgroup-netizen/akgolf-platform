@@ -1057,18 +1057,18 @@
   }
 
   .apple-badge-success {
-    background: rgba(45, 106, 79, 0.12);
-    color: #2D6A4F;
+    background: rgba(42, 125, 90, 0.12);
+    color: #2A7D5A;
   }
 
   .apple-badge-warning {
-    background: rgba(232, 156, 48, 0.12);
-    color: #E89C30;
+    background: rgba(196, 138, 50, 0.12);
+    color: #C48A32;
   }
 
   .apple-badge-error {
-    background: rgba(209, 67, 67, 0.12);
-    color: #D14343;
+    background: rgba(184, 66, 51, 0.12);
+    color: #B84233;
   }
 
   .apple-badge-info {

@@ -13,6 +13,7 @@ import {
   Award,
   TrendingDown,
   Camera,
+  Loader2,
 } from "lucide-react";
 import { ProgressChart } from "@/components/portal/heritage/progress-chart";
 import { QuickAction } from "@/components/portal/heritage/quick-action";
@@ -43,6 +44,8 @@ const mockAchievements = [
 
 export default function ProfilPage() {
   const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [name, setName] = useState("Anders Kristiansen");
   const [handicap, setHandicap] = useState(15.2);
   const [isLoading, setIsLoading] = useState(true);
@@ -88,19 +91,41 @@ export default function ProfilPage() {
           {/* Info */}
           <div className="flex-1 text-center sm:text-left">
             {isEditing ? (
-              <div className="flex items-center gap-2 justify-center sm:justify-start">
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="bg-white/20 border border-white/30 rounded-lg px-3 py-1.5 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#d2f000]/50"
-                />
-                <button
-                  onClick={() => setIsEditing(false)}
-                  className="p-1.5 rounded-lg bg-[#d2f000] text-[#1c1c16]"
-                >
-                  <Check className="w-4 h-4" />
-                </button>
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 justify-center sm:justify-start">
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => { setName(e.target.value); setSaveError(null); }}
+                    className="bg-white/20 border border-white/30 rounded-lg px-3 py-1.5 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#d2f000]/50"
+                  />
+                  <button
+                    onClick={async () => {
+                      setIsSaving(true);
+                      setSaveError(null);
+                      try {
+                        // TODO: erstatt med faktisk API-kall når mock fjernes
+                        // await updateProfile({ name });
+                        setIsEditing(false);
+                      } catch {
+                        setSaveError("Kunne ikke lagre endringer. Prøv igjen.");
+                      } finally {
+                        setIsSaving(false);
+                      }
+                    }}
+                    disabled={isSaving}
+                    className="p-1.5 rounded-lg bg-[#d2f000] text-[#1c1c16] disabled:opacity-50"
+                  >
+                    {isSaving ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Check className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+                {saveError && (
+                  <p className="text-xs text-red-300 text-center sm:text-left">{saveError}</p>
+                )}
               </div>
             ) : (
               <div className="flex items-center gap-2 justify-center sm:justify-start">
@@ -211,20 +236,25 @@ export default function ProfilPage() {
             <button className="text-xs font-medium text-[#154212] hover:underline">+ Nytt mål</button>
           </div>
           <div className="space-y-4">
-            {mockGoals.map((goal) => (
-              <div key={goal.id}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium text-[#1c1c16]">{goal.title}</span>
-                  <span className="text-xs text-[#8a9385]">{goal.progress}%</span>
+            {mockGoals.map((goal) => {
+              const progress = goal.target > 0
+                ? Math.min(100, Math.round((goal.current / goal.target) * 100))
+                : 0;
+              return (
+                <div key={goal.id}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm font-medium text-[#1c1c16]">{goal.title}</span>
+                    <span className="text-xs text-[#8a9385]">{progress}%</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-[#f7f3ea] overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-[#154212] transition-all duration-500"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
                 </div>
-                <div className="h-2 rounded-full bg-[#f7f3ea] overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-[#154212] transition-all duration-500"
-                    style={{ width: `${goal.progress}%` }}
-                  />
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

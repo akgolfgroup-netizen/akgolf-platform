@@ -27,7 +27,13 @@ export default async function DashboardPage() {
     redirect("/portal/onboarding");
   }
 
-  const [stats, handicap, nextBooking, coachInsight, aiInsight] = await Promise.all([
+  const [
+    stats,
+    handicap,
+    nextBooking,
+    coachInsight,
+    aiInsight,
+  ] = await Promise.all([
     getDashboardStats(user.id),
     getHandicapData(user.id),
     getNextBooking(user.id),

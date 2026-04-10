@@ -79,7 +79,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
     }
   };
 
-  const handleBook = async (paymentMethod: "STRIPE" | "VIPPS") => {
+  const handleBook = async (paymentMethod: "STRIPE") => {
     if (!selectedService || !selectedInstructor || !selectedSlot) return;
     setBooking(true);
 
@@ -547,27 +547,6 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                 )}
               </motion.button>
 
-              <motion.button
-                onClick={() => handleBook("VIPPS")}
-                disabled={booking}
-                className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-[background-color,color,opacity] duration-300 disabled:opacity-50 border-2 bg-transparent text-[#FF5B24] border-[#FF5B24] hover:bg-[#FF5B24] hover:text-white"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-              >
-                {booking ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>Behandler...</span>
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M17.5 4C15.1 4 13 5.7 12 8.1C11 5.7 8.9 4 6.5 4C3.5 4 1 6.5 1 9.5C1 15.5 12 21 12 21C12 21 23 15.5 23 9.5C23 6.5 20.5 4 17.5 4Z"/>
-                    </svg>
-                    <span>Betal med Vipps</span>
-                  </>
-                )}
-              </motion.button>
             </div>
 
             <p className="text-xs text-center mt-6 text-[var(--color-grey-400)]">

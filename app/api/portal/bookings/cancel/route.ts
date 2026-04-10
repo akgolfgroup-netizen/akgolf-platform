@@ -7,6 +7,7 @@ import { processRefund } from "@/lib/portal/booking/refund";
 import { notifyNextOnWaitlist } from "@/lib/portal/booking/waitlist";
 import { sendBookingCancellation } from "@/lib/portal/email/send-booking-email";
 import { notifyBookingCancelled } from "@/lib/portal/notifications/triggers";
+import { releaseSession } from "@/lib/portal/booking/subscription-quota";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 export async function POST(req: NextRequest) {
@@ -124,6 +125,13 @@ export async function POST(req: NextRequest) {
 
     if (updateError) {
       throw updateError;
+    }
+
+    // Release subscription quota if cancellation is >24h before start (full refund)
+    if (cancellation.refundPercent === 100 && booking.paymentMethod === "NONE") {
+      releaseSession(booking.studentId).catch((err) =>
+        logger.error("[Cancel] Failed to release session quota", err)
+      );
     }
 
     // Send cancellation email (non-blocking)

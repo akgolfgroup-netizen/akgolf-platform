@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { uploadAvatar } from "@/app/portal/(dashboard)/profil/actions";
 import { Camera } from "lucide-react";
@@ -13,21 +13,59 @@ interface AvatarUploadProps {
 export function AvatarUpload({ currentImage, name }: AvatarUploadProps) {
   const [preview, setPreview] = useState<string | null>(currentImage ?? null);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const objectUrlRef = useRef<string | null>(null);
+
+  // Cleanup object URL ved unmount
+  useEffect(() => {
+    return () => {
+      if (objectUrlRef.current) {
+        URL.revokeObjectURL(objectUrlRef.current);
+      }
+    };
+  }, []);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (!file) return;
 
-    // Show local preview immediately
+    setError(null);
+
+    // Revoke gammel preview-URL for å unngå memory leak
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = null;
+    }
+
+    // Vis lokal preview umiddelbart
     const objectUrl = URL.createObjectURL(file);
+    objectUrlRef.current = objectUrl;
     setPreview(objectUrl);
 
     setUploading(true);
-    const fd = new FormData();
-    fd.append("avatar", file);
-    await uploadAvatar(fd);
-    setUploading(false);
-  }, []);
+    try {
+      const fd = new FormData();
+      fd.append("avatar", file);
+      const serverUrl = await uploadAvatar(fd);
+
+      // Erstatt object URL med server-URL og frigjør minne
+      if (objectUrlRef.current) {
+        URL.revokeObjectURL(objectUrlRef.current);
+        objectUrlRef.current = null;
+      }
+      setPreview(serverUrl);
+    } catch {
+      // Upload feilet — fjern preview og vis feilmelding
+      if (objectUrlRef.current) {
+        URL.revokeObjectURL(objectUrlRef.current);
+        objectUrlRef.current = null;
+      }
+      setPreview(currentImage ?? null);
+      setError("Kunne ikke laste opp bilde. Prøv igjen.");
+    } finally {
+      setUploading(false);
+    }
+  }, [currentImage]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -74,6 +112,12 @@ export function AvatarUpload({ currentImage, name }: AvatarUploadProps) {
         <div className="absolute inset-0 rounded-2xl border-2 border-[var(--color-grey-900)] bg-[var(--color-grey-900)]/10 flex items-center justify-center">
           <Camera className="w-5 h-5 text-[var(--color-grey-900)]" />
         </div>
+      )}
+
+      {error && (
+        <p className="absolute -bottom-6 left-0 right-0 text-center text-xs text-[var(--color-error)]">
+          {error}
+        </p>
       )}
     </div>
   );

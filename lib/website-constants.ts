@@ -201,7 +201,7 @@ export const SINGLE_SESSIONS = {
     sessions: [
       { name: "Privat 1:1", duration: "50 min", price: "1 500", priceLabel: "kr", maxParticipants: 1 },
       { name: "Duo 2:1", duration: "50 min", price: "850", priceLabel: "kr/pers", maxParticipants: 2 },
-      { name: "Gruppetrening", duration: "60 min", price: "499", priceLabel: "kr/pers", maxParticipants: 4 },
+      { name: "Gruppetrening", duration: "60 min", price: "500", priceLabel: "kr/pers", maxParticipants: 4 },
       { name: "Playing lesson", duration: "2 timer", price: "2 500", priceLabel: "kr", maxParticipants: 1 }
     ]
   },
@@ -1632,7 +1632,7 @@ export const ACADEMY_PRICES_V2 = {
     },
     {
       name: "Gruppe",
-      price: "495",
+      price: "500",
       unit: "kr/\u00f8kt",
       note: "Maks 6 per gruppe",
       features: [
@@ -1805,3 +1805,10 @@ export const PLAYER_JOURNEY = [
     steps: ["Performance (Abonnement)", "Performance Pro (Abonnement)", "Gameday", "On-Course 9"]
   }
 ] as const;
+
+export const PLAYER_JOURNEY_SECTION = {
+  label: "DIN UTVIKLING",
+  heading: "Spillerreisen: Veien til bedre golf.",
+  description: "Vi har utviklet en systematisk sti fra dine aller første slag til avansert coaching. Finn ut hvor du er i dag, og se hva som kreves for å nå neste nivå.",
+  ctaLabel: "Start reisen"
+} as const;

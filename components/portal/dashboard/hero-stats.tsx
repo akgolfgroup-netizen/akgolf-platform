@@ -7,6 +7,7 @@ import Link from "next/link";
 interface HeroStatsProps {
   handicap: number | null;
   handicapChange: number | null;
+  handicapHistory: number[];
   streak: number;
   sessionsThisMonth: number;
   achievements: number;
@@ -17,6 +18,7 @@ interface HeroStatsProps {
 export function HeroStats({
   handicap,
   handicapChange,
+  handicapHistory,
   streak,
   sessionsThisMonth,
   achievements,
@@ -96,14 +98,17 @@ export function HeroStats({
               </Link>
             </div>
             <div className="flex items-end gap-1 mt-2 h-8">
-              {[18.2, 17.8, 17.5, 17.9, 17.2, handicap ?? 17.0].map((val, i) => (
+              {(handicapHistory.length > 0
+                ? handicapHistory.slice(-6)
+                : [handicap ?? 0]
+              ).map((val, i, arr) => (
                 <motion.div
                   key={i}
                   initial={{ height: 0 }}
                   animate={{ height: `${Math.max(20, 100 - (val - 15) * 10)}%` }}
                   transition={{ delay: 0.5 + i * 0.1, duration: 0.4 }}
                   className={`flex-1 rounded-t ${
-                    i === 5 ? "bg-[var(--color-grey-900)]" : "bg-[var(--color-grey-200)]"
+                    i === arr.length - 1 ? "bg-[var(--color-grey-900)]" : "bg-[var(--color-grey-200)]"
                   }`}
                 />
               ))}

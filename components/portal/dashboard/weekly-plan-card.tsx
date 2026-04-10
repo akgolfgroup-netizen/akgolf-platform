@@ -160,7 +160,7 @@ function DayCard({ day, sessions, status }: DayPlan) {
           : isRest && (
               <span
                 className={`text-[10px] font-medium ${
-                  isToday ? "text-white/40" : "text-[#D2D2D7]"
+                  isToday ? "text-white/40" : "text-[#A5B2AD]"
                 }`}
               >
                 Hvile

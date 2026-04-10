@@ -32,7 +32,7 @@ export function MaintenancePage({
           }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-tl from-[#D2D2D7] to-transparent blur-3xl opacity-40"
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-tl from-[#A5B2AD] to-transparent blur-3xl opacity-40"
           animate={{
             scale: [1, 1.15, 1],
             x: [0, -25, 0],
@@ -110,7 +110,7 @@ export function MaintenancePage({
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: 0.6, duration: 0.5 }}
-          className="w-16 h-px bg-[#D2D2D7] mx-auto mb-8"
+          className="w-16 h-px bg-[#A5B2AD] mx-auto mb-8"
         />
 
         {/* Contact info */}
@@ -131,7 +131,7 @@ export function MaintenancePage({
               >
                 post@akgolf.no
               </a>
-              <span className="hidden sm:block text-[#D2D2D7]">|</span>
+              <span className="hidden sm:block text-[#A5B2AD]">|</span>
               <a
                 href="tel:+4745008048"
                 className="text-[#0A1F18] font-medium hover:opacity-70 transition-opacity"

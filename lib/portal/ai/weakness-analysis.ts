@@ -1,7 +1,9 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { createServiceClient } from "@/lib/supabase/server";
 import { subDays } from "date-fns";
-import type { MessageCategory } from "./model-router";
+// MessageCategory not used in this file — removed model-router import
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type MessageCategory = string;
 
 function getClient() {
   return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });

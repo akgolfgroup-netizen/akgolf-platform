@@ -8,7 +8,7 @@ const VARIANTS = {
   inverted:  { path: "#FFFFFF", dot: "#2A7D5A" },
   white:     { path: "#FFFFFF", dot: "#2A7D5A" },
   // Admin — neutral grey dot
-  neutral:   { path: "#0A1F18", dot: "#D2D2D7" },
+  neutral:   { path: "#0A1F18", dot: "#A5B2AD" },
   // Legacy compatibility
   academy:   { path: "#0A1F18", dot: "#005840" },
   software:  { path: "#0A1F18", dot: "#005840" },

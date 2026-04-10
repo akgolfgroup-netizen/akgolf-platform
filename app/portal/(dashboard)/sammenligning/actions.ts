@@ -19,10 +19,14 @@ export async function getPeerComparisonData() {
     .limit(1)
     .single();
 
-  if (!latestHandicap) return null;
+  if (!latestHandicap) {
+    return { error: "Registrer handicap først for å se sammenligning" as const };
+  }
 
   const skillLevel = getSkillLevelByHandicap(Math.round(latestHandicap.handicapIndex));
-  if (!skillLevel) return null;
+  if (!skillLevel) {
+    return { error: "Kunne ikke bestemme ferdighetsnivå fra handicap" as const };
+  }
 
   // Get user's stats (last 10 rounds)
   const { data: myRounds } = await supabase
@@ -32,7 +36,9 @@ export async function getPeerComparisonData() {
     .order("date", { ascending: false })
     .limit(10);
 
-  if (!myRounds || myRounds.length === 0) return null;
+  if (!myRounds || myRounds.length === 0) {
+    return { error: "Spill minst 1 runde for å se sammenligning" as const };
+  }
 
   // Get all users in same handicap range
   const { data: peerUsers } = await supabase
@@ -44,23 +50,31 @@ export async function getPeerComparisonData() {
 
   const peerUserIds = [...new Set((peerUsers || []).map((p) => p.userId))];
 
-  // Get peer rounds
-  const { data: peerRounds } = peerUserIds.length > 0
-    ? await supabase
-        .from("RoundStats")
-        .select("*")
-        .in("userId", peerUserIds)
-        .order("date", { ascending: false })
-        .limit(100)
-    : { data: [] };
-
-  function avg(vals: (number | null)[]): number | null {
-    const valid = vals.filter((v): v is number => v !== null);
-    return valid.length > 0 ? valid.reduce((a, b) => a + b, 0) / valid.length : null;
+  if (peerUserIds.length === 0) {
+    return { error: "Ikke nok spillere i din handicap-gruppe for sammenligning" as const };
   }
 
-  function pct(made: number, total: number): number | null {
-    return total > 0 ? Math.round((made / total) * 100) : null;
+  // Get peer rounds
+  const { data: peerRounds } = await supabase
+    .from("RoundStats")
+    .select("*")
+    .in("userId", peerUserIds)
+    .order("date", { ascending: false })
+    .limit(100);
+
+  const peerRoundsList = peerRounds || [];
+
+  if (peerRoundsList.length === 0) {
+    return { error: "Ingen runder registrert i din handicap-gruppe ennå" as const };
+  }
+
+  function avg(vals: (number | null)[]): number {
+    const valid = vals.filter((v): v is number => v !== null);
+    return valid.length > 0 ? valid.reduce((a, b) => a + b, 0) / valid.length : 0;
+  }
+
+  function pct(made: number, total: number): number {
+    return total > 0 ? Math.round((made / total) * 100) : 0;
   }
 
   const myStats = {
@@ -81,7 +95,7 @@ export async function getPeerComparisonData() {
     puttsPerGir: avg(myRounds.map((r) => r.puttsPerGir)),
   };
 
-  const myRoundStats = peerRounds || [];
+  const myRoundStats = peerRoundsList;
   const peerStats = {
     sgTotal: avg(myRoundStats.map((r) => r.sgTotal)),
     sgOffTheTee: avg(myRoundStats.map((r) => r.sgOffTheTee)),

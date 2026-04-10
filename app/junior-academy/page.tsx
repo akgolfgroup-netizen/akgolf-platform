@@ -167,7 +167,7 @@ export default function JuniorPage() {
 
                   <Link
                     href="#apply"
-                    className="inline-flex px-8 py-4 rounded-[980px] bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
+                    className="inline-flex px-8 py-4 rounded-[980px] bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#1A3529] transition-colors"
                   >
                     {JUNIOR_ACADEMY_PROGRAM.ctaLabel} &rarr;
                   </Link>
@@ -309,7 +309,7 @@ export default function JuniorPage() {
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <Link
                       href={JUNIOR_CTA_V2.ctaPrimaryHref}
-                      className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
+                      className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#1A3529] transition-colors"
                     >
                       {JUNIOR_CTA_V2.ctaPrimary} &rarr;
                     </Link>

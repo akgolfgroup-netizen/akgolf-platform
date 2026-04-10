@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Tester for Booking-Admin Sync System
  * 

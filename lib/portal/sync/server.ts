@@ -5,7 +5,9 @@
  */
 
 import { createServiceClient } from '@/lib/supabase/server';
-import { SyncEventType, SyncEventStatus } from '@prisma/client';
+// SyncEventType and SyncEventStatus are not in Prisma schema — define locally
+type SyncEventType = string;
+type SyncEventStatus = string;
 
 // ════════════════════════════════════════════════════════════
 // Types

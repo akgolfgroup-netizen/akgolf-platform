@@ -132,7 +132,7 @@ export default function AcademyBookingPage() {
     return true;
   };
 
-  const handleBook = async (paymentMethod: "STRIPE" | "VIPPS") => {
+  const handleBook = async (paymentMethod: "STRIPE") => {
     if (!selectedService || !selectedInstructor || !selectedSlot) return;
     if (!validateCustomerDetails()) {
       alert("Vennligst fyll ut gyldig navn og e-postadresse");
@@ -158,26 +158,10 @@ export default function AcademyBookingPage() {
         const data = await res.json();
         setBookingResult({ bookingId: data.bookingId, isNewUser: data.isNewUser });
         
-        if (paymentMethod === "STRIPE" && data.clientSecret) {
-          // Stripe: gå til betalingsside
-          router.push(`/booking/${data.bookingId}/pay`);
-        } else if (paymentMethod === "VIPPS") {
-          // Vipps: initiere betaling og redirect til Vipps
-          const vippsRes = await fetch("/api/booking/vipps-initiate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ bookingId: data.bookingId }),
-          });
-          
-          if (vippsRes.ok) {
-            const vippsData = await vippsRes.json();
-            if (vippsData.paymentUrl) {
-              window.location.href = vippsData.paymentUrl;
-              return;
-            }
-          }
-          // Hvis Vipps-initiering feiler, gå til confirmation
-          router.push(`/booking/${data.bookingId}/confirmation`);
+        if (data.redirectUrl) {
+          // Stripe checkout: redirect til betalingsside
+          window.location.href = data.redirectUrl;
+          return;
         } else {
           router.push(`/booking/${data.bookingId}/confirmation`);
         }
@@ -998,36 +982,6 @@ export default function AcademyBookingPage() {
                         )}
                       </motion.button>
 
-                      <motion.button
-                        onClick={() => handleBook("VIPPS")}
-                        disabled={booking}
-                        className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-[opacity,transform,background-color,color] duration-300 disabled:opacity-50 border-2"
-                        style={{
-                          background: "transparent",
-                          color: "#FF5B24",
-                          borderColor: "#FF5B24",
-                        }}
-                        whileHover={{ 
-                          scale: 1.01,
-                          background: "#FF5B24",
-                          color: "#FFFFFF",
-                        }}
-                        whileTap={{ scale: 0.99 }}
-                      >
-                        {booking ? (
-                          <>
-                            <Loader2 className="w-5 h-5 animate-spin" />
-                            <span>Behandler...</span>
-                          </>
-                        ) : (
-                          <>
-                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M17.5 4C15.1 4 13 5.7 12 8.1C11 5.7 8.9 4 6.5 4C3.5 4 1 6.5 1 9.5C1 15.5 12 21 12 21C12 21 23 15.5 23 9.5C23 6.5 20.5 4 17.5 4Z"/>
-                            </svg>
-                            <span>Betal med Vipps</span>
-                          </>
-                        )}
-                      </motion.button>
                     </div>
 
                     <p 

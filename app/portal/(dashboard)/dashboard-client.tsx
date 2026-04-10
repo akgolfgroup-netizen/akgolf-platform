@@ -14,29 +14,14 @@ import {
   Sparkles,
   ArrowRight,
   Trophy,
-  Clock,
   ChevronRight,
   Award,
-  TrendingUp as TrendingUpIcon,
   Activity,
 } from "lucide-react";
-
-/* ── AK GOLF DESIGN TOKENS v5.0 ── */
-const colors = {
-  primary: '#00594C',
-  primaryLight: '#E6F3F1',
-  primaryDark: '#004940',
-  secondary: '#627C75',
-  background: '#EBE7E0',
-  surface: '#FFFFFF',
-  textPrimary: '#000000',
-  textSecondary: '#36454F',
-  textMuted: '#7A8C85',
-  aiPurple: '#8E5CE6',
-  aiPurpleLight: '#F3EEFC',
-  success: '#2A7D5A',
-  warning: '#C48A32',
-};
+import { WeekRings } from "@/components/portal/dashboard/week-rings";
+import { DailyChecklist } from "@/components/portal/dashboard/daily-checklist";
+import { AchievementShowcase } from "@/components/portal/dashboard/achievement-showcase";
+import { PersonalInsights } from "@/components/portal/dashboard/personal-insights";
 
 const EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 

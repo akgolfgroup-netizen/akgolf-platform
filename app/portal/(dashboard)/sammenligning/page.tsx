@@ -21,11 +21,13 @@ export default async function SammenligningPage() {
 
       <div className="max-w-4xl">
         <TierGate userTier={userTier} required={SubscriptionTier.PRO}>
-          {!data ? (
+          {!data || "error" in data ? (
             <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-white border border-[#c2c9bb]/50">
               <Users className="w-10 h-10 text-[#c2c9bb] mb-3" />
               <p className="text-sm text-[#6b7366]">
-                Registrer handicap og noen runder for å se sammenligning.
+                {data && "error" in data
+                  ? data.error
+                  : "Registrer handicap og noen runder for å se sammenligning."}
               </p>
             </div>
           ) : (

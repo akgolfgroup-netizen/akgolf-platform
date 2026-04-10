@@ -36,7 +36,8 @@ export async function notifyNextOnWaitlist(
   if (error || !nextEntry) return;
   
   // Type assertion for joined data
-  const userData = nextEntry.User as { name: string | null; email: string | null } | null;
+  const userArr = nextEntry.User as unknown as Array<{ name: string | null; email: string | null }>;
+  const userData = userArr?.[0] ?? null;
   if (!userData?.email) return;
 
   // Mark as notified with 24h expiry

@@ -77,6 +77,15 @@ export async function createCoachingSession(data: {
   return created;
 }
 
+const MAX_AI_ITEMS = 10;
+
+function sanitizeStringArray(input: unknown, maxItems = MAX_AI_ITEMS): string[] {
+  if (!Array.isArray(input)) return [];
+  return input
+    .filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+    .slice(0, maxItems);
+}
+
 export async function saveAISummary(
   sessionId: string,
   summary: {
@@ -90,14 +99,22 @@ export async function saveAISummary(
     throw new Error("Ikke autorisert");
   }
 
+  if (!sessionId || typeof sessionId !== "string") {
+    throw new Error("Ugyldig sesjons-ID");
+  }
+
+  const keyPoints = sanitizeStringArray(summary?.keyPoints);
+  const focusAreas = sanitizeStringArray(summary?.focusAreas);
+  const actionItems = sanitizeStringArray(summary?.actionItems);
+
   const supabase = await createServerSupabase();
 
   await supabase
     .from("CoachingSession")
     .update({
-      aiKeyPoints: summary.keyPoints,
-      aiFocusAreas: summary.focusAreas,
-      aiActionItems: summary.actionItems,
+      aiKeyPoints: keyPoints,
+      aiFocusAreas: focusAreas,
+      aiActionItems: actionItems,
       aiGeneratedAt: new Date().toISOString(),
     })
     .eq("id", sessionId);

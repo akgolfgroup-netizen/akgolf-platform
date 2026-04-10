@@ -183,7 +183,7 @@ export function ExerciseSidebar() {
       {/* Exercise list */}
       <div className="flex-1 overflow-y-auto p-4 space-y-2">
         {filtered.length === 0 ? (
-          <p className="text-xs text-[#D2D2D7] text-center py-8">
+          <p className="text-xs text-[#A5B2AD] text-center py-8">
             Ingen ovelser funnet
           </p>
         ) : (
@@ -192,7 +192,7 @@ export function ExerciseSidebar() {
               key={ex.id}
               className="flex items-start gap-2 p-3 rounded-xl bg-[#ECF0EF] border border-transparent hover:border-[#D5DFDB] hover:bg-white cursor-grab active:cursor-grabbing transition-colors group"
             >
-              <GripVertical className="w-3.5 h-3.5 text-[#D2D2D7] mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+              <GripVertical className="w-3.5 h-3.5 text-[#A5B2AD] mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <div

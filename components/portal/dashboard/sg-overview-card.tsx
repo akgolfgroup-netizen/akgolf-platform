@@ -55,7 +55,7 @@ export function SGOverviewCard({
             key={cat.label}
             className="bg-[#ECF0EF] rounded-xl p-3 flex items-center justify-between"
           >
-            <span className="text-xs font-semibold text-[#48484A]">
+            <span className="text-xs font-semibold text-[#3D5249]">
               {cat.label}
             </span>
             {cat.value !== null ? (
@@ -68,7 +68,7 @@ export function SGOverviewCard({
                 {cat.value.toFixed(2)}
               </span>
             ) : (
-              <span className="text-sm font-bold text-[#D2D2D7]">
+              <span className="text-sm font-bold text-[#A5B2AD]">
                 &mdash;
               </span>
             )}
@@ -92,8 +92,8 @@ export function SGOverviewCard({
               />
               <Radar
                 dataKey="value"
-                stroke={hasData ? "#005840" : "#D2D2D7"}
-                fill={hasData ? "#005840" : "#D2D2D7"}
+                stroke={hasData ? "#005840" : "#A5B2AD"}
+                fill={hasData ? "#005840" : "#A5B2AD"}
                 fillOpacity={hasData ? 0.12 : 0.05}
                 strokeWidth={2}
                 animationDuration={1200}

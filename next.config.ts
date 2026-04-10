@@ -8,10 +8,6 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Temporarily ignore ESLint errors during build
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   // Exclude stitch-export from build
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   distDir: '.next',

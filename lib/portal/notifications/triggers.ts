@@ -45,7 +45,7 @@ export async function notifyNewBooking(
 
     const metadata: BookingNotificationMetadata = {
       bookingId: booking.id,
-      startTime: booking.startTime,
+      startTime: booking.startTime instanceof Date ? booking.startTime.toISOString() : booking.startTime,
       studentName: booking.User?.name ?? undefined,
       serviceTypeName: booking.ServiceType?.name ?? undefined,
       locationName: booking.Location?.name ?? undefined,
@@ -88,7 +88,7 @@ export async function notifyBookingCancelled(
 
     const metadata: BookingNotificationMetadata = {
       bookingId: booking.id,
-      startTime: booking.startTime,
+      startTime: booking.startTime instanceof Date ? booking.startTime.toISOString() : booking.startTime,
       studentName: booking.User?.name ?? undefined,
       serviceTypeName: booking.ServiceType?.name ?? undefined,
     };
@@ -257,7 +257,7 @@ export async function notifyBookingConfirmed(
 
     const metadata: BookingNotificationMetadata = {
       bookingId: booking.id,
-      startTime: booking.startTime,
+      startTime: booking.startTime instanceof Date ? booking.startTime.toISOString() : booking.startTime,
       instructorName: booking.Instructor?.User?.name ?? undefined,
       serviceTypeName: booking.ServiceType?.name ?? undefined,
       locationName: booking.Location?.name ?? undefined,
@@ -299,8 +299,8 @@ export async function notifyBookingRescheduled(
 
     const metadata: BookingNotificationMetadata = {
       bookingId: booking.id,
-      startTime: booking.startTime,
-      endTime: booking.endTime ?? undefined,
+      startTime: booking.startTime instanceof Date ? booking.startTime.toISOString() : booking.startTime,
+      endTime: booking.endTime instanceof Date ? booking.endTime.toISOString() : (booking.endTime ?? undefined),
       serviceTypeName: booking.ServiceType?.name ?? undefined,
       locationName: booking.Location?.name ?? undefined,
     };
@@ -353,7 +353,7 @@ export async function notifyCoachingNotesAdded(
     const metadata: CoachingNotesMetadata = {
       sessionId: session.id,
       instructorName: session.Instructor?.User?.name ?? "",
-      sessionDate: session.sessionDate,
+      sessionDate: session.sessionDate instanceof Date ? session.sessionDate.toISOString() : session.sessionDate,
       focusArea: session.primaryFocus ?? undefined,
     };
 
@@ -389,8 +389,8 @@ export async function notifyTrainingPlanReady(
     const metadata: TrainingPlanMetadata = {
       planId: plan.id,
       planTitle: plan.title,
-      startDate: plan.startDate,
-      endDate: plan.endDate,
+      startDate: plan.startDate instanceof Date ? plan.startDate.toISOString() : plan.startDate,
+      endDate: plan.endDate instanceof Date ? plan.endDate.toISOString() : plan.endDate,
     };
 
     await createNotification({
@@ -428,7 +428,7 @@ export async function notifyBookingReminder(
 
     const metadata: BookingNotificationMetadata = {
       bookingId: booking.id,
-      startTime: booking.startTime,
+      startTime: booking.startTime instanceof Date ? booking.startTime.toISOString() : booking.startTime,
       instructorName: booking.Instructor?.User?.name ?? undefined,
       serviceTypeName: booking.ServiceType?.name ?? undefined,
       locationName: booking.Location?.name ?? undefined,

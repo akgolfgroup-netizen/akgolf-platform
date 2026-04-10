@@ -17,7 +17,6 @@ function createPrismaClient() {
     max: 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 10000,
-    family: 4,
   });
   
   const adapter = new PrismaPg(pool);

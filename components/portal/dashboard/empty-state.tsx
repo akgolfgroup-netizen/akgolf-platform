@@ -81,7 +81,7 @@ export function EmptyState({ type, compact = false }: EmptyStateProps) {
       <div className="mb-6 space-y-2 opacity-30">
         {config.preview.map((row) => (
           <div key={row} className="flex items-center gap-3 px-3 py-2 bg-[#ECF0EF] rounded-lg">
-            <div className="w-2 h-2 rounded-full bg-[#D2D2D7]" />
+            <div className="w-2 h-2 rounded-full bg-[#A5B2AD]" />
             <span className="text-xs text-[#7A8C85]">{row}</span>
           </div>
         ))}

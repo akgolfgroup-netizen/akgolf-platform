@@ -40,10 +40,10 @@ export interface CapacityData {
   };
 }
 
-/** Supabase returnerer relasjoner som arrays. Hent første element safe. */
-function rel<T>(value: unknown): T | null {
-  if (Array.isArray(value)) return (value[0] as T) ?? null;
-  return (value as T) ?? null;
+// Helper to safely extract first element from Supabase nested relation (returned as array)
+function first<T>(val: unknown): T | null {
+  if (Array.isArray(val)) return (val[0] as T) ?? null;
+  return (val as T) ?? null;
 }
 
 export async function getCapacityData(): Promise<CapacityData> {
@@ -62,6 +62,21 @@ export async function getCapacityData(): Promise<CapacityData> {
       User (name),
       InstructorAvailability (dayOfWeek, startTime, endTime)
     `);
+
+  // Hent aktive tjenestetyper for å beregne gjennomsnittlig varighet og pris
+  const { data: serviceTypes } = await supabase
+    .from("ServiceType")
+    .select("duration, price")
+    .eq("isActive", true);
+
+  // Beregn gjennomsnittlig slot-varighet og pris fra faktiske tjenestetyper
+  const avgSlotDuration =
+    serviceTypes && serviceTypes.length > 0
+      ? Math.round(
+          serviceTypes.reduce((sum, st) => sum + st.duration, 0) /
+            serviceTypes.length
+        )
+      : 50;
 
   // Hent bookinger denne uken
   const { data: weeklyBookings } = await supabase
@@ -85,36 +100,52 @@ export async function getCapacityData(): Promise<CapacityData> {
     .lte("startTime", monthEnd.toISOString())
     .in("status", ["CONFIRMED", "COMPLETED"]);
 
+  // Beregn gjennomsnittspris per slot fra faktiske bookinger i perioden
+  const allBookingPrices = (weeklyBookings || [])
+    .map((b) => first<{ price: number; duration: number }>(b.ServiceType)?.price ?? 0)
+    .filter((p) => p > 0);
+  const avgPricePerSlot =
+    allBookingPrices.length > 0
+      ? Math.round(
+          allBookingPrices.reduce((sum, p) => sum + p, 0) /
+            allBookingPrices.length
+        )
+      : serviceTypes && serviceTypes.length > 0
+        ? Math.round(
+            serviceTypes.reduce((sum, st) => sum + st.price, 0) /
+              serviceTypes.length
+          )
+        : 1000;
+
   // Beregn kapasitet per instruktor
   const coaches: CoachCapacity[] = (instructors || []).map((instructor) => {
     const availabilities = (instructor.InstructorAvailability as { dayOfWeek: number; startTime: string; endTime: string }[]) || [];
-    
-    // Beregn totale slots per uke basert på tilgjengelighet
+
+    // Beregn totale slots per uke basert på tilgjengelighet og faktisk slot-varighet
     let weeklySlots = 0;
     let maxWeeklyRevenue = 0;
-    const avgPricePerHour = 1500; // Gjennomsnittlig pris per time
 
     for (const avail of availabilities) {
       const startMinutes = parseInt(avail.startTime.split(":")[0]) * 60 + parseInt(avail.startTime.split(":")[1]);
       const endMinutes = parseInt(avail.endTime.split(":")[0]) * 60 + parseInt(avail.endTime.split(":")[1]);
-      const slotsInWindow = Math.floor((endMinutes - startMinutes) / 50); // 50 min per slot
+      const slotsInWindow = Math.floor((endMinutes - startMinutes) / avgSlotDuration);
       weeklySlots += slotsInWindow;
-      maxWeeklyRevenue += slotsInWindow * avgPricePerHour;
+      maxWeeklyRevenue += slotsInWindow * avgPricePerSlot;
     }
 
     // Tell bookede slots denne uken
     const bookedSlots = (weeklyBookings || []).filter(
-      (b) => rel<{ id: string }>(b.Instructor)?.id === instructor.id
+      (b) => first<{ id: string }>(b.Instructor)?.id === instructor.id
     ).length;
 
     // Beregn faktisk inntekt
     const weeklyRevenue = (weeklyBookings || [])
-      .filter((b) => rel<{ id: string }>(b.Instructor)?.id === instructor.id)
-      .reduce((sum, b) => sum + (rel<{ price: number }>(b.ServiceType)?.price ?? 0), 0);
+      .filter((b) => first<{ id: string }>(b.Instructor)?.id === instructor.id)
+      .reduce((sum, b) => sum + (first<{ price: number }>(b.ServiceType)?.price ?? 0), 0);
 
     return {
       id: instructor.id,
-      name: rel<{ name: string | null }>(instructor.User)?.name ?? "Ukjent",
+      name: first<{ name: string | null }>(instructor.User)?.name ?? "Ukjent",
       weeklySlots,
       bookedSlots,
       occupancy: weeklySlots > 0 ? bookedSlots / weeklySlots : 0,
@@ -144,11 +175,11 @@ export async function getCapacityData(): Promise<CapacityData> {
 
       const bookedSlots = (weeklyBookings || []).filter(
         (b) =>
-          rel<{ id: string }>(b.Instructor)?.id === instructor.id &&
-          new Date(b.startTime).toDateString() === day.toDateString()
+          first<{ id: string }>(b.Instructor)?.id === instructor.id &&
+          new Date(b.startTime as string).toDateString() === day.toDateString()
       ).length;
 
-      coachesData[rel<{ name: string | null }>(instructor.User)?.name ?? "Ukjent"] = {
+      coachesData[first<{ name: string | null }>(instructor.User)?.name ?? "Ukjent"] = {
         booked: bookedSlots,
         total: totalSlots,
       };
@@ -172,7 +203,7 @@ export async function getCapacityData(): Promise<CapacityData> {
   weeklyTotal.occupancy = weeklyTotal.slots > 0 ? weeklyTotal.booked / weeklyTotal.slots : 0;
 
   const monthlyTotal = {
-    revenue: (monthlyBookings || []).reduce((sum, b) => sum + (rel<{ price: number }>(b.ServiceType)?.price ?? 0), 0),
+    revenue: (monthlyBookings || []).reduce((sum, b) => sum + (first<{ price: number }>(b.ServiceType)?.price ?? 0), 0),
     maxRevenue: weeklyTotal.maxRevenue * 4, // Estimat
     bookedCount: (monthlyBookings || []).length,
   };

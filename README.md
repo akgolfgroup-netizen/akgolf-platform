@@ -79,12 +79,13 @@ prisma/
 
 Se `docs/ART-DIRECTION.md` for komplett design-spesifikasjon.
 
-### Farger (Brand Guide 2026)
-- **Black:** `#1D1D1F` (tekst, knapper)
-- **White:** `#FFFFFF` (bakgrunn)
-- **Grey:** `#F5F5F7`, `#E8E8ED`, `#6E6E73` (overflater, tekst)
-- **Brand Green:** `#005840` (logo, CTA)
-- **Success:** `#2A7D5A` | **Error:** `#B84233` | **AI:** `#AF52DE`
+### Farger (Brand Guide V2.0)
+- **Primary:** `#005840` (logo, nav, CTA)
+- **Accent:** `#D1F843` (CTA-knapper)
+- **Surface:** `#ECF0EF` (bakgrunn)
+- **Text:** `#324D45` (brodtekst)
+- **Grey:** `#ECF0EF`, `#D5DFDB`, `#5A6E66` (gronn-tonet skala)
+- **Success:** `#2A7D5A` | **Error:** `#B84233` | **Warning:** `#C48A32` | **AI:** `#AF52DE`
 
 ### Typografi
 - **Font:** Inter (variable, 300-700)

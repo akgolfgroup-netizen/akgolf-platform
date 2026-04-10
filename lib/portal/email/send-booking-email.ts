@@ -5,6 +5,7 @@ import { getResend, FROM_EMAIL } from "./resend";
 import { BookingConfirmedEmail } from "./templates/booking-confirmed";
 import { InstructorNewBookingEmail } from "./templates/instructor-new-booking";
 import { BookingCancelledEmail } from "./templates/booking-cancelled";
+import { createServerSupabase } from "@/lib/supabase/server";
 
 interface BookingEmailData {
   bookingId: string;
@@ -28,6 +29,42 @@ function formatNOK(amount: number): string {
   })}`;
 }
 
+/**
+ * Hent en lagret e-postmal fra databasen.
+ * Returnerer null hvis malen ikke finnes.
+ */
+async function getEmailTemplate(
+  templateName: string
+): Promise<{ subject: string; htmlContent: string } | null> {
+  try {
+    const supabase = await createServerSupabase();
+    const { data: template } = await supabase
+      .from("EmailTemplate")
+      .select("subject, htmlContent")
+      .eq("name", templateName)
+      .single();
+
+    return template ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Erstatt variabler i en template-streng.
+ * Variabler er på formen {{variabelnavn}}.
+ */
+function interpolateTemplate(
+  template: string,
+  variables: Record<string, string>
+): string {
+  let result = template;
+  for (const [key, value] of Object.entries(variables)) {
+    result = result.replaceAll(`{{${key}}}`, value);
+  }
+  return result;
+}
+
 export async function sendBookingConfirmation(data: BookingEmailData) {
   const resend = getResend();
   if (!resend) {
@@ -38,45 +75,84 @@ export async function sendBookingConfirmation(data: BookingEmailData) {
   const dateStr = format(data.startTime, "EEEE d. MMMM yyyy", { locale: nb });
   const timeStr = format(data.startTime, "HH:mm");
 
-  // Send to student
+  const templateVars: Record<string, string> = {
+    studentName: data.studentName,
+    serviceName: data.serviceName,
+    instructorName: data.instructorName,
+    date: dateStr,
+    time: timeStr,
+    duration: String(data.duration),
+    price: formatNOK(data.amount),
+    vatAmount: formatNOK(data.vatAmount),
+    location: data.location,
+    studentEmail: data.studentEmail,
+  };
+
+  // Send til student — prøv lagret mal, deretter fallback til React Email
   try {
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: data.studentEmail,
-      subject: `Bookingbekreftelse — ${data.serviceName}`,
-      react: BookingConfirmedEmail({
-        studentName: data.studentName,
-        serviceName: data.serviceName,
-        instructorName: data.instructorName,
-        date: dateStr,
-        time: timeStr,
-        duration: data.duration,
-        price: formatNOK(data.amount),
-        vatAmount: formatNOK(data.vatAmount),
-        location: data.location,
-      }),
-    });
+    const savedTemplate = await getEmailTemplate("booking-bekreftet");
+
+    if (savedTemplate) {
+      const subject = interpolateTemplate(savedTemplate.subject, templateVars);
+      const html = interpolateTemplate(savedTemplate.htmlContent, templateVars);
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: data.studentEmail,
+        subject,
+        html,
+      });
+    } else {
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: data.studentEmail,
+        subject: `Bookingbekreftelse — ${data.serviceName}`,
+        react: BookingConfirmedEmail({
+          studentName: data.studentName,
+          serviceName: data.serviceName,
+          instructorName: data.instructorName,
+          date: dateStr,
+          time: timeStr,
+          duration: data.duration,
+          price: formatNOK(data.amount),
+          vatAmount: formatNOK(data.vatAmount),
+          location: data.location,
+        }),
+      });
+    }
     logger.info(`[Email] Confirmation sent for booking ${data.bookingId}`);
   } catch (error) {
     logger.error(`[Email] Failed to send confirmation for booking ${data.bookingId}`, error);
   }
 
-  // Send to instructor
+  // Send til instruktør — prøv lagret mal, deretter fallback til React Email
   try {
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: data.instructorEmail,
-      subject: `Ny booking: ${data.studentName} — ${data.serviceName}`,
-      react: InstructorNewBookingEmail({
-        instructorName: data.instructorName,
-        studentName: data.studentName,
-        studentEmail: data.studentEmail,
-        serviceName: data.serviceName,
-        date: dateStr,
-        time: timeStr,
-        duration: data.duration,
-      }),
-    });
+    const instructorTemplate = await getEmailTemplate("booking-instruktor");
+
+    if (instructorTemplate) {
+      const subject = interpolateTemplate(instructorTemplate.subject, templateVars);
+      const html = interpolateTemplate(instructorTemplate.htmlContent, templateVars);
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: data.instructorEmail,
+        subject,
+        html,
+      });
+    } else {
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: data.instructorEmail,
+        subject: `Ny booking: ${data.studentName} — ${data.serviceName}`,
+        react: InstructorNewBookingEmail({
+          instructorName: data.instructorName,
+          studentName: data.studentName,
+          studentEmail: data.studentEmail,
+          serviceName: data.serviceName,
+          date: dateStr,
+          time: timeStr,
+          duration: data.duration,
+        }),
+      });
+    }
     logger.info(`[Email] Instructor notification sent for booking ${data.bookingId}`);
   } catch (error) {
     logger.error(`[Email] Failed to send instructor notification for booking ${data.bookingId}`, error);
@@ -108,21 +184,44 @@ export async function sendBookingCancellation(
         ? `${refundPercent}% refusjon`
         : "Ingen refusjon";
 
+  const templateVars: Record<string, string> = {
+    studentName,
+    serviceName,
+    instructorName,
+    date: dateStr,
+    time: timeStr,
+    refundInfo,
+    cancelReason,
+  };
+
   try {
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: studentEmail,
-      subject: `Avbestillingsbekreftelse — ${serviceName}`,
-      react: BookingCancelledEmail({
-        studentName,
-        serviceName,
-        instructorName,
-        date: dateStr,
-        time: timeStr,
-        refundInfo,
-        policyReason: cancelReason,
-      }),
-    });
+    const savedTemplate = await getEmailTemplate("booking-avbestilt");
+
+    if (savedTemplate) {
+      const subject = interpolateTemplate(savedTemplate.subject, templateVars);
+      const html = interpolateTemplate(savedTemplate.htmlContent, templateVars);
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: studentEmail,
+        subject,
+        html,
+      });
+    } else {
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: studentEmail,
+        subject: `Avbestillingsbekreftelse — ${serviceName}`,
+        react: BookingCancelledEmail({
+          studentName,
+          serviceName,
+          instructorName,
+          date: dateStr,
+          time: timeStr,
+          refundInfo,
+          policyReason: cancelReason,
+        }),
+      });
+    }
     logger.info(`[Email] Cancellation sent to ${studentEmail}`);
   } catch (error) {
     logger.error(`[Email] Failed to send cancellation to ${studentEmail}`, error);

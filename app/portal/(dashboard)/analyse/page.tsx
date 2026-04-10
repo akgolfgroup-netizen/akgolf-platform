@@ -22,12 +22,18 @@ export default async function AnalysePage() {
   const userTier = (user?.subscriptionTier ?? "VISITOR") as SubscriptionTier;
   const isPro = hasTierAccess(userTier, SubscriptionTier.PRO);
 
-  const handicapEntries = await getHandicapEntries(12);
+  let chartData: { date: string; value: number }[] = [];
+  let loadError = false;
 
-  const chartData = handicapEntries.map((entry) => ({
-    date: entry.date.toISOString(),
-    value: entry.handicapIndex,
-  }));
+  try {
+    const handicapEntries = await getHandicapEntries(12);
+    chartData = handicapEntries.map((entry) => ({
+      date: entry.date.toISOString(),
+      value: entry.handicapIndex,
+    }));
+  } catch {
+    loadError = true;
+  }
 
   return (
     <div className="space-y-8">
@@ -36,6 +42,16 @@ export default async function AnalysePage() {
         <h1 className="text-2xl font-bold text-[#1c1c16]">Analyse</h1>
         <p className="text-[#6b7366] mt-1">Dyp innsikt i din golf-utvikling</p>
       </div>
+
+      {/* Data load error */}
+      {loadError && (
+        <div role="alert" className="rounded-2xl p-4 border flex items-center gap-3 bg-[var(--color-error)]/10 border-[var(--color-error)]/30">
+          <Info className="w-5 h-5 text-[var(--color-error)] flex-shrink-0" />
+          <p className="text-sm text-[var(--color-error)] font-medium">
+            Kunne ikke laste handicap-data. Prøv å laste siden på nytt.
+          </p>
+        </div>
+      )}
 
       {/* Tier Gate for Pro Features */}
       {!isPro && (

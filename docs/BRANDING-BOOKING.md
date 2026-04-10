@@ -7,14 +7,16 @@
 
 ## 1. Overordnet Brand-Strategi
 
-### Brand Guide 2026 — Apple Light
+### Brand Guide V2.0
 | Element | Verdi | Bruk i Booking |
 |---------|-------|----------------|
-| **Svart** | `#1D1D1F` | Primær-knapper, tekst, logo |
-| **Hvit** | `#FFFFFF` | Bakgrunn |
-| **Grey-100** | `#F5F5F7` | Sekundær bakgrunn |
-| **Grey-200** | `#E8E8ED` | Borders, dividers |
-| **Grey-500** | `#6E6E73` | Sekundær tekst |
+| **Primary** | `#005840` | Primaer-knapper, nav, logo |
+| **Accent** | `#D1F843` | CTA-knapper |
+| **Surface** | `#ECF0EF` | Bakgrunn |
+| **Text** | `#324D45` | Brodtekst |
+| **Grey-100** | `#ECF0EF` | Sekundaer bakgrunn |
+| **Grey-200** | `#D5DFDB` | Borders, dividers |
+| **Grey-500** | `#5A6E66` | Sekundaer tekst |
 | **Font** | Inter | All tekst i booking-flyten |
 
 ### Tone of Voice
@@ -77,16 +79,18 @@ components/portal/apple/
 ## 4. Farge-Variabler
 
 ```css
-/* Brand Guide 2026 — Apple Light */
---color-black: #1D1D1F;
---color-white: #FFFFFF;
---color-grey-50: #FBFBFD;
---color-grey-100: #F5F5F7;
---color-grey-200: #E8E8ED;
---color-grey-300: #D2D2D7;
---color-grey-400: #86868B;
---color-grey-500: #6E6E73;
---color-grey-900: #1D1D1F;
+/* Brand Guide V2.0 */
+--color-primary: #005840;
+--color-accent-cta: #D1F843;
+--color-surface: #ECF0EF;
+--color-text: #324D45;
+--color-muted: #A5B2AD;
+--color-grey-100: #ECF0EF;
+--color-grey-200: #D5DFDB;
+--color-grey-300: #A5B2AD;
+--color-grey-500: #5A6E66;
+--color-grey-700: #324D45;
+--color-grey-900: #0A1F18;
 
 /* Semantisk */
 --color-success: #2A7D5A;
@@ -98,9 +102,9 @@ components/portal/apple/
 ### Stripe Theme
 ```javascript
 const STRIPE_THEME = {
-  colorPrimary: '#1D1D1F',     // Svart
+  colorPrimary: '#005840',
   colorBackground: '#FFFFFF',
-  colorText: '#1D1D1F',
+  colorText: '#324D45',
   colorDanger: '#B84233',
 }
 ```

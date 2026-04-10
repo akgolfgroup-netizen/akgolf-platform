@@ -26,7 +26,7 @@ export function AIGenerateButton({ studentId }: AIGenerateButtonProps) {
     if (!goals.trim()) return;
     setLoading(true);
     const startDate = new Date().toISOString().split("T")[0];
-    await fetch("/api/ai/training-plan", {
+    await fetch("/api/portal/ai/training-plan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ studentId, goals, periodType, durationWeeks, startDate }),

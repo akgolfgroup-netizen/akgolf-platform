@@ -349,7 +349,8 @@ async function checkInstructorAvailability(
     return { errors };
   }
 
-  const userData = instructor.User as { name: string | null } | null;
+  const userArr = instructor.User as unknown as Array<{ name: string | null }>;
+  const userData = userArr?.[0] ?? null;
 
   // Sjekk ukedag-tilgjengelighet (InstructorAvailability)
   const dayOfWeek = startTime.getUTCDay();

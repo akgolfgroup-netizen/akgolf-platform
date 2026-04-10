@@ -7,10 +7,23 @@ import { writeFile } from "fs/promises";
 import path from "path";
 import { subDays, subMonths } from "date-fns";
 import { z } from "zod";
+import { nanoid } from "nanoid";
+
+const ALLOWED_AVATAR_EXTENSIONS = ["jpg", "jpeg", "png", "webp"] as const;
+const ALLOWED_AVATAR_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+] as const;
 
 const profileSchema = z.object({
   name: z.string().min(2, "Navn må være minst 2 tegn").max(100, "Navn kan maks være 100 tegn").optional(),
-  phone: z.string().regex(/^(\+47)?[0-9\s]{8,15}$/, "Ugyldig telefonnummer").optional().or(z.literal("")),
+  phone: z
+    .string()
+    .transform((val) => val.replace(/\s/g, ""))
+    .pipe(z.string().regex(/^(\+47)?[0-9]{8,15}$/, "Ugyldig telefonnummer"))
+    .optional()
+    .or(z.literal("")),
 });
 
 export async function getMyProfile() {
@@ -192,14 +205,33 @@ export async function uploadAvatar(formData: FormData) {
   if (!file || !file.size) throw new Error("Ingen fil valgt");
   if (file.size > 5 * 1024 * 1024) throw new Error("Filen er for stor (maks 5MB)");
 
-  const ext = file.name.split(".").pop() ?? "jpg";
-  const fileName = `${user.id}.${ext}`;
-  const filePath = path.join(process.cwd(), "public", "avatars", fileName);
+  // Valider MIME-type
+  if (
+    !ALLOWED_AVATAR_MIME_TYPES.includes(
+      file.type as (typeof ALLOWED_AVATAR_MIME_TYPES)[number]
+    )
+  ) {
+    throw new Error("Ugyldig filtype. Kun JPG, PNG og WebP er tillatt.");
+  }
+
+  // Hent og valider extension fra originalt filnavn
+  const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
+  if (
+    !ALLOWED_AVATAR_EXTENSIONS.includes(
+      ext as (typeof ALLOWED_AVATAR_EXTENSIONS)[number]
+    )
+  ) {
+    throw new Error("Ugyldig filtype. Kun JPG, PNG og WebP er tillatt.");
+  }
+
+  // Bruk nanoid for sikkert filnavn (unngår path traversal)
+  const safeFileName = `${nanoid()}.${ext}`;
+  const filePath = path.join(process.cwd(), "public", "avatars", safeFileName);
 
   const buffer = Buffer.from(await file.arrayBuffer());
   await writeFile(filePath, buffer);
 
-  const imageUrl = `/avatars/${fileName}`;
+  const imageUrl = `/avatars/${safeFileName}`;
   const supabase = await createServerSupabase();
 
   await supabase

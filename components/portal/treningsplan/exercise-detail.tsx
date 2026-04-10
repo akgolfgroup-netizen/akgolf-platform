@@ -308,7 +308,7 @@ export function ExerciseDetail({ open, onClose, type, name }: ExerciseDetailProp
               >
                 Tilbake
               </button>
-              <button className="px-6 py-2.5 rounded-full bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#3A3A3C] transition-colors">
+              <button className="px-6 py-2.5 rounded-full bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#324D45] transition-colors">
                 Lagre
               </button>
             </div>

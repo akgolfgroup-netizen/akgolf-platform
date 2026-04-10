@@ -11,7 +11,7 @@ export function TestimonialBlock() {
         <RevealOnScroll>
           <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_240px] gap-12 items-center">
             <div>
-              <svg width="48" height="38" viewBox="0 0 40 32" fill="none" className="text-[#D2D2D7] mb-6">
+              <svg width="48" height="38" viewBox="0 0 40 32" fill="none" className="text-[#A5B2AD] mb-6">
                 <path d="M0 32V19.2C0 6.4 8 0 18 0v8c-6 0-9.6 3.2-10 8h10v16H0zm22 0V19.2C22 6.4 30 0 40 0v8c-6 0-9.6 3.2-10 8h10v16H22z" fill="currentColor" />
               </svg>
               <blockquote className="font-display text-2xl md:text-[32px] font-medium text-[#0A1F18] leading-snug mb-8">

@@ -6,6 +6,11 @@ import {
 import { syncGoogleCalendar } from "@/lib/portal/google-calendar/sync";
 import { createServiceClient } from "@/lib/supabase/server";
 import { logger } from "@/lib/logger";
+import {
+  checkRateLimit,
+  getClientIp,
+  RATE_LIMITS,
+} from "@/lib/portal/rate-limit";
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
 
@@ -17,14 +22,26 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
  * Triggers initial sync to BlockedTime.
  */
 export async function GET(request: Request) {
+  // Rate-limit for å hindre misbruk av callback-endepunktet
+  const rateLimit = checkRateLimit(
+    `gcal-callback:${getClientIp(request)}`,
+    RATE_LIMITS.API_GENERAL
+  );
+  if (!rateLimit.allowed) {
+    return NextResponse.redirect(
+      `${BASE_URL}/portal/kalender?google=error&reason=rate_limited`
+    );
+  }
+
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const state = searchParams.get("state");
   const error = searchParams.get("error");
 
   if (error) {
+    logger.warn("[Google Calendar Callback] OAuth-feil mottatt");
     return NextResponse.redirect(
-      `${BASE_URL}/portal/kalender?google=error&reason=${encodeURIComponent(error)}`
+      `${BASE_URL}/portal/kalender?google=error&reason=auth_failed`
     );
   }
 
@@ -54,13 +71,12 @@ export async function GET(request: Request) {
       syncGoogleCalendar(instructor.id)
         .then((result) => {
           logger.info(
-            `[Google Calendar Callback] Initial sync completed: ${result.synced} events`
+            `[Google Calendar Callback] Sync fullfort: ${result.synced} hendelser`
           );
         })
-        .catch((syncError) => {
+        .catch(() => {
           logger.error(
-            `[Google Calendar Callback] Initial sync failed:`,
-            syncError
+            "[Google Calendar Callback] Initial sync feilet"
           );
         });
     }
@@ -68,8 +84,8 @@ export async function GET(request: Request) {
     return NextResponse.redirect(
       `${BASE_URL}/portal/kalender?google=connected`
     );
-  } catch (error) {
-    logger.error("[Google Calendar Callback] Error:", error);
+  } catch {
+    logger.error("[Google Calendar Callback] Callback-behandling feilet");
     return NextResponse.redirect(
       `${BASE_URL}/portal/kalender?google=error`
     );

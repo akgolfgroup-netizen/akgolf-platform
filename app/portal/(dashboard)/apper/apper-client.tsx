@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
+  AlertCircle,
   Crown,
   Check,
   Loader2,
@@ -71,6 +72,7 @@ export function ApperClient({
   currentTier,
 }: ApperClientProps) {
   const [loading, setLoading] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
   const isSuccess = searchParams.get("success") === "true";
@@ -80,8 +82,8 @@ export function ApperClient({
     interval: "month" | "year"
   ) {
     setLoading(plan);
+    setError(null);
     try {
-      // Map to bundle slug
       const bundleSlug =
         plan === "PRO" ? "pro-bundle" : "premium-bundle";
       const res = await fetch("/api/portal/subscriptions/checkout", {
@@ -92,8 +94,12 @@ export function ApperClient({
       const data = await res.json();
       if (data.url) {
         router.push(data.url);
+      } else {
+        setError(data.error || "Kunne ikke starte betalingsprosessen. Prøv igjen.");
+        setLoading(null);
       }
     } catch {
+      setError("Noe gikk galt. Sjekk internettforbindelsen og prøv igjen.");
       setLoading(null);
     }
   }
@@ -101,6 +107,7 @@ export function ApperClient({
   async function handleCheckout(moduleSlug?: string, bundleSlug?: string) {
     const key = moduleSlug ?? bundleSlug ?? "";
     setLoading(key);
+    setError(null);
 
     try {
       const res = await fetch("/api/portal/subscriptions/checkout", {
@@ -111,27 +118,37 @@ export function ApperClient({
       const data = await res.json();
       if (data.url) {
         router.push(data.url);
+      } else {
+        setError(data.error || "Kunne ikke starte betalingsprosessen. Prøv igjen.");
+        setLoading(null);
       }
     } catch {
+      setError("Noe gikk galt. Sjekk internettforbindelsen og prøv igjen.");
       setLoading(null);
     }
   }
 
   async function handlePortal() {
     setLoading("portal");
+    setError(null);
     try {
       const res = await fetch("/api/portal/subscriptions/portal", { method: "POST" });
       const data = await res.json();
       if (data.url) {
         router.push(data.url);
+      } else {
+        setError(data.error || "Kunne ikke åpne abonnementportalen. Prøv igjen.");
+        setLoading(null);
       }
     } catch {
+      setError("Noe gikk galt. Sjekk internettforbindelsen og prøv igjen.");
       setLoading(null);
     }
   }
 
   async function handleActivateFree(moduleSlug: string) {
     setLoading(moduleSlug);
+    setError(null);
     try {
       const res = await fetch("/api/portal/subscriptions/activate-free", {
         method: "POST",
@@ -140,8 +157,13 @@ export function ApperClient({
       });
       if (res.ok) {
         router.refresh();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setError((data as { error?: string }).error || "Kunne ikke aktivere modulen. Prøv igjen.");
+        setLoading(null);
       }
     } catch {
+      setError("Noe gikk galt. Sjekk internettforbindelsen og prøv igjen.");
       setLoading(null);
     }
   }
@@ -160,11 +182,19 @@ export function ApperClient({
     <div className="space-y-10">
       {/* Success message */}
       {isSuccess && (
-        <div className="rounded-2xl p-4 border flex items-center gap-3 bg-[#22c55e]/10 border-[#22c55e]/30">
+        <div role="alert" className="rounded-2xl p-4 border flex items-center gap-3 bg-[#22c55e]/10 border-[#22c55e]/30">
           <Check className="w-5 h-5 text-[#22c55e] flex-shrink-0" />
           <p className="text-sm text-[#22c55e] font-medium">
             Abonnementet ditt er aktivert! Din 14-dagers prøveperiode har startet.
           </p>
+        </div>
+      )}
+
+      {/* Error message */}
+      {error && (
+        <div role="alert" className="rounded-2xl p-4 border flex items-center gap-3 bg-[var(--color-error)]/10 border-[var(--color-error)]/30">
+          <AlertCircle className="w-5 h-5 text-[var(--color-error)] flex-shrink-0" />
+          <p className="text-sm text-[var(--color-error)] font-medium">{error}</p>
         </div>
       )}
 

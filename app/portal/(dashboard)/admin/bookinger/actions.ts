@@ -3,15 +3,71 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
-import { addMinutes } from "date-fns";
+import { addMinutes, format } from "date-fns";
+import { nb } from "date-fns/locale";
 import { revalidatePath } from "next/cache";
 import { nanoid } from "nanoid";
 import { processRefund } from "@/lib/portal/booking/refund";
 import { evaluateCancellationPolicy } from "@/lib/portal/booking/cancellation-policy";
-import { notifyNextOnWaitlist } from "@/lib/portal/booking/waitlist";
+import { sendReminderSms } from "@/lib/portal/sms/send-reminder-sms";
+import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { logger } from "@/lib/logger";
 
-const BOOKING_SELECT = `
+// Helper to safely extract first element from Supabase nested relation (returned as array)
+function first<T>(val: unknown): T | null {
+  if (Array.isArray(val)) return (val[0] as T) ?? null;
+  return (val as T) ?? null;
+}
+
+// ---------------------------------------------------------------------------
+// Types exported for client components
+// ---------------------------------------------------------------------------
+
+export interface AdminBooking {
+  id: string;
+  startTime: string;
+  endTime: string;
+  status: string;
+  amount: number | null;
+  paymentMethod: string;
+  paymentStatus: string;
+  cancelledAt: string | null;
+  cancelReason: string | null;
+  adminNotes: string | null;
+  createdAt: string;
+  focusArea: string | null;
+  playerNotes: string | null;
+  User: { name: string | null; email: string | null; phone: string | null } | null;
+  ServiceType: { name: string; color: string | null; duration: number } | null;
+  Instructor: { User: { name: string | null } } | null;
+  Location: { name: string } | null;
+}
+
+export interface SearchBookingsResult {
+  bookings: AdminBooking[];
+  total: number;
+}
+
+export interface ServiceTypeOption {
+  id: string;
+  name: string;
+  duration: number;
+  price: number;
+}
+
+export interface InstructorOption {
+  id: string;
+  name: string;
+  title: string | null;
+}
+
+export interface StudentOption {
+  id: string;
+  name: string | null;
+  email: string;
+}
+
+const bookingSelect = `
   id,
   startTime,
   endTime,
@@ -22,45 +78,14 @@ const BOOKING_SELECT = `
   cancelledAt,
   cancelReason,
   adminNotes,
-  focusArea,
-  playerNotes,
   createdAt,
-  User:studentId(id, name, email, phone),
-  ServiceType:serviceTypeId(name, color, duration),
-  Instructor:instructorId(id, User(name)),
-  Location:locationId(name)
+  User (id, name, email, phone),
+  ServiceType (name, color, duration),
+  Instructor (id, User (name)),
+  Location (name)
 `;
 
-export type AdminBooking = {
-  id: string;
-  startTime: string;
-  endTime: string;
-  status: string;
-  amount: number;
-  paymentMethod: string | null;
-  paymentStatus: string | null;
-  cancelledAt: string | null;
-  cancelReason: string | null;
-  adminNotes: string | null;
-  focusArea: string | null;
-  playerNotes: string | null;
-  createdAt: string;
-  User: { id: string; name: string | null; email: string; phone: string | null } | null;
-  ServiceType: { name: string; color: string | null; duration: number } | null;
-  Instructor: { id: string; User: { name: string | null } | null } | null;
-  Location: { name: string } | null;
-};
-
-export type SearchBookingsResult = {
-  bookings: AdminBooking[];
-  total: number;
-};
-
-export async function searchBookings(
-  query: string,
-  status?: string,
-  page = 1
-): Promise<SearchBookingsResult> {
+export async function searchBookings(query: string, status?: string, page = 1) {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return { bookings: [], total: 0 };
 
@@ -68,34 +93,21 @@ export async function searchBookings(
   const pageSize = 20;
   const skip = (page - 1) * pageSize;
 
-  let baseQuery = supabase
-    .from("Booking")
-    .select(BOOKING_SELECT, { count: "exact" });
+  let baseQuery = supabase.from("Booking").select("*", { count: "exact" });
 
   if (status && status !== "ALL") {
     baseQuery = baseQuery.eq("status", status);
   }
 
-  // Supabase .or() på relasjoner krever !inner join — for nå filtrerer vi etter fetch
-  const { data, count: total } = await baseQuery
-    .order("startTime", { ascending: false })
-    .range(skip, skip + pageSize - 1);
-
-  let bookings = (data as AdminBooking[] | null) ?? [];
-
-  // Klient-side filtrering på søkeord (Supabase støtter ikke .or() på relasjonsfelt uten !inner)
   if (query) {
-    const q = query.toLowerCase();
-    bookings = bookings.filter(
-      (b) =>
-        b.User?.name?.toLowerCase().includes(q) ||
-        b.User?.email?.toLowerCase().includes(q) ||
-        b.ServiceType?.name?.toLowerCase().includes(q) ||
-        b.Instructor?.User?.name?.toLowerCase().includes(q)
-    );
+    baseQuery = baseQuery.or(`User.name.ilike.%${query}%,User.email.ilike.%${query}%,ServiceType.name.ilike.%${query}%`);
   }
 
-  return { bookings, total: total ?? 0 };
+  const { data: bookings, count: total } = await baseQuery
+    .order("createdAt", { ascending: false })
+    .range(skip, skip + pageSize - 1);
+
+  return { bookings: bookings || [], total: total ?? 0 };
 }
 
 export async function adminCancelBooking(
@@ -112,16 +124,7 @@ export async function adminCancelBooking(
 
   const { data: booking } = await supabase
     .from("Booking")
-    .select(`
-      startTime,
-      endTime,
-      paymentMethod,
-      stripePaymentId,
-      amount,
-      paymentStatus,
-      ServiceType:serviceTypeId(name),
-      Instructor:instructorId(User(name))
-    `)
+    .select("startTime, paymentMethod, stripePaymentId, amount, paymentStatus")
     .eq("id", bookingId)
     .single();
 
@@ -177,21 +180,6 @@ export async function adminCancelBooking(
       .update({ refundedAt: new Date().toISOString() })
       .eq("bookingId", bookingId);
   }
-
-  // Notify waitlist
-  const serviceType = booking.ServiceType as { name: string } | null;
-  const instructor = booking.Instructor as { User: { name: string | null } | null } | null;
-  const serviceName = serviceType?.name ?? "Tjeneste";
-  const instructorName = instructor?.User?.name ?? "Instruktør";
-
-  notifyNextOnWaitlist(
-    bookingId,
-    serviceName,
-    instructorName,
-    new Date(booking.startTime)
-  ).catch((err) =>
-    logger.error("[adminCancelBooking] Waitlist notification failed:", err)
-  );
 
   revalidatePath("/admin/bookinger");
   return { refundResult };
@@ -298,65 +286,191 @@ export async function adminCreateBooking(data: {
   return booking!.id;
 }
 
-// ── Ny Booking: hjelpefunksjoner ──
-
-export type ServiceTypeOption = {
-  id: string;
-  name: string;
-  duration: number;
-  price: number;
-  category: string;
-  color: string | null;
-};
-
-export type InstructorOption = {
-  id: string;
-  name: string;
-  title: string | null;
-};
-
-export type StudentOption = {
-  id: string;
-  name: string | null;
-  email: string;
-};
-
-export async function getServiceTypes(): Promise<ServiceTypeOption[]> {
+export async function bulkSendReminder(bookingIds: string[]) {
   const user = await requirePortalUser();
-  if (!user?.id || !isStaff(user.role)) return [];
+  if (!user?.id || !isStaff(user.role)) {
+    throw new Error("Ikke autorisert");
+  }
+
+  if (bookingIds.length === 0) return { sent: 0, failed: 0 };
 
   const supabase = await createServerSupabase();
+
+  const { data: bookings } = await supabase
+    .from("Booking")
+    .select(`
+      id,
+      startTime,
+      reminderSentAt,
+      smsReminderSentAt,
+      User (name, email, phone),
+      ServiceType (name),
+      Instructor (User (name))
+    `)
+    .in("id", bookingIds)
+    .in("status", ["CONFIRMED", "PENDING"]);
+
+  if (!bookings || bookings.length === 0) return { sent: 0, failed: 0 };
+
+  let sent = 0;
+  let failed = 0;
+  const resend = getResend();
+
+  for (const booking of bookings) {
+    const student = first<{ name: string | null; email: string | null; phone: string | null }>(booking.User);
+    const serviceType = first<{ name: string }>(booking.ServiceType);
+    const rawInstructor = first<{ User: unknown }>(booking.Instructor);
+    const instructorUser = rawInstructor ? first<{ name: string | null }>(rawInstructor.User) : null;
+    const instructor = rawInstructor ? { User: { name: instructorUser?.name ?? null } } : null;
+
+    if (!student) {
+      failed++;
+      continue;
+    }
+
+    const studentName = student.name ?? "Golfer";
+    const serviceName = serviceType?.name ?? "Time";
+    const instructorName = instructor?.User?.name ?? "AK Golf";
+    const startTime = new Date(booking.startTime);
+    const dateStr = format(startTime, "EEEE d. MMMM 'kl.' HH:mm", { locale: nb });
+
+    let emailSent = false;
+    let smsSent = false;
+
+    // Send e-post
+    if (resend && student.email) {
+      try {
+        await resend.emails.send({
+          from: FROM_EMAIL,
+          to: student.email,
+          subject: `Påminnelse: ${serviceName} ${format(startTime, "d. MMM", { locale: nb })}`,
+          html: `
+            <div style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; max-width: 560px; margin: 0 auto; background: #fff; padding: 32px; border-radius: 8px;">
+              <h2 style="color: #0A1F18; font-size: 24px; font-weight: 700; margin: 0 0 24px;">Påminnelse</h2>
+              <p style="color: #333; font-size: 16px; margin: 0 0 8px;">Hei ${studentName},</p>
+              <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 0 0 16px;">
+                Du har en booking for <strong>${serviceName}</strong> med ${instructorName}.
+              </p>
+              <div style="background: #f9fafb; border-radius: 6px; padding: 16px; margin: 0 0 16px;">
+                <p style="color: #333; font-size: 14px; margin: 0;"><strong>${dateStr}</strong></p>
+              </div>
+              <p style="color: #555; font-size: 14px; line-height: 1.6;">Vi ser frem til å se deg!</p>
+              <p style="color: #999; font-size: 12px; margin: 24px 0 0;">AK Golf Academy — Gamle Fredrikstad Golfklubb</p>
+            </div>
+          `,
+        });
+        emailSent = true;
+      } catch (error) {
+        logger.error(`[bulkSendReminder] E-post feilet for booking ${booking.id}:`, error);
+      }
+    }
+
+    // Send SMS
+    if (student.phone) {
+      try {
+        smsSent = await sendReminderSms({
+          phone: student.phone,
+          studentName,
+          serviceName,
+          startTime,
+          instructorName,
+        });
+      } catch (error) {
+        logger.error(`[bulkSendReminder] SMS feilet for booking ${booking.id}:`, error);
+      }
+    }
+
+    if (emailSent || smsSent) {
+      // Marker at påminnelse er sendt
+      await supabase
+        .from("Booking")
+        .update({
+          ...(emailSent ? { reminderSentAt: new Date().toISOString() } : {}),
+          ...(smsSent ? { smsReminderSentAt: new Date().toISOString() } : {}),
+        })
+        .eq("id", booking.id);
+      sent++;
+    } else {
+      failed++;
+    }
+  }
+
+  revalidatePath("/admin/bookinger");
+  return { sent, failed };
+}
+
+export async function bulkCancelBookings(
+  bookingIds: string[],
+  reason?: string
+) {
+  const user = await requirePortalUser();
+  if (!user?.id || !isStaff(user.role)) {
+    throw new Error("Ikke autorisert");
+  }
+
+  if (bookingIds.length === 0) return { cancelled: 0, failed: 0 };
+
+  let cancelled = 0;
+  let failed = 0;
+
+  for (const bookingId of bookingIds) {
+    try {
+      await adminCancelBooking(
+        bookingId,
+        reason ?? "Avbestilt av admin (bulk)",
+        true
+      );
+      cancelled++;
+    } catch (error) {
+      logger.error(`[bulkCancelBookings] Feilet for booking ${bookingId}:`, error);
+      failed++;
+    }
+  }
+
+  revalidatePath("/admin/bookinger");
+  return { cancelled, failed };
+}
+
+// ---------------------------------------------------------------------------
+// Helpers for ny-booking page
+// ---------------------------------------------------------------------------
+
+export async function getServiceTypes(): Promise<ServiceTypeOption[]> {
+  const supabase = await createServerSupabase();
+
   const { data } = await supabase
     .from("ServiceType")
-    .select("id, name, duration, price, category, color")
+    .select("id, name, duration, price")
     .eq("isActive", true)
-    .order("sortOrder", { ascending: true });
+    .order("name");
 
-  return (data ?? []) as ServiceTypeOption[];
+  return (data || []).map((st) => ({
+    id: st.id as string,
+    name: st.name as string,
+    duration: st.duration as number,
+    price: st.price as number,
+  }));
 }
 
 export async function getInstructors(): Promise<InstructorOption[]> {
-  const user = await requirePortalUser();
-  if (!user?.id || !isStaff(user.role)) return [];
-
   const supabase = await createServerSupabase();
+
   const { data } = await supabase
     .from("Instructor")
-    .select("id, title, User(name)");
+    .select("id, title, User (name)");
 
-  return (data ?? []).map((i) => {
-    const userRel = i.User as unknown as { name: string | null } | null;
+  return (data || []).map((inst) => {
+    const userArr = inst.User as unknown as { name: string | null }[] | null;
+    const userName = Array.isArray(userArr) ? userArr[0]?.name : (userArr as { name: string | null } | null)?.name;
     return {
-      id: i.id as string,
-      name: userRel?.name ?? "Ukjent",
-      title: i.title as string | null,
+      id: inst.id as string,
+      name: userName ?? "Ukjent",
+      title: (inst.title as string | null) ?? null,
     };
   });
 }
 
-export async function searchStudentsForBooking(
-  query: string
-): Promise<StudentOption[]> {
+export async function searchStudentsForBooking(query: string): Promise<StudentOption[]> {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return [];
 
@@ -366,12 +480,18 @@ export async function searchStudentsForBooking(
     .from("User")
     .select("id, name, email")
     .eq("role", "STUDENT")
+    .order("name")
     .limit(20);
 
   if (query) {
     baseQuery = baseQuery.or(`name.ilike.%${query}%,email.ilike.%${query}%`);
   }
 
-  const { data } = await baseQuery.order("name", { ascending: true });
-  return (data ?? []) as StudentOption[];
+  const { data } = await baseQuery;
+
+  return (data || []).map((u) => ({
+    id: u.id as string,
+    name: (u.name as string | null) ?? null,
+    email: u.email as string,
+  }));
 }

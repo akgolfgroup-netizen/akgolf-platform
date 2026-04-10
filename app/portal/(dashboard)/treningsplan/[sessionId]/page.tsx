@@ -37,22 +37,76 @@ function mapIntensity(focusArea: string | null): "low" | "medium" | "high" {
   return "medium";
 }
 
-// Convert exercise strings from AI to ExerciseInstance objects
-function exerciseStringsToInstances(exercises: unknown): ExerciseInstance[] {
+// Structured exercise shape from AI (if AI returns objects instead of strings)
+interface AIExerciseData {
+  name?: string;
+  description?: string;
+  pyramid?: string;
+  area?: string;
+  lPhase?: string;
+  clubSpeed?: number;
+  environment?: number;
+  pressLevel?: number;
+  sets?: number;
+  reps?: number;
+}
+
+// Valid values for type-safe mapping
+const VALID_PYRAMIDS = ["FYS", "TEK", "SLAG", "SPILL", "MENTAL"] as const;
+const VALID_LPHASES = ["KROPP", "ARM", "KØLLE", "BALL", "AUTO"] as const;
+
+function isValidPyramid(v: string): v is (typeof VALID_PYRAMIDS)[number] {
+  return (VALID_PYRAMIDS as readonly string[]).includes(v);
+}
+
+function isValidLPhase(v: string): v is (typeof VALID_LPHASES)[number] {
+  return (VALID_LPHASES as readonly string[]).includes(v);
+}
+
+// Convert exercise data from AI to ExerciseInstance objects.
+// AI may return strings (exercise names) or structured objects with metadata.
+function exerciseStringsToInstances(
+  exercises: unknown,
+  sessionArea: TrainingArea
+): ExerciseInstance[] {
   if (!Array.isArray(exercises)) return [];
 
   return exercises.map((exercise, index) => {
-    const name = typeof exercise === "string" ? exercise : String(exercise);
+    // Handle string-only exercises (legacy/simple AI output)
+    if (typeof exercise === "string") {
+      return {
+        id: `exercise-${index}`,
+        name: exercise,
+        description: undefined,
+        // Defaults — AI did not provide structured data for string exercises
+        pyramid: "SLAG" as const,
+        area: sessionArea,
+        lPhase: "BALL" as const,
+        clubSpeed: 50,
+        environment: 2 as const,
+        pressLevel: 2 as const,
+        completed: false,
+      };
+    }
+
+    // Handle structured exercise objects from AI
+    const data = exercise as AIExerciseData;
+    const name = data.name ?? String(exercise);
+    const pyramid = data.pyramid && isValidPyramid(data.pyramid) ? data.pyramid : "SLAG";
+    const lPhase = data.lPhase && isValidLPhase(data.lPhase) ? data.lPhase : "BALL";
+
     return {
       id: `exercise-${index}`,
       name,
-      description: undefined,
-      pyramid: "SLAG" as const,
-      area: "INN150" as TrainingArea,
-      lPhase: "BALL" as const,
-      clubSpeed: 50,
-      environment: 2 as const,
-      pressLevel: 2 as const,
+      description: data.description,
+      pyramid: pyramid as ExerciseInstance["pyramid"],
+      area: sessionArea,
+      lPhase: lPhase as ExerciseInstance["lPhase"],
+      clubSpeed: data.clubSpeed ?? 50,
+      environment: (data.environment ?? 2) as ExerciseInstance["environment"],
+      pressLevel: (data.pressLevel ?? 2) as ExerciseInstance["pressLevel"],
+      sets: data.sets,
+      reps: data.reps,
       completed: false,
     };
   });
@@ -83,7 +137,7 @@ export default async function SessionPage({ params }: Props) {
   if (!dbSession) notFound();
 
   const primaryArea = mapFocusArea(dbSession.focusArea);
-  const allExercises = exerciseStringsToInstances(dbSession.exercises);
+  const allExercises = exerciseStringsToInstances(dbSession.exercises, primaryArea);
 
   const session: TrainingSessionData = {
     id: dbSession.id,

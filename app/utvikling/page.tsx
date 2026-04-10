@@ -381,12 +381,12 @@ export default function UtviklingPage() {
                   <h2 className="w-heading-lg text-[#0A1F18] mb-4">
                     {UTVIKLING_CTA_V2.heading}
                   </h2>
-                  <p className="text-[#48484A] leading-relaxed mb-10">
+                  <p className="text-[#3D5249] leading-relaxed mb-10">
                     {UTVIKLING_CTA_V2.description}
                   </p>
                   <Link
                     href="/booking"
-                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
+                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#1A3529] transition-colors"
                   >
                     {UTVIKLING_CTA_V2.ctaPrimary} &rarr;
                   </Link>

@@ -53,7 +53,7 @@ const defaultSteps: Omit<OnboardingStep, "completed">[] = [
     icon: Calendar,
     title: "Book en coachingtime",
     description: "Fa personlig veiledning fra en proff",
-    action: { label: "Se ledige timer", href: "/portal/booking" },
+    action: { label: "Se ledige timer", href: "/portal/bookinger/ny" },
   },
   {
     id: "set-goals",

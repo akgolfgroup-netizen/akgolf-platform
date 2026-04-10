@@ -149,11 +149,11 @@ export function TrainingCalendar({
             <div className="flex flex-col gap-1.5 min-h-[140px]">
               {day.isRest && day.sessions.length === 0 ? (
                 <div className="flex-1 rounded-xl bg-[#ECF0EF] flex items-center justify-center">
-                  <span className="text-xs text-[#D2D2D7]">Hvile</span>
+                  <span className="text-xs text-[#A5B2AD]">Hvile</span>
                 </div>
               ) : day.sessions.length === 0 ? (
                 <div className="flex-1 rounded-xl border border-dashed border-[#D5DFDB] flex items-center justify-center">
-                  <span className="text-xs text-[#D2D2D7]">&ndash;</span>
+                  <span className="text-xs text-[#A5B2AD]">&ndash;</span>
                 </div>
               ) : (
                 day.sessions.map((session) => (

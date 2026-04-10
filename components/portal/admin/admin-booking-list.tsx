@@ -15,7 +15,12 @@ import {
   Calendar,
   ArrowUpDown
 } from "lucide-react";
-import { searchBookings, adminCancelBooking } from "@/app/portal/(dashboard)/admin/bookinger/actions";
+import {
+  searchBookings,
+  adminCancelBooking,
+  bulkSendReminder,
+  bulkCancelBookings,
+} from "@/app/portal/(dashboard)/admin/bookinger/actions";
 import { AppleCard } from "@/components/portal/apple/apple-card";
 import { AppleBadge } from "@/components/portal/apple/apple-badge";
 import { AppleAvatar } from "@/components/portal/apple/apple-avatar";
@@ -69,6 +74,7 @@ export function AdminBookingList() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [bulkLoading, setBulkLoading] = useState(false);
   const [selectedBookings, setSelectedBookings] = useState<Set<string>>(new Set());
 
   const fetchBookings = async (q: string, status: string, p: number) => {
@@ -108,6 +114,46 @@ export function AdminBookingList() {
       fetchBookings(query, statusFilter, page);
     } catch {
       // Error handled silently - booking remains unchanged
+    }
+  };
+
+  const handleBulkReminder = async () => {
+    if (bulkLoading) return;
+    const ids = Array.from(selectedBookings);
+    if (ids.length === 0) return;
+
+    if (!confirm(`Sende påminnelse til ${ids.length} booking(er)?`)) return;
+
+    setBulkLoading(true);
+    try {
+      const result = await bulkSendReminder(ids);
+      alert(`Påminnelse sendt: ${result.sent} vellykket, ${result.failed} feilet`);
+      setSelectedBookings(new Set());
+      fetchBookings(query, statusFilter, page);
+    } catch {
+      alert("Feil ved sending av påminnelser");
+    } finally {
+      setBulkLoading(false);
+    }
+  };
+
+  const handleBulkCancel = async () => {
+    if (bulkLoading) return;
+    const ids = Array.from(selectedBookings);
+    if (ids.length === 0) return;
+
+    if (!confirm(`Avbestille ${ids.length} booking(er)? Eventuelle Stripe-betalinger blir refundert.`)) return;
+
+    setBulkLoading(true);
+    try {
+      const result = await bulkCancelBookings(ids);
+      alert(`Avbestilt: ${result.cancelled} vellykket, ${result.failed} feilet`);
+      setSelectedBookings(new Set());
+      fetchBookings(query, statusFilter, page);
+    } catch {
+      alert("Feil ved avbestilling");
+    } finally {
+      setBulkLoading(false);
     }
   };
 
@@ -219,11 +265,19 @@ export function AdminBookingList() {
           <span className="text-sm font-medium">
             <strong>{selectedBookings.size}</strong> valgt
           </span>
-          <button className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 text-white text-[13px] font-medium rounded-lg hover:bg-white/25 transition-colors">
-            Send påminnelse
+          <button
+            onClick={handleBulkReminder}
+            disabled={bulkLoading}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 text-white text-[13px] font-medium rounded-lg hover:bg-white/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {bulkLoading ? "Sender..." : "Send påminnelse"}
           </button>
-          <button className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-error)]/30 text-white text-[13px] font-medium rounded-lg hover:bg-[var(--color-error)]/50 transition-colors">
-            Avbestill
+          <button
+            onClick={handleBulkCancel}
+            disabled={bulkLoading}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-error)]/30 text-white text-[13px] font-medium rounded-lg hover:bg-[var(--color-error)]/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {bulkLoading ? "Avbestiller..." : "Avbestill"}
           </button>
           <button
             onClick={() => setSelectedBookings(new Set())}
