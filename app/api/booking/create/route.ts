@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { randomUUID } from "crypto";
-import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { stripe } from "@/lib/portal/stripe";
 import { validateBooking } from "@/lib/portal/booking/validation";
@@ -140,7 +139,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const supabase = await createServerSupabase();
+    // Use service role client — booking/user creation bypasses RLS for guest flow
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Get or create user
     const user = await getOrCreateUser(email, name, phone);
