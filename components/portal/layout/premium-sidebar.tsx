@@ -36,6 +36,7 @@ import { NotificationBell } from "./notification-bell";
 
 const navItems = [
   { href: "/portal", label: "Oversikt", icon: LayoutDashboard },
+  { href: "/booking", label: "Book ny time", icon: CalendarPlus },
   { href: "/portal/bookinger", label: "Mine Bookinger", icon: CalendarCheck },
   { href: "/portal/treningsplan", label: "Treningsplan", icon: Target },
   { href: "/portal/dagbok", label: "Treningsdagbok", icon: BookOpen },
