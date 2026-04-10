@@ -5,12 +5,22 @@ import { MessageSquare, Send, ArrowLeft, Inbox } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
-import type { ConversationSummary, ChatMessage } from "@/app/portal/(dashboard)/admin/meldinger/chat-actions";
+import type { ConversationSummary } from "./actions";
 import {
   getConversationMessages,
   sendDirectMessage,
   markConversationAsRead,
 } from "./actions";
+
+type ChatMessage = {
+  id: string;
+  content: string;
+  senderId: string;
+  senderName: string;
+  senderImage: string | null;
+  createdAt: string;
+  readAt: string | null;
+};
 
 interface MeldingerChatClientProps {
   conversations: ConversationSummary[];

@@ -14,11 +14,18 @@ import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
   toggleAgent,
-  TEAM_LABELS,
   type AgentData,
   type AgentStats,
 } from "./actions";
 import type { AgentTeam } from "@prisma/client";
+
+const TEAM_LABELS: Record<AgentTeam, string> = {
+  LEADERSHIP: "Ledergruppen",
+  DEV: "Utviklingsteam",
+  OPS: "Drift & Operasjon",
+  COACHING: "Coaching",
+  CONTENT: "Innhold & Merkevare",
+};
 
 // ── Team order for display ─────────────────────────────────────────────
 

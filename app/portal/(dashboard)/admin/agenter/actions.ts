@@ -33,16 +33,6 @@ export type AgentStats = {
   costMtd: number;
 };
 
-// ── Team labels ────────────────────────────────────────────────────────
-
-export const TEAM_LABELS: Record<AgentTeam, string> = {
-  LEADERSHIP: "Ledergruppen",
-  DEV: "Utviklingsteam",
-  OPS: "Drift & Operasjon",
-  COACHING: "Coaching",
-  CONTENT: "Innhold & Merkevare",
-};
-
 // ── Data fetching ──────────────────────────────────────────────────────
 
 export async function getAgents(): Promise<AgentData[]> {

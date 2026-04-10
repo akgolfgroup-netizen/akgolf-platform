@@ -1,50 +1,73 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// Vedlikeholdsmodus - les fra env, default til false (LIVE)
-const MAINTENANCE_MODE = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
+// ============================================================
+// VEDLIKEHOLDSMODUS KONFIGURASJON
+// ============================================================
+// Sett MAINTENANCE_MODE=true i .env for å aktivere vedlikeholdsmodus
+// Bruk ?bypass=SECRET_KEY for å omgå vedlikeholdsmodus
+// ============================================================
+
+const MAINTENANCE_MODE = process.env.MAINTENANCE_MODE === "true";
 const BYPASS_KEY = process.env.MAINTENANCE_BYPASS_KEY;
 
+// Ruter som ALLTID er tilgjengelige (selv i vedlikeholdsmodus)
+const ALWAYS_ALLOWED_PATHS = [
+  "/maintenance",
+  "/api/maintenance",
+  "/api/health",
+  "/_next",
+  "/static",
+  "/favicon",
+  "/icon",
+  "/robots.txt",
+  "/sitemap.xml",
+  "/manifest.json",
+  "/.well-known",
+];
+
+// Beskyttede ruter som krever autentisering
+const PROTECTED_ROUTES = ["/portal", "/admin", "/mission-board"];
+
 export async function proxy(request: NextRequest) {
-  // ─── Maintenance Mode ───
+  const pathname = request.nextUrl.pathname;
+
+  // ============================================================
+  // 1. VEDLIKEHOLDSMODUS SJEKK
+  // ============================================================
   if (MAINTENANCE_MODE) {
-    const pathname = request.nextUrl.pathname;
+    const isAlwaysAllowed = ALWAYS_ALLOWED_PATHS.some(
+      (path) => pathname.startsWith(path) || pathname === path
+    );
 
-    // Bypass med secret key
-    if (BYPASS_KEY && request.nextUrl.searchParams.get("bypass") === BYPASS_KEY) {
-      const response = NextResponse.next({ request });
-      response.cookies.set("maintenance_bypass", "true", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-        maxAge: 60 * 60 * 24,
-      });
-      return response;
-    }
+    if (!isAlwaysAllowed) {
+      if (
+        BYPASS_KEY &&
+        request.nextUrl.searchParams.get("bypass") === BYPASS_KEY
+      ) {
+        const response = NextResponse.next({ request });
+        response.cookies.set("maintenance_bypass", "true", {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+          maxAge: 60 * 60 * 24,
+          path: "/",
+        });
+        return response;
+      }
 
-    // Sjekk bypass-cookie
-    if (request.cookies.get("maintenance_bypass")?.value === "true") {
-      // Continue to normal flow
-    } else if (
-      !pathname.startsWith("/api") &&
-      !pathname.startsWith("/_next") &&
-      !pathname.startsWith("/favicon") &&
-      !pathname.startsWith("/icon") &&
-      !pathname.startsWith("/portal") &&
-      !pathname.startsWith("/portal-preview") &&
-      !pathname.startsWith("/auth") &&
-      !pathname.startsWith("/booking") &&
-      pathname !== "/" &&
-      pathname !== "/coaching" &&
-      pathname !== "/junior-academy" &&
-      pathname !== "/utvikling" &&
-      pathname !== "/personvern" &&
-      pathname !== "/maintenance"
-    ) {
-      return NextResponse.rewrite(new URL("/maintenance", request.url));
+      const hasBypassCookie =
+        request.cookies.get("maintenance_bypass")?.value === "true";
+
+      if (!hasBypassCookie) {
+        return NextResponse.rewrite(new URL("/maintenance", request.url));
+      }
     }
   }
 
+  // ============================================================
+  // 2. AUTENTISERING OG AUTORISASJON
+  // ============================================================
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -68,39 +91,37 @@ export async function proxy(request: NextRequest) {
     }
   );
 
-  // Refresh the session — must be called before getUser()
+  // Refresh session - must be called before getUser()
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Website training plan dashboard requires authentication
-  if (request.nextUrl.pathname.startsWith("/treningsplan/dashboard")) {
-    if (!user) {
-      const loginUrl = new URL("/auth/login", request.url);
-      loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
-      return NextResponse.redirect(loginUrl);
-    }
+  // Beskyttede ruter
+  const isProtectedRoute = PROTECTED_ROUTES.some((route) =>
+    pathname.startsWith(route)
+  );
+
+  // Offentlige auth-ruter (login, register, etc)
+  const isPublicAuthRoute =
+    pathname.startsWith("/auth") ||
+    pathname.startsWith("/portal/login") ||
+    pathname.startsWith("/portal-preview");
+
+  if (isProtectedRoute && !isPublicAuthRoute && !user) {
+    const loginUrl = new URL("/portal/login", request.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
-  // Portal requires authentication (except login and preview pages)
-  if (
-    request.nextUrl.pathname.startsWith("/portal") &&
-    !request.nextUrl.pathname.startsWith("/portal/login") &&
-    !request.nextUrl.pathname.startsWith("/portal-preview")
-  ) {
-    if (!user) {
-      return NextResponse.redirect(new URL("/portal/login", request.url));
-    }
-  }
-
-  // Already logged-in users on login pages → redirect
-  if (request.nextUrl.pathname === "/auth/login" && user) {
-    return NextResponse.redirect(
-      new URL("/treningsplan/dashboard", request.url)
-    );
-  }
-  if (request.nextUrl.pathname === "/portal/login" && user) {
+  // Allerede innloggede brukere på login-sider → redirect til portal
+  if (pathname === "/portal/login" && user) {
     return NextResponse.redirect(new URL("/portal", request.url));
+  }
+
+  if (pathname === "/auth/login" && user) {
+    const redirectTo =
+      request.nextUrl.searchParams.get("redirect") || "/portal";
+    return NextResponse.redirect(new URL(redirectTo, request.url));
   }
 
   return supabaseResponse;
@@ -109,6 +130,6 @@ export async function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     // Match all paths except static files
-    "/((?!_next/static|_next/image|favicon.ico).*)",
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff|woff2|ttf)$).*)",
   ],
 };

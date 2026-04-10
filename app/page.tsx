@@ -169,7 +169,8 @@ export default function HomePage() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+  // springY brukes for fremtidig vertikal parallax pa hero
+  useSpring(mouseY, { stiffness: 50, damping: 20 });
 
   useEffect(() => {
     function handleMouse(e: MouseEvent) {
@@ -189,7 +190,7 @@ export default function HomePage() {
         Hopp til innhold
       </a>
 
-      <WebsiteNav variant="dark" />
+      <WebsiteNav />
 
       <main id="main-content">
         {/* ═══════════════════════════════════════════════════ */}
