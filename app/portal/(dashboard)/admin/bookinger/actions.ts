@@ -22,6 +22,8 @@ const BOOKING_SELECT = `
   cancelledAt,
   cancelReason,
   adminNotes,
+  focusArea,
+  playerNotes,
   createdAt,
   User:studentId(id, name, email, phone),
   ServiceType:serviceTypeId(name, color, duration),
@@ -40,6 +42,8 @@ export type AdminBooking = {
   cancelledAt: string | null;
   cancelReason: string | null;
   adminNotes: string | null;
+  focusArea: string | null;
+  playerNotes: string | null;
   createdAt: string;
   User: { id: string; name: string | null; email: string; phone: string | null } | null;
   ServiceType: { name: string; color: string | null; duration: number } | null;
