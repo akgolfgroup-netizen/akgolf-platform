@@ -78,13 +78,16 @@ export async function getPendingRequests() {
     .eq("status", "PENDING")
     .order("createdAt", { ascending: false });
 
-  return (pending || []).map((f) => ({
-    friendshipId: f.id,
-    id: (f.User as { id: string }).id,
-    name: (f.User as { name: string | null }).name ?? "Ukjent",
-    image: (f.User as { image: string | null }).image,
-    createdAt: f.createdAt,
-  }));
+  return (pending || []).map((f) => {
+    const userRecord = f.User as unknown as { id: string; name: string | null; image: string | null } | null;
+    return {
+      friendshipId: f.id,
+      id: userRecord?.id ?? "",
+      name: userRecord?.name ?? "Ukjent",
+      image: userRecord?.image ?? null,
+      createdAt: f.createdAt,
+    };
+  });
 }
 
 const searchSchema = z.object({

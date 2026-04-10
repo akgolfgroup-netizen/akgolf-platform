@@ -28,27 +28,7 @@ import {
   Clock3,
 } from "lucide-react";
 
-// Heritage Tech Design Tokens
-const heritage = {
-  colors: {
-    deep: "#154212",
-    darker: "#0f2f0c",
-    base: "#2D5A27",
-    light: "#3D7A37",
-    lime: "#DFFF00",
-    limeDark: "#B8D400",
-    limeMuted: "rgba(223, 255, 0, 0.15)",
-    graphite: "#1A1D1A",
-    charcoal: "#2A2D2A",
-    ink: "#0D0F0D",
-    pure: "#050705",
-    cream: "#F5F1E8",
-    surface: "#0D120C",
-    surfaceRaised: "#141914",
-  },
-};
-
-// Types
+// Types — matcher respons fra /api/portal/admin/dashboard
 interface DashboardStats {
   today: {
     totalBookings: number;
@@ -63,12 +43,12 @@ interface DashboardStats {
     retention: number;
   };
   trends: {
-    bookingsChange: number;
-    revenueChange: number;
-    studentsChange: number;
+    bookings: number;
+    revenue: number;
+    students: number;
   };
   alerts: {
-    type: "warning" | "info" | "success" | "error";
+    type: "warning" | "info" | "success";
     message: string;
     time: string;
   }[];
@@ -78,8 +58,7 @@ interface DashboardStats {
     studentName: string;
     service: string;
     instructor: string;
-    status: "confirmed" | "pending" | "cancelled";
-    duration: string;
+    status: string;
   }[];
 }
 
@@ -192,27 +171,40 @@ function StatCard({
 }
 
 // Status Badge Component
-function StatusBadge({ status }: { status: "confirmed" | "pending" | "cancelled" }) {
-  const styles = {
+type BookingStatus = "confirmed" | "pending" | "cancelled" | "completed";
+
+function StatusBadge({ status }: { status: string }) {
+  const normalized = status.toLowerCase() as BookingStatus;
+
+  const styles: Record<BookingStatus, string> = {
     confirmed: "bg-[#DFFF00]/10 text-[#DFFF00] border-[#DFFF00]/20",
     pending: "bg-amber-500/10 text-amber-400 border-amber-500/20",
     cancelled: "bg-red-500/10 text-red-400 border-red-500/20",
+    completed: "bg-[#DFFF00]/10 text-[#DFFF00] border-[#DFFF00]/20",
   };
 
-  const icons = {
+  const icons: Record<BookingStatus, React.ElementType> = {
     confirmed: CheckCircle,
     pending: Clock3,
     cancelled: XCircle,
+    completed: CheckCircle,
   };
 
-  const Icon = icons[status];
+  const labels: Record<BookingStatus, string> = {
+    confirmed: "Bekreftet",
+    pending: "Venter",
+    cancelled: "Avlyst",
+    completed: "Fullfort",
+  };
+
+  const Icon = icons[normalized] || Clock3;
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${styles[status]}`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${styles[normalized] || styles.pending}`}
     >
       <Icon className="w-3.5 h-3.5" />
-      {status === "confirmed" ? "Bekreftet" : status === "pending" ? "Venter" : "Avlyst"}
+      {labels[normalized] || status}
     </span>
   );
 }
@@ -228,62 +220,12 @@ export default function MissionBoardPage() {
     try {
       setLoading(true);
       setError(null);
-      
-      const response = await fetch("/api/mock-data?type=dashboard");
+
+      const response = await fetch("/api/portal/admin/dashboard");
       if (!response.ok) throw new Error("Kunne ikke hente dashboard-data");
-      
-      const data = await response.json();
-      
-      // Transform API data to DashboardStats format
-      setStats({
-        today: data.today,
-        week: data.week,
-        trends: {
-          bookingsChange: 12,
-          revenueChange: 8,
-          studentsChange: 5,
-        },
-        alerts: data.alerts,
-        todaysSchedule: [
-          {
-            id: "1",
-            time: "10:00",
-            studentName: "Olav Nordmann",
-            service: "TrackMan Analyse",
-            instructor: "Anders Kristiansen",
-            status: "confirmed",
-            duration: "60 min",
-          },
-          {
-            id: "2",
-            time: "13:00",
-            studentName: "Kari Hansen",
-            service: "Coaching Session",
-            instructor: "Anders Kristiansen",
-            status: "confirmed",
-            duration: "90 min",
-          },
-          {
-            id: "3",
-            time: "15:00",
-            studentName: "Erik Olsen",
-            service: "20-Min Quick Fix",
-            instructor: "Markus",
-            status: "pending",
-            duration: "20 min",
-          },
-          {
-            id: "4",
-            time: "16:30",
-            studentName: "Maria Johansen",
-            service: "TrackMan Analyse",
-            instructor: "Anders Kristiansen",
-            status: "confirmed",
-            duration: "60 min",
-          },
-        ],
-      });
-      
+
+      const data: DashboardStats = await response.json();
+      setStats(data);
       setLastUpdated(new Date());
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ukjent feil");
@@ -415,29 +357,29 @@ export default function MissionBoardPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <StatCard
               icon={Calendar}
-              label="Økter i dag"
+              label="Okter i dag"
               value={stats.today.totalBookings}
-              trend="+2"
-              trendUp={true}
+              trend={stats.trends.bookings !== 0 ? `${stats.trends.bookings > 0 ? "+" : ""}${stats.trends.bookings}` : undefined}
+              trendUp={stats.trends.bookings > 0}
             />
             <StatCard
               icon={Activity}
-              label="Aktive økter"
+              label="Aktive okter"
               value={stats.today.activeSessions}
             />
             <StatCard
               icon={Users}
               label="Nye elever (uke)"
               value={stats.week.newStudents}
-              trend="+1"
-              trendUp={true}
+              trend={stats.trends.students !== 0 ? `${stats.trends.students > 0 ? "+" : ""}${stats.trends.students}` : undefined}
+              trendUp={stats.trends.students > 0}
             />
             <StatCard
               icon={DollarSign}
-              label="Omsetning (MTD)"
+              label="Omsetning (uke)"
               value={`${stats.week.revenue.toLocaleString("nb-NO")} kr`}
-              trend="+8%"
-              trendUp={true}
+              trend={stats.trends.revenue !== 0 ? `${stats.trends.revenue > 0 ? "+" : ""}${stats.trends.revenue}%` : undefined}
+              trendUp={stats.trends.revenue > 0}
             />
           </div>
 
@@ -472,7 +414,6 @@ export default function MissionBoardPage() {
                       <div className="flex items-center gap-5">
                         <div className="text-center min-w-[60px]">
                           <p className="text-lg font-bold text-[#F5F1E8]">{booking.time}</p>
-                          <p className="text-xs text-[#F5F1E8]/40">{booking.duration}</p>
                         </div>
                         
                         <div className="flex-1">
@@ -551,8 +492,6 @@ export default function MissionBoardPage() {
                           className={`w-2 h-2 rounded-full mt-2 ${
                             alert.type === "warning"
                               ? "bg-amber-400"
-                              : alert.type === "error"
-                              ? "bg-red-400"
                               : alert.type === "success"
                               ? "bg-[#DFFF00]"
                               : "bg-blue-400"

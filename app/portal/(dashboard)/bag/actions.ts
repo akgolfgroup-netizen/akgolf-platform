@@ -4,6 +4,82 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { nanoid } from "nanoid";
 
+export interface PlayerClubData {
+  id: string;
+  name: string;
+  brand: string | null;
+  model: string | null;
+  loft: number | null;
+  avgCarry: number | null;
+  avgTotal: number | null;
+  avgOffline: number | null;
+  shotCount: number;
+  sortOrder: number;
+}
+
+export interface GapAnalysisItem {
+  between: string;
+  gap: number;
+  recommended: string;
+}
+
+function computeGapAnalysis(clubs: PlayerClubData[]): GapAnalysisItem[] {
+  const sorted = clubs
+    .filter((c) => (c.avgCarry ?? 0) > 0)
+    .sort((a, b) => (b.avgCarry ?? 0) - (a.avgCarry ?? 0));
+
+  if (sorted.length < 2) return [];
+
+  const gaps: GapAnalysisItem[] = [];
+  for (let i = 0; i < sorted.length - 1; i++) {
+    const carryA = sorted[i].avgCarry ?? 0;
+    const carryB = sorted[i + 1].avgCarry ?? 0;
+    const gap = carryA - carryB;
+
+    let recommended = "OK";
+    if (gap > 20) recommended = "Legg til klubb";
+    else if (gap > 15) recommended = "Justert loft";
+
+    gaps.push({
+      between: `${sorted[i].name} - ${sorted[i + 1].name}`,
+      gap,
+      recommended,
+    });
+  }
+
+  return gaps.filter((g) => g.gap > 10).slice(0, 5);
+}
+
+export async function getPlayerBag(): Promise<{
+  clubs: PlayerClubData[];
+  gapAnalysis: GapAnalysisItem[];
+}> {
+  const user = await requirePortalUser();
+  const supabase = await createServerSupabase();
+
+  const { data: bag } = await supabase
+    .from("PlayerBag")
+    .select(`
+      id,
+      PlayerClub (*)
+    `)
+    .eq("userId", user.id)
+    .single();
+
+  if (!bag) {
+    return { clubs: [], gapAnalysis: [] };
+  }
+
+  const clubs = (
+    (bag.PlayerClub as PlayerClubData[]) || []
+  ).sort((a, b) => a.sortOrder - b.sortOrder);
+
+  return {
+    clubs,
+    gapAnalysis: computeGapAnalysis(clubs),
+  };
+}
+
 export async function addClub(data: {
   name: string;
   brand?: string;

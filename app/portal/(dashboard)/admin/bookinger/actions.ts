@@ -268,3 +268,81 @@ export async function adminCreateBooking(data: {
   revalidatePath("/admin/bookinger");
   return booking!.id;
 }
+
+// ── Ny Booking: hjelpefunksjoner ──
+
+export type ServiceTypeOption = {
+  id: string;
+  name: string;
+  duration: number;
+  price: number;
+  category: string;
+  color: string | null;
+};
+
+export type InstructorOption = {
+  id: string;
+  name: string;
+  title: string | null;
+};
+
+export type StudentOption = {
+  id: string;
+  name: string | null;
+  email: string;
+};
+
+export async function getServiceTypes(): Promise<ServiceTypeOption[]> {
+  const user = await requirePortalUser();
+  if (!user?.id || !isStaff(user.role)) return [];
+
+  const supabase = await createServerSupabase();
+  const { data } = await supabase
+    .from("ServiceType")
+    .select("id, name, duration, price, category, color")
+    .eq("isActive", true)
+    .order("sortOrder", { ascending: true });
+
+  return (data ?? []) as ServiceTypeOption[];
+}
+
+export async function getInstructors(): Promise<InstructorOption[]> {
+  const user = await requirePortalUser();
+  if (!user?.id || !isStaff(user.role)) return [];
+
+  const supabase = await createServerSupabase();
+  const { data } = await supabase
+    .from("Instructor")
+    .select("id, title, User(name)");
+
+  return (data ?? []).map((i) => {
+    const userRel = i.User as unknown as { name: string | null } | null;
+    return {
+      id: i.id as string,
+      name: userRel?.name ?? "Ukjent",
+      title: i.title as string | null,
+    };
+  });
+}
+
+export async function searchStudentsForBooking(
+  query: string
+): Promise<StudentOption[]> {
+  const user = await requirePortalUser();
+  if (!user?.id || !isStaff(user.role)) return [];
+
+  const supabase = await createServerSupabase();
+
+  let baseQuery = supabase
+    .from("User")
+    .select("id, name, email")
+    .eq("role", "STUDENT")
+    .limit(20);
+
+  if (query) {
+    baseQuery = baseQuery.or(`name.ilike.%${query}%,email.ilike.%${query}%`);
+  }
+
+  const { data } = await baseQuery.order("name", { ascending: true });
+  return (data ?? []) as StudentOption[];
+}
