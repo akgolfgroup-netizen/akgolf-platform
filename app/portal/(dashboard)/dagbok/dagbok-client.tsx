@@ -14,16 +14,22 @@ import {
   Flame,
   RotateCcw,
   Loader2,
+  Star,
 } from "lucide-react";
 import { repeatLastSession } from "./actions";
 import { LogSessionModal } from "@/components/portal/dagbok/log-session-modal";
 import { BentoGrid } from "@/components/portal/apple/bento-grid";
 import { BentoCard } from "@/components/portal/apple/bento-card";
-import { StatCard } from "@/components/portal/apple/stat-card";
 import { AppleButton } from "@/components/portal/apple/apple-button";
 import { AppleBadge } from "@/components/portal/apple/apple-badge";
 import { AppleCard } from "@/components/portal/apple/apple-card";
 import { StreakMilestone } from "@/components/portal/gamification/streak-milestone";
+import {
+  PortalHeader,
+  PremiumStatCard,
+  fadeInUp,
+  staggerContainer,
+} from "@/components/portal/premium";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import {
@@ -190,13 +196,16 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
     (sum, l) => sum + (l.durationMinutes || 0),
     0
   );
-  const totalHours = (totalMinutes / 60).toFixed(1);
-  const avgRating =
-    logs.filter((l) => l.rating != null).length > 0
-      ? (
-          logs.reduce((sum, l) => sum + (l.rating || 0), 0) /
-          logs.filter((l) => l.rating != null).length
-        ).toFixed(1)
+  const totalHours = Number((totalMinutes / 60).toFixed(1));
+  const ratedLogs = logs.filter((l) => l.rating != null);
+  const avgRating: number | string =
+    ratedLogs.length > 0
+      ? Number(
+          (
+            ratedLogs.reduce((sum, l) => sum + (l.rating || 0), 0) /
+            ratedLogs.length
+          ).toFixed(1)
+        )
       : "-";
 
   // Filter logs for display
@@ -245,43 +254,34 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-8 py-10 space-y-8">
         {/* Header */}
-        <motion.div
-          className="flex items-start justify-between"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div>
-            <h1 className="text-[32px] font-bold text-[var(--color-grey-900)] tracking-tight mb-1">
-              Treningsdagbok
-            </h1>
-            <p className="text-[15px] text-[var(--color-grey-500)]">
-              Hold oversikt over treningsaktiviteten din
-            </p>
-          </div>
-          <div className="flex gap-2">
-            {lastSession && (
+        <PortalHeader
+          title="Treningsdagbok"
+          description="Hold oversikt over treningsaktiviteten din"
+          actions={
+            <div className="flex gap-2">
+              {lastSession && (
+                <AppleButton
+                  variant="secondary"
+                  icon={isPending ? Loader2 : RotateCcw}
+                  onClick={handleQuickLog}
+                  disabled={isPending}
+                >
+                  {isPending ? "Logger..." : "Gjenta siste"}
+                </AppleButton>
+              )}
               <AppleButton
-                variant="secondary"
-                icon={isPending ? Loader2 : RotateCcw}
-                onClick={handleQuickLog}
-                disabled={isPending}
+                variant="primary"
+                icon={Plus}
+                onClick={() => {
+                  setEditingLog(null);
+                  setLogModalOpen(true);
+                }}
               >
-                {isPending ? "Logger..." : "Gjenta siste"}
+                Logg ny okt
               </AppleButton>
-            )}
-            <AppleButton
-              variant="primary"
-              icon={Plus}
-              onClick={() => {
-                setEditingLog(null);
-                setLogModalOpen(true);
-              }}
-            >
-              Logg ny økt
-            </AppleButton>
-          </div>
-        </motion.div>
+            </div>
+          }
+        />
 
         {/* Quick-log success toast */}
         {quickLogSuccess && (
@@ -325,34 +325,40 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
             {/* Stats Row */}
             <motion.div
               className="grid grid-cols-2 md:grid-cols-4 gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.05 }}
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
             >
-              <StatCard
-                label="Denne uken"
-                value={String(logsThisWeek.length)}
-                icon={Calendar}
-                size="sm"
-              />
-              <StatCard
-                label="Timer totalt"
-                value={totalHours}
-                icon={Clock}
-                size="sm"
-              />
-              <StatCard
-                label="Streak"
-                value={String(streak)}
-                icon={Flame}
-                size="sm"
-              />
-              <StatCard
-                label="Snitt vurdering"
-                value={avgRating}
-                icon={Activity}
-                size="sm"
-              />
+              <motion.div variants={fadeInUp}>
+                <PremiumStatCard
+                  label="Denne uken"
+                  value={logsThisWeek.length}
+                  icon={Activity}
+                />
+              </motion.div>
+              <motion.div variants={fadeInUp}>
+                <PremiumStatCard
+                  label="Timer totalt"
+                  value={totalHours}
+                  icon={Clock}
+                  decimals={1}
+                />
+              </motion.div>
+              <motion.div variants={fadeInUp}>
+                <PremiumStatCard
+                  label="Streak"
+                  value={streak}
+                  icon={Flame}
+                />
+              </motion.div>
+              <motion.div variants={fadeInUp}>
+                <PremiumStatCard
+                  label="Snitt vurdering"
+                  value={avgRating}
+                  icon={Star}
+                  decimals={1}
+                />
+              </motion.div>
             </motion.div>
 
             {/* Bento Grid */}

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Loader2, Save } from "lucide-react";
 import Link from "next/link";
+import { PortalHeader, PortalCard } from "@/components/portal/premium";
 import { saveRound } from "./actions";
 
 export default function NyRundePage() {
@@ -62,34 +63,39 @@ export default function NyRundePage() {
     }
   }
 
+  const backButton = (
+    <Link
+      href="/portal/statistikk"
+      className="flex items-center gap-2 rounded-xl border border-black/5 bg-white px-3 py-2 text-sm text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)] hover:text-[var(--color-text)]"
+    >
+      <ArrowLeft className="h-4 w-4" />
+      Tilbake
+    </Link>
+  );
+
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-4">
-        <Link
-          href="/portal/statistikk"
-          className="p-2 rounded-lg hover:bg-[#f7f3ea] transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5 text-[#6b7366]" />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-[#1c1c16]">Registrer runde</h1>
-          <p className="text-sm text-[#6b7366] mt-1">Logg din golfrunde med statistikk</p>
-        </div>
-      </div>
+      <PortalHeader
+        label="Statistikk"
+        title="Registrer runde"
+        description="Logg din golfrunde med statistikk"
+        actions={backButton}
+      />
 
       <form onSubmit={handleSubmit} className="max-w-xl space-y-6">
         {/* Grunnleggende info */}
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50 space-y-4">
-          <h2 className="text-sm font-semibold text-[#1c1c16] mb-4 flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-[#154212] text-white flex items-center justify-center text-xs">1</span>
+        <PortalCard className="space-y-4" padding="md">
+          <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-[var(--color-text)]">
+            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[var(--color-primary)] text-xs text-white">
+              1
+            </span>
             Grunnleggende info
           </h2>
 
           <div className="grid grid-cols-2 gap-4">
             {/* Dato */}
             <div>
-              <label className="block text-xs font-medium text-[#6b7366] mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[var(--color-muted)]">
                 Dato *
               </label>
               <input
@@ -97,13 +103,13 @@ export default function NyRundePage() {
                 value={form.date}
                 onChange={(e) => update("date", e.target.value)}
                 required
-                className="w-full px-3 py-2 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/50 text-[#1c1c16] text-sm outline-none focus:border-[#154212] transition-colors"
+                className="w-full rounded-xl border border-black/5 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] outline-none transition-colors focus:border-[var(--color-primary)]"
               />
             </div>
 
             {/* Bane */}
             <div>
-              <label className="block text-xs font-medium text-[#6b7366] mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[var(--color-muted)]">
                 Bane
               </label>
               <input
@@ -111,7 +117,7 @@ export default function NyRundePage() {
                 value={form.courseName}
                 onChange={(e) => update("courseName", e.target.value)}
                 placeholder="f.eks. Fredrikstad GK"
-                className="w-full px-3 py-2 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/50 text-[#1c1c16] text-sm outline-none focus:border-[#154212] placeholder:text-[#8a9385] transition-colors"
+                className="w-full rounded-xl border border-black/5 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] outline-none transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-primary)]"
               />
             </div>
           </div>
@@ -119,7 +125,7 @@ export default function NyRundePage() {
           <div className="grid grid-cols-2 gap-4">
             {/* Score */}
             <div>
-              <label className="block text-xs font-medium text-[#6b7366] mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[var(--color-muted)]">
                 Score *
               </label>
               <input
@@ -130,13 +136,13 @@ export default function NyRundePage() {
                 min="50"
                 max="150"
                 required
-                className="w-full px-3 py-2 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/50 text-[#1c1c16] text-sm outline-none focus:border-[#154212] placeholder:text-[#8a9385] transition-colors"
+                className="w-full rounded-xl border border-black/5 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] outline-none transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-primary)]"
               />
             </div>
 
             {/* Par */}
             <div>
-              <label className="block text-xs font-medium text-[#6b7366] mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[var(--color-muted)]">
                 Par
               </label>
               <input
@@ -146,23 +152,25 @@ export default function NyRundePage() {
                 placeholder="72"
                 min="60"
                 max="80"
-                className="w-full px-3 py-2 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/50 text-[#1c1c16] text-sm outline-none focus:border-[#154212] placeholder:text-[#8a9385] transition-colors"
+                className="w-full rounded-xl border border-black/5 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] outline-none transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-primary)]"
               />
             </div>
           </div>
-        </div>
+        </PortalCard>
 
         {/* Statistikk */}
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50 space-y-4">
-          <h2 className="text-sm font-semibold text-[#1c1c16] mb-4 flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-[#154212] text-white flex items-center justify-center text-xs">2</span>
+        <PortalCard className="space-y-4" padding="md">
+          <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-[var(--color-text)]">
+            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[var(--color-primary)] text-xs text-white">
+              2
+            </span>
             Statistikk
           </h2>
 
           <div className="grid grid-cols-3 gap-4">
             {/* Fairways */}
             <div>
-              <label className="block text-xs font-medium text-[#6b7366] mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[var(--color-muted)]">
                 Fairways truffet
               </label>
               <div className="relative">
@@ -173,9 +181,9 @@ export default function NyRundePage() {
                   placeholder="10"
                   min="0"
                   max="14"
-                  className="w-full px-3 py-2 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/50 text-[#1c1c16] text-sm outline-none focus:border-[#154212] placeholder:text-[#8a9385] transition-colors"
+                  className="w-full rounded-xl border border-black/5 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] outline-none transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-primary)]"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#8a9385]">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[var(--color-muted)]">
                   / 14
                 </span>
               </div>
@@ -183,7 +191,7 @@ export default function NyRundePage() {
 
             {/* GIR */}
             <div>
-              <label className="block text-xs font-medium text-[#6b7366] mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[var(--color-muted)]">
                 Greener i reg.
               </label>
               <div className="relative">
@@ -194,9 +202,9 @@ export default function NyRundePage() {
                   placeholder="12"
                   min="0"
                   max="18"
-                  className="w-full px-3 py-2 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/50 text-[#1c1c16] text-sm outline-none focus:border-[#154212] placeholder:text-[#8a9385] transition-colors"
+                  className="w-full rounded-xl border border-black/5 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] outline-none transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-primary)]"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#8a9385]">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[var(--color-muted)]">
                   / 18
                 </span>
               </div>
@@ -204,7 +212,7 @@ export default function NyRundePage() {
 
             {/* Putter */}
             <div>
-              <label className="block text-xs font-medium text-[#6b7366] mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[var(--color-muted)]">
                 Antall putter
               </label>
               <input
@@ -214,30 +222,30 @@ export default function NyRundePage() {
                 placeholder="32"
                 min="15"
                 max="50"
-                className="w-full px-3 py-2 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/50 text-[#1c1c16] text-sm outline-none focus:border-[#154212] placeholder:text-[#8a9385] transition-colors"
+                className="w-full rounded-xl border border-black/5 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] outline-none transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-primary)]"
               />
             </div>
           </div>
-        </div>
+        </PortalCard>
 
         {/* Notater */}
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50">
-          <label className="block text-xs font-medium text-[#6b7366] mb-1.5">
+        <PortalCard padding="md">
+          <label className="mb-1.5 block text-xs font-medium text-[var(--color-muted)]">
             Notater (valgfritt)
           </label>
           <textarea
             value={form.notes}
             onChange={(e) => update("notes", e.target.value)}
-            placeholder="Hvordan føltes runden? Hva gikk bra/dårlig?"
+            placeholder="Hvordan foltes runden? Hva gikk bra/darlig?"
             rows={3}
-            className="w-full px-3 py-2 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/50 text-[#1c1c16] text-sm outline-none focus:border-[#154212] placeholder:text-[#8a9385] resize-none transition-colors"
+            className="w-full resize-none rounded-xl border border-black/5 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] outline-none transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-primary)]"
           />
-        </div>
+        </PortalCard>
 
         {/* Feilmelding */}
         {error && (
-          <div className="p-3 rounded-xl bg-[#ef4444]/10 border border-[#ef4444]/30">
-            <p className="text-sm text-[#ef4444]">{error}</p>
+          <div className="rounded-xl border border-[var(--color-error)]/30 bg-[var(--color-error)]/10 p-3">
+            <p className="text-sm text-[var(--color-error)]">{error}</p>
           </div>
         )}
 
@@ -245,19 +253,19 @@ export default function NyRundePage() {
         <div className="flex gap-3">
           <Link
             href="/portal/statistikk"
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium border border-[#c2c9bb]/50 text-[#6b7366] hover:bg-[#f7f3ea] transition-colors"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-black/5 py-3 text-sm font-medium text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)]"
           >
             Avbryt
           </Link>
           <button
             type="submit"
             disabled={saving || !form.date || !form.totalScore}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold bg-[#154212] text-white hover:bg-[#0d2e0c] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {saving ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              <Save className="w-4 h-4" />
+              <Save className="h-4 w-4" />
             )}
             Lagre runde
           </button>

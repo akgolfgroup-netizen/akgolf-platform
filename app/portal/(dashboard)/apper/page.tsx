@@ -1,6 +1,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { getUserModuleSlugs } from "@/lib/portal/access";
+import { PortalHeader } from "@/components/portal/premium";
 import { ApperClient } from "./apper-client";
 
 export default async function ApperPage() {
@@ -77,10 +78,11 @@ export default async function ApperPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-[#1c1c16]">Apper og Abonnement</h1>
-        <p className="text-sm text-[#6b7366] mt-1">Få tilgang til avanserte verktøy for å forbedre golfen din</p>
-      </div>
+      <PortalHeader
+        label="Apper"
+        title="Apper og abonnement"
+        description="Låst opp avanserte moduler og bundles for å forbedre spillet ditt — enkeltmoduler eller komplette pakker."
+      />
 
       <ApperClient
         modules={modules ?? []}

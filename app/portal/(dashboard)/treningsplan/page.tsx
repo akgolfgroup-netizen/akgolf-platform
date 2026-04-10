@@ -1,19 +1,22 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getActivePlan, getCurrentWeekSessions } from "./actions";
 import { isStaff } from "@/lib/portal/rbac";
-import { Calendar, CheckCircle2, Clock, Target, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { Calendar, CheckCircle2, Clock, Target, ChevronLeft, ChevronRight } from "lucide-react";
 import { format, startOfISOWeek, addDays, addWeeks, isToday as isTodayFn } from "date-fns";
 import { nb } from "date-fns/locale";
 import Link from "next/link";
 import { GeneratePlanButton } from "@/components/portal/treningsplan/generate-plan-button";
 import { ManualPlanButton } from "@/components/portal/treningsplan/manual-plan-button";
+import { PortalHeader, PortalCard } from "@/components/portal/premium";
 
 interface SessionExercise {
   name: string;
   details: string;
 }
 
-function inferPyramidLevel(focusArea: string | null): "FYS" | "TEK" | "SLAG" | "SPILL" | "TURN" | null {
+type PyramidLevel = "FYS" | "TEK" | "SLAG" | "SPILL" | "TURN";
+
+function inferPyramidLevel(focusArea: string | null): PyramidLevel | null {
   if (!focusArea) return null;
   const lower = focusArea.toLowerCase();
   if (["styrke", "kondisjon", "mobilitet", "eksplosivitet", "gym"].some((k) => lower.includes(k))) return "FYS";
@@ -24,12 +27,17 @@ function inferPyramidLevel(focusArea: string | null): "FYS" | "TEK" | "SLAG" | "
   return null;
 }
 
-const pyramidConfig = {
-  FYS: { color: "#f59e0b", bg: "bg-[#f59e0b]/10", label: "Fysisk" },
-  TEK: { color: "#3b82f6", bg: "bg-[#3b82f6]/10", label: "Teknikk" },
-  SLAG: { color: "#154212", bg: "bg-[#154212]/10", label: "Slag" },
-  SPILL: { color: "#8b5cf6", bg: "bg-[#8b5cf6]/10", label: "Spill" },
-  TURN: { color: "#1c1c16", bg: "bg-[#1c1c16]/10", label: "Turnering" },
+interface PyramidConfigEntry {
+  token: string;
+  label: string;
+}
+
+const pyramidConfig: Record<PyramidLevel, PyramidConfigEntry> = {
+  FYS: { token: "var(--color-warning)", label: "Fysisk" },
+  TEK: { token: "var(--color-primary)", label: "Teknikk" },
+  SLAG: { token: "var(--color-primary-alt)", label: "Slag" },
+  SPILL: { token: "var(--color-ai)", label: "Spill" },
+  TURN: { token: "var(--color-grey-900)", label: "Turnering" },
 };
 
 interface TreningsplanPageProps {
@@ -78,19 +86,29 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   if (!plan) {
     return (
       <div className="space-y-8">
-        <div>
-          <h1 className="text-2xl font-bold text-[#1c1c16]">Treningsplan</h1>
-          <p className="text-[#6b7366] mt-1">Uke {weekNumber}</p>
-        </div>
+        <PortalHeader
+          label={`Uke ${weekNumber}`}
+          title="Treningsplan"
+          description="Din ukeplan med ekter, fokusomrader og AI-anbefalinger."
+        />
 
-        <div className="bg-white rounded-3xl p-12 text-center border border-[#c2c9bb]/50">
-          <div className="w-16 h-16 rounded-2xl bg-[#f7f3ea] flex items-center justify-center mx-auto mb-5">
-            <Calendar className="w-8 h-8 text-[#c2c9bb]" />
+        <PortalCard padding="lg" className="text-center">
+          <div
+            className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"
+            style={{ backgroundColor: "var(--color-grey-100)" }}
+          >
+            <Calendar
+              className="w-8 h-8"
+              style={{ color: "var(--color-grey-500)" }}
+            />
           </div>
-          <h2 className="text-lg font-semibold text-[#1c1c16] mb-2">
+          <h2 className="text-lg font-semibold mb-2" style={{ color: "var(--color-text)" }}>
             Din treningsplan er tom
           </h2>
-          <p className="text-sm text-[#6b7366] max-w-md mx-auto mb-6">
+          <p
+            className="text-sm max-w-md mx-auto mb-6"
+            style={{ color: "var(--color-muted)" }}
+          >
             {canGenerate
               ? "Dra øvelser fra banken, eller la AI lage en plan for deg."
               : "Kontakt din coach for å få en personlig treningsplan."}
@@ -101,153 +119,206 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
               <GeneratePlanButton studentId={user.id} />
             </div>
           )}
-        </div>
+        </PortalCard>
       </div>
     );
   }
 
+  const headerActions = (
+    <>
+      <div className="flex items-center gap-1">
+        <Link
+          href={`/portal/treningsplan?week=${weekOffset - 1}`}
+          className="p-2 rounded-lg transition-colors hover:bg-[var(--color-grey-100)]"
+          aria-label="Forrige uke"
+        >
+          <ChevronLeft className="w-4 h-4" style={{ color: "var(--color-muted)" }} />
+        </Link>
+        {weekOffset !== 0 && (
+          <Link
+            href="/portal/treningsplan"
+            className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:bg-[var(--color-grey-100)]"
+            style={{ color: "var(--color-muted)" }}
+          >
+            I dag
+          </Link>
+        )}
+        <Link
+          href={`/portal/treningsplan?week=${weekOffset + 1}`}
+          className="p-2 rounded-lg transition-colors hover:bg-[var(--color-grey-100)]"
+          aria-label="Neste uke"
+        >
+          <ChevronRight className="w-4 h-4" style={{ color: "var(--color-muted)" }} />
+        </Link>
+      </div>
+      {canGenerate && (
+        <>
+          <ManualPlanButton studentId={user.id} />
+          <GeneratePlanButton studentId={user.id} />
+        </>
+      )}
+    </>
+  );
+
+  const weekRange = `${format(weekStart, "d.", { locale: nb })} - ${format(
+    addDays(weekStart, 6),
+    "d. MMMM yyyy",
+    { locale: nb }
+  )}`;
+
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-[#1c1c16]">Treningsplan</h1>
-          <p className="text-[#6b7366] mt-1">
-            Uke {weekNumber} · {format(weekStart, "d.", { locale: nb })} -
-            {format(addDays(weekStart, 6), "d. MMMM yyyy", { locale: nb })}
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          {/* Uke-navigasjon */}
-          <div className="flex items-center gap-1">
-            <Link
-              href={`/portal/treningsplan?week=${weekOffset - 1}`}
-              className="p-2 rounded-lg hover:bg-[#f7f3ea] transition-colors"
-              aria-label="Forrige uke"
-            >
-              <ChevronLeft className="w-4 h-4 text-[#6b7366]" />
-            </Link>
-            {weekOffset !== 0 && (
-              <Link
-                href="/portal/treningsplan"
-                className="px-3 py-1.5 rounded-lg text-xs font-medium text-[#6b7366] hover:bg-[#f7f3ea] transition-colors"
-              >
-                I dag
-              </Link>
-            )}
-            <Link
-              href={`/portal/treningsplan?week=${weekOffset + 1}`}
-              className="p-2 rounded-lg hover:bg-[#f7f3ea] transition-colors"
-              aria-label="Neste uke"
-            >
-              <ChevronRight className="w-4 h-4 text-[#6b7366]" />
-            </Link>
-          </div>
-          {canGenerate && (
-            <>
-              <ManualPlanButton studentId={user.id} />
-              <GeneratePlanButton studentId={user.id} />
-            </>
-          )}
-        </div>
-      </div>
+      <PortalHeader
+        label={`Uke ${weekNumber}`}
+        title="Treningsplan"
+        description={weekRange}
+        actions={headerActions}
+      />
 
       {/* Week Grid */}
       <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
-        {weekDays.map((day, index) => (
-          <div
-            key={day.dayName}
-            className={`bg-white rounded-2xl border ${
-              day.isToday ? "border-[#d2f000] ring-1 ring-[#d2f000]/50" : "border-[#c2c9bb]/50"
-            } overflow-hidden`}
-          >
-            {/* Day Header */}
-            <div
-              className={`p-3 text-center border-b ${
-                day.isToday ? "bg-[#d2f000]/10 border-[#d2f000]/30" : "bg-[#f7f3ea] border-[#c2c9bb]/30"
-              }`}
-            >
-              <p
-                className={`text-xs font-semibold uppercase tracking-wider ${
-                  day.isToday ? "text-[#154212]" : "text-[#8a9385]"
-                }`}
-              >
-                {day.dayName}
-              </p>
-              <p
-                className={`text-lg font-bold mt-0.5 ${
-                  day.isToday ? "text-[#154212]" : "text-[#1c1c16]"
-                }`}
-              >
-                {format(day.date, "d")}
-              </p>
-            </div>
+        {weekDays.map((day) => {
+          const level: PyramidLevel = day.session?.pyramidLevel ?? "SLAG";
+          const levelToken = pyramidConfig[level].token;
+          const levelLabel = pyramidConfig[level].label;
+          const isCompleted = day.session?.completed ?? false;
+          const borderLeftColor = isCompleted ? "var(--color-success)" : levelToken;
 
-            {/* Day Content */}
-            <div className="p-3 min-h-[180px]">
-              {day.session ? (
-                <Link href={`/portal/treningsplan/${day.session.id}`}>
-                  <div
-                    className={`p-3 rounded-xl border-l-4 transition-all hover:shadow-md ${
-                      day.session.completed
-                        ? "bg-[#22c55e]/10 border-[#22c55e]"
-                        : `${pyramidConfig[day.session.pyramidLevel || "SLAG"].bg} border-${
-                            pyramidConfig[day.session.pyramidLevel || "SLAG"].color
-                          }`
-                    }`}
-                    style={{
-                      borderLeftColor: day.session.completed
-                        ? "#22c55e"
-                        : pyramidConfig[day.session.pyramidLevel || "SLAG"].color,
-                    }}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-white/50">
-                        {pyramidConfig[day.session.pyramidLevel || "SLAG"].label}
-                      </span>
-                      {day.session.completed && (
-                        <CheckCircle2 className="w-4 h-4 text-[#22c55e]" />
+          return (
+            <div
+              key={day.dayName}
+              className="bg-white rounded-[24px] overflow-hidden transition-all duration-300"
+              style={{
+                border: day.isToday
+                  ? "1px solid var(--color-accent-cta)"
+                  : "1px solid rgba(0, 0, 0, 0.05)",
+                boxShadow: day.isToday
+                  ? "0 0 0 3px color-mix(in srgb, var(--color-accent-cta) 25%, transparent)"
+                  : undefined,
+              }}
+            >
+              {/* Day Header */}
+              <div
+                className="p-3 text-center border-b"
+                style={{
+                  backgroundColor: day.isToday
+                    ? "color-mix(in srgb, var(--color-accent-cta) 12%, white)"
+                    : "var(--color-grey-100)",
+                  borderColor: day.isToday
+                    ? "color-mix(in srgb, var(--color-accent-cta) 30%, transparent)"
+                    : "var(--color-grey-200)",
+                }}
+              >
+                <p
+                  className="text-xs font-semibold uppercase tracking-wider"
+                  style={{
+                    color: day.isToday
+                      ? "var(--color-primary)"
+                      : "var(--color-grey-500)",
+                  }}
+                >
+                  {day.dayName}
+                </p>
+                <p
+                  className="text-lg font-bold mt-0.5"
+                  style={{
+                    color: day.isToday
+                      ? "var(--color-primary)"
+                      : "var(--color-text)",
+                  }}
+                >
+                  {format(day.date, "d")}
+                </p>
+              </div>
+
+              {/* Day Content */}
+              <div className="p-3 min-h-[180px]">
+                {day.session ? (
+                  <Link href={`/portal/treningsplan/${day.session.id}`}>
+                    <div
+                      className="p-3 rounded-xl border-l-4 transition-all hover:shadow-md"
+                      style={{
+                        borderLeftColor,
+                        backgroundColor: isCompleted
+                          ? "color-mix(in srgb, var(--color-success) 10%, white)"
+                          : `color-mix(in srgb, ${levelToken} 10%, white)`,
+                      }}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span
+                          className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-white/60"
+                          style={{ color: "var(--color-text)" }}
+                        >
+                          {levelLabel}
+                        </span>
+                        {isCompleted && (
+                          <CheckCircle2
+                            className="w-4 h-4"
+                            style={{ color: "var(--color-success)" }}
+                          />
+                        )}
+                      </div>
+                      <h4
+                        className="font-medium text-sm leading-tight"
+                        style={{ color: "var(--color-text)" }}
+                      >
+                        {day.session.title}
+                      </h4>
+                      <div
+                        className="flex items-center gap-1 mt-2 text-xs"
+                        style={{ color: "var(--color-muted)" }}
+                      >
+                        <Clock className="w-3 h-3" />
+                        {day.session.duration} min
+                      </div>
+                      {day.session.exercises.length > 0 && (
+                        <p
+                          className="text-xs mt-2"
+                          style={{ color: "var(--color-grey-500)" }}
+                        >
+                          {day.session.exercises.length} øvelser
+                        </p>
                       )}
                     </div>
-                    <h4 className="font-medium text-sm text-[#1c1c16] leading-tight">
-                      {day.session.title}
-                    </h4>
-                    <div className="flex items-center gap-1 mt-2 text-xs text-[#6b7366]">
-                      <Clock className="w-3 h-3" />
-                      {day.session.duration} min
-                    </div>
-                    {day.session.exercises.length > 0 && (
-                      <p className="text-xs text-[#8a9385] mt-2">
-                        {day.session.exercises.length} øvelser
-                      </p>
-                    )}
+                  </Link>
+                ) : (
+                  <div className="h-full flex flex-col items-center justify-center text-center py-8">
+                    <Target
+                      className="w-6 h-6 mb-2"
+                      style={{ color: "var(--color-grey-300)" }}
+                    />
+                    <p className="text-xs" style={{ color: "var(--color-grey-500)" }}>
+                      Hviledag
+                    </p>
                   </div>
-                </Link>
-              ) : (
-                <div className="h-full flex flex-col items-center justify-center text-center py-8">
-                  <Target className="w-6 h-6 text-[#c2c9bb] mb-2" />
-                  <p className="text-xs text-[#8a9385]">Hviledag</p>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Legend */}
       <div className="flex flex-wrap items-center gap-4 text-xs">
-        <span className="text-[#8a9385] font-medium">Pyramidenivåer:</span>
-        {Object.entries(pyramidConfig).map(([key, config]) => (
-          <div key={key} className="flex items-center gap-1.5">
-            <div
-              className="w-3 h-3 rounded-sm"
-              style={{ backgroundColor: config.color }}
-            />
-            <span className="text-[#6b7366]">
-              {config.label} ({key})
-            </span>
-          </div>
-        ))}
+        <span
+          className="font-medium"
+          style={{ color: "var(--color-grey-500)" }}
+        >
+          Pyramidenivåer:
+        </span>
+        {(Object.entries(pyramidConfig) as [PyramidLevel, PyramidConfigEntry][]).map(
+          ([key, config]) => (
+            <div key={key} className="flex items-center gap-1.5">
+              <div
+                className="w-3 h-3 rounded-sm"
+                style={{ backgroundColor: config.token }}
+              />
+              <span style={{ color: "var(--color-muted)" }}>
+                {config.label} ({key})
+              </span>
+            </div>
+          )
+        )}
       </div>
     </div>
   );

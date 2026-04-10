@@ -1,11 +1,13 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { WeekCalendar } from "@/components/portal/heritage/week-calendar";
-import { addWeeks, startOfWeek, endOfWeek } from "date-fns";
+import { startOfWeek, endOfWeek } from "date-fns";
 import { CalendarSyncSettings } from "@/components/portal/kalender/calendar-sync-settings";
 import { getCalendarEvents } from "./actions";
+import { PortalHeader, PortalCard } from "@/components/portal/premium";
+import { Settings2 } from "lucide-react";
 
 export default async function KalenderPage() {
-  const user = await requirePortalUser();
+  await requirePortalUser();
 
   // Get current week events
   const now = new Date();
@@ -15,9 +17,10 @@ export default async function KalenderPage() {
   const events = await getCalendarEvents(weekStart, weekEnd);
 
   const formattedEvents = events.map((event) => {
-    // Calculate duration from start and end dates
     const duration = event.endDate
-      ? Math.round((event.endDate.getTime() - event.startDate.getTime()) / 60000)
+      ? Math.round(
+          (event.endDate.getTime() - event.startDate.getTime()) / 60000,
+        )
       : 60;
     return {
       id: event.id,
@@ -30,19 +33,30 @@ export default async function KalenderPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-[#1c1c16]">Kalender</h1>
-        <p className="text-[#6b7366] mt-1">
-          Oversikt over dine coaching-timer, treninger og turneringer
-        </p>
-      </div>
+      <PortalHeader
+        label="Portal"
+        title="Kalender"
+        description="Oversikt over dine coaching-timer, treninger og turneringer — synkronisert med Google Calendar."
+        actions={
+          <a
+            href="#calendar-sync"
+            className="inline-flex items-center gap-2 rounded-xl border border-[var(--color-primary)]/20 bg-white px-4 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition-colors hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5"
+          >
+            <Settings2 className="h-4 w-4" />
+            Sync-innstillinger
+          </a>
+        }
+      />
 
       {/* Week Calendar */}
-      <WeekCalendar events={formattedEvents} />
+      <PortalCard padding="sm" as="section">
+        <WeekCalendar events={formattedEvents} />
+      </PortalCard>
 
       {/* Google Calendar Sync */}
-      <CalendarSyncSettings />
+      <PortalCard padding="lg" as="section" id="calendar-sync">
+        <CalendarSyncSettings />
+      </PortalCard>
     </div>
   );
 }

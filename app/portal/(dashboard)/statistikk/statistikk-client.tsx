@@ -7,16 +7,22 @@ import { motion } from "framer-motion";
 import {
   BarChart3,
   TrendingDown,
-  TrendingUp,
   Target,
-  Calendar,
+  Trophy,
+  Clock,
   Award,
   Plus,
   ChevronRight,
   Info,
   Lightbulb,
 } from "lucide-react";
-import { StatCard } from "@/components/portal/heritage/stat-card";
+import {
+  PortalHeader,
+  PortalCard,
+  PremiumStatCard,
+  fadeInUp,
+  staggerContainer,
+} from "@/components/portal/premium";
 import { ScoreTrendChart } from "@/components/portal/statistikk/score-trend-chart";
 import { SGRadarChart } from "@/components/portal/statistikk/sg-radar-chart";
 import { TrainingVolumeChart } from "@/components/portal/statistikk/training-volume-chart";
@@ -85,29 +91,30 @@ function getTotalTrainingMinutes(breakdown: TrainingAreaBreakdown[]): number {
 function EmptyState() {
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Statistikk</h1>
-        <p className="text-[var(--color-grey-500)] mt-1">Folg utviklingen din over tid</p>
-      </div>
+      <PortalHeader
+        label="Statistikk"
+        title="Statistikk"
+        description="Folg utviklingen din over tid"
+      />
 
-      <div className="bg-white rounded-3xl p-12 text-center border border-[var(--color-grey-200)]">
-        <div className="w-16 h-16 rounded-2xl bg-[var(--color-grey-100)] flex items-center justify-center mx-auto mb-6">
-          <BarChart3 className="w-8 h-8 text-[var(--color-grey-400)]" />
+      <PortalCard padding="lg" className="text-center">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-surface)]">
+          <BarChart3 className="h-8 w-8 text-[var(--color-muted)]" />
         </div>
-        <h2 className="text-xl font-semibold text-[var(--color-grey-900)] mb-2">
+        <h2 className="mb-2 text-xl font-semibold text-[var(--color-text)]">
           Ingen runder registrert
         </h2>
-        <p className="text-[var(--color-grey-500)] mb-8 max-w-md mx-auto">
+        <p className="mx-auto mb-8 max-w-md text-[var(--color-muted)]">
           Registrer din forste runde for a se statistikk, Strokes Gained-analyse og utviklingstrender.
         </p>
         <Link
           href="/portal/statistikk/ny-runde"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--color-primary)] text-white font-medium hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 rounded-xl bg-[var(--color-primary)] px-6 py-3 font-medium text-white transition-opacity hover:opacity-90"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="h-4 w-4" />
           Registrer din forste runde
         </Link>
-      </div>
+      </PortalCard>
     </div>
   );
 }
@@ -186,225 +193,254 @@ export function StatistikkClient({
 
   const hasSGData = Object.values(playerSG).some((v) => v !== null);
 
+  const periodSelector = (
+    <div className="flex gap-1 rounded-xl border border-black/5 bg-white p-1">
+      {PERIOD_OPTIONS.map((option) => (
+        <button
+          key={option.key}
+          onClick={() => handlePeriodChange(option.key)}
+          className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+            option.key === currentPeriod
+              ? "bg-[var(--color-primary)] text-white"
+              : "text-[var(--color-muted)] hover:text-[var(--color-text)]"
+          }`}
+        >
+          {option.label}
+        </button>
+      ))}
+    </div>
+  );
+
+  const avgScoreValue = aggregates?.avgScore ?? null;
+  const bestScoreTrendLabel =
+    bestScoreToPar != null ? `${formatScoreDiff(bestScoreToPar)} fra par` : undefined;
+  const trainingHours = totalTrainingMinutes > 0 ? totalTrainingMinutes / 60 : 0;
+
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Statistikk</h1>
-          <p className="text-[var(--color-grey-500)] mt-1">Folg utviklingen din over tid</p>
-        </div>
-
-        {/* Period Selector */}
-        <div className="flex gap-1 p-1 rounded-xl bg-white border border-[var(--color-grey-200)]">
-          {PERIOD_OPTIONS.map((option) => (
-            <button
-              key={option.key}
-              onClick={() => handlePeriodChange(option.key)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                option.key === currentPeriod
-                  ? "bg-[var(--color-primary)] text-white"
-                  : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
-              }`}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      </div>
+      <PortalHeader
+        label="Statistikk"
+        title="Statistikk"
+        description="Folg utviklingen din over tid"
+        actions={periodSelector}
+      />
 
       {/* Stats Grid */}
       <motion.div
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        className="grid grid-cols-2 gap-4 lg:grid-cols-4"
+        initial="hidden"
+        animate="visible"
+        variants={staggerContainer}
       >
-        <StatCard
-          label="Snittscore"
-          value={aggregates?.avgScore?.toFixed(1) ?? "-"}
-          trend={
-            aggregates?.scoreTrend === "down"
-              ? { value: -1, label: "bedre" }
-              : aggregates?.scoreTrend === "up"
-              ? { value: 1, label: "hoyere" }
-              : undefined
-          }
-          icon={aggregates?.scoreTrend === "down" ? TrendingDown : TrendingUp}
-          iconColor={aggregates?.scoreTrend === "down" ? "var(--color-success)" : "var(--color-error)"}
-        />
-        <StatCard
-          label="Runder"
-          value={aggregates?.roundCount?.toString() ?? "0"}
-          icon={Calendar}
-          iconColor="var(--color-primary)"
-        />
-        <StatCard
-          label="Beste score"
-          value={bestScore?.toString() ?? "-"}
-          trend={
-            bestScoreToPar != null
-              ? { value: 0, label: formatScoreDiff(bestScoreToPar) + " fra par" }
-              : undefined
-          }
-          icon={Award}
-          iconColor="var(--color-warning)"
-        />
-        <StatCard
-          label="Treningstid"
-          value={totalTrainingMinutes > 0 ? (totalTrainingMinutes / 60).toFixed(1) + "t" : "0"}
-          trend={
-            totalTrainingSessions > 0
-              ? { value: 0, label: `${totalTrainingSessions} okter` }
-              : undefined
-          }
-          icon={BarChart3}
-          iconColor="var(--color-ai)"
-        />
+        <motion.div variants={fadeInUp}>
+          <PremiumStatCard
+            label="Snittslag"
+            value={avgScoreValue ?? "-"}
+            decimals={1}
+            icon={TrendingDown}
+            lowerIsBetter
+            trend={
+              aggregates?.scoreTrend === "down"
+                ? -1
+                : aggregates?.scoreTrend === "up"
+                  ? 1
+                  : aggregates?.scoreTrend === "flat"
+                    ? 0
+                    : null
+            }
+            trendLabel="siste periode"
+          />
+        </motion.div>
+        <motion.div variants={fadeInUp}>
+          <PremiumStatCard
+            label="Runder"
+            value={aggregates?.roundCount ?? 0}
+            icon={Trophy}
+          />
+        </motion.div>
+        <motion.div variants={fadeInUp}>
+          <PremiumStatCard
+            label="Beste score"
+            value={bestScore ?? "-"}
+            icon={Award}
+            trend={bestScoreToPar != null ? 0 : null}
+            trendLabel={bestScoreTrendLabel}
+          />
+        </motion.div>
+        <motion.div variants={fadeInUp}>
+          <PremiumStatCard
+            label="Treningstimer"
+            value={trainingHours}
+            unit="t"
+            decimals={1}
+            icon={Clock}
+            trend={totalTrainingSessions > 0 ? 0 : null}
+            trendLabel={totalTrainingSessions > 0 ? `${totalTrainingSessions} okter` : undefined}
+          />
+        </motion.div>
       </motion.div>
 
       {/* Charts Row: Score Trend + Recent Rounds */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Score Trend Chart */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.5 }}
-          className="bg-white rounded-2xl p-6 border border-[var(--color-grey-200)]"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          transition={{ delay: 0.1 }}
         >
-          <h3 className="font-semibold text-[var(--color-grey-900)] mb-4">Score-utvikling</h3>
-          <ScoreTrendChart
-            rounds={scoreTrendRounds}
-            handicap={handicap ?? undefined}
-          />
+          <PortalCard>
+            <h3 className="mb-4 font-semibold text-[var(--color-text)]">Score-utvikling</h3>
+            <ScoreTrendChart
+              rounds={scoreTrendRounds}
+              handicap={handicap ?? undefined}
+            />
+          </PortalCard>
         </motion.div>
 
         {/* Recent Rounds */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="bg-white rounded-2xl p-6 border border-[var(--color-grey-200)]"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          transition={{ delay: 0.2 }}
         >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-[var(--color-grey-900)]">Siste runder</h3>
-            {rounds.length > 5 && (
-              <button className="text-xs font-medium text-[var(--color-primary)] hover:underline">
-                Se alle
-              </button>
-            )}
-          </div>
-          <div className="space-y-3">
-            {recentRounds.length === 0 ? (
-              <p className="text-sm text-[var(--color-grey-400)] text-center py-8">Ingen runder registrert enna</p>
-            ) : (
-              recentRounds.map((round) => {
-                const { date, month } = formatDate(round.date);
-                return (
-                  <div
-                    key={round.id}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)] transition-colors"
-                  >
-                    <div className="w-10 h-10 bg-white rounded-lg flex flex-col items-center justify-center shadow-sm flex-shrink-0">
-                      <span className="text-sm font-bold text-[var(--color-grey-900)]">{date}</span>
-                      <span className="text-[10px] font-medium text-[var(--color-grey-400)] uppercase">{month}</span>
+          <PortalCard>
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="font-semibold text-[var(--color-text)]">Siste runder</h3>
+              {rounds.length > 5 && (
+                <button className="text-xs font-medium text-[var(--color-primary)] hover:underline">
+                  Se alle
+                </button>
+              )}
+            </div>
+            <div className="space-y-3">
+              {recentRounds.length === 0 ? (
+                <p className="py-8 text-center text-sm text-[var(--color-muted)]">
+                  Ingen runder registrert enna
+                </p>
+              ) : (
+                recentRounds.map((round) => {
+                  const { date, month } = formatDate(round.date);
+                  return (
+                    <div
+                      key={round.id}
+                      className="flex items-center gap-3 rounded-xl bg-[var(--color-surface)] p-3 transition-colors hover:bg-[var(--color-surface-alt,var(--color-surface))]"
+                    >
+                      <div className="flex h-10 w-10 flex-shrink-0 flex-col items-center justify-center rounded-lg bg-white shadow-sm">
+                        <span className="text-sm font-bold text-[var(--color-text)]">{date}</span>
+                        <span className="text-[10px] font-medium uppercase text-[var(--color-muted)]">
+                          {month}
+                        </span>
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-[var(--color-text)]">
+                          {round.courseName ?? "Ukjent bane"}
+                        </p>
+                        {round.scoreToPar !== null && (
+                          <p className="text-xs text-[var(--color-muted)]">
+                            {formatScoreDiff(round.scoreToPar)} fra par
+                          </p>
+                        )}
+                      </div>
+                      <div className="text-lg font-bold text-[var(--color-text)]">
+                        {round.totalScore ?? "-"}
+                      </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[var(--color-grey-900)] truncate">
-                        {round.courseName ?? "Ukjent bane"}
-                      </p>
-                      {round.scoreToPar !== null && (
-                        <p className="text-xs text-[var(--color-grey-400)]">{formatScoreDiff(round.scoreToPar)} fra par</p>
-                      )}
-                    </div>
-                    <div className="text-lg font-bold text-[var(--color-grey-900)]">{round.totalScore ?? "-"}</div>
-                  </div>
-                );
-              })
-            )}
-          </div>
+                  );
+                })
+              )}
+            </div>
+          </PortalCard>
         </motion.div>
       </div>
 
       {/* Charts Row: SG Radar + Training Volume */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* SG Radar Chart */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="bg-white rounded-2xl p-6 border border-[var(--color-grey-200)]"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          transition={{ delay: 0.3 }}
         >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-[var(--color-grey-900)]">Strokes Gained</h3>
-            {aggregates?.avgSgTotal !== null && aggregates?.avgSgTotal !== undefined && (
-              <span className="text-xs text-[var(--color-grey-400)]">
-                Totalt: {aggregates.avgSgTotal.toFixed(2)}
-              </span>
-            )}
-          </div>
-          {hasSGData ? (
-            <SGRadarChart playerSG={playerSG} showLegend={false} />
-          ) : (
-            <div className="h-[280px] flex items-center justify-center text-sm text-[var(--color-grey-400)]">
-              Ingen SG-data i valgt periode
+          <PortalCard>
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="font-semibold text-[var(--color-text)]">Strokes Gained</h3>
+              {aggregates?.avgSgTotal !== null && aggregates?.avgSgTotal !== undefined && (
+                <span className="text-xs text-[var(--color-muted)]">
+                  Totalt: {aggregates.avgSgTotal.toFixed(2)}
+                </span>
+              )}
             </div>
-          )}
+            {hasSGData ? (
+              <SGRadarChart playerSG={playerSG} showLegend={false} />
+            ) : (
+              <div className="flex h-[280px] items-center justify-center text-sm text-[var(--color-muted)]">
+                Ingen SG-data i valgt periode
+              </div>
+            )}
+          </PortalCard>
         </motion.div>
 
         {/* Training Volume Chart */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="bg-white rounded-2xl p-6 border border-[var(--color-grey-200)]"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          transition={{ delay: 0.4 }}
         >
-          <h3 className="font-semibold text-[var(--color-grey-900)] mb-4">Treningsvolum</h3>
-          <TrainingVolumeChart data={weeklyTraining} />
+          <PortalCard>
+            <h3 className="mb-4 font-semibold text-[var(--color-text)]">Treningsvolum</h3>
+            <TrainingVolumeChart data={weeklyTraining} />
+          </PortalCard>
         </motion.div>
       </div>
 
       {/* Focus Areas */}
       {focusAreas.length > 0 && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="bg-white rounded-2xl p-6 border border-[var(--color-grey-200)]"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          transition={{ delay: 0.5 }}
         >
-          <h3 className="font-semibold text-[var(--color-grey-900)] mb-6">Fokusomrade-fordeling</h3>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {focusAreas.map((area) => (
-              <div key={area.name} className="text-center">
-                <div className="h-24 rounded-xl bg-[var(--color-grey-100)] relative overflow-hidden mb-3">
-                  <div
-                    className="absolute bottom-0 left-0 right-0 bg-[var(--color-primary)] transition-all duration-500"
-                    style={{ height: `${area.percent}%` }}
-                  />
+          <PortalCard>
+            <h3 className="mb-6 font-semibold text-[var(--color-text)]">Fokusomrade-fordeling</h3>
+            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+              {focusAreas.map((area) => (
+                <div key={area.name} className="text-center">
+                  <div className="relative mb-3 h-24 overflow-hidden rounded-xl bg-[var(--color-surface)]">
+                    <div
+                      className="absolute bottom-0 left-0 right-0 bg-[var(--color-primary)] transition-all duration-500"
+                      style={{ height: `${area.percent}%` }}
+                    />
+                  </div>
+                  <p className="text-sm font-semibold text-[var(--color-text)]">{area.name}</p>
+                  <p className="text-xs text-[var(--color-muted)]">{area.percent}%</p>
                 </div>
-                <p className="text-sm font-semibold text-[var(--color-grey-900)]">{area.name}</p>
-                <p className="text-xs text-[var(--color-grey-400)]">{area.percent}%</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </PortalCard>
         </motion.div>
       )}
 
       {/* AI Recommendation */}
       {weakestArea && weakestArea.value !== null && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="bg-gradient-to-br from-[var(--color-ai)]/10 to-[var(--color-ai)]/5 rounded-2xl p-6 border border-[var(--color-ai)]/20"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          transition={{ delay: 0.6 }}
+          className="rounded-[24px] border border-[var(--color-ai)]/20 bg-gradient-to-br from-[var(--color-ai)]/10 to-[var(--color-ai)]/5 p-6"
         >
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-[var(--color-ai)]/20 flex items-center justify-center flex-shrink-0">
-              <Lightbulb className="w-6 h-6 text-[var(--color-ai)]" />
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--color-ai)]/20">
+              <Lightbulb className="h-6 w-6 text-[var(--color-ai)]" />
             </div>
             <div>
-              <h3 className="font-semibold text-[var(--color-grey-900)] mb-1">AI-anbefaling</h3>
-              <p className="text-sm text-[var(--color-grey-600)]">
+              <h3 className="mb-1 font-semibold text-[var(--color-text)]">AI-anbefaling</h3>
+              <p className="text-sm text-[var(--color-muted)]">
                 Basert pa dine SG-data bor du oke fokus pa <strong>{weakestArea.label}</strong>-trening.
                 Du taper mest slag ({weakestArea.value.toFixed(1)}) i denne kategorien.
               </p>
@@ -415,12 +451,13 @@ export function StatistikkClient({
 
       {/* Quick Actions */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+        transition={{ delay: 0.7 }}
       >
-        <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4">Hurtighandlinger</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <h3 className="mb-4 text-sm font-semibold text-[var(--color-text)]">Hurtighandlinger</h3>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <QuickAction
             href="/portal/statistikk/ny-runde"
             icon={Plus}
@@ -444,25 +481,28 @@ export function StatistikkClient({
       </motion.div>
 
       {/* SG Explanation */}
-      <details className="group bg-white rounded-2xl border border-[var(--color-grey-200)] overflow-hidden">
-        <summary className="flex items-center gap-3 p-4 cursor-pointer list-none hover:bg-[var(--color-grey-100)] transition-colors">
-          <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center">
-            <Info className="w-5 h-5 text-[var(--color-grey-500)]" />
+      <details className="group overflow-hidden rounded-[24px] border border-black/5 bg-white">
+        <summary className="flex cursor-pointer list-none items-center gap-3 p-4 transition-colors hover:bg-[var(--color-surface)]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-surface)]">
+            <Info className="h-5 w-5 text-[var(--color-muted)]" />
           </div>
-          <span className="font-semibold text-[var(--color-grey-900)]">Hva er Strokes Gained?</span>
-          <ChevronRight className="w-5 h-5 text-[var(--color-grey-400)] ml-auto transition-transform group-open:rotate-90" />
+          <span className="font-semibold text-[var(--color-text)]">Hva er Strokes Gained?</span>
+          <ChevronRight className="ml-auto h-5 w-5 text-[var(--color-muted)] transition-transform group-open:rotate-90" />
         </summary>
-        <div className="p-4 pt-0 border-t border-[var(--color-grey-200)]">
-          <p className="text-sm text-[var(--color-grey-500)] mb-4 mt-4">
+        <div className="border-t border-black/5 p-4 pt-0">
+          <p className="mb-4 mt-4 text-sm text-[var(--color-muted)]">
             {PORTAL_CONTENT.statistikk.sgExplanation.intro}
           </p>
           <div className="grid grid-cols-2 gap-3">
             {PORTAL_CONTENT.statistikk.sgExplanation.categories.map((cat) => (
-              <div key={cat.key} className="flex gap-3 p-3 rounded-xl bg-[var(--color-grey-100)]">
-                <span className="text-xs font-bold px-2 py-1 rounded bg-[var(--color-primary)] text-white h-fit">
+              <div
+                key={cat.key}
+                className="flex gap-3 rounded-xl bg-[var(--color-surface)] p-3"
+              >
+                <span className="h-fit rounded bg-[var(--color-primary)] px-2 py-1 text-xs font-bold text-white">
                   {cat.key}
                 </span>
-                <span className="text-xs text-[var(--color-grey-500)]">{cat.description}</span>
+                <span className="text-xs text-[var(--color-muted)]">{cat.description}</span>
               </div>
             ))}
           </div>

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
   AlertCircle,
-  Crown,
   Check,
   Loader2,
   Settings,
@@ -15,8 +15,19 @@ import {
   Target,
   ScanSearch,
   Trophy,
+  Package,
+  Sparkles,
+  type LucideIcon,
 } from "lucide-react";
 import { PricingTable } from "@/components/portal/pricing/pricing-table";
+import {
+  PortalCard,
+  PremiumBentoCard,
+  PremiumBentoGrid,
+  staggerContainer,
+  fadeInUp,
+} from "@/components/portal/premium";
+import { cn } from "@/lib/portal/utils/cn";
 
 interface AppModule {
   id: string;
@@ -53,14 +64,14 @@ interface ApperClientProps {
   currentTier: "VISITOR" | "PRO" | "ELITE";
 }
 
-const ICON_MAP: Record<string, React.ElementType> = {
+const ICON_MAP: Record<string, LucideIcon> = {
   "notebook-pen": NotebookPen,
-  "dumbbell": Dumbbell,
+  dumbbell: Dumbbell,
   "bar-chart-3": BarChart3,
-  "users": Users,
-  "target": Target,
+  users: Users,
+  target: Target,
   "scan-search": ScanSearch,
-  "trophy": Trophy,
+  trophy: Trophy,
 };
 
 export function ApperClient({
@@ -84,8 +95,7 @@ export function ApperClient({
     setLoading(plan);
     setError(null);
     try {
-      const bundleSlug =
-        plan === "PRO" ? "pro-bundle" : "premium-bundle";
+      const bundleSlug = plan === "PRO" ? "pro-bundle" : "premium-bundle";
       const res = await fetch("/api/portal/subscriptions/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -159,7 +169,9 @@ export function ApperClient({
         router.refresh();
       } else {
         const data = await res.json().catch(() => ({}));
-        setError((data as { error?: string }).error || "Kunne ikke aktivere modulen. Prøv igjen.");
+        setError(
+          (data as { error?: string }).error || "Kunne ikke aktivere modulen. Prøv igjen."
+        );
         setLoading(null);
       }
     } catch {
@@ -178,34 +190,54 @@ export function ApperClient({
     );
   }
 
+  const activeSubscriptions = subscriptions.filter(
+    (s) => s.status === "ACTIVE" || s.status === "TRIALING"
+  );
+
   return (
-    <div className="space-y-10">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+      className="space-y-10"
+    >
       {/* Success message */}
       {isSuccess && (
-        <div role="alert" className="rounded-2xl p-4 border flex items-center gap-3 bg-[#22c55e]/10 border-[#22c55e]/30">
-          <Check className="w-5 h-5 text-[#22c55e] flex-shrink-0" />
-          <p className="text-sm text-[#22c55e] font-medium">
-            Abonnementet ditt er aktivert! Din 14-dagers prøveperiode har startet.
-          </p>
-        </div>
+        <motion.div variants={fadeInUp} role="alert">
+          <div className="flex items-center gap-3 rounded-[24px] p-4 bg-[var(--color-success)]/10 border border-[var(--color-success)]/25">
+            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--color-success)]/15">
+              <Check className="h-5 w-5 text-[var(--color-success)]" />
+            </div>
+            <p className="text-sm font-medium text-[var(--color-success)]">
+              Abonnementet ditt er aktivert. Din 14-dagers prøveperiode har startet.
+            </p>
+          </div>
+        </motion.div>
       )}
 
       {/* Error message */}
       {error && (
-        <div role="alert" className="rounded-2xl p-4 border flex items-center gap-3 bg-[var(--color-error)]/10 border-[var(--color-error)]/30">
-          <AlertCircle className="w-5 h-5 text-[var(--color-error)] flex-shrink-0" />
-          <p className="text-sm text-[var(--color-error)] font-medium">{error}</p>
-        </div>
+        <motion.div variants={fadeInUp} role="alert">
+          <div className="flex items-center gap-3 rounded-[24px] p-4 bg-[var(--color-error)]/10 border border-[var(--color-error)]/25">
+            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--color-error)]/15">
+              <AlertCircle className="h-5 w-5 text-[var(--color-error)]" />
+            </div>
+            <p className="text-sm font-medium text-[var(--color-error)]">{error}</p>
+          </div>
+        </motion.div>
       )}
 
       {/* Pricing Table */}
-      <div className="space-y-4">
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-[#1c1c16] mb-2">
+      <motion.div variants={fadeInUp} className="space-y-5">
+        <div className="text-center">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+            Velg plan
+          </p>
+          <h2 className="mt-1 text-2xl font-bold tracking-tight text-[var(--color-text)] lg:text-3xl">
             Velg ditt abonnement
           </h2>
-          <p className="text-[#6b7366]">
-            Få tilgang til avanserte verktøy for å forbedre golfen din
+          <p className="mt-2 text-[var(--color-muted)]">
+            Få tilgang til avanserte verktøy for å forbedre golfen din.
           </p>
         </div>
         <PricingTable
@@ -213,39 +245,101 @@ export function ApperClient({
           onSelectPlan={handlePlanSelect}
           loading={loading}
         />
-      </div>
+      </motion.div>
+
+      {/* Active subscriptions */}
+      {activeSubscriptions.length > 0 && (
+        <motion.section variants={fadeInUp} className="space-y-4">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+              Aktive abonnement
+            </p>
+            {hasStripeCustomer && (
+              <button
+                onClick={handlePortal}
+                disabled={loading === "portal"}
+                className="flex items-center gap-1.5 text-xs font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 transition-colors"
+              >
+                <Settings className="h-3.5 w-3.5" />
+                {loading === "portal" ? "Åpner…" : "Administrer"}
+              </button>
+            )}
+          </div>
+          <PortalCard padding="md">
+            <ul className="divide-y divide-black/5">
+              {activeSubscriptions.map((sub) => {
+                const name =
+                  sub.bundle?.slug ?? sub.module?.slug ?? "Abonnement";
+                const isBundle = !!sub.bundle;
+                return (
+                  <li
+                    key={sub.id}
+                    className="flex items-center justify-between py-3 first:pt-0 last:pb-0"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-success)]/10">
+                        {isBundle ? (
+                          <Package className="h-[18px] w-[18px] text-[var(--color-success)]" />
+                        ) : (
+                          <Sparkles className="h-[18px] w-[18px] text-[var(--color-success)]" />
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-[var(--color-text)] capitalize">
+                          {name.replace(/-/g, " ")}
+                        </p>
+                        <p className="text-xs text-[var(--color-muted)]">
+                          {sub.status === "TRIALING" ? "Prøveperiode" : "Aktiv"}
+                          {sub.cancelAtPeriodEnd && " · Avsluttes ved periodeslutt"}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-success)]/10 px-2.5 py-1 text-[11px] font-semibold text-[var(--color-success)]">
+                      <Check className="h-3 w-3" />
+                      Aktiv
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </PortalCard>
+        </motion.section>
+      )}
 
       {/* Bundles */}
-      <div className="space-y-4">
-        <p className="text-[11px] font-semibold text-[#8a9385] uppercase tracking-widest">
+      <motion.section variants={fadeInUp} className="space-y-4">
+        <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
           Pakker
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <PremiumBentoGrid columns={2}>
           {bundles.map((bundle) => {
             const active = isBundleActive(bundle.slug);
             const isPremium = bundle.slug === "premium-bundle";
+            const variant: "default" | "soft" | "bold" = isPremium
+              ? "bold"
+              : "soft";
 
             return (
-              <div
+              <PremiumBentoCard
                 key={bundle.id}
-                className="rounded-2xl p-6 border relative overflow-hidden bg-white border-[#c2c9bb]/50"
+                title={bundle.name}
+                description={bundle.description ?? undefined}
+                icon={isPremium ? Trophy : Package}
+                variant={variant}
+                featured={isPremium}
+                badge={active ? "Aktiv" : undefined}
+                badgeVariant="success"
               >
-                {isPremium && (
-                  <div className="absolute top-3 right-3">
-                    <Crown className="w-5 h-5 text-[#d2f000]" />
-                  </div>
-                )}
-                <h3 className="text-lg font-bold text-[#1c1c16] mb-1">
-                  {bundle.name}
-                </h3>
-                <p className="text-xs text-[#6b7366] mb-3">
-                  {bundle.description}
-                </p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {bundle.items.map((item) => (
                     <span
                       key={item.module.slug}
-                      className="text-[10px] px-2 py-0.5 rounded-full border border-[#c2c9bb]/50 text-[#6b7366]"
+                      className={cn(
+                        "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium",
+                        variant === "bold"
+                          ? "bg-white/15 text-white"
+                          : "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                      )}
                     >
                       {item.module.name}
                     </span>
@@ -253,92 +347,92 @@ export function ApperClient({
                 </div>
                 <div className="flex items-end justify-between">
                   <div>
-                    <span className="text-2xl font-bold text-[#1c1c16]">
+                    <span
+                      className={cn(
+                        "text-3xl font-bold tracking-tight",
+                        variant === "bold" ? "text-white" : "text-[var(--color-text)]"
+                      )}
+                    >
                       {bundle.monthlyPriceNok / 100}
                     </span>
-                    <span className="text-sm text-[#6b7366] ml-1">
+                    <span
+                      className={cn(
+                        "ml-1 text-sm",
+                        variant === "bold"
+                          ? "text-white/70"
+                          : "text-[var(--color-muted)]"
+                      )}
+                    >
                       kr/mnd
                     </span>
                   </div>
-                  {active ? (
-                    <span className="text-xs font-medium text-[#22c55e] flex items-center gap-1">
-                      <Check className="w-3.5 h-3.5" /> Aktiv
-                    </span>
-                  ) : (
+                  {!active && (
                     <button
                       onClick={() => handleCheckout(undefined, bundle.slug)}
                       disabled={loading !== null}
-                      className="px-4 py-2 rounded-xl text-xs font-semibold transition-colors bg-[#154212] text-white hover:bg-[#0d2e0c]"
+                      className={cn(
+                        "inline-flex h-9 items-center justify-center rounded-full px-4 text-xs font-semibold transition-all duration-200",
+                        variant === "bold"
+                          ? "bg-[var(--color-accent-cta)] text-[var(--color-primary)] hover:brightness-105"
+                          : "bg-[var(--color-primary)] text-white hover:brightness-110"
+                      )}
                     >
                       {loading === bundle.slug ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <Loader2 className="h-4 w-4 animate-spin" />
                       ) : (
                         "Prøv 7 dager gratis"
                       )}
                     </button>
                   )}
                 </div>
-              </div>
+              </PremiumBentoCard>
             );
           })}
-        </div>
-      </div>
+        </PremiumBentoGrid>
+      </motion.section>
 
       {/* Individual modules */}
-      <div className="space-y-4">
-        <p className="text-[11px] font-semibold text-[#8a9385] uppercase tracking-widest">
+      <motion.section variants={fadeInUp} className="space-y-4">
+        <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
           Enkeltapper
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <PremiumBentoGrid columns={3}>
           {modules.map((mod) => {
             const active = isModuleActive(mod.slug);
             const Icon = ICON_MAP[mod.icon ?? ""] ?? BarChart3;
+            const isFree = mod.monthlyPriceNok === 0;
 
             return (
-              <div
+              <PremiumBentoCard
                 key={mod.id}
-                className="rounded-2xl p-5 border transition-colors bg-white border-[#c2c9bb]/50"
-                style={{
-                  borderColor: active ? "rgba(34,197,94,0.4)" : undefined,
-                }}
+                title={mod.name}
+                description={mod.description ?? undefined}
+                icon={Icon}
+                variant="default"
+                badge={active ? "Aktiv" : isFree ? "Gratis" : undefined}
+                badgeVariant={active ? "success" : "primary"}
               >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#f7f3ea]">
-                    <Icon className="w-4.5 h-4.5 text-[#154212]" />
-                  </div>
-                  {active && (
-                    <span className="text-[10px] font-medium text-[#22c55e] flex items-center gap-1">
-                      <Check className="w-3 h-3" /> Aktiv
-                    </span>
-                  )}
-                </div>
-                <h4 className="text-sm font-semibold text-[#1c1c16] mb-1">
-                  {mod.name}
-                </h4>
-                <p className="text-xs text-[#6b7366] mb-4 line-clamp-2">
-                  {mod.description}
-                </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-[#1c1c16]">
-                    {mod.monthlyPriceNok === 0 ? (
+                  <span className="text-lg font-bold tracking-tight text-[var(--color-text)]">
+                    {isFree ? (
                       "Gratis"
                     ) : (
                       <>
                         {mod.monthlyPriceNok / 100}
-                        <span className="text-xs font-normal text-[#6b7366] ml-0.5">
+                        <span className="ml-1 text-xs font-normal text-[var(--color-muted)]">
                           kr/mnd
                         </span>
                       </>
                     )}
                   </span>
-                  {!active && mod.monthlyPriceNok === 0 ? (
+                  {!active && isFree ? (
                     <button
                       onClick={() => handleActivateFree(mod.slug)}
                       disabled={loading !== null}
-                      className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors bg-[#22c55e]/10 text-[#22c55e] hover:bg-[#22c55e]/20"
+                      className="inline-flex h-8 items-center justify-center rounded-full bg-[var(--color-success)]/10 px-3 text-[11px] font-semibold text-[var(--color-success)] hover:bg-[var(--color-success)]/15 transition-colors"
                     >
                       {loading === mod.slug ? (
-                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
                       ) : (
                         "Aktiver"
                       )}
@@ -347,35 +441,35 @@ export function ApperClient({
                     <button
                       onClick={() => handleCheckout(mod.slug)}
                       disabled={loading !== null}
-                      className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors bg-[#f7f3ea] text-[#1c1c16] hover:bg-[#e8e4db]"
+                      className="inline-flex h-8 items-center justify-center rounded-full bg-[var(--color-primary)]/10 px-3 text-[11px] font-semibold text-[var(--color-primary)] hover:bg-[var(--color-primary)]/15 transition-colors"
                     >
                       {loading === mod.slug ? (
-                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
                       ) : (
                         "Prøv gratis"
                       )}
                     </button>
                   ) : null}
                 </div>
-              </div>
+              </PremiumBentoCard>
             );
           })}
-        </div>
-      </div>
+        </PremiumBentoGrid>
+      </motion.section>
 
-      {/* Manage subscriptions */}
-      {hasStripeCustomer && (
-        <div className="pt-4">
+      {/* Manage subscriptions fallback */}
+      {hasStripeCustomer && activeSubscriptions.length === 0 && (
+        <motion.div variants={fadeInUp} className="pt-2">
           <button
             onClick={handlePortal}
             disabled={loading === "portal"}
-            className="flex items-center gap-2 text-sm text-[#6b7366] hover:text-[#1c1c16] transition-colors"
+            className="flex items-center gap-2 text-sm text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors"
           >
-            <Settings className="w-4 h-4" />
-            {loading === "portal" ? "Åpner..." : "Administrer abonnementer"}
+            <Settings className="h-4 w-4" />
+            {loading === "portal" ? "Åpner…" : "Administrer abonnementer"}
           </button>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 }

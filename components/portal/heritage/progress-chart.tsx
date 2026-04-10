@@ -19,7 +19,7 @@ interface ProgressChartProps {
 export function ProgressChart({
   data,
   title,
-  color = "#154212",
+  color = "var(--color-primary)",
   showGrid = true,
   height = 200,
 }: ProgressChartProps) {
@@ -70,12 +70,12 @@ export function ProgressChart({
 
   if (data.length < 2) {
     return (
-      <div className="bg-white rounded-2xl p-6 border border-[#c2c9bb]/50">
+      <div>
         {title && (
-          <h3 className="text-sm font-semibold text-[#1c1c16] mb-4">{title}</h3>
+          <h3 className="text-sm font-semibold text-[var(--color-text)] mb-4">{title}</h3>
         )}
         <div
-          className="flex items-center justify-center text-[#8a9385] text-sm"
+          className="flex items-center justify-center text-[var(--color-muted)] text-sm"
           style={{ height }}
         >
           Ikke nok data
@@ -85,11 +85,11 @@ export function ProgressChart({
   }
 
   return (
-    <div className="bg-white rounded-2xl p-6 border border-[#c2c9bb]/50">
+    <div>
       {title && (
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-[#1c1c16]">{title}</h3>
-          <div className="flex items-center gap-4 text-xs text-[#8a9385]">
+          <h3 className="text-sm font-semibold text-[var(--color-text)]">{title}</h3>
+          <div className="flex items-center gap-4 text-xs text-[var(--color-muted)]">
             <span>Min: {minValue.toFixed(1)}</span>
             <span>Max: {maxValue.toFixed(1)}</span>
           </div>
@@ -104,7 +104,7 @@ export function ProgressChart({
         >
           {/* Grid lines */}
           {showGrid && (
-            <g className="text-[#c2c9bb]/30">
+            <g className="text-[var(--color-muted)]/30">
               {[0, 25, 50, 75, 100].map((y) => (
                 <line
                   key={y}
@@ -172,7 +172,7 @@ export function ProgressChart({
       </div>
 
       {/* X-axis labels */}
-      <div className="flex justify-between text-[10px] text-[#8a9385] mt-2">
+      <div className="flex justify-between text-[10px] text-[var(--color-muted)] mt-2">
         {data.length > 6
           ? [data[0], data[Math.floor(data.length / 2)], data[data.length - 1]].map(
               (d, i) => (

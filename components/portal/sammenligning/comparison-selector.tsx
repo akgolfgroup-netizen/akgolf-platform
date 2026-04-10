@@ -1,12 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Loader2, AlertCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { Loader2, AlertCircle, Flag, Target, Circle, TrendingUp } from "lucide-react";
 import { PeerRadarChart } from "./peer-radar-chart";
 import { StatComparisonRow } from "./stat-comparison-row";
 import { PeerSummary } from "./peer-summary";
 import { SG_BENCHMARKS } from "@/lib/portal/golf/sg-benchmarks";
 import { cn } from "@/lib/portal/utils/cn";
+import {
+  PortalCard,
+  PremiumStatCard,
+  staggerContainer,
+  fadeInUp,
+} from "@/components/portal/premium";
 
 type SGStats = {
   sgTotal: number | null;
@@ -41,10 +48,10 @@ interface ComparisonSelectorProps {
 
 type Mode = "peer" | "tour" | "tier";
 
-const CARD_STYLE = {
-  background: "var(--color-grey-100)",
-  borderColor: "var(--color-grey-200)",
-};
+function calcTrend(mine: number | null, theirs: number | null): number | null {
+  if (mine === null || theirs === null) return null;
+  return Number((mine - theirs).toFixed(2));
+}
 
 export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProps) {
   const [mode, setMode] = useState<Mode>(peerData ? "peer" : "tier");
@@ -53,9 +60,8 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
   const [playerError, setPlayerError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [selectedPlayerId, setSelectedPlayerId] = useState<number | null>(null);
-  const [selectedTier, setSelectedTier] = useState<string>(SG_BENCHMARKS[6].category); // default "E" Avansert
+  const [selectedTier, setSelectedTier] = useState<string>(SG_BENCHMARKS[6].category);
 
-  // Fetch tour players when tour mode is activated
   useEffect(() => {
     if (mode !== "tour" || players.length > 0) return;
 
@@ -82,14 +88,12 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
     void Promise.resolve().then(fetchPlayers);
   }, [mode, players.length]);
 
-  // Derive comparison target stats
   const comparisonStats: SGStats | null = (() => {
     if (mode === "peer") return peerData?.stats ?? null;
     if (mode === "tour") {
       const p = players.find((pl) => pl.id === selectedPlayerId);
       return p?.sg ?? null;
     }
-    // tier
     const b = SG_BENCHMARKS.find((b) => b.category === selectedTier);
     if (!b) return null;
     return {
@@ -122,155 +126,208 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
   ];
 
   return (
-    <div className="space-y-5">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+      className="space-y-6"
+    >
       {/* Mode tabs */}
-      <div className="flex gap-2 flex-wrap">
+      <motion.div variants={fadeInUp} className="flex gap-2 flex-wrap">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => !tab.disabled && setMode(tab.key)}
             disabled={tab.disabled}
             className={cn(
-              "px-4 py-1.5 rounded-full text-xs font-semibold transition-[background-color,color,box-shadow] duration-200",
+              "px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200",
               mode === tab.key
-                ? "bg-[var(--color-grey-900)] text-white shadow-[0_2px_8px_var(--color-grey-200)]"
+                ? "bg-[var(--color-primary)] text-white shadow-[0_4px_16px_-4px_rgba(0,88,64,0.3)]"
                 : tab.disabled
-                ? "bg-[var(--color-grey-200)] text-[var(--color-grey-400)] cursor-not-allowed opacity-50"
-                : "bg-[var(--color-grey-200)] text-[var(--color-grey-500)] hover:bg-[var(--color-grey-500)] hover:text-white"
+                  ? "bg-black/5 text-[var(--color-muted)] cursor-not-allowed opacity-50"
+                  : "bg-white border border-black/5 text-[var(--color-text)] hover:border-[var(--color-primary)]/30 hover:text-[var(--color-primary)]"
             )}
           >
             {tab.label}
           </button>
         ))}
-      </div>
+      </motion.div>
 
       {/* Selector for tour/tier */}
       {mode === "tour" && (
-        <div
-          className="rounded-2xl p-4 border space-y-3"
-          style={CARD_STYLE}
-        >
-          {loadingPlayers ? (
-            <div className="flex items-center gap-2 text-xs text-[var(--color-grey-500)]">
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Henter spillere...
-            </div>
-          ) : playerError ? (
-            <div className="flex items-center gap-2 text-xs text-[var(--color-error)]">
-              <AlertCircle className="w-4 h-4" />
-              {playerError}
-            </div>
-          ) : (
-            <>
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Søk etter spiller..."
-                className="w-full px-3 py-1.5 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
-              />
-              <select
-                value={selectedPlayerId ?? ""}
-                onChange={(e) => setSelectedPlayerId(Number(e.target.value))}
-                className="w-full px-3 py-1.5 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
-                size={5}
-              >
-                {filteredPlayers.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-              </select>
-            </>
-          )}
-        </div>
+        <motion.div variants={fadeInUp}>
+          <PortalCard padding="md" className="space-y-3">
+            {loadingPlayers ? (
+              <div className="flex items-center gap-2 text-sm text-[var(--color-muted)]">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Henter spillere…
+              </div>
+            ) : playerError ? (
+              <div className="flex items-center gap-2 text-sm text-[var(--color-error)]">
+                <AlertCircle className="w-4 h-4" />
+                {playerError}
+              </div>
+            ) : (
+              <>
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Søk etter spiller…"
+                  className="w-full px-4 py-2 rounded-xl bg-white border border-black/10 text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
+                />
+                <select
+                  value={selectedPlayerId ?? ""}
+                  onChange={(e) => setSelectedPlayerId(Number(e.target.value))}
+                  className="w-full px-4 py-2 rounded-xl bg-white border border-black/10 text-sm text-[var(--color-text)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
+                  size={5}
+                >
+                  {filteredPlayers.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.name}
+                    </option>
+                  ))}
+                </select>
+              </>
+            )}
+          </PortalCard>
+        </motion.div>
       )}
 
       {mode === "tier" && (
-        <div className="rounded-2xl p-4 border" style={CARD_STYLE}>
-          <select
-            value={selectedTier}
-            onChange={(e) => setSelectedTier(e.target.value)}
-            className="w-full px-3 py-1.5 rounded-lg bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] text-[var(--color-grey-900)] text-sm outline-none focus:border-[var(--color-grey-900)]"
-          >
-            {SG_BENCHMARKS.map((b) => (
-              <option key={b.category} value={b.category}>
-                {b.category} — {b.label} (HCP {b.handicapRange[0]}–{b.handicapRange[1]})
-              </option>
-            ))}
-          </select>
-        </div>
+        <motion.div variants={fadeInUp}>
+          <PortalCard padding="md">
+            <select
+              value={selectedTier}
+              onChange={(e) => setSelectedTier(e.target.value)}
+              className="w-full px-4 py-2 rounded-xl bg-white border border-black/10 text-sm text-[var(--color-text)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
+            >
+              {SG_BENCHMARKS.map((b) => (
+                <option key={b.category} value={b.category}>
+                  {b.category} — {b.label} (HCP {b.handicapRange[0]}–{b.handicapRange[1]})
+                </option>
+              ))}
+            </select>
+          </PortalCard>
+        </motion.div>
       )}
 
       {/* Peer summary — only in peer mode */}
       {mode === "peer" && peerData && (
-        <PeerSummary
-          skillLevelLabel={peerData.skillLevelLabel}
-          peerCount={peerData.peerCount}
-          aboveAverageCount={peerData.aboveAverageCount}
-          totalCategories={peerData.totalSGCategories}
-        />
+        <motion.div variants={fadeInUp}>
+          <PeerSummary
+            skillLevelLabel={peerData.skillLevelLabel}
+            peerCount={peerData.peerCount}
+            aboveAverageCount={peerData.aboveAverageCount}
+            totalCategories={peerData.totalSGCategories}
+          />
+        </motion.div>
+      )}
+
+      {/* Key stat cards (peer mode only — requires extended data) */}
+      {mode === "peer" && peerData && (
+        <motion.div
+          variants={fadeInUp}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        >
+          <PremiumStatCard
+            label="SG Total"
+            value={myStats.sgTotal ?? 0}
+            decimals={2}
+            trend={calcTrend(myStats.sgTotal, peerData.stats.sgTotal)}
+            trendLabel="vs gruppe"
+            icon={TrendingUp}
+          />
+          <PremiumStatCard
+            label="Snitt Score"
+            value={myStats.avgScore ?? 0}
+            decimals={1}
+            trend={calcTrend(myStats.avgScore ?? null, peerData.stats.avgScore ?? null)}
+            trendLabel="vs gruppe"
+            lowerIsBetter
+            icon={Flag}
+          />
+          <PremiumStatCard
+            label="GIR"
+            value={myStats.girPct ?? 0}
+            unit="%"
+            trend={calcTrend(myStats.girPct ?? null, peerData.stats.girPct ?? null)}
+            trendLabel="vs gruppe"
+            icon={Target}
+          />
+          <PremiumStatCard
+            label="Putts/GIR"
+            value={myStats.puttsPerGir ?? 0}
+            decimals={2}
+            trend={calcTrend(myStats.puttsPerGir ?? null, peerData.stats.puttsPerGir ?? null)}
+            trendLabel="vs gruppe"
+            lowerIsBetter
+            icon={Circle}
+          />
+        </motion.div>
       )}
 
       {/* Radar chart */}
       {comparisonStats && (
-        <div className="rounded-2xl p-5 border" style={CARD_STYLE}>
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-[11px] font-semibold text-[var(--color-grey-400)]/50 uppercase tracking-widest">
-              SG Profil vs. {comparisonLabel}
-            </p>
-            {mode === "peer" && peerData && (
-              <p className="text-[10px] text-[var(--color-grey-500)]">
-                Dine {peerData.myRoundCount} runder vs. {peerData.peerRoundCount} runder i gruppen
+        <motion.div variants={fadeInUp}>
+          <PortalCard padding="lg">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+                SG-profil vs. {comparisonLabel}
               </p>
-            )}
-          </div>
-          <PeerRadarChart
-            myStats={myStats}
-            peerStats={comparisonStats}
-            comparisonLabel={comparisonLabel}
-          />
-        </div>
+              {mode === "peer" && peerData && (
+                <p className="text-[11px] text-[var(--color-muted)]">
+                  {peerData.myRoundCount} runder vs. {peerData.peerRoundCount} runder
+                </p>
+              )}
+            </div>
+            <PeerRadarChart
+              myStats={myStats}
+              peerStats={comparisonStats}
+              comparisonLabel={comparisonLabel}
+            />
+          </PortalCard>
+        </motion.div>
       )}
 
       {/* Detailed stats */}
       {comparisonStats && (
-        <div className="rounded-2xl p-5 border" style={CARD_STYLE}>
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-[11px] font-semibold text-[var(--color-grey-400)]/50 uppercase tracking-widest">
-              Detaljert sammenligning
-            </p>
-            <div className="flex gap-6 text-[10px] text-[var(--color-grey-500)]">
-              <span>Du</span>
-              <span>{comparisonLabel}</span>
+        <motion.div variants={fadeInUp}>
+          <PortalCard padding="lg">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+                Detaljert sammenligning
+              </p>
+              <div className="flex gap-6 text-[11px] text-[var(--color-muted)]">
+                <span>Du</span>
+                <span>{comparisonLabel}</span>
+              </div>
             </div>
-          </div>
-          <div className="space-y-1.5">
-            {/* SG rows — always shown */}
-            <StatComparisonRow label="SG Total" myValue={myStats.sgTotal ?? null} peerValue={comparisonStats.sgTotal ?? null} format={(v) => v.toFixed(2)} />
-            <StatComparisonRow label="SG Off the Tee" myValue={myStats.sgOffTheTee ?? null} peerValue={comparisonStats.sgOffTheTee ?? null} format={(v) => v.toFixed(2)} />
-            <StatComparisonRow label="SG Approach" myValue={myStats.sgApproach ?? null} peerValue={comparisonStats.sgApproach ?? null} format={(v) => v.toFixed(2)} />
-            <StatComparisonRow label="SG Rundt Green" myValue={myStats.sgAroundTheGreen ?? null} peerValue={comparisonStats.sgAroundTheGreen ?? null} format={(v) => v.toFixed(2)} />
-            <StatComparisonRow label="SG Putting" myValue={myStats.sgPutting ?? null} peerValue={comparisonStats.sgPutting ?? null} format={(v) => v.toFixed(2)} />
+            <div className="space-y-1.5">
+              <StatComparisonRow label="SG Total" myValue={myStats.sgTotal ?? null} peerValue={comparisonStats.sgTotal ?? null} format={(v) => v.toFixed(2)} />
+              <StatComparisonRow label="SG Off the Tee" myValue={myStats.sgOffTheTee ?? null} peerValue={comparisonStats.sgOffTheTee ?? null} format={(v) => v.toFixed(2)} />
+              <StatComparisonRow label="SG Approach" myValue={myStats.sgApproach ?? null} peerValue={comparisonStats.sgApproach ?? null} format={(v) => v.toFixed(2)} />
+              <StatComparisonRow label="SG Rundt Green" myValue={myStats.sgAroundTheGreen ?? null} peerValue={comparisonStats.sgAroundTheGreen ?? null} format={(v) => v.toFixed(2)} />
+              <StatComparisonRow label="SG Putting" myValue={myStats.sgPutting ?? null} peerValue={comparisonStats.sgPutting ?? null} format={(v) => v.toFixed(2)} />
 
-            {/* Extended rows — only in peer mode where data is available */}
-            {mode === "peer" && peerData && (
-              <>
-                <StatComparisonRow label="Snitt Score" myValue={myStats.avgScore ?? null} peerValue={peerData.stats.avgScore ?? null} higherIsBetter={false} />
-                <StatComparisonRow label="Fairway %" myValue={myStats.fairwayPct ?? null} peerValue={peerData.stats.fairwayPct ?? null} unit="%" format={(v) => `${v}`} />
-                <StatComparisonRow label="GIR %" myValue={myStats.girPct ?? null} peerValue={peerData.stats.girPct ?? null} unit="%" format={(v) => `${v}`} />
-                <StatComparisonRow label="Putts/GIR" myValue={myStats.puttsPerGir ?? null} peerValue={peerData.stats.puttsPerGir ?? null} higherIsBetter={false} format={(v) => v.toFixed(2)} />
-              </>
-            )}
-          </div>
-        </div>
+              {mode === "peer" && peerData && (
+                <>
+                  <StatComparisonRow label="Snitt Score" myValue={myStats.avgScore ?? null} peerValue={peerData.stats.avgScore ?? null} higherIsBetter={false} />
+                  <StatComparisonRow label="Fairway %" myValue={myStats.fairwayPct ?? null} peerValue={peerData.stats.fairwayPct ?? null} unit="%" format={(v) => `${v}`} />
+                  <StatComparisonRow label="GIR %" myValue={myStats.girPct ?? null} peerValue={peerData.stats.girPct ?? null} unit="%" format={(v) => `${v}`} />
+                  <StatComparisonRow label="Putts/GIR" myValue={myStats.puttsPerGir ?? null} peerValue={peerData.stats.puttsPerGir ?? null} higherIsBetter={false} format={(v) => v.toFixed(2)} />
+                </>
+              )}
+            </div>
+          </PortalCard>
+        </motion.div>
       )}
 
       {!comparisonStats && mode === "tour" && !loadingPlayers && (
-        <p className="text-xs text-center text-[var(--color-grey-500)] py-8">
+        <p className="text-sm text-center text-[var(--color-muted)] py-8">
           Velg en spiller for å se sammenligning
         </p>
       )}
-    </div>
+    </motion.div>
   );
 }

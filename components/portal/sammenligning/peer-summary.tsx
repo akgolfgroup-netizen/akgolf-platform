@@ -1,5 +1,7 @@
 "use client";
 
+import { Users } from "lucide-react";
+
 interface PeerSummaryProps {
   skillLevelLabel: string;
   peerCount: number;
@@ -7,19 +9,24 @@ interface PeerSummaryProps {
   totalCategories: number;
 }
 
-export function PeerSummary({ skillLevelLabel, peerCount, aboveAverageCount, totalCategories }: PeerSummaryProps) {
+export function PeerSummary({
+  skillLevelLabel,
+  peerCount,
+  aboveAverageCount,
+  totalCategories,
+}: PeerSummaryProps) {
   return (
-    <div
-      className="rounded-xl p-4 border border-[var(--color-grey-900)]/20"
-      style={{ background: "var(--color-grey-200)" }}
-    >
-      <p className="text-sm text-[var(--color-grey-900)]">
+    <div className="flex items-start gap-4 rounded-[24px] p-5 bg-gradient-to-br from-[var(--color-primary)]/[0.04] to-white border border-[var(--color-primary)]/15">
+      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)]/10">
+        <Users className="h-5 w-5 text-[var(--color-primary)]" />
+      </div>
+      <p className="text-sm leading-relaxed text-[var(--color-text)]">
         Du er over snittet i{" "}
-        <span className="font-bold text-[var(--color-grey-900)]">
+        <span className="font-bold text-[var(--color-primary)]">
           {aboveAverageCount}/{totalCategories}
         </span>{" "}
         SG-kategorier sammenlignet med{" "}
-        <span className="font-bold text-[var(--color-grey-900)]">{peerCount}</span>{" "}
+        <span className="font-bold text-[var(--color-primary)]">{peerCount}</span>{" "}
         spillere på nivå {skillLevelLabel}.
       </p>
     </div>
