@@ -74,7 +74,7 @@ export function MCTopbar({
       <div className="flex items-center gap-3">
         {/* New booking button */}
         <Link
-          href="/portal/admin/bookinger/ny"
+          href="/admin/bookinger/ny"
           className="hidden md:flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg hg-btn-primary text-[11px]"
         >
           <Plus className="w-3.5 h-3.5" />

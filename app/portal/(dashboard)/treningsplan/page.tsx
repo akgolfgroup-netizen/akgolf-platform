@@ -1,11 +1,11 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getActivePlan, getCurrentWeekSessions } from "./actions";
 import { isStaff } from "@/lib/portal/rbac";
-import { Calendar, Sparkles, CheckCircle2, Clock, Target } from "lucide-react";
-import { format, startOfISOWeek, addDays, isToday } from "date-fns";
+import { Calendar, CheckCircle2, Clock, Target, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { format, startOfISOWeek, addDays, addWeeks, isToday as isTodayFn } from "date-fns";
 import { nb } from "date-fns/locale";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { GeneratePlanButton } from "@/components/portal/treningsplan/generate-plan-button";
 
 interface SessionExercise {
   name: string;
@@ -31,15 +31,23 @@ const pyramidConfig = {
   TURN: { color: "#1c1c16", bg: "bg-[#1c1c16]/10", label: "Turnering" },
 };
 
-export default async function TreningsplanPage() {
+interface TreningsplanPageProps {
+  searchParams: Promise<{ week?: string }>;
+}
+
+export default async function TreningsplanPage({ searchParams }: TreningsplanPageProps) {
   const user = await requirePortalUser();
+  const { week } = await searchParams;
+  const weekOffset = parseInt(week ?? "0", 10) || 0;
+
   const plan = await getActivePlan();
-  const sessions = await getCurrentWeekSessions();
+  const sessions = await getCurrentWeekSessions(weekOffset);
   const canGenerate = isStaff(user?.role);
 
   const now = new Date();
-  const weekStart = startOfISOWeek(now);
-  const weekNumber = format(now, "w");
+  const targetDate = addWeeks(now, weekOffset);
+  const weekStart = startOfISOWeek(targetDate);
+  const weekNumber = format(targetDate, "w");
 
   const sessionsByDay = new Map(sessions.map((s) => [s.dayOfWeek, s]));
 
@@ -51,7 +59,7 @@ export default async function TreningsplanPage() {
     return {
       dayName: day,
       date,
-      isToday: isToday(date),
+      isToday: isTodayFn(date),
       session: session
         ? {
             id: session.id,

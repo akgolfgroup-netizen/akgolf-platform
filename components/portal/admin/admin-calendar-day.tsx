@@ -1,7 +1,7 @@
 "use client";
 
 import { format, isSameDay } from "date-fns";
-import type { CalendarBooking } from "@/app/portal/(dashboard)/admin/kalender/actions";
+import type { CalendarBooking } from "@/app/admin/kalender/actions";
 
 // 08:00 – 22:00 time grid
 const HOURS = Array.from({ length: 15 }, (_, i) => i + 8); // 8..22

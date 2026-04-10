@@ -67,7 +67,7 @@ export async function sendDirectMessage(
   });
 
   revalidatePath("/portal/meldinger");
-  revalidatePath("/portal/admin/meldinger");
+  revalidatePath("/admin/meldinger");
 
   return { success: true };
 }

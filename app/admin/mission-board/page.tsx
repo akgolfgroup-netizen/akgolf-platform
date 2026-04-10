@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 
-// Types — matcher respons fra /api/portal/admin/dashboard
+// Types — matcher respons fra /api/admin/dashboard
 interface DashboardStats {
   today: {
     totalBookings: number;
@@ -226,7 +226,7 @@ export default function MissionBoardPage() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch("/api/portal/admin/dashboard");
+      const response = await fetch("/api/admin/dashboard");
       if (!response.ok) throw new Error("Kunne ikke hente dashboard-data");
 
       const data: DashboardStats = await response.json();
@@ -343,23 +343,23 @@ export default function MissionBoardPage() {
             <QuickAction
               icon={Plus}
               label="Ny Booking"
-              href="/portal/admin/bookinger/ny"
+              href="/admin/bookinger/ny"
               variant="primary"
             />
             <QuickAction
               icon={MessageSquare}
               label="Send Melding"
-              href="/portal/admin/meldinger"
+              href="/admin/meldinger"
             />
             <QuickAction
               icon={UserPlus}
               label="Ny Elev"
-              href="/portal/admin/elever/ny"
+              href="/admin/elever/ny"
             />
             <QuickAction
               icon={FileText}
               label="Rapport"
-              href="/portal/admin/rapporter"
+              href="/admin/rapporter"
             />
           </motion.div>
 
@@ -416,7 +416,7 @@ export default function MissionBoardPage() {
                     <h2 className="hg-section-title">Dagens timeplan</h2>
                   </div>
                   <Link
-                    href="/portal/admin/kalender"
+                    href="/admin/kalender"
                     className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 font-medium flex items-center gap-1.5 transition-colors"
                   >
                     Se kalender

@@ -48,7 +48,7 @@ export async function createTemplate(data: {
     .select()
     .single();
 
-  revalidatePath("/portal/admin/e-postmaler");
+  revalidatePath("/admin/e-postmaler");
   return template;
 }
 
@@ -78,7 +78,7 @@ export async function updateTemplate(
     .select()
     .single();
 
-  revalidatePath("/portal/admin/e-postmaler");
+  revalidatePath("/admin/e-postmaler");
   return template;
 }
 
@@ -90,5 +90,5 @@ export async function deleteTemplate(id: string) {
 
   await supabase.from("EmailTemplate").delete().eq("id", id);
 
-  revalidatePath("/portal/admin/e-postmaler");
+  revalidatePath("/admin/e-postmaler");
 }

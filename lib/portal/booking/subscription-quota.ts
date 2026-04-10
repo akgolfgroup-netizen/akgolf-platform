@@ -37,11 +37,11 @@ export function getSessionLimits(tier: CoachingSubscriptionTier): {
 } {
   switch (tier) {
     case "PERFORMANCE_PRO":
-      return { sessionsPerPeriod: 4, bookingWindowDays: 14, maxPerWeek: 2 };
+      return { sessionsPerPeriod: 4, bookingWindowDays: 28, maxPerWeek: 2 };
     case "PERFORMANCE":
-      return { sessionsPerPeriod: 2, bookingWindowDays: 7, maxPerWeek: 1 };
+      return { sessionsPerPeriod: 2, bookingWindowDays: 28, maxPerWeek: 1 };
     case "START":
-      return { sessionsPerPeriod: 3, bookingWindowDays: 30, maxPerWeek: 1 };
+      return { sessionsPerPeriod: 3, bookingWindowDays: 21, maxPerWeek: 1 };
     default:
       return { sessionsPerPeriod: 0, bookingWindowDays: 0, maxPerWeek: 0 };
   }

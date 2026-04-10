@@ -117,7 +117,7 @@ export async function deleteTournament(
       where: { id },
     });
 
-    revalidatePath("/portal/admin/turneringer");
+    revalidatePath("/admin/turneringer");
     return { success: true };
   } catch {
     return { success: false, error: "Kunne ikke slette turnering" };

@@ -58,17 +58,17 @@ const accountItems = [
 ];
 
 const staffItems = [
-  { href: "/portal/admin/kalender", label: "Kalender", icon: CalendarDays },
-  { href: "/portal/admin/bookinger", label: "Bookinger", icon: CalendarPlus },
-  { href: "/portal/admin/godkjenninger", label: "Godkjenninger", icon: CheckCircle },
-  { href: "/portal/admin/elever", label: "Elever", icon: UsersIcon },
-  { href: "/portal/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
-  { href: "/portal/admin/kapasitet", label: "Kapasitet", icon: BarChart3 },
-  { href: "/portal/admin/denne-uken", label: "Denne uken", icon: CalendarCheck },
-  { href: "/portal/admin/okter", label: "Økter", icon: BookOpen },
-  { href: "/portal/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
-  { href: "/portal/admin/meldinger", label: "Meldinger", icon: MessageSquare },
-  { href: "/portal/admin/ai-assistent", label: "AI-assistent", icon: Bot },
+  { href: "/admin/kalender", label: "Kalender", icon: CalendarDays },
+  { href: "/admin/bookinger", label: "Bookinger", icon: CalendarPlus },
+  { href: "/admin/godkjenninger", label: "Godkjenninger", icon: CheckCircle },
+  { href: "/admin/elever", label: "Elever", icon: UsersIcon },
+  { href: "/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
+  { href: "/admin/kapasitet", label: "Kapasitet", icon: BarChart3 },
+  { href: "/admin/denne-uken", label: "Denne uken", icon: CalendarCheck },
+  { href: "/admin/okter", label: "Økter", icon: BookOpen },
+  { href: "/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
+  { href: "/admin/meldinger", label: "Meldinger", icon: MessageSquare },
+  { href: "/admin/ai-assistent", label: "AI-assistent", icon: Bot },
 ];
 
 // Light sidebar theme (Brand System 2026)

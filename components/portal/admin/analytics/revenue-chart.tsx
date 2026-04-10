@@ -11,7 +11,7 @@ import {
   Line,
   ComposedChart,
 } from "recharts";
-import type { AnalyticsData } from "@/app/portal/(dashboard)/admin/analytics/actions";
+import type { AnalyticsData } from "@/app/admin/analytics/actions";
 
 interface RevenueChartProps {
   data: AnalyticsData;

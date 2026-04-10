@@ -66,6 +66,6 @@ export async function addCommunicationLog(
     content: content.trim(),
   });
 
-  revalidatePath(`/portal/admin/elever/${studentId}`);
+  revalidatePath(`/admin/elever/${studentId}`);
   return { success: true };
 }

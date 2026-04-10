@@ -136,7 +136,7 @@ export async function saveSessionNotes(
       data: { adminNotes: notes },
     });
 
-    revalidatePath("/portal/admin/okter");
+    revalidatePath("/admin/okter");
     return { success: true };
   } catch {
     return { success: false, error: "Kunne ikke lagre notater" };

@@ -166,7 +166,7 @@ export async function toggleAgent(
       },
     });
 
-    revalidatePath("/portal/admin/agenter");
+    revalidatePath("/admin/agenter");
     return { success: true };
   } catch (error) {
     return {

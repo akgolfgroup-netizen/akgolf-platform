@@ -220,8 +220,8 @@ export function NyPlanWizard({ students, drills, preselectedStudentId }: NyPlanW
       if (result.success) {
         router.push(
           studentId
-            ? `/portal/admin/treningsplan?studentId=${studentId}`
-            : "/portal/admin/treningsplan"
+            ? `/admin/treningsplan?studentId=${studentId}`
+            : "/admin/treningsplan"
         );
       }
     });
@@ -671,7 +671,7 @@ export function NyPlanWizard({ students, drills, preselectedStudentId }: NyPlanW
               </button>
             ) : (
               <button
-                onClick={() => router.push("/portal/admin/treningsplan")}
+                onClick={() => router.push("/admin/treningsplan")}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-[var(--color-grey-200)] text-sm font-medium text-[var(--color-text)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />

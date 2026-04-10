@@ -157,7 +157,7 @@ export async function approveMessage(
         .eq("id", messageId);
     }
 
-    revalidatePath("/portal/admin/meldinger");
+    revalidatePath("/admin/meldinger");
 
     return { success: true };
   } catch (error) {
@@ -182,7 +182,7 @@ export async function rejectMessage(
       .update({ status: "FAILED" })
       .eq("id", messageId);
 
-    revalidatePath("/portal/admin/meldinger");
+    revalidatePath("/admin/meldinger");
 
     return { success: true };
   } catch (error) {
@@ -250,7 +250,7 @@ export async function regenerateAIResponse(
         .eq("id", messageId);
     }
 
-    revalidatePath("/portal/admin/meldinger");
+    revalidatePath("/admin/meldinger");
 
     return { success: true };
   } catch (error) {

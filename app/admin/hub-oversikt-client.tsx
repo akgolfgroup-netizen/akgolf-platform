@@ -135,9 +135,9 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
 
   // Quick actions
   const quickActions = [
-    { label: "Ny booking", icon: Plus, href: "/portal/admin/bookinger/ny", variant: "primary" as const },
-    { label: "Send melding", icon: MessageSquare, href: "/portal/admin/meldinger" },
-    { label: "Legg til elev", icon: UserPlus, href: "/portal/admin/elever" },
+    { label: "Ny booking", icon: Plus, href: "/admin/bookinger/ny", variant: "primary" as const },
+    { label: "Send melding", icon: MessageSquare, href: "/admin/meldinger" },
+    { label: "Legg til elev", icon: UserPlus, href: "/admin/elever" },
   ];
 
   return (
@@ -149,12 +149,12 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
         user={user}
         notificationCount={data.alerts.length}
       >
-        <Link href="/portal/admin/focus">
+        <Link href="/admin/focus">
           <MCModeToggle
             activeMode="oversikt"
             onModeChange={(mode) => {
               if (mode === "focus") {
-                router.push("/portal/admin/focus");
+                router.push("/admin/focus");
               }
             }}
           />

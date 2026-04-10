@@ -35,9 +35,9 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 const ADMIN_ITEMS: NavItem[] = [
-  { label: "Denne uken", href: "/portal/admin/denne-uken", icon: Calendar },
-  { label: "Elever", href: "/portal/admin/elever", icon: BookOpen },
-  { label: "Bookinger", href: "/portal/admin/bookinger", icon: Clock },
+  { label: "Denne uken", href: "/admin/denne-uken", icon: Calendar },
+  { label: "Elever", href: "/admin/elever", icon: BookOpen },
+  { label: "Bookinger", href: "/admin/bookinger", icon: Clock },
 ];
 
 interface EliteDashboardProps {

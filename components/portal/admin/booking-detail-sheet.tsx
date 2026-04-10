@@ -4,8 +4,8 @@ import { useState, useEffect, useId } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { X, AlertTriangle, StickyNote, UserX } from "lucide-react";
-import { markNoShow, addAdminNote } from "@/app/portal/(dashboard)/admin/kalender/actions";
-import type { CalendarBooking } from "@/app/portal/(dashboard)/admin/kalender/actions";
+import { markNoShow, addAdminNote } from "@/app/admin/kalender/actions";
+import type { CalendarBooking } from "@/app/admin/kalender/actions";
 
 interface Props {
   booking: CalendarBooking;

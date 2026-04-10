@@ -222,7 +222,7 @@ export async function updateSession(
       data: updateData,
     });
 
-    revalidatePath("/portal/admin/treningsplan");
+    revalidatePath("/admin/treningsplan");
     return { success: true };
   } catch {
     return { success: false, error: "Kunne ikke oppdatere sesjonen" };
@@ -239,7 +239,7 @@ export async function deleteSession(
       where: { id: sessionId },
     });
 
-    revalidatePath("/portal/admin/treningsplan");
+    revalidatePath("/admin/treningsplan");
     return { success: true };
   } catch {
     return { success: false, error: "Kunne ikke slette sesjonen" };
@@ -285,7 +285,7 @@ export async function addSession(
       },
     });
 
-    revalidatePath("/portal/admin/treningsplan");
+    revalidatePath("/admin/treningsplan");
     return { success: true, sessionId: id };
   } catch {
     return { success: false, error: "Kunne ikke legge til sesjon" };
@@ -306,7 +306,7 @@ export async function updateWeekFocus(
       data: { focus },
     });
 
-    revalidatePath("/portal/admin/treningsplan");
+    revalidatePath("/admin/treningsplan");
     return { success: true };
   } catch {
     return { success: false, error: "Kunne ikke oppdatere ukefokus" };
@@ -386,7 +386,7 @@ export async function duplicatePlan(
       }
     }
 
-    revalidatePath("/portal/admin/treningsplan");
+    revalidatePath("/admin/treningsplan");
     return { success: true, newPlanId };
   } catch {
     return { success: false, error: "Kunne ikke duplisere planen" };
@@ -533,7 +533,7 @@ export async function createManualPlan(
       },
     });
 
-    revalidatePath("/portal/admin/treningsplan");
+    revalidatePath("/admin/treningsplan");
     return { success: true, planId };
   } catch (error) {
     console.error("[createManualPlan]", error);

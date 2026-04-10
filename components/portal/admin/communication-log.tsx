@@ -13,7 +13,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { CommunicationType } from "@prisma/client";
-import { addCommunicationLog } from "@/app/portal/(dashboard)/admin/elever/[id]/communication-actions";
+import { addCommunicationLog } from "@/app/admin/elever/[id]/communication-actions";
 
 // ----------------------------------------------------------------
 // Typer

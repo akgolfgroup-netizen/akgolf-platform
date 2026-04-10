@@ -58,7 +58,7 @@ export function InstructorNewBookingEmail({
 
           <Text style={text}>
             Se alle bookinger i{" "}
-            <a href="https://akgolf.no/portal/admin/kalender" style={link}>
+            <a href="https://akgolf.no/admin/kalender" style={link}>
               admin-kalenderen
             </a>
             .

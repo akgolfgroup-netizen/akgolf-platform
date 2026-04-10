@@ -107,7 +107,7 @@ export async function upsertAvailability(
   }
 
   // Revalidate cache
-  revalidatePath("/portal/admin/tilgjengelighet");
+  revalidatePath("/admin/tilgjengelighet");
   revalidateTag("slots", {});
   revalidateTag(`availability:${instructorId}`, {});
 }
@@ -169,7 +169,7 @@ export async function createBlockedTime(params: {
     throw new Error("Kunne ikke blokkere tid");
   }
 
-  revalidatePath("/portal/admin/tilgjengelighet");
+  revalidatePath("/admin/tilgjengelighet");
   revalidateTag("slots", {});
 }
 
@@ -191,7 +191,7 @@ export async function deleteBlockedTime(id: string) {
     throw new Error("Kunne ikke slette blokkert tid");
   }
 
-  revalidatePath("/portal/admin/tilgjengelighet");
+  revalidatePath("/admin/tilgjengelighet");
   revalidateTag("slots", {});
 }
 

@@ -124,7 +124,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
           instructorId: selectedInstructor.id,
           startTime: `${dateStr}T${selectedSlot.time}:00`,
         });
-        router.push("/portal/admin/bookinger");
+        router.push("/admin/bookinger");
       } catch (err) {
         setError(err instanceof Error ? err.message : "Noe gikk galt");
       }
@@ -167,7 +167,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
       <div className="p-5 max-w-4xl mx-auto">
         {/* Tilbake */}
         <Link
-          href="/portal/admin/bookinger"
+          href="/admin/bookinger"
           className="inline-flex items-center gap-1 text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors mb-5"
         >
           <ChevronLeft className="w-4 h-4" />

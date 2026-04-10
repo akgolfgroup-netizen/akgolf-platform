@@ -154,7 +154,7 @@ export async function createActivity(input: CreateActivityInput) {
     .select()
     .single();
 
-  revalidatePath("/portal/admin/fasiliteter");
+  revalidatePath("/admin/fasiliteter");
 
   return {
     success: true,
@@ -192,8 +192,8 @@ export async function approveActivity(activityId: string) {
     })
     .eq("id", activityId);
 
-  revalidatePath("/portal/admin/fasiliteter");
-  revalidatePath("/portal/admin/godkjenninger");
+  revalidatePath("/admin/fasiliteter");
+  revalidatePath("/admin/godkjenninger");
 
   return { success: true };
 }
@@ -226,7 +226,7 @@ export async function cancelActivity(activityId: string) {
     .update({ status: "CANCELLED" })
     .eq("id", activityId);
 
-  revalidatePath("/portal/admin/fasiliteter");
+  revalidatePath("/admin/fasiliteter");
 
   return { success: true };
 }

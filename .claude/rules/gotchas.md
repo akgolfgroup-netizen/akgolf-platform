@@ -40,10 +40,18 @@ Inter via `next/font/google`. Ikke lokal font-fil.
 - Flex = enkeltbetaling uten binding. Flex 20/50/90 + Duo-varianter + Banecoaching 9 hull.
 - Portal: Abo-pakker = lopende. Gruppe/Express/First Tee = 3 mnd. Flex/Bane = 1 mnd fra oktdato.
 
+## Booking-vinduer
+- Performance / Performance Pro: 4 uker (28 dager) i forveien
+- Flex-tjenester: 3 uker (21 dager) i forveien
+- Konfigurert i `lib/portal/booking/subscription-quota.ts` (getSessionLimits) og `maxAdvanceDays` på ServiceType i databasen.
+
 ## Mission Control
 - Admin: `/portal/admin/` med RBAC via `canAccessMissionControl()` og `canAccessMCPage()`.
 - Roller: ADMIN (alt), INSTRUCTOR (coaching), INVITED (begrenset).
 - All instruktør-funksjonalitet i Portal Admin. Ikke opprett separate dashboards.
+
+## Git
+- ALDRI bruk `git add -A` eller `git add .` for commit. Bruk `git add <spesifikke filer>` for å unngå utilsiktet inkludering av slettinger eller endringer.
 
 ## Oppdater dokumentasjon ved strukturelle endringer
 Endre kode + oppdater docs = én atomisk operasjon.

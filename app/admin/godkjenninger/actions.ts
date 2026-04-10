@@ -106,8 +106,8 @@ export async function approveBooking(
       }).catch((err: unknown) => logger.error("[Godkjenning] E-post feilet:", err));
     }
 
-    revalidatePath("/portal/admin/godkjenninger");
-    revalidatePath("/portal/admin");
+    revalidatePath("/admin/godkjenninger");
+    revalidatePath("/admin");
 
     return { success: true };
   } catch (error) {
@@ -173,8 +173,8 @@ export async function rejectBooking(
       ).catch((err: unknown) => logger.error("[Godkjenning] Avvisnings-e-post feilet:", err));
     }
 
-    revalidatePath("/portal/admin/godkjenninger");
-    revalidatePath("/portal/admin");
+    revalidatePath("/admin/godkjenninger");
+    revalidatePath("/admin");
 
     return { success: true };
   } catch (error) {
@@ -216,8 +216,8 @@ export async function approveActivity(
       })
       .eq("id", activityId);
 
-    revalidatePath("/portal/admin/godkjenninger");
-    revalidatePath("/portal/admin/fasiliteter");
+    revalidatePath("/admin/godkjenninger");
+    revalidatePath("/admin/fasiliteter");
 
     return { success: true };
   } catch (error) {
@@ -255,8 +255,8 @@ export async function rejectActivity(
       .update({ status: "CANCELLED" })
       .eq("id", activityId);
 
-    revalidatePath("/portal/admin/godkjenninger");
-    revalidatePath("/portal/admin/fasiliteter");
+    revalidatePath("/admin/godkjenninger");
+    revalidatePath("/admin/fasiliteter");
 
     return { success: true };
   } catch (error) {

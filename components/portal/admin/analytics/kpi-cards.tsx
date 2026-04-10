@@ -12,7 +12,7 @@ import {
   TrendingDown,
   Minus,
 } from "lucide-react";
-import type { AnalyticsData } from "@/app/portal/(dashboard)/admin/analytics/actions";
+import type { AnalyticsData } from "@/app/admin/analytics/actions";
 
 interface KPICardsProps {
   data: AnalyticsData;

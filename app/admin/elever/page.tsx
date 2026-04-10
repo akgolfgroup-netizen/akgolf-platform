@@ -180,7 +180,7 @@ export default function StudentsPage() {
                 <Download className="w-4 h-4" />
                 <span className="hidden sm:inline">Eksporter</span>
               </button>
-              <Link href="/portal/admin/elever/ny" className="hg-btn hg-btn-primary">
+              <Link href="/admin/elever/ny" className="hg-btn hg-btn-primary">
                 <UserPlus className="w-4 h-4" />
                 <span className="hidden sm:inline">Ny elev</span>
               </Link>
