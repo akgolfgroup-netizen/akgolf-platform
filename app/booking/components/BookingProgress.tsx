@@ -16,11 +16,11 @@ const steps = [
   { num: 3, label: "Betal", href: "/booking/review-confirm" },
 ];
 
-export function BookingProgress({ 
-  currentStep, 
-  serviceTypeId, 
-  instructorId, 
-  startTime 
+export function BookingProgress({
+  currentStep,
+  serviceTypeId,
+  instructorId,
+  startTime
 }: BookingProgressProps) {
   const getHref = (step: typeof steps[0]) => {
     // Going back to step 1 is always possible
@@ -35,7 +35,7 @@ export function BookingProgress({
   };
 
   return (
-    <div className="w-full bg-[#f7f3ea] py-4 px-4">
+    <div className="w-full bg-surface py-4 px-4">
       <div className="max-w-lg mx-auto">
         <div className="flex items-center justify-between">
           {steps.map((step, index) => {
@@ -48,17 +48,17 @@ export function BookingProgress({
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
                     isCompleted
-                      ? "bg-[#154212] text-[#d2f000]"
+                      ? "bg-primary text-accent-cta"
                       : isActive
-                      ? "bg-[#d2f000] text-[#154212] ring-2 ring-[#154212]"
-                      : "bg-white text-[#154212]/40 border border-[#e6e2d9]"
+                      ? "bg-accent-cta text-primary ring-2 ring-primary"
+                      : "bg-white text-primary/40 border border-primary/20"
                   }`}
                 >
                   {isCompleted ? <Check className="w-4 h-4" /> : step.num}
                 </div>
                 <span
                   className={`text-xs font-medium uppercase tracking-wider ${
-                    isActive || isCompleted ? "text-[#154212]" : "text-[#154212]/40"
+                    isActive || isCompleted ? "text-primary" : "text-primary/40"
                   }`}
                 >
                   {step.label}
@@ -90,9 +90,9 @@ export function BookingProgress({
         </div>
 
         {/* Progress line */}
-        <div className="mt-4 relative h-1 bg-[#e6e2d9] rounded-full overflow-hidden">
+        <div className="mt-4 relative h-1 bg-primary/20 rounded-full overflow-hidden">
           <div
-            className="absolute left-0 top-0 h-full bg-[#d2f000] transition-all duration-500"
+            className="absolute left-0 top-0 h-full bg-accent-cta transition-all duration-500"
             style={{ width: `${((currentStep - 1) / 2) * 100}%` }}
           />
         </div>

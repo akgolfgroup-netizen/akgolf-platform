@@ -85,7 +85,7 @@ export default function BookingReviewConfirmPage() {
           setError("Tjeneste ikke funnet");
         }
 
-        const foundInstructor = data.flatMap((s: any) => s.Instructor).find((i: Instructor) => i.id === instructorId);
+        const foundInstructor = data.flatMap((s: ServiceType & { Instructor?: Instructor[] }) => s.Instructor ?? []).find((i: Instructor) => i.id === instructorId);
         if (foundInstructor) {
           setInstructor(foundInstructor);
         } else {
@@ -102,7 +102,7 @@ export default function BookingReviewConfirmPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!acceptedTerms) {
       setBookingError("Du må godta vilkårene");
       return;
@@ -168,18 +168,18 @@ export default function BookingReviewConfirmPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#fdf9f0] flex items-center justify-center lg:ml-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#154212]"></div>
+      <div className="min-h-screen bg-surface flex items-center justify-center lg:ml-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   if (error || !service || !instructor || !startTime) {
     return (
-      <div className="min-h-screen bg-[#fdf9f0] flex items-center justify-center lg:ml-64">
+      <div className="min-h-screen bg-surface flex items-center justify-center lg:ml-64">
         <div className="text-center">
-          <p className="text-[#ba1a1a] mb-4">{error || "Manglende informasjon"}</p>
-          <Link href="/booking/select-service" className="px-6 py-3 bg-[#154212] text-white rounded-lg inline-block">
+          <p className="text-error mb-4">{error || "Manglende informasjon"}</p>
+          <Link href="/booking/select-service" className="px-6 py-3 bg-primary text-white rounded-lg inline-block">
             Start på nytt
           </Link>
         </div>
@@ -188,9 +188,9 @@ export default function BookingReviewConfirmPage() {
   }
 
   const endTime = new Date(startTime.getTime() + (service.duration || 20) * 60000);
-  const priceFormatted = service.price === 0 
-    ? "Gratis" 
-    : service.name.includes("Performance") 
+  const priceFormatted = service.price === 0
+    ? "Gratis"
+    : service.name.includes("Performance")
       ? `${service.price.toLocaleString("nb-NO")} kr/mnd`
       : `${service.price.toLocaleString("nb-NO")} kr`;
 
@@ -198,8 +198,8 @@ export default function BookingReviewConfirmPage() {
     <>
       {/* Progress Bar - Desktop only */}
       <div className="hidden lg:block">
-        <BookingProgress 
-          currentStep={3} 
+        <BookingProgress
+          currentStep={3}
           serviceTypeId={serviceTypeId || undefined}
           instructorId={instructorId || undefined}
           startTime={startTime?.toISOString() || undefined}
@@ -207,7 +207,7 @@ export default function BookingReviewConfirmPage() {
       </div>
 
       {/* Navigation Sidebar */}
-      <BookingNavSidebar 
+      <BookingNavSidebar
         currentStep={3}
         serviceTypeId={serviceTypeId || undefined}
         instructorId={instructorId || undefined}
@@ -218,26 +218,26 @@ export default function BookingReviewConfirmPage() {
       />
 
       {/* Main Content */}
-      <main className="lg:ml-64 min-h-screen bg-[#fdf9f0]">
+      <main className="lg:ml-64 min-h-screen bg-surface">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12">
           {/* Mobile Title */}
           <div className="lg:hidden mb-6">
-            <span className="font-mono text-[#154212] text-[10px] uppercase tracking-widest block mb-1">Steg 3 av 3</span>
-            <h3 className="text-2xl font-bold text-[#154212] tracking-tight">Oppsummering</h3>
+            <span className="font-mono text-primary text-[10px] uppercase tracking-widest block mb-1">Steg 3 av 3</span>
+            <h3 className="text-2xl font-bold text-primary tracking-tight">Oppsummering</h3>
           </div>
 
           {/* Desktop Title */}
           <div className="hidden lg:block mb-8">
-            <span className="font-mono text-[#154212] text-[10px] uppercase tracking-widest block mb-2">Siste sjekk</span>
-            <h3 className="text-4xl lg:text-5xl font-bold text-[#154212] tracking-tight leading-tight">
-              Gjennomgå din <span className="text-[#b8d300]">booking</span>.
+            <span className="font-mono text-primary text-[10px] uppercase tracking-widest block mb-2">Siste sjekk</span>
+            <h3 className="text-4xl lg:text-5xl font-bold text-primary tracking-tight leading-tight">
+              Gjennomgå din <span className="text-accent-cta">booking</span>.
             </h3>
           </div>
 
           {bookingError && (
-            <div className="mb-6 lg:mb-8 bg-[#ba1a1a]/10 border border-[#ba1a1a]/20 rounded-xl p-4 flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-[#ba1a1a]" />
-              <p className="text-[#ba1a1a] text-sm">{bookingError}</p>
+            <div className="mb-6 lg:mb-8 bg-error/10 border border-error/20 rounded-xl p-4 flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-error" />
+              <p className="text-error text-sm">{bookingError}</p>
             </div>
           )}
 
@@ -246,17 +246,17 @@ export default function BookingReviewConfirmPage() {
               {/* Left Column */}
               <div className="lg:col-span-7 space-y-6">
                 {/* Booking Summary */}
-                <section className="bg-white rounded-2xl lg:rounded-3xl p-5 lg:p-8 shadow-[0_4px_16px_rgba(45,90,39,0.04)] overflow-hidden relative border border-[#f1eee5]">
+                <section className="bg-white rounded-2xl lg:rounded-3xl p-5 lg:p-8 shadow-sm overflow-hidden relative border border-primary/10">
                   <div className="flex justify-between items-start mb-6 lg:mb-10">
                     <div className="min-w-0">
-                      <h4 className="text-xl lg:text-2xl font-bold text-[#154212] mb-1 truncate">{service.name}</h4>
-                      <p className="text-[#42493e] flex items-center gap-2 text-sm">
+                      <h4 className="text-xl lg:text-2xl font-bold text-primary mb-1 truncate">{service.name}</h4>
+                      <p className="text-text flex items-center gap-2 text-sm">
                         <User className="w-4 h-4 flex-shrink-0" />
                         <span className="truncate">{instructor.User.name}</span>
                       </p>
                     </div>
-                    <div className="bg-[#154212]/5 px-3 lg:px-4 py-2 rounded-full border border-[#154212]/10 flex-shrink-0 ml-2">
-                      <span className="font-mono text-[10px] lg:text-xs font-medium text-[#154212] uppercase">
+                    <div className="bg-primary/5 px-3 lg:px-4 py-2 rounded-full border border-primary/10 flex-shrink-0 ml-2">
+                      <span className="font-mono text-[10px] lg:text-xs font-medium text-primary uppercase">
                         {service.name.includes("Performance") ? "Månedlig" : "Engang"}
                       </span>
                     </div>
@@ -264,23 +264,23 @@ export default function BookingReviewConfirmPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
                     <div className="space-y-4 lg:space-y-6">
                       <div>
-                        <label className="font-mono text-[10px] uppercase text-[#154212]/40 tracking-widest block mb-1">Dato & Tid</label>
-                        <p className="text-base lg:text-lg font-semibold text-[#154212]">{formatDate(startTime)}</p>
-                        <p className="text-[#42493e] text-sm">{formatTime(startTime)} — {formatTime(endTime)} ({service.duration || 20} Min)</p>
+                        <label className="font-mono text-[10px] uppercase text-primary/40 tracking-widest block mb-1">Dato & Tid</label>
+                        <p className="text-base lg:text-lg font-semibold text-primary">{formatDate(startTime)}</p>
+                        <p className="text-text text-sm">{formatTime(startTime)} — {formatTime(endTime)} ({service.duration || 20} Min)</p>
                       </div>
                       <div>
-                        <label className="font-mono text-[10px] uppercase text-[#154212]/40 tracking-widest block mb-1">Lokasjon</label>
-                        <p className="text-base lg:text-lg font-semibold text-[#154212]">Gamle Fredrikstad GK</p>
-                        <p className="text-[#42493e] text-sm">Driving range / TrackMan</p>
+                        <label className="font-mono text-[10px] uppercase text-primary/40 tracking-widest block mb-1">Lokasjon</label>
+                        <p className="text-base lg:text-lg font-semibold text-primary">Gamle Fredrikstad GK</p>
+                        <p className="text-text text-sm">Driving range / TrackMan</p>
                       </div>
                     </div>
                     <div className="space-y-4 lg:space-y-6">
-                      <div className="bg-[#f7f3ea] rounded-2xl p-4">
-                        <label className="font-mono text-[10px] uppercase text-[#154212]/40 tracking-widest block mb-2">Inkludert</label>
-                        <ul className="text-sm text-[#42493e] space-y-1">
-                          <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#d2f000]" />TrackMan analyse</li>
-                          <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#d2f000]" />Teknisk veiledning</li>
-                          <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#d2f000]" />Oppdatert treningsplan</li>
+                      <div className="bg-surface rounded-2xl p-4">
+                        <label className="font-mono text-[10px] uppercase text-primary/40 tracking-widest block mb-2">Inkludert</label>
+                        <ul className="text-sm text-text space-y-1">
+                          <li className="flex items-center gap-2"><Check className="w-4 h-4 text-accent-cta" />TrackMan analyse</li>
+                          <li className="flex items-center gap-2"><Check className="w-4 h-4 text-accent-cta" />Teknisk veiledning</li>
+                          <li className="flex items-center gap-2"><Check className="w-4 h-4 text-accent-cta" />Oppdatert treningsplan</li>
                         </ul>
                       </div>
                     </div>
@@ -288,17 +288,17 @@ export default function BookingReviewConfirmPage() {
                 </section>
 
                 {/* User Info Form */}
-                <section className="bg-white rounded-2xl lg:rounded-3xl p-5 lg:p-8 border border-[#f1eee5]">
+                <section className="bg-white rounded-2xl lg:rounded-3xl p-5 lg:p-8 border border-primary/10">
                   <div className="mb-4 lg:mb-6">
-                    <h4 className="text-base lg:text-lg font-bold text-[#154212] uppercase tracking-tight">Dine opplysninger</h4>
+                    <h4 className="text-base lg:text-lg font-bold text-primary uppercase tracking-tight">Dine opplysninger</h4>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">Navn *</label>
-                      <input 
+                      <label htmlFor="name" className="font-mono text-[10px] uppercase text-muted block mb-1">Navn *</label>
+                      <input
                         id="name"
                         name="name"
-                        className="w-full bg-[#f7f3ea] border-none rounded-xl px-4 py-3 text-[#1c1c16] text-sm"
+                        className="w-full bg-surface border-none rounded-xl px-4 py-3 text-text text-sm"
                         placeholder="Ola Nordmann"
                         type="text"
                         value={name}
@@ -307,11 +307,11 @@ export default function BookingReviewConfirmPage() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="email" className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">E-post *</label>
-                      <input 
+                      <label htmlFor="email" className="font-mono text-[10px] uppercase text-muted block mb-1">E-post *</label>
+                      <input
                         id="email"
                         name="email"
-                        className="w-full bg-[#f7f3ea] border-none rounded-xl px-4 py-3 text-[#1c1c16] text-sm"
+                        className="w-full bg-surface border-none rounded-xl px-4 py-3 text-text text-sm"
                         placeholder="ola@epost.no"
                         type="email"
                         value={email}
@@ -320,11 +320,11 @@ export default function BookingReviewConfirmPage() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="phone" className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">Telefon</label>
-                      <input 
+                      <label htmlFor="phone" className="font-mono text-[10px] uppercase text-muted block mb-1">Telefon</label>
+                      <input
                         id="phone"
                         name="phone"
-                        className="w-full bg-[#f7f3ea] border-none rounded-xl px-4 py-3 text-[#1c1c16] text-sm"
+                        className="w-full bg-surface border-none rounded-xl px-4 py-3 text-text text-sm"
                         placeholder="+47 000 00 000"
                         type="tel"
                         value={phone}
@@ -332,11 +332,11 @@ export default function BookingReviewConfirmPage() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="handicap" className="font-mono text-[10px] uppercase text-[#72796e] block mb-1">Handicap</label>
-                      <input 
+                      <label htmlFor="handicap" className="font-mono text-[10px] uppercase text-muted block mb-1">Handicap</label>
+                      <input
                         id="handicap"
                         name="handicap"
-                        className="w-full bg-[#f7f3ea] border-none rounded-xl px-4 py-3 text-[#1c1c16] text-sm"
+                        className="w-full bg-surface border-none rounded-xl px-4 py-3 text-text text-sm"
                         placeholder="f.eks. 12.5"
                         type="text"
                         value={handicap}
@@ -347,38 +347,38 @@ export default function BookingReviewConfirmPage() {
                 </section>
 
                 {/* Payment Method & Terms */}
-                <section className="bg-white rounded-2xl lg:rounded-3xl p-5 lg:p-8 border border-[#f1eee5]">
+                <section className="bg-white rounded-2xl lg:rounded-3xl p-5 lg:p-8 border border-primary/10">
                   <div className="mb-4 lg:mb-6">
-                    <h4 className="text-base lg:text-lg font-bold text-[#154212] uppercase tracking-tight">Betalingsmåte</h4>
+                    <h4 className="text-base lg:text-lg font-bold text-primary uppercase tracking-tight">Betalingsmåte</h4>
                   </div>
                   <div className="grid grid-cols-1 gap-4">
-                    <div 
+                    <div
                       onClick={() => setPaymentMethod("STRIPE")}
-                      className={`border-2 ${paymentMethod === "STRIPE" ? 'border-[#d2f000] bg-[#d2f000]/5' : 'border-[#f1eee5]'} rounded-2xl p-4 lg:p-5 flex items-center gap-4 cursor-pointer relative transition-all`}
+                      className={`border-2 ${paymentMethod === "STRIPE" ? 'border-accent-cta bg-accent-cta/5' : 'border-primary/10'} rounded-2xl p-4 lg:p-5 flex items-center gap-4 cursor-pointer relative transition-all`}
                     >
-                      <CreditCard className="w-5 h-5 lg:w-6 lg:h-6 text-[#154212]" />
+                      <CreditCard className="w-5 h-5 lg:w-6 lg:h-6 text-primary" />
                       <div className="flex-1">
-                        <p className="font-bold text-[#154212] text-sm">Kortbetaling</p>
-                        <p className="text-xs text-[#154212]/60">Visa/Mastercard</p>
+                        <p className="font-bold text-primary text-sm">Kortbetaling</p>
+                        <p className="text-xs text-primary/60">Visa/Mastercard</p>
                       </div>
                       {paymentMethod === "STRIPE" && (
-                        <div className="w-5 h-5 bg-[#154212] rounded-full flex items-center justify-center">
+                        <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center">
                           <Check className="w-3 h-3 text-white" />
                         </div>
                       )}
                     </div>
                   </div>
                   <div className="mt-6 lg:mt-8 flex items-start gap-3">
-                    <input 
-                      className="mt-1 rounded border-[#f1eee5] text-[#154212] focus:ring-[#154212] h-4 w-4"
+                    <input
+                      className="mt-1 rounded border-primary/10 text-primary focus:ring-primary h-4 w-4"
                       type="checkbox"
                       checked={acceptedTerms}
                       onChange={(e) => setAcceptedTerms(e.target.checked)}
                       id="terms"
                       name="terms"
                     />
-                    <label htmlFor="terms" className="text-xs text-[#42493e] leading-relaxed">
-                      Jeg godtar <a className="underline font-medium text-[#154212]" href="#">vilkårene</a> og bekrefter at jeg har lest <a className="underline font-medium text-[#154212]" href="#">kanselleringspolicyen</a>. Sessioner må kanselleres minst 24 timer i forveien.
+                    <label htmlFor="terms" className="text-xs text-text leading-relaxed">
+                      Jeg godtar <a className="underline font-medium text-primary" href="#">vilkårene</a> og bekrefter at jeg har lest <a className="underline font-medium text-primary" href="#">kanselleringspolicyen</a>. Sessioner må kanselleres minst 24 timer i forveien.
                     </label>
                   </div>
                 </section>
@@ -388,7 +388,7 @@ export default function BookingReviewConfirmPage() {
               <div className="lg:col-span-5">
                 <div className="lg:sticky lg:top-32 space-y-4 lg:space-y-6">
                   {/* Price Summary Card */}
-                  <div className="bg-[#154212] text-white rounded-2xl lg:rounded-3xl p-5 lg:p-8 shadow-xl">
+                  <div className="bg-primary text-white rounded-2xl lg:rounded-3xl p-5 lg:p-8 shadow-xl">
                     <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-white/50 mb-6 lg:mb-8">Prisoversikt</h4>
                     <div className="space-y-3 lg:space-y-4 mb-6 lg:mb-8">
                       <div className="flex justify-between text-sm">
@@ -404,13 +404,13 @@ export default function BookingReviewConfirmPage() {
                     <div className="flex justify-between items-end mb-6 lg:mb-10">
                       <div>
                         <p className="text-xs text-white/40 uppercase font-mono mb-1">Total</p>
-                        <p className="text-3xl lg:text-4xl font-bold tracking-tighter text-[#d2f000]">
+                        <p className="text-3xl lg:text-4xl font-bold tracking-tighter text-accent-cta">
                           {service.price === 0 ? "Gratis" : `${service.price.toLocaleString("nb-NO")} kr`}
                         </p>
                       </div>
                       {service.name.includes("Performance") && <span className="text-xs text-white/40">per mnd</span>}
                     </div>
-                    <button 
+                    <button
                       type="submit"
                       disabled={submitting || !acceptedTerms}
                       onClick={(e) => {
@@ -420,11 +420,11 @@ export default function BookingReviewConfirmPage() {
                           document.getElementById('terms')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
                       }}
-                      className="w-full bg-[#d2f000] text-[#154212] py-4 lg:py-5 rounded-xl lg:rounded-2xl font-bold uppercase tracking-widest text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-[#d2f000]/20 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-accent-cta text-primary py-4 lg:py-5 rounded-xl lg:rounded-2xl font-bold uppercase tracking-widest text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-accent-cta/20 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {submitting ? (
                         <>
-                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#154212]"></div>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary"></div>
                           <span>Behandler...</span>
                         </>
                       ) : (
@@ -433,20 +433,20 @@ export default function BookingReviewConfirmPage() {
                         </>
                       )}
                     </button>
-                    
+
                   </div>
 
                   {/* Trust Badges */}
                   <div className="grid grid-cols-2 gap-3 lg:gap-4">
-                    <div className="bg-[#f7f3ea] rounded-2xl p-3 lg:p-4 flex flex-col items-center text-center">
-                      <Shield className="w-5 h-5 lg:w-6 lg:h-6 text-[#154212] mb-1 lg:mb-2" />
-                      <p className="font-bold text-[10px] uppercase tracking-wide text-[#154212]">Sikker betaling</p>
-                      <p className="text-[10px] text-[#42493e]/70">SSL kryptering</p>
+                    <div className="bg-surface rounded-2xl p-3 lg:p-4 flex flex-col items-center text-center">
+                      <Shield className="w-5 h-5 lg:w-6 lg:h-6 text-primary mb-1 lg:mb-2" />
+                      <p className="font-bold text-[10px] uppercase tracking-wide text-primary">Sikker betaling</p>
+                      <p className="text-[10px] text-text/70">SSL kryptering</p>
                     </div>
-                    <div className="bg-[#f7f3ea] rounded-2xl p-3 lg:p-4 flex flex-col items-center text-center">
-                      <CalendarCheck className="w-5 h-5 lg:w-6 lg:h-6 text-[#154212] mb-1 lg:mb-2" />
-                      <p className="font-bold text-[10px] uppercase tracking-wide text-[#154212]">Avbestilling</p>
-                      <p className="text-[10px] text-[#42493e]/70">Opptil 24t før</p>
+                    <div className="bg-surface rounded-2xl p-3 lg:p-4 flex flex-col items-center text-center">
+                      <CalendarCheck className="w-5 h-5 lg:w-6 lg:h-6 text-primary mb-1 lg:mb-2" />
+                      <p className="font-bold text-[10px] uppercase tracking-wide text-primary">Avbestilling</p>
+                      <p className="text-[10px] text-text/70">Opptil 24t før</p>
                     </div>
                   </div>
                 </div>

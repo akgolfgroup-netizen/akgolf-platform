@@ -49,7 +49,7 @@ export function BookingNavSidebar({
   return (
     <>
       {/* Mobile Header */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#154212]">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-primary">
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/" className="text-white font-bold text-lg tracking-tight">
             AK Golf
@@ -64,7 +64,7 @@ export function BookingNavSidebar({
 
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
-          <div className="bg-[#154212] border-t border-white/10 px-4 py-4">
+          <div className="bg-primary border-t border-white/10 px-4 py-4">
             <nav className="space-y-1">
               {steps.map((step) => {
                 const isActive = step.num === currentStep;
@@ -79,14 +79,14 @@ export function BookingNavSidebar({
                         onClick={() => setMobileMenuOpen(false)}
                         className={`flex items-center gap-3 py-3 px-4 rounded-lg font-medium uppercase text-xs transition-all ${
                           isCompleted
-                            ? "text-[#d2f000] bg-white/10"
+                            ? "text-accent-cta bg-white/10"
                             : "text-white/70 hover:bg-white/10"
                         }`}
                       >
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-xs ${
                             isCompleted
-                              ? "bg-[#d2f000] text-[#154212]"
+                              ? "bg-accent-cta text-primary"
                               : "bg-white/20 text-white"
                           }`}
                         >
@@ -98,14 +98,14 @@ export function BookingNavSidebar({
                       <div
                         className={`flex items-center gap-3 py-3 px-4 rounded-lg font-medium uppercase text-xs ${
                           isActive
-                            ? "bg-[#d2f000] text-[#154212]"
+                            ? "bg-accent-cta text-primary"
                             : "text-white/40"
                         }`}
                       >
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-xs ${
                             isActive
-                              ? "bg-[#154212] text-[#d2f000]"
+                              ? "bg-primary text-accent-cta"
                               : "bg-white/10 text-white/40"
                           }`}
                         >
@@ -125,7 +125,7 @@ export function BookingNavSidebar({
                 <p className="text-white/40 text-[10px] font-mono uppercase mb-1">Valgt pakke</p>
                 <p className="text-white font-semibold text-sm">{serviceName}</p>
                 {servicePrice !== undefined && (
-                  <p className="text-[#d2f000] text-xs">{formatPrice()}</p>
+                  <p className="text-accent-cta text-xs">{formatPrice()}</p>
                 )}
               </div>
             )}
@@ -134,11 +134,11 @@ export function BookingNavSidebar({
       </header>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex h-screen w-64 fixed left-0 top-0 bg-[#154212] flex-col py-8 z-40">
+      <aside className="hidden lg:flex h-screen w-64 fixed left-0 top-0 bg-primary flex-col py-8 z-40">
         {/* Logo */}
         <div className="px-6 mb-10">
           <Link href="/" className="block group">
-            <span className="text-white font-black text-xl tracking-tight group-hover:text-[#d2f000] transition-colors">
+            <span className="text-white font-black text-xl tracking-tight group-hover:text-accent-cta transition-colors">
               AK Golf
             </span>
             <span className="block text-white/50 font-medium uppercase text-[10px] tracking-widest mt-1">
@@ -172,14 +172,14 @@ export function BookingNavSidebar({
                     href={href}
                     className={`flex items-center gap-3 py-3 px-4 rounded-lg font-medium uppercase text-xs transition-all ${
                       isCompleted
-                        ? "text-[#d2f000] hover:bg-white/10"
+                        ? "text-accent-cta hover:bg-white/10"
                         : "text-white/70 hover:bg-white/10"
                     }`}
                   >
                     <div
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs ${
                         isCompleted
-                          ? "bg-[#d2f000] text-[#154212]"
+                          ? "bg-accent-cta text-primary"
                           : "bg-white/20 text-white"
                       }`}
                     >
@@ -191,14 +191,14 @@ export function BookingNavSidebar({
                   <div
                     className={`flex items-center gap-3 py-3 px-4 rounded-lg font-medium uppercase text-xs ${
                       isActive
-                        ? "bg-[#d2f000] text-[#154212]"
+                        ? "bg-accent-cta text-primary"
                         : "text-white/40"
                     }`}
                   >
                     <div
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs ${
                         isActive
-                          ? "bg-[#154212] text-[#d2f000] ring-2 ring-[#154212]"
+                          ? "bg-primary text-accent-cta ring-2 ring-primary"
                           : "bg-white/10 text-white/40"
                       }`}
                     >
@@ -219,7 +219,7 @@ export function BookingNavSidebar({
               <p className="text-white/40 text-[10px] font-mono uppercase mb-2">Valgt pakke</p>
               <p className="text-white font-semibold text-sm leading-tight">{serviceName}</p>
               {servicePrice !== undefined && (
-                <p className="text-[#d2f000] text-xs mt-1">{formatPrice()}</p>
+                <p className="text-accent-cta text-xs mt-1">{formatPrice()}</p>
               )}
             </div>
           ) : (
