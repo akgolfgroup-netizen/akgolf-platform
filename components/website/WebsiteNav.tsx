@@ -79,7 +79,7 @@ export function WebsiteNav() {
             </Link>
             <a
               href={BOOKING_URL}
-              className="text-[13px] font-medium px-5 py-2 rounded-full bg-[#1D1D1F] text-white transition-opacity duration-300 hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              className="text-[13px] font-medium px-5 py-2 rounded-full bg-[#0A1F18] text-white transition-opacity duration-300 hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
             >
               Book coaching
             </a>
@@ -166,7 +166,7 @@ export function WebsiteNav() {
                 <a
                   href={BOOKING_URL}
                   onClick={() => setMobileOpen(false)}
-                  className="text-lg font-semibold px-8 py-4 mt-4 rounded-[980px] bg-[#1D1D1F] text-white hover:opacity-85 transition-opacity"
+                  className="text-lg font-semibold px-8 py-4 mt-4 rounded-[980px] bg-[#0A1F18] text-white hover:opacity-85 transition-opacity"
                 >
                   Book coaching
                 </a>

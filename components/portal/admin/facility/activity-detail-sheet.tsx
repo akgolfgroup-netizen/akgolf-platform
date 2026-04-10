@@ -104,7 +104,7 @@ export function ActivityDetailSheet({ event, onClose, onApprove, onDelete }: Pro
             <div className="p-6 space-y-6">
               {/* Status badge */}
               {isPending && (
-                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#FF9500]/10 text-[#FF9500]">
+                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#C48A32]/10 text-[#C48A32]">
                   <AlertTriangle className="w-4 h-4" aria-hidden="true" />
                   <span className="text-sm font-medium">Venter på godkjenning</span>
                 </div>

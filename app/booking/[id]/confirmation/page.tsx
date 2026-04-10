@@ -8,12 +8,12 @@ import { Loader2, AlertCircle } from "lucide-react";
 
 // Apple Light Theme 2026
 const THEME = {
-  bg: "#F5F5F7",
+  bg: "#ECF0EF",
   bgElevated: "#FFFFFF",
-  primary: "#1D1D1F",
-  text: "#1D1D1F",
-  textMuted: "#86868B",
-  border: "#E8E8ED",
+  primary: "#0A1F18",
+  text: "#0A1F18",
+  textMuted: "#7A8C85",
+  border: "#D5DFDB",
 };
 
 interface Props {

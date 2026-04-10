@@ -96,7 +96,7 @@ const container = {
 };
 
 const heading = {
-  color: "#1D1D1F",
+  color: "#0A1F18",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
@@ -130,7 +130,7 @@ const detailsBox = {
 };
 
 const refundBox = {
-  backgroundColor: "#F5F5F7",
+  backgroundColor: "#ECF0EF",
   borderRadius: "6px",
   padding: "16px",
   margin: "0 0 16px",
@@ -149,7 +149,7 @@ const hr = {
 };
 
 const link = {
-  color: "#1D1D1F",
+  color: "#0A1F18",
   textDecoration: "underline",
 };
 

@@ -522,8 +522,6 @@ function UtfordringerTab({
           current.endDate ||
           new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10),
       }));
-    }    new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10),
-      }));
     });
   }, []);
 

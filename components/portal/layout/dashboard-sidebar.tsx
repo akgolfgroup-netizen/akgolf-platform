@@ -54,7 +54,7 @@ const colors = {
   
   // Academy
   forestGreen: "#1B4D3E",
-  forestGreenLight: "#2D6A4F",
+  forestGreenLight: "#005840",
   forestGreenMuted: "#EDF5F0",
   
   // Accent
@@ -63,13 +63,13 @@ const colors = {
   
   // Neutrals
   white: "#FFFFFF",
-  silver: "#F5F5F7",
-  silverLight: "#E8E8ED",
-  grey400: "#86868B",
-  grey500: "#6E6E73",
+  silver: "#ECF0EF",
+  silverLight: "#D5DFDB",
+  grey400: "#7A8C85",
+  grey500: "#5A6E66",
   grey600: "#48484A",
   grey800: "#2C2C2E",
-  grey900: "#1D1D1F",
+  grey900: "#0A1F18",
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════

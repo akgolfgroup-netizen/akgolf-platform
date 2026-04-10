@@ -42,11 +42,11 @@ const tierLabels: Record<string, string> = {
 };
 
 const tierColors: Record<string, string> = {
-  VISITOR: "#86868B",
+  VISITOR: "#7A8C85",
   ACADEMY: "#007AFF",
-  STARTER: "#FF9500",
+  STARTER: "#C48A32",
   PRO: "#d2f000",
-  ELITE: "#2D6A4F",
+  ELITE: "#005840",
 };
 
 const timeRanges = [
@@ -195,7 +195,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
               {data.tierDistribution.length > 0 ? (
                 data.tierDistribution.map((tier) => {
                   const percentage = totalTier > 0 ? (tier.count / totalTier) * 100 : 0;
-                  const color = tierColors[tier.tier] || "#86868B";
+                  const color = tierColors[tier.tier] || "#7A8C85";
                   return (
                     <div key={tier.tier}>
                       <div className="flex items-center justify-between mb-1">

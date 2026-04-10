@@ -4,71 +4,77 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ─── AK Golf Brand System 2026 — Apple Light Theme ─── */
-/* Based on Brand Guide 2026 */
+/* ─── AK Golf Brand System — Brand Guide V2.0 (2026) ─── */
 
 @theme inline {
   /* ═══════════════════════════════════════════════════════════════════════════ */
-  /* COLORS — Apple-Inspired Light Theme                                        */
+  /* COLORS — AK Golf Group Brand Guide V2.0                                    */
   /* ═══════════════════════════════════════════════════════════════════════════ */
 
-  /* Primary Colors */
-  --color-black: #1D1D1F;
+  /* Core Brand Colors */
+  --color-primary: #005840;
+  --color-accent: #D1F843;
+  --color-surface: #ECF0EF;
+  --color-text: #324D45;
+  --color-muted: #A5B2AD;
+
+  /* Legacy aliases (gradvis utfasing — bruk --color-primary etc.) */
+  --color-brand: #005840;
+  --color-brand-dark: #0A1F18;
+  --color-brand-light: #ECF0EF;
+
+  /* Neutral Scale */
+  --color-black: #0A1F18;
   --color-white: #FFFFFF;
 
-  /* Grey Scale */
-  --color-grey-100: #F5F5F7;
-  --color-grey-200: #E8E8ED;
-  --color-grey-300: #D2D2D7;
-  --color-grey-400: #86868B;
-  --color-grey-500: #6E6E73;
-  --color-grey-600: #48484A;
-  --color-grey-700: #3A3A3C;
-  --color-grey-800: #2C2C2E;
-  --color-grey-900: #1D1D1F;
+  /* Grey Scale (mappet til brand-palette) */
+  --color-grey-100: #ECF0EF;
+  --color-grey-200: #D5DFDB;
+  --color-grey-300: #A5B2AD;
+  --color-grey-400: #7A8C85;
+  --color-grey-500: #5A6E66;
+  --color-grey-600: #3D5249;
+  --color-grey-700: #324D45;
+  --color-grey-800: #1A3529;
+  --color-grey-900: #0A1F18;
 
   /* Surfaces */
   --color-surface-warm: #FFFFFF;
-  --color-surface-secondary: #F5F5F7;
+  --color-surface-secondary: #ECF0EF;
   --color-snow: #FFFFFF;
 
-  /* Brand — AK Green */
-  --color-brand: #2D6A4F;
-  --color-brand-dark: #1B4332;
-  --color-brand-light: #EDF5F0;
-
-  /* Semantic colors (portal + admin) — Apple-standard */
-  --color-success: #34C759;
-  --color-success-light: #F0FDF4;
-  --color-success-text: #166534;
-  --color-error: #FF3B30;
-  --color-error-light: #FEF2F2;
-  --color-error-text: #991B1B;
-  --color-warning: #FF9500;
-  --color-warning-light: #FFFBEB;
-  --color-warning-text: #92400E;
+  /* Semantic Colors — Brand Guide V2.0 */
+  --color-success: #2A7D5A;
+  --color-success-light: #E8F5EF;
+  --color-success-text: #1A4D36;
+  --color-error: #B84233;
+  --color-error-light: #FCEAE8;
+  --color-error-text: #7A2C22;
+  --color-warning: #C48A32;
+  --color-warning-light: #FDF4E4;
+  --color-warning-text: #7A5520;
   --color-info: #007AFF;
   --color-info-light: #EFF6FF;
   --color-info-text: #1E40AF;
 
-  /* AI accent — purple */
+  /* AI accent — purple (beholdt, ikke i brand guide men etablert i portalen) */
   --color-ai: #AF52DE;
   --color-ai-light: #FAF5FF;
   --color-ai-text: #6B21A8;
 
-  /* Accent (subtle, not primary) */
-  --color-accent: #1D1D1F;
-  --color-accent-light: #6E6E73;
+  /* Accent — Lime for CTA */
+  --color-accent-cta: #D1F843;
+  --color-accent-cta-text: #0A1F18;
 
-  /* AK Green palette */
-  --color-green: #2D6A4F;
-  --color-green-dark: #1B4332;
-  --color-green-bright: #40916C;
-  --color-green-light: #EDF5F0;
-  --color-coaching: #2563EB;
-  --color-coaching-light: #EFF6FF;
-  --color-streak-bg: #FFFBF5;
-  --color-streak-border: #F5E6CC;
+  /* Green palette (brand-avledet) */
+  --color-green: #005840;
+  --color-green-dark: #0A1F18;
+  --color-green-bright: #2A7D5A;
+  --color-green-light: #ECF0EF;
+  --color-coaching: #005840;
+  --color-coaching-light: #ECF0EF;
+  --color-streak-bg: #FDF4E4;
+  --color-streak-border: #E8D5B0;
 
   /* External brand */
   --color-vipps: #FF5B24;
@@ -121,8 +127,8 @@
   /* BORDERS & RADIUS                                                            */
   /* ═══════════════════════════════════════════════════════════════════════════ */
 
-  --border-color: #E8E8ED;
-  --border-color-light: #F5F5F7;
+  --border-color: #D5DFDB;
+  --border-color-light: #ECF0EF;
 
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
@@ -219,22 +225,22 @@
   /* ═══════════════════════════════════════════════════════════════════════════ */
 
   /* Division Colors */
-  --mc-color-coaching: #1D1D1F;
+  --mc-color-coaching: #005840;
   --mc-color-junior: #007AFF;
-  --mc-color-gfgk: #2D6A4F;
+  --mc-color-gfgk: #005840;
   --mc-color-ai: #AF52DE;
 
   /* Layout */
   --mc-sidebar-width: 220px;
   --mc-topbar-height: 56px;
 
-  /* Semantic Backgrounds */
-  --mc-success-bg: #F0FDF4;
-  --mc-success-text: #166534;
-  --mc-warning-bg: #FFFBEB;
-  --mc-warning-text: #92400E;
-  --mc-error-bg: #FEF2F2;
-  --mc-error-text: #991B1B;
+  /* Semantic Backgrounds — Brand Guide V2.0 */
+  --mc-success-bg: #E8F5EF;
+  --mc-success-text: #1A4D36;
+  --mc-warning-bg: #FDF4E4;
+  --mc-warning-text: #7A5520;
+  --mc-error-bg: #FCEAE8;
+  --mc-error-text: #7A2C22;
   --mc-info-bg: #DBEAFE;
   --mc-info-text: #1E40AF;
 
@@ -246,48 +252,7 @@
   --mc-spacing-xl: 20px;
   --mc-spacing-2xl: 24px;
 
-  /* ═══════════════════════════════════════════════════════════════════════════ */
-  /* HERITAGE GRID — Dark Admin Theme                                            */
-  /* ═══════════════════════════════════════════════════════════════════════════ */
-  
-  /* Core Colors */
-  --hg-bg: #0a0a0a;
-  --hg-surface: #1a1a1a;
-  --hg-surface-raised: #242424;
-  --hg-surface-sunken: #0d0d0d;
-  
-  /* Primary Accent */
-  --hg-primary: #d2f000;
-  --hg-primary-muted: #b8d600;
-  --hg-primary-dark: #9eb800;
-  --hg-primary-glow: rgba(210, 240, 0, 0.15);
-  
-  /* Text Colors */
-  --hg-text: #ffffff;
-  --hg-text-secondary: #a0a0a0;
-  --hg-text-muted: #666666;
-  --hg-text-disabled: #444444;
-  
-  /* Border Colors */
-  --hg-border: #333333;
-  --hg-border-subtle: #222222;
-  --hg-border-hover: #444444;
-  
-  /* Semantic Colors */
-  --hg-success: #22c55e;
-  --hg-success-bg: rgba(34, 197, 94, 0.1);
-  --hg-warning: #f59e0b;
-  --hg-warning-bg: rgba(245, 158, 11, 0.1);
-  --hg-error: #ef4444;
-  --hg-error-bg: rgba(239, 68, 68, 0.1);
-  --hg-info: #3b82f6;
-  --hg-info-bg: rgba(59, 130, 246, 0.1);
-  
-  /* Status Colors */
-  --hg-status-confirmed: #22c55e;
-  --hg-status-pending: #f59e0b;
-  --hg-status-cancelled: #ef4444;
-  --hg-status-no-show: #666666;
+  /* Heritage Grid — DROPPET april 2026, fjernet fra kodebasen */
 }
 
 /* ─── Base ─── */
@@ -801,55 +766,55 @@
 /* ─── Portal Light Theme ─── */
 @layer components {
   :root {
-    /* Portal uses same light theme */
+    /* Portal — Brand Guide V2.0 */
     --portal-bg: #FFFFFF;
     --portal-card-bg: #FFFFFF;
     --portal-card-bg-solid: #FFFFFF;
-    --portal-card-border: #E8E8ED;
-    --portal-card-border-hover: #D2D2D7;
-    --portal-surface-sunken: #F5F5F7;
+    --portal-card-border: #D5DFDB;
+    --portal-card-border-hover: #A5B2AD;
+    --portal-surface-sunken: #ECF0EF;
     --portal-surface-raised: #FFFFFF;
-    --portal-text-primary: #1D1D1F;
-    --portal-text-secondary: #6E6E73;
-    --portal-text-muted: #86868B;
-    --portal-accent: #1D1D1F;
-    --portal-accent-glow: rgba(29, 29, 31, 0.1);
-    --portal-success: #34C759;
-    --portal-error: #FF3B30;
+    --portal-text-primary: #324D45;
+    --portal-text-secondary: #5A6E66;
+    --portal-text-muted: #A5B2AD;
+    --portal-accent: #005840;
+    --portal-accent-glow: rgba(0, 88, 64, 0.1);
+    --portal-success: #2A7D5A;
+    --portal-error: #B84233;
 
-    /* Apple grey scale */
-    --apple-gray-50: #FAFAFA;
-    --apple-gray-100: #F5F5F7;
-    --apple-gray-200: #E8E8ED;
-    --apple-gray-300: #D2D2D7;
-    --apple-gray-400: #86868B;
-    --apple-gray-500: #6E6E73;
-    --apple-gray-600: #48484A;
-    --apple-gray-700: #3A3A3C;
-    --apple-gray-800: #2C2C2E;
-    --apple-gray-900: #1D1D1F;
+    /* Brand grey scale (V2.0) */
+    --apple-gray-50: #F5F8F7;
+    --apple-gray-100: #ECF0EF;
+    --apple-gray-200: #D5DFDB;
+    --apple-gray-300: #A5B2AD;
+    --apple-gray-400: #7A8C85;
+    --apple-gray-500: #5A6E66;
+    --apple-gray-600: #3D5249;
+    --apple-gray-700: #324D45;
+    --apple-gray-800: #1A3529;
+    --apple-gray-900: #0A1F18;
 
-    /* Brand accent (coaching context) */
-    --portal-brand: #2D6A4F;
-    --portal-brand-light: #EDF5F0;
-    --portal-brand-dark: #1B4332;
+    /* Brand accent */
+    --portal-brand: #005840;
+    --portal-brand-light: #ECF0EF;
+    --portal-brand-dark: #0A1F18;
 
-    /* Pyramide-farger (treningsplanlegger) */
-    --pyramid-fys: #FF9500;
-    --pyramid-fys-light: #FFFBEB;
-    --pyramid-fys-text: #92400E;
+    /* Pyramide-farger (treningsplanlegger) — V2.0 semantiske */
+    --pyramid-fys: #C48A32;
+    --pyramid-fys-light: #FDF4E4;
+    --pyramid-fys-text: #7A5520;
     --pyramid-tek: #007AFF;
     --pyramid-tek-light: #EFF6FF;
     --pyramid-tek-text: #1E40AF;
-    --pyramid-slag: #2D6A4F;
-    --pyramid-slag-light: #EDF5F0;
-    --pyramid-slag-text: #1B4332;
+    --pyramid-slag: #005840;
+    --pyramid-slag-light: #ECF0EF;
+    --pyramid-slag-text: #0A1F18;
     --pyramid-spill: #AF52DE;
     --pyramid-spill-light: #FAF5FF;
     --pyramid-spill-text: #6B21A8;
-    --pyramid-turn: #1D1D1F;
-    --pyramid-turn-light: #F5F5F7;
-    --pyramid-turn-text: #1D1D1F;
+    --pyramid-turn: #324D45;
+    --pyramid-turn-light: #ECF0EF;
+    --pyramid-turn-text: #324D45;
 
     /* AI */
     --portal-ai: #AF52DE;
@@ -857,11 +822,11 @@
     --portal-ai-text: #6B21A8;
     --portal-ai-border: #E9D5FF;
 
-    /* Info */
+    /* Info & Warning — V2.0 */
     --portal-info: #007AFF;
     --portal-info-light: #EFF6FF;
-    --portal-warning: #FF9500;
-    --portal-warning-light: #FFFBEB;
+    --portal-warning: #C48A32;
+    --portal-warning-light: #FDF4E4;
 
     /* Glassmorphism for light theme */
     --glass-bg: rgba(255, 255, 255, 0.8);

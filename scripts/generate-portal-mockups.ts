@@ -12,13 +12,13 @@ const OUTPUT_DIR = join(process.cwd(), "public/images/portal-preview");
 
 // Apple Light 2026 design tokens
 const COLORS = {
-  bg: "#F5F5F7",
+  bg: "#ECF0EF",
   white: "#FFFFFF",
-  black: "#1D1D1F",
-  grey200: "#E8E8ED",
-  grey400: "#86868B",
-  grey500: "#6E6E73",
-  success: "#34C759",
+  black: "#0A1F18",
+  grey200: "#D5DFDB",
+  grey400: "#7A8C85",
+  grey500: "#5A6E66",
+  success: "#2A7D5A",
 };
 
 function generateDashboardHTML(): string {
@@ -326,11 +326,11 @@ function generateStatisticsHTML(): string {
       height: 100%; border-radius: 4px;
       background: ${COLORS.black};
     }
-    .sg-bar.negative { background: #FF3B30; }
+    .sg-bar.negative { background: #B84233; }
     .sg-bar.positive { background: ${COLORS.success}; }
     .sg-value { width: 50px; text-align: right; font-size: 14px; font-weight: 600; }
     .sg-value.positive { color: ${COLORS.success}; }
-    .sg-value.negative { color: #FF3B30; }
+    .sg-value.negative { color: #B84233; }
   </style>
 </head>
 <body>

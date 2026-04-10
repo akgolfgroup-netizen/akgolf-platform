@@ -21,7 +21,7 @@ function CountUpStat({ value, suffix, label }: { value: number; suffix: string; 
 
 export function SocialProofBar() {
   return (
-    <section className="py-20 md:py-28 bg-[#1D1D1F] grain-overlay">
+    <section className="py-20 md:py-28 bg-[#0A1F18] grain-overlay">
       <div className="w-container">
         <RevealOnScroll>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 md:divide-x md:divide-white/10">

@@ -53,13 +53,13 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Service Reminder */}
-      <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border bg-[#F5F5F7] border-[#E8E8ED]">
-        <CreditCard size={20} className="text-[#1D1D1F]" />
-        <p className="font-medium text-[#1D1D1F]">{serviceName}</p>
+      <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border bg-[#ECF0EF] border-[#D5DFDB]">
+        <CreditCard size={20} className="text-[#0A1F18]" />
+        <p className="font-medium text-[#0A1F18]">{serviceName}</p>
       </div>
 
       {/* Stripe Payment Element */}
-      <div className="rounded-2xl p-5 border bg-white border-[#E8E8ED]">
+      <div className="rounded-2xl p-5 border bg-white border-[#D5DFDB]">
         <PaymentElement
           options={{
             layout: "tabs",
@@ -83,7 +83,7 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
       <motion.button
         type="submit"
         disabled={!stripe || !elements || loading}
-        className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-[opacity,transform,box-shadow] duration-300 disabled:opacity-50 text-white bg-[#1D1D1F] shadow-lg shadow-black/15"
+        className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-[opacity,transform,box-shadow] duration-300 disabled:opacity-50 text-white bg-[#0A1F18] shadow-lg shadow-black/15"
         whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(29,29,31,0.25)" }}
         whileTap={{ scale: 0.99 }}
       >
@@ -101,7 +101,7 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
       </motion.button>
 
       {/* Payment Methods Info */}
-      <div className="flex items-center justify-center gap-4 text-xs text-[#86868B]">
+      <div className="flex items-center justify-center gap-4 text-xs text-[#7A8C85]">
         <div className="flex items-center gap-1.5">
           <Smartphone size={14} />
           <span>Apple Pay</span>
@@ -116,7 +116,7 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
       </div>
 
       {/* Security Note */}
-      <p className="text-xs text-center text-[#AEAEB2]">
+      <p className="text-xs text-center text-[#A5B2AD]">
         Sikker betaling via Stripe. AK Golf Academy lagrer ikke kortinformasjon.
       </p>
     </form>
@@ -135,7 +135,7 @@ export function StripePaymentPage({
   serviceName,
 }: StripePaymentPageProps) {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F5F5F7]">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#ECF0EF]">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -148,14 +148,14 @@ export function StripePaymentPage({
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border bg-[#F5F5F7] border-[#E8E8ED]"
+            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border bg-[#ECF0EF] border-[#D5DFDB]"
           >
-            <CreditCard size={28} className="text-[#1D1D1F]" />
+            <CreditCard size={28} className="text-[#0A1F18]" />
           </motion.div>
-          <h1 className="text-2xl font-semibold mb-2 text-[#1D1D1F]">
+          <h1 className="text-2xl font-semibold mb-2 text-[#0A1F18]">
             Fullfør betaling
           </h1>
-          <p className="text-[#86868B]">
+          <p className="text-[#7A8C85]">
             Apple Pay, Google Pay eller kort
           </p>
         </div>
@@ -165,7 +165,7 @@ export function StripePaymentPage({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-3xl p-8 border bg-white border-[#E8E8ED] shadow-md"
+          className="rounded-3xl p-8 border bg-white border-[#D5DFDB] shadow-md"
         >
           <Elements
             stripe={stripePromise}
@@ -174,9 +174,9 @@ export function StripePaymentPage({
               appearance: {
                 theme: "stripe",
                 variables: {
-                  colorPrimary: "#1D1D1F",
+                  colorPrimary: "#0A1F18",
                   colorBackground: "#FFFFFF",
-                  colorText: "#1D1D1F",
+                  colorText: "#0A1F18",
                   colorDanger: "#EF4444",
                   fontFamily: "Inter, system-ui, -apple-system, sans-serif",
                   borderRadius: "12px",

@@ -4,7 +4,7 @@ import { AKLogo } from "./AKLogo";
 
 export function WebsiteFooter() {
   return (
-    <footer className="relative bg-[#1D1D1F] text-white overflow-hidden border-t border-white/10">
+    <footer className="relative bg-[#0A1F18] text-white overflow-hidden border-t border-white/10">
       <div className="w-container relative py-16 md:py-20">
         {/* Links grid — 2 cols on mobile, 4 on desktop */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
@@ -16,7 +16,7 @@ export function WebsiteFooter() {
                 AK Golf
               </span>
             </div>
-            <p className="text-xs leading-relaxed text-[#86868B] max-w-[240px] mb-4">
+            <p className="text-xs leading-relaxed text-[#7A8C85] max-w-[240px] mb-4">
               Premium golfcoaching for ambisiøse spillere.
             </p>
             {/* Social icons */}
@@ -27,7 +27,7 @@ export function WebsiteFooter() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 text-[#86868B] hover:bg-[var(--color-brand)] hover:text-white transition-colors duration-300"
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 text-[#7A8C85] hover:bg-[var(--color-brand)] hover:text-white transition-colors duration-300"
                   aria-label={social.label}
                 >
                   {social.icon === "instagram" && (
@@ -56,7 +56,7 @@ export function WebsiteFooter() {
 
           {/* Tjenester */}
           <div>
-            <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#86868B] mb-3">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#7A8C85] mb-3">
               Tjenester
             </h4>
             <ul className="space-y-2">
@@ -64,7 +64,7 @@ export function WebsiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-xs text-[#6E6E73] hover:text-white transition-colors"
+                    className="text-xs text-[#5A6E66] hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -75,7 +75,7 @@ export function WebsiteFooter() {
 
           {/* Selskap */}
           <div>
-            <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#86868B] mb-3">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#7A8C85] mb-3">
               Selskap
             </h4>
             <ul className="space-y-2">
@@ -83,7 +83,7 @@ export function WebsiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-xs text-[#6E6E73] hover:text-white transition-colors"
+                    className="text-xs text-[#5A6E66] hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -94,10 +94,10 @@ export function WebsiteFooter() {
 
           {/* Kontakt */}
           <div>
-            <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#86868B] mb-3">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#7A8C85] mb-3">
               Kontakt
             </h4>
-            <ul className="space-y-2 text-xs text-[#6E6E73]">
+            <ul className="space-y-2 text-xs text-[#5A6E66]">
               <li>
                 <a
                   href={`mailto:${FOOTER_LINKS.contact.email}`}
@@ -120,7 +120,7 @@ export function WebsiteFooter() {
 
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center">
-          <p className="text-[10px] text-[#6E6E73]">
+          <p className="text-[10px] text-[#5A6E66]">
             &copy; {new Date().getFullYear()} AK Golf Group AS
           </p>
         </div>

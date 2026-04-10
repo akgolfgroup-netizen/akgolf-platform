@@ -1,20 +1,20 @@
 // Brand Guide 2026 — AK Green Signal Dot
-// Primary: Black #1D1D1F, Green Dot #2D6A4F
+// Primary: Black #0A1F18, Green Dot #005840
 const VARIANTS = {
   // Primary — green signal dot
-  black:     { path: "#1D1D1F", dot: "#2D6A4F" },
-  primary:   { path: "#1D1D1F", dot: "#2D6A4F" },
+  black:     { path: "#0A1F18", dot: "#005840" },
+  primary:   { path: "#0A1F18", dot: "#005840" },
   // Inverted for dark backgrounds
-  inverted:  { path: "#FFFFFF", dot: "#40916C" },
-  white:     { path: "#FFFFFF", dot: "#40916C" },
+  inverted:  { path: "#FFFFFF", dot: "#2A7D5A" },
+  white:     { path: "#FFFFFF", dot: "#2A7D5A" },
   // Admin — neutral grey dot
-  neutral:   { path: "#1D1D1F", dot: "#D2D2D7" },
+  neutral:   { path: "#0A1F18", dot: "#D2D2D7" },
   // Legacy compatibility
-  academy:   { path: "#1D1D1F", dot: "#2D6A4F" },
-  software:  { path: "#1D1D1F", dot: "#2D6A4F" },
-  utvikling: { path: "#1D1D1F", dot: "#2D6A4F" },
-  midnight:  { path: "#1D1D1F", dot: "#2D6A4F" },
-  gold:      { path: "#1D1D1F", dot: "#2D6A4F" },
+  academy:   { path: "#0A1F18", dot: "#005840" },
+  software:  { path: "#0A1F18", dot: "#005840" },
+  utvikling: { path: "#0A1F18", dot: "#005840" },
+  midnight:  { path: "#0A1F18", dot: "#005840" },
+  gold:      { path: "#0A1F18", dot: "#005840" },
 } as const;
 
 type LogoVariant = keyof typeof VARIANTS;

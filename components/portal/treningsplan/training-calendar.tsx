@@ -79,12 +79,12 @@ export function TrainingCalendar({
       {/* ── Header ── */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-[28px] font-medium tracking-[-0.02em] text-[#1D1D1F]">
+          <h1 className="text-[28px] font-medium tracking-[-0.02em] text-[#0A1F18]">
             Treningsplan
           </h1>
-          <p className="text-sm text-[#86868B] mt-1">
+          <p className="text-sm text-[#7A8C85] mt-1">
             {periodLabel && (
-              <span className="text-[#1D1D1F] font-medium">{periodLabel}</span>
+              <span className="text-[#0A1F18] font-medium">{periodLabel}</span>
             )}
             {periodLabel && " · "}
             {weekLabel}
@@ -94,15 +94,15 @@ export function TrainingCalendar({
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center border border-[#E8E8ED] rounded-xl overflow-hidden">
-            <button className="px-3 py-2 hover:bg-[#F5F5F7] transition-colors">
-              <ChevronLeft className="w-4 h-4 text-[#86868B]" />
+          <div className="flex items-center border border-[#D5DFDB] rounded-xl overflow-hidden">
+            <button className="px-3 py-2 hover:bg-[#ECF0EF] transition-colors">
+              <ChevronLeft className="w-4 h-4 text-[#7A8C85]" />
             </button>
-            <span className="px-3 py-2 text-xs font-semibold text-[#1D1D1F] border-x border-[#E8E8ED]">
+            <span className="px-3 py-2 text-xs font-semibold text-[#0A1F18] border-x border-[#D5DFDB]">
               Uke {weekNumber}
             </span>
-            <button className="px-3 py-2 hover:bg-[#F5F5F7] transition-colors">
-              <ChevronRight className="w-4 h-4 text-[#86868B]" />
+            <button className="px-3 py-2 hover:bg-[#ECF0EF] transition-colors">
+              <ChevronRight className="w-4 h-4 text-[#7A8C85]" />
             </button>
           </div>
           {canGenerate && (
@@ -126,19 +126,19 @@ export function TrainingCalendar({
             {/* Day header */}
             <div
               className={`text-center py-2 mb-2 rounded-lg ${
-                day.isToday ? "bg-[#1D1D1F]" : ""
+                day.isToday ? "bg-[#0A1F18]" : ""
               }`}
             >
               <span
                 className={`text-[10px] font-bold uppercase tracking-wide block ${
-                  day.isToday ? "text-white/60" : "text-[#86868B]"
+                  day.isToday ? "text-white/60" : "text-[#7A8C85]"
                 }`}
               >
                 {day.dayName}
               </span>
               <span
                 className={`text-lg font-bold tabular-nums block mt-0.5 ${
-                  day.isToday ? "text-white" : "text-[#1D1D1F]"
+                  day.isToday ? "text-white" : "text-[#0A1F18]"
                 }`}
               >
                 {day.dateNum}
@@ -148,11 +148,11 @@ export function TrainingCalendar({
             {/* Session blocks */}
             <div className="flex flex-col gap-1.5 min-h-[140px]">
               {day.isRest && day.sessions.length === 0 ? (
-                <div className="flex-1 rounded-xl bg-[#F5F5F7] flex items-center justify-center">
+                <div className="flex-1 rounded-xl bg-[#ECF0EF] flex items-center justify-center">
                   <span className="text-xs text-[#D2D2D7]">Hvile</span>
                 </div>
               ) : day.sessions.length === 0 ? (
-                <div className="flex-1 rounded-xl border border-dashed border-[#E8E8ED] flex items-center justify-center">
+                <div className="flex-1 rounded-xl border border-dashed border-[#D5DFDB] flex items-center justify-center">
                   <span className="text-xs text-[#D2D2D7]">&ndash;</span>
                 </div>
               ) : (
@@ -170,7 +170,7 @@ export function TrainingCalendar({
         <div className="portal-card !p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="portal-label">Pyramidefordeling</span>
-            <span className="text-xs text-[#86868B]">{distribution.total} min totalt</span>
+            <span className="text-xs text-[#7A8C85]">{distribution.total} min totalt</span>
           </div>
           <div className="flex h-2.5 rounded-full overflow-hidden">
             {distribution.levels.map((level) =>
@@ -189,7 +189,7 @@ export function TrainingCalendar({
           <div className="flex gap-4 mt-2.5">
             {distribution.levels.map((level) =>
               level.pct > 0 ? (
-                <div key={level.id} className="flex items-center gap-1.5 text-[10px] text-[#86868B] font-semibold">
+                <div key={level.id} className="flex items-center gap-1.5 text-[10px] text-[#7A8C85] font-semibold">
                   <div
                     className="w-2 h-2 rounded-sm"
                     style={{ backgroundColor: `var(--pyramid-${level.id.toLowerCase()})` }}
@@ -217,7 +217,7 @@ function SessionBlock({ session }: { session: CalendarSession }) {
     return (
       <Link
         href={`/portal/treningsplan/${session.id}`}
-        className="rounded-xl bg-[#1D1D1F] text-white p-3 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300 cursor-pointer"
+        className="rounded-xl bg-[#0A1F18] text-white p-3 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300 cursor-pointer"
       >
         <span className="text-[10px] font-bold uppercase tracking-wide text-white/50 block">
           Coaching
@@ -245,24 +245,24 @@ function SessionBlock({ session }: { session: CalendarSession }) {
       <span className={`text-[10px] font-bold uppercase tracking-wide block ${colors.text}`}>
         {level}
       </span>
-      <span className="text-xs font-semibold text-[#1D1D1F] mt-1 block truncate">
+      <span className="text-xs font-semibold text-[#0A1F18] mt-1 block truncate">
         {session.title}
       </span>
       <div className="flex items-center gap-2 mt-1.5">
         {session.durationMinutes && (
-          <span className="flex items-center gap-1 text-[10px] text-[#86868B]">
+          <span className="flex items-center gap-1 text-[10px] text-[#7A8C85]">
             <Clock className="w-3 h-3" />
             {session.durationMinutes} min
           </span>
         )}
         {session.exerciseCount > 0 && (
-          <span className="text-[10px] text-[#86868B]">
+          <span className="text-[10px] text-[#7A8C85]">
             {session.exerciseCount} ov.
           </span>
         )}
       </div>
       {session.completed && (
-        <span className="flex items-center gap-1 text-[9px] font-bold text-[#2D6A4F] mt-1.5">
+        <span className="flex items-center gap-1 text-[9px] font-bold text-[#005840] mt-1.5">
           <Check className="w-3 h-3" />
           Fullfort
         </span>

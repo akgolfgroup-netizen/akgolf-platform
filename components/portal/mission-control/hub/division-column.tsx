@@ -47,14 +47,14 @@ export function DivisionColumn({
       <MCCardHeader>
         <div className="flex items-center gap-2">
           <DivisionDot division={division} />
-          <span className="text-[13px] font-bold text-[#1D1D1F]">{label}</span>
+          <span className="text-[13px] font-bold text-[#0A1F18]">{label}</span>
         </div>
         <MCBadge variant="neutral">{studentCount} elever</MCBadge>
       </MCCardHeader>
 
       <MCCardBody>
         {/* Today's Sessions */}
-        <div className="text-[9px] font-semibold text-[#86868B] mb-2">I DAG</div>
+        <div className="text-[9px] font-semibold text-[#7A8C85] mb-2">I DAG</div>
         <div className="flex flex-col gap-2">
           {sessions.length > 0 ? (
             sessions.map((session) => (
@@ -68,7 +68,7 @@ export function DivisionColumn({
               />
             ))
           ) : (
-            <div className="text-[10px] text-[#86868B] py-4 text-center">
+            <div className="text-[10px] text-[#7A8C85] py-4 text-center">
               Ingen okter i dag
             </div>
           )}
@@ -76,8 +76,8 @@ export function DivisionColumn({
 
         {/* Action Items */}
         {actionItems && actionItems.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-[#E8E8ED]">
-            <div className="text-[9px] font-semibold text-[#86868B] mb-1.5">
+          <div className="mt-3 pt-3 border-t border-[#D5DFDB]">
+            <div className="text-[9px] font-semibold text-[#7A8C85] mb-1.5">
               KREVER HANDLING
             </div>
             {actionItems.map((item, index) => (
@@ -93,12 +93,12 @@ export function DivisionColumn({
 
         {/* Next Week */}
         {nextWeekItems && nextWeekItems.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-[#E8E8ED]">
-            <div className="text-[9px] font-semibold text-[#86868B] mb-1.5">
+          <div className="mt-3 pt-3 border-t border-[#D5DFDB]">
+            <div className="text-[9px] font-semibold text-[#7A8C85] mb-1.5">
               NESTE UKE
             </div>
             {nextWeekItems.map((item, index) => (
-              <div key={index} className="text-[10px] text-[#6E6E73] mt-0.5">
+              <div key={index} className="text-[10px] text-[#5A6E66] mt-0.5">
                 • {item}
               </div>
             ))}

@@ -22,11 +22,11 @@ Du er ekspert på AK Golf markedsside. Du kjenner designsystemet, brand guidelin
 ```
 Sort:   #1D1D1F (primær)
 Hvit:   #FFFFFF (bakgrunn)
-Grønn:  #2D6A4F (brand-aksent)
-Grå:    #F5F5F7 / #E8E8ED / #86868B
+Grønn:  #005840 (brand-aksent)
+Grå:    #ECF0EF / #D5DFDB / #7A8C85
 ```
 
-Semantisk: Success=#34C759, Error=#FF3B30, Warning=#FF9500
+Semantisk: Success=#2A7D5A, Error=#B84233, Warning=#C48A32
 AI: Lilla #AF52DE (aldri grønn for AI)
 
 #### Sub-brand aksenter

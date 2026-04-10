@@ -22,13 +22,13 @@ interface DayInfo {
 }
 
 /* ─── Constants ─── */
-const BRAND_GREEN = "#2D6A4F";
-const BRAND_GREEN_10 = "rgba(45,106,79,0.10)";
-const BRAND_GREEN_40 = "rgba(45,106,79,0.40)";
-const TEXT_PRIMARY = "#1D1D1F";
-const TEXT_SECONDARY = "#86868B";
-const BORDER = "#E8E8ED";
-const SUBTLE_BG = "#F5F5F7";
+const BRAND_GREEN = "#005840";
+const BRAND_GREEN_10 = "rgba(0,88,64,0.10)";
+const BRAND_GREEN_40 = "rgba(0,88,64,0.40)";
+const TEXT_PRIMARY = "#0A1F18";
+const TEXT_SECONDARY = "#7A8C85";
+const BORDER = "#D5DFDB";
+const SUBTLE_BG = "#ECF0EF";
 const DISABLED = "#D2D2D7";
 
 const WEEKDAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"];

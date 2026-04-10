@@ -31,11 +31,11 @@ const colors = {
   surface: '#FFFFFF',
   textPrimary: '#000000',
   textSecondary: '#36454F',
-  textMuted: '#86868B',
+  textMuted: '#7A8C85',
   aiPurple: '#8E5CE6',
   aiPurpleLight: '#F3EEFC',
-  success: '#34C759',
-  warning: '#FF9500',
+  success: '#2A7D5A',
+  warning: '#C48A32',
 };
 
 const EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
@@ -177,7 +177,7 @@ export function DashboardClient({
         >
           <div className="flex items-start justify-between mb-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#86868B] mb-1">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-1">
                 Handicap
               </p>
               <p className="text-4xl font-bold text-black tabular-nums">
@@ -186,13 +186,13 @@ export function DashboardClient({
             </div>
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
               handicap.trend !== null && handicap.trend < 0 
-                ? 'bg-[#34C759]/10' 
-                : 'bg-[#FF3B30]/10'
+                ? 'bg-[#2A7D5A]/10' 
+                : 'bg-[#B84233]/10'
             }`}>
               {handicap.trend !== null && handicap.trend < 0 ? (
-                <TrendingDown className="w-5 h-5 text-[#34C759]" />
+                <TrendingDown className="w-5 h-5 text-[#2A7D5A]" />
               ) : (
-                <TrendingUp className="w-5 h-5 text-[#FF3B30]" />
+                <TrendingUp className="w-5 h-5 text-[#B84233]" />
               )}
             </div>
           </div>
@@ -200,11 +200,11 @@ export function DashboardClient({
           {handicap.trend !== null && (
             <div className="flex items-center gap-2">
               <span className={`text-sm font-medium ${
-                handicap.trend < 0 ? 'text-[#34C759]' : 'text-[#FF3B30]'
+                handicap.trend < 0 ? 'text-[#2A7D5A]' : 'text-[#B84233]'
               }`}>
                 {handicap.trend > 0 ? '+' : ''}{handicap.trend.toFixed(1)}
               </span>
-              <span className="text-sm text-[#86868B]">siste 30 dager</span>
+              <span className="text-sm text-[#7A8C85]">siste 30 dager</span>
             </div>
           )}
           
@@ -228,7 +228,7 @@ export function DashboardClient({
           <div className="w-10 h-10 rounded-xl bg-[#E6F3F1] flex items-center justify-center mb-4">
             <Target className="w-5 h-5 text-[#00594C]" />
           </div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#86868B] mb-1">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-1">
             Treningsøkter
           </p>
           <p className="text-3xl font-bold text-black tabular-nums">
@@ -242,9 +242,9 @@ export function DashboardClient({
           className="bg-white rounded-[24px] p-6 border border-[#000000]/5"
         >
           <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] flex items-center justify-center mb-4">
-            <Trophy className="w-5 h-5 text-[#FF9500]" />
+            <Trophy className="w-5 h-5 text-[#C48A32]" />
           </div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#86868B] mb-1">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-1">
             Runder spilt
           </p>
           <p className="text-3xl font-bold text-black tabular-nums">
@@ -321,7 +321,7 @@ export function DashboardClient({
                 <Activity className="w-6 h-6 text-[#00594C]" />
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#86868B]">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85]">
                   Streak
                 </p>
                 <p className="text-2xl font-bold text-black">
@@ -334,7 +334,7 @@ export function DashboardClient({
           {/* Goal Progress */}
           <div className="bg-white rounded-[24px] p-6 border border-[#000000]/5">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#86868B]">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85]">
                 Mål: Handicap 10
               </p>
               <span className="text-sm font-semibold text-[#00594C]">
@@ -430,13 +430,13 @@ function QuickAction({
           {label}
         </p>
         <p className={`text-sm ${
-          variant === 'primary' ? 'text-white/70' : 'text-[#86868B]'
+          variant === 'primary' ? 'text-white/70' : 'text-[#7A8C85]'
         }`}>
           {description}
         </p>
       </div>
       <ChevronRight className={`w-5 h-5 ${
-        variant === 'primary' ? 'text-white/50' : 'text-[#86868B]'
+        variant === 'primary' ? 'text-white/50' : 'text-[#7A8C85]'
       }`} />
     </Link>
   );
@@ -506,7 +506,7 @@ function OnboardingView({ userName }: { userName: string | null }) {
                 <span className="w-8 h-8 rounded-full bg-[#00594C] text-white text-sm font-bold flex items-center justify-center">
                   {item.step}
                 </span>
-                <item.icon className="w-5 h-5 text-[#86868B] group-hover:text-[#00594C] transition-colors" />
+                <item.icon className="w-5 h-5 text-[#7A8C85] group-hover:text-[#00594C] transition-colors" />
               </div>
               <h3 className="font-semibold text-black text-lg">{item.title}</h3>
               <p className="text-sm text-[#36454F] mt-1">{item.description}</p>

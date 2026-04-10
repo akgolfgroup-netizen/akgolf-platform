@@ -28,12 +28,12 @@ export default async function BookingNewPage({ searchParams }: Props) {
   // Need at least serviceTypeId
   if (!serviceTypeId) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-[#F5F5F7]">
-        <div className="rounded-3xl p-10 max-w-md w-full text-center border bg-white border-[#E8E8ED]">
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[#F5F5F7]">
-            <Calendar className="w-8 h-8 text-[#1D1D1F]" />
+      <div className="min-h-screen flex items-center justify-center px-4 bg-[#ECF0EF]">
+        <div className="rounded-3xl p-10 max-w-md w-full text-center border bg-white border-[#D5DFDB]">
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[#ECF0EF]">
+            <Calendar className="w-8 h-8 text-[#0A1F18]" />
           </div>
-          <p className="text-[#86868B]">
+          <p className="text-[#7A8C85]">
             Mangler bookingdetaljer. Vennligst start på nytt fra booking-systemet.
           </p>
         </div>
@@ -54,15 +54,15 @@ export default async function BookingNewPage({ searchParams }: Props) {
 
   if (!serviceType) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-[#F5F5F7]">
-        <div className="rounded-3xl p-10 max-w-md w-full text-center border bg-white border-[#E8E8ED]">
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[#F5F5F7]">
-            <CreditCard className="w-8 h-8 text-[#1D1D1F]" />
+      <div className="min-h-screen flex items-center justify-center px-4 bg-[#ECF0EF]">
+        <div className="rounded-3xl p-10 max-w-md w-full text-center border bg-white border-[#D5DFDB]">
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[#ECF0EF]">
+            <CreditCard className="w-8 h-8 text-[#0A1F18]" />
           </div>
-          <h2 className="text-xl font-semibold mb-2 text-[#1D1D1F]">
+          <h2 className="text-xl font-semibold mb-2 text-[#0A1F18]">
             Kunne ikke finne tjenesten
           </h2>
-          <p className="text-[#86868B]">
+          <p className="text-[#7A8C85]">
             Tjenesten ble ikke funnet. Vennligst prøv igjen.
           </p>
         </div>
@@ -85,7 +85,7 @@ export default async function BookingNewPage({ searchParams }: Props) {
     const instructor = instructors?.find((i) => i.id === instructorId);
     if (instructor) {
       return (
-        <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F5F5F7]">
+        <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#ECF0EF]">
           <BookingPaymentForm
             serviceType={serviceType}
             instructor={{
@@ -102,7 +102,7 @@ export default async function BookingNewPage({ searchParams }: Props) {
 
   // Show step manager for instructor/time selection
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F5F5F7]">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#ECF0EF]">
       <BookingStepManager
         serviceType={serviceType}
         instructors={(instructors ?? []).map((i) => ({

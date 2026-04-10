@@ -42,10 +42,10 @@ export function SGOverviewCard({
   return (
     <div className="portal-card">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-[15px] font-semibold text-[#1D1D1F]">
+        <h3 className="text-[15px] font-semibold text-[#0A1F18]">
           Strokes Gained
         </h3>
-        <span className="text-xs text-[#86868B]">{period}</span>
+        <span className="text-xs text-[#7A8C85]">{period}</span>
       </div>
 
       {/* SG values grid */}
@@ -53,7 +53,7 @@ export function SGOverviewCard({
         {categories.map((cat) => (
           <div
             key={cat.label}
-            className="bg-[#F5F5F7] rounded-xl p-3 flex items-center justify-between"
+            className="bg-[#ECF0EF] rounded-xl p-3 flex items-center justify-between"
           >
             <span className="text-xs font-semibold text-[#48484A]">
               {cat.label}
@@ -61,7 +61,7 @@ export function SGOverviewCard({
             {cat.value !== null ? (
               <span
                 className={`text-sm font-bold tabular-nums ${
-                  cat.value >= 0 ? "text-[#2D6A4F]" : "text-[#D14343]"
+                  cat.value >= 0 ? "text-[#005840]" : "text-[#D14343]"
                 }`}
               >
                 {cat.value > 0 ? "+" : ""}
@@ -81,19 +81,19 @@ export function SGOverviewCard({
         <div className="w-[200px] h-[160px]">
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="70%">
-              <PolarGrid stroke="#E8E8ED" strokeWidth={0.5} />
+              <PolarGrid stroke="#D5DFDB" strokeWidth={0.5} />
               <PolarAngleAxis
                 dataKey="subject"
                 tick={{
                   fontSize: 10,
                   fontWeight: 600,
-                  fill: "#86868B",
+                  fill: "#7A8C85",
                 }}
               />
               <Radar
                 dataKey="value"
-                stroke={hasData ? "#2D6A4F" : "#D2D2D7"}
-                fill={hasData ? "#2D6A4F" : "#D2D2D7"}
+                stroke={hasData ? "#005840" : "#D2D2D7"}
+                fill={hasData ? "#005840" : "#D2D2D7"}
                 fillOpacity={hasData ? 0.12 : 0.05}
                 strokeWidth={2}
                 animationDuration={1200}

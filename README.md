@@ -83,8 +83,8 @@ Se `docs/ART-DIRECTION.md` for komplett design-spesifikasjon.
 - **Black:** `#1D1D1F` (tekst, knapper)
 - **White:** `#FFFFFF` (bakgrunn)
 - **Grey:** `#F5F5F7`, `#E8E8ED`, `#6E6E73` (overflater, tekst)
-- **Brand Green:** `#2D6A4F` (logo, CTA)
-- **Success:** `#34C759` | **Error:** `#FF3B30` | **AI:** `#AF52DE`
+- **Brand Green:** `#005840` (logo, CTA)
+- **Success:** `#2A7D5A` | **Error:** `#B84233` | **AI:** `#AF52DE`
 
 ### Typografi
 - **Font:** Inter (variable, 300-700)

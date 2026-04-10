@@ -127,7 +127,7 @@ const container = {
 };
 
 const heading = {
-  color: "#1D1D1F",
+  color: "#0A1F18",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
@@ -159,7 +159,7 @@ const statBox = {
 };
 
 const statValue = {
-  color: "#1D1D1F",
+  color: "#0A1F18",
   fontSize: "28px",
   fontWeight: "700" as const,
   margin: "0",
@@ -195,7 +195,7 @@ const ctaText = {
 };
 
 const button = {
-  backgroundColor: "#1D1D1F",
+  backgroundColor: "#0A1F18",
   borderRadius: "980px",
   color: "#ffffff",
   fontSize: "14px",

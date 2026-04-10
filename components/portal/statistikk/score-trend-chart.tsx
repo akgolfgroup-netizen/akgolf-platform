@@ -176,7 +176,7 @@ export function ScoreTrendChart({
               <Line
                 type="monotone"
                 dataKey="movingAvg"
-                stroke="#34C759"
+                stroke="#2A7D5A"
                 strokeWidth={2}
                 strokeDasharray="5 5"
                 dot={false}

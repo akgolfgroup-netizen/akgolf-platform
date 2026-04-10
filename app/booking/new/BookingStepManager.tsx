@@ -48,7 +48,7 @@ export function BookingStepManager({ serviceType, instructors, studentId }: Prop
 
   // Show date/time picker with instructor tabs
   return (
-    <div className="rounded-3xl p-8 max-w-2xl w-full border bg-white border-[#E8E8ED]">
+    <div className="rounded-3xl p-8 max-w-2xl w-full border bg-white border-[#D5DFDB]">
       <DateTimePicker
         serviceTypeId={serviceType.id}
         instructorId={instructors[0]?.id ?? ""}

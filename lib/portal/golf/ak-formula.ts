@@ -29,7 +29,7 @@ export const PYRAMID_LEVELS = {
     name: "Slagtrening",
     description: "Slagkvalitet — avstand, nøyaktighet, ballkontroll",
     order: 3,
-    color: "#2D6A4F", // Green
+    color: "#005840", // Green
   },
   SPILL: {
     id: "SPILL",
@@ -185,7 +185,7 @@ export type TrainingArea = keyof typeof TRAINING_AREAS;
 
 export const TRAINING_AREA_CATEGORIES = {
   FULL_SWING: { name: "Full Swing", color: "#3B82F6" },
-  SHORT_GAME: { name: "Nærspill", color: "#2D6A4F" },
+  SHORT_GAME: { name: "Nærspill", color: "#005840" },
   PUTTING: { name: "Putting", color: "#8B5CF6" },
 } as const;
 
@@ -352,7 +352,7 @@ export const LIFE_DIMENSIONS = {
     id: "EMO",
     name: "Emosjonell",
     description: "Følelsesregulering, håndtering av press",
-    color: "#2D6A4F",
+    color: "#005840",
   },
   KAR: {
     id: "KAR",

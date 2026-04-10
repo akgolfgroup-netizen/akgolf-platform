@@ -9,7 +9,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
 
   return (
     <div
-      className={`border-b border-grey-200 transition-[border-color,background-color] duration-300 rounded-xl hover:bg-[#F5F5F7]/50 ${
+      className={`border-b border-grey-200 transition-[border-color,background-color] duration-300 rounded-xl hover:bg-[#ECF0EF]/50 ${
         open ? "border-l-2 border-l-black pl-4 -ml-4 bg-grey-100/50" : "border-l-2 border-l-transparent pl-4 -ml-4"
       }`}
     >

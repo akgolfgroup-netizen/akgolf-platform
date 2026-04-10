@@ -56,17 +56,21 @@ import { HERO_CONTENT } from "@/lib/website-constants";
 
 ## Styling
 
-### Design tokens (Brand Guide 2026 — Apple Light)
-
-**Offisiell kilde:** `Google Drive/AK Golf Group/ak-golf-academy/branding/2026/design-tokens.css`
+### Design tokens (Brand Guide V2.0 · 2026)
 
 Se `docs/ART-DIRECTION.md` for komplett visuell spesifikasjon.
 
-Farger: "Sort. Hvit. En gronn." — #1D1D1F base + AK Green #2D6A4F (brand).
-Semantikk: Success=#34C759, Error=#FF3B30, Warning=#FF9500 (Apple-standard).
-AI: Lilla #AF52DE (--color-ai). Logo-prikk: Gra #D2D2D7 som default.
+Kjernefarger (Brand Guide V2.0):
+- Primary: #005840 (--color-primary) — hovedfarge, bakgrunner
+- Accent: #D1F843 (--color-accent-cta) — CTA-knapper, uthevinger
+- Surface: #ECF0EF (--color-surface) — bakgrunner, kort
+- Text: #324D45 (--color-text) — brodtekst, overskrifter
+- Muted: #A5B2AD (--color-muted) — hjelpetekst, rammer
 
-**ALDRI bruk:** `--color-gold`, `--apple-gold-*`, `#B07D4F` (bronse), `--color-ink-*`, #2D6A4F for success
+Semantikk: Success=#2A7D5A, Error=#B84233, Warning=#C48A32 (Brand Guide V2.0 §04).
+AI: Lilla #AF52DE (--color-ai).
+
+**ALDRI bruk:** `--color-gold`, `--apple-gold-*`, `#B07D4F`, `--color-ink-*`, `--hg-*`, #2D6A4F (gammel brand), #34C759 (gammel success), #FF3B30 (gammel error), #FF9500 (gammel warning), #1D1D1F (gammel svart)
 
 ### Font
 Inter via `next/font/google` — definert i `app/layout.tsx`.

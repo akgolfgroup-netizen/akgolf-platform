@@ -56,7 +56,7 @@ const AGENT_CONFIGS = [
     description: "Analyserer data og genererer rapporter",
     team: "technical" as const,
     icon: TrendingUp,
-    color: "#2D6A4F",
+    color: "#005840",
     scopes: ["analytics", "reporting"],
   },
   {
@@ -231,7 +231,7 @@ export default function AgenterPage() {
               { agent: "Coach", action: "Oppdaterte treningsplan for Erik S.", time: "2 min siden", color: "#d2f000" },
               { agent: "Mercury", action: "Genererte Instagram-innlegg for Junior Academy", time: "15 min siden", color: "#00d2ff" },
               { agent: "Guardian", action: "Godkjente nyhetsbrev-design", time: "1 time siden", color: "#ff9500" },
-              { agent: "Atlas", action: "Oppdaterte MTD-rapport", time: "2 timer siden", color: "#2D6A4F" },
+              { agent: "Atlas", action: "Oppdaterte MTD-rapport", time: "2 timer siden", color: "#005840" },
             ].map((log, i) => (
               <div
                 key={i}

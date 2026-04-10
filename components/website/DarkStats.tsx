@@ -14,14 +14,14 @@ function DarkStat({ value, suffix, label }: { value: number; suffix: string; lab
         {isDecimal ? count.toFixed(1) : Math.round(count)}
         {suffix}
       </span>
-      <p className="text-sm md:text-base text-[#86868B] mt-3">{label}</p>
+      <p className="text-sm md:text-base text-[#7A8C85] mt-3">{label}</p>
     </div>
   );
 }
 
 export function DarkStats() {
   return (
-    <section className="py-[120px] md:py-[160px] bg-[#1D1D1F] grain-overlay">
+    <section className="py-[120px] md:py-[160px] bg-[#0A1F18] grain-overlay">
       <div className="w-container">
         <RevealOnScroll>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">

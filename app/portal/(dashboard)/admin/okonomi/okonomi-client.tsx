@@ -83,10 +83,10 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
             <MCCardBody>
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
+                  <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px]">
                     Omsetning MTD
                   </div>
-                  <div className="text-2xl font-bold text-[#1D1D1F] mt-1">
+                  <div className="text-2xl font-bold text-[#0A1F18] mt-1">
                     {formatCurrency(data.mtdRevenue)}
                   </div>
                   <div className="flex items-center gap-1 mt-1">
@@ -115,13 +115,13 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
             <MCCardBody>
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
+                  <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px]">
                     Transaksjoner
                   </div>
-                  <div className="text-2xl font-bold text-[#1D1D1F] mt-1">
+                  <div className="text-2xl font-bold text-[#0A1F18] mt-1">
                     {data.mtdTransactions}
                   </div>
-                  <div className="text-[10px] text-[#86868B] mt-1">Denne maneden</div>
+                  <div className="text-[10px] text-[#7A8C85] mt-1">Denne maneden</div>
                 </div>
                 <div className="w-10 h-10 rounded-lg bg-[#DBEAFE] flex items-center justify-center">
                   <CreditCard className="w-5 h-5 text-[#007AFF]" />
@@ -134,13 +134,13 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
             <MCCardBody>
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
+                  <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px]">
                     Aktive abonnementer
                   </div>
-                  <div className="text-2xl font-bold text-[#1D1D1F] mt-1">
+                  <div className="text-2xl font-bold text-[#0A1F18] mt-1">
                     {data.activeSubscriptions}
                   </div>
-                  <div className="text-[10px] text-[#86868B] mt-1">
+                  <div className="text-[10px] text-[#7A8C85] mt-1">
                     Coaching-pakker
                   </div>
                 </div>
@@ -155,15 +155,15 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
             <MCCardBody>
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px]">
+                  <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px]">
                     Gj.snitt per transaksjon
                   </div>
-                  <div className="text-2xl font-bold text-[#1D1D1F] mt-1">
+                  <div className="text-2xl font-bold text-[#0A1F18] mt-1">
                     {data.mtdTransactions > 0
                       ? formatCurrency(data.mtdRevenue / data.mtdTransactions)
                       : formatCurrency(0)}
                   </div>
-                  <div className="text-[10px] text-[#86868B] mt-1">MTD</div>
+                  <div className="text-[10px] text-[#7A8C85] mt-1">MTD</div>
                 </div>
                 <div className="w-10 h-10 rounded-lg bg-[#FEF3C7] flex items-center justify-center">
                   <TrendingUp className="w-5 h-5 text-[#F59E0B]" />
@@ -189,16 +189,16 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
                   return (
                     <div key={service.type}>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-[11px] font-medium text-[#1D1D1F]">
+                        <span className="text-[11px] font-medium text-[#0A1F18]">
                           {service.type}
                         </span>
-                        <span className="text-[11px] text-[#6E6E73]">
+                        <span className="text-[11px] text-[#5A6E66]">
                           {formatCurrency(service.amount)} ({percentage.toFixed(1)}%)
                         </span>
                       </div>
-                      <div className="h-2 bg-[#E8E8ED] rounded-full overflow-hidden">
+                      <div className="h-2 bg-[#D5DFDB] rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-[#1D1D1F] rounded-full"
+                          className="h-full bg-[#0A1F18] rounded-full"
                           style={{ width: `${percentage}%` }}
                         />
                       </div>
@@ -206,7 +206,7 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
                   );
                 })
               ) : (
-                <div className="text-[10px] text-[#86868B] text-center py-4">
+                <div className="text-[10px] text-[#7A8C85] text-center py-4">
                   Ingen transaksjoner denne maneden
                 </div>
               )}
@@ -237,7 +237,7 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
                       <MCTableCell>
                         <div>
                           <div className="font-medium">{tx.customerName}</div>
-                          <div className="text-[9px] text-[#86868B]">
+                          <div className="text-[9px] text-[#7A8C85]">
                             {tx.customerEmail}
                           </div>
                         </div>
@@ -263,14 +263,14 @@ export function OkonomiClient({ data }: OkonomiClientProps) {
                             : tx.status}
                         </MCBadge>
                       </MCTableCell>
-                      <MCTableCell className="text-[#86868B]">
+                      <MCTableCell className="text-[#7A8C85]">
                         {formatDate(tx.createdAt)}
                       </MCTableCell>
                     </MCTableRow>
                   ))
                 ) : (
                   <MCTableRow>
-                    <MCTableCell colSpan={5} className="text-center py-8 text-[#86868B]">
+                    <MCTableCell colSpan={5} className="text-center py-8 text-[#7A8C85]">
                       Ingen transaksjoner funnet
                     </MCTableCell>
                   </MCTableRow>

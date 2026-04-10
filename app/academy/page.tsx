@@ -58,7 +58,7 @@ export default function AcademyPage() {
         />
         <PageTransition>
           {/* ─── 1. Hero (dark, half height) ─── */}
-          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-[#1D1D1F] grain-overlay">
+          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-[#0A1F18] grain-overlay">
             <div className="absolute inset-0 pointer-events-none">
               <Image
                 src={ACADEMY_HERO_V2.heroImage}
@@ -122,7 +122,7 @@ export default function AcademyPage() {
               >
                 <Link
                   href="/booking"
-                  className="px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
+                  className="px-7 py-3.5 rounded-[980px] bg-white text-[#0A1F18] text-sm font-semibold hover:bg-white/90 transition-colors"
                 >
                   {ACADEMY_HERO_V2.ctaPrimary} &rarr;
                 </Link>
@@ -151,11 +151,11 @@ export default function AcademyPage() {
               <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 {ACADEMY_METHOD_V2.steps.map((step) => (
                   <StaggerItem key={step.number}>
-                    <div className="bg-[#F5F5F7] rounded-[20px] border border-[#E8E8ED] p-8 h-full">
-                      <span className="block text-[80px] font-[900] leading-none text-[#E8E8ED] mb-4">
+                    <div className="bg-[#ECF0EF] rounded-[20px] border border-[#D5DFDB] p-8 h-full">
+                      <span className="block text-[80px] font-[900] leading-none text-[#D5DFDB] mb-4">
                         {step.number}
                       </span>
-                      <h3 className="text-xl font-semibold text-[#1D1D1F] mb-3">
+                      <h3 className="text-xl font-semibold text-[#0A1F18] mb-3">
                         {step.title}
                       </h3>
                       <p className="text-sm text-grey-500 leading-relaxed">
@@ -204,19 +204,19 @@ export default function AcademyPage() {
                       className={`rounded-[20px] p-8 h-full flex flex-col relative ${
                         pkg.highlighted
                           ? "bg-white border-2 border-[var(--color-brand)]"
-                          : "bg-white border border-[#E8E8ED]"
+                          : "bg-white border border-[#D5DFDB]"
                       }`}
                     >
                       {pkg.badge && (
-                        <span className="absolute -top-3 left-8 px-3 py-1 bg-[#1D1D1F] text-white text-[10px] font-mono uppercase tracking-[0.12em] rounded-full font-semibold">
+                        <span className="absolute -top-3 left-8 px-3 py-1 bg-[#0A1F18] text-white text-[10px] font-mono uppercase tracking-[0.12em] rounded-full font-semibold">
                           {pkg.badge}
                         </span>
                       )}
-                      <h3 className="text-xl font-semibold text-[#1D1D1F] mb-2">
+                      <h3 className="text-xl font-semibold text-[#0A1F18] mb-2">
                         {pkg.name}
                       </h3>
                       <div className="mb-4">
-                        <span className="text-[48px] font-bold text-[#1D1D1F]">
+                        <span className="text-[48px] font-bold text-[#0A1F18]">
                           {pkg.price}
                         </span>
                         <span className="text-sm text-grey-500 ml-2">
@@ -253,7 +253,7 @@ export default function AcademyPage() {
                       </ul>
                       <Link
                         href="/booking"
-                        className="mt-8 px-7 py-3.5 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors text-center block"
+                        className="mt-8 px-7 py-3.5 rounded-[980px] bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors text-center block"
                       >
                         Book coaching &rarr;
                       </Link>
@@ -265,7 +265,7 @@ export default function AcademyPage() {
           </section>
 
           {/* ─── 5. CTA (dark) ─── */}
-          <section className="relative py-28 md:py-40 bg-[#1D1D1F] overflow-hidden">
+          <section className="relative py-28 md:py-40 bg-[#0A1F18] overflow-hidden">
             <div className="absolute inset-0 pointer-events-none">
               <Image
                 src={ACADEMY_CTA_V2.heroImage}
@@ -287,7 +287,7 @@ export default function AcademyPage() {
                   </p>
                   <Link
                     href="/booking"
-                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
+                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-white text-[#0A1F18] text-sm font-semibold hover:bg-white/90 transition-colors"
                   >
                     {ACADEMY_CTA_V2.ctaLabel} &rarr;
                   </Link>

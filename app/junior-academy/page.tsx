@@ -60,7 +60,7 @@ export default function JuniorPage() {
         />
         <PageTransition>
           {/* ─── 1. Hero (dark, half height) ─── */}
-          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-[#1D1D1F] grain-overlay">
+          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-[#0A1F18] grain-overlay">
             <div className="absolute inset-0 pointer-events-none">
               <Image
                 src={JUNIOR_HERO_V2.heroImage}
@@ -124,7 +124,7 @@ export default function JuniorPage() {
               >
                 <Link
                   href="#apply"
-                  className="px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
+                  className="px-7 py-3.5 rounded-[980px] bg-white text-[#0A1F18] text-sm font-semibold hover:bg-white/90 transition-colors"
                 >
                   {JUNIOR_HERO_V2.ctaPrimary} &rarr;
                 </Link>
@@ -153,11 +153,11 @@ export default function JuniorPage() {
 
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-10">
                     <div className="text-center">
-                      <p className="text-3xl md:text-4xl font-bold text-[#1D1D1F]">
+                      <p className="text-3xl md:text-4xl font-bold text-[#0A1F18]">
                         {JUNIOR_ACADEMY_PROGRAM.price}
                       </p>
                     </div>
-                    <div className="hidden sm:block w-px h-10 bg-[#E8E8ED]" />
+                    <div className="hidden sm:block w-px h-10 bg-[#D5DFDB]" />
                     <div className="text-center">
                       <p className="text-sm text-grey-500">
                         {JUNIOR_ACADEMY_PROGRAM.capacity}
@@ -167,7 +167,7 @@ export default function JuniorPage() {
 
                   <Link
                     href="#apply"
-                    className="inline-flex px-8 py-4 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
+                    className="inline-flex px-8 py-4 rounded-[980px] bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
                   >
                     {JUNIOR_ACADEMY_PROGRAM.ctaLabel} &rarr;
                   </Link>
@@ -199,7 +199,7 @@ export default function JuniorPage() {
           </section>
 
           {/* ─── 3. GFGK Junior treningsgrupper (light grey bg) ─── */}
-          <section id="age-groups" className="py-28 md:py-40 bg-[#F5F5F7]">
+          <section id="age-groups" className="py-28 md:py-40 bg-[#ECF0EF]">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center mb-16">
@@ -213,17 +213,17 @@ export default function JuniorPage() {
               <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 {JUNIOR_AGE_GROUPS_V2.groups.map((group) => (
                   <StaggerItem key={group.ageRange}>
-                    <div className="bg-white rounded-[20px] border border-[#E8E8ED] p-8 h-full flex flex-col">
+                    <div className="bg-white rounded-[20px] border border-[#D5DFDB] p-8 h-full flex flex-col">
                       <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-grey-500 font-medium">
                         {group.ageRange}
                       </span>
-                      <h3 className="text-2xl font-bold text-[#1D1D1F] mt-3 mb-3">
+                      <h3 className="text-2xl font-bold text-[#0A1F18] mt-3 mb-3">
                         {group.name}
                       </h3>
                       <p className="text-sm text-grey-500 leading-relaxed mb-6 flex-1">
                         {group.description}
                       </p>
-                      <div className="pt-4 border-t border-[#E8E8ED]">
+                      <div className="pt-4 border-t border-[#D5DFDB]">
                         <p className="text-xs text-grey-500">
                           {group.schedule}
                         </p>
@@ -260,7 +260,7 @@ export default function JuniorPage() {
           </section>
 
           {/* ─── 4. WANG Toppidrett (dark section) ─── */}
-          <section className="py-28 md:py-40 bg-[#1D1D1F]">
+          <section className="py-28 md:py-40 bg-[#0A1F18]">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="max-w-2xl mx-auto text-center">
@@ -286,7 +286,7 @@ export default function JuniorPage() {
                     href="https://wang.no/toppidrett/fredrikstad"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
+                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-white text-[#0A1F18] text-sm font-semibold hover:bg-white/90 transition-colors"
                   >
                     {JUNIOR_WANG_V2.ctaLabel} &rarr;
                   </a>
@@ -309,14 +309,14 @@ export default function JuniorPage() {
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <Link
                       href={JUNIOR_CTA_V2.ctaPrimaryHref}
-                      className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
+                      className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
                     >
                       {JUNIOR_CTA_V2.ctaPrimary} &rarr;
                     </Link>
                     {/* TODO: Oppdater href til korrekt GFGK Junior kontakt-URL */}
                     <a
                       href={JUNIOR_CTA_V2.ctaSecondaryHref}
-                      className="inline-flex px-7 py-3.5 rounded-[980px] border border-[#E8E8ED] text-[#1D1D1F] text-sm font-semibold hover:bg-[#F5F5F7] transition-colors"
+                      className="inline-flex px-7 py-3.5 rounded-[980px] border border-[#D5DFDB] text-[#0A1F18] text-sm font-semibold hover:bg-[#ECF0EF] transition-colors"
                     >
                       {JUNIOR_CTA_V2.ctaSecondary} &rarr;
                     </a>

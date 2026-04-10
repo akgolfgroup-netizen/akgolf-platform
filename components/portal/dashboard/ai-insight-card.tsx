@@ -109,7 +109,7 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
         </p>
 
         {/* Focus tip */}
-        <div className="flex items-start gap-3 mt-4 p-3 rounded-xl bg-[#F5F5F7] border border-[#E8E8ED]">
+        <div className="flex items-start gap-3 mt-4 p-3 rounded-xl bg-[#ECF0EF] border border-[#D5DFDB]">
           <Lightbulb className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-xs font-semibold text-[var(--color-grey-700)] uppercase tracking-wide mb-1">

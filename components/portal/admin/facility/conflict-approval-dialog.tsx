@@ -73,10 +73,10 @@ export function ConflictApprovalDialog({
             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white rounded-2xl shadow-2xl z-50 overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)] bg-[#FF9500]/5">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)] bg-[#C48A32]/5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#FF9500]/20 flex items-center justify-center">
-                  <AlertTriangle className="w-5 h-5 text-[#FF9500]" aria-hidden="true" />
+                <div className="w-10 h-10 rounded-full bg-[#C48A32]/20 flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-[#C48A32]" aria-hidden="true" />
                 </div>
                 <h2 id={titleId} className="text-lg font-semibold text-[var(--color-grey-900)]">
                   Konflikt oppdaget
@@ -111,7 +111,7 @@ export function ConflictApprovalDialog({
                     >
                       <div
                         className={`w-2 h-2 rounded-full ${
-                          conflict.type === "booking" ? "bg-[#86868B]" : "bg-[#007AFF]"
+                          conflict.type === "booking" ? "bg-[#7A8C85]" : "bg-[#007AFF]"
                         }`}
                       />
                       <div className="flex-1 min-w-0">
@@ -157,7 +157,7 @@ export function ConflictApprovalDialog({
               </button>
               <button
                 onClick={() => onConfirm(note || undefined)}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#FF9500] text-white font-medium hover:bg-[#E88800] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#C48A32] text-white font-medium hover:bg-[#E88800] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
                 Godkjenn likevel

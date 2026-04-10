@@ -18,12 +18,13 @@ Inter via `next/font/google`. Ikke lokal font-fil.
 - Stripe forventer øre: `service.price * 100`.
 - Aldri vis MVA på kundevendte sider.
 
-## CSS / Design
+## CSS / Design — Brand Guide V2.0
 - Én `app/globals.css` for hele appen. Aldri lag globals.css i undermapper.
 - Bruk kun offisielle tokens. Aldri `--color-gold`, `--apple-gold-*`, `--color-ink-*`.
-- Grey-skala: `--color-grey-100` (#F5F5F7) til `--color-grey-900` (#1D1D1F). Ingen `--color-grey-50/050`.
-- Brand #2D6A4F er KUN for logo, nav-aksent, CTA. Aldri for success-indikatorer.
-- Success: `--color-success` (#34C759). Error: `--color-error` (#FF3B30). AI: `--color-ai` (#AF52DE).
+- Grey-skala: `--color-grey-100` (#ECF0EF) til `--color-grey-900` (#0A1F18). Grønn-tonet, ikke nøytral.
+- Primary: #005840 (--color-primary). Accent/CTA: #D1F843 (--color-accent-cta). Aldri bruk gamle #2D6A4F.
+- Success: `--color-success` (#2A7D5A). Error: `--color-error` (#B84233). Warning: `--color-warning` (#C48A32). AI: `--color-ai` (#AF52DE).
+- Heritage Grid er DROPPET. Aldri bruk `--hg-*` variabler. Aldri dark mode.
 - Aldri bruk emojier. Bruk Lucide-ikoner.
 
 ## Komponenter

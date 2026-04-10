@@ -75,7 +75,7 @@ export function ActivityForm({
   };
 
   const selectedType = ACTIVITY_TYPES.find((t) => t.value === formData.activityType);
-  const typeColor = ACTIVITY_TYPE_COLORS[formData.activityType]?.color ?? "#86868B";
+  const typeColor = ACTIVITY_TYPE_COLORS[formData.activityType]?.color ?? "#7A8C85";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">

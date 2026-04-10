@@ -74,22 +74,22 @@ export function ExerciseSidebar() {
   }, [activePyramid, activeArea, activeM, search]);
 
   return (
-    <div className="w-[300px] bg-white border-l border-[#E8E8ED] flex flex-col h-full overflow-hidden">
+    <div className="w-[300px] bg-white border-l border-[#D5DFDB] flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-[#E8E8ED]">
-        <h3 className="text-[15px] font-semibold text-[#1D1D1F] mb-3">
+      <div className="p-4 border-b border-[#D5DFDB]">
+        <h3 className="text-[15px] font-semibold text-[#0A1F18] mb-3">
           Ovelsesbank
         </h3>
 
         {/* Search */}
         <div className="relative mb-3">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#86868B]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#7A8C85]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Sok ovelser..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F5F5F7] border border-[#E8E8ED] rounded-lg focus:outline-none focus:border-[#1D1D1F] focus:ring-1 focus:ring-[#1D1D1F]/10 transition-colors"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-[#ECF0EF] border border-[#D5DFDB] rounded-lg focus:outline-none focus:border-[#0A1F18] focus:ring-1 focus:ring-[#0A1F18]/10 transition-colors"
           />
         </div>
 
@@ -106,7 +106,7 @@ export function ExerciseSidebar() {
               className={`flex-1 text-[10px] font-bold py-1.5 rounded-md transition-colors ${
                 activePyramid === p.id
                   ? PYRAMID_COLORS[p.id].active
-                  : "text-[#86868B] hover:bg-[#F5F5F7]"
+                  : "text-[#7A8C85] hover:bg-[#ECF0EF]"
               }`}
             >
               {p.label}
@@ -116,14 +116,14 @@ export function ExerciseSidebar() {
       </div>
 
       {/* Area filter */}
-      <div className="px-4 py-3 border-b border-[#E8E8ED]">
+      <div className="px-4 py-3 border-b border-[#D5DFDB]">
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setActiveArea(null)}
             className={`text-[10px] font-semibold px-2.5 py-1 rounded-full transition-colors ${
               !activeArea
-                ? "bg-[#1D1D1F] text-white"
-                : "text-[#86868B] hover:bg-[#F5F5F7]"
+                ? "bg-[#0A1F18] text-white"
+                : "text-[#7A8C85] hover:bg-[#ECF0EF]"
             }`}
           >
             Alle
@@ -134,8 +134,8 @@ export function ExerciseSidebar() {
               onClick={() => setActiveArea(activeArea === area ? null : area)}
               className={`text-[10px] font-semibold px-2.5 py-1 rounded-full transition-colors ${
                 activeArea === area
-                  ? "bg-[#1D1D1F] text-white"
-                  : "text-[#86868B] hover:bg-[#F5F5F7]"
+                  ? "bg-[#0A1F18] text-white"
+                  : "text-[#7A8C85] hover:bg-[#ECF0EF]"
               }`}
             >
               {area}
@@ -149,8 +149,8 @@ export function ExerciseSidebar() {
             onClick={() => setActiveM(null)}
             className={`text-[10px] font-semibold px-2 py-1 rounded-full transition-colors ${
               activeM === null
-                ? "bg-[#1D1D1F] text-white"
-                : "text-[#86868B] hover:bg-[#F5F5F7]"
+                ? "bg-[#0A1F18] text-white"
+                : "text-[#7A8C85] hover:bg-[#ECF0EF]"
             }`}
           >
             Alle M
@@ -161,8 +161,8 @@ export function ExerciseSidebar() {
               onClick={() => setActiveM(activeM === m ? null : m)}
               className={`text-[10px] font-semibold px-2 py-1 rounded-full transition-colors ${
                 activeM === m
-                  ? "bg-[#1D1D1F] text-white"
-                  : "text-[#86868B] hover:bg-[#F5F5F7]"
+                  ? "bg-[#0A1F18] text-white"
+                  : "text-[#7A8C85] hover:bg-[#ECF0EF]"
               }`}
             >
               M{m}
@@ -171,7 +171,7 @@ export function ExerciseSidebar() {
         </div>
 
         {/* Filter summary */}
-        <p className="text-[10px] text-[#86868B] mt-2">
+        <p className="text-[10px] text-[#7A8C85] mt-2">
           {activePyramid}
           {activeArea ? ` \u2192 ${activeArea}` : ""}
           {activeM !== null ? ` \u00B7 M${activeM}` : " \u00B7 Alle M"}
@@ -190,7 +190,7 @@ export function ExerciseSidebar() {
           filtered.map((ex) => (
             <div
               key={ex.id}
-              className="flex items-start gap-2 p-3 rounded-xl bg-[#F5F5F7] border border-transparent hover:border-[#E8E8ED] hover:bg-white cursor-grab active:cursor-grabbing transition-colors group"
+              className="flex items-start gap-2 p-3 rounded-xl bg-[#ECF0EF] border border-transparent hover:border-[#D5DFDB] hover:bg-white cursor-grab active:cursor-grabbing transition-colors group"
             >
               <GripVertical className="w-3.5 h-3.5 text-[#D2D2D7] mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
               <div className="flex-1 min-w-0">
@@ -198,15 +198,15 @@ export function ExerciseSidebar() {
                   <div
                     className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${PYRAMID_COLORS[ex.pyramid].dot}`}
                   />
-                  <span className="text-xs font-semibold text-[#1D1D1F] truncate">
+                  <span className="text-xs font-semibold text-[#0A1F18] truncate">
                     {ex.name}
                   </span>
                 </div>
-                <p className="text-[10px] text-[#86868B] mt-0.5 ml-3.5">
+                <p className="text-[10px] text-[#7A8C85] mt-0.5 ml-3.5">
                   {ex.area} {ex.meta ? `\u00B7 ${ex.meta}` : ""} {ex.mLevel > 0 ? `\u00B7 M${ex.mLevel}` : ""}
                 </p>
               </div>
-              <span className="text-[10px] font-semibold text-[#86868B] tabular-nums flex-shrink-0">
+              <span className="text-[10px] font-semibold text-[#7A8C85] tabular-nums flex-shrink-0">
                 {ex.durationMinutes} min
               </span>
             </div>
@@ -215,7 +215,7 @@ export function ExerciseSidebar() {
       </div>
 
       {/* AI suggestion */}
-      <div className="p-4 border-t border-[#E8E8ED] bg-[var(--portal-ai-light)]">
+      <div className="p-4 border-t border-[#D5DFDB] bg-[var(--portal-ai-light)]">
         <div className="flex items-center gap-2 mb-2">
           <Sparkles className="w-3.5 h-3.5 text-[#AF52DE]" />
           <span className="text-[10px] font-bold uppercase tracking-wide text-[#6B21A8]">

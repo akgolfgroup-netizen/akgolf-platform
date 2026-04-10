@@ -9,7 +9,7 @@ export function MCCard({ children, className }: MCCardProps) {
   return (
     <div
       className={cn(
-        "bg-white rounded-xl border border-[#E8E8ED] overflow-hidden",
+        "bg-white rounded-xl border border-[#D5DFDB] overflow-hidden",
         className
       )}
     >
@@ -27,7 +27,7 @@ export function MCCardHeader({ children, className }: MCCardHeaderProps) {
   return (
     <div
       className={cn(
-        "px-4 py-3 border-b border-[#E8E8ED] flex items-center justify-between",
+        "px-4 py-3 border-b border-[#D5DFDB] flex items-center justify-between",
         className
       )}
     >
@@ -43,7 +43,7 @@ interface MCCardTitleProps {
 
 export function MCCardTitle({ children, className }: MCCardTitleProps) {
   return (
-    <h3 className={cn("text-[13px] font-semibold text-[#1D1D1F]", className)}>
+    <h3 className={cn("text-[13px] font-semibold text-[#0A1F18]", className)}>
       {children}
     </h3>
   );
@@ -66,7 +66,7 @@ interface MCCardFooterProps {
 export function MCCardFooter({ children, className }: MCCardFooterProps) {
   return (
     <div
-      className={cn("px-4 py-3 border-t border-[#E8E8ED] bg-[#F5F5F7]", className)}
+      className={cn("px-4 py-3 border-t border-[#D5DFDB] bg-[#ECF0EF]", className)}
     >
       {children}
     </div>

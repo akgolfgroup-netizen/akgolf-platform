@@ -92,8 +92,8 @@ export default async function RoundSummaryPage({ params }: Props) {
           {[
             { label: "Eagle+", count: eagles, color: "#EAB308" },
             { label: "Birdie", count: birdies, color: "#EF4444" },
-            { label: "Par", count: pars, color: "#2D6A4F" },
-            { label: "Bogey", count: bogeys, color: "#6E6E73" },
+            { label: "Par", count: pars, color: "#005840" },
+            { label: "Bogey", count: bogeys, color: "#5A6E66" },
             { label: "Dobbel+", count: doubles, color: "#D2D2D7" },
           ].map((item) => {
             const maxCount = Math.max(eagles, birdies, pars, bogeys, doubles, 1);

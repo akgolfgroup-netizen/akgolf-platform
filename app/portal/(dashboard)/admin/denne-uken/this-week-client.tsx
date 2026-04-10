@@ -50,15 +50,15 @@ interface ThisWeekClientProps {
 const PLAN_LEVEL_CONFIG: Record<string, { label: string; color: string }> = {
   A: { label: "Plan A", color: "#d2f000" },
   B: { label: "Plan B", color: "#00d2ff" },
-  C: { label: "Plan C", color: "#86868B" },
+  C: { label: "Plan C", color: "#7A8C85" },
 };
 
 const GOAL_TYPE_CONFIG: Record<string, { label: string; color: string }> = {
-  WIN: { label: "Seier", color: "#2D6A4F" },
+  WIN: { label: "Seier", color: "#005840" },
   TOP3: { label: "Topp 3", color: "#d2f000" },
   TOP10: { label: "Topp 10", color: "#007AFF" },
-  CUT: { label: "Cut", color: "#86868B" },
-  EXPERIENCE: { label: "Erfaring", color: "#FF9500" },
+  CUT: { label: "Cut", color: "#7A8C85" },
+  EXPERIENCE: { label: "Erfaring", color: "#C48A32" },
 };
 
 export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
@@ -164,8 +164,8 @@ export function ThisWeekClient({ plans, weekStats }: ThisWeekClientProps) {
                   {/* Players List */}
                   <div className="space-y-3">
                     {tournamentPlans.map((plan) => {
-                      const planLevel = PLAN_LEVEL_CONFIG[plan.planLevel] || { label: plan.planLevel, color: "#86868B" };
-                      const goalType = GOAL_TYPE_CONFIG[plan.goalType] || { label: plan.goalType, color: "#86868B" };
+                      const planLevel = PLAN_LEVEL_CONFIG[plan.planLevel] || { label: plan.planLevel, color: "#7A8C85" };
+                      const goalType = GOAL_TYPE_CONFIG[plan.goalType] || { label: plan.goalType, color: "#7A8C85" };
                       
                       return (
                         <div

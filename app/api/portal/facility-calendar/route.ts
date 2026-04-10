@@ -9,15 +9,15 @@ const ACTIVITY_COLORS: Record<string, string> = {
   TOURNAMENT_CLUB: "#D14343", // Error red
   TOURNAMENT_REGION: "#D14343",
   TOURNAMENT_JUNIOR: "#D14343",
-  VTG_COURSE: "#FF9500", // Warning
-  GFGK_JUNIOR: "#2D6A4F", // Success
+  VTG_COURSE: "#C48A32", // Warning
+  GFGK_JUNIOR: "#005840", // Success
   AK_GOLF: "#007AFF", // Info blue
   AK_GOLF_JUNIOR_ACADEMY: "#007AFF",
   SPONSOR_EVENT: "#5856D6", // Purple
-  INTERNAL: "#86868B", // Grey
-  CLOSURE: "#1D1D1F", // Black
-  OTHER: "#86868B",
-  BOOKING: "#86868B", // Grey for bookinger
+  INTERNAL: "#7A8C85", // Grey
+  CLOSURE: "#0A1F18", // Black
+  OTHER: "#7A8C85",
+  BOOKING: "#7A8C85", // Grey for bookinger
 };
 
 interface CalendarEvent {

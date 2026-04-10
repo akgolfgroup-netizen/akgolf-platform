@@ -40,9 +40,9 @@ Supabase Auth → `requirePortalUser()` i server components. `proxy.ts` for edge
 ## Design
 
 "Sort. Hvit. En gronn." — Se `docs/ART-DIRECTION.md` og `code-style.md`.
-- Brand: #2D6A4F (kun logo, nav, CTA)
+- Brand: #005840 (kun logo, nav, CTA)
 - Font: Inter via next/font/google
-- Success: #34C759 | Error: #FF3B30 | AI: #AF52DE
+- Success: #2A7D5A | Error: #B84233 | AI: #AF52DE
 - Aldri emojier, aldri sertifiseringer, aldri MVA på kundesider
 
 ## Konvensjoner

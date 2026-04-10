@@ -85,8 +85,8 @@ function TekForm() {
       </div>
 
       {/* Post-exercise quality */}
-      <div className="bg-[#F5F5F7] rounded-xl p-4">
-        <span className="text-[10px] font-bold uppercase tracking-wide text-[#86868B] block mb-2">
+      <div className="bg-[#ECF0EF] rounded-xl p-4">
+        <span className="text-[10px] font-bold uppercase tracking-wide text-[#7A8C85] block mb-2">
           Etter ovelsen
         </span>
         <Field label="Kvalitet (1-10)">
@@ -193,8 +193,8 @@ function SlagForm() {
       </div>
 
       {/* Post-exercise scoring */}
-      <div className="bg-[#F5F5F7] rounded-xl p-4 space-y-3">
-        <span className="text-[10px] font-bold uppercase tracking-wide text-[#86868B] block">
+      <div className="bg-[#ECF0EF] rounded-xl p-4 space-y-3">
+        <span className="text-[10px] font-bold uppercase tracking-wide text-[#7A8C85] block">
           Etter ovelsen
         </span>
         <div className="grid grid-cols-2 gap-3">
@@ -223,8 +223,8 @@ function SlagForm() {
       </div>
 
       {/* TrackMan data */}
-      <div className="border border-[#E8E8ED] rounded-xl p-4">
-        <span className="text-[10px] font-bold uppercase tracking-wide text-[#86868B] block mb-3">
+      <div className="border border-[#D5DFDB] rounded-xl p-4">
+        <span className="text-[10px] font-bold uppercase tracking-wide text-[#7A8C85] block mb-3">
           TrackMan-data (valgfritt)
         </span>
         <div className="grid grid-cols-3 gap-3">
@@ -271,27 +271,27 @@ export function ExerciseDetail({ open, onClose, type, name }: ExerciseDetailProp
             onClick={onClose}
           />
           <motion.div
-            className="fixed right-0 top-0 bottom-0 w-[480px] bg-white border-l border-[#E8E8ED] z-50 flex flex-col shadow-2xl"
+            className="fixed right-0 top-0 bottom-0 w-[480px] bg-white border-l border-[#D5DFDB] z-50 flex flex-col shadow-2xl"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
           >
             {/* Header */}
-            <div className="flex items-center gap-3 px-6 py-4 border-b border-[#E8E8ED]">
-              <button onClick={onClose} className="p-1.5 hover:bg-[#F5F5F7] rounded-lg transition-colors">
-                <ChevronLeft className="w-4 h-4 text-[#86868B]" />
+            <div className="flex items-center gap-3 px-6 py-4 border-b border-[#D5DFDB]">
+              <button onClick={onClose} className="p-1.5 hover:bg-[#ECF0EF] rounded-lg transition-colors">
+                <ChevronLeft className="w-4 h-4 text-[#7A8C85]" />
               </button>
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <span className={`text-[9px] font-bold px-2 py-0.5 rounded-md ${pyramidBadge}`}>
                     {type}
                   </span>
-                  <h2 className="text-[15px] font-semibold text-[#1D1D1F]">{name}</h2>
+                  <h2 className="text-[15px] font-semibold text-[#0A1F18]">{name}</h2>
                 </div>
               </div>
-              <button onClick={onClose} className="p-1.5 hover:bg-[#F5F5F7] rounded-lg transition-colors">
-                <X className="w-4 h-4 text-[#86868B]" />
+              <button onClick={onClose} className="p-1.5 hover:bg-[#ECF0EF] rounded-lg transition-colors">
+                <X className="w-4 h-4 text-[#7A8C85]" />
               </button>
             </div>
 
@@ -301,14 +301,14 @@ export function ExerciseDetail({ open, onClose, type, name }: ExerciseDetailProp
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-4 border-t border-[#E8E8ED] flex justify-between">
+            <div className="px-6 py-4 border-t border-[#D5DFDB] flex justify-between">
               <button
                 onClick={onClose}
-                className="px-5 py-2.5 text-sm font-semibold text-[#86868B] hover:text-[#1D1D1F] transition-colors"
+                className="px-5 py-2.5 text-sm font-semibold text-[#7A8C85] hover:text-[#0A1F18] transition-colors"
               >
                 Tilbake
               </button>
-              <button className="px-6 py-2.5 rounded-full bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#3A3A3C] transition-colors">
+              <button className="px-6 py-2.5 rounded-full bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#3A3A3C] transition-colors">
                 Lagre
               </button>
             </div>
@@ -324,7 +324,7 @@ export function ExerciseDetail({ open, onClose, type, name }: ExerciseDetailProp
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-[11px] font-semibold uppercase tracking-[0.05em] text-[#86868B] mb-1">
+      <label className="block text-[11px] font-semibold uppercase tracking-[0.05em] text-[#7A8C85] mb-1">
         {label}
       </label>
       {children}

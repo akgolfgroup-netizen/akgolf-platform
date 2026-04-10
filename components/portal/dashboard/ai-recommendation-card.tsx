@@ -28,7 +28,7 @@ export function AIRecommendationCard({
         </span>
       </div>
 
-      <p className="text-[15px] text-[#1D1D1F] leading-relaxed flex-1">
+      <p className="text-[15px] text-[#0A1F18] leading-relaxed flex-1">
         {recommendation ||
           "Logg din forste okt eller runde for a fa personlige anbefalinger basert pa dine data."}
       </p>

@@ -85,7 +85,7 @@ const container = {
 };
 
 const heading = {
-  color: "#1D1D1F",
+  color: "#0A1F18",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
@@ -144,7 +144,7 @@ const benefitsBox = {
 };
 
 const benefitsTitle = {
-  color: "#1D1D1F",
+  color: "#0A1F18",
   fontSize: "14px",
   fontWeight: "600" as const,
   margin: "0 0 12px",

@@ -34,17 +34,17 @@ export function BookingProgressBar({ currentStep }: Props) {
                   backgroundColor: isCompleted
                     ? "var(--color-brand)"
                     : isCurrent
-                    ? "#1D1D1F"
-                    : "#F5F5F7",
+                    ? "#0A1F18"
+                    : "#ECF0EF",
                   borderColor: isCompleted
                     ? "var(--color-brand)"
                     : isCurrent
-                    ? "#1D1D1F"
-                    : "#E8E8ED",
+                    ? "#0A1F18"
+                    : "#D5DFDB",
                 }}
                 className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold border-2"
                 style={{
-                  color: isCompleted || isCurrent ? "#FFFFFF" : "#86868B",
+                  color: isCompleted || isCurrent ? "#FFFFFF" : "#7A8C85",
                 }}
               >
                 {isCompleted ? (
@@ -67,9 +67,9 @@ export function BookingProgressBar({ currentStep }: Props) {
               <div className="flex-1 mx-3 h-0.5 hidden sm:block">
                 <motion.div
                   className="h-full rounded-full"
-                  initial={{ backgroundColor: "#E8E8ED" }}
+                  initial={{ backgroundColor: "#D5DFDB" }}
                   animate={{
-                    backgroundColor: isCompleted ? "var(--color-brand)" : "#E8E8ED",
+                    backgroundColor: isCompleted ? "var(--color-brand)" : "#D5DFDB",
                   }}
                   transition={{ duration: 0.3 }}
                 />

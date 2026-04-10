@@ -71,7 +71,7 @@ export async function GET(req: NextRequest) {
           subject: `${unusedSessions} ubrukte coaching-sesjoner utloper ${expiryDate}`,
           html: `
             <div style="font-family: sans-serif; max-width: 500px; margin: 0 auto;">
-              <h2 style="color: #1D1D1F;">Hei${user.name ? ` ${user.name.split(" ")[0]}` : ""}!</h2>
+              <h2 style="color: #0A1F18;">Hei${user.name ? ` ${user.name.split(" ")[0]}` : ""}!</h2>
               <p style="color: #374151; line-height: 1.6;">
                 Du har <strong>${unusedSessions} ubrukte coaching-sesjoner</strong> i ${coachingPackage.name}-pakken din.
               </p>
@@ -80,7 +80,7 @@ export async function GET(req: NextRequest) {
               </p>
               <p style="margin-top: 24px;">
                 <a href="https://akgolf.no/portal/bookinger/ny"
-                   style="display: inline-block; background: #1D1D1F; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                   style="display: inline-block; background: #0A1F18; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
                   Book en sesjon nå
                 </a>
               </p>

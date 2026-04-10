@@ -18,13 +18,13 @@ interface ConfirmationViewProps {
 
 // Apple Light Theme 2026
 const THEME = {
-  bg: "#F5F5F7",
+  bg: "#ECF0EF",
   bgElevated: "#FFFFFF",
-  primary: "#1D1D1F",
-  text: "#1D1D1F",
-  textMuted: "#86868B",
-  textLight: "#AEAEB2",
-  border: "#E8E8ED",
+  primary: "#0A1F18",
+  text: "#0A1F18",
+  textMuted: "#7A8C85",
+  textLight: "#A5B2AD",
+  border: "#D5DFDB",
   success: "#10B981",
   shadow: "0 4px 8px rgba(0,0,0,0.06)",
   shadowPrimary: "0 4px 16px rgba(29,29,31,0.15)",

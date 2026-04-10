@@ -18,8 +18,8 @@ export default function GlobalError({
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#F5F5F7",
-          color: "#1D1D1F",
+          background: "#ECF0EF",
+          color: "#0A1F18",
           fontFamily: "system-ui, -apple-system, sans-serif",
           padding: "1.5rem",
           textAlign: "center",
@@ -34,7 +34,7 @@ export default function GlobalError({
         <button
           onClick={reset}
           style={{
-            background: "#1D1D1F",
+            background: "#0A1F18",
             color: "#FFFFFF",
             border: "none",
             borderRadius: "9999px",

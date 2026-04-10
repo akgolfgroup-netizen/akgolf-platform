@@ -15,7 +15,7 @@ interface MCStatCardProps {
 }
 
 const valueColors: Record<StatVariant, string> = {
-  default: "text-[#1D1D1F]",
+  default: "text-[#0A1F18]",
   success: "text-[var(--color-success)]",
   warning: "text-[#E89C30]",
   error: "text-[var(--color-error)]",
@@ -32,11 +32,11 @@ export function MCStatCard({
   return (
     <div
       className={cn(
-        "bg-white rounded-xl border border-[#E8E8ED] p-3",
+        "bg-white rounded-xl border border-[#D5DFDB] p-3",
         className
       )}
     >
-      <div className="text-[9px] font-medium text-[#86868B] uppercase tracking-[0.5px] mb-1">
+      <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px] mb-1">
         {label}
       </div>
       <div className="flex items-center gap-2">
@@ -48,7 +48,7 @@ export function MCStatCard({
         )}
       </div>
       {subtext && (
-        <div className="text-[9px] text-[#86868B] mt-1">{subtext}</div>
+        <div className="text-[9px] text-[#7A8C85] mt-1">{subtext}</div>
       )}
     </div>
   );
@@ -57,9 +57,9 @@ export function MCStatCard({
 // Mini sparkline SVG
 function Sparkline({ direction }: { direction: "up" | "down" | "neutral" }) {
   const colors = {
-    up: "#34C759",
-    down: "#FF3B30",
-    neutral: "#86868B",
+    up: "#2A7D5A",
+    down: "#B84233",
+    neutral: "#7A8C85",
   };
 
   const paths = {
@@ -102,7 +102,7 @@ export function MCKPIStrip({ items, alerts, className }: MCKPIStripProps) {
   return (
     <div
       className={cn(
-        "bg-white px-5 py-3 border-b border-[#E8E8ED]",
+        "bg-white px-5 py-3 border-b border-[#D5DFDB]",
         className
       )}
     >
@@ -110,12 +110,12 @@ export function MCKPIStrip({ items, alerts, className }: MCKPIStripProps) {
         {items.map((item, index) => (
           <div key={item.label} className="flex items-center gap-2">
             {index > 0 && (
-              <div className="w-px h-8 bg-[#E8E8ED] -ml-3 mr-3" />
+              <div className="w-px h-8 bg-[#D5DFDB] -ml-3 mr-3" />
             )}
             <div className={cn("text-2xl font-bold", valueColors[item.variant || "default"])}>
               {item.value}
             </div>
-            <div className="text-[9px] text-[#86868B] leading-tight">
+            <div className="text-[9px] text-[#7A8C85] leading-tight">
               {item.label.toUpperCase()}
               {item.sublabel && <br />}
               {item.sublabel?.toUpperCase()}

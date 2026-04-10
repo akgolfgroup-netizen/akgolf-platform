@@ -13,7 +13,7 @@ const variantStyles: Record<BadgeVariant, string> = {
   warning: "bg-[#FEF3C7] text-[#92400E]",
   error: "bg-[#FEE2E2] text-[#991B1B]",
   info: "bg-[#DBEAFE] text-[#1E40AF]",
-  neutral: "bg-[#F5F5F7] text-[#6E6E73]",
+  neutral: "bg-[#ECF0EF] text-[#5A6E66]",
 };
 
 export function MCBadge({ children, variant = "neutral", className }: MCBadgeProps) {
@@ -39,7 +39,7 @@ interface DivisionDotProps {
 }
 
 const divisionColors: Record<DivisionColor, string> = {
-  coaching: "bg-[#1D1D1F]",
+  coaching: "bg-[#0A1F18]",
   junior: "bg-[#007AFF]",
   gfgk: "bg-[var(--color-brand)]",
 };
@@ -55,7 +55,7 @@ export function DivisionDot({ division, className }: DivisionDotProps) {
 // Division border (for session items)
 export function getDivisionBorderClass(division: DivisionColor): string {
   const borders: Record<DivisionColor, string> = {
-    coaching: "border-l-[#1D1D1F]",
+    coaching: "border-l-[#0A1F18]",
     junior: "border-l-[#007AFF]",
     gfgk: "border-l-[var(--color-brand)]",
   };

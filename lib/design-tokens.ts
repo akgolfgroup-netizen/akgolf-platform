@@ -1,79 +1,82 @@
 /**
- * AK Golf Brand System v5.0 - Design Tokens (Brand Guide 2026)
+ * AK Golf Brand System — Design Tokens (Brand Guide V2.0 · 2026)
  * Single source of truth for all design values
  */
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// COLORS
+// COLORS — Brand Guide V2.0
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const colors = {
-  // Primære brand-farger (Brand Guide 2026 — Monokrom + Signal)
+  // Kjernefarger (Brand Guide V2.0 §03)
   primary: {
-    black: '#1D1D1F',
+    main: '#005840',       // --akgolf-primary
+    accent: '#D1F843',     // --akgolf-accent (CTA, uthevinger)
+    surface: '#ECF0EF',    // --akgolf-surface
+    text: '#324D45',       // --akgolf-text
+    muted: '#A5B2AD',      // --akgolf-muted
     white: '#FFFFFF',
-    snow: '#F5F5F5',
-    deepInk: '#1D1D1F',
+    dark: '#0A1F18',       // Morkeste grønn (dark bg)
   },
 
-  // Ink-skala (nøytral grå)
+  // Grå-skala (brand-avledet, grønn-tonet)
   ink: {
-    5: '#F5F5F5',
-    10: '#E8E8ED',
-    20: '#D2D2D7',
-    30: '#AEAEB2',
-    40: '#86868B',
-    50: '#6E6E73',
-    60: '#48484A',
-    70: '#3A3A3C',
-    80: '#2C2C2E',
-    90: '#1D1D1F',
+    5: '#ECF0EF',
+    10: '#D5DFDB',
+    20: '#A5B2AD',
+    30: '#7A8C85',
+    40: '#5A6E66',
+    50: '#3D5249',
+    60: '#324D45',
+    70: '#1A3529',
+    80: '#0A1F18',
+    90: '#0A1F18',
     100: '#000000',
   },
 
   // Overflater
   surface: {
-    warm: '#F5F5F5',
-    cream: '#F5F5F7',
-    warmNeutral: '#E8E8ED',
-    lightGray: '#D2D2D7',
-    snow: '#F5F5F7',
+    warm: '#FFFFFF',
+    cream: '#ECF0EF',
+    warmNeutral: '#D5DFDB',
+    lightGray: '#A5B2AD',
+    snow: '#ECF0EF',
   },
 
   // Sub-brand farger
   subBrand: {
-    academy: '#1D1D1F',
-    academyLight: '#6E6E73',
-    academyDark: '#1D1D1F',
+    academy: '#005840',
+    academyLight: '#ECF0EF',
+    academyDark: '#0A1F18',
     junior: '#3B82F6',
     juniorLight: '#60A5FA',
     juniorDark: '#2563EB',
     software: '#8B5CF6',
     softwareLight: '#A78BFA',
     softwareDark: '#7C3AED',
-    utvikling: '#2D6A4F',
-    utviklingLight: '#4ADE80',
-    utviklingDark: '#16A34A',
+    utvikling: '#005840',
+    utviklingLight: '#2A7D5A',
+    utviklingDark: '#0A1F18',
   },
 
-  // Semantiske farger (Apple-standard)
+  // Semantiske farger (Brand Guide V2.0 §04)
   semantic: {
-    success: '#34C759',
-    successLight: '#F0FDF4',
-    successText: '#166534',
-    error: '#FF3B30',
-    errorLight: '#FEF2F2',
-    errorText: '#991B1B',
-    warning: '#FF9500',
-    warningLight: '#FFFBEB',
-    warningText: '#92400E',
+    success: '#2A7D5A',
+    successLight: '#E8F5EF',
+    successText: '#1A4D36',
+    error: '#B84233',
+    errorLight: '#FCEAE8',
+    errorText: '#7A2C22',
+    warning: '#C48A32',
+    warningLight: '#FDF4E4',
+    warningText: '#7A5520',
     info: '#007AFF',
     infoLight: '#EFF6FF',
     infoText: '#1E40AF',
     vipps: '#FF5B24',
   },
 
-  // AI accent — purple
+  // AI accent — purple (beholdt fra etablert portal-design)
   ai: {
     primary: '#AF52DE',
     light: '#FAF5FF',
@@ -82,8 +85,8 @@ export const colors = {
 
   // Ikoner og tekst
   icon: {
-    gray: '#64748B',
-    muted: '#9BA5B2',
+    gray: '#5A6E66',
+    muted: '#A5B2AD',
   },
 } as const;
 
@@ -345,10 +348,10 @@ export const borders = {
   },
 
   color: {
-    default: 'rgba(29, 29, 31, 0.08)',
-    light: 'rgba(29, 29, 31, 0.05)',
-    gold: 'rgba(29, 29, 31, 0.2)',
-    goldMuted: 'rgba(29, 29, 31, 0.1)',
+    default: 'rgba(0, 88, 64, 0.08)',
+    light: 'rgba(0, 88, 64, 0.05)',
+    strong: 'rgba(0, 88, 64, 0.2)',
+    muted: 'rgba(0, 88, 64, 0.1)',
   },
 
   radius: {

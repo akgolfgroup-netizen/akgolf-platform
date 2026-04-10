@@ -356,7 +356,7 @@ export const INTENSITY_LEVELS = {
   low: {
     name: "Lav",
     description: "Rolig tempo, fokus på teknikk",
-    color: "#2D6A4F",
+    color: "#005840",
   },
   medium: {
     name: "Middels",

@@ -97,14 +97,14 @@ const container = {
 };
 
 const heading = {
-  color: "#1D1D1F",
+  color: "#0A1F18",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
 };
 
 const greeting = {
-  color: "#1D1D1F",
+  color: "#0A1F18",
   fontSize: "16px",
   margin: "0 0 8px",
 };
@@ -117,14 +117,14 @@ const text = {
 };
 
 const warningText = {
-  color: "#1D1D1F",
+  color: "#0A1F18",
   fontSize: "14px",
   lineHeight: "1.6",
   margin: "0 0 16px",
-  backgroundColor: "#F5F5F7",
+  backgroundColor: "#ECF0EF",
   padding: "12px",
   borderRadius: "6px",
-  border: "1px solid #E8E8ED",
+  border: "1px solid #D5DFDB",
 };
 
 const detailsBox = {
@@ -135,14 +135,14 @@ const detailsBox = {
 };
 
 const detailRow = {
-  color: "#1D1D1F",
+  color: "#0A1F18",
   fontSize: "14px",
   margin: "0 0 6px",
   lineHeight: "1.5",
 };
 
 const button = {
-  backgroundColor: "#1D1D1F",
+  backgroundColor: "#0A1F18",
   borderRadius: "6px",
   color: "#ffffff",
   fontSize: "14px",

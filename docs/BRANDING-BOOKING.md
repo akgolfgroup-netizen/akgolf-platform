@@ -89,9 +89,9 @@ components/portal/apple/
 --color-grey-900: #1D1D1F;
 
 /* Semantisk */
---color-success: #34C759;
---color-error: #FF3B30;
---color-warning: #FF9500;
+--color-success: #2A7D5A;
+--color-error: #B84233;
+--color-warning: #C48A32;
 --color-info: #007AFF;
 ```
 
@@ -101,7 +101,7 @@ const STRIPE_THEME = {
   colorPrimary: '#1D1D1F',     // Svart
   colorBackground: '#FFFFFF',
   colorText: '#1D1D1F',
-  colorDanger: '#FF3B30',
+  colorDanger: '#B84233',
 }
 ```
 

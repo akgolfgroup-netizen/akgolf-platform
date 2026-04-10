@@ -24,21 +24,21 @@ function SportsplanSVG() {
   return (
     <svg viewBox="0 0 200 160" fill="none" className="w-full max-w-[200px] mx-auto">
       {/* Document */}
-      <rect x="40" y="10" width="120" height="140" rx="8" stroke="#E8E8ED" strokeWidth="1.5" fill="white" />
+      <rect x="40" y="10" width="120" height="140" rx="8" stroke="#D5DFDB" strokeWidth="1.5" fill="white" />
       {/* Header area */}
-      <rect x="52" y="24" width="60" height="6" rx="3" fill="#E8E8ED" />
-      <rect x="52" y="36" width="40" height="4" rx="2" fill="#F5F5F7" />
+      <rect x="52" y="24" width="60" height="6" rx="3" fill="#D5DFDB" />
+      <rect x="52" y="36" width="40" height="4" rx="2" fill="#ECF0EF" />
       {/* Section lines */}
-      <rect x="52" y="52" width="96" height="4" rx="2" fill="#F5F5F7" />
-      <rect x="52" y="62" width="80" height="4" rx="2" fill="#F5F5F7" />
-      <rect x="52" y="72" width="88" height="4" rx="2" fill="#F5F5F7" />
+      <rect x="52" y="52" width="96" height="4" rx="2" fill="#ECF0EF" />
+      <rect x="52" y="62" width="80" height="4" rx="2" fill="#ECF0EF" />
+      <rect x="52" y="72" width="88" height="4" rx="2" fill="#ECF0EF" />
       {/* Green highlight section */}
-      <rect x="48" y="88" width="104" height="24" rx="6" fill="#2D6A4F" fillOpacity="0.08" />
-      <rect x="56" y="94" width="64" height="4" rx="2" fill="#2D6A4F" fillOpacity="0.3" />
-      <rect x="56" y="102" width="48" height="4" rx="2" fill="#2D6A4F" fillOpacity="0.2" />
+      <rect x="48" y="88" width="104" height="24" rx="6" fill="#005840" fillOpacity="0.08" />
+      <rect x="56" y="94" width="64" height="4" rx="2" fill="#005840" fillOpacity="0.3" />
+      <rect x="56" y="102" width="48" height="4" rx="2" fill="#005840" fillOpacity="0.2" />
       {/* Bottom lines */}
-      <rect x="52" y="122" width="72" height="4" rx="2" fill="#F5F5F7" />
-      <rect x="52" y="132" width="56" height="4" rx="2" fill="#F5F5F7" />
+      <rect x="52" y="122" width="72" height="4" rx="2" fill="#ECF0EF" />
+      <rect x="52" y="132" width="56" height="4" rx="2" fill="#ECF0EF" />
     </svg>
   );
 }
@@ -47,33 +47,33 @@ function PortalMockupSVG() {
   return (
     <svg viewBox="0 0 120 220" fill="none" className="w-full max-w-[100px] mx-auto">
       {/* Phone frame */}
-      <rect x="4" y="4" width="112" height="212" rx="20" stroke="#1D1D1F" strokeWidth="6" fill="#F5F5F7" />
+      <rect x="4" y="4" width="112" height="212" rx="20" stroke="#0A1F18" strokeWidth="6" fill="#ECF0EF" />
       {/* Notch */}
-      <rect x="36" y="4" width="48" height="14" rx="7" fill="#1D1D1F" />
+      <rect x="36" y="4" width="48" height="14" rx="7" fill="#0A1F18" />
       {/* Screen content */}
       {/* Handicap card */}
       <rect x="16" y="28" width="88" height="40" rx="8" fill="white" />
-      <rect x="24" y="36" width="30" height="3" rx="1.5" fill="#E8E8ED" />
-      <rect x="24" y="44" width="20" height="8" rx="2" fill="#1D1D1F" />
-      <rect x="24" y="56" width="40" height="3" rx="1.5" fill="#2D6A4F" fillOpacity="0.3" />
+      <rect x="24" y="36" width="30" height="3" rx="1.5" fill="#D5DFDB" />
+      <rect x="24" y="44" width="20" height="8" rx="2" fill="#0A1F18" />
+      <rect x="24" y="56" width="40" height="3" rx="1.5" fill="#005840" fillOpacity="0.3" />
       {/* Stats card */}
       <rect x="16" y="76" width="88" height="36" rx="8" fill="white" />
-      <rect x="24" y="84" width="24" height="3" rx="1.5" fill="#E8E8ED" />
+      <rect x="24" y="84" width="24" height="3" rx="1.5" fill="#D5DFDB" />
       {/* Mini bars */}
-      <rect x="24" y="92" width="12" height="12" rx="2" fill="#2D6A4F" fillOpacity="0.2" />
-      <rect x="40" y="96" width="12" height="8" rx="2" fill="#2D6A4F" fillOpacity="0.15" />
-      <rect x="56" y="90" width="12" height="14" rx="2" fill="#2D6A4F" fillOpacity="0.25" />
-      <rect x="72" y="94" width="12" height="10" rx="2" fill="#2D6A4F" fillOpacity="0.18" />
+      <rect x="24" y="92" width="12" height="12" rx="2" fill="#005840" fillOpacity="0.2" />
+      <rect x="40" y="96" width="12" height="8" rx="2" fill="#005840" fillOpacity="0.15" />
+      <rect x="56" y="90" width="12" height="14" rx="2" fill="#005840" fillOpacity="0.25" />
+      <rect x="72" y="94" width="12" height="10" rx="2" fill="#005840" fillOpacity="0.18" />
       {/* Plan card */}
       <rect x="16" y="120" width="88" height="36" rx="8" fill="white" />
-      <rect x="24" y="128" width="36" height="3" rx="1.5" fill="#E8E8ED" />
-      <rect x="24" y="136" width="72" height="3" rx="1.5" fill="#F5F5F7" />
-      <rect x="24" y="144" width="56" height="3" rx="1.5" fill="#F5F5F7" />
+      <rect x="24" y="128" width="36" height="3" rx="1.5" fill="#D5DFDB" />
+      <rect x="24" y="136" width="72" height="3" rx="1.5" fill="#ECF0EF" />
+      <rect x="24" y="144" width="56" height="3" rx="1.5" fill="#ECF0EF" />
       {/* Bottom nav */}
       <rect x="16" y="168" width="88" height="32" rx="8" fill="white" />
-      <circle cx="36" cy="184" r="4" fill="#E8E8ED" />
-      <circle cx="60" cy="184" r="4" fill="#2D6A4F" fillOpacity="0.3" />
-      <circle cx="84" cy="184" r="4" fill="#E8E8ED" />
+      <circle cx="36" cy="184" r="4" fill="#D5DFDB" />
+      <circle cx="60" cy="184" r="4" fill="#005840" fillOpacity="0.3" />
+      <circle cx="84" cy="184" r="4" fill="#D5DFDB" />
     </svg>
   );
 }
@@ -101,7 +101,7 @@ function QRSkiltSVG() {
       {/* Camera viewfinder */}
       <rect x="143" y="58" width="32" height="32" rx="4" stroke="white" strokeOpacity="0.3" strokeWidth="1" fill="none" strokeDasharray="4 4" />
       {/* Scan line */}
-      <line x1="143" y1="74" x2="175" y2="74" stroke="#2D6A4F" strokeWidth="1.5" strokeOpacity="0.6" />
+      <line x1="143" y1="74" x2="175" y2="74" stroke="#005840" strokeWidth="1.5" strokeOpacity="0.6" />
     </svg>
   );
 }
@@ -135,10 +135,10 @@ function ExpandableCard({
         item.span === "large" ? "md:col-span-2 p-10" : ""
       } ${
         isDark
-          ? "bg-[#1D1D1F] text-white"
+          ? "bg-[#0A1F18] text-white"
           : item.span === "large"
-            ? "bg-[#F5F5F7] border border-[#E8E8ED]"
-            : "bg-white border border-[#E8E8ED]"
+            ? "bg-[#ECF0EF] border border-[#D5DFDB]"
+            : "bg-white border border-[#D5DFDB]"
       }`}
     >
       <span
@@ -151,7 +151,7 @@ function ExpandableCard({
       <h3
         className={`text-xl font-bold mt-3 mb-3 ${
           item.span === "large" ? "text-2xl" : ""
-        } ${isDark ? "text-white" : "text-[#1D1D1F]"}`}
+        } ${isDark ? "text-white" : "text-[#0A1F18]"}`}
       >
         {item.title}
       </h3>
@@ -191,7 +191,7 @@ function ExpandableCard({
         className={`text-xs font-semibold mt-4 transition-colors ${
           isDark
             ? "text-white/80 hover:text-white"
-            : "text-[#1D1D1F] hover:text-[#6E6E73]"
+            : "text-[#0A1F18] hover:text-[#5A6E66]"
         }`}
       >
         {expanded ? "Vis mindre" : "Les mer"}
@@ -237,7 +237,7 @@ export default function UtviklingPage() {
         />
         <PageTransition>
           {/* ─── 1. Hero (dark, with background image) ─── */}
-          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-[#1D1D1F] grain-overlay">
+          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-[#0A1F18] grain-overlay">
             <div className="absolute inset-0 pointer-events-none">
               <Image
                 src="/images/academy/AK-Golf-Academy-8.jpg"
@@ -300,7 +300,7 @@ export default function UtviklingPage() {
               >
                 <Link
                   href="#contact"
-                  className="px-7 py-3.5 rounded-[980px] bg-white text-[#1D1D1F] text-sm font-semibold hover:bg-white/90 transition-colors"
+                  className="px-7 py-3.5 rounded-[980px] bg-white text-[#0A1F18] text-sm font-semibold hover:bg-white/90 transition-colors"
                 >
                   {UTVIKLING_HERO_V2.ctaLabel} &rarr;
                 </Link>
@@ -331,7 +331,7 @@ export default function UtviklingPage() {
           </section>
 
           {/* ─── 3. References / Social proof (grey bg) ─── */}
-          <section className="py-28 md:py-40 bg-[#F5F5F7]">
+          <section className="py-28 md:py-40 bg-[#ECF0EF]">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center">
@@ -355,10 +355,10 @@ export default function UtviklingPage() {
                       </p>
                     </div>
                     <div className="flex flex-col items-center gap-3">
-                      <div className="w-20 h-20 rounded-[16px] border border-[#E8E8ED] bg-white flex items-center justify-center">
+                      <div className="w-20 h-20 rounded-[16px] border border-[#D5DFDB] bg-white flex items-center justify-center">
                         <svg viewBox="0 0 40 40" className="w-10 h-10" aria-hidden="true">
                           <text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle"
-                            style={{ fontSize: "16px", fontWeight: 700, fill: "#6E6E73", fontFamily: "var(--font-inter), system-ui" }}>
+                            style={{ fontSize: "16px", fontWeight: 700, fill: "#5A6E66", fontFamily: "var(--font-inter), system-ui" }}>
                             MG
                           </text>
                         </svg>
@@ -374,11 +374,11 @@ export default function UtviklingPage() {
           </section>
 
           {/* ─── 4. CTA (light bg) ─── */}
-          <section id="contact" className="py-28 md:py-40 bg-[#F5F5F7]">
+          <section id="contact" className="py-28 md:py-40 bg-[#ECF0EF]">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="max-w-2xl mx-auto text-center">
-                  <h2 className="w-heading-lg text-[#1D1D1F] mb-4">
+                  <h2 className="w-heading-lg text-[#0A1F18] mb-4">
                     {UTVIKLING_CTA_V2.heading}
                   </h2>
                   <p className="text-[#48484A] leading-relaxed mb-10">
@@ -386,7 +386,7 @@ export default function UtviklingPage() {
                   </p>
                   <Link
                     href="/booking"
-                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#1D1D1F] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
+                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#2C2C2E] transition-colors"
                   >
                     {UTVIKLING_CTA_V2.ctaPrimary} &rarr;
                   </Link>

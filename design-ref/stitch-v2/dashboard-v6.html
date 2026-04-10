@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK Golf — Spillerportal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#E8EDEB;--card:#fff;--brd:rgba(0,60,43,.07);--brds:rgba(0,60,43,.12);
+  --tx:#1A2F28;--tx2:#5A7A6E;--txm:#8DA99E;
+  --grn:#1B6B4A;--grn-l:#D6EDE2;--grn-b:#22C55E;
+  --acc:#E8763A;--acc-l:#FFF0E8;
+  --lime:#C8E640;--lime-d:rgba(200,230,64,.2);
+  --pur:#7C5CFC;--pur-d:rgba(124,92,252,.08);
+  --sh:0 1px 3px rgba(0,40,28,.06),0 1px 2px rgba(0,40,28,.04);
+  --shm:0 4px 14px rgba(0,40,28,.07),0 2px 4px rgba(0,40,28,.04);
+  --shl:0 12px 32px rgba(0,40,28,.09),0 4px 8px rgba(0,40,28,.04);
+  --r:16px;--rs:12px;--rx:8px;
+}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ═══ SIDEBAR ═══ */
+.S{position:fixed;left:0;top:0;bottom:0;width:64px;background:#1A2F28;display:flex;flex-direction:column;align-items:center;padding:14px 0;z-index:100}
+.S-logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#22C55E,#16A34A);display:flex;align-items:center;justify-content:center;margin-bottom:24px;box-shadow:0 4px 12px rgba(34,197,94,.3)}
+.S-logo svg{width:18px;height:18px;color:#fff;stroke-width:2.5}
+.S-n{display:flex;flex-direction:column;gap:3px;flex:1;width:100%;padding:0 10px}
+.N{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;color:rgba(255,255,255,.28)}
+.N:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.55)}
+.N.on{background:rgba(255,255,255,.11);color:#fff}
+.N svg{width:19px;height:19px;stroke-width:1.7}
+.S-b{display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 10px}
+.S-av{width:34px;height:34px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,.12);cursor:pointer}
+.S-av img{width:100%;height:100%;object-fit:cover}
+
+/* ═══ TOPBAR ═══ */
+.T{position:sticky;top:0;z-index:50;margin-left:64px;height:54px;background:rgba(232,237,235,.78);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.T-tabs{display:flex;gap:2px;background:var(--card);border-radius:11px;padding:3px;border:1px solid var(--brd);box-shadow:0 1px 2px rgba(0,40,28,.04)}
+.Tt{padding:5px 14px;border-radius:8px;font-size:11.5px;font-weight:500;color:var(--tx2);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
+.Tt:hover{color:var(--tx)}
+.Tt.on{background:#1A2F28;color:#fff;box-shadow:var(--sh)}
+.Tt svg{width:13px;height:13px}
+.T-r{display:flex;align-items:center;gap:6px}
+.Tb{height:32px;padding:0 10px;border-radius:8px;display:flex;align-items:center;gap:5px;cursor:pointer;color:var(--tx2);font-size:11px;font-weight:500;border:1px solid var(--brd);background:var(--card);box-shadow:0 1px 2px rgba(0,40,28,.03);transition:all .15s}
+.Tb:hover{border-color:var(--brds);color:var(--tx)}
+.Tb svg{width:14px;height:14px}
+.Ti{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2);border:1px solid var(--brd);background:var(--card);box-shadow:0 1px 2px rgba(0,40,28,.03);position:relative;transition:all .15s}
+.Ti:hover{border-color:var(--brds);color:var(--tx)}
+.Ti svg{width:15px;height:15px}
+.Ti.nt::after{content:'';position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--acc);border:2px solid var(--bg)}
+.T-av{width:32px;height:32px;border-radius:50%;overflow:hidden;cursor:pointer;border:2px solid var(--brds)}
+.T-av img{width:100%;height:100%;object-fit:cover}
+
+/* ═══ MAIN ═══ */
+.M{margin-left:64px;padding:16px 24px 40px}
+.greet{font-size:26px;font-weight:300;letter-spacing:-.03em;margin-bottom:16px}
+.greet b{font-weight:700}
+
+/* ═══ GRID — exact SyncActive wireframe ═══ */
+.G{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-template-rows:repeat(12,auto);
+  gap:10px;
+}
+.C{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);padding:16px;box-shadow:var(--sh);transition:all .25s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.C:hover{box-shadow:var(--shm);transform:translateY(-1px);border-color:var(--brds)}
+.L{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--txm);margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.L .I{width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center}
+.L .I svg{width:10px;height:10px}
+.L-r{margin-left:auto}
+.P{font-size:9px;font-weight:600;padding:3px 7px;border-radius:5px;display:inline-flex;align-items:center;gap:3px}
+.Pg{background:var(--grn-l);color:var(--grn)}.Po{background:var(--acc-l);color:var(--acc)}.Pp{background:var(--pur-d);color:var(--pur)}.Pm{background:rgba(0,40,28,.04);color:var(--tx2)}
+.dots{cursor:pointer;width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.dots:hover{background:rgba(0,40,28,.05)}
+.dots svg{width:14px;height:14px;color:var(--txm)}
+
+/* ═══ C1: TRENINGSAKTIVITET (green accent, col 1-3, row 1-6) ═══ */
+.C1{
+  grid-column:1/4;grid-row:1/7;
+  background:linear-gradient(178deg,#E1F0E8 0%,#D2E8DA 100%);
+  border-color:rgba(27,107,74,.08);
+}
+.C1-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:7px;background:var(--card);font-size:10.5px;font-weight:600;color:var(--grn);box-shadow:0 1px 3px rgba(0,40,28,.06)}
+.C1-badge svg{width:13px;height:13px}
+.C1-streak{display:flex;align-items:center;gap:5px;padding:5px 9px;border-radius:7px;background:rgba(27,107,74,.06);font-size:10.5px;color:var(--grn);margin:7px 0 10px}
+.C1-streak svg{width:13px;height:13px;color:var(--acc)}
+.C1-tabs{display:flex;gap:0;background:var(--card);border-radius:8px;padding:2.5px;margin-bottom:10px;box-shadow:0 1px 2px rgba(0,40,28,.04)}
+.C1t{flex:1;text-align:center;padding:4.5px 0;font-size:10px;font-weight:600;border-radius:6px;cursor:pointer;color:var(--txm);transition:all .15s}
+.C1t.on{background:var(--grn);color:#fff;box-shadow:var(--sh)}
+.C1-wk{font-size:10px;color:var(--tx2);margin-bottom:6px;display:flex;justify-content:space-between}
+.C1-wk span{font-size:8.5px;color:var(--txm)}
+.bars{display:flex;align-items:flex-end;gap:4px;height:115px;margin-bottom:10px}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;height:100%;justify-content:flex-end}
+.b{width:100%;border-radius:3px 3px 1px 1px}
+.b1{background:var(--lime)}.b2{background:var(--acc)}.b3{background:rgba(27,107,74,.1)}
+.bd{font-size:8px;color:var(--txm);font-weight:500;margin-top:2px}
+.C1-foot{font-size:9.5px;color:var(--tx2);display:flex;gap:10px;padding-top:8px;border-top:1px solid rgba(27,107,74,.07)}
+.C1-foot svg{width:12px;height:12px;color:var(--grn)}
+.C1-foot b{color:var(--tx);font-weight:700}
+
+/* ═══ C2: HANDICAP RING (col 4-5, row 1-3) ═══ */
+.C2{grid-column:4/6;grid-row:1/4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.C2-ring{position:relative;width:115px;height:115px;margin:2px 0 6px}
+.C2-ring svg{transform:rotate(-90deg)}
+.C2-v{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.C2-num{font-size:32px;font-weight:900;letter-spacing:-.04em;color:var(--grn)}
+.C2-unit{font-size:9.5px;color:var(--txm);font-weight:500}
+.C2-sub{font-size:10px;color:var(--txm)}
+
+/* ═══ C3: TRACKMAN WAVE (col 6-9, row 1-3) ═══ */
+.C3{grid-column:6/10;grid-row:1/4}
+.C3-sub{font-size:10px;color:var(--tx2);margin-bottom:6px}
+.C3-w{display:flex;align-items:center;gap:1.5px;height:68px;margin:4px 0}
+.C3-wb{width:2.5px;border-radius:1.5px}
+.C3-times{display:flex;justify-content:space-between;font-size:8px;color:var(--txm);margin-top:3px}
+
+/* ═══ C4: SPILLER PROFIL (col 10-12, row 1-7) ═══ */
+.C4{grid-column:10/13;grid-row:1/8;padding:0;border:none;overflow:hidden;box-shadow:var(--shl);position:relative;background:#1A2F28}
+.C4-img{width:100%;height:55%;object-fit:cover;object-position:center top;display:block}
+.C4-body{padding:16px;color:#fff;background:linear-gradient(180deg,#1A2F28 0%,#142420 100%)}
+.C4-name{font-size:18px;font-weight:800;letter-spacing:-.02em}
+.C4-meta{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+.C4-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px}
+.C4-stat{text-align:center;padding:8px 4px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06)}
+.C4-stat-v{font-size:16px;font-weight:800;letter-spacing:-.02em}
+.C4-stat-v.lime{color:var(--lime)}
+.C4-stat-v.acc{color:var(--acc)}
+.C4-stat-l{font-size:8px;color:rgba(255,255,255,.4);margin-top:1px}
+.C4-badge{position:absolute;top:12px;right:12px;padding:4px 8px;border-radius:6px;background:rgba(200,230,64,.9);color:#1A2F28;font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.C4-tier{display:flex;align-items:center;gap:6px;margin-top:12px;padding:8px 10px;border-radius:8px;background:rgba(200,230,64,.08);border:1px solid rgba(200,230,64,.15)}
+.C4-tier-dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 6px rgba(200,230,64,.4)}
+.C4-tier-txt{font-size:10px;font-weight:600;color:var(--lime)}
+.C4-tier-sub{font-size:9px;color:rgba(255,255,255,.35);margin-left:auto}
+
+/* ═══ C5: STROKES GAINED (col 4-5, row 4-6) ═══ */
+.C5{grid-column:4/6;grid-row:4/7}
+.C5-big{font-size:38px;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--grn)}
+.C5-sub{font-size:10px;color:var(--txm);margin-top:2px}
+.C5-meter{display:flex;gap:3px;margin-top:10px}
+.C5-dot{width:7px;height:7px;border-radius:2px;background:rgba(27,107,74,.08)}
+.C5-dot.on{background:var(--grn)}.C5-dot.w{background:var(--acc)}
+
+/* ═══ C6: PUTTS (col 6-7, row 4-6) ═══ */
+.C6{grid-column:6/8;grid-row:4/7}
+.C6-bars{display:flex;align-items:flex-end;gap:3.5px;height:55px;margin:8px 0}
+.C6-bar{flex:1;border-radius:2.5px}
+.C6-val{font-size:18px;font-weight:800;letter-spacing:-.02em}
+.C6-u{font-size:10px;color:var(--txm)}
+
+/* ═══ C7: RUNDE-ANALYSE (col 8-9, row 4-7 — plus below) ═══ */
+.C7{grid-column:4/10;grid-row:7/10}
+.C7-sub{font-size:10px;color:var(--tx2);margin-bottom:6px}
+.C7-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.C7i{display:flex;flex-direction:column}
+.C7k{font-size:8.5px;color:var(--txm);margin-bottom:1px}
+.C7v{font-size:14px;font-weight:800;letter-spacing:-.01em}
+.C7r{display:flex;align-items:center;gap:3px;margin-top:3px}
+.C7bar{flex:1;height:3px;border-radius:2px;background:rgba(0,40,28,.04);overflow:hidden}
+.C7fill{height:100%;border-radius:2px}
+.C7pct{font-size:8px;color:var(--txm);font-weight:600}
+.C7-extras{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.C7-ex{padding:7px 8px;background:rgba(0,40,28,.02);border-radius:7px;border:1px solid var(--brd)}
+.C7-ex-k{font-size:8px;color:var(--txm)}
+.C7-ex-v{font-size:13px;font-weight:800;margin-top:1px}
+
+/* ═══ C8: HANDICAP CHART (col 1-5, row 7-12) ═══ */
+.C8{grid-column:1/4;grid-row:7/12}
+.C8-top{display:flex;align-items:flex-end;gap:8px;margin-bottom:2px}
+.C8-big{font-size:44px;font-weight:900;letter-spacing:-.05em;line-height:1}
+.C8-trend{display:flex;align-items:center;gap:3px;margin-bottom:6px}
+.C8-trend svg{width:13px;height:13px;color:var(--grn-b)}
+.C8-trend span{font-size:12px;font-weight:700;color:var(--grn-b)}
+.C8-sub{font-size:10px;color:var(--txm);margin-bottom:6px}
+.C8-chart{height:90px;margin-top:6px}
+.C8-labels{display:flex;justify-content:space-between;margin-top:4px}
+.C8-labels span{font-size:8px;color:var(--txm)}
+.C8-score{display:flex;align-items:center;gap:6px;margin-top:8px}
+.C8-score-lbl{font-size:10px;font-weight:600;color:var(--grn)}
+.C8-score-big{font-size:32px;font-weight:900;letter-spacing:-.04em}
+.C8-score-sub{font-size:9px;color:var(--txm)}
+
+/* ═══ C9: NESTE COACHING (orange, col 10-12, row 8-10) ═══ */
+.C9{grid-column:10/13;grid-row:8/11;background:linear-gradient(135deg,var(--acc),#D4622A);border:none;color:#fff;box-shadow:var(--shm),0 0 24px rgba(232,118,58,.1)}
+.C9 .L{color:rgba(255,255,255,.55)}
+.C9-date{font-size:15px;font-weight:700;margin-top:4px}
+.C9-info{font-size:11px;color:rgba(255,255,255,.6);line-height:1.5;margin-top:2px}
+.C9-coach{display:flex;align-items:center;gap:8px;margin-top:10px;padding:8px;background:rgba(255,255,255,.1);border-radius:9px;backdrop-filter:blur(8px)}
+.C9-coach-av{width:28px;height:28px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(255,255,255,.3);flex-shrink:0}
+.C9-coach-av img{width:100%;height:100%;object-fit:cover}
+.C9-coach-name{font-size:11px;font-weight:600}
+.C9-chart{display:flex;align-items:flex-end;gap:3px;height:32px;margin-top:10px}
+.C9-bar{flex:1;border-radius:2px;background:rgba(255,255,255,.2)}
+.C9-bar.hi{background:rgba(255,255,255,.6)}
+
+/* ═══ C10: TRENINGSPLAN (col 4-9, row 10-12) ═══ */
+.C10{grid-column:4/10;grid-row:10/13}
+.C10-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:10px}
+.C10d{text-align:center;padding:6px 0;border-radius:8px;cursor:pointer;transition:all .15s}
+.C10d:hover{background:rgba(0,40,28,.03)}
+.C10d.today{background:var(--grn);color:#fff;box-shadow:0 2px 6px rgba(27,107,74,.2)}
+.C10d.done{position:relative}
+.C10d.done::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--grn-b)}
+.C10dn{font-size:8px;color:var(--txm);font-weight:500;margin-bottom:2px}
+.C10dd{font-size:12px;font-weight:700}
+.C10d.today .C10dn,.C10d.today .C10dd{color:#fff}
+.C10-items{display:flex;flex-direction:column;gap:4px}
+.C10i{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;background:rgba(0,40,28,.015);transition:all .15s;cursor:pointer}
+.C10i:hover{background:rgba(0,40,28,.035)}
+.C10i.done{opacity:.45}
+.C10-chk{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--brds);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.C10i.done .C10-chk{background:var(--grn);border-color:var(--grn)}
+.C10i.done .C10-chk svg{color:#fff}
+.C10-chk svg{width:11px;height:11px;color:transparent}
+.C10-txt{font-size:11px;font-weight:500}
+.C10-meta{font-size:9px;color:var(--txm)}
+.C10-r{margin-left:auto;font-size:9px;color:var(--txm);font-weight:500}
+
+/* ═══ C11: AI INSIGHT (col 10-12, row 11-13) ═══ */
+.C11{grid-column:10/13;grid-row:11/14;position:relative;overflow:hidden}
+.C11-glow{position:absolute;top:-30px;right:-30px;width:90px;height:90px;background:radial-gradient(circle,rgba(124,92,252,.1),transparent 70%);pointer-events:none}
+.C11-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:5px;background:var(--pur-d);color:var(--pur);font-size:9.5px;font-weight:600;margin-bottom:8px}
+.C11-badge svg{width:11px;height:11px}
+.C11-h{font-size:12.5px;font-weight:700;line-height:1.35;margin-bottom:5px}
+.C11-p{font-size:10.5px;color:var(--tx2);line-height:1.55}
+.C11-m{display:flex;gap:5px;margin-top:8px}
+.C11-mi{flex:1;padding:6px;border-radius:var(--rx);text-align:center;border:1px solid var(--brd)}
+.C11-mi.pu{background:var(--pur-d);border-color:rgba(124,92,252,.1)}
+.C11-mv{font-size:14px;font-weight:800;letter-spacing:-.02em}
+.C11-ml{font-size:7.5px;color:var(--txm);margin-top:1px}
+
+/* ═══ C12: SISTE RUNDER (col 1-3, row 12-14) ═══ */
+.C12{grid-column:1/4;grid-row:12/15}
+.C12-list{display:flex;flex-direction:column;gap:4px;margin-top:4px}
+.C12-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;background:rgba(0,40,28,.01);border:1px solid transparent;transition:all .15s;cursor:pointer}
+.C12-row:hover{background:rgba(0,40,28,.03);border-color:var(--brd)}
+.C12-l{display:flex;align-items:center;gap:8px}
+.C12-ico{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.C12-ico svg{width:13px;height:13px}
+.C12-name{font-size:11px;font-weight:600}
+.C12-date{font-size:9.5px;color:var(--txm)}
+.C12-score{font-size:18px;font-weight:900;letter-spacing:-.03em}
+.C12-diff{font-size:8px;font-weight:600}
+
+/* ANIM */
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.C{animation:fu .4s cubic-bezier(.4,0,.2,1) both}
+.C:nth-child(1){animation-delay:.02s}.C:nth-child(2){animation-delay:.05s}.C:nth-child(3){animation-delay:.08s}.C:nth-child(4){animation-delay:.11s}.C:nth-child(5){animation-delay:.14s}.C:nth-child(6){animation-delay:.17s}.C:nth-child(7){animation-delay:.20s}.C:nth-child(8){animation-delay:.23s}.C:nth-child(9){animation-delay:.26s}.C:nth-child(10){animation-delay:.29s}.C:nth-child(11){animation-delay:.32s}.C:nth-child(12){animation-delay:.35s}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(0,40,28,.08);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="S">
+  <div class="S-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 2L6 8l6 6"/><path d="M18 8l-6 6 6 6"/></svg></div>
+  <nav class="S-n">
+    <div class="N on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+    <div class="N"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+    <div class="N"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+    <div class="N"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+    <div class="N"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+    <div class="N"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+  </nav>
+  <div class="S-b">
+    <div class="N"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+    <div class="S-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt=""/></div>
+  </div>
+</aside>
+
+<!-- TOPBAR -->
+<header class="T">
+  <div class="T-tabs">
+    <div class="Tt on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> Oversikt</div>
+    <div class="Tt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Aktiviteter</div>
+    <div class="Tt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Statistikk</div>
+    <div class="Tt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/></svg> Treningsplan</div>
+  </div>
+  <div class="T-r">
+    <div class="Tb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+    <div class="Tb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg> Kalender</div>
+    <div class="Tb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.6 5.7 21l2.3-7.2-6-4.4h7.6z"/></svg> AI Coach</div>
+    <div class="Ti nt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+    <div class="T-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt=""/></div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="M">
+  <h1 class="greet">Hei, <b>Erik</b></h1>
+  <div class="G">
+
+    <!-- C1: TRENINGSAKTIVITET -->
+    <div class="C C1">
+      <div class="C1-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Treningsaktivitet</div>
+      <div class="C1-streak"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Du er pa en streak! 21 dager</div>
+      <div class="C1-tabs"><div class="C1t on">Uke</div><div class="C1t">Mnd</div><div class="C1t">Ar</div><div class="C1t">Totalt</div></div>
+      <div class="C1-wk">Denne uken <span>Forrige: 7t 24m</span></div>
+      <div class="bars">
+        <div class="bc"><div class="b b1" style="height:50%"></div><div class="b b2" style="height:25%"></div><div class="b b3" style="height:15%"></div><div class="bd">Man</div></div>
+        <div class="bc"><div class="b b1" style="height:78%"></div><div class="b b2" style="height:42%"></div><div class="b b3" style="height:28%"></div><div class="bd">Tir</div></div>
+        <div class="bc"><div class="b b1" style="height:30%"></div><div class="b b2" style="height:15%"></div><div class="b b3" style="height:10%"></div><div class="bd">Ons</div></div>
+        <div class="bc"><div class="b b1" style="height:90%"></div><div class="b b2" style="height:52%"></div><div class="b b3" style="height:35%"></div><div class="bd">Tor</div></div>
+        <div class="bc"><div class="b b1" style="height:45%"></div><div class="b b2" style="height:28%"></div><div class="b b3" style="height:20%"></div><div class="bd">Fre</div></div>
+        <div class="bc"><div class="b b1" style="height:100%"></div><div class="b b2" style="height:58%"></div><div class="b b3" style="height:42%"></div><div class="bd">Lor</div></div>
+        <div class="bc"><div class="b b1" style="height:65%"></div><div class="b b2" style="height:35%"></div><div class="b b3" style="height:22%"></div><div class="bd">Son</div></div>
+      </div>
+      <div class="C1-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <b>8.5 t</b> trening &nbsp; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <b>28.5 km</b> distanse</div>
+    </div>
+
+    <!-- C2: HANDICAP RING -->
+    <div class="C C2">
+      <div class="L" style="width:100%;justify-content:space-between"><span>Handicap</span><span class="P Pg">-1.2</span></div>
+      <div class="C2-ring">
+        <svg width="115" height="115" viewBox="0 0 115 115">
+          <circle cx="57.5" cy="57.5" r="49" fill="none" stroke="rgba(0,40,28,.05)" stroke-width="9"/>
+          <circle cx="57.5" cy="57.5" r="49" fill="none" stroke="var(--grn)" stroke-width="9" stroke-linecap="round" stroke-dasharray="308" stroke-dashoffset="77" style="transform:rotate(-90deg);transform-origin:center;filter:drop-shadow(0 0 5px rgba(27,107,74,.2))"/>
+          <circle cx="57.5" cy="57.5" r="49" fill="none" stroke="var(--acc)" stroke-width="9" stroke-linecap="round" stroke-dasharray="308" stroke-dashoffset="245" opacity=".45" style="transform:rotate(-90deg);transform-origin:center"/>
+        </svg>
+        <div class="C2-v"><div class="C2-num">14.2</div><div class="C2-unit">HCP</div></div>
+      </div>
+      <div class="C2-sub">Oppdatert 8. april</div>
+    </div>
+
+    <!-- C3: TRACKMAN WAVE -->
+    <div class="C C3">
+      <div class="L" style="justify-content:space-between"><span><span class="I" style="background:var(--acc-l)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span> TrackMan Data</span><span class="P Po">Siste okt</span></div>
+      <div class="C3-sub">Driver — 8. april 2026, 20 slag</div>
+      <div class="C3-w" id="wave"></div>
+      <div class="C3-times"><span>Slag 1</span><span>5</span><span>10</span><span>15</span><span>20</span></div>
+    </div>
+
+    <!-- C4: SPILLER PROFIL (tall right column) -->
+    <div class="C C4">
+      <div class="C4-badge">Performance Pro</div>
+      <img class="C4-img" src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=500&h=400&fit=crop&crop=center" alt="Erik pa banen"/>
+      <div class="C4-body">
+        <div class="C4-name">Erik Hansen</div>
+        <div class="C4-meta">Medlem siden 2025 - Gamle Fredrikstad GK</div>
+        <div class="C4-stats">
+          <div class="C4-stat"><div class="C4-stat-v lime">14.2</div><div class="C4-stat-l">Handicap</div></div>
+          <div class="C4-stat"><div class="C4-stat-v acc">24</div><div class="C4-stat-l">Runder</div></div>
+          <div class="C4-stat"><div class="C4-stat-v">78</div><div class="C4-stat-l">Beste</div></div>
+        </div>
+        <div class="C4-tier">
+          <div class="C4-tier-dot"></div>
+          <div class="C4-tier-txt">Performance Pro</div>
+          <div class="C4-tier-sub">3 av 4 okter</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C5: STROKES GAINED -->
+    <div class="C C5">
+      <div class="L"><span class="I" style="background:var(--grn-l)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--grn)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg></span> Strokes Gained</div>
+      <div class="C5-big">+3.5</div>
+      <div class="C5-sub">Normal — siste 5 runder</div>
+      <div class="C5-meter">
+        <div class="C5-dot on"></div><div class="C5-dot on"></div><div class="C5-dot on"></div><div class="C5-dot on"></div><div class="C5-dot on"></div><div class="C5-dot w"></div><div class="C5-dot"></div><div class="C5-dot"></div><div class="C5-dot"></div><div class="C5-dot"></div>
+      </div>
+    </div>
+
+    <!-- C6: PUTTS -->
+    <div class="C C6">
+      <div class="L" style="justify-content:space-between"><span>Putts per runde</span><div class="dots"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></div></div>
+      <div class="C6-bars" id="puttBars"></div>
+      <div style="display:flex;align-items:baseline;gap:3px"><div class="C6-val">1.8</div><div class="C6-u">putts/hull snitt</div></div>
+    </div>
+
+    <!-- C7: RUNDE-ANALYSE -->
+    <div class="C C7">
+      <div class="L" style="justify-content:space-between"><span><span class="I" style="background:var(--grn-l)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--grn)" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span> Runde-analyse</span><span class="P Pm">Vis alt</span></div>
+      <div class="C7-sub">Gamle Fredrikstad GK — 8. april 2026</div>
+      <div class="C7-grid">
+        <div class="C7i"><div class="C7k">Score</div><div class="C7v">78</div><div class="C7r"><div class="C7bar"><div class="C7fill" style="width:78%;background:var(--grn)"></div></div><div class="C7pct">+6</div></div></div>
+        <div class="C7i"><div class="C7k">Fairway</div><div class="C7v">9/14</div><div class="C7r"><div class="C7bar"><div class="C7fill" style="width:64%;background:var(--lime)"></div></div><div class="C7pct">64%</div></div></div>
+        <div class="C7i"><div class="C7k">GIR</div><div class="C7v">11/18</div><div class="C7r"><div class="C7bar"><div class="C7fill" style="width:61%;background:var(--acc)"></div></div><div class="C7pct">61%</div></div></div>
+        <div class="C7i"><div class="C7k">Putts</div><div class="C7v">31</div><div class="C7r"><div class="C7bar"><div class="C7fill" style="width:57%;background:var(--grn)"></div></div><div class="C7pct">1.72</div></div></div>
+      </div>
+      <div class="C7-extras">
+        <div class="C7-ex"><div class="C7-ex-k">Scrambling</div><div class="C7-ex-v">67%</div></div>
+        <div class="C7-ex"><div class="C7-ex-k">Par saves</div><div class="C7-ex-v">44%</div></div>
+        <div class="C7-ex"><div class="C7-ex-k">Sand saves</div><div class="C7-ex-v">33%</div></div>
+      </div>
+    </div>
+
+    <!-- C8: HANDICAP CHART -->
+    <div class="C C8">
+      <div class="L" style="justify-content:space-between"><span>Handicap-utvikling</span><span class="P Pm">12 mnd</span></div>
+      <div class="C8-top">
+        <div class="C8-big">14.2</div>
+        <div class="C8-trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg><span>-4.3</span></div>
+      </div>
+      <div class="C8-sub">Fra 18.5 — april 2025</div>
+      <div class="C8-chart">
+        <svg width="100%" height="90" viewBox="0 0 500 90" preserveAspectRatio="none">
+          <defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--grn)" stop-opacity=".1"/><stop offset="100%" stop-color="var(--grn)" stop-opacity="0"/></linearGradient></defs>
+          <line x1="0" y1="22" x2="500" y2="22" stroke="rgba(0,40,28,.03)"/><line x1="0" y1="45" x2="500" y2="45" stroke="rgba(0,40,28,.03)"/><line x1="0" y1="67" x2="500" y2="67" stroke="rgba(0,40,28,.03)"/>
+          <path d="M0,8 C40,10 80,18 140,28 C200,38 260,45 300,52 C340,56 360,48 390,54 C430,60 470,68 500,74 L500,90 L0,90Z" fill="url(#hg)"/>
+          <path d="M0,8 C40,10 80,18 140,28 C200,38 260,45 300,52 C340,56 360,48 390,54 C430,60 470,68 500,74" fill="none" stroke="var(--grn)" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="360" cy="48" r="3.5" fill="var(--card)" stroke="var(--grn)" stroke-width="1.5"/>
+          <circle cx="500" cy="74" r="4.5" fill="var(--lime)" stroke="var(--card)" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="C8-labels"><span>Apr '25</span><span>Jun</span><span>Aug</span><span>Okt</span><span>Des</span><span>Feb</span><span style="font-weight:600;color:var(--grn)">Apr '26</span></div>
+      <div class="C8-score"><div class="C8-score-lbl">Mal</div><div class="C8-score-big">10.0</div><div class="C8-score-sub" style="margin-top:8px">innen des 2026</div></div>
+    </div>
+
+    <!-- C9: NESTE COACHING (orange card) -->
+    <div class="C C9">
+      <div class="L"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Neste coaching</div>
+      <div class="C9-date">Tirsdag 15. april</div>
+      <div class="C9-info">kl. 10:00 — Performance Pro 20 min<br>Gamle Fredrikstad GK, Range</div>
+      <div class="C9-coach">
+        <div class="C9-coach-av"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" alt=""/></div>
+        <div><div class="C9-coach-name">Anders Kristiansen</div></div>
+      </div>
+      <div class="C9-chart">
+        <div class="C9-bar" style="height:30%"></div><div class="C9-bar" style="height:50%"></div><div class="C9-bar hi" style="height:70%"></div><div class="C9-bar hi" style="height:90%"></div><div class="C9-bar hi" style="height:60%"></div><div class="C9-bar" style="height:40%"></div><div class="C9-bar" style="height:35%"></div><div class="C9-bar" style="height:55%"></div>
+      </div>
+    </div>
+
+    <!-- C10: TRENINGSPLAN -->
+    <div class="C C10">
+      <div class="L" style="justify-content:space-between"><span><span class="I" style="background:var(--grn-l)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--grn)" stroke-width="2"><path d="M9 11l3 3L22 4"/></svg></span> Treningsplan — Uke 16</span><span class="P Pg">3 av 5 fullfort</span></div>
+      <div class="C10-days">
+        <div class="C10d done"><div class="C10dn">Man</div><div class="C10dd">7</div></div>
+        <div class="C10d done"><div class="C10dn">Tir</div><div class="C10dd">8</div></div>
+        <div class="C10d done"><div class="C10dn">Ons</div><div class="C10dd">9</div></div>
+        <div class="C10d today"><div class="C10dn">Tor</div><div class="C10dd">10</div></div>
+        <div class="C10d"><div class="C10dn">Fre</div><div class="C10dd">11</div></div>
+        <div class="C10d"><div class="C10dn">Lor</div><div class="C10dd">12</div></div>
+        <div class="C10d"><div class="C10dn">Son</div><div class="C10dd">13</div></div>
+      </div>
+      <div class="C10-items">
+        <div class="C10i done"><div class="C10-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="C10-txt">Putting drill — 10-footer</div><div class="C10-meta">20 min</div></div><div class="C10-r">Fullfort</div></div>
+        <div class="C10i done"><div class="C10-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="C10-txt">Approach 50-100m</div><div class="C10-meta">15 min</div></div><div class="C10-r">Fullfort</div></div>
+        <div class="C10i done"><div class="C10-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="C10-txt">Driving range — tempo</div><div class="C10-meta">30 min</div></div><div class="C10-r">Fullfort</div></div>
+        <div class="C10i"><div class="C10-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="C10-txt">Chip shots 20-40m</div><div class="C10-meta">20 min</div></div><div class="C10-r" style="color:var(--acc);font-weight:600">I dag</div></div>
+        <div class="C10i"><div class="C10-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="C10-txt">9 hull — Gamle Fredrikstad</div><div class="C10-meta">90 min</div></div><div class="C10-r">Lordag</div></div>
+      </div>
+    </div>
+
+    <!-- C11: AI INSIGHT -->
+    <div class="C C11">
+      <div class="C11-glow"></div>
+      <div class="C11-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.6 5.7 21l2.3-7.2-6-4.4h7.6z"/></svg> AI-innsikt</div>
+      <div class="C11-h">Kort spill = storst potensial</div>
+      <div class="C11-p">Chip shots 20-40m er 2.1 slag under snitt. Fokuser her for best effekt.</div>
+      <div class="C11-m">
+        <div class="C11-mi pu"><div class="C11-mv" style="color:var(--pur)">-2.1</div><div class="C11-ml">Kort spill</div></div>
+        <div class="C11-mi"><div class="C11-mv">+1.4</div><div class="C11-ml">Driving</div></div>
+        <div class="C11-mi"><div class="C11-mv">+0.8</div><div class="C11-ml">Putting</div></div>
+      </div>
+    </div>
+
+    <!-- C12: SISTE RUNDER -->
+    <div class="C C12">
+      <div class="L" style="justify-content:space-between"><span>Siste runder</span><span class="P Pm">Se alle</span></div>
+      <div class="C12-list">
+        <div class="C12-row"><div class="C12-l"><div class="C12-ico" style="background:var(--grn-l)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--grn)" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div><div><div class="C12-name">Gamle Fredrikstad</div><div class="C12-date">8. apr</div></div></div><div style="text-align:right"><div class="C12-score" style="color:var(--grn)">78</div><div class="C12-diff" style="color:var(--grn-b)">+6</div></div></div>
+        <div class="C12-row"><div class="C12-l"><div class="C12-ico" style="background:var(--acc-l)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div><div><div class="C12-name">Miklagard</div><div class="C12-date">2. apr</div></div></div><div style="text-align:right"><div class="C12-score">82</div><div class="C12-diff" style="color:var(--acc)">+10</div></div></div>
+        <div class="C12-row"><div class="C12-l"><div class="C12-ico" style="background:rgba(0,40,28,.03)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--tx2)" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div><div><div class="C12-name">Losby</div><div class="C12-date">28. mar</div></div></div><div style="text-align:right"><div class="C12-score">80</div><div class="C12-diff" style="color:var(--tx2)">+8</div></div></div>
+        <div class="C12-row"><div class="C12-l"><div class="C12-ico" style="background:var(--grn-l)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--grn)" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div><div><div class="C12-name">Gamle Fredrikstad</div><div class="C12-date">21. mar</div></div></div><div style="text-align:right"><div class="C12-score">81</div><div class="C12-diff" style="color:var(--tx2)">+9</div></div></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+// TrackMan wave
+const w=document.getElementById('wave');
+for(let i=0;i<75;i++){const b=document.createElement('div');b.className='C3-wb';const h=5+Math.sin(i*.22)*26+Math.random()*18;b.style.height=h+'px';const c=i>18&&i<48;b.style.background=c?'var(--acc)':'rgba(232,118,58,.15)';b.style.opacity=c?(.35+Math.random()*.55):(.1+Math.random()*.12);w.appendChild(b)}
+// Putt bars
+const pb=document.getElementById('puttBars');
+[38,62,48,78,42,100,52,68,35,82,45,58,40,72,55].forEach((h,i)=>{const b=document.createElement('div');b.className='C6-bar';b.style.height=h+'%';b.style.background=i===5?'var(--acc)':'var(--grn)';b.style.opacity=i===5?'1':'.2';pb.appendChild(b)});
+</script>
+</body>
+</html>

@@ -41,7 +41,7 @@ export const SERVICES = {
     duration: 20, // per økt
     price: 3000, // 3 000 kr
     maxStudents: 1,
-    color: "#2D6A4F",
+    color: "#005840",
     coachId: "anders",
     active: true,
     portalAccessDays: 30,
@@ -52,7 +52,7 @@ export const SERVICES = {
     duration: 50,
     price: 995, // 995 kr
     maxStudents: 1,
-    color: "#2D6A4F",
+    color: "#005840",
     coachId: "anders",
     active: true,
     portalAccessDays: 30,
@@ -65,7 +65,7 @@ export const SERVICES = {
     duration: 50,
     price: 1500, // 1 500 kr
     maxStudents: 1,
-    color: "#2D6A4F",
+    color: "#005840",
     coachId: "anders",
     active: true,
     portalAccessDays: 30,
@@ -76,7 +76,7 @@ export const SERVICES = {
     duration: 50,
     price: 1700, // 1 700 kr totalt (850 × 2)
     maxStudents: 2,
-    color: "#2D6A4F",
+    color: "#005840",
     coachId: "anders",
     active: true,
     portalAccessDays: 30,
@@ -87,7 +87,7 @@ export const SERVICES = {
     duration: 90,
     price: 2500, // 2 500 kr
     maxStudents: 1,
-    color: "#2D6A4F",
+    color: "#005840",
     coachId: "anders",
     active: true,
     portalAccessDays: 30,
@@ -98,7 +98,7 @@ export const SERVICES = {
     duration: 90,
     price: 2800, // 2 800 kr totalt (1400 × 2)
     maxStudents: 2,
-    color: "#2D6A4F",
+    color: "#005840",
     coachId: "anders",
     active: true,
     portalAccessDays: 30,
@@ -111,7 +111,7 @@ export const SERVICES = {
     duration: 20,
     price: 300, // 300 kr
     maxStudents: 1,
-    color: "#2D6A4F",
+    color: "#005840",
     coachId: "markus",
     active: true,
     portalAccessDays: 30,
@@ -124,7 +124,7 @@ export const SERVICES = {
     duration: 150, // ~2.5 timer
     price: 3000, // 3 000 kr/spiller
     maxStudents: 2,
-    color: "#2D6A4F",
+    color: "#005840",
     coachId: "anders",
     active: true,
     portalAccessDays: 30,
@@ -137,7 +137,7 @@ export const SERVICES = {
     duration: 60,
     price: 500, // 500 kr enkeltpris
     maxStudents: 5,
-    color: "#2D6A4F",
+    color: "#005840",
     coachId: "anders",
     active: true,
     portalAccessDays: 0, // Portal via abonnement
@@ -150,7 +150,7 @@ export const SERVICES = {
     duration: 0,
     price: 299, // 299 kr/mnd
     maxStudents: 1,
-    color: "#2D6A4F",
+    color: "#005840",
     coachId: null,
     active: true,
     portalAccessDays: 30,

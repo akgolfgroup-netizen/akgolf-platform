@@ -15,11 +15,11 @@ export function MaintenancePage({
   showContactInfo = true,
 }: MaintenancePageProps) {
   return (
-    <div className="min-h-screen bg-[#F5F5F7] flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen bg-[#ECF0EF] flex flex-col items-center justify-center px-6">
       {/* Animated background gradient */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#E8E8ED] to-transparent blur-3xl opacity-60"
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#D5DFDB] to-transparent blur-3xl opacity-60"
           animate={{
             scale: [1, 1.1, 1],
             x: [0, 30, 0],
@@ -69,7 +69,7 @@ export function MaintenancePage({
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="w-2.5 h-2.5 rounded-full bg-[#1D1D1F]"
+                className="w-2.5 h-2.5 rounded-full bg-[#0A1F18]"
                 animate={{
                   scale: [1, 1.3, 1],
                   opacity: [0.3, 1, 0.3],
@@ -90,7 +90,7 @@ export function MaintenancePage({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="text-4xl md:text-5xl font-bold text-[#1D1D1F] tracking-tight mb-4"
+          className="text-4xl md:text-5xl font-bold text-[#0A1F18] tracking-tight mb-4"
         >
           {title}
         </motion.h1>
@@ -100,7 +100,7 @@ export function MaintenancePage({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="text-lg text-[#86868B] leading-relaxed mb-8"
+          className="text-lg text-[#7A8C85] leading-relaxed mb-8"
         >
           {message}
         </motion.p>
@@ -121,20 +121,20 @@ export function MaintenancePage({
             transition={{ delay: 0.7, duration: 0.5 }}
             className="space-y-3"
           >
-            <p className="text-sm text-[#6E6E73]">
+            <p className="text-sm text-[#5A6E66]">
               Har du sporsmal? Ta kontakt:
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
               <a
                 href="mailto:post@akgolf.no"
-                className="text-[#1D1D1F] font-medium hover:opacity-70 transition-opacity"
+                className="text-[#0A1F18] font-medium hover:opacity-70 transition-opacity"
               >
                 post@akgolf.no
               </a>
               <span className="hidden sm:block text-[#D2D2D7]">|</span>
               <a
                 href="tel:+4745008048"
-                className="text-[#1D1D1F] font-medium hover:opacity-70 transition-opacity"
+                className="text-[#0A1F18] font-medium hover:opacity-70 transition-opacity"
               >
                 +47 450 08 048
               </a>
@@ -147,7 +147,7 @@ export function MaintenancePage({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.5 }}
-          className="mt-16 text-xs text-[#86868B] uppercase tracking-widest"
+          className="mt-16 text-xs text-[#7A8C85] uppercase tracking-widest"
         >
           AK Golf Group
         </motion.p>

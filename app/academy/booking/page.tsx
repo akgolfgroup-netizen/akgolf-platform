@@ -35,14 +35,14 @@ interface ServiceType {
 type Step = "service" | "instructor" | "date" | "details" | "confirm";
 
 const THEME = {
-  bg: "#F5F5F7",
+  bg: "#ECF0EF",
   bgElevated: "#FFFFFF",
   bgSubtle: "#FAFAFA",
-  primary: "#1D1D1F",
-  text: "#1D1D1F",
-  textMuted: "#86868B",
-  textLight: "#AEAEB2",
-  border: "#E8E8ED",
+  primary: "#0A1F18",
+  text: "#0A1F18",
+  textMuted: "#7A8C85",
+  textLight: "#A5B2AD",
+  border: "#D5DFDB",
   shadow: "0 4px 20px rgba(0,0,0,0.04)",
   shadowHover: "0 8px 30px rgba(0,0,0,0.08)",
   shadowPrimary: "0 4px 20px rgba(29,29,31,0.15)",
@@ -207,7 +207,7 @@ export default function AcademyBookingPage() {
     return (
       <>
         <WebsiteNav />
-        <main className="min-h-screen bg-[#F5F5F7] flex items-center justify-center">
+        <main className="min-h-screen bg-[#ECF0EF] flex items-center justify-center">
           <div className="flex items-center gap-3" style={{ color: THEME.textMuted }}>
             <Loader2 className="w-6 h-6 animate-spin" />
             <span>Laster tilgjengelige tjenester...</span>
@@ -222,20 +222,20 @@ export default function AcademyBookingPage() {
     <>
       <WebsiteNav />
       
-      <main className="min-h-screen bg-[#F5F5F7]" id="main-content">
+      <main className="min-h-screen bg-[#ECF0EF]" id="main-content">
         <PageTransition>
           {/* Hero Section */}
-          <section className="bg-white py-20 border-b border-[#E8E8ED]">
+          <section className="bg-white py-20 border-b border-[#D5DFDB]">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center">
-                  <span className="inline-block px-4 py-1.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] text-sm font-medium mb-4 border border-[#E8E8ED]">
+                  <span className="inline-block px-4 py-1.5 rounded-full bg-[#ECF0EF] text-[#0A1F18] text-sm font-medium mb-4 border border-[#D5DFDB]">
                     AK Golf Academy
                   </span>
-                  <h1 className="text-4xl md:text-5xl font-semibold text-[#1D1D1F] mb-4">
+                  <h1 className="text-4xl md:text-5xl font-semibold text-[#0A1F18] mb-4">
                     Book din coaching-time
                   </h1>
-                  <p className="text-[#86868B] max-w-lg mx-auto">
+                  <p className="text-[#7A8C85] max-w-lg mx-auto">
                     Velg tjeneste, trener og tidspunkt. Ingen konto nødvendig —
                     hvis du har booket før, kobles timen automatisk til din profil.
                   </p>

@@ -13,7 +13,7 @@ export function CoachingOfferGrid() {
           <div className="text-center mb-16">
             <SectionLabel>Coaching-pakker</SectionLabel>
             <h2 className="w-heading-lg mt-5">Velg ditt nivå</h2>
-            <p className="text-[#6E6E73] max-w-xl mx-auto mt-5 text-lg leading-relaxed">
+            <p className="text-[#5A6E66] max-w-xl mx-auto mt-5 text-lg leading-relaxed">
               Alle pakker inkluderer TrackMan-analyse, treningsplan og full portaltilgang. Ingen binding.
             </p>
           </div>
@@ -24,7 +24,7 @@ export function CoachingOfferGrid() {
             <StaggerItem key={offer.title}>
               <a
                 href={offer.href}
-                className="group block bg-white rounded-[20px] border border-[#E8E8ED] overflow-hidden transition-[transform,box-shadow] duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] h-full"
+                className="group block bg-white rounded-[20px] border border-[#D5DFDB] overflow-hidden transition-[transform,box-shadow] duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] h-full"
               >
                 <div className="relative h-48 overflow-hidden">
                   <Image
@@ -43,11 +43,11 @@ export function CoachingOfferGrid() {
                   )}
                 </div>
                 <div className="p-6">
-                  <h3 className="font-display text-lg font-semibold text-[#1D1D1F] mb-2">{offer.title}</h3>
-                  <p className="text-sm text-[#6E6E73] leading-relaxed mb-4">{offer.description}</p>
+                  <h3 className="font-display text-lg font-semibold text-[#0A1F18] mb-2">{offer.title}</h3>
+                  <p className="text-sm text-[#5A6E66] leading-relaxed mb-4">{offer.description}</p>
                   <div className="flex items-baseline gap-1">
-                    <span className="font-display text-3xl font-bold text-[#1D1D1F]">{offer.price}</span>
-                    <span className="text-sm text-[#86868B]">{offer.period}</span>
+                    <span className="font-display text-3xl font-bold text-[#0A1F18]">{offer.price}</span>
+                    <span className="text-sm text-[#7A8C85]">{offer.period}</span>
                   </div>
                 </div>
               </a>
