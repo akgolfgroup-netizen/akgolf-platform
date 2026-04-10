@@ -16,6 +16,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { repeatLastSession } from "./actions";
+import { LogSessionModal } from "@/components/portal/dagbok/log-session-modal";
 import { BentoGrid } from "@/components/portal/apple/bento-grid";
 import { BentoCard } from "@/components/portal/apple/bento-card";
 import { StatCard } from "@/components/portal/apple/stat-card";
@@ -153,6 +154,8 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
   const [calendarMonth, setCalendarMonth] = useState(new Date());
   const [isPending, startTransition] = useTransition();
   const [quickLogSuccess, setQuickLogSuccess] = useState(false);
+  const [logModalOpen, setLogModalOpen] = useState(false);
+  const [editingLog, setEditingLog] = useState<TrainingLogEntry | null>(null);
 
   const logs = initialLogs;
 
@@ -267,8 +270,15 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
                 {isPending ? "Logger..." : "Gjenta siste"}
               </AppleButton>
             )}
-            <AppleButton variant="primary" icon={Plus}>
-              Logg ny okt
+            <AppleButton
+              variant="primary"
+              icon={Plus}
+              onClick={() => {
+                setEditingLog(null);
+                setLogModalOpen(true);
+              }}
+            >
+              Logg ny økt
             </AppleButton>
           </div>
         </motion.div>
@@ -623,6 +633,19 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.25 + idx * 0.05 }}
+                    onClick={() => {
+                      setEditingLog(log);
+                      setLogModalOpen(true);
+                    }}
+                    className="cursor-pointer"
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        setEditingLog(log);
+                        setLogModalOpen(true);
+                      }
+                    }}
                   >
                     <AppleCard hover padding="md">
                       <div className="flex items-start justify-between mb-3">
@@ -672,6 +695,16 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
           </>
         )}
       </div>
+
+      {/* Log Session Modal */}
+      <LogSessionModal
+        open={logModalOpen}
+        onClose={() => {
+          setLogModalOpen(false);
+          setEditingLog(null);
+        }}
+        editLog={editingLog}
+      />
     </div>
   );
 }

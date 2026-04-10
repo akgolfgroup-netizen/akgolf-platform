@@ -6,6 +6,7 @@ import { format, startOfISOWeek, addDays, addWeeks, isToday as isTodayFn } from 
 import { nb } from "date-fns/locale";
 import Link from "next/link";
 import { GeneratePlanButton } from "@/components/portal/treningsplan/generate-plan-button";
+import { ManualPlanButton } from "@/components/portal/treningsplan/manual-plan-button";
 
 interface SessionExercise {
   name: string;
@@ -94,7 +95,12 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
               ? "Dra øvelser fra banken, eller la AI lage en plan for deg."
               : "Kontakt din coach for å få en personlig treningsplan."}
           </p>
-          {canGenerate && <GeneratePlanButton studentId={user.id} />}
+          {canGenerate && (
+            <div className="flex items-center gap-3 justify-center flex-wrap">
+              <ManualPlanButton studentId={user.id} />
+              <GeneratePlanButton studentId={user.id} />
+            </div>
+          )}
         </div>
       </div>
     );
@@ -137,7 +143,12 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
               <ChevronRight className="w-4 h-4 text-[#6b7366]" />
             </Link>
           </div>
-          {canGenerate && <GeneratePlanButton studentId={user.id} />}
+          {canGenerate && (
+            <>
+              <ManualPlanButton studentId={user.id} />
+              <GeneratePlanButton studentId={user.id} />
+            </>
+          )}
         </div>
       </div>
 

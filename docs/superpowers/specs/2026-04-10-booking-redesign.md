@@ -27,7 +27,7 @@
   - Bilde fyller kortet (aspect-ratio 3:4)
   - Gradient overlay på bunn med navn, rolle, badge
   - Anders Kristiansen — Head Coach — "Performance · Flex"
-  - Markus R. Pedersen — Assistant Coach — "Express · First Tee"
+  - Markus R. Pedersen — Assistant Coach — "Express · Flex"
 - **Interaksjon:** Klikk → kortet utvides, tjenester avslører seg under med animasjon
 - **Hover:** translateY(-4px) + box-shadow + lime border
 

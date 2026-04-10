@@ -9,6 +9,7 @@ import { checkUserQuota, consumeSession } from "@/lib/portal/booking/subscriptio
 import { invalidateSlotsCache, invalidateBookingsCache } from "@/lib/portal/booking/cache";
 import { syncBookingToCalendar } from "@/lib/portal/calendar/google-calendar";
 import { broadcastUpdate } from "@/app/api/portal/bookings/live/route";
+import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -82,7 +83,7 @@ async function getOrCreateUser(
       phone: phone || null,
       role: "USER",
       isActive: true,
-      subscriptionTier: "FREE",
+      subscriptionTier: "VISITOR",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })
@@ -100,14 +101,16 @@ async function getOrCreateUser(
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { 
-      serviceTypeId, 
-      instructorId, 
-      startTime, 
-      paymentMethod = "STRIPE", 
-      email, 
-      name, 
-      phone 
+    const {
+      serviceTypeId,
+      instructorId,
+      startTime,
+      paymentMethod = "STRIPE",
+      email,
+      name,
+      phone,
+      focusArea,
+      playerNotes,
     } = body;
 
     // Validate required fields
@@ -239,6 +242,10 @@ export async function POST(req: NextRequest) {
     const now = new Date().toISOString();
     const bookingId = randomUUID();
 
+    // Determine if this is a guest booking (not logged in)
+    const portalUser = await getPortalUser();
+    const isGuest = !portalUser?.id;
+
     const { data: booking, error: createError } = await supabase
       .from("Booking")
       .insert({
@@ -254,14 +261,18 @@ export async function POST(req: NextRequest) {
         paymentStatus: isSubscriptionBooking ? "PAID" : (paymentMethod === "STRIPE" ? "PENDING" : "PAID"),
         amount: isSubscriptionBooking ? 0 : (serviceType?.price || 0),
         vatAmount: 0,
-        // TODO: Enable after migration: guestEmail, guestName, guestPhone
+        focusArea: focusArea || null,
+        playerNotes: playerNotes ? String(playerNotes).slice(0, 500) : null,
+        guestEmail: isGuest ? email.toLowerCase().trim() : null,
+        guestName: isGuest ? (name || null) : null,
+        guestPhone: isGuest ? (phone || null) : null,
       })
       .select(`
         *,
         ServiceType:serviceTypeId(*),
         Instructor:instructorId(
           userId,
-          User:userId(name)
+          User:userId(name, email, phone)
         )
       `)
       .single();
@@ -280,6 +291,25 @@ export async function POST(req: NextRequest) {
         startTime: start.toISOString(),
       }),
     ]);
+
+    // For subscription bookings (no Stripe), send confirmation email immediately
+    // Stripe bookings get their email from the webhook after payment
+    if (isSubscriptionBooking) {
+      const instructorUser = booking.Instructor?.User as { name: string | null; email: string | null; phone: string | null } | null;
+      sendBookingConfirmation({
+        bookingId: booking.id,
+        studentName: user.name ?? name ?? "Kunde",
+        studentEmail: user.email ?? email,
+        instructorName: instructorUser?.name ?? "Instruktør",
+        instructorEmail: instructorUser?.email ?? "",
+        serviceName: booking.ServiceType?.name ?? "Coaching",
+        startTime: start,
+        duration: serviceType?.duration ?? 50,
+        amount: 0,
+        vatAmount: 0,
+        location: "Gamle Fredrikstad Golfklubb",
+      }).catch((err: unknown) => logger.error("[create] Subscription email failed:", err));
+    }
 
     // Create Stripe checkout if needed
     let redirectUrl: string;

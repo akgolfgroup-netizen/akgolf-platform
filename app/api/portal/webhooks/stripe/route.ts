@@ -305,15 +305,15 @@ export async function POST(req: Request) {
 type CoachingTier = "PERFORMANCE_PRO" | "PERFORMANCE" | "START";
 
 function mapPriceToTier(priceId: string): CoachingTier | null {
-  if (priceId === process.env.STRIPE_PRICE_PERFORMANCE_PRO) {
-    return "PERFORMANCE_PRO";
-  }
-  if (priceId === process.env.STRIPE_PRICE_PERFORMANCE) {
-    return "PERFORMANCE";
-  }
-  if (priceId === process.env.STRIPE_PRICE_STARTER) {
-    return "START";
-  }
+  // Trim env vars defensively — Vercel sometimes includes trailing whitespace
+  const priceIdClean = priceId.trim();
+  const pro = process.env.STRIPE_PRICE_PERFORMANCE_PRO?.trim();
+  const perf = process.env.STRIPE_PRICE_PERFORMANCE?.trim();
+  const starter = process.env.STRIPE_PRICE_STARTER?.trim();
+
+  if (pro && priceIdClean === pro) return "PERFORMANCE_PRO";
+  if (perf && priceIdClean === perf) return "PERFORMANCE";
+  if (starter && priceIdClean === starter) return "START";
 
   // Log warning for unmapped price IDs to catch missing env vars
   logger.warn(

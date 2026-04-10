@@ -2,8 +2,10 @@
 
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
-import { endOfISOWeek, isWithinInterval } from "date-fns";
+import { endOfISOWeek, isWithinInterval, addWeeks, startOfISOWeek } from "date-fns";
 import { nanoid } from "nanoid";
+import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
 // -------------------------------------------------------------------
 // Types for exercise data passed from client
@@ -256,3 +258,129 @@ export async function getCurrentWeekSessions(studentId?: string) {
 
   return currentWeek?.TrainingPlanSession ?? [];
 }
+
+// -------------------------------------------------------------------
+// Manual training plan creation
+// -------------------------------------------------------------------
+
+const manualSessionSchema = z.object({
+  dayOfWeek: z.number().int().min(1).max(7),
+  title: z.string().min(1, "Tittel er påkrevd").max(200),
+  description: z.string().max(1000).optional(),
+  durationMinutes: z.number().int().min(1).max(480).optional(),
+  focusArea: z.string().max(100).optional(),
+});
+
+const manualWeekSchema = z.object({
+  weekNumber: z.number().int().min(1).max(52),
+  focus: z.string().max(200).optional(),
+  volumeLabel: z.string().max(100).optional(),
+  sessions: z.array(manualSessionSchema).min(0).max(14),
+});
+
+const manualPlanSchema = z.object({
+  studentId: z.string().min(1).optional(),
+  title: z.string().min(1, "Tittel er påkrevd").max(200),
+  description: z.string().max(1000).optional(),
+  goals: z.string().max(2000).optional(),
+  periodType: z.enum(["PREPARATION", "COMPETITION", "RECOVERY", "OFF_SEASON"]),
+  startDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Ugyldig startdato",
+  }),
+  weeks: z.array(manualWeekSchema).min(1, "Planen må ha minst én uke").max(52),
+});
+
+export type ManualPlanInput = z.infer<typeof manualPlanSchema>;
+
+export async function createManualPlan(input: ManualPlanInput) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const parsed = manualPlanSchema.safeParse(input);
+  if (!parsed.success) {
+    const firstError = parsed.error.issues[0];
+    throw new Error(firstError?.message ?? "Ugyldig input");
+  }
+
+  const data = parsed.data;
+  const supabase = await createServerSupabase();
+
+  const studentId = data.studentId ?? user.id;
+  const startDate = new Date(data.startDate);
+  const endDate = addWeeks(startDate, data.weeks.length);
+
+  // Deaktiver eksisterende aktive planer for studenten
+  await supabase
+    .from("TrainingPlan")
+    .update({ isActive: false })
+    .eq("studentId", studentId)
+    .eq("isActive", true);
+
+  // Opprett plan
+  const planId = nanoid();
+  const now = new Date().toISOString();
+
+  const { error: planError } = await supabase.from("TrainingPlan").insert({
+    id: planId,
+    studentId,
+    createdById: user.id,
+    title: data.title,
+    description: data.description ?? null,
+    goals: data.goals ?? null,
+    periodType: data.periodType,
+    startDate: startDate.toISOString().slice(0, 10),
+    endDate: endDate.toISOString().slice(0, 10),
+    isActive: true,
+    aiGenerated: false,
+    updatedAt: now,
+  });
+
+  if (planError) {
+    throw new Error(`Kunne ikke opprette plan: ${planError.message}`);
+  }
+
+  // Opprett uker og økter
+  for (const week of data.weeks) {
+    const weekId = nanoid();
+    const weekStart = startOfISOWeek(addWeeks(startDate, week.weekNumber - 1));
+
+    const { error: weekError } = await supabase.from("TrainingPlanWeek").insert({
+      id: weekId,
+      planId,
+      weekNumber: week.weekNumber,
+      weekStart: weekStart.toISOString().slice(0, 10),
+      focus: week.focus ?? null,
+      volumeLabel: week.volumeLabel ?? null,
+    });
+
+    if (weekError) {
+      throw new Error(`Kunne ikke opprette uke ${week.weekNumber}: ${weekError.message}`);
+    }
+
+    if (week.sessions.length > 0) {
+      const sessionsToInsert = week.sessions.map((session, idx) => ({
+        id: nanoid(),
+        weekId,
+        dayOfWeek: session.dayOfWeek,
+        title: session.title,
+        description: session.description ?? null,
+        durationMinutes: session.durationMinutes ?? null,
+        focusArea: session.focusArea ?? null,
+        exercises: [],
+        sortOrder: idx,
+      }));
+
+      const { error: sessionError } = await supabase
+        .from("TrainingPlanSession")
+        .insert(sessionsToInsert);
+
+      if (sessionError) {
+        throw new Error(`Kunne ikke opprette økter: ${sessionError.message}`);
+      }
+    }
+  }
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true, planId };
+}
+
