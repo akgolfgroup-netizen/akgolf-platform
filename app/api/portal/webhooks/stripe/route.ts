@@ -16,7 +16,8 @@ import { createNotification } from "@/lib/portal/notifications";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  // Trim defensively — Vercel env vars may have trailing whitespace
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
   if (!webhookSecret) {
     logger.error("[Stripe Webhook] STRIPE_WEBHOOK_SECRET is not configured");
     return NextResponse.json(

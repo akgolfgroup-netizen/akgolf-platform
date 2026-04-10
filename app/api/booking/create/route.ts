@@ -400,10 +400,8 @@ export async function POST(req: NextRequest) {
     }
     
     logger.error("Booking creation error:", error);
-    // TEMP: Return error details for E2E debugging — revert before production
-    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: "Noe gikk galt. Vennligst prøv igjen.", debug: errorMessage },
+      { error: "Noe gikk galt. Vennligst prøv igjen." },
       { status: 500 }
     );
   }
