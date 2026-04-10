@@ -132,34 +132,6 @@ function BentoCard({
   );
 }
 
-// ─── Image Reveal ─────────────────────────────────────────
-function ImageReveal({ src, alt, delay = 0 }: { src: string; alt: string; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [revealed, setRevealed] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setTimeout(() => setRevealed(true), delay); obs.disconnect(); } },
-      { threshold: 0.3 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [delay]);
-
-  return (
-    <div ref={ref} className="h-[280px] rounded-2xl overflow-hidden">
-      <div
-        className="w-full h-full transition-[clip-path] duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]"
-        style={{ clipPath: revealed ? "inset(0 0 0 0)" : "inset(100% 0 0 0)" }}
-      >
-        <Image src={src} alt={alt} width={600} height={400} className="w-full h-full object-cover" />
-      </div>
-    </div>
-  );
-}
-
 // ─── Main Page ────────────────────────────────────────────
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -368,16 +340,6 @@ export default function HomePage() {
           </StaggerContainer>
         </section>
 
-        {/* ═══════════════════════════════════════════════════ */}
-        {/* BILDEGALLERI — Clip-path reveal                    */}
-        {/* ═══════════════════════════════════════════════════ */}
-        <section className="px-6 lg:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <ImageReveal src="/images/sections/instruksjon.jpg" alt="Instruksjon pa fairway" delay={0} />
-            <ImageReveal src="/images/sections/putting.jpg" alt="Putting coaching" delay={200} />
-            <ImageReveal src="/images/sections/banecoaching.jpg" alt="Banecoaching" delay={400} />
-          </div>
-        </section>
 
         {/* ═══════════════════════════════════════════════════ */}
         {/* PRISER                                             */}
