@@ -259,7 +259,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
               treningsplan og tilgang til alle verktøy i portalen.
             </p>
             <Link
-              href="/booking/select-service"
+              href="/booking"
               className={cn(
                 "inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all",
                 "bg-[var(--color-accent-cta)] text-[var(--color-accent-cta-text)]",

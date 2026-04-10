@@ -90,7 +90,7 @@ export function AcademyPricesV2() {
                 ))}
               </ul>
               <Link
-                href="/booking/select-service"
+                href="/booking"
                 className={`inline-flex items-center justify-center gap-2 font-bold px-6 py-3.5 rounded-lg transition-all duration-200 text-sm ${
                   pkg.highlighted
                     ? "bg-[var(--color-accent-cta)] text-[var(--color-primary)] hover:brightness-105"
@@ -136,7 +136,7 @@ export function AcademyPricesV2() {
                 </div>
               </div>
               <Link
-                href="/booking/select-service"
+                href="/booking"
                 className="inline-flex items-center justify-center gap-2 border border-[var(--color-primary)] text-[var(--color-primary)] font-bold px-6 py-3 rounded-lg hover:bg-[var(--color-primary)] hover:text-white transition-all duration-200 text-sm"
               >
                 Book Flex-sesjon

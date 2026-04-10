@@ -19,7 +19,7 @@ export function AcademyHeroV2() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/booking/select-service"
+              href="/booking"
               className="inline-flex items-center justify-center gap-2 bg-[var(--color-accent-cta)] text-[var(--color-primary)] font-bold px-8 py-4 rounded-lg hover:brightness-105 transition-all duration-200 text-base"
             >
               Book din time

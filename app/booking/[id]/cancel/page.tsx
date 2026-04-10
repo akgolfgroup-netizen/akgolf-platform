@@ -15,7 +15,7 @@ export default function BookingCancelPage() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
           <Link
-            href="/booking/select-service"
+            href="/booking"
             className="flex-1 bg-primary text-white py-3 px-6 rounded-xl font-medium text-sm text-center hover:opacity-90 transition"
           >
             Prøv igjen
