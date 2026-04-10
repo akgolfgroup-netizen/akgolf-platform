@@ -20,6 +20,7 @@ interface DaySlots {
   date: string;
   dayName: string;
   dayNumber: number;
+  month: string;
   slots: SmartSlot[];
 }
 
@@ -226,6 +227,7 @@ export async function GET(req: NextRequest) {
         date: dateStr,
         dayName: dayNames[i],
         dayNumber: date.getDate(),
+        month: date.toLocaleDateString("nb-NO", { month: "short" }).replace(".", ""),
         slots,
       });
     }
