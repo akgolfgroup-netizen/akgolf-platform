@@ -94,7 +94,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
               ? "Dra øvelser fra banken, eller la AI lage en plan for deg."
               : "Kontakt din coach for å få en personlig treningsplan."}
           </p>
-          {canGenerate && <GeneratePlanButton />}
+          {canGenerate && <GeneratePlanButton studentId={user.id} />}
         </div>
       </div>
     );
@@ -111,12 +111,34 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
             {format(addDays(weekStart, 6), "d. MMMM yyyy", { locale: nb })}
           </p>
         </div>
-        {canGenerate && (
-          <button className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#8b5cf6]/10 text-[#8b5cf6] text-sm font-semibold hover:bg-[#8b5cf6]/20 transition-colors">
-            <Sparkles className="w-4 h-4" />
-            Generer med AI
-          </button>
-        )}
+        <div className="flex items-center gap-3">
+          {/* Uke-navigasjon */}
+          <div className="flex items-center gap-1">
+            <Link
+              href={`/portal/treningsplan?week=${weekOffset - 1}`}
+              className="p-2 rounded-lg hover:bg-[#f7f3ea] transition-colors"
+              aria-label="Forrige uke"
+            >
+              <ChevronLeft className="w-4 h-4 text-[#6b7366]" />
+            </Link>
+            {weekOffset !== 0 && (
+              <Link
+                href="/portal/treningsplan"
+                className="px-3 py-1.5 rounded-lg text-xs font-medium text-[#6b7366] hover:bg-[#f7f3ea] transition-colors"
+              >
+                I dag
+              </Link>
+            )}
+            <Link
+              href={`/portal/treningsplan?week=${weekOffset + 1}`}
+              className="p-2 rounded-lg hover:bg-[#f7f3ea] transition-colors"
+              aria-label="Neste uke"
+            >
+              <ChevronRight className="w-4 h-4 text-[#6b7366]" />
+            </Link>
+          </div>
+          {canGenerate && <GeneratePlanButton studentId={user.id} />}
+        </div>
       </div>
 
       {/* Week Grid */}

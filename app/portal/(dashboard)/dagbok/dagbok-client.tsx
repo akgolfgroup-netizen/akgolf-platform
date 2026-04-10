@@ -314,7 +314,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
           <>
             {/* Stats Row */}
             <motion.div
-              className="grid grid-cols-4 gap-4"
+              className="grid grid-cols-2 md:grid-cols-4 gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.05 }}

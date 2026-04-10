@@ -55,7 +55,7 @@ export function TrainingVolumeChart({ data }: TrainingVolumeChartProps) {
       </div>
 
       {/* Chart */}
-      <div className="h-[220px]">
+      <div className="h-[180px] sm:h-[220px]" role="img" aria-label="Ukentlig treningsvolum">
         <ResponsiveContainer>
           <BarChart data={data} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" vertical={false} />

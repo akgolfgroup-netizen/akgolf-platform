@@ -94,7 +94,7 @@ export function RescheduleForm({
       }
 
       setSuccess(true);
-      setTimeout(() => router.push("/bookinger"), 2000);
+      setTimeout(() => router.push("/portal/bookinger"), 2000);
     } catch {
       setError("Noe gikk galt");
     } finally {

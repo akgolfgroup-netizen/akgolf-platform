@@ -115,7 +115,7 @@ export function ScoreTrendChart({
       </div>
 
       {/* Chart */}
-      <div className="h-[280px]">
+      <div className="h-[220px] sm:h-[280px]" role="img" aria-label="Score-utvikling over tid">
         <ResponsiveContainer>
           <LineChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" />

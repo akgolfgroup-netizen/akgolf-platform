@@ -1,4 +1,4 @@
-import { requirePortalUser } from "@/lib/portal/auth";
+import { getPortalUser } from "@/lib/portal/auth";
 import { canAccessMissionControl } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { MCLayout } from "@/components/portal/mission-control";
@@ -10,12 +10,12 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await requirePortalUser();
+  const user = await getPortalUser();
 
   if (!user) redirect("/admin/login");
 
   if (!canAccessMissionControl(user.role)) {
-    redirect("/portal");
+    redirect("/admin/login");
   }
 
   return (

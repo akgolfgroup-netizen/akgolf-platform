@@ -104,6 +104,20 @@ export default function StudentsPage() {
   const [activeSubFilter, setActiveSubFilter] = useState("all");
   const [selectedStudents, setSelectedStudents] = useState<Set<string>>(new Set());
 
+  function handleExport() {
+    const csv = [
+      "Navn,E-post,Status,Sist aktiv",
+      ...filteredStudents.map((s) => `"${s.name}","${s.email}","${s.status}","${s.lastActive}"`),
+    ].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `elever-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   const filteredStudents = mockStudents.filter((student) => {
     const matchesSearch = student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          student.email?.toLowerCase().includes(searchQuery.toLowerCase());
@@ -176,7 +190,7 @@ export default function StudentsPage() {
 
             {/* Actions */}
             <div className="flex gap-2">
-              <button className="hg-btn hg-btn-secondary">
+              <button onClick={handleExport} className="hg-btn hg-btn-secondary">
                 <Download className="w-4 h-4" />
                 <span className="hidden sm:inline">Eksporter</span>
               </button>

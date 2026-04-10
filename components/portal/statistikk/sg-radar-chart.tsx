@@ -44,7 +44,7 @@ export function SGRadarChart({ playerSG, benchmark, showLegend = true }: SGRadar
 
   return (
     <div className="w-full">
-      <div className="h-[280px]">
+      <div className="h-[220px] sm:h-[280px]" role="img" aria-label="Strokes Gained radar-diagram">
         <ResponsiveContainer>
           <RadarChart data={data} cx="50%" cy="50%" outerRadius="75%">
             <PolarGrid stroke="var(--color-grey-200)" strokeDasharray="3 3" />
