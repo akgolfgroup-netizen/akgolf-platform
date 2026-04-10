@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -161,8 +161,8 @@ export default function SetupAdminPage() {
       setSuccess(true);
       setStatus("✅ Admin-bruker opprettet!");
       addLog("Ferdig!");
-    } catch (err: any) {
-      const errorMsg = err.message || "Ukjent feil";
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
       addLog("FEIL: " + errorMsg);
       setError(errorMsg);
       setStatus("Feil ved oppretting");

@@ -58,17 +58,28 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
   // Fetch tour players when tour mode is activated
   useEffect(() => {
     if (mode !== "tour" || players.length > 0) return;
-    setLoadingPlayers(true);
-    setPlayerError(null);
-    fetch("/portal/api/datagolf/players")
-      .then((r) => r.json())
-      .then((data) => {
+
+    const fetchPlayers = async () => {
+      setLoadingPlayers(true);
+      setPlayerError(null);
+
+      try {
+        const response = await fetch("/portal/api/datagolf/players");
+        const data = await response.json();
+
         if (data.error) throw new Error(data.error);
         setPlayers(data.players ?? []);
         if (data.players?.length > 0) setSelectedPlayerId(data.players[0].id);
-      })
-      .catch((err) => setPlayerError(err.message ?? "Feil ved henting av spillere"))
-      .finally(() => setLoadingPlayers(false));
+      } catch (err) {
+        setPlayerError(
+          err instanceof Error ? err.message : "Feil ved henting av spillere"
+        );
+      } finally {
+        setLoadingPlayers(false);
+      }
+    };
+
+    void Promise.resolve().then(fetchPlayers);
   }, [mode, players.length]);
 
   // Derive comparison target stats

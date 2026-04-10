@@ -9,7 +9,7 @@ import {
   AlertTriangle,
   Lightbulb,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
 
@@ -27,6 +27,22 @@ interface AiInsightCardProps {
 
 export function AiInsightCard({ insight }: AiInsightCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const [isNew, setIsNew] = useState(false);
+
+  useEffect(() => {
+    const updateIsNew = () => {
+      if (!insight) {
+        setIsNew(false);
+        return;
+      }
+
+      const generatedAt = new Date(insight.generatedAt);
+      setIsNew(Date.now() - generatedAt.getTime() < 24 * 60 * 60 * 1000);
+    };
+
+    const timeoutId = window.setTimeout(updateIsNew, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [insight]);
 
   if (!insight) {
     return (
@@ -52,8 +68,6 @@ export function AiInsightCard({ insight }: AiInsightCardProps) {
   }
 
   const generatedAt = new Date(insight.generatedAt);
-  const isNew =
-    Date.now() - generatedAt.getTime() < 24 * 60 * 60 * 1000; // Siste 24 timer
 
   return (
     <motion.div
