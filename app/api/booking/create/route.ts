@@ -9,6 +9,7 @@ import { invalidateSlotsCache, invalidateBookingsCache } from "@/lib/portal/book
 import { syncBookingToCalendar } from "@/lib/portal/calendar/google-calendar";
 import { broadcastUpdate } from "@/app/api/portal/bookings/live/route";
 import { createClient } from "@supabase/supabase-js";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -98,15 +99,27 @@ async function getOrCreateUser(
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limiting
+    const rateLimit = checkRateLimit(
+      `booking-create:${getClientIp(req)}`,
+      RATE_LIMITS.BOOKING_CREATE
+    );
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "For mange forespørsler. Vent litt og prøv igjen." },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
-    const { 
-      serviceTypeId, 
-      instructorId, 
-      startTime, 
-      paymentMethod = "STRIPE", 
-      email, 
-      name, 
-      phone 
+    const {
+      serviceTypeId,
+      instructorId,
+      startTime,
+      paymentMethod = "STRIPE",
+      email,
+      name,
+      phone
     } = body;
 
     // Validate required fields
