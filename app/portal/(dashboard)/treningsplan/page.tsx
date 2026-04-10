@@ -41,7 +41,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   const weekOffset = parseInt(week ?? "0", 10) || 0;
 
   const plan = await getActivePlan();
-  const sessions = await getCurrentWeekSessions(weekOffset);
+  const sessions = await getCurrentWeekSessions();
   const canGenerate = isStaff(user?.role);
 
   const now = new Date();
@@ -94,12 +94,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
               ? "Dra øvelser fra banken, eller la AI lage en plan for deg."
               : "Kontakt din coach for å få en personlig treningsplan."}
           </p>
-          {canGenerate && (
-            <button className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#8b5cf6] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
-              <Sparkles className="w-4 h-4" />
-              Generer plan med AI
-            </button>
-          )}
+          {canGenerate && <GeneratePlanButton />}
         </div>
       </div>
     );
