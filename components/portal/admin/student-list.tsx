@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Search, Eye, Edit2, MoreHorizontal, ChevronsUpDown, Check, Mail, Tag, Download, X } from "lucide-react";
-import { searchStudents } from "@/app/admin/elever/actions";
+import { searchStudents } from "@/app/portal/(dashboard)/admin/elever/actions";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
 import { AppleAvatar, AppleBadge, AppleCard } from "@/components/portal/apple";
@@ -319,7 +319,7 @@ export function StudentList() {
                 {/* Actions */}
                 <div className="flex gap-2">
                   <Link
-                    href={`/admin/elever/${student.id}`}
+                    href={`/portal/admin/elever/${student.id}`}
                     className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors group"
                   >
                     <Eye className="w-4 h-4 text-[var(--color-grey-500)] group-hover:text-[var(--color-grey-900)]" />

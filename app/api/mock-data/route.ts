@@ -28,10 +28,10 @@ const missionBoardData = {
       { type: "success", message: "Betaling mottatt: 2 000 kr", time: "08:45" },
     ],
     quickActions: [
-      { label: "Ny Booking", icon: "calendar", href: "/admin/bookinger/ny" },
-      { label: "Send Melding", icon: "message", href: "/admin/meldinger" },
-      { label: "Legg til Elev", icon: "user-plus", href: "/admin/elever/ny" },
-      { label: "Se Rapport", icon: "chart", href: "/admin/rapporter" },
+      { label: "Ny Booking", icon: "calendar", href: "/portal/admin/bookinger/ny" },
+      { label: "Send Melding", icon: "message", href: "/portal/admin/meldinger" },
+      { label: "Legg til Elev", icon: "user-plus", href: "/portal/admin/elever/ny" },
+      { label: "Se Rapport", icon: "chart", href: "/portal/admin/rapporter" },
     ],
   },
   // Mock Students

@@ -230,7 +230,7 @@ export function FacilityCalendar({ initialFacilities }: Props) {
 
           {/* New activity button */}
           <Link
-            href="/admin/fasiliteter/ny-aktivitet"
+            href="/portal/admin/fasiliteter/ny-aktivitet"
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--color-grey-900)] text-white text-sm font-medium hover:bg-[var(--color-grey-800)] transition-colors"
           >
             <Plus className="w-4 h-4" />

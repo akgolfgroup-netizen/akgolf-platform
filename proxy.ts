@@ -105,26 +105,17 @@ export async function proxy(request: NextRequest) {
   const isPublicAuthRoute =
     pathname.startsWith("/auth") ||
     pathname.startsWith("/portal/login") ||
-    pathname.startsWith("/admin/login") ||
     pathname.startsWith("/portal-preview");
 
   if (isProtectedRoute && !isPublicAuthRoute && !user) {
-    // Admin-ruter redirecter til /admin/login, portal-ruter til /portal/login
-    const loginPath = pathname.startsWith("/admin")
-      ? "/admin/login"
-      : "/portal/login";
-    const loginUrl = new URL(loginPath, request.url);
+    const loginUrl = new URL("/portal/login", request.url);
     loginUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  // Allerede innloggede brukere på login-sider → redirect til riktig dashboard
+  // Allerede innloggede brukere på login-sider → redirect til portal
   if (pathname === "/portal/login" && user) {
     return NextResponse.redirect(new URL("/portal", request.url));
-  }
-
-  if (pathname === "/admin/login" && user) {
-    return NextResponse.redirect(new URL("/admin", request.url));
   }
 
   if (pathname === "/auth/login" && user) {

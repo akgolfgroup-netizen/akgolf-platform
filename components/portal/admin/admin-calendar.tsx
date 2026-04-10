@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from "lucide-reac
 import { AdminCalendarDay } from "./admin-calendar-day";
 import { AdminCalendarWeek } from "./admin-calendar-week";
 import { BookingDetailSheet } from "./booking-detail-sheet";
-import { getBookingsForDay, getBookingsForWeek, type CalendarBooking } from "@/app/admin/kalender/actions";
+import { getBookingsForDay, getBookingsForWeek, type CalendarBooking } from "@/app/portal/(dashboard)/admin/kalender/actions";
 
 type ViewMode = "day" | "week";
 

@@ -47,7 +47,7 @@ export function HGStudentListItem({
   return (
     <div className="hg-list-item group">
       {/* Avatar */}
-      <Link href={`/admin/elever/${id}`}>
+      <Link href={`/portal/admin/elever/${id}`}>
         <div className="hg-avatar hg-avatar-sm shrink-0 cursor-pointer hover:ring-2 hover:ring-[var(--hg-primary)] transition-all">
           {initials}
         </div>
@@ -57,7 +57,7 @@ export function HGStudentListItem({
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <Link 
-            href={`/admin/elever/${id}`}
+            href={`/portal/admin/elever/${id}`}
             className="text-sm font-medium text-[var(--hg-text)] hover:text-[var(--hg-primary)] transition-colors truncate"
           >
             {name}
@@ -119,7 +119,7 @@ export function HGStudentListItem({
             {showMenu && (
               <div className="hg-dropdown-menu">
                 <Link 
-                  href={`/admin/elever/${id}`}
+                  href={`/portal/admin/elever/${id}`}
                   className="hg-dropdown-item"
                 >
                   Se profil

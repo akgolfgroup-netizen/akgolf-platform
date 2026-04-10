@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AvailabilityWeekGrid } from "./availability-week-grid";
 import { BlockedTimeForm } from "./blocked-time-form";
-import { getAvailability, getBlockedTimes, upsertAvailability, deleteBlockedTime } from "@/app/admin/tilgjengelighet/actions";
+import { getAvailability, getBlockedTimes, upsertAvailability, deleteBlockedTime } from "@/app/portal/(dashboard)/admin/tilgjengelighet/actions";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Trash2, Clock, Ban, ChevronDown, User } from "lucide-react";

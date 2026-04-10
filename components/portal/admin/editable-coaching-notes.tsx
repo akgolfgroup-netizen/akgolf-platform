@@ -4,7 +4,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Pencil, X, Save, Loader2 } from "lucide-react";
-import { updateCoachingNotes } from "@/app/admin/elever/[id]/actions";
+import { updateCoachingNotes } from "@/app/portal/(dashboard)/admin/elever/[id]/actions";
 
 interface CoachingSession {
   id: string;

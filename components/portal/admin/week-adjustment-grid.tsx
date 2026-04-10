@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Pencil, RotateCcw, Check, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { DayCapacity } from "@/app/admin/kapasitet/week-actions";
+import type { DayCapacity } from "@/app/portal/(dashboard)/admin/kapasitet/week-actions";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 

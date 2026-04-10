@@ -2,7 +2,7 @@
 
 import { format, startOfWeek, addDays, isSameDay, isToday } from "date-fns";
 import { nb } from "date-fns/locale";
-import type { CalendarBooking } from "@/app/admin/kalender/actions";
+import type { CalendarBooking } from "@/app/portal/(dashboard)/admin/kalender/actions";
 
 const HOURS = Array.from({ length: 15 }, (_, i) => i + 8);
 const SLOT_HEIGHT = 56; // slightly smaller for week view
