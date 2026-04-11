@@ -3,6 +3,7 @@
 import { createBrowserClient } from "@supabase/ssr";
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Eye,
@@ -115,12 +116,27 @@ export default function LoginPage() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
         className="hidden lg:flex lg:w-1/2 relative overflow-hidden text-white"
-        style={{
-          background:
-            "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-alt) 100%)",
-        }}
         aria-hidden="true"
       >
+        {/* Bakgrunn: hero-bilde */}
+        <Image
+          src="/images/hero/academy.jpg"
+          alt=""
+          fill
+          priority
+          sizes="50vw"
+          className="object-cover"
+        />
+
+        {/* Bakgrunn: gradient-overlay for lesbarhet */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(0, 88, 64, 0.92) 0%, rgba(0, 89, 76, 0.85) 50%, rgba(0, 88, 64, 0.92) 100%)",
+          }}
+        />
+
         {/* Bakgrunn: radial dot-grid */}
         <div
           className="absolute inset-0 opacity-[0.08]"
@@ -185,7 +201,7 @@ export default function LoginPage() {
             </motion.p>
             <motion.h1
               variants={fadeInUp}
-              className="text-5xl xl:text-6xl font-semibold leading-[1.05] tracking-tight mb-6"
+              className="text-5xl xl:text-6xl font-semibold leading-[1.05] tracking-tight mb-6 text-white"
             >
               Premium
               <br />
@@ -306,7 +322,7 @@ export default function LoginPage() {
                 exit={{ opacity: 0, y: 10, transition: { duration: 0.2 } }}
               >
                 <motion.div variants={fadeInUp} className="mb-8">
-                  <h1 className="text-3xl font-semibold text-[var(--color-text)] tracking-tight mb-2">
+                  <h1 className="text-3xl font-semibold text-[var(--color-grey-900)] tracking-tight mb-2">
                     Velkommen tilbake
                   </h1>
                   <p className="text-[15px] text-[var(--color-muted)]">
