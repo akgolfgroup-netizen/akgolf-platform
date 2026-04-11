@@ -97,12 +97,15 @@ export function BookCoachingForm({ serviceTypes }: Props) {
 
       if (res.ok) {
         const data = await res.json();
-        if (data.bookingId) {
-          if (paymentMethod === "STRIPE" && data.clientSecret) {
-            router.push(`/booking/${data.bookingId}/pay`);
+        if (data.redirectUrl) {
+          // Stripe checkout returnerer full URL, interne stier er relative
+          if (data.redirectUrl.startsWith("http")) {
+            window.location.href = data.redirectUrl;
           } else {
-            router.push(`/booking/${data.bookingId}/confirmation`);
+            router.push(data.redirectUrl);
           }
+        } else if (data.bookingId) {
+          router.push(`/booking/${data.bookingId}/confirmation`);
         } else {
           router.push("/portal/bookinger");
         }

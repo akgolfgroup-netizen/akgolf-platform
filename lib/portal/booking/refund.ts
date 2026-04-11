@@ -4,14 +4,14 @@ import { logger } from "@/lib/logger";
 
 interface RefundResult {
   success: boolean;
-  refundedAmount: number; // øre
+  refundedAmount: number; // kroner (samme enhet som database)
   providerRefundId?: string;
   error?: string;
 }
 
 /**
  * Process a refund via the original payment provider.
- * Amount is in øre. Supports partial refunds.
+ * totalAmount er i kroner (database-enhet). Konverteres til øre for Stripe.
  */
 export async function processRefund(
   paymentMethod: PaymentMethod,
@@ -23,7 +23,8 @@ export async function processRefund(
     return { success: true, refundedAmount: 0 };
   }
 
-  const refundAmount = Math.round((totalAmount * refundPercent) / 100);
+  // totalAmount er i kroner fra database, Stripe forventer øre
+  const refundAmount = Math.round((totalAmount * 100 * refundPercent) / 100);
 
   if (!providerPaymentId) {
     return {
@@ -57,7 +58,7 @@ async function refundStripe(
 
     return {
       success: refund.status === "succeeded" || refund.status === "pending",
-      refundedAmount: refund.amount,
+      refundedAmount: refund.amount / 100, // Stripe returnerer øre, konverter til kroner
       providerRefundId: refund.id,
     };
   } catch (error) {
