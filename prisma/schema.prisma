@@ -1220,6 +1220,7 @@ model User {
   UserSubscription                            UserSubscription[]
   WaitlistEntry                               WaitlistEntry[]
   Conversation                                Conversation[]             @relation("ConversationParticipants")
+  AdminTaskCreated                            AdminTask[]                @relation("AdminTaskCreator")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1950,4 +1951,42 @@ enum ChallengeType {
   ROUNDS
   STREAK
   CUSTOM
+}
+
+// ── Admin Focus Tasks ──────────────────────────────────────
+
+model AdminTask {
+  id          String          @id
+  title       String
+  description String?
+  division    AdminDivision
+  status      AdminTaskStatus @default(TODO)
+  priority    AdminPriority   @default(NORMAL)
+  dueDate     DateTime?
+  createdById String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime
+
+  CreatedBy User @relation("AdminTaskCreator", fields: [createdById], references: [id])
+
+  @@index([division])
+  @@index([status])
+}
+
+enum AdminDivision {
+  COACHING
+  JUNIOR
+  GFGK
+}
+
+enum AdminTaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum AdminPriority {
+  URGENT
+  IMPORTANT
+  NORMAL
 }

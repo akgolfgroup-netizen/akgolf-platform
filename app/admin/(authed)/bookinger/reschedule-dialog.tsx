@@ -55,22 +55,17 @@ export function RescheduleDialog({
     setError(null);
 
     try {
-      const result = await adminRescheduleBooking(
+      await adminRescheduleBooking(
         booking.id,
         newStartTime.toISOString()
       );
-
-      if (!result.success) {
-        setError(result.error ?? "Noe gikk galt");
-        return;
-      }
 
       setDate("");
       setTime("");
       onSuccess();
       onClose();
-    } catch {
-      setError("Noe gikk galt");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Noe gikk galt");
     } finally {
       setLoading(false);
     }

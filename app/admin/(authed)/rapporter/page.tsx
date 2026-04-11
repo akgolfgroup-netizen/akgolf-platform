@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import {
   FileText,
   Download,
@@ -13,7 +13,7 @@ import {
   Plus,
   MoreHorizontal,
   FileSpreadsheet,
-  FileType,
+  Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
@@ -32,6 +32,10 @@ import {
   type AdminDateRange,
   type AdminDropdownItem,
 } from "@/components/portal/mission-control/ui";
+import {
+  exportBookingsCSV,
+  exportRevenueCSV,
+} from "./actions";
 
 // ─── Typer ───
 
@@ -160,18 +164,51 @@ const recentReports: RecentReportRow[] = [
 const exportFormats = ["PDF", "Excel", "CSV"] as const;
 type ExportFormat = (typeof exportFormats)[number];
 
+function downloadCsv(csv: string, filename: string) {
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export default function RapporterPage() {
   const { toggle } = useMCSidebar();
   const [selectedReport, setSelectedReport] = useState<ReportTypeId | null>(
     null,
   );
-  const [selectedFormat, setSelectedFormat] = useState<ExportFormat>("PDF");
+  const [selectedFormat, setSelectedFormat] = useState<ExportFormat>("CSV");
   const [generateType, setGenerateType] = useState<string>("");
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const [dialogRange, setDialogRange] = useState<AdminDateRange>({
     from: new Date(new Date().setDate(new Date().getDate() - 29)),
     to: new Date(),
   });
+
+  function handleExport(type: ReportTypeId) {
+    const from = dialogRange.from.toISOString();
+    const to = dialogRange.to.toISOString();
+
+    startTransition(async () => {
+      if (type === "financial") {
+        const result = await exportRevenueCSV(from, to);
+        downloadCsv(result.csv, result.filename);
+      } else {
+        // monthly, students, capacity — alle bruker booking-data
+        const result = await exportBookingsCSV(from, to);
+        downloadCsv(result.csv, result.filename);
+      }
+    });
+  }
+
+  function handleGenerate() {
+    if (!generateType) return;
+    handleExport(generateType as ReportTypeId);
+    setDialogOpen(false);
+  }
 
   // ── Tabell-kolonner for nylig genererte rapporter ─────────────────────────
 
@@ -226,34 +263,16 @@ export default function RapporterPage() {
           }
           items={[
             {
-              id: "pdf",
-              label: "Last ned som PDF",
-              icon: <FileType className="w-4 h-4" />,
-              onSelect: () => console.log("PDF", row.id),
-            },
-            {
               id: "excel",
-              label: "Last ned som Excel",
+              label: "Last ned som Excel (CSV)",
               icon: <FileSpreadsheet className="w-4 h-4" />,
-              onSelect: () => console.log("Excel", row.id),
+              onSelect: () => handleExport("monthly"),
             },
             {
               id: "csv",
               label: "Last ned som CSV",
               icon: <FileText className="w-4 h-4" />,
-              onSelect: () => console.log("CSV", row.id),
-            },
-            {
-              id: "email",
-              label: "Send på e-post",
-              icon: <Mail className="w-4 h-4" />,
-              onSelect: () => console.log("Email", row.id),
-            },
-            {
-              id: "delete",
-              label: "Slett",
-              variant: "danger",
-              onSelect: () => console.log("Delete", row.id),
+              onSelect: () => handleExport("monthly"),
             },
           ] satisfies AdminDropdownItem[]}
         />
@@ -334,22 +353,16 @@ export default function RapporterPage() {
                     }
                     items={[
                       {
-                        id: "pdf",
-                        label: "PDF",
-                        icon: <FileType className="w-4 h-4" />,
-                        onSelect: () => console.log("pdf", report.id),
-                      },
-                      {
                         id: "excel",
-                        label: "Excel",
+                        label: "Excel (CSV)",
                         icon: <FileSpreadsheet className="w-4 h-4" />,
-                        onSelect: () => console.log("excel", report.id),
+                        onSelect: () => handleExport(report.id),
                       },
                       {
                         id: "csv",
                         label: "CSV",
                         icon: <FileText className="w-4 h-4" />,
-                        onSelect: () => console.log("csv", report.id),
+                        onSelect: () => handleExport(report.id),
                       },
                     ]}
                   />
@@ -413,10 +426,12 @@ export default function RapporterPage() {
               </div>
               <AdminButton
                 variant="primary"
-                icon={<FileText className="w-4 h-4" />}
+                icon={isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
                 className="w-full justify-center"
+                onClick={() => generateType && handleExport(generateType as ReportTypeId)}
+                disabled={!generateType || isPending}
               >
-                Generer rapport
+                {isPending ? "Genererer..." : "Generer rapport"}
               </AdminButton>
             </div>
           </AdminCard>
@@ -511,10 +526,11 @@ export default function RapporterPage() {
             </AdminButton>
             <AdminButton
               variant="primary"
-              icon={<FileText className="w-4 h-4" />}
-              onClick={() => setDialogOpen(false)}
+              icon={isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
+              onClick={handleGenerate}
+              disabled={!generateType || isPending}
             >
-              Generer
+              {isPending ? "Genererer..." : "Generer"}
             </AdminButton>
           </>
         }

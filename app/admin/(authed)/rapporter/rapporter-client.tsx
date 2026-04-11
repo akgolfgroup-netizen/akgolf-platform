@@ -21,6 +21,7 @@ import {
   AdminPageHeader,
   AdminEmptyState,
 } from "@/components/portal/mission-control/ui";
+import { exportBookingsCSV } from "./actions";
 
 interface ReportData {
   totalStudents: number;
@@ -65,6 +66,16 @@ const timeRanges = [
 
 type TimeRange = (typeof timeRanges)[number]["value"];
 
+function downloadCsv(csv: string, filename: string) {
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export function RapporterClient({ data }: RapporterClientProps) {
   const { toggle } = useMCSidebar();
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
@@ -91,6 +102,15 @@ export function RapporterClient({ data }: RapporterClientProps) {
             <AdminButton
               variant="secondary"
               icon={<Download className="w-4 h-4" />}
+              onClick={async () => {
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                const result = await exportBookingsCSV(
+                  thirtyDaysAgo.toISOString(),
+                  new Date().toISOString()
+                );
+                downloadCsv(result.csv, result.filename);
+              }}
             >
               Eksporter rapport
             </AdminButton>

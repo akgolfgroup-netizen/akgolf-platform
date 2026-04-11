@@ -31,10 +31,8 @@ Sist oppdatert: 2026-04-11
 - **Problem:** Mock rapporttyper og schedulerte rapporter
 - **Handling:** Implementer rapportgenerering fra eksisterende data
 
-### 6. Admin: Focus — mock prosjektstyring
-- **Fil:** `app/admin/(authed)/focus/`
-- **Problem:** Mock divisjoner, prosjekter, tasks
-- **Handling:** Koble til reell data eller vurder om siden skal fjernes
+### ~~6. Admin: Focus — mock prosjektstyring~~ FERDIG
+- **Losning:** AdminTask Prisma-modell med CRUD, divisjonsfiltrering (Coaching/Junior/GFGK), prioritet, status (Todo/InProgress/Done), dagens bookinger per divisjon
 
 ### 7. Portal: Trening/tester — hardkodet stat
 - **Fil:** `app/portal/(dashboard)/trening/tester/page.tsx` linje 78
@@ -63,9 +61,13 @@ Sist oppdatert: 2026-04-11
 - **Problem:** API-kall er reelle, men visualiseringsdata er mock
 - **Handling:** Koble visualisering til faktiske metrics
 
-## Fullfort i dag (2026-04-11)
+## Fullfort
 
+### 2026-04-11
 - Elever-side med reell data fra Supabase (HCP, A-K kategori, bookinger)
 - Refusjon kr->ore konvertering fikset
 - Booking race condition, reschedule transaction, idempotent cancel
 - Portal redesign med sidebar + dashboard bento grid + fargetoken-migrering
+- Admin Focus: AdminTask-modell, CRUD actions, reelle bookinger per divisjon
+- Admin Bookinger: reschedule-dialog, Google Calendar-synk ved reschedule/cancel
+- Google Calendar eventId lagres pa Booking for oppdatering/sletting
