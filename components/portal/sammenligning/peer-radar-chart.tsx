@@ -47,7 +47,7 @@ export function PeerRadarChart({ myStats, peerStats, comparisonLabel = "Gruppe" 
           <PolarGrid stroke="var(--color-grey-200)" />
           <PolarAngleAxis
             dataKey="category"
-            tick={{ fill: "rgba(212,196,168,0.7)", fontSize: 11 }}
+            tick={{ fill: "var(--color-muted)", fontSize: 11 }}
           />
           <Tooltip
             contentStyle={{
@@ -63,8 +63,8 @@ export function PeerRadarChart({ myStats, peerStats, comparisonLabel = "Gruppe" 
           <Radar
             name={comparisonLabel}
             dataKey="gruppe"
-            stroke="#38BDF8"
-            fill="#38BDF8"
+            stroke="var(--color-info)"
+            fill="var(--color-info)"
             fillOpacity={0.1}
             strokeWidth={1.5}
           />

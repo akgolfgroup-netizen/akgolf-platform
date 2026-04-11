@@ -103,7 +103,7 @@ export function PremiumBentoCard({
         variant === "soft" &&
           "bg-gradient-to-br from-[var(--color-primary)]/[0.03] to-white border-[var(--color-primary)]/10",
         variant === "bold" &&
-          "bg-gradient-to-br from-[var(--color-primary)] to-[#00594C] text-white border-transparent",
+          "bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-alt)] text-white border-transparent",
         "hover:-translate-y-0.5 will-change-transform cursor-pointer",
         variant !== "bold" &&
           "hover:border-[var(--color-primary)]/20 hover:shadow-[0_12px_40px_-12px_rgba(0,88,64,0.15)]",

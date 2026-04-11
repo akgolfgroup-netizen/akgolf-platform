@@ -64,7 +64,7 @@ export function FacilityCalendarDay({
             </span>
             <span
               className={`text-xl font-bold ${
-                isToday(date) ? "text-[#007AFF]" : "text-[var(--color-grey-900)]"
+                isToday(date) ? "text-info" : "text-[var(--color-grey-900)]"
               }`}
             >
               {format(date, "d. MMMM", { locale: nb })}
@@ -154,7 +154,7 @@ export function FacilityCalendarDay({
                     key={event.id}
                     onClick={() => onSelectEvent(event)}
                     className={`absolute left-1 right-1 rounded-lg px-2 py-1 text-left hover:ring-2 hover:ring-offset-1 transition-[box-shadow] cursor-pointer overflow-hidden shadow-sm ${
-                      isPending ? "ring-2 ring-[#C48A32] ring-offset-1" : ""
+                      isPending ? "ring-2 ring-[var(--color-warning)] ring-offset-1" : ""
                     }`}
                     style={{
                       top,
@@ -178,7 +178,7 @@ export function FacilityCalendarDay({
                       </p>
                     )}
                     {isPending && (
-                      <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#C48A32] animate-pulse" />
+                      <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[var(--color-warning)] animate-pulse" />
                     )}
                   </button>
                 );

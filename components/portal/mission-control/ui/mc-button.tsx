@@ -17,10 +17,10 @@ interface MCButtonProps {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: "bg-[#0A1F18] text-white hover:bg-[#3a3a3c]",
-  secondary: "bg-white border border-[#D5DFDB] text-[#5A6E66] hover:bg-[#ECF0EF] hover:text-[#0A1F18]",
-  success: "bg-[var(--color-success)] text-white hover:bg-[var(--color-success)]/90",
-  danger: "bg-[var(--color-error)] text-white hover:bg-[var(--color-error)]/90",
+  primary: "bg-black text-white hover:bg-grey-800",
+  secondary: "bg-white border border-grey-200 text-grey-500 hover:bg-surface hover:text-black",
+  success: "bg-success text-white hover:bg-success/90",
+  danger: "bg-error text-white hover:bg-error/90",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

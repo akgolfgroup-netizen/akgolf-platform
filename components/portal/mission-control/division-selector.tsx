@@ -23,8 +23,8 @@ export function DivisionSelector({
           className={cn(
             "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-[background-color,border-color,color] duration-150 cursor-pointer",
             selected === division.id
-              ? "bg-[#0A1F18] text-white"
-              : "bg-white border border-[#D5DFDB] text-[#5A6E66] hover:bg-[#ECF0EF] hover:text-[#0A1F18]"
+              ? "bg-black text-white"
+              : "bg-white border border-grey-200 text-grey-500 hover:bg-surface hover:text-black"
           )}
         >
           <span
@@ -47,7 +47,7 @@ interface DivisionTabsProps {
 
 export function DivisionTabs({ selected, onChange, className }: DivisionTabsProps) {
   return (
-    <div className={cn("flex bg-[#D5DFDB] rounded-lg p-0.5", className)}>
+    <div className={cn("flex bg-grey-200 rounded-lg p-0.5", className)}>
       {DIVISIONS.map((division) => (
         <button
           key={division.id}
@@ -56,7 +56,7 @@ export function DivisionTabs({ selected, onChange, className }: DivisionTabsProp
             "px-4 py-1.5 text-[10px] font-semibold rounded-md transition-colors cursor-pointer",
             selected === division.id
               ? "text-white"
-              : "text-[#5A6E66] hover:text-[#0A1F18]"
+              : "text-grey-500 hover:text-black"
           )}
           style={{
             backgroundColor: selected === division.id ? division.color : "transparent",

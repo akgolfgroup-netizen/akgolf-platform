@@ -46,9 +46,9 @@ interface AgentCardProps {
 }
 
 const statusStyles: Record<AgentStatus, string> = {
-  active: "bg-[var(--color-success)]",
-  busy: "bg-[#C48A32]",
-  inactive: "bg-[#7A8C85]",
+  active: "bg-success",
+  busy: "bg-[var(--color-warning)]",
+  inactive: "bg-grey-400",
 };
 
 export function AgentCard({
@@ -69,7 +69,7 @@ export function AgentCard({
   return (
     <div
       className={cn(
-        "bg-white rounded-xl border border-[#D5DFDB] p-4 relative transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md",
+        "bg-white rounded-xl border border-grey-200 p-4 relative transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md",
         className,
       )}
     >
@@ -94,12 +94,12 @@ export function AgentCard({
       </div>
 
       {/* Name & Role */}
-      <div className="text-[13px] font-bold text-[#0A1F18] mb-0.5">{name}</div>
-      <div className="text-[10px] text-[#5A6E66] mb-2">{role}</div>
+      <div className="text-[13px] font-bold text-[var(--color-black)] mb-0.5">{name}</div>
+      <div className="text-[10px] text-[var(--color-grey-500)] mb-2">{role}</div>
 
       {/* Description */}
       {description && (
-        <div className="text-[9px] text-[#7A8C85] leading-relaxed mb-3">
+        <div className="text-[9px] text-[var(--color-grey-400)] leading-relaxed mb-3">
           {description}
         </div>
       )}
@@ -110,7 +110,7 @@ export function AgentCard({
           {scopes.map((scope) => (
             <span
               key={scope}
-              className="px-1.5 py-0.5 text-[8px] bg-[#ECF0EF] text-[#5A6E66] rounded"
+              className="px-1.5 py-0.5 text-[8px] bg-[var(--color-surface)] text-[var(--color-grey-500)] rounded"
             >
               {scope}
             </span>
@@ -120,14 +120,14 @@ export function AgentCard({
 
       {/* Last action */}
       {lastAction && (
-        <div className="text-[9px] text-[#7A8C85] mb-3">
+        <div className="text-[9px] text-[var(--color-grey-400)] mb-3">
           Siste handling: {lastAction}
         </div>
       )}
 
       {/* Toggle */}
-      <div className="flex items-center justify-between pt-3 border-t border-[#D5DFDB]">
-        <span className="text-[10px] text-[#5A6E66]">
+      <div className="flex items-center justify-between pt-3 border-t border-grey-200">
+        <span className="text-[10px] text-[var(--color-grey-500)]">
           {isEnabled ? "Aktiv" : "Inaktiv"}
         </span>
         <Switch
@@ -162,7 +162,7 @@ export const AGENT_CONFIGS: AgentConfig[] = [
     role: "Akademi-direktor",
     description:
       "Ansvarlig for spillerutvikling, coaching-planer og treningsstrategier.",
-    gradient: "linear-gradient(135deg, #0A1F18, #3a3a3c)",
+    gradient: "linear-gradient(135deg, var(--color-black), #3a3a3c)",
     iconName: "graduation-cap",
     team: "leadership",
     scopes: ["AK Golf", "Junior", "GFGK"],

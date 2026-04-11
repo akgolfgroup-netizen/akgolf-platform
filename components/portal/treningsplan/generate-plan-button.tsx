@@ -196,7 +196,7 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
                 )}
               </button>
 
-              <p className="text-[10px] text-[#525252] text-center">
+              <p className="text-[10px] text-grey-500 text-center">
                 AI genererer en personlig treningsplan basert på dine mål
               </p>
             </div>

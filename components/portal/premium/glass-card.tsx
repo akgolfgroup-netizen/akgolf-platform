@@ -54,7 +54,7 @@ export function GlassCard({
         variant === "light" &&
           "bg-white/70 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_-12px_rgba(10,31,24,0.12)]",
         variant === "dark" &&
-          "bg-[#0A1F18] border border-white/5 shadow-[0_20px_60px_-20px_rgba(10,31,24,0.25)] text-white",
+          "bg-black border border-white/5 shadow-[0_20px_60px_-20px_rgba(10,31,24,0.25)] text-white",
         interactive && "cursor-pointer will-change-transform",
         interactive && variant === "light" && "hover:shadow-[0_12px_40px_-12px_rgba(0,88,64,0.2)] hover:border-[var(--color-primary)]/20",
         interactive && variant === "dark" && "hover:shadow-[0_24px_70px_-20px_rgba(209,248,67,0.15)]",

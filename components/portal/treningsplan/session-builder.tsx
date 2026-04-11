@@ -116,18 +116,18 @@ export function SessionBuilder({ open, onClose, dayLabel, timeLabel }: SessionBu
 
           {/* Panel */}
           <motion.div
-            className="fixed right-0 top-0 bottom-0 w-[520px] bg-white border-l border-[#D5DFDB] z-50 flex flex-col shadow-2xl"
+            className="fixed right-0 top-0 bottom-0 w-[520px] bg-white border-l border-grey-200 z-50 flex flex-col shadow-2xl"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#D5DFDB]">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
               <div>
-                <h2 className="text-lg font-semibold text-[#0A1F18]">Okt-builder</h2>
+                <h2 className="text-lg font-semibold text-black">Okt-builder</h2>
                 {dayLabel && (
-                  <p className="text-xs text-[#7A8C85] mt-0.5">
+                  <p className="text-xs text-grey-400 mt-0.5">
                     {dayLabel}
                     {timeLabel ? ` \u00B7 ${timeLabel}` : ""}
                   </p>
@@ -135,11 +135,11 @@ export function SessionBuilder({ open, onClose, dayLabel, timeLabel }: SessionBu
               </div>
               <div className="flex items-center gap-2">
                 {/* Mode toggle */}
-                <div className="flex border border-[#D5DFDB] rounded-lg overflow-hidden">
+                <div className="flex border border-grey-200 rounded-lg overflow-hidden">
                   <button
                     onClick={() => setMode("quick")}
                     className={`text-[10px] font-semibold px-3 py-1.5 transition-colors ${
-                      mode === "quick" ? "bg-[#0A1F18] text-white" : "text-[#7A8C85] hover:bg-[#ECF0EF]"
+                      mode === "quick" ? "bg-black text-white" : "text-grey-400 hover:bg-grey-100"
                     }`}
                   >
                     Quick
@@ -147,14 +147,14 @@ export function SessionBuilder({ open, onClose, dayLabel, timeLabel }: SessionBu
                   <button
                     onClick={() => setMode("full")}
                     className={`text-[10px] font-semibold px-3 py-1.5 transition-colors ${
-                      mode === "full" ? "bg-[#0A1F18] text-white" : "text-[#7A8C85] hover:bg-[#ECF0EF]"
+                      mode === "full" ? "bg-black text-white" : "text-grey-400 hover:bg-grey-100"
                     }`}
                   >
                     Full
                   </button>
                 </div>
-                <button onClick={onClose} className="p-1.5 hover:bg-[#ECF0EF] rounded-lg transition-colors">
-                  <X className="w-4 h-4 text-[#7A8C85]" />
+                <button onClick={onClose} className="p-1.5 hover:bg-grey-100 rounded-lg transition-colors">
+                  <X className="w-4 h-4 text-grey-400" />
                 </button>
               </div>
             </div>
@@ -249,12 +249,12 @@ export function SessionBuilder({ open, onClose, dayLabel, timeLabel }: SessionBu
               )}
 
               {/* Session ID */}
-              <div className="bg-[#ECF0EF] rounded-xl p-3 flex items-center justify-between">
+              <div className="bg-surface rounded-xl p-3 flex items-center justify-between">
                 <div>
-                  <span className="text-[9px] font-bold uppercase tracking-wide text-[#7A8C85] block">
+                  <span className="text-[9px] font-bold uppercase tracking-wide text-grey-400 block">
                     OKT-ID (auto)
                   </span>
-                  <span className="text-[11px] font-mono text-[#0A1F18] mt-0.5 block break-all">
+                  <span className="text-[11px] font-mono text-black mt-0.5 block break-all">
                     {sessionId}
                   </span>
                 </div>
@@ -267,7 +267,7 @@ export function SessionBuilder({ open, onClose, dayLabel, timeLabel }: SessionBu
               <div className="pt-2">
                 <div className="flex items-center justify-between mb-3">
                   <span className="portal-label">Ovelser i denne okten</span>
-                  <button className="flex items-center gap-1 text-[10px] font-semibold text-[#0A1F18] hover:text-[#005840] transition-colors">
+                  <button className="flex items-center gap-1 text-[10px] font-semibold text-black hover:text-primary transition-colors">
                     <Plus className="w-3 h-3" />
                     Legg til
                   </button>
@@ -276,24 +276,24 @@ export function SessionBuilder({ open, onClose, dayLabel, timeLabel }: SessionBu
                   {exercises.map((ex, idx) => (
                     <div
                       key={ex.id}
-                      className="flex items-center gap-2 p-3 rounded-xl bg-[#ECF0EF] hover:bg-[#D5DFDB]/60 group transition-colors"
+                      className="flex items-center gap-2 p-3 rounded-xl bg-surface hover:bg-grey-200/60 group transition-colors"
                     >
-                      <GripVertical className="w-3 h-3 text-[#A5B2AD] cursor-grab flex-shrink-0" />
-                      <span className="text-xs font-semibold text-[#7A8C85] w-5">{idx + 1}.</span>
+                      <GripVertical className="w-3 h-3 text-muted cursor-grab flex-shrink-0" />
+                      <span className="text-xs font-semibold text-grey-400 w-5">{idx + 1}.</span>
                       <div className="flex-1 min-w-0">
-                        <span className="text-xs font-semibold text-[#0A1F18] block truncate">
+                        <span className="text-xs font-semibold text-black block truncate">
                           {ex.name}
                         </span>
-                        <span className="text-[10px] text-[#7A8C85]">{ex.meta}</span>
+                        <span className="text-[10px] text-grey-400">{ex.meta}</span>
                       </div>
-                      <span className="text-[10px] font-semibold text-[#7A8C85] tabular-nums">
+                      <span className="text-[10px] font-semibold text-grey-400 tabular-nums">
                         {ex.durationMinutes} min
                       </span>
                       <button
                         onClick={() => setExercises(exercises.filter((e) => e.id !== ex.id))}
-                        className="p-1 opacity-0 group-hover:opacity-100 hover:text-[#D14343] transition-all"
+                        className="p-1 opacity-0 group-hover:opacity-100 hover:text-error transition-all"
                       >
-                        <Trash2 className="w-3 h-3 text-[#7A8C85]" />
+                        <Trash2 className="w-3 h-3 text-grey-400" />
                       </button>
                     </div>
                   ))}
@@ -307,7 +307,7 @@ export function SessionBuilder({ open, onClose, dayLabel, timeLabel }: SessionBu
                     {["Ikke gjenta", "Hver uke", "Custom"].map((opt) => (
                       <button
                         key={opt}
-                        className="text-[10px] font-semibold px-3 py-1.5 rounded-lg border border-[#D5DFDB] text-[#7A8C85] hover:bg-[#ECF0EF] transition-colors"
+                        className="text-[10px] font-semibold px-3 py-1.5 rounded-lg border border-grey-200 text-grey-400 hover:bg-grey-100 transition-colors"
                       >
                         <Repeat className="w-3 h-3 inline mr-1" />
                         {opt}
@@ -319,14 +319,14 @@ export function SessionBuilder({ open, onClose, dayLabel, timeLabel }: SessionBu
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-4 border-t border-[#D5DFDB] flex justify-between">
+            <div className="px-6 py-4 border-t border-grey-200 flex justify-between">
               <button
                 onClick={onClose}
-                className="px-5 py-2.5 text-sm font-semibold text-[#7A8C85] hover:text-[#0A1F18] transition-colors"
+                className="px-5 py-2.5 text-sm font-semibold text-grey-400 hover:text-black transition-colors"
               >
                 Avbryt
               </button>
-              <button className="px-6 py-2.5 rounded-full bg-[#0A1F18] text-white text-sm font-semibold hover:bg-[#324D45] transition-colors">
+              <button className="px-6 py-2.5 rounded-full bg-black text-white text-sm font-semibold hover:bg-grey-700 transition-colors">
                 Lagre okt
               </button>
             </div>
@@ -342,7 +342,7 @@ export function SessionBuilder({ open, onClose, dayLabel, timeLabel }: SessionBu
 function FormField({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-[11px] font-semibold uppercase tracking-[0.05em] text-[#7A8C85] mb-1.5">
+      <label className="block text-[11px] font-semibold uppercase tracking-[0.05em] text-grey-400 mb-1.5">
         {label}
       </label>
       {children}

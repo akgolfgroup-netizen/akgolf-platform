@@ -100,7 +100,7 @@ export function PeerBenchmarkCard({
             className="flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold text-white shadow-[0_8px_24px_-8px_rgba(0,88,64,0.35)]"
             style={{
               background:
-                "linear-gradient(135deg, var(--color-primary) 0%, #00594C 100%)",
+                "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-alt) 100%)",
             }}
           >
             {benchmark.category}
@@ -147,7 +147,7 @@ export function PeerBenchmarkCard({
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[#00594C]"
+              className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-alt)]"
             />
           </div>
         </motion.div>

@@ -44,7 +44,7 @@ export function MCTableRow({ children, className, warning, onClick }: MCTableRow
       onClick={onClick}
       className={cn(
         "transition-colors",
-        warning ? "bg-[#FFFBEB] hover:bg-[#FEF3C7]" : "hover:bg-[#ECF0EF]",
+        warning ? "bg-[var(--color-warning-light)] hover:bg-[var(--color-warning-light)]" : "hover:bg-[var(--color-surface)]",
         onClick && "cursor-pointer",
         className
       )}
@@ -63,7 +63,7 @@ export function MCTableHead({ children, className }: MCTableHeadProps) {
   return (
     <th
       className={cn(
-        "text-left px-3.5 py-2.5 text-[9px] font-semibold text-[#7A8C85] uppercase tracking-[0.5px] bg-[#ECF0EF]",
+        "text-left px-3.5 py-2.5 text-[9px] font-semibold text-[var(--color-grey-400)] uppercase tracking-[0.5px] bg-[var(--color-surface)]",
         className
       )}
     >
@@ -83,7 +83,7 @@ export function MCTableCell({ children, className, colSpan }: MCTableCellProps) 
     <td
       colSpan={colSpan}
       className={cn(
-        "px-3.5 py-3 border-t border-[#D5DFDB] text-[11px] text-[#0A1F18]",
+        "px-3.5 py-3 border-t border-[var(--color-grey-200)] text-[11px] text-[var(--color-black)]",
         className
       )}
     >

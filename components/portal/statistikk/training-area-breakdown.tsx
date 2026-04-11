@@ -24,14 +24,14 @@ const AREA_LABELS: Record<string, string> = {
 };
 
 const AREA_COLORS: Record<string, string> = {
-  range: "#38BDF8",
-  naerspill: "#10B981",
-  putting: "#F59E0B",
-  bane: "#8B5CF6",
-  styrke: "#EF4444",
-  restitusjon: "#06B6D4",
-  teknikk: "#A3A3A3",
-  mental: "#EC4899",
+  range: "var(--color-info)",
+  naerspill: "var(--color-success)",
+  putting: "var(--color-warning)",
+  bane: "var(--color-ai)",
+  styrke: "var(--color-error)",
+  restitusjon: "var(--color-info)",
+  teknikk: "var(--color-grey-400)",
+  mental: "var(--color-ai)",
 };
 
 export function TrainingAreaBreakdown({ data }: TrainingAreaBreakdownProps) {
@@ -54,7 +54,7 @@ export function TrainingAreaBreakdown({ data }: TrainingAreaBreakdownProps) {
       <div className="space-y-2">
         {sorted.map((item) => {
           const pct = totalMinutes > 0 ? Math.round((item.minutes / totalMinutes) * 100) : 0;
-          const color = AREA_COLORS[item.area] ?? "#A3A3A3";
+          const color = AREA_COLORS[item.area] ?? "var(--color-grey-400)";
           const label = AREA_LABELS[item.area] ?? item.area;
 
           return (

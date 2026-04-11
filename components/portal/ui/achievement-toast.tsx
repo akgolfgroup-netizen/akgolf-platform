@@ -124,7 +124,7 @@ export function AchievementToast({ achievement, onClose }: AchievementToastProps
           <div className="relative">
             <Confetti seed={confettiSeed} />
             <div
-              className="relative px-6 py-4 rounded-2xl shadow-2xl border-2 border-amber-300"
+              className="relative px-6 py-4 rounded-2xl shadow-2xl border-2 border-[var(--color-warning)]"
               style={{
                 background: "linear-gradient(135deg, #FFF8E1 0%, #FFE082 100%)",
               }}
@@ -147,7 +147,7 @@ export function AchievementToast({ achievement, onClose }: AchievementToastProps
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="text-xs font-semibold uppercase tracking-wider text-amber-700"
+                    className="text-xs font-semibold uppercase tracking-wider text-[var(--color-warning)]"
                   >
                     Achievement opplast!
                   </motion.p>
@@ -155,7 +155,7 @@ export function AchievementToast({ achievement, onClose }: AchievementToastProps
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="text-lg font-bold text-amber-900"
+                    className="text-lg font-bold text-black"
                   >
                     {achievement.title}
                   </motion.p>
@@ -163,7 +163,7 @@ export function AchievementToast({ achievement, onClose }: AchievementToastProps
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="text-sm text-amber-700"
+                    className="text-sm text-[var(--color-warning)]"
                   >
                     {achievement.description}
                   </motion.p>

@@ -12,9 +12,9 @@ interface SessionItemProps {
 }
 
 const divisionBorders: Record<Division, string> = {
-  coaching: "border-l-[#0A1F18]",
-  junior: "border-l-[#007AFF]",
-  gfgk: "border-l-[var(--color-brand)]",
+  coaching: "border-l-black",
+  junior: "border-l-info",
+  gfgk: "border-l-primary",
 };
 
 export function SessionItem({
@@ -30,27 +30,27 @@ export function SessionItem({
     <div
       onClick={onClick}
       className={cn(
-        "px-3 py-2.5 bg-[#ECF0EF] rounded-lg border-l-[3px] transition-colors",
+        "px-3 py-2.5 bg-[var(--color-surface)] rounded-lg border-l-[3px] transition-colors",
         divisionBorders[division],
-        onClick && "cursor-pointer hover:bg-[#D5DFDB]",
+        onClick && "cursor-pointer hover:bg-[var(--color-grey-200)]",
         className
       )}
     >
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-semibold text-[#0A1F18]">{name}</span>
+        <span className="text-[11px] font-semibold text-[var(--color-black)]">{name}</span>
         <span
           className={cn(
             "px-2 py-0.5 rounded text-[9px] font-semibold",
             isActive
-              ? "bg-[#0A1F18] text-white"
-              : "bg-[#D5DFDB] text-[#0A1F18]"
+              ? "bg-[var(--color-black)] text-white"
+              : "bg-[var(--color-grey-200)] text-[var(--color-black)]"
           )}
         >
           {time}
         </span>
       </div>
       {subtitle && (
-        <div className="text-[9px] text-[#5A6E66] mt-1">{subtitle}</div>
+        <div className="text-[9px] text-[var(--color-grey-500)] mt-1">{subtitle}</div>
       )}
     </div>
   );

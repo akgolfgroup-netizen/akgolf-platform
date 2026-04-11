@@ -2,18 +2,18 @@
 
 // Farger for aktivitetstyper (Brand Guide 2026 - Apple Light)
 export const ACTIVITY_TYPE_COLORS: Record<string, { color: string; label: string }> = {
-  TOURNAMENT_CLUB: { color: "#B84233", label: "Klubbturnering" },
-  TOURNAMENT_REGION: { color: "#B84233", label: "Regionturnering" },
-  TOURNAMENT_JUNIOR: { color: "#B84233", label: "Juniorturnering" },
-  VTG_COURSE: { color: "#C48A32", label: "VTG-kurs" },
-  GFGK_JUNIOR: { color: "#005840", label: "GFGK Junior" },
-  AK_GOLF: { color: "#007AFF", label: "AK Golf" },
-  AK_GOLF_JUNIOR_ACADEMY: { color: "#007AFF", label: "AK Golf Junior Academy" },
-  SPONSOR_EVENT: { color: "#5856D6", label: "Sponsorevent" },
-  INTERNAL: { color: "#7A8C85", label: "Internt" },
-  CLOSURE: { color: "#0A1F18", label: "Stengt" },
-  OTHER: { color: "#7A8C85", label: "Annet" },
-  BOOKING: { color: "#7A8C85", label: "Booking" },
+  TOURNAMENT_CLUB: { color: "var(--color-error)", label: "Klubbturnering" },
+  TOURNAMENT_REGION: { color: "var(--color-error)", label: "Regionturnering" },
+  TOURNAMENT_JUNIOR: { color: "var(--color-error)", label: "Juniorturnering" },
+  VTG_COURSE: { color: "var(--color-warning)", label: "VTG-kurs" },
+  GFGK_JUNIOR: { color: "var(--color-primary)", label: "GFGK Junior" },
+  AK_GOLF: { color: "var(--color-info)", label: "AK Golf" },
+  AK_GOLF_JUNIOR_ACADEMY: { color: "var(--color-info)", label: "AK Golf Junior Academy" },
+  SPONSOR_EVENT: { color: "var(--color-ai)", label: "Sponsorevent" },
+  INTERNAL: { color: "var(--color-grey-400)", label: "Internt" },
+  CLOSURE: { color: "var(--color-black)", label: "Stengt" },
+  OTHER: { color: "var(--color-grey-400)", label: "Annet" },
+  BOOKING: { color: "var(--color-grey-400)", label: "Booking" },
 };
 
 export function FacilityLegend() {
@@ -38,12 +38,12 @@ export function FacilityLegend() {
 
 export function FacilityLegendCompact() {
   const items = [
-    { color: "#B84233", label: "Turnering" },
-    { color: "#C48A32", label: "VTG" },
-    { color: "#005840", label: "GFGK Junior" },
-    { color: "#007AFF", label: "AK Golf" },
-    { color: "#7A8C85", label: "Booking" },
-    { color: "#0A1F18", label: "Stengt" },
+    { color: "var(--color-error)", label: "Turnering" },
+    { color: "var(--color-warning)", label: "VTG" },
+    { color: "var(--color-primary)", label: "GFGK Junior" },
+    { color: "var(--color-info)", label: "AK Golf" },
+    { color: "var(--color-grey-400)", label: "Booking" },
+    { color: "var(--color-black)", label: "Stengt" },
   ];
 
   return (

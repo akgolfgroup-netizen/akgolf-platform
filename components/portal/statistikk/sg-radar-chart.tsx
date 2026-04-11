@@ -72,8 +72,8 @@ export function SGRadarChart({ playerSG, benchmark, showLegend = true }: SGRadar
               <Radar
                 name={`Benchmark (${benchmark.category})`}
                 dataKey="benchmark"
-                stroke="#3B82F6"
-                fill="#3B82F6"
+                stroke="var(--color-info)"
+                fill="var(--color-info)"
                 fillOpacity={0.15}
                 strokeWidth={2}
                 strokeDasharray="5 5"

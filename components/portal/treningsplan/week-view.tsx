@@ -28,40 +28,40 @@ interface TrainingWeek {
 // Mørkt tema farger for fokusområder
 const focusColors: Record<string, { bg: string; border: string; text: string; icon: string }> = {
   range: {
-    bg: "rgba(59,130,246,0.15)",
-    border: "rgba(59,130,246,0.4)",
-    text: "#93C5FD",
-    icon: "#38BDF8"
+    bg: "color-mix(in srgb, var(--color-info) 15%, transparent)",
+    border: "color-mix(in srgb, var(--color-info) 40%, transparent)",
+    text: "var(--color-info)",
+    icon: "var(--color-info)"
   },
   naerspill: {
     bg: "var(--color-grey-200)",
     border: "var(--color-grey-200)",
-    text: "#E8D4B0",
+    text: "var(--color-muted)",
     icon: "var(--color-grey-600)"
   },
   putting: {
-    bg: "rgba(34,197,94,0.15)",
-    border: "rgba(34,197,94,0.4)",
-    text: "#86EFAC",
-    icon: "#10B981"
+    bg: "color-mix(in srgb, var(--color-success) 15%, transparent)",
+    border: "color-mix(in srgb, var(--color-success) 40%, transparent)",
+    text: "var(--color-success)",
+    icon: "var(--color-success)"
   },
   bane: {
-    bg: "rgba(139,92,246,0.15)",
-    border: "rgba(139,92,246,0.4)",
-    text: "#C4B5FD",
-    icon: "#8B5CF6"
+    bg: "color-mix(in srgb, var(--color-ai) 15%, transparent)",
+    border: "color-mix(in srgb, var(--color-ai) 40%, transparent)",
+    text: "var(--color-ai)",
+    icon: "var(--color-ai)"
   },
   styrke: {
-    bg: "rgba(249,115,22,0.15)",
-    border: "rgba(249,115,22,0.4)",
-    text: "#FDBA74",
-    icon: "#F97316"
+    bg: "color-mix(in srgb, var(--color-warning) 15%, transparent)",
+    border: "color-mix(in srgb, var(--color-warning) 40%, transparent)",
+    text: "var(--color-warning)",
+    icon: "var(--color-warning)"
   },
   restitusjon: {
-    bg: "rgba(156,163,175,0.15)",
-    border: "rgba(156,163,175,0.4)",
-    text: "#D1D5DB",
-    icon: "#9CA3AF"
+    bg: "color-mix(in srgb, var(--color-muted) 15%, transparent)",
+    border: "color-mix(in srgb, var(--color-muted) 40%, transparent)",
+    text: "var(--color-muted)",
+    icon: "var(--color-muted)"
   },
 };
 
@@ -183,16 +183,16 @@ export function WeekView({
                         whileHover={{ scale: 1.02 }}
                         className="rounded-xl p-3 cursor-default transition-shadow hover:shadow-md"
                         style={{
-                          background: isLogged ? "rgba(34,197,94,0.15)" : focusStyle.bg,
-                          border: `1px solid ${isLogged ? "rgba(34,197,94,0.4)" : focusStyle.border}`,
+                          background: isLogged ? "color-mix(in srgb, var(--color-success) 15%, transparent)" : focusStyle.bg,
+                          border: `1px solid ${isLogged ? "color-mix(in srgb, var(--color-success) 40%, transparent)" : focusStyle.border}`,
                         }}
                       >
                         {/* Focus area badge */}
                         <div className="flex items-center gap-1.5 mb-2">
-                          <Dumbbell className="w-3 h-3" style={{ color: isLogged ? "#10B981" : focusStyle.icon }} />
+                          <Dumbbell className="w-3 h-3" style={{ color: isLogged ? "var(--color-success)" : focusStyle.icon }} />
                           <span
                             className="text-[10px] font-medium uppercase tracking-wide"
-                            style={{ color: isLogged ? "#86EFAC" : focusStyle.text }}
+                            style={{ color: isLogged ? "var(--color-success)" : focusStyle.text }}
                           >
                             {s.focusArea || "Trening"}
                           </span>
@@ -215,7 +215,7 @@ export function WeekView({
                         {showCompleteButton && (
                           <div className="mt-2">
                             {isLogged ? (
-                              <div className="flex items-center gap-1.5 text-[10px] font-medium text-[#10B981]">
+                              <div className="flex items-center gap-1.5 text-[10px] font-medium text-success">
                                 <CheckCircle2 className="w-3.5 h-3.5" />
                                 Fullført
                               </div>

@@ -15,10 +15,10 @@ interface MCStatCardProps {
 }
 
 const valueColors: Record<StatVariant, string> = {
-  default: "text-[#0A1F18]",
-  success: "text-[var(--color-success)]",
-  warning: "text-[#E89C30]",
-  error: "text-[var(--color-error)]",
+  default: "text-black",
+  success: "text-success",
+  warning: "text-[var(--color-warning)]",
+  error: "text-error",
 };
 
 export function MCStatCard({
@@ -32,11 +32,11 @@ export function MCStatCard({
   return (
     <div
       className={cn(
-        "bg-white rounded-xl border border-[#D5DFDB] p-3",
+        "bg-white rounded-xl border border-grey-200 p-3",
         className
       )}
     >
-      <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px] mb-1">
+      <div className="text-[9px] font-medium text-[var(--color-grey-400)] uppercase tracking-[0.5px] mb-1">
         {label}
       </div>
       <div className="flex items-center gap-2">
@@ -48,7 +48,7 @@ export function MCStatCard({
         )}
       </div>
       {subtext && (
-        <div className="text-[9px] text-[#7A8C85] mt-1">{subtext}</div>
+        <div className="text-[9px] text-[var(--color-grey-400)] mt-1">{subtext}</div>
       )}
     </div>
   );
@@ -59,7 +59,7 @@ function Sparkline({ direction }: { direction: "up" | "down" | "neutral" }) {
   const colors = {
     up: "#2A7D5A",
     down: "#B84233",
-    neutral: "#7A8C85",
+    neutral: "var(--color-grey-400)",
   };
 
   const paths = {
@@ -102,7 +102,7 @@ export function MCKPIStrip({ items, alerts, className }: MCKPIStripProps) {
   return (
     <div
       className={cn(
-        "bg-white px-5 py-3 border-b border-[#D5DFDB]",
+        "bg-white px-5 py-3 border-b border-grey-200",
         className
       )}
     >
@@ -115,7 +115,7 @@ export function MCKPIStrip({ items, alerts, className }: MCKPIStripProps) {
             <div className={cn("text-2xl font-bold", valueColors[item.variant || "default"])}>
               {item.value}
             </div>
-            <div className="text-[9px] text-[#7A8C85] leading-tight">
+            <div className="text-[9px] text-[var(--color-grey-400)] leading-tight">
               {item.label.toUpperCase()}
               {item.sublabel && <br />}
               {item.sublabel?.toUpperCase()}
@@ -129,10 +129,10 @@ export function MCKPIStrip({ items, alerts, className }: MCKPIStripProps) {
           <div className="ml-auto flex gap-2">
             {alerts.map((alert) => {
               const alertColors = {
-                success: "bg-[var(--mc-success-bg)] text-[var(--mc-success-text)]",
-                warning: "bg-[#FEF3C7] text-[#92400E]",
-                error: "bg-[#FEE2E2] text-[#991B1B]",
-                info: "bg-[#DBEAFE] text-[#1E40AF]",
+                success: "bg-success-light text-success-text",
+                warning: "bg-warning-light text-warning-text",
+                error: "bg-error-light text-error-text",
+                info: "bg-info-light text-info-text",
               };
               return (
                 <span

@@ -64,7 +64,7 @@ export function DarkStatCard({
       )}
     >
       {/* Dark base */}
-      <div className="absolute inset-0 bg-[#0A1F18]" />
+      <div className="absolute inset-0 bg-black" />
 
       {/* Gradient mesh overlay */}
       <div
@@ -139,7 +139,7 @@ export function DarkStatCard({
                   ? "text-white/40"
                   : trendPositive
                     ? "text-[var(--color-accent-cta)]"
-                    : "text-[#FF6B6B]"
+                    : "text-[var(--color-error)]"
               )}
             >
               {trend > 0 ? "+" : ""}

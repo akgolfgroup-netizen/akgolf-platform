@@ -154,11 +154,11 @@ export function ScoreTrendChart({
             {targetScore && (
               <ReferenceLine
                 y={targetScore}
-                stroke="#3B82F6"
+                stroke="var(--color-info)"
                 strokeDasharray="5 5"
                 label={{
                   value: `Mal (HCP ${handicap})`,
-                  fill: "#3B82F6",
+                  fill: "var(--color-info)",
                   fontSize: 10,
                   position: "right",
                 }}
@@ -176,7 +176,7 @@ export function ScoreTrendChart({
               <Line
                 type="monotone"
                 dataKey="movingAvg"
-                stroke="#2A7D5A"
+                stroke="var(--color-success)"
                 strokeWidth={2}
                 strokeDasharray="5 5"
                 dot={false}

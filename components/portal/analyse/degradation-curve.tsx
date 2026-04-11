@@ -221,7 +221,7 @@ function TrendIndicator({
       case "improving":
         return {
           label: "Forbedres",
-          color: "text-[#007AFF]",
+          color: "text-[var(--color-info)]",
           description: "Uvanlig - presterer bedre under press",
         };
       case "insufficient_data":

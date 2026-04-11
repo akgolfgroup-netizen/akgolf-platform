@@ -42,19 +42,19 @@ interface AKActivityRingsProps {
 // AK Golf brand-farger for ringene
 const RING_COLORS = {
   training: {
-    start: "#005840", // Primary
-    end: "#00594C",
-    hex: "#005840",
+    start: "var(--color-primary)", // Primary
+    end: "var(--color-primary-alt)",
+    hex: "var(--color-primary)",
   },
   coaching: {
-    start: "#D1F843", // Accent
-    end: "#B8DD3C",
-    hex: "#B8DD3C",
+    start: "var(--color-accent-cta)", // Accent
+    end: "var(--color-accent-cta)",
+    hex: "var(--color-accent-cta)",
   },
   rounds: {
-    start: "#2A7D5A", // Success
-    end: "#4AA179",
-    hex: "#2A7D5A",
+    start: "var(--color-success)", // Success
+    end: "var(--color-success)",
+    hex: "var(--color-success)",
   },
 };
 

@@ -113,7 +113,7 @@ export function FacilityCalendarMonth({
                         key={event.id}
                         onClick={() => onSelectEvent(event)}
                         className={`w-full text-left px-1.5 py-0.5 rounded text-[10px] truncate hover:opacity-80 transition-opacity ${
-                          isPending ? "ring-1 ring-[#C48A32]" : ""
+                          isPending ? "ring-1 ring-[var(--color-warning)]" : ""
                         }`}
                         style={{
                           backgroundColor: `${event.color}20`,
