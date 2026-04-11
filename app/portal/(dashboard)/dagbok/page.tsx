@@ -69,12 +69,12 @@ export default async function DagbokPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#1c1c16]">Treningsdagbok</h1>
-          <p className="text-[#6b7366] mt-1">Logg og spor din treningsaktivitet</p>
+          <h1 className="text-2xl font-bold text-[var(--color-text)]">Treningsdagbok</h1>
+          <p className="text-[var(--color-muted)] mt-1">Logg og spor din treningsaktivitet</p>
         </div>
         <Link
           href="/portal/dagbok/ny"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#154212] text-white text-sm font-medium hover:bg-[#0d2e0c] transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--color-primary)] text-white text-sm font-medium hover:bg-[var(--color-primary-alt)] transition-colors"
         >
           <Plus className="w-4 h-4" />
           Logg økt
@@ -83,58 +83,58 @@ export default async function DagbokPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50">
+        <div className="bg-white rounded-2xl p-5 border border-[var(--color-grey-300)]/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#6b7366]">Streak</p>
-              <p className="text-3xl font-bold text-[#1c1c16] mt-1">{streak}</p>
-              <p className="text-xs text-[#8a9385] mt-0.5">dager på rad</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">Streak</p>
+              <p className="text-3xl font-bold text-[var(--color-text)] mt-1">{streak}</p>
+              <p className="text-xs text-[var(--color-grey-500)] mt-0.5">dager på rad</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#d2f000]/20 flex items-center justify-center">
-              <Trophy className="w-6 h-6 text-[#154212]" />
+            <div className="w-12 h-12 rounded-xl bg-[var(--color-accent-cta)]/20 flex items-center justify-center">
+              <Trophy className="w-6 h-6 text-[var(--color-primary)]" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50">
+        <div className="bg-white rounded-2xl p-5 border border-[var(--color-grey-300)]/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#6b7366]">Økter</p>
-              <p className="text-3xl font-bold text-[#1c1c16] mt-1">{totalSessions}</p>
-              <p className="text-xs text-[#8a9385] mt-0.5">totalt</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">Økter</p>
+              <p className="text-3xl font-bold text-[var(--color-text)] mt-1">{totalSessions}</p>
+              <p className="text-xs text-[var(--color-grey-500)] mt-0.5">totalt</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#154212]/10 flex items-center justify-center">
-              <BookOpen className="w-6 h-6 text-[#154212]" />
+            <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center">
+              <BookOpen className="w-6 h-6 text-[var(--color-primary)]" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50">
+        <div className="bg-white rounded-2xl p-5 border border-[var(--color-grey-300)]/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#6b7366]">Timer</p>
-              <p className="text-3xl font-bold text-[#1c1c16] mt-1">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">Timer</p>
+              <p className="text-3xl font-bold text-[var(--color-text)] mt-1">
                 {(totalMinutes / 60).toFixed(1)}
               </p>
-              <p className="text-xs text-[#8a9385] mt-0.5">totalt</p>
+              <p className="text-xs text-[var(--color-grey-500)] mt-0.5">totalt</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#3b82f6]/10 flex items-center justify-center">
-              <Calendar className="w-6 h-6 text-[#3b82f6]" />
+            <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center">
+              <Calendar className="w-6 h-6 text-[var(--color-primary)]" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50">
+        <div className="bg-white rounded-2xl p-5 border border-[var(--color-grey-300)]/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#6b7366]">Snitt</p>
-              <p className="text-3xl font-bold text-[#1c1c16] mt-1">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">Snitt</p>
+              <p className="text-3xl font-bold text-[var(--color-text)] mt-1">
                 {avgRating > 0 ? avgRating.toFixed(1) : "-"}
               </p>
-              <p className="text-xs text-[#8a9385] mt-0.5">av 5 stjerner</p>
+              <p className="text-xs text-[var(--color-grey-500)] mt-0.5">av 5 stjerner</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#f59e0b]/10 flex items-center justify-center">
-              <Target className="w-6 h-6 text-[#f59e0b]" />
+            <div className="w-12 h-12 rounded-xl bg-[var(--color-warning)]/10 flex items-center justify-center">
+              <Target className="w-6 h-6 text-[var(--color-warning)]" />
             </div>
           </div>
         </div>
@@ -165,23 +165,23 @@ export default async function DagbokPage() {
       {/* Activity Timeline */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-[#1c1c16]">Aktivitetshistorikk</h2>
-          <button className="flex items-center gap-1 text-sm text-[#6b7366] hover:text-[#154212] transition-colors">
+          <h2 className="text-lg font-semibold text-[var(--color-text)]">Aktivitetshistorikk</h2>
+          <button className="flex items-center gap-1 text-sm text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors">
             <Filter className="w-4 h-4" />
             Filtrer
           </button>
         </div>
 
         {timelineItems.length === 0 ? (
-          <div className="bg-white rounded-2xl p-12 text-center border border-[#c2c9bb]/50">
-            <div className="w-16 h-16 rounded-2xl bg-[#f7f3ea] flex items-center justify-center mx-auto mb-4">
-              <BookOpen className="w-8 h-8 text-[#c2c9bb]" />
+          <div className="bg-white rounded-2xl p-12 text-center border border-[var(--color-grey-300)]/50">
+            <div className="w-16 h-16 rounded-2xl bg-[var(--color-grey-100)] flex items-center justify-center mx-auto mb-4">
+              <BookOpen className="w-8 h-8 text-[var(--color-grey-300)]" />
             </div>
-            <h3 className="font-semibold text-[#1c1c16] mb-1">Ingen aktiviteter ennå</h3>
-            <p className="text-sm text-[#6b7366] mb-4">Start med å logge din første treningsøkt</p>
+            <h3 className="font-semibold text-[var(--color-text)] mb-1">Ingen aktiviteter ennå</h3>
+            <p className="text-sm text-[var(--color-muted)] mb-4">Start med å logge din første treningsøkt</p>
             <Link
               href="/portal/dagbok/ny"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#154212] text-white text-sm font-medium hover:bg-[#0d2e0c] transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--color-primary)] text-white text-sm font-medium hover:bg-[var(--color-primary-alt)] transition-colors"
             >
               <Plus className="w-4 h-4" />
               Logg første økt

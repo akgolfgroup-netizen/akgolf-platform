@@ -31,10 +31,26 @@ interface WeekCalendarProps {
 }
 
 const typeColors = {
-  coaching: { bg: "bg-[#22c55e]/15", border: "border-[#22c55e]", text: "text-[#15803d]" },
-  training: { bg: "bg-[#3b82f6]/15", border: "border-[#3b82f6]", text: "text-[#1d4ed8]" },
-  tournament: { bg: "bg-[#f59e0b]/15", border: "border-[#f59e0b]", text: "text-[#b45309]" },
-  booking: { bg: "bg-[#8b5cf6]/15", border: "border-[#8b5cf6]", text: "text-[#6d28d9]" },
+  coaching: {
+    bg: "bg-[var(--color-success)]/15",
+    border: "border-[var(--color-success)]",
+    text: "text-[var(--color-success-text)]",
+  },
+  training: {
+    bg: "bg-[var(--color-primary)]/15",
+    border: "border-[var(--color-primary)]",
+    text: "text-[var(--color-primary)]",
+  },
+  tournament: {
+    bg: "bg-[var(--color-warning)]/15",
+    border: "border-[var(--color-warning)]",
+    text: "text-[var(--color-warning-text)]",
+  },
+  booking: {
+    bg: "bg-[var(--color-ai)]/15",
+    border: "border-[var(--color-ai)]",
+    text: "text-[var(--color-ai-text)]",
+  },
 };
 
 const hours = Array.from({ length: 14 }, (_, i) => i + 7); // 07:00 - 20:00
@@ -59,15 +75,15 @@ export function WeekCalendar({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-[#c2c9bb]/50 overflow-hidden">
+    <div className="bg-white rounded-2xl border border-[var(--color-grey-200)]/70 overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-[#c2c9bb]/50">
+      <div className="p-4 border-b border-[var(--color-grey-200)]/70">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <h2 className="text-lg font-semibold text-[#1c1c16]">
+            <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
               Uke {format(weekStart, "w", { locale: nb })}
             </h2>
-            <span className="text-sm text-[#6b7366]">
+            <span className="text-sm text-[var(--color-grey-500)]">
               {format(weekStart, "d.", { locale: nb })} -{" "}
               {format(addDays(weekStart, 6), "d. MMMM yyyy", { locale: nb })}
             </span>
@@ -75,21 +91,21 @@ export function WeekCalendar({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentWeek(subWeeks(currentWeek, 1))}
-              className="p-2 rounded-lg hover:bg-[#f7f3ea] transition-colors"
+              className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors"
             >
-              <ChevronLeft className="w-5 h-5 text-[#6b7366]" />
+              <ChevronLeft className="w-5 h-5 text-[var(--color-grey-500)]" />
             </button>
             <button
               onClick={() => setCurrentWeek(new Date())}
-              className="px-3 py-1.5 text-sm font-medium text-[#154212] bg-[#e8f0e5] rounded-lg hover:bg-[#d2f000]/20 transition-colors"
+              className="px-3 py-1.5 text-sm font-medium text-[var(--color-primary)] bg-[var(--color-primary-soft)] rounded-lg hover:bg-[var(--color-accent-cta)]/25 transition-colors"
             >
               I dag
             </button>
             <button
               onClick={() => setCurrentWeek(addWeeks(currentWeek, 1))}
-              className="p-2 rounded-lg hover:bg-[#f7f3ea] transition-colors"
+              className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors"
             >
-              <ChevronRight className="w-5 h-5 text-[#6b7366]" />
+              <ChevronRight className="w-5 h-5 text-[var(--color-grey-500)]" />
             </button>
           </div>
         </div>
@@ -105,13 +121,13 @@ export function WeekCalendar({
                 key={i}
                 className={cn(
                   "text-center py-2 px-1 rounded-lg",
-                  isTodayDate && "bg-[#d2f000]/20"
+                  isTodayDate && "bg-[var(--color-accent-cta)]/25"
                 )}
               >
                 <p
                   className={cn(
                     "text-xs uppercase tracking-wider",
-                    isTodayDate ? "text-[#154212] font-semibold" : "text-[#8a9385]"
+                    isTodayDate ? "text-[var(--color-primary)] font-semibold" : "text-[var(--color-grey-400)]"
                   )}
                 >
                   {dayName}
@@ -119,7 +135,7 @@ export function WeekCalendar({
                 <p
                   className={cn(
                     "text-lg font-semibold mt-0.5",
-                    isTodayDate ? "text-[#154212]" : "text-[#1c1c16]"
+                    isTodayDate ? "text-[var(--color-primary)]" : "text-[var(--color-grey-900)]"
                   )}
                 >
                   {format(day, "d")}
@@ -131,16 +147,16 @@ export function WeekCalendar({
       </div>
 
       {/* Legend */}
-      <div className="px-4 py-2 border-b border-[#c2c9bb]/30 flex flex-wrap gap-4 text-xs">
+      <div className="px-4 py-2 border-b border-[var(--color-grey-200)]/50 flex flex-wrap gap-4 text-xs">
         {[
-          { label: "Coaching", color: "bg-[#22c55e]" },
-          { label: "Trening", color: "bg-[#3b82f6]" },
-          { label: "Turnering", color: "bg-[#f59e0b]" },
-          { label: "Booking", color: "bg-[#8b5cf6]" },
+          { label: "Coaching", color: "bg-[var(--color-success)]" },
+          { label: "Trening", color: "bg-[var(--color-primary)]" },
+          { label: "Turnering", color: "bg-[var(--color-warning)]" },
+          { label: "Booking", color: "bg-[var(--color-ai)]" },
         ].map((item) => (
           <div key={item.label} className="flex items-center gap-1.5">
             <div className={cn("w-2.5 h-2.5 rounded-sm", item.color)} />
-            <span className="text-[#6b7366]">{item.label}</span>
+            <span className="text-[var(--color-grey-500)]">{item.label}</span>
           </div>
         ))}
       </div>
@@ -158,8 +174,8 @@ export function WeekCalendar({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: dayIndex * 0.05 }}
               className={cn(
-                "border-b border-[#c2c9bb]/30 last:border-b-0 p-3",
-                isTodayDate && "bg-[#d2f000]/5"
+                "border-b border-[var(--color-grey-200)]/50 last:border-b-0 p-3",
+                isTodayDate && "bg-[var(--color-accent-cta)]/10"
               )}
             >
               <div className="flex items-center justify-between mb-2">
@@ -167,13 +183,13 @@ export function WeekCalendar({
                   <span
                     className={cn(
                       "text-sm font-medium",
-                      isTodayDate ? "text-[#154212]" : "text-[#1c1c16]"
+                      isTodayDate ? "text-[var(--color-primary)]" : "text-[var(--color-grey-900)]"
                     )}
                   >
                     {format(day, "EEEE d.", { locale: nb })}
                   </span>
                   {isTodayDate && (
-                    <span className="text-[10px] font-semibold text-[#154212] bg-[#d2f000]/30 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-semibold text-[var(--color-primary)] bg-[var(--color-accent-cta)]/40 px-2 py-0.5 rounded-full">
                       I dag
                     </span>
                   )}
@@ -181,7 +197,7 @@ export function WeekCalendar({
                 {onAddClick && (
                   <button
                     onClick={() => onAddClick(day)}
-                    className="p-1.5 rounded-lg text-[#8a9385] hover:text-[#154212] hover:bg-[#f7f3ea] transition-colors"
+                    className="p-1.5 rounded-lg text-[var(--color-grey-400)] hover:text-[var(--color-primary)] hover:bg-[var(--color-grey-100)] transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
@@ -189,7 +205,7 @@ export function WeekCalendar({
               </div>
 
               {dayEvents.length === 0 ? (
-                <p className="text-sm text-[#8a9385] py-2">Ingen hendelser</p>
+                <p className="text-sm text-[var(--color-grey-400)] py-2">Ingen hendelser</p>
               ) : (
                 <div className="space-y-2">
                   {dayEvents.map((event) => {
@@ -208,7 +224,7 @@ export function WeekCalendar({
                         <p className={cn("font-medium text-sm", colors.text)}>
                           {event.title}
                         </p>
-                        <p className="text-xs text-[#6b7366] mt-0.5">
+                        <p className="text-xs text-[var(--color-grey-500)] mt-0.5">
                           {formatTime(new Date(event.startTime))} ·{" "}
                           {event.duration} min
                         </p>
@@ -224,7 +240,7 @@ export function WeekCalendar({
 
       {/* Desktop: Week grid */}
       <div className="hidden lg:block">
-        <div className="grid grid-cols-7 divide-x divide-[#c2c9bb]/30">
+        <div className="grid grid-cols-7 divide-x divide-[var(--color-grey-200)]/50">
           {weekDays.map((day, dayIndex) => {
             const dayEvents = getEventsForDay(day);
             const isTodayDate = isToday(day);
@@ -234,7 +250,7 @@ export function WeekCalendar({
                 key={dayIndex}
                 className={cn(
                   "min-h-[300px] p-2",
-                  isTodayDate && "bg-[#d2f000]/5"
+                  isTodayDate && "bg-[var(--color-accent-cta)]/10"
                 )}
               >
                 <div className="space-y-2">
@@ -261,7 +277,7 @@ export function WeekCalendar({
                         >
                           {event.title}
                         </p>
-                        <p className="text-[10px] text-[#6b7366] mt-1">
+                        <p className="text-[10px] text-[var(--color-grey-500)] mt-1">
                           {formatTime(new Date(event.startTime))}
                         </p>
                       </motion.button>
@@ -272,7 +288,7 @@ export function WeekCalendar({
                 {onAddClick && (
                   <button
                     onClick={() => onAddClick(day)}
-                    className="w-full mt-2 p-2 rounded-lg border border-dashed border-[#c2c9bb] text-[#8a9385] hover:text-[#154212] hover:border-[#154212]/30 hover:bg-[#f7f3ea] transition-all text-xs flex items-center justify-center gap-1"
+                    className="w-full mt-2 p-2 rounded-lg border border-dashed border-[var(--color-grey-200)] text-[var(--color-grey-400)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)]/30 hover:bg-[var(--color-grey-100)] transition-all text-xs flex items-center justify-center gap-1"
                   >
                     <Plus className="w-3 h-3" />
                     Legg til
