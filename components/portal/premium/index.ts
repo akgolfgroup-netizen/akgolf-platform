@@ -14,3 +14,11 @@ export {
   scaleIn,
   staggerContainer,
 } from "./motion-presets";
+
+// Ron-v2 premium-komponenter
+export { AnimatedNumber } from "./animated-number";
+export { TiltCard, Shimmer } from "./tilt-card";
+export { AtmosphericBackground } from "./atmospheric-background";
+export { HeroHeading } from "./hero-heading";
+export { DarkStatCard } from "./dark-stat-card";
+export { GlassCard } from "./glass-card";
