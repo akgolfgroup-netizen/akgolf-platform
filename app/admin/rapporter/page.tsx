@@ -11,6 +11,9 @@ import {
   Users,
   DollarSign,
   Plus,
+  MoreHorizontal,
+  FileSpreadsheet,
+  FileType,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
@@ -20,6 +23,14 @@ import {
   AdminSelect,
   AdminInput,
   AdminPageHeader,
+  AdminDataTable,
+  AdminDropdown,
+  AdminDialog,
+  AdminDateRangePicker,
+  AdminBadge,
+  type AdminDataTableColumn,
+  type AdminDateRange,
+  type AdminDropdownItem,
 } from "@/components/portal/mission-control/ui";
 
 // ─── Typer ───
@@ -44,7 +55,7 @@ interface ScheduledReport {
   active: boolean;
 }
 
-interface RecentReport {
+interface RecentReportRow {
   id: string;
   name: string;
   type: string;
@@ -76,7 +87,7 @@ const reportTypes: ReportType[] = [
     name: "Økonomisk rapport",
     description: "Inntekter, utgifter og lønnsomhet",
     icon: DollarSign,
-    colorVar: "var(--color-info)",
+    colorVar: "var(--color-accent-cta)",
     lastGenerated: "1. april 2024",
   },
   {
@@ -108,7 +119,7 @@ const scheduledReports: ScheduledReport[] = [
   },
 ];
 
-const recentReports: RecentReport[] = [
+const recentReports: RecentReportRow[] = [
   {
     id: "1",
     name: "Månedsrapport - Mars 2024",
@@ -130,6 +141,20 @@ const recentReports: RecentReport[] = [
     generatedAt: "5. januar 2024",
     size: "5.2 MB",
   },
+  {
+    id: "4",
+    name: "Kapasitetsrapport - Mars",
+    type: "Månedlig",
+    generatedAt: "2. april 2024",
+    size: "1.1 MB",
+  },
+  {
+    id: "5",
+    name: "Økonomirapport Q1 2024",
+    type: "Kvartalsvis",
+    generatedAt: "3. april 2024",
+    size: "3.7 MB",
+  },
 ];
 
 const exportFormats = ["PDF", "Excel", "CSV"] as const;
@@ -142,8 +167,99 @@ export default function RapporterPage() {
   );
   const [selectedFormat, setSelectedFormat] = useState<ExportFormat>("PDF");
   const [generateType, setGenerateType] = useState<string>("");
-  const [fromDate, setFromDate] = useState<string>("");
-  const [toDate, setToDate] = useState<string>("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogRange, setDialogRange] = useState<AdminDateRange>({
+    from: new Date(new Date().setDate(new Date().getDate() - 29)),
+    to: new Date(),
+  });
+
+  // ── Tabell-kolonner for nylig genererte rapporter ─────────────────────────
+
+  const recentColumns: AdminDataTableColumn<RecentReportRow>[] = [
+    {
+      key: "name",
+      label: "Navn",
+      sortable: true,
+      render: (row) => (
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-[var(--color-grey-100)]">
+            <FileText className="w-4 h-4 text-[var(--color-primary)]" />
+          </div>
+          <span className="font-medium text-[var(--color-text)]">
+            {row.name}
+          </span>
+        </div>
+      ),
+    },
+    {
+      key: "type",
+      label: "Type",
+      sortable: true,
+      render: (row) => <AdminBadge variant="info">{row.type}</AdminBadge>,
+    },
+    {
+      key: "generatedAt",
+      label: "Generert",
+      sortable: true,
+    },
+    {
+      key: "size",
+      label: "Størrelse",
+      sortable: true,
+      align: "right",
+    },
+    {
+      key: "id",
+      label: "",
+      align: "right",
+      render: (row) => (
+        <AdminDropdown
+          align="right"
+          trigger={
+            <button
+              type="button"
+              className="p-1.5 rounded-md hover:bg-[var(--color-grey-100)] text-[var(--color-muted)] transition-colors"
+              aria-label={`Handlinger for ${row.name}`}
+            >
+              <MoreHorizontal className="w-4 h-4" />
+            </button>
+          }
+          items={[
+            {
+              id: "pdf",
+              label: "Last ned som PDF",
+              icon: <FileType className="w-4 h-4" />,
+              onSelect: () => console.log("PDF", row.id),
+            },
+            {
+              id: "excel",
+              label: "Last ned som Excel",
+              icon: <FileSpreadsheet className="w-4 h-4" />,
+              onSelect: () => console.log("Excel", row.id),
+            },
+            {
+              id: "csv",
+              label: "Last ned som CSV",
+              icon: <FileText className="w-4 h-4" />,
+              onSelect: () => console.log("CSV", row.id),
+            },
+            {
+              id: "email",
+              label: "Send på e-post",
+              icon: <Mail className="w-4 h-4" />,
+              onSelect: () => console.log("Email", row.id),
+            },
+            {
+              id: "delete",
+              label: "Slett",
+              variant: "danger",
+              onSelect: () => console.log("Delete", row.id),
+            },
+          ] satisfies AdminDropdownItem[]}
+        />
+      ),
+    },
+  ];
 
   return (
     <>
@@ -157,6 +273,15 @@ export default function RapporterPage() {
         <AdminPageHeader
           title="Rapporter"
           subtitle="Generer, planlegg og last ned rapporter fra akademiet"
+          actions={
+            <AdminButton
+              variant="primary"
+              icon={<Plus className="w-4 h-4" />}
+              onClick={() => setDialogOpen(true)}
+            >
+              Ny rapport
+            </AdminButton>
+          }
         />
 
         {/* Report Types Grid */}
@@ -192,16 +317,42 @@ export default function RapporterPage() {
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] text-[var(--color-muted)]">
-                    Sist generert: {report.lastGenerated}
+                    Sist: {report.lastGenerated}
                   </span>
-                  <button
-                    type="button"
-                    onClick={(e) => e.stopPropagation()}
-                    className="p-1.5 rounded-md hover:bg-[var(--color-grey-100)] text-[var(--color-primary)] transition-colors"
-                    aria-label={`Last ned ${report.name}`}
-                  >
-                    <Download className="w-4 h-4" />
-                  </button>
+                  <AdminDropdown
+                    label="Eksporter"
+                    align="right"
+                    trigger={
+                      <button
+                        type="button"
+                        onClick={(e) => e.stopPropagation()}
+                        className="p-1.5 rounded-md hover:bg-[var(--color-grey-100)] text-[var(--color-primary)] transition-colors"
+                        aria-label={`Last ned ${report.name}`}
+                      >
+                        <Download className="w-4 h-4" />
+                      </button>
+                    }
+                    items={[
+                      {
+                        id: "pdf",
+                        label: "PDF",
+                        icon: <FileType className="w-4 h-4" />,
+                        onSelect: () => console.log("pdf", report.id),
+                      },
+                      {
+                        id: "excel",
+                        label: "Excel",
+                        icon: <FileSpreadsheet className="w-4 h-4" />,
+                        onSelect: () => console.log("excel", report.id),
+                      },
+                      {
+                        id: "csv",
+                        label: "CSV",
+                        icon: <FileText className="w-4 h-4" />,
+                        onSelect: () => console.log("csv", report.id),
+                      },
+                    ]}
+                  />
                 </div>
               </AdminCard>
             );
@@ -228,18 +379,13 @@ export default function RapporterPage() {
                   </option>
                 ))}
               </AdminSelect>
-              <div className="grid grid-cols-2 gap-3">
-                <AdminInput
-                  label="Fra dato"
-                  type="date"
-                  value={fromDate}
-                  onChange={(e) => setFromDate(e.target.value)}
-                />
-                <AdminInput
-                  label="Til dato"
-                  type="date"
-                  value={toDate}
-                  onChange={(e) => setToDate(e.target.value)}
+              <div>
+                <label className="admin-label block mb-1.5">
+                  Rapportperiode
+                </label>
+                <AdminDateRangePicker
+                  value={dialogRange}
+                  onChange={setDialogRange}
                 />
               </div>
               <div>
@@ -327,58 +473,98 @@ export default function RapporterPage() {
           </AdminCard>
         </div>
 
-        {/* Recent Reports */}
-        <AdminCard className="p-0 overflow-hidden">
-          <div className="px-5 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+        {/* Nylig genererte rapporter — DataTable */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-semibold text-[var(--color-text)]">
               Nylig genererte rapporter
             </h3>
-            <button
-              type="button"
-              className="text-xs text-[var(--color-primary)] hover:underline"
-            >
-              Se alle
-            </button>
+            <span className="text-xs text-[var(--color-muted)]">
+              {recentReports.length} rapporter
+            </span>
           </div>
-          <div className="divide-y divide-[var(--color-grey-200)]">
-            {recentReports.map((report) => (
-              <div key={report.id} className="p-4 flex items-center gap-4">
-                <div className="p-2 rounded-lg bg-[var(--color-grey-100)]">
-                  <FileText className="w-5 h-5 text-[var(--color-primary)]" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-medium text-[var(--color-text)]">
-                    {report.name}
-                  </h4>
-                  <div className="flex items-center gap-3 text-xs text-[var(--color-muted)]">
-                    <span>{report.type}</span>
-                    <span>&bull;</span>
-                    <span>{report.generatedAt}</span>
-                    <span>&bull;</span>
-                    <span>{report.size}</span>
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-muted)] transition-colors"
-                    aria-label="Send på e-post"
-                  >
-                    <Mail className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-primary)] transition-colors"
-                    aria-label="Last ned"
-                  >
-                    <Download className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </AdminCard>
+          <AdminDataTable<RecentReportRow>
+            columns={recentColumns}
+            data={recentReports}
+            searchable
+            searchPlaceholder="Søk i rapporter..."
+            pagination={{ pageSize: 10 }}
+            emptyMessage="Ingen rapporter ennå."
+          />
+        </div>
       </div>
+
+      {/* Dialog: Ny rapport */}
+      <AdminDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        title="Generer ny rapport"
+        description="Velg rapporttype, periode og format."
+        size="md"
+        footer={
+          <>
+            <AdminButton
+              variant="secondary"
+              onClick={() => setDialogOpen(false)}
+            >
+              Avbryt
+            </AdminButton>
+            <AdminButton
+              variant="primary"
+              icon={<FileText className="w-4 h-4" />}
+              onClick={() => setDialogOpen(false)}
+            >
+              Generer
+            </AdminButton>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <AdminSelect
+            label="Rapporttype"
+            value={generateType}
+            onChange={(e) => setGenerateType(e.target.value)}
+          >
+            <option value="">Velg rapport...</option>
+            {reportTypes.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name}
+              </option>
+            ))}
+          </AdminSelect>
+          <div>
+            <label className="admin-label block mb-1.5">Rapportperiode</label>
+            <AdminDateRangePicker
+              value={dialogRange}
+              onChange={setDialogRange}
+            />
+          </div>
+          <AdminInput label="Tittel (valgfritt)" placeholder="f.eks. Mars 2024" />
+          <div>
+            <label className="admin-label block mb-1.5">Format</label>
+            <div className="flex gap-2">
+              {exportFormats.map((fmt) => {
+                const isActive = selectedFormat === fmt;
+                return (
+                  <button
+                    key={fmt}
+                    type="button"
+                    onClick={() => setSelectedFormat(fmt)}
+                    className={cn(
+                      "flex-1 py-2 text-xs font-medium rounded-lg border transition-colors",
+                      isActive
+                        ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
+                        : "bg-white text-[var(--color-text)] border-[var(--color-grey-200)] hover:bg-[var(--color-grey-100)]",
+                    )}
+                  >
+                    {fmt}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </AdminDialog>
     </>
   );
 }

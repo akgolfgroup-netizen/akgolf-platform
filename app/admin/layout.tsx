@@ -1,7 +1,7 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { canAccessMissionControl } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { MCLayout } from "@/components/portal/mission-control";
+import { AdminShell } from "./admin-shell";
 
 export const metadata = { title: "AK Golf — Mission Control" };
 
@@ -19,7 +19,7 @@ export default async function AdminLayout({
   }
 
   return (
-    <MCLayout
+    <AdminShell
       user={{
         id: user.id,
         name: user.name,
@@ -29,6 +29,6 @@ export default async function AdminLayout({
       }}
     >
       {children}
-    </MCLayout>
+    </AdminShell>
   );
 }

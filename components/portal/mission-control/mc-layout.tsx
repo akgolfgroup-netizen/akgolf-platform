@@ -44,9 +44,9 @@ export function MCLayout({ children, user }: MCLayoutProps) {
 
   return (
     <MCSidebarContext.Provider value={contextValue}>
-      <div className="min-h-screen flex hg-bg">
+      <div className="min-h-screen flex bg-[var(--color-surface)]">
         <MCSidebar user={user} isOpen={isOpen} onClose={() => setIsOpen(false)} />
-        <main className="flex-1 lg:ml-[220px] min-h-screen flex flex-col">
+        <main className="flex-1 lg:ml-[240px] min-h-screen flex flex-col">
           {children}
         </main>
       </div>

@@ -14,6 +14,13 @@ import {
   AdminStatCard,
   AdminBadge,
   AdminEmptyState,
+  AdminTimeline,
+  AdminProgressRing,
+  AdminBarChart,
+} from "@/components/portal/mission-control/ui";
+import type {
+  AdminTimelineItem,
+  AdminBarChartDatum,
 } from "@/components/portal/mission-control/ui";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -59,6 +66,41 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
       ? Math.round((stats.confirmedBookings / stats.totalBookings) * 100)
       : 0;
 
+  // Daglig aktivitet for bar chart (man-son)
+  const dayLabels = ["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"];
+  const dailyCounts = new Array(7).fill(0) as number[];
+  for (const b of bookings) {
+    const d = new Date(b.startTime);
+    // getDay: 0=son, 1=man ... -> map til 0=man ... 6=son
+    const idx = (d.getDay() + 6) % 7;
+    dailyCounts[idx] += 1;
+  }
+  const dailyData: AdminBarChartDatum[] = dayLabels.map((label, i) => ({
+    label,
+    value: dailyCounts[i],
+  }));
+
+  // Timeline — ukens hendelser (topp 8 kommende)
+  const now = new Date();
+  const timelineItems: AdminTimelineItem[] = bookings
+    .filter((b) => new Date(b.startTime) >= now)
+    .slice(0, 8)
+    .map((b) => ({
+      id: b.id,
+      title: b.student.name ?? "Ukjent elev",
+      description: `${b.service.name} · ${b.instructor.name ?? "Ukjent instruktor"}`,
+      date: format(new Date(b.startTime), "EEE d. MMM HH:mm", { locale: nb }),
+      color:
+        b.status === "CONFIRMED" || b.status === "COMPLETED"
+          ? "var(--color-success)"
+          : b.status === "PENDING"
+            ? "var(--color-warning)"
+            : "var(--color-primary)",
+    }));
+
+  // Ukemal (eksempel — 50 okter per uke)
+  const weeklyGoal = 50;
+
   return (
     <>
       <MCTopbar
@@ -96,6 +138,44 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
             icon={<DollarSign className="w-5 h-5" />}
           />
         </div>
+
+        {/* Visualiseringer — ukemal, daglig aktivitet, timeline */}
+        {bookings.length > 0 && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <AdminCard>
+              <h3 className="admin-section-title mb-4">Ukemal</h3>
+              <div className="flex flex-col items-center justify-center py-2">
+                <AdminProgressRing
+                  value={stats.totalBookings}
+                  max={weeklyGoal}
+                  size={160}
+                  strokeWidth={12}
+                  label={`${stats.totalBookings} av ${weeklyGoal} bookinger`}
+                />
+              </div>
+            </AdminCard>
+
+            <AdminCard className="lg:col-span-2">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="admin-section-title">Daglig aktivitet</h3>
+                <AdminBadge variant="info">Denne uken</AdminBadge>
+              </div>
+              <AdminBarChart data={dailyData} height={220} />
+            </AdminCard>
+          </div>
+        )}
+
+        {timelineItems.length > 0 && (
+          <AdminCard>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="admin-section-title">Ukens kommende hendelser</h3>
+              <span className="text-xs text-[var(--color-muted)]">
+                {timelineItems.length} hendelser
+              </span>
+            </div>
+            <AdminTimeline items={timelineItems} />
+          </AdminCard>
+        )}
 
         {/* Bookings by Day */}
         {bookings.length === 0 ? (

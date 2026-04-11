@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import {
   Gauge,
   TrendingUp,
@@ -17,8 +18,20 @@ import {
   AdminCard,
   AdminStatCard,
   AdminBadge,
+  AdminGauge,
+  AdminProgressRing,
+  AdminBarChart,
+  AdminAreaChart,
+  AdminHeatmap,
+  AdminDataTable,
 } from "@/components/portal/mission-control/ui";
-import type { CapacityData } from "./actions";
+import type {
+  AdminBarChartDatum,
+  AdminAreaChartDatum,
+  AdminHeatmapCell,
+  AdminDataTableColumn,
+} from "@/components/portal/mission-control/ui";
+import type { CapacityData, CoachCapacity } from "./actions";
 
 interface KapasitetClientProps {
   data: CapacityData;
@@ -55,6 +68,25 @@ function formatKr(amount: number): string {
   return `${Math.round(amount).toLocaleString("nb-NO")} kr`;
 }
 
+// Ukesutnyttelse-trend (syntetisk — reell data kobles på senere)
+function buildTrendData(current: number): AdminAreaChartDatum[] {
+  const weeks = ["U-5", "U-4", "U-3", "U-2", "U-1", "Nå"];
+  const base = Math.max(10, current - 20);
+  return weeks.map((label, i) => ({
+    label,
+    value: Math.round(base + (current - base) * (i / (weeks.length - 1))),
+  }));
+}
+
+interface CoachRow {
+  id: string;
+  name: string;
+  bookedSlots: number;
+  weeklySlots: number;
+  occupancy: number;
+  weeklyRevenue: number;
+}
+
 export function KapasitetClient({ data }: KapasitetClientProps) {
   const { toggle } = useMCSidebar();
 
@@ -73,6 +105,103 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
       }
     }
   }
+
+  // Bar chart — ukesutnyttelse per dag
+  const weekBarData = useMemo<AdminBarChartDatum[]>(
+    () =>
+      dailyBreakdown.map((day) => {
+        const totalSlots = Object.values(day.coaches).reduce(
+          (s, c) => s + c.total,
+          0,
+        );
+        const bookedSlots = Object.values(day.coaches).reduce(
+          (s, c) => s + c.booked,
+          0,
+        );
+        const pct =
+          totalSlots > 0 ? Math.round((bookedSlots / totalSlots) * 100) : 0;
+        return {
+          label: day.day.slice(0, 3),
+          value: pct,
+        };
+      }),
+    [dailyBreakdown],
+  );
+
+  // Heatmap — belegg per coach × dag
+  const heatmapRows = useMemo(() => coaches.map((c) => c.name), [coaches]);
+  const heatmapCols = useMemo(
+    () => dailyBreakdown.map((d) => d.day.slice(0, 3)),
+    [dailyBreakdown],
+  );
+  const heatmapData = useMemo<AdminHeatmapCell[]>(() => {
+    const cells: AdminHeatmapCell[] = [];
+    for (const coach of coaches) {
+      for (const day of dailyBreakdown) {
+        const stats = day.coaches[coach.name];
+        const pct =
+          stats && stats.total > 0
+            ? Math.round((stats.booked / stats.total) * 100)
+            : 0;
+        cells.push({
+          row: coach.name,
+          col: day.day.slice(0, 3),
+          value: pct,
+        });
+      }
+    }
+    return cells;
+  }, [coaches, dailyBreakdown]);
+
+  // Trend
+  const trendData = useMemo(() => buildTrendData(occupancyPct), [occupancyPct]);
+
+  // Data table
+  const coachRows = useMemo<CoachRow[]>(
+    () =>
+      coaches.map((c: CoachCapacity) => ({
+        id: c.id,
+        name: c.name,
+        bookedSlots: c.bookedSlots,
+        weeklySlots: c.weeklySlots,
+        occupancy: Math.round(c.occupancy * 100),
+        weeklyRevenue: c.weeklyRevenue,
+      })),
+    [coaches],
+  );
+
+  const coachColumns: AdminDataTableColumn<CoachRow>[] = [
+    { key: "name", label: "Coach", sortable: true },
+    {
+      key: "bookedSlots",
+      label: "Booket",
+      sortable: true,
+      align: "right",
+      render: (r) => (
+        <span className="tabular-nums">
+          {r.bookedSlots} / {r.weeklySlots}
+        </span>
+      ),
+    },
+    {
+      key: "occupancy",
+      label: "Utnyttelse",
+      sortable: true,
+      align: "right",
+      render: (r) => (
+        <span className="tabular-nums font-semibold">{r.occupancy}%</span>
+      ),
+    },
+    {
+      key: "weeklyRevenue",
+      label: "Inntekt",
+      sortable: true,
+      align: "right",
+      render: (r) => (
+        <span className="tabular-nums">{formatKr(r.weeklyRevenue)}</span>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -114,133 +243,163 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
           />
         </div>
 
-        {/* Main Grid */}
+        {/* Hero — total utnyttelse + trend */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          {/* Coach Capacity */}
+          <AdminCard>
+            <h3 className="admin-section-title mb-4">Total utnyttelse</h3>
+            <div className="flex flex-col items-center gap-3">
+              <AdminProgressRing
+                value={occupancyPct}
+                size={160}
+                strokeWidth={14}
+                label="denne uken"
+              />
+              <div className="text-center">
+                <p className="text-xs text-[var(--color-muted)]">
+                  {weeklyTotal.booked} av {weeklyTotal.slots} sloter
+                </p>
+              </div>
+            </div>
+          </AdminCard>
+
           <AdminCard className="lg:col-span-2">
-            <h3 className="admin-section-title mb-4">Kapasitet per coach</h3>
-            <div className="space-y-5">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="admin-section-title">Kapasitetstrend</h3>
+              <AdminBadge variant="info">Siste 6 uker</AdminBadge>
+            </div>
+            <AdminAreaChart
+              data={trendData}
+              height={200}
+              valueLabel="Utnyttelse %"
+            />
+          </AdminCard>
+        </div>
+
+        {/* Coach Gauges */}
+        <AdminCard>
+          <h3 className="admin-section-title mb-4">Kapasitet per coach</h3>
+          {coaches.length === 0 ? (
+            <p className="text-sm text-[var(--color-muted)] py-4 text-center">
+              Ingen coacher å vise.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {coaches.map((coach) => {
                 const coachPct = Math.round(coach.occupancy * 100);
                 return (
                   <div
                     key={coach.id}
-                    className="p-4 bg-[var(--color-grey-100)] rounded-lg"
+                    className="flex flex-col items-center p-4 rounded-lg bg-[var(--color-grey-100)]"
                   >
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <h4 className="text-sm font-semibold text-[var(--color-text)]">
-                          {coach.name}
-                        </h4>
-                        <span className="text-xs text-[var(--color-muted)]">
-                          {coach.bookedSlots} av {coach.weeklySlots} sloter
-                          booket
-                        </span>
-                      </div>
-                      <span className="text-lg font-bold text-[var(--color-text)] tabular-nums">
-                        {coachPct}%
-                      </span>
-                    </div>
-                    <div className="h-2 bg-[var(--color-grey-200)] rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-[var(--color-primary)] transition-all"
-                        style={{ width: `${coachPct}%` }}
-                      />
-                    </div>
-                    <div className="flex items-center justify-between mt-3 text-xs text-[var(--color-muted)]">
-                      <span>{formatKr(coach.weeklyRevenue)} inntekt</span>
-                      <span>
-                        {coach.weeklySlots - coach.bookedSlots} ledige sloter
-                      </span>
+                    <AdminGauge
+                      value={coachPct}
+                      size={160}
+                      strokeWidth={14}
+                      label={coach.name}
+                    />
+                    <div className="mt-2 text-center">
+                      <p className="text-xs text-[var(--color-muted)]">
+                        {coach.bookedSlots} av {coach.weeklySlots} sloter
+                      </p>
+                      <p className="text-xs text-[var(--color-muted)]">
+                        {formatKr(coach.weeklyRevenue)} inntekt
+                      </p>
                     </div>
                   </div>
                 );
               })}
             </div>
+          )}
+        </AdminCard>
 
-            {/* Daily Breakdown */}
-            <div className="mt-6 pt-6 border-t border-[var(--color-grey-200)]">
-              <h4 className="text-sm font-medium text-[var(--color-text)] mb-4">
-                Daglig oversikt
-              </h4>
-              <div className="flex items-end gap-2 h-24">
-                {dailyBreakdown.map((day, i) => {
-                  const totalSlots = Object.values(day.coaches).reduce(
-                    (s, c) => s + c.total,
-                    0,
-                  );
-                  const bookedSlots = Object.values(day.coaches).reduce(
-                    (s, c) => s + c.booked,
-                    0,
-                  );
-                  const pct =
-                    totalSlots > 0
-                      ? Math.round((bookedSlots / totalSlots) * 100)
-                      : 0;
-                  return (
-                    <div
-                      key={i}
-                      className="flex-1 flex flex-col items-center gap-1"
-                    >
-                      <div className="relative w-full flex justify-center">
-                        <div
-                          className="w-8 bg-[var(--color-primary)] rounded-t transition-all"
-                          style={{ height: `${(pct / 100) * 80}px` }}
-                        />
-                      </div>
-                      <span className="text-[10px] text-[var(--color-muted)] capitalize">
-                        {day.day.slice(0, 3)}
-                      </span>
-                      <span className="text-[10px] text-[var(--color-muted)] tabular-nums">
-                        {pct}%
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+        {/* Ukesutnyttelse + belegg heatmap */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <AdminCard>
+            <h3 className="admin-section-title mb-4">Ukesutnyttelse</h3>
+            <AdminBarChart
+              data={weekBarData}
+              height={240}
+              valueLabel="Utnyttelse %"
+            />
           </AdminCard>
 
-          {/* Empty Slots */}
           <AdminCard>
-            <h3 className="admin-section-title mb-4">Ledige sloter</h3>
-            <p className="text-xs text-[var(--color-muted)] mb-3">
-              Ledige tider denne uken som kan fylles
-            </p>
-            <div className="space-y-2">
-              {emptySlotsList.length === 0 ? (
-                <p className="text-sm text-[var(--color-muted)] py-4 text-center">
-                  Ingen ledige sloter denne uken
-                </p>
-              ) : (
-                emptySlotsList.slice(0, 8).map((slot, i) => (
-                  <div
-                    key={i}
-                    className="p-3 bg-[var(--color-grey-100)] rounded-lg flex items-center justify-between hover:bg-[var(--color-grey-200)] transition-colors cursor-pointer"
-                  >
-                    <div>
-                      <div className="text-sm font-medium text-[var(--color-text)] capitalize">
-                        {slot.day}
-                      </div>
-                      <div className="text-xs text-[var(--color-muted)]">
-                        {slot.coach} — {slot.free}{" "}
-                        {slot.free === 1 ? "ledig slot" : "ledige sloter"}
-                      </div>
-                    </div>
-                    <button className="p-1.5 rounded-md hover:bg-white text-[var(--color-primary)]">
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
-            {emptySlotsList.length > 8 && (
-              <p className="text-xs text-[var(--color-muted)] mt-2 text-center">
-                + {emptySlotsList.length - 8} flere
+            <h3 className="admin-section-title mb-4">Belegg per coach og dag</h3>
+            {heatmapRows.length === 0 ? (
+              <p className="text-sm text-[var(--color-muted)] py-4 text-center">
+                Ingen data å vise.
               </p>
+            ) : (
+              <div className="overflow-x-auto">
+                <AdminHeatmap
+                  data={heatmapData}
+                  rows={heatmapRows}
+                  cols={heatmapCols}
+                  cellSize={32}
+                  formatTooltip={(cell) =>
+                    `${cell.row} ${cell.col}: ${cell.value}% belegg`
+                  }
+                />
+              </div>
             )}
           </AdminCard>
         </div>
+
+        {/* Detail table */}
+        <div>
+          <h3 className="admin-section-title mb-3">Detaljer per coach</h3>
+          <AdminDataTable
+            columns={coachColumns}
+            data={coachRows}
+            searchable
+            searchPlaceholder="Søk coach..."
+            emptyMessage="Ingen coacher funnet."
+          />
+        </div>
+
+        {/* Empty slots */}
+        <AdminCard>
+          <h3 className="admin-section-title mb-4">Ledige sloter</h3>
+          <p className="text-xs text-[var(--color-muted)] mb-3">
+            Ledige tider denne uken som kan fylles
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+            {emptySlotsList.length === 0 ? (
+              <p className="text-sm text-[var(--color-muted)] py-4 text-center col-span-full">
+                Ingen ledige sloter denne uken
+              </p>
+            ) : (
+              emptySlotsList.slice(0, 9).map((slot, i) => (
+                <div
+                  key={i}
+                  className="p-3 bg-[var(--color-grey-100)] rounded-lg flex items-center justify-between hover:bg-[var(--color-grey-200)] transition-colors cursor-pointer"
+                >
+                  <div>
+                    <div className="text-sm font-medium text-[var(--color-text)] capitalize">
+                      {slot.day}
+                    </div>
+                    <div className="text-xs text-[var(--color-muted)]">
+                      {slot.coach} — {slot.free}{" "}
+                      {slot.free === 1 ? "ledig slot" : "ledige sloter"}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    aria-label="Se detaljer"
+                    className="p-1.5 rounded-md hover:bg-white text-[var(--color-primary)]"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+          {emptySlotsList.length > 9 && (
+            <p className="text-xs text-[var(--color-muted)] mt-2 text-center">
+              + {emptySlotsList.length - 9} flere
+            </p>
+          )}
+        </AdminCard>
 
         {/* AI Recommendations (statisk foreløpig) */}
         <AdminCard>
@@ -269,7 +428,10 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                   <span className="text-sm font-bold text-[var(--color-primary)]">
                     {rec.impact}
                   </span>
-                  <button className="text-xs text-[var(--color-primary)] hover:underline">
+                  <button
+                    type="button"
+                    className="text-xs text-[var(--color-primary)] hover:underline"
+                  >
                     Implementer
                   </button>
                 </div>

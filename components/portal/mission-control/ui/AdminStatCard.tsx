@@ -1,12 +1,15 @@
 import * as React from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AdminSparkline } from "./charts/AdminSparkline";
 
 interface AdminStatCardProps {
   label: string;
   value: string | number;
   change?: { value: number; positive?: boolean };
   icon?: React.ReactNode;
+  sparkline?: number[];
+  sparklineColor?: string;
   className?: string;
 }
 
@@ -15,6 +18,8 @@ export function AdminStatCard({
   value,
   change,
   icon,
+  sparkline,
+  sparklineColor,
   className,
 }: AdminStatCardProps) {
   const isPositive = change?.positive ?? (change ? change.value >= 0 : true);
@@ -54,14 +59,31 @@ export function AdminStatCard({
             </div>
           )}
         </div>
-        {icon && (
-          <div
-            className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
-            aria-hidden="true"
-          >
-            {icon}
-          </div>
-        )}
+        <div className="flex flex-col items-end gap-2">
+          {icon && (
+            <div
+              className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+              aria-hidden="true"
+            >
+              {icon}
+            </div>
+          )}
+          {sparkline && sparkline.length > 1 && (
+            <AdminSparkline
+              data={sparkline}
+              color={
+                sparklineColor ??
+                (isPositive
+                  ? "var(--color-success)"
+                  : change
+                    ? "var(--color-error)"
+                    : "var(--color-primary)")
+              }
+              width={72}
+              height={24}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

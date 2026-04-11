@@ -30,6 +30,18 @@ import {
   AdminBadge,
   AdminStatCard,
   AdminEmptyState,
+  AdminAreaChart,
+  AdminDonutChart,
+  AdminSparkline,
+  AdminHeatmap,
+  AdminTimeline,
+  AdminProgressRing,
+} from "@/components/portal/mission-control/ui";
+import type {
+  AdminAreaChartDatum,
+  AdminDonutChartDatum,
+  AdminHeatmapCell,
+  AdminTimelineItem,
 } from "@/components/portal/mission-control/ui";
 
 // Types — matcher respons fra /api/admin/dashboard
@@ -204,6 +216,58 @@ export default function MissionBoardPage() {
 
   if (!stats) return null;
 
+  // Eksempel-data (brukes til visualiseringer inntil API leverer ekte tall)
+  const bookingTrendData: AdminAreaChartDatum[] = Array.from({ length: 30 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (29 - i));
+    const base = 8 + Math.sin(i / 4) * 3 + (i % 7 === 5 || i % 7 === 6 ? -3 : 2);
+    return {
+      label: date.toLocaleDateString("nb-NO", { day: "numeric", month: "short" }),
+      value: Math.max(0, Math.round(base + Math.random() * 4)),
+    };
+  });
+
+  const bookingDistribution: AdminDonutChartDatum[] = [
+    { label: "Performance", value: 42 },
+    { label: "Express", value: 28 },
+    { label: "Gruppe", value: 18 },
+    { label: "Flex", value: 12 },
+  ];
+
+  const sparkBookings = bookingTrendData.slice(-14).map((d) => d.value);
+  const sparkRevenue = [18, 22, 19, 26, 31, 28, 34, 30, 33, 38, 36, 42, 39, 45];
+  const sparkStudents = [46, 47, 48, 48, 50, 51, 52, 51, 53, 54, 55, 56, 57, 58];
+  const sparkActive = [4, 6, 5, 7, 8, 6, 9, 7, 8, 10, 9, 11, 10, 12];
+
+  // Heatmap — dag x time (mandag-sondag, 08-20)
+  const heatmapRows = ["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"];
+  const heatmapCols = ["08", "10", "12", "14", "16", "18", "20"];
+  const heatmapData: AdminHeatmapCell[] = heatmapRows.flatMap((row) =>
+    heatmapCols.map((col) => ({
+      row,
+      col,
+      value: Math.round(Math.random() * 8 + (col === "16" || col === "18" ? 4 : 0)),
+    })),
+  );
+
+  // Timeline — dagens hendelser basert pa todaysSchedule
+  const timelineItems: AdminTimelineItem[] = stats.todaysSchedule.slice(0, 6).map((b) => ({
+    id: b.id,
+    title: b.studentName,
+    description: `${b.service} med ${b.instructor}`,
+    date: b.time,
+    color:
+      b.status.toLowerCase() === "confirmed" || b.status.toLowerCase() === "completed"
+        ? "var(--color-success)"
+        : b.status.toLowerCase() === "pending"
+          ? "var(--color-warning)"
+          : "var(--color-primary)",
+  }));
+
+  // Manedlig mal
+  const monthlyGoal = 240;
+  const monthlyCurrent = Math.min(monthlyGoal, stats.week.totalBookings * 4);
+
   const quickActions = [
     {
       icon: Plus,
@@ -293,55 +357,144 @@ export default function MissionBoardPage() {
             })}
           </motion.div>
 
-          {/* Stats Grid */}
+          {/* Stats Grid med sparklines */}
           <motion.div
             variants={itemVariants}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
           >
-            <AdminStatCard
-              label="Okter i dag"
-              value={stats.today.totalBookings}
-              icon={<Calendar className="w-5 h-5" />}
-              change={
-                stats.trends.bookings !== 0
-                  ? {
-                      value: stats.trends.bookings,
-                      positive: stats.trends.bookings > 0,
-                    }
-                  : undefined
-              }
-            />
-            <AdminStatCard
-              label="Aktive okter"
-              value={stats.today.activeSessions}
-              icon={<Activity className="w-5 h-5" />}
-            />
-            <AdminStatCard
-              label="Nye elever (uke)"
-              value={stats.week.newStudents}
-              icon={<Users className="w-5 h-5" />}
-              change={
-                stats.trends.students !== 0
-                  ? {
-                      value: stats.trends.students,
-                      positive: stats.trends.students > 0,
-                    }
-                  : undefined
-              }
-            />
-            <AdminStatCard
-              label="Omsetning (uke)"
-              value={`${stats.week.revenue.toLocaleString("nb-NO")} kr`}
-              icon={<DollarSign className="w-5 h-5" />}
-              change={
-                stats.trends.revenue !== 0
-                  ? {
-                      value: stats.trends.revenue,
-                      positive: stats.trends.revenue > 0,
-                    }
-                  : undefined
-              }
-            />
+            <AdminCard>
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <div className="flex-1 min-w-0">
+                  <p className="admin-label">Okter i dag</p>
+                  <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                    {stats.today.totalBookings}
+                  </p>
+                </div>
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                  <Calendar className="w-5 h-5" />
+                </div>
+              </div>
+              <AdminSparkline data={sparkBookings} width="100%" height={32} />
+            </AdminCard>
+
+            <AdminCard>
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <div className="flex-1 min-w-0">
+                  <p className="admin-label">Aktive okter</p>
+                  <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                    {stats.today.activeSessions}
+                  </p>
+                </div>
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                  <Activity className="w-5 h-5" />
+                </div>
+              </div>
+              <AdminSparkline
+                data={sparkActive}
+                width="100%"
+                height={32}
+                color="var(--color-success)"
+              />
+            </AdminCard>
+
+            <AdminCard>
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <div className="flex-1 min-w-0">
+                  <p className="admin-label">Nye elever (uke)</p>
+                  <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                    {stats.week.newStudents}
+                  </p>
+                </div>
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                  <Users className="w-5 h-5" />
+                </div>
+              </div>
+              <AdminSparkline
+                data={sparkStudents}
+                width="100%"
+                height={32}
+                color="var(--color-accent-cta)"
+              />
+            </AdminCard>
+
+            <AdminCard>
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <div className="flex-1 min-w-0">
+                  <p className="admin-label">Omsetning (uke)</p>
+                  <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                    {`${stats.week.revenue.toLocaleString("nb-NO")} kr`}
+                  </p>
+                </div>
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                  <DollarSign className="w-5 h-5" />
+                </div>
+              </div>
+              <AdminSparkline
+                data={sparkRevenue}
+                width="100%"
+                height={32}
+                color="var(--color-primary)"
+              />
+            </AdminCard>
+          </motion.div>
+
+          {/* Charts — trend + fordeling + manedsmal */}
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+          >
+            <AdminCard className="lg:col-span-2">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="admin-section-title">Bookinger siste 30 dager</h3>
+                <AdminBadge variant="info">Trend</AdminBadge>
+              </div>
+              <AdminAreaChart data={bookingTrendData} height={240} />
+            </AdminCard>
+
+            <AdminCard>
+              <h3 className="admin-section-title mb-4">Manedlig mal</h3>
+              <div className="flex flex-col items-center justify-center py-4">
+                <AdminProgressRing
+                  value={monthlyCurrent}
+                  max={monthlyGoal}
+                  size={140}
+                  strokeWidth={12}
+                  label={`${monthlyCurrent} / ${monthlyGoal} okter`}
+                />
+              </div>
+            </AdminCard>
+          </motion.div>
+
+          {/* Heatmap + Donut */}
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+          >
+            <AdminCard>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="admin-section-title">Aktivitet denne uken</h3>
+                <span className="text-xs text-[var(--color-muted)]">Dag x time</span>
+              </div>
+              <div className="overflow-x-auto">
+                <AdminHeatmap
+                  data={heatmapData}
+                  rows={heatmapRows}
+                  cols={heatmapCols}
+                  cellSize={32}
+                  formatTooltip={(c) => `${c.row} kl. ${c.col}:00 — ${c.value} okter`}
+                />
+              </div>
+            </AdminCard>
+
+            <AdminCard>
+              <h3 className="admin-section-title mb-4">Fordeling per tjeneste</h3>
+              <AdminDonutChart
+                data={bookingDistribution}
+                height={240}
+                centerLabel="Denne uken"
+                centerValue={bookingDistribution.reduce((s, d) => s + d.value, 0)}
+              />
+            </AdminCard>
           </motion.div>
 
           {/* Main Grid */}
@@ -495,6 +648,19 @@ export default function MissionBoardPage() {
                   )}
                 </AdminCard>
               </motion.div>
+
+              {/* Timeline — dagens aktivitet */}
+              {timelineItems.length > 0 && (
+                <motion.div variants={itemVariants}>
+                  <AdminCard>
+                    <h3 className="admin-section-title mb-4 flex items-center gap-2">
+                      <Clock className="w-5 h-5 text-[var(--color-primary)]" />
+                      Dagens aktivitet
+                    </h3>
+                    <AdminTimeline items={timelineItems} />
+                  </AdminCard>
+                </motion.div>
+              )}
 
               {/* Weekly Summary */}
               <motion.div variants={itemVariants}>

@@ -7,9 +7,16 @@ import {
 } from "@/components/portal/mission-control";
 import {
   AdminCard,
-  AdminStatCard,
   AdminButton,
   AdminBadge,
+  AdminGauge,
+  AdminSparkline,
+  AdminLineChart,
+  AdminDonutChart,
+} from "@/components/portal/mission-control/ui";
+import type {
+  AdminLineChartDatum,
+  AdminDonutChartDatum,
 } from "@/components/portal/mission-control/ui";
 import {
   Calendar,
@@ -128,6 +135,33 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
 
   const kapasitetPct = Math.round((data.kpis.activeStudents / 150) * 100);
 
+  // Sparkline-data for KPI-kortene (siste 14 dager — eksempel-data)
+  const sparkSessions = [6, 7, 5, 8, 9, 7, 10, 8, 9, 11, 10, 12, 11, 13];
+  const sparkActiveStudents = [140, 142, 143, 145, 146, 147, 148, 149, 150, 150, 151, 152, 153, 154];
+  const sparkPending = [3, 2, 4, 3, 5, 4, 3, 2, 4, 3, 2, 3, 4, 2];
+  const sparkRevenue = [
+    210000, 225000, 230000, 245000, 260000, 255000, 270000, 280000, 290000, 295000, 310000, 320000, 325000, 340000,
+  ];
+
+  // Handicap-trend siste 30 dager (eksempel — gjennomsnitt alle aktive elever)
+  const handicapTrend: AdminLineChartDatum[] = Array.from({ length: 30 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (29 - i));
+    return {
+      label: date.toLocaleDateString("nb-NO", { day: "numeric", month: "short" }),
+      value: Number((18.4 - i * 0.04 - Math.random() * 0.3).toFixed(1)),
+    };
+  });
+
+  // Elevfordeling per tier (VISITOR / ACADEMY / STARTER / PRO / ELITE)
+  const tierDistribution: AdminDonutChartDatum[] = [
+    { label: "Visitor", value: data.divisions.gfgk.studentCount, color: "var(--color-muted)" },
+    { label: "Academy", value: Math.round(data.divisions.junior.studentCount * 0.6), color: "var(--color-accent-cta)" },
+    { label: "Starter", value: Math.round(data.divisions.junior.studentCount * 0.4), color: "var(--color-warning)" },
+    { label: "Pro", value: Math.round(data.divisions.coaching.studentCount * 0.7), color: "var(--color-primary)" },
+    { label: "Elite", value: Math.round(data.divisions.coaching.studentCount * 0.3), color: "var(--color-ai)" },
+  ];
+
   return (
     <>
       <MCTopbar
@@ -150,30 +184,114 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           </div>
         )}
 
-        {/* Stats Grid */}
+        {/* Stats Grid med sparklines */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <AdminStatCard
-            label="Okter i dag"
-            value={data.kpis.sessionsToday}
-            icon={<Calendar className="w-5 h-5" />}
-          />
-          <AdminStatCard
-            label="Aktive elever"
-            value={data.kpis.activeStudents}
-            icon={<Users className="w-5 h-5" />}
-            change={{ value: 8, positive: true }}
-          />
-          <AdminStatCard
-            label="Kapasitet"
-            value={`${kapasitetPct}%`}
-            icon={<Clock className="w-5 h-5" />}
-          />
-          <AdminStatCard
-            label="Omsetning MTD"
-            value={formatRevenue(data.kpis.mtdRevenue)}
-            icon={<TrendingUp className="w-5 h-5" />}
-            change={{ value: 12, positive: true }}
-          />
+          <AdminCard>
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <div className="flex-1 min-w-0">
+                <p className="admin-label">Okter i dag</p>
+                <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                  {data.kpis.sessionsToday}
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                <Calendar className="w-5 h-5" />
+              </div>
+            </div>
+            <AdminSparkline data={sparkSessions} width="100%" height={32} />
+          </AdminCard>
+
+          <AdminCard>
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <div className="flex-1 min-w-0">
+                <p className="admin-label">Aktive elever</p>
+                <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                  {data.kpis.activeStudents}
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                <Users className="w-5 h-5" />
+              </div>
+            </div>
+            <AdminSparkline
+              data={sparkActiveStudents}
+              width="100%"
+              height={32}
+              color="var(--color-success)"
+            />
+          </AdminCard>
+
+          <AdminCard>
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <div className="flex-1 min-w-0">
+                <p className="admin-label">Ventende bookinger</p>
+                <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                  {data.kpis.pendingBookings}
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                <Clock className="w-5 h-5" />
+              </div>
+            </div>
+            <AdminSparkline
+              data={sparkPending}
+              width="100%"
+              height={32}
+              color="var(--color-warning)"
+            />
+          </AdminCard>
+
+          <AdminCard>
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <div className="flex-1 min-w-0">
+                <p className="admin-label">Omsetning MTD</p>
+                <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                  {formatRevenue(data.kpis.mtdRevenue)}
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                <TrendingUp className="w-5 h-5" />
+              </div>
+            </div>
+            <AdminSparkline
+              data={sparkRevenue}
+              width="100%"
+              height={32}
+              color="var(--color-primary)"
+            />
+          </AdminCard>
+        </div>
+
+        {/* Kapasitet + Tier fordeling + Handicap-trend */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <AdminCard>
+            <h3 className="admin-section-title mb-4">Kapasitetsutnyttelse</h3>
+            <div className="flex flex-col items-center justify-center py-2">
+              <AdminGauge
+                value={kapasitetPct}
+                size={180}
+                label={`${data.kpis.activeStudents} av 150 plasser`}
+              />
+            </div>
+          </AdminCard>
+
+          <AdminCard>
+            <h3 className="admin-section-title mb-4">Elevfordeling per tier</h3>
+            <AdminDonutChart
+              data={tierDistribution}
+              height={240}
+              centerLabel="Totalt"
+              centerValue={tierDistribution.reduce((s, d) => s + d.value, 0)}
+            />
+          </AdminCard>
+
+          <AdminCard>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="admin-section-title">Handicap-trend (30 dager)</h3>
+              <AdminBadge variant="info">Snitt</AdminBadge>
+            </div>
+            <AdminLineChart data={handicapTrend} height={240} />
+          </AdminCard>
         </div>
 
         {/* Main Content Grid */}

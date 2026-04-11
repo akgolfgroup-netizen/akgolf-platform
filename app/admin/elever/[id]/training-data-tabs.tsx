@@ -24,6 +24,8 @@ import {
   AdminTableHeaderCell,
   AdminTableCell,
   AdminEmptyState,
+  AdminTabs,
+  type AdminTabItem,
 } from "@/components/portal/mission-control/ui";
 import {
   getStudentTrainingPlan,
@@ -100,29 +102,25 @@ export function TrainingDataTabs({ studentId }: Props) {
     });
   }, [activeTab, studentId, data]);
 
+  const tabItems: AdminTabItem[] = TABS.map((t) => {
+    const Icon = t.icon;
+    return {
+      id: t.id,
+      label: t.label,
+      icon: <Icon className="h-3.5 w-3.5" />,
+    };
+  });
+
   return (
     <div className="space-y-4">
       {/* Tab bar */}
-      <div className="flex gap-1 overflow-x-auto pb-1 border-b border-[var(--color-grey-200)]">
-        {TABS.map((tab) => {
-          const Icon = tab.icon;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={cn(
-                "flex items-center gap-1.5 px-3 py-2 text-sm font-medium whitespace-nowrap border-b-2 transition-colors -mb-px",
-                activeTab === tab.id
-                  ? "border-[var(--color-primary)] text-[var(--color-primary)]"
-                  : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-text)]",
-              )}
-            >
-              <Icon className="h-3.5 w-3.5" />
-              {tab.label}
-            </button>
-          );
-        })}
-      </div>
+      <AdminTabs
+        items={tabItems}
+        value={activeTab}
+        onValueChange={(v) => setActiveTab(v as TabId)}
+        size="sm"
+      />
+
 
       {/* Content */}
       <AdminCard className="min-h-[200px]">

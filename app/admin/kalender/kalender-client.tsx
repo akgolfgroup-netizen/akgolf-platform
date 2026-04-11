@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useCallback } from "react";
+import { useState, useTransition, useCallback, useMemo } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -13,7 +13,10 @@ import {
   AlertTriangle,
   MessageSquare,
   Loader2,
-  X,
+  MoreHorizontal,
+  CheckCircle2,
+  User,
+  MapPin,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
@@ -23,7 +26,18 @@ import {
   AdminBadge,
   AdminSelect,
   AdminTextarea,
-  AdminEmptyState,
+  AdminInput,
+  AdminTabs,
+  AdminHeatmap,
+  AdminDrawer,
+  AdminDialog,
+  AdminDropdown,
+  useToast,
+} from "@/components/portal/mission-control/ui";
+import type {
+  AdminTabItem,
+  AdminHeatmapCell,
+  AdminDropdownItem,
 } from "@/components/portal/mission-control/ui";
 import {
   format,
@@ -37,6 +51,7 @@ import {
   addMonths,
   subMonths,
   differenceInMinutes,
+  getHours,
 } from "date-fns";
 import { nb } from "date-fns/locale";
 import type { CalendarBooking } from "./actions";
@@ -62,16 +77,15 @@ interface KalenderClientProps {
 
 // — View modes —
 
-const viewModes = [
-  { label: "Maned", value: "month", icon: Grid3X3 },
-  { label: "Uke", value: "week", icon: CalendarIcon },
-  { label: "Dag", value: "day", icon: List },
-] as const;
+type ViewMode = "month" | "week" | "day";
 
-type ViewMode = (typeof viewModes)[number]["value"];
+const viewTabs: AdminTabItem[] = [
+  { id: "month", label: "Måned", icon: <Grid3X3 className="w-3.5 h-3.5" /> },
+  { id: "week", label: "Uke", icon: <CalendarIcon className="w-3.5 h-3.5" /> },
+  { id: "day", label: "Dag", icon: <List className="w-3.5 h-3.5" /> },
+];
 
 // — Status styles —
-// Pill/kort i kalender-cellene bruker myke bakgrunner og accent-border
 const statusCellStyles: Record<string, string> = {
   PENDING:
     "bg-[var(--color-warning)]/10 border-[var(--color-warning)]/40 text-[var(--color-warning)]",
@@ -85,7 +99,10 @@ const statusCellStyles: Record<string, string> = {
 
 type StatusKey = "PENDING" | "CONFIRMED" | "COMPLETED" | "NO_SHOW";
 
-const statusBadgeVariant: Record<StatusKey, "warning" | "info" | "success" | "error"> = {
+const statusBadgeVariant: Record<
+  StatusKey,
+  "warning" | "info" | "success" | "error"
+> = {
   PENDING: "warning",
   CONFIRMED: "info",
   COMPLETED: "success",
@@ -100,7 +117,9 @@ const statusLabels: Record<string, string> = {
 };
 
 function isStatusKey(s: string): s is StatusKey {
-  return s === "PENDING" || s === "CONFIRMED" || s === "COMPLETED" || s === "NO_SHOW";
+  return (
+    s === "PENDING" || s === "CONFIRMED" || s === "COMPLETED" || s === "NO_SHOW"
+  );
 }
 
 // — Component —
@@ -110,6 +129,7 @@ export default function KalenderClient({
   instructors,
 }: KalenderClientProps) {
   const { toggle } = useMCSidebar();
+  const { toast } = useToast();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<ViewMode>("month");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -117,8 +137,23 @@ export default function KalenderClient({
   const [selectedInstructorId, setSelectedInstructorId] = useState<string>("");
   const [isPending, startTransition] = useTransition();
 
+  // Drawer / dialogs
+  const [drawerBooking, setDrawerBooking] = useState<CalendarBooking | null>(
+    null,
+  );
+  const [newEventOpen, setNewEventOpen] = useState(false);
+  const [newEventForm, setNewEventForm] = useState({
+    title: "",
+    date: format(new Date(), "yyyy-MM-dd"),
+    startTime: "09:00",
+    endTime: "10:00",
+    note: "",
+  });
+
   // Note modal state
-  const [noteModalBookingId, setNoteModalBookingId] = useState<string | null>(null);
+  const [noteModalBookingId, setNoteModalBookingId] = useState<string | null>(
+    null,
+  );
   const [noteText, setNoteText] = useState("");
   const [isNotePending, startNoteTransition] = useTransition();
   const [isNoShowPending, startNoShowTransition] = useTransition();
@@ -141,13 +176,13 @@ export default function KalenderClient({
           result = await getBookingsForPeriod(
             start.toISOString(),
             end.toISOString(),
-            iid
+            iid,
           );
         }
         setBookings(result);
       });
     },
-    []
+    [],
   );
 
   const handleNavigate = (newDate: Date) => {
@@ -155,9 +190,10 @@ export default function KalenderClient({
     fetchBookings(newDate, viewMode, selectedInstructorId);
   };
 
-  const handleViewChange = (newView: ViewMode) => {
-    setViewMode(newView);
-    fetchBookings(currentDate, newView, selectedInstructorId);
+  const handleViewChange = (newView: string) => {
+    const v = newView as ViewMode;
+    setViewMode(v);
+    fetchBookings(currentDate, v, selectedInstructorId);
   };
 
   const handleInstructorFilter = (instructorId: string) => {
@@ -170,6 +206,11 @@ export default function KalenderClient({
   const handleMarkNoShow = (bookingId: string) => {
     startNoShowTransition(async () => {
       await markNoShow(bookingId);
+      toast({
+        variant: "warning",
+        title: "Merket som ikke mott",
+        description: "Bookingen er oppdatert.",
+      });
       fetchBookings(currentDate, viewMode, selectedInstructorId);
     });
   };
@@ -179,10 +220,24 @@ export default function KalenderClient({
     const id = noteModalBookingId;
     startNoteTransition(async () => {
       await addAdminNote(id, noteText.trim());
+      toast({
+        variant: "success",
+        title: "Notat lagret",
+      });
       setNoteModalBookingId(null);
       setNoteText("");
       fetchBookings(currentDate, viewMode, selectedInstructorId);
     });
+  };
+
+  const handleCreateNewEvent = () => {
+    // Foreløpig — server-integrasjon kommer senere
+    toast({
+      variant: "info",
+      title: "Ny hendelse",
+      description: `${newEventForm.title || "Uten tittel"} — ${newEventForm.date} ${newEventForm.startTime}`,
+    });
+    setNewEventOpen(false);
   };
 
   // — Calendar calculations —
@@ -206,11 +261,71 @@ export default function KalenderClient({
     ? getBookingsForDate(selectedDate)
     : [];
 
+  // — Heatmap data — antall bookinger per ukedag × time (8-20)
+  const heatmapRows = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
+  const heatmapCols = useMemo(
+    () => Array.from({ length: 13 }, (_, i) => `${i + 8}`),
+    [],
+  );
+
+  const heatmapData = useMemo<AdminHeatmapCell[]>(() => {
+    const counts = new Map<string, number>();
+    for (const b of bookings) {
+      const d = new Date(b.startTime);
+      const dow = (d.getDay() + 6) % 7; // Man=0
+      const rowLabel = heatmapRows[dow];
+      const hour = getHours(d);
+      if (hour < 8 || hour > 20) continue;
+      const key = `${rowLabel}|${hour}`;
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+    const cells: AdminHeatmapCell[] = [];
+    for (const row of heatmapRows) {
+      for (const col of heatmapCols) {
+        cells.push({
+          row,
+          col,
+          value: counts.get(`${row}|${col}`) ?? 0,
+        });
+      }
+    }
+    return cells;
+  }, [bookings, heatmapCols]);
+
   // — Render helpers —
 
   const formatTime = (date: Date) => format(new Date(date), "HH:mm");
   const formatDuration = (b: CalendarBooking) =>
     `${differenceInMinutes(new Date(b.endTime), new Date(b.startTime))} min`;
+
+  const buildQuickActions = (
+    booking: CalendarBooking,
+  ): AdminDropdownItem[] => [
+    {
+      id: "view",
+      label: "Se detaljer",
+      icon: <CalendarIcon className="w-4 h-4" />,
+      onSelect: () => setDrawerBooking(booking),
+    },
+    {
+      id: "note",
+      label: "Legg til notat",
+      icon: <MessageSquare className="w-4 h-4" />,
+      onSelect: () => {
+        setNoteText(booking.adminNotes || "");
+        setNoteModalBookingId(booking.id);
+      },
+    },
+    {
+      id: "no-show",
+      label: "Merk som ikke mott",
+      icon: <AlertTriangle className="w-4 h-4" />,
+      variant: "danger" as const,
+      disabled:
+        booking.status === "NO_SHOW" || booking.status === "COMPLETED",
+      onSelect: () => handleMarkNoShow(booking.id),
+    },
+  ];
 
   return (
     <>
@@ -269,36 +384,30 @@ export default function KalenderClient({
                 ))}
               </AdminSelect>
 
-              {/* View Mode Toggle */}
-              <div className="inline-flex rounded-lg border border-[var(--color-grey-200)] bg-white p-1">
-                {viewModes.map((mode) => {
-                  const Icon = mode.icon;
-                  const isActive = viewMode === mode.value;
-                  return (
-                    <button
-                      key={mode.value}
-                      onClick={() => handleViewChange(mode.value)}
-                      className={cn(
-                        "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors",
-                        isActive
-                          ? "bg-[var(--color-primary)] text-white"
-                          : "text-[var(--color-muted)] hover:text-[var(--color-text)]"
-                      )}
-                    >
-                      <Icon className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">{mode.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <AdminButton variant="secondary" icon={<Filter className="w-4 h-4" />}>
+              <AdminButton
+                variant="secondary"
+                icon={<Filter className="w-4 h-4" />}
+              >
                 <span className="hidden sm:inline">Filter</span>
               </AdminButton>
-              <AdminButton variant="primary" icon={<Plus className="w-4 h-4" />}>
+              <AdminButton
+                variant="primary"
+                icon={<Plus className="w-4 h-4" />}
+                onClick={() => setNewEventOpen(true)}
+              >
                 <span className="hidden sm:inline">Ny</span>
               </AdminButton>
             </div>
+          </div>
+
+          {/* View Tabs */}
+          <div className="mt-4">
+            <AdminTabs
+              items={viewTabs}
+              value={viewMode}
+              onValueChange={handleViewChange}
+              size="sm"
+            />
           </div>
         </AdminCard>
 
@@ -316,7 +425,7 @@ export default function KalenderClient({
                   >
                     {dayLabel}
                   </div>
-                )
+                ),
               )}
             </div>
 
@@ -340,7 +449,7 @@ export default function KalenderClient({
                       isToday && "bg-[var(--color-primary)]/5",
                       isSelected &&
                         "ring-2 ring-[var(--color-primary)] ring-inset",
-                      "hover:bg-[var(--color-grey-50)]"
+                      "hover:bg-[var(--color-grey-50)]",
                     )}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -349,7 +458,7 @@ export default function KalenderClient({
                           "text-sm font-medium w-7 h-7 flex items-center justify-center rounded-full",
                           isToday
                             ? "bg-[var(--color-primary)] text-white"
-                            : "text-[var(--color-text)]"
+                            : "text-[var(--color-text)]",
                         )}
                       >
                         {format(date, "d")}
@@ -364,10 +473,14 @@ export default function KalenderClient({
                       {dayBookings.slice(0, 3).map((booking) => (
                         <div
                           key={booking.id}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDrawerBooking(booking);
+                          }}
                           className={cn(
-                            "px-1.5 py-0.5 text-[10px] rounded border truncate",
+                            "px-1.5 py-0.5 text-[10px] rounded border truncate cursor-pointer",
                             statusCellStyles[booking.status] ||
-                              statusCellStyles.CONFIRMED
+                              statusCellStyles.CONFIRMED,
                           )}
                         >
                           {formatTime(booking.startTime)}{" "}
@@ -424,59 +537,47 @@ export default function KalenderClient({
                               ({formatDuration(booking)})
                             </span>
                           </div>
-                          <AdminBadge variant={statusBadgeVariant[statusKey]}>
-                            {statusLabels[booking.status] || booking.status}
-                          </AdminBadge>
-                        </div>
-                        <div className="text-sm font-medium text-[var(--color-text)]">
-                          {booking.serviceType.name}
-                        </div>
-                        <div className="text-xs text-[var(--color-muted)] mt-0.5">
-                          {booking.student.name ||
-                            booking.student.email ||
-                            "Ukjent elev"}
-                        </div>
-                        {booking.instructor.user.name && (
-                          <div className="text-xs text-[var(--color-muted)]">
-                            Med {booking.instructor.user.name}
+                          <div className="flex items-center gap-1">
+                            <AdminBadge variant={statusBadgeVariant[statusKey]}>
+                              {statusLabels[booking.status] || booking.status}
+                            </AdminBadge>
+                            <AdminDropdown
+                              items={buildQuickActions(booking)}
+                              trigger={
+                                <button
+                                  aria-label="Handlinger"
+                                  className="p-1 rounded hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+                                >
+                                  <MoreHorizontal className="w-3.5 h-3.5" />
+                                </button>
+                              }
+                            />
                           </div>
-                        )}
-                        {booking.location && (
-                          <div className="text-xs text-[var(--color-muted)]">
-                            {booking.location.name}
-                          </div>
-                        )}
-
-                        {/* Action buttons */}
-                        <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-[var(--color-grey-100)]">
-                          {booking.status !== "NO_SHOW" &&
-                            booking.status !== "COMPLETED" && (
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleMarkNoShow(booking.id);
-                                }}
-                                disabled={isNoShowPending}
-                                className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded hover:bg-[var(--color-error)]/10 text-[var(--color-muted)] hover:text-[var(--color-error)] transition-colors disabled:opacity-50"
-                                title="Merk som ikke mott"
-                              >
-                                <AlertTriangle className="w-3 h-3" />
-                                Ikke mott
-                              </button>
-                            )}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setNoteText(booking.adminNotes || "");
-                              setNoteModalBookingId(booking.id);
-                            }}
-                            className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded hover:bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
-                            title="Legg til notat"
-                          >
-                            <MessageSquare className="w-3 h-3" />
-                            Notat
-                          </button>
                         </div>
+                        <button
+                          type="button"
+                          onClick={() => setDrawerBooking(booking)}
+                          className="block w-full text-left"
+                        >
+                          <div className="text-sm font-medium text-[var(--color-text)]">
+                            {booking.serviceType.name}
+                          </div>
+                          <div className="text-xs text-[var(--color-muted)] mt-0.5">
+                            {booking.student.name ||
+                              booking.student.email ||
+                              "Ukjent elev"}
+                          </div>
+                          {booking.instructor.user.name && (
+                            <div className="text-xs text-[var(--color-muted)]">
+                              Med {booking.instructor.user.name}
+                            </div>
+                          )}
+                          {booking.location && (
+                            <div className="text-xs text-[var(--color-muted)]">
+                              {booking.location.name}
+                            </div>
+                          )}
+                        </button>
                       </div>
                     );
                   })}
@@ -486,6 +587,7 @@ export default function KalenderClient({
                 variant="primary"
                 className="w-full mt-3"
                 icon={<Plus className="w-4 h-4" />}
+                onClick={() => setNewEventOpen(true)}
               >
                 Legg til hendelse
               </AdminButton>
@@ -500,7 +602,7 @@ export default function KalenderClient({
                     <div
                       className={cn(
                         "w-3 h-3 rounded border",
-                        statusCellStyles[status]
+                        statusCellStyles[status],
                       )}
                     />
                     <span className="text-sm text-[var(--color-text)]">
@@ -512,47 +614,268 @@ export default function KalenderClient({
             </AdminCard>
           </div>
         </div>
+
+        {/* Activity Heatmap */}
+        <AdminCard>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="admin-section-title">Aktivitet</h3>
+              <p className="text-xs text-[var(--color-muted)] mt-0.5">
+                Antall bookinger per ukedag og klokkeslett
+              </p>
+            </div>
+            <AdminBadge variant="info">{bookings.length} totalt</AdminBadge>
+          </div>
+          <div className="overflow-x-auto">
+            <AdminHeatmap
+              data={heatmapData}
+              rows={heatmapRows}
+              cols={heatmapCols}
+              formatTooltip={(cell) =>
+                `${cell.row} kl ${cell.col}:00 — ${cell.value} booking${
+                  cell.value === 1 ? "" : "er"
+                }`
+              }
+            />
+          </div>
+        </AdminCard>
       </div>
 
-      {/* Note Modal */}
-      {noteModalBookingId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <AdminCard className="w-full max-w-md">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="admin-section-title">Admin-notat</h3>
-              <button
-                onClick={() => setNoteModalBookingId(null)}
-                className="p-1 rounded hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
-                aria-label="Lukk"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <AdminTextarea
-              value={noteText}
-              onChange={(e) => setNoteText(e.target.value)}
-              rows={5}
-              placeholder="Skriv et notat..."
+      {/* Note Dialog */}
+      <AdminDialog
+        open={noteModalBookingId !== null}
+        onClose={() => setNoteModalBookingId(null)}
+        title="Admin-notat"
+        description="Internt notat på bookingen"
+        footer={
+          <>
+            <AdminButton
+              variant="secondary"
+              onClick={() => setNoteModalBookingId(null)}
+            >
+              Avbryt
+            </AdminButton>
+            <AdminButton
+              variant="primary"
+              onClick={handleAddNote}
+              loading={isNotePending}
+              disabled={!noteText.trim()}
+            >
+              Lagre
+            </AdminButton>
+          </>
+        }
+      >
+        <AdminTextarea
+          value={noteText}
+          onChange={(e) => setNoteText(e.target.value)}
+          rows={5}
+          placeholder="Skriv et notat..."
+        />
+      </AdminDialog>
+
+      {/* New Event Dialog */}
+      <AdminDialog
+        open={newEventOpen}
+        onClose={() => setNewEventOpen(false)}
+        title="Ny hendelse"
+        description="Opprett en ny kalenderhendelse"
+        footer={
+          <>
+            <AdminButton
+              variant="secondary"
+              onClick={() => setNewEventOpen(false)}
+            >
+              Avbryt
+            </AdminButton>
+            <AdminButton
+              variant="primary"
+              onClick={handleCreateNewEvent}
+              disabled={!newEventForm.title.trim()}
+            >
+              Opprett
+            </AdminButton>
+          </>
+        }
+      >
+        <div className="space-y-3">
+          <AdminInput
+            label="Tittel"
+            value={newEventForm.title}
+            onChange={(e) =>
+              setNewEventForm((prev) => ({ ...prev, title: e.target.value }))
+            }
+            placeholder="F.eks. Teamsamling"
+          />
+          <AdminInput
+            label="Dato"
+            type="date"
+            value={newEventForm.date}
+            onChange={(e) =>
+              setNewEventForm((prev) => ({ ...prev, date: e.target.value }))
+            }
+          />
+          <div className="grid grid-cols-2 gap-3">
+            <AdminInput
+              label="Fra"
+              type="time"
+              value={newEventForm.startTime}
+              onChange={(e) =>
+                setNewEventForm((prev) => ({
+                  ...prev,
+                  startTime: e.target.value,
+                }))
+              }
             />
-            <div className="flex justify-end gap-2 mt-4">
+            <AdminInput
+              label="Til"
+              type="time"
+              value={newEventForm.endTime}
+              onChange={(e) =>
+                setNewEventForm((prev) => ({
+                  ...prev,
+                  endTime: e.target.value,
+                }))
+              }
+            />
+          </div>
+          <AdminTextarea
+            label="Notat"
+            value={newEventForm.note}
+            onChange={(e) =>
+              setNewEventForm((prev) => ({ ...prev, note: e.target.value }))
+            }
+            rows={3}
+            placeholder="Valgfritt"
+          />
+        </div>
+      </AdminDialog>
+
+      {/* Booking Details Drawer */}
+      <AdminDrawer
+        open={drawerBooking !== null}
+        onClose={() => setDrawerBooking(null)}
+        title={drawerBooking?.serviceType.name ?? "Booking"}
+        description={
+          drawerBooking
+            ? `${format(new Date(drawerBooking.startTime), "EEEE d. MMMM yyyy", {
+                locale: nb,
+              })} kl ${formatTime(drawerBooking.startTime)}`
+            : undefined
+        }
+        width="lg"
+        footer={
+          drawerBooking && (
+            <div className="flex items-center justify-end gap-2">
               <AdminButton
                 variant="secondary"
-                onClick={() => setNoteModalBookingId(null)}
+                icon={<MessageSquare className="w-4 h-4" />}
+                onClick={() => {
+                  setNoteText(drawerBooking.adminNotes || "");
+                  setNoteModalBookingId(drawerBooking.id);
+                }}
               >
-                Avbryt
+                Notat
               </AdminButton>
-              <AdminButton
-                variant="primary"
-                onClick={handleAddNote}
-                loading={isNotePending}
-                disabled={!noteText.trim()}
-              >
-                Lagre
-              </AdminButton>
+              {drawerBooking.status !== "NO_SHOW" &&
+                drawerBooking.status !== "COMPLETED" && (
+                  <AdminButton
+                    variant="secondary"
+                    icon={<AlertTriangle className="w-4 h-4" />}
+                    loading={isNoShowPending}
+                    onClick={() => handleMarkNoShow(drawerBooking.id)}
+                  >
+                    Ikke mott
+                  </AdminButton>
+                )}
             </div>
-          </AdminCard>
-        </div>
-      )}
+          )
+        }
+      >
+        {drawerBooking && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              {isStatusKey(drawerBooking.status) && (
+                <AdminBadge variant={statusBadgeVariant[drawerBooking.status]}>
+                  {statusLabels[drawerBooking.status] || drawerBooking.status}
+                </AdminBadge>
+              )}
+              <AdminBadge variant="muted">
+                {formatDuration(drawerBooking)}
+              </AdminBadge>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <Clock className="w-4 h-4 text-[var(--color-muted)] mt-0.5" />
+                <div>
+                  <div className="text-xs text-[var(--color-muted)]">
+                    Tidspunkt
+                  </div>
+                  <div className="text-sm text-[var(--color-text)] font-medium tabular-nums">
+                    {formatTime(drawerBooking.startTime)}–
+                    {formatTime(drawerBooking.endTime)}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <User className="w-4 h-4 text-[var(--color-muted)] mt-0.5" />
+                <div>
+                  <div className="text-xs text-[var(--color-muted)]">Elev</div>
+                  <div className="text-sm text-[var(--color-text)] font-medium">
+                    {drawerBooking.student.name || "Ukjent"}
+                  </div>
+                  {drawerBooking.student.email && (
+                    <div className="text-xs text-[var(--color-muted)]">
+                      {drawerBooking.student.email}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {drawerBooking.instructor.user.name && (
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-[var(--color-muted)] mt-0.5" />
+                  <div>
+                    <div className="text-xs text-[var(--color-muted)]">
+                      Instruktør
+                    </div>
+                    <div className="text-sm text-[var(--color-text)] font-medium">
+                      {drawerBooking.instructor.user.name}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {drawerBooking.location && (
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-4 h-4 text-[var(--color-muted)] mt-0.5" />
+                  <div>
+                    <div className="text-xs text-[var(--color-muted)]">
+                      Lokasjon
+                    </div>
+                    <div className="text-sm text-[var(--color-text)] font-medium">
+                      {drawerBooking.location.name}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {drawerBooking.adminNotes && (
+              <div className="pt-3 border-t border-[var(--color-grey-200)]">
+                <div className="text-xs font-semibold text-[var(--color-muted)] uppercase tracking-wide mb-1">
+                  Admin-notat
+                </div>
+                <p className="text-sm text-[var(--color-text)] whitespace-pre-wrap">
+                  {drawerBooking.adminNotes}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+      </AdminDrawer>
     </>
   );
 }

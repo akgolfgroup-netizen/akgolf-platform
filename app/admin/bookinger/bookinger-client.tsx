@@ -31,12 +31,20 @@ import {
   AdminStatCard,
   AdminEmptyState,
   AdminInput,
+  AdminDialog,
+  AdminDrawer,
+  AdminDropdown,
+  AdminDataTable,
+  type AdminDataTableColumn,
+  type AdminDataTableBulkAction,
 } from "@/components/portal/mission-control/ui";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
   searchBookings,
   adminCancelBooking,
+  bulkCancelBookings,
+  bulkSendReminder,
   type AdminBooking,
   type SearchBookingsResult,
 } from "./actions";
@@ -287,9 +295,11 @@ function SessionPlanPanel({ bookingId }: { bookingId: string }) {
 // ---------------------------------------------------------------------------
 
 const VIEW_MODES = [
-  { label: "Dag", value: "day", icon: List },
-  { label: "Uke", value: "week", icon: Calendar },
+  { label: "Dag", value: "day", icon: Calendar },
+  { label: "Liste", value: "list", icon: List },
 ] as const;
+
+type ViewMode = (typeof VIEW_MODES)[number]["value"];
 
 function isStatusKey(s: string): s is StatusKey {
   return s === "CONFIRMED" || s === "PENDING" || s === "CANCELLED";
@@ -326,10 +336,12 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
   const [bookings, setBookings] = useState<AdminBooking[]>(initialData.bookings);
   const [total, setTotal] = useState(initialData.total);
   const [searchQuery, setSearchQuery] = useState("");
-  const [viewMode, setViewMode] = useState<"day" | "week">("day");
+  const [viewMode, setViewMode] = useState<ViewMode>("day");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [statusFilter, setStatusFilter] = useState<StatusKey | null>(null);
   const [cancellingId, setCancellingId] = useState<string | null>(null);
+  const [confirmCancelId, setConfirmCancelId] = useState<string | null>(null);
+  const [drawerBooking, setDrawerBooking] = useState<AdminBooking | null>(null);
 
   // ---------------------------------------------------------------------------
   // Sok og filter via server action
@@ -358,19 +370,139 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
   // ---------------------------------------------------------------------------
 
   async function handleCancel(bookingId: string) {
-    if (!confirm("Er du sikker pa at du vil avbestille denne bookingen?")) return;
-
     setCancellingId(bookingId);
     try {
       await adminCancelBooking(bookingId, "Avbestilt av admin", true);
       doSearch(searchQuery, statusFilter);
+      setDrawerBooking(null);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Noe gikk galt";
       alert(message);
     } finally {
       setCancellingId(null);
+      setConfirmCancelId(null);
     }
   }
+
+  async function handleBulkSendReminder(rows: AdminBooking[]) {
+    if (rows.length === 0) return;
+    try {
+      const result = await bulkSendReminder(rows.map((r) => r.id));
+      alert(`Påminnelser sendt: ${result.sent}. Feilet: ${result.failed}.`);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Noe gikk galt");
+    }
+  }
+
+  async function handleBulkCancel(rows: AdminBooking[]) {
+    if (rows.length === 0) return;
+    if (
+      !window.confirm(
+        `Avbestill ${rows.length} bookinger? Dette kan ikke angres.`,
+      )
+    )
+      return;
+    try {
+      const result = await bulkCancelBookings(rows.map((r) => r.id));
+      alert(
+        `Avbestilt: ${result.cancelled}. Feilet: ${result.failed}.`,
+      );
+      doSearch(searchQuery, statusFilter);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Noe gikk galt");
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // List-view kolonner
+  // ---------------------------------------------------------------------------
+
+  const listColumns: AdminDataTableColumn<AdminBooking>[] = [
+    {
+      key: "startTime",
+      label: "Tidspunkt",
+      sortable: true,
+      render: (row) => (
+        <div>
+          <div className="text-sm font-medium text-[var(--color-text)]">
+            {format(new Date(row.startTime), "d. MMM", { locale: nb })}
+          </div>
+          <div className="text-xs text-[var(--color-muted)] tabular-nums">
+            {formatTime(row.startTime)}
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: "User",
+      label: "Elev",
+      sortable: false,
+      render: (row) => (
+        <div className="text-sm text-[var(--color-text)]">
+          {row.User?.name ?? row.User?.email ?? "Ukjent"}
+        </div>
+      ),
+    },
+    {
+      key: "ServiceType",
+      label: "Tjeneste",
+      sortable: false,
+      render: (row) => (
+        <div className="text-sm text-[var(--color-text)]">
+          {row.ServiceType?.name ?? "—"}
+        </div>
+      ),
+    },
+    {
+      key: "Instructor",
+      label: "Instruktør",
+      sortable: false,
+      render: (row) => (
+        <div className="text-sm text-[var(--color-muted)]">
+          {row.Instructor?.User?.name ?? "—"}
+        </div>
+      ),
+    },
+    {
+      key: "status",
+      label: "Status",
+      sortable: true,
+      render: (row) => {
+        const key = isStatusKey(row.status) ? row.status : "PENDING";
+        const cfg = STATUS_CONFIG[key];
+        const Icon = cfg.icon;
+        return (
+          <AdminBadge variant={cfg.variant} icon={<Icon className="w-3 h-3" />}>
+            {cfg.label}
+          </AdminBadge>
+        );
+      },
+    },
+    {
+      key: "amount",
+      label: "Beløp",
+      sortable: true,
+      align: "right",
+      render: (row) => (
+        <span className="text-sm font-semibold text-[var(--color-text)] tabular-nums">
+          {(row.amount ?? 0).toLocaleString("nb-NO")} kr
+        </span>
+      ),
+    },
+  ];
+
+  const listBulkActions: AdminDataTableBulkAction<AdminBooking>[] = [
+    {
+      label: "Send påminnelse",
+      variant: "primary",
+      action: handleBulkSendReminder,
+    },
+    {
+      label: "Avbestill",
+      variant: "danger",
+      action: handleBulkCancel,
+    },
+  ];
 
   // ---------------------------------------------------------------------------
   // Filtrer bookinger for valgt dag
@@ -458,12 +590,47 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
 
             {/* Actions */}
             <div className="flex gap-2">
-              <AdminButton
-                variant="secondary"
-                icon={<Download className="w-4 h-4" />}
-              >
-                <span className="hidden sm:inline">Eksporter</span>
-              </AdminButton>
+              <AdminDropdown
+                label="Handlinger"
+                items={[
+                  {
+                    id: "export",
+                    label: "Eksporter som CSV",
+                    icon: <Download className="w-4 h-4" />,
+                    onSelect: () => {
+                      const csv = [
+                        "Tid,Elev,Tjeneste,Instruktør,Status,Beløp",
+                        ...bookings.map((b) =>
+                          [
+                            format(new Date(b.startTime), "yyyy-MM-dd HH:mm"),
+                            b.User?.name ?? "",
+                            b.ServiceType?.name ?? "",
+                            b.Instructor?.User?.name ?? "",
+                            b.status,
+                            String(b.amount ?? 0),
+                          ]
+                            .map((v) => `"${v}"`)
+                            .join(","),
+                        ),
+                      ].join("\n");
+                      const blob = new Blob([csv], {
+                        type: "text/csv;charset=utf-8;",
+                      });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = url;
+                      a.download = `bookinger-${format(new Date(), "yyyy-MM-dd")}.csv`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    },
+                  },
+                  {
+                    id: "send-reminders",
+                    label: "Send påminnelse til dagens",
+                    onSelect: () => handleBulkSendReminder(dayBookings),
+                  },
+                ]}
+              />
               <Link href="/admin/bookinger/ny">
                 <AdminButton variant="primary" icon={<Plus className="w-4 h-4" />}>
                   <span className="hidden sm:inline">Ny booking</span>
@@ -514,7 +681,8 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
           </div>
         </AdminCard>
 
-        {/* Bookings List */}
+        {/* Bookings List (day view) */}
+        {viewMode === "day" && (
         <div className="bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
           <div className="px-4 py-3 border-b border-[var(--color-grey-200)]">
             <h3 className="admin-section-title capitalize">
@@ -616,7 +784,7 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
                         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                           {booking.status !== "CANCELLED" && (
                             <button
-                              onClick={() => handleCancel(booking.id)}
+                              onClick={() => setConfirmCancelId(booking.id)}
                               disabled={isCancelling}
                               className="p-1.5 rounded-md hover:bg-[var(--color-error)]/10 text-[var(--color-muted)] hover:text-[var(--color-error)] transition-colors"
                               title="Avbestill booking"
@@ -629,8 +797,9 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
                             </button>
                           )}
                           <button
+                            onClick={() => setDrawerBooking(booking)}
                             className="p-1.5 rounded-md hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
-                            title="Flere handlinger"
+                            title="Vis detaljer"
                           >
                             <MoreHorizontal className="w-4 h-4" />
                           </button>
@@ -643,7 +812,180 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
             )}
           </div>
         </div>
+        )}
+
+        {/* List view — AdminDataTable */}
+        {viewMode === "list" && (
+          <AdminDataTable<AdminBooking>
+            columns={listColumns}
+            data={bookings}
+            searchable={false}
+            pagination={{ pageSize: 15 }}
+            bulkActions={listBulkActions}
+            onRowClick={(row) => setDrawerBooking(row)}
+            emptyMessage="Ingen bookinger funnet."
+          />
+        )}
       </div>
+
+      {/* AdminDrawer — booking-detaljer */}
+      <AdminDrawer
+        open={drawerBooking !== null}
+        onClose={() => setDrawerBooking(null)}
+        title={drawerBooking?.ServiceType?.name ?? "Booking"}
+        description={
+          drawerBooking
+            ? format(
+                new Date(drawerBooking.startTime),
+                "EEEE d. MMMM 'kl.' HH:mm",
+                { locale: nb },
+              )
+            : undefined
+        }
+        width="lg"
+        footer={
+          drawerBooking && drawerBooking.status !== "CANCELLED" ? (
+            <div className="flex items-center justify-end gap-2">
+              <AdminButton
+                variant="secondary"
+                onClick={() => setDrawerBooking(null)}
+              >
+                Lukk
+              </AdminButton>
+              <AdminButton
+                variant="primary"
+                icon={<XCircle className="w-4 h-4" />}
+                onClick={() =>
+                  drawerBooking && setConfirmCancelId(drawerBooking.id)
+                }
+              >
+                Avbestill
+              </AdminButton>
+            </div>
+          ) : (
+            <AdminButton
+              variant="secondary"
+              onClick={() => setDrawerBooking(null)}
+            >
+              Lukk
+            </AdminButton>
+          )
+        }
+      >
+        {drawerBooking && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              {(() => {
+                const key = isStatusKey(drawerBooking.status)
+                  ? drawerBooking.status
+                  : "PENDING";
+                const cfg = STATUS_CONFIG[key];
+                const Icon = cfg.icon;
+                return (
+                  <AdminBadge
+                    variant={cfg.variant}
+                    icon={<Icon className="w-3 h-3" />}
+                  >
+                    {cfg.label}
+                  </AdminBadge>
+                );
+              })()}
+              {drawerBooking.focusArea &&
+                isFocusAreaKey(drawerBooking.focusArea) && (
+                  <AdminBadge
+                    variant={FOCUS_AREA_CONFIG[drawerBooking.focusArea].variant}
+                    icon={<Target className="w-3 h-3" />}
+                  >
+                    {FOCUS_AREA_CONFIG[drawerBooking.focusArea].label}
+                  </AdminBadge>
+                )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <AdminStatCard
+                label="Varighet"
+                value={`${drawerBooking.ServiceType?.duration ?? 0} min`}
+              />
+              <AdminStatCard
+                label="Pris"
+                value={`${(drawerBooking.amount ?? 0).toLocaleString("nb-NO")} kr`}
+              />
+            </div>
+
+            <AdminCard>
+              <h4 className="admin-section-title mb-2">Elev</h4>
+              <div className="space-y-1 text-sm text-[var(--color-text)]">
+                <div className="flex items-center gap-2">
+                  <User className="w-4 h-4 text-[var(--color-muted)]" />
+                  {drawerBooking.User?.name ?? "Ukjent"}
+                </div>
+                {drawerBooking.User?.email && (
+                  <div className="flex items-center gap-2 text-[var(--color-muted)]">
+                    {drawerBooking.User.email}
+                  </div>
+                )}
+                {drawerBooking.User?.phone && (
+                  <div className="flex items-center gap-2 text-[var(--color-muted)]">
+                    {drawerBooking.User.phone}
+                  </div>
+                )}
+              </div>
+            </AdminCard>
+
+            <AdminCard>
+              <h4 className="admin-section-title mb-2">Instruktør</h4>
+              <p className="text-sm text-[var(--color-text)]">
+                {drawerBooking.Instructor?.User?.name ?? "Ukjent"}
+              </p>
+            </AdminCard>
+
+            {drawerBooking.playerNotes && (
+              <AdminCard>
+                <h4 className="admin-section-title mb-2">Spillernotater</h4>
+                <p className="text-sm text-[var(--color-text)] italic">
+                  {drawerBooking.playerNotes}
+                </p>
+              </AdminCard>
+            )}
+
+            {drawerBooking.adminNotes && (
+              <AdminCard>
+                <h4 className="admin-section-title mb-2">Admin-notater</h4>
+                <p className="text-sm text-[var(--color-text)]">
+                  {drawerBooking.adminNotes}
+                </p>
+              </AdminCard>
+            )}
+          </div>
+        )}
+      </AdminDrawer>
+
+      {/* AdminDialog — bekreft avbestilling */}
+      <AdminDialog
+        open={confirmCancelId !== null}
+        onClose={() => setConfirmCancelId(null)}
+        title="Avbestille booking?"
+        description="Dette kan ikke angres. Refund prosesseres automatisk hvis betaling er gjort."
+        footer={
+          <>
+            <AdminButton
+              variant="ghost"
+              onClick={() => setConfirmCancelId(null)}
+            >
+              Avbryt
+            </AdminButton>
+            <AdminButton
+              variant="primary"
+              loading={cancellingId === confirmCancelId}
+              onClick={() => {
+                if (confirmCancelId) handleCancel(confirmCancelId);
+              }}
+            >
+              Ja, avbestill
+            </AdminButton>
+          </>
+        }
+      />
     </>
   );
 }

@@ -16,6 +16,11 @@ import {
   FileText,
   MessageSquare,
   Plus,
+  CheckCircle2,
+  BookOpen,
+  Mail as MailIcon,
+  Activity,
+  Flag,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
@@ -25,6 +30,14 @@ import {
   AdminBadge,
   AdminStatCard,
   AdminPageHeader,
+  AdminTabs,
+  AdminTimeline,
+  AdminLineChart,
+  AdminBarChart,
+  AdminProgressRing,
+  type AdminTimelineItem,
+  type AdminLineChartDatum,
+  type AdminBarChartDatum,
 } from "@/components/portal/mission-control/ui";
 import { format, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -67,6 +80,12 @@ const studentData = {
     nextSession: new Date(Date.now() + 86400000),
     avgFrequency: 2.1,
     attendanceRate: 94,
+    monthlyGoal: 10,
+  },
+  sessionsPerMonth: [4, 6, 7, 5, 8, 9, 7, 8],
+  sparkline: {
+    sessions: [4, 6, 7, 5, 8, 9, 7, 8],
+    attendance: [88, 90, 92, 91, 93, 94, 94, 94],
   },
 };
 
@@ -95,8 +114,7 @@ const trainingHistory = [
     date: subDays(new Date(), 2),
     service: "Privat Coaching",
     coach: "Anders Kristiansen",
-    notes:
-      "God progresjon på putting. Fokus på avstandskontroll neste gang.",
+    notes: "God progresjon på putting. Fokus på avstandskontroll neste gang.",
     focus: "Putting",
   },
   {
@@ -158,14 +176,70 @@ const communicationLog = [
   },
 ];
 
-const tabs = [
-  { id: "overview", label: "Oversikt" },
-  { id: "history", label: "Historikk" },
-  { id: "notes", label: "Notater" },
-  { id: "communication", label: "Kommunikasjon" },
-] as const;
+// Handicap-trend som chart-data
+const handicapTrend: AdminLineChartDatum[] = [
+  { label: "Aug", value: 18.2 },
+  { label: "Sep", value: 17.5 },
+  { label: "Okt", value: 16.9 },
+  { label: "Nov", value: 16.2 },
+  { label: "Des", value: 15.8 },
+];
 
-type TabId = (typeof tabs)[number]["id"];
+// Treningsvolum per måned
+const trainingVolume: AdminBarChartDatum[] = [
+  { label: "Aug", value: 4 },
+  { label: "Sep", value: 6 },
+  { label: "Okt", value: 7 },
+  { label: "Nov", value: 5 },
+  { label: "Des", value: 8 },
+  { label: "Jan", value: 9 },
+  { label: "Feb", value: 7 },
+  { label: "Mar", value: 8 },
+];
+
+// Samlet aktivitetstimeline
+const activityTimeline: AdminTimelineItem[] = [
+  {
+    id: "a1",
+    title: "Privat Coaching gjennomført",
+    description: "Fokus: Putting — avstandskontroll neste gang",
+    date: format(subDays(new Date(), 2), "d. MMM", { locale: nb }),
+    icon: <CheckCircle2 className="w-3 h-3" />,
+    color: "var(--color-success)",
+  },
+  {
+    id: "a2",
+    title: "E-post sendt",
+    description: "Booking-bekreftelse",
+    date: format(subDays(new Date(), 1), "d. MMM", { locale: nb }),
+    icon: <MailIcon className="w-3 h-3" />,
+    color: "var(--color-primary)",
+  },
+  {
+    id: "a3",
+    title: "Videoanalyse gjennomført",
+    description: "Sving-plan mer konsistent",
+    date: format(subDays(new Date(), 9), "d. MMM", { locale: nb }),
+    icon: <BookOpen className="w-3 h-3" />,
+    color: "var(--color-success)",
+  },
+  {
+    id: "a4",
+    title: "Handicap oppdatert",
+    description: "Fra 16.2 → 15.8",
+    date: format(subDays(new Date(), 14), "d. MMM", { locale: nb }),
+    icon: <Activity className="w-3 h-3" />,
+    color: "var(--color-ai)",
+  },
+  {
+    id: "a5",
+    title: "Nytt mål satt",
+    description: "Nå handicap 15 før sommeren",
+    date: format(subDays(new Date(), 21), "d. MMM", { locale: nb }),
+    icon: <Flag className="w-3 h-3" />,
+    color: "var(--color-warning)",
+  },
+];
 
 export default function StudentDetailPage({
   params,
@@ -174,7 +248,7 @@ export default function StudentDetailPage({
 }) {
   const { id: studentId } = use(params);
   const { toggle } = useMCSidebar();
-  const [activeTab, setActiveTab] = useState<TabId>("overview");
+  const [activeTab, setActiveTab] = useState<string>("overview");
   const router = useRouter();
   const [isSendingMessage, startSendingMessage] = useTransition();
 
@@ -186,6 +260,14 @@ export default function StudentDetailPage({
       }
     });
   }
+
+  const tabs = [
+    { id: "overview", label: "Oversikt" },
+    { id: "training", label: "Trening" },
+    { id: "rounds", label: "Runder" },
+    { id: "notes", label: "Notater" },
+    { id: "communication", label: "Kommunikasjon" },
+  ];
 
   return (
     <>
@@ -273,7 +355,7 @@ export default function StudentDetailPage({
               </div>
             </div>
 
-            <div className="flex-1 grid grid-cols-3 gap-4 lg:border-l lg:border-[var(--color-grey-200)] lg:pl-6">
+            <div className="flex-1 grid grid-cols-4 gap-4 lg:border-l lg:border-[var(--color-grey-200)] lg:pl-6 items-center">
               <div className="text-center">
                 <div className="text-3xl font-bold text-[var(--color-primary)] tabular-nums">
                   {studentData.handicap}
@@ -302,11 +384,21 @@ export default function StudentDetailPage({
                   Oppmøte
                 </div>
               </div>
+              <div className="flex items-center justify-center">
+                <AdminProgressRing
+                  value={studentData.stats.sessionsThisMonth}
+                  max={studentData.stats.monthlyGoal}
+                  size={84}
+                  strokeWidth={7}
+                  valueSuffix=""
+                  label={`av ${studentData.stats.monthlyGoal}`}
+                />
+              </div>
             </div>
           </div>
         </AdminCard>
 
-        {/* Stats Row */}
+        {/* Stats Row med sparklines */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <AdminStatCard
             label="Siste økt"
@@ -326,35 +418,76 @@ export default function StudentDetailPage({
             label="Økter denne måneden"
             value={studentData.stats.sessionsThisMonth}
             icon={<Target className="w-5 h-5" />}
+            sparkline={studentData.sparkline.sessions}
           />
           <AdminStatCard
-            label="Snittfrekvens"
-            value={`${studentData.stats.avgFrequency}/uke`}
+            label="Oppmøte"
+            value={`${studentData.stats.attendanceRate}%`}
             icon={<Award className="w-5 h-5" />}
+            sparkline={studentData.sparkline.attendance}
           />
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 border-b border-[var(--color-grey-200)]">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={cn(
-                "px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px",
-                activeTab === tab.id
-                  ? "border-[var(--color-primary)] text-[var(--color-primary)]"
-                  : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-text)]",
-              )}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+        <AdminTabs
+          items={tabs}
+          value={activeTab}
+          onValueChange={setActiveTab}
+        />
 
-        {/* Tab Content */}
+        {/* Tab: Oversikt */}
         {activeTab === "overview" && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            <AdminCard className="lg:col-span-2">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="admin-section-title">Handicap-utvikling</h3>
+                <span className="text-xs text-[var(--color-muted)]">
+                  Siste 5 måneder
+                </span>
+              </div>
+              <AdminLineChart
+                data={handicapTrend}
+                height={220}
+                color="var(--color-primary)"
+                valueLabel="Handicap"
+              />
+            </AdminCard>
+
+            <AdminCard>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="admin-section-title">Månedlig mål</h3>
+              </div>
+              <div className="flex flex-col items-center gap-3">
+                <AdminProgressRing
+                  value={studentData.stats.sessionsThisMonth}
+                  max={studentData.stats.monthlyGoal}
+                  size={140}
+                  strokeWidth={10}
+                  valueSuffix=""
+                  label={`av ${studentData.stats.monthlyGoal} økter`}
+                />
+                <p className="text-xs text-center text-[var(--color-muted)]">
+                  {studentData.stats.monthlyGoal - studentData.stats.sessionsThisMonth}{" "}
+                  økter igjen denne måneden
+                </p>
+              </div>
+            </AdminCard>
+
+            <AdminCard className="lg:col-span-2">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="admin-section-title">Treningsvolum</h3>
+                <span className="text-xs text-[var(--color-muted)]">
+                  Økter per måned
+                </span>
+              </div>
+              <AdminBarChart
+                data={trainingVolume}
+                height={220}
+                color="var(--color-primary)"
+                valueLabel="Økter"
+              />
+            </AdminCard>
+
             <AdminCard>
               <div className="flex items-center justify-between mb-4">
                 <h3 className="admin-section-title">Målsettinger</h3>
@@ -398,6 +531,21 @@ export default function StudentDetailPage({
               </div>
             </AdminCard>
 
+            <AdminCard className="lg:col-span-3">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="admin-section-title">Aktivitetslogg</h3>
+                <span className="text-xs text-[var(--color-muted)]">
+                  Siste aktiviteter
+                </span>
+              </div>
+              <AdminTimeline items={activityTimeline} />
+            </AdminCard>
+          </div>
+        )}
+
+        {/* Tab: Trening (historikk + kommende) */}
+        {activeTab === "training" && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <AdminCard>
               <div className="flex items-center justify-between mb-4">
                 <h3 className="admin-section-title">Kommende bookinger</h3>
@@ -436,44 +584,67 @@ export default function StudentDetailPage({
                 ))}
               </div>
             </AdminCard>
+
+            <AdminCard>
+              <h3 className="admin-section-title mb-4">Treningshistorikk</h3>
+              <div className="space-y-3">
+                {trainingHistory.map((session) => (
+                  <div
+                    key={session.id}
+                    className="flex items-start gap-3 p-3 rounded-lg bg-[var(--color-grey-100)]"
+                  >
+                    <div className="p-2 rounded-lg bg-white text-[var(--color-primary)]">
+                      <Calendar className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="text-sm font-medium text-[var(--color-text)]">
+                          {session.service}
+                        </h4>
+                        <AdminBadge variant="muted">{session.focus}</AdminBadge>
+                      </div>
+                      <p className="text-xs text-[var(--color-muted)] mb-2">
+                        {format(session.date, "d. MMMM yyyy", { locale: nb })} •{" "}
+                        {session.coach}
+                      </p>
+                      {session.notes && (
+                        <p className="text-sm text-[var(--color-text)]">
+                          {session.notes}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </AdminCard>
           </div>
         )}
 
-        {activeTab === "history" && (
+        {/* Tab: Runder (placeholder som bruker linjegraf for score-trend) */}
+        {activeTab === "rounds" && (
           <AdminCard>
-            <h3 className="admin-section-title mb-4">Treningshistorikk</h3>
-            <div className="space-y-3">
-              {trainingHistory.map((session) => (
-                <div
-                  key={session.id}
-                  className="flex items-start gap-3 p-3 rounded-lg bg-[var(--color-grey-100)]"
-                >
-                  <div className="p-2 rounded-lg bg-white text-[var(--color-primary)]">
-                    <Calendar className="w-4 h-4" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="text-sm font-medium text-[var(--color-text)]">
-                        {session.service}
-                      </h4>
-                      <AdminBadge variant="muted">{session.focus}</AdminBadge>
-                    </div>
-                    <p className="text-xs text-[var(--color-muted)] mb-2">
-                      {format(session.date, "d. MMMM yyyy", { locale: nb })} •{" "}
-                      {session.coach}
-                    </p>
-                    {session.notes && (
-                      <p className="text-sm text-[var(--color-text)]">
-                        {session.notes}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              ))}
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="admin-section-title">Score-trend</h3>
+              <span className="text-xs text-[var(--color-muted)]">
+                Siste 5 runder
+              </span>
             </div>
+            <AdminLineChart
+              data={[
+                { label: "1", value: 88 },
+                { label: "2", value: 85 },
+                { label: "3", value: 87 },
+                { label: "4", value: 83 },
+                { label: "5", value: 82 },
+              ]}
+              height={240}
+              color="var(--color-success)"
+              valueLabel="Score"
+            />
           </AdminCard>
         )}
 
+        {/* Tab: Notater */}
         {activeTab === "notes" && (
           <div className="space-y-4">
             <div className="flex justify-end">
@@ -514,6 +685,7 @@ export default function StudentDetailPage({
           </div>
         )}
 
+        {/* Tab: Kommunikasjon */}
         {activeTab === "communication" && (
           <AdminCard>
             <div className="flex items-center justify-between mb-4">
