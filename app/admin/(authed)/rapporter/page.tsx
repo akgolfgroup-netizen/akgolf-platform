@@ -35,6 +35,7 @@ import {
 import {
   exportBookingsCSV,
   exportRevenueCSV,
+  exportStudentsCSV,
 } from "./actions";
 
 // ─── Typer ───
@@ -193,14 +194,15 @@ export default function RapporterPage() {
     const to = dialogRange.to.toISOString();
 
     startTransition(async () => {
+      let result;
       if (type === "financial") {
-        const result = await exportRevenueCSV(from, to);
-        downloadCsv(result.csv, result.filename);
+        result = await exportRevenueCSV(from, to);
+      } else if (type === "students") {
+        result = await exportStudentsCSV();
       } else {
-        // monthly, students, capacity — alle bruker booking-data
-        const result = await exportBookingsCSV(from, to);
-        downloadCsv(result.csv, result.filename);
+        result = await exportBookingsCSV(from, to);
       }
+      downloadCsv(result.csv, result.filename);
     });
   }
 

@@ -5,20 +5,6 @@ import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/portal/prisma";
 import { format } from "date-fns";
-import { nb } from "date-fns/locale";
-
-export interface ReportData {
-  totalStudents: number;
-  newStudents: number;
-  activeStudents: number;
-  retentionRate: number;
-  completedSessions: number;
-  cancelledSessions: number;
-  cancellationRate: number;
-  handicapImprovement: number;
-  bookingTrends: { week: string; count: number }[];
-  tierDistribution: { tier: string; count: number }[];
-}
 
 interface CsvResult {
   csv: string;
@@ -31,117 +17,7 @@ async function requireStaff() {
   return user;
 }
 
-export async function generateReport(
-  from: string,
-  to: string
-): Promise<ReportData> {
-  await requireStaff();
-
-  const fromDate = new Date(from);
-  const toDate = new Date(to);
-  const thirtyDaysAgo = new Date(toDate);
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-  // Parallelle queries
-  const [
-    totalStudents,
-    newStudents,
-    activeStudentIds,
-    completedSessions,
-    cancelledSessions,
-    tierGroups,
-    weeklyBookings,
-  ] = await Promise.all([
-    prisma.user.count({
-      where: { role: "STUDENT" },
-    }),
-
-    prisma.user.count({
-      where: {
-        role: "STUDENT",
-        createdAt: { gte: thirtyDaysAgo, lte: toDate },
-      },
-    }),
-
-    prisma.booking.findMany({
-      where: {
-        startTime: { gte: thirtyDaysAgo, lte: toDate },
-        status: { in: ["CONFIRMED", "COMPLETED"] },
-      },
-      select: { studentId: true },
-      distinct: ["studentId"],
-    }),
-
-    prisma.booking.count({
-      where: {
-        startTime: { gte: fromDate, lte: toDate },
-        status: "COMPLETED",
-      },
-    }),
-
-    prisma.booking.count({
-      where: {
-        startTime: { gte: fromDate, lte: toDate },
-        status: "CANCELLED",
-      },
-    }),
-
-    prisma.user.groupBy({
-      by: ["subscriptionTier"],
-      where: { role: "STUDENT" },
-      _count: true,
-    }),
-
-    prisma.booking.groupBy({
-      by: ["startTime"],
-      where: {
-        startTime: { gte: fromDate, lte: toDate },
-        status: { in: ["CONFIRMED", "COMPLETED", "PENDING"] },
-      },
-      _count: true,
-    }),
-  ]);
-
-  const activeStudents = activeStudentIds.length;
-  const totalSessions = completedSessions + cancelledSessions;
-  const cancellationRate =
-    totalSessions > 0
-      ? Math.round((cancelledSessions / totalSessions) * 100)
-      : 0;
-  const retentionRate =
-    totalStudents > 0
-      ? Math.round((activeStudents / totalStudents) * 100)
-      : 0;
-
-  // Grupper bookinger per uke
-  const weekMap = new Map<string, number>();
-  for (const b of weeklyBookings) {
-    const weekStart = getWeekStart(new Date(b.startTime));
-    const key = format(weekStart, "d. MMM", { locale: nb });
-    weekMap.set(key, (weekMap.get(key) ?? 0) + b._count);
-  }
-  const bookingTrends = Array.from(weekMap.entries())
-    .map(([week, count]) => ({ week, count }))
-    .slice(-8);
-
-  const tierDistribution = tierGroups.map((g) => ({
-    tier: g.subscriptionTier,
-    count: g._count,
-  }));
-
-  return {
-    totalStudents,
-    newStudents,
-    activeStudents,
-    retentionRate,
-    completedSessions,
-    cancelledSessions,
-    cancellationRate,
-    handicapImprovement: 0, // Krever HCP-data vi ikke har enna
-    bookingTrends,
-    tierDistribution,
-  };
-}
+// ── Bookinger CSV ──────────────────────────────────────
 
 export async function exportBookingsCSV(
   from: string,
@@ -156,9 +32,7 @@ export async function exportBookingsCSV(
     include: {
       User: { select: { name: true, email: true } },
       ServiceType: { select: { name: true, category: true, duration: true } },
-      Instructor: {
-        select: { User: { select: { name: true } } },
-      },
+      Instructor: { select: { User: { select: { name: true } } } },
       Location: { select: { name: true } },
     },
     orderBy: { startTime: "asc" },
@@ -178,6 +52,7 @@ export async function exportBookingsCSV(
     "Sted",
     "Status",
     "Betalingsstatus",
+    "Betalingsmetode",
     "Belop (kr)",
   ];
 
@@ -194,6 +69,7 @@ export async function exportBookingsCSV(
     b.Location?.name ?? "",
     b.status,
     b.paymentStatus,
+    b.paymentMethod,
     String(b.amount),
   ]);
 
@@ -201,11 +77,10 @@ export async function exportBookingsCSV(
   const fromStr = format(new Date(from), "yyyy-MM-dd");
   const toStr = format(new Date(to), "yyyy-MM-dd");
 
-  return {
-    csv,
-    filename: `bookinger_${fromStr}_${toStr}.csv`,
-  };
+  return { csv, filename: `bookinger_${fromStr}_${toStr}.csv` };
 }
+
+// ── Okonomi CSV ────────────────────────────────────────
 
 export async function exportRevenueCSV(
   from: string,
@@ -220,11 +95,10 @@ export async function exportRevenueCSV(
     include: {
       Booking: {
         select: {
+          startTime: true,
           User: { select: { name: true, email: true } },
-          ServiceType: { select: { name: true } },
-          Instructor: {
-            select: { User: { select: { name: true } } },
-          },
+          ServiceType: { select: { name: true, category: true } },
+          Instructor: { select: { User: { select: { name: true } } } },
         },
       },
     },
@@ -233,10 +107,12 @@ export async function exportRevenueCSV(
   });
 
   const headers = [
-    "Dato",
+    "Transaksjonsdato",
+    "Bookingdato",
     "Elev",
     "E-post",
     "Tjeneste",
+    "Kategori",
     "Instruktor",
     "Betalingsmetode",
     "Brutto (kr)",
@@ -250,9 +126,11 @@ export async function exportRevenueCSV(
 
   const rows = transactions.map((t) => [
     format(t.createdAt, "yyyy-MM-dd"),
+    format(t.Booking.startTime, "yyyy-MM-dd"),
     t.Booking.User.name ?? "",
     t.Booking.User.email ?? "",
     t.Booking.ServiceType.name,
+    t.Booking.ServiceType.category,
     t.Booking.Instructor.User.name ?? "",
     t.paymentMethod,
     String(t.grossAmount),
@@ -268,11 +146,91 @@ export async function exportRevenueCSV(
   const fromStr = format(new Date(from), "yyyy-MM-dd");
   const toStr = format(new Date(to), "yyyy-MM-dd");
 
-  return {
-    csv,
-    filename: `okonomi_${fromStr}_${toStr}.csv`,
-  };
+  return { csv, filename: `okonomi_${fromStr}_${toStr}.csv` };
 }
+
+// ── Elever CSV ─────────────────────────────────────────
+
+export async function exportStudentsCSV(): Promise<CsvResult> {
+  await requireStaff();
+
+  const students = await prisma.user.findMany({
+    where: { role: "STUDENT" },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      phone: true,
+      subscriptionTier: true,
+      createdAt: true,
+      lastActiveAt: true,
+      isActive: true,
+      activeCoachingCustomer: true,
+      HandicapEntry: {
+        orderBy: { date: "desc" },
+        take: 1,
+        select: { handicapIndex: true, date: true },
+      },
+      UserGolfId: {
+        select: { clubName: true, handicap: true },
+      },
+      Booking: {
+        orderBy: { startTime: "desc" },
+        take: 1,
+        select: {
+          startTime: true,
+          ServiceType: { select: { name: true } },
+        },
+      },
+    },
+    orderBy: { name: "asc" },
+  });
+
+  const headers = [
+    "Navn",
+    "E-post",
+    "Telefon",
+    "Klubb",
+    "HCP (siste)",
+    "HCP-dato",
+    "Kategori",
+    "Aktiv kunde",
+    "Registrert",
+    "Sist aktiv",
+    "Siste booking",
+    "Siste tjeneste",
+  ];
+
+  const rows = students.map((s) => {
+    const hcp = s.HandicapEntry[0];
+    const golfId = s.UserGolfId;
+    const lastBooking = s.Booking[0];
+    // Bruk HandicapEntry (nyeste), ellers UserGolfId.handicap
+    const hcpValue = hcp?.handicapIndex ?? golfId?.handicap;
+
+    return [
+      s.name ?? "",
+      s.email ?? "",
+      s.phone ?? "",
+      golfId?.clubName ?? "",
+      hcpValue != null ? String(hcpValue) : "",
+      hcp ? format(hcp.date, "yyyy-MM-dd") : "",
+      s.subscriptionTier,
+      s.activeCoachingCustomer ? "Ja" : "Nei",
+      format(s.createdAt, "yyyy-MM-dd"),
+      s.lastActiveAt ? format(s.lastActiveAt, "yyyy-MM-dd") : "",
+      lastBooking ? format(lastBooking.startTime, "yyyy-MM-dd") : "",
+      lastBooking?.ServiceType.name ?? "",
+    ];
+  });
+
+  const csv = toCsv(headers, rows);
+  const dateStr = format(new Date(), "yyyy-MM-dd");
+
+  return { csv, filename: `elever_${dateStr}.csv` };
+}
+
+// ── CSV-hjelper ────────────────────────────────────────
 
 function toCsv(headers: string[], rows: string[][]): string {
   const BOM = "\uFEFF"; // UTF-8 BOM for Excel-kompatibilitet
@@ -287,13 +245,4 @@ function toCsv(headers: string[], rows: string[][]): string {
     ...rows.map((row) => row.map(escape).join(";")),
   ];
   return BOM + lines.join("\n");
-}
-
-function getWeekStart(date: Date): Date {
-  const d = new Date(date);
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  d.setDate(diff);
-  d.setHours(0, 0, 0, 0);
-  return d;
 }
