@@ -27,7 +27,7 @@ export function PyramidIndicator({ level, showLabel = true, size = "md" }: Props
         {pyramid.id}
       </div>
       {showLabel && (
-        <span className="text-sm text-[#6b7366]">{pyramid.name}</span>
+        <span className="text-sm text-grey-500">{pyramid.name}</span>
       )}
     </div>
   );
@@ -54,7 +54,7 @@ export function PyramidStack({ activeLevel, compact = false }: PyramidStackProps
               key={level}
               className="w-2 h-2 rounded-sm"
               style={{
-                backgroundColor: isActive ? pyramid.color : "#c2c9bb",
+                backgroundColor: isActive ? pyramid.color : "var(--color-grey-300)",
                 opacity: isActive ? 1 : 0.4,
               }}
               title={pyramid.name}
@@ -78,14 +78,14 @@ export function PyramidStack({ activeLevel, compact = false }: PyramidStackProps
             key={level}
             className={`h-6 rounded flex items-center justify-center text-[10px] font-medium transition-[opacity,box-shadow] ${
               isActive
-                ? "text-white ring-2 ring-[#d2f000]/50"
+                ? "text-white ring-2 ring-accent-cta/50"
                 : isBelow
                 ? "text-white/90"
                 : "text-white/50"
             }`}
             style={{
               width: `${width}%`,
-              backgroundColor: isActive || isBelow ? pyramid.color : "#c2c9bb",
+              backgroundColor: isActive || isBelow ? pyramid.color : "var(--color-grey-300)",
               opacity: isActive ? 1 : isBelow ? 0.7 : 0.4,
             }}
           >

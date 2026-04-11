@@ -90,7 +90,7 @@ export function EmailTemplateEditor({ initialTemplates }: Props) {
     for (const v of draft.variables) {
       html = html.replaceAll(
         `{{${v}}}`,
-        `<span style="background:#0A1F18;color:white;padding:1px 6px;border-radius:4px;font-size:12px;">${v}</span>`
+        `<span style="background:var(--color-black);color:white;padding:1px 6px;border-radius:4px;font-size:12px;">${v}</span>`
       );
     }
     return html;

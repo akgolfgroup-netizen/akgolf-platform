@@ -15,13 +15,13 @@ const actions = [
     label: "Se statistikk",
     href: "/portal/statistikk",
     icon: Heart,
-    gradient: "from-[#171717] to-[#404040]",
+    gradient: "from-[var(--color-grey-800)] to-[var(--color-grey-600)]",
   },
   {
     label: "Se kalender",
     href: "/portal/kalender",
     icon: Calendar,
-    gradient: "from-amber-500 to-orange-400",
+    gradient: "from-[var(--color-warning)] to-[var(--color-error)]",
   },
 ];
 

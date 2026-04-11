@@ -19,15 +19,15 @@ const RISK_CONFIG = {
   medium: {
     label: "Moderat risiko",
     color: "var(--color-warning)",
-    bgColor: "#FFF8F0",
-    textColor: "#9A3412",
+    bgColor: "var(--color-warning-light)",
+    textColor: "var(--color-warning-text)",
     Icon: Target,
   },
   high: {
     label: "Hoy risiko",
     color: "var(--color-error)",
-    bgColor: "#FEF2F2",
-    textColor: "#991B1B",
+    bgColor: "var(--color-error-light)",
+    textColor: "var(--color-error-text)",
     Icon: AlertTriangle,
   },
 } as const;

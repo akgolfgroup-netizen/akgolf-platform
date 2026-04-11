@@ -8,10 +8,13 @@ import {
   Zap,
   ArrowRight,
   ExternalLink,
+  XCircle,
+  ChevronUp,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { cn } from "@/lib/portal/utils/cn";
+import { UpgradeOptions } from "@/components/portal/subscription/upgrade-options";
 import { getStripePortalUrl } from "./actions";
 import type { SubscriptionData } from "./actions";
 
@@ -191,37 +194,74 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                 ) : null}
               </div>
 
-              {/* Stripe portal button */}
-              {user.hasStripeSubscription && (
-                <div className="pt-2">
-                  {error && (
-                    <p className="text-sm text-[var(--color-error)] mb-3">
-                      {error}
-                    </p>
-                  )}
+              {/* Handlinger */}
+              <div className="pt-2 flex flex-wrap gap-3">
+                {/* Oppgrader-knapp (vis kun hvis ikke allerede på PRO/ELITE) */}
+                {user.tier !== "PRO" && user.tier !== "ELITE" && (
                   <button
                     onClick={handleStripePortal}
                     disabled={isPending}
                     className={cn(
-                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all",
-                      "bg-[var(--color-accent-cta)] text-[var(--color-accent-cta-text)]",
+                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-[20px] text-sm font-semibold transition-all",
+                      "bg-accent-cta text-accent-cta-text",
                       "hover:brightness-95 active:scale-[0.98]",
                       isPending && "opacity-60 cursor-not-allowed"
                     )}
                   >
-                    <ExternalLink className="w-4 h-4" />
-                    {isPending ? "Åpner…" : "Administrer abonnement"}
+                    <ChevronUp className="w-4 h-4" />
+                    {isPending ? "Åpner…" : "Oppgrader abonnement"}
                   </button>
-                  <p className="text-xs text-[var(--color-muted)] mt-2">
-                    Du sendes til Stripe for å endre eller avbryte abonnementet.
+                )}
+
+                {/* Administrer i Stripe */}
+                {user.hasStripeSubscription && (
+                  <button
+                    onClick={handleStripePortal}
+                    disabled={isPending}
+                    className={cn(
+                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-[20px] text-sm font-medium transition-all",
+                      "border border-grey-200 text-text",
+                      "hover:bg-grey-50 active:scale-[0.98]",
+                      isPending && "opacity-60 cursor-not-allowed"
+                    )}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Administrer i Stripe
+                  </button>
+                )}
+              </div>
+
+              {/* Kansellerings-seksjon */}
+              {user.hasStripeSubscription && (
+                <div className="pt-4 mt-2 border-t border-grey-200">
+                  {error && (
+                    <p className="text-sm text-error mb-3">{error}</p>
+                  )}
+                  <button
+                    onClick={handleStripePortal}
+                    disabled={isPending}
+                    className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-error transition-colors"
+                  >
+                    <XCircle className="w-3.5 h-3.5" />
+                    Avbryt abonnement
+                  </button>
+                  <p className="text-[10px] text-muted mt-1">
+                    Du sendes til Stripe der du kan endre, pause eller avbryte.
                   </p>
                 </div>
               )}
             </div>
           </div>
 
+          {/* Tilgjengelige oppgraderinger */}
+          <UpgradeOptions
+            currentTier={user.tier}
+            onUpgrade={handleStripePortal}
+            isPending={isPending}
+          />
+
           {/* Booking shortcut */}
-          <div className="bg-white rounded-2xl border border-[var(--color-primary)]/10 p-5 flex items-center justify-between gap-4">
+          <div className="bg-white rounded-2xl border border-primary/10 p-5 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-[var(--color-surface)] flex items-center justify-center shrink-0">
                 <Calendar className="w-5 h-5 text-[var(--color-primary)]" />

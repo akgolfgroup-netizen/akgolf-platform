@@ -1,16 +1,10 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Trophy, TrendingUp, TrendingDown, Medal, Clock, Users } from "lucide-react";
+import { Medal } from "lucide-react";
+import type { TestOverviewData } from "./actions";
 
-interface TestData {
-  testNumber: number;
-  name: string;
-  unit: string;
-  higherIsBetter: boolean;
-  description: string;
-  userBest: { value: number; passed: boolean; date: string } | null;
-}
+type TestData = TestOverviewData;
 
 interface LeaderboardEntry {
   userId: string;
