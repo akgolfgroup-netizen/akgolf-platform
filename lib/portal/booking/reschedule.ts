@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 import { sendRescheduleNotification } from "@/lib/portal/email/send-booking-email";
 import { logger } from "@/lib/logger";
 import { notifyBookingRescheduled } from "@/lib/portal/notifications/triggers";
+import { syncBookingToCalendar } from "@/lib/portal/calendar/google-calendar";
 
 interface RescheduleResult {
   success: boolean;
@@ -39,6 +40,9 @@ export async function rescheduleBooking(
       },
       User: {
         select: { name: true, email: true },
+      },
+      Instructor: {
+        select: { userId: true, User: { select: { name: true } } },
       },
     },
   });
@@ -155,6 +159,25 @@ export async function rescheduleBooking(
     }, {
       isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
     });
+
+    // Oppdater Google Calendar-event (non-blocking)
+    if (booking.Instructor?.userId) {
+      syncBookingToCalendar(booking.Instructor.userId, {
+        id: newBookingId,
+        startTime: newStartTime,
+        endTime: newEndTime,
+        serviceName: serviceType.name,
+        instructorName: booking.Instructor.User?.name ?? undefined,
+        googleCalendarEventId: booking.googleCalendarEventId,
+      }).then(async (eventId) => {
+        await prisma.booking.update({
+          where: { id: newBookingId },
+          data: { googleCalendarEventId: eventId },
+        });
+      }).catch((err) => {
+        logger.error("[Reschedule] Google Calendar sync failed:", err);
+      });
+    }
 
     // Notifikasjoner utenfor transaksjon (non-blocking)
     if (booking.User?.email) {

@@ -49,6 +49,7 @@ import {
   type SearchBookingsResult,
 } from "./actions";
 import type { SessionPlan } from "@/lib/portal/ai/session-planner";
+import { RescheduleDialog } from "./reschedule-dialog";
 
 // ---------------------------------------------------------------------------
 // Typer
@@ -341,6 +342,7 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
   const [statusFilter, setStatusFilter] = useState<StatusKey | null>(null);
   const [cancellingId, setCancellingId] = useState<string | null>(null);
   const [confirmCancelId, setConfirmCancelId] = useState<string | null>(null);
+  const [rescheduleBooking, setRescheduleBooking] = useState<AdminBooking | null>(null);
   const [drawerBooking, setDrawerBooking] = useState<AdminBooking | null>(null);
 
   // ---------------------------------------------------------------------------
@@ -783,18 +785,27 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
                         </span>
                         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                           {booking.status !== "CANCELLED" && (
-                            <button
-                              onClick={() => setConfirmCancelId(booking.id)}
-                              disabled={isCancelling}
-                              className="p-1.5 rounded-md hover:bg-[var(--color-error)]/10 text-[var(--color-muted)] hover:text-[var(--color-error)] transition-colors"
-                              title="Avbestill booking"
-                            >
-                              {isCancelling ? (
-                                <Loader2 className="w-4 h-4 animate-spin" />
-                              ) : (
-                                <XCircle className="w-4 h-4" />
-                              )}
-                            </button>
+                            <>
+                              <button
+                                onClick={() => setRescheduleBooking(booking)}
+                                className="p-1.5 rounded-md hover:bg-[var(--color-primary)]/10 text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors"
+                                title="Endre tidspunkt"
+                              >
+                                <Calendar className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => setConfirmCancelId(booking.id)}
+                                disabled={isCancelling}
+                                className="p-1.5 rounded-md hover:bg-[var(--color-error)]/10 text-[var(--color-muted)] hover:text-[var(--color-error)] transition-colors"
+                                title="Avbestill booking"
+                              >
+                                {isCancelling ? (
+                                  <Loader2 className="w-4 h-4 animate-spin" />
+                                ) : (
+                                  <XCircle className="w-4 h-4" />
+                                )}
+                              </button>
+                            </>
                           )}
                           <button
                             onClick={() => setDrawerBooking(booking)}
@@ -851,6 +862,16 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
                 onClick={() => setDrawerBooking(null)}
               >
                 Lukk
+              </AdminButton>
+              <AdminButton
+                variant="secondary"
+                icon={<Calendar className="w-4 h-4" />}
+                onClick={() => {
+                  setRescheduleBooking(drawerBooking);
+                  setDrawerBooking(null);
+                }}
+              >
+                Endre tid
               </AdminButton>
               <AdminButton
                 variant="primary"
@@ -959,6 +980,13 @@ export function BookingerClient({ initialData }: BookingerClientProps) {
           </div>
         )}
       </AdminDrawer>
+
+      {/* RescheduleDialog — endre tidspunkt */}
+      <RescheduleDialog
+        booking={rescheduleBooking}
+        onClose={() => setRescheduleBooking(null)}
+        onSuccess={() => doSearch(searchQuery, statusFilter)}
+      />
 
       {/* AdminDialog — bekreft avbestilling */}
       <AdminDialog

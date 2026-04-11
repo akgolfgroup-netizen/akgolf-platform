@@ -2,6 +2,7 @@
 
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
+import { prisma } from "@/lib/portal/prisma";
 import { isStaff } from "@/lib/portal/rbac";
 import { addMinutes, format } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -12,6 +13,7 @@ import { evaluateCancellationPolicy } from "@/lib/portal/booking/cancellation-po
 import { sendReminderSms } from "@/lib/portal/sms/send-reminder-sms";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { logger } from "@/lib/logger";
+import { BookingStatus, Prisma } from "@prisma/client";
 
 // Helper to safely extract first element from Supabase nested relation (returned as array)
 function first<T>(val: unknown): T | null {
@@ -429,6 +431,128 @@ export async function bulkCancelBookings(
 
   revalidatePath("/admin/bookinger");
   return { cancelled, failed };
+}
+
+// ---------------------------------------------------------------------------
+// Admin reschedule
+// ---------------------------------------------------------------------------
+
+export async function adminRescheduleBooking(
+  bookingId: string,
+  newStartTime: string
+): Promise<{ success: boolean; newBookingId?: string; error?: string }> {
+  const user = await requirePortalUser();
+  if (!user?.id || !isStaff(user.role)) {
+    return { success: false, error: "Ikke autorisert" };
+  }
+
+  const booking = await prisma.booking.findUnique({
+    where: { id: bookingId },
+    include: {
+      ServiceType: {
+        select: { duration: true, bufferBefore: true, bufferAfter: true },
+      },
+    },
+  });
+
+  if (!booking) {
+    return { success: false, error: "Booking ikke funnet" };
+  }
+
+  if (
+    booking.status !== BookingStatus.CONFIRMED &&
+    booking.status !== BookingStatus.PENDING
+  ) {
+    return { success: false, error: "Kan kun endre aktive bookinger" };
+  }
+
+  const serviceType = booking.ServiceType;
+  if (!serviceType) {
+    return { success: false, error: "Tjenestetype ikke funnet" };
+  }
+
+  const start = new Date(newStartTime);
+  if (start <= new Date()) {
+    return { success: false, error: "Nytt tidspunkt ma vaere i fremtiden" };
+  }
+
+  const end = addMinutes(start, serviceType.duration);
+  const conflictStart = addMinutes(start, -(serviceType.bufferBefore ?? 0));
+  const conflictEnd = addMinutes(end, serviceType.bufferAfter ?? 0);
+  const newBookingId = nanoid();
+
+  try {
+    await prisma.$transaction(async (tx) => {
+      // Sjekk konflikter
+      const conflict = await tx.booking.findFirst({
+        where: {
+          id: { not: bookingId },
+          instructorId: booking.instructorId,
+          status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
+          startTime: { lt: conflictEnd },
+          endTime: { gt: conflictStart },
+        },
+        select: { id: true },
+      });
+
+      if (conflict) {
+        throw new Error("Tidspunktet er opptatt");
+      }
+
+      // Sjekk blokkerte tider
+      const blockedCount = await tx.$queryRaw<[{ count: bigint }]>`
+        SELECT COUNT(*) as count FROM "BlockedTime"
+        WHERE ("instructorId" = ${booking.instructorId} OR "instructorId" IS NULL)
+          AND "startTime" < ${conflictEnd}
+          AND "endTime" > ${conflictStart}
+      `;
+
+      if (Number(blockedCount[0].count) > 0) {
+        throw new Error("Tidspunktet er blokkert");
+      }
+
+      // Opprett ny booking
+      await tx.booking.create({
+        data: {
+          id: newBookingId,
+          studentId: booking.studentId,
+          instructorId: booking.instructorId,
+          serviceTypeId: booking.serviceTypeId,
+          locationId: booking.locationId,
+          resourceId: booking.resourceId,
+          startTime: start,
+          endTime: end,
+          status: booking.status,
+          paymentMethod: booking.paymentMethod,
+          paymentStatus: booking.paymentStatus,
+          amount: booking.amount,
+          vatAmount: booking.vatAmount,
+          stripePaymentId: booking.stripePaymentId,
+          vippsOrderId: booking.vippsOrderId,
+          updatedAt: new Date(),
+        },
+      });
+
+      // Kanseller gammel
+      await tx.booking.update({
+        where: { id: bookingId },
+        data: {
+          status: BookingStatus.CANCELLED,
+          cancelledAt: new Date(),
+          cancelReason: "Ombestilt av admin",
+        },
+      });
+    }, {
+      isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+    });
+
+    revalidatePath("/admin/bookinger");
+    return { success: true, newBookingId };
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : "Kunne ikke ombestille";
+    logger.error(`[adminRescheduleBooking] ${msg}`, error);
+    return { success: false, error: msg };
+  }
 }
 
 // ---------------------------------------------------------------------------

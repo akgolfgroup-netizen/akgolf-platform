@@ -376,13 +376,20 @@ export async function POST(req: NextRequest) {
 
     // Sync to Google Calendar if instructor has it connected
     if (booking.Instructor?.userId) {
-      await syncBookingToCalendar(booking.Instructor.userId, {
+      syncBookingToCalendar(booking.Instructor.userId, {
         id: booking.id,
         serviceName: booking.ServiceType?.name || "",
         startTime: new Date(booking.startTime),
         endTime: new Date(booking.endTime),
         instructorName: booking.Instructor?.User?.name || "",
         location: booking.location || undefined,
+      }).then(async (eventId) => {
+        // Lagre Google Calendar eventId pa bookingen
+        const serviceSupabase = createClient(supabaseUrl, supabaseKey);
+        await serviceSupabase
+          .from("Booking")
+          .update({ googleCalendarEventId: eventId })
+          .eq("id", booking.id);
       }).catch((err) => {
         logger.error("Google Calendar sync failed:", err);
       });

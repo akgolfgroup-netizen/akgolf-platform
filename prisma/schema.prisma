@@ -195,8 +195,9 @@ model Booking {
   guestEmail         String?
   guestName          String?
   guestPhone         String?
-  focusArea          FocusArea?
-  playerNotes        String?
+  focusArea              FocusArea?
+  playerNotes            String?
+  googleCalendarEventId  String?
   Facility           Facility?            @relation(fields: [facilityId], references: [id])
   Instructor         Instructor           @relation(fields: [instructorId], references: [id])
   Location           Location?            @relation(fields: [locationId], references: [id])

@@ -9,6 +9,7 @@ import { sendBookingCancellation } from "@/lib/portal/email/send-booking-email";
 import { notifyBookingCancelled } from "@/lib/portal/notifications/triggers";
 import { releaseSession } from "@/lib/portal/booking/subscription-quota";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { removeFromCalendar } from "@/lib/portal/calendar/google-calendar";
 
 export async function POST(req: NextRequest) {
   const rateLimit = checkRateLimit(`booking:${getClientIp(req)}`, RATE_LIMITS.BOOKING_CREATE);
@@ -48,6 +49,7 @@ export async function POST(req: NextRequest) {
           name
         ),
         Instructor (
+          userId,
           User (
             name
           )
@@ -144,6 +146,16 @@ export async function POST(req: NextRequest) {
 
     if (updateError) {
       throw updateError;
+    }
+
+    // Slett Google Calendar-event (non-blocking)
+    if (booking.googleCalendarEventId && booking.Instructor?.userId) {
+      removeFromCalendar(
+        booking.Instructor.userId,
+        booking.googleCalendarEventId
+      ).catch((err) =>
+        logger.error("[Cancel] Google Calendar removal failed", err)
+      );
     }
 
     // Release subscription quota if cancellation is >24h before start (full refund)
