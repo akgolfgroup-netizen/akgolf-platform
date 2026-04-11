@@ -59,13 +59,32 @@ export async function POST(req: NextRequest) {
       `)
       .eq("id", bookingId)
       .eq("studentId", user.id)
-      .in("status", ["PENDING", "CONFIRMED"])
       .single();
 
     if (bookingError || !booking) {
       return NextResponse.json(
-        { error: "Booking ikke funnet eller kan ikke avbestilles" },
+        { error: "Booking ikke funnet" },
         { status: 404 }
+      );
+    }
+
+    // Idempotens: allerede kansellert → returner 200 OK
+    if (booking.status === "CANCELLED") {
+      return NextResponse.json({
+        success: true,
+        message: "Booking allerede avbestilt",
+        cancellation: {
+          reason: booking.cancelReason ?? "Allerede avbestilt",
+          refundPercent: 0,
+          refundedAmount: 0,
+        },
+      });
+    }
+
+    if (!["PENDING", "CONFIRMED"].includes(booking.status)) {
+      return NextResponse.json(
+        { error: "Booking kan ikke avbestilles" },
+        { status: 400 }
       );
     }
 

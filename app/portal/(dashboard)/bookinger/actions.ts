@@ -134,8 +134,13 @@ export async function cancelBooking(
     throw new Error("Ikke autorisert");
   }
 
+  // Idempotens: allerede kansellert → returner success
   if (booking.status === "CANCELLED") {
-    throw new Error("Bookingen er allerede avbestilt");
+    return {
+      success: true,
+      refundedAmount: 0,
+      policyReason: "Allerede avbestilt",
+    };
   }
 
   // Evaluate cancellation policy
