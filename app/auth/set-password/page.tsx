@@ -3,25 +3,46 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
-import { Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Loader2,
+  Lock,
+  CheckCircle2,
+  AlertTriangle,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
 import { AKLogo } from "@/components/website/AKLogo";
+import {
+  PortalCard,
+  EASE,
+  EASE_OUT_EXPO,
+  fadeInUp,
+  staggerContainer,
+  scaleIn,
+} from "@/components/portal/premium";
 
 type PageState = "loading" | "form" | "success" | "error";
 
 function getSupabase() {
   return createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   );
 }
 
 export default function SetPasswordPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader2 size={24} className="animate-spin text-[var(--color-grey-900)]" />
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <main className="min-h-screen w-full flex items-center justify-center bg-[var(--color-background-beige)]">
+          <Loader2
+            size={28}
+            className="animate-spin text-[var(--color-primary)]"
+          />
+        </main>
+      }
+    >
       <SetPasswordContent />
     </Suspense>
   );
@@ -49,23 +70,27 @@ function SetPasswordContent() {
         }
       }
 
-      const { data: { session } } = await getSupabase().auth.getSession();
+      const {
+        data: { session },
+      } = await getSupabase().auth.getSession();
       if (session) {
         setState("form");
       } else {
-        const { data: { subscription } } = getSupabase().auth.onAuthStateChange(
-          (event) => {
-            if (event === "SIGNED_IN" || event === "PASSWORD_RECOVERY") {
-              setState("form");
-              subscription.unsubscribe();
-            }
+        const {
+          data: { subscription },
+        } = getSupabase().auth.onAuthStateChange((event) => {
+          if (event === "SIGNED_IN" || event === "PASSWORD_RECOVERY") {
+            setState("form");
+            subscription.unsubscribe();
           }
-        );
+        });
 
         setTimeout(() => {
           setState((prev) => {
             if (prev === "loading") {
-              setError("Kunne ikke verifisere invitasjonen. Prøv å klikke lenken i e-posten på nytt.");
+              setError(
+                "Kunne ikke verifisere invitasjonen. Prøv å klikke lenken i e-posten på nytt.",
+              );
               return "error";
             }
             return prev;
@@ -107,114 +132,311 @@ function SetPasswordContent() {
   }
 
   return (
-    <main className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-16" id="main-content">
-      <div className="w-full max-w-md">
-        <div className="flex justify-center mb-8">
-          <AKLogo variant="black" size={48} />
-        </div>
+    <main
+      id="main-content"
+      className="min-h-screen w-full flex flex-col lg:flex-row bg-[var(--color-background-beige)]"
+    >
+      {/* VENSTRE — Hero */}
+      <motion.aside
+        initial={{ opacity: 0, x: -40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
+        className="hidden lg:flex lg:w-1/2 relative overflow-hidden text-white"
+        style={{
+          background:
+            "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-alt) 100%)",
+        }}
+        aria-hidden="true"
+      >
+        <div
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div
+          className="absolute -top-40 -left-40 w-[560px] h-[560px] rounded-full blur-3xl opacity-25"
+          style={{
+            background:
+              "radial-gradient(circle, var(--color-accent-cta) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute left-0 right-0 bottom-0 h-1"
+          style={{ background: "var(--color-accent-cta)" }}
+        />
 
-        {state === "loading" && (
-          <div className="text-center py-20">
-            <Loader2 size={24} className="animate-spin text-[var(--color-grey-900)] mx-auto mb-4" />
-            <p className="text-[var(--color-grey-400)]">Verifiserer invitasjon...</p>
-          </div>
-        )}
-
-        {state === "error" && (
-          <div className="bg-[var(--color-grey-100)] rounded-2xl p-8 text-center">
-            <div className="w-16 h-16 rounded-full bg-[var(--color-error)]/10 flex items-center justify-center mx-auto mb-5">
-              <svg className="w-8 h-8 text-[var(--color-error)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-              </svg>
+        <div className="relative z-10 flex flex-col justify-between w-full p-12 xl:p-16">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
+            className="flex items-center justify-between"
+          >
+            <AKLogo variant="white" size={56} />
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm bg-white/5">
+              <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent-cta)]" />
+              <span className="text-[11px] font-medium tracking-wide uppercase text-white/90">
+                Ny konto
+              </span>
             </div>
-            <h1 className="text-xl font-semibold text-[var(--color-grey-900)] mb-2">Noe gikk galt</h1>
-            <p className="text-[var(--color-grey-400)] mb-6">{error}</p>
-            <a
-              href="mailto:post@akgolf.no"
-              className="text-sm text-[var(--color-grey-900)] hover:text-[var(--color-grey-400)] transition-colors"
+          </motion.div>
+
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            className="max-w-lg"
+          >
+            <motion.p
+              variants={fadeInUp}
+              className="text-sm font-medium tracking-[0.18em] uppercase text-[var(--color-accent-cta)] mb-6"
             >
-              Kontakt oss for hjelp
-            </a>
+              Velkommen ombord
+            </motion.p>
+            <motion.h1
+              variants={fadeInUp}
+              className="text-5xl xl:text-6xl font-semibold leading-[1.05] tracking-tight mb-6"
+            >
+              Ett steg
+              <br />
+              igjen.
+            </motion.h1>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg leading-relaxed text-white/70 max-w-md"
+            >
+              Velg et passord for kontoen din, så tar vi deg rett inn i
+              spillerportalen og treningsplanen din.
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: EASE }}
+            className="text-xs text-white/50 tracking-wide"
+          >
+            &copy; {new Date().getFullYear()} AK Golf Group
+          </motion.div>
+        </div>
+      </motion.aside>
+
+      {/* HOYRE — Form */}
+      <section className="flex-1 flex items-center justify-center px-5 py-12 lg:px-12 lg:py-16 relative">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-40"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 85% 15%, var(--color-primary-soft) 0%, transparent 55%)",
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="w-full max-w-[440px] relative z-10">
+          <div className="flex lg:hidden justify-center mb-8">
+            <AKLogo variant="black" size={44} />
           </div>
-        )}
 
-        {state === "form" && (
-          <div className="bg-[var(--color-grey-100)] rounded-2xl p-8">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 rounded-full bg-[var(--color-grey-900)]/5 flex items-center justify-center mx-auto mb-5">
-                <svg className="w-8 h-8 text-[var(--color-grey-900)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
-              <h1 className="text-2xl font-semibold text-[var(--color-grey-900)] mb-2">Velg passord</h1>
-              <p className="text-[var(--color-grey-400)]">
-                Sett et passord for å logge inn på spillerportalen.
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-[var(--color-grey-900)] mb-2">
-                  Passord
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  minLength={8}
-                  autoComplete="new-password"
-                  className="w-full px-4 py-3 bg-white border border-[var(--color-grey-200)] rounded-xl text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)] transition-[border-color,box-shadow]"
-                  placeholder="Minst 8 tegn"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="confirm" className="block text-sm font-medium text-[var(--color-grey-900)] mb-2">
-                  Bekreft passord
-                </label>
-                <input
-                  id="confirm"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                  autoComplete="new-password"
-                  className="w-full px-4 py-3 bg-white border border-[var(--color-grey-200)] rounded-xl text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/20 focus:border-[var(--color-grey-900)] transition-[border-color,box-shadow]"
-                  placeholder="Gjenta passordet"
-                />
-              </div>
-
-              {error && (
-                <p className="text-sm text-[var(--color-error)]" role="alert" aria-live="assertive">{error}</p>
-              )}
-
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full bg-[var(--color-grey-900)] text-white font-medium py-3 px-6 rounded-full hover:bg-[var(--color-grey-900)]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-[background-color,opacity]"
+          <AnimatePresence mode="wait">
+            {state === "loading" && (
+              <motion.div
+                key="loading"
+                variants={scaleIn}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0 }}
               >
-                {submitting ? "Lagrer..." : "Sett passord og logg inn"}
-              </button>
-            </form>
-          </div>
-        )}
+                <PortalCard padding="lg" className="text-center">
+                  <Loader2
+                    size={28}
+                    className="animate-spin text-[var(--color-primary)] mx-auto mb-4"
+                  />
+                  <p className="text-sm text-[var(--color-muted)]">
+                    Verifiserer invitasjon...
+                  </p>
+                </PortalCard>
+              </motion.div>
+            )}
 
-        {state === "success" && (
-          <div className="bg-[var(--color-grey-100)] rounded-2xl p-8 text-center">
-            <div className="w-16 h-16 rounded-full bg-[var(--color-success)]/10 flex items-center justify-center mx-auto mb-5">
-              <svg className="w-8 h-8 text-[var(--color-success)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h1 className="text-xl font-semibold text-[var(--color-grey-900)] mb-2">Passord satt!</h1>
-            <p className="text-[var(--color-grey-400)]">
-              Du blir nå sendt til spillerportalen...
-            </p>
-          </div>
-        )}
-      </div>
+            {state === "error" && (
+              <motion.div
+                key="error"
+                variants={scaleIn}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0 }}
+              >
+                <PortalCard
+                  padding="lg"
+                  className="text-center shadow-[0_24px_60px_-30px_rgba(184,66,51,0.25)]"
+                >
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-[var(--color-error)]/10">
+                    <AlertTriangle className="w-7 h-7 text-[var(--color-error)]" />
+                  </div>
+                  <h1 className="text-2xl font-semibold text-[var(--color-text)] mb-2">
+                    Noe gikk galt
+                  </h1>
+                  <p className="text-sm text-[var(--color-muted)] mb-8 leading-relaxed">
+                    {error}
+                  </p>
+                  <a
+                    href="mailto:post@akgolf.no"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary-alt)] transition-colors"
+                  >
+                    Kontakt oss for hjelp
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                </PortalCard>
+              </motion.div>
+            )}
+
+            {state === "form" && (
+              <motion.div
+                key="form"
+                variants={staggerContainer}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, y: 10 }}
+              >
+                <motion.div variants={fadeInUp} className="mb-8">
+                  <h1 className="text-3xl font-semibold text-[var(--color-text)] tracking-tight mb-2">
+                    Velg passord
+                  </h1>
+                  <p className="text-[15px] text-[var(--color-muted)]">
+                    Sett et passord for å logge inn på spillerportalen.
+                  </p>
+                </motion.div>
+
+                <motion.div variants={fadeInUp}>
+                  <PortalCard
+                    padding="lg"
+                    className="shadow-[0_24px_60px_-30px_rgba(0,88,64,0.20)]"
+                  >
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div>
+                        <label
+                          htmlFor="password"
+                          className="block text-[13px] font-medium mb-2 text-[var(--color-text)]"
+                        >
+                          Passord
+                        </label>
+                        <div className="relative group">
+                          <Lock
+                            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] transition-colors group-focus-within:text-[var(--color-primary)]"
+                            aria-hidden="true"
+                          />
+                          <input
+                            id="password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            minLength={8}
+                            autoComplete="new-password"
+                            placeholder="Minst 8 tegn"
+                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-white border border-black/10 text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/10 transition-[border-color,box-shadow]"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="confirm"
+                          className="block text-[13px] font-medium mb-2 text-[var(--color-text)]"
+                        >
+                          Bekreft passord
+                        </label>
+                        <div className="relative group">
+                          <Lock
+                            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] transition-colors group-focus-within:text-[var(--color-primary)]"
+                            aria-hidden="true"
+                          />
+                          <input
+                            id="confirm"
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                            autoComplete="new-password"
+                            placeholder="Gjenta passordet"
+                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-white border border-black/10 text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/10 transition-[border-color,box-shadow]"
+                          />
+                        </div>
+                      </div>
+
+                      {error && (
+                        <motion.p
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="text-xs font-medium text-[var(--color-error)] flex items-center gap-1.5"
+                          role="alert"
+                          aria-live="assertive"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-[var(--color-error)]" />
+                          {error}
+                        </motion.p>
+                      )}
+
+                      <button
+                        type="submit"
+                        disabled={submitting}
+                        className="w-full py-3 rounded-xl bg-[var(--color-primary)] text-white text-sm font-semibold hover:bg-[var(--color-primary-alt)] disabled:opacity-60 disabled:cursor-not-allowed transition-colors group relative overflow-hidden cursor-pointer border-none mt-1"
+                      >
+                        <span className="relative z-10 flex items-center justify-center gap-2">
+                          {submitting
+                            ? "Lagrer..."
+                            : "Sett passord og logg inn"}
+                          {!submitting && (
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                          )}
+                        </span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+                      </button>
+                    </form>
+                  </PortalCard>
+                </motion.div>
+              </motion.div>
+            )}
+
+            {state === "success" && (
+              <motion.div
+                key="success"
+                variants={scaleIn}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0 }}
+              >
+                <PortalCard
+                  padding="lg"
+                  className="text-center shadow-[0_24px_60px_-30px_rgba(42,125,90,0.25)]"
+                >
+                  <motion.div
+                    initial={{ scale: 0, rotate: -20 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{
+                      duration: 0.6,
+                      delay: 0.1,
+                      ease: EASE_OUT_EXPO,
+                    }}
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-[var(--color-success)]/10"
+                  >
+                    <CheckCircle2 className="w-7 h-7 text-[var(--color-success)]" />
+                  </motion.div>
+                  <h1 className="text-2xl font-semibold text-[var(--color-text)] mb-2">
+                    Passord satt
+                  </h1>
+                  <p className="text-sm text-[var(--color-muted)]">
+                    Du blir nå sendt til spillerportalen...
+                  </p>
+                </PortalCard>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </section>
     </main>
   );
 }

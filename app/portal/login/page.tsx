@@ -3,17 +3,42 @@
 import { createBrowserClient } from "@supabase/ssr";
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  ArrowRight,
+  CheckCircle2,
+  Sparkles,
+} from "lucide-react";
 import { AKLogo } from "@/components/website/AKLogo";
-import { ShimmerButton } from "@/components/portal/ui/shimmer-button";
-import { Spotlight } from "@/components/portal/ui/spotlight";
+import {
+  PortalCard,
+  EASE,
+  EASE_OUT_EXPO,
+  fadeInUp,
+  staggerContainer,
+  scaleIn,
+} from "@/components/portal/premium";
 
 function createSupabaseBrowser() {
   return createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   );
 }
+
+type Mode = "password" | "magic";
+
+const shakeVariant = {
+  shake: {
+    x: [0, -8, 8, -6, 6, -3, 3, 0],
+    transition: { duration: 0.4, ease: EASE },
+  },
+  rest: { x: 0 },
+};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,10 +48,15 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
-  const [mode, setMode] = useState<"password" | "magic">("password");
+  const [mode, setMode] = useState<Mode>("password");
+  const [errorKey, setErrorKey] = useState(0);
 
-  // Memoize supabase client to avoid recreating on each render
   const getSupabase = useCallback(() => createSupabaseBrowser(), []);
+
+  function triggerError(message: string) {
+    setError(message);
+    setErrorKey((k) => k + 1);
+  }
 
   async function handlePasswordLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -42,12 +72,11 @@ export default function LoginPage() {
     if (authError) {
       setLoading(false);
       if (authError.message.includes("Invalid login credentials")) {
-        setError("Feil e-post eller passord. Prov igjen.");
+        triggerError("Feil e-post eller passord. Prøv igjen.");
       } else {
-        setError("Kunne ikke logge inn. Prov igjen.");
+        triggerError("Kunne ikke logge inn. Prøv igjen.");
       }
     } else {
-      // Refresh server components to pick up new auth cookies, then navigate
       router.refresh();
       router.push("/portal");
     }
@@ -69,191 +98,424 @@ export default function LoginPage() {
     setLoading(false);
 
     if (authError) {
-      setError("Kunne ikke sende innloggingslenke. Prov igjen.");
+      triggerError("Kunne ikke sende innloggingslenke. Prøv igjen.");
     } else {
       setSent(true);
     }
   }
 
-  if (sent) {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-[var(--portal-bg)]">
-        <div className="w-full max-w-sm mx-auto text-center">
-          <div className="w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4 bg-[var(--portal-surface-sunken)] border border-[var(--portal-card-border)]">
-            <Mail className="w-5 h-5 text-[var(--portal-text-muted)]" />
-          </div>
-          <h1 className="text-xl font-semibold mb-2 text-[var(--portal-text-primary)]">
-            Sjekk e-posten din
-          </h1>
-          <p className="text-sm text-[var(--portal-text-secondary)]">
-            Vi har sendt en innloggingslenke til{" "}
-            <strong className="text-[var(--portal-text-primary)]">{email}</strong>
-          </p>
-          <button
-            onClick={() => setSent(false)}
-            className="mt-6 text-sm font-medium cursor-pointer bg-transparent border-none text-[var(--portal-text-primary)] hover:text-[var(--portal-accent)]"
-          >
-            &larr; Tilbake til innlogging
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-[var(--portal-bg)] relative overflow-hidden">
-      <Spotlight fill="rgba(176, 125, 79, 0.06)" className="-top-40 left-0 md:-top-20 md:left-60" />
+    <main
+      id="main-content"
+      className="min-h-screen w-full flex flex-col lg:flex-row bg-[var(--color-background-beige)]"
+    >
+      {/* VENSTRE — Hero (skjult pa mobil) */}
+      <motion.aside
+        initial={{ opacity: 0, x: -40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
+        className="hidden lg:flex lg:w-1/2 relative overflow-hidden text-white"
+        style={{
+          background:
+            "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-alt) 100%)",
+        }}
+        aria-hidden="true"
+      >
+        {/* Bakgrunn: radial dot-grid */}
+        <div
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
 
-      <div className="w-full max-w-sm relative z-10">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <AKLogo variant="academy" size={48} />
-          </div>
-          <h1 className="text-xl font-semibold text-[var(--portal-text-primary)]">
-            Spillerportal
-          </h1>
-          <p className="text-sm mt-1 text-[var(--portal-text-muted)]">
-            Logg inn for å fortsette
-          </p>
-        </div>
+        {/* Bakgrunn: store radial glow */}
+        <div
+          className="absolute -top-40 -left-40 w-[560px] h-[560px] rounded-full blur-3xl opacity-25"
+          style={{
+            background:
+              "radial-gradient(circle, var(--color-accent-cta) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute -bottom-48 -right-32 w-[520px] h-[520px] rounded-full blur-3xl opacity-15"
+          style={{
+            background:
+              "radial-gradient(circle, #ffffff 0%, transparent 70%)",
+          }}
+        />
 
-        {/* Card */}
-        <div className="portal-card rounded-xl p-6">
-          {/* Mode Toggle */}
-          <div className="flex rounded-lg p-1 mb-5 bg-[var(--portal-surface-sunken)]">
-            <button
-              type="button"
-              onClick={() => setMode("password")}
-              className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-[background-color,color,border-color] cursor-pointer ${
-                mode === "password"
-                  ? "bg-[var(--portal-card-bg-solid)] text-[var(--portal-text-primary)] border border-[var(--portal-card-border)]"
-                  : "bg-transparent text-[var(--portal-text-muted)] border border-transparent"
-              }`}
-            >
-              Passord
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode("magic")}
-              className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-[background-color,color,border-color] cursor-pointer ${
-                mode === "magic"
-                  ? "bg-[var(--portal-card-bg-solid)] text-[var(--portal-text-primary)] border border-[var(--portal-card-border)]"
-                  : "bg-transparent text-[var(--portal-text-muted)] border border-transparent"
-              }`}
-            >
-              Magic Link
-            </button>
-          </div>
+        {/* Accent-stripe nede */}
+        <div
+          className="absolute left-0 right-0 bottom-0 h-1"
+          style={{ background: "var(--color-accent-cta)" }}
+        />
 
-          <form
-            onSubmit={mode === "password" ? handlePasswordLogin : handleMagicLink}
-            className="space-y-4"
+        <div className="relative z-10 flex flex-col justify-between w-full p-12 xl:p-16">
+          {/* Logo + badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
+            className="flex items-center justify-between"
           >
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-[var(--portal-text-primary)]">
-                E-postadresse
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--portal-text-muted)]" aria-hidden="true" />
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="navn@eksempel.no"
-                  required
-                  autoComplete="email"
-                  spellCheck={false}
-                  className="portal-input w-full pl-10 pr-4 py-2.5 rounded-lg text-sm"
-                />
-              </div>
+            <AKLogo variant="white" size={56} />
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm bg-white/5">
+              <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent-cta)]" />
+              <span className="text-[11px] font-medium tracking-wide uppercase text-white/90">
+                Spillerportal
+              </span>
             </div>
+          </motion.div>
 
-            {/* Password (only in password mode) */}
-            {mode === "password" && (
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium mb-1.5 text-[var(--portal-text-primary)]">
-                  Passord
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--portal-text-muted)]" aria-hidden="true" />
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    required
-                    autoComplete="current-password"
-                    className="portal-input w-full pl-10 pr-10 py-2.5 rounded-lg text-sm"
-                  />
+          {/* Hero-tekst */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            className="max-w-lg"
+          >
+            <motion.p
+              variants={fadeInUp}
+              className="text-sm font-medium tracking-[0.18em] uppercase text-[var(--color-accent-cta)] mb-6"
+            >
+              Sort. Hvit. En grønn.
+            </motion.p>
+            <motion.h1
+              variants={fadeInUp}
+              className="text-5xl xl:text-6xl font-semibold leading-[1.05] tracking-tight mb-6"
+            >
+              Premium
+              <br />
+              golfcoaching.
+            </motion.h1>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg leading-relaxed text-white/70 max-w-md"
+            >
+              Logg inn for å se treningsplanen din, booke økter og følge
+              utviklingen din med skreddersydd coaching fra AK Golf.
+            </motion.p>
+
+            <motion.ul
+              variants={fadeInUp}
+              className="mt-10 space-y-3 text-[15px] text-white/80"
+            >
+              {[
+                "Personlig treningsplan generert av AI",
+                "Strokes Gained-statistikk i sanntid",
+                "Direkte kontakt med din trener",
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-[var(--color-accent-cta)] flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </motion.ul>
+          </motion.div>
+
+          {/* Footer i hero */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: EASE }}
+            className="text-xs text-white/50 tracking-wide"
+          >
+            &copy; {new Date().getFullYear()} AK Golf Group
+          </motion.div>
+        </div>
+      </motion.aside>
+
+      {/* HOYRE — Form */}
+      <section className="flex-1 flex items-center justify-center px-5 py-12 lg:px-12 lg:py-16 relative">
+        {/* Subtil bakgrunn pa form-siden */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-40"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 85% 15%, var(--color-primary-soft) 0%, transparent 55%)",
+          }}
+          aria-hidden="true"
+        />
+
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="w-full max-w-[440px] relative z-10"
+        >
+          {/* Mini-logo — vises kun pa mobil */}
+          <motion.div
+            variants={fadeInUp}
+            className="flex lg:hidden justify-center mb-8"
+          >
+            <AKLogo variant="black" size={44} />
+          </motion.div>
+
+          <AnimatePresence mode="wait">
+            {sent ? (
+              <motion.div
+                key="sent"
+                variants={scaleIn}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}
+              >
+                <PortalCard
+                  padding="lg"
+                  className="text-center shadow-[0_24px_60px_-30px_rgba(0,88,64,0.25)]"
+                >
+                  <motion.div
+                    initial={{ scale: 0, rotate: -20 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{
+                      duration: 0.6,
+                      delay: 0.1,
+                      ease: EASE_OUT_EXPO,
+                    }}
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-[var(--color-primary-soft)]"
+                  >
+                    <Mail className="w-7 h-7 text-[var(--color-primary)]" />
+                  </motion.div>
+                  <h1 className="text-2xl font-semibold text-[var(--color-text)] mb-2">
+                    Sjekk e-posten din
+                  </h1>
+                  <p className="text-sm text-[var(--color-muted)] leading-relaxed">
+                    Vi har sendt en innloggingslenke til
+                    <br />
+                    <strong className="text-[var(--color-text)]">{email}</strong>
+                  </p>
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? "Skjul passord" : "Vis passord"}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer bg-transparent border-none text-[var(--portal-text-muted)] hover:text-[var(--portal-text-primary)]"
+                    onClick={() => setSent(false)}
+                    className="mt-8 text-sm font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-alt)] transition-colors inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-none"
                   >
-                    {showPassword ? (
-                      <EyeOff className="w-4 h-4" aria-hidden="true" />
-                    ) : (
-                      <Eye className="w-4 h-4" aria-hidden="true" />
-                    )}
+                    <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+                    Tilbake til innlogging
                   </button>
-                </div>
-              </div>
-            )}
-
-            {error && (
-              <p className="text-xs text-[var(--color-error)]" role="alert" aria-live="assertive">
-                {error}
-              </p>
-            )}
-
-            <ShimmerButton
-              type="submit"
-              disabled={loading}
-              className="w-full"
-              background="var(--portal-accent)"
-              shimmerColor="rgba(255, 255, 255, 0.3)"
-              borderRadius="8px"
-            >
-              {loading
-                ? mode === "password"
-                  ? "Logger inn..."
-                  : "Sender lenke..."
-                : mode === "password"
-                  ? "Logg inn"
-                  : "Send innloggingslenke"}
-            </ShimmerButton>
-          </form>
-
-          {/* Forgot password link */}
-          {mode === "password" && (
-            <div className="mt-4 text-center">
-              <button
-                type="button"
-                onClick={() => setMode("magic")}
-                className="text-sm cursor-pointer bg-transparent border-none text-[var(--portal-text-muted)] hover:text-[var(--portal-text-primary)]"
+                </PortalCard>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="form"
+                variants={fadeInUp}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, y: 10, transition: { duration: 0.2 } }}
               >
-                Glemt passord? Bruk magic link
-              </button>
-            </div>
-          )}
-        </div>
+                <motion.div variants={fadeInUp} className="mb-8">
+                  <h1 className="text-3xl font-semibold text-[var(--color-text)] tracking-tight mb-2">
+                    Velkommen tilbake
+                  </h1>
+                  <p className="text-[15px] text-[var(--color-muted)]">
+                    Logg inn på spillerportalen for å fortsette.
+                  </p>
+                </motion.div>
 
-        {/* Footer */}
-        <p className="text-center text-sm mt-6 text-[var(--portal-text-muted)]">
-          Har du ikke tilgang?{" "}
-          <a
-            href="/academy"
-            className="font-medium text-[var(--portal-accent)]"
-          >
-            Sok om plass
-          </a>
-        </p>
-      </div>
-    </div>
+                <motion.div variants={fadeInUp}>
+                  <PortalCard
+                    padding="lg"
+                    className="shadow-[0_24px_60px_-30px_rgba(0,88,64,0.20)]"
+                  >
+                    {/* Mode-toggle — pill med layoutId */}
+                    <div className="relative flex p-1 mb-6 rounded-xl bg-[var(--color-primary-soft)]">
+                      {(["password", "magic"] as const).map((m) => {
+                        const isActive = mode === m;
+                        return (
+                          <button
+                            key={m}
+                            type="button"
+                            onClick={() => setMode(m)}
+                            className="relative flex-1 py-2.5 px-3 text-sm font-medium rounded-lg z-10 cursor-pointer bg-transparent border-none transition-colors"
+                          >
+                            {isActive && (
+                              <motion.span
+                                layoutId="login-tab-indicator"
+                                className="absolute inset-0 bg-white rounded-lg shadow-[0_4px_12px_-4px_rgba(0,88,64,0.15)]"
+                                transition={{
+                                  type: "spring",
+                                  stiffness: 400,
+                                  damping: 32,
+                                }}
+                              />
+                            )}
+                            <span
+                              className={`relative z-10 transition-colors ${
+                                isActive
+                                  ? "text-[var(--color-primary)]"
+                                  : "text-[var(--color-muted)]"
+                              }`}
+                            >
+                              {m === "password" ? "Passord" : "Magic Link"}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <motion.form
+                      key={errorKey}
+                      variants={shakeVariant}
+                      animate={error ? "shake" : "rest"}
+                      onSubmit={
+                        mode === "password"
+                          ? handlePasswordLogin
+                          : handleMagicLink
+                      }
+                      className="space-y-4"
+                    >
+                      {/* E-post */}
+                      <div>
+                        <label
+                          htmlFor="email"
+                          className="block text-[13px] font-medium mb-2 text-[var(--color-text)]"
+                        >
+                          E-postadresse
+                        </label>
+                        <div className="relative group">
+                          <Mail
+                            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] transition-colors group-focus-within:text-[var(--color-primary)]"
+                            aria-hidden="true"
+                          />
+                          <input
+                            id="email"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="navn@eksempel.no"
+                            required
+                            autoComplete="email"
+                            spellCheck={false}
+                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-white border border-black/10 text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/10 transition-[border-color,box-shadow]"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Passord */}
+                      <AnimatePresence initial={false}>
+                        {mode === "password" && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.25, ease: EASE }}
+                            style={{ overflow: "hidden" }}
+                          >
+                            <label
+                              htmlFor="password"
+                              className="block text-[13px] font-medium mb-2 text-[var(--color-text)]"
+                            >
+                              Passord
+                            </label>
+                            <div className="relative group">
+                              <Lock
+                                className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] transition-colors group-focus-within:text-[var(--color-primary)]"
+                                aria-hidden="true"
+                              />
+                              <input
+                                id="password"
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••"
+                                required={mode === "password"}
+                                autoComplete="current-password"
+                                className="w-full pl-10 pr-11 py-3 text-sm rounded-xl bg-white border border-black/10 text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/10 transition-[border-color,box-shadow]"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={
+                                  showPassword ? "Skjul passord" : "Vis passord"
+                                }
+                                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 cursor-pointer bg-transparent border-none text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors"
+                              >
+                                {showPassword ? (
+                                  <EyeOff className="w-4 h-4" aria-hidden="true" />
+                                ) : (
+                                  <Eye className="w-4 h-4" aria-hidden="true" />
+                                )}
+                              </button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      {/* Error */}
+                      <AnimatePresence>
+                        {error && (
+                          <motion.p
+                            initial={{ opacity: 0, y: -4 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -4 }}
+                            transition={{ duration: 0.2 }}
+                            className="text-xs font-medium text-[var(--color-error)] flex items-center gap-1.5"
+                            role="alert"
+                            aria-live="assertive"
+                          >
+                            <span className="w-1 h-1 rounded-full bg-[var(--color-error)]" />
+                            {error}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+
+                      {/* Submit */}
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full py-3 rounded-xl bg-[var(--color-primary)] text-white text-sm font-semibold hover:bg-[var(--color-primary-alt)] disabled:opacity-60 disabled:cursor-not-allowed transition-colors group relative overflow-hidden cursor-pointer border-none mt-1"
+                      >
+                        <span className="relative z-10 flex items-center justify-center gap-2">
+                          {loading
+                            ? mode === "password"
+                              ? "Logger inn..."
+                              : "Sender lenke..."
+                            : mode === "password"
+                              ? "Logg inn"
+                              : "Send innloggingslenke"}
+                          {!loading && (
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                          )}
+                        </span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+                      </button>
+                    </motion.form>
+
+                    {/* Glemt passord */}
+                    {mode === "password" && (
+                      <div className="mt-5 text-center">
+                        <button
+                          type="button"
+                          onClick={() => setMode("magic")}
+                          className="text-[13px] cursor-pointer bg-transparent border-none text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors"
+                        >
+                          Glemt passord? Bruk magic link
+                        </button>
+                      </div>
+                    )}
+                  </PortalCard>
+                </motion.div>
+
+                {/* Footer */}
+                <motion.p
+                  variants={fadeInUp}
+                  className="text-center text-sm mt-8 text-[var(--color-muted)]"
+                >
+                  Har du ikke tilgang?{" "}
+                  <a
+                    href="/academy"
+                    className="font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary-alt)] transition-colors"
+                  >
+                    Søk om plass
+                  </a>
+                </motion.p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </section>
+    </main>
   );
 }
