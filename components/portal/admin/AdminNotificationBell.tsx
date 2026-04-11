@@ -13,51 +13,75 @@ export function AdminNotificationBell({ className }: AdminNotificationBellProps)
   const [unreadCount, setUnreadCount] = useState(0);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [hasNewNotification, setHasNewNotification] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(true);
   const timeoutRef = useRef<number | null>(null);
 
   // Hent antall uleste notifikasjoner
-  const fetchUnreadCount = async () => {
+  const fetchUnreadCount = async (signal?: AbortSignal) => {
     try {
       const response = await fetch("/api/portal/admin/notifications", {
-        method: "HEAD",
+        method: "GET",
+        signal,
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        const newCount = data.unreadCount || 0;
-
-        setUnreadCount((current) => {
-          if (newCount > current) {
-            setHasNewNotification(true);
-            timeoutRef.current = window.setTimeout(() => {
-              setHasNewNotification(false);
-              timeoutRef.current = null;
-            }, 2000);
-          }
-
-          return newCount;
-        });
+      // Stopp polling ved auth-feil — bruker er ikke innlogget som admin
+      if (response.status === 401 || response.status === 403) {
+        setIsAuthorized(false);
+        return;
       }
+
+      if (!response.ok) {
+        return;
+      }
+
+      // Sikker JSON-parsing (endepunktet kan returnere tom body)
+      const text = await response.text();
+      if (!text) return;
+
+      const data = JSON.parse(text) as { unreadCount?: number };
+      const newCount = data.unreadCount || 0;
+
+      setUnreadCount((current) => {
+        if (newCount > current) {
+          setHasNewNotification(true);
+          timeoutRef.current = window.setTimeout(() => {
+            setHasNewNotification(false);
+            timeoutRef.current = null;
+          }, 2000);
+        }
+
+        return newCount;
+      });
     } catch (error) {
-      console.error("Failed to fetch unread count:", error);
+      // Ignorer AbortError (cleanup)
+      if (error instanceof Error && error.name === "AbortError") return;
+      // Stille logging — ikke spam konsollen
     }
   };
 
   useEffect(() => {
-    const load = async () => {
-      await fetchUnreadCount();
-    };
+    const controller = new AbortController();
 
-    void load();
-    const interval = window.setInterval(load, 30000);
+    void fetchUnreadCount(controller.signal);
+
+    // Stopp polling hvis ikke autorisert
+    if (!isAuthorized) return;
+
+    const interval = window.setInterval(() => {
+      void fetchUnreadCount(controller.signal);
+    }, 30000);
 
     return () => {
+      controller.abort();
       if (timeoutRef.current !== null) {
         window.clearTimeout(timeoutRef.current);
       }
       window.clearInterval(interval);
     };
-  }, []);
+  }, [isAuthorized]);
+
+  // Skjul komponenten helt hvis ikke autorisert
+  if (!isAuthorized) return null;
 
   return (
     <>
@@ -80,7 +104,7 @@ export function AdminNotificationBell({ className }: AdminNotificationBellProps)
                 transition={{ 
                   duration: hasNewNotification ? 0.3 : 0.15,
                 }}
-                className="absolute -top-1.5 -right-1.5 min-w-[14px] h-[14px] px-1 bg-[var(--hg-error)] text-white text-[9px] font-semibold rounded-full flex items-center justify-center"
+                className="absolute -top-1.5 -right-1.5 min-w-[14px] h-[14px] px-1 bg-[var(--color-error)] text-white text-[9px] font-semibold rounded-full flex items-center justify-center"
               >
                 {unreadCount > 9 ? "9+" : unreadCount}
               </motion.span>
@@ -93,7 +117,7 @@ export function AdminNotificationBell({ className }: AdminNotificationBellProps)
               initial={{ scale: 1, opacity: 0.5 }}
               animate={{ scale: 2, opacity: 0 }}
               transition={{ duration: 0.5, repeat: 2 }}
-              className="absolute inset-0 rounded-full bg-[var(--hg-error)]/30"
+              className="absolute inset-0 rounded-full bg-[var(--color-error)]/30"
             />
           )}
         </div>

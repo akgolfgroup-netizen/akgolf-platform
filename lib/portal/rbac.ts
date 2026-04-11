@@ -38,27 +38,21 @@ export function canAccessMissionControl(role?: string): boolean {
  */
 export function canAccessMCPage(
   role: string | undefined,
-  page:
-    | "hub"
-    | "focus"
-    | "kalender"
-    | "fasiliteter"
-    | "bookinger"
-    | "elever"
-    | "meldinger"
-    | "godkjenninger"
-    | "ai-assistent"
-    | "okter"
-    | "turneringer"
-    | "agenter"
-    | "okonomi"
-    | "rapporter"
-    | "e-postmaler"
+  page: string
 ): boolean {
   if (!role) return false;
 
   // Pages accessible to all MC users (ADMIN, INSTRUCTOR, INVITED)
-  const publicPages = ["hub", "focus", "kalender", "fasiliteter"];
+  const publicPages = [
+    "hub",
+    "admin",
+    "focus",
+    "kalender",
+    "fasiliteter",
+    "mission-board",
+    "denne-uken",
+    "tilgjengelighet",
+  ];
   if (publicPages.includes(page)) {
     return canAccessMissionControl(role);
   }
@@ -72,6 +66,10 @@ export function canAccessMCPage(
     "ai-assistent",
     "okter",
     "turneringer",
+    "treningsplan",
+    "notifications",
+    "kapasitet",
+    "analytics",
   ];
   if (staffPages.includes(page)) {
     return isStaff(role);
@@ -83,7 +81,8 @@ export function canAccessMCPage(
     return isAdmin(role);
   }
 
-  return false;
+  // Default: gi tilgang til alle MC-brukere for ukjente sider
+  return canAccessMissionControl(role);
 }
 
 const TIER_RANK: Record<SubscriptionTier, number> = {

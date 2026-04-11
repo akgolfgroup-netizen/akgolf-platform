@@ -42,22 +42,25 @@ import type {
 } from "./actions";
 import { getProPlayers, getProComparison } from "./actions";
 
-// ── Design tokens as hex (for Recharts which doesn't support CSS vars) ──
+// ── Design tokens as hex (for Recharts which doesn't støtter CSS vars) ──
+// Verdier speiler brand guide V2.0-tokens i globals.css.
+// Bruk CSS-variabler i JSX der det er mulig — dette objektet brukes kun
+// på props som Recharts trenger som literale strenger.
 
 const COLORS = {
-  black: "#1c1c16",
-  grey100: "#f7f3ea",
-  grey200: "#e8e4db",
-  grey400: "#8a9385",
-  grey500: "#6b7366",
-  grey600: "#42493e",
-  grey900: "#1c1c16",
-  brand: "#154212",
-  blue: "#3b82f6",
-  success: "#22c55e",
-  error: "#ef4444",
-  warning: "#f59e0b",
-  ai: "#8b5cf6",
+  black: "#0A1F18", // --color-grey-900
+  grey100: "#ECF0EF", // --color-grey-100
+  grey200: "#D5DFDB", // --color-grey-200
+  grey400: "#7A8C85", // --color-grey-400
+  grey500: "#5A6E66", // --color-grey-500
+  grey600: "#3D5249", // --color-grey-600
+  grey900: "#0A1F18", // --color-grey-900
+  brand: "#005840", // --color-primary
+  blue: "#C48A32", // --color-warning (kontrastfarge for pro-sammenligning vs spiller-brand)
+  success: "#2A7D5A", // --color-success
+  error: "#B84233", // --color-error
+  warning: "#C48A32", // --color-warning
+  ai: "#AF52DE", // --color-ai
 };
 
 // ── SG category config ──
@@ -157,20 +160,20 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
     return (
       <div className="space-y-6">
         <header>
-          <h1 className="text-2xl font-bold text-[#1c1c16]">Benchmarking</h1>
-          <p className="text-[#6b7366] mt-1">
+          <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Benchmarking</h1>
+          <p className="text-[var(--color-grey-500)] mt-1">
             Sammenlign deg med PGA Tour og proffspillere
           </p>
         </header>
 
-        <div className="rounded-2xl border border-[#c2c9bb]/50 bg-white p-12 text-center">
-          <div className="mx-auto w-12 h-12 rounded-xl bg-[#f7f3ea] flex items-center justify-center mb-4">
-            <BarChart3 className="w-6 h-6 text-[#c2c9bb]" />
+        <div className="rounded-2xl border border-[var(--color-grey-200)]/70 bg-white p-12 text-center">
+          <div className="mx-auto w-12 h-12 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center mb-4">
+            <BarChart3 className="w-6 h-6 text-[var(--color-grey-300)]" />
           </div>
-          <h2 className="text-lg font-semibold text-[#1c1c16] mb-2">
+          <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-2">
             Ingen statistikk ennå
           </h2>
-          <p className="text-sm text-[#6b7366] max-w-md mx-auto">
+          <p className="text-sm text-[var(--color-grey-500)] max-w-md mx-auto">
             Registrer Strokes Gained-data fra rundene dine under Statistikk for
             å se hvordan du måler deg mot PGA Tour-spillere.
           </p>
@@ -337,11 +340,11 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
     <div className="space-y-6">
       {/* ── Header ── */}
       <header>
-        <h1 className="text-2xl font-bold text-[#1c1c16]">Benchmarking</h1>
-        <p className="text-[#6b7366] mt-1">
+        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Benchmarking</h1>
+        <p className="text-[var(--color-grey-500)] mt-1">
           Sammenlign deg med PGA Tour og proffspillere
           {profile.roundCount > 0 && (
-            <span className="ml-2 text-[#8a9385]">
+            <span className="ml-2 text-[var(--color-grey-400)]">
               Basert på {profile.roundCount} runder
             </span>
           )}
@@ -426,7 +429,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             {percentileData.map((d) => (
               <div
                 key={d.category}
-                className="flex items-center gap-1.5 text-xs text-[#6b7366]"
+                className="flex items-center gap-1.5 text-xs text-[var(--color-grey-500)]"
               >
                 <div
                   className="w-2.5 h-2.5 rounded-full"
@@ -446,17 +449,17 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         >
           {/* Overall level */}
           {akCategory && (
-            <div className="flex items-center gap-4 mt-4 p-4 rounded-xl bg-[#f7f3ea]">
-              <div className="w-14 h-14 rounded-xl bg-[#154212] flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-4 mt-4 p-4 rounded-xl bg-[var(--color-grey-100)]">
+              <div className="w-14 h-14 rounded-xl bg-[var(--color-primary)] flex items-center justify-center shrink-0">
                 <span className="text-2xl font-bold text-white">
                   {akCategory.category}
                 </span>
               </div>
               <div>
-                <p className="text-sm font-semibold text-[#1c1c16]">
+                <p className="text-sm font-semibold text-[var(--color-grey-900)]">
                   {akCategory.label}
                 </p>
-                <p className="text-xs text-[#6b7366]">
+                <p className="text-xs text-[var(--color-grey-500)]">
                   HCP {akCategory.handicapRange[0]}-
                   {akCategory.handicapRange[1]} | Snitt{" "}
                   {akCategory.averageScore} slag
@@ -470,27 +473,27 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             {categoryAK.map((c) => (
               <div
                 key={c.label}
-                className="p-3 rounded-xl border border-[#c2c9bb]/50 bg-white"
+                className="p-3 rounded-xl border border-[var(--color-grey-200)]/70 bg-white"
               >
-                <p className="text-[10px] font-medium uppercase tracking-wider text-[#8a9385] mb-1">
+                <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-grey-400)] mb-1">
                   {c.label}
                 </p>
                 <div className="flex items-baseline gap-2">
                   {c.category ? (
                     <>
-                      <span className="text-xl font-bold text-[#1c1c16]">
+                      <span className="text-xl font-bold text-[var(--color-grey-900)]">
                         {c.category.category}
                       </span>
-                      <span className="text-xs text-[#6b7366]">
+                      <span className="text-xs text-[var(--color-grey-500)]">
                         {c.category.label}
                       </span>
                     </>
                   ) : (
-                    <span className="text-sm text-[#8a9385]">Ingen data</span>
+                    <span className="text-sm text-[var(--color-grey-400)]">Ingen data</span>
                   )}
                 </div>
                 {c.userVal !== null && (
-                  <p className="text-xs text-[#6b7366] mt-1">
+                  <p className="text-xs text-[var(--color-grey-500)] mt-1">
                     SG: {c.userVal.toFixed(2)}
                   </p>
                 )}
@@ -508,34 +511,34 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
       >
         {/* Search bar */}
         <div className="relative mt-4 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8a9385]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-400)]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Søk etter spiller (f.eks. Viktor Hovland)"
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#c2c9bb]/50 bg-[#f7f3ea] text-sm text-[#1c1c16] placeholder:text-[#8a9385] focus:outline-none focus:border-[#154212] transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[var(--color-grey-200)]/70 bg-[var(--color-grey-100)] text-sm text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:border-[var(--color-primary)] transition-colors"
           />
           {isSearching && (
-            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8a9385] animate-spin" />
+            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-400)] animate-spin" />
           )}
         </div>
 
         {/* Search results dropdown */}
         {searchResults.length > 0 && (
-          <div className="mt-2 max-w-md rounded-xl border border-[#c2c9bb]/50 bg-white shadow-lg overflow-hidden">
+          <div className="mt-2 max-w-md rounded-xl border border-[var(--color-grey-200)]/70 bg-white shadow-lg overflow-hidden">
             {searchResults.map((player) => (
               <button
                 key={player.dgId}
                 onClick={() => handleSelectPro(player.dgId)}
                 disabled={isPending}
-                className="w-full text-left px-4 py-3 hover:bg-[#f7f3ea] transition-colors border-b border-[#f7f3ea] last:border-b-0 disabled:opacity-50"
+                className="w-full text-left px-4 py-3 hover:bg-[var(--color-grey-100)] transition-colors border-b border-[var(--color-grey-200)]/50 last:border-b-0 disabled:opacity-50"
               >
-                <span className="text-sm font-medium text-[#1c1c16]">
+                <span className="text-sm font-medium text-[var(--color-grey-900)]">
                   {player.name}
                 </span>
                 {player.sgTotal !== null && (
-                  <span className="ml-2 text-xs text-[#6b7366]">
+                  <span className="ml-2 text-xs text-[var(--color-grey-500)]">
                     SG Total: {player.sgTotal.toFixed(2)}
                   </span>
                 )}
@@ -549,7 +552,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Radar chart */}
             <div>
-              <h3 className="text-sm font-semibold text-[#1c1c16] mb-3">
+              <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-3">
                 SG-profil: Du vs {selectedPro.pro.name}
               </h3>
               <div className="h-[300px]">
@@ -625,7 +628,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
 
             {/* Side-by-side values */}
             <div>
-              <h3 className="text-sm font-semibold text-[#1c1c16] mb-3">
+              <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-3">
                 Detaljert sammenligning
               </h3>
               <div className="space-y-3">
@@ -663,25 +666,25 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                   return (
                     <div
                       key={row.label}
-                      className="flex items-center justify-between p-3 rounded-xl border border-[#c2c9bb]/50 bg-white"
+                      className="flex items-center justify-between p-3 rounded-xl border border-[var(--color-grey-200)]/70 bg-white"
                     >
-                      <span className="text-sm font-medium text-[#6b7366] w-20">
+                      <span className="text-sm font-medium text-[var(--color-grey-500)] w-20">
                         {row.label}
                       </span>
                       <div className="flex items-center gap-6 text-sm">
-                        <span className="font-mono font-semibold text-[#1c1c16] w-16 text-right">
+                        <span className="font-mono font-semibold text-[var(--color-grey-900)] w-16 text-right">
                           {row.yours !== null ? row.yours.toFixed(2) : "-"}
                         </span>
-                        <span className="text-[#c2c9bb]">vs</span>
-                        <span className="font-mono font-semibold text-[#1c1c16] w-16">
+                        <span className="text-[var(--color-grey-300)]">vs</span>
+                        <span className="font-mono font-semibold text-[var(--color-grey-900)] w-16">
                           {row.theirs !== null ? row.theirs.toFixed(2) : "-"}
                         </span>
                         {diff !== null && (
                           <span
                             className={`text-xs font-medium w-16 text-right ${
                               diff >= 0
-                                ? "text-[#22c55e]"
-                                : "text-[#ef4444]"
+                                ? "text-[var(--color-success)]"
+                                : "text-[var(--color-error)]"
                             }`}
                           >
                             {diff >= 0 ? "+" : ""}
@@ -700,8 +703,8 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         {/* No pro selected placeholder */}
         {!selectedPro && !isPending && (
           <div className="mt-6 py-8 text-center">
-            <Crosshair className="w-8 h-8 text-[#c2c9bb] mx-auto mb-3" />
-            <p className="text-sm text-[#8a9385]">
+            <Crosshair className="w-8 h-8 text-[var(--color-grey-300)] mx-auto mb-3" />
+            <p className="text-sm text-[var(--color-grey-400)]">
               Søk etter en spiller for å se sammenligning
             </p>
           </div>
@@ -709,8 +712,8 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
 
         {isPending && !isSearching && (
           <div className="mt-6 py-8 text-center">
-            <Loader2 className="w-6 h-6 text-[#8a9385] mx-auto mb-3 animate-spin" />
-            <p className="text-sm text-[#8a9385]">Henter spillerdata...</p>
+            <Loader2 className="w-6 h-6 text-[var(--color-grey-400)] mx-auto mb-3 animate-spin" />
+            <p className="text-sm text-[var(--color-grey-400)]">Henter spillerdata...</p>
           </div>
         )}
       </BentoCard>
@@ -732,30 +735,30 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
               return (
                 <div
                   key={area.label}
-                  className="p-4 rounded-xl border border-[#c2c9bb]/50 bg-[#f7f3ea]/50"
+                  className="p-4 rounded-xl border border-[var(--color-grey-200)]/70 bg-[var(--color-grey-100)]/50"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-[#1c1c16]">
+                    <span className="text-sm font-medium text-[var(--color-grey-900)]">
                       {area.label}
                     </span>
-                    <span className="text-xs font-semibold text-[#22c55e] bg-[#22c55e]/10 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-semibold text-[var(--color-success)] bg-[var(--color-success)]/10 px-2 py-0.5 rounded-full">
                       -{hcpImpact} HCP
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-[#6b7366]">
+                  <div className="flex items-center gap-2 text-sm text-[var(--color-grey-500)]">
                     <span className="font-mono">
                       {area.current.toFixed(2)} SG
                     </span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#8a9385]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[var(--color-grey-400)]" />
                     <span className="font-mono font-semibold">
                       {newSg.toFixed(2)} SG
                     </span>
-                    <span className="text-xs text-[#8a9385] ml-1">
+                    <span className="text-xs text-[var(--color-grey-400)] ml-1">
                       (+{area.improvement.toFixed(2)})
                     </span>
                   </div>
                   {/* Progress bar showing how close to 0 */}
-                  <div className="mt-2 h-1.5 rounded-full bg-[#f7f3ea] overflow-hidden">
+                  <div className="mt-2 h-1.5 rounded-full bg-[var(--color-grey-100)] overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -769,7 +772,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             })}
           </div>
 
-          <p className="text-[10px] text-[#8a9385] mt-4">
+          <p className="text-[10px] text-[var(--color-grey-400)] mt-4">
             Estimater er basert på historiske sammenhenger mellom SG og handicap.
             Faktisk effekt varierer.
           </p>
@@ -847,25 +850,25 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
               {/* Pro approach overlay if available */}
               {proApproachData && (
                 <div className="mt-4">
-                  <p className="text-xs font-medium text-[#6b7366] mb-2">
+                  <p className="text-xs font-medium text-[var(--color-grey-500)] mb-2">
                     Sammenligning med {selectedPro?.pro.name} (yards)
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {proApproachData.map((d) => (
                       <div
                         key={d.bucket}
-                        className="text-center p-2 rounded-lg bg-[#f7f3ea]"
+                        className="text-center p-2 rounded-lg bg-[var(--color-grey-100)]"
                       >
-                        <p className="text-[10px] font-medium uppercase tracking-wider text-[#8a9385] mb-1">
+                        <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-grey-400)] mb-1">
                           {d.bucket}
                         </p>
-                        <p className="text-xs text-[#1c1c16]">
+                        <p className="text-xs text-[var(--color-grey-900)]">
                           Du:{" "}
                           <span className="font-mono font-semibold">
                             {d.player !== null ? d.player.toFixed(1) : "-"}
                           </span>
                         </p>
-                        <p className="text-xs text-[#6b7366]">
+                        <p className="text-xs text-[var(--color-grey-500)]">
                           Pro:{" "}
                           <span className="font-mono">
                             {d.pro !== null ? d.pro.toFixed(1) : "-"}
@@ -879,8 +882,8 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             </>
           ) : (
             <div className="py-10 text-center">
-              <Target className="w-8 h-8 text-[#c2c9bb] mx-auto mb-3" />
-              <p className="text-sm text-[#8a9385]">
+              <Target className="w-8 h-8 text-[var(--color-grey-300)] mx-auto mb-3" />
+              <p className="text-sm text-[var(--color-grey-400)]">
                 Legg til approach-statistikk per avstand i rundene dine for å se
                 denne analysen.
               </p>

@@ -35,27 +35,27 @@ export default function TesterPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[#1c1c16]">DECADE Tester</h1>
-        <p className="text-[#6b7366] mt-1">Standardiserte tester for å måle fremgang</p>
+        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">DECADE Tester</h1>
+        <p className="text-[var(--color-grey-500)] mt-1">Standardiserte tester for å måle fremgang</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#6b7366]">Fullførte tester</p>
-          <p className="text-3xl font-bold text-[#1c1c16] mt-1">5/6</p>
+        <div className="bg-white rounded-2xl p-5 border border-[var(--color-grey-200)]/70">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">Fullførte tester</p>
+          <p className="text-3xl font-bold text-[var(--color-grey-900)] mt-1">5/6</p>
         </div>
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#6b7366]">Total score</p>
-          <p className="text-3xl font-bold text-[#1c1c16] mt-1">385</p>
+        <div className="bg-white rounded-2xl p-5 border border-[var(--color-grey-200)]/70">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">Total score</p>
+          <p className="text-3xl font-bold text-[var(--color-grey-900)] mt-1">385</p>
         </div>
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#6b7366]">Ranking</p>
-          <p className="text-3xl font-bold text-[#1c1c16] mt-1">#3</p>
+        <div className="bg-white rounded-2xl p-5 border border-[var(--color-grey-200)]/70">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">Ranking</p>
+          <p className="text-3xl font-bold text-[var(--color-grey-900)] mt-1">#3</p>
         </div>
-        <div className="bg-white rounded-2xl p-5 border border-[#c2c9bb]/50">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#6b7366]">Beste test</p>
-          <p className="text-3xl font-bold text-[#1c1c16] mt-1">Putting</p>
+        <div className="bg-white rounded-2xl p-5 border border-[var(--color-grey-200)]/70">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">Beste test</p>
+          <p className="text-3xl font-bold text-[var(--color-grey-900)] mt-1">Putting</p>
         </div>
       </div>
 
@@ -65,8 +65,8 @@ export default function TesterPage() {
           onClick={() => setSelectedCategory(null)}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
             selectedCategory === null
-              ? "bg-[#154212] text-white"
-              : "bg-white text-[#6b7366] border border-[#c2c9bb]/50 hover:bg-[#f7f3ea]"
+              ? "bg-[var(--color-primary)] text-white"
+              : "bg-white text-[var(--color-grey-500)] border border-[var(--color-grey-200)]/70 hover:bg-[var(--color-grey-100)]"
           }`}
         >
           Alle
@@ -77,8 +77,8 @@ export default function TesterPage() {
             onClick={() => setSelectedCategory(cat)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               selectedCategory === cat
-                ? "bg-[#154212] text-white"
-                : "bg-white text-[#6b7366] border border-[#c2c9bb]/50 hover:bg-[#f7f3ea]"
+                ? "bg-[var(--color-primary)] text-white"
+                : "bg-white text-[var(--color-grey-500)] border border-[var(--color-grey-200)]/70 hover:bg-[var(--color-grey-100)]"
             }`}
           >
             {cat}
@@ -96,32 +96,32 @@ export default function TesterPage() {
             transition={{ delay: index * 0.05 }}
             className={`bg-white rounded-2xl p-5 border transition-all ${
               test.locked
-                ? "border-[#c2c9bb]/30 opacity-60"
-                : "border-[#c2c9bb]/50 hover:shadow-md cursor-pointer"
+                ? "border-[var(--color-grey-200)]/50 opacity-60"
+                : "border-[var(--color-grey-200)]/70 hover:shadow-md cursor-pointer"
             }`}
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold text-[#8a9385] uppercase tracking-wider">
+                  <span className="text-xs font-bold text-[var(--color-grey-400)] uppercase tracking-wider">
                     {test.category}
                   </span>
-                  {test.locked && <Lock className="w-3 h-3 text-[#8a9385]" />}
+                  {test.locked && <Lock className="w-3 h-3 text-[var(--color-grey-400)]" />}
                 </div>
-                <h3 className="font-semibold text-[#1c1c16]">{test.name}</h3>
-                <p className="text-sm text-[#6b7366] mt-1">{test.description}</p>
+                <h3 className="font-semibold text-[var(--color-grey-900)]">{test.name}</h3>
+                <p className="text-sm text-[var(--color-grey-500)] mt-1">{test.description}</p>
 
                 {test.bestResult && !test.locked && (
                   <div className="flex items-center gap-4 mt-4">
                     <div className="flex items-center gap-2">
-                      <Trophy className="w-4 h-4 text-[#f59e0b]" />
-                      <span className="text-sm font-semibold text-[#1c1c16]">
+                      <Trophy className="w-4 h-4 text-[var(--color-warning)]" />
+                      <span className="text-sm font-semibold text-[var(--color-grey-900)]">
                         {test.bestResult} {test.unit}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Target className="w-4 h-4 text-[#154212]" />
-                      <span className="text-sm text-[#6b7366]">Mål: {test.target}</span>
+                      <Target className="w-4 h-4 text-[var(--color-primary)]" />
+                      <span className="text-sm text-[var(--color-grey-500)]">Mål: {test.target}</span>
                     </div>
                   </div>
                 )}
@@ -131,8 +131,8 @@ export default function TesterPage() {
                 disabled={test.locked}
                 className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
                   test.locked
-                    ? "bg-[#f7f3ea] text-[#c2c9bb]"
-                    : "bg-[#154212] text-white hover:bg-[#0d2e0c]"
+                    ? "bg-[var(--color-grey-100)] text-[var(--color-grey-300)]"
+                    : "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-alt)]"
                 }`}
               >
                 {test.bestResult ? (
@@ -147,41 +147,41 @@ export default function TesterPage() {
       </div>
 
       {/* Leaderboard */}
-      <div className="bg-white rounded-2xl p-6 border border-[#c2c9bb]/50">
-        <h3 className="font-semibold text-[#1c1c16] mb-4">Toppliste</h3>
+      <div className="bg-white rounded-2xl p-6 border border-[var(--color-grey-200)]/70">
+        <h3 className="font-semibold text-[var(--color-grey-900)] mb-4">Toppliste</h3>
         <div className="space-y-3">
           {leaderboard.map((player, index) => (
             <div
               key={player.name}
               className={`flex items-center gap-4 p-3 rounded-xl ${
-                player.name === "Anders Kristiansen" ? "bg-[#d2f000]/10 border border-[#d2f000]/30" : "bg-[#f7f3ea]"
+                player.name === "Anders Kristiansen" ? "bg-[var(--color-accent-cta)]/15 border border-[var(--color-accent-cta)]/40" : "bg-[var(--color-grey-100)]"
               }`}
             >
               <span
                 className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${
                   index === 0
-                    ? "bg-[#f59e0b] text-white"
+                    ? "bg-[var(--color-warning)] text-white"
                     : index === 1
-                    ? "bg-[#8a9385] text-white"
+                    ? "bg-[var(--color-grey-400)] text-white"
                     : index === 2
-                    ? "bg-[#cd7f32] text-white"
-                    : "bg-white text-[#6b7366]"
+                    ? "bg-[var(--color-grey-600)] text-white"
+                    : "bg-white text-[var(--color-grey-500)]"
                 }`}
               >
                 {player.rank}
               </span>
-              <div className="w-10 h-10 rounded-full bg-[#154212] flex items-center justify-center text-white text-sm font-bold">
+              <div className="w-10 h-10 rounded-full bg-[var(--color-primary)] flex items-center justify-center text-white text-sm font-bold">
                 {player.avatar}
               </div>
               <div className="flex-1">
-                <p className="font-medium text-[#1c1c16]">
+                <p className="font-medium text-[var(--color-grey-900)]">
                   {player.name}
                   {player.name === "Anders Kristiansen" && (
-                    <span className="ml-2 text-xs text-[#154212]">(Deg)</span>
+                    <span className="ml-2 text-xs text-[var(--color-primary)]">(Deg)</span>
                   )}
                 </p>
               </div>
-              <p className="font-bold text-[#1c1c16]">{player.score} poeng</p>
+              <p className="font-bold text-[var(--color-grey-900)]">{player.score} poeng</p>
             </div>
           ))}
         </div>

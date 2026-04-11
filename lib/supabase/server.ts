@@ -14,8 +14,13 @@ export async function createServerSupabase() {
           return cookieStore.getAll();
         },
         setAll(cookiesToSet) {
-          for (const { name, value, options } of cookiesToSet) {
-            cookieStore.set(name, value, options);
+          try {
+            for (const { name, value, options } of cookiesToSet) {
+              cookieStore.set(name, value, options);
+            }
+          } catch {
+            // Called from a Server Component. This can be ignored if you have
+            // middleware/proxy that refreshes the session.
           }
         },
       },
