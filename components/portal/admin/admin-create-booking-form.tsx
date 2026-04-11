@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { adminCreateBooking } from "@/app/admin/(authed)/bookinger/actions";
+import { adminCreateBooking } from "@/app/admin/(authed)/bookinger/create-actions";
 import { Check } from "lucide-react";
 
 interface Props {

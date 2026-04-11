@@ -21,12 +21,12 @@ import {
 import Link from "next/link";
 import { format, addDays, startOfWeek } from "date-fns";
 import { nb } from "date-fns/locale";
-import { adminCreateBooking, searchStudentsForBooking } from "../actions";
+import { adminCreateBooking, searchStudentsForBooking } from "../create-actions";
 import type {
   ServiceTypeOption,
   InstructorOption,
   StudentOption,
-} from "../actions";
+} from "../create-actions";
 
 // ── Props ──
 

@@ -1,7 +1,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { getServiceTypes, getInstructors } from "../actions";
+import { getServiceTypes, getInstructors } from "../create-actions";
 import { NyBookingClient } from "./ny-booking-client";
 
 export const metadata = {
