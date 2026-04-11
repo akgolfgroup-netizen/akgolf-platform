@@ -4,22 +4,26 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { useSidebar } from "./sidebar-context";
 import { NotificationBell } from "./notification-bell";
+import { AKLogo } from "@/components/website/AKLogo";
 
 export function MobileHeader() {
   const { toggle } = useSidebar();
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-14 z-30 flex items-center justify-between px-4 lg:hidden bg-white border-b border-[#D5DFDB]">
+    <header className="fixed top-0 left-0 right-0 h-14 z-30 flex items-center justify-between px-4 lg:hidden bg-white/95 backdrop-blur-sm border-b border-[var(--color-grey-200)]">
       <button
         onClick={toggle}
-        className="p-2 rounded-lg text-[#7A8C85] hover:text-[#0A1F18] hover:bg-[#ECF0EF] transition-colors cursor-pointer"
+        className="p-2 rounded-lg text-[var(--color-grey-400)] hover:text-[var(--color-primary)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
         aria-label="Meny"
       >
         <Menu className="w-5 h-5" />
       </button>
 
-      <Link href="/portal" className="text-sm font-bold text-[#0A1F18]">
-        AK Golf
+      <Link href="/portal" className="flex items-center gap-2">
+        <AKLogo variant="black" size={24} />
+        <span className="text-sm font-bold text-[var(--color-grey-900)]">
+          AK Golf
+        </span>
       </Link>
 
       <NotificationBell />

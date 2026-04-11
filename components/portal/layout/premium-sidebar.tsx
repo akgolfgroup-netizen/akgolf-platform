@@ -92,19 +92,26 @@ function NavLink({
           whileHover={{ x: 2 }}
           transition={{ duration: 0.15 }}
           className={cn(
-            "flex items-center gap-3 px-4 py-2 mx-3 rounded-lg text-[13px] font-medium transition-[background-color,color] duration-200",
+            "flex items-center gap-3 px-4 py-2 mx-3 rounded-lg text-[13px] font-medium transition-[background-color,color] duration-200 relative",
             active
-              ? "bg-[#f7f3ea] text-[#154212] font-semibold"
-              : "text-[#6b7366] hover:text-[#1c1c16] hover:bg-[#f7f3ea]"
+              ? "bg-[var(--color-primary)] text-white font-semibold shadow-[0_0_0_1px_var(--color-accent-cta)]"
+              : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)]"
           )}
         >
+          {active && (
+            <span
+              aria-hidden
+              className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] rounded-r-full bg-[var(--color-accent-cta)]"
+            />
+          )}
           <div className={cn(
-            "w-[18px] h-[18px] rounded-[5px] flex items-center justify-center transition-colors shrink-0",
-            active ? "bg-[#154212]" : ""
+            "w-[18px] h-[18px] rounded-[5px] flex items-center justify-center transition-colors shrink-0"
           )}>
             <item.icon className={cn(
               "w-3.5 h-3.5 transition-colors",
-              active ? "text-white" : "text-[#8a9385] group-hover:text-[#154212]"
+              active
+                ? "text-[var(--color-accent-cta)]"
+                : "text-[var(--color-grey-400)] group-hover:text-[var(--color-primary)]"
             )} />
           </div>
 
@@ -118,7 +125,7 @@ function NavLink({
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
     <div className="px-6 pt-6 pb-2">
-      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#c2c9bb]">
+      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-grey-300)]">
         {children}
       </p>
     </div>
@@ -171,10 +178,10 @@ function SidebarContent({
               <motion.div
                 whileHover={{ x: 4 }}
                 transition={{ duration: 0.15 }}
-                className="flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium text-[#6b7366] hover:text-[#ef4444] hover:bg-[#ef4444]/10 transition-[background-color,color] duration-200"
+                className="flex items-center gap-3 px-4 py-2.5 mx-3 rounded-lg text-sm font-medium text-[var(--color-grey-500)] hover:text-[var(--color-error)] hover:bg-[color-mix(in_srgb,var(--color-error)_10%,transparent)] transition-[background-color,color] duration-200"
               >
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#f7f3ea] group-hover:bg-[#ef4444]/20 transition-colors">
-                  <LogOut className="w-4 h-4 text-[#8a9385] group-hover:text-[#ef4444] transition-colors" />
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[var(--color-grey-100)] group-hover:bg-[color-mix(in_srgb,var(--color-error)_18%,transparent)] transition-colors">
+                  <LogOut className="w-4 h-4 text-[var(--color-grey-400)] group-hover:text-[var(--color-error)] transition-colors" />
                 </div>
                 <span>Logg ut</span>
               </motion.div>
@@ -196,7 +203,7 @@ function SidebarContent({
       </nav>
 
       {/* User footer */}
-      <div className="p-4 mx-3 mb-3 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/30">
+      <div className="p-4 mx-3 mb-3 rounded-xl bg-[var(--color-primary-soft)] border border-[var(--color-grey-200)]">
         <div className="flex items-center gap-3">
           <div className="relative">
             {user.image ? (
@@ -206,7 +213,7 @@ function SidebarContent({
                 className="w-10 h-10 rounded-full object-cover"
               />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-[#154212] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-[var(--color-primary)] flex items-center justify-center ring-1 ring-[var(--color-accent-cta)]/40">
                 <span className="text-sm font-semibold text-white">
                   {(user.name ?? "S")[0].toUpperCase()}
                 </span>
@@ -214,10 +221,10 @@ function SidebarContent({
             )}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-[#1c1c16] truncate">
+            <p className="text-sm font-medium text-[var(--color-grey-900)] truncate">
               {user.name ?? "Spiller"}
             </p>
-            <p className="text-xs font-medium text-[#154212] truncate">
+            <p className="text-xs font-medium text-[var(--color-primary)] truncate">
               {user.subscriptionTier ?? "Academy"}
             </p>
           </div>
@@ -244,17 +251,17 @@ export function PremiumSidebar({ user }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-[220px] hidden lg:flex flex-col z-20 bg-white border-r border-[#c2c9bb]/30">
+      <aside className="fixed left-0 top-0 h-full w-[220px] hidden lg:flex flex-col z-20 bg-white border-r border-[var(--color-grey-200)]">
         {/* Logo */}
-        <div className="px-5 py-4 border-b border-[#c2c9bb]/30">
+        <div className="px-5 py-4 border-b border-[var(--color-grey-200)]">
           <div className="flex items-center justify-between">
             <Link href="/portal" className="flex items-center gap-3 group">
               <AKLogo variant="black" size={32} />
               <div>
-                <span className="text-[14px] font-bold text-[#1c1c16] group-hover:text-[#154212] transition-colors">
+                <span className="text-[14px] font-bold text-[var(--color-grey-900)] group-hover:text-[var(--color-primary)] transition-colors">
                   AK Golf
                 </span>
-                <p className="text-[9px] text-[#8a9385] uppercase tracking-wider font-bold">
+                <p className="text-[9px] text-[var(--color-grey-400)] uppercase tracking-wider font-bold">
                   Academy
                 </p>
               </div>
@@ -280,7 +287,7 @@ export function PremiumSidebar({ user }: SidebarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={close}
-              className="fixed inset-0 bg-[#1c1c16]/40 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-[var(--color-grey-900)]/40 backdrop-blur-sm z-40 lg:hidden"
             />
             {/* Drawer */}
             <motion.aside
@@ -288,20 +295,20 @@ export function PremiumSidebar({ user }: SidebarProps) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-[#c2c9bb]/30"
+              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-[var(--color-grey-200)]"
             >
               {/* Close button */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[#c2c9bb]/30">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-grey-200)]">
                 <div className="flex items-center gap-3">
                   <AKLogo variant="black" size={32} />
                   <div>
-                    <span className="text-[14px] font-bold text-[#1c1c16]">AK Golf</span>
-                    <p className="text-[9px] text-[#8a9385] uppercase tracking-wider font-bold">Academy</p>
+                    <span className="text-[14px] font-bold text-[var(--color-grey-900)]">AK Golf</span>
+                    <p className="text-[9px] text-[var(--color-grey-400)] uppercase tracking-wider font-bold">Academy</p>
                   </div>
                 </div>
                 <button
                   onClick={close}
-                  className="p-2 rounded-lg text-[#8a9385] hover:text-[#1c1c16] hover:bg-[#f7f3ea] transition-colors cursor-pointer"
+                  className="p-2 rounded-lg text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
                   aria-label="Lukk meny"
                 >
                   <X className="w-5 h-5" />
