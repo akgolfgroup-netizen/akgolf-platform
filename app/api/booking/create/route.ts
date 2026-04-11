@@ -4,7 +4,7 @@ import { randomUUID } from "crypto";
 import { getPortalUser } from "@/lib/portal/auth";
 import { stripe } from "@/lib/portal/stripe";
 import { validateBooking } from "@/lib/portal/booking/validation";
-import { checkUserQuota, consumeSession } from "@/lib/portal/booking/subscription-quota";
+import { checkUserQuota, consumeSession, checkWeeklyLimit } from "@/lib/portal/booking/subscription-quota";
 import { invalidateSlotsCache, invalidateBookingsCache } from "@/lib/portal/booking/cache";
 import { syncBookingToCalendar } from "@/lib/portal/calendar/google-calendar";
 import { broadcastUpdate } from "@/app/api/portal/bookings/live/route";
@@ -182,6 +182,12 @@ export async function POST(req: NextRequest) {
     const isSubscriptionBooking = quotaCheck.hasQuota && serviceType.price === 0;
 
     if (isSubscriptionBooking) {
+      // Sjekk per-uke grense
+      const weeklyError = await checkWeeklyLimit(user.id, quotaCheck.tier);
+      if (weeklyError) {
+        return NextResponse.json({ error: weeklyError }, { status: 400 });
+      }
+
       const consumed = await consumeSession(user.id);
       if (!consumed) {
         return NextResponse.json(

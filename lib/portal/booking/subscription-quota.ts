@@ -18,6 +18,7 @@ export interface QuotaCheckResult {
   sessionsAllowed: number;
   sessionsRemaining: number;
   periodEnd: Date;
+  tier: CoachingSubscriptionTier;
   reason?: string;
 }
 
@@ -48,6 +49,47 @@ export function getSessionLimits(tier: CoachingSubscriptionTier): {
 }
 
 /**
+ * Check weekly booking limit for subscription users.
+ * Returns error message if limit exceeded, null if OK.
+ */
+export async function checkWeeklyLimit(
+  userId: string,
+  tier: CoachingSubscriptionTier
+): Promise<string | null> {
+  const limits = getSessionLimits(tier);
+  if (limits.maxPerWeek <= 0) return null;
+
+  const supabase = createServiceClient();
+
+  // Beregn mandag-sondag for innevarende uke
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // 0=sondag, 1=mandag, ...
+  const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+  const weekStart = new Date(now);
+  weekStart.setDate(now.getDate() + mondayOffset);
+  weekStart.setHours(0, 0, 0, 0);
+
+  const weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekStart.getDate() + 7);
+
+  const { count, error } = await supabase
+    .from("Booking")
+    .select("*", { count: "exact", head: true })
+    .eq("studentId", userId)
+    .in("status", ["PENDING", "CONFIRMED"])
+    .gte("startTime", weekStart.toISOString())
+    .lt("startTime", weekEnd.toISOString());
+
+  if (error) return null; // Feil i telling skal ikke blokkere booking
+
+  if ((count ?? 0) >= limits.maxPerWeek) {
+    return `Du har brukt alle dine ${limits.maxPerWeek} okt${limits.maxPerWeek === 1 ? "" : "er"} denne uken. Ny uke starter mandag.`;
+  }
+
+  return null;
+}
+
+/**
  * Check if user has available booking quota
  */
 export async function checkUserQuota(userId: string): Promise<QuotaCheckResult> {
@@ -66,9 +108,12 @@ export async function checkUserQuota(userId: string): Promise<QuotaCheckResult> 
       sessionsAllowed: 0,
       sessionsRemaining: 0,
       periodEnd: new Date(),
+      tier: "PERFORMANCE" as CoachingSubscriptionTier,
       reason: "Ingen aktiv abonnement funnet. Vennligst oppgrader til Performance eller Performance Pro.",
     };
   }
+
+  const tier = quota.tier as CoachingSubscriptionTier;
 
   // Check if period has expired
   if (new Date() > new Date(quota.periodEnd)) {
@@ -78,6 +123,7 @@ export async function checkUserQuota(userId: string): Promise<QuotaCheckResult> 
       sessionsAllowed: quota.sessionsAllowed,
       sessionsRemaining: 0,
       periodEnd: new Date(quota.periodEnd),
+      tier,
       reason: "Abonnementsperioden har utløpt. Venter på fornyelse.",
     };
   }
@@ -90,6 +136,7 @@ export async function checkUserQuota(userId: string): Promise<QuotaCheckResult> 
     sessionsAllowed: quota.sessionsAllowed,
     sessionsRemaining,
     periodEnd: new Date(quota.periodEnd),
+    tier,
     reason: sessionsRemaining <= 0
       ? `Du har brukt alle ${quota.sessionsAllowed} sesjonene dine denne måneden. Ny kvote fra ${new Date(quota.periodEnd).toLocaleDateString("nb-NO")}.`
       : undefined,
