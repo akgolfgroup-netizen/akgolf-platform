@@ -10,6 +10,7 @@ import { broadcastUpdate } from "@/app/api/portal/bookings/live/route";
 import { logger } from "@/lib/logger";
 import { notifyNewBooking, notifyBookingConfirmed } from "@/lib/portal/notifications/triggers";
 import { Prisma } from "@prisma/client";
+import { checkUserQuota, checkWeeklyLimit } from "@/lib/portal/booking/subscription-quota";
 
 interface Participant {
   name: string;
@@ -95,6 +96,15 @@ export async function POST(req: NextRequest) {
         { error: `Maks ${serviceType.maxStudents} deltakere for denne tjenesten` },
         { status: 400 }
       );
+    }
+
+    // Sjekk per-uke grense for abonnementbrukere
+    const quotaCheck = await checkUserQuota(user.id);
+    if (quotaCheck.hasQuota) {
+      const weeklyError = await checkWeeklyLimit(user.id, quotaCheck.tier);
+      if (weeklyError) {
+        return NextResponse.json({ error: weeklyError }, { status: 400 });
+      }
     }
 
     const start = new Date(startTime);
