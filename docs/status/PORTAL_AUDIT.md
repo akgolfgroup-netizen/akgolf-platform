@@ -1,10 +1,10 @@
-# Spillerportal — Audit 2026-04-11
+# Spillerportal — Audit 2026-04-12
 
 ## Sammendrag
 
-- **23 sider** + login-side
-- **21/24 bruker reelle data** (Supabase/Prisma)
-- **1 side har kun mock-data** (turneringsplan)
+- **24 sider** + login-side
+- **22/24 bruker reelle data** (Supabase/Prisma)
+- **0 sider har kun mock-data**
 - **15/24 har server/client-split** (actions.ts + *-client.tsx)
 
 ## Status per side
@@ -20,6 +20,8 @@
 | Bag | Reell (actions.ts) | Ja | OK |
 | Benchmark | Reell (actions.ts) | Ja | OK |
 | Bookinger | Reell (2 parallelle actions) | Ja | OK |
+| Bookinger/[id] | Reell (Prisma) | Ja | OK — ny |
+| Bookinger/[id]/endre | Reell (Supabase) | Ja | OK |
 | Coaching-historikk | Reell (actions.ts) | Nei | OK |
 | Dagbok | Reell (actions.ts) | Ja | OK |
 | Kalender | Reell (actions.ts) | Nei | OK |
@@ -37,25 +39,27 @@
 | Trening/tester | Reell (inline Supabase) | Nei | Hardkodet "0 fullforte" |
 | Treningsplan | Reell (2 actions) | Nei | OK |
 | Turneringer | Reell (3 actions + tour API) | Ja | OK |
-| **Turneringsplan** | **MOCK** | Ja | **Helt hardkodet** |
+| ~~Turneringsplan~~ | ~~MOCK~~ Reell (actions.ts) | Ja | OK |
 
-## Kritiske funn
+## Fullfort 2026-04-12
 
-### 1. Turneringsplan — kun mock-data
+### Turneringsplan — reell data (commit 9b53be7)
+- Mock erstattet med `actions.ts`: `getPlayerTournaments()` fra Tournament + PlayerTournamentPlan
+- Server component med `requirePortalUser()`
 
-- `mockTournaments` array med 3 hardkodede turneringer fra 2024
-- `preparationChecklist` hardkodet med 6 punkter
-- Ingen actions.ts, ingen server-side datahenting
-- Ikke beskyttet av `requirePortalUser()`
-- **Handling:** Implementer reell datahenting, koble til turneringer-tabellen
+### Bookinger/[id] — ny detaljside (commit d509d75)
+- `page.tsx`: Server component med Prisma-query inkl. ServiceType, Instructor, Location
+- `booking-detail-client.tsx`: Viser dato, tid, instruktor, sted, status, betaling
+- Handlinger: Endre tidspunkt (lenke til /endre), Avbestill med bekreftelsessteg
+- Gjenbruker `BookingStatusBadge` og `cancelBooking()` fra eksisterende kode
 
-### 2. Trening/tester — hardkodet stat
+## Gjenstående funn
 
+### 1. Trening/tester — hardkodet stat
 - Linje 78: viser alltid "0 fullforte tester" uavhengig av brukerdata
 - **Handling:** Hent faktisk fullforingsdata fra brukerens testhistorikk
 
-### 3. Apper — mangler actions.ts
-
+### 2. Apper — mangler actions.ts
 - Direkte Supabase-queries i page.tsx i stedet for via actions.ts
 - Bryter med arkitekturmonsteret brukt i alle andre sider
 - **Handling:** Migrer queries til actions.ts for konsistens
