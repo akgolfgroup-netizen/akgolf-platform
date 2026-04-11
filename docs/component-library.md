@@ -1,52 +1,39 @@
-# Component Library — AK Golf Platform
+# Komponentbibliotek — AK Golf Platform
 
-Oversikt over gjenbrukbare komponenter i portalen.
+Sjekk her FØR du bygger nye komponenter. Oppdater etter nye komponenter.
 
-## Portal — Booking
+## Portal-komponenter (`components/portal/`)
 
-| Komponent | Fil | Beskrivelse |
-|-----------|-----|-------------|
-| `BookingStatusBadge` | `components/portal/booking/booking-status-badge.tsx` | Fargekodet badge for bookingstatus (success/warning/cancelled) |
-| `UpcomingBookingCard` | `components/portal/booking/upcoming-booking-card.tsx` | Kort for kommende booking med ikon, tid, instruktor, sted |
-| `NextBookingHero` | `components/portal/booking/next-booking-hero.tsx` | Uthevet hero-visning av neste booking |
-| `PastBookingList` | `components/portal/booking/past-booking-list.tsx` | Liste over tidligere bookinger |
-| `CancellationRulesCard` | `components/portal/booking/cancellation-rules-card.tsx` | Viser avbestillingsregler |
-| `RescheduleForm` | `components/portal/booking/reschedule-form.tsx` | Skjema for endring av bookingtidspunkt |
-| `BookingHoverCardGroup` | `components/portal/booking/booking-hover-card.tsx` | Hover-effekt wrapper for booking-kort |
+| Komponent | Fil | Bruk |
+|-----------|-----|------|
+| Admin booking-liste | `admin/admin-booking-list.tsx` | Booking-oversikt i MC |
+| Admin booking-skjema | `admin/admin-create-booking-form.tsx` | Ny booking i MC |
+| Sidebar | `layout/portal-sidebar.tsx` | Portal-navigasjon |
+| Topbar | `layout/portal-topbar.tsx` | Portal-header |
 
-### Typer
+## Markedsside-komponenter (`components/website/`)
 
-- `BookingViewModel` — Grunndata for booking-visning (id, serviceName, instructorName, startTime, duration, location, status, type)
-- `BookingStatusVariant` — `"success" | "warning" | "cancelled"`
-- `CancellationRule` — Avbestillingsregel (hours, rule, fee)
-- `getStatusConfig(booking)` — Mapper BookingViewModel.status til label + variant
+| Komponent | Fil | Bruk |
+|-----------|-----|------|
+| Logo | `AKLogo.tsx` | K-mark logo |
+| Navigasjon | `WebsiteNav.tsx` | Markedsside-nav |
+| Footer | `WebsiteFooter.tsx` | Markedsside-footer |
+| Søknadsskjema | `ApplicationForm.tsx` | Søknad om plass |
 
-Definert i `components/portal/booking/booking-types.ts`.
+## Motion-wrappers (`components/motion/`)
 
-## Portal — Premium UI
+| Komponent | Bruk |
+|-----------|------|
+| `FadeIn` | Fade-in animasjon |
+| `SlideUp` | Slide-up animasjon |
 
-| Komponent | Fil | Beskrivelse |
-|-----------|-----|-------------|
-| `GlassCard` | `components/portal/premium/glass-card.tsx` | Glassmorfisme-kort med variant (light/dark) og padding |
-| `HeroHeading` | `components/portal/premium/index.ts` | Hero-overskrift med label, title, description, actions |
-| `Shimmer` | `components/portal/premium/index.ts` | Shimmer-animasjon for knapper |
-| `FadeIn` / `SlideUp` | `components/motion/` | Framer Motion wrappers |
+## UI-komponenter (`components/ui/`)
 
-## Admin — Mission Control
+shadcn/ui-baserte komponenter. Sjekk her før du installerer nye.
 
-| Komponent | Fil | Beskrivelse |
-|-----------|-----|-------------|
-| `MCTopbar` | `components/portal/mission-control/mc-topbar.tsx` | Topbar med tittel, undertittel, hamburger |
-| `AdminCard` | `components/portal/mission-control/ui/AdminCard.tsx` | Basis-kort for admin-sider |
-| `AdminButton` | `components/portal/mission-control/ui/AdminButton.tsx` | Knapp med variant (primary/secondary) |
-| `AdminBadge` | `components/portal/mission-control/ui/AdminBadge.tsx` | Badge med variant (muted/success/error) |
-| `AdminEmptyState` | `components/portal/mission-control/ui/AdminEmptyState.tsx` | Tom tilstand med ikon, tittel, beskrivelse |
+## Regler
 
-## Sider som bruker disse
-
-| Side | Komponenter |
-|------|-------------|
-| `/portal/bookinger` | BookingerClient, NextBookingHero, UpcomingBookingCard, PastBookingList, CancellationRulesCard, BookingHoverCard |
-| `/portal/bookinger/[id]` | BookingDetailClient, BookingStatusBadge, GlassCard |
-| `/portal/bookinger/[id]/endre` | RescheduleForm |
-| `/admin/meldinger` | AdminChatClient, MCTopbar, AdminCard, AdminEmptyState |
+- Lucide-ikoner kan ikke sendes som props Server → Client. Bruk `iconName` string + ICON_MAP.
+- Client components skal aldri importere `prisma`. Splitt til `*-types.ts` + `*-service.ts`.
+- Se `.claude/rules/design-system.md` for farger og tokens.
+- Se `.claude/rules/ui-patterns.md` for layout-mønstre.
