@@ -25,10 +25,10 @@ import {
 } from "lucide-react";
 import { QuickAction } from "@/components/portal/heritage/quick-action";
 import {
-  PortalHeader,
-  PortalCard,
-  PremiumBentoCard,
-  PremiumBentoGrid,
+  HeroHeading,
+  GlassCard,
+  DarkStatCard,
+  Shimmer,
   staggerContainer,
   fadeInUp,
 } from "@/components/portal/premium";
@@ -114,144 +114,185 @@ export default function TurneringsplanPage() {
     (t) => t.status === "registered",
   ).length;
 
+  const completedCount = 2;
+
   return (
-    <div className="space-y-8">
-      <PortalHeader
-        label="Portal"
-        title="Turneringsplan"
+    <div className="space-y-10">
+      <HeroHeading
+        label="Sesong 2026"
+        title={
+          <>
+            <span className="font-serif italic text-[var(--color-primary)] font-normal">
+              Turnerings
+            </span>
+            plan
+            <span className="text-[var(--color-accent-cta)]">.</span>
+          </>
+        }
         description="Planlegg og forbered dine turneringer — periodisering, sjekklister og forberedelse."
         actions={
-          <button className="inline-flex items-center gap-2 rounded-xl bg-[var(--color-primary)] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-primary-alt)]">
-            <Plus className="h-4 w-4" />
-            Legg til turnering
+          <button className="relative h-11 px-6 rounded-full bg-[var(--color-accent-cta)] text-[var(--color-grey-900)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group">
+            <Shimmer />
+            <Plus className="h-3.5 w-3.5 relative z-10" />
+            <span className="relative z-10">Legg til turnering</span>
           </button>
         }
       />
 
       {/* Stats */}
-      <PremiumBentoGrid columns={3}>
-        <PremiumBentoCard
-          title="Planlagt"
-          description={`${mockTournaments.length} turneringer på planen denne sesongen.`}
-          icon={Target}
-          badge={`${mockTournaments.length}`}
-          badgeVariant="primary"
-        />
-        <PremiumBentoCard
-          title="Påmeldt"
-          description={`${registeredCount} bekreftede påmeldinger klare for spill.`}
-          icon={CheckCircle2}
-          badge={`${registeredCount}`}
-          badgeVariant="success"
-        />
-        <PremiumBentoCard
-          title="Fullført"
-          description="Turneringer du har spilt ferdig denne sesongen."
-          icon={Flag}
-          badge="2"
-          badgeVariant="neutral"
-        />
-      </PremiumBentoGrid>
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+        className="grid grid-cols-12 gap-4"
+      >
+        <div className="col-span-12 md:col-span-4">
+          <DarkStatCard
+            label="Kommende"
+            value={mockTournaments.length}
+            icon={Target}
+            variant="primary"
+            delay={0}
+          />
+        </div>
+        <div className="col-span-12 md:col-span-4">
+          <DarkStatCard
+            label="Fullført"
+            value={completedCount}
+            icon={Flag}
+            variant="default"
+            delay={0.08}
+          />
+        </div>
+        <div className="col-span-12 md:col-span-4">
+          <DarkStatCard
+            label="Påmeldt"
+            value={registeredCount}
+            icon={CheckCircle2}
+            variant="accent"
+            delay={0.16}
+          />
+        </div>
+      </motion.div>
 
       {/* Calendar & List */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Calendar */}
-        <PortalCard padding="md" className="lg:col-span-2">
-          <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-semibold text-[var(--color-text)]">
-              {format(currentMonth, "MMMM yyyy", { locale: nb })}
-            </h3>
-            <div className="flex gap-1">
-              <button
-                onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}
-                className="rounded-lg p-1.5 text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)]"
-                aria-label="Forrige måned"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button
-                onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-                className="rounded-lg p-1.5 text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)]"
-                aria-label="Neste måned"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-7 gap-1">
-            {["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"].map((day) => (
-              <div
-                key={day}
-                className="py-2 text-center text-xs font-semibold text-[var(--color-muted)]"
-              >
-                {day}
-              </div>
-            ))}
-            {days.map((day) => {
-              const tournament = getTournamentForDay(day);
-              return (
+        <div className="lg:col-span-2">
+          <GlassCard variant="light" padding="lg">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="font-semibold text-[var(--color-grey-900)]">
+                {format(currentMonth, "MMMM yyyy", { locale: nb })}
+              </h3>
+              <div className="flex gap-1">
                 <button
-                  key={day.toISOString()}
-                  onClick={() =>
-                    tournament && setSelectedTournament(tournament.id)
-                  }
-                  className={`aspect-square rounded-lg p-1 text-sm transition-colors ${
-                    tournament
-                      ? "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-alt)]"
-                      : "text-[var(--color-text)] hover:bg-[var(--color-surface)]"
-                  }`}
+                  onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}
+                  className="rounded-lg p-1.5 text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)]"
+                  aria-label="Forrige måned"
                 >
-                  {format(day, "d")}
-                  {tournament && (
-                    <div className="mt-0.5 truncate text-[8px] opacity-80">
-                      {tournament.name}
-                    </div>
-                  )}
+                  <ChevronLeft className="h-5 w-5" />
                 </button>
-              );
-            })}
-          </div>
-        </PortalCard>
+                <button
+                  onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+                  className="rounded-lg p-1.5 text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)]"
+                  aria-label="Neste måned"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-7 gap-1">
+              {["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"].map((day) => (
+                <div
+                  key={day}
+                  className="py-2 text-center text-[10px] font-bold uppercase tracking-wider text-[var(--color-muted)]"
+                >
+                  {day}
+                </div>
+              ))}
+              {days.map((day) => {
+                const tournament = getTournamentForDay(day);
+                return (
+                  <button
+                    key={day.toISOString()}
+                    onClick={() =>
+                      tournament && setSelectedTournament(tournament.id)
+                    }
+                    className={`aspect-square rounded-lg p-1 text-sm transition-colors ${
+                      tournament
+                        ? "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)]/90"
+                        : "text-[var(--color-text)] hover:bg-[var(--color-surface)]"
+                    }`}
+                  >
+                    {format(day, "d")}
+                    {tournament && (
+                      <div className="mt-0.5 truncate text-[8px] opacity-80">
+                        {tournament.name}
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </GlassCard>
+        </div>
 
         {/* Upcoming */}
         <div>
-          <h3 className="mb-4 font-semibold text-[var(--color-text)]">
+          <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase mb-4 flex items-center gap-2">
+            <span className="w-6 h-px bg-[var(--color-muted)]" />
             Kommende
-          </h3>
+          </p>
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
             className="space-y-3"
           >
-            {mockTournaments.map((tournament) => {
+            {mockTournaments.map((tournament, i) => {
               const isSelected = selectedTournament === tournament.id;
+              const isRegistered = tournament.status === "registered";
               return (
                 <motion.div key={tournament.id} variants={fadeInUp}>
-                  <PremiumBentoCard
-                    title={tournament.name}
-                    description={`${format(tournament.date, "d. MMMM", {
-                      locale: nb,
-                    })} · ${getPeriodLabel(tournament.date)} · ${
-                      tournament.type
-                    }`}
-                    icon={Trophy}
-                    badge={
-                      tournament.status === "registered"
-                        ? "Påmeldt"
-                        : "Planlegger"
-                    }
-                    badgeVariant={
-                      tournament.status === "registered" ? "success" : "warning"
-                    }
+                  <GlassCard
+                    variant="light"
+                    padding="md"
+                    interactive
                     onClick={() => setSelectedTournament(tournament.id)}
+                    delay={i * 0.04}
                     className={
                       isSelected
                         ? "border-[var(--color-primary)]/40 shadow-[0_12px_40px_-12px_rgba(0,88,64,0.2)]"
                         : undefined
                     }
-                  />
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                        <Trophy className="h-5 w-5 text-[var(--color-primary)]" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className="font-semibold text-[13px] text-[var(--color-grey-900)] truncate">
+                            {tournament.name}
+                          </h4>
+                          <span
+                            className={`inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider ${
+                              isRegistered
+                                ? "bg-[var(--color-success)]/10 text-[var(--color-success)]"
+                                : "bg-[var(--color-warning)]/10 text-[var(--color-warning)]"
+                            }`}
+                          >
+                            {isRegistered ? "Påmeldt" : "Planlegger"}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-[var(--color-muted)]">
+                          {format(tournament.date, "d. MMMM", { locale: nb })} ·{" "}
+                          {getPeriodLabel(tournament.date)} · {tournament.type}
+                        </p>
+                      </div>
+                    </div>
+                  </GlassCard>
                 </motion.div>
               );
             })}
@@ -265,7 +306,7 @@ export default function TurneringsplanPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <PortalCard padding="lg">
+          <GlassCard variant="light" padding="lg">
             {(() => {
               const tournament = mockTournaments.find(
                 (t) => t.id === selectedTournament,
@@ -366,7 +407,7 @@ export default function TurneringsplanPage() {
                 </>
               );
             })()}
-          </PortalCard>
+          </GlassCard>
         </motion.div>
       )}
 

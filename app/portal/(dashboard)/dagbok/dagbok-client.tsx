@@ -18,15 +18,12 @@ import {
 } from "lucide-react";
 import { repeatLastSession } from "./actions";
 import { LogSessionModal } from "@/components/portal/dagbok/log-session-modal";
-import { BentoGrid } from "@/components/portal/apple/bento-grid";
-import { BentoCard } from "@/components/portal/apple/bento-card";
-import { AppleButton } from "@/components/portal/apple/apple-button";
-import { AppleBadge } from "@/components/portal/apple/apple-badge";
-import { AppleCard } from "@/components/portal/apple/apple-card";
 import { StreakMilestone } from "@/components/portal/gamification/streak-milestone";
 import {
-  PortalHeader,
-  PremiumStatCard,
+  HeroHeading,
+  DarkStatCard,
+  GlassCard,
+  Shimmer,
   fadeInUp,
   staggerContainer,
 } from "@/components/portal/premium";
@@ -86,7 +83,6 @@ function calculateStreak(logs: TrainingLogEntry[]): number {
   let streak = 0;
   let checkDate = today;
 
-  // If today has no log, start checking from yesterday
   if (!logDates.has(format(checkDate, "yyyy-MM-dd"))) {
     checkDate = subDays(checkDate, 1);
   }
@@ -104,7 +100,6 @@ function getStreakDays(logs: TrainingLogEntry[]) {
     logs.map((l) => format(new Date(l.date), "yyyy-MM-dd"))
   );
   const today = new Date();
-  // Get Monday of the current week
   const weekStart = startOfWeek(today, { weekStartsOn: 1 });
   const days = eachDayOfInterval({
     start: weekStart,
@@ -149,7 +144,7 @@ function buildCategories(logs: TrainingLogEntry[]) {
 
   return sorted.slice(0, 4).map(([name, count]) => ({
     name,
-    count: `${count} ${count === 1 ? "okt" : "okter"}`,
+    count: `${count} ${count === 1 ? "økt" : "økter"}`,
     progress: Math.round((count / total) * 100),
   }));
 }
@@ -162,6 +157,9 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
   const [quickLogSuccess, setQuickLogSuccess] = useState(false);
   const [logModalOpen, setLogModalOpen] = useState(false);
   const [editingLog, setEditingLog] = useState<TrainingLogEntry | null>(null);
+
+  // loggedSessionIds er ikke brukt i nåværende visning, men beholdes i props for kompatibilitet
+  void loggedSessionIds;
 
   const logs = initialLogs;
 
@@ -177,7 +175,6 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
     });
   };
 
-  // Compute stats
   const streak = useMemo(() => calculateStreak(logs), [logs]);
   const streakDays = useMemo(() => getStreakDays(logs), [logs]);
   const calendarDays = useMemo(
@@ -186,7 +183,6 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
   );
   const categories = useMemo(() => buildCategories(logs), [logs]);
 
-  // Stats calculations
   const now = new Date();
   const weekStart = startOfWeek(now, { weekStartsOn: 1 });
   const logsThisWeek = logs.filter(
@@ -206,9 +202,8 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
             ratedLogs.length
           ).toFixed(1)
         )
-      : "-";
+      : "–";
 
-  // Filter logs for display
   const filters = useMemo(() => {
     const areas = new Set<string>();
     logs.forEach((l) => {
@@ -232,475 +227,471 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
     const d = new Date(date);
     if (isToday(d)) return `I dag, ${format(d, "HH:mm")}`;
     const yesterday = subDays(new Date(), 1);
-    if (isSameDay(d, yesterday)) return `I gar, ${format(d, "HH:mm")}`;
+    if (isSameDay(d, yesterday)) return `I går, ${format(d, "HH:mm")}`;
     return format(d, "d. MMMM, HH:mm", { locale: nb });
   };
 
   const isEmpty = logs.length === 0;
 
-  return (
-    // MERK: Bruker white i stedet for --color-grey-050 som ikke eksisterer
-    // Se gotchas.md #36 for liste over gyldige CSS-tokens
-    <div className="min-h-screen bg-gradient-to-br from-[var(--color-grey-100)] via-white to-[var(--color-grey-100)] relative">
-      {/* Subtle grid pattern */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0)",
-          backgroundSize: "24px 24px",
+  const heroTitle = (
+    <>
+      Logg og{" "}
+      <span className="font-serif italic text-[var(--color-primary)] font-normal">
+        spor
+      </span>
+      <span className="text-[var(--color-accent-cta)]">.</span>
+    </>
+  );
+
+  const heroActions = (
+    <>
+      {lastSession && (
+        <motion.button
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={handleQuickLog}
+          disabled={isPending}
+          className="h-11 px-6 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 text-[var(--color-text)] text-[12px] font-semibold hover:bg-white transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-60"
+        >
+          {isPending ? (
+            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+          ) : (
+            <RotateCcw className="w-3.5 h-3.5" />
+          )}
+          {isPending ? "Logger…" : "Gjenta siste"}
+        </motion.button>
+      )}
+      <motion.button
+        whileHover={{ y: -2 }}
+        whileTap={{ scale: 0.97 }}
+        onClick={() => {
+          setEditingLog(null);
+          setLogModalOpen(true);
         }}
+        className="relative h-11 px-6 rounded-full bg-[var(--color-accent-cta)] text-[var(--color-grey-900)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group"
+      >
+        <Shimmer />
+        <Plus className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
+        <span className="relative z-10">Logg ny økt</span>
+      </motion.button>
+    </>
+  );
+
+  return (
+    <div className="space-y-10">
+      <HeroHeading
+        label="Din treningsdagbok"
+        title={heroTitle}
+        description="Hold oversikt over aktiviteten din. Hver økt teller, og hver streak er et skritt nærmere målet."
+        actions={heroActions}
       />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-8 py-10 space-y-8">
-        {/* Header */}
-        <PortalHeader
-          title="Treningsdagbok"
-          description="Hold oversikt over treningsaktiviteten din"
-          actions={
-            <div className="flex gap-2">
-              {lastSession && (
-                <AppleButton
-                  variant="secondary"
-                  icon={isPending ? Loader2 : RotateCcw}
-                  onClick={handleQuickLog}
-                  disabled={isPending}
-                >
-                  {isPending ? "Logger..." : "Gjenta siste"}
-                </AppleButton>
-              )}
-              <AppleButton
-                variant="primary"
-                icon={Plus}
-                onClick={() => {
-                  setEditingLog(null);
-                  setLogModalOpen(true);
-                }}
-              >
-                Logg ny okt
-              </AppleButton>
+      {/* Quick-log success toast */}
+      {quickLogSuccess && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          className="fixed top-4 right-4 z-50 px-4 py-3 rounded-xl bg-[var(--color-success)] text-white text-sm font-medium shadow-lg"
+        >
+          Økt logget!
+        </motion.div>
+      )}
+
+      {/* Empty State */}
+      {isEmpty && (
+        <GlassCard variant="light" padding="lg" className="text-center py-16">
+          <div className="flex flex-col items-center justify-center text-center">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-[var(--color-primary)]/10">
+              <NotebookPen className="w-8 h-8 text-[var(--color-primary)]" strokeWidth={1.75} />
             </div>
-          }
-        />
-
-        {/* Quick-log success toast */}
-        {quickLogSuccess && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="fixed top-4 right-4 z-50 px-4 py-3 rounded-xl bg-[var(--color-success)] text-white text-sm font-medium shadow-lg"
-          >
-            Okt logget!
-          </motion.div>
-        )}
-
-        {/* Empty State */}
-        {isEmpty && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <AppleCard className="py-16">
-              <div className="flex flex-col items-center justify-center text-center">
-                <NotebookPen className="w-12 h-12 text-[var(--color-grey-300)] mb-4" />
-                <p className="text-base font-medium text-[var(--color-grey-900)] mb-1">
-                  Din treningsdagbok er tom
-                </p>
-                <p className="text-sm text-[var(--color-grey-500)] mb-6">
-                  Logg din forste treningsokt for a komme i gang
-                </p>
-                <AppleButton variant="primary" icon={Plus}>
-                  Logg ny okt
-                </AppleButton>
-              </div>
-            </AppleCard>
-          </motion.div>
-        )}
-
-        {/* Content - only shown when there are logs */}
-        {!isEmpty && (
-          <>
-            {/* Stats Row */}
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-4"
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
+            <p className="text-[20px] font-semibold text-[var(--color-grey-900)] mb-2">
+              Din treningsdagbok er tom
+            </p>
+            <p className="text-[13px] text-[var(--color-muted)] mb-6 max-w-md leading-relaxed">
+              Logg din første treningsøkt for å komme i gang. Alt du logger blir automatisk en del av fremdriften din.
+            </p>
+            <motion.button
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => {
+                setEditingLog(null);
+                setLogModalOpen(true);
+              }}
+              className="relative h-11 px-6 rounded-full bg-[var(--color-accent-cta)] text-[var(--color-grey-900)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group"
             >
-              <motion.div variants={fadeInUp}>
-                <PremiumStatCard
-                  label="Denne uken"
-                  value={logsThisWeek.length}
-                  icon={Activity}
-                />
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <PremiumStatCard
-                  label="Timer totalt"
-                  value={totalHours}
-                  icon={Clock}
-                  decimals={1}
-                />
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <PremiumStatCard
-                  label="Streak"
-                  value={streak}
-                  icon={Flame}
-                />
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <PremiumStatCard
-                  label="Snitt vurdering"
-                  value={avgRating}
-                  icon={Star}
-                  decimals={1}
-                />
-              </motion.div>
-            </motion.div>
+              <Shimmer />
+              <Plus className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
+              <span className="relative z-10">Logg ny økt</span>
+            </motion.button>
+          </div>
+        </GlassCard>
+      )}
 
-            {/* Bento Grid */}
-            <BentoGrid gap="md">
-              {/* Calendar Card - 8 columns */}
-              <BentoCard
-                span={8}
-                title={format(calendarMonth, "MMMM yyyy", { locale: nb })}
-                action={
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() =>
-                        setCalendarMonth(subMonths(calendarMonth, 1))
-                      }
-                      className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:bg-[var(--color-grey-100)] transition-colors"
-                    >
-                      <ChevronLeft className="w-4 h-4 text-[var(--color-grey-600)]" />
-                    </button>
-                    <button
-                      onClick={() =>
-                        setCalendarMonth(addMonths(calendarMonth, 1))
-                      }
-                      className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:bg-[var(--color-grey-100)] transition-colors"
-                    >
-                      <ChevronRight className="w-4 h-4 text-[var(--color-grey-600)]" />
-                    </button>
-                  </div>
-                }
+      {/* Content - only shown when there are logs */}
+      {!isEmpty && (
+        <>
+          {/* Stats Row */}
+          <motion.div
+            className="grid grid-cols-12 gap-4"
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+          >
+            <div className="col-span-6 md:col-span-3">
+              <DarkStatCard
+                label="Denne uken"
+                value={logsThisWeek.length}
+                icon={Activity}
+                variant="default"
+                delay={0}
+              />
+            </div>
+            <div className="col-span-6 md:col-span-3">
+              <DarkStatCard
+                label="Timer totalt"
+                value={totalHours}
+                decimals={1}
+                icon={Clock}
+                variant="default"
+                delay={0.08}
+              />
+            </div>
+            <div className="col-span-6 md:col-span-3">
+              <DarkStatCard
+                label="Streak"
+                value={streak}
+                unit={streak === 1 ? "dag" : "dager"}
+                icon={Flame}
+                variant="accent"
+                delay={0.16}
+              />
+            </div>
+            <div className="col-span-6 md:col-span-3">
+              <DarkStatCard
+                label="Snitt rating"
+                value={avgRating}
+                decimals={1}
+                icon={Star}
+                variant="default"
+                delay={0.24}
+              />
+            </div>
+          </motion.div>
+
+          {/* Kalender + siste økter */}
+          <div>
+            <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase mb-4 flex items-center gap-2">
+              <span className="w-6 h-px bg-[var(--color-muted)]" />
+              Oversikt
+            </p>
+            <div className="grid grid-cols-12 gap-4">
+              {/* Kalender */}
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                animate="visible"
+                className="col-span-12 lg:col-span-8"
               >
-                <div className="grid grid-cols-7 gap-2">
-                  {weekDays.map((day, i) => (
-                    <div
-                      key={`${day}-${i}`}
-                      className="text-center text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-500)] py-2"
-                    >
-                      {day}
+                <GlassCard variant="light" padding="lg" className="h-full">
+                  <div className="flex items-center justify-between mb-5">
+                    <h3 className="text-[16px] font-semibold text-[var(--color-grey-900)] capitalize">
+                      {format(calendarMonth, "MMMM yyyy", { locale: nb })}
+                    </h3>
+                    <div className="flex gap-1 p-1 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 shadow-sm">
+                      <button
+                        onClick={() => setCalendarMonth(subMonths(calendarMonth, 1))}
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-[var(--color-muted)] hover:text-[var(--color-grey-900)] hover:bg-white transition-colors"
+                        aria-label="Forrige måned"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => setCalendarMonth(addMonths(calendarMonth, 1))}
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-[var(--color-muted)] hover:text-[var(--color-grey-900)] hover:bg-white transition-colors"
+                        aria-label="Neste måned"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
                     </div>
-                  ))}
-                  {calendarDays.map((day, idx) => (
-                    <div
-                      key={idx}
-                      className={cn(
-                        "aspect-square flex flex-col items-center justify-center rounded-lg cursor-pointer transition-colors duration-200",
-                        day.otherMonth && "opacity-30",
-                        day.today &&
-                          "bg-[var(--color-grey-100)] border-2 border-[var(--color-grey-400)]",
-                        day.hasLog &&
-                          !day.today &&
-                          "bg-[var(--color-grey-200)]",
-                        !day.today &&
-                          !day.hasLog &&
-                          "hover:bg-[var(--color-grey-100)]"
-                      )}
-                    >
-                      <span
+                  </div>
+                  <div className="grid grid-cols-7 gap-2">
+                    {weekDays.map((day, i) => (
+                      <div
+                        key={`${day}-${i}`}
+                        className="text-center text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-muted)] py-2"
+                      >
+                        {day}
+                      </div>
+                    ))}
+                    {calendarDays.map((day, idx) => (
+                      <div
+                        key={idx}
                         className={cn(
-                          "text-sm font-medium",
-                          day.today
-                            ? "text-[var(--color-grey-900)] font-semibold"
-                            : "text-[var(--color-grey-900)]"
+                          "aspect-square flex flex-col items-center justify-center rounded-xl cursor-pointer transition-all duration-200",
+                          day.otherMonth && "opacity-30",
+                          day.today &&
+                            "bg-[var(--color-accent-cta)]/15 border-2 border-[var(--color-accent-cta)]",
+                          day.hasLog &&
+                            !day.today &&
+                            "bg-[var(--color-primary)]/8",
+                          !day.today &&
+                            !day.hasLog &&
+                            "hover:bg-white/60"
                         )}
                       >
-                        {day.day}
-                      </span>
-                      {day.hasLog && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-grey-900)] mt-1" />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </BentoCard>
-
-              {/* Recent Logs Card - 4 columns */}
-              <BentoCard
-                span={4}
-                title="Siste okter"
-                action={
-                  <button className="text-[13px] font-medium text-[var(--color-grey-900)] hover:text-[var(--color-grey-900)] flex items-center gap-1">
-                    Se alle
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-                }
-              >
-                <div className="space-y-3">
-                  {logs.slice(0, 3).map((log) => {
-                    const d = new Date(log.date);
-                    const title =
-                      log.TrainingPlanSession?.title ||
-                      log.focusArea ||
-                      "Treningsokt";
-                    const area =
-                      log.focusArea ||
-                      log.TrainingPlanSession?.focusArea ||
-                      "Trening";
-                    return (
-                      <motion.div
-                        key={log.id}
-                        className="flex gap-4 p-4 bg-[var(--color-grey-100)] rounded-xl cursor-pointer hover:bg-[var(--color-grey-200)] transition-colors"
-                        whileHover={{ scale: 1.01 }}
-                      >
-                        <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex flex-col items-center justify-center shrink-0">
-                          <span className="text-lg font-bold text-[var(--color-grey-900)] leading-none">
-                            {d.getDate()}
-                          </span>
-                          <span className="text-[10px] font-semibold uppercase text-[var(--color-grey-500)]">
-                            {format(d, "MMM", { locale: nb })}
-                          </span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-900)]">
-                            {area}
-                          </span>
-                          <p className="text-sm font-medium text-[var(--color-grey-900)] truncate">
-                            {title}
-                          </p>
-                          {log.durationMinutes && (
-                            <div className="flex items-center gap-2 mt-1 text-xs text-[var(--color-grey-500)]">
-                              <Clock className="w-3 h-3" />
-                              {log.durationMinutes} min
-                            </div>
+                        <span
+                          className={cn(
+                            "text-[13px] font-medium tabular-nums",
+                            day.today
+                              ? "text-[var(--color-primary)] font-semibold"
+                              : "text-[var(--color-grey-900)]"
                           )}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                  {logs.length === 0 && (
-                    <p className="text-sm text-[var(--color-grey-500)] text-center py-4">
-                      Ingen okter logget enna
-                    </p>
-                  )}
-                </div>
-              </BentoCard>
-
-              {/* Categories Card - 6 columns */}
-              <BentoCard span={6} title="Treningskategorier">
-                {categories.length > 0 ? (
-                  <div className="grid grid-cols-2 gap-3">
-                    {categories.map((cat) => (
-                      <div
-                        key={cat.name}
-                        className="flex items-center gap-3 p-4 bg-[var(--color-grey-100)] rounded-xl hover:bg-[var(--color-grey-200)] transition-colors"
-                      >
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-[var(--color-grey-200)]">
-                          <Target className="w-5 h-5 text-[var(--color-grey-600)]" />
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-[var(--color-grey-900)]">
-                            {cat.name}
-                          </p>
-                          <p className="text-xs text-[var(--color-grey-500)]">
-                            {cat.count}
-                          </p>
-                          <div className="h-1 bg-[var(--color-grey-200)] rounded-full mt-2 overflow-hidden">
-                            <div
-                              className="h-full rounded-full bg-[var(--color-grey-900)]"
-                              style={{ width: `${cat.progress}%` }}
-                            />
-                          </div>
-                        </div>
+                        >
+                          {day.day}
+                        </span>
+                        {day.hasLog && (
+                          <span
+                            className={cn(
+                              "w-1.5 h-1.5 rounded-full mt-0.5",
+                              day.today
+                                ? "bg-[var(--color-primary)]"
+                                : "bg-[var(--color-primary)]"
+                            )}
+                          />
+                        )}
                       </div>
                     ))}
                   </div>
-                ) : (
-                  <p className="text-sm text-[var(--color-grey-500)] text-center py-4">
-                    Ingen kategorier enna
-                  </p>
-                )}
-              </BentoCard>
+                </GlassCard>
+              </motion.div>
 
-              {/* Streak Card - 6 columns */}
-              <BentoCard span={6} variant="gradient" title="Treningsstreak">
-                <div className="flex items-center gap-6 mb-5">
-                  <span className="text-7xl font-bold text-[var(--color-grey-900)] leading-none">
-                    {streak}
-                  </span>
-                  <div>
-                    <h3 className="text-lg font-semibold text-[var(--color-grey-900)] mb-1">
-                      {streak === 1 ? "dag pa rad" : "dager pa rad"}
-                    </h3>
-                    <p className="text-sm text-[var(--color-grey-500)]">
-                      {streak > 0
-                        ? "Fortsett den gode innsatsen!"
-                        : "Start en streak ved a logge trening!"}
-                    </p>
+              {/* Streak-kort */}
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                animate="visible"
+                className="col-span-12 lg:col-span-4"
+              >
+                <GlassCard variant="light" padding="lg" className="h-full">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-10 h-10 rounded-xl bg-[var(--color-accent-cta)]/15 flex items-center justify-center">
+                      <Flame className="w-5 h-5 text-[var(--color-primary)]" strokeWidth={1.75} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-[var(--color-grey-900)] text-[14px]">
+                        Treningsstreak
+                      </h3>
+                      <p className="text-[10px] text-[var(--color-muted)] uppercase tracking-wider">
+                        {streak > 0 ? "Fortsett det gode arbeidet" : "Start i dag"}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex gap-2 mb-4">
-                  {streakDays.map((d, idx) => (
-                    <div
-                      key={idx}
-                      className={cn(
-                        "w-9 h-9 rounded-lg flex items-center justify-center text-xs font-semibold",
-                        d.active &&
-                          "bg-[var(--color-grey-900)] text-white",
-                        d.today &&
+                  <div className="flex items-baseline gap-3 mb-5">
+                    <span className="text-[64px] font-[300] text-[var(--color-grey-900)] leading-none tabular-nums tracking-[-0.04em]">
+                      {streak}
+                    </span>
+                    <span className="text-[13px] text-[var(--color-muted)]">
+                      {streak === 1 ? "dag på rad" : "dager på rad"}
+                    </span>
+                  </div>
+                  <div className="flex gap-1.5 mb-4">
+                    {streakDays.map((d, idx) => (
+                      <div
+                        key={idx}
+                        className={cn(
+                          "flex-1 h-9 rounded-lg flex items-center justify-center text-[11px] font-bold transition-colors",
+                          d.active &&
+                            "bg-[var(--color-primary)] text-white",
+                          d.today &&
+                            !d.active &&
+                            "bg-white border-2 border-[var(--color-accent-cta)] text-[var(--color-primary)]",
                           !d.active &&
-                          "bg-[var(--color-grey-100)] text-[var(--color-grey-900)] border-2 border-[var(--color-grey-400)]",
-                        !d.active &&
-                          !d.today &&
-                          "bg-[var(--color-grey-100)] text-[var(--color-grey-400)]"
-                      )}
+                            !d.today &&
+                            "bg-white/60 border border-[var(--color-grey-200)] text-[var(--color-muted)]"
+                        )}
+                      >
+                        {d.day}
+                      </div>
+                    ))}
+                  </div>
+                  {streak > 0 && <StreakMilestone currentStreak={streak} />}
+                </GlassCard>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Kategorier */}
+          {categories.length > 0 && (
+            <div>
+              <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase mb-4 flex items-center gap-2">
+                <span className="w-6 h-px bg-[var(--color-muted)]" />
+                Treningskategorier
+              </p>
+              <GlassCard variant="light" padding="lg">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {categories.map((cat) => (
+                    <div
+                      key={cat.name}
+                      className="flex items-center gap-3 p-4 rounded-2xl bg-white/60 border border-white/80 hover:border-[var(--color-primary)]/20 transition-colors"
                     >
-                      {d.day}
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-[var(--color-primary)]/10">
+                        <Target className="w-5 h-5 text-[var(--color-primary)]" strokeWidth={1.75} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-semibold text-[var(--color-grey-900)] truncate">
+                          {cat.name}
+                        </p>
+                        <p className="text-[11px] text-[var(--color-muted)]">
+                          {cat.count}
+                        </p>
+                        <div className="h-1 bg-[var(--color-grey-200)] rounded-full mt-2 overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-[var(--color-primary)]"
+                            style={{ width: `${cat.progress}%` }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
-                {streak > 0 && <StreakMilestone currentStreak={streak} />}
-              </BentoCard>
-            </BentoGrid>
+              </GlassCard>
+            </div>
+          )}
 
-            {/* Filter Bar */}
-            <motion.div
-              className="flex items-center justify-between"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <div className="flex gap-1 p-1 rounded-xl bg-white/70 backdrop-blur-xl border border-white/50 shadow-sm">
-                {filters.map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={() => setActiveFilter(filter)}
-                    className={cn(
-                      "px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200",
-                      activeFilter === filter
-                        ? "bg-white shadow-sm text-[var(--color-grey-900)]"
-                        : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
-                    )}
-                  >
-                    {filter}
-                  </button>
-                ))}
-              </div>
-              <div className="flex gap-2">
+          {/* Filter Bar */}
+          <motion.div
+            className="flex flex-wrap items-center justify-between gap-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <div className="flex gap-1 p-1 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 shadow-sm">
+              {filters.map((filter) => (
                 <button
-                  onClick={() => setViewMode("list")}
+                  key={filter}
+                  onClick={() => setActiveFilter(filter)}
                   className={cn(
-                    "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-[background-color,border-color,color,box-shadow] duration-200",
-                    viewMode === "list"
-                      ? "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-900)] shadow-sm"
-                      : "text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)]"
+                    "px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
+                    activeFilter === filter
+                      ? "bg-[var(--color-grey-900)] text-white shadow-sm"
+                      : "text-[var(--color-muted)] hover:text-[var(--color-grey-900)]"
                   )}
                 >
-                  <List className="w-4 h-4" />
-                  Liste
+                  {filter}
                 </button>
-                <button
-                  onClick={() => setViewMode("calendar")}
-                  className={cn(
-                    "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-[background-color,border-color,color,box-shadow] duration-200",
-                    viewMode === "calendar"
-                      ? "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-900)] shadow-sm"
-                      : "text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)]"
-                  )}
-                >
-                  <Calendar className="w-4 h-4" />
-                  Kalender
-                </button>
-              </div>
-            </motion.div>
+              ))}
+            </div>
+            <div className="flex gap-1 p-1 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 shadow-sm">
+              <button
+                onClick={() => setViewMode("list")}
+                className={cn(
+                  "inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
+                  viewMode === "list"
+                    ? "bg-[var(--color-grey-900)] text-white shadow-sm"
+                    : "text-[var(--color-muted)] hover:text-[var(--color-grey-900)]"
+                )}
+              >
+                <List className="w-3.5 h-3.5" />
+                Liste
+              </button>
+              <button
+                onClick={() => setViewMode("calendar")}
+                className={cn(
+                  "inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
+                  viewMode === "calendar"
+                    ? "bg-[var(--color-grey-900)] text-white shadow-sm"
+                    : "text-[var(--color-muted)] hover:text-[var(--color-grey-900)]"
+                )}
+              >
+                <Calendar className="w-3.5 h-3.5" />
+                Kalender
+              </button>
+            </div>
+          </motion.div>
 
-            {/* Log Entries */}
-            <div className="space-y-4">
-              {filteredLogs.map((log, idx) => {
-                const title =
-                  log.TrainingPlanSession?.title ||
-                  log.focusArea ||
-                  "Treningsokt";
-                const area =
-                  log.focusArea ||
-                  log.TrainingPlanSession?.focusArea ||
-                  "Trening";
-                const isCoaching = !!log.planSessionId;
+          {/* Log Entries */}
+          <div className="space-y-3">
+            {filteredLogs.map((log, idx) => {
+              const title =
+                log.TrainingPlanSession?.title ||
+                log.focusArea ||
+                "Treningsøkt";
+              const area =
+                log.focusArea ||
+                log.TrainingPlanSession?.focusArea ||
+                "Trening";
+              const isCoaching = !!log.planSessionId;
 
-                return (
-                  <motion.div
-                    key={log.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.25 + idx * 0.05 }}
-                    onClick={() => {
+              return (
+                <motion.div
+                  key={log.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.05 * Math.min(idx, 6) }}
+                  onClick={() => {
+                    setEditingLog(log);
+                    setLogModalOpen(true);
+                  }}
+                  className="cursor-pointer group relative rounded-[24px] overflow-hidden p-6 bg-white/70 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_-12px_rgba(10,31,24,0.1)] hover:border-[var(--color-primary)]/20 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_-12px_rgba(0,88,64,0.18)] transition-all duration-300 will-change-transform"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
                       setEditingLog(log);
                       setLogModalOpen(true);
-                    }}
-                    className="cursor-pointer"
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        setEditingLog(log);
-                        setLogModalOpen(true);
-                      }
-                    }}
-                  >
-                    <AppleCard hover padding="md">
-                      <div className="flex items-start justify-between mb-3">
-                        <div>
-                          <p className="text-xs text-[var(--color-grey-500)] mb-0.5">
-                            {formatLogDate(log.date)}
-                          </p>
-                          <p className="text-base font-semibold text-[var(--color-grey-900)]">
-                            {title}
-                          </p>
-                        </div>
-                        <AppleBadge
-                          variant={isCoaching ? "info" : "success"}
-                          size="sm"
-                        >
-                          {isCoaching ? "Coaching" : "Fullfort"}
-                        </AppleBadge>
-                      </div>
-                      <div className="flex gap-5 mb-3 text-xs text-[var(--color-grey-500)]">
-                        {log.durationMinutes && (
-                          <span className="flex items-center gap-1.5">
-                            <Clock className="w-3.5 h-3.5" />
-                            {log.durationMinutes} min
-                          </span>
-                        )}
-                        <span className="flex items-center gap-1.5">
-                          <Target className="w-3.5 h-3.5" />
-                          {area}
-                        </span>
-                        {log.rating != null && (
-                          <span className="flex items-center gap-1.5">
-                            <Activity className="w-3.5 h-3.5" />
-                            {log.rating}/10
-                          </span>
-                        )}
-                      </div>
-                      {log.notes && (
-                        <p className="text-sm text-[var(--color-grey-600)] leading-relaxed">
-                          {log.notes}
-                        </p>
+                    }
+                  }}
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-muted)] mb-1">
+                        {formatLogDate(log.date)}
+                      </p>
+                      <p className="text-[16px] font-semibold text-[var(--color-grey-900)] truncate">
+                        {title}
+                      </p>
+                    </div>
+                    <span
+                      className={cn(
+                        "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.1em] shrink-0",
+                        isCoaching
+                          ? "bg-[var(--color-ai)]/10 text-[var(--color-ai)] border border-[var(--color-ai)]/20"
+                          : "bg-[var(--color-success)]/10 text-[var(--color-success)] border border-[var(--color-success)]/20"
                       )}
-                    </AppleCard>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </>
-        )}
-      </div>
+                    >
+                      {isCoaching ? "Coaching" : "Fullført"}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-5 mb-3 text-[11px] text-[var(--color-muted)]">
+                    {log.durationMinutes && (
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5" />
+                        {log.durationMinutes} min
+                      </span>
+                    )}
+                    <span className="flex items-center gap-1.5">
+                      <Target className="w-3.5 h-3.5" />
+                      {area}
+                    </span>
+                    {log.rating != null && (
+                      <span className="flex items-center gap-1.5">
+                        <Star className="w-3.5 h-3.5" />
+                        {log.rating}/10
+                      </span>
+                    )}
+                  </div>
+                  {log.notes && (
+                    <p className="text-[13px] text-[var(--color-text)] leading-relaxed">
+                      {log.notes}
+                    </p>
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
+        </>
+      )}
 
       {/* Log Session Modal */}
       <LogSessionModal

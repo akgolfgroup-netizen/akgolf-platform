@@ -9,8 +9,8 @@ import { PeerSummary } from "./peer-summary";
 import { SG_BENCHMARKS } from "@/lib/portal/golf/sg-benchmarks";
 import { cn } from "@/lib/portal/utils/cn";
 import {
-  PortalCard,
-  PremiumStatCard,
+  GlassCard,
+  DarkStatCard,
   staggerContainer,
   fadeInUp,
 } from "@/components/portal/premium";
@@ -132,31 +132,33 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
       variants={staggerContainer}
       className="space-y-6"
     >
-      {/* Mode tabs */}
-      <motion.div variants={fadeInUp} className="flex gap-2 flex-wrap">
-        {tabs.map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => !tab.disabled && setMode(tab.key)}
-            disabled={tab.disabled}
-            className={cn(
-              "px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200",
-              mode === tab.key
-                ? "bg-[var(--color-primary)] text-white shadow-[0_4px_16px_-4px_rgba(0,88,64,0.3)]"
-                : tab.disabled
-                  ? "bg-black/5 text-[var(--color-muted)] cursor-not-allowed opacity-50"
-                  : "bg-white border border-black/5 text-[var(--color-text)] hover:border-[var(--color-primary)]/30 hover:text-[var(--color-primary)]"
-            )}
-          >
-            {tab.label}
-          </button>
-        ))}
+      {/* Mode tabs — glassmorphism pill */}
+      <motion.div variants={fadeInUp}>
+        <div className="inline-flex gap-1 p-1 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 shadow-[0_8px_24px_-12px_rgba(10,31,24,0.15)]">
+          {tabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => !tab.disabled && setMode(tab.key)}
+              disabled={tab.disabled}
+              className={cn(
+                "px-5 py-2 rounded-full text-[12px] font-semibold transition-all duration-200",
+                mode === tab.key
+                  ? "bg-[var(--color-primary)] text-white shadow-[0_4px_16px_-4px_rgba(0,88,64,0.3)]"
+                  : tab.disabled
+                    ? "text-[var(--color-muted)] cursor-not-allowed opacity-50"
+                    : "text-[var(--color-text)] hover:text-[var(--color-primary)]"
+              )}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
       </motion.div>
 
       {/* Selector for tour/tier */}
       {mode === "tour" && (
         <motion.div variants={fadeInUp}>
-          <PortalCard padding="md" className="space-y-3">
+          <GlassCard variant="light" padding="md" className="space-y-3">
             {loadingPlayers ? (
               <div className="flex items-center gap-2 text-sm text-[var(--color-muted)]">
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -190,13 +192,13 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
                 </select>
               </>
             )}
-          </PortalCard>
+          </GlassCard>
         </motion.div>
       )}
 
       {mode === "tier" && (
         <motion.div variants={fadeInUp}>
-          <PortalCard padding="md">
+          <GlassCard variant="light" padding="md">
             <select
               value={selectedTier}
               onChange={(e) => setSelectedTier(e.target.value)}
@@ -208,7 +210,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
                 </option>
               ))}
             </select>
-          </PortalCard>
+          </GlassCard>
         </motion.div>
       )}
 
@@ -230,15 +232,17 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
           variants={fadeInUp}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
         >
-          <PremiumStatCard
+          <DarkStatCard
             label="SG Total"
             value={myStats.sgTotal ?? 0}
             decimals={2}
             trend={calcTrend(myStats.sgTotal, peerData.stats.sgTotal)}
             trendLabel="vs gruppe"
             icon={TrendingUp}
+            variant="primary"
+            delay={0}
           />
-          <PremiumStatCard
+          <DarkStatCard
             label="Snitt Score"
             value={myStats.avgScore ?? 0}
             decimals={1}
@@ -246,16 +250,20 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
             trendLabel="vs gruppe"
             lowerIsBetter
             icon={Flag}
+            variant="default"
+            delay={0.08}
           />
-          <PremiumStatCard
+          <DarkStatCard
             label="GIR"
             value={myStats.girPct ?? 0}
             unit="%"
             trend={calcTrend(myStats.girPct ?? null, peerData.stats.girPct ?? null)}
             trendLabel="vs gruppe"
             icon={Target}
+            variant="default"
+            delay={0.16}
           />
-          <PremiumStatCard
+          <DarkStatCard
             label="Putts/GIR"
             value={myStats.puttsPerGir ?? 0}
             decimals={2}
@@ -263,6 +271,8 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
             trendLabel="vs gruppe"
             lowerIsBetter
             icon={Circle}
+            variant="accent"
+            delay={0.24}
           />
         </motion.div>
       )}
@@ -270,9 +280,10 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
       {/* Radar chart */}
       {comparisonStats && (
         <motion.div variants={fadeInUp}>
-          <PortalCard padding="lg">
+          <GlassCard variant="light" padding="lg">
             <div className="flex items-center justify-between mb-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+              <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase flex items-center gap-2">
+                <span className="w-6 h-px bg-[var(--color-muted)]" />
                 SG-profil vs. {comparisonLabel}
               </p>
               {mode === "peer" && peerData && (
@@ -286,16 +297,17 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
               peerStats={comparisonStats}
               comparisonLabel={comparisonLabel}
             />
-          </PortalCard>
+          </GlassCard>
         </motion.div>
       )}
 
       {/* Detailed stats */}
       {comparisonStats && (
         <motion.div variants={fadeInUp}>
-          <PortalCard padding="lg">
+          <GlassCard variant="light" padding="lg">
             <div className="flex items-center justify-between mb-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+              <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase flex items-center gap-2">
+                <span className="w-6 h-px bg-[var(--color-muted)]" />
                 Detaljert sammenligning
               </p>
               <div className="flex gap-6 text-[11px] text-[var(--color-muted)]">
@@ -319,7 +331,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
                 </>
               )}
             </div>
-          </PortalCard>
+          </GlassCard>
         </motion.div>
       )}
 

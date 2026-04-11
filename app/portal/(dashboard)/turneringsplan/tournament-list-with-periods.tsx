@@ -5,7 +5,7 @@ import type { TournamentWithPlan, GoalType } from "@/modules/tournament-planner"
 import { TournamentCard } from "@/modules/tournament-planner";
 import { findPeriodForDate } from "@/modules/tournament-planner/constants";
 import { Trophy } from "lucide-react";
-import { PortalCard } from "@/components/portal/premium";
+import { GlassCard } from "@/components/portal/premium";
 
 interface Period {
   periodType: string;
@@ -28,17 +28,16 @@ export function TournamentListWithPeriods({
 
   if (tournaments.length === 0) {
     return (
-      <PortalCard
-        padding="lg"
-        className="flex flex-col items-center justify-center py-16 text-center"
-      >
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
-          <Trophy className="h-6 w-6" />
+      <GlassCard variant="light" padding="lg">
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <Trophy className="h-6 w-6" />
+          </div>
+          <p className="text-sm text-[var(--color-muted)]">
+            Ingen turneringer lagt inn ennå.
+          </p>
         </div>
-        <p className="text-sm text-[var(--color-muted)]">
-          Ingen turneringer lagt inn ennå.
-        </p>
-      </PortalCard>
+      </GlassCard>
     );
   }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   User,
@@ -16,19 +17,21 @@ import {
   Flame,
   Bird,
   Flag,
+  ArrowRight,
   type LucideIcon,
 } from "lucide-react";
 import {
-  PortalHeader,
-  PortalCard,
-  PremiumStatCard,
+  HeroHeading,
+  DarkStatCard,
+  GlassCard,
+  Shimmer,
   PremiumBentoCard,
   PremiumBentoGrid,
+  EASE,
   fadeInUp,
   staggerContainer,
 } from "@/components/portal/premium";
 import { ProgressChart } from "@/components/portal/heritage/progress-chart";
-import { QuickAction } from "@/components/portal/heritage/quick-action";
 
 // Mock data - replace with actual API calls
 const mockHandicapHistory = [
@@ -130,195 +133,233 @@ export default function ProfilPage() {
     );
   }
 
+  const nameParts = name.trim().split(" ");
+  const firstName = nameParts[0] ?? "Spiller";
+  const lastName = nameParts.slice(1).join(" ") || "";
+  const unlockedCount = mockAchievements.filter((a) => a.unlocked).length;
+
+  async function handleSave() {
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      // TODO: erstatt med faktisk API-kall når mock fjernes
+      // await updateProfile({ name });
+      setIsEditing(false);
+    } catch {
+      setSaveError("Kunne ikke lagre endringer. Prøv igjen.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={staggerContainer}
-      className="space-y-8"
-    >
-      {/* Header */}
-      <PortalHeader
-        label="Profil"
-        title="Min profil"
-        description="Administrer din profil, mål og prestasjoner"
+    <div className="space-y-10">
+      {/* ═══ HERO ═══ */}
+      <HeroHeading
+        label="Din profil"
+        title={
+          <>
+            {firstName}{" "}
+            {lastName && (
+              <span className="font-serif italic text-[var(--color-primary)] font-normal">
+                {lastName}
+              </span>
+            )}
+            <span className="text-[var(--color-accent-cta)]">.</span>
+          </>
+        }
+        description="Administrer din profil, mål og prestasjoner. Se hvor langt du har kommet."
+        actions={
+          <>
+            {!isEditing ? (
+              <motion.button
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setIsEditing(true)}
+                className="h-11 px-6 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 text-[var(--color-text)] text-[12px] font-semibold hover:bg-white transition-colors shadow-sm inline-flex items-center gap-2"
+              >
+                <Edit2 className="w-3.5 h-3.5" />
+                Rediger
+              </motion.button>
+            ) : (
+              <motion.button
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={handleSave}
+                disabled={isSaving}
+                className="relative h-11 px-6 rounded-full bg-[var(--color-accent-cta)] text-[var(--color-grey-900)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group disabled:opacity-60"
+              >
+                <Shimmer />
+                {isSaving ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin relative z-10" />
+                ) : (
+                  <Check className="w-3.5 h-3.5 relative z-10" />
+                )}
+                <span className="relative z-10">Lagre</span>
+              </motion.button>
+            )}
+          </>
+        }
       />
 
-      {/* Profile Hero */}
-      <motion.div variants={fadeInUp}>
-        <PortalCard variant="bold" padding="lg" className="overflow-hidden">
-          <div className="flex flex-col sm:flex-row items-center gap-6">
-            {/* Avatar */}
-            <div className="relative">
-              <div className="w-24 h-24 rounded-2xl bg-white/15 flex items-center justify-center border-2 border-white/25 overflow-hidden backdrop-blur-sm">
-                <User className="w-12 h-12 text-white/70" />
-              </div>
-              <button
-                aria-label="Last opp profilbilde"
-                className="absolute -bottom-2 -right-2 w-9 h-9 rounded-xl bg-[var(--color-accent-cta)] flex items-center justify-center text-[var(--color-primary)] hover:scale-105 transition-transform shadow-lg"
-              >
-                <Camera className="w-4 h-4" />
-              </button>
+      {/* ═══ HERO CARD (dark) ═══ */}
+      <GlassCard variant="dark" padding="lg">
+        <div className="flex flex-col sm:flex-row items-center gap-6">
+          {/* Avatar */}
+          <div className="relative shrink-0">
+            <div className="w-24 h-24 rounded-2xl bg-white/10 flex items-center justify-center border border-white/20 overflow-hidden backdrop-blur-sm">
+              <User className="w-12 h-12 text-white/70" strokeWidth={1.5} />
             </div>
+            <button
+              aria-label="Last opp profilbilde"
+              className="absolute -bottom-2 -right-2 w-9 h-9 rounded-xl bg-[var(--color-accent-cta)] flex items-center justify-center text-[var(--color-grey-900)] hover:scale-105 transition-transform shadow-lg"
+            >
+              <Camera className="w-4 h-4" />
+            </button>
+          </div>
 
-            {/* Info */}
-            <div className="flex-1 text-center sm:text-left">
-              {isEditing ? (
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 justify-center sm:justify-start">
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => {
-                        setName(e.target.value);
-                        setSaveError(null);
-                      }}
-                      className="bg-white/15 border border-white/25 rounded-lg px-3 py-1.5 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-cta)]/60"
-                    />
-                    <button
-                      onClick={async () => {
-                        setIsSaving(true);
-                        setSaveError(null);
-                        try {
-                          // TODO: erstatt med faktisk API-kall når mock fjernes
-                          // await updateProfile({ name });
-                          setIsEditing(false);
-                        } catch {
-                          setSaveError("Kunne ikke lagre endringer. Prøv igjen.");
-                        } finally {
-                          setIsSaving(false);
-                        }
-                      }}
-                      disabled={isSaving}
-                      className="p-1.5 rounded-lg bg-[var(--color-accent-cta)] text-[var(--color-primary)] disabled:opacity-50"
-                    >
-                      {isSaving ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        <Check className="w-4 h-4" />
-                      )}
-                    </button>
-                  </div>
-                  {saveError && (
-                    <p className="text-xs text-[var(--color-accent-cta)] text-center sm:text-left">
-                      {saveError}
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <div className="flex items-center gap-2 justify-center sm:justify-start">
-                  <h2 className="text-2xl font-bold tracking-tight">{name}</h2>
-                  <button
-                    aria-label="Rediger navn"
-                    onClick={() => setIsEditing(true)}
-                    className="p-1.5 rounded-lg hover:bg-white/15 transition-colors"
-                  >
-                    <Edit2 className="w-4 h-4 text-white/70" />
-                  </button>
-                </div>
-              )}
-              <div className="flex items-center gap-2 mt-2 justify-center sm:justify-start">
-                <span className="px-2.5 py-0.5 rounded-full bg-[var(--color-accent-cta)] text-[var(--color-primary)] text-xs font-semibold">
-                  Elite
-                </span>
-                <span className="text-white/70 text-sm">Medlem siden 2024</span>
+          {/* Info */}
+          <div className="flex-1 text-center sm:text-left min-w-0">
+            {isEditing ? (
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setSaveError(null);
+                  }}
+                  className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-cta)]/60 w-full max-w-xs text-2xl font-bold"
+                />
+                {saveError && (
+                  <p className="text-xs text-[#FF6B6B]">{saveError}</p>
+                )}
               </div>
-            </div>
-
-            {/* Handicap */}
-            <div className="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20 text-center min-w-[120px]">
-              <p className="text-xs text-white/70 uppercase tracking-wider">Handicap</p>
-              <p className="text-4xl font-bold text-[var(--color-accent-cta)]">
-                {handicap.toFixed(1)}
-              </p>
-              <p className="text-xs text-white/70 mt-1">Nivå: 3</p>
+            ) : (
+              <h2 className="text-[32px] font-[300] tracking-[-0.03em] text-white leading-tight">
+                {firstName}{" "}
+                {lastName && (
+                  <span className="font-serif italic text-[var(--color-accent-cta)] font-normal">
+                    {lastName}
+                  </span>
+                )}
+              </h2>
+            )}
+            <div className="flex items-center gap-2 mt-3 justify-center sm:justify-start flex-wrap">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--color-accent-cta)]/[0.12] border border-[var(--color-accent-cta)]/25 text-[10px] font-bold tracking-[0.15em] text-[var(--color-accent-cta)] uppercase">
+                <Crown className="w-3 h-3" />
+                Elite
+              </span>
+              <span className="text-white/50 text-[12px]">Medlem siden 2024</span>
             </div>
           </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/20">
-            <div className="text-center">
-              <p className="text-2xl font-bold">24</p>
-              <p className="text-xs text-white/70 uppercase tracking-wider">Runder</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold">12</p>
-              <p className="text-xs text-white/70 uppercase tracking-wider">Coaching</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold">3</p>
-              <p className="text-xs text-white/70 uppercase tracking-wider">Turneringer</p>
-            </div>
+          {/* Handicap */}
+          <div className="bg-white/[0.06] backdrop-blur-xl rounded-2xl p-5 border border-white/10 text-center min-w-[140px]">
+            <p className="text-[10px] text-white/50 uppercase tracking-[0.15em] font-bold mb-1">
+              Handicap
+            </p>
+            <p className="text-[42px] font-[300] tracking-[-0.04em] leading-none text-[var(--color-accent-cta)] tabular-nums">
+              {handicap.toFixed(1)}
+            </p>
+            <p className="text-[10px] text-white/40 mt-2 uppercase tracking-[0.1em]">
+              Nivå 3
+            </p>
           </div>
-        </PortalCard>
+        </div>
+      </GlassCard>
+
+      {/* ═══ STATS GRID ═══ */}
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+        className="grid grid-cols-12 gap-4"
+      >
+        <div className="col-span-6 md:col-span-3">
+          <DarkStatCard
+            label="Treningsøkter"
+            value={128}
+            icon={Target}
+            variant="default"
+            delay={0}
+          />
+        </div>
+        <div className="col-span-6 md:col-span-3">
+          <DarkStatCard
+            label="Coaching"
+            value={12}
+            icon={Award}
+            variant="primary"
+            delay={0.08}
+          />
+        </div>
+        <div className="col-span-6 md:col-span-3">
+          <DarkStatCard
+            label="Turneringer"
+            value={3}
+            icon={Trophy}
+            variant="default"
+            delay={0.16}
+          />
+        </div>
+        <div className="col-span-6 md:col-span-3">
+          <DarkStatCard
+            label="Streak"
+            value={7}
+            unit="dager"
+            icon={Flame}
+            variant="accent"
+            delay={0.24}
+          />
+        </div>
       </motion.div>
 
-      {/* Stats Grid */}
-      <motion.div
-        variants={fadeInUp}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4"
-      >
-        <PremiumStatCard
-          label="Beste score"
-          value={78}
-          icon={Trophy}
-          trend={-2}
-          trendLabel="vs. forrige"
-          lowerIsBetter
-        />
-        <PremiumStatCard
-          label="Snitt putts"
-          value={32.5}
-          icon={Target}
-          decimals={1}
-          trend={-0.8}
-          trendLabel="siste 10 runder"
-          lowerIsBetter
-        />
-        <PremiumStatCard
-          label="Fairway"
-          value={58}
-          unit="%"
-          icon={TrendingDown}
-          trend={4}
-          trendLabel="siste 30 dager"
-        />
-        <PremiumStatCard
-          label="GIR"
-          value={42}
-          unit="%"
-          icon={Award}
-          trend={3}
-          trendLabel="siste 30 dager"
-        />
-      </motion.div>
-
-      {/* Two Column Layout */}
-      <motion.div
-        variants={fadeInUp}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-      >
+      {/* ═══ TO-KOLONNE: CHART + GOALS ═══ */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Handicap Chart */}
-        <PortalCard>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-[var(--color-text)]">
-              Handicap-utvikling
-            </h3>
-            <span className="text-xs text-[var(--color-muted)]">Siste 6 måneder</span>
+        <GlassCard variant="light" padding="lg">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center">
+                <TrendingDown className="w-5 h-5 text-[var(--color-primary)]" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-[var(--color-grey-900)] text-[14px]">
+                  Handicap-utvikling
+                </h3>
+                <p className="text-[10px] text-[var(--color-muted)] uppercase tracking-wider">
+                  Siste 6 måneder
+                </p>
+              </div>
+            </div>
           </div>
           <ProgressChart
             data={mockHandicapHistory}
             color="var(--color-primary)"
             height={200}
           />
-        </PortalCard>
+        </GlassCard>
 
         {/* Goals */}
-        <PortalCard>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-[var(--color-text)]">Mine mål</h3>
-            <button className="text-xs font-medium text-[var(--color-primary)] hover:underline">
-              + Nytt mål
+        <GlassCard variant="light" padding="lg">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center">
+                <Target className="w-5 h-5 text-[var(--color-primary)]" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-[var(--color-grey-900)] text-[14px]">
+                  Mine mål
+                </h3>
+                <p className="text-[10px] text-[var(--color-muted)] uppercase tracking-wider">
+                  {mockGoals.length} aktive
+                </p>
+              </div>
+            </div>
+            <button className="text-[11px] font-semibold text-[var(--color-primary)] hover:underline inline-flex items-center gap-1">
+              Nytt mål
+              <ArrowRight className="w-3 h-3" />
             </button>
           </div>
           <div className="space-y-5">
@@ -329,11 +370,11 @@ export default function ProfilPage() {
                   : 0;
               return (
                 <div key={goal.id}>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-sm font-medium text-[var(--color-text)]">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[13px] font-medium text-[var(--color-grey-900)]">
                       {goal.title}
                     </span>
-                    <span className="text-xs font-semibold text-[var(--color-muted)]">
+                    <span className="text-[11px] font-bold text-[var(--color-muted)] tabular-nums">
                       {progress}%
                     </span>
                   </div>
@@ -349,50 +390,109 @@ export default function ProfilPage() {
               );
             })}
           </div>
-        </PortalCard>
-      </motion.div>
+        </GlassCard>
+      </div>
 
-      {/* Achievements */}
-      <motion.section variants={fadeInUp} className="space-y-4">
+      {/* ═══ ACHIEVEMENTS ═══ */}
+      <motion.section
+        variants={fadeInUp}
+        initial="hidden"
+        animate="visible"
+        className="space-y-4"
+      >
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+          <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase flex items-center gap-2">
+            <span className="w-6 h-px bg-[var(--color-muted)]" />
             Prestasjoner
-          </h3>
-          <span className="text-xs text-[var(--color-muted)]">
-            {mockAchievements.filter((a) => a.unlocked).length} / {mockAchievements.length} oppnådd
+          </p>
+          <span className="text-[11px] text-[var(--color-muted)] tabular-nums">
+            {unlockedCount} / {mockAchievements.length} oppnådd
           </span>
         </div>
         <PremiumBentoGrid columns={3}>
-          {mockAchievements.map((achievement) => (
-            <PremiumBentoCard
+          {mockAchievements.map((achievement, i) => (
+            <motion.div
               key={achievement.id}
-              title={achievement.title}
-              description={achievement.description}
-              icon={achievement.icon}
-              badge={achievement.unlocked ? "Oppnådd" : "Låst"}
-              badgeVariant={achievement.unlocked ? "success" : "neutral"}
-              variant={achievement.unlocked ? "soft" : "default"}
-              className={achievement.unlocked ? "" : "opacity-40"}
-            />
+              variants={fadeInUp}
+              transition={{ delay: i * 0.05, ease: EASE }}
+            >
+              <PremiumBentoCard
+                title={achievement.title}
+                description={achievement.description}
+                icon={achievement.icon}
+                badge={achievement.unlocked ? "Oppnådd" : "Låst"}
+                badgeVariant={achievement.unlocked ? "success" : "neutral"}
+                variant={achievement.unlocked ? "soft" : "default"}
+                className={achievement.unlocked ? "" : "opacity-40"}
+              />
+            </motion.div>
           ))}
         </PremiumBentoGrid>
       </motion.section>
 
-      {/* Quick Actions */}
-      <motion.section variants={fadeInUp}>
-        <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-4">
+      {/* ═══ INNSTILLINGER ═══ */}
+      <motion.section
+        variants={fadeInUp}
+        initial="hidden"
+        animate="visible"
+      >
+        <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase mb-4 flex items-center gap-2">
+          <span className="w-6 h-px bg-[var(--color-muted)]" />
           Innstillinger
-        </h3>
+        </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <QuickAction
+          <SettingsLink
             href="/portal/profil/innstillinger"
             icon={User}
             label="Kontoinnstillinger"
+            description="Navn, e-post, passord"
           />
-          <QuickAction href="/portal/profil/abonnement" icon={Crown} label="Abonnement" />
-          <QuickAction href="/portal/profil/personvern" icon={Award} label="Personvern" />
+          <SettingsLink
+            href="/portal/profil/abonnement"
+            icon={Crown}
+            label="Abonnement"
+            description="Pakke og betaling"
+          />
+          <SettingsLink
+            href="/portal/profil/personvern"
+            icon={Award}
+            label="Personvern"
+            description="Data og samtykker"
+          />
         </div>
       </motion.section>
-    </motion.div>
+    </div>
+  );
+}
+
+function SettingsLink({
+  href,
+  icon: Icon,
+  label,
+  description,
+}: {
+  href: string;
+  icon: LucideIcon;
+  label: string;
+  description: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group relative flex items-center gap-3 p-4 rounded-[20px] bg-white/70 backdrop-blur-xl border border-white/80 hover:border-[var(--color-primary)]/20 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-12px_rgba(0,88,64,0.2)] transition-all duration-300 will-change-transform"
+    >
+      <div className="w-10 h-10 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center transition-transform group-hover:scale-110">
+        <Icon className="w-[18px] h-[18px] text-[var(--color-primary)]" strokeWidth={1.75} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="font-semibold text-[13px] text-[var(--color-grey-900)] truncate">
+          {label}
+        </p>
+        <p className="text-[11px] text-[var(--color-muted)] truncate">
+          {description}
+        </p>
+      </div>
+      <ArrowRight className="w-3.5 h-3.5 text-[var(--color-muted)] opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all" />
+    </Link>
   );
 }

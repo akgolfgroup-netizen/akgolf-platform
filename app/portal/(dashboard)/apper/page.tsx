@@ -1,7 +1,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { getUserModuleSlugs } from "@/lib/portal/access";
-import { PortalHeader } from "@/components/portal/premium";
+import { HeroHeading } from "@/components/portal/premium";
 import { ApperClient } from "./apper-client";
 
 export default async function ApperPage() {
@@ -77,11 +77,19 @@ export default async function ApperPage() {
   }));
 
   return (
-    <div className="space-y-8">
-      <PortalHeader
-        label="Apper"
-        title="Apper og abonnement"
-        description="Låst opp avanserte moduler og bundles for å forbedre spillet ditt — enkeltmoduler eller komplette pakker."
+    <div className="space-y-10">
+      <HeroHeading
+        label="Marketplace"
+        title={
+          <>
+            Apper og{" "}
+            <span className="font-serif italic text-[var(--color-primary)] font-normal">
+              moduler
+            </span>
+            <span className="text-[var(--color-accent-cta)]">.</span>
+          </>
+        }
+        description="Lås opp avanserte moduler og bundles for å forbedre spillet ditt — enkeltmoduler eller komplette pakker."
       />
 
       <ApperClient

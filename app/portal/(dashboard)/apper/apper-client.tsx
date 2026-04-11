@@ -21,9 +21,7 @@ import {
 } from "lucide-react";
 import { PricingTable } from "@/components/portal/pricing/pricing-table";
 import {
-  PortalCard,
-  PremiumBentoCard,
-  PremiumBentoGrid,
+  GlassCard,
   staggerContainer,
   fadeInUp,
 } from "@/components/portal/premium";
@@ -247,26 +245,27 @@ export function ApperClient({
         />
       </motion.div>
 
-      {/* Active subscriptions */}
+      {/* Active subscriptions — dark featured */}
       {activeSubscriptions.length > 0 && (
         <motion.section variants={fadeInUp} className="space-y-4">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+            <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase flex items-center gap-2">
+              <span className="w-6 h-px bg-[var(--color-muted)]" />
               Aktive abonnement
             </p>
             {hasStripeCustomer && (
               <button
                 onClick={handlePortal}
                 disabled={loading === "portal"}
-                className="flex items-center gap-1.5 text-xs font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 transition-colors"
+                className="flex items-center gap-1.5 text-[11px] font-semibold text-[var(--color-accent-cta)] hover:opacity-80 transition-opacity"
               >
                 <Settings className="h-3.5 w-3.5" />
                 {loading === "portal" ? "Åpner…" : "Administrer"}
               </button>
             )}
           </div>
-          <PortalCard padding="md">
-            <ul className="divide-y divide-black/5">
+          <GlassCard variant="dark" padding="md">
+            <ul className="divide-y divide-white/10">
               {activeSubscriptions.map((sub) => {
                 const name =
                   sub.bundle?.slug ?? sub.module?.slug ?? "Abonnement";
@@ -277,24 +276,24 @@ export function ApperClient({
                     className="flex items-center justify-between py-3 first:pt-0 last:pb-0"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-success)]/10">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-accent-cta)]/15 border border-[var(--color-accent-cta)]/25">
                         {isBundle ? (
-                          <Package className="h-[18px] w-[18px] text-[var(--color-success)]" />
+                          <Package className="h-[18px] w-[18px] text-[var(--color-accent-cta)]" />
                         ) : (
-                          <Sparkles className="h-[18px] w-[18px] text-[var(--color-success)]" />
+                          <Sparkles className="h-[18px] w-[18px] text-[var(--color-accent-cta)]" />
                         )}
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-[var(--color-text)] capitalize">
+                        <p className="text-sm font-semibold text-white capitalize">
                           {name.replace(/-/g, " ")}
                         </p>
-                        <p className="text-xs text-[var(--color-muted)]">
+                        <p className="text-[11px] text-white/60">
                           {sub.status === "TRIALING" ? "Prøveperiode" : "Aktiv"}
                           {sub.cancelAtPeriodEnd && " · Avsluttes ved periodeslutt"}
                         </p>
                       </div>
                     </div>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-success)]/10 px-2.5 py-1 text-[11px] font-semibold text-[var(--color-success)]">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-accent-cta)]/15 border border-[var(--color-accent-cta)]/25 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--color-accent-cta)]">
                       <Check className="h-3 w-3" />
                       Aktiv
                     </span>
@@ -302,42 +301,88 @@ export function ApperClient({
                 );
               })}
             </ul>
-          </PortalCard>
+          </GlassCard>
         </motion.section>
       )}
 
       {/* Bundles */}
       <motion.section variants={fadeInUp} className="space-y-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+        <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase flex items-center gap-2">
+          <span className="w-6 h-px bg-[var(--color-muted)]" />
           Pakker
         </p>
-        <PremiumBentoGrid columns={2}>
-          {bundles.map((bundle) => {
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {bundles.map((bundle, i) => {
             const active = isBundleActive(bundle.slug);
             const isPremium = bundle.slug === "premium-bundle";
-            const variant: "default" | "soft" | "bold" = isPremium
-              ? "bold"
-              : "soft";
+            const cardVariant: "light" | "dark" = isPremium ? "dark" : "light";
+            const BundleIcon = isPremium ? Trophy : Package;
 
             return (
-              <PremiumBentoCard
+              <GlassCard
                 key={bundle.id}
-                title={bundle.name}
-                description={bundle.description ?? undefined}
-                icon={isPremium ? Trophy : Package}
-                variant={variant}
-                featured={isPremium}
-                badge={active ? "Aktiv" : undefined}
-                badgeVariant="success"
+                variant={cardVariant}
+                padding="lg"
+                delay={i * 0.08}
               >
-                <div className="flex flex-wrap gap-1.5 mb-4">
+                <div className="flex items-start justify-between mb-4">
+                  <div
+                    className={cn(
+                      "w-11 h-11 rounded-xl flex items-center justify-center",
+                      isPremium
+                        ? "bg-[var(--color-accent-cta)]/15 border border-[var(--color-accent-cta)]/25"
+                        : "bg-[var(--color-primary)]/10"
+                    )}
+                  >
+                    <BundleIcon
+                      className={cn(
+                        "h-5 w-5",
+                        isPremium
+                          ? "text-[var(--color-accent-cta)]"
+                          : "text-[var(--color-primary)]"
+                      )}
+                    />
+                  </div>
+                  {active && (
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
+                        isPremium
+                          ? "bg-[var(--color-accent-cta)]/15 border border-[var(--color-accent-cta)]/25 text-[var(--color-accent-cta)]"
+                          : "bg-[var(--color-success)]/10 text-[var(--color-success)]"
+                      )}
+                    >
+                      <Check className="h-3 w-3" />
+                      Aktiv
+                    </span>
+                  )}
+                </div>
+                <h3
+                  className={cn(
+                    "text-[18px] font-semibold tracking-tight mb-1.5",
+                    isPremium ? "text-white" : "text-[var(--color-grey-900)]"
+                  )}
+                >
+                  {bundle.name}
+                </h3>
+                {bundle.description && (
+                  <p
+                    className={cn(
+                      "text-[13px] leading-relaxed mb-4",
+                      isPremium ? "text-white/70" : "text-[var(--color-muted)]"
+                    )}
+                  >
+                    {bundle.description}
+                  </p>
+                )}
+                <div className="flex flex-wrap gap-1.5 mb-5">
                   {bundle.items.map((item) => (
                     <span
                       key={item.module.slug}
                       className={cn(
                         "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium",
-                        variant === "bold"
-                          ? "bg-white/15 text-white"
+                        isPremium
+                          ? "bg-white/10 text-white/90 border border-white/10"
                           : "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
                       )}
                     >
@@ -349,8 +394,8 @@ export function ApperClient({
                   <div>
                     <span
                       className={cn(
-                        "text-3xl font-bold tracking-tight",
-                        variant === "bold" ? "text-white" : "text-[var(--color-text)]"
+                        "text-[32px] font-[300] tabular-nums tracking-[-0.04em] leading-none",
+                        isPremium ? "text-white" : "text-[var(--color-grey-900)]"
                       )}
                     >
                       {bundle.monthlyPriceNok / 100}
@@ -358,9 +403,7 @@ export function ApperClient({
                     <span
                       className={cn(
                         "ml-1 text-sm",
-                        variant === "bold"
-                          ? "text-white/70"
-                          : "text-[var(--color-muted)]"
+                        isPremium ? "text-white/60" : "text-[var(--color-muted)]"
                       )}
                     >
                       kr/mnd
@@ -371,9 +414,9 @@ export function ApperClient({
                       onClick={() => handleCheckout(undefined, bundle.slug)}
                       disabled={loading !== null}
                       className={cn(
-                        "inline-flex h-9 items-center justify-center rounded-full px-4 text-xs font-semibold transition-all duration-200",
-                        variant === "bold"
-                          ? "bg-[var(--color-accent-cta)] text-[var(--color-primary)] hover:brightness-105"
+                        "relative h-10 px-5 rounded-full text-[11px] font-bold inline-flex items-center gap-2 transition-all",
+                        isPremium
+                          ? "bg-[var(--color-accent-cta)] text-[var(--color-grey-900)] shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)]"
                           : "bg-[var(--color-primary)] text-white hover:brightness-110"
                       )}
                     >
@@ -385,41 +428,74 @@ export function ApperClient({
                     </button>
                   )}
                 </div>
-              </PremiumBentoCard>
+              </GlassCard>
             );
           })}
-        </PremiumBentoGrid>
+        </div>
       </motion.section>
 
       {/* Individual modules */}
       <motion.section variants={fadeInUp} className="space-y-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+        <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase flex items-center gap-2">
+          <span className="w-6 h-px bg-[var(--color-muted)]" />
           Enkeltapper
         </p>
-        <PremiumBentoGrid columns={3}>
-          {modules.map((mod) => {
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {modules.map((mod, i) => {
             const active = isModuleActive(mod.slug);
             const Icon = ICON_MAP[mod.icon ?? ""] ?? BarChart3;
             const isFree = mod.monthlyPriceNok === 0;
 
             return (
-              <PremiumBentoCard
+              <GlassCard
                 key={mod.id}
-                title={mod.name}
-                description={mod.description ?? undefined}
-                icon={Icon}
-                variant="default"
-                badge={active ? "Aktiv" : isFree ? "Gratis" : undefined}
-                badgeVariant={active ? "success" : "primary"}
+                variant="light"
+                padding="md"
+                delay={i * 0.04}
               >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center">
+                    <Icon
+                      className="h-[18px] w-[18px] text-[var(--color-primary)]"
+                      strokeWidth={1.75}
+                    />
+                  </div>
+                  {(active || isFree) && (
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
+                        active
+                          ? "bg-[var(--color-success)]/10 text-[var(--color-success)]"
+                          : "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                      )}
+                    >
+                      {active ? (
+                        <>
+                          <Check className="h-3 w-3" />
+                          Aktiv
+                        </>
+                      ) : (
+                        "Gratis"
+                      )}
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-[15px] font-semibold text-[var(--color-grey-900)] mb-1.5 tracking-tight">
+                  {mod.name}
+                </h3>
+                {mod.description && (
+                  <p className="text-[12px] text-[var(--color-muted)] leading-relaxed mb-4 line-clamp-2">
+                    {mod.description}
+                  </p>
+                )}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold tracking-tight text-[var(--color-text)]">
+                  <span className="text-[18px] font-semibold tracking-tight text-[var(--color-grey-900)]">
                     {isFree ? (
                       "Gratis"
                     ) : (
                       <>
                         {mod.monthlyPriceNok / 100}
-                        <span className="ml-1 text-xs font-normal text-[var(--color-muted)]">
+                        <span className="ml-1 text-[11px] font-normal text-[var(--color-muted)]">
                           kr/mnd
                         </span>
                       </>
@@ -451,10 +527,10 @@ export function ApperClient({
                     </button>
                   ) : null}
                 </div>
-              </PremiumBentoCard>
+              </GlassCard>
             );
           })}
-        </PremiumBentoGrid>
+        </div>
       </motion.section>
 
       {/* Manage subscriptions fallback */}

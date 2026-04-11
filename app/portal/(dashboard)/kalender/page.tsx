@@ -1,9 +1,10 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { WeekCalendar } from "@/components/portal/heritage/week-calendar";
-import { startOfWeek, endOfWeek } from "date-fns";
+import { startOfWeek, endOfWeek, format } from "date-fns";
+import { nb } from "date-fns/locale";
 import { CalendarSyncSettings } from "@/components/portal/kalender/calendar-sync-settings";
 import { getCalendarEvents } from "./actions";
-import { PortalHeader, PortalCard } from "@/components/portal/premium";
+import { HeroHeading, GlassCard } from "@/components/portal/premium";
 import { Settings2 } from "lucide-react";
 
 export default async function KalenderPage() {
@@ -32,31 +33,41 @@ export default async function KalenderPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <PortalHeader
-        label="Portal"
-        title="Kalender"
+    <div className="space-y-10">
+      <HeroHeading
+        label={format(now, "EEEE d. MMMM yyyy", { locale: nb })}
+        title={
+          <>
+            Din{" "}
+            <span className="font-serif italic text-[var(--color-primary)] font-normal">
+              kalender
+            </span>
+            <span className="text-[var(--color-accent-cta)]">.</span>
+          </>
+        }
         description="Oversikt over dine coaching-timer, treninger og turneringer — synkronisert med Google Calendar."
         actions={
           <a
             href="#calendar-sync"
-            className="inline-flex items-center gap-2 rounded-xl border border-[var(--color-primary)]/20 bg-white px-4 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition-colors hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5"
+            className="h-11 px-6 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 text-[var(--color-text)] text-[12px] font-semibold hover:bg-white transition-colors shadow-sm inline-flex items-center gap-2"
           >
-            <Settings2 className="h-4 w-4" />
+            <Settings2 className="h-3.5 w-3.5" />
             Sync-innstillinger
           </a>
         }
       />
 
       {/* Week Calendar */}
-      <PortalCard padding="sm" as="section">
+      <GlassCard variant="light" padding="lg">
         <WeekCalendar events={formattedEvents} />
-      </PortalCard>
+      </GlassCard>
 
       {/* Google Calendar Sync */}
-      <PortalCard padding="lg" as="section" id="calendar-sync">
-        <CalendarSyncSettings />
-      </PortalCard>
+      <div id="calendar-sync">
+        <GlassCard variant="light" padding="lg" delay={0.08}>
+          <CalendarSyncSettings />
+        </GlassCard>
+      </div>
     </div>
   );
 }

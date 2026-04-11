@@ -17,16 +17,16 @@ import {
   Lightbulb,
 } from "lucide-react";
 import {
-  PortalHeader,
-  PortalCard,
-  PremiumStatCard,
+  HeroHeading,
+  GlassCard,
+  DarkStatCard,
+  Shimmer,
   fadeInUp,
   staggerContainer,
 } from "@/components/portal/premium";
 import { ScoreTrendChart } from "@/components/portal/statistikk/score-trend-chart";
 import { SGRadarChart } from "@/components/portal/statistikk/sg-radar-chart";
 import { TrainingVolumeChart } from "@/components/portal/statistikk/training-volume-chart";
-import { QuickAction } from "@/components/portal/heritage/quick-action";
 import { PORTAL_CONTENT } from "@/lib/website-constants";
 import type { RoundStats } from "@prisma/client";
 import type { PeriodKey, WeeklyTrainingData } from "./actions";
@@ -90,18 +90,26 @@ function getTotalTrainingMinutes(breakdown: TrainingAreaBreakdown[]): number {
 
 function EmptyState() {
   return (
-    <div className="space-y-8">
-      <PortalHeader
+    <div className="space-y-10">
+      <HeroHeading
         label="Statistikk"
-        title="Statistikk"
-        description="Folg utviklingen din over tid"
+        title={
+          <>
+            Din{" "}
+            <span className="font-serif italic text-[var(--color-primary)] font-normal">
+              statistikk
+            </span>
+            <span className="text-[var(--color-accent-cta)]">.</span>
+          </>
+        }
+        description="Folg utviklingen din over tid. Registrer din forste runde for a se trender og analyser."
       />
 
-      <PortalCard padding="lg" className="text-center">
+      <GlassCard variant="light" padding="lg" className="text-center">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-surface)]">
           <BarChart3 className="h-8 w-8 text-[var(--color-muted)]" />
         </div>
-        <h2 className="mb-2 text-xl font-semibold text-[var(--color-text)]">
+        <h2 className="mb-2 text-xl font-semibold text-[var(--color-grey-900)]">
           Ingen runder registrert
         </h2>
         <p className="mx-auto mb-8 max-w-md text-[var(--color-muted)]">
@@ -109,12 +117,12 @@ function EmptyState() {
         </p>
         <Link
           href="/portal/statistikk/ny-runde"
-          className="inline-flex items-center gap-2 rounded-xl bg-[var(--color-primary)] px-6 py-3 font-medium text-white transition-opacity hover:opacity-90"
+          className="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent-cta)] px-6 py-3 text-[12px] font-bold text-[var(--color-grey-900)] shadow-[0_8px_24px_rgba(209,248,67,0.4)] transition-shadow hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)]"
         >
           <Plus className="h-4 w-4" />
           Registrer din forste runde
         </Link>
-      </PortalCard>
+      </GlassCard>
     </div>
   );
 }
@@ -193,16 +201,28 @@ export function StatistikkClient({
 
   const hasSGData = Object.values(playerSG).some((v) => v !== null);
 
+  const avgScoreValue = aggregates?.avgScore ?? null;
+  const avgScoreNumeric = typeof avgScoreValue === "number" ? avgScoreValue : 0;
+  const trainingHours = totalTrainingMinutes > 0 ? totalTrainingMinutes / 60 : 0;
+  const scoreTrendValue =
+    aggregates?.scoreTrend === "down"
+      ? -1
+      : aggregates?.scoreTrend === "up"
+        ? 1
+        : aggregates?.scoreTrend === "flat"
+          ? 0
+          : null;
+
   const periodSelector = (
-    <div className="flex gap-1 rounded-xl border border-black/5 bg-white p-1">
+    <div className="flex h-11 items-center gap-1 rounded-full border border-white/80 bg-white/70 p-1 backdrop-blur-xl shadow-sm">
       {PERIOD_OPTIONS.map((option) => (
         <button
           key={option.key}
           onClick={() => handlePeriodChange(option.key)}
-          className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+          className={`rounded-full px-4 py-2 text-[11px] font-semibold transition-colors ${
             option.key === currentPeriod
-              ? "bg-[var(--color-primary)] text-white"
-              : "text-[var(--color-muted)] hover:text-[var(--color-text)]"
+              ? "bg-[var(--color-grey-900)] text-white shadow-sm"
+              : "text-[var(--color-muted)] hover:text-[var(--color-grey-900)]"
           }`}
         >
           {option.label}
@@ -211,64 +231,80 @@ export function StatistikkClient({
     </div>
   );
 
-  const avgScoreValue = aggregates?.avgScore ?? null;
-  const bestScoreTrendLabel =
-    bestScoreToPar != null ? `${formatScoreDiff(bestScoreToPar)} fra par` : undefined;
-  const trainingHours = totalTrainingMinutes > 0 ? totalTrainingMinutes / 60 : 0;
-
   return (
-    <div className="space-y-8">
-      <PortalHeader
+    <div className="space-y-10">
+      {/* HERO */}
+      <HeroHeading
         label="Statistikk"
-        title="Statistikk"
-        description="Folg utviklingen din over tid"
-        actions={periodSelector}
+        title={
+          <>
+            Din{" "}
+            <span className="font-serif italic text-[var(--color-primary)] font-normal">
+              statistikk
+            </span>
+            <span className="text-[var(--color-accent-cta)]">.</span>
+          </>
+        }
+        description="Folg utviklingen din over tid. Analyser trender, Strokes Gained og fokusomrader."
+        actions={
+          <>
+            {periodSelector}
+            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                href="/portal/statistikk/ny-runde"
+                className="relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-full bg-[var(--color-accent-cta)] px-6 text-[12px] font-bold text-[var(--color-grey-900)] shadow-[0_8px_24px_rgba(209,248,67,0.4)] transition-shadow hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)]"
+              >
+                <Shimmer />
+                <Plus className="relative z-10 h-3.5 w-3.5" strokeWidth={2.5} />
+                <span className="relative z-10">Logg runde</span>
+              </Link>
+            </motion.div>
+          </>
+        }
       />
 
-      {/* Stats Grid */}
+      {/* STATS GRID */}
       <motion.div
-        className="grid grid-cols-2 gap-4 lg:grid-cols-4"
+        className="grid grid-cols-12 gap-4"
         initial="hidden"
         animate="visible"
         variants={staggerContainer}
       >
-        <motion.div variants={fadeInUp}>
-          <PremiumStatCard
+        <div className="col-span-6 lg:col-span-3">
+          <DarkStatCard
             label="Snittslag"
-            value={avgScoreValue ?? "-"}
+            value={avgScoreNumeric}
             decimals={1}
             icon={TrendingDown}
             lowerIsBetter
-            trend={
-              aggregates?.scoreTrend === "down"
-                ? -1
-                : aggregates?.scoreTrend === "up"
-                  ? 1
-                  : aggregates?.scoreTrend === "flat"
-                    ? 0
-                    : null
-            }
+            trend={scoreTrendValue}
             trendLabel="siste periode"
+            variant="primary"
+            delay={0}
           />
-        </motion.div>
-        <motion.div variants={fadeInUp}>
-          <PremiumStatCard
+        </div>
+        <div className="col-span-6 lg:col-span-3">
+          <DarkStatCard
             label="Runder"
             value={aggregates?.roundCount ?? 0}
             icon={Trophy}
+            variant="default"
+            delay={0.08}
           />
-        </motion.div>
-        <motion.div variants={fadeInUp}>
-          <PremiumStatCard
+        </div>
+        <div className="col-span-6 lg:col-span-3">
+          <DarkStatCard
             label="Beste score"
-            value={bestScore ?? "-"}
+            value={bestScore ?? 0}
             icon={Award}
             trend={bestScoreToPar != null ? 0 : null}
-            trendLabel={bestScoreTrendLabel}
+            trendLabel={bestScoreToPar != null ? `${formatScoreDiff(bestScoreToPar)} fra par` : undefined}
+            variant="accent"
+            delay={0.16}
           />
-        </motion.div>
-        <motion.div variants={fadeInUp}>
-          <PremiumStatCard
+        </div>
+        <div className="col-span-6 lg:col-span-3">
+          <DarkStatCard
             label="Treningstimer"
             value={trainingHours}
             unit="t"
@@ -276,40 +312,37 @@ export function StatistikkClient({
             icon={Clock}
             trend={totalTrainingSessions > 0 ? 0 : null}
             trendLabel={totalTrainingSessions > 0 ? `${totalTrainingSessions} okter` : undefined}
+            variant="default"
+            delay={0.24}
           />
-        </motion.div>
+        </div>
       </motion.div>
 
-      {/* Charts Row: Score Trend + Recent Rounds */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Score Trend Chart */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          transition={{ delay: 0.1 }}
-        >
-          <PortalCard>
-            <h3 className="mb-4 font-semibold text-[var(--color-text)]">Score-utvikling</h3>
-            <ScoreTrendChart
-              rounds={scoreTrendRounds}
-              handicap={handicap ?? undefined}
-            />
-          </PortalCard>
-        </motion.div>
+      {/* SECTION LABEL */}
+      <div>
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--color-muted)]">
+          <span className="h-px w-6 bg-[var(--color-muted)]" />
+          Utvikling
+        </p>
 
-        {/* Recent Rounds */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          transition={{ delay: 0.2 }}
-        >
-          <PortalCard>
-            <div className="mb-4 flex items-center justify-between">
-              <h3 className="font-semibold text-[var(--color-text)]">Siste runder</h3>
+        {/* Charts Row: Score Trend + Recent Rounds */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {/* Score Trend Chart */}
+          <GlassCard variant="light" padding="lg" delay={0.1}>
+            <h3 className="mb-5 text-[14px] font-semibold text-[var(--color-grey-900)]">
+              Score-utvikling
+            </h3>
+            <ScoreTrendChart rounds={scoreTrendRounds} handicap={handicap ?? undefined} />
+          </GlassCard>
+
+          {/* Recent Rounds */}
+          <GlassCard variant="light" padding="lg" delay={0.2}>
+            <div className="mb-5 flex items-center justify-between">
+              <h3 className="text-[14px] font-semibold text-[var(--color-grey-900)]">
+                Siste runder
+              </h3>
               {rounds.length > 5 && (
-                <button className="text-xs font-medium text-[var(--color-primary)] hover:underline">
+                <button className="text-[11px] font-semibold text-[var(--color-primary)] hover:underline">
                   Se alle
                 </button>
               )}
@@ -325,25 +358,27 @@ export function StatistikkClient({
                   return (
                     <div
                       key={round.id}
-                      className="flex items-center gap-3 rounded-xl bg-[var(--color-surface)] p-3 transition-colors hover:bg-[var(--color-surface-alt,var(--color-surface))]"
+                      className="flex items-center gap-3 rounded-2xl border border-white/60 bg-white/60 p-3 backdrop-blur-xl transition-colors hover:border-[var(--color-primary)]/20 hover:bg-white"
                     >
-                      <div className="flex h-10 w-10 flex-shrink-0 flex-col items-center justify-center rounded-lg bg-white shadow-sm">
-                        <span className="text-sm font-bold text-[var(--color-text)]">{date}</span>
-                        <span className="text-[10px] font-medium uppercase text-[var(--color-muted)]">
+                      <div className="flex h-11 w-11 flex-shrink-0 flex-col items-center justify-center rounded-xl bg-[var(--color-surface)]">
+                        <span className="text-sm font-bold text-[var(--color-grey-900)] tabular-nums">
+                          {date}
+                        </span>
+                        <span className="text-[9px] font-semibold uppercase tracking-wider text-[var(--color-muted)]">
                           {month}
                         </span>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-[var(--color-text)]">
+                        <p className="truncate text-[13px] font-semibold text-[var(--color-grey-900)]">
                           {round.courseName ?? "Ukjent bane"}
                         </p>
                         {round.scoreToPar !== null && (
-                          <p className="text-xs text-[var(--color-muted)]">
+                          <p className="text-[11px] text-[var(--color-muted)]">
                             {formatScoreDiff(round.scoreToPar)} fra par
                           </p>
                         )}
                       </div>
-                      <div className="text-lg font-bold text-[var(--color-text)]">
+                      <div className="text-[20px] font-[300] tabular-nums text-[var(--color-grey-900)]">
                         {round.totalScore ?? "-"}
                       </div>
                     </div>
@@ -351,24 +386,27 @@ export function StatistikkClient({
                 })
               )}
             </div>
-          </PortalCard>
-        </motion.div>
+          </GlassCard>
+        </div>
       </div>
 
-      {/* Charts Row: SG Radar + Training Volume */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* SG Radar Chart */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          transition={{ delay: 0.3 }}
-        >
-          <PortalCard>
-            <div className="mb-4 flex items-center justify-between">
-              <h3 className="font-semibold text-[var(--color-text)]">Strokes Gained</h3>
+      {/* SECTION LABEL */}
+      <div>
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--color-muted)]">
+          <span className="h-px w-6 bg-[var(--color-muted)]" />
+          Analyse
+        </p>
+
+        {/* Charts Row: SG Radar + Training Volume */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {/* SG Radar Chart */}
+          <GlassCard variant="light" padding="lg" delay={0.3}>
+            <div className="mb-5 flex items-center justify-between">
+              <h3 className="text-[14px] font-semibold text-[var(--color-grey-900)]">
+                Strokes Gained
+              </h3>
               {aggregates?.avgSgTotal !== null && aggregates?.avgSgTotal !== undefined && (
-                <span className="text-xs text-[var(--color-muted)]">
+                <span className="text-[11px] text-[var(--color-muted)] tabular-nums">
                   Totalt: {aggregates.avgSgTotal.toFixed(2)}
                 </span>
               )}
@@ -380,69 +418,75 @@ export function StatistikkClient({
                 Ingen SG-data i valgt periode
               </div>
             )}
-          </PortalCard>
-        </motion.div>
+          </GlassCard>
 
-        {/* Training Volume Chart */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          transition={{ delay: 0.4 }}
-        >
-          <PortalCard>
-            <h3 className="mb-4 font-semibold text-[var(--color-text)]">Treningsvolum</h3>
+          {/* Training Volume Chart */}
+          <GlassCard variant="light" padding="lg" delay={0.4}>
+            <h3 className="mb-5 text-[14px] font-semibold text-[var(--color-grey-900)]">
+              Treningsvolum
+            </h3>
             <TrainingVolumeChart data={weeklyTraining} />
-          </PortalCard>
-        </motion.div>
+          </GlassCard>
+        </div>
       </div>
 
       {/* Focus Areas */}
       {focusAreas.length > 0 && (
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          transition={{ delay: 0.5 }}
-        >
-          <PortalCard>
-            <h3 className="mb-6 font-semibold text-[var(--color-text)]">Fokusomrade-fordeling</h3>
-            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {focusAreas.map((area) => (
-                <div key={area.name} className="text-center">
-                  <div className="relative mb-3 h-24 overflow-hidden rounded-xl bg-[var(--color-surface)]">
-                    <div
-                      className="absolute bottom-0 left-0 right-0 bg-[var(--color-primary)] transition-all duration-500"
-                      style={{ height: `${area.percent}%` }}
-                    />
-                  </div>
-                  <p className="text-sm font-semibold text-[var(--color-text)]">{area.name}</p>
-                  <p className="text-xs text-[var(--color-muted)]">{area.percent}%</p>
+        <GlassCard variant="light" padding="lg" delay={0.5}>
+          <h3 className="mb-6 text-[14px] font-semibold text-[var(--color-grey-900)]">
+            Fokusomrade-fordeling
+          </h3>
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {focusAreas.map((area) => (
+              <div key={area.name} className="text-center">
+                <div className="relative mb-3 h-24 overflow-hidden rounded-2xl bg-[var(--color-surface)]">
+                  <div
+                    className="absolute bottom-0 left-0 right-0 bg-[var(--color-primary)] transition-all duration-500"
+                    style={{ height: `${area.percent}%` }}
+                  />
                 </div>
-              ))}
-            </div>
-          </PortalCard>
-        </motion.div>
+                <p className="text-[12px] font-semibold text-[var(--color-grey-900)]">
+                  {area.name}
+                </p>
+                <p className="text-[11px] text-[var(--color-muted)] tabular-nums">
+                  {area.percent}%
+                </p>
+              </div>
+            ))}
+          </div>
+        </GlassCard>
       )}
 
       {/* AI Recommendation */}
       {weakestArea && weakestArea.value !== null && (
         <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          transition={{ delay: 0.6 }}
-          className="rounded-[24px] border border-[var(--color-ai)]/20 bg-gradient-to-br from-[var(--color-ai)]/10 to-[var(--color-ai)]/5 p-6"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, type: "spring", damping: 20, stiffness: 100 }}
+          className="relative overflow-hidden rounded-[24px] border border-white/80 bg-white/70 p-7 backdrop-blur-xl shadow-[0_8px_32px_-12px_rgba(10,31,24,0.12)]"
         >
-          <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--color-ai)]/20">
-              <Lightbulb className="h-6 w-6 text-[var(--color-ai)]" />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 50% at 100% 0%, rgba(175,82,222,0.08), transparent 60%)",
+            }}
+          />
+          <div className="relative flex items-start gap-4">
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--color-ai)]/10">
+              <Lightbulb className="h-6 w-6 text-[var(--color-ai)]" strokeWidth={1.75} />
             </div>
             <div>
-              <h3 className="mb-1 font-semibold text-[var(--color-text)]">AI-anbefaling</h3>
-              <p className="text-sm text-[var(--color-muted)]">
-                Basert pa dine SG-data bor du oke fokus pa <strong>{weakestArea.label}</strong>-trening.
-                Du taper mest slag ({weakestArea.value.toFixed(1)}) i denne kategorien.
+              <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-muted)]">
+                AI-anbefaling
+              </p>
+              <h3 className="mb-2 text-[14px] font-semibold text-[var(--color-grey-900)]">
+                Fokuser pa {weakestArea.label}-trening
+              </h3>
+              <p className="text-[13px] leading-relaxed text-[var(--color-text)]">
+                Basert pa dine SG-data bor du oke fokus pa{" "}
+                <strong className="text-[var(--color-grey-900)]">{weakestArea.label}</strong>. Du
+                taper mest slag ({weakestArea.value.toFixed(1)}) i denne kategorien.
               </p>
             </div>
           </div>
@@ -451,27 +495,28 @@ export function StatistikkClient({
 
       {/* Quick Actions */}
       <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        transition={{ delay: 0.7 }}
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7, type: "spring", damping: 20, stiffness: 100 }}
       >
-        <h3 className="mb-4 text-sm font-semibold text-[var(--color-text)]">Hurtighandlinger</h3>
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--color-muted)]">
+          <span className="h-px w-6 bg-[var(--color-muted)]" />
+          Snarveier
+        </p>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <QuickAction
+          <StatistikkQuickAction
             href="/portal/statistikk/ny-runde"
             icon={Plus}
             label="Registrer runde"
             description="Legg til ny score"
-            variant="primary"
           />
-          <QuickAction
+          <StatistikkQuickAction
             href="/portal/analyse"
             icon={BarChart3}
             label="Dyp analyse"
             description="Se detaljert statistikk"
           />
-          <QuickAction
+          <StatistikkQuickAction
             href="/portal/treningsplan"
             icon={Target}
             label="Treningsplan"
@@ -481,33 +526,68 @@ export function StatistikkClient({
       </motion.div>
 
       {/* SG Explanation */}
-      <details className="group overflow-hidden rounded-[24px] border border-black/5 bg-white">
-        <summary className="flex cursor-pointer list-none items-center gap-3 p-4 transition-colors hover:bg-[var(--color-surface)]">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-surface)]">
-            <Info className="h-5 w-5 text-[var(--color-muted)]" />
+      <motion.details
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, type: "spring", damping: 20, stiffness: 100 }}
+        className="group overflow-hidden rounded-[24px] border border-white/80 bg-white/70 backdrop-blur-xl shadow-[0_8px_32px_-12px_rgba(10,31,24,0.12)]"
+      >
+        <summary className="flex cursor-pointer list-none items-center gap-3 p-5 transition-colors hover:bg-white/40">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-primary)]/10">
+            <Info className="h-5 w-5 text-[var(--color-primary)]" strokeWidth={1.75} />
           </div>
-          <span className="font-semibold text-[var(--color-text)]">Hva er Strokes Gained?</span>
+          <span className="text-[14px] font-semibold text-[var(--color-grey-900)]">
+            Hva er Strokes Gained?
+          </span>
           <ChevronRight className="ml-auto h-5 w-5 text-[var(--color-muted)] transition-transform group-open:rotate-90" />
         </summary>
-        <div className="border-t border-black/5 p-4 pt-0">
-          <p className="mb-4 mt-4 text-sm text-[var(--color-muted)]">
+        <div className="border-t border-white/60 p-5 pt-0">
+          <p className="mb-4 mt-4 text-[13px] leading-relaxed text-[var(--color-muted)]">
             {PORTAL_CONTENT.statistikk.sgExplanation.intro}
           </p>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {PORTAL_CONTENT.statistikk.sgExplanation.categories.map((cat) => (
               <div
                 key={cat.key}
-                className="flex gap-3 rounded-xl bg-[var(--color-surface)] p-3"
+                className="flex gap-3 rounded-2xl border border-white/60 bg-white/60 p-3 backdrop-blur-xl"
               >
-                <span className="h-fit rounded bg-[var(--color-primary)] px-2 py-1 text-xs font-bold text-white">
+                <span className="h-fit rounded-lg bg-[var(--color-primary)] px-2 py-1 text-[10px] font-bold text-white">
                   {cat.key}
                 </span>
-                <span className="text-xs text-[var(--color-muted)]">{cat.description}</span>
+                <span className="text-[12px] text-[var(--color-muted)]">{cat.description}</span>
               </div>
             ))}
           </div>
         </div>
-      </details>
+      </motion.details>
     </div>
+  );
+}
+
+function StatistikkQuickAction({
+  href,
+  icon: Icon,
+  label,
+  description,
+}: {
+  href: string;
+  icon: React.ElementType;
+  label: string;
+  description: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group relative flex items-center gap-3 rounded-[20px] border border-white/80 bg-white/70 p-4 backdrop-blur-xl transition-all duration-300 will-change-transform hover:-translate-y-0.5 hover:border-[var(--color-primary)]/20 hover:shadow-[0_12px_32px_-12px_rgba(0,88,64,0.2)]"
+    >
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 transition-transform group-hover:scale-110">
+        <Icon className="h-[18px] w-[18px] text-[var(--color-primary)]" strokeWidth={1.75} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-[13px] font-semibold text-[var(--color-grey-900)]">{label}</p>
+        <p className="truncate text-[11px] text-[var(--color-muted)]">{description}</p>
+      </div>
+      <ChevronRight className="h-3.5 w-3.5 -translate-x-1 text-[var(--color-muted)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+    </Link>
   );
 }
