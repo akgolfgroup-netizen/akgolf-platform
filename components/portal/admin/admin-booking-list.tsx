@@ -20,7 +20,7 @@ import {
   adminCancelBooking,
   bulkSendReminder,
   bulkCancelBookings,
-} from "@/app/admin/bookinger/actions";
+} from "@/app/admin/(authed)/bookinger/actions";
 import { AppleCard } from "@/components/portal/apple/apple-card";
 import { AppleBadge } from "@/components/portal/apple/apple-badge";
 import { AppleAvatar } from "@/components/portal/apple/apple-avatar";

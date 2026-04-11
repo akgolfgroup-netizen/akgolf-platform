@@ -110,8 +110,8 @@ export function TourComparison({ playerSG }: TourComparisonProps) {
       <div className="p-6 border-b border-[var(--color-grey-100)]">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
-              <Trophy className="w-5 h-5 text-blue-600" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--color-info-light)] to-[var(--color-ai-light)] flex items-center justify-center">
+              <Trophy className="w-5 h-5 text-info-text" />
             </div>
             <div>
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)]">
@@ -168,8 +168,8 @@ export function TourComparison({ playerSG }: TourComparisonProps) {
               <Radar
                 name="PGA Tour (median)"
                 dataKey="tour"
-                stroke="#3B82F6"
-                fill="#3B82F6"
+                stroke="var(--color-info)"
+                fill="var(--color-info)"
                 fillOpacity={0.15}
                 strokeWidth={2}
                 strokeDasharray="5 5"

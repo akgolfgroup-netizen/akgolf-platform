@@ -4,7 +4,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Pencil, X, Save, Loader2 } from "lucide-react";
-import { updateCoachingNotes } from "@/app/admin/elever/[id]/actions";
+import { updateCoachingNotes } from "@/app/admin/(authed)/elever/[id]/actions";
 
 interface CoachingSession {
   id: string;
@@ -173,7 +173,7 @@ export function EditableCoachingNotes({ session }: Props) {
 
               {/* Error */}
               {error && (
-                <p className="text-sm text-[#FCA5A5] bg-[rgba(239,68,68,0.15)] rounded-lg px-3 py-2">
+                <p className="text-sm text-error-text bg-error-light rounded-lg px-3 py-2">
                   {error}
                 </p>
               )}

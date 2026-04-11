@@ -30,28 +30,28 @@ export function StatsGrid({ trainingSessions, coachingSessions, tournaments, str
       sublabel: "siste 30 dager",
       value: trainingSessions,
       icon: Activity,
-      color: "#10B981",
+      color: "var(--color-success)",
     },
     {
       label: "Coaching",
       sublabel: "totalt",
       value: coachingSessions,
       icon: BookOpen,
-      color: "#38BDF8",
+      color: "var(--color-info)",
     },
     {
       label: "Turneringer",
       sublabel: "planlagt",
       value: tournaments,
       icon: Trophy,
-      color: "#F59E0B",
+      color: "var(--color-warning)",
     },
     {
       label: "Streak",
       sublabel: streak === 1 ? "dag på rad" : "dager på rad",
       value: streak,
       icon: Flame,
-      color: "#F97316",
+      color: "var(--color-error)",
     },
   ];
 

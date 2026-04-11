@@ -11,7 +11,7 @@ import {
   Line,
   ComposedChart,
 } from "recharts";
-import type { AnalyticsData } from "@/app/admin/analytics/actions";
+import type { AnalyticsData } from "@/app/admin/(authed)/analytics/actions";
 
 interface RevenueChartProps {
   data: AnalyticsData;
@@ -43,7 +43,7 @@ export function RevenueChart({ data }: RevenueChartProps) {
             <span className="text-[var(--color-grey-600)]">Inntekt</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-[#3B82F6]" />
+            <div className="w-3 h-3 rounded-full bg-info" />
             <span className="text-[var(--color-grey-600)]">Bookinger</span>
           </div>
         </div>
@@ -104,9 +104,9 @@ export function RevenueChart({ data }: RevenueChartProps) {
               yAxisId="right"
               type="monotone"
               dataKey="bookings"
-              stroke="#3B82F6"
+              stroke="var(--color-info)"
               strokeWidth={2}
-              dot={{ fill: "#3B82F6", r: 4 }}
+              dot={{ fill: "var(--color-info)", r: 4 }}
               activeDot={{ r: 6 }}
             />
           </ComposedChart>

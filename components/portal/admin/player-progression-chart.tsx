@@ -129,17 +129,17 @@ export function PlayerProgressionChart({
       {/* Chart */}
       <ResponsiveContainer width="100%" height={200}>
         <LineChart data={dataWithTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" />
           <XAxis
             dataKey="date"
-            tick={{ fill: "#9CA3AF", fontSize: 10 }}
+            tick={{ fill: "var(--color-grey-300)", fontSize: 10 }}
             axisLine={false}
             tickLine={false}
             interval="preserveStartEnd"
           />
           <YAxis
             domain={[min - padding, max + padding]}
-            tick={{ fill: "#9CA3AF", fontSize: 10 }}
+            tick={{ fill: "var(--color-grey-300)", fontSize: 10 }}
             axisLine={false}
             tickLine={false}
             reversed
@@ -147,7 +147,7 @@ export function PlayerProgressionChart({
           <Tooltip
             contentStyle={{
               background: "white",
-              border: "1px solid #E5E7EB",
+              border: "1px solid var(--color-grey-200)",
               borderRadius: "8px",
               fontSize: "12px",
             }}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Search, Eye, Edit2, MoreHorizontal, ChevronsUpDown, Check, Mail, Tag, Download, X } from "lucide-react";
-import { searchStudents } from "@/app/admin/elever/actions";
+import { searchStudents } from "@/app/admin/(authed)/elever/actions";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
 import { AppleAvatar, AppleBadge, AppleCard } from "@/components/portal/apple";

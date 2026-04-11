@@ -70,7 +70,7 @@ export function StatCard({
   return (
     <motion.div
       className={cn(
-        "rounded-[14px] p-4 bg-white border border-[#D5DFDB]",
+        "rounded-[14px] p-4 bg-white border border-grey-200",
         "transition-[transform,box-shadow] duration-300",
         className
       )}
@@ -86,7 +86,7 @@ export function StatCard({
             <Icon className={cn(iconColor, sizes.iconInner)} />
           </div>
         )}
-        <span className="text-[10px] uppercase tracking-[1px] text-[#7A8C85] font-medium">
+        <span className="text-[10px] uppercase tracking-[1px] text-grey-400 font-medium">
           {label}
         </span>
       </div>
@@ -94,7 +94,7 @@ export function StatCard({
       <div className="flex items-end justify-between">
         <motion.span
           className={cn(
-            "text-[26px] font-extrabold text-[#0A1F18] tabular-nums"
+            "text-[26px] font-extrabold text-black tabular-nums"
           )}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -109,7 +109,7 @@ export function StatCard({
               "flex items-center gap-1 text-[11px] font-semibold",
               isPositive && "text-[var(--color-success)]",
               isNegative && "text-[var(--color-error)]",
-              !isPositive && !isNegative && "text-[#7A8C85]"
+              !isPositive && !isNegative && "text-grey-400"
             )}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}

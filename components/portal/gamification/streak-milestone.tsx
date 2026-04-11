@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { Flame, Trophy, Crown, Star, Zap, Award } from "lucide-react";
 
 const MILESTONES = [
-  { days: 7, label: "1 uke", icon: Flame, color: "#F97316" },
-  { days: 14, label: "2 uker", icon: Zap, color: "#EAB308" },
-  { days: 30, label: "1 maned", icon: Star, color: "var(--color-brand)" },
-  { days: 60, label: "2 maneder", icon: Award, color: "#3B82F6" },
-  { days: 90, label: "3 maneder", icon: Trophy, color: "#8B5CF6" },
-  { days: 365, label: "1 ar", icon: Crown, color: "#EC4899" },
+  { days: 7, label: "1 uke", icon: Flame, color: "var(--color-error)" },
+  { days: 14, label: "2 uker", icon: Zap, color: "var(--color-warning)" },
+  { days: 30, label: "1 maned", icon: Star, color: "var(--color-primary)" },
+  { days: 60, label: "2 maneder", icon: Award, color: "var(--color-info)" },
+  { days: 90, label: "3 maneder", icon: Trophy, color: "var(--color-ai)" },
+  { days: 365, label: "1 ar", icon: Crown, color: "var(--color-accent-cta)" },
 ];
 
 interface StreakMilestoneProps {
@@ -43,7 +43,7 @@ export function StreakMilestone({ currentStreak }: StreakMilestoneProps) {
         <div className="flex items-center gap-2">
           <div
             className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ backgroundColor: latestAchieved?.color || "#6B7280" }}
+            style={{ backgroundColor: latestAchieved?.color || "var(--color-grey-400)" }}
           >
             <Icon className="w-4 h-4 text-white" />
           </div>
@@ -83,7 +83,7 @@ export function StreakMilestone({ currentStreak }: StreakMilestoneProps) {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="h-full rounded-full"
               style={{
-                background: `linear-gradient(90deg, ${latestAchieved?.color || "#6B7280"}, ${nextMilestone.color})`,
+                background: `linear-gradient(90deg, ${latestAchieved?.color || "var(--color-grey-400)"}, ${nextMilestone.color})`,
               }}
             />
           </div>

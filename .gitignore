@@ -77,3 +77,4 @@ e2e/
 code.html
 check-data.js
 cleanup-data.js
+.mcp.json

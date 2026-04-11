@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Plus, Calendar, Clock, MessageSquare } from "lucide-react";
-import { createBlockedTime } from "@/app/admin/tilgjengelighet/actions";
+import { createBlockedTime } from "@/app/admin/(authed)/tilgjengelighet/actions";
 import { AppleButton } from "@/components/portal/apple/apple-button";
 import { motion } from "framer-motion";
 

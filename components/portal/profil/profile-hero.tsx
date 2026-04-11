@@ -18,8 +18,8 @@ const roleLabelMap: Record<string, string> = {
 };
 
 const tierConfig: Record<string, { label: string; color: string; bg: string; border: string }> = {
-  VISITOR: { label: "Gjest", color: "#8a9bb0", bg: "rgba(138,155,176,0.1)", border: "rgba(138,155,176,0.2)" },
-  PRO: { label: "Pro", color: "#38BDF8", bg: "rgba(56,189,248,0.1)", border: "rgba(56,189,248,0.25)" },
+  VISITOR: { label: "Gjest", color: "var(--color-grey-400)", bg: "var(--color-grey-100)", border: "var(--color-grey-200)" },
+  PRO: { label: "Pro", color: "var(--color-info)", bg: "var(--color-info-light)", border: "var(--color-info)" },
   ELITE: { label: "Elite", color: "var(--color-grey-900)", bg: "var(--color-grey-200)", border: "var(--color-grey-200)" },
 };
 

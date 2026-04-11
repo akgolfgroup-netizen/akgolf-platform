@@ -12,7 +12,7 @@ import {
   TrendingDown,
   Minus,
 } from "lucide-react";
-import type { AnalyticsData } from "@/app/admin/analytics/actions";
+import type { AnalyticsData } from "@/app/admin/(authed)/analytics/actions";
 
 interface KPICardsProps {
   data: AnalyticsData;
@@ -107,7 +107,7 @@ export function KPICards({ data }: KPICardsProps) {
         title="Nye elever"
         value={data.newStudents}
         icon={UserPlus}
-        iconColor="#2A7D5A"
+        iconColor="var(--color-success)"
         delay={0}
       />
 
@@ -116,7 +116,7 @@ export function KPICards({ data }: KPICardsProps) {
         value={data.activeStudents}
         subtitle="Siste 30 dager"
         icon={Users}
-        iconColor="#3B82F6"
+        iconColor="var(--color-info)"
         delay={0.05}
       />
 
@@ -125,7 +125,7 @@ export function KPICards({ data }: KPICardsProps) {
         value={data.churnedStudents}
         subtitle="Ingen booking siste 60d"
         icon={UserMinus}
-        iconColor={data.churnedStudents > 0 ? "#EF4444" : "#6B7280"}
+        iconColor={data.churnedStudents > 0 ? "var(--color-error)" : "var(--color-grey-400)"}
         delay={0.1}
       />
 
@@ -134,7 +134,7 @@ export function KPICards({ data }: KPICardsProps) {
         value={data.totalBookings}
         subtitle={`${data.completedBookings} fullfort`}
         icon={Calendar}
-        iconColor="#8B5CF6"
+        iconColor="var(--color-ai)"
         delay={0.15}
       />
 
@@ -143,7 +143,7 @@ export function KPICards({ data }: KPICardsProps) {
         value={`${data.bookingRate.toFixed(0)}%`}
         subtitle="Fullfort/totalt"
         icon={CheckCircle}
-        iconColor="#10B981"
+        iconColor="var(--color-success)"
         delay={0.2}
       />
 
@@ -155,7 +155,7 @@ export function KPICards({ data }: KPICardsProps) {
         }
         icon={XCircle}
         iconColor={
-          data.noShowCount > data.totalBookings * 0.1 ? "#EF4444" : "#6B7280"
+          data.noShowCount > data.totalBookings * 0.1 ? "var(--color-error)" : "var(--color-grey-400)"
         }
         delay={0.25}
       />
@@ -166,7 +166,7 @@ export function KPICards({ data }: KPICardsProps) {
         trend={data.revenueGrowth}
         trendLabel={`vs ${data.previousPeriodLabel}`}
         icon={TrendingUp}
-        iconColor="#059669"
+        iconColor="var(--color-success)"
         delay={0.3}
       />
 
@@ -175,7 +175,7 @@ export function KPICards({ data }: KPICardsProps) {
         value={formatCurrency(Math.round(data.avgRevenuePerStudent))}
         subtitle="Gjennomsnitt"
         icon={Users}
-        iconColor="#0EA5E9"
+        iconColor="var(--color-info)"
         delay={0.35}
       />
     </div>

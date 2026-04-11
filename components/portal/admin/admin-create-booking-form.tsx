@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { adminCreateBooking } from "@/app/admin/bookinger/actions";
+import { adminCreateBooking } from "@/app/admin/(authed)/bookinger/actions";
 import { Check } from "lucide-react";
 
 interface Props {
@@ -45,9 +45,9 @@ export function AdminCreateBookingForm({ serviceTypes, instructors }: Props) {
 
   if (success) {
     return (
-      <div className="bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.4)] rounded-2xl p-8 text-center">
-        <Check className="w-8 h-8 text-[#10B981] mx-auto mb-3" />
-        <p className="text-[#86EFAC] font-semibold">Booking opprettet!</p>
+      <div className="bg-success-light border border-success/40 rounded-2xl p-8 text-center">
+        <Check className="w-8 h-8 text-success mx-auto mb-3" />
+        <p className="text-success-text font-semibold">Booking opprettet!</p>
       </div>
     );
   }
@@ -121,7 +121,7 @@ export function AdminCreateBookingForm({ serviceTypes, instructors }: Props) {
       </div>
 
       {error && (
-        <p className="text-sm text-[#FCA5A5] bg-[rgba(239,68,68,0.15)] rounded-xl px-4 py-2">{error}</p>
+        <p className="text-sm text-error-text bg-error-light rounded-xl px-4 py-2">{error}</p>
       )}
 
       <button

@@ -5,120 +5,121 @@ import { usePathname, useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  User,
-  CalendarDays,
-  CalendarPlus,
-  BookOpen,
-  Target,
-  Calendar,
-  CalendarCheck,
+  ClipboardList,
+  Flag,
   LayoutDashboard,
-  ShieldCheck,
   LogOut,
-  NotebookPen,
-  BarChart3,
-  Users as UsersIcon,
-  Clock,
-  ClipboardCheck,
-  Dumbbell,
-  X,
-  CheckCircle,
-  MessageSquare,
-  Bot,
-  Crosshair,
-  Trophy,
+  Plus,
+  ShieldCheck,
   Sparkles,
+  Target,
+  TrendingUp,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
 import type { PortalUser } from "@/lib/portal/auth";
 import { useSidebar } from "./sidebar-context";
+import { AKLogo } from "@/components/website/AKLogo";
+import { NotificationBell } from "./notification-bell";
 
-const navItems = [
-  { href: "/portal", label: "Oversikt", icon: LayoutDashboard },
-  { href: "/portal/bookinger", label: "Mine Bookinger", icon: CalendarCheck },
-  { href: "/portal/treningsplan", label: "Treningsplan", icon: Target },
-  { href: "/portal/dagbok", label: "Treningsdagbok", icon: BookOpen },
-  { href: "/portal/statistikk", label: "Statistikk", icon: BarChart3 },
-  { href: "/portal/turneringer", label: "Turneringer", icon: Trophy },
-  { href: "/portal/benchmark", label: "Benchmarking", icon: Crosshair },
-  { href: "/portal/kalender", label: "Kalender", icon: Calendar },
-  { href: "/portal/meldinger", label: "Meldinger", icon: MessageSquare },
-  { href: "/portal/ai-coach", label: "AI Coach", icon: Sparkles },
-];
+// ── 6 nav-items: Spillerens syklus (Planlegge → Gjennomføre → Evaluere) ─────
 
-const trainingItems = [
-  { href: "/portal/trening/tester", label: "Trackman Tester", icon: ClipboardCheck },
-  { href: "/portal/trening/ovelser", label: "Øvelser", icon: Dumbbell },
-];
-
-const accountItems = [
-  { href: "/portal/profil", label: "Profil", icon: User },
-  { href: "/portal/coaching-historikk", label: "Historikk", icon: NotebookPen },
-];
-
-const staffItems = [
-  { href: "/admin/kalender", label: "Kalender", icon: CalendarDays },
-  { href: "/admin/bookinger", label: "Bookinger", icon: CalendarPlus },
-  { href: "/admin/godkjenninger", label: "Godkjenninger", icon: CheckCircle },
-  { href: "/admin/elever", label: "Elever", icon: UsersIcon },
-  { href: "/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
-  { href: "/admin/kapasitet", label: "Kapasitet", icon: BarChart3 },
-  { href: "/admin/denne-uken", label: "Denne uken", icon: CalendarCheck },
-  { href: "/admin/okter", label: "Økter", icon: BookOpen },
-  { href: "/admin/turneringer", label: "Turneringer", icon: ShieldCheck },
-  { href: "/admin/meldinger", label: "Meldinger", icon: MessageSquare },
-  { href: "/admin/ai-assistent", label: "AI-assistent", icon: Bot },
-];
-
-// Light sidebar theme (Brand System 2026)
-const THEME = {
-  bg: "white",
-  bgHover: "var(--color-grey-100)",
-  bgActive: "var(--color-grey-100)",
-  gold: "var(--color-grey-900)",
-  white: "var(--color-grey-900)",
-  textMuted: "var(--color-grey-400)",
-  textDim: "var(--color-grey-500)",
-  border: "var(--color-grey-200)",
-};
-
-interface SidebarProps {
-  user: PortalUser;
+interface NavItem {
+  href: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  matchPaths?: string[];
 }
+
+const NAV_ITEMS: NavItem[] = [
+  {
+    href: "/portal",
+    label: "Oversikt",
+    icon: LayoutDashboard,
+  },
+  {
+    href: "/portal/treningsplan",
+    label: "Planlegg",
+    icon: ClipboardList,
+    matchPaths: ["/portal/bookinger", "/portal/kalender"],
+  },
+  {
+    href: "/portal/dagbok",
+    label: "Tren",
+    icon: Target,
+    matchPaths: ["/portal/trening"],
+  },
+  {
+    href: "/portal/runde",
+    label: "Spill",
+    icon: Flag,
+    matchPaths: ["/portal/turneringer", "/portal/spill", "/portal/turneringsplan"],
+  },
+  {
+    href: "/portal/statistikk",
+    label: "Analyser",
+    icon: TrendingUp,
+    matchPaths: ["/portal/analyse", "/portal/benchmark", "/portal/trackman", "/portal/sammenligning"],
+  },
+  {
+    href: "/portal/ai-coach",
+    label: "AI Coach",
+    icon: Sparkles,
+    matchPaths: ["/portal/coaching-historikk"],
+  },
+];
+
+// ── NavLink ──────────────────────────────────────────────────────────────────
 
 function NavLink({
   item,
   pathname,
   onClick,
 }: {
-  item: { href: string; label: string; icon: React.ComponentType<{ className?: string }> };
+  item: NavItem;
   pathname: string;
   onClick?: () => void;
 }) {
-  const active =
-    pathname === item.href ||
-    (item.href !== "/portal" && pathname.startsWith(`${item.href}/`));
+  const isExactHome = item.href === "/portal" && pathname === "/portal";
+  const isSubMatch =
+    item.href !== "/portal" && pathname.startsWith(item.href);
+  const isExtraMatch = item.matchPaths?.some((p) => pathname.startsWith(p));
+  const active = isExactHome || isSubMatch || (isExtraMatch ?? false);
 
   return (
     <li>
-      <Link
-        href={item.href}
-        onClick={onClick}
-        className={cn(
-          "flex items-center gap-3 px-5 py-3 text-sm font-medium transition-colors duration-150",
-          active
-            ? "text-[var(--color-grey-900)] border-l-[3px] border-[var(--color-grey-900)]"
-            : "text-[var(--portal-text-secondary)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)]"
-        )}
-        style={active ? { background: THEME.bgActive } : undefined}
-      >
-        <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
-        <span>{item.label}</span>
+      <Link href={item.href} onClick={onClick} className="group relative block">
+        <div
+          className={cn(
+            "relative mx-2 flex items-center gap-3 rounded-lg px-4 py-2.5 text-[13px] transition-colors duration-150",
+            active
+              ? "bg-primary-soft font-semibold text-primary"
+              : "font-medium text-grey-500 hover:bg-grey-50 hover:text-text",
+          )}
+        >
+          {active && (
+            <span
+              aria-hidden
+              className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-primary"
+            />
+          )}
+          <item.icon
+            className={cn(
+              "h-[18px] w-[18px] shrink-0 transition-colors",
+              active
+                ? "text-primary"
+                : "text-grey-400 group-hover:text-primary",
+            )}
+          />
+          <span>{item.label}</span>
+        </div>
       </Link>
     </li>
   );
 }
+
+// ── SidebarContent ───────────────────────────────────────────────────────────
 
 function SidebarContent({
   user,
@@ -133,104 +134,89 @@ function SidebarContent({
 }) {
   return (
     <>
-      {/* Main Nav */}
-      <nav className="flex-1 py-4 overflow-y-auto">
-        <ul className="space-y-0.5">
-          {navItems.map((item) => (
+      {/* Nav — 6 items, no scrolling needed */}
+      <nav className="flex-1 py-4">
+        <ul className="space-y-1">
+          {NAV_ITEMS.map((item) => (
             <NavLink key={item.href} item={item} pathname={pathname} onClick={onNavClick} />
           ))}
         </ul>
 
-        {/* Trening section */}
-        <div className="mt-4 pt-2">
-          <p
-            className="px-5 py-2 text-[11px] font-medium uppercase tracking-widest"
-            style={{ color: THEME.textDim }}
+        {/* Logg ut */}
+        <div className="mx-2 mt-6 border-t border-grey-100 pt-4">
+          <button
+            onClick={() => {
+              onSignOut();
+              onNavClick?.();
+            }}
+            className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-[13px] font-medium text-grey-400 transition-colors hover:text-error"
           >
-            Trening
-          </p>
-          <ul className="space-y-0.5">
-            {trainingItems.map((item) => (
-              <NavLink key={item.href} item={item} pathname={pathname} onClick={onNavClick} />
-            ))}
-          </ul>
+            <LogOut className="h-4 w-4" />
+            <span>Logg ut</span>
+          </button>
         </div>
 
-        {/* Konto section */}
-        <div className="mt-4 pt-2">
-          <p
-            className="px-5 py-2 text-[11px] font-medium uppercase tracking-widest"
-            style={{ color: THEME.textDim }}
-          >
-            Konto
-          </p>
-          <ul className="space-y-0.5">
-            {accountItems.map((item) => (
-              <NavLink key={item.href} item={item} pathname={pathname} onClick={onNavClick} />
-            ))}
-            <li>
-              <button
-                onClick={() => {
-                  onSignOut();
-                  onNavClick?.();
-                }}
-                className="w-full flex items-center gap-3 px-5 py-3 text-sm font-medium transition-colors duration-150 text-[var(--portal-text-secondary)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] cursor-pointer"
-              >
-                <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
-                <span>Logg ut</span>
-              </button>
-            </li>
-          </ul>
-        </div>
-
-        {/* Admin section */}
+        {/* Mission Control for staff */}
         {isStaff(user.role) && (
-          <div className="mt-4 pt-2">
-            <p
-              className="px-5 py-2 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: THEME.textDim }}
+          <div className="mx-2 mt-2">
+            <Link
+              href="/admin"
+              onClick={onNavClick}
+              className="flex items-center gap-2.5 rounded-xl bg-primary px-4 py-2.5 text-[13px] font-bold text-white transition-opacity hover:opacity-90"
             >
-              Admin
-            </p>
-            <ul className="space-y-0.5">
-              {staffItems.map((item) => (
-                <NavLink key={item.href} item={item} pathname={pathname} onClick={onNavClick} />
-              ))}
-            </ul>
+              <ShieldCheck className="h-4 w-4" />
+              <span>Mission Control</span>
+            </Link>
           </div>
         )}
       </nav>
 
-      {/* User footer */}
-      <div
-        className="px-5 py-4 flex items-center gap-3"
-        style={{ borderTop: `1px solid ${THEME.border}` }}
-      >
-        <div
-          className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
-          style={{ background: "var(--portal-text-muted)" }}
+      {/* CTA — bottom */}
+      <div className="px-4 pb-4">
+        <Link
+          href="/portal/bookinger/ny"
+          onClick={onNavClick}
+          className="flex w-full items-center justify-center gap-2 rounded-[20px] bg-accent-cta px-4 py-2.5 text-[13px] font-bold text-accent-cta-text transition-opacity hover:opacity-90"
         >
+          <Plus className="h-4 w-4" />
+          Ny økt
+        </Link>
+      </div>
+
+      {/* User footer */}
+      <div className="mx-3 mb-3 rounded-xl border border-grey-200 bg-primary-soft p-3">
+        <div className="flex items-center gap-3">
           {user.image ? (
             <img
               src={user.image}
               alt=""
-              className="w-9 h-9 rounded-full object-cover"
+              className="h-9 w-9 rounded-full object-cover"
             />
           ) : (
-            <User className="w-[18px] h-[18px] text-[var(--portal-text-secondary)]" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary ring-1 ring-accent-cta/40">
+              <span className="text-xs font-semibold text-white">
+                {(user.name ?? "S")[0].toUpperCase()}
+              </span>
+            </div>
           )}
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-[var(--color-grey-900)] truncate">
-            {user.name ?? "Spiller"}
-          </p>
-          <p className="text-xs text-[var(--portal-text-muted)] truncate">
-            {user.email}
-          </p>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-medium text-black">
+              {user.name ?? "Spiller"}
+            </p>
+            <p className="truncate text-[11px] font-medium text-primary">
+              {user.subscriptionTier ?? "Academy"}
+            </p>
+          </div>
         </div>
       </div>
     </>
   );
+}
+
+// ── Main Component ───────────────────────────────────────────────────────────
+
+interface SidebarProps {
+  user: PortalUser;
 }
 
 export function Sidebar({ user }: SidebarProps) {
@@ -241,7 +227,7 @@ export function Sidebar({ user }: SidebarProps) {
   async function handleSignOut() {
     const supabase = createBrowserClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     );
     await supabase.auth.signOut();
     router.push("/portal/login");
@@ -249,17 +235,24 @@ export function Sidebar({ user }: SidebarProps) {
 
   return (
     <>
-      {/* Desktop sidebar */}
-      <aside
-        className="fixed left-0 top-0 h-full w-60 hidden lg:flex flex-col z-20"
-        style={{ background: THEME.bg }}
-      >
+      {/* Desktop sidebar — light, minimal */}
+      <aside className="fixed left-0 top-0 z-20 hidden h-full w-[220px] flex-col border-r border-grey-100 bg-white lg:flex">
         {/* Logo */}
-        <div
-          className="px-5 py-5"
-          style={{ borderBottom: `1px solid ${THEME.border}` }}
-        >
-          <span className="text-lg font-bold text-[var(--color-grey-900)]">AK Golf</span>
+        <div className="border-b border-grey-100 px-5 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/portal" className="group flex items-center gap-3">
+              <AKLogo variant="black" size={32} />
+              <div>
+                <span className="text-[14px] font-bold text-black transition-colors group-hover:text-primary">
+                  AK Golf
+                </span>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-grey-400">
+                  Academy
+                </p>
+              </div>
+            </Link>
+            <NotificationBell />
+          </div>
         </div>
 
         <SidebarContent
@@ -273,35 +266,31 @@ export function Sidebar({ user }: SidebarProps) {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={close}
-              className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
             />
-            {/* Drawer */}
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden"
-              style={{ background: THEME.bg }}
+              className="fixed left-0 top-0 z-50 flex h-full w-72 flex-col border-r border-grey-100 bg-white lg:hidden"
             >
-              {/* Close button */}
-              <div
-                className="flex items-center justify-between px-5 py-4"
-                style={{ borderBottom: `1px solid ${THEME.border}` }}
-              >
-                <span className="text-lg font-bold text-[var(--color-grey-900)]">AK Golf</span>
+              <div className="flex items-center justify-between border-b border-grey-100 px-5 py-4">
+                <div className="flex items-center gap-3">
+                  <AKLogo variant="black" size={32} />
+                  <span className="text-[14px] font-bold text-black">AK Golf</span>
+                </div>
                 <button
                   onClick={close}
-                  className="p-1 rounded-lg text-[var(--portal-text-muted)] hover:text-[var(--color-grey-900)] transition-colors cursor-pointer"
+                  className="cursor-pointer rounded-lg p-2 text-grey-400 transition-colors hover:bg-grey-50 hover:text-black"
                   aria-label="Lukk meny"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="h-5 w-5" />
                 </button>
               </div>
 

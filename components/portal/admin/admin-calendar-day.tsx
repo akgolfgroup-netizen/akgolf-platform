@@ -1,7 +1,7 @@
 "use client";
 
 import { format, isSameDay } from "date-fns";
-import type { CalendarBooking } from "@/app/admin/kalender/actions";
+import type { CalendarBooking } from "@/app/admin/(authed)/kalender/actions";
 
 // 08:00 – 22:00 time grid
 const HOURS = Array.from({ length: 15 }, (_, i) => i + 8); // 8..22
@@ -25,10 +25,10 @@ function bookingHeight(startTime: Date, endTime: Date): number {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  CONFIRMED: "#10b981",
-  PENDING: "#f59e0b",
-  COMPLETED: "#6b7280",
-  NO_SHOW: "#ef4444",
+  CONFIRMED: "var(--color-success)",
+  PENDING: "var(--color-warning)",
+  COMPLETED: "var(--color-grey-400)",
+  NO_SHOW: "var(--color-error)",
 };
 
 export function AdminCalendarDay({ date, bookings, onSelectBooking }: Props) {
@@ -60,7 +60,7 @@ export function AdminCalendarDay({ date, bookings, onSelectBooking }: Props) {
             const end = new Date(booking.endTime);
             const top = bookingTop(start);
             const height = bookingHeight(start, end);
-            const color = booking.serviceType.color ?? STATUS_COLORS[booking.status] ?? "#6b7280";
+            const color = booking.serviceType.color ?? STATUS_COLORS[booking.status] ?? "var(--color-grey-400)";
 
             return (
               <button

@@ -41,7 +41,7 @@ import {
 } from "@/components/portal/mission-control/ui";
 import { format, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { getOrCreateConversation } from "@/app/admin/meldinger/chat-actions";
+import { getOrCreateConversation } from "@/app/admin/(authed)/meldinger/chat-actions";
 
 // Mock data
 const studentData = {

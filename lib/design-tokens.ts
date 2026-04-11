@@ -318,7 +318,7 @@ export const motion = {
 // FRAMER MOTION EASING (array format for Framer Motion)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export const EASE_ENTRANCE = [0.16, 1, 0.3, 1] as const;
+export const EASE_ENTRANCE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SHADOWS

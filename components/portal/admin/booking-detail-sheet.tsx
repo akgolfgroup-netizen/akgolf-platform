@@ -4,8 +4,8 @@ import { useState, useEffect, useId } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { X, AlertTriangle, StickyNote, UserX } from "lucide-react";
-import { markNoShow, addAdminNote } from "@/app/admin/kalender/actions";
-import type { CalendarBooking } from "@/app/admin/kalender/actions";
+import { markNoShow, addAdminNote } from "@/app/admin/(authed)/kalender/actions";
+import type { CalendarBooking } from "@/app/admin/(authed)/kalender/actions";
 
 interface Props {
   booking: CalendarBooking;
@@ -22,10 +22,10 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  CONFIRMED: "bg-[rgba(34,197,94,0.15)] text-[#86EFAC]",
-  PENDING: "bg-[rgba(245,158,11,0.15)] text-[#FCD34D]",
+  CONFIRMED: "bg-success-light text-success-text",
+  PENDING: "bg-warning-light text-warning-text",
   COMPLETED: "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]",
-  NO_SHOW: "bg-[rgba(239,68,68,0.15)] text-[#FCA5A5]",
+  NO_SHOW: "bg-error-light text-error-text",
   CANCELLED: "bg-[var(--color-grey-100)] text-[var(--color-grey-400)]",
 };
 
@@ -173,7 +173,7 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
             <button
               onClick={handleMarkNoShow}
               disabled={markingNoShow}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-[#FCA5A5] bg-[rgba(239,68,68,0.15)] rounded-xl hover:bg-[rgba(239,68,68,0.25)] disabled:opacity-50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-error-text bg-error-light rounded-xl hover:bg-error/10 disabled:opacity-50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               <UserX className="w-4 h-4" aria-hidden="true" />
               {markingNoShow ? "Registrerer..." : "Marker som no-show"}

@@ -2,7 +2,7 @@
 
 import { format, startOfWeek, addDays, isSameDay, isToday } from "date-fns";
 import { nb } from "date-fns/locale";
-import type { CalendarBooking } from "@/app/admin/kalender/actions";
+import type { CalendarBooking } from "@/app/admin/(authed)/kalender/actions";
 
 const HOURS = Array.from({ length: 15 }, (_, i) => i + 8);
 const SLOT_HEIGHT = 56; // slightly smaller for week view
@@ -26,10 +26,10 @@ function bookingHeight(startTime: Date, endTime: Date): number {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  CONFIRMED: "#10b981",
-  PENDING: "#f59e0b",
-  COMPLETED: "#6b7280",
-  NO_SHOW: "#ef4444",
+  CONFIRMED: "var(--color-success)",
+  PENDING: "var(--color-warning)",
+  COMPLETED: "var(--color-grey-400)",
+  NO_SHOW: "var(--color-error)",
 };
 
 export function AdminCalendarWeek({ date, bookings, onSelectBooking }: Props) {
@@ -119,7 +119,7 @@ export function AdminCalendarWeek({ date, bookings, onSelectBooking }: Props) {
                 const color =
                   booking.serviceType.color ??
                   STATUS_COLORS[booking.status] ??
-                  "#6b7280";
+                  "var(--color-grey-400)";
 
                 return (
                   <button

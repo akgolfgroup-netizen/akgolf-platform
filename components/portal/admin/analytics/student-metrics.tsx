@@ -8,7 +8,7 @@ import {
   Users,
   UserMinus,
 } from "lucide-react";
-import type { AnalyticsData } from "@/app/admin/analytics/actions";
+import type { AnalyticsData } from "@/app/admin/(authed)/analytics/actions";
 
 interface StudentMetricsProps {
   data: AnalyticsData;
@@ -91,8 +91,8 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
         className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6"
       >
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-            <Users className="w-5 h-5 text-blue-600" />
+          <div className="w-10 h-10 rounded-xl bg-info-light flex items-center justify-center">
+            <Users className="w-5 h-5 text-info-text" />
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[var(--color-grey-900)]">
@@ -112,7 +112,7 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
           </div>
           <div className="h-3 bg-[var(--color-grey-100)] rounded-full overflow-hidden flex">
             <div
-              className="bg-blue-500 transition-[width] duration-500"
+              className="bg-info transition-[width] duration-500"
               style={{
                 width: `${
                   data.activeStudents + data.churnedStudents > 0
@@ -173,13 +173,13 @@ export function StudentMetrics({ data }: StudentMetricsProps) {
 
         {/* Churn warning if significant */}
         {data.churnedStudents > 0 && data.churnedStudents >= data.activeStudents * 0.2 && (
-          <div className="flex items-start gap-3 p-3 rounded-xl bg-amber-50 border border-amber-100 mt-3">
-            <UserMinus className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-3 p-3 rounded-xl bg-warning-light border border-[var(--color-warning)]/15 mt-3">
+            <UserMinus className="w-5 h-5 text-warning-text flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-amber-800">
+              <p className="text-sm font-medium text-warning-text">
                 {data.churnedStudents} inaktive elever
               </p>
-              <p className="text-xs text-amber-600 mt-0.5">
+              <p className="text-xs text-[var(--color-warning)] mt-0.5">
                 Vurder a sende win-back kampanje
               </p>
             </div>
