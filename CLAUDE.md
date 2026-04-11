@@ -45,6 +45,14 @@ Supabase Auth → `requirePortalUser()` i server components. `proxy.ts` for edge
 - Success: #2A7D5A | Error: #B84233 | AI: #AF52DE
 - Aldri emojier, aldri sertifiseringer, aldri MVA på kundesider
 
+## Status og backlog
+
+Se `docs/status/` for audit-rapporter og prioritert backlog:
+- `PORTAL_AUDIT.md` — spillerportal-status per side (21/24 reelle data)
+- `ADMIN_AUDIT.md` — Mission Control-status per side (17/27 reelle data)
+- `BOOKING_AUDIT.md` — booking-system funn og Stripe-integrering
+- `BACKLOG.md` — prioritert liste over gjenstående arbeid (P1/P2/P3)
+
 ## Konvensjoner
 
 - Norsk bokmål for all brukervendt tekst
