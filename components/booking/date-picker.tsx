@@ -1,162 +1,148 @@
 "use client";
 
-import { useMemo } from "react";
-import { addDays, startOfDay, format } from "date-fns";
+import { useState, useMemo } from "react";
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  addDays,
+  addMonths,
+  isSameMonth,
+  isSameDay,
+  isToday,
+  isBefore,
+  startOfDay,
+} from "date-fns";
 import { nb } from "date-fns/locale";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, Loader2 } from "lucide-react";
 
-interface BookingDatePickerProps {
-  serviceName: string;
-  instructorName: string;
-  selectedDate: Date | null;
-  onSelectDate: (date: Date) => void;
-  availableSlots: string[];
-  loadingSlots: boolean;
-  onSelectSlot: (slot: string) => void;
-  onBack: () => void;
+interface DatePickerProps {
+  selected: Date | null;
+  onSelect: (date: Date) => void;
+  maxAdvanceDays?: number;
 }
 
-const DAYS_AHEAD = 28;
+const WEEKDAYS = ["man", "tir", "ons", "tor", "fre", "lor", "son"];
 
 export function BookingDatePicker({
-  serviceName,
-  instructorName,
-  selectedDate,
-  onSelectDate,
-  availableSlots,
-  loadingSlots,
-  onSelectSlot,
-  onBack,
-}: BookingDatePickerProps) {
-  const dates = useMemo(
-    () =>
-      Array.from({ length: DAYS_AHEAD }, (_, i) =>
-        addDays(startOfDay(new Date()), i + 1)
-      ),
-    []
-  );
+  selected,
+  onSelect,
+  maxAdvanceDays = 28,
+}: DatePickerProps) {
+  const [currentMonth, setCurrentMonth] = useState(() => startOfMonth(new Date()));
+  const today = useMemo(() => startOfDay(new Date()), []);
+  const maxDate = useMemo(() => addDays(today, maxAdvanceDays), [today, maxAdvanceDays]);
+
+  const calendarDays = useMemo(() => {
+    const monthStart = startOfMonth(currentMonth);
+    const monthEnd = endOfMonth(currentMonth);
+    const calStart = startOfWeek(monthStart, { weekStartsOn: 1 });
+    const calEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
+
+    const days: Date[] = [];
+    let day = calStart;
+    while (day <= calEnd) {
+      days.push(day);
+      day = addDays(day, 1);
+    }
+    return days;
+  }, [currentMonth]);
+
+  const canGoBack = isSameMonth(currentMonth, new Date()) === false &&
+    !isBefore(currentMonth, startOfMonth(new Date()));
+  const canGoForward = isBefore(startOfMonth(addMonths(currentMonth, 1)), maxDate);
+
+  function isDisabled(date: Date): boolean {
+    if (isBefore(date, today)) return true;
+    if (isSameDay(date, today)) return true;
+    if (isBefore(maxDate, date)) return true;
+    const dow = date.getDay();
+    if (dow === 0 || dow === 6) return true;
+    return false;
+  }
 
   return (
-    <div>
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 text-sm mb-6 text-[var(--color-muted)] hover:text-[var(--color-grey-900)] transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Tilbake
-      </button>
-
-      <h2 className="text-3xl font-semibold mb-2 text-[var(--color-grey-900)]">
-        Velg dato og tid
-      </h2>
-      <p className="text-[var(--color-muted)] mb-8">
-        {serviceName} med {instructorName}
-      </p>
-
-      {/* Date grid — Cal.com-style compact cards */}
-      <div className="mb-8">
-        <h3 className="text-xs font-semibold mb-4 uppercase tracking-wider text-[var(--color-grey-400)]">
-          Velg dato
+    <div className="select-none">
+      {/* Month header */}
+      <div className="flex items-center justify-between mb-4">
+        <button
+          onClick={() => setCurrentMonth((m) => addMonths(m, -1))}
+          disabled={!canGoBack}
+          className="w-9 h-9 rounded-lg flex items-center justify-center text-muted hover:bg-grey-100 hover:text-text disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          aria-label="Forrige måned"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+        <h3 className="text-base font-semibold text-black capitalize">
+          {format(currentMonth, "MMMM yyyy", { locale: nb })}
         </h3>
-        <div className="flex gap-2.5 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
-          {dates.map((date) => {
-            const selected =
-              selectedDate &&
-              format(date, "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd");
-            const isWeekend = date.getDay() === 0 || date.getDay() === 6;
-
-            return (
-              <button
-                key={date.toISOString()}
-                onClick={() => !isWeekend && onSelectDate(date)}
-                disabled={isWeekend}
-                className={`
-                  flex-shrink-0 rounded-xl py-3 px-4 text-center min-w-[72px]
-                  transition-all duration-200 border
-                  ${isWeekend ? "opacity-30 cursor-not-allowed" : "cursor-pointer"}
-                  ${
-                    selected
-                      ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)] shadow-lg"
-                      : "bg-white border-[var(--color-grey-200)] hover:border-[var(--color-grey-900)] shadow-sm"
-                  }
-                `}
-              >
-                <p
-                  className={`text-[10px] uppercase tracking-wide mb-0.5 font-medium ${
-                    selected ? "text-white/70" : "text-[var(--color-grey-400)]"
-                  }`}
-                >
-                  {format(date, "EEE", { locale: nb })}
-                </p>
-                <p
-                  className={`text-xl font-semibold leading-tight ${
-                    selected ? "text-white" : "text-[var(--color-grey-900)]"
-                  }`}
-                >
-                  {format(date, "d")}
-                </p>
-                <p
-                  className={`text-[10px] mt-0.5 ${
-                    selected ? "text-white/60" : "text-[var(--color-muted)]"
-                  }`}
-                >
-                  {format(date, "MMM", { locale: nb })}
-                </p>
-              </button>
-            );
-          })}
-        </div>
+        <button
+          onClick={() => setCurrentMonth((m) => addMonths(m, 1))}
+          disabled={!canGoForward}
+          className="w-9 h-9 rounded-lg flex items-center justify-center text-muted hover:bg-grey-100 hover:text-text disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          aria-label="Neste måned"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
       </div>
 
-      {/* Slots */}
-      {selectedDate && (
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          <h3 className="text-xs font-semibold mb-4 uppercase tracking-wider text-[var(--color-grey-400)]">
-            Ledige tider — {format(selectedDate, "EEEE d. MMMM", { locale: nb })}
-          </h3>
+      {/* Weekday headers */}
+      <div className="grid grid-cols-7 mb-1">
+        {WEEKDAYS.map((day) => (
+          <div
+            key={day}
+            className="text-center text-xs font-medium text-muted uppercase tracking-wider py-2"
+          >
+            {day}
+          </div>
+        ))}
+      </div>
 
-          {loadingSlots ? (
-            <div className="flex items-center gap-3 py-12 text-[var(--color-muted)]">
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Henter tilgjengelige tider...</span>
-            </div>
-          ) : availableSlots.length === 0 ? (
-            <div className="rounded-2xl p-8 text-center border border-[var(--color-grey-200)] bg-[var(--color-grey-50)]">
-              <Calendar className="w-10 h-10 mx-auto mb-3 text-[var(--color-grey-300)]" />
-              <p className="text-[var(--color-muted)]">
-                Ingen ledige tider denne dagen.
-              </p>
-              <p className="text-sm mt-1 text-[var(--color-grey-300)]">
-                Prov en annen dato.
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
-              {availableSlots.map((slot) => (
-                <button
-                  key={slot}
-                  onClick={() => onSelectSlot(slot)}
-                  className="
-                    rounded-xl py-3.5 text-sm font-medium
-                    bg-white border border-[var(--color-grey-200)]
-                    text-[var(--color-grey-900)]
-                    hover:border-[var(--color-grey-900)] hover:shadow-md
-                    active:scale-[0.97]
-                    transition-all duration-150
-                  "
-                >
-                  {format(new Date(slot), "HH:mm")}
-                </button>
-              ))}
-            </div>
-          )}
-        </motion.div>
-      )}
+      {/* Calendar grid */}
+      <div className="grid grid-cols-7">
+        {calendarDays.map((date) => {
+          const inMonth = isSameMonth(date, currentMonth);
+          const disabled = isDisabled(date);
+          const isSelected = selected && isSameDay(date, selected);
+          const todayDate = isToday(date);
+
+          return (
+            <button
+              key={date.toISOString()}
+              onClick={() => !disabled && inMonth && onSelect(date)}
+              disabled={disabled || !inMonth}
+              className="relative aspect-square flex items-center justify-center text-sm transition-colors duration-150"
+              aria-label={format(date, "d. MMMM yyyy", { locale: nb })}
+            >
+              {isSelected ? (
+                <motion.div
+                  layoutId="booking-date-selected"
+                  className="absolute inset-1 bg-primary rounded-lg"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                />
+              ) : null}
+              <span
+                className={[
+                  "relative z-10 w-full h-full flex items-center justify-center rounded-lg",
+                  isSelected
+                    ? "text-white font-semibold"
+                    : !inMonth
+                      ? "text-transparent cursor-default"
+                      : disabled
+                        ? "text-grey-300 cursor-not-allowed"
+                        : "text-text font-medium hover:bg-grey-100 cursor-pointer",
+                  todayDate && !isSelected && inMonth ? "ring-1 ring-primary/30" : "",
+                ].join(" ")}
+              >
+                {format(date, "d")}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

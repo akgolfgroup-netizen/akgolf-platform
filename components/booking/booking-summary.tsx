@@ -2,167 +2,235 @@
 
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  ArrowLeft,
-  Calendar,
-  Clock,
-  CreditCard,
-  Loader2,
-  Mail,
-  Phone,
-  User,
-} from "lucide-react";
-import { type BookingState, formatPrice } from "./booking-types";
+import { Clock, User, Calendar, Mail, Phone, CreditCard, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+import type { BookingServiceType, BookingInstructor, BookingMode } from "./booking-types";
+import { formatBookingPrice } from "./booking-types";
 
 interface BookingSummaryProps {
-  state: BookingState;
-  onUpdateCustomer: (
-    field: "customerName" | "customerEmail" | "customerPhone",
-    value: string
-  ) => void;
+  mode: BookingMode;
+  service: BookingServiceType;
+  instructor: BookingInstructor;
+  slot: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  onSetField: (field: "customerName" | "customerEmail" | "customerPhone", value: string) => void;
   onBook: () => void;
   booking: boolean;
-  onBack: () => void;
+  showDetails: boolean;
+  isDetailsValid: boolean;
+  onProceedToConfirm?: () => void;
 }
 
 export function BookingSummary({
-  state,
-  onUpdateCustomer,
+  mode,
+  service,
+  instructor,
+  slot,
+  customerName,
+  customerEmail,
+  customerPhone,
+  onSetField,
   onBook,
   booking,
-  onBack,
+  showDetails,
+  isDetailsValid,
+  onProceedToConfirm,
 }: BookingSummaryProps) {
-  const { service, instructor, slot, customerName, customerEmail, customerPhone } =
-    state;
+  const slotDate = new Date(slot);
 
-  if (!service || !instructor || !slot) return null;
-
-  const isValid = validateCustomerDetails(customerName, customerEmail);
+  if (showDetails && mode === "public") {
+    return <CustomerDetailsForm
+      customerName={customerName}
+      customerEmail={customerEmail}
+      customerPhone={customerPhone}
+      onSetField={onSetField}
+      isValid={isDetailsValid}
+      onProceed={onProceedToConfirm!}
+      service={service}
+      instructor={instructor}
+      slot={slot}
+    />;
+  }
 
   return (
     <div>
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 text-sm mb-6 text-[var(--color-muted)] hover:text-[var(--color-grey-900)] transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Tilbake
-      </button>
-
-      <h2 className="text-3xl font-semibold mb-2 text-[var(--color-grey-900)]">
-        Bekreft og betal
+      <h2 className="text-2xl font-semibold text-black mb-6 tracking-tight">
+        Bekreft din booking
       </h2>
-      <p className="text-[var(--color-muted)] mb-8">
-        Fyll inn kontaktinfo og gjennomfoer betaling
-      </p>
 
-      {/* Booking details card */}
-      <div className="rounded-2xl border border-[var(--color-grey-200)] bg-white shadow-sm p-6 mb-8">
-        <div className="flex items-center gap-3 pb-4 mb-4 border-b border-[var(--color-grey-200)]">
-          <div
-            className="w-3 h-3 rounded-full"
-            style={{ backgroundColor: service.color ?? "var(--color-primary)" }}
+      {/* Summary card */}
+      <div className="bg-white rounded-xl border border-grey-200 shadow-card overflow-hidden mb-6">
+        <div className="p-5 border-b border-grey-100">
+          <div className="flex items-center gap-2.5">
+            <div
+              className="w-3 h-3 rounded-full"
+              style={{ backgroundColor: service.color ?? undefined }}
+            />
+            <h3 className="text-lg font-semibold text-black">{service.name}</h3>
+          </div>
+        </div>
+
+        <div className="p-5 space-y-4">
+          <SummaryRow icon={User} label="Instruktor" value={instructor.user.name ?? ""} />
+          <SummaryRow
+            icon={Calendar}
+            label="Dato og tid"
+            value={format(slotDate, "EEEE d. MMMM yyyy 'kl.' HH:mm", { locale: nb })}
           />
-          <h3 className="text-lg font-semibold text-[var(--color-grey-900)]">
-            {service.name}
-          </h3>
+          <SummaryRow icon={Clock} label="Varighet" value={`${service.duration} minutter`} />
+          {mode === "public" && customerName && (
+            <SummaryRow icon={Mail} label="Kunde" value={customerName} sub={customerEmail} />
+          )}
         </div>
 
-        <div className="space-y-3 text-sm">
-          <p className="flex items-center gap-2 text-[var(--color-grey-500)]">
-            <User className="w-4 h-4 text-[var(--color-primary)]" />
-            {instructor.user.name}
-          </p>
-          <p className="flex items-center gap-2 text-[var(--color-grey-500)]">
-            <Calendar className="w-4 h-4 text-[var(--color-primary)]" />
-            {format(new Date(slot), "EEEE d. MMMM yyyy 'kl.' HH:mm", {
-              locale: nb,
-            })}
-          </p>
-          <p className="flex items-center gap-2 text-[var(--color-grey-500)]">
-            <Clock className="w-4 h-4 text-[var(--color-primary)]" />
-            {service.duration} minutter
-          </p>
-        </div>
-
-        <div className="flex items-center justify-between pt-4 mt-4 border-t border-[var(--color-grey-200)]">
-          <span className="text-sm text-[var(--color-muted)]">Totalpris</span>
-          <span className="text-2xl font-semibold text-[var(--color-grey-900)]">
-            {formatPrice(service.price)}
+        <div className="px-5 py-4 bg-grey-50 flex items-center justify-between">
+          <span className="text-sm text-muted">Totalpris</span>
+          <span className="text-2xl font-semibold text-black tabular-nums">
+            {formatBookingPrice(service.price)}
           </span>
         </div>
       </div>
 
-      {/* Customer form */}
-      <div className="space-y-4 mb-8">
-        <InputField
-          label="Fullt navn"
-          required
-          type="text"
-          value={customerName}
-          onChange={(v) => onUpdateCustomer("customerName", v)}
-          placeholder="Ditt navn"
-        />
-
-        <InputField
-          label="E-postadresse"
-          required
-          type="email"
-          value={customerEmail}
-          onChange={(v) => onUpdateCustomer("customerEmail", v)}
-          placeholder="din@epost.no"
-          icon={<Mail className="w-4 h-4 text-[var(--color-primary)]" />}
-          hint="Har du booket foer med denne e-posten, kobles timen til din profil."
-        />
-
-        <InputField
-          label="Telefonnummer"
-          type="tel"
-          value={customerPhone}
-          onChange={(v) => onUpdateCustomer("customerPhone", v)}
-          placeholder="+47 000 00 000"
-          icon={<Phone className="w-4 h-4 text-[var(--color-primary)]" />}
-        />
-      </div>
-
-      {/* Pay button */}
-      <button
+      {/* Payment */}
+      <motion.button
         onClick={onBook}
-        disabled={!isValid || booking}
-        className="
-          w-full py-4 rounded-2xl text-base font-semibold
-          bg-[var(--color-grey-900)] text-white
-          shadow-lg hover:shadow-xl disabled:opacity-50
-          active:scale-[0.99] transition-all duration-200
-          flex items-center justify-center gap-3
-        "
+        disabled={booking}
+        className="w-full py-4 rounded-[20px] bg-primary text-white font-semibold flex items-center justify-center gap-2.5 hover:bg-primary-alt transition-colors disabled:opacity-50"
+        whileTap={{ scale: 0.99 }}
       >
         {booking ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Loader2 className="w-4 h-4 animate-spin" />
             Behandler...
           </>
         ) : (
           <>
-            <CreditCard className="w-5 h-5" />
+            <CreditCard className="w-4 h-4" />
             Betal med kort
           </>
         )}
-      </button>
+      </motion.button>
 
-      <p className="text-xs text-center mt-4 text-[var(--color-grey-300)]">
-        Alle betalinger er sikre og krypterte via Stripe.
+      <p className="text-xs text-grey-300 text-center mt-4">
+        Sikker betaling via Stripe. Du mottar bekreftelse på e-post.
       </p>
     </div>
   );
 }
 
-/* ─── Helpers ─── */
+/* ---- Customer Details Form (public mode) ---- */
 
-function validateCustomerDetails(name: string, email: string): boolean {
-  if (!name.trim() || name.length < 2) return false;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+interface CustomerDetailsFormProps {
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  onSetField: (field: "customerName" | "customerEmail" | "customerPhone", value: string) => void;
+  isValid: boolean;
+  onProceed: () => void;
+  service: BookingServiceType;
+  instructor: BookingInstructor;
+  slot: string;
+}
+
+function CustomerDetailsForm({
+  customerName,
+  customerEmail,
+  customerPhone,
+  onSetField,
+  isValid,
+  onProceed,
+  service,
+  instructor,
+  slot,
+}: CustomerDetailsFormProps) {
+  const slotDate = new Date(slot);
+
+  return (
+    <div>
+      <h2 className="text-2xl font-semibold text-black mb-2 tracking-tight">
+        Dine opplysninger
+      </h2>
+      <p className="text-sm text-muted mb-6">
+        Fyll inn kontaktinformasjon for bookingen
+      </p>
+
+      {/* Mini summary */}
+      <div className="bg-grey-50 rounded-xl p-4 mb-6 text-sm space-y-1.5">
+        <p className="font-medium text-black">{service.name}</p>
+        <p className="text-muted">
+          {instructor.user.name} — {format(slotDate, "EEE d. MMM 'kl.' HH:mm", { locale: nb })}
+        </p>
+      </div>
+
+      {/* Form */}
+      <div className="space-y-4">
+        <InputField
+          label="Fullt navn"
+          required
+          type="text"
+          value={customerName}
+          onChange={(v) => onSetField("customerName", v)}
+          placeholder="Ditt navn"
+        />
+        <InputField
+          label="E-postadresse"
+          required
+          type="email"
+          value={customerEmail}
+          onChange={(v) => onSetField("customerEmail", v)}
+          placeholder="din@epost.no"
+          icon={Mail}
+          hint="Har du booket før med denne e-posten, kobles timen til din profil."
+        />
+        <InputField
+          label="Telefonnummer"
+          type="tel"
+          value={customerPhone}
+          onChange={(v) => onSetField("customerPhone", v)}
+          placeholder="+47 000 00 000"
+          icon={Phone}
+        />
+      </div>
+
+      <motion.button
+        onClick={onProceed}
+        disabled={!isValid}
+        className="w-full mt-6 py-4 rounded-[20px] bg-primary text-white font-semibold hover:bg-primary-alt transition-colors disabled:opacity-50"
+        whileTap={{ scale: 0.99 }}
+      >
+        Fortsett til betaling
+      </motion.button>
+    </div>
+  );
+}
+
+/* ---- Helpers ---- */
+
+function SummaryRow({
+  icon: Icon,
+  label,
+  value,
+  sub,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+  sub?: string;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="w-9 h-9 rounded-lg bg-grey-50 flex items-center justify-center flex-shrink-0">
+        <Icon className="w-4 h-4 text-primary" />
+      </div>
+      <div className="min-w-0">
+        <p className="text-xs text-muted uppercase tracking-wider">{label}</p>
+        <p className="text-sm font-medium text-black truncate">{value}</p>
+        {sub && <p className="text-xs text-muted truncate">{sub}</p>}
+      </div>
+    </div>
+  );
 }
 
 function InputField({
@@ -172,7 +240,7 @@ function InputField({
   value,
   onChange,
   placeholder,
-  icon,
+  icon: Icon,
   hint,
 }: {
   label: string;
@@ -181,39 +249,31 @@ function InputField({
   value: string;
   onChange: (v: string) => void;
   placeholder: string;
-  icon?: React.ReactNode;
+  icon?: React.ComponentType<{ className?: string }>;
   hint?: string;
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-1.5 text-[var(--color-grey-900)]">
-        {label}
-        {required && " *"}
+      <label className="block text-sm font-medium text-text mb-1.5">
+        {label} {required && <span className="text-error">*</span>}
       </label>
       <div className="relative">
-        {icon && (
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2">
-            {icon}
-          </span>
+        {Icon && (
+          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
         )}
         <input
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className={`
-            w-full py-3 rounded-xl border border-[var(--color-grey-200)]
-            bg-white text-[var(--color-grey-900)]
-            placeholder:text-[var(--color-grey-300)]
-            focus:border-[var(--color-grey-900)] focus:outline-none focus:ring-1 focus:ring-[var(--color-grey-900)]
-            transition-all duration-150
-            ${icon ? "pl-11 pr-4" : "px-4"}
-          `}
+          className={[
+            "w-full py-3 rounded-lg border border-grey-200 bg-white text-text placeholder:text-grey-300",
+            "focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors",
+            Icon ? "pl-10 pr-4" : "px-4",
+          ].join(" ")}
         />
       </div>
-      {hint && (
-        <p className="text-xs mt-1 text-[var(--color-grey-300)]">{hint}</p>
-      )}
+      {hint && <p className="text-xs text-grey-300 mt-1">{hint}</p>}
     </div>
   );
 }

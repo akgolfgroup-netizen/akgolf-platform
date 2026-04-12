@@ -1,292 +1,256 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import { format } from "date-fns";
-import { nb } from "date-fns/locale";
-import { AnimatePresence, motion } from "framer-motion";
-import { Check, Loader2 } from "lucide-react";
-import {
-  type ServiceType,
-  type InstructorOption,
-  type BookingStep,
-  type BookingState,
-  STEP_LABELS,
-  INITIAL_BOOKING_STATE,
-  getVisibleSteps,
-} from "./booking-types";
+import { useState, useEffect } from "react";
+import { ArrowLeft, Check, Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import type { BookingServiceType, BookingMode, BookingStep } from "./booking-types";
+import { getVisibleSteps, STEP_CONFIG } from "./booking-types";
+import { useBookingWizard } from "./use-booking-wizard";
 import { ServiceSelector } from "./service-selector";
 import { BookingDatePicker } from "./date-picker";
 import { TimeSlots } from "./time-slots";
 import { BookingSummary } from "./booking-summary";
 
-const STEP_INITIAL = { opacity: 0, x: 40 };
-const STEP_ANIMATE = { opacity: 1, x: 0 };
-const STEP_EXIT = { opacity: 0, x: -40 };
-const STEP_TRANSITION = { duration: 0.25, ease: "easeInOut" as const };
+interface InstructorPickerProps {
+  service: BookingServiceType;
+  onSelect: (inst: BookingServiceType["instructors"][0]) => void;
+  selected: BookingServiceType["instructors"][0] | null;
+}
 
-export function BookingWizard() {
-  const router = useRouter();
-  const [services, setServices] = useState<ServiceType[]>([]);
-  const [loadingServices, setLoadingServices] = useState(true);
-  const [state, setState] = useState<BookingState>(INITIAL_BOOKING_STATE);
-  const [step, setStep] = useState<BookingStep>("service");
-  const [availableSlots, setAvailableSlots] = useState<string[]>([]);
-  const [loadingSlots, setLoadingSlots] = useState(false);
-  const [booking, setBooking] = useState(false);
+function InstructorPicker({ service, onSelect, selected }: InstructorPickerProps) {
+  if (service.instructors.length <= 1) return null;
+
+  return (
+    <div className="mb-6">
+      <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-3">
+        Velg instruktor
+      </p>
+      <div className="flex gap-2">
+        {service.instructors.map((inst) => {
+          const isActive = selected?.id === inst.id;
+          return (
+            <button
+              key={inst.id}
+              onClick={() => onSelect(inst)}
+              className={[
+                "flex items-center gap-2.5 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all duration-200",
+                isActive
+                  ? "bg-primary text-white border-primary"
+                  : "bg-white text-text border-grey-200 hover:border-primary",
+              ].join(" ")}
+            >
+              {inst.user.image ? (
+                <img
+                  src={inst.user.image}
+                  alt=""
+                  className="w-6 h-6 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-6 h-6 rounded-full bg-grey-100 flex items-center justify-center text-xs font-bold text-muted">
+                  {inst.user.name?.charAt(0) ?? "?"}
+                </div>
+              )}
+              {inst.user.name}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ---- Progress Bar ---- */
+
+function ProgressBar({ steps, currentStep }: { steps: BookingStep[]; currentStep: BookingStep }) {
+  const currentIndex = steps.indexOf(currentStep);
+
+  return (
+    <div className="flex items-center justify-center gap-1 mb-8">
+      {steps.map((s, i) => {
+        const isActive = s === currentStep;
+        const isCompleted = i < currentIndex;
+        return (
+          <div key={s} className="flex items-center gap-1">
+            <div
+              className={[
+                "flex items-center justify-center w-8 h-8 rounded-full text-xs font-semibold transition-all duration-300",
+                isActive
+                  ? "bg-primary text-white"
+                  : isCompleted
+                    ? "bg-primary/10 text-primary border-2 border-primary"
+                    : "bg-grey-100 text-grey-400 border border-grey-200",
+              ].join(" ")}
+            >
+              {isCompleted ? <Check className="w-3.5 h-3.5" /> : i + 1}
+            </div>
+            <span
+              className={[
+                "text-xs font-medium hidden sm:inline",
+                isActive ? "text-primary" : "text-muted",
+              ].join(" ")}
+            >
+              {STEP_CONFIG[s].label}
+            </span>
+            {i < steps.length - 1 && (
+              <div
+                className={[
+                  "w-8 h-0.5 mx-1",
+                  isCompleted ? "bg-primary" : "bg-grey-200",
+                ].join(" ")}
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ---- Main Wizard ---- */
+
+interface BookingWizardProps {
+  mode: BookingMode;
+  services?: BookingServiceType[];
+  onComplete?: (data: { bookingId: string; redirectUrl?: string; isNewUser?: boolean }) => void;
+}
+
+export function BookingWizard({ mode, services: preloadedServices, onComplete }: BookingWizardProps) {
+  const [services, setServices] = useState<BookingServiceType[]>(preloadedServices ?? []);
+  const [loadingServices, setLoadingServices] = useState(!preloadedServices);
 
   useEffect(() => {
+    if (preloadedServices) return;
     fetch("/api/portal/public/service-types")
       .then((res) => res.json())
-      .then((data) => {
-        setServices(Array.isArray(data) ? data : []);
-        setLoadingServices(false);
-      })
-      .catch(() => setLoadingServices(false));
-  }, []);
+      .then((data) => setServices(Array.isArray(data) ? data : []))
+      .catch(() => setServices([]))
+      .finally(() => setLoadingServices(false));
+  }, [preloadedServices]);
 
-  const visibleSteps = getVisibleSteps(
-    (state.service?.instructors.length ?? 0) > 1
-  );
-
-  const handleSelectService = useCallback((svc: ServiceType) => {
-    setState((s) => ({ ...s, service: svc, instructor: null, date: null, slot: null }));
-    if (svc.instructors.length === 1) {
-      setState((s) => ({ ...s, instructor: svc.instructors[0] }));
-      setStep("date");
-    } else {
-      setStep("instructor");
-    }
-  }, []);
-
-  const handleSelectInstructor = useCallback((inst: InstructorOption) => {
-    setState((s) => ({ ...s, instructor: inst, date: null, slot: null }));
-    setStep("date");
-  }, []);
-
-  const handleSelectDate = useCallback(
-    async (date: Date) => {
-      setState((s) => ({ ...s, date, slot: null }));
-      setAvailableSlots([]);
-      setLoadingSlots(true);
-      try {
-        const dateStr = format(date, "yyyy-MM-dd");
-        const res = await fetch(
-          `/api/portal/public/slots?serviceTypeId=${state.service!.id}&instructorId=${state.instructor!.id}&date=${dateStr}`
-        );
-        const slots = await res.json();
-        setAvailableSlots(Array.isArray(slots) ? slots : []);
-      } catch {
-        setAvailableSlots([]);
-      } finally {
-        setLoadingSlots(false);
-      }
-    },
-    [state.service, state.instructor]
-  );
-
-  const handleSelectSlot = useCallback((slot: string) => {
-    setState((s) => ({ ...s, slot }));
-    setStep("time");
-  }, []);
-
-  const handleConfirmTime = useCallback(() => {
-    setStep("summary");
-  }, []);
-
-  const handleUpdateCustomer = useCallback(
-    (field: "customerName" | "customerEmail" | "customerPhone", value: string) => {
-      setState((s) => ({ ...s, [field]: value }));
-    },
-    []
-  );
-
-  const handleBook = useCallback(async () => {
-    if (!state.service || !state.instructor || !state.slot) return;
-    setBooking(true);
-    try {
-      const res = await fetch("/api/booking/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          serviceTypeId: state.service.id,
-          instructorId: state.instructor.id,
-          startTime: state.slot,
-          paymentMethod: "STRIPE",
-          email: state.customerEmail.trim().toLowerCase(),
-          name: state.customerName.trim(),
-        }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.redirectUrl) {
-          window.location.href = data.redirectUrl;
-          return;
-        }
-        router.push(`/booking/${data.bookingId}/confirmation`);
-        router.refresh();
-      } else {
-        const error = await res.json().catch(() => ({ error: "Ukjent feil" }));
-        alert(error.error || "Booking feilet. Prov igjen.");
-      }
-    } catch {
-      alert("Noe gikk galt. Prov igjen.");
-    } finally {
-      setBooking(false);
-    }
-  }, [state, router]);
-
-  const handleBack = useCallback(() => {
-    const idx = visibleSteps.indexOf(step);
-    if (idx > 0) {
-      setStep(visibleSteps[idx - 1]);
-    }
-  }, [step, visibleSteps]);
+  const wizard = useBookingWizard({ mode, onBookingComplete: onComplete });
+  const { state, visibleSteps, goBack } = wizard;
+  const showBackButton = state.step !== "service";
 
   if (loadingServices) {
     return (
-      <div className="flex items-center justify-center py-24">
-        <div className="flex items-center gap-3 text-[var(--color-muted)]">
-          <Loader2 className="w-6 h-6 animate-spin" />
-          <span>Laster tilgjengelige tjenester...</span>
-        </div>
+      <div className="flex items-center justify-center py-20 gap-3 text-muted">
+        <Loader2 className="w-5 h-5 animate-spin" />
+        <span>Laster tilgjengelige tjenester...</span>
       </div>
     );
   }
 
   return (
-    <div className="w-container max-w-3xl py-12">
-      {/* Progress bar */}
-      <StepProgress steps={visibleSteps} currentStep={step} />
+    <div className="w-full max-w-2xl mx-auto">
+      <ProgressBar steps={visibleSteps} currentStep={state.step} />
 
-      {/* Step content */}
+      {showBackButton && (
+        <button
+          onClick={goBack}
+          className="flex items-center gap-1.5 text-sm text-muted hover:text-text transition-colors mb-4"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Tilbake
+        </button>
+      )}
+
       <AnimatePresence mode="wait">
-        {step === "service" && (
-          <motion.div key="service" initial={STEP_INITIAL} animate={STEP_ANIMATE} exit={STEP_EXIT} transition={STEP_TRANSITION}>
-            <ServiceSelector
-              services={services}
-              onSelect={handleSelectService}
-            />
-          </motion.div>
+        {state.step === "service" && (
+          <StepWrapper key="service">
+            <ServiceSelector services={services} onSelect={wizard.selectService} />
+          </StepWrapper>
         )}
 
-        {step === "instructor" && state.service && (
-          <motion.div key="instructor" initial={STEP_INITIAL} animate={STEP_ANIMATE} exit={STEP_EXIT} transition={STEP_TRANSITION}>
-            <ServiceSelector
-              services={services}
-              onSelect={handleSelectService}
-              instructorMode
-              selectedService={state.service}
-              onSelectInstructor={handleSelectInstructor}
-              onBack={handleBack}
+        {state.step === "datetime" && state.selectedService && (
+          <StepWrapper key="datetime">
+            <h2 className="text-2xl font-semibold text-black mb-1 tracking-tight">
+              Velg dato og tid
+            </h2>
+            <p className="text-sm text-muted mb-6">
+              {state.selectedService.name}
+              {state.selectedInstructor ? ` med ${state.selectedInstructor.user.name}` : ""}
+            </p>
+
+            <InstructorPicker
+              service={state.selectedService}
+              onSelect={wizard.selectInstructor}
+              selected={state.selectedInstructor}
             />
-          </motion.div>
+
+            {state.selectedInstructor && (
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] gap-6">
+                <div className="bg-white rounded-xl border border-grey-200 shadow-card p-4">
+                  <BookingDatePicker
+                    selected={state.selectedDate}
+                    onSelect={wizard.selectDate}
+                  />
+                </div>
+                <div className="bg-white rounded-xl border border-grey-200 shadow-card p-4">
+                  <TimeSlots
+                    date={state.selectedDate}
+                    slots={state.availableSlots}
+                    loading={state.loadingSlots}
+                    selectedSlot={state.selectedSlot}
+                    onSelect={wizard.selectSlot}
+                  />
+                </div>
+              </div>
+            )}
+          </StepWrapper>
         )}
 
-        {step === "date" && state.service && state.instructor && (
-          <motion.div key="date" initial={STEP_INITIAL} animate={STEP_ANIMATE} exit={STEP_EXIT} transition={STEP_TRANSITION}>
-            <BookingDatePicker
-              serviceName={state.service.name}
-              instructorName={state.instructor.user.name ?? ""}
-              selectedDate={state.date}
-              onSelectDate={handleSelectDate}
-              availableSlots={availableSlots}
-              loadingSlots={loadingSlots}
-              onSelectSlot={handleSelectSlot}
-              onBack={handleBack}
-            />
-          </motion.div>
-        )}
-
-        {step === "time" && state.service && state.slot && (
-          <motion.div key="time" initial={STEP_INITIAL} animate={STEP_ANIMATE} exit={STEP_EXIT} transition={STEP_TRANSITION}>
-            <TimeSlots
-              service={state.service}
-              instructor={state.instructor!}
-              slot={state.slot}
-              date={state.date!}
-              onConfirm={handleConfirmTime}
-              onBack={handleBack}
-            />
-          </motion.div>
-        )}
-
-        {step === "summary" && state.service && state.slot && (
-          <motion.div key="summary" initial={STEP_INITIAL} animate={STEP_ANIMATE} exit={STEP_EXIT} transition={STEP_TRANSITION}>
+        {state.step === "details" && state.selectedService && state.selectedInstructor && state.selectedSlot && (
+          <StepWrapper key="details">
             <BookingSummary
-              state={state}
-              onUpdateCustomer={handleUpdateCustomer}
-              onBook={handleBook}
-              booking={booking}
-              onBack={handleBack}
+              mode={mode}
+              service={state.selectedService}
+              instructor={state.selectedInstructor}
+              slot={state.selectedSlot}
+              customerName={state.customerName}
+              customerEmail={state.customerEmail}
+              customerPhone={state.customerPhone}
+              onSetField={wizard.setCustomerField}
+              onBook={wizard.handleBook}
+              booking={state.booking}
+              showDetails={true}
+              isDetailsValid={wizard.validateCustomerDetails()}
+              onProceedToConfirm={() => wizard.setStep("confirm")}
             />
-          </motion.div>
+          </StepWrapper>
+        )}
+
+        {state.step === "confirm" && state.selectedService && state.selectedInstructor && state.selectedSlot && (
+          <StepWrapper key="confirm">
+            <BookingSummary
+              mode={mode}
+              service={state.selectedService}
+              instructor={state.selectedInstructor}
+              slot={state.selectedSlot}
+              customerName={state.customerName}
+              customerEmail={state.customerEmail}
+              customerPhone={state.customerPhone}
+              onSetField={wizard.setCustomerField}
+              onBook={wizard.handleBook}
+              booking={state.booking}
+              showDetails={false}
+              isDetailsValid={wizard.validateCustomerDetails()}
+            />
+          </StepWrapper>
         )}
       </AnimatePresence>
     </div>
   );
 }
 
-/* ─── Progress indicator ─── */
-
-function StepProgress({
-  steps,
-  currentStep,
-}: {
-  steps: BookingStep[];
-  currentStep: BookingStep;
-}) {
-  const currentIdx = steps.indexOf(currentStep);
-
+function StepWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <nav aria-label="Bookingsteg" className="mb-10">
-      <ol className="flex items-center justify-center gap-0">
-        {steps.map((s, i) => {
-          const isActive = s === currentStep;
-          const isCompleted = i < currentIdx;
-
-          return (
-            <li key={s} className="flex items-center">
-              <div className="flex flex-col items-center">
-                <div
-                  className={`
-                    w-10 h-10 rounded-full flex items-center justify-center
-                    text-sm font-semibold transition-all duration-300
-                    ${isActive
-                      ? "bg-[var(--color-grey-900)] text-white"
-                      : isCompleted
-                        ? "border-2 border-[var(--color-grey-900)] bg-transparent text-[var(--color-grey-900)]"
-                        : "border-2 border-[var(--color-grey-200)] bg-[var(--color-grey-50)] text-[var(--color-muted)]"
-                    }
-                  `}
-                >
-                  {isCompleted ? (
-                    <Check className="w-5 h-5" />
-                  ) : (
-                    i + 1
-                  )}
-                </div>
-                <span
-                  className={`
-                    text-xs mt-2 font-medium transition-colors duration-300
-                    ${isActive ? "text-[var(--color-grey-900)]" : "text-[var(--color-muted)]"}
-                  `}
-                >
-                  {STEP_LABELS[s]}
-                </span>
-              </div>
-              {i < steps.length - 1 && (
-                <div
-                  className={`
-                    w-12 sm:w-16 h-0.5 mx-2 transition-colors duration-300
-                    ${isCompleted ? "bg-[var(--color-grey-900)]" : "bg-[var(--color-grey-200)]"}
-                  `}
-                />
-              )}
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -16 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    >
+      {children}
+    </motion.div>
   );
 }

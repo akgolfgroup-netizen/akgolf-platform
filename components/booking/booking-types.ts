@@ -1,4 +1,9 @@
-export interface ServiceType {
+/**
+ * Booking Wizard — Delte typer
+ * Brukes av både /academy/booking (public) og /portal/bookinger/ny (portal)
+ */
+
+export interface BookingServiceType {
   id: string;
   name: string;
   description: string | null;
@@ -7,59 +12,47 @@ export interface ServiceType {
   price: number;
   color: string | null;
   maxStudents: number;
-  instructors: InstructorOption[];
+  instructors: BookingInstructor[];
 }
 
-export interface InstructorOption {
+export interface BookingInstructor {
   id: string;
   title: string | null;
   user: { name: string | null; image: string | null };
 }
 
-export type BookingStep =
-  | "service"
-  | "instructor"
-  | "date"
-  | "time"
-  | "summary";
+export type BookingStep = "service" | "datetime" | "details" | "confirm";
 
-export const STEP_LABELS: Record<BookingStep, string> = {
-  service: "Tjeneste",
-  instructor: "Trener",
-  date: "Dato",
-  time: "Tidspunkt",
-  summary: "Bekreft",
-};
+export type BookingMode = "public" | "portal";
 
-export interface BookingState {
-  service: ServiceType | null;
-  instructor: InstructorOption | null;
-  date: Date | null;
-  slot: string | null;
+export interface BookingWizardState {
+  step: BookingStep;
+  selectedService: BookingServiceType | null;
+  selectedInstructor: BookingInstructor | null;
+  selectedDate: Date | null;
+  selectedSlot: string | null;
+  availableSlots: string[];
+  loadingSlots: boolean;
+  booking: boolean;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
 }
 
-export const INITIAL_BOOKING_STATE: BookingState = {
-  service: null,
-  instructor: null,
-  date: null,
-  slot: null,
-  customerName: "",
-  customerEmail: "",
-  customerPhone: "",
+export const STEP_CONFIG: Record<BookingStep, { label: string; index: number }> = {
+  service: { label: "Tjeneste", index: 0 },
+  datetime: { label: "Tidspunkt", index: 1 },
+  details: { label: "Opplysninger", index: 2 },
+  confirm: { label: "Bekreft", index: 3 },
 };
 
-export function formatPrice(price: number): string {
-  return price.toLocaleString("nb-NO", { minimumFractionDigits: 0 }) + " kr";
+export function getVisibleSteps(mode: BookingMode): BookingStep[] {
+  if (mode === "portal") {
+    return ["service", "datetime", "confirm"];
+  }
+  return ["service", "datetime", "details", "confirm"];
 }
 
-export function getVisibleSteps(
-  hasMultipleInstructors: boolean
-): BookingStep[] {
-  if (hasMultipleInstructors) {
-    return ["service", "instructor", "date", "time", "summary"];
-  }
-  return ["service", "date", "time", "summary"];
+export function formatBookingPrice(price: number): string {
+  return price.toLocaleString("nb-NO", { minimumFractionDigits: 0 }) + " kr";
 }
