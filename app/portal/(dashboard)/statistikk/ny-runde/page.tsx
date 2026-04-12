@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft, Loader2, Save } from "lucide-react";
 import Link from "next/link";
-import { HeroHeading, GlassCard, Shimmer } from "@/components/portal/premium";
 import { saveRound } from "./actions";
 
 export default function NyRundePage() {
@@ -65,43 +64,40 @@ export default function NyRundePage() {
   }
 
   const inputClass =
-    "w-full rounded-2xl border border-white/80 bg-white/60 px-4 py-2.5 text-[13px] text-[var(--color-grey-900)] outline-none backdrop-blur-xl transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-primary)]/40 focus:bg-white";
+    "w-full rounded-xl border border-portal-border bg-white px-4 py-2.5 text-[13px] text-portal-text outline-none transition-colors placeholder:text-portal-muted focus:border-primary/40 focus:ring-2 focus:ring-primary/20";
 
   const labelClass =
-    "mb-1.5 block text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-muted)]";
+    "mb-1.5 block text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted";
 
   return (
     <div className="space-y-10">
-      <HeroHeading
-        label="Statistikk"
-        title={
-          <>
-            Ny{" "}
-            <span className="font-serif italic text-[var(--color-primary)] font-normal">
-              runde
-            </span>
-            <span className="text-[var(--color-accent-cta)]">.</span>
-          </>
-        }
-        description="Logg din golfrunde med score, statistikk og notater. Alle tall kan redigeres senere."
-        actions={
-          <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
-            <Link
-              href="/portal/statistikk"
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-white/80 bg-white/70 px-5 text-[12px] font-semibold text-[var(--color-text)] shadow-sm backdrop-blur-xl transition-colors hover:bg-white"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" />
-              Tilbake
-            </Link>
-          </motion.div>
-        }
-      />
+      {/* Header */}
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted mb-2">
+          Statistikk
+        </p>
+        <h1 className="text-2xl font-bold tracking-tight text-portal-text">
+          Ny runde
+        </h1>
+        <p className="text-portal-secondary mt-1">
+          Logg din golfrunde med score, statistikk og notater. Alle tall kan redigeres senere.
+        </p>
+        <div className="mt-4">
+          <Link
+            href="/portal/statistikk"
+            className="inline-flex h-11 items-center gap-2 rounded-[20px] border border-portal-border bg-white px-5 text-[12px] font-semibold text-portal-text shadow-sm transition-colors hover:bg-portal-hover"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            Tilbake
+          </Link>
+        </div>
+      </div>
 
       <form onSubmit={handleSubmit} className="max-w-2xl space-y-4">
         {/* Grunnleggende info */}
-        <GlassCard variant="light" padding="lg" delay={0.05}>
-          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-[var(--color-grey-900)]">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-primary)] text-[11px] font-bold text-white">
+        <div className="bg-white rounded-xl shadow-card p-6">
+          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-portal-text">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white tabular-nums">
               1
             </span>
             Grunnleggende info
@@ -159,12 +155,12 @@ export default function NyRundePage() {
               />
             </div>
           </div>
-        </GlassCard>
+        </div>
 
         {/* Statistikk */}
-        <GlassCard variant="light" padding="lg" delay={0.1}>
-          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-[var(--color-grey-900)]">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-primary)] text-[11px] font-bold text-white">
+        <div className="bg-white rounded-xl shadow-card p-6">
+          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-portal-text">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white tabular-nums">
               2
             </span>
             Statistikk
@@ -183,7 +179,7 @@ export default function NyRundePage() {
                   max="14"
                   className={inputClass}
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] text-[var(--color-muted)] tabular-nums">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] text-portal-muted tabular-nums">
                   / 14
                 </span>
               </div>
@@ -201,7 +197,7 @@ export default function NyRundePage() {
                   max="18"
                   className={inputClass}
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] text-[var(--color-muted)] tabular-nums">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] text-portal-muted tabular-nums">
                   / 18
                 </span>
               </div>
@@ -220,12 +216,12 @@ export default function NyRundePage() {
               />
             </div>
           </div>
-        </GlassCard>
+        </div>
 
         {/* Notater */}
-        <GlassCard variant="light" padding="lg" delay={0.15}>
-          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-[var(--color-grey-900)]">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-primary)] text-[11px] font-bold text-white">
+        <div className="bg-white rounded-xl shadow-card p-6">
+          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-portal-text">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white tabular-nums">
               3
             </span>
             Notater
@@ -238,12 +234,12 @@ export default function NyRundePage() {
             rows={4}
             className={`${inputClass} resize-none`}
           />
-        </GlassCard>
+        </div>
 
         {/* Feilmelding */}
         {error && (
-          <div className="rounded-2xl border border-[var(--color-error)]/30 bg-[var(--color-error)]/10 p-4 backdrop-blur-xl">
-            <p className="text-[13px] font-medium text-[var(--color-error)]">{error}</p>
+          <div className="rounded-xl border border-error/30 bg-error/10 p-4">
+            <p className="text-[13px] font-medium text-error">{error}</p>
           </div>
         )}
 
@@ -251,7 +247,7 @@ export default function NyRundePage() {
         <div className="flex gap-3 pt-2">
           <Link
             href="/portal/statistikk"
-            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-white/80 bg-white/70 py-3 text-[12px] font-semibold text-[var(--color-muted)] backdrop-blur-xl transition-colors hover:bg-white hover:text-[var(--color-grey-900)]"
+            className="flex flex-1 items-center justify-center gap-2 rounded-[20px] border border-portal-border bg-white py-3 text-[12px] font-semibold text-portal-muted transition-colors hover:bg-portal-hover hover:text-portal-text"
           >
             Avbryt
           </Link>
@@ -260,15 +256,14 @@ export default function NyRundePage() {
             disabled={saving || !form.date || !form.totalScore}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.97 }}
-            className="relative flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-full bg-[var(--color-accent-cta)] py-3 text-[12px] font-bold text-[var(--color-grey-900)] shadow-[0_8px_24px_rgba(209,248,67,0.4)] transition-shadow hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] disabled:cursor-not-allowed disabled:opacity-50"
+            className="relative flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-[20px] bg-accent-cta py-3 text-[12px] font-bold text-accent-cta-text shadow-[0_8px_24px_rgba(209,248,67,0.4)] transition-shadow hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <Shimmer />
             {saving ? (
-              <Loader2 className="relative z-10 h-3.5 w-3.5 animate-spin" />
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
             ) : (
-              <Save className="relative z-10 h-3.5 w-3.5" strokeWidth={2.5} />
+              <Save className="h-3.5 w-3.5" strokeWidth={2.5} />
             )}
-            <span className="relative z-10">Lagre runde</span>
+            <span>Lagre runde</span>
           </motion.button>
         </div>
       </form>

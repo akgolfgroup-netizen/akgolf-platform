@@ -36,20 +36,20 @@ async function getDrills() {
 }
 
 const pyramidLabels: Record<string, { label: string; icon: React.ElementType; color: string }> = {
-  FYS: { label: "Fysisk", icon: Dumbbell, color: "text-[var(--color-error)] bg-[var(--color-error)]/20" },
-  TEK: { label: "Teknikk", icon: Target, color: "text-blue-400 bg-blue-500/20" },
-  SLAG: { label: "Slag", icon: Zap, color: "text-yellow-400 bg-yellow-500/20" },
-  SPILL: { label: "Spill", icon: Mountain, color: "text-[var(--color-brand)] bg-[var(--color-brand)]/20" },
-  TURN: { label: "Turnering", icon: Trophy, color: "text-purple-400 bg-purple-500/20" },
+  FYS: { label: "Fysisk", icon: Dumbbell, color: "text-error bg-error/20" },
+  TEK: { label: "Teknikk", icon: Target, color: "text-info bg-info/20" },
+  SLAG: { label: "Slag", icon: Zap, color: "text-warning bg-warning/20" },
+  SPILL: { label: "Spill", icon: Mountain, color: "text-primary bg-primary/20" },
+  TURN: { label: "Turnering", icon: Trophy, color: "text-ai bg-ai/20" },
 };
 
 const difficultyColors: Record<string, string> = {
-  nybegynner: "bg-[var(--color-success)]/20 text-[var(--color-success)]",
-  rekrutt: "bg-blue-500/20 text-blue-400",
-  klubb: "bg-yellow-500/20 text-yellow-400",
-  regional: "bg-orange-500/20 text-orange-400",
-  nasjonal: "bg-[var(--color-error)]/20 text-[var(--color-error)]",
-  elite: "bg-purple-500/20 text-purple-400",
+  nybegynner: "bg-success/20 text-success",
+  rekrutt: "bg-info/20 text-info",
+  klubb: "bg-warning/20 text-warning",
+  regional: "bg-warning/20 text-warning",
+  nasjonal: "bg-error/20 text-error",
+  elite: "bg-ai/20 text-ai",
 };
 
 export default async function OvelserPage() {
@@ -83,8 +83,8 @@ export default async function OvelserPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Øvelser</h1>
-        <p className="text-[#A3A3A3] mt-1">
+        <h1 className="text-2xl font-bold text-portal-text">Øvelser</h1>
+        <p className="text-portal-secondary mt-1">
           Øvelsebibliotek basert på AK Masterdokument — fra fysisk grunnlag til turneringsmental
         </p>
       </div>
@@ -99,21 +99,21 @@ export default async function OvelserPage() {
           return (
             <div
               key={level}
-              className="bg-white rounded-lg p-4 border border-[var(--color-grey-200)]"
+              className="bg-white rounded-xl p-4 border border-portal-border shadow-card"
             >
               <div className={`w-8 h-8 rounded-lg ${config?.color.split(" ")[1]} flex items-center justify-center mb-2`}>
                 <Icon className={`w-4 h-4 ${config?.color.split(" ")[0]}`} />
               </div>
-              <p className="text-2xl font-bold text-[var(--color-grey-900)]">{count}</p>
-              <p className="text-sm text-[#A3A3A3]">{config?.label ?? level}</p>
+              <p className="text-2xl font-bold text-portal-text tabular-nums">{count}</p>
+              <p className="text-sm text-portal-secondary">{config?.label ?? level}</p>
             </div>
           );
         })}
       </div>
 
       {/* Pyramid visualization */}
-      <div className="bg-white rounded-lg p-6 border border-[var(--color-grey-200)]">
-        <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-4">AK Treningspyramiden</h2>
+      <div className="bg-white rounded-xl p-6 border border-portal-border shadow-card">
+        <h2 className="text-lg font-semibold text-portal-text mb-4">AK Treningspyramiden</h2>
         <div className="flex flex-col items-center gap-1">
           {[...pyramidOrder].reverse().map((level, i) => {
             const config = pyramidLabels[level];
@@ -146,12 +146,12 @@ export default async function OvelserPage() {
             <div key={level} className="space-y-4">
               {/* Level header */}
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-lg ${config?.color.split(" ")[1]} flex items-center justify-center`}>
+                <div className={`w-10 h-10 rounded-xl ${config?.color.split(" ")[1]} flex items-center justify-center`}>
                   <Icon className={`w-5 h-5 ${config?.color.split(" ")[0]}`} />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">{config?.label}</h2>
-                  <p className="text-sm text-[#A3A3A3]">{levelDrills.length} øvelser</p>
+                  <h2 className="text-lg font-semibold text-portal-text">{config?.label}</h2>
+                  <p className="text-sm text-portal-secondary">{levelDrills.length} øvelser</p>
                 </div>
               </div>
 
@@ -160,20 +160,20 @@ export default async function OvelserPage() {
                 {levelDrills.map((drill) => (
                   <div
                     key={drill.id}
-                    className="group bg-white border border-[var(--color-grey-200)] rounded-lg p-4 hover:border-[var(--color-grey-900)] transition-colors"
+                    className="group bg-white border border-portal-border rounded-xl p-4 hover:border-black/8 transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-medium text-[var(--color-grey-900)] group-hover:text-[var(--color-grey-600)] transition-colors">
+                          <h3 className="font-medium text-portal-text group-hover:text-portal-secondary transition-colors">
                             {drill.name}
                           </h3>
                         </div>
-                        <p className="text-sm text-[#A3A3A3] line-clamp-2">
+                        <p className="text-sm text-portal-secondary line-clamp-2">
                           {drill.goal ?? drill.description}
                         </p>
-                        <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-[#737373]">
-                          <span className="flex items-center gap-1">
+                        <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-portal-muted">
+                          <span className="flex items-center gap-1 tabular-nums">
                             <Clock className="w-3 h-3" />
                             {drill.duration_minutes} min
                           </span>
@@ -190,8 +190,8 @@ export default async function OvelserPage() {
                       </div>
                       <div className="flex items-center gap-3">
                         <span
-                          className={`px-2 py-1 text-xs rounded ${
-                            difficultyColors[drill.difficulty] ?? "bg-[var(--color-grey-400)]/20 text-[var(--color-grey-400)]"
+                          className={`px-2 py-1 text-xs rounded-full ${
+                            difficultyColors[drill.difficulty] ?? "bg-portal-hover text-portal-muted"
                           }`}
                         >
                           {drill.difficulty}

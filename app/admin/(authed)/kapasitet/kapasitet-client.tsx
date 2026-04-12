@@ -211,7 +211,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
         onMenuClick={toggle}
       />
 
-      <div className="p-5 space-y-5">
+      <div className="p-6 space-y-6">
         {/* Alert */}
         <HGAlert variant="info">
           <strong>Kapasitetsoversikt:</strong> Basert på tilgjengelighet og
@@ -244,7 +244,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
         </div>
 
         {/* Hero — total utnyttelse + trend */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <AdminCard>
             <h3 className="admin-section-title mb-4">Total utnyttelse</h3>
             <div className="flex flex-col items-center gap-3">
@@ -313,7 +313,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
         </AdminCard>
 
         {/* Ukesutnyttelse + belegg heatmap */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <AdminCard>
             <h3 className="admin-section-title mb-4">Ukesutnyttelse</h3>
             <AdminBarChart

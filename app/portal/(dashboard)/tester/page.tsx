@@ -18,10 +18,10 @@ export default async function TesterPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">
+        <h1 className="text-2xl font-bold text-portal-text">
           DECADE Tester
         </h1>
-        <p className="text-[var(--color-grey-500)] mt-1">
+        <p className="text-portal-secondary mt-1">
           Standardiserte tester for å måle fremgang
         </p>
       </div>
@@ -29,34 +29,34 @@ export default async function TesterPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-xl shadow-card p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-portal-secondary">
             Fullførte tester
           </p>
-          <p className="text-3xl font-bold text-[var(--color-grey-900)] mt-1 tabular-nums">
+          <p className="text-3xl font-bold text-portal-text mt-1 tabular-nums">
             {stats.completedTests}/{stats.totalTests}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-portal-secondary">
             Total score
           </p>
-          <p className="text-3xl font-bold text-[var(--color-grey-900)] mt-1 tabular-nums">
+          <p className="text-3xl font-bold text-portal-text mt-1 tabular-nums">
             {stats.totalScore}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-portal-secondary">
             Tilgjengelige tester
           </p>
-          <p className="text-3xl font-bold text-[var(--color-grey-900)] mt-1 tabular-nums">
+          <p className="text-3xl font-bold text-portal-text mt-1 tabular-nums">
             {stats.totalTests}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-portal-secondary">
             Beste test
           </p>
-          <p className="text-3xl font-bold text-[var(--color-grey-900)] mt-1">
+          <p className="text-3xl font-bold text-portal-text mt-1">
             {stats.bestTestName ?? "-"}
           </p>
         </div>

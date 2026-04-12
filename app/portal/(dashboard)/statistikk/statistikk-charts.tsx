@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GlassCard, fadeInUp } from "@/components/portal/premium";
+import { fadeInUp } from "@/components/portal/premium";
 import { ScoreTrendChart } from "@/components/portal/statistikk/score-trend-chart";
 import { SGRadarChart } from "@/components/portal/statistikk/sg-radar-chart";
 import { TrainingVolumeChart } from "@/components/portal/statistikk/training-volume-chart";
@@ -86,32 +86,32 @@ export function StatistikkCharts({
     <>
       {/* Score Trend + SG Radar */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--color-muted)]">
-          <span className="h-px w-6 bg-[var(--color-muted)]" />
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted">
+          <span className="h-px w-6 bg-portal-muted" />
           Utvikling
         </p>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <motion.div variants={fadeInUp}>
-            <GlassCard variant="light" padding="lg" delay={0.1}>
-              <h3 className="mb-5 text-[14px] font-semibold text-[var(--color-grey-900)]">
+            <div className="bg-white rounded-xl shadow-card p-6">
+              <h3 className="mb-5 text-[14px] font-semibold text-portal-text">
                 Score-utvikling
               </h3>
               <ScoreTrendChart
                 rounds={scoreTrendRounds}
                 handicap={handicap ?? undefined}
               />
-            </GlassCard>
+            </div>
           </motion.div>
 
           <motion.div variants={fadeInUp}>
-            <GlassCard variant="light" padding="lg" delay={0.2}>
+            <div className="bg-white rounded-xl shadow-card p-6">
               <div className="mb-5 flex items-center justify-between">
-                <h3 className="text-[14px] font-semibold text-[var(--color-grey-900)]">
+                <h3 className="text-[14px] font-semibold text-portal-text">
                   Strokes Gained
                 </h3>
                 {aggregates?.avgSgTotal != null && (
-                  <span className="text-[11px] text-[var(--color-muted)] tabular-nums">
+                  <span className="text-[11px] text-portal-muted tabular-nums">
                     Totalt: {aggregates.avgSgTotal.toFixed(2)}
                   </span>
                 )}
@@ -119,59 +119,59 @@ export function StatistikkCharts({
               {hasSGData ? (
                 <SGRadarChart playerSG={playerSG} showLegend={false} />
               ) : (
-                <div className="flex h-[280px] items-center justify-center text-sm text-[var(--color-muted)]">
+                <div className="flex h-[280px] items-center justify-center text-sm text-portal-muted">
                   Ingen SG-data i valgt periode
                 </div>
               )}
-            </GlassCard>
+            </div>
           </motion.div>
         </div>
       </div>
 
       {/* Training Volume + Breakdown */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--color-muted)]">
-          <span className="h-px w-6 bg-[var(--color-muted)]" />
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted">
+          <span className="h-px w-6 bg-portal-muted" />
           Trening
         </p>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <motion.div variants={fadeInUp}>
-            <GlassCard variant="light" padding="lg" delay={0.3}>
-              <h3 className="mb-5 text-[14px] font-semibold text-[var(--color-grey-900)]">
+            <div className="bg-white rounded-xl shadow-card p-6">
+              <h3 className="mb-5 text-[14px] font-semibold text-portal-text">
                 Treningsvolum
               </h3>
               <TrainingVolumeChart data={weeklyTraining} />
-            </GlassCard>
+            </div>
           </motion.div>
 
           {focusAreas.length > 0 && (
             <motion.div variants={fadeInUp}>
-              <GlassCard variant="light" padding="lg" delay={0.4}>
-                <h3 className="mb-6 text-[14px] font-semibold text-[var(--color-grey-900)]">
+              <div className="bg-white rounded-xl shadow-card p-6">
+                <h3 className="mb-6 text-[14px] font-semibold text-portal-text">
                   Fokusomrade-fordeling
                 </h3>
                 <div className="space-y-4">
                   {focusAreas.map((area) => (
                     <div key={area.name}>
                       <div className="mb-1.5 flex items-center justify-between">
-                        <span className="text-[12px] font-semibold text-[var(--color-grey-900)]">
+                        <span className="text-[12px] font-semibold text-portal-text">
                           {area.name}
                         </span>
-                        <span className="text-[11px] text-[var(--color-muted)] tabular-nums">
+                        <span className="text-[11px] text-portal-muted tabular-nums">
                           {area.percent}%
                         </span>
                       </div>
-                      <div className="h-2 overflow-hidden rounded-full bg-[var(--color-surface)]">
+                      <div className="h-2 overflow-hidden rounded-full bg-portal-hover">
                         <div
-                          className="h-full rounded-full bg-[var(--color-primary)] transition-all duration-500"
+                          className="h-full rounded-full bg-primary transition-all duration-500"
                           style={{ width: `${area.percent}%` }}
                         />
                       </div>
                     </div>
                   ))}
                 </div>
-              </GlassCard>
+              </div>
             </motion.div>
           )}
         </div>

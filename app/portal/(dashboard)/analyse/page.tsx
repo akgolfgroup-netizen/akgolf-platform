@@ -7,7 +7,6 @@ import {
   getTrackManStats,
 } from "./actions";
 import { ProgressChart } from "@/components/portal/heritage/progress-chart";
-import { HeroHeading, GlassCard, DarkStatCard } from "@/components/portal/premium";
 import {
   TrendingDown,
   Target,
@@ -57,25 +56,23 @@ export default async function AnalysePage() {
   return (
     <div className="space-y-10">
       {/* HERO */}
-      <HeroHeading
-        label="Analyse"
-        title={
-          <>
-            Din{" "}
-            <span className="font-serif italic text-primary font-normal">
-              analyse
-            </span>
-            <span className="text-accent-cta">.</span>
-          </>
-        }
-        description="AI-drevet innsikt i ditt spill. Dyp analyse av handicap, Strokes Gained og TrackMan-data."
-      />
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted mb-2">
+          Analyse
+        </p>
+        <h1 className="text-2xl font-bold tracking-tight text-portal-text">
+          Din analyse
+        </h1>
+        <p className="text-portal-secondary mt-1">
+          AI-drevet innsikt i ditt spill. Dyp analyse av handicap, Strokes Gained og TrackMan-data.
+        </p>
+      </div>
 
       {/* Data load error */}
       {loadError && (
         <div
           role="alert"
-          className="flex items-center gap-3 rounded-2xl border border-error/30 bg-error-light p-4"
+          className="flex items-center gap-3 rounded-xl border border-error/30 bg-error-light p-4"
         >
           <Info className="h-5 w-5 flex-shrink-0 text-error" />
           <p className="text-[13px] font-medium text-error-text">
@@ -86,119 +83,117 @@ export default async function AnalysePage() {
 
       {/* Tier Gate for Pro Features */}
       {!isPro && (
-        <GlassCard variant="light" padding="lg">
+        <div className="bg-white rounded-xl shadow-card p-6">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-warning-light">
               <Lightbulb className="h-6 w-6 text-warning" strokeWidth={1.75} />
             </div>
             <div className="flex-1">
-              <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.15em] text-muted">
+              <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">
                 Pro-funksjon
               </p>
-              <h3 className="mb-2 text-[14px] font-semibold text-grey-900">
+              <h3 className="mb-2 text-[14px] font-semibold text-portal-text">
                 Oppgrader for full analyse
               </h3>
-              <p className="mb-4 text-[13px] leading-relaxed text-muted">
+              <p className="mb-4 text-[13px] leading-relaxed text-portal-muted">
                 Få tilgang til avansert statistikk, TrackMan-data, og AI-drevne
                 anbefalinger med Pro-abonnement.
               </p>
               <Link
                 href="/portal/abonnement"
-                className="inline-flex h-10 items-center rounded-full bg-warning px-5 text-[12px] font-bold text-white shadow-sm transition-opacity hover:opacity-90"
+                className="inline-flex h-10 items-center rounded-[20px] bg-warning px-5 text-[12px] font-bold text-white shadow-sm transition-opacity hover:opacity-90"
               >
                 Oppgrader til Pro
               </Link>
             </div>
           </div>
-        </GlassCard>
+        </div>
       )}
 
       {/* STATS GRID */}
       {hasRoundData ? (
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-6 lg:col-span-3">
-            <DarkStatCard
-              label="GIR"
-              value={stats.girPercent != null ? Math.round(stats.girPercent) : 0}
-              unit="%"
-              icon={Target}
-              trend={stats.girTrend != null ? Math.round(stats.girTrend * 10) / 10 : undefined}
-              trendLabel="vs. forrige"
-              variant="primary"
-              delay={0}
-            />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white rounded-xl shadow-card p-5">
+            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">GIR</p>
+            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
+              {stats.girPercent != null ? Math.round(stats.girPercent) : 0}
+              <span className="ml-1 text-[13px] font-normal text-portal-muted">%</span>
+            </p>
+            {stats.girTrend != null && (
+              <p className={`mt-2 text-[11px] tabular-nums ${stats.girTrend >= 0 ? "text-success" : "text-error"}`}>
+                {stats.girTrend >= 0 ? "+" : ""}{(Math.round(stats.girTrend * 10) / 10).toFixed(1)} vs. forrige
+              </p>
+            )}
           </div>
-          <div className="col-span-6 lg:col-span-3">
-            <DarkStatCard
-              label="Fairways"
-              value={stats.fairwayPercent != null ? Math.round(stats.fairwayPercent) : 0}
-              unit="%"
-              icon={Activity}
-              trend={stats.fairwayTrend != null ? Math.round(stats.fairwayTrend * 10) / 10 : undefined}
-              trendLabel="vs. forrige"
-              variant="default"
-              delay={0.08}
-            />
+          <div className="bg-white rounded-xl shadow-card p-5">
+            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">Fairways</p>
+            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
+              {stats.fairwayPercent != null ? Math.round(stats.fairwayPercent) : 0}
+              <span className="ml-1 text-[13px] font-normal text-portal-muted">%</span>
+            </p>
+            {stats.fairwayTrend != null && (
+              <p className={`mt-2 text-[11px] tabular-nums ${stats.fairwayTrend >= 0 ? "text-success" : "text-error"}`}>
+                {stats.fairwayTrend >= 0 ? "+" : ""}{(Math.round(stats.fairwayTrend * 10) / 10).toFixed(1)} vs. forrige
+              </p>
+            )}
           </div>
-          <div className="col-span-6 lg:col-span-3">
-            <DarkStatCard
-              label="Putts/runde"
-              value={stats.puttsPerRound != null ? Math.round(stats.puttsPerRound * 10) / 10 : 0}
-              decimals={1}
-              icon={TrendingDown}
-              lowerIsBetter
-              trend={stats.puttsTrend != null ? Math.round(stats.puttsTrend * 10) / 10 : undefined}
-              trendLabel="vs. forrige"
-              variant="accent"
-              delay={0.16}
-            />
+          <div className="bg-white rounded-xl shadow-card p-5">
+            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">Putts/runde</p>
+            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
+              {stats.puttsPerRound != null ? (Math.round(stats.puttsPerRound * 10) / 10).toFixed(1) : "0"}
+            </p>
+            {stats.puttsTrend != null && (
+              <p className={`mt-2 text-[11px] tabular-nums ${stats.puttsTrend <= 0 ? "text-success" : "text-error"}`}>
+                {stats.puttsTrend >= 0 ? "+" : ""}{(Math.round(stats.puttsTrend * 10) / 10).toFixed(1)} vs. forrige
+              </p>
+            )}
           </div>
-          <div className="col-span-6 lg:col-span-3">
-            <DarkStatCard
-              label="Scrambling"
-              value={stats.scramblingPercent != null ? Math.round(stats.scramblingPercent) : 0}
-              unit="%"
-              icon={BarChart3}
-              trend={stats.scramblingTrend != null ? Math.round(stats.scramblingTrend * 10) / 10 : undefined}
-              trendLabel="vs. forrige"
-              variant="default"
-              delay={0.24}
-            />
+          <div className="bg-white rounded-xl shadow-card p-5">
+            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">Scrambling</p>
+            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
+              {stats.scramblingPercent != null ? Math.round(stats.scramblingPercent) : 0}
+              <span className="ml-1 text-[13px] font-normal text-portal-muted">%</span>
+            </p>
+            {stats.scramblingTrend != null && (
+              <p className={`mt-2 text-[11px] tabular-nums ${stats.scramblingTrend >= 0 ? "text-success" : "text-error"}`}>
+                {stats.scramblingTrend >= 0 ? "+" : ""}{(Math.round(stats.scramblingTrend * 10) / 10).toFixed(1)} vs. forrige
+              </p>
+            )}
           </div>
         </div>
       ) : (
-        <GlassCard variant="light" padding="lg">
+        <div className="bg-white rounded-xl shadow-card p-6">
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-grey-100">
-              <BarChart3 className="h-6 w-6 text-muted" strokeWidth={1.75} />
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-portal-hover">
+              <BarChart3 className="h-6 w-6 text-portal-muted" strokeWidth={1.75} />
             </div>
-            <h3 className="mb-2 text-[14px] font-semibold text-grey-900">
+            <h3 className="mb-2 text-[14px] font-semibold text-portal-text">
               Ingen rundestatistikk ennå
             </h3>
-            <p className="mb-4 max-w-sm text-[13px] leading-relaxed text-muted">
+            <p className="mb-4 max-w-sm text-[13px] leading-relaxed text-portal-muted">
               Registrer din første runde for å se GIR, Fairways, Putts og Scrambling her.
             </p>
             <Link
               href="/portal/statistikk/ny-runde"
-              className="inline-flex h-10 items-center rounded-full bg-primary px-5 text-[12px] font-bold text-white shadow-sm transition-opacity hover:opacity-90"
+              className="inline-flex h-10 items-center rounded-[20px] bg-primary px-5 text-[12px] font-bold text-white shadow-sm transition-opacity hover:opacity-90"
             >
               Registrer runde
             </Link>
           </div>
-        </GlassCard>
+        </div>
       )}
 
       {/* SECTION LABEL */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-muted">
-          <span className="h-px w-6 bg-muted" />
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted">
+          <span className="h-px w-6 bg-portal-muted" />
           Utvikling
         </p>
 
         {/* Main Charts */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <GlassCard variant="light" padding="lg" delay={0.1}>
-            <h3 className="mb-5 text-[14px] font-semibold text-grey-900">
+          <div className="bg-white rounded-xl shadow-card p-6">
+            <h3 className="mb-5 text-[14px] font-semibold text-portal-text">
               Handicap-trend
             </h3>
             {chartData.length > 0 ? (
@@ -209,38 +204,38 @@ export default async function AnalysePage() {
                 height={220}
               />
             ) : (
-              <p className="py-12 text-center text-[13px] text-muted">
+              <p className="py-12 text-center text-[13px] text-portal-muted">
                 Ingen handicap-data registrert ennå.
               </p>
             )}
-          </GlassCard>
+          </div>
 
           {/* Strokes Gained Breakdown */}
-          <GlassCard variant="light" padding="lg" delay={0.2}>
-            <h3 className="mb-5 text-[14px] font-semibold text-grey-900">
+          <div className="bg-white rounded-xl shadow-card p-6">
+            <h3 className="mb-5 text-[14px] font-semibold text-portal-text">
               Strokes Gained
             </h3>
             {hasSGData ? (
               <StrokesGainedBars sgData={sgData} />
             ) : (
-              <p className="py-12 text-center text-[13px] text-muted">
+              <p className="py-12 text-center text-[13px] text-portal-muted">
                 Ingen Strokes Gained-data ennå. Registrer runder med SG for å se analysen.
               </p>
             )}
-          </GlassCard>
+          </div>
         </div>
       </div>
 
       {/* TrackMan Data */}
       {isPro && (
         <div>
-          <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-muted">
-            <span className="h-px w-6 bg-muted" />
+          <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted">
+            <span className="h-px w-6 bg-portal-muted" />
             TrackMan
           </p>
-          <GlassCard variant="light" padding="lg" delay={0.3}>
+          <div className="bg-white rounded-xl shadow-card p-6">
             <div className="mb-5 flex items-center justify-between">
-              <h3 className="text-[14px] font-semibold text-grey-900">
+              <h3 className="text-[14px] font-semibold text-portal-text">
                 TrackMan-data
               </h3>
               <Link
@@ -255,42 +250,42 @@ export default async function AnalysePage() {
                 {trackManStats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-2xl border border-grey-100 bg-white p-4"
+                    className="rounded-xl border border-portal-border bg-white p-4"
                   >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">
                       {stat.label}
                     </p>
-                    <p className="mt-2 text-[28px] font-[300] leading-none tabular-nums tracking-[-0.02em] text-grey-900">
+                    <p className="mt-2 text-[28px] font-[300] leading-none tabular-nums tracking-[-0.02em] text-portal-text">
                       {stat.value}
-                      <span className="ml-1 text-[13px] font-normal text-muted">
+                      <span className="ml-1 text-[13px] font-normal text-portal-muted">
                         {stat.unit}
                       </span>
                     </p>
-                    <p className="mt-2 text-[11px] text-muted">{stat.club}</p>
+                    <p className="mt-2 text-[11px] text-portal-muted">{stat.club}</p>
                   </div>
                 ))}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-8 text-center">
-                <p className="text-[13px] text-muted">
+                <p className="text-[13px] text-portal-muted">
                   Ingen TrackMan-sesjoner registrert ennå.
                 </p>
                 <Link
                   href="/portal/trackman"
-                  className="mt-3 inline-flex h-9 items-center rounded-full bg-primary px-4 text-[12px] font-bold text-white transition-opacity hover:opacity-90"
+                  className="mt-3 inline-flex h-9 items-center rounded-[20px] bg-primary px-4 text-[12px] font-bold text-white transition-opacity hover:opacity-90"
                 >
                   Last opp data
                 </Link>
               </div>
             )}
-          </GlassCard>
+          </div>
         </div>
       )}
 
       {/* Quick Actions */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-muted">
-          <span className="h-px w-6 bg-muted" />
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted">
+          <span className="h-px w-6 bg-portal-muted" />
           Handlinger
         </p>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -316,18 +311,18 @@ export default async function AnalysePage() {
       </div>
 
       {/* Info */}
-      <details className="group overflow-hidden rounded-xl border border-grey-100 bg-white shadow-card">
-        <summary className="flex cursor-pointer list-none items-center gap-3 p-5 transition-colors hover:bg-grey-50">
+      <details className="group overflow-hidden rounded-xl border border-portal-border bg-white shadow-card">
+        <summary className="flex cursor-pointer list-none items-center gap-3 p-5 transition-colors hover:bg-portal-bg">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft">
             <Info className="h-5 w-5 text-primary" strokeWidth={1.75} />
           </div>
-          <span className="text-[14px] font-semibold text-grey-900">
+          <span className="text-[14px] font-semibold text-portal-text">
             Om Strokes Gained
           </span>
-          <ChevronRight className="ml-auto h-5 w-5 text-muted transition-transform group-open:rotate-90" />
+          <ChevronRight className="ml-auto h-5 w-5 text-portal-muted transition-transform group-open:rotate-90" />
         </summary>
-        <div className="border-t border-grey-100 p-5 pt-0">
-          <p className="mt-4 text-[13px] leading-relaxed text-muted">
+        <div className="border-t border-portal-border p-5 pt-0">
+          <p className="mt-4 text-[13px] leading-relaxed text-portal-muted">
             Strokes Gained er en statistisk metode som måler hvor mange slag du
             sparer eller taper sammenlignet med referansenivået (typisk PGA
             Tour-gjennomsnitt eller ditt handicap-nivå). Positive tall betyr at
@@ -367,7 +362,7 @@ function StrokesGainedBars({
       {items.map((item) => (
         <div key={item.label}>
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-[12px] font-medium text-text">
+            <span className="text-[12px] font-medium text-portal-text">
               {item.label}
             </span>
             <span
@@ -379,7 +374,7 @@ function StrokesGainedBars({
               {item.value.toFixed(1)}
             </span>
           </div>
-          <div className="h-2 overflow-hidden rounded-full bg-surface">
+          <div className="h-2 overflow-hidden rounded-full bg-portal-hover">
             <div
               className={`h-full rounded-full transition-all duration-500 ${
                 item.value >= 0 ? "bg-success" : "bg-error"
@@ -411,18 +406,18 @@ function AnalyseQuickAction({
   return (
     <Link
       href={href}
-      className="group relative flex items-center gap-3 rounded-xl border border-grey-100 bg-white p-4 shadow-card transition-all duration-300 will-change-transform hover:-translate-y-0.5 hover:shadow-card-hover"
+      className="group relative flex items-center gap-3 rounded-xl border border-portal-border bg-white p-4 shadow-card transition-all duration-300 will-change-transform hover:-translate-y-px hover:shadow-card-hover"
     >
       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft transition-transform group-hover:scale-110">
         <Icon className="h-[18px] w-[18px] text-primary" strokeWidth={1.75} />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[13px] font-semibold text-grey-900">
+        <p className="truncate text-[13px] font-semibold text-portal-text">
           {label}
         </p>
-        <p className="truncate text-[11px] text-muted">{description}</p>
+        <p className="truncate text-[11px] text-portal-muted">{description}</p>
       </div>
-      <ChevronRight className="h-3.5 w-3.5 -translate-x-1 text-muted opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+      <ChevronRight className="h-3.5 w-3.5 -translate-x-1 text-portal-muted opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
     </Link>
   );
 }

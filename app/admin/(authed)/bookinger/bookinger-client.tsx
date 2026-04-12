@@ -114,7 +114,7 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
   return (
     <>
       <MCTopbar title="Bookinger" subtitle="Administrer alle bookinger og timeplan" onMenuClick={toggle} />
-      <div className="p-5 space-y-5">
+      <div className="p-6 space-y-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <AdminStatCard label="I dag" value={dayBookings.length} />
           <AdminStatCard label="Bekreftet" value={confirmedCount} />
@@ -153,8 +153,8 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
         </AdminCard>
 
         {viewMode === "day" && (
-          <div className="bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
-            <div className="px-4 py-3 border-b border-[var(--color-grey-200)]">
+          <AdminCard className="p-0 overflow-hidden">
+            <div className="px-6 py-4 border-b border-[var(--color-grey-200)]">
               <h3 className="admin-section-title capitalize">{format(selectedDate, "EEEE d. MMMM", { locale: nb })}</h3>
               <span className="text-xs text-[var(--color-muted)]">{dayBookings.length} booking{dayBookings.length !== 1 ? "er" : ""}</span>
             </div>
@@ -163,7 +163,7 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
                 <AdminEmptyState icon={<Calendar className="w-6 h-6" />} title="Ingen bookinger denne dagen" description="Velg en annen dato eller opprett en ny booking." className="border-0" />
               ) : dayBookings.map((b) => <DayBookingRow key={b.id} booking={b} onDetail={setDrawerBooking} />)}
             </div>
-          </div>
+          </AdminCard>
         )}
 
         {viewMode === "list" && (

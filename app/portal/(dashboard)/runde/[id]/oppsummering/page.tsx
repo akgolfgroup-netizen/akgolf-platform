@@ -49,7 +49,7 @@ export default async function RoundSummaryPage({ params }: Props) {
     (round.scoreToPar ?? 0) < 0
       ? "text-[var(--color-success-text)]"
       : (round.scoreToPar ?? 0) === 0
-        ? "text-[var(--color-grey-900)]"
+        ? "text-[var(--color-portal-text)]"
         : "text-[var(--color-error)]";
 
   const sgSections = [
@@ -63,23 +63,23 @@ export default async function RoundSummaryPage({ params }: Props) {
     <div className="max-w-lg mx-auto space-y-6">
       <Link
         href="/portal/runde/ny"
-        className="flex items-center gap-2 text-sm text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
+        className="flex items-center gap-2 text-sm text-[var(--color-portal-secondary)] hover:text-[var(--color-portal-text)]"
       >
         <ArrowLeft className="h-4 w-4" />
         Ny runde
       </Link>
 
       {/* Score headline */}
-      <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6 text-center">
-        <div className="text-sm text-[var(--color-grey-500)]">{courseName}</div>
-        <div className={`text-6xl font-bold mt-2 ${scoreColor}`}>
+      <div className="bg-white rounded-2xl border border-[var(--color-portal-border)] p-6 text-center">
+        <div className="text-sm text-[var(--color-portal-secondary)]">{courseName}</div>
+        <div className={`text-6xl font-bold mt-2 tabular-nums tracking-tight ${scoreColor}`}>
           {round.totalScore ?? "-"}
         </div>
-        <div className="text-lg text-[var(--color-grey-600)] mt-1">
+        <div className="text-lg text-[var(--color-portal-secondary)] mt-1 tabular-nums">
           {(round.scoreToPar ?? 0) > 0 ? "+" : ""}
           {round.scoreToPar ?? 0} (par {coursePar})
         </div>
-        <div className="text-xs text-[var(--color-grey-400)] mt-2">
+        <div className="text-xs text-[var(--color-portal-muted)] mt-2">
           {new Date(round.date).toLocaleDateString("nb-NO", {
             weekday: "long",
             day: "numeric",
@@ -90,8 +90,8 @@ export default async function RoundSummaryPage({ params }: Props) {
       </div>
 
       {/* Score-fordeling */}
-      <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6">
-        <h2 className="text-sm font-semibold text-[var(--color-grey-700)] mb-4">
+      <div className="bg-white rounded-2xl border border-[var(--color-portal-border)] p-6">
+        <h2 className="text-sm font-semibold text-[var(--color-portal-text)] mb-4">
           Score-fordeling
         </h2>
         <div className="flex items-end justify-around h-28">
@@ -106,14 +106,14 @@ export default async function RoundSummaryPage({ params }: Props) {
             const height = Math.max(4, (item.count / maxCount) * 80);
             return (
               <div key={item.label} className="flex flex-col items-center gap-1">
-                <span className="text-xs font-bold text-[var(--color-grey-900)]">
+                <span className="text-xs font-bold text-[var(--color-portal-text)]">
                   {item.count}
                 </span>
                 <div
                   className="w-10 rounded-t-lg transition-all"
                   style={{ height: `${height}px`, backgroundColor: item.color }}
                 />
-                <span className="text-xs text-[var(--color-grey-500)]">
+                <span className="text-xs text-[var(--color-portal-secondary)]">
                   {item.label}
                 </span>
               </div>
@@ -124,31 +124,31 @@ export default async function RoundSummaryPage({ params }: Props) {
 
       {/* Statistikk */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="bg-white rounded-xl border border-[var(--color-grey-200)] p-4 text-center">
-          <div className="text-2xl font-bold text-[var(--color-grey-900)]">
+        <div className="bg-white rounded-xl border border-[var(--color-portal-border)] p-4 text-center">
+          <div className="text-2xl font-bold text-[var(--color-portal-text)] tabular-nums tracking-tight">
             {fairwayHoles.length > 0
               ? `${Math.round((fairwaysHit / fairwayHoles.length) * 100)}%`
               : "-"}
           </div>
-          <div className="text-xs text-[var(--color-grey-500)] mt-1">
+          <div className="text-xs text-[var(--color-portal-secondary)] mt-1">
             Fairway ({fairwaysHit}/{fairwayHoles.length})
           </div>
         </div>
-        <div className="bg-white rounded-xl border border-[var(--color-grey-200)] p-4 text-center">
-          <div className="text-2xl font-bold text-[var(--color-grey-900)]">
+        <div className="bg-white rounded-xl border border-[var(--color-portal-border)] p-4 text-center">
+          <div className="text-2xl font-bold text-[var(--color-portal-text)] tabular-nums tracking-tight">
             {holes.length > 0
               ? `${Math.round((girCount / holes.length) * 100)}%`
               : "-"}
           </div>
-          <div className="text-xs text-[var(--color-grey-500)] mt-1">
+          <div className="text-xs text-[var(--color-portal-secondary)] mt-1">
             GIR ({girCount}/{holes.length})
           </div>
         </div>
-        <div className="bg-white rounded-xl border border-[var(--color-grey-200)] p-4 text-center">
-          <div className="text-2xl font-bold text-[var(--color-grey-900)]">
+        <div className="bg-white rounded-xl border border-[var(--color-portal-border)] p-4 text-center">
+          <div className="text-2xl font-bold text-[var(--color-portal-text)] tabular-nums tracking-tight">
             {totalPutts}
           </div>
-          <div className="text-xs text-[var(--color-grey-500)] mt-1">
+          <div className="text-xs text-[var(--color-portal-secondary)] mt-1">
             Putts ({holes.length > 0 ? (totalPutts / holes.length).toFixed(1) : "-"}/hull)
           </div>
         </div>
@@ -156,11 +156,11 @@ export default async function RoundSummaryPage({ params }: Props) {
 
       {/* SG Breakdown */}
       {round.sgTotal !== null && (
-        <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6">
-          <h2 className="text-sm font-semibold text-[var(--color-grey-700)] mb-1">
+        <div className="bg-white rounded-2xl border border-[var(--color-portal-border)] p-6">
+          <h2 className="text-sm font-semibold text-[var(--color-portal-text)] mb-1">
             Strokes Gained
           </h2>
-          <div className="text-3xl font-bold text-[var(--color-grey-900)] mb-4">
+          <div className="text-3xl font-bold text-[var(--color-portal-text)] mb-4 tabular-nums tracking-tight">
             {(round.sgTotal ?? 0) > 0 ? "+" : ""}
             {(round.sgTotal ?? 0).toFixed(1)}
           </div>
@@ -176,7 +176,7 @@ export default async function RoundSummaryPage({ params }: Props) {
                     ) : (
                       <TrendingDown className="h-4 w-4 text-[var(--color-error)]" />
                     )}
-                    <span className="text-sm text-[var(--color-grey-700)]">
+                    <span className="text-sm text-[var(--color-portal-text)]">
                       {sg.label}
                     </span>
                   </div>
@@ -199,20 +199,20 @@ export default async function RoundSummaryPage({ params }: Props) {
 
       {/* DECADE Score */}
       {round.decadeScore !== null && (
-        <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6">
-          <h2 className="text-sm font-semibold text-[var(--color-grey-700)] mb-1">
+        <div className="bg-white rounded-2xl border border-[var(--color-portal-border)] p-6">
+          <h2 className="text-sm font-semibold text-[var(--color-portal-text)] mb-1">
             DECADE Score
           </h2>
-          <div className="text-3xl font-bold text-[var(--color-grey-900)]">
+          <div className="text-3xl font-bold text-[var(--color-portal-text)] tabular-nums tracking-tight">
             {round.decadeScore}/100
           </div>
-          <div className="w-full bg-[var(--color-grey-100)] rounded-full h-3 mt-3">
+          <div className="w-full bg-[var(--color-portal-hover)] rounded-full h-3 mt-3">
             <div
-              className="h-3 rounded-full bg-[var(--color-brand)] transition-all"
+              className="h-3 rounded-full bg-primary transition-all"
               style={{ width: `${round.decadeScore}%` }}
             />
           </div>
-          <p className="text-xs text-[var(--color-grey-500)] mt-2">
+          <p className="text-xs text-[var(--color-portal-secondary)] mt-2">
             Strategietterlevelse og beslutningskvalitet
           </p>
         </div>
@@ -222,13 +222,13 @@ export default async function RoundSummaryPage({ params }: Props) {
       <div className="flex gap-3">
         <Link
           href="/portal/statistikk"
-          className="flex-1 text-center py-3 rounded-xl border border-[var(--color-grey-200)] text-[var(--color-grey-700)] font-medium hover:bg-[var(--color-grey-100)] transition-colors"
+          className="flex-1 text-center py-3 rounded-[20px] border border-[var(--color-portal-border)] text-[var(--color-portal-text)] font-medium hover:bg-[var(--color-portal-hover)] transition-all duration-300"
         >
           Se statistikk
         </Link>
         <Link
           href="/portal/runde/ny"
-          className="flex-1 text-center py-3 rounded-xl bg-[var(--color-brand)] text-white font-medium hover:bg-[var(--color-brand)]/90 transition-colors"
+          className="flex-1 text-center py-3 rounded-[20px] bg-primary text-white font-medium hover:opacity-85 active:scale-[0.98] transition-all duration-300"
         >
           Ny runde
         </Link>

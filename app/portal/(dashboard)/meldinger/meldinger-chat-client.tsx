@@ -106,10 +106,10 @@ export function MeldingerChatClient({
 
   if (conversations.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full text-[var(--color-grey-500)]">
+      <div className="flex items-center justify-center h-full text-portal-secondary">
         <div className="text-center">
           <Inbox className="w-12 h-12 mx-auto mb-3 opacity-40" />
-          <p className="text-lg font-medium mb-1 text-[var(--color-grey-900)]">
+          <p className="text-lg font-medium mb-1 text-portal-text">
             Ingen meldinger ennå
           </p>
           <p className="text-sm">
@@ -121,16 +121,16 @@ export function MeldingerChatClient({
   }
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] bg-[var(--color-grey-50)] rounded-2xl border border-[var(--color-grey-200)] overflow-hidden">
+    <div className="flex h-[calc(100vh-8rem)] bg-portal-bg rounded-2xl border border-portal-border overflow-hidden">
       {/* Samtaleliste */}
       <div
         className={cn(
-          "w-full sm:w-80 border-r border-[var(--color-grey-200)] bg-white flex flex-col",
+          "w-full sm:w-80 border-r border-portal-border bg-white flex flex-col",
           selectedId && "hidden sm:flex"
         )}
       >
-        <div className="p-4 border-b border-[var(--color-grey-200)]">
-          <h2 className="text-sm font-semibold text-[var(--color-grey-900)]">
+        <div className="p-4 border-b border-portal-border">
+          <h2 className="text-sm font-semibold text-portal-text">
             Meldinger
           </h2>
         </div>
@@ -140,10 +140,10 @@ export function MeldingerChatClient({
               key={conv.id}
               onClick={() => setSelectedId(conv.id)}
               className={cn(
-                "w-full text-left px-4 py-3 border-b border-[var(--color-grey-100)] transition-colors cursor-pointer",
+                "w-full text-left px-4 py-3 border-b border-black/4 transition-colors cursor-pointer",
                 selectedId === conv.id
-                  ? "bg-[var(--color-grey-100)]"
-                  : "hover:bg-[var(--color-grey-50)]"
+                  ? "bg-portal-hover"
+                  : "hover:bg-portal-bg"
               )}
             >
               <div className="flex items-center justify-between mb-1">
@@ -151,14 +151,14 @@ export function MeldingerChatClient({
                   className={cn(
                     "text-sm",
                     conv.unreadCount > 0
-                      ? "font-semibold text-[var(--color-grey-900)]"
-                      : "font-medium text-[var(--color-grey-700)]"
+                      ? "font-semibold text-portal-text"
+                      : "font-medium text-portal-text"
                   )}
                 >
                   {conv.participantName}
                 </span>
                 {conv.lastMessageAt && (
-                  <span className="text-[11px] text-[var(--color-grey-400)]">
+                  <span className="text-[11px] text-portal-muted">
                     {formatDistanceToNow(new Date(conv.lastMessageAt), {
                       addSuffix: true,
                       locale: nb,
@@ -167,11 +167,11 @@ export function MeldingerChatClient({
                 )}
               </div>
               <div className="flex items-center gap-2">
-                <p className="text-xs text-[var(--color-grey-500)] truncate flex-1">
+                <p className="text-xs text-portal-secondary truncate flex-1">
                   {conv.lastMessage ?? "Ingen meldinger ennå"}
                 </p>
                 {conv.unreadCount > 0 && (
-                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[var(--color-primary)] text-white text-[10px] font-bold flex items-center justify-center">
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
                     {conv.unreadCount}
                   </span>
                 )}
@@ -191,15 +191,15 @@ export function MeldingerChatClient({
         {selectedId && selectedConversation ? (
           <>
             {/* Header */}
-            <div className="flex items-center gap-3 px-4 py-3 border-b border-[var(--color-grey-200)]">
+            <div className="flex items-center gap-3 px-4 py-3 border-b border-portal-border">
               <button
                 onClick={() => setSelectedId(null)}
-                className="sm:hidden p-1 rounded-lg hover:bg-[var(--color-grey-100)] cursor-pointer"
+                className="sm:hidden p-1 rounded-lg hover:bg-portal-hover cursor-pointer"
               >
-                <ArrowLeft className="w-5 h-5 text-[var(--color-grey-600)]" />
+                <ArrowLeft className="w-5 h-5 text-portal-secondary" />
               </button>
-              <div className="w-8 h-8 rounded-full bg-[var(--color-grey-200)] flex items-center justify-center">
-                <span className="text-xs font-semibold text-[var(--color-grey-600)]">
+              <div className="w-8 h-8 rounded-full bg-portal-hover flex items-center justify-center">
+                <span className="text-xs font-semibold text-portal-secondary">
                   {selectedConversation.participantName
                     .split(" ")
                     .map((n) => n[0])
@@ -208,7 +208,7 @@ export function MeldingerChatClient({
                     .slice(0, 2)}
                 </span>
               </div>
-              <span className="text-sm font-semibold text-[var(--color-grey-900)]">
+              <span className="text-sm font-semibold text-portal-text">
                 {selectedConversation.participantName}
               </span>
             </div>
@@ -216,7 +216,7 @@ export function MeldingerChatClient({
             {/* Meldinger */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {isPending && messages.length === 0 ? (
-                <div className="flex items-center justify-center h-full text-[var(--color-grey-400)]">
+                <div className="flex items-center justify-center h-full text-portal-muted">
                   <p className="text-sm">Laster meldinger...</p>
                 </div>
               ) : (
@@ -234,8 +234,8 @@ export function MeldingerChatClient({
                         className={cn(
                           "max-w-[75%] rounded-2xl px-4 py-2.5",
                           isMe
-                            ? "bg-[var(--color-primary)] text-white"
-                            : "bg-[var(--color-grey-100)] text-[var(--color-grey-900)]"
+                            ? "bg-primary text-white"
+                            : "bg-portal-hover text-portal-text"
                         )}
                       >
                         <p className="text-sm whitespace-pre-wrap">
@@ -246,7 +246,7 @@ export function MeldingerChatClient({
                             "text-[10px] mt-1",
                             isMe
                               ? "text-white/60"
-                              : "text-[var(--color-grey-400)]"
+                              : "text-portal-muted"
                           )}
                         >
                           {new Date(msg.createdAt).toLocaleTimeString("nb-NO", {
@@ -263,7 +263,7 @@ export function MeldingerChatClient({
             </div>
 
             {/* Skriv melding */}
-            <div className="p-3 border-t border-[var(--color-grey-200)]">
+            <div className="p-3 border-t border-portal-border">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -276,13 +276,13 @@ export function MeldingerChatClient({
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Skriv en melding..."
-                  className="flex-1 px-4 py-2.5 text-sm rounded-xl border border-[var(--color-grey-200)] bg-[var(--color-grey-50)] text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+                  className="flex-1 px-4 py-2.5 text-sm rounded-[20px] border border-portal-border bg-portal-bg text-portal-text placeholder:text-portal-muted focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   disabled={isSending}
                 />
                 <button
                   type="submit"
                   disabled={!newMessage.trim() || isSending}
-                  className="p-2.5 rounded-xl bg-[var(--color-primary)] text-white disabled:opacity-40 hover:opacity-90 transition-opacity cursor-pointer"
+                  className="p-2.5 rounded-[20px] bg-primary text-white disabled:opacity-40 hover:opacity-90 transition-opacity cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                 </button>
@@ -290,7 +290,7 @@ export function MeldingerChatClient({
             </div>
           </>
         ) : (
-          <div className="flex items-center justify-center h-full text-[var(--color-grey-500)]">
+          <div className="flex items-center justify-center h-full text-portal-secondary">
             <div className="text-center">
               <MessageSquare className="w-10 h-10 mx-auto mb-2 opacity-30" />
               <p className="text-sm">Velg en samtale for å se meldinger</p>

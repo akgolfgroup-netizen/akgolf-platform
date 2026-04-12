@@ -141,7 +141,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
           whileTap={{ scale: 0.97 }}
           onClick={handleQuickLog}
           disabled={isPending}
-          className="h-11 px-6 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 text-[var(--color-text)] text-[12px] font-semibold hover:bg-white transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-60"
+          className="h-11 px-6 rounded-[20px] bg-white/70 backdrop-blur-xl border border-white/80 text-[var(--color-portal-text)] text-[12px] font-semibold hover:bg-white transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-60"
         >
           {isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RotateCcw className="w-3.5 h-3.5" />}
           {isPending ? "Logger\u2026" : "Gjenta siste"}
@@ -151,7 +151,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.97 }}
         onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
-        className="relative h-11 px-6 rounded-full bg-[var(--color-accent-cta)] text-[var(--color-grey-900)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group"
+        className="relative h-11 px-6 rounded-[20px] bg-accent-cta text-[var(--color-portal-text)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group"
       >
         <Shimmer />
         <Plus className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
@@ -184,13 +184,13 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-[var(--color-primary)]/10">
               <NotebookPen className="w-8 h-8 text-[var(--color-primary)]" strokeWidth={1.75} />
             </div>
-            <p className="text-[20px] font-semibold text-[var(--color-grey-900)] mb-2">Din treningsdagbok er tom</p>
-            <p className="text-[13px] text-[var(--color-muted)] mb-6 max-w-md leading-relaxed">
+            <p className="text-[20px] font-semibold text-[var(--color-portal-text)] mb-2">Din treningsdagbok er tom</p>
+            <p className="text-[13px] text-[var(--color-portal-muted)] mb-6 max-w-md leading-relaxed">
               Logg din forste treningsokt for a komme i gang. Alt du logger blir automatisk en del av fremdriften din.
             </p>
             <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}
               onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
-              className="relative h-11 px-6 rounded-full bg-[var(--color-accent-cta)] text-[var(--color-grey-900)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group">
+              className="relative h-11 px-6 rounded-[20px] bg-accent-cta text-[var(--color-portal-text)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group">
               <Shimmer />
               <Plus className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
               <span className="relative z-10">Logg ny okt</span>
@@ -223,7 +223,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
               {filters.map((filter) => (
                 <button key={filter} onClick={() => setActiveFilter(filter)}
                   className={cn("px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
-                    activeFilter === filter ? "bg-[var(--color-grey-900)] text-white shadow-sm" : "text-[var(--color-muted)] hover:text-[var(--color-grey-900)]")}>
+                    activeFilter === filter ? "bg-[var(--color-portal-text)] text-white shadow-sm" : "text-[var(--color-portal-muted)] hover:text-[var(--color-portal-text)]")}>
                   {filter}
                 </button>
               ))}
@@ -231,12 +231,12 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
             <div className="flex gap-1 p-1 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 shadow-sm">
               <button onClick={() => setViewMode("list")}
                 className={cn("inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
-                  viewMode === "list" ? "bg-[var(--color-grey-900)] text-white shadow-sm" : "text-[var(--color-muted)] hover:text-[var(--color-grey-900)]")}>
+                  viewMode === "list" ? "bg-[var(--color-portal-text)] text-white shadow-sm" : "text-[var(--color-portal-muted)] hover:text-[var(--color-portal-text)]")}>
                 <List className="w-3.5 h-3.5" /> Liste
               </button>
               <button onClick={() => setViewMode("calendar")}
                 className={cn("inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
-                  viewMode === "calendar" ? "bg-[var(--color-grey-900)] text-white shadow-sm" : "text-[var(--color-muted)] hover:text-[var(--color-grey-900)]")}>
+                  viewMode === "calendar" ? "bg-[var(--color-portal-text)] text-white shadow-sm" : "text-[var(--color-portal-muted)] hover:text-[var(--color-portal-text)]")}>
                 <Calendar className="w-3.5 h-3.5" /> Kalender
               </button>
             </div>
@@ -258,20 +258,20 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
                     onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { setEditingLog(log); setLogModalOpen(true); } }}>
                     <div className="flex items-start justify-between mb-3">
                       <div className="min-w-0">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-muted)] mb-1">{formatLogDate(log.date)}</p>
-                        <p className="text-[16px] font-semibold text-[var(--color-grey-900)] truncate">{title}</p>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-portal-muted)] mb-1">{formatLogDate(log.date)}</p>
+                        <p className="text-[16px] font-semibold text-[var(--color-portal-text)] truncate">{title}</p>
                       </div>
                       <span className={cn("px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.1em] shrink-0",
                         isCoaching ? "bg-[var(--color-ai)]/10 text-[var(--color-ai)] border border-[var(--color-ai)]/20" : "bg-[var(--color-success)]/10 text-[var(--color-success)] border border-[var(--color-success)]/20")}>
                         {isCoaching ? "Coaching" : "Fullfort"}
                       </span>
                     </div>
-                    <div className="flex flex-wrap gap-5 mb-3 text-[11px] text-[var(--color-muted)]">
+                    <div className="flex flex-wrap gap-5 mb-3 text-[11px] text-[var(--color-portal-muted)]">
                       {log.durationMinutes && (<span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" />{log.durationMinutes} min</span>)}
                       <span className="flex items-center gap-1.5"><Target className="w-3.5 h-3.5" />{area}</span>
                       {log.rating != null && (<span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5" />{log.rating}/10</span>)}
                     </div>
-                    {log.notes && <p className="text-[13px] text-[var(--color-text)] leading-relaxed line-clamp-2">{log.notes}</p>}
+                    {log.notes && <p className="text-[13px] text-[var(--color-portal-secondary)] leading-relaxed line-clamp-2">{log.notes}</p>}
                   </motion.div>
                 );
               })}

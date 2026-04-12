@@ -249,7 +249,7 @@ export function AdminChatClient({
                       {getInitials(selectedConversation.participantName)}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                      <h3 className="admin-section-title">
                         {selectedConversation.participantName}
                       </h3>
                     </div>

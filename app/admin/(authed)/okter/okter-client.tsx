@@ -201,7 +201,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
         ) : (
           <AdminCard className="p-0 overflow-hidden">
             <div className="px-4 py-3 border-b border-[var(--color-grey-200)] flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+              <h3 className="admin-section-title">
                 Økter
               </h3>
               <span className="text-xs text-[var(--color-muted)]">
@@ -277,7 +277,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
         {selectedSessionData && (
           <AdminCard>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+              <h3 className="admin-section-title">
                 Notater
               </h3>
               <button

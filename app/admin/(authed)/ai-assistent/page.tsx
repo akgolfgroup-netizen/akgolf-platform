@@ -17,9 +17,9 @@ import {
   Clock,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminCard,
-  AdminPageHeader,
 } from "@/components/portal/mission-control/ui";
 
 const suggestedQuestions = [
@@ -63,6 +63,7 @@ const WELCOME_MESSAGE: Message = {
 };
 
 export default function AIAssistentPage() {
+  const { toggle } = useMCSidebar();
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
@@ -172,12 +173,14 @@ export default function AIAssistentPage() {
   }, []);
 
   return (
-    <div className="p-6 md:p-8 h-screen flex flex-col">
-      <AdminPageHeader
+    <>
+      <MCTopbar
         title="AI-assistent"
         subtitle="Still spørsmål om data, elever og analytikk"
+        onMenuClick={toggle}
       />
 
+      <div className="p-6 flex flex-col" style={{ height: "calc(100vh - 56px)" }}>
       <AdminCard className="flex-1 flex flex-col min-h-0 !p-0 overflow-hidden">
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
@@ -323,6 +326,7 @@ export default function AIAssistentPage() {
           </p>
         </div>
       </AdminCard>
-    </div>
+      </div>
+    </>
   );
 }

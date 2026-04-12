@@ -59,37 +59,37 @@ export function TesterClient({ tests }: Props) {
             <button
               key={test.testNumber}
               onClick={() => loadLeaderboard(test.testNumber)}
-              className="w-full text-left bg-white rounded-xl border border-[var(--color-grey-200)] p-4 hover:border-[var(--color-brand)] transition-all"
+              className="w-full text-left bg-white rounded-xl border border-portal-border p-4 hover:border-black/8 transition-all"
             >
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-[var(--color-grey-400)]">
+                    <span className="text-xs font-mono text-portal-muted tabular-nums">
                       #{test.testNumber}
                     </span>
-                    <span className="font-semibold text-[var(--color-grey-900)]">
+                    <span className="font-semibold text-portal-text">
                       {test.name}
                     </span>
                   </div>
-                  <p className="text-xs text-[var(--color-grey-500)] mt-1">
+                  <p className="text-xs text-portal-secondary mt-1">
                     {test.description}
                   </p>
                 </div>
                 <div className="text-right">
                   {test.userBest ? (
                     <div>
-                      <div className="text-lg font-bold text-[var(--color-grey-900)]">
+                      <div className="text-lg font-bold text-portal-text tabular-nums">
                         {test.userBest.value}
-                        <span className="text-xs text-[var(--color-grey-400)] ml-1">
+                        <span className="text-xs text-portal-muted ml-1">
                           {test.unit}
                         </span>
                       </div>
-                      <div className={`text-xs ${test.userBest.passed ? "text-[var(--color-success-text)]" : "text-[var(--color-grey-400)]"}`}>
+                      <div className={`text-xs ${test.userBest.passed ? "text-success-text" : "text-portal-muted"}`}>
                         {test.userBest.passed ? "Bestatt" : "Ikke bestatt"}
                       </div>
                     </div>
                   ) : (
-                    <span className="text-sm text-[var(--color-grey-300)]">
+                    <span className="text-sm text-portal-muted">
                       Ingen resultat
                     </span>
                   )}
@@ -99,7 +99,7 @@ export function TesterClient({ tests }: Props) {
           ))}
 
           {tests.length === 0 && (
-            <p className="text-center text-sm text-[var(--color-grey-400)] py-8">
+            <p className="text-center text-sm text-portal-muted py-8">
               Ingen tester tilgjengelig
             </p>
           )}
@@ -109,33 +109,33 @@ export function TesterClient({ tests }: Props) {
         <div className="space-y-4">
           <button
             onClick={() => setSelectedTest(null)}
-            className="text-sm text-[var(--color-brand)] hover:underline"
+            className="text-sm text-primary hover:underline"
           >
             Tilbake til alle tester
           </button>
 
-          <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6">
+          <div className="bg-white rounded-xl border border-portal-border p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="text-lg font-bold text-[var(--color-grey-900)]">
+                <h2 className="text-lg font-bold text-portal-text">
                   {selectedTestData?.name}
                 </h2>
-                <p className="text-xs text-[var(--color-grey-500)]">
+                <p className="text-xs text-portal-secondary">
                   {selectedTestData?.description}
                 </p>
               </div>
               {userRank && (
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-[var(--color-brand)]">
+                  <div className="text-2xl font-bold text-primary tabular-nums">
                     #{userRank}
                   </div>
-                  <div className="text-xs text-[var(--color-grey-400)]">Din plass</div>
+                  <div className="text-xs text-portal-muted">Din plass</div>
                 </div>
               )}
             </div>
 
             {/* Periode-filter */}
-            <div className="flex gap-1 bg-[var(--color-grey-100)] rounded-lg p-0.5 mb-4">
+            <div className="flex gap-1.5 rounded-[10px] bg-portal-hover p-[3px] mb-4">
               {[
                 { id: "all" as const, label: "Alle" },
                 { id: "month" as const, label: "Denne maned" },
@@ -144,10 +144,10 @@ export function TesterClient({ tests }: Props) {
                 <button
                   key={p.id}
                   onClick={() => handlePeriodChange(p.id)}
-                  className={`flex-1 py-1.5 rounded-md text-xs font-medium transition-all ${
+                  className={`flex-1 py-[7px] rounded-[7px] text-[13px] font-medium transition-all ${
                     period === p.id
-                      ? "bg-white text-[var(--color-grey-900)] shadow-sm"
-                      : "text-[var(--color-grey-500)]"
+                      ? "bg-primary text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
+                      : "text-portal-muted hover:text-portal-secondary"
                   }`}
                 >
                   {p.label}
@@ -158,7 +158,7 @@ export function TesterClient({ tests }: Props) {
             {/* Leaderboard */}
             {isPending ? (
               <div className="flex justify-center py-8">
-                <div className="h-6 w-6 border-2 border-[var(--color-grey-300)] border-t-[var(--color-brand)] rounded-full animate-spin" />
+                <div className="h-6 w-6 border-2 border-portal-muted border-t-primary rounded-full animate-spin" />
               </div>
             ) : (
               <div className="space-y-1">
@@ -166,19 +166,19 @@ export function TesterClient({ tests }: Props) {
                   <div
                     key={entry.userId}
                     className={`flex items-center justify-between py-3 px-3 rounded-lg ${
-                      entry.isCurrentUser ? "bg-[var(--color-brand)]/5" : ""
+                      entry.isCurrentUser ? "bg-primary/5" : ""
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <span
-                        className={`w-8 text-center font-bold ${
+                        className={`w-8 text-center font-bold tabular-nums ${
                           entry.rank === 1
-                            ? "text-yellow-500"
+                            ? "text-warning"
                             : entry.rank === 2
-                              ? "text-[var(--color-grey-400)]"
+                              ? "text-portal-muted"
                               : entry.rank === 3
-                                ? "text-amber-600"
-                                : "text-[var(--color-grey-300)]"
+                                ? "text-warning"
+                                : "text-portal-muted"
                         }`}
                       >
                         {entry.rank <= 3 ? (
@@ -190,19 +190,19 @@ export function TesterClient({ tests }: Props) {
                       <span
                         className={`text-sm ${
                           entry.isCurrentUser
-                            ? "font-bold text-[var(--color-grey-900)]"
-                            : "text-[var(--color-grey-700)]"
+                            ? "font-bold text-portal-text"
+                            : "text-portal-text"
                         }`}
                       >
                         {entry.name}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-[var(--color-grey-900)] tabular-nums">
+                      <span className="text-sm font-semibold text-portal-text tabular-nums">
                         {entry.bestValue} {selectedTestData?.unit}
                       </span>
                       {entry.passed && (
-                        <span className="text-xs text-[var(--color-success-text)]">
+                        <span className="text-xs text-success-text">
                           Bestatt
                         </span>
                       )}
@@ -210,7 +210,7 @@ export function TesterClient({ tests }: Props) {
                   </div>
                 ))}
                 {leaderboard.length === 0 && (
-                  <p className="text-center text-sm text-[var(--color-grey-400)] py-8">
+                  <p className="text-center text-sm text-portal-muted py-8">
                     Ingen resultater for denne perioden
                   </p>
                 )}

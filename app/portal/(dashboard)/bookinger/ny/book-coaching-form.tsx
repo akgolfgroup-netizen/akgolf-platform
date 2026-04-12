@@ -6,6 +6,7 @@ import { format, addDays, startOfDay } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Clock, User, Calendar, ChevronRight, Loader2, CreditCard, ArrowLeft, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { PremiumCard } from "@/components/portal/dashboard";
 
 interface ServiceType {
   id: string;
@@ -148,22 +149,22 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   <motion.div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-[background-color,border-color,color] duration-300 ${
                       isActive
-                        ? "bg-[var(--color-grey-900)] text-white border-none"
+                        ? "bg-portal-text text-white border-none"
                         : isCompleted
-                          ? "bg-[var(--color-grey-200)] text-white border-2 border-[var(--color-grey-900)]"
-                          : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)] border-2 border-[var(--color-grey-200)]"
+                          ? "bg-portal-border text-white border-2 border-portal-text"
+                          : "bg-portal-hover text-portal-secondary border-2 border-portal-border"
                     }`}
                     whileHover={!isActive ? { scale: 1.05 } : {}}
                   >
                     {isCompleted && s !== step ? (
-                      <Check className={`w-5 h-5 ${isActive ? "text-white" : "text-[var(--color-grey-900)]"}`} />
+                      <Check className={`w-5 h-5 ${isActive ? "text-white" : "text-portal-text"}`} />
                     ) : (
                       index + 1
                     )}
                   </motion.div>
                   <span
                     className={`text-xs mt-2 font-medium ${
-                      isActive ? "text-[var(--color-grey-900)]" : "text-[var(--color-grey-500)]"
+                      isActive ? "text-portal-text" : "text-portal-secondary"
                     }`}
                   >
                     {stepLabels[s]}
@@ -172,7 +173,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                 {index < arr.length - 1 && (
                   <div
                     className={`w-16 h-0.5 mx-2 ${
-                      isCompleted ? "bg-[var(--color-grey-900)]" : "bg-[var(--color-grey-100)]"
+                      isCompleted ? "bg-portal-text" : "bg-portal-hover"
                     }`}
                   />
                 )}
@@ -193,10 +194,10 @@ export function BookCoachingForm({ serviceTypes }: Props) {
             transition={{ duration: 0.3 }}
           >
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-semibold mb-3 text-[var(--color-grey-900)]">
+              <h1 className="text-3xl font-semibold mb-3 text-portal-text">
                 Velg din treningsform
               </h1>
-              <p className="text-[var(--color-grey-500)]">
+              <p className="text-portal-secondary">
                 Alle våre coaching-timer inkluderer TrackMan-analyse og personlig tilpasning
               </p>
             </div>
@@ -213,7 +214,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="rounded-2xl p-6 transition-[border-color] duration-300 border bg-white border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]">
+                  <div className="rounded-xl p-6 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-portal-card border-portal-border hover:border-black/8 hover:-translate-y-px hover:shadow-card-hover">
                     <div className="flex items-start justify-between gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
@@ -221,31 +222,31 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                             className="w-4 h-4 rounded-full"
                             style={{ backgroundColor: svc.color ?? "#0A1F18" }}
                           />
-                          <h3 className="text-lg font-semibold transition-colors text-[var(--color-grey-900)]">
+                          <h3 className="text-lg font-semibold transition-colors text-portal-text">
                             {svc.name}
                           </h3>
                         </div>
                         {svc.description && (
-                          <p className="text-sm leading-relaxed mb-4 text-[var(--color-grey-500)]">
+                          <p className="text-sm leading-relaxed mb-4 text-portal-secondary">
                             {svc.description}
                           </p>
                         )}
                         <div className="flex items-center gap-6">
-                          <span className="flex items-center gap-2 text-sm text-[var(--color-grey-500)]">
-                            <Clock className="w-4 h-4 text-[var(--color-grey-900)]" />
+                          <span className="flex items-center gap-2 text-sm text-portal-secondary tabular-nums">
+                            <Clock className="w-4 h-4 text-portal-text" />
                             {svc.duration} minutter
                           </span>
-                          <span className="flex items-center gap-2 text-sm text-[var(--color-grey-500)]">
-                            <User className="w-4 h-4 text-[var(--color-grey-900)]" />
+                          <span className="flex items-center gap-2 text-sm text-portal-secondary">
+                            <User className="w-4 h-4 text-portal-text" />
                             {svc.maxStudents === 1 ? "Individuell" : `Gruppe (max ${svc.maxStudents})`}
                           </span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-2xl font-semibold text-[var(--color-grey-900)]">
+                        <span className="text-2xl font-semibold text-portal-text tabular-nums">
                           {formatPrice(svc.price)}
                         </span>
-                        <ChevronRight className="w-5 h-5 mt-2 ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-[var(--color-grey-900)]" />
+                        <ChevronRight className="w-5 h-5 mt-2 ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-portal-text" />
                       </div>
                     </div>
                   </div>
@@ -266,16 +267,16 @@ export function BookCoachingForm({ serviceTypes }: Props) {
           >
             <button
               onClick={() => { setStep("service"); setSelectedService(null); }}
-              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-[var(--color-grey-500)]"
+              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-portal-secondary"
             >
               <ArrowLeft className="w-4 h-4" />
               Tilbake til tjenester
             </button>
 
-            <h1 className="text-3xl font-semibold mb-2 text-[var(--color-grey-900)]">
+            <h1 className="text-3xl font-semibold mb-2 text-portal-text">
               Velg instruktør
             </h1>
-            <p className="mb-8 text-[var(--color-grey-500)]">
+            <p className="mb-8 text-portal-secondary">
               {selectedService.name}
             </p>
 
@@ -290,27 +291,27 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   className="w-full text-left group"
                   whileHover={{ x: 4 }}
                 >
-                  <div className="rounded-2xl p-5 flex items-center gap-5 transition-[border-color] duration-300 border bg-white border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]">
+                  <div className="rounded-xl p-5 flex items-center gap-5 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-portal-card border-portal-border hover:border-black/8 hover:shadow-card-hover">
                     {inst.user.image ? (
                       <img
                         src={inst.user.image}
                         alt=""
-                        className="w-16 h-16 rounded-2xl object-cover border-2 border-[var(--color-grey-200)]"
+                        className="w-16 h-16 rounded-xl object-cover border-2 border-portal-border"
                       />
                     ) : (
-                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold bg-gradient-to-br from-[var(--color-grey-600)] to-[var(--color-grey-900)] text-white">
+                      <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl font-bold bg-gradient-to-br from-portal-secondary to-portal-text text-white">
                         {inst.user.name?.charAt(0) ?? "?"}
                       </div>
                     )}
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold mb-1 text-[var(--color-grey-900)]">
+                      <h3 className="text-lg font-semibold mb-1 text-portal-text">
                         {inst.user.name}
                       </h3>
                       {inst.title && (
-                        <p className="text-[var(--color-grey-500)]">{inst.title}</p>
+                        <p className="text-portal-secondary">{inst.title}</p>
                       )}
                     </div>
-                    <ChevronRight className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--color-grey-900)]" />
+                    <ChevronRight className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity text-portal-text" />
                   </div>
                 </motion.button>
               ))}
@@ -338,22 +339,22 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   setSelectedInstructor(null);
                 }
               }}
-              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-[var(--color-grey-500)]"
+              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-portal-secondary"
             >
               <ArrowLeft className="w-4 h-4" />
               Tilbake
             </button>
 
-            <h1 className="text-3xl font-semibold mb-2 text-[var(--color-grey-900)]">
+            <h1 className="text-3xl font-semibold mb-2 text-portal-text">
               Velg dato og tid
             </h1>
-            <p className="mb-8 text-[var(--color-grey-500)]">
+            <p className="mb-8 text-portal-secondary">
               {selectedService.name} med {selectedInstructor.user.name}
             </p>
 
             {/* Date Pills */}
             <div className="mb-8">
-              <h3 className="text-sm font-semibold mb-4 uppercase tracking-wide text-[var(--color-grey-400)]">
+              <h3 className="text-[11px] font-semibold mb-4 uppercase tracking-[0.08em] text-portal-muted">
                 Velg dato
               </h3>
               <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
@@ -366,22 +367,22 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                       key={date.toISOString()}
                       onClick={() => !isWeekend && handleSelectDate(date)}
                       disabled={isWeekend}
-                      className={`flex-shrink-0 rounded-2xl p-4 text-center min-w-[80px] transition-[background-color,border-color] duration-200 ${
+                      className={`flex-shrink-0 rounded-xl p-4 text-center min-w-[80px] transition-all duration-200 ${
                         isSelected
-                          ? "bg-[var(--color-grey-900)] border-none"
-                          : "bg-white border border-[var(--color-grey-200)]"
+                          ? "bg-portal-text border-none shadow-card"
+                          : "bg-portal-card border border-portal-border hover:border-black/8"
                       }`}
                       style={{ opacity: isWeekend ? 0.4 : 1 }}
                       whileHover={!isWeekend ? { scale: 1.02 } : {}}
                       whileTap={!isWeekend ? { scale: 0.98 } : {}}
                     >
-                      <p className={`text-xs uppercase tracking-wide mb-1 ${isSelected ? "text-white" : "text-[var(--color-grey-400)]"}`}>
+                      <p className={`text-xs uppercase tracking-wide mb-1 ${isSelected ? "text-white" : "text-portal-muted"}`}>
                         {format(date, "EEE", { locale: nb })}
                       </p>
-                      <p className={`text-2xl font-semibold mb-1 ${isSelected ? "text-white" : "text-[var(--color-grey-900)]"}`}>
+                      <p className={`text-2xl font-semibold mb-1 tabular-nums ${isSelected ? "text-white" : "text-portal-text"}`}>
                         {format(date, "d")}
                       </p>
-                      <p className={`text-xs ${isSelected ? "text-white/80" : "text-[var(--color-grey-500)]"}`}>
+                      <p className={`text-xs ${isSelected ? "text-white/80" : "text-portal-secondary"}`}>
                         {format(date, "MMM", { locale: nb })}
                       </p>
                     </motion.button>
@@ -396,22 +397,22 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h3 className="text-sm font-semibold mb-4 uppercase tracking-wide text-[var(--color-grey-400)]">
+                <h3 className="text-[11px] font-semibold mb-4 uppercase tracking-[0.08em] text-portal-muted">
                   Ledige tider — {format(selectedDate, "EEEE d. MMMM", { locale: nb })}
                 </h3>
 
                 {loading ? (
-                  <div className="flex items-center gap-3 py-12 text-[var(--color-grey-500)]">
+                  <div className="flex items-center gap-3 py-12 text-portal-secondary">
                     <Loader2 className="w-5 h-5 animate-spin" />
                     <span>Henter tilgjengelige tider...</span>
                   </div>
                 ) : availableSlots.length === 0 ? (
-                  <div className="rounded-2xl p-8 text-center border bg-[var(--color-grey-100)] border-[var(--color-grey-200)]">
-                    <Calendar className="w-12 h-12 mx-auto mb-4 text-[var(--color-grey-400)]" />
-                    <p className="text-[var(--color-grey-500)]">
+                  <div className="rounded-xl p-8 text-center border bg-portal-hover border-portal-border">
+                    <Calendar className="w-12 h-12 mx-auto mb-4 text-portal-muted" />
+                    <p className="text-portal-secondary">
                       Ingen ledige tider denne dagen.
                     </p>
-                    <p className="text-sm mt-1 text-[var(--color-grey-400)]">
+                    <p className="text-sm mt-1 text-portal-muted">
                       Prøv en annen dato.
                     </p>
                   </div>
@@ -428,7 +429,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                             setSelectedSlot(slot);
                             setStep("confirm");
                           }}
-                          className="rounded-xl py-4 text-sm font-medium transition-[border-color] duration-200 border bg-white border-[var(--color-grey-200)] text-[var(--color-grey-900)] hover:border-[var(--color-grey-900)]"
+                          className="rounded-[20px] py-4 text-sm font-medium transition-all duration-200 border bg-portal-card border-portal-border text-portal-text hover:border-portal-text tabular-nums"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
@@ -454,28 +455,28 @@ export function BookCoachingForm({ serviceTypes }: Props) {
           >
             <button
               onClick={() => setStep("date")}
-              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-[var(--color-grey-500)]"
+              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-portal-secondary"
             >
               <ArrowLeft className="w-4 h-4" />
               Tilbake til tidspunkt
             </button>
 
-            <h1 className="text-3xl font-semibold mb-2 text-[var(--color-grey-900)]">
+            <h1 className="text-3xl font-semibold mb-2 text-portal-text">
               Bekreft din booking
             </h1>
-            <p className="mb-8 text-[var(--color-grey-500)]">
+            <p className="mb-8 text-portal-secondary">
               Gjennomgå detaljene før betaling
             </p>
 
             {/* Summary Card */}
-            <div className="rounded-3xl p-8 mb-8 border bg-white border-[var(--color-grey-200)]">
+            <PremiumCard className="p-8 mb-8" noHover>
               {/* Header */}
-              <div className="flex items-center gap-4 pb-6 mb-6 border-b border-[var(--color-grey-200)]">
+              <div className="flex items-center gap-4 pb-6 mb-6 border-b border-portal-border">
                 <div
                   className="w-4 h-4 rounded-full"
                   style={{ backgroundColor: selectedService.color ?? "#0A1F18" }}
                 />
-                <h3 className="text-xl font-semibold text-[var(--color-grey-900)]">
+                <h3 className="text-xl font-semibold text-portal-text">
                   {selectedService.name}
                 </h3>
               </div>
@@ -483,57 +484,57 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               {/* Details */}
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[var(--color-grey-100)]">
-                    <User className="w-5 h-5 text-[var(--color-grey-900)]" />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-portal-hover">
+                    <User className="w-5 h-5 text-portal-text" />
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wide text-[var(--color-grey-400)]">Instruktør</p>
-                    <p className="font-medium text-[var(--color-grey-900)]">{selectedInstructor.user.name}</p>
+                    <p className="text-[11px] uppercase tracking-[0.08em] text-portal-muted">Instruktør</p>
+                    <p className="font-medium text-portal-text">{selectedInstructor.user.name}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[var(--color-grey-100)]">
-                    <Calendar className="w-5 h-5 text-[var(--color-grey-900)]" />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-portal-hover">
+                    <Calendar className="w-5 h-5 text-portal-text" />
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wide text-[var(--color-grey-400)]">Dato og tid</p>
-                    <p className="font-medium text-[var(--color-grey-900)]">
+                    <p className="text-[11px] uppercase tracking-[0.08em] text-portal-muted">Dato og tid</p>
+                    <p className="font-medium text-portal-text tabular-nums">
                       {format(new Date(selectedSlot), "EEEE d. MMMM yyyy 'kl.' HH:mm", { locale: nb })}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[var(--color-grey-100)]">
-                    <Clock className="w-5 h-5 text-[var(--color-grey-900)]" />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-portal-hover">
+                    <Clock className="w-5 h-5 text-portal-text" />
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wide text-[var(--color-grey-400)]">Varighet</p>
-                    <p className="font-medium text-[var(--color-grey-900)]">{selectedService.duration} minutter</p>
+                    <p className="text-[11px] uppercase tracking-[0.08em] text-portal-muted">Varighet</p>
+                    <p className="font-medium text-portal-text tabular-nums">{selectedService.duration} minutter</p>
                   </div>
                 </div>
               </div>
 
               {/* Price */}
-              <div className="flex items-center justify-between pt-6 border-t border-[var(--color-grey-200)]">
-                <span className="text-[var(--color-grey-500)]">Totalpris</span>
-                <span className="text-3xl font-semibold text-[var(--color-grey-900)]">
+              <div className="flex items-center justify-between pt-6 border-t border-portal-border">
+                <span className="text-portal-secondary">Totalpris</span>
+                <span className="text-3xl font-semibold text-portal-text tabular-nums">
                   {formatPrice(selectedService.price)}
                 </span>
               </div>
-            </div>
+            </PremiumCard>
 
             {/* Payment Buttons */}
             <div className="space-y-4">
-              <p className="text-sm text-center uppercase tracking-wide text-[var(--color-grey-400)]">
+              <p className="text-[11px] text-center uppercase tracking-[0.08em] text-portal-muted">
                 Velg betalingsmetode
               </p>
 
               <motion.button
                 onClick={() => handleBook("STRIPE")}
                 disabled={booking}
-                className="w-full py-5 rounded-2xl text-base font-semibold flex items-center justify-center gap-3 transition-opacity duration-300 disabled:opacity-50 bg-gradient-to-r from-[var(--color-grey-900)] to-[var(--color-grey-600)] text-white"
+                className="w-full py-5 rounded-[20px] text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 bg-primary text-white hover:opacity-85 hover:scale-[1.01] active:scale-[0.99] active:opacity-75"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
@@ -552,7 +553,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
 
             </div>
 
-            <p className="text-xs text-center mt-6 text-[var(--color-grey-400)]">
+            <p className="text-xs text-center mt-6 text-portal-muted">
               Alle betalinger er sikre og krypterte. Du møter til timen selv om betalingen ikke er gjennomført ennå.
             </p>
           </motion.div>

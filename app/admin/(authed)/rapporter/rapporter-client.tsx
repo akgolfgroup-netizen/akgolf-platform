@@ -206,7 +206,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
           {/* Booking Trends */}
           <AdminCard className="p-0 overflow-hidden">
             <div className="px-5 py-4 border-b border-[var(--color-grey-200)]">
-              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+              <h3 className="admin-section-title">
                 Booking-trend
               </h3>
             </div>
@@ -243,7 +243,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
           {/* Tier Distribution */}
           <AdminCard className="p-0 overflow-hidden">
             <div className="px-5 py-4 border-b border-[var(--color-grey-200)]">
-              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+              <h3 className="admin-section-title">
                 Fordeling per tier
               </h3>
             </div>
@@ -296,7 +296,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
 
         {/* Additional Insights */}
         <AdminCard>
-          <h3 className="text-sm font-semibold text-[var(--color-text)] mb-4">
+          <h3 className="admin-section-title mb-4">
             Innsikt og anbefalinger
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -255,7 +255,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
           subtitle="Ingen ventende godkjenninger"
           onMenuClick={toggle}
         />
-        <div className="p-5">
+        <div className="p-6">
           <AdminEmptyState
             icon={<CheckCircle className="h-6 w-6" />}
             title="Alt er godkjent"
@@ -279,7 +279,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
         onMenuClick={toggle}
       />
 
-      <div className="p-5 space-y-4">
+      <div className="p-6 space-y-6">
         {conflictItems.length > 0 && (
           <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-[var(--color-warning)]/10 text-[var(--color-warning)] text-sm">
             <AlertTriangle className="h-4 w-4 flex-shrink-0 mt-0.5" />

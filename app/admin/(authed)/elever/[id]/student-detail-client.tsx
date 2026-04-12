@@ -360,7 +360,7 @@ export function StudentDetailClient({ profile }: Props) {
 
         {/* Tab: Oversikt */}
         {activeTab === "overview" && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {handicapTrend.length > 1 && (
               <AdminCard className="lg:col-span-2">
                 <div className="flex items-center justify-between mb-4">
@@ -482,7 +482,7 @@ export function StudentDetailClient({ profile }: Props) {
 
         {/* Tab: Trening (kommende + historikk) */}
         {activeTab === "training" && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <AdminCard>
               <div className="flex items-center justify-between mb-4">
                 <h3 className="admin-section-title">Kommende bookinger</h3>

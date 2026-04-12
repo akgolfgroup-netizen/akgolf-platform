@@ -175,18 +175,18 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
         onMenuClick={toggle}
       />
 
-      <div className="p-5 max-w-4xl mx-auto">
+      <div className="p-6 max-w-4xl mx-auto">
         {/* Tilbake */}
         <Link
           href="/admin/bookinger"
-          className="inline-flex items-center gap-1 text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors mb-5"
+          className="inline-flex items-center gap-1 text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors mb-6"
         >
           <ChevronLeft className="w-4 h-4" />
           Tilbake til bookinger
         </Link>
 
         {/* Steg-indikator */}
-        <AdminCard compact className="mb-5">
+        <AdminCard compact className="mb-6">
           <div className="flex items-center gap-2">
             {steps.map((s, i) => (
               <div key={i} className="flex items-center gap-2">
@@ -515,7 +515,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-4 mb-5">
+              <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4 text-[var(--color-muted)]" />
                   <span className="text-sm text-[var(--color-text)]">

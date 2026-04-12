@@ -56,13 +56,13 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
       {!selectedCourse ? (
         <div className="space-y-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-grey-400)]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-portal-muted)]" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Sok etter bane..."
-              className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--color-grey-200)] bg-white text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)]/20 focus:border-[var(--color-brand)]"
+              className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--color-portal-border)] bg-white text-[var(--color-portal-text)] placeholder:text-[var(--color-portal-muted)] focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               autoFocus
             />
           </div>
@@ -72,15 +72,15 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
               <button
                 key={course.id}
                 onClick={() => setSelectedCourse(course)}
-                className="w-full text-left p-4 rounded-xl border border-[var(--color-grey-200)] bg-white hover:border-[var(--color-brand)] hover:bg-[var(--color-grey-100)] transition-all"
+                className="w-full text-left p-4 rounded-xl border border-[var(--color-portal-border)] bg-white hover:border-primary hover:bg-[var(--color-portal-hover)] transition-all"
               >
                 <div className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 text-[var(--color-brand)] mt-0.5 shrink-0" />
+                  <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
                   <div>
-                    <div className="font-semibold text-[var(--color-grey-900)]">
+                    <div className="font-semibold text-[var(--color-portal-text)]">
                       {course.name}
                     </div>
-                    <div className="text-sm text-[var(--color-grey-500)]">
+                    <div className="text-sm text-[var(--color-portal-secondary)]">
                       {course.location} — Par {course.par}
                       {course.courseRating && ` — CR ${course.courseRating}`}
                       {course.slopeRating && ` / Slope ${course.slopeRating}`}
@@ -90,7 +90,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
               </button>
             ))}
             {filtered.length === 0 && (
-              <p className="text-center text-[var(--color-grey-400)] py-8">
+              <p className="text-center text-[var(--color-portal-muted)] py-8">
                 Ingen baner funnet
               </p>
             )}
@@ -99,22 +99,22 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
       ) : (
         <>
           {/* Valgt bane */}
-          <div className="p-4 rounded-xl border border-[var(--color-brand)] bg-[var(--color-brand)]/5">
+          <div className="p-4 rounded-xl border border-primary bg-primary/5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <MapPin className="h-5 w-5 text-[var(--color-brand)]" />
+                <MapPin className="h-5 w-5 text-primary" />
                 <div>
-                  <div className="font-semibold text-[var(--color-grey-900)]">
+                  <div className="font-semibold text-[var(--color-portal-text)]">
                     {selectedCourse.name}
                   </div>
-                  <div className="text-sm text-[var(--color-grey-500)]">
+                  <div className="text-sm text-[var(--color-portal-secondary)]">
                     Par {selectedCourse.par} — {selectedCourse.location}
                   </div>
                 </div>
               </div>
               <button
                 onClick={() => setSelectedCourse(null)}
-                className="text-sm text-[var(--color-brand)] hover:underline"
+                className="text-sm text-primary hover:underline"
               >
                 Endre
               </button>
@@ -123,7 +123,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
 
           {/* Tee-valg */}
           <div>
-            <label className="text-sm font-medium text-[var(--color-grey-700)] mb-2 block">
+            <label className="text-sm font-medium text-[var(--color-portal-text)] mb-2 block">
               Tee
             </label>
             <div className="flex gap-2">
@@ -133,15 +133,15 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                   onClick={() => setTeeColor(tee.value)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
                     teeColor === tee.value
-                      ? "border-[var(--color-brand)] bg-[var(--color-brand)]/5 ring-1 ring-[var(--color-brand)]"
-                      : "border-[var(--color-grey-200)] bg-white hover:border-[var(--color-grey-300)]"
+                      ? "border-primary bg-primary/5 ring-1 ring-primary"
+                      : "border-[var(--color-portal-border)] bg-white hover:border-[var(--color-portal-border)]"
                   }`}
                 >
                   <div
-                    className="h-4 w-4 rounded-full border border-[var(--color-grey-300)]"
+                    className="h-4 w-4 rounded-full border border-[var(--color-portal-border)]"
                     style={{ backgroundColor: tee.color }}
                   />
-                  <span className="text-sm font-medium text-[var(--color-grey-700)]">
+                  <span className="text-sm font-medium text-[var(--color-portal-text)]">
                     {tee.label}
                   </span>
                 </button>
@@ -151,7 +151,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
 
           {/* Vaer */}
           <div>
-            <label className="text-sm font-medium text-[var(--color-grey-700)] mb-2 block">
+            <label className="text-sm font-medium text-[var(--color-portal-text)] mb-2 block">
               Vaer (valgfritt)
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -166,11 +166,11 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                   onClick={() => setWeather(weather === w.value ? "" : w.value)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
                     weather === w.value
-                      ? "border-[var(--color-brand)] bg-[var(--color-brand)]/5"
-                      : "border-[var(--color-grey-200)] bg-white hover:border-[var(--color-grey-300)]"
+                      ? "border-primary bg-primary/5"
+                      : "border-[var(--color-portal-border)] bg-white hover:border-[var(--color-portal-border)]"
                   }`}
                 >
-                  <w.icon className="h-4 w-4 text-[var(--color-grey-500)]" />
+                  <w.icon className="h-4 w-4 text-[var(--color-portal-secondary)]" />
                   <span className="text-sm">{w.label}</span>
                 </button>
               ))}
@@ -187,7 +187,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
           <button
             onClick={handleStart}
             disabled={isPending}
-            className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-[var(--color-brand)] text-white font-semibold text-lg hover:bg-[var(--color-brand)]/90 transition-colors disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-3 py-4 rounded-[20px] bg-primary text-white font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
           >
             <Play className="h-5 w-5" />
             {isPending ? "Starter..." : "Start runde"}

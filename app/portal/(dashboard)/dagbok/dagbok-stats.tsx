@@ -105,19 +105,19 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
               <Flame className="w-5 h-5 text-[var(--color-primary)]" strokeWidth={1.75} />
             </div>
             <div>
-              <h3 className="font-semibold text-[var(--color-grey-900)] text-[14px]">
+              <h3 className="font-semibold text-[var(--color-portal-text)] text-[14px]">
                 Treningsstreak
               </h3>
-              <p className="text-[10px] text-[var(--color-muted)] uppercase tracking-wider">
+              <p className="text-[10px] text-[var(--color-portal-muted)] uppercase tracking-wider">
                 {streak > 0 ? "Fortsett det gode arbeidet" : "Start i dag"}
               </p>
             </div>
           </div>
           <div className="flex items-baseline gap-3 mb-5">
-            <span className="text-[64px] font-[300] text-[var(--color-grey-900)] leading-none tabular-nums tracking-[-0.04em]">
+            <span className="text-[64px] font-[300] text-[var(--color-portal-text)] leading-none tabular-nums tracking-[-0.04em]">
               {streak}
             </span>
-            <span className="text-[13px] text-[var(--color-muted)]">
+            <span className="text-[13px] text-[var(--color-portal-muted)]">
               {streak === 1 ? "dag pa rad" : "dager pa rad"}
             </span>
           </div>
@@ -131,7 +131,7 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
                   d.today && !d.active &&
                     "bg-white border-2 border-[var(--color-accent-cta)] text-[var(--color-primary)]",
                   !d.active && !d.today &&
-                    "bg-white/60 border border-[var(--color-grey-200)] text-[var(--color-muted)]"
+                    "bg-white/60 border border-[var(--color-portal-border)] text-[var(--color-portal-muted)]"
                 )}
               >
                 {d.day}
@@ -145,8 +145,8 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
       {/* Categories breakdown */}
       {categories.length > 0 && (
         <div>
-          <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase mb-4 flex items-center gap-2">
-            <span className="w-6 h-px bg-[var(--color-muted)]" />
+          <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-portal-muted)] uppercase mb-4 flex items-center gap-2">
+            <span className="w-6 h-px bg-[var(--color-portal-muted)]" />
             Treningskategorier
           </p>
           <GlassCard variant="light" padding="lg">
@@ -160,11 +160,11 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
                     <Target className="w-5 h-5 text-[var(--color-primary)]" strokeWidth={1.75} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13px] font-semibold text-[var(--color-grey-900)] truncate">
+                    <p className="text-[13px] font-semibold text-[var(--color-portal-text)] truncate">
                       {cat.name}
                     </p>
-                    <p className="text-[11px] text-[var(--color-muted)]">{cat.count}</p>
-                    <div className="h-1 bg-[var(--color-grey-200)] rounded-full mt-2 overflow-hidden">
+                    <p className="text-[11px] text-[var(--color-portal-muted)]">{cat.count}</p>
+                    <div className="h-1 bg-[var(--color-portal-border)] rounded-full mt-2 overflow-hidden">
                       <div
                         className="h-full rounded-full bg-[var(--color-primary)]"
                         style={{ width: `${cat.progress}%` }}

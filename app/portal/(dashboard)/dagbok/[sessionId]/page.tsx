@@ -92,65 +92,65 @@ export default async function SessionDetailPage({ params }: Props) {
       <div className="flex items-center gap-4">
         <Link
           href="/portal/dagbok"
-          className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white border border-[var(--color-grey-200)]/70 text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors"
+          className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white border border-[var(--color-portal-border)]/70 text-[var(--color-portal-secondary)] hover:bg-[var(--color-portal-hover)] hover:text-[var(--color-portal-text)] transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">{sessionTitle}</h1>
-          <p className="text-sm text-[var(--color-grey-500)] capitalize">{sessionDate}</p>
+          <h1 className="text-2xl font-bold text-[var(--color-portal-text)]">{sessionTitle}</h1>
+          <p className="text-sm text-[var(--color-portal-secondary)] capitalize">{sessionDate}</p>
         </div>
       </div>
 
       {/* Session Overview Card */}
-      <div className="bg-white rounded-2xl border border-[var(--color-grey-200)]/70 p-6 space-y-5">
-        <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">Øktoversikt</h2>
+      <div className="bg-white rounded-2xl border border-[var(--color-portal-border)]/70 p-6 space-y-5">
+        <h2 className="text-lg font-semibold text-[var(--color-portal-text)]">Øktoversikt</h2>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {log.durationMinutes && (
-            <div className="flex items-center gap-3 p-4 bg-[var(--color-grey-100)] rounded-xl">
+            <div className="flex items-center gap-3 p-4 bg-[var(--color-portal-hover)] rounded-xl">
               <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
                 <Clock className="w-5 h-5 text-[var(--color-primary)]" />
               </div>
               <div>
-                <p className="text-xs text-[var(--color-grey-500)]">Varighet</p>
-                <p className="text-base font-semibold text-[var(--color-grey-900)]">{log.durationMinutes} min</p>
+                <p className="text-xs text-[var(--color-portal-secondary)]">Varighet</p>
+                <p className="text-base font-semibold text-[var(--color-portal-text)] tabular-nums tracking-tight">{log.durationMinutes} min</p>
               </div>
             </div>
           )}
 
           {log.focusArea && (
-            <div className="flex items-center gap-3 p-4 bg-[var(--color-grey-100)] rounded-xl">
+            <div className="flex items-center gap-3 p-4 bg-[var(--color-portal-hover)] rounded-xl">
               <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
                 <Target className="w-5 h-5 text-[var(--color-primary)]" />
               </div>
               <div>
-                <p className="text-xs text-[var(--color-grey-500)]">Fokusområde</p>
-                <p className="text-base font-semibold text-[var(--color-grey-900)]">{log.focusArea}</p>
+                <p className="text-xs text-[var(--color-portal-secondary)]">Fokusområde</p>
+                <p className="text-base font-semibold text-[var(--color-portal-text)]">{log.focusArea}</p>
               </div>
             </div>
           )}
 
           {log.rating !== null && (
-            <div className="flex items-center gap-3 p-4 bg-[var(--color-grey-100)] rounded-xl">
+            <div className="flex items-center gap-3 p-4 bg-[var(--color-portal-hover)] rounded-xl">
               <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
                 <Activity className="w-5 h-5 text-[var(--color-primary)]" />
               </div>
               <div>
-                <p className="text-xs text-[var(--color-grey-500)]">Vurdering</p>
-                <p className="text-base font-semibold text-[var(--color-grey-900)]">{log.rating}/10</p>
+                <p className="text-xs text-[var(--color-portal-secondary)]">Vurdering</p>
+                <p className="text-base font-semibold text-[var(--color-portal-text)] tabular-nums tracking-tight">{log.rating}/10</p>
               </div>
             </div>
           )}
 
-          <div className="flex items-center gap-3 p-4 bg-[var(--color-grey-100)] rounded-xl">
+          <div className="flex items-center gap-3 p-4 bg-[var(--color-portal-hover)] rounded-xl">
             <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
               <Layers className="w-5 h-5 text-[var(--color-primary)]" />
             </div>
             <div>
-              <p className="text-xs text-[var(--color-grey-500)]">Øvelser</p>
-              <p className="text-base font-semibold text-[var(--color-grey-900)]">{log.TrainingLogExercises?.length ?? 0}</p>
+              <p className="text-xs text-[var(--color-portal-secondary)]">Øvelser</p>
+              <p className="text-base font-semibold text-[var(--color-portal-text)] tabular-nums tracking-tight">{log.TrainingLogExercises?.length ?? 0}</p>
             </div>
           </div>
         </div>
@@ -182,20 +182,20 @@ export default async function SessionDetailPage({ params }: Props) {
         {/* Notes */}
         {log.notes && (
           <div className="pt-2">
-            <p className="text-xs text-[var(--color-grey-500)] mb-1">Notater</p>
-            <p className="text-sm text-[var(--color-grey-600)] leading-relaxed">{log.notes}</p>
+            <p className="text-xs text-[var(--color-portal-secondary)] mb-1">Notater</p>
+            <p className="text-sm text-[var(--color-portal-secondary)] leading-relaxed">{log.notes}</p>
           </div>
         )}
 
         {/* Plan deviation */}
         {log.deviatedFromPlan && (
-          <div className="pt-2 border-t border-[var(--color-grey-200)]/50">
+          <div className="pt-2 border-t border-[var(--color-portal-border)]/50">
             <div className="flex items-center gap-2 text-[var(--color-warning)] mb-1">
               <XCircle className="w-4 h-4" />
               <span className="text-sm font-medium">Avvik fra plan</span>
             </div>
             {log.deviationReason && (
-              <p className="text-sm text-[var(--color-grey-500)]">{log.deviationReason}</p>
+              <p className="text-sm text-[var(--color-portal-secondary)]">{log.deviationReason}</p>
             )}
           </div>
         )}
@@ -203,12 +203,12 @@ export default async function SessionDetailPage({ params }: Props) {
 
       {/* Exercises Card */}
       {log.TrainingLogExercises && log.TrainingLogExercises.length > 0 && (
-        <div className="bg-white rounded-2xl border border-[var(--color-grey-200)]/70 p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">Øvelser</h2>
+        <div className="bg-white rounded-2xl border border-[var(--color-portal-border)]/70 p-6 space-y-4">
+          <h2 className="text-lg font-semibold text-[var(--color-portal-text)]">Øvelser</h2>
 
           <div className="space-y-3">
             {log.TrainingLogExercises.sort((a: { sortOrder: number }, b: { sortOrder: number }) => a.sortOrder - b.sortOrder).map((exercise: { id: string; name: string; score: number | null; plannedSets: number | null; plannedReps: number | null; actualSets: number | null; actualReps: number | null; lPhase: string | null; environment: number | null; pressLevel: number | null; clubSpeed: number | null; successRate: number | null; notes: string | null; coachFeedback: string | null }, idx: number) => (
-              <div key={exercise.id} className="p-4 bg-[var(--color-grey-100)] rounded-xl space-y-3">
+              <div key={exercise.id} className="p-4 bg-[var(--color-portal-hover)] rounded-xl space-y-3">
                 {/* Exercise header */}
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
@@ -216,13 +216,13 @@ export default async function SessionDetailPage({ params }: Props) {
                       {idx + 1}
                     </span>
                     <div>
-                      <p className="text-base font-medium text-[var(--color-grey-900)]">{exercise.name}</p>
+                      <p className="text-base font-medium text-[var(--color-portal-text)]">{exercise.name}</p>
                     </div>
                   </div>
                   {exercise.score !== null && (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[var(--color-grey-200)]/70 text-sm font-medium text-[var(--color-grey-900)]">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[var(--color-portal-border)]/70 text-sm font-medium text-[var(--color-portal-text)]">
                       <Star className="w-3.5 h-3.5 text-[var(--color-warning)]" />
-                      {exercise.score}/10
+                      <span className="tabular-nums tracking-tight">{exercise.score}/10</span>
                     </span>
                   )}
                 </div>
@@ -230,15 +230,15 @@ export default async function SessionDetailPage({ params }: Props) {
                 {/* Sets/Reps comparison */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs text-[var(--color-grey-500)] mb-1">Planlagt</p>
-                    <p className="text-sm font-medium text-[var(--color-grey-500)]">
+                    <p className="text-xs text-[var(--color-portal-secondary)] mb-1">Planlagt</p>
+                    <p className="text-sm font-medium text-[var(--color-portal-secondary)]">
                       {exercise.plannedSets ?? "-"} sett x{" "}
                       {exercise.plannedReps ?? "-"} reps
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-[var(--color-grey-500)] mb-1">Faktisk</p>
-                    <p className="text-sm font-medium text-[var(--color-grey-900)]">
+                    <p className="text-xs text-[var(--color-portal-secondary)] mb-1">Faktisk</p>
+                    <p className="text-sm font-medium text-[var(--color-portal-text)]">
                       {exercise.actualSets ?? "-"} sett x{" "}
                       {exercise.actualReps ?? "-"} reps
                     </p>
@@ -263,12 +263,12 @@ export default async function SessionDetailPage({ params }: Props) {
                     </span>
                   )}
                   {exercise.clubSpeed !== null && (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--color-grey-100)] text-[var(--color-grey-500)] text-xs font-medium">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--color-portal-hover)] text-[var(--color-portal-secondary)] text-xs font-medium">
                       CS: {exercise.clubSpeed}%
                     </span>
                   )}
                   {exercise.successRate !== null && (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--color-grey-100)] text-[var(--color-grey-500)] text-xs font-medium">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--color-portal-hover)] text-[var(--color-portal-secondary)] text-xs font-medium">
                       Treffprosent: {Math.round(exercise.successRate * 100)}%
                     </span>
                   )}
@@ -276,17 +276,17 @@ export default async function SessionDetailPage({ params }: Props) {
 
                 {/* Exercise notes */}
                 {exercise.notes && (
-                  <p className="text-sm text-[var(--color-grey-500)] pt-1">{exercise.notes}</p>
+                  <p className="text-sm text-[var(--color-portal-secondary)] pt-1">{exercise.notes}</p>
                 )}
 
                 {/* Coach feedback for this exercise */}
                 {exercise.coachFeedback && (
-                  <div className="pt-2 border-t border-[var(--color-grey-200)]/70">
+                  <div className="pt-2 border-t border-[var(--color-portal-border)]/70">
                     <div className="flex items-center gap-2 text-[var(--color-primary)] mb-1">
                       <MessageSquare className="w-3.5 h-3.5" />
                       <span className="text-xs font-medium">Coach-feedback</span>
                     </div>
-                    <p className="text-sm text-[var(--color-grey-600)]">{exercise.coachFeedback}</p>
+                    <p className="text-sm text-[var(--color-portal-secondary)]">{exercise.coachFeedback}</p>
                   </div>
                 )}
               </div>
@@ -297,23 +297,23 @@ export default async function SessionDetailPage({ params }: Props) {
 
       {/* Coach Feedback Card */}
       {log.coachFeedback && (
-        <div className="bg-white rounded-2xl border border-[var(--color-grey-200)]/70 p-6 space-y-3">
+        <div className="bg-white rounded-2xl border border-[var(--color-portal-border)]/70 p-6 space-y-3">
           <div className="flex items-center gap-2">
             <MessageSquare className="w-5 h-5 text-[var(--color-primary)]" />
-            <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">Coach-feedback</h2>
+            <h2 className="text-lg font-semibold text-[var(--color-portal-text)]">Coach-feedback</h2>
           </div>
-          <p className="text-sm text-[var(--color-grey-600)] leading-relaxed">{log.coachFeedback}</p>
+          <p className="text-sm text-[var(--color-portal-secondary)] leading-relaxed">{log.coachFeedback}</p>
         </div>
       )}
 
       {/* Linked plan session */}
       {log.TrainingPlanSession && (
-        <div className="bg-[var(--color-grey-100)] rounded-2xl p-4 flex items-center justify-between">
+        <div className="bg-[var(--color-portal-hover)] rounded-2xl p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <CheckCircle2 className="w-5 h-5 text-[var(--color-success)]" />
             <div>
-              <p className="text-xs text-[var(--color-grey-500)]">Koblet til treningsplan</p>
-              <p className="text-sm font-medium text-[var(--color-grey-900)]">{log.TrainingPlanSession.title}</p>
+              <p className="text-xs text-[var(--color-portal-secondary)]">Koblet til treningsplan</p>
+              <p className="text-sm font-medium text-[var(--color-portal-text)]">{log.TrainingPlanSession.title}</p>
             </div>
           </div>
           <Link

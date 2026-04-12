@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Loader2, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 
 interface Message {
   id: string;
@@ -19,6 +20,7 @@ const suggestions = [
 ];
 
 export function ChatClient() {
+  const { toggle } = useMCSidebar();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
@@ -72,7 +74,14 @@ export function ChatClient() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-white border border-[var(--color-grey-200)] rounded-2xl overflow-hidden shadow-[var(--shadow-card)] min-h-0">
+    <>
+    <MCTopbar
+      title="AI-chat"
+      subtitle="Chat med AI-assistenten"
+      onMenuClick={toggle}
+    />
+    <div className="p-6">
+    <div className="flex flex-col bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden shadow-[var(--shadow-card)]" style={{ height: "calc(100vh - 180px)" }}>
       {/* Messages */}
       <div className="flex-1 overflow-auto p-6 space-y-4">
         {messages.map((message) => (
@@ -162,6 +171,8 @@ export function ChatClient() {
         </div>
       </div>
     </div>
+    </div>
+    </>
   );
 }
 

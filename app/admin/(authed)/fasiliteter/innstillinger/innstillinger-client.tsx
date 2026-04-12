@@ -64,7 +64,7 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
         {/* Facilities List */}
         <AdminCard className="p-0 overflow-hidden">
           <div className="px-5 py-4 border-b border-[var(--color-grey-200)]">
-            <h3 className="text-sm font-semibold text-[var(--color-text)]">Fasiliteter</h3>
+            <h3 className="admin-section-title">Fasiliteter</h3>
           </div>
           <div className="divide-y divide-[var(--color-grey-200)]">
             {facilities.map((f) => (
@@ -101,7 +101,7 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
         {/* Instructor Defaults */}
         <AdminCard className="p-0 overflow-hidden">
           <div className="px-5 py-4 border-b border-[var(--color-grey-200)]">
-            <h3 className="text-sm font-semibold text-[var(--color-text)]">Instruktør-fasilitet defaults</h3>
+            <h3 className="admin-section-title">Instruktør-fasilitet defaults</h3>
             <p className="text-sm text-[var(--color-muted)] mt-1">Standard fasilitet for hver instruktør ved booking-opprettelse</p>
           </div>
           {defaults.length > 0 ? (

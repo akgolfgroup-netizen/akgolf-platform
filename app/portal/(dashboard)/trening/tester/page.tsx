@@ -88,29 +88,29 @@ export default async function TesterPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Trackman Tester</h1>
-        <p className="text-[var(--color-grey-500)] mt-1">
+        <h1 className="text-2xl font-bold text-portal-text">Trackman Tester</h1>
+        <p className="text-portal-secondary mt-1">
           100 standardiserte tester for å måle og utvikle ditt spill
         </p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
-          <p className="text-3xl font-bold text-[var(--color-grey-900)]">{protocols.length}</p>
-          <p className="text-sm text-[var(--color-grey-500)]">Tester tilgjengelig</p>
+        <div className="bg-white rounded-xl p-4 border border-portal-border shadow-card">
+          <p className="text-3xl font-bold text-portal-text tabular-nums">{protocols.length}</p>
+          <p className="text-sm text-portal-secondary">Tester tilgjengelig</p>
         </div>
-        <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
-          <p className="text-3xl font-bold text-[var(--color-grey-900)]">{categories.length}</p>
-          <p className="text-sm text-[var(--color-grey-500)]">Kategorier</p>
+        <div className="bg-white rounded-xl p-4 border border-portal-border shadow-card">
+          <p className="text-3xl font-bold text-portal-text tabular-nums">{categories.length}</p>
+          <p className="text-sm text-portal-secondary">Kategorier</p>
         </div>
-        <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
-          <p className="text-3xl font-bold text-[var(--color-grey-900)]">{testStats.completedCount}</p>
-          <p className="text-sm text-[var(--color-grey-500)]">Fullførte tester</p>
+        <div className="bg-white rounded-xl p-4 border border-portal-border shadow-card">
+          <p className="text-3xl font-bold text-portal-text tabular-nums">{testStats.completedCount}</p>
+          <p className="text-sm text-portal-secondary">Fullførte tester</p>
         </div>
-        <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
-          <p className="text-3xl font-bold text-[var(--color-success)]">{testStats.lastTestLabel ?? "-"}</p>
-          <p className="text-sm text-[var(--color-grey-500)]">Siste test</p>
+        <div className="bg-white rounded-xl p-4 border border-portal-border shadow-card">
+          <p className="text-3xl font-bold text-success tabular-nums">{testStats.lastTestLabel ?? "-"}</p>
+          <p className="text-sm text-portal-secondary">Siste test</p>
         </div>
       </div>
 

@@ -274,7 +274,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                         <X className="w-5 h-5 text-[var(--color-text)]" />
                       </button>
                       <div>
-                        <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                        <h3 className="admin-section-title">
                           {editName}
                         </h3>
                         <p className="text-xs text-[var(--color-muted)]">

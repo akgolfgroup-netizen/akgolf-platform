@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Inbox, AlertCircle, X } from "lucide-react";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   ChannelFilter,
   type Channel,
@@ -28,6 +29,7 @@ export function MeldingerClient({
   initialMessages,
   channelCounts,
 }: MeldingerClientProps) {
+  const { toggle } = useMCSidebar();
   const [selectedChannel, setSelectedChannel] = useState<Channel | "ALL">(
     "ALL"
   );
@@ -103,20 +105,36 @@ export function MeldingerClient({
 
   if (messages.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full text-[var(--color-grey-500)]">
-        <div className="text-center">
-          <Inbox className="w-12 h-12 mx-auto mb-3 opacity-40" />
-          <p className="text-lg font-medium mb-1 text-[var(--color-grey-900)]">
-            Ingen meldinger ennå
-          </p>
-          <p className="text-sm">Nye meldinger fra spillere dukker opp her</p>
+      <>
+        <MCTopbar
+          title="Meldingskø"
+          subtitle="Ingen meldinger ennå"
+          onMenuClick={toggle}
+        />
+        <div className="p-6">
+          <div className="flex items-center justify-center py-20 text-[var(--color-muted)]">
+            <div className="text-center">
+              <Inbox className="w-12 h-12 mx-auto mb-3 opacity-40" />
+              <p className="text-lg font-medium mb-1 text-[var(--color-text)]">
+                Ingen meldinger ennå
+              </p>
+              <p className="text-sm">Nye meldinger fra spillere dukker opp her</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="flex flex-col h-full bg-[var(--color-grey-50)] rounded-2xl border border-[var(--color-grey-200)] overflow-hidden">
+    <>
+    <MCTopbar
+      title="Meldingskø"
+      subtitle={`${messages.length} meldinger`}
+      onMenuClick={toggle}
+    />
+    <div className="p-6">
+    <div className="flex flex-col bg-[var(--color-grey-50)] rounded-xl border border-[var(--color-grey-200)] overflow-hidden" style={{ height: "calc(100vh - 180px)" }}>
       {/* Error banner */}
       {error && (
         <div className="flex items-center justify-between gap-3 px-4 py-3 bg-[var(--color-error)]/5 border-b border-[var(--color-error)]/20">
@@ -176,5 +194,7 @@ export function MeldingerClient({
         </div>
       </div>
     </div>
+    </div>
+    </>
   );
 }

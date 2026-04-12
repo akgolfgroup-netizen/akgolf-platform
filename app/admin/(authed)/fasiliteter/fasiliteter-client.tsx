@@ -174,7 +174,7 @@ export default function FasiliteterClient({
           {/* Facilities List */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+              <h3 className="admin-section-title">
                 Anlegg
               </h3>
             </div>
@@ -267,7 +267,7 @@ export default function FasiliteterClient({
                 {/* Today's Schedule */}
                 <AdminCard className="p-0 overflow-hidden">
                   <div className="px-5 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
-                    <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                    <h3 className="admin-section-title">
                       Dagens timeplan
                     </h3>
                     <span className="text-xs text-[var(--color-muted)]">
@@ -327,7 +327,7 @@ export default function FasiliteterClient({
 
                 {/* Info */}
                 <AdminCard>
-                  <h3 className="text-sm font-semibold text-[var(--color-text)] mb-3">
+                  <h3 className="admin-section-title mb-3">
                     Detaljer
                   </h3>
                   <div className="space-y-2 text-sm">

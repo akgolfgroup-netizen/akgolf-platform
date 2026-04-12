@@ -9,6 +9,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminCard,
   AdminPageHeader,
@@ -46,6 +47,7 @@ interface AgenterClientProps {
 }
 
 export function AgenterClient({ agents, stats }: AgenterClientProps) {
+  const { toggle } = useMCSidebar();
   const [isPending, startTransition] = useTransition();
 
   const handleToggle = (agentId: string, currentState: boolean) => {
@@ -66,14 +68,21 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
   }
 
   return (
-    <div className="p-6 md:p-8">
+    <>
+      <MCTopbar
+        title="AI-agenter"
+        subtitle="Administrer autonome AI-agenter"
+        onMenuClick={toggle}
+      />
+
+      <div className="p-6 space-y-6">
       <AdminPageHeader
         title="AI-agenter"
         subtitle="Administrer autonome AI-agenter"
       />
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <AdminStatCard
           label="Totalt"
           value={stats.total}
@@ -105,7 +114,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
       </div>
 
       {/* Agents by Team */}
-      <div className="space-y-8">
+      <div className="space-y-6">
         {TEAM_ORDER.filter((team) => agentsByTeam.has(team)).map((team) => (
           <section key={team}>
             <h2 className="admin-label mb-3">{TEAM_LABELS[team]}</h2>
@@ -210,6 +219,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
           description="Det er ikke lagt til noen AI-agenter ennå."
         />
       )}
-    </div>
+      </div>
+    </>
   );
 }
