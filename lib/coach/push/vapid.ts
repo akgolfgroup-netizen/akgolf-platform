@@ -1,8 +1,9 @@
 import webpush from "web-push";
 import { logger } from "@/lib/logger";
 
-const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || "";
-const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY || "";
+// VAPID keys must be URL-safe Base64 without "=" padding
+const VAPID_PUBLIC_KEY = (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || "").replace(/=+$/, "");
+const VAPID_PRIVATE_KEY = (process.env.VAPID_PRIVATE_KEY || "").replace(/=+$/, "");
 const VAPID_CONTACT = process.env.VAPID_CONTACT_EMAIL || "mailto:post@akgolf.no";
 
 let vapidConfigured = false;
@@ -18,7 +19,7 @@ function ensureVapidConfigured() {
     vapidConfigured = true;
     return true;
   } catch (error) {
-    logger.error("Failed to configure VAPID", error);
+    logger.error("[webpush] VAPID config failed", error);
     return false;
   }
 }

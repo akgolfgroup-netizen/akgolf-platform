@@ -26,8 +26,8 @@ export function HeroSection() {
     <section className="relative min-h-[100svh] flex items-end overflow-hidden">
       {/* Background image */}
       <Image
-        src="/images/academy/AK-Golf-Academy-20.jpg"
-        alt="Golf coaching med TrackMan-analyse"
+        src="/images/branding/ak-golf-academy-11.jpg"
+        alt="Golf coaching med TrackMan på rangen"
         fill
         priority
         quality={90}
