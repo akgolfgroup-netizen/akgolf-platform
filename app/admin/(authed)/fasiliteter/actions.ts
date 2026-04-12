@@ -231,6 +231,46 @@ export async function cancelActivity(activityId: string) {
   return { success: true };
 }
 
+// ─── Innstillinger ───
+
+export async function getAllFacilities() {
+  const user = await requirePortalUser();
+  if (!isStaff(user.role)) throw new Error("Ikke tilgang");
+  return prisma.facility.findMany({
+    include: { Location: { select: { name: true } } },
+    orderBy: { sortOrder: "asc" },
+  });
+}
+
+export async function toggleFacilityActive(facilityId: string) {
+  const user = await requirePortalUser();
+  if (!isAdmin(user.role)) throw new Error("Kun admin");
+  const facility = await prisma.facility.findUnique({ where: { id: facilityId }, select: { isActive: true } });
+  if (!facility) throw new Error("Fasilitet ikke funnet");
+  await prisma.facility.update({ where: { id: facilityId }, data: { isActive: !facility.isActive } });
+  revalidatePath("/admin/fasiliteter");
+}
+
+export async function getInstructorFacilityDefaults() {
+  const user = await requirePortalUser();
+  if (!isStaff(user.role)) throw new Error("Ikke tilgang");
+  return prisma.instructorFacilityDefault.findMany({
+    include: {
+      Instructor: { include: { User: { select: { name: true } } } },
+      Facility: { select: { name: true } },
+      ServiceType: { select: { name: true } },
+    },
+    orderBy: { priority: "asc" },
+  });
+}
+
+export async function deleteInstructorDefault(defaultId: string) {
+  const user = await requirePortalUser();
+  if (!isAdmin(user.role)) throw new Error("Kun admin");
+  await prisma.instructorFacilityDefault.delete({ where: { id: defaultId } });
+  revalidatePath("/admin/fasiliteter/innstillinger");
+}
+
 export async function getPendingActivities() {
   const user = await requirePortalUser();
   if (!isStaff(user.role)) {

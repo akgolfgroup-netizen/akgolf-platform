@@ -1,4 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
+import { prisma } from "@/lib/portal/prisma";
 import { TestProtocolList } from "./components/test-protocol-list";
 
 export const metadata = {
@@ -20,7 +21,6 @@ async function getTestProtocols() {
     .order("difficulty");
 
   if (error) {
-    // Table may not exist yet - return empty array silently
     if (error.code === "42P01" || error.message?.includes("does not exist")) {
       return [];
     }
@@ -30,9 +30,29 @@ async function getTestProtocols() {
   return data ?? [];
 }
 
+async function getUserTestStats(userId: string) {
+  const [completedCount, lastResult] = await Promise.all([
+    prisma.testResult.count({ where: { userId } }),
+    prisma.testResult.findFirst({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+      select: { createdAt: true },
+    }),
+  ]);
+
+  const lastTestLabel = lastResult
+    ? lastResult.createdAt.toLocaleDateString("nb-NO", { day: "numeric", month: "short" })
+    : null;
+
+  return { completedCount, lastTestLabel };
+}
+
 export default async function TesterPage() {
   const user = await requirePortalUser();
-  const protocols = await getTestProtocols();
+  const [protocols, testStats] = await Promise.all([
+    getTestProtocols(),
+    getUserTestStats(user.id),
+  ]);
 
   // Group by category
   const grouped = protocols.reduce((acc, p) => {
@@ -75,11 +95,11 @@ export default async function TesterPage() {
           <p className="text-sm text-[var(--color-grey-500)]">Kategorier</p>
         </div>
         <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
-          <p className="text-3xl font-bold text-[var(--color-grey-900)]">0</p>
+          <p className="text-3xl font-bold text-[var(--color-grey-900)]">{testStats.completedCount}</p>
           <p className="text-sm text-[var(--color-grey-500)]">Fullførte tester</p>
         </div>
         <div className="bg-white rounded-[20px] p-4 border border-[var(--color-grey-200)]">
-          <p className="text-3xl font-bold text-[var(--color-success)]">-</p>
+          <p className="text-3xl font-bold text-[var(--color-success)]">{testStats.lastTestLabel ?? "-"}</p>
           <p className="text-sm text-[var(--color-grey-500)]">Siste test</p>
         </div>
       </div>

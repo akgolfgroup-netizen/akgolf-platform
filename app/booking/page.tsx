@@ -84,6 +84,50 @@ export default async function BookingPage() {
 
   const rows = (serviceTypes ?? []) as ServiceTypeRow[];
 
+  // Hent tilgjengelige timer og bookinger for resten av uken
+  const now = new Date();
+  const endOfWeek = new Date(now);
+  endOfWeek.setDate(now.getDate() + (7 - (now.getDay() || 7)));
+
+  const [{ data: availabilityData }, { data: weekBookings }] = await Promise.all([
+    supabase
+      .from("InstructorAvailability")
+      .select("instructorId, dayOfWeek, startTime, endTime"),
+    supabase
+      .from("Booking")
+      .select("instructorId")
+      .gte("startTime", now.toISOString())
+      .lt("startTime", endOfWeek.toISOString())
+      .in("status", ["CONFIRMED", "PENDING"]),
+  ]);
+
+  // Beregn gjenværende ukedager (dayOfWeek: 0=søndag, 1=mandag, ...)
+  const remainingDays: number[] = [];
+  for (let d = new Date(now); d < endOfWeek; d.setDate(d.getDate() + 1)) {
+    remainingDays.push(d.getDay());
+  }
+
+  // Tell bookede timer per instruktør
+  const bookedByInstructor = (weekBookings ?? []).reduce((acc, b) => {
+    acc[b.instructorId] = (acc[b.instructorId] ?? 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Beregn tilgjengelige slots per instruktør + varighet
+  function countSlots(instructorId: string, duration: number): number {
+    const windows = (availabilityData ?? []).filter(
+      (a) => a.instructorId === instructorId && remainingDays.includes(a.dayOfWeek),
+    );
+    let totalSlots = 0;
+    for (const w of windows) {
+      const [sh, sm] = (w.startTime as string).split(":").map(Number);
+      const [eh, em] = (w.endTime as string).split(":").map(Number);
+      const minutes = (eh * 60 + em) - (sh * 60 + sm);
+      totalSlots += Math.floor(minutes / duration);
+    }
+    return Math.max(0, totalSlots - (bookedByInstructor[instructorId] ?? 0));
+  }
+
   // Grupper etter trener
   const trainersMap = new Map<string, TrainerWithServices>();
 
@@ -126,7 +170,7 @@ export default async function BookingPage() {
         duration: st.duration,
         price: st.price,
         isSubscription,
-        availableSlotsThisWeek: 8,
+        availableSlotsThisWeek: countSlots(trainerId, st.duration),
         allowStripe: st.allowStripe,
       });
     }

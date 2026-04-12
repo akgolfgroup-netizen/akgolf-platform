@@ -4,46 +4,34 @@ import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
-import { CTASection } from "@/components/website/CTASection";
-import { LandingHero } from "@/components/website/landing/LandingHero";
-import { LandingPurpose } from "@/components/website/landing/LandingPurpose";
-import { LandingFeatures } from "@/components/website/landing/LandingFeatures";
-import { LandingPricing } from "@/components/website/landing/LandingPricing";
+import { LandingHero } from "@/components/website/landing-hero";
+import { LandingPurpose } from "@/components/website/landing-purpose";
+import { LandingFeatures } from "@/components/website/landing-features";
+import { LandingPricing } from "@/components/website/landing-pricing";
+import { LandingCTA } from "@/components/website/landing-cta";
 
 export default function HomePage() {
   return (
-    <>
+    <PageTransition>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-black focus:text-white focus:rounded-lg"
+      >
+        Hopp til innhold
+      </a>
+
       <WebsiteNav />
-      <PageTransition>
-        <main>
-          {/* 1. Hero — typografi-fokusert, Linear-inspirert */}
-          <LandingHero />
 
-          {/* 2. Formal — tre kolonner: Coaching / Junior / Utvikling */}
-          <LandingPurpose />
+      <main id="main-content">
+        <LandingHero />
+        <LandingPurpose />
+        <LandingFeatures />
+        <LandingPricing />
+        <LandingCTA />
+      </main>
 
-          {/* 3. Features — bento grid med portal-beskrivelser */}
-          <LandingFeatures />
-
-          {/* 4. Priser — tre kort: Performance / Performance Pro / Flex */}
-          <LandingPricing />
-
-          {/* 5. CTA — avsluttende konverteringsseksjon */}
-          <CTASection
-            eyebrow="Klar?"
-            heading="Klar for a forbedre spillet ditt?"
-            description="Begrenset kapasitet — maks 65 plasser for a sikre kvalitet og tilgjengelighet. Reserver din plass i dag."
-            ctaLabel="Se coaching-pakker"
-            ctaHref="/academy"
-            external={false}
-            secondaryCtaLabel="Book Flex-sesjon"
-            secondaryCtaHref="/booking"
-            secondaryExternal={false}
-          />
-        </main>
-      </PageTransition>
       <WebsiteFooter />
       <BackToTop />
-    </>
+    </PageTransition>
   );
 }

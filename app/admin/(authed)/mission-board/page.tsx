@@ -43,6 +43,7 @@ import type {
   AdminHeatmapCell,
   AdminTimelineItem,
 } from "@/components/portal/mission-control/ui";
+import { getMissionBoardCharts, type MissionBoardCharts } from "./actions";
 
 // Types — matcher respons fra /api/portal/admin/dashboard
 interface DashboardStats {
@@ -135,6 +136,7 @@ function StatusBadge({ status }: { status: string }) {
 export default function MissionBoardPage() {
   const { toggle } = useMCSidebar();
   const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [charts, setCharts] = useState<MissionBoardCharts | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
@@ -144,11 +146,15 @@ export default function MissionBoardPage() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch("/api/portal/admin/dashboard");
+      const [response, chartData] = await Promise.all([
+        fetch("/api/portal/admin/dashboard"),
+        getMissionBoardCharts(),
+      ]);
       if (!response.ok) throw new Error("Kunne ikke hente dashboard-data");
 
       const data: DashboardStats = await response.json();
       setStats(data);
+      setCharts(chartData);
       setLastUpdated(new Date());
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ukjent feil");
@@ -159,8 +165,6 @@ export default function MissionBoardPage() {
 
   useEffect(() => {
     fetchDashboardData();
-
-    // Auto-refresh every 5 minutes
     const interval = setInterval(fetchDashboardData, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
@@ -216,39 +220,17 @@ export default function MissionBoardPage() {
 
   if (!stats) return null;
 
-  // Eksempel-data (brukes til visualiseringer inntil API leverer ekte tall)
-  const bookingTrendData: AdminAreaChartDatum[] = Array.from({ length: 30 }, (_, i) => {
-    const date = new Date();
-    date.setDate(date.getDate() - (29 - i));
-    const base = 8 + Math.sin(i / 4) * 3 + (i % 7 === 5 || i % 7 === 6 ? -3 : 2);
-    return {
-      label: date.toLocaleDateString("nb-NO", { day: "numeric", month: "short" }),
-      value: Math.max(0, Math.round(base + Math.random() * 4)),
-    };
-  });
+  // Reelle chart-data fra server action
+  const bookingTrendData: AdminAreaChartDatum[] = charts?.bookingTrend ?? [];
+  const bookingDistribution: AdminDonutChartDatum[] = charts?.serviceDistribution ?? [];
+  const sparkBookings = charts?.sparkBookings ?? [];
+  const sparkRevenue = charts?.sparkRevenue ?? [];
+  const sparkStudents = charts?.sparkStudents ?? [];
+  const sparkActive = sparkBookings; // Bruker booking-sparkline som proxy
 
-  const bookingDistribution: AdminDonutChartDatum[] = [
-    { label: "Performance", value: 42 },
-    { label: "Express", value: 28 },
-    { label: "Gruppe", value: 18 },
-    { label: "Flex", value: 12 },
-  ];
-
-  const sparkBookings = bookingTrendData.slice(-14).map((d) => d.value);
-  const sparkRevenue = [18, 22, 19, 26, 31, 28, 34, 30, 33, 38, 36, 42, 39, 45];
-  const sparkStudents = [46, 47, 48, 48, 50, 51, 52, 51, 53, 54, 55, 56, 57, 58];
-  const sparkActive = [4, 6, 5, 7, 8, 6, 9, 7, 8, 10, 9, 11, 10, 12];
-
-  // Heatmap — dag x time (mandag-sondag, 08-20)
-  const heatmapRows = ["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"];
+  const heatmapRows = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
   const heatmapCols = ["08", "10", "12", "14", "16", "18", "20"];
-  const heatmapData: AdminHeatmapCell[] = heatmapRows.flatMap((row) =>
-    heatmapCols.map((col) => ({
-      row,
-      col,
-      value: Math.round(Math.random() * 8 + (col === "16" || col === "18" ? 4 : 0)),
-    })),
-  );
+  const heatmapData: AdminHeatmapCell[] = charts?.heatmap ?? [];
 
   // Timeline — dagens hendelser basert pa todaysSchedule
   const timelineItems: AdminTimelineItem[] = stats.todaysSchedule.slice(0, 6).map((b) => ({
@@ -264,9 +246,8 @@ export default function MissionBoardPage() {
           : "var(--color-primary)",
   }));
 
-  // Manedlig mal
-  const monthlyGoal = 240;
-  const monthlyCurrent = Math.min(monthlyGoal, stats.week.totalBookings * 4);
+  const monthlyGoal = charts?.monthlyGoal ?? 240;
+  const monthlyCurrent = charts?.monthlyCurrent ?? 0;
 
   const quickActions = [
     {

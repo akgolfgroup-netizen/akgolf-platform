@@ -51,10 +51,10 @@ async function refundStripe(
   amount: number
 ): Promise<RefundResult> {
   try {
-    const refund = await stripe.refunds.create({
-      payment_intent: paymentIntentId,
-      amount,
-    });
+    const refund = await stripe.refunds.create(
+      { payment_intent: paymentIntentId, amount },
+      { idempotencyKey: `refund_${paymentIntentId}_${amount}` },
+    );
 
     return {
       success: refund.status === "succeeded" || refund.status === "pending",
