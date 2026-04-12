@@ -1,5 +1,5 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { TestProtocolList } from "./components/test-protocol-list";
 
 export const metadata = {
@@ -31,17 +31,27 @@ async function getTestProtocols() {
 }
 
 async function getUserTestStats(userId: string) {
-  const [completedCount, lastResult] = await Promise.all([
-    prisma.testResult.count({ where: { userId } }),
-    prisma.testResult.findFirst({
-      where: { userId },
-      orderBy: { createdAt: "desc" },
-      select: { createdAt: true },
-    }),
-  ]);
+  const supabase = await createServerSupabase();
 
-  const lastTestLabel = lastResult
-    ? lastResult.createdAt.toLocaleDateString("nb-NO", { day: "numeric", month: "short" })
+  const { data: results, error } = await supabase
+    .from("TestResult")
+    .select("testNumber, createdAt")
+    .eq("userId", userId)
+    .order("createdAt", { ascending: false });
+
+  if (error || !results) {
+    return { completedCount: 0, lastTestLabel: null };
+  }
+
+  // Antall unike tester brukeren har gjennomfort
+  const uniqueTests = new Set(results.map((r) => r.testNumber));
+  const completedCount = uniqueTests.size;
+
+  const lastTestLabel = results.length > 0
+    ? new Date(results[0].createdAt).toLocaleDateString("nb-NO", {
+        day: "numeric",
+        month: "short",
+      })
     : null;
 
   return { completedCount, lastTestLabel };

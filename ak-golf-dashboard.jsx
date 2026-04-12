@@ -779,9 +779,9 @@ function BookingView() {
             borderRadius: 12, padding: 16,
           }}>
             {[
-              { label: "Blokkér tid", icon: "🚫" },
+              { label: "Blokkér tid", icon: "x" },
               { label: "Legg til ledig slot", icon: "+" },
-              { label: "Kopier forrige uke", icon: "📋" },
+              { label: "Kopier forrige uke", icon: "=" },
             ].map(a => (
               <button key={a.label} style={{
                 display: "flex", alignItems: "center", gap: 8, width: "100%",

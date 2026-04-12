@@ -1,7 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { prisma } from "@/lib/portal/prisma";
 import { getUserModuleSlugs } from "@/lib/portal/access";
 
 // ── Types ──────────────────────────────────────────────────
@@ -15,7 +15,6 @@ export interface AppModuleData {
   description: string | null;
   icon: string | null;
   monthlyPriceNok: number;
-  [key: string]: unknown;
 }
 
 export interface AppBundleData {
@@ -25,7 +24,6 @@ export interface AppBundleData {
   description: string | null;
   monthlyPriceNok: number;
   items: { module: { slug: string; name: string } }[];
-  [key: string]: unknown;
 }
 
 export interface ApperPageData {
@@ -47,58 +45,76 @@ export interface ApperPageData {
 
 export async function getApperPageData(): Promise<ApperPageData> {
   const user = await requirePortalUser();
-  const supabase = await createServerSupabase();
 
-  const [
-    { data: modules },
-    { data: bundles },
-    userModules,
-    { data: subscriptions },
-    { data: userData },
-  ] = await Promise.all([
-    supabase
-      .from("AppModule")
-      .select("*")
-      .eq("isActive", true)
-      .order("sortOrder", { ascending: true }),
-    supabase
-      .from("AppBundle")
-      .select(`*, BundleItem(*, AppModule:moduleId(slug, name))`)
-      .eq("isActive", true)
-      .order("sortOrder", { ascending: true }),
+  const [modules, bundles, userModules, subscriptions] = await Promise.all([
+    prisma.appModule.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: "asc" },
+      select: {
+        id: true,
+        slug: true,
+        name: true,
+        description: true,
+        icon: true,
+        monthlyPriceNok: true,
+      },
+    }),
+    prisma.appBundle.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: "asc" },
+      select: {
+        id: true,
+        slug: true,
+        name: true,
+        description: true,
+        monthlyPriceNok: true,
+        BundleItem: {
+          select: {
+            AppModule: {
+              select: { slug: true, name: true },
+            },
+          },
+        },
+      },
+    }),
     getUserModuleSlugs(user.id),
-    supabase
-      .from("AppSubscription")
-      .select(`id, status, cancelAtPeriodEnd, AppModule:moduleId(slug), AppBundle:bundleId(slug)`)
-      .eq("userId", user.id),
-    supabase
-      .from("User")
-      .select("subscriptionTier")
-      .eq("id", user.id)
-      .single(),
+    prisma.appSubscription.findMany({
+      where: { userId: user.id },
+      select: {
+        id: true,
+        status: true,
+        cancelAtPeriodEnd: true,
+        AppModule: { select: { slug: true } },
+        AppBundle: { select: { slug: true } },
+      },
+    }),
   ]);
 
-  const tier = (userData?.subscriptionTier as string) ?? "VISITOR";
+  const tier = user.subscriptionTier as string | null;
   const currentTier: PricingTier =
     tier === "PRO" ? "PRO" : tier === "ELITE" ? "ELITE" : "VISITOR";
 
-  const transformedBundles = (bundles ?? []).map((b) => ({
-    ...b,
-    items: (b.BundleItem ?? []).map((item: { AppModule: { slug: string; name: string } }) => ({
-      module: item.AppModule,
+  const transformedBundles: AppBundleData[] = bundles.map((b) => ({
+    id: b.id,
+    slug: b.slug,
+    name: b.name,
+    description: b.description,
+    monthlyPriceNok: b.monthlyPriceNok,
+    items: b.BundleItem.map((item) => ({
+      module: { slug: item.AppModule.slug, name: item.AppModule.name },
     })),
   }));
 
-  const transformedSubscriptions = (subscriptions ?? []).map((s) => ({
-    id: s.id as string,
-    status: s.status as string,
-    cancelAtPeriodEnd: s.cancelAtPeriodEnd as boolean,
-    module: (s.AppModule as { slug: string }[])?.[0] ?? null,
-    bundle: (s.AppBundle as { slug: string }[])?.[0] ?? null,
+  const transformedSubscriptions = subscriptions.map((s) => ({
+    id: s.id,
+    status: s.status,
+    cancelAtPeriodEnd: s.cancelAtPeriodEnd,
+    module: s.AppModule ? { slug: s.AppModule.slug } : null,
+    bundle: s.AppBundle ? { slug: s.AppBundle.slug } : null,
   }));
 
   return {
-    modules: (modules ?? []) as AppModuleData[],
+    modules,
     bundles: transformedBundles,
     userModules,
     subscriptions: transformedSubscriptions,

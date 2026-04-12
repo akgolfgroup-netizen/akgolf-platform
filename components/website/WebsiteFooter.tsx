@@ -4,7 +4,7 @@ import { AKLogo } from "./AKLogo";
 
 export function WebsiteFooter() {
   return (
-    <footer className="relative bg-[#0A1F18] text-white overflow-hidden border-t border-white/10">
+    <footer className="relative bg-black text-white overflow-hidden border-t border-white/10">
       <div className="w-container relative py-16 md:py-20">
         {/* Links grid — 2 cols on mobile, 4 on desktop */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
@@ -16,7 +16,7 @@ export function WebsiteFooter() {
                 AK Golf
               </span>
             </div>
-            <p className="text-xs leading-relaxed text-[#7A8C85] max-w-[240px] mb-4">
+            <p className="text-xs leading-relaxed text-grey-400 max-w-[240px] mb-4">
               Premium golfcoaching for ambisiøse spillere.
             </p>
             {/* Social icons */}
@@ -27,7 +27,7 @@ export function WebsiteFooter() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 text-[#7A8C85] hover:bg-[var(--color-brand)] hover:text-white transition-colors duration-300"
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 text-grey-400 hover:bg-[var(--color-brand)] hover:text-white transition-colors duration-300"
                   aria-label={social.label}
                 >
                   {social.icon === "instagram" && (
@@ -56,7 +56,7 @@ export function WebsiteFooter() {
 
           {/* Tjenester */}
           <div>
-            <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#7A8C85] mb-3">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-grey-400 mb-3">
               Tjenester
             </h4>
             <ul className="space-y-2">
@@ -75,7 +75,7 @@ export function WebsiteFooter() {
 
           {/* Selskap */}
           <div>
-            <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#7A8C85] mb-3">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-grey-400 mb-3">
               Selskap
             </h4>
             <ul className="space-y-2">
@@ -94,7 +94,7 @@ export function WebsiteFooter() {
 
           {/* Kontakt */}
           <div>
-            <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#7A8C85] mb-3">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-grey-400 mb-3">
               Kontakt
             </h4>
             <ul className="space-y-2 text-xs text-[#5A6E66]">

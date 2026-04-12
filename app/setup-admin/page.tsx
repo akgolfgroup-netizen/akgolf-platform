@@ -159,7 +159,7 @@ export default function SetupAdminPage() {
       }
 
       setSuccess(true);
-      setStatus("✅ Admin-bruker opprettet!");
+      setStatus("Admin-bruker opprettet!");
       addLog("Ferdig!");
     } catch (err: unknown) {
       const errorMsg = err instanceof Error ? err.message : String(err);
