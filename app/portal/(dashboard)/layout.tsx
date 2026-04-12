@@ -23,7 +23,7 @@ export default async function DashboardLayout({
         logCount={user.portalMonthlyLogCount}
       >
         <LenisProvider>
-          <div className="min-h-screen flex bg-[var(--color-background-beige)] relative">
+          <div className="min-h-screen flex bg-[var(--color-portal-bg)] relative">
             <AtmosphericBackground />
             <Sidebar user={user} />
             <MobileHeader />

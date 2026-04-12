@@ -1,80 +1,59 @@
 "use client";
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
-import { EASE_ENTRANCE } from "@/lib/design-tokens";
-
-interface WeeklyInsight {
-  summary: string;
-  strengths: string[];
-  improvements: string[];
-  focusTip: string;
-  generatedAt: string | Date;
-}
+import { Sparkles } from "lucide-react";
+import { PremiumCard } from "./premium-card";
 
 interface AiInsightCardProps {
-  insight: WeeklyInsight | null;
+  insight: {
+    summary: string;
+    focusTip: string;
+  } | null;
   delay?: number;
 }
 
+const FALLBACK_TEXT =
+  "Jern-spillet trenger fokus. Approach-skudd lander i snitt 12m fra hullet. Anbefaler 15 min dedikert trening med avstandskontroll 100-140m for neste okt.";
+
 export function AiInsightCard({ insight, delay = 0 }: AiInsightCardProps) {
+  const text = insight?.focusTip || insight?.summary || FALLBACK_TEXT;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay, ease: EASE_ENTRANCE }}
-      className="flex h-full flex-col rounded-xl bg-ai-light p-5 shadow-card"
-    >
+    <PremiumCard delay={delay} glow="ai" className="relative">
+      {/* Purple glow line across top */}
+      <div className="absolute left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-ai to-transparent" />
+
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-ai/10">
-          <Sparkles className="h-5 w-5 text-ai" strokeWidth={1.75} />
+      <div className="mb-3 flex items-center gap-2.5">
+        <div className="flex h-[30px] w-[30px] items-center justify-center rounded-lg border border-ai/15 bg-ai/[0.08]">
+          <Sparkles className="h-[14px] w-[14px] text-ai" strokeWidth={2} />
         </div>
-        <div>
-          <h3 className="text-sm font-semibold text-ai-text">AI-innsikt</h3>
-          <p className="text-[11px] uppercase tracking-wider text-ai-text/60">
-            Basert på treningshistorikk
-          </p>
-        </div>
+        <span className="text-sm font-semibold tracking-[-0.01em] text-[var(--color-portal-text)]">
+          AI-innsikt
+        </span>
+        <span className="ml-auto rounded-md border border-ai/15 bg-ai/[0.08] px-2.5 py-1 text-[11px] font-medium text-ai">
+          Ny
+        </span>
       </div>
 
-      {/* Content */}
-      {insight ? (
-        <>
-          <p className="mt-4 text-sm italic leading-relaxed text-ai-text/80">
-            &ldquo;{insight.focusTip || insight.summary}&rdquo;
-          </p>
+      {/* Content — first sentence bold, rest normal */}
+      <p className="text-[13px] leading-[1.65] text-[var(--color-portal-secondary)]">
+        <HighlightedText text={text} />
+      </p>
+    </PremiumCard>
+  );
+}
 
-          {/* Improvement tags */}
-          {insight.improvements.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {insight.improvements.slice(0, 3).map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full bg-ai/10 px-2.5 py-1 text-[11px] font-medium text-ai-text"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          )}
-        </>
-      ) : (
-        <p className="mt-4 text-sm leading-relaxed text-ai-text/70">
-          Når du har logget økter og runder, vil AI Coach gi deg personlige
-          innsikter og anbefalinger.
-        </p>
-      )}
+function HighlightedText({ text }: { text: string }) {
+  const dotIndex = text.indexOf(".");
+  if (dotIndex === -1) return <>{text}</>;
 
-      {/* Link */}
-      <Link
-        href="/portal/ai-coach"
-        className="mt-auto inline-flex items-center gap-1.5 pt-4 text-xs font-semibold text-ai-text transition-all hover:gap-2"
-      >
-        {insight ? "Se full analyse" : "Start en samtale"}
-        <ArrowRight className="h-3.5 w-3.5" />
-      </Link>
-    </motion.div>
+  const bold = text.slice(0, dotIndex + 1);
+  const rest = text.slice(dotIndex + 1);
+
+  return (
+    <>
+      <strong className="font-medium text-[var(--color-portal-text)]">{bold}</strong>
+      {rest}
+    </>
   );
 }

@@ -11,7 +11,6 @@ import {
   LogOut,
   Plus,
   ShieldCheck,
-  Sparkles,
   Target,
   TrendingUp,
   X,
@@ -23,7 +22,14 @@ import { useSidebar } from "./sidebar-context";
 import { AKLogo } from "@/components/website/AKLogo";
 import { NotificationBell } from "./notification-bell";
 
-// ── 6 nav-items: Spillerens syklus (Planlegge → Gjennomføre → Evaluere) ─────
+// ── 5 nav-items: Spillerens syklus ──────────────────────────────────────────
+// PLANLEGGE → GJENNOMFOERE → SPILL → EVALUERE
+//
+// 1. Oversikt     — Dashboard, status, motivasjon
+// 2. Planlegg     — Aarsplan, periodisering, standard okter, treningsplan, booking, kalender
+// 3. Tren         — Start okt, ovelser, tester, logg resultater, coach-feedback
+// 4. Spill        — Registrer runde, turneringer, game sessions, bag
+// 5. Analyser     — Statistikk, SG, benchmark, trackman, AI Coach (sub-tab)
 
 interface NavItem {
   href: string;
@@ -42,31 +48,25 @@ const NAV_ITEMS: NavItem[] = [
     href: "/portal/treningsplan",
     label: "Planlegg",
     icon: ClipboardList,
-    matchPaths: ["/portal/bookinger", "/portal/kalender"],
+    matchPaths: ["/portal/bookinger", "/portal/kalender", "/portal/periodisering"],
   },
   {
     href: "/portal/dagbok",
     label: "Tren",
     icon: Target,
-    matchPaths: ["/portal/trening"],
+    matchPaths: ["/portal/trening", "/portal/tester"],
   },
   {
     href: "/portal/runde",
     label: "Spill",
     icon: Flag,
-    matchPaths: ["/portal/turneringer", "/portal/spill", "/portal/turneringsplan"],
+    matchPaths: ["/portal/turneringer", "/portal/spill", "/portal/turneringsplan", "/portal/bag"],
   },
   {
     href: "/portal/statistikk",
     label: "Analyser",
     icon: TrendingUp,
-    matchPaths: ["/portal/analyse", "/portal/benchmark", "/portal/trackman", "/portal/sammenligning"],
-  },
-  {
-    href: "/portal/ai-coach",
-    label: "AI Coach",
-    icon: Sparkles,
-    matchPaths: ["/portal/coaching-historikk"],
+    matchPaths: ["/portal/analyse", "/portal/benchmark", "/portal/trackman", "/portal/sammenligning", "/portal/ai-coach", "/portal/coaching-historikk"],
   },
 ];
 
@@ -92,24 +92,18 @@ function NavLink({
       <Link href={item.href} onClick={onClick} className="group relative block">
         <div
           className={cn(
-            "relative mx-2 flex items-center gap-3 rounded-lg px-4 py-2.5 text-[13px] transition-colors duration-150",
+            "relative mx-2 flex items-center gap-3 rounded-[10px] px-4 py-[7px] text-[13px] transition-all duration-200",
             active
-              ? "bg-primary-soft font-semibold text-primary"
-              : "font-medium text-grey-500 hover:bg-grey-50 hover:text-text",
+              ? "bg-primary font-semibold text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
+              : "font-medium text-[var(--color-portal-muted)] hover:bg-[var(--color-portal-hover)] hover:text-[var(--color-portal-secondary)]",
           )}
         >
-          {active && (
-            <span
-              aria-hidden
-              className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-primary"
-            />
-          )}
           <item.icon
             className={cn(
               "h-[18px] w-[18px] shrink-0 transition-colors",
               active
-                ? "text-primary"
-                : "text-grey-400 group-hover:text-primary",
+                ? "text-white"
+                : "text-[var(--color-portal-muted)] group-hover:text-[var(--color-portal-secondary)]",
             )}
           />
           <span>{item.label}</span>
@@ -143,13 +137,13 @@ function SidebarContent({
         </ul>
 
         {/* Logg ut */}
-        <div className="mx-2 mt-6 border-t border-grey-100 pt-4">
+        <div className="mx-2 mt-6 border-t border-[rgba(0,0,0,0.04)] pt-4">
           <button
             onClick={() => {
               onSignOut();
               onNavClick?.();
             }}
-            className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-[13px] font-medium text-grey-400 transition-colors hover:text-error"
+            className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-[13px] font-medium text-[var(--color-portal-muted)] transition-colors hover:text-error"
           >
             <LogOut className="h-4 w-4" />
             <span>Logg ut</span>
@@ -184,7 +178,7 @@ function SidebarContent({
       </div>
 
       {/* User footer */}
-      <div className="mx-3 mb-3 rounded-xl border border-grey-200 bg-primary-soft p-3">
+      <div className="mx-3 mb-3 rounded-xl border border-[rgba(0,0,0,0.06)] bg-[var(--color-portal-hover)] p-3">
         <div className="flex items-center gap-3">
           {user.image ? (
             <img
@@ -193,17 +187,17 @@ function SidebarContent({
               className="h-9 w-9 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary ring-1 ring-accent-cta/40">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary">
               <span className="text-xs font-semibold text-white">
                 {(user.name ?? "S")[0].toUpperCase()}
               </span>
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-black">
+            <p className="truncate text-sm font-medium text-[var(--color-portal-text)]">
               {user.name ?? "Spiller"}
             </p>
-            <p className="truncate text-[11px] font-medium text-primary">
+            <p className="truncate text-[11px] font-semibold uppercase tracking-wider text-primary">
               {user.subscriptionTier ?? "Academy"}
             </p>
           </div>
@@ -236,17 +230,17 @@ export function Sidebar({ user }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar — light, minimal */}
-      <aside className="fixed left-0 top-0 z-20 hidden h-full w-[220px] flex-col border-r border-grey-100 bg-white lg:flex">
+      <aside className="fixed left-0 top-0 z-20 hidden h-full w-[220px] flex-col border-r border-[rgba(0,0,0,0.06)] bg-white/85 backdrop-blur-xl backdrop-saturate-[1.4] lg:flex">
         {/* Logo */}
-        <div className="border-b border-grey-100 px-5 py-4">
+        <div className="border-b border-[rgba(0,0,0,0.06)] px-5 py-4">
           <div className="flex items-center justify-between">
             <Link href="/portal" className="group flex items-center gap-3">
               <AKLogo variant="black" size={32} />
               <div>
-                <span className="text-[14px] font-bold text-black transition-colors group-hover:text-primary">
+                <span className="text-[17px] font-bold tracking-[-0.03em] text-[var(--color-portal-text)] transition-colors group-hover:text-primary">
                   AK Golf
                 </span>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-grey-400">
+                <p className="text-[9px] font-bold uppercase tracking-wider text-[var(--color-portal-muted)]">
                   Academy
                 </p>
               </div>

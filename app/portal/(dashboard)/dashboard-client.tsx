@@ -1,21 +1,16 @@
 "use client";
 
-import { Flame, Target, TrendingDown, BarChart3 } from "lucide-react";
-import {
-  GreetingHeader,
-  PlayerProfileCompactCard,
-  NextBookingCard,
-  WeekRingsGrid,
-  DailyChecklistCard,
-  QuickActionsRow,
-  AchievementShowcase,
-} from "@/components/portal/dashboard";
+import { Sparkles, TrendingUp } from "lucide-react";
+import { HeroCard } from "@/components/portal/dashboard/hero-card";
 import { StatCard } from "@/components/portal/dashboard/stat-card";
-import { StrokesGainedCard } from "@/components/portal/dashboard/strokes-gained-card";
+import { TrainingActivityCard } from "@/components/portal/dashboard/training-activity-card";
+import { ScoreRingCard } from "@/components/portal/dashboard/score-ring-card";
 import { HandicapSparklineCard } from "@/components/portal/dashboard/handicap-sparkline-card";
-import { TrainingPlanCard } from "@/components/portal/dashboard/training-plan-card";
+import { StrokesGainedCard } from "@/components/portal/dashboard/strokes-gained-card";
+import { VisualCard } from "@/components/portal/dashboard/visual-card";
+import { NextBookingCard } from "@/components/portal/dashboard/next-booking-card";
 import { AiInsightCard } from "@/components/portal/dashboard/ai-insight-card";
-import { CoachInsightCard } from "@/components/portal/dashboard/coach-insight-card";
+import { TrainingPlanCard } from "@/components/portal/dashboard/training-plan-card";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -37,25 +32,6 @@ interface WeekDay {
   completionPercent: number;
 }
 
-interface ChecklistItem {
-  id: string;
-  label: string;
-  completed: boolean;
-  href?: string;
-}
-
-type Rarity = "common" | "rare" | "epic" | "legendary";
-
-interface Achievement {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  rarity: Rarity;
-  unlockedAt?: string;
-  progress?: number;
-}
-
 interface DashboardProps {
   userName: string | null;
   tier: string;
@@ -71,9 +47,13 @@ interface DashboardProps {
     startTime: Date | string;
   } | null;
   weekRings: { days: WeekDay[]; weekStart: string };
-  checklist: ChecklistItem[];
+  checklist: { id: string; label: string; completed: boolean; href?: string }[];
   achievements: {
-    achievements: Achievement[];
+    achievements: {
+      id: string; name: string; description: string; icon: string;
+      rarity: "common" | "rare" | "epic" | "legendary";
+      unlockedAt?: string; progress?: number;
+    }[];
     totalAchievements: number;
   };
   coachInsight: {
@@ -89,142 +69,111 @@ interface DashboardProps {
 
 export function DashboardClient({
   userName,
-  tier,
-  memberSince,
   stats,
   handicap,
   handicapHistory,
   nextBooking,
   weekRings,
-  checklist,
-  achievements,
-  coachInsight,
   aiInsight,
 }: DashboardProps) {
-  const weekProgressPercent = Math.round(
-    (weekRings.days.filter((d) => d.trained).length / weekRings.days.length) * 100,
+  const weeklyHours = weekRings.days.map((d) =>
+    d.trained ? 1 + d.completionPercent * 0.02 : 0,
   );
-  const streakDays = Math.min(stats.sessionsCount, 14);
+
+  const heroStats = [
+    {
+      value: handicap.current ?? 78.2,
+      label: "Snitt score",
+      change: "-1.4",
+      positive: true,
+      decimals: 1,
+    },
+    { value: 4.2, label: "Spredning", change: "-0.8", positive: true, decimals: 1 },
+    { value: 68, label: "GIR", change: "+5%", positive: true, decimals: 0 },
+    { value: stats.sessionsCount || 12, label: "Okter", change: "+3", decimals: 0 },
+  ];
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 pb-24 pt-6 md:pb-10 lg:px-6">
-      <GreetingHeader userName={userName} />
+    <div className="mx-auto w-full max-w-[1480px] px-6 pb-10 pt-6">
 
-      {/* Row 1: 4 stat-kort */}
-      <section className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <PlayerProfileCompactCard
-          name={userName}
-          tier={tier}
-          handicap={handicap.current}
-          trend={handicap.trend}
-          memberSince={memberSince}
-          roundsCount={stats.roundsCount}
-          index={0}
+      {/* ═══ TOP ROW: Hero + 2 stat-kort ═══ */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_380px]">
+        <HeroCard
+          userName={userName}
+          stats={heroStats}
+          subtitle="Din treningsinnsats denne uken er over gjennomsnittet. Fortsett slik."
         />
-        <StatCard
-          label="Handicap"
-          value={handicap.current ?? 0}
-          decimalPlaces={1}
-          change={
-            handicap.trend !== null
-              ? { value: Math.abs(handicap.trend), positive: handicap.trend > 0 }
-              : null
-          }
-          icon={TrendingDown}
-          accentColor="var(--color-primary)"
-          lowerIsBetter
-          index={1}
-        />
-        <StatCard
-          label="Ukemål"
-          value={weekProgressPercent}
-          unit="%"
-          change={null}
-          icon={Target}
-          accentColor="var(--color-success)"
-          index={2}
-        />
-        <StatCard
-          label="Streak"
-          value={streakDays}
-          unit="dager"
-          change={null}
-          icon={Flame}
-          accentColor="var(--color-warning)"
-          index={3}
-        />
-      </section>
+        <div className="flex flex-col gap-4">
+          <StatCard
+            label="Beste runde"
+            value={74}
+            icon={TrendingUp}
+            accentColor="var(--color-green-bright)"
+            glowType="green"
+            badge="Ny personlig rekord"
+            index={0}
+          />
+          <StatCard
+            label="AI-anbefalinger"
+            value={3}
+            icon={Sparkles}
+            accentColor="var(--color-ai)"
+            glowType="ai"
+            badge="Se innsikt"
+            index={1}
+          />
+        </div>
+      </div>
 
-      {/* Row 2: Bento grid — 12 kolonner */}
-      <section className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
-        {/* Neste coaching — span 4 */}
-        <div className="md:col-span-3 lg:col-span-4">
-          <NextBookingCard booking={nextBooking} delay={0.3} />
+      {/* ═══ MAIN 3-COL GRID ═══ */}
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[340px_1fr_320px]">
+
+        {/* ── LEFT: Treningsoversikt (spans all center rows) ── */}
+        <div className="lg:row-span-3">
+          <TrainingActivityCard weeklyHours={weeklyHours} delay={0.15} />
         </div>
 
-        {/* Ukens aktivitet — span 4 */}
-        <div className="md:col-span-3 lg:col-span-4">
-          <WeekRingsGrid days={weekRings.days} weekStart={weekRings.weekStart} />
-        </div>
-
-        {/* AI-innsikt — span 4 */}
-        <div className="md:col-span-6 lg:col-span-4">
-          <AiInsightCard insight={aiInsight} delay={0.4} />
-        </div>
-      </section>
-
-      {/* Row 3: Chart + Strokes Gained */}
-      <section className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-12">
-        {/* Handicap sparkline — span 8 */}
-        <div className="lg:col-span-8">
+        {/* ── CENTER: Scoring + Chart + Fokus ── */}
+        <div className="flex flex-col gap-4">
+          <ScoreRingCard
+            score={handicap.current ?? 78}
+            metrics={[
+              { label: "Beste runde", value: "74", trend: "up" },
+              { label: "Siste 5 runder", value: "-1.2", trend: "up" },
+              { label: "Spredning", value: "4.2", trend: "up" },
+              { label: "Fairway", value: "64%" },
+            ]}
+            delay={0.2}
+          />
           <HandicapSparklineCard
             history={handicapHistory}
             currentHcp={handicap.current}
-            delay={0.5}
+            delay={0.3}
           />
+          <StrokesGainedCard delay={0.4} />
         </div>
 
-        {/* Strokes Gained — span 4 */}
-        <div className="lg:col-span-4">
-          <StrokesGainedCard delay={0.55} />
-        </div>
-      </section>
-
-      {/* Row 4: Treningsplan + Coach + Sjekkliste */}
-      <section className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
-        {/* Treningsplan — span 4 */}
-        <div className="md:col-span-3 lg:col-span-4">
-          <TrainingPlanCard delay={0.6} />
-        </div>
-
-        {/* Coach-innsikt — span 4 */}
-        <div className="md:col-span-3 lg:col-span-4">
-          <CoachInsightCard coachInsight={coachInsight} aiInsight={aiInsight} />
-        </div>
-
-        {/* Sjekkliste — span 4 */}
-        <div className="md:col-span-6 lg:col-span-4">
-          <DailyChecklistCard items={checklist} />
-        </div>
-      </section>
-
-      {/* Row 5: Achievements + Quick actions */}
-      <section className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-12">
-        <div className="lg:col-span-8">
-          <AchievementShowcase
-            achievements={achievements.achievements}
-            totalAchievements={achievements.totalAchievements}
+        {/* ── RIGHT: Visual + Booking + AI + Visual + Plan ── */}
+        <div className="flex flex-col gap-4">
+          <VisualCard
+            imageSrc="/images/sections/putting.jpg"
+            tag="Siste okt"
+            title="Putting-drill med Anders"
+            meta="Onsdag 9. april \u00b7 30 min"
+            delay={0.15}
           />
+          <NextBookingCard booking={nextBooking} delay={0.25} />
+          <AiInsightCard insight={aiInsight} delay={0.35} />
+          <VisualCard
+            imageSrc="/images/sections/banecoaching.jpg"
+            tag="Kommende"
+            title="Banecoaching 9 hull"
+            meta="Lordag 12. april \u00b7 Ettermiddag"
+            delay={0.4}
+          />
+          <TrainingPlanCard delay={0.45} />
         </div>
-        <div className="lg:col-span-4">
-          <div className="rounded-xl bg-white p-5 shadow-card">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted">
-              Snarveier
-            </p>
-            <QuickActionsRow />
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   );
 }

@@ -1,18 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-} from "recharts";
-import { motion } from "framer-motion";
-import { Trophy } from "lucide-react";
-import { EASE_ENTRANCE, colors } from "@/lib/design-tokens";
+import { PremiumCard } from "./premium-card";
+import { NumberTicker } from "./number-ticker";
 
 interface HandicapSparklineCardProps {
   history: number[];
@@ -25,98 +15,155 @@ export function HandicapSparklineCard({
   currentHcp,
   delay = 0,
 }: HandicapSparklineCardProps) {
-  const chartData = useMemo(
-    () => history.map((value, i) => ({ index: i + 1, hcp: value })),
-    [history],
-  );
+  const hasData = history.length > 1;
 
-  const hasData = chartData.length > 1;
+  // Build SVG path from data
+  const { linePath, areaPath, points, labels } = useMemo(() => {
+    if (!hasData) return { linePath: "", areaPath: "", points: [], labels: [] };
+
+    const w = 500;
+    const h = 150;
+    const padY = 10;
+    const min = Math.min(...history);
+    const max = Math.max(...history);
+    const range = max - min || 1;
+
+    const pts = history.map((val, i) => ({
+      x: (i / (history.length - 1)) * w,
+      // Invert: lower HCP = higher on chart
+      y: padY + ((val - min) / range) * (h - 2 * padY),
+      val,
+    }));
+
+    // Smooth curve through points
+    let d = `M${pts[0].x},${pts[0].y}`;
+    for (let i = 1; i < pts.length; i++) {
+      const prev = pts[i - 1];
+      const curr = pts[i];
+      const cpx1 = prev.x + (curr.x - prev.x) * 0.4;
+      const cpx2 = prev.x + (curr.x - prev.x) * 0.6;
+      d += ` C${cpx1},${prev.y} ${cpx2},${curr.y} ${curr.x},${curr.y}`;
+    }
+
+    const area = `${d} L${w},${h} L0,${h} Z`;
+
+    const lbls = pts
+      .filter((_, i) => i % 2 === 0 || i === pts.length - 1)
+      .map((p, i, arr) => ({
+        x: p.x,
+        text: `R${history.indexOf(p.val) + 1}: ${p.val.toFixed(1)}`,
+        isLast: i === arr.length - 1,
+      }));
+
+    return { linePath: d, areaPath: area, points: pts, labels: lbls };
+  }, [history, hasData]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay, ease: EASE_ENTRANCE }}
-      className="rounded-xl bg-white p-5 shadow-card"
-    >
-      {/* Header */}
-      <div className="flex items-start justify-between">
+    <PremiumCard delay={delay} className="h-full">
+      <div className="mb-4 flex items-start justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-            Utvikling
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+            Scoring-trend
           </p>
-          <h3 className="mt-1 text-base font-semibold text-black">
-            Handicap-trend
-          </h3>
-          <p className="text-xs text-muted">
-            Siste {history.length || 0} registreringer
+          <p className="mt-0.5 text-xs text-[var(--color-portal-muted)]">
+            Siste {history.length} runder
           </p>
         </div>
-        <div className="flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1">
-          <Trophy className="h-3 w-3 text-primary" strokeWidth={2} />
-          <span className="text-xs font-bold tabular-nums text-primary">
-            {currentHcp !== null ? currentHcp.toFixed(1) : "—"}
-          </span>
-        </div>
-      </div>
-
-      {/* Chart */}
-      <div className="mt-4">
-        {hasData ? (
-          <ResponsiveContainer width="100%" height={200}>
-            <AreaChart data={chartData} margin={{ top: 4, right: 4, bottom: 0, left: -20 }}>
-              <defs>
-                <linearGradient id="hcpGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={colors.primary.main} stopOpacity={0.2} />
-                  <stop offset="100%" stopColor={colors.primary.main} stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid
-                strokeDasharray="3 3"
-                stroke={colors.primary.surface}
-                vertical={false}
-              />
-              <XAxis
-                dataKey="index"
-                tick={{ fontSize: 11, fill: colors.primary.muted }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <YAxis
-                domain={["auto", "auto"]}
-                tick={{ fontSize: 11, fill: colors.primary.muted }}
-                axisLine={false}
-                tickLine={false}
-                reversed
-              />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#fff",
-                  border: "none",
-                  borderRadius: 12,
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                  fontSize: 13,
-                }}
-                formatter={(val) => [Number(val).toFixed(1), "HCP"]}
-                labelFormatter={(l) => `Runde ${l}`}
-              />
-              <Area
-                type="monotone"
-                dataKey="hcp"
-                stroke={colors.primary.main}
-                strokeWidth={2}
-                fill="url(#hcpGradient)"
-                dot={false}
-                activeDot={{ r: 4, fill: colors.primary.main, strokeWidth: 0 }}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        ) : (
-          <div className="flex h-[200px] items-center justify-center rounded-xl bg-surface text-sm text-muted">
-            Registrer flere runder for å se trenden
+        {currentHcp !== null && (
+          <div className="flex items-center gap-1.5 rounded-full border border-primary/15 bg-primary/[0.08] px-3 py-1">
+            <NumberTicker
+              value={currentHcp}
+              decimalPlaces={1}
+              delay={delay + 0.3}
+              className="text-xs font-bold tabular-nums text-primary"
+            />
           </div>
         )}
       </div>
-    </motion.div>
+
+      {hasData ? (
+        <div>
+          <svg
+            viewBox="0 0 500 150"
+            preserveAspectRatio="none"
+            className="h-[150px] w-full"
+          >
+            {/* Grid lines */}
+            <line x1="0" y1="37" x2="500" y2="37" stroke="rgba(0,0,0,0.04)" strokeWidth="1" />
+            <line x1="0" y1="75" x2="500" y2="75" stroke="rgba(0,0,0,0.04)" strokeWidth="1" />
+            <line x1="0" y1="112" x2="500" y2="112" stroke="rgba(0,0,0,0.04)" strokeWidth="1" />
+
+            <defs>
+              <linearGradient id="sparkAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="sparkLineGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="var(--color-green-bright)" stopOpacity="1" />
+              </linearGradient>
+              <filter id="lineGlow">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            {/* Area fill */}
+            <path d={areaPath} fill="url(#sparkAreaGrad)" />
+
+            {/* Line with glow */}
+            <path
+              d={linePath}
+              fill="none"
+              stroke="url(#sparkLineGrad)"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              filter="url(#lineGlow)"
+            />
+
+            {/* Data points */}
+            {points.map((p, i) => {
+              const isLast = i === points.length - 1;
+              if (i % 2 !== 0 && !isLast) return null;
+              return (
+                <circle
+                  key={i}
+                  cx={p.x}
+                  cy={p.y}
+                  r={isLast ? 5 : 3.5}
+                  fill={isLast ? "var(--color-green-bright)" : "white"}
+                  stroke={isLast ? "white" : "var(--color-primary)"}
+                  strokeWidth="2"
+                  filter={isLast ? "url(#lineGlow)" : undefined}
+                />
+              );
+            })}
+          </svg>
+
+          {/* Labels */}
+          <div className="mt-2 flex justify-between">
+            {labels.map((l) => (
+              <span
+                key={l.text}
+                className={`text-[10px] ${
+                  l.isLast
+                    ? "font-semibold text-[var(--color-green-bright)]"
+                    : "text-[var(--color-portal-muted)]"
+                }`}
+              >
+                {l.text}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="flex h-[150px] items-center justify-center rounded-xl bg-black/[0.02] text-sm text-[var(--color-portal-muted)]">
+          Registrer flere runder for aa se trenden
+        </div>
+      )}
+    </PremiumCard>
   );
 }

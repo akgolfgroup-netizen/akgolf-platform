@@ -84,6 +84,25 @@
   --color-vipps: #FF5B24;
 
   /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* PORTAL — Nøytrale farger for dashboard (ikke grønntonet)                   */
+  /* Markedssiden beholder brand-grønn. Portalen bruker ren Apple-grå.          */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+
+  --color-portal-bg: #F5F5F7;
+  --color-portal-card: #FFFFFF;
+  --color-portal-text: #1D1D1F;
+  --color-portal-secondary: #6E6E73;
+  --color-portal-muted: #AEAEB2;
+  --color-portal-border: rgba(0, 0, 0, 0.06);
+  --color-portal-border-subtle: rgba(0, 0, 0, 0.04);
+  --color-portal-hover: #F0F0F2;
+
+  /* Portal shadows */
+  --shadow-portal-card: 0 0 0 1px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-portal-glow-green: inset 0 0 30px rgba(0,88,64,0.08), 0 0 0 1px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-portal-glow-ai: inset 0 0 30px rgba(175,82,222,0.08), 0 0 0 1px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06);
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
   /* TYPOGRAPHY — Inter                                                         */
   /* ═══════════════════════════════════════════════════════════════════════════ */
 

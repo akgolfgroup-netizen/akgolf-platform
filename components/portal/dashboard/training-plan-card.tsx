@@ -1,163 +1,133 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Dumbbell, type LucideIcon, Target, Waypoints } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { EASE_ENTRANCE } from "@/lib/design-tokens";
+import { Check, Circle, User, TrendingUp, Target, Calendar } from "lucide-react";
+import { PremiumCard } from "./premium-card";
 
-// ── Types ──────────────────────────────────────────────────────────────────────
-
-interface WeekDay {
-  dayLabel: string;
-  dateNumber: number;
-  hasActivity: boolean;
-}
-
-interface Exercise {
-  id: string;
-  title: string;
-  description: string;
-  duration: number;
-  iconName: "Dumbbell" | "Target" | "Waypoints";
+interface PlanItem {
+  name: string;
+  meta: string;
+  done: boolean;
+  iconColor: string;
+  iconBg: string;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number; style?: React.CSSProperties }>;
+  highlight?: boolean;
+  dimmed?: boolean;
 }
 
 interface TrainingPlanCardProps {
-  days?: WeekDay[];
-  exercises?: Exercise[];
   delay?: number;
 }
 
-// ── Icon map ───────────────────────────────────────────────────────────────────
-
-const ICON_MAP: Record<string, LucideIcon> = {
-  Dumbbell,
-  Target,
-  Waypoints,
-};
-
-// ── Mock data (brukes når ingen data sendes inn) ───────────────────────────────
-
-const MOCK_DAYS: WeekDay[] = [
-  { dayLabel: "Ma", dateNumber: 7, hasActivity: true },
-  { dayLabel: "Ti", dateNumber: 8, hasActivity: true },
-  { dayLabel: "On", dateNumber: 9, hasActivity: false },
-  { dayLabel: "To", dateNumber: 10, hasActivity: true },
-  { dayLabel: "Fr", dateNumber: 11, hasActivity: false },
-  { dayLabel: "Lø", dateNumber: 12, hasActivity: true },
-  { dayLabel: "Sø", dateNumber: 13, hasActivity: false },
+const PLAN_ITEMS: PlanItem[] = [
+  {
+    name: "Putting-drill",
+    meta: "Man 7. apr \u00b7 20 min",
+    done: true,
+    icon: Circle,
+    iconColor: "var(--color-green-bright)",
+    iconBg: "rgba(0,88,64,0.08)",
+  },
+  {
+    name: "Short game",
+    meta: "Tir 8. apr \u00b7 30 min",
+    done: true,
+    icon: TrendingUp,
+    iconColor: "var(--color-warning)",
+    iconBg: "rgba(196,138,50,0.12)",
+  },
+  {
+    name: "Driving range",
+    meta: "Ons 9. apr \u00b7 45 min",
+    done: true,
+    icon: Target,
+    iconColor: "var(--color-green-bright)",
+    iconBg: "rgba(0,88,64,0.08)",
+  },
+  {
+    name: "Coaching-okt",
+    meta: "Fre 11. apr \u00b7 14:30",
+    done: false,
+    icon: User,
+    iconColor: "var(--color-ai)",
+    iconBg: "rgba(175,82,222,0.08)",
+    highlight: true,
+  },
+  {
+    name: "9 hull spill",
+    meta: "Lor 12. apr",
+    done: false,
+    icon: Calendar,
+    iconColor: "var(--color-portal-muted)",
+    iconBg: "rgba(0,0,0,0.03)",
+    dimmed: true,
+  },
 ];
 
-const MOCK_EXERCISES: Exercise[] = [
-  {
-    id: "1",
-    title: "Pitch 20-40 meter",
-    description: "Variert avstand, 30 baller",
-    duration: 20,
-    iconName: "Target",
-  },
-  {
-    id: "2",
-    title: "Chip rundt green",
-    description: "3 posisjoner, opp-og-ned",
-    duration: 25,
-    iconName: "Waypoints",
-  },
-  {
-    id: "3",
-    title: "Putting-drill",
-    description: "Gate-drill, 1.5m–3m",
-    duration: 15,
-    iconName: "Dumbbell",
-  },
-];
-
-// ── Component ��───────────────────────────���─────────────────────────────────────
-
-export function TrainingPlanCard({
-  days = MOCK_DAYS,
-  exercises = MOCK_EXERCISES,
-  delay = 0,
-}: TrainingPlanCardProps) {
-  const todayIndex = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
-  const [selectedDay, setSelectedDay] = useState(
-    Math.min(todayIndex, days.length - 1),
-  );
+export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
+  const doneCount = PLAN_ITEMS.filter((i) => i.done).length;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay, ease: EASE_ENTRANCE }}
-      className="rounded-xl bg-white p-5 shadow-card"
-    >
-      <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-        Treningsplan
-      </p>
+    <PremiumCard delay={delay} className="h-full">
+      <div className="mb-4 flex items-center justify-between">
+        <div>
+          <p className="text-sm font-semibold tracking-[-0.01em] text-[var(--color-portal-text)]">
+            Ukens plan
+          </p>
+          <p className="text-[11px] text-[var(--color-portal-muted)]">
+            {doneCount} av {PLAN_ITEMS.length} fullfort
+          </p>
+        </div>
+      </div>
 
-      {/* Week selector */}
-      <div className="mt-3 flex gap-2">
-        {days.map((day, i) => (
-          <button
-            key={day.dayLabel}
-            onClick={() => setSelectedDay(i)}
-            className={cn(
-              "flex flex-1 flex-col items-center gap-1 rounded-xl py-2 text-center transition-colors",
-              i === selectedDay
-                ? "bg-black text-white"
-                : "bg-white text-text hover:bg-grey-50",
-            )}
+      <div className="flex flex-col gap-2">
+        {PLAN_ITEMS.map((item) => (
+          <div
+            key={item.name}
+            className="flex items-center gap-2.5 rounded-[10px] border border-[var(--color-portal-border)] bg-[var(--color-portal-border-subtle)] px-3 py-2.5 transition-colors duration-200 hover:border-[rgba(0,0,0,0.08)] hover:bg-[rgba(0,0,0,0.04)]"
+            style={{ opacity: item.dimmed ? 0.4 : 1 }}
           >
-            <span className="text-[10px] font-medium uppercase tracking-wider opacity-70">
-              {day.dayLabel}
-            </span>
-            <span className="text-sm font-semibold tabular-nums">
-              {day.dateNumber}
-            </span>
-            <span
-              className={cn(
-                "h-1.5 w-1.5 rounded-full",
-                day.hasActivity ? "bg-success" : "bg-transparent",
-              )}
-            />
-          </button>
+            {/* Icon dot */}
+            <div
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg"
+              style={{ background: item.iconBg }}
+            >
+              <item.icon
+                className="h-3 w-3"
+                style={{ color: item.iconColor }}
+                strokeWidth={2}
+              />
+            </div>
+
+            {/* Info */}
+            <div className="flex-1 min-w-0">
+              <p
+                className="text-[13px] font-medium"
+                style={{
+                  color: item.highlight
+                    ? "var(--color-green-bright)"
+                    : "var(--color-portal-text)",
+                }}
+              >
+                {item.name}
+              </p>
+              <p className="text-[11px] text-[var(--color-portal-muted)]">
+                {item.meta}
+              </p>
+            </div>
+
+            {/* Check circle */}
+            <div
+              className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 text-[10px] transition-colors ${
+                item.done
+                  ? "border-[var(--color-success)] bg-[var(--color-success)] text-white"
+                  : "border-[var(--color-portal-border)]"
+              }`}
+            >
+              {item.done && <Check className="h-2.5 w-2.5" strokeWidth={3} />}
+            </div>
+          </div>
         ))}
       </div>
-
-      {/* Exercise list */}
-      <div className="mt-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-          Dagens økt
-        </p>
-        <AnimatePresence mode="wait">
-          <motion.ul
-            key={selectedDay}
-            initial={{ opacity: 0, x: 8 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -8 }}
-            transition={{ duration: 0.2 }}
-            className="mt-3 divide-y divide-grey-100"
-          >
-            {exercises.map((ex) => {
-              const Icon = ICON_MAP[ex.iconName] ?? Dumbbell;
-              return (
-                <li key={ex.id} className="flex items-start gap-4 py-3.5">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-grey-50">
-                    <Icon className="h-5 w-5 text-grey-500" strokeWidth={1.75} />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-black">{ex.title}</p>
-                    <p className="text-xs text-muted">{ex.description}</p>
-                  </div>
-                  <span className="shrink-0 text-xs tabular-nums text-muted">
-                    {ex.duration} min
-                  </span>
-                </li>
-              );
-            })}
-          </motion.ul>
-        </AnimatePresence>
-      </div>
-    </motion.div>
+    </PremiumCard>
   );
 }

@@ -24,18 +24,18 @@ export function GreetingHeader({ userName, locale = nb }: GreetingHeaderProps) {
   return (
     <header className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)]">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-portal-muted)]">
           Dashboard
         </p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--color-grey-900)] md:text-4xl">
+        <h1 className="mt-2 text-3xl font-extrabold tracking-[-0.04em] text-[var(--color-portal-text)] md:text-4xl">
           {greeting},{" "}
           <span className="text-[var(--color-primary)]">{firstName}</span>
         </h1>
       </div>
-      <div className="flex items-center gap-3 text-sm text-[var(--color-muted)]">
+      <div className="flex items-center gap-3 text-sm text-[var(--color-portal-secondary)]">
         <span className="capitalize">{dateLabel}</span>
-        <span className="h-4 w-px bg-[var(--color-grey-200)]" />
-        <span className="rounded-full border border-[var(--color-grey-200)] bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text)]">
+        <span className="h-4 w-px bg-[var(--color-portal-border)]" />
+        <span className="rounded-full border border-[var(--color-portal-border)] bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[var(--color-portal-text)]">
           Uke {weekNumber}
         </span>
       </div>

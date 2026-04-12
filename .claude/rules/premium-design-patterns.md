@@ -11,6 +11,54 @@ Premium = disiplin, ikke dekorasjon. Tre prinsipper:
 
 ---
 
+## 0. KRITISK: Portal vs Markedsside farger
+
+Portalen bruker NOEYTRALE Apple-graa farger (`--color-portal-*`), IKKE groenntonede brand-farger.
+Markedssiden beholder groenntonet palett (`--color-grey-*`).
+
+| Bruk | Portal-token | Verdi | Markedsside-token | Verdi |
+|------|-------------|-------|-------------------|-------|
+| Bakgrunn | `portal-bg` | #F5F5F7 | `surface` | #ECF0EF |
+| Tekst primaer | `portal-text` | #1D1D1F | `black` | #0A1F18 |
+| Tekst sekundaer | `portal-secondary` | #6E6E73 | `grey-400` | #7A8C85 |
+| Tekst muted | `portal-muted` | #AEAEB2 | `muted` | #A5B2AD |
+| Kort-bg | `portal-card` | #FFFFFF | `white` | #FFFFFF |
+| Border | `portal-border` | rgba(0,0,0,0.06) | `grey-200` | #D5DFDB |
+| Hover-bg | `portal-hover` | #F0F0F2 | `grey-50` | #F5F8F7 |
+
+### Tailwind-bruk i portal:
+```tsx
+// RIKTIG — portal
+<div className="bg-portal-bg text-portal-text">
+<span className="text-portal-secondary">
+<div className="border-portal-border">
+
+// FEIL — dette er markedsside-farger
+<div className="bg-surface text-black">
+```
+
+### Chip-tabs (filter-pills i portal)
+
+```tsx
+<div className="flex gap-1.5 rounded-[10px] bg-portal-hover p-[3px]">
+  <button className="rounded-[7px] bg-primary px-4 py-[7px] text-[13px] font-medium text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]">
+    Aktiv
+  </button>
+  <button className="rounded-[7px] px-4 py-[7px] text-[13px] font-medium text-portal-muted hover:bg-portal-hover hover:text-portal-secondary">
+    Inaktiv
+  </button>
+</div>
+```
+
+### Inset glow er STANDARD paa stat-kort
+
+Alle stat-kort i portalen SKAL ha inset glow. Ikke flat shadow.
+- Groenn glow: `shadow-portal-glow-green` — for golf-metrikker
+- Lilla glow: `shadow-portal-glow-ai` — for AI-kort
+- Standard: `shadow-portal-card` — for noytrale kort
+
+---
+
 ## 1. Shadows — Layered Card System
 
 Aldri bruk en enkel shadow. Premium kort har MINST to lag.
