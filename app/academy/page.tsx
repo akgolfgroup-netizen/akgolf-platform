@@ -2,10 +2,12 @@ import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { BackToTop } from "@/components/website/BackToTop";
 import { AcademyHeroV2 } from "@/components/website/academy-hero-v2";
-import { AcademyMethodV2 } from "@/components/website/academy-method-v2";
-import { PlayerJourney } from "@/components/website/player-journey";
+import { ConceptSection } from "@/components/website/academy/ConceptSection";
 import { AcademyPricesV2 } from "@/components/website/academy-prices-v2";
+import { ComparisonSection } from "@/components/website/academy/ComparisonSection";
+import { TestimonialSection } from "@/components/website/landing/TestimonialSection";
 import { AcademyCtaV2 } from "@/components/website/academy-cta-v2";
+import { FAQSection } from "@/components/website/landing/FAQSection";
 
 export default function AcademyPage() {
   return (
@@ -43,20 +45,26 @@ export default function AcademyPage() {
           }}
         />
 
-        {/* 1. Hero med coaching-bilde */}
+        {/* 1. Hero */}
         <AcademyHeroV2 />
 
-        {/* 2. Metodikken bak (Analyse, Plan, Oppfolging) */}
-        <AcademyMethodV2 />
+        {/* 2. Konsept — Hvorfor abonnement */}
+        <ConceptSection />
 
-        {/* 3. Spillerreisen */}
-        <PlayerJourney />
-
-        {/* 4. Priser og pakker */}
+        {/* 3. Priser og pakker */}
         <AcademyPricesV2 />
 
-        {/* 5. Avsluttende CTA */}
+        {/* 4. Abonnement vs Flex */}
+        <ComparisonSection />
+
+        {/* 5. Kundehistorie */}
+        <TestimonialSection />
+
+        {/* 6. CTA */}
         <AcademyCtaV2 />
+
+        {/* 7. FAQ */}
+        <FAQSection />
       </main>
 
       <BackToTop />

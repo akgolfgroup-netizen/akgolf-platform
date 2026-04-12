@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { SectionLabel } from "../SectionLabel";
 import { RevealOnScroll } from "../RevealOnScroll";
+import { IPhoneMockup } from "@/components/ui/iphone-mockup";
 import { PORTAL_PREVIEW_SCREENS, PORTAL_URL } from "@/lib/website-constants";
+import Link from "next/link";
 
 export function PortalPreviewSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -29,9 +29,9 @@ export function PortalPreviewSection() {
         </RevealOnScroll>
 
         <RevealOnScroll>
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Tab navigation + features */}
-            <div className="lg:col-span-2 space-y-2">
+            <div className="space-y-2">
               {PORTAL_PREVIEW_SCREENS.map((screen, i) => (
                 <button
                   key={screen.id}
@@ -74,19 +74,13 @@ export function PortalPreviewSection() {
               </Link>
             </div>
 
-            {/* Screenshot preview */}
-            <div className="lg:col-span-3">
-              <div className="relative rounded-2xl overflow-hidden shadow-card-hover bg-white border border-black/6">
-                <div className="relative aspect-[16/10]">
-                  <Image
-                    src={active.image}
-                    alt={`Spillerportalen — ${active.title}`}
-                    fill
-                    className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
-                  />
-                </div>
-              </div>
+            {/* iPhone Mockup */}
+            <div className="flex justify-center">
+              <IPhoneMockup
+                width={320}
+                imageSrc={active.image}
+                className="drop-shadow-2xl"
+              />
             </div>
           </div>
         </RevealOnScroll>

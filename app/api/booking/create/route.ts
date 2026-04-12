@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { randomUUID } from "crypto";
 import { getPortalUser } from "@/lib/portal/auth";
+import { verifyCsrf } from "@/lib/portal/csrf";
 import { stripe } from "@/lib/portal/stripe";
 import { validateBooking } from "@/lib/portal/booking/validation";
 import { checkUserQuota, consumeSession, checkWeeklyLimit } from "@/lib/portal/booking/subscription-quota";
@@ -98,6 +99,14 @@ async function getOrCreateUser(
 }
 
 export async function POST(req: NextRequest) {
+  // CSRF-beskyttelse: avvis requests fra ukjente origins
+  if (!verifyCsrf(req)) {
+    return NextResponse.json(
+      { error: "Ugyldig forespørsel" },
+      { status: 403 }
+    );
+  }
+
   try {
     const body = await req.json();
     const {

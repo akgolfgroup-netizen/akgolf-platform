@@ -66,20 +66,24 @@ export function checkRateLimit(
 
 /**
  * Get client IP from request headers.
- * Handles Vercel/Cloudflare proxy headers.
+ * Uses x-real-ip (set by Vercel, cannot be spoofed) as primary source.
+ * Falls back to last IP in x-forwarded-for chain (closest proxy).
  */
 export function getClientIp(request: Request): string {
-  const forwardedFor = request.headers.get("x-forwarded-for");
-  if (forwardedFor) {
-    return forwardedFor.split(",")[0].trim();
-  }
-
+  // x-real-ip is set by Vercel and cannot be spoofed by the client
   const realIp = request.headers.get("x-real-ip");
   if (realIp) {
-    return realIp;
+    return realIp.trim();
   }
 
-  // Fallback for local development
+  // Fallback: use last IP in x-forwarded-for (the one added by the trusted proxy)
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  if (forwardedFor) {
+    const ips = forwardedFor.split(",");
+    return ips[ips.length - 1].trim();
+  }
+
+  // Local development fallback
   return "127.0.0.1";
 }
 

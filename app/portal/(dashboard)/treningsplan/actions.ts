@@ -455,3 +455,340 @@ export async function toggleSessionComplete(sessionId: string) {
   return { completed: true };
 }
 
+// -------------------------------------------------------------------
+// V2: Update session time (drag resize)
+// -------------------------------------------------------------------
+
+export async function updateSessionTime(
+  sessionId: string,
+  startH: number,
+  startM: number,
+  durationMinutes: number
+) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const supabase = await createServerSupabase();
+
+  const { data: session } = await supabase
+    .from("TrainingPlanSession")
+    .select("id, exercises")
+    .eq("id", sessionId)
+    .single();
+
+  if (!session) throw new Error("Treningsokten finnes ikke");
+
+  // Store startH/startM in exercises JSON metadata
+  const currentExercises = Array.isArray(session.exercises) ? session.exercises : [];
+  const meta = { _startH: startH, _startM: startM };
+
+  await supabase
+    .from("TrainingPlanSession")
+    .update({
+      durationMinutes,
+      exercises: JSON.stringify(
+        Array.isArray(currentExercises) && currentExercises.length > 0
+          ? currentExercises.map((ex: unknown, i: number) =>
+              i === 0 ? { ...(typeof ex === "object" && ex !== null ? ex : {}), ...meta } : ex
+            )
+          : [meta]
+      ),
+    })
+    .eq("id", sessionId);
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true };
+}
+
+// -------------------------------------------------------------------
+// V2: Move session to another day (drag move)
+// -------------------------------------------------------------------
+
+export async function moveSessionToDay(
+  sessionId: string,
+  newDayOfWeek: number,
+  startH?: number,
+  startM?: number
+) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const supabase = await createServerSupabase();
+
+  const { data: session } = await supabase
+    .from("TrainingPlanSession")
+    .select("id, dayOfWeek, exercises")
+    .eq("id", sessionId)
+    .single();
+
+  if (!session) throw new Error("Treningsokten finnes ikke");
+
+  const updateData: Record<string, unknown> = {
+    dayOfWeek: newDayOfWeek,
+  };
+
+  // Optionally update start time metadata
+  if (startH !== undefined && startM !== undefined) {
+    const currentExercises = Array.isArray(session.exercises) ? session.exercises : [];
+    const meta = { _startH: startH, _startM: startM };
+    updateData.exercises = JSON.stringify(
+      Array.isArray(currentExercises) && currentExercises.length > 0
+        ? currentExercises.map((ex: unknown, i: number) =>
+            i === 0 ? { ...(typeof ex === "object" && ex !== null ? ex : {}), ...meta } : ex
+          )
+        : [meta]
+    );
+  }
+
+  await supabase
+    .from("TrainingPlanSession")
+    .update(updateData)
+    .eq("id", sessionId);
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true };
+}
+
+// -------------------------------------------------------------------
+// V2: Delete session
+// -------------------------------------------------------------------
+
+export async function deleteSession(sessionId: string) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const supabase = await createServerSupabase();
+
+  // Delete associated training logs first
+  await supabase
+    .from("TrainingLogExercise")
+    .delete()
+    .in(
+      "trainingLogId",
+      (
+        await supabase
+          .from("TrainingLog")
+          .select("id")
+          .eq("planSessionId", sessionId)
+      ).data?.map((l: { id: string }) => l.id) || []
+    );
+
+  await supabase
+    .from("TrainingLog")
+    .delete()
+    .eq("planSessionId", sessionId);
+
+  await supabase
+    .from("TrainingPlanSession")
+    .delete()
+    .eq("id", sessionId);
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true };
+}
+
+// -------------------------------------------------------------------
+// V2: Get all sessions for a week as V2 events
+// -------------------------------------------------------------------
+
+interface V2Event {
+  id: string;
+  date: string;
+  startH: number;
+  startM: number;
+  dur: number;
+  title: string;
+  focus: string;
+  exercises: V2ExerciseData[];
+  done: boolean;
+}
+
+interface V2ExerciseData {
+  id: string;
+  name: string;
+  pyramid: string;
+  area: string;
+  lPhase: string | null;
+  cs: string | null;
+  m: string | null;
+  pr: string | null;
+  pFrom: string | null;
+  pTo: string | null;
+  slagFocus: string[];
+  baller: number;
+  bevegelser: number;
+}
+
+export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
+  const user = await requirePortalUser();
+  if (!user?.id) return [];
+
+  const supabase = await createServerSupabase();
+  const now = new Date();
+  const targetDate = addWeeks(now, weekOffset);
+  const weekStart = startOfISOWeek(targetDate);
+  const weekEnd = endOfISOWeek(targetDate);
+
+  const { data: plan } = await supabase
+    .from("TrainingPlan")
+    .select(`
+      id,
+      TrainingPlanWeek (
+        id,
+        weekStart,
+        TrainingPlanSession (
+          *,
+          TrainingLog (id)
+        )
+      )
+    `)
+    .eq("studentId", user.id)
+    .eq("isActive", true)
+    .single();
+
+  if (!plan) return [];
+
+  interface SessionRow {
+    id: string;
+    dayOfWeek: number;
+    title: string;
+    durationMinutes: number | null;
+    focusArea: string | null;
+    exercises: unknown;
+    TrainingLog: { id: string }[];
+  }
+
+  interface WeekRow {
+    weekStart: string;
+    TrainingPlanSession: SessionRow[];
+  }
+
+  const weeks = (plan.TrainingPlanWeek as unknown as WeekRow[]) || [];
+
+  // Find week that contains target date
+  const currentWeek = weeks.find((w) =>
+    isWithinInterval(targetDate, {
+      start: new Date(w.weekStart),
+      end: endOfISOWeek(new Date(w.weekStart)),
+    })
+  );
+
+  if (!currentWeek) return [];
+
+  const weekStartDate = startOfISOWeek(new Date(currentWeek.weekStart));
+
+  return currentWeek.TrainingPlanSession.map((session) => {
+    const sessionDate = new Date(weekStartDate);
+    sessionDate.setDate(sessionDate.getDate() + session.dayOfWeek - 1);
+    const dateStr = `${sessionDate.getFullYear()}-${String(sessionDate.getMonth() + 1).padStart(2, "0")}-${String(sessionDate.getDate()).padStart(2, "0")}`;
+
+    // Parse exercises JSON for start time metadata and exercise data
+    const rawExercises = Array.isArray(session.exercises)
+      ? (session.exercises as Record<string, unknown>[])
+      : [];
+
+    let startH = 9;
+    let startM = 0;
+    const v2Exercises: V2ExerciseData[] = [];
+
+    for (const ex of rawExercises) {
+      if (ex._startH !== undefined) {
+        startH = Number(ex._startH);
+        startM = Number(ex._startM) || 0;
+      }
+      if (ex.name && typeof ex.name === "string") {
+        v2Exercises.push({
+          id: (ex.id as string) || Math.random().toString(36).slice(2, 9),
+          name: ex.name as string,
+          pyramid: (ex.pyramid as string) || inferPyramidFromFocus(session.focusArea),
+          area: (ex.area as string) || "",
+          lPhase: (ex.lPhase as string) || null,
+          cs: (ex.cs as string) || null,
+          m: (ex.m as string) || null,
+          pr: (ex.pr as string) || null,
+          pFrom: (ex.pFrom as string) || null,
+          pTo: (ex.pTo as string) || null,
+          slagFocus: Array.isArray(ex.slagFocus) ? (ex.slagFocus as string[]) : [],
+          baller: 0,
+          bevegelser: 0,
+        });
+      }
+    }
+
+    return {
+      id: session.id,
+      date: dateStr,
+      startH,
+      startM,
+      dur: session.durationMinutes || 60,
+      title: session.title,
+      focus: inferPyramidFromFocus(session.focusArea),
+      exercises: v2Exercises,
+      done: session.TrainingLog?.length > 0,
+    };
+  });
+}
+
+function inferPyramidFromFocus(focusArea: string | null): string {
+  if (!focusArea) return "TEK";
+  const lower = focusArea.toLowerCase();
+  if (["styrke", "kondisjon", "mobilitet", "eksplosivitet", "gym"].some((k) => lower.includes(k))) return "FYS";
+  if (["sving", "teknikk", "driver", "jern", "full swing"].some((k) => lower.includes(k))) return "TEK";
+  if (["putting", "putt", "chip", "pitch", "bunker", "naerspill", "approach", "range"].some((k) => lower.includes(k))) return "SLAG";
+  if (["bane", "strategi", "management", "9 hull", "18 hull", "spill"].some((k) => lower.includes(k))) return "SPILL";
+  if (["turnering", "test", "konkurranse", "benchmark"].some((k) => lower.includes(k))) return "TURN";
+  return "TEK";
+}
+
+// -------------------------------------------------------------------
+// V2: Log live session with exercises
+// -------------------------------------------------------------------
+
+export async function logLiveSession(data: {
+  durationMinutes: number;
+  focusArea: string | null;
+  exercises: V2ExerciseData[];
+}) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const supabase = await createServerSupabase();
+  const now = new Date();
+  const logId = nanoid();
+
+  await supabase.from("TrainingLog").insert({
+    id: logId,
+    userId: user.id,
+    planSessionId: null,
+    date: now.toISOString(),
+    completedAt: now.toISOString(),
+    durationMinutes: data.durationMinutes,
+    focusArea: data.focusArea,
+    exercises: JSON.stringify(data.exercises),
+    updatedAt: now.toISOString(),
+  });
+
+  if (data.exercises.length > 0) {
+    await supabase.from("TrainingLogExercise").insert(
+      data.exercises.map((e, index) => ({
+        id: nanoid(),
+        trainingLogId: logId,
+        exerciseId: null,
+        name: e.name,
+        plannedReps: null,
+        plannedSets: null,
+        actualReps: e.baller || null,
+        lPhase: e.lPhase ?? null,
+        clubSpeed: null,
+        environment: e.m ? parseInt(e.m.replace("M", "")) : null,
+        pressLevel: e.pr ? parseInt(e.pr.replace("PR", "")) : null,
+        score: null,
+        notes: null,
+        sortOrder: index,
+      }))
+    );
+  }
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true, logId };
+}

@@ -1,31 +1,13 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { getActivePlan, getCurrentWeekSessions } from "./actions";
-import { isStaff } from "@/lib/portal/rbac";
-import { format, startOfISOWeek, addDays, addWeeks, isToday as isTodayFn } from "date-fns";
-import { nb } from "date-fns/locale";
-import { TreningsplanClient } from "./treningsplan-client";
-
-// ---------------------------------------------------------------------
-// Types & pyramid inference (server-only)
-// ---------------------------------------------------------------------
-
-interface SessionExercise {
-  name: string;
-  details: string;
-}
-
-type PyramidLevel = "FYS" | "TEK" | "SLAG" | "SPILL" | "TURN";
-
-function inferPyramidLevel(focusArea: string | null): PyramidLevel | null {
-  if (!focusArea) return null;
-  const lower = focusArea.toLowerCase();
-  if (["styrke", "kondisjon", "mobilitet", "eksplosivitet", "gym"].some((k) => lower.includes(k))) return "FYS";
-  if (["sving", "teknikk", "driver", "jern", "full swing"].some((k) => lower.includes(k))) return "TEK";
-  if (["putting", "putt", "chip", "pitch", "bunker", "nærspill", "approach", "range"].some((k) => lower.includes(k))) return "SLAG";
-  if (["bane", "strategi", "management", "9 hull", "18 hull", "spill"].some((k) => lower.includes(k))) return "SPILL";
-  if (["turnering", "test", "konkurranse", "benchmark"].some((k) => lower.includes(k))) return "TURN";
-  return null;
-}
+import {
+  getWeekEvents,
+  getActivePlan,
+  updateSessionTime,
+  moveSessionToDay,
+  deleteSession,
+  logLiveSession,
+} from "./actions";
+import { TrainingPlannerV2 } from "./treningsplan-v2-client";
 
 // ---------------------------------------------------------------------
 // Server component
@@ -41,54 +23,89 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   const weekOffset = parseInt(week ?? "0", 10) || 0;
 
   const plan = await getActivePlan();
-  const sessions = await getCurrentWeekSessions();
-  const canGenerate = isStaff(user?.role);
+  const events = await getWeekEvents(weekOffset);
 
-  const now = new Date();
-  const targetDate = addWeeks(now, weekOffset);
-  const weekStart = startOfISOWeek(targetDate);
-  const weekNumber = format(targetDate, "w");
+  // Server action wrappers bound to the user context
+  async function handleSaveEvent(event: {
+    id: string;
+    date: string;
+    startH: number;
+    startM: number;
+    dur: number;
+    title: string;
+    focus: string;
+    exercises: unknown[];
+    done: boolean;
+  }) {
+    "use server";
+    // For new events or edits, we update the session time
+    await updateSessionTime(event.id, event.startH, event.startM, event.dur);
+  }
 
-  const sessionsByDay = new Map(sessions.map((s) => [s.dayOfWeek, s]));
+  async function handleDeleteEvent(eventId: string) {
+    "use server";
+    await deleteSession(eventId);
+  }
 
-  const weekDays = ["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"].map((day, idx) => {
-    const dayOfWeek = idx + 1;
-    const session = sessionsByDay.get(dayOfWeek);
-    const date = addDays(weekStart, idx);
+  async function handleMoveEvent(eventId: string, date: string, startH: number, startM: number) {
+    "use server";
+    // Parse date to get dayOfWeek (1=Mon, 7=Sun)
+    const d = new Date(date);
+    const day = d.getDay();
+    const dayOfWeek = day === 0 ? 7 : day;
+    await moveSessionToDay(eventId, dayOfWeek, startH, startM);
+  }
 
-    return {
-      dayName: day,
-      dateISO: date.toISOString(),
-      isToday: isTodayFn(date),
-      session: session
-        ? {
-            id: session.id,
-            title: session.title,
-            duration: session.durationMinutes,
-            focusArea: session.focusArea,
-            pyramidLevel: inferPyramidLevel(session.focusArea),
-            completed: session.TrainingLog ? session.TrainingLog.length > 0 : false,
-            exercises: (session.exercises as unknown as SessionExercise[]) || [],
-          }
-        : null,
-    };
-  });
+  async function handleResizeEvent(eventId: string, durationMinutes: number) {
+    "use server";
+    // Get current time from event
+    const ev = events.find((e) => e.id === eventId);
+    await updateSessionTime(eventId, ev?.startH ?? 9, ev?.startM ?? 0, durationMinutes);
+  }
 
-  const weekRange = `${format(weekStart, "d.", { locale: nb })} – ${format(
-    addDays(weekStart, 6),
-    "d. MMMM yyyy",
-    { locale: nb }
-  )}`;
+  async function handleSaveLiveSession(data: {
+    durationMinutes: number;
+    focusArea: string | null;
+    exercises: {
+      id: string;
+      name: string;
+      pyramid: string;
+      area: string;
+      lPhase: string | null;
+      cs: string | null;
+      m: string | null;
+      pr: string | null;
+      pFrom: string | null;
+      pTo: string | null;
+      slagFocus: string[];
+      baller: number;
+      bevegelser: number;
+    }[];
+  }) {
+    "use server";
+    await logLiveSession(data);
+  }
+
+  // Default templates (can be extended with user favorites later)
+  const templates = [
+    { id: "t1", title: "Putting-drill", dur: 20, focus: "TEK", exercises: [] },
+    { id: "t2", title: "Short game", dur: 30, focus: "SLAG", exercises: [] },
+    { id: "t3", title: "Driving range", dur: 45, focus: "SLAG", exercises: [] },
+    { id: "t4", title: "Styrke-okt", dur: 50, focus: "FYS", exercises: [] },
+    { id: "t5", title: "Spill 9 hull", dur: 120, focus: "SPILL", exercises: [] },
+    { id: "t6", title: "Svinganalyse", dur: 40, focus: "TEK", exercises: [] },
+  ];
 
   return (
-    <TreningsplanClient
-      hasPlan={!!plan}
-      weekNumber={weekNumber}
-      weekRange={weekRange}
-      weekOffset={weekOffset}
-      weekDays={weekDays}
-      canGenerate={canGenerate}
-      userId={user.id}
+    <TrainingPlannerV2
+      events={events}
+      templates={templates}
+      planId={plan?.id ?? null}
+      onSaveEvent={handleSaveEvent}
+      onDeleteEvent={handleDeleteEvent}
+      onMoveEvent={handleMoveEvent}
+      onResizeEvent={handleResizeEvent}
+      onSaveLiveSession={handleSaveLiveSession}
     />
   );
 }

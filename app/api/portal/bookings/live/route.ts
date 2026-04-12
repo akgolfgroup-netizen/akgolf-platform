@@ -20,6 +20,8 @@ import { NextRequest } from "next/server";
 import { realtimeCache } from "@/lib/portal/booking/cache";
 import { logger } from "@/lib/logger";
 import { nanoid } from "nanoid";
+import { getPortalUser } from "@/lib/portal/auth";
+import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
 // Hearthbeat interval (hold connection alive)
 const HEARTBEAT_INTERVAL = 30000; // 30 sekunder
@@ -30,6 +32,31 @@ const MAX_CONNECTION_TIME = 5 * 60 * 1000; // 5 minutter
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
+  // Auth: krever innlogget bruker
+  const user = await getPortalUser();
+  if (!user) {
+    return new Response(
+      JSON.stringify({ error: "Ikke autentisert" }),
+      { status: 401, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  // Rate limit SSE-tilkoblinger
+  const clientIp = getClientIp(req);
+  const rateLimit = checkRateLimit(`sse:${clientIp}`, RATE_LIMITS.BOOKING_SLOTS);
+  if (!rateLimit.allowed) {
+    return new Response(
+      JSON.stringify({ error: "For mange forespørsler" }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+          "Retry-After": String(Math.ceil((rateLimit.resetAt - Date.now()) / 1000)),
+        },
+      }
+    );
+  }
+
   const { searchParams } = new URL(req.url);
   const instructorId = searchParams.get("instructorId");
   const date = searchParams.get("date"); // YYYY-MM-DD
@@ -46,6 +73,16 @@ export async function GET(req: NextRequest) {
   if (!dateRegex.test(date)) {
     return new Response(
       JSON.stringify({ error: "Ugyldig datoformat. Bruk YYYY-MM-DD" }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  // Valider at instructorId er gyldig UUID-format (forhindrer vilkårlig input)
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const cuidRegex = /^c[a-z0-9]{24,}$/;
+  if (!uuidRegex.test(instructorId) && !cuidRegex.test(instructorId)) {
+    return new Response(
+      JSON.stringify({ error: "Ugyldig instructorId" }),
       { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }

@@ -51,8 +51,21 @@ async function getEmailTemplate(
 }
 
 /**
+ * Escape HTML-entiteter for å forhindre XSS i e-postmaler.
+ */
+function escapeHtml(str: string): string {
+  return str
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+/**
  * Erstatt variabler i en template-streng.
  * Variabler er på formen {{variabelnavn}}.
+ * Alle verdier escapes for HTML før innsetting.
  */
 function interpolateTemplate(
   template: string,
@@ -60,7 +73,7 @@ function interpolateTemplate(
 ): string {
   let result = template;
   for (const [key, value] of Object.entries(variables)) {
-    result = result.replaceAll(`{{${key}}}`, value);
+    result = result.replaceAll(`{{${key}}}`, escapeHtml(value));
   }
   return result;
 }

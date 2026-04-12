@@ -5,10 +5,12 @@ import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
 import { HeroSection } from "@/components/website/landing/HeroSection";
-import { DivisionsSection } from "@/components/website/landing/DivisionsSection";
-import { FoundationSection } from "@/components/website/landing/FoundationSection";
-import { TeamSection } from "@/components/website/landing/TeamSection";
+import { HowItWorksSection } from "@/components/website/landing/HowItWorksSection";
 import { PortalPreviewSection } from "@/components/website/landing/PortalPreviewSection";
+import { TargetProfilesSection } from "@/components/website/landing/TargetProfilesSection";
+import { TeamSection } from "@/components/website/landing/TeamSection";
+import { DivisionsSection } from "@/components/website/landing/DivisionsSection";
+import { TestimonialSection } from "@/components/website/landing/TestimonialSection";
 import { CTASection } from "@/components/website/landing/CTASection";
 
 export default function HomePage() {
@@ -25,10 +27,12 @@ export default function HomePage() {
 
       <main id="main-content">
         <HeroSection />
-        <DivisionsSection />
-        <FoundationSection />
-        <TeamSection />
+        <HowItWorksSection />
         <PortalPreviewSection />
+        <TargetProfilesSection />
+        <TeamSection />
+        <DivisionsSection />
+        <TestimonialSection />
         <CTASection />
       </main>
 
