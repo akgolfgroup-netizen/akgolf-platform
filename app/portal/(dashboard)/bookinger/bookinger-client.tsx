@@ -6,11 +6,11 @@ import { motion } from "framer-motion";
 import { Calendar, Plus } from "lucide-react";
 import {
   HeroHeading,
-  GlassCard,
   Shimmer,
   fadeInUp,
   staggerContainer,
 } from "@/components/portal/premium";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import type {
   BookingViewModel,
   CancellationRule,
@@ -48,7 +48,7 @@ export function BookingerClient({
   const restUpcoming = upcoming.slice(1);
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-6">
       {/* ═══ HERO ═══ */}
       <HeroHeading
         label="Mine bookinger"
@@ -77,7 +77,7 @@ export function BookingerClient({
           <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
             <Link
               href="/portal/bookinger/ny"
-              className="relative h-11 px-6 rounded-full bg-accent-cta text-accent-cta-text text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group"
+              className="relative h-11 px-6 rounded-[20px] bg-accent-cta text-accent-cta-text text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group"
             >
               <Shimmer />
               <Plus
@@ -107,11 +107,11 @@ export function BookingerClient({
           className="space-y-4"
         >
           <div className="flex items-center justify-between">
-            <p className="text-[10px] font-bold tracking-[0.22em] text-muted uppercase flex items-center gap-2">
-              <span className="w-6 h-px bg-muted" />
+            <p className="text-[10px] font-bold tracking-[0.08em] text-portal-muted uppercase flex items-center gap-2">
+              <span className="w-6 h-px bg-portal-muted" />
               Kommende
             </p>
-            <span className="text-[11px] text-muted tabular-nums">
+            <span className="text-[11px] text-portal-muted tabular-nums">
               {restUpcoming.length} planlagt
             </span>
           </div>
@@ -134,7 +134,7 @@ export function BookingerClient({
       {/* ═══ TOM TILSTAND ═══ */}
       {upcomingCount === 0 && (
         <motion.div variants={fadeInUp} initial="hidden" animate="visible">
-          <GlassCard variant="light" padding="lg" className="text-center">
+          <PremiumCard className="text-center">
             <div className="flex flex-col items-center gap-4 py-6">
               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
                 <Calendar
@@ -142,7 +142,7 @@ export function BookingerClient({
                   strokeWidth={1.75}
                 />
               </div>
-              <p className="text-[13px] text-muted max-w-sm">{emptyMessage}</p>
+              <p className="text-[13px] text-portal-muted max-w-sm">{emptyMessage}</p>
               <Link
                 href="/portal/bookinger/ny"
                 className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-primary hover:gap-2 transition-all"
@@ -151,7 +151,7 @@ export function BookingerClient({
                 Book din første time
               </Link>
             </div>
-          </GlassCard>
+          </PremiumCard>
         </motion.div>
       )}
 

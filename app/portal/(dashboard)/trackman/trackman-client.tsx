@@ -186,10 +186,10 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">
+          <h1 className="text-2xl font-bold text-[var(--color-portal-text)]">
             TrackMan Data
           </h1>
-          <p className="text-[var(--color-muted)] mt-1">
+          <p className="text-[var(--color-portal-muted)] mt-1">
             Spredning, teknikk-profil og klubb-analyse
           </p>
         </div>
@@ -203,7 +203,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
               success: null,
             })
           }
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--color-primary)] text-white text-sm font-medium hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-[20px] bg-[var(--color-primary)] text-white text-sm font-medium hover:opacity-90 transition-opacity"
         >
           <Upload className="w-4 h-4" />
           Last opp data
@@ -232,8 +232,8 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
         <StatCard
           label="Slag totalt"
           value={data.totalShots.toLocaleString("nb-NO")}
-          icon={<Target className="w-6 h-6 text-[#3b82f6]" />}
-          iconBg="bg-[#3b82f6]/10"
+          icon={<Target className="w-6 h-6 text-info" />}
+          iconBg="bg-info/10"
         />
         <StatCard
           label="Beste carry"
@@ -268,15 +268,15 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Club Data Table */}
       {data.clubStats.length > 0 ? (
-        <div className="bg-white rounded-2xl border border-[var(--color-grey-200)]/50 overflow-hidden">
-          <div className="p-4 border-b border-[var(--color-grey-200)]/30">
-            <h3 className="font-semibold text-[var(--color-grey-900)]">
+        <div className="bg-white rounded-2xl border border-[var(--color-portal-border)]/50 overflow-hidden">
+          <div className="p-4 border-b border-[var(--color-portal-border)]/30">
+            <h3 className="font-semibold text-[var(--color-portal-text)]">
               Klubb-statistikk
             </h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-[var(--color-surface)]">
+              <thead className="bg-[var(--color-portal-hover)]">
                 <tr>
                   {[
                     "Klubb",
@@ -288,7 +288,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                   ].map((header) => (
                     <th
                       key={header}
-                      className={`text-xs font-semibold text-[var(--color-muted)] uppercase tracking-wider p-4 ${
+                      className={`text-xs font-semibold text-[var(--color-portal-muted)] uppercase tracking-wider p-4 ${
                         header === "Klubb" ? "text-left" : "text-right"
                       }`}
                     >
@@ -301,25 +301,25 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                 {data.clubStats.map((club) => (
                   <tr
                     key={club.club}
-                    className="border-t border-[var(--color-grey-200)]/30 hover:bg-[var(--color-surface)]/50"
+                    className="border-t border-[var(--color-portal-border)]/30 hover:bg-[var(--color-portal-hover)]/50"
                   >
-                    <td className="p-4 font-medium text-[var(--color-grey-900)]">
+                    <td className="p-4 font-medium text-[var(--color-portal-text)]">
                       {club.club}
                     </td>
-                    <td className="p-4 text-right text-[var(--color-text)]">
+                    <td className="p-4 text-right text-[var(--color-portal-text)]">
                       {club.avgSpeed ? `${club.avgSpeed} mph` : "\u2013"}
                     </td>
-                    <td className="p-4 text-right text-[var(--color-text)]">
+                    <td className="p-4 text-right text-[var(--color-portal-text)]">
                       {club.avgBallSpeed
                         ? `${club.avgBallSpeed} mph`
                         : "\u2013"}
                     </td>
-                    <td className="p-4 text-right text-[var(--color-text)]">
+                    <td className="p-4 text-right text-[var(--color-portal-text)]">
                       {club.avgSpin
                         ? `${Math.round(club.avgSpin)} rpm`
                         : "\u2013"}
                     </td>
-                    <td className="p-4 text-right text-[var(--color-text)]">
+                    <td className="p-4 text-right text-[var(--color-portal-text)]">
                       {club.avgLaunch ? `${club.avgLaunch}\u00B0` : "\u2013"}
                     </td>
                     <td className="p-4 text-right font-semibold text-[var(--color-primary)]">
@@ -341,7 +341,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
       {/* Recent Sessions */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-[var(--color-grey-900)]">
+          <h3 className="font-semibold text-[var(--color-portal-text)]">
             Siste sesjoner
           </h3>
         </div>
@@ -353,26 +353,26 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-4 border border-[var(--color-grey-200)]/50 hover:shadow-md transition-shadow"
+                className="bg-white rounded-2xl p-4 border border-[var(--color-portal-border)]/50 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm font-semibold text-[var(--color-primary)]">
                     {session.club}
                   </span>
-                  <Calendar className="w-4 h-4 text-[var(--color-muted)]" />
+                  <Calendar className="w-4 h-4 text-[var(--color-portal-muted)]" />
                 </div>
-                <p className="text-xs text-[var(--color-muted)]">
+                <p className="text-xs text-[var(--color-portal-muted)]">
                   {new Date(session.sessionDate).toLocaleDateString("nb-NO", {
                     day: "numeric",
                     month: "short",
                     year: "numeric",
                   })}
                 </p>
-                <div className="flex items-center justify-between mt-3 pt-3 border-t border-[var(--color-grey-200)]/30">
-                  <span className="text-xs text-[var(--color-text)]">
+                <div className="flex items-center justify-between mt-3 pt-3 border-t border-[var(--color-portal-border)]/30">
+                  <span className="text-xs text-[var(--color-portal-text)]">
                     {session.shotCount} slag
                   </span>
-                  <span className="text-sm font-bold text-[var(--color-grey-900)]">
+                  <span className="text-sm font-bold text-[var(--color-portal-text)]">
                     {session.avgCarry}m
                   </span>
                 </div>
@@ -386,7 +386,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Quick Actions */}
       <div>
-        <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4">
+        <h3 className="text-sm font-semibold text-[var(--color-portal-text)] mb-4">
           Handlinger
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -460,15 +460,15 @@ function UploadModal({
         className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-[var(--color-grey-900)]">
+          <h2 className="text-lg font-bold text-[var(--color-portal-text)]">
             Last opp TrackMan-data
           </h2>
           {!upload.loading && (
             <button
               onClick={resetUpload}
-              className="p-1 rounded-lg hover:bg-[var(--color-surface)] transition-colors"
+              className="p-1 rounded-lg hover:bg-[var(--color-portal-hover)] transition-colors"
             >
-              <X className="w-5 h-5 text-[var(--color-muted)]" />
+              <X className="w-5 h-5 text-[var(--color-portal-muted)]" />
             </button>
           )}
         </div>
@@ -491,7 +491,7 @@ function UploadModal({
         {upload.loading && (
           <div className="flex flex-col items-center gap-3 py-8">
             <Loader2 className="w-8 h-8 text-[var(--color-primary)] animate-spin" />
-            <p className="text-sm text-[var(--color-muted)]">
+            <p className="text-sm text-[var(--color-portal-muted)]">
               {upload.mode === "image"
                 ? "Analyserer bilde med AI..."
                 : "Importerer CSV-data..."}
@@ -507,16 +507,16 @@ function UploadModal({
                 setUpload((prev) => ({ ...prev, mode: "csv" }));
                 csvInputRef.current?.click();
               }}
-              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-[var(--color-grey-200)] hover:border-[var(--color-primary)] hover:bg-[var(--color-surface)] transition-all"
+              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-[var(--color-portal-border)] hover:border-[var(--color-primary)] hover:bg-[var(--color-portal-hover)] transition-all"
             >
               <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
                 <FileSpreadsheet className="w-6 h-6 text-[var(--color-primary)]" />
               </div>
               <div className="text-left">
-                <p className="font-semibold text-sm text-[var(--color-grey-900)]">
+                <p className="font-semibold text-sm text-[var(--color-portal-text)]">
                   Last opp CSV-fil
                 </p>
-                <p className="text-xs text-[var(--color-muted)] mt-0.5">
+                <p className="text-xs text-[var(--color-portal-muted)] mt-0.5">
                   Eksporter fra TrackMan Range eller Performance Studio
                 </p>
               </div>
@@ -527,16 +527,16 @@ function UploadModal({
                 setUpload((prev) => ({ ...prev, mode: "image" }));
                 imageInputRef.current?.click();
               }}
-              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-[var(--color-grey-200)] hover:border-[var(--color-ai)] hover:bg-[var(--color-ai)]/5 transition-all"
+              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-[var(--color-portal-border)] hover:border-[var(--color-ai)] hover:bg-[var(--color-ai)]/5 transition-all"
             >
               <div className="w-12 h-12 rounded-xl bg-[var(--color-ai)]/10 flex items-center justify-center flex-shrink-0">
                 <Image className="w-6 h-6 text-[var(--color-ai)]" />
               </div>
               <div className="text-left">
-                <p className="font-semibold text-sm text-[var(--color-grey-900)]">
+                <p className="font-semibold text-sm text-[var(--color-portal-text)]">
                   Last opp skjermbilde
                 </p>
-                <p className="text-xs text-[var(--color-muted)] mt-0.5">
+                <p className="text-xs text-[var(--color-portal-muted)] mt-0.5">
                   AI leser data fra TrackMan-skjerm (PNG, JPG)
                 </p>
               </div>
@@ -562,13 +562,13 @@ function StatCard({
   iconBg: string;
 }) {
   return (
-    <div className="bg-white rounded-2xl p-5 border border-[var(--color-grey-200)]/50">
+    <div className="bg-white rounded-2xl p-5 border border-[var(--color-portal-border)]/50">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-portal-muted)]">
             {label}
           </p>
-          <p className="text-3xl font-bold text-[var(--color-grey-900)] mt-1">
+          <p className="text-3xl font-bold text-[var(--color-portal-text)] mt-1">
             {value}
           </p>
         </div>
@@ -592,15 +592,15 @@ function EmptyState({
   message: string;
 }) {
   return (
-    <div className="bg-white rounded-2xl p-6 border border-[var(--color-grey-200)]/50">
+    <div className="bg-white rounded-2xl p-6 border border-[var(--color-portal-border)]/50">
       {title && (
-        <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4">
+        <h3 className="text-sm font-semibold text-[var(--color-portal-text)] mb-4">
           {title}
         </h3>
       )}
       <div className="flex flex-col items-center justify-center py-8 text-center">
-        <Upload className="w-8 h-8 text-[var(--color-muted)] mb-3" />
-        <p className="text-sm text-[var(--color-muted)]">{message}</p>
+        <Upload className="w-8 h-8 text-[var(--color-portal-muted)] mb-3" />
+        <p className="text-sm text-[var(--color-portal-muted)]">{message}</p>
       </div>
     </div>
   );

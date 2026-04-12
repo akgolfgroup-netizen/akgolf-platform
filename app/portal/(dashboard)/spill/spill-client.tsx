@@ -178,10 +178,8 @@ export default function SpillClient({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-portal-text">Spill</h1>
-          <p className="text-portal-secondary mt-1">
-            Start en runde, bli med i spill eller utforsk utfordringer
-          </p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">Spillerportal</p>
+          <h1 className="mt-1 text-[28px] font-bold tracking-tight text-portal-text">Spill</h1>
         </div>
         <div className="flex gap-2">
           <button
@@ -193,7 +191,7 @@ export default function SpillClient({
           </button>
           <button
             onClick={() => setShowNewGame(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary-alt transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-[20px] bg-primary text-white text-sm font-medium hover:bg-primary-alt transition-colors"
           >
             <Plus className="w-4 h-4" />
             Nytt spill
@@ -253,7 +251,7 @@ export default function SpillClient({
             </button>
           </div>
 
-          <button className="w-full py-3 rounded-xl bg-primary text-white font-semibold hover:bg-primary-alt transition-colors flex items-center justify-center gap-2">
+          <button className="w-full py-3 rounded-[20px] bg-primary text-white font-semibold hover:bg-primary-alt transition-colors flex items-center justify-center gap-2">
             <Play className="w-4 h-4" />
             Fortsett spill
           </button>
@@ -392,8 +390,7 @@ export default function SpillClient({
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <Link
           href="/portal/sosialt"
-          className="flex items-center gap-3 rounded-xl bg-portal-card p-4 text-sm font-medium text-portal-text hover:bg-portal-hover transition-colors"
-          style={{ boxShadow: "var(--shadow-portal-card)" }}
+          className="flex items-center gap-3 rounded-xl bg-portal-card p-4 text-sm font-medium text-portal-text hover:bg-portal-hover transition-colors shadow-card"
         >
           <div className="w-10 h-10 rounded-xl bg-portal-hover flex items-center justify-center flex-shrink-0">
             <Search className="w-5 h-5 text-portal-secondary" />
@@ -405,8 +402,7 @@ export default function SpillClient({
         </Link>
         <Link
           href="/portal/spill"
-          className="flex items-center gap-3 rounded-xl bg-portal-card p-4 text-sm font-medium text-portal-text hover:bg-portal-hover transition-colors"
-          style={{ boxShadow: "var(--shadow-portal-card)" }}
+          className="flex items-center gap-3 rounded-xl bg-portal-card p-4 text-sm font-medium text-portal-text hover:bg-portal-hover transition-colors shadow-card"
         >
           <div className="w-10 h-10 rounded-xl bg-portal-hover flex items-center justify-center flex-shrink-0">
             <MapPin className="w-5 h-5 text-portal-secondary" />
@@ -418,8 +414,7 @@ export default function SpillClient({
         </Link>
         <Link
           href="/portal/spill"
-          className="flex items-center gap-3 rounded-xl bg-portal-card p-4 text-sm font-medium text-portal-text hover:bg-portal-hover transition-colors"
-          style={{ boxShadow: "var(--shadow-portal-card)" }}
+          className="flex items-center gap-3 rounded-xl bg-portal-card p-4 text-sm font-medium text-portal-text hover:bg-portal-hover transition-colors shadow-card"
         >
           <div className="w-10 h-10 rounded-xl bg-portal-hover flex items-center justify-center flex-shrink-0">
             <Trophy className="w-5 h-5 text-portal-secondary" />
@@ -437,8 +432,7 @@ export default function SpillClient({
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-portal-card rounded-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
-            style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.08)" }}
+            className="bg-portal-card rounded-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto shadow-card"
           >
             {createdSession ? (
               <div className="text-center">
@@ -459,7 +453,7 @@ export default function SpillClient({
                 </div>
                 <button
                   onClick={resetNewGameDialog}
-                  className="w-full py-3 rounded-xl bg-primary text-white font-semibold hover:bg-primary-alt transition-colors"
+                  className="w-full py-3 rounded-[20px] bg-primary text-white font-semibold hover:bg-primary-alt transition-colors"
                 >
                   Ferdig
                 </button>
@@ -577,7 +571,7 @@ export default function SpillClient({
                 <button
                   onClick={handleCreateGame}
                   disabled={isPending || !selectedCourse}
-                  className="w-full py-3 rounded-xl bg-primary text-white font-semibold hover:bg-primary-alt transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-[20px] bg-primary text-white font-semibold hover:bg-primary-alt transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {isPending ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -604,8 +598,7 @@ export default function SpillClient({
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-portal-card rounded-2xl p-6 w-full max-w-sm"
-            style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.08)" }}
+            className="bg-portal-card rounded-2xl p-6 w-full max-w-sm shadow-card"
           >
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-portal-text">Bli med i spill</h3>
@@ -644,7 +637,7 @@ export default function SpillClient({
             <button
               onClick={handleJoinGame}
               disabled={isPending || joinCode.length < 4}
-              className="w-full mt-4 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-primary-alt transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full mt-4 py-3 rounded-[20px] bg-primary text-white font-semibold hover:bg-primary-alt transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {isPending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

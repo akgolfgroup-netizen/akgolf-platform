@@ -28,7 +28,7 @@ import {
   Cell,
   ReferenceLine,
 } from "recharts";
-import { BentoCard } from "@/components/portal/apple/bento-card";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import {
   calculateTourPercentile,
   getPercentileLabel,
@@ -160,24 +160,26 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
     return (
       <div className="space-y-6">
         <header>
-          <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Benchmarking</h1>
-          <p className="text-[var(--color-grey-500)] mt-1">
+          <h1 className="text-2xl font-bold text-[var(--color-portal-text)]">Benchmarking</h1>
+          <p className="text-[var(--color-portal-secondary)] mt-1">
             Sammenlign deg med PGA Tour og proffspillere
           </p>
         </header>
 
-        <div className="rounded-2xl border border-[var(--color-grey-200)]/70 bg-white p-12 text-center">
-          <div className="mx-auto w-12 h-12 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center mb-4">
-            <BarChart3 className="w-6 h-6 text-[var(--color-grey-300)]" />
+        <PremiumCard>
+          <div className="p-6 text-center">
+            <div className="mx-auto w-12 h-12 rounded-xl bg-[var(--color-portal-hover)] flex items-center justify-center mb-4">
+              <BarChart3 className="w-6 h-6 text-[var(--color-portal-muted)]" />
+            </div>
+            <h2 className="text-lg font-semibold text-[var(--color-portal-text)] mb-2">
+              Ingen statistikk ennå
+            </h2>
+            <p className="text-sm text-[var(--color-portal-secondary)] max-w-md mx-auto">
+              Registrer Strokes Gained-data fra rundene dine under Statistikk for
+              å se hvordan du måler deg mot PGA Tour-spillere.
+            </p>
           </div>
-          <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-2">
-            Ingen statistikk ennå
-          </h2>
-          <p className="text-sm text-[var(--color-grey-500)] max-w-md mx-auto">
-            Registrer Strokes Gained-data fra rundene dine under Statistikk for
-            å se hvordan du måler deg mot PGA Tour-spillere.
-          </p>
-        </div>
+        </PremiumCard>
       </div>
     );
   }
@@ -340,11 +342,11 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
     <div className="space-y-6">
       {/* ── Header ── */}
       <header>
-        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Benchmarking</h1>
-        <p className="text-[var(--color-grey-500)] mt-1">
+        <h1 className="text-2xl font-bold text-[var(--color-portal-text)]">Benchmarking</h1>
+        <p className="text-[var(--color-portal-secondary)] mt-1">
           Sammenlign deg med PGA Tour og proffspillere
           {profile.roundCount > 0 && (
-            <span className="ml-2 text-[var(--color-grey-400)]">
+            <span className="ml-2 text-[var(--color-portal-muted)]">
               Basert på {profile.roundCount} runder
             </span>
           )}
@@ -354,11 +356,18 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
       {/* ── Row 1: Tour Percentile + A-K Category ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Tour Percentile Bar Chart */}
-        <BentoCard
-          icon={BarChart3}
-          title="PGA Tour-persentil"
-          subtitle="Hvor du ligger sammenlignet med touren"
-        >
+        <PremiumCard>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-[var(--color-portal-hover)] flex items-center justify-center">
+              <BarChart3 className="w-5 h-5 text-[var(--color-portal-text)]" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[var(--color-portal-text)]">
+                PGA Tour-persentil
+              </h3>
+              <p className="text-xs text-[var(--color-portal-secondary)]">Hvor du ligger sammenlignet med touren</p>
+            </div>
+          </div>
           <div className="h-[300px] mt-4">
             <ResponsiveContainer>
               <BarChart
@@ -429,7 +438,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             {percentileData.map((d) => (
               <div
                 key={d.category}
-                className="flex items-center gap-1.5 text-xs text-[var(--color-grey-500)]"
+                className="flex items-center gap-1.5 text-xs text-[var(--color-portal-secondary)]"
               >
                 <div
                   className="w-2.5 h-2.5 rounded-full"
@@ -439,27 +448,34 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
               </div>
             ))}
           </div>
-        </BentoCard>
+        </PremiumCard>
 
         {/* A-K Category Card */}
-        <BentoCard
-          icon={Layers}
-          title="A-K Ferdighetsnivå"
-          subtitle="Din kategori per SG-område"
-        >
+        <PremiumCard>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-[var(--color-portal-hover)] flex items-center justify-center">
+              <Layers className="w-5 h-5 text-[var(--color-portal-text)]" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[var(--color-portal-text)]">
+                A-K Ferdighetsnivå
+              </h3>
+              <p className="text-xs text-[var(--color-portal-secondary)]">Din kategori per SG-område</p>
+            </div>
+          </div>
           {/* Overall level */}
           {akCategory && (
-            <div className="flex items-center gap-4 mt-4 p-4 rounded-xl bg-[var(--color-grey-100)]">
+            <div className="flex items-center gap-4 mt-4 p-4 rounded-xl bg-[var(--color-portal-hover)]">
               <div className="w-14 h-14 rounded-xl bg-[var(--color-primary)] flex items-center justify-center shrink-0">
-                <span className="text-2xl font-bold text-white">
+                <span className="text-2xl font-bold text-white tabular-nums tracking-tight">
                   {akCategory.category}
                 </span>
               </div>
               <div>
-                <p className="text-sm font-semibold text-[var(--color-grey-900)]">
+                <p className="text-sm font-semibold text-[var(--color-portal-text)]">
                   {akCategory.label}
                 </p>
-                <p className="text-xs text-[var(--color-grey-500)]">
+                <p className="text-xs text-[var(--color-portal-secondary)]">
                   HCP {akCategory.handicapRange[0]}-
                   {akCategory.handicapRange[1]} | Snitt{" "}
                   {akCategory.averageScore} slag
@@ -473,72 +489,79 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             {categoryAK.map((c) => (
               <div
                 key={c.label}
-                className="p-3 rounded-xl border border-[var(--color-grey-200)]/70 bg-white"
+                className="p-3 rounded-xl border border-[var(--color-portal-border)] bg-white"
               >
-                <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-grey-400)] mb-1">
+                <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-portal-muted)] mb-1">
                   {c.label}
                 </p>
                 <div className="flex items-baseline gap-2">
                   {c.category ? (
                     <>
-                      <span className="text-xl font-bold text-[var(--color-grey-900)]">
+                      <span className="text-xl font-bold text-[var(--color-portal-text)] tabular-nums tracking-tight">
                         {c.category.category}
                       </span>
-                      <span className="text-xs text-[var(--color-grey-500)]">
+                      <span className="text-xs text-[var(--color-portal-secondary)]">
                         {c.category.label}
                       </span>
                     </>
                   ) : (
-                    <span className="text-sm text-[var(--color-grey-400)]">Ingen data</span>
+                    <span className="text-sm text-[var(--color-portal-muted)]">Ingen data</span>
                   )}
                 </div>
                 {c.userVal !== null && (
-                  <p className="text-xs text-[var(--color-grey-500)] mt-1">
+                  <p className="text-xs text-[var(--color-portal-secondary)] mt-1">
                     SG: {c.userVal.toFixed(2)}
                   </p>
                 )}
               </div>
             ))}
           </div>
-        </BentoCard>
+        </PremiumCard>
       </div>
 
       {/* ── Row 2: Pro Comparison ── */}
-      <BentoCard
-        icon={Search}
-        title="Sammenlign med proff"
-        subtitle="Søk etter en PGA Tour-spiller og se side-ved-side SG-sammenligning"
-      >
+      <PremiumCard>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-[var(--color-portal-hover)] flex items-center justify-center">
+            <Search className="w-5 h-5 text-[var(--color-portal-text)]" />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-[var(--color-portal-text)]">
+              Sammenlign med proff
+            </h3>
+            <p className="text-xs text-[var(--color-portal-secondary)]">Søk etter en PGA Tour-spiller og se side-ved-side SG-sammenligning</p>
+          </div>
+        </div>
         {/* Search bar */}
         <div className="relative mt-4 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-400)]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-portal-muted)]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Søk etter spiller (f.eks. Viktor Hovland)"
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[var(--color-grey-200)]/70 bg-[var(--color-grey-100)] text-sm text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[var(--color-portal-border)] bg-[var(--color-portal-hover)] text-sm text-[var(--color-portal-text)] placeholder:text-[var(--color-portal-muted)] focus:outline-none focus:border-[var(--color-primary)] transition-colors"
           />
           {isSearching && (
-            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-400)] animate-spin" />
+            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-portal-muted)] animate-spin" />
           )}
         </div>
 
         {/* Search results dropdown */}
         {searchResults.length > 0 && (
-          <div className="mt-2 max-w-md rounded-xl border border-[var(--color-grey-200)]/70 bg-white shadow-lg overflow-hidden">
+          <div className="mt-2 max-w-md rounded-xl border border-[var(--color-portal-border)] bg-white shadow-lg overflow-hidden">
             {searchResults.map((player) => (
               <button
                 key={player.dgId}
                 onClick={() => handleSelectPro(player.dgId)}
                 disabled={isPending}
-                className="w-full text-left px-4 py-3 hover:bg-[var(--color-grey-100)] transition-colors border-b border-[var(--color-grey-200)]/50 last:border-b-0 disabled:opacity-50"
+                className="w-full text-left px-4 py-3 hover:bg-[var(--color-portal-hover)] transition-colors border-b border-[var(--color-portal-border)] last:border-b-0 disabled:opacity-50"
               >
-                <span className="text-sm font-medium text-[var(--color-grey-900)]">
+                <span className="text-sm font-medium text-[var(--color-portal-text)]">
                   {player.name}
                 </span>
                 {player.sgTotal !== null && (
-                  <span className="ml-2 text-xs text-[var(--color-grey-500)]">
+                  <span className="ml-2 text-xs text-[var(--color-portal-secondary)]">
                     SG Total: {player.sgTotal.toFixed(2)}
                   </span>
                 )}
@@ -552,7 +575,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Radar chart */}
             <div>
-              <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-3">
+              <h3 className="text-sm font-semibold text-[var(--color-portal-text)] mb-3">
                 SG-profil: Du vs {selectedPro.pro.name}
               </h3>
               <div className="h-[300px]">
@@ -628,7 +651,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
 
             {/* Side-by-side values */}
             <div>
-              <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-3">
+              <h3 className="text-sm font-semibold text-[var(--color-portal-text)] mb-3">
                 Detaljert sammenligning
               </h3>
               <div className="space-y-3">
@@ -666,17 +689,17 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                   return (
                     <div
                       key={row.label}
-                      className="flex items-center justify-between p-3 rounded-xl border border-[var(--color-grey-200)]/70 bg-white"
+                      className="flex items-center justify-between p-3 rounded-xl border border-[var(--color-portal-border)] bg-white"
                     >
-                      <span className="text-sm font-medium text-[var(--color-grey-500)] w-20">
+                      <span className="text-sm font-medium text-[var(--color-portal-secondary)] w-20">
                         {row.label}
                       </span>
                       <div className="flex items-center gap-6 text-sm">
-                        <span className="font-mono font-semibold text-[var(--color-grey-900)] w-16 text-right">
+                        <span className="tabular-nums tracking-tight font-semibold text-[var(--color-portal-text)] w-16 text-right">
                           {row.yours !== null ? row.yours.toFixed(2) : "-"}
                         </span>
-                        <span className="text-[var(--color-grey-300)]">vs</span>
-                        <span className="font-mono font-semibold text-[var(--color-grey-900)] w-16">
+                        <span className="text-[var(--color-portal-muted)]">vs</span>
+                        <span className="tabular-nums tracking-tight font-semibold text-[var(--color-portal-text)] w-16">
                           {row.theirs !== null ? row.theirs.toFixed(2) : "-"}
                         </span>
                         {diff !== null && (
@@ -703,8 +726,8 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         {/* No pro selected placeholder */}
         {!selectedPro && !isPending && (
           <div className="mt-6 py-8 text-center">
-            <Crosshair className="w-8 h-8 text-[var(--color-grey-300)] mx-auto mb-3" />
-            <p className="text-sm text-[var(--color-grey-400)]">
+            <Crosshair className="w-8 h-8 text-[var(--color-portal-muted)] mx-auto mb-3" />
+            <p className="text-sm text-[var(--color-portal-muted)]">
               Søk etter en spiller for å se sammenligning
             </p>
           </div>
@@ -712,20 +735,27 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
 
         {isPending && !isSearching && (
           <div className="mt-6 py-8 text-center">
-            <Loader2 className="w-6 h-6 text-[var(--color-grey-400)] mx-auto mb-3 animate-spin" />
-            <p className="text-sm text-[var(--color-grey-400)]">Henter spillerdata...</p>
+            <Loader2 className="w-6 h-6 text-[var(--color-portal-muted)] mx-auto mb-3 animate-spin" />
+            <p className="text-sm text-[var(--color-portal-muted)]">Henter spillerdata...</p>
           </div>
         )}
-      </BentoCard>
+      </PremiumCard>
 
       {/* ── Row 3: Improvement Potential + Approach Distance ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Improvement Potential */}
-        <BentoCard
-          icon={TrendingUp}
-          title="Forbedringspotensial"
-          subtitle="Estimert handicap-effekt av SG-forbedringer"
-        >
+        <PremiumCard>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-[var(--color-portal-hover)] flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-[var(--color-portal-text)]" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[var(--color-portal-text)]">
+                Forbedringspotensial
+              </h3>
+              <p className="text-xs text-[var(--color-portal-secondary)]">Estimert handicap-effekt av SG-forbedringer</p>
+            </div>
+          </div>
           <div className="space-y-3 mt-4">
             {improvementAreas.map((area) => {
               if (area.current === null) return null;
@@ -735,30 +765,30 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
               return (
                 <div
                   key={area.label}
-                  className="p-4 rounded-xl border border-[var(--color-grey-200)]/70 bg-[var(--color-grey-100)]/50"
+                  className="p-4 rounded-xl border border-[var(--color-portal-border)] bg-[var(--color-portal-hover)]/50"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-[var(--color-grey-900)]">
+                    <span className="text-sm font-medium text-[var(--color-portal-text)]">
                       {area.label}
                     </span>
                     <span className="text-xs font-semibold text-[var(--color-success)] bg-[var(--color-success)]/10 px-2 py-0.5 rounded-full">
                       -{hcpImpact} HCP
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-[var(--color-grey-500)]">
-                    <span className="font-mono">
+                  <div className="flex items-center gap-2 text-sm text-[var(--color-portal-secondary)]">
+                    <span className="tabular-nums tracking-tight">
                       {area.current.toFixed(2)} SG
                     </span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[var(--color-grey-400)]" />
-                    <span className="font-mono font-semibold">
+                    <ArrowRight className="w-3.5 h-3.5 text-[var(--color-portal-muted)]" />
+                    <span className="tabular-nums tracking-tight font-semibold">
                       {newSg.toFixed(2)} SG
                     </span>
-                    <span className="text-xs text-[var(--color-grey-400)] ml-1">
+                    <span className="text-xs text-[var(--color-portal-muted)] ml-1">
                       (+{area.improvement.toFixed(2)})
                     </span>
                   </div>
                   {/* Progress bar showing how close to 0 */}
-                  <div className="mt-2 h-1.5 rounded-full bg-[var(--color-grey-100)] overflow-hidden">
+                  <div className="mt-2 h-1.5 rounded-full bg-[var(--color-portal-hover)] overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -772,22 +802,29 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             })}
           </div>
 
-          <p className="text-[10px] text-[var(--color-grey-400)] mt-4">
+          <p className="text-[10px] text-[var(--color-portal-muted)] mt-4">
             Estimater er basert på historiske sammenhenger mellom SG og handicap.
             Faktisk effekt varierer.
           </p>
-        </BentoCard>
+        </PremiumCard>
 
         {/* Approach Distance Breakdown */}
-        <BentoCard
-          icon={Target}
-          title="Innspill per avstand"
-          subtitle={
-            approachDistanceData.length > 0
-              ? "Dine SG-verdier per avstandskategori"
-              : "Registrer approach-data for å se fordeling"
-          }
-        >
+        <PremiumCard>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-[var(--color-portal-hover)] flex items-center justify-center">
+              <Target className="w-5 h-5 text-[var(--color-portal-text)]" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[var(--color-portal-text)]">
+                Innspill per avstand
+              </h3>
+              <p className="text-xs text-[var(--color-portal-secondary)]">
+                {approachDistanceData.length > 0
+                  ? "Dine SG-verdier per avstandskategori"
+                  : "Registrer approach-data for å se fordeling"}
+              </p>
+            </div>
+          </div>
           {approachDistanceData.length > 0 ? (
             <>
               <div className="h-[260px] mt-4">
@@ -850,27 +887,27 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
               {/* Pro approach overlay if available */}
               {proApproachData && (
                 <div className="mt-4">
-                  <p className="text-xs font-medium text-[var(--color-grey-500)] mb-2">
+                  <p className="text-xs font-medium text-[var(--color-portal-secondary)] mb-2">
                     Sammenligning med {selectedPro?.pro.name} (yards)
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {proApproachData.map((d) => (
                       <div
                         key={d.bucket}
-                        className="text-center p-2 rounded-lg bg-[var(--color-grey-100)]"
+                        className="text-center p-2 rounded-lg bg-[var(--color-portal-hover)]"
                       >
-                        <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-grey-400)] mb-1">
+                        <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-portal-muted)] mb-1">
                           {d.bucket}
                         </p>
-                        <p className="text-xs text-[var(--color-grey-900)]">
+                        <p className="text-xs text-[var(--color-portal-text)]">
                           Du:{" "}
-                          <span className="font-mono font-semibold">
+                          <span className="tabular-nums tracking-tight font-semibold">
                             {d.player !== null ? d.player.toFixed(1) : "-"}
                           </span>
                         </p>
-                        <p className="text-xs text-[var(--color-grey-500)]">
+                        <p className="text-xs text-[var(--color-portal-secondary)]">
                           Pro:{" "}
-                          <span className="font-mono">
+                          <span className="tabular-nums tracking-tight">
                             {d.pro !== null ? d.pro.toFixed(1) : "-"}
                           </span>
                         </p>
@@ -882,14 +919,14 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             </>
           ) : (
             <div className="py-10 text-center">
-              <Target className="w-8 h-8 text-[var(--color-grey-300)] mx-auto mb-3" />
-              <p className="text-sm text-[var(--color-grey-400)]">
+              <Target className="w-8 h-8 text-[var(--color-portal-muted)] mx-auto mb-3" />
+              <p className="text-sm text-[var(--color-portal-muted)]">
                 Legg til approach-statistikk per avstand i rundene dine for å se
                 denne analysen.
               </p>
             </div>
           )}
-        </BentoCard>
+        </PremiumCard>
       </div>
     </div>
   );

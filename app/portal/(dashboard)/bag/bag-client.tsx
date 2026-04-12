@@ -15,6 +15,7 @@ import {
 import { addClub, deleteClub } from "./actions";
 import { useRouter } from "next/navigation";
 import { QuickAction } from "@/components/portal/heritage/quick-action";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import type { PlayerClubData, GapAnalysisItem } from "./actions";
 
 const DEFAULT_CLUBS = [
@@ -90,8 +91,8 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Min bag</h1>
-          <p className="text-[var(--color-grey-500)] mt-1">
+          <h1 className="text-2xl font-bold text-[var(--color-portal-text)]">Min bag</h1>
+          <p className="text-[var(--color-portal-secondary)] mt-1">
             {clubs.length > 0
               ? `${clubs.length} klubber registrert`
               : "Ingen klubber registrert enda"}
@@ -99,7 +100,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
         </div>
         <button
           onClick={() => setShowAdd(true)}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--color-primary)] text-white text-sm font-medium hover:bg-[var(--color-primary-alt)] transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-[20px] bg-primary text-white text-sm font-medium hover:bg-[var(--color-primary-alt)] transition-colors"
         >
           <Plus className="w-4 h-4" />
           Legg til klubb
@@ -108,21 +109,23 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
 
       {/* Empty State */}
       {clubs.length === 0 && !showAdd && (
-        <div className="bg-white rounded-2xl p-12 border border-[var(--color-grey-200)]/70 text-center">
-          <Target className="w-12 h-12 text-[var(--color-grey-300)] mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-[var(--color-grey-900)] mb-2">
-            Ingen klubber i bagen
-          </h3>
-          <p className="text-[var(--color-grey-500)] max-w-md mx-auto">
-            Legg til klubbene dine for a fa oversikt over avstander, gap-analyse
-            og anbefalinger.
-          </p>
-        </div>
+        <PremiumCard>
+          <div className="p-6 text-center">
+            <Target className="w-12 h-12 text-[var(--color-portal-muted)] mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-[var(--color-portal-text)] mb-2">
+              Ingen klubber i bagen
+            </h3>
+            <p className="text-[var(--color-portal-secondary)] max-w-md mx-auto">
+              Legg til klubbene dine for a fa oversikt over avstander, gap-analyse
+              og anbefalinger.
+            </p>
+          </div>
+        </PremiumCard>
       )}
 
       {/* Bag Visualization */}
       {clubs.length > 0 && (
-        <div className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-alt)] rounded-3xl p-6 lg:p-8">
+        <PremiumCard className="p-6 lg:p-8">
           <div className="grid grid-cols-4 sm:grid-cols-7 lg:grid-cols-14 gap-2">
             {clubs.map((club, index) => (
               <motion.button
@@ -133,20 +136,20 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                 onClick={() => setSelectedClub(club.id)}
                 className={`aspect-[3/4] rounded-xl flex flex-col items-center justify-center p-2 transition-all ${
                   selectedClub === club.id
-                    ? "bg-[var(--color-accent-cta)] text-[var(--color-grey-900)]"
-                    : "bg-white/10 text-white hover:bg-white/20"
+                    ? "bg-[var(--color-accent-cta)] text-[var(--color-portal-text)]"
+                    : "bg-[var(--color-portal-hover)] text-[var(--color-portal-secondary)] hover:bg-[var(--color-portal-border)]"
                 }`}
               >
                 <span className="text-[10px] uppercase tracking-wider opacity-70">
                   {club.name}
                 </span>
-                <span className="text-lg font-bold">
+                <span className="text-lg font-bold tabular-nums tracking-tight">
                   {club.loft != null ? `${club.loft}` : "--"}
                 </span>
               </motion.button>
             ))}
           </div>
-        </div>
+        </PremiumCard>
       )}
 
       {/* Selected Club Detail */}
@@ -155,37 +158,32 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
           const club = clubs.find((c) => c.id === selectedClub);
           if (!club) return null;
           return (
-            <motion.div
-              key={selectedClub}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl p-6 border border-[var(--color-grey-200)]/70"
-            >
+            <PremiumCard key={selectedClub}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-16 h-16 rounded-2xl bg-[var(--color-grey-100)] flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-2xl bg-[var(--color-portal-hover)] flex items-center justify-center">
                       <Target className="w-8 h-8 text-[var(--color-primary)]" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-[var(--color-grey-900)]">
+                      <h3 className="text-xl font-bold text-[var(--color-portal-text)]">
                         {club.name}
                       </h3>
-                      <p className="text-[var(--color-grey-500)]">
+                      <p className="text-[var(--color-portal-secondary)]">
                         {[club.brand, club.model].filter(Boolean).join(" ") ||
                           "Ikke spesifisert"}
                       </p>
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[var(--color-grey-100)] text-sm text-[var(--color-grey-500)] hover:bg-[var(--color-grey-200)] transition-colors">
+                    <button className="flex items-center gap-1 px-3 py-1.5 rounded-[20px] bg-[var(--color-portal-hover)] text-sm text-[var(--color-portal-secondary)] hover:bg-[var(--color-portal-border)] transition-colors">
                       <Edit2 className="w-3 h-3" />
                       Rediger
                     </button>
                     <button
                       onClick={() => handleDelete(club.id)}
                       disabled={isPending}
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[var(--color-error)]/10 text-sm text-[var(--color-error)] hover:bg-[var(--color-error)]/20 transition-colors disabled:opacity-50"
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-[20px] bg-[var(--color-error)]/10 text-sm text-[var(--color-error)] hover:bg-[var(--color-error)]/20 transition-colors disabled:opacity-50"
                     >
                       <Trash2 className="w-3 h-3" />
                       Fjern
@@ -194,48 +192,48 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-[var(--color-grey-100)]">
-                    <p className="text-xs text-[var(--color-grey-400)] uppercase tracking-wider">
+                  <div className="p-4 rounded-xl bg-[var(--color-portal-hover)]">
+                    <p className="text-xs text-[var(--color-portal-muted)] uppercase tracking-wider">
                       Carry
                     </p>
-                    <p className="text-2xl font-bold text-[var(--color-grey-900)]">
+                    <p className="text-2xl font-bold text-[var(--color-portal-text)] tabular-nums tracking-tight">
                       {club.avgCarry != null ? `${club.avgCarry}m` : "--"}
                     </p>
                   </div>
-                  <div className="p-4 rounded-xl bg-[var(--color-grey-100)]">
-                    <p className="text-xs text-[var(--color-grey-400)] uppercase tracking-wider">
+                  <div className="p-4 rounded-xl bg-[var(--color-portal-hover)]">
+                    <p className="text-xs text-[var(--color-portal-muted)] uppercase tracking-wider">
                       Total
                     </p>
-                    <p className="text-2xl font-bold text-[var(--color-grey-900)]">
+                    <p className="text-2xl font-bold text-[var(--color-portal-text)] tabular-nums tracking-tight">
                       {club.avgTotal != null ? `${club.avgTotal}m` : "--"}
                     </p>
                   </div>
-                  <div className="p-4 rounded-xl bg-[var(--color-grey-100)]">
-                    <p className="text-xs text-[var(--color-grey-400)] uppercase tracking-wider">
+                  <div className="p-4 rounded-xl bg-[var(--color-portal-hover)]">
+                    <p className="text-xs text-[var(--color-portal-muted)] uppercase tracking-wider">
                       Slag
                     </p>
-                    <p className="text-2xl font-bold text-[var(--color-primary)]">
+                    <p className="text-2xl font-bold text-[var(--color-primary)] tabular-nums tracking-tight">
                       {club.shotCount}
                     </p>
                   </div>
-                  <div className="p-4 rounded-xl bg-[var(--color-grey-100)]">
-                    <p className="text-xs text-[var(--color-grey-400)] uppercase tracking-wider">
+                  <div className="p-4 rounded-xl bg-[var(--color-portal-hover)]">
+                    <p className="text-xs text-[var(--color-portal-muted)] uppercase tracking-wider">
                       Loft
                     </p>
-                    <p className="text-2xl font-bold text-[var(--color-grey-900)]">
+                    <p className="text-2xl font-bold text-[var(--color-portal-text)] tabular-nums tracking-tight">
                       {club.loft != null ? `${club.loft}` : "--"}
                     </p>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </PremiumCard>
           );
         })()}
 
       {/* Distance Chart */}
       {clubs.some((c) => (c.avgCarry ?? 0) > 0) && (
-        <div className="bg-white rounded-2xl p-6 border border-[var(--color-grey-200)]/70">
-          <h3 className="font-semibold text-[var(--color-grey-900)] mb-4">
+        <PremiumCard>
+          <h3 className="font-semibold text-[var(--color-portal-text)] mb-4">
             Avstandsoversikt
           </h3>
           <div className="space-y-3">
@@ -244,10 +242,10 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
               .sort((a, b) => (b.avgCarry ?? 0) - (a.avgCarry ?? 0))
               .map((club) => (
                 <div key={club.id} className="flex items-center gap-4">
-                  <span className="w-16 text-sm font-medium text-[var(--color-grey-900)]">
+                  <span className="w-16 text-sm font-medium text-[var(--color-portal-text)]">
                     {club.name}
                   </span>
-                  <div className="flex-1 h-6 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
+                  <div className="flex-1 h-6 bg-[var(--color-portal-hover)] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[var(--color-primary)] rounded-full transition-all duration-500"
                       style={{
@@ -255,13 +253,13 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                       }}
                     />
                   </div>
-                  <span className="w-16 text-sm text-right text-[var(--color-grey-500)]">
+                  <span className="w-16 text-sm text-right text-[var(--color-portal-secondary)] tabular-nums tracking-tight">
                     {club.avgCarry}m
                   </span>
                 </div>
               ))}
           </div>
-        </div>
+        </PremiumCard>
       )}
 
       {/* Gap Analysis */}
@@ -274,9 +272,9 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {gapAnalysis.map((gap) => (
               <div key={gap.between} className="p-4 rounded-xl bg-white/50">
-                <p className="text-xs text-[var(--color-grey-400)] mb-1">{gap.between}</p>
-                <p className="text-2xl font-bold text-[var(--color-grey-900)]">{gap.gap}m</p>
-                <p className="text-xs text-[var(--color-grey-500)] mt-1">
+                <p className="text-xs text-[var(--color-portal-muted)] mb-1">{gap.between}</p>
+                <p className="text-2xl font-bold text-[var(--color-portal-text)] tabular-nums tracking-tight">{gap.gap}m</p>
+                <p className="text-xs text-[var(--color-portal-secondary)] mt-1">
                   {gap.recommended}
                 </p>
               </div>
@@ -287,64 +285,62 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
 
       {/* Add Club Form */}
       {showAdd && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl border border-[var(--color-grey-200)]/70 p-4 space-y-3 shadow-sm"
-        >
-          <select
-            value={newClub.name}
-            onChange={(e) => setNewClub({ ...newClub, name: e.target.value })}
-            className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-grey-200)]/70 text-[var(--color-grey-900)] bg-[var(--color-grey-100)] outline-none focus:border-[var(--color-primary)]"
-          >
-            <option value="">Velg klubb...</option>
-            {DEFAULT_CLUBS.filter(
-              (c) => !clubs.some((ec) => ec.name === c)
-            ).map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-          <input
-            type="text"
-            value={newClub.brand}
-            onChange={(e) => setNewClub({ ...newClub, brand: e.target.value })}
-            placeholder="Merke (valgfritt)"
-            className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-grey-200)]/70 text-[var(--color-grey-900)] bg-[var(--color-grey-100)] outline-none focus:border-[var(--color-primary)]"
-          />
-          <input
-            type="number"
-            value={newClub.avgCarry}
-            onChange={(e) =>
-              setNewClub({ ...newClub, avgCarry: e.target.value })
-            }
-            placeholder="Gjennomsnittlig carry (meter)"
-            className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-grey-200)]/70 text-[var(--color-grey-900)] bg-[var(--color-grey-100)] outline-none focus:border-[var(--color-primary)]"
-          />
-          <div className="flex gap-2">
-            <button
-              onClick={handleAdd}
-              disabled={!newClub.name || isPending}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[var(--color-primary)] text-white font-medium disabled:opacity-50 hover:bg-[var(--color-primary-alt)] transition-colors"
+        <PremiumCard>
+          <div className="space-y-3">
+            <select
+              value={newClub.name}
+              onChange={(e) => setNewClub({ ...newClub, name: e.target.value })}
+              className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-portal-border)] text-[var(--color-portal-text)] bg-[var(--color-portal-hover)] outline-none focus:border-[var(--color-primary)]"
             >
-              <Save className="h-4 w-4" />
-              {isPending ? "Lagrer..." : "Legg til"}
-            </button>
-            <button
-              onClick={() => setShowAdd(false)}
-              className="px-4 py-2.5 rounded-xl border border-[var(--color-grey-200)]/70 text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)] transition-colors"
-            >
-              <X className="h-4 w-4" />
-            </button>
+              <option value="">Velg klubb...</option>
+              {DEFAULT_CLUBS.filter(
+                (c) => !clubs.some((ec) => ec.name === c)
+              ).map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            <input
+              type="text"
+              value={newClub.brand}
+              onChange={(e) => setNewClub({ ...newClub, brand: e.target.value })}
+              placeholder="Merke (valgfritt)"
+              className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-portal-border)] text-[var(--color-portal-text)] bg-[var(--color-portal-hover)] outline-none focus:border-[var(--color-primary)]"
+            />
+            <input
+              type="number"
+              value={newClub.avgCarry}
+              onChange={(e) =>
+                setNewClub({ ...newClub, avgCarry: e.target.value })
+              }
+              placeholder="Gjennomsnittlig carry (meter)"
+              className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-portal-border)] text-[var(--color-portal-text)] bg-[var(--color-portal-hover)] outline-none focus:border-[var(--color-primary)]"
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={handleAdd}
+                disabled={!newClub.name || isPending}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[20px] bg-primary text-white font-medium disabled:opacity-50 hover:bg-[var(--color-primary-alt)] transition-colors"
+              >
+                <Save className="h-4 w-4" />
+                {isPending ? "Lagrer..." : "Legg til"}
+              </button>
+              <button
+                onClick={() => setShowAdd(false)}
+                className="px-4 py-2.5 rounded-[20px] border border-[var(--color-portal-border)] text-[var(--color-portal-secondary)] hover:bg-[var(--color-portal-hover)] transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
           </div>
-        </motion.div>
+        </PremiumCard>
       )}
 
       {/* TrackMan import hint */}
       {clubs.length > 0 && clubs.every((c) => !c.avgCarry) && (
-        <div className="bg-[var(--color-grey-100)] rounded-xl p-4 text-sm text-[var(--color-grey-500)]">
-          <p className="font-medium text-[var(--color-grey-900)]">Visste du?</p>
+        <div className="bg-[var(--color-portal-hover)] rounded-xl p-4 text-sm text-[var(--color-portal-secondary)]">
+          <p className="font-medium text-[var(--color-portal-text)]">Visste du?</p>
           <p className="mt-1">
             Last opp TrackMan-data for a fa presise gjennomsnitt og spredning
             per klubb automatisk.
