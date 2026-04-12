@@ -30,6 +30,7 @@ interface WeekDay {
 
 interface DashboardProps {
   userName: string | null;
+  userImage: string | null;
   tier: string;
   memberSince: string | null;
   stats: { sessionsCount: number; roundsCount: number };
@@ -65,6 +66,7 @@ interface DashboardProps {
 
 export function DashboardClient({
   userName,
+  userImage,
   tier,
   stats,
   handicap,
@@ -101,9 +103,13 @@ export function DashboardClient({
           {/* Avatar */}
           <Link
             href="/portal/profil"
-            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-white shadow-card transition-transform duration-300 hover:scale-105"
+            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-white shadow-card transition-transform duration-300 hover:scale-105 overflow-hidden"
           >
-            {initials}
+            {userImage ? (
+              <img src={userImage} alt="" className="h-full w-full object-cover" />
+            ) : (
+              initials
+            )}
           </Link>
           <div>
             <p className="text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">

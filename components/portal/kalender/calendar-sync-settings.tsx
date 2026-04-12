@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Calendar, Copy, Check, RefreshCw, Lock } from "lucide-react";
+import { Calendar, Copy, Check, RefreshCw, Lock, ExternalLink } from "lucide-react";
+
+function toWebcalUrl(httpUrl: string): string {
+  return httpUrl.replace(/^https?:\/\//, "webcal://");
+}
 
 export function CalendarSyncSettings() {
   const [feedUrl, setFeedUrl] = useState<string | null>(null);
@@ -10,7 +14,7 @@ export function CalendarSyncSettings() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    fetch("/api/calendar/token")
+    fetch("/api/portal/calendar/token")
       .then((r) => r.json())
       .then((d) => {
         setFeedUrl(d.feedUrl ?? null);
@@ -22,7 +26,7 @@ export function CalendarSyncSettings() {
   async function generateToken() {
     setGenerating(true);
     try {
-      const r = await fetch("/api/calendar/token", { method: "POST" });
+      const r = await fetch("/api/portal/calendar/token", { method: "POST" });
       const d = await r.json();
       if (d.feedUrl) setFeedUrl(d.feedUrl);
     } finally {
@@ -35,6 +39,11 @@ export function CalendarSyncSettings() {
     await navigator.clipboard.writeText(feedUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  }
+
+  function openInAppleCalendar() {
+    if (!feedUrl) return;
+    window.open(toWebcalUrl(feedUrl), "_self");
   }
 
   if (loading) {
@@ -60,12 +69,27 @@ export function CalendarSyncSettings() {
       </div>
 
       <p className="text-xs text-[var(--color-grey-500)] mb-4">
-        Abonner på treningsplanen din direkte i Apple Kalender eller Google Kalender.
+        Abonner på treningsplanen din direkte i Apple Kalender, Outlook eller Google Kalender.
         Kalenderen oppdateres automatisk.
       </p>
 
       {feedUrl ? (
-        <div className="space-y-3">
+        <div className="space-y-4">
+          {/* Apple Calendar / Outlook subscribe button */}
+          <button
+            onClick={openInAppleCalendar}
+            className="flex items-center gap-2 w-full px-4 py-2.5 rounded-lg text-xs font-semibold transition-all hover:opacity-90"
+            style={{
+              background: "var(--color-primary)",
+              color: "#fff",
+            }}
+          >
+            <Calendar className="w-3.5 h-3.5" />
+            Abonner i Apple Kalender / Outlook
+            <ExternalLink className="w-3 h-3 ml-auto" />
+          </button>
+
+          {/* Feed URL display */}
           <div
             className="flex items-center gap-2 px-3 py-2 rounded-lg"
             style={{ background: "var(--color-grey-200)", border: "1px solid var(--color-grey-200)" }}
@@ -89,15 +113,19 @@ export function CalendarSyncSettings() {
 
           <div className="space-y-1">
             <p className="text-[10px] font-semibold text-[var(--color-grey-400)] uppercase tracking-wider">
-              Slik abonnerer du:
+              Eller legg til manuelt:
             </p>
             <p className="text-[10px] text-[var(--color-grey-500)]">
               <strong className="text-[var(--color-grey-900)]">Apple Kalender:</strong>{" "}
-              Fil → Ny kalenderabonnement → lim inn URL
+              Fil &rarr; Ny kalenderabonnement &rarr; lim inn URL
+            </p>
+            <p className="text-[10px] text-[var(--color-grey-500)]">
+              <strong className="text-[var(--color-grey-900)]">Outlook:</strong>{" "}
+              Legg til kalender &rarr; Abonner fra nett &rarr; lim inn URL
             </p>
             <p className="text-[10px] text-[var(--color-grey-500)]">
               <strong className="text-[var(--color-grey-900)]">Google Kalender:</strong>{" "}
-              + → Andre kalendere → Fra URL → lim inn URL
+              + &rarr; Andre kalendere &rarr; Fra URL &rarr; lim inn URL
             </p>
           </div>
 
@@ -117,7 +145,7 @@ export function CalendarSyncSettings() {
           className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold transition-opacity hover:opacity-90"
           style={{
             background: "var(--color-black)",
-            color: "var(--color-grey-900)",
+            color: "#fff",
             opacity: generating ? 0.7 : 1,
           }}
         >

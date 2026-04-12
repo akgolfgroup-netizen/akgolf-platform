@@ -9,7 +9,6 @@ import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { SectionLabel } from "@/components/website/SectionLabel";
 import { RevealOnScroll } from "@/components/website/RevealOnScroll";
 import { BackToTop } from "@/components/website/BackToTop";
-import { PageTransition } from "@/components/website/PageTransition";
 import { EASE_ENTRANCE } from "@/lib/design-tokens";
 import {
   UTVIKLING_HERO_V2,
@@ -18,99 +17,7 @@ import {
   UTVIKLING_CTA_V2,
 } from "@/lib/website-constants";
 
-/* ── SVG Illustrations for service cards ── */
-
-function SportsplanSVG() {
-  return (
-    <svg viewBox="0 0 200 160" fill="none" className="w-full max-w-[200px] mx-auto">
-      {/* Document */}
-      <rect x="40" y="10" width="120" height="140" rx="8" stroke="var(--color-grey-200)" strokeWidth="1.5" fill="white" />
-      {/* Header area */}
-      <rect x="52" y="24" width="60" height="6" rx="3" fill="var(--color-grey-200)" />
-      <rect x="52" y="36" width="40" height="4" rx="2" fill="var(--color-surface)" />
-      {/* Section lines */}
-      <rect x="52" y="52" width="96" height="4" rx="2" fill="var(--color-surface)" />
-      <rect x="52" y="62" width="80" height="4" rx="2" fill="var(--color-surface)" />
-      <rect x="52" y="72" width="88" height="4" rx="2" fill="var(--color-surface)" />
-      {/* Green highlight section */}
-      <rect x="48" y="88" width="104" height="24" rx="6" fill="var(--color-primary)" fillOpacity="0.08" />
-      <rect x="56" y="94" width="64" height="4" rx="2" fill="var(--color-primary)" fillOpacity="0.3" />
-      <rect x="56" y="102" width="48" height="4" rx="2" fill="var(--color-primary)" fillOpacity="0.2" />
-      {/* Bottom lines */}
-      <rect x="52" y="122" width="72" height="4" rx="2" fill="var(--color-surface)" />
-      <rect x="52" y="132" width="56" height="4" rx="2" fill="var(--color-surface)" />
-    </svg>
-  );
-}
-
-function PortalMockupSVG() {
-  return (
-    <svg viewBox="0 0 120 220" fill="none" className="w-full max-w-[100px] mx-auto">
-      {/* Phone frame */}
-      <rect x="4" y="4" width="112" height="212" rx="20" stroke="var(--color-black)" strokeWidth="6" fill="var(--color-surface)" />
-      {/* Notch */}
-      <rect x="36" y="4" width="48" height="14" rx="7" fill="var(--color-black)" />
-      {/* Screen content */}
-      {/* Handicap card */}
-      <rect x="16" y="28" width="88" height="40" rx="8" fill="white" />
-      <rect x="24" y="36" width="30" height="3" rx="1.5" fill="var(--color-grey-200)" />
-      <rect x="24" y="44" width="20" height="8" rx="2" fill="var(--color-black)" />
-      <rect x="24" y="56" width="40" height="3" rx="1.5" fill="var(--color-primary)" fillOpacity="0.3" />
-      {/* Stats card */}
-      <rect x="16" y="76" width="88" height="36" rx="8" fill="white" />
-      <rect x="24" y="84" width="24" height="3" rx="1.5" fill="var(--color-grey-200)" />
-      {/* Mini bars */}
-      <rect x="24" y="92" width="12" height="12" rx="2" fill="var(--color-primary)" fillOpacity="0.2" />
-      <rect x="40" y="96" width="12" height="8" rx="2" fill="var(--color-primary)" fillOpacity="0.15" />
-      <rect x="56" y="90" width="12" height="14" rx="2" fill="var(--color-primary)" fillOpacity="0.25" />
-      <rect x="72" y="94" width="12" height="10" rx="2" fill="var(--color-primary)" fillOpacity="0.18" />
-      {/* Plan card */}
-      <rect x="16" y="120" width="88" height="36" rx="8" fill="white" />
-      <rect x="24" y="128" width="36" height="3" rx="1.5" fill="var(--color-grey-200)" />
-      <rect x="24" y="136" width="72" height="3" rx="1.5" fill="var(--color-surface)" />
-      <rect x="24" y="144" width="56" height="3" rx="1.5" fill="var(--color-surface)" />
-      {/* Bottom nav */}
-      <rect x="16" y="168" width="88" height="32" rx="8" fill="white" />
-      <circle cx="36" cy="184" r="4" fill="var(--color-grey-200)" />
-      <circle cx="60" cy="184" r="4" fill="var(--color-primary)" fillOpacity="0.3" />
-      <circle cx="84" cy="184" r="4" fill="var(--color-grey-200)" />
-    </svg>
-  );
-}
-
-function QRSkiltSVG() {
-  return (
-    <svg viewBox="0 0 200 160" fill="none" className="w-full max-w-[200px] mx-auto">
-      {/* Sign frame */}
-      <rect x="20" y="10" width="100" height="130" rx="6" stroke="white" strokeOpacity="0.3" strokeWidth="1.5" fill="white" fillOpacity="0.05" />
-      {/* QR code placeholder */}
-      <rect x="40" y="24" width="60" height="60" rx="4" fill="white" fillOpacity="0.1" />
-      {/* QR pattern */}
-      <rect x="46" y="30" width="12" height="12" rx="1" fill="white" fillOpacity="0.25" />
-      <rect x="82" y="30" width="12" height="12" rx="1" fill="white" fillOpacity="0.25" />
-      <rect x="46" y="66" width="12" height="12" rx="1" fill="white" fillOpacity="0.25" />
-      <rect x="62" y="46" width="16" height="16" rx="1" fill="white" fillOpacity="0.15" />
-      <rect x="62" y="66" width="8" height="8" rx="1" fill="white" fillOpacity="0.2" />
-      <rect x="74" y="58" width="8" height="8" rx="1" fill="white" fillOpacity="0.15" />
-      {/* Text lines under QR */}
-      <rect x="40" y="94" width="60" height="4" rx="2" fill="white" fillOpacity="0.2" />
-      <rect x="48" y="104" width="44" height="3" rx="1.5" fill="white" fillOpacity="0.1" />
-      {/* Phone scanning */}
-      <rect x="135" y="40" width="48" height="90" rx="10" stroke="white" strokeOpacity="0.3" strokeWidth="1.5" fill="white" fillOpacity="0.05" />
-      <rect x="151" y="40" width="16" height="8" rx="4" fill="white" fillOpacity="0.15" />
-      {/* Camera viewfinder */}
-      <rect x="143" y="58" width="32" height="32" rx="4" stroke="white" strokeOpacity="0.3" strokeWidth="1" fill="none" strokeDasharray="4 4" />
-      {/* Scan line */}
-      <line x1="143" y1="74" x2="175" y2="74" stroke="var(--color-primary)" strokeWidth="1.5" strokeOpacity="0.6" />
-    </svg>
-  );
-}
-
-const MOCKUP_MAP: Record<string, React.ComponentType> = {
-  sportsplan: SportsplanSVG,
-  programvare: PortalMockupSVG,
-  skilting: QRSkiltSVG,
-};
+/* ── Expandable service card ── */
 
 function ExpandableCard({
   item,
@@ -127,23 +34,22 @@ function ExpandableCard({
 }) {
   const [expanded, setExpanded] = useState(false);
   const isDark = item.theme === "dark";
-  const MockupComponent = MOCKUP_MAP[item.id];
 
   return (
     <div
-      className={`rounded-[20px] p-8 ${
+      className={`rounded-2xl p-8 ${
         item.span === "large" ? "md:col-span-2 p-10" : ""
       } ${
         isDark
           ? "bg-black text-white"
           : item.span === "large"
             ? "bg-surface border border-grey-200"
-            : "bg-white border border-grey-200"
+            : "bg-white border border-grey-200 shadow-card hover:shadow-card-hover transition-shadow duration-300"
       }`}
     >
       <span
-        className={`text-[10px] font-mono uppercase tracking-[0.15em] font-medium ${
-          isDark ? "text-white/60" : "text-grey-500"
+        className={`text-[11px] font-mono uppercase tracking-[0.15em] font-medium ${
+          isDark ? "text-white/60" : "text-grey-400"
         }`}
       >
         {item.label}
@@ -158,7 +64,7 @@ function ExpandableCard({
       <p
         className={`text-sm leading-relaxed ${
           item.span === "large" ? "max-w-xl" : ""
-        } ${isDark ? "text-white/60" : "text-grey-500"}`}
+        } ${isDark ? "text-white/60" : "text-grey-400"}`}
       >
         {item.description}
       </p>
@@ -174,15 +80,10 @@ function ExpandableCard({
             <p
               className={`text-sm leading-relaxed mt-4 ${
                 item.span === "large" ? "max-w-xl" : ""
-              } ${isDark ? "text-white/60" : "text-grey-500"}`}
+              } ${isDark ? "text-white/60" : "text-grey-400"}`}
             >
               {item.expandedDescription}
             </p>
-            {MockupComponent && (
-              <div className="mt-6 flex justify-center">
-                <MockupComponent />
-              </div>
-            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -205,7 +106,7 @@ export default function UtviklingPage() {
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--color-grey-900)] focus:text-white focus:rounded-lg"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-black focus:text-white focus:rounded-lg"
       >
         Hopp til hovedinnhold
       </a>
@@ -235,166 +136,177 @@ export default function UtviklingPage() {
             }),
           }}
         />
-        <PageTransition>
-          {/* ─── 1. Hero (dark, with background image) ─── */}
-          <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-black grain-overlay">
-            <div className="absolute inset-0 pointer-events-none">
-              <Image
-                src="/images/academy/AK-Golf-Academy-8.jpg"
-                alt="Coach og elev ved laptop"
-                fill
-                className="object-cover opacity-25"
-                priority
-                sizes="100vw"
-              />
-            </div>
-            <div className="w-container relative">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  ease: [...EASE_ENTRANCE],
-                }}
+
+        {/* 1. Hero */}
+        <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-black grain-overlay">
+          <div className="absolute inset-0 pointer-events-none">
+            <Image
+              src="/images/academy/AK-Golf-Academy-8.jpg"
+              alt="Coach og elev ved laptop"
+              fill
+              className="object-cover opacity-25"
+              priority
+              sizes="100vw"
+            />
+          </div>
+          <div className="w-container relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [...EASE_ENTRANCE] }}
+            >
+              <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/60 font-medium">
+                {UTVIKLING_HERO_V2.label}
+              </span>
+            </motion.div>
+
+            <motion.h1
+              className="text-[48px] font-extrabold leading-[1.1] tracking-tight text-white max-w-3xl mt-6 whitespace-pre-line"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.9,
+                delay: 0.1,
+                ease: [...EASE_ENTRANCE],
+              }}
+            >
+              {UTVIKLING_HERO_V2.heading}
+            </motion.h1>
+
+            <motion.p
+              className="text-base text-white/60 max-w-2xl leading-relaxed mt-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                ease: [...EASE_ENTRANCE],
+              }}
+            >
+              {UTVIKLING_HERO_V2.description}
+            </motion.p>
+
+            <motion.div
+              className="flex flex-wrap gap-4 mt-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.3,
+                ease: [...EASE_ENTRANCE],
+              }}
+            >
+              <Link
+                href="#contact"
+                className="px-7 py-3.5 rounded-[20px] bg-primary text-white text-sm font-semibold hover:bg-primary-alt transition-colors"
               >
-                <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/60 font-medium">
-                  {UTVIKLING_HERO_V2.label}
-                </span>
-              </motion.div>
+                {UTVIKLING_HERO_V2.ctaLabel} &rarr;
+              </Link>
+            </motion.div>
+          </div>
+        </section>
 
-              <motion.h1
-                className="text-[48px] font-extrabold leading-[1.1] tracking-tight text-white max-w-3xl mt-6 whitespace-pre-line"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.9,
-                  delay: 0.1,
-                  ease: [...EASE_ENTRANCE],
-                }}
-              >
-                {UTVIKLING_HERO_V2.heading}
-              </motion.h1>
+        {/* 2. Tjenester bento grid */}
+        <section className="py-24 md:py-32 bg-white">
+          <div className="w-container">
+            <RevealOnScroll>
+              <div className="text-center mb-16">
+                <SectionLabel>{UTVIKLING_SERVICES_V2.label}</SectionLabel>
+                <h2 className="w-heading-lg mt-4">
+                  {UTVIKLING_SERVICES_V2.heading}
+                </h2>
+              </div>
+            </RevealOnScroll>
 
-              <motion.p
-                className="text-base text-white/60 max-w-2xl leading-relaxed mt-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.2,
-                  ease: [...EASE_ENTRANCE],
-                }}
-              >
-                {UTVIKLING_HERO_V2.description}
-              </motion.p>
+            <RevealOnScroll delay={0.1}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                {UTVIKLING_SERVICES_V2.items.map((item) => (
+                  <ExpandableCard key={item.id} item={item} />
+                ))}
+              </div>
+            </RevealOnScroll>
+          </div>
+        </section>
 
-              <motion.div
-                className="flex flex-wrap gap-4 mt-10"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.3,
-                  ease: [...EASE_ENTRANCE],
-                }}
-              >
-                <Link
-                  href="#contact"
-                  className="px-7 py-3.5 rounded-[980px] bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors"
-                >
-                  {UTVIKLING_HERO_V2.ctaLabel} &rarr;
-                </Link>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* ─── 2. Services bento grid (white bg) ─── */}
-          <section className="py-28 md:py-40 bg-white">
-            <div className="w-container">
-              <RevealOnScroll>
-                <div className="text-center mb-16">
-                  <SectionLabel>{UTVIKLING_SERVICES_V2.label}</SectionLabel>
-                  <h2 className="w-heading-lg mt-4">
-                    {UTVIKLING_SERVICES_V2.heading}
-                  </h2>
-                </div>
-              </RevealOnScroll>
-
-              <RevealOnScroll delay={0.1}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-                  {UTVIKLING_SERVICES_V2.items.map((item) => (
-                    <ExpandableCard key={item.id} item={item} />
-                  ))}
-                </div>
-              </RevealOnScroll>
-            </div>
-          </section>
-
-          {/* ─── 3. References / Social proof (grey bg) ─── */}
-          <section className="py-28 md:py-40 bg-surface">
-            <div className="w-container">
-              <RevealOnScroll>
-                <div className="text-center">
-                  <SectionLabel>
-                    {UTVIKLING_REFERENCES_V2.label}
-                  </SectionLabel>
-                  <h2 className="w-heading-lg mt-4 mb-12">
-                    {UTVIKLING_REFERENCES_V2.heading}
-                  </h2>
-                  <div className="flex flex-wrap items-center justify-center gap-8 max-w-3xl mx-auto">
-                    <div className="flex flex-col items-center gap-3">
-                      <Image
-                        src="/images/partners/gfgk-logo.svg"
-                        alt="Gamle Fredrikstad Golfklubb"
-                        width={80}
-                        height={80}
-                        className="opacity-60 hover:opacity-100 transition-opacity"
-                      />
-                      <p className="text-sm text-grey-500">
-                        Gamle Fredrikstad Golfklubb
-                      </p>
+        {/* 3. Referanser */}
+        <section className="py-24 md:py-32 bg-surface">
+          <div className="w-container">
+            <RevealOnScroll>
+              <div className="text-center">
+                <SectionLabel>
+                  {UTVIKLING_REFERENCES_V2.label}
+                </SectionLabel>
+                <h2 className="w-heading-lg mt-4 mb-12">
+                  {UTVIKLING_REFERENCES_V2.heading}
+                </h2>
+                <div className="flex flex-wrap items-center justify-center gap-8 max-w-3xl mx-auto">
+                  <div className="flex flex-col items-center gap-3">
+                    <Image
+                      src="/images/partners/gfgk-logo.svg"
+                      alt="Gamle Fredrikstad Golfklubb"
+                      width={80}
+                      height={80}
+                      className="opacity-60 hover:opacity-100 transition-opacity"
+                    />
+                    <p className="text-sm text-grey-400">
+                      Gamle Fredrikstad Golfklubb
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="w-20 h-20 rounded-xl border border-grey-200 bg-white flex items-center justify-center">
+                      <svg
+                        viewBox="0 0 40 40"
+                        className="w-10 h-10"
+                        aria-hidden="true"
+                      >
+                        <text
+                          x="50%"
+                          y="54%"
+                          dominantBaseline="middle"
+                          textAnchor="middle"
+                          style={{
+                            fontSize: "16px",
+                            fontWeight: 700,
+                            fill: "var(--color-grey-500)",
+                            fontFamily:
+                              "var(--font-inter), system-ui",
+                          }}
+                        >
+                          MG
+                        </text>
+                      </svg>
                     </div>
-                    <div className="flex flex-col items-center gap-3">
-                      <div className="w-20 h-20 rounded-[16px] border border-grey-200 bg-white flex items-center justify-center">
-                        <svg viewBox="0 0 40 40" className="w-10 h-10" aria-hidden="true">
-                          <text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle"
-                            style={{ fontSize: "16px", fontWeight: 700, fill: "var(--color-grey-500)", fontFamily: "var(--font-inter), system-ui" }}>
-                            MG
-                          </text>
-                        </svg>
-                      </div>
-                      <p className="text-sm text-grey-500">
-                        Miklagard Golfklubb
-                      </p>
-                    </div>
+                    <p className="text-sm text-grey-400">
+                      Miklagard Golfklubb
+                    </p>
                   </div>
                 </div>
-              </RevealOnScroll>
-            </div>
-          </section>
+              </div>
+            </RevealOnScroll>
+          </div>
+        </section>
 
-          {/* ─── 4. CTA (light bg) ─── */}
-          <section id="contact" className="py-28 md:py-40 bg-surface">
-            <div className="w-container">
-              <RevealOnScroll>
-                <div className="max-w-2xl mx-auto text-center">
-                  <h2 className="w-heading-lg text-black mb-4">
-                    {UTVIKLING_CTA_V2.heading}
-                  </h2>
-                  <p className="text-grey-600 leading-relaxed mb-10">
-                    {UTVIKLING_CTA_V2.description}
-                  </p>
-                  <Link
-                    href="/booking"
-                    className="inline-flex px-7 py-3.5 rounded-[980px] bg-black text-white text-sm font-semibold hover:bg-grey-800 transition-colors"
-                  >
-                    {UTVIKLING_CTA_V2.ctaPrimary} &rarr;
-                  </Link>
-                </div>
-              </RevealOnScroll>
-            </div>
-          </section>
-        </PageTransition>
+        {/* 4. CTA */}
+        <section id="contact" className="py-24 md:py-32 bg-white">
+          <div className="w-container">
+            <RevealOnScroll>
+              <div className="max-w-2xl mx-auto text-center">
+                <h2 className="w-heading-lg text-black mb-4">
+                  {UTVIKLING_CTA_V2.heading}
+                </h2>
+                <p className="text-grey-400 leading-relaxed mb-10">
+                  {UTVIKLING_CTA_V2.description}
+                </p>
+                <Link
+                  href="/booking"
+                  className="inline-flex px-7 py-3.5 rounded-[20px] bg-primary text-white text-sm font-semibold hover:bg-primary-alt transition-colors"
+                >
+                  {UTVIKLING_CTA_V2.ctaPrimary} &rarr;
+                </Link>
+              </div>
+            </RevealOnScroll>
+          </div>
+        </section>
       </main>
 
       <BackToTop />

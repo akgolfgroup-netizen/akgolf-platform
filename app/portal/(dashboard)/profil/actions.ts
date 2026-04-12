@@ -74,7 +74,8 @@ export async function updateProfile(data: {
     })
     .eq("id", user.id);
 
-  revalidatePath("/profil");
+  revalidatePath("/portal/profil");
+  revalidatePath("/portal");
 }
 
 async function calculateStreak(userId: string): Promise<number> {
@@ -239,7 +240,8 @@ export async function uploadAvatar(formData: FormData) {
     .update({ image: imageUrl })
     .eq("id", user.id);
 
-  revalidatePath("/profil");
+  revalidatePath("/portal/profil");
+  revalidatePath("/portal");
   return imageUrl;
 }
 

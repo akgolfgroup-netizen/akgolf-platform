@@ -81,7 +81,7 @@ export async function GET(
 
         events.push({
           uid: `training-session-${session.id}@akgolf`,
-          summary: `${isLogged ? "✓ " : ""}${session.title}`,
+          summary: `${isLogged ? "[Fullfort] " : ""}${session.title}`,
           description: [
             session.description ?? "",
             session.focusArea ? `Fokus: ${session.focusArea}` : "",
@@ -125,7 +125,7 @@ export async function GET(
 
     events.push({
       uid: `booking-${b.id}@akgolf`,
-      summary: `${b.status === "CONFIRMED" ? "" : "⏳ "}${serviceType?.name ?? ""}`,
+      summary: `${b.status === "CONFIRMED" ? "" : "[Venter] "}${serviceType?.name ?? ""}`,
       description: [
         `Coach: ${userName ?? ""}`,
         `Status: ${b.status === "CONFIRMED" ? "Bekreftet" : "Venter"}`,
@@ -173,7 +173,7 @@ export async function GET(
 
     events.push({
       uid: `tournament-${tp.id}@akgolf`,
-      summary: `🏆 ${tournament.name}`,
+      summary: `Turnering: ${tournament.name}`,
       description: [
         tournament.location ? `Sted: ${tournament.location}` : "",
         tournament.course ? `Bane: ${tournament.course}` : "",
@@ -215,7 +215,7 @@ export async function GET(
 
     events.push({
       uid: `log-${log.id}@akgolf`,
-      summary: `✓ ${session?.title ?? "Treningsøkt"}`,
+      summary: `[Fullfort] ${session?.title ?? "Treningsokt"}`,
       description: [
         log.focusArea ? `Fokus: ${log.focusArea}` : "",
         log.notes ?? "",

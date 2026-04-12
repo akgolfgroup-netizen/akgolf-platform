@@ -4,11 +4,12 @@ import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { BackToTop } from "@/components/website/BackToTop";
 import { PageTransition } from "@/components/website/PageTransition";
-import { LandingHero } from "@/components/website/landing-hero";
-import { LandingPurpose } from "@/components/website/landing-purpose";
-import { LandingFeatures } from "@/components/website/landing-features";
-import { LandingPricing } from "@/components/website/landing-pricing";
-import { LandingCTA } from "@/components/website/landing-cta";
+import { HeroSection } from "@/components/website/landing/HeroSection";
+import { DivisionsSection } from "@/components/website/landing/DivisionsSection";
+import { FoundationSection } from "@/components/website/landing/FoundationSection";
+import { TeamSection } from "@/components/website/landing/TeamSection";
+import { PortalPreviewSection } from "@/components/website/landing/PortalPreviewSection";
+import { CTASection } from "@/components/website/landing/CTASection";
 
 export default function HomePage() {
   return (
@@ -23,11 +24,12 @@ export default function HomePage() {
       <WebsiteNav />
 
       <main id="main-content">
-        <LandingHero />
-        <LandingPurpose />
-        <LandingFeatures />
-        <LandingPricing />
-        <LandingCTA />
+        <HeroSection />
+        <DivisionsSection />
+        <FoundationSection />
+        <TeamSection />
+        <PortalPreviewSection />
+        <CTASection />
       </main>
 
       <WebsiteFooter />

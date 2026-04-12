@@ -60,6 +60,7 @@ export default async function DashboardPage() {
   return (
     <DashboardClient
       userName={user.name}
+      userImage={user.image}
       tier={user.subscriptionTier}
       memberSince={memberSince}
       stats={stats}

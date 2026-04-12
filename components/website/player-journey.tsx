@@ -1,76 +1,78 @@
-import React from 'react';
-import { PLAYER_JOURNEY, PLAYER_JOURNEY_SECTION } from '@/lib/website-constants';
-import { CheckCircle2, User, ChevronRight } from 'lucide-react';
+"use client";
 
-export const PlayerJourney = () => {
+import { CheckCircle2, User } from "lucide-react";
+import { PLAYER_JOURNEY, PLAYER_JOURNEY_SECTION } from "@/lib/website-constants";
+import { SectionLabel } from "@/components/website/SectionLabel";
+import {
+  RevealOnScroll,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/website/RevealOnScroll";
+
+export function PlayerJourney() {
   return (
-    <section className="py-24 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="text-emerald-600 font-bold tracking-widest text-sm uppercase mb-4 block">
-            {PLAYER_JOURNEY_SECTION.label}
-          </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">
-            {PLAYER_JOURNEY_SECTION.heading}
-          </h2>
-          <p className="text-lg text-slate-600">
-            {PLAYER_JOURNEY_SECTION.description}
-          </p>
-        </div>
+    <section className="py-24 md:py-32 bg-white">
+      <div className="w-container">
+        <RevealOnScroll>
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <SectionLabel>{PLAYER_JOURNEY_SECTION.label}</SectionLabel>
+            <h2 className="w-heading-lg mt-4 mb-4">
+              {PLAYER_JOURNEY_SECTION.heading}
+            </h2>
+            <p className="text-grey-400 leading-relaxed max-w-xl mx-auto">
+              {PLAYER_JOURNEY_SECTION.description}
+            </p>
+          </div>
+        </RevealOnScroll>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
-          {/* Dekorativ linje for desktop */}
-          <div className="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 -translate-y-1/2 z-0" />
-
+        <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {PLAYER_JOURNEY.map((phase, index) => (
-            <div key={phase.id} className="relative z-10 group">
-              <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm group-hover:shadow-xl group-hover:border-slate-300 transition-all duration-300 h-full flex flex-col">
+            <StaggerItem key={phase.id}>
+              <div className="bg-white rounded-2xl p-8 border border-grey-200 shadow-card hover:shadow-card-hover hover:-translate-y-px transition-all duration-300 h-full flex flex-col">
                 <div className="flex items-center justify-between mb-8">
-                  <div className={`flex items-center justify-center w-12 h-12 rounded-xl font-bold text-lg ${
-                    phase.coach === 'Anders' 
-                      ? 'bg-slate-900 text-white' 
-                      : 'bg-emerald-500 text-white'
-                  }`}>
+                  <div
+                    className={`flex items-center justify-center w-12 h-12 rounded-xl font-bold text-lg ${
+                      phase.coach === "Anders"
+                        ? "bg-black text-white"
+                        : "bg-primary text-white"
+                    }`}
+                  >
                     {index + 1}
                   </div>
-                  <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                    <User size={14} className="text-slate-400" />
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-surface rounded-full text-xs font-semibold text-grey-500 uppercase tracking-wider">
+                    <User size={14} className="text-grey-300" />
                     Coach {phase.coach}
                   </div>
                 </div>
 
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                  <h3 className="text-2xl font-bold text-black mb-2">
                     {phase.title}
                   </h3>
-                  <div className="h-1 w-12 bg-slate-200 group-hover:w-full group-hover:bg-slate-900 transition-all duration-500" />
+                  <div className="h-1 w-12 bg-grey-200 group-hover:w-full transition-all duration-500" />
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-grow">
                   {phase.steps.map((step) => (
-                    <li key={step} className="flex items-start gap-3 text-slate-600 group/item">
-                      <CheckCircle2 
-                        className={`mt-0.5 shrink-0 transition-colors ${
-                          phase.coach === 'Anders' ? 'text-slate-400 group-hover/item:text-slate-900' : 'text-slate-300 group-hover/item:text-emerald-500'
-                        }`} 
-                        size={18} 
+                    <li
+                      key={step}
+                      className="flex items-start gap-3 text-grey-500"
+                    >
+                      <CheckCircle2
+                        className="mt-0.5 shrink-0 text-grey-300"
+                        size={18}
                       />
-                      <span className="text-sm font-medium leading-relaxed">{step}</span>
+                      <span className="text-sm font-medium leading-relaxed">
+                        {step}
+                      </span>
                     </li>
                   ))}
                 </ul>
-
-                <div className="pt-6 border-t border-slate-100">
-                  <button className="w-full flex items-center justify-center gap-2 py-3 rounded-lg font-bold text-sm bg-slate-50 text-slate-900 hover:bg-slate-900 hover:text-white transition-colors duration-200">
-                    {phase.id === 'nybegynner' ? 'Start her' : 'Les mer'}
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
-};
+}
