@@ -1,13 +1,40 @@
 export default function Loading() {
   return (
-    <div className="space-y-6 animate-pulse">
-      <div>
-        <div className="h-8 w-48 bg-[var(--color-grey-200)] rounded" />
-        <div className="h-4 w-32 bg-[var(--color-grey-100)] rounded mt-2" />
+    <div className="mx-auto w-full max-w-[1120px] px-6 pb-12 pt-8">
+      <div className="mb-8 animate-pulse">
+        <div className="h-3 w-16 rounded bg-[var(--color-portal-hover)]" />
+        <div className="mt-2 h-8 w-48 rounded bg-[var(--color-portal-hover)]" />
       </div>
-      <div className="bg-white rounded-[20px] border border-[var(--color-grey-200)] p-5">
-        <div className="h-4 w-32 bg-[var(--color-grey-200)] rounded mb-4" />
-        <div className="h-40 bg-[var(--color-grey-100)] rounded-lg" />
+      <div className="mb-6 grid grid-cols-3 gap-4">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="animate-pulse rounded-2xl bg-[var(--color-portal-card)] p-5"
+          >
+            <div className="flex flex-col items-center py-2">
+              <div className="h-2 w-12 rounded bg-[var(--color-portal-hover)]" />
+              <div className="mt-3 h-8 w-10 rounded bg-[var(--color-portal-hover)]" />
+              <div className="mt-3 h-4 w-4 rounded bg-[var(--color-portal-hover)]" />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mb-5 h-9 w-64 animate-pulse rounded-[10px] bg-[var(--color-portal-hover)]" />
+      <div className="space-y-3">
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="animate-pulse rounded-2xl bg-[var(--color-portal-card)] p-5"
+          >
+            <div className="flex items-start gap-4">
+              <div className="h-12 w-12 rounded-xl bg-[var(--color-portal-hover)]" />
+              <div className="flex-1">
+                <div className="h-4 w-40 rounded bg-[var(--color-portal-hover)]" />
+                <div className="mt-2 h-3 w-64 rounded bg-[var(--color-portal-hover)]" />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

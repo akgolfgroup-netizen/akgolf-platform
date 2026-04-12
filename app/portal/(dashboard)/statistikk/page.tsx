@@ -9,7 +9,7 @@ import {
 import { StatistikkClient } from "./statistikk-client";
 import type { PeriodKey } from "./actions";
 
-const VALID_PERIODS: PeriodKey[] = ["7d", "30d", "90d", "1y"];
+const VALID_PERIODS: PeriodKey[] = ["30d", "90d", "season", "1y"];
 
 interface StatistikkPageProps {
   searchParams: Promise<{ period?: string }>;

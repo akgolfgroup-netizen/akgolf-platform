@@ -72,12 +72,12 @@ export function PaymentDrawer({
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
-      <div className="text-lg font-bold text-[#0A1F18]">Bekreft og betal</div>
-      <div className="text-xs text-[#A5B2AD] mb-5">
+      <div className="text-lg font-bold text-black">Bekreft og betal</div>
+      <div className="text-xs text-muted mb-5">
         {service.name} · {service.price.toLocaleString("nb-NO")} {periodLabel}
       </div>
 
-      <div className="mb-4 p-4 rounded-xl bg-[#ECF0EF] text-[13px] text-[#324D45]">
+      <div className="mb-4 p-4 rounded-xl bg-surface text-[13px] text-text">
         Du blir videresendt til Stripe for sikker betaling. Stripe stotter automatisk kort, Apple Pay og Google Pay avhengig av din enhet.
       </div>
 
@@ -88,7 +88,7 @@ export function PaymentDrawer({
       </div>
 
       {error && (
-        <div className="mb-4 p-3 rounded-xl bg-[#B84233]/10 border border-[#B84233]/20 text-xs text-[#B84233]">
+        <div className="mb-4 p-3 rounded-xl bg-error/10 border border-error/20 text-xs text-error">
           {error}
         </div>
       )}
@@ -97,7 +97,7 @@ export function PaymentDrawer({
         type="button"
         onClick={handleSubmit}
         disabled={submitting}
-        className="w-full py-4 rounded-[14px] bg-[#D1F843] text-[#005840] text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#c8ef35] hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className="w-full py-4 rounded-[14px] bg-accent-cta text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
         {submitting ? (
           <>
@@ -123,9 +123,9 @@ function TrustBadge({
   label: string;
 }) {
   return (
-    <div className="flex-1 bg-[#ECF0EF] rounded-[10px] p-3 text-center">
-      <Icon className="w-4 h-4 text-[#005840] mx-auto mb-1" />
-      <div className="text-[10px] font-semibold text-[#005840]">{label}</div>
+    <div className="flex-1 bg-surface rounded-[10px] p-3 text-center">
+      <Icon className="w-4 h-4 text-primary mx-auto mb-1" />
+      <div className="text-[10px] font-semibold text-primary">{label}</div>
     </div>
   );
 }

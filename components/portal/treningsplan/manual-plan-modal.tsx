@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Plus, Trash2, Loader2, Save, ClipboardList } from "lucide-react";
 import { createManualPlan, type ManualPlanInput } from "@/app/portal/(dashboard)/treningsplan/actions";
@@ -59,6 +60,7 @@ interface Props {
 }
 
 export function ManualPlanModal({ open, onClose, studentId }: Props) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<1 | 2>(1);
@@ -135,14 +137,14 @@ export function ManualPlanModal({ open, onClose, studentId }: Props) {
   function handleSubmit() {
     setError(null);
 
-    // Valider at hver uke har minst én økt
-    const emptyWeeks = weeks.filter((w) => w.sessions.length === 0);
-    if (emptyWeeks.length > 0) {
-      setError(`Uke ${emptyWeeks[0].weekNumber} mangler økter`);
+    // Valider at minst én uke har økter
+    const weeksWithSessions = weeks.filter((w) => w.sessions.length > 0);
+    if (weeksWithSessions.length === 0) {
+      setError("Planen må ha minst én økt i en av ukene");
       return;
     }
 
-    // Valider at alle økter har tittel
+    // Valider at alle økter som finnes har tittel
     for (const week of weeks) {
       for (const session of week.sessions) {
         if (!session.title.trim()) {
@@ -175,6 +177,7 @@ export function ManualPlanModal({ open, onClose, studentId }: Props) {
           })),
         });
         handleClose();
+        router.refresh();
       } catch (err) {
         setError(err instanceof Error ? err.message : "Kunne ikke lagre plan");
       }

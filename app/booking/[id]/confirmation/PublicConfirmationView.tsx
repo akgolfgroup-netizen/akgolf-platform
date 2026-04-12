@@ -4,17 +4,6 @@ import Link from "next/link";
 import { Check, Mail, Calendar, Clock, CreditCard, User, LogIn } from "lucide-react";
 import { BookingUpsellCard } from "@/components/portal/booking/upsell-card";
 
-// Apple Light Theme 2026
-const THEME = {
-  bg: "#ECF0EF",
-  bgElevated: "#FFFFFF",
-  primary: "#005840",
-  text: "#005840",
-  textMuted: "#A5B2AD",
-  border: "#D5DFDB",
-  shadow: "0 4px 20px rgba(0,0,0,0.04)",
-};
-
 interface Props {
   serviceName: string;
   instructorName: string;
@@ -39,120 +28,79 @@ export function PublicConfirmationView({
   bookingPrice,
 }: Props) {
   return (
-    <div className="min-h-screen py-12 px-4" style={{ background: THEME.bg }}>
+    <div className="min-h-screen py-12 px-4 bg-surface">
       <div className="max-w-2xl mx-auto">
         {/* Success Header */}
-        <div 
-          className="rounded-3xl p-10 mb-8 text-center border"
-          style={{
-            background: THEME.bgElevated,
-            borderColor: THEME.border,
-            boxShadow: THEME.shadow,
-          }}
-        >
-          <div 
-            className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
-            style={{ background: THEME.primary }}
-          >
+        <div className="rounded-3xl p-10 mb-8 text-center border bg-white border-grey-200 shadow-card">
+          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-primary">
             <Check className="w-10 h-10 text-white" />
           </div>
-          <h1 
-            className="text-3xl font-semibold mb-3"
-            style={{ color: THEME.text }}
-          >
+          <h1 className="text-3xl font-semibold mb-3 text-primary">
             Booking bekreftet!
           </h1>
-          <p style={{ color: THEME.textMuted }}>
+          <p className="text-muted">
             Takk for din booking. Du vil motta en bekreftelse på e-post.
           </p>
         </div>
 
         {/* Booking Details */}
-        <div 
-          className="rounded-3xl p-8 mb-8 border"
-          style={{
-            background: THEME.bgElevated,
-            borderColor: THEME.border,
-            boxShadow: THEME.shadow,
-          }}
-        >
-          <h2 
-            className="text-xl font-semibold mb-6 pb-4 border-b"
-            style={{ color: THEME.text, borderColor: THEME.border }}
-          >
+        <div className="rounded-3xl p-8 mb-8 border bg-white border-grey-200 shadow-card">
+          <h2 className="text-xl font-semibold mb-6 pb-4 border-b text-primary border-grey-200">
             Bookingdetaljer
           </h2>
 
           <div className="space-y-5">
             <div className="flex items-center gap-4">
-              <div 
-                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: THEME.bg }}
-              >
-                <Calendar className="w-6 h-6" style={{ color: THEME.primary }} />
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-surface">
+                <Calendar className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm" style={{ color: THEME.textMuted }}>Dato og tid</p>
-                <p className="font-medium" style={{ color: THEME.text }}>{formattedDate}</p>
+                <p className="text-sm text-muted">Dato og tid</p>
+                <p className="font-medium text-primary">{formattedDate}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-4">
-              <div 
-                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: THEME.bg }}
-              >
-                <User className="w-6 h-6" style={{ color: THEME.primary }} />
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-surface">
+                <User className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm" style={{ color: THEME.textMuted }}>Instruktør</p>
-                <p className="font-medium" style={{ color: THEME.text }}>{instructorName}</p>
+                <p className="text-sm text-muted">Instruktør</p>
+                <p className="font-medium text-primary">{instructorName}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-4">
-              <div 
-                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: THEME.bg }}
-              >
-                <Clock className="w-6 h-6" style={{ color: THEME.primary }} />
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-surface">
+                <Clock className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm" style={{ color: THEME.textMuted }}>Varighet</p>
-                <p className="font-medium" style={{ color: THEME.text }}>{duration} minutter</p>
+                <p className="text-sm text-muted">Varighet</p>
+                <p className="font-medium text-primary">{duration} minutter</p>
               </div>
             </div>
 
             <div className="flex items-center gap-4">
-              <div 
-                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: THEME.bg }}
-              >
-                <CreditCard className="w-6 h-6" style={{ color: THEME.primary }} />
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-surface">
+                <CreditCard className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm" style={{ color: THEME.textMuted }}>Pris</p>
-                <p className="font-medium" style={{ color: THEME.text }}>{priceNOK}</p>
+                <p className="text-sm text-muted">Pris</p>
+                <p className="font-medium text-primary">{priceNOK}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Email Notice */}
-        <div
-          className="rounded-2xl p-6 mb-6 border"
-          style={{
-            background: THEME.bg,
-            borderColor: THEME.border,
-          }}
-        >
+        <div className="rounded-2xl p-6 mb-6 border bg-surface border-grey-200">
           <div className="flex items-start gap-4">
-            <Mail className="w-6 h-6 shrink-0 mt-0.5" style={{ color: THEME.primary }} />
+            <Mail className="w-6 h-6 shrink-0 mt-0.5 text-primary" />
             <div>
-              <h3 className="font-semibold mb-1" style={{ color: THEME.text }}>
+              <h3 className="font-semibold mb-1 text-primary">
                 Bekreftelse sendt
               </h3>
-              <p className="text-sm" style={{ color: THEME.textMuted }}>
+              <p className="text-sm text-muted">
                 En detaljert bekreftelse er sendt til <strong>{studentEmail}</strong>.
                 Sjekk innboksen din (og spam-mappen) for mer informasjon om timen.
               </p>
@@ -170,30 +118,20 @@ export function PublicConfirmationView({
         </div>
 
         {/* Login CTA */}
-        <div 
-          className="rounded-2xl p-6 border"
-          style={{
-            background: THEME.bgElevated,
-            borderColor: THEME.border,
-          }}
-        >
+        <div className="rounded-2xl p-6 border bg-white border-grey-200">
           <div className="flex items-start gap-4">
-            <LogIn className="w-6 h-6 shrink-0 mt-0.5" style={{ color: THEME.primary }} />
+            <LogIn className="w-6 h-6 shrink-0 mt-0.5 text-primary" />
             <div className="flex-1">
-              <h3 className="font-semibold mb-1" style={{ color: THEME.text }}>
+              <h3 className="font-semibold mb-1 text-primary">
                 Din spillerportal
               </h3>
-              <p className="text-sm mb-4" style={{ color: THEME.textMuted }}>
-                Ved første booking opprettes en konto automatisk. Hvis du er ny kunde, 
+              <p className="text-sm mb-4 text-muted">
+                Ved første booking opprettes en konto automatisk. Hvis du er ny kunde,
                 vil du motta innloggingsinformasjon på e-post.
               </p>
               <Link
                 href="/portal/login"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity duration-300"
-                style={{
-                  background: THEME.primary,
-                  color: "#FFFFFF",
-                }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity duration-300 bg-primary text-white"
               >
                 <LogIn className="w-4 h-4" />
                 Logg inn på portalen
@@ -204,10 +142,9 @@ export function PublicConfirmationView({
 
         {/* Back to Academy */}
         <div className="mt-8 text-center">
-          <Link 
-            href="/academy" 
-            className="text-sm transition-colors hover:opacity-70"
-            style={{ color: THEME.textMuted }}
+          <Link
+            href="/academy"
+            className="text-sm transition-colors hover:opacity-70 text-muted"
           >
             ← Tilbake til Academy
           </Link>

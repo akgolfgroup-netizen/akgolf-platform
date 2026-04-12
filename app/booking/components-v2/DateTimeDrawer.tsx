@@ -85,17 +85,17 @@ export function DateTimeDrawer({
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
-      <div className="text-lg font-bold text-[#0A1F18]">Velg dato og tid</div>
-      <div className="text-xs text-[#A5B2AD] mb-5">
+      <div className="text-lg font-bold text-black">Velg dato og tid</div>
+      <div className="text-xs text-muted mb-5">
         {serviceName} med {trainerFirstName}
       </div>
 
       {loading ? (
         <div className="flex justify-center py-12">
-          <Loader2 className="w-6 h-6 text-[#005840] animate-spin" />
+          <Loader2 className="w-6 h-6 text-primary animate-spin" />
         </div>
       ) : days.length === 0 ? (
-        <div className="text-center py-8 text-sm text-[#A5B2AD]">
+        <div className="text-center py-8 text-sm text-muted">
           Ingen ledige tider denne uken.
         </div>
       ) : (
@@ -131,7 +131,7 @@ export function DateTimeDrawer({
             type="button"
             onClick={handleConfirm}
             disabled={!canConfirm}
-            className="w-full mt-5 py-4 rounded-[14px] bg-[#D1F843] text-[#005840] text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#c8ef35] hover:scale-[1.01] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="w-full mt-5 py-4 rounded-[14px] bg-accent-cta text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             Bekreft tid
             <ChevronRight className="w-4 h-4" strokeWidth={2.5} />

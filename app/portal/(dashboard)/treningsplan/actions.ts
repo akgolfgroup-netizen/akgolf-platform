@@ -384,3 +384,74 @@ export async function createManualPlan(input: ManualPlanInput) {
   return { success: true, planId };
 }
 
+// -------------------------------------------------------------------
+// Toggle session complete — quick mark from week view
+// -------------------------------------------------------------------
+
+export async function toggleSessionComplete(sessionId: string) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const supabase = await createServerSupabase();
+
+  // Verify session exists
+  const { data: session } = await supabase
+    .from("TrainingPlanSession")
+    .select("id, focusArea, durationMinutes, exercises")
+    .eq("id", sessionId)
+    .single();
+
+  if (!session) throw new Error("Treningsokten finnes ikke");
+
+  // Check for existing log
+  const { data: existingLog } = await supabase
+    .from("TrainingLog")
+    .select("id")
+    .eq("planSessionId", sessionId)
+    .eq("userId", user.id)
+    .single();
+
+  const now = new Date();
+
+  if (existingLog) {
+    // Already completed — remove log to "uncomplete"
+    await supabase
+      .from("TrainingLogExercise")
+      .delete()
+      .eq("trainingLogId", existingLog.id);
+
+    await supabase
+      .from("TrainingLog")
+      .delete()
+      .eq("id", existingLog.id);
+
+    revalidatePath("/portal/treningsplan");
+    return { completed: false };
+  }
+
+  // Not completed — create log
+  const logId = nanoid();
+  const exerciseData = Array.isArray(session.exercises) ? session.exercises : [];
+
+  await supabase.from("TrainingLog").insert({
+    id: logId,
+    userId: user.id,
+    planSessionId: sessionId,
+    date: now.toISOString(),
+    completedAt: now.toISOString(),
+    durationMinutes: session.durationMinutes,
+    focusArea: session.focusArea,
+    exercises: JSON.stringify(
+      exerciseData.map((name: unknown, i: number) => ({
+        id: `ex-${i}`,
+        name: typeof name === "string" ? name : `Ovelse ${i + 1}`,
+        completed: true,
+      }))
+    ),
+    updatedAt: now.toISOString(),
+  });
+
+  revalidatePath("/portal/treningsplan");
+  return { completed: true };
+}
+

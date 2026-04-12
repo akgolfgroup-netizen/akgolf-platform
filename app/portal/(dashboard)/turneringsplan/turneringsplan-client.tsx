@@ -1,21 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  format, addMonths, startOfMonth, endOfMonth,
-  eachDayOfInterval, isSameDay,
-} from "date-fns";
+import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
   Trophy, Calendar, CheckCircle2, MapPin, Clock,
-  ChevronLeft, ChevronRight, Plus, Target, Flag,
+  ExternalLink, Target, Flag, ChevronRight,
 } from "lucide-react";
-import { QuickAction } from "@/components/portal/heritage/quick-action";
-import {
-  HeroHeading, GlassCard, DarkStatCard, Shimmer,
-  staggerContainer, fadeInUp,
-} from "@/components/portal/premium";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
+import { NumberTicker } from "@/components/portal/dashboard/number-ticker";
 import type { PortalTournament, TournamentStats } from "./actions";
 
 // ── Helpers ─────────────────────────────────────────────────
@@ -28,6 +21,22 @@ function getPeriodLabel(date: Date): string {
   return "Vintertrening";
 }
 
+function getLevelColor(level: string): string {
+  switch (level.toLowerCase()) {
+    case "major":
+    case "nasjonal":
+      return "bg-primary/10 text-primary";
+    case "regional":
+      return "bg-[var(--color-info-light)] text-[var(--color-info-text)]";
+    default:
+      return "bg-[var(--color-portal-hover)] text-[var(--color-portal-secondary)]";
+  }
+}
+
+// ── Types ───────────────────────────────────────────────────
+
+type TabKey = "kommende" | "pameldt" | "resultater";
+
 // ── Component ───────────────────────────────────────────────
 
 interface Props {
@@ -36,230 +45,295 @@ interface Props {
 }
 
 export function TurneringsplanClient({ tournaments, stats }: Props) {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<TabKey>("kommende");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  const monthStart = startOfMonth(currentMonth);
-  const monthEnd = endOfMonth(currentMonth);
-  const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
+  const registered = tournaments.filter((t) => t.isRegistered);
 
-  const getTournamentForDay = (day: Date) =>
-    tournaments.find((t) => isSameDay(new Date(t.startDate), day));
+  const tabs: { key: TabKey; label: string; count: number }[] = [
+    { key: "kommende", label: "Kommende", count: stats.upcoming },
+    { key: "pameldt", label: "Påmeldt", count: stats.registered },
+    { key: "resultater", label: "Resultater", count: stats.completed },
+  ];
 
-  const selected = tournaments.find((t) => t.id === selectedId);
+  const displayList =
+    activeTab === "pameldt"
+      ? registered
+      : activeTab === "resultater"
+        ? [] // Resultater er historisk — ikke tilgjengelig i denne dataen ennå
+        : tournaments;
 
   return (
-    <div className="space-y-10">
-      <HeroHeading
-        label="Sesong 2026"
-        title={
-          <>
-            <span className="font-serif italic text-[var(--color-primary)] font-normal">
-              Turnerings
-            </span>
-            plan
-            <span className="text-[var(--color-accent-cta)]">.</span>
-          </>
-        }
-        description="Planlegg og forbered dine turneringer — periodisering, sjekklister og forberedelse."
-        actions={
-          <button className="relative h-11 px-6 rounded-full bg-[var(--color-accent-cta)] text-[var(--color-grey-900)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group">
-            <Shimmer />
-            <Plus className="h-3.5 w-3.5 relative z-10" />
-            <span className="relative z-10">Legg til turnering</span>
-          </button>
-        }
-      />
+    <div className="mx-auto w-full max-w-[1120px] px-6 pb-12 pt-8">
 
-      {/* Stats */}
-      <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 md:col-span-4">
-          <DarkStatCard label="Kommende" value={stats.upcoming} icon={Target} variant="primary" delay={0} />
-        </div>
-        <div className="col-span-12 md:col-span-4">
-          <DarkStatCard label="Fullfort" value={stats.completed} icon={Flag} variant="default" delay={0.08} />
-        </div>
-        <div className="col-span-12 md:col-span-4">
-          <DarkStatCard label="Pameldt" value={stats.registered} icon={CheckCircle2} variant="accent" delay={0.16} />
-        </div>
-      </motion.div>
-
-      {/* Calendar & List */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* Calendar */}
-        <div className="lg:col-span-2">
-          <GlassCard variant="light" padding="lg">
-            <div className="mb-4 flex items-center justify-between">
-              <h3 className="font-semibold text-[var(--color-grey-900)]">
-                {format(currentMonth, "MMMM yyyy", { locale: nb })}
-              </h3>
-              <div className="flex gap-1">
-                <button onClick={() => setCurrentMonth(addMonths(currentMonth, -1))} className="rounded-lg p-1.5 text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)]" aria-label="Forrige maned">
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-                <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="rounded-lg p-1.5 text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)]" aria-label="Neste maned">
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-7 gap-1">
-              {["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"].map((day) => (
-                <div key={day} className="py-2 text-center text-[10px] font-bold uppercase tracking-wider text-[var(--color-muted)]">{day}</div>
-              ))}
-              {days.map((day) => {
-                const tournament = getTournamentForDay(day);
-                return (
-                  <button
-                    key={day.toISOString()}
-                    onClick={() => tournament && setSelectedId(tournament.id)}
-                    className={`aspect-square rounded-lg p-1 text-sm transition-colors ${
-                      tournament
-                        ? "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)]/90"
-                        : "text-[var(--color-text)] hover:bg-[var(--color-surface)]"
-                    }`}
-                  >
-                    {format(day, "d")}
-                    {tournament && (
-                      <div className="mt-0.5 truncate text-[8px] opacity-80">{tournament.name}</div>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </GlassCard>
-        </div>
-
-        {/* Upcoming List */}
-        <div>
-          <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase mb-4 flex items-center gap-2">
-            <span className="w-6 h-px bg-[var(--color-muted)]" />
-            Kommende
-          </p>
-          <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-3">
-            {tournaments.length === 0 ? (
-              <GlassCard variant="light" padding="lg">
-                <div className="flex flex-col items-center justify-center py-8 text-center">
-                  <Trophy className="h-8 w-8 text-[var(--color-muted)] mb-3 opacity-50" />
-                  <p className="text-sm text-[var(--color-muted)]">Ingen kommende turneringer</p>
-                </div>
-              </GlassCard>
-            ) : tournaments.slice(0, 10).map((t, i) => (
-              <motion.div key={t.id} variants={fadeInUp}>
-                <GlassCard
-                  variant="light" padding="md" interactive
-                  onClick={() => setSelectedId(t.id)}
-                  delay={i * 0.04}
-                  className={selectedId === t.id ? "border-[var(--color-primary)]/40 shadow-[0_12px_40px_-12px_rgba(0,88,64,0.2)]" : undefined}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
-                      <Trophy className="h-5 w-5 text-[var(--color-primary)]" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-semibold text-[13px] text-[var(--color-grey-900)] truncate">{t.name}</h4>
-                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider ${
-                          t.isRegistered
-                            ? "bg-[var(--color-success)]/10 text-[var(--color-success)]"
-                            : "bg-[var(--color-warning)]/10 text-[var(--color-warning)]"
-                        }`}>
-                          {t.isRegistered ? "Pameldt" : "Planlegger"}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-[var(--color-muted)]">
-                        {format(new Date(t.startDate), "d. MMMM", { locale: nb })} ·{" "}
-                        {getPeriodLabel(new Date(t.startDate))} · {t.level}
-                      </p>
-                    </div>
-                  </div>
-                </GlassCard>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+      {/* ═══ HEADER ═══ */}
+      <div className="mb-8">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+          Sesong 2026
+        </p>
+        <h1 className="mt-1 text-[28px] font-bold tracking-tight text-[var(--color-portal-text)]">
+          Turneringsplan
+        </h1>
       </div>
 
-      {/* Selected Tournament Details */}
-      {selected && (
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-          <GlassCard variant="light" padding="lg">
-            <div className="mb-6 flex items-start justify-between gap-4">
-              <div>
-                <div className="mb-2 flex items-center gap-2">
-                  <Trophy className="h-5 w-5 text-[var(--color-primary)]" />
-                  <span className="text-sm text-[var(--color-muted)]">
-                    {selected.level} · {getPeriodLabel(new Date(selected.startDate))}
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold text-[var(--color-text)]">{selected.name}</h3>
-                <div className="mt-2 flex flex-wrap items-center gap-4 text-sm text-[var(--color-muted)]">
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="h-4 w-4" />
-                    {format(new Date(selected.startDate), "EEEE d. MMMM yyyy", { locale: nb })}
-                  </span>
-                  {(selected.location || selected.course) && (
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="h-4 w-4" />
-                      {selected.course ?? selected.location}
-                    </span>
-                  )}
-                  {selected.numberOfHoles && (
-                    <span className="flex items-center gap-1.5">
-                      <Flag className="h-4 w-4" />
-                      {selected.numberOfHoles} hull
-                    </span>
-                  )}
-                </div>
-              </div>
-              <span className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${
-                selected.isRegistered
-                  ? "bg-[var(--color-success)]/10 text-[var(--color-success)]"
-                  : "bg-[var(--color-warning)]/10 text-[var(--color-warning)]"
-              }`}>
-                {selected.isRegistered ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Clock className="h-3.5 w-3.5" />}
-                {selected.isRegistered ? "Pameldt" : "Planlegger"}
-              </span>
-            </div>
+      {/* ═══ STAT-KORT ═══ */}
+      <div className="mb-6 grid grid-cols-3 gap-4">
+        <PremiumCard delay={0} glow="green">
+          <div className="flex flex-col items-center py-2 text-center">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+              Kommende
+            </span>
+            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums">
+              <NumberTicker value={stats.upcoming} />
+            </span>
+            <Target className="mt-2 h-4 w-4 text-[var(--color-portal-muted)]" />
+          </div>
+        </PremiumCard>
 
-            {/* Plan info */}
-            {selected.planLevel && (
-              <div className="mb-4 flex items-center gap-3 text-sm">
-                <span className="font-semibold text-[var(--color-text)]">
-                  Prioritet: {selected.planLevel}
-                </span>
-                {selected.goalType && (
-                  <span className="text-[var(--color-muted)]">
-                    · Mal: {selected.goalType}
-                  </span>
-                )}
-              </div>
-            )}
+        <PremiumCard delay={0.06}>
+          <div className="flex flex-col items-center py-2 text-center">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+              Påmeldt
+            </span>
+            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-primary tabular-nums">
+              <NumberTicker value={stats.registered} />
+            </span>
+            <CheckCircle2 className="mt-2 h-4 w-4 text-[var(--color-portal-muted)]" />
+          </div>
+        </PremiumCard>
 
-            {selected.planNotes && (
-              <p className="text-sm text-[var(--color-muted)] italic">{selected.planNotes}</p>
-            )}
+        <PremiumCard delay={0.12}>
+          <div className="flex flex-col items-center py-2 text-center">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+              Fullført
+            </span>
+            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums">
+              <NumberTicker value={stats.completed} />
+            </span>
+            <Flag className="mt-2 h-4 w-4 text-[var(--color-portal-muted)]" />
+          </div>
+        </PremiumCard>
+      </div>
 
-            {selected.externalUrl && (
-              <a
-                href={selected.externalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-1.5 text-sm text-[var(--color-primary)] hover:underline"
-              >
-                Se turnering
-              </a>
-            )}
-          </GlassCard>
-        </motion.div>
+      {/* ═══ TABS ═══ */}
+      <div className="mb-5 flex gap-1.5 rounded-[10px] bg-[var(--color-portal-hover)] p-[3px]">
+        {tabs.map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={`rounded-[7px] px-4 py-[7px] text-[13px] font-medium transition-all duration-200 ${
+              activeTab === tab.key
+                ? "bg-primary text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
+                : "text-[var(--color-portal-muted)] hover:text-[var(--color-portal-secondary)]"
+            }`}
+          >
+            {tab.label}
+            <span className="ml-1.5 tabular-nums">({tab.count})</span>
+          </button>
+        ))}
+      </div>
+
+      {/* ═══ TURNERINGSLISTE ═══ */}
+      {activeTab === "resultater" && stats.completed === 0 && (
+        <PremiumCard delay={0}>
+          <div className="flex flex-col items-center py-12 text-center">
+            <Trophy className="mb-3 h-8 w-8 text-[var(--color-portal-muted)] opacity-40" />
+            <p className="text-sm font-medium text-[var(--color-portal-secondary)]">
+              Ingen resultater ennå
+            </p>
+            <p className="mt-1 text-xs text-[var(--color-portal-muted)]">
+              Resultater vises her etter gjennomførte turneringer
+            </p>
+          </div>
+        </PremiumCard>
       )}
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <QuickAction href="#" icon={Plus} label="Finn turneringer" description="Sok i terminlisten" />
-        <QuickAction href="#" icon={MapPin} label="Baneguide" description="Utforsk baner" />
-        <QuickAction href="#" icon={Calendar} label="Reiseplanlegger" description="Bestill reise" />
-      </div>
+      {activeTab === "resultater" && stats.completed > 0 && (
+        <PremiumCard delay={0}>
+          <div className="flex flex-col items-center py-12 text-center">
+            <Trophy className="mb-3 h-8 w-8 text-primary opacity-60" />
+            <p className="text-sm font-medium text-[var(--color-portal-secondary)]">
+              {stats.completed} fullførte turneringer
+            </p>
+            <p className="mt-1 text-xs text-[var(--color-portal-muted)]">
+              Detaljert resultatoversikt kommer snart
+            </p>
+          </div>
+        </PremiumCard>
+      )}
+
+      {activeTab !== "resultater" && displayList.length === 0 && (
+        <PremiumCard delay={0}>
+          <div className="flex flex-col items-center py-12 text-center">
+            <Calendar className="mb-3 h-8 w-8 text-[var(--color-portal-muted)] opacity-40" />
+            <p className="text-sm font-medium text-[var(--color-portal-secondary)]">
+              {activeTab === "pameldt"
+                ? "Du er ikke påmeldt noen turneringer"
+                : "Ingen kommende turneringer"}
+            </p>
+            <p className="mt-1 text-xs text-[var(--color-portal-muted)]">
+              {activeTab === "pameldt"
+                ? "Meld deg på fra listen over kommende turneringer"
+                : "Nye turneringer legges til fortløpende"}
+            </p>
+          </div>
+        </PremiumCard>
+      )}
+
+      {activeTab !== "resultater" && displayList.length > 0 && (
+        <div className="space-y-3">
+          {displayList.map((t, i) => {
+            const isExpanded = expandedId === t.id;
+            const tournamentDate = new Date(t.startDate);
+
+            return (
+              <PremiumCard key={t.id} delay={i * 0.03} className="p-0">
+                {/* Kort-header — klikk for å utvide */}
+                <button
+                  onClick={() => setExpandedId(isExpanded ? null : t.id)}
+                  className="flex w-full items-start gap-4 p-5 text-left"
+                >
+                  {/* Dato-blokk */}
+                  <div className="flex h-12 w-12 flex-shrink-0 flex-col items-center justify-center rounded-xl bg-[var(--color-portal-hover)]">
+                    <span className="text-[10px] font-semibold uppercase leading-none text-[var(--color-portal-muted)]">
+                      {format(tournamentDate, "MMM", { locale: nb })}
+                    </span>
+                    <span className="text-lg font-bold leading-tight text-[var(--color-portal-text)] tabular-nums">
+                      {format(tournamentDate, "d")}
+                    </span>
+                  </div>
+
+                  {/* Innhold */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="truncate text-[14px] font-semibold text-[var(--color-portal-text)]">
+                        {t.name}
+                      </h3>
+                      {t.isRegistered && (
+                        <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full bg-[var(--color-success-light)] px-2 py-0.5 text-[10px] font-semibold text-[var(--color-success-text)]">
+                          <CheckCircle2 className="h-3 w-3" />
+                          Påmeldt
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-[var(--color-portal-muted)]">
+                      {(t.course ?? t.location) && (
+                        <span className="flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          {t.course ?? t.location}
+                        </span>
+                      )}
+                      <span className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {format(tournamentDate, "EEEE d. MMMM", { locale: nb })}
+                      </span>
+                      <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${getLevelColor(t.level)}`}>
+                        {t.level}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Chevron */}
+                  <ChevronRight
+                    className={`h-4 w-4 flex-shrink-0 text-[var(--color-portal-muted)] transition-transform duration-200 ${
+                      isExpanded ? "rotate-90" : ""
+                    }`}
+                  />
+                </button>
+
+                {/* Utvidet detaljer */}
+                {isExpanded && (
+                  <div className="border-t border-[var(--color-portal-border)] px-5 pb-5 pt-4">
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                      <div>
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                          Periode
+                        </span>
+                        <p className="mt-0.5 text-sm font-medium text-[var(--color-portal-text)]">
+                          {getPeriodLabel(tournamentDate)}
+                        </p>
+                      </div>
+                      {t.numberOfHoles && (
+                        <div>
+                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                            Hull
+                          </span>
+                          <p className="mt-0.5 text-sm font-medium text-[var(--color-portal-text)]">
+                            {t.numberOfHoles}
+                          </p>
+                        </div>
+                      )}
+                      {t.series && (
+                        <div>
+                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                            Serie
+                          </span>
+                          <p className="mt-0.5 text-sm font-medium text-[var(--color-portal-text)]">
+                            {t.series}
+                          </p>
+                        </div>
+                      )}
+                      {t.planLevel && (
+                        <div>
+                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                            Prioritet
+                          </span>
+                          <p className="mt-0.5 text-sm font-medium text-[var(--color-portal-text)]">
+                            {t.planLevel}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {t.goalType && (
+                      <div className="mt-3">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                          Mål
+                        </span>
+                        <p className="mt-0.5 text-sm text-[var(--color-portal-secondary)]">
+                          {t.goalType}
+                        </p>
+                      </div>
+                    )}
+
+                    {t.planNotes && (
+                      <div className="mt-3">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                          Notater
+                        </span>
+                        <p className="mt-0.5 text-sm italic text-[var(--color-portal-secondary)]">
+                          {t.planNotes}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="mt-4 flex items-center gap-3">
+                      {!t.isRegistered && (
+                        <button className="inline-flex items-center gap-1.5 rounded-[20px] bg-accent-cta px-4 py-2 text-[12px] font-bold text-[var(--color-accent-cta-text)] transition-opacity hover:opacity-85">
+                          <CheckCircle2 className="h-3.5 w-3.5" />
+                          Meld meg på
+                        </button>
+                      )}
+                      {t.externalUrl && (
+                        <a
+                          href={t.externalUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-[20px] border border-[var(--color-portal-border)] px-4 py-2 text-[12px] font-medium text-[var(--color-portal-secondary)] transition-colors hover:bg-[var(--color-portal-hover)]"
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                          Se turnering
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </PremiumCard>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

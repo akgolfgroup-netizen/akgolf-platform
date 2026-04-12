@@ -7,7 +7,7 @@ import { nb } from "date-fns/locale";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 
-export type PeriodKey = "7d" | "30d" | "90d" | "1y";
+export type PeriodKey = "7d" | "30d" | "90d" | "season" | "1y";
 
 function getDateFromPeriod(period: PeriodKey): Date {
   const now = new Date();
@@ -18,6 +18,10 @@ function getDateFromPeriod(period: PeriodKey): Date {
       return subDays(now, 30);
     case "90d":
       return subDays(now, 90);
+    case "season":
+      // Golfsesong i Norge: 1. april - 31. oktober
+      // Hvis vi er for april, bruk forrige ars sesongstart
+      return new Date(now.getMonth() >= 3 ? now.getFullYear() : now.getFullYear() - 1, 3, 1);
     case "1y":
       return subDays(now, 365);
   }
@@ -165,7 +169,7 @@ export async function getWeeklyTrainingVolume(period: PeriodKey = "30d"): Promis
   const weekMap = new Map<string, { sessions: number; minutes: number }>();
 
   // Pre-fill weeks so we get empty ones too
-  const weeksCount = period === "7d" ? 1 : period === "30d" ? 4 : period === "90d" ? 12 : 52;
+  const weeksCount = period === "7d" ? 1 : period === "30d" ? 4 : period === "90d" ? 12 : period === "season" ? 30 : 52;
   for (let i = weeksCount - 1; i >= 0; i--) {
     const weekStart = startOfWeek(subWeeks(new Date(), i), { weekStartsOn: 1 });
     const key = format(weekStart, "d. MMM", { locale: nb });

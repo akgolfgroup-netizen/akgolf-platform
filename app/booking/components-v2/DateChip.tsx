@@ -15,17 +15,17 @@ export function DateChip({ dayName, dayNumber, month, isSelected, onClick }: Dat
       onClick={onClick}
       className={`flex-shrink-0 min-w-[72px] px-4 py-2.5 rounded-xl text-center border-2 transition-all snap-start ${
         isSelected
-          ? "bg-[#005840] border-[#005840]"
-          : "bg-[#ECF0EF] border-transparent hover:border-[#005840]"
+          ? "bg-primary border-primary"
+          : "bg-surface border-transparent hover:border-primary"
       }`}
     >
-      <div className={`text-[10px] font-semibold uppercase ${isSelected ? "text-white/60" : "text-[#A5B2AD]"}`}>
+      <div className={`text-[10px] font-semibold uppercase ${isSelected ? "text-white/60" : "text-muted"}`}>
         {dayName}
       </div>
-      <div className={`text-lg font-bold mt-0.5 ${isSelected ? "text-white" : "text-[#0A1F18]"}`}>
+      <div className={`text-lg font-bold mt-0.5 ${isSelected ? "text-white" : "text-black"}`}>
         {dayNumber}
       </div>
-      <div className={`text-[10px] ${isSelected ? "text-[#D1F843]" : "text-[#A5B2AD]"}`}>
+      <div className={`text-[10px] ${isSelected ? "text-accent-cta" : "text-muted"}`}>
         {month}
       </div>
     </button>

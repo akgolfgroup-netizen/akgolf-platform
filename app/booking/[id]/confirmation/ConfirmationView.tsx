@@ -16,20 +16,6 @@ interface ConfirmationViewProps {
   bookingPrice: number;
 }
 
-// Apple Light Theme 2026
-const THEME = {
-  bg: "#ECF0EF",
-  bgElevated: "#FFFFFF",
-  primary: "#005840",
-  text: "#005840",
-  textMuted: "#A5B2AD",
-  textLight: "#A5B2AD",
-  border: "#D5DFDB",
-  success: "#10B981",
-  shadow: "0 4px 8px rgba(0,0,0,0.06)",
-  shadowPrimary: "0 4px 16px rgba(29,29,31,0.15)",
-};
-
 export function ConfirmationView({
   serviceName,
   instructorName,
@@ -41,10 +27,7 @@ export function ConfirmationView({
   bookingPrice,
 }: ConfirmationViewProps) {
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center px-4 py-12"
-      style={{ background: THEME.bg }}
-    >
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-surface">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -56,26 +39,21 @@ export function ConfirmationView({
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ 
+            transition={{
               type: "spring",
               stiffness: 200,
               damping: 15,
-              delay: 0.1 
+              delay: 0.1
             }}
-            className="inline-flex items-center justify-center w-24 h-24 rounded-full mb-6"
-            style={{
-              background: `linear-gradient(135deg, ${THEME.success}20, ${THEME.success}10)`,
-              border: `2px solid ${THEME.success}40`,
-            }}
+            className="inline-flex items-center justify-center w-24 h-24 rounded-full mb-6 bg-success/10 border-2 border-success/25"
           >
-            <CheckCircle2 size={48} style={{ color: THEME.success }} />
+            <CheckCircle2 size={48} className="text-success" />
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-3xl font-semibold mb-3"
-            style={{ color: THEME.text }}
+            className="text-3xl font-semibold mb-3 text-primary"
           >
             Booking bekreftet
           </motion.h1>
@@ -83,7 +61,7 @@ export function ConfirmationView({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            style={{ color: THEME.textMuted }}
+            className="text-muted"
           >
             Din coaching-time er booket og bekreftet
           </motion.p>
@@ -94,25 +72,12 @@ export function ConfirmationView({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-          className="rounded-3xl p-8 mb-8 border"
-          style={{
-            background: THEME.bgElevated,
-            borderColor: THEME.border,
-            boxShadow: THEME.shadow,
-          }}
+          className="rounded-3xl p-8 mb-8 border bg-white border-grey-200 shadow-card"
         >
           {/* Decorative top line */}
-          <div 
-            className="absolute top-0 left-8 right-8 h-1 rounded-full"
-            style={{ 
-              background: `linear-gradient(90deg, ${THEME.primary}, ${THEME.primary}, ${THEME.primary})`,
-            }}
-          />
+          <div className="absolute top-0 left-8 right-8 h-1 rounded-full bg-primary" />
 
-          <h3 
-            className="text-xs font-semibold uppercase tracking-widest mb-6"
-            style={{ color: THEME.textLight }}
-          >
+          <h3 className="text-xs font-semibold uppercase tracking-widest mb-6 text-muted">
             Bookingdetaljer
           </h3>
 
@@ -124,15 +89,12 @@ export function ConfirmationView({
               transition={{ delay: 0.3 }}
               className="flex items-center gap-4"
             >
-              <div 
-                className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                style={{ background: THEME.bg }}
-              >
-                <CreditCard size={20} style={{ color: THEME.primary }} />
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-surface">
+                <CreditCard size={20} className="text-primary" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide mb-1" style={{ color: THEME.textLight }}>Tjeneste</p>
-                <p className="font-semibold" style={{ color: THEME.text }}>{serviceName}</p>
+                <p className="text-xs uppercase tracking-wide mb-1 text-muted">Tjeneste</p>
+                <p className="font-semibold text-primary">{serviceName}</p>
               </div>
             </motion.div>
 
@@ -143,15 +105,12 @@ export function ConfirmationView({
               transition={{ delay: 0.4 }}
               className="flex items-center gap-4"
             >
-              <div 
-                className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                style={{ background: THEME.bg }}
-              >
-                <User size={20} style={{ color: THEME.primary }} />
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-surface">
+                <User size={20} className="text-primary" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide mb-1" style={{ color: THEME.textLight }}>Instruktør</p>
-                <p className="font-semibold" style={{ color: THEME.text }}>{instructorName}</p>
+                <p className="text-xs uppercase tracking-wide mb-1 text-muted">Instruktør</p>
+                <p className="font-semibold text-primary">{instructorName}</p>
               </div>
             </motion.div>
 
@@ -162,15 +121,12 @@ export function ConfirmationView({
               transition={{ delay: 0.5 }}
               className="flex items-center gap-4"
             >
-              <div 
-                className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                style={{ background: THEME.bg }}
-              >
-                <Calendar size={20} style={{ color: THEME.primary }} />
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-surface">
+                <Calendar size={20} className="text-primary" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide mb-1" style={{ color: THEME.textLight }}>Dato og tid</p>
-                <p className="font-semibold" style={{ color: THEME.text }}>{formattedDate}</p>
+                <p className="text-xs uppercase tracking-wide mb-1 text-muted">Dato og tid</p>
+                <p className="font-semibold text-primary">{formattedDate}</p>
               </div>
             </motion.div>
 
@@ -181,35 +137,32 @@ export function ConfirmationView({
               transition={{ delay: 0.6 }}
               className="flex items-center gap-4"
             >
-              <div 
-                className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                style={{ background: THEME.bg }}
-              >
-                <Clock size={20} style={{ color: THEME.primary }} />
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-surface">
+                <Clock size={20} className="text-primary" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide mb-1" style={{ color: THEME.textLight }}>Varighet</p>
-                <p className="font-semibold" style={{ color: THEME.text }}>{duration} minutter</p>
+                <p className="text-xs uppercase tracking-wide mb-1 text-muted">Varighet</p>
+                <p className="font-semibold text-primary">{duration} minutter</p>
               </div>
             </motion.div>
           </div>
 
           {/* Divider */}
-          <div className="my-6 h-px" style={{ background: THEME.border }} />
+          <div className="my-6 h-px bg-grey-200" />
 
           {/* Price & Payment */}
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wide mb-1" style={{ color: THEME.textLight }}>Betalt</p>
-              <p className="text-3xl font-semibold" style={{ color: THEME.primary }}>{priceNOK}</p>
+              <p className="text-xs uppercase tracking-wide mb-1 text-muted">Betalt</p>
+              <p className="text-3xl font-semibold text-primary">{priceNOK}</p>
             </div>
             {paymentMethod !== "NONE" && (
-              <div 
-                className="px-4 py-2 rounded-xl text-sm font-semibold"
-                style={{
-                  background: paymentMethod === "VIPPS" ? "#FF5B2420" : "#635BFF20",
-                  color: paymentMethod === "VIPPS" ? "#FF5B24" : "#635BFF",
-                }}
+              <div
+                className={`px-4 py-2 rounded-xl text-sm font-semibold ${
+                  paymentMethod === "VIPPS"
+                    ? "bg-vipps/20 text-vipps"
+                    : "bg-ai/20 text-ai"
+                }`}
               >
                 {paymentMethod === "VIPPS" ? "Vipps" : "Kort"}
               </div>
@@ -222,8 +175,7 @@ export function ConfirmationView({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="text-sm text-center mb-6"
-          style={{ color: THEME.textMuted }}
+          className="text-sm text-center mb-6 text-muted"
         >
           En bekreftelse er sendt til din e-post.<br/>
           Du kan administrere bookingen fra &quot;Bookinger&quot; i menyen.
@@ -244,12 +196,7 @@ export function ConfirmationView({
         >
           <Link
             href="/portal/bookinger"
-            className="flex items-center justify-center w-full px-6 py-4 rounded-2xl text-base font-semibold transition-opacity duration-300"
-            style={{
-              background: `linear-gradient(135deg, ${THEME.primary}, ${THEME.primary})`,
-              color: "#FFFFFF",
-              boxShadow: THEME.shadowPrimary,
-            }}
+            className="flex items-center justify-center w-full px-6 py-4 rounded-2xl text-base font-semibold transition-opacity duration-300 bg-primary text-white shadow-md"
           >
             Se mine bookinger
           </Link>

@@ -39,7 +39,7 @@ export function Drawer({ isOpen, onClose, children }: DrawerProps) {
             transition={{ type: "spring", damping: 28, stiffness: 300 }}
             className="fixed bottom-0 left-0 right-0 max-w-[720px] mx-auto bg-white rounded-t-[20px] shadow-[0_-8px_40px_rgba(0,0,0,0.12)] z-[100] max-h-[92vh] overflow-y-auto"
           >
-            <div className="w-10 h-1 rounded-full bg-[#D5DFDB] mx-auto mt-3" />
+            <div className="w-10 h-1 rounded-full bg-grey-200 mx-auto mt-3" />
 
             <div className="px-6 pt-5 pb-8">{children}</div>
           </motion.div>

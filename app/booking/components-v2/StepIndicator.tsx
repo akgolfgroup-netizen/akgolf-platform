@@ -18,10 +18,10 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
             key={step}
             className={`h-2 rounded-full transition-all duration-400 ${
               isActive
-                ? "w-6 bg-[#005840]"
+                ? "w-6 bg-primary"
                 : isDone
-                ? "w-2 bg-[#D1F843]"
-                : "w-2 bg-[#D5DFDB]"
+                ? "w-2 bg-accent-cta"
+                : "w-2 bg-grey-200"
             }`}
           />
         );

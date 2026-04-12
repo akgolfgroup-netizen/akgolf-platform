@@ -1,13 +1,26 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useMemo, useTransition } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Calendar, CheckCircle2, ChevronLeft, ChevronRight, Clock, Target } from "lucide-react";
-import { HeroHeading, GlassCard, fadeInUp, staggerContainer } from "@/components/portal/premium";
+import {
+  Calendar,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Dumbbell,
+  Loader2,
+  Play,
+  Target,
+  TrendingUp,
+} from "lucide-react";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import { PyramidTag } from "@/components/portal/treningsplan/ak-formula-tags";
+import { toggleSessionComplete } from "./actions";
 import { GeneratePlanButton } from "@/components/portal/treningsplan/generate-plan-button";
 import { ManualPlanButton } from "@/components/portal/treningsplan/manual-plan-button";
 import type { PyramidLevel } from "@/lib/portal/golf/ak-formula";
@@ -15,7 +28,10 @@ import type { PyramidLevel } from "@/lib/portal/golf/ak-formula";
 // ---------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------
-interface SessionExercise { name: string; details: string }
+interface SessionExercise {
+  name: string;
+  details: string;
+}
 
 interface DayData {
   dayName: string;
@@ -45,12 +61,12 @@ interface TreningsplanClientProps {
 // ---------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------
-const pyramidConfig: Record<PyramidLevel, { token: string; label: string }> = {
-  FYS: { token: "var(--color-warning)", label: "Fysisk" },
-  TEK: { token: "var(--color-primary)", label: "Teknikk" },
-  SLAG: { token: "var(--color-primary-alt)", label: "Slag" },
-  SPILL: { token: "var(--color-ai)", label: "Spill" },
-  TURN: { token: "var(--color-grey-900)", label: "Turnering" },
+const pyramidConfig: Record<PyramidLevel, { label: string }> = {
+  FYS: { label: "Fysisk" },
+  TEK: { label: "Teknikk" },
+  SLAG: { label: "Slag" },
+  SPILL: { label: "Spill" },
+  TURN: { label: "Turnering" },
 };
 
 const SUB_NAV_TABS = [
@@ -59,115 +75,339 @@ const SUB_NAV_TABS = [
 ];
 
 // ---------------------------------------------------------------------
-// Day card sub-component (inline, not exported)
+// Week Day Selector — 7 days horizontal with activity dots
 // ---------------------------------------------------------------------
-function DayCard({ day }: { day: DayData }) {
-  const level: PyramidLevel = day.session?.pyramidLevel ?? "SLAG";
-  const levelToken = pyramidConfig[level].token;
-  const isCompleted = day.session?.completed ?? false;
-  const borderLeftColor = isCompleted ? "var(--color-success)" : levelToken;
-
+function WeekDaySelector({
+  weekDays,
+  selectedIndex,
+  onSelect,
+}: {
+  weekDays: DayData[];
+  selectedIndex: number;
+  onSelect: (idx: number) => void;
+}) {
   return (
-    <motion.div
-      variants={fadeInUp}
-      className="relative rounded-[24px] overflow-hidden bg-white/70 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_-12px_rgba(10,31,24,0.12)] transition-all duration-300"
-      style={day.isToday ? {
-        borderColor: "var(--color-accent-cta)",
-        boxShadow: "0 0 0 3px color-mix(in srgb, var(--color-accent-cta) 25%, transparent), 0 12px 40px -12px rgba(209,248,67,0.35)",
-      } : undefined}
-    >
-      <div
-        className="p-3 text-center border-b"
-        style={{
-          backgroundColor: day.isToday
-            ? "color-mix(in srgb, var(--color-accent-cta) 14%, white)"
-            : "color-mix(in srgb, var(--color-grey-100) 70%, white)",
-          borderColor: day.isToday
-            ? "color-mix(in srgb, var(--color-accent-cta) 30%, transparent)"
-            : "rgba(10,31,24,0.06)",
-        }}
-      >
-        <p className="text-[10px] font-bold uppercase tracking-[0.15em]"
-          style={{ color: day.isToday ? "var(--color-primary)" : "var(--color-muted)" }}>
-          {day.dayName}
-        </p>
-        <p className="text-[22px] font-[300] mt-0.5 tabular-nums tracking-[-0.03em]"
-          style={{ color: day.isToday ? "var(--color-primary)" : "var(--color-grey-900)" }}>
-          {format(new Date(day.dateISO), "d", { locale: nb })}
-        </p>
-      </div>
+    <div className="flex gap-2">
+      {weekDays.map((day, idx) => {
+        const isSelected = idx === selectedIndex;
+        const hasSession = !!day.session;
+        const isCompleted = day.session?.completed ?? false;
 
-      <div className="p-3 min-h-[180px]">
-        {day.session ? (
-          <Link href={`/portal/treningsplan/${day.session.id}`}>
-            <div className="p-3 rounded-xl border-l-4 transition-all hover:shadow-md" style={{
-              borderLeftColor,
-              backgroundColor: isCompleted
-                ? "color-mix(in srgb, var(--color-success) 10%, white)"
-                : `color-mix(in srgb, ${levelToken} 10%, white)`,
-            }}>
-              <div className="flex items-center justify-between mb-2">
-                <PyramidTag level={level} />
-                {isCompleted && <CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-success)" }} />}
-              </div>
-              <h4 className="font-medium text-[13px] leading-tight" style={{ color: "var(--color-grey-900)" }}>
-                {day.session.title}
-              </h4>
-              <div className="flex items-center gap-1 mt-2 text-[11px]" style={{ color: "var(--color-muted)" }}>
-                <Clock className="w-3 h-3" />
-                {day.session.duration} min
-              </div>
-              {day.session.exercises.length > 0 && (
-                <p className="text-[11px] mt-2" style={{ color: "var(--color-muted)" }}>
-                  {day.session.exercises.length} ovelser
-                </p>
+        return (
+          <button
+            key={day.dayName}
+            onClick={() => onSelect(idx)}
+            className={`
+              flex-1 flex flex-col items-center gap-1 py-3 px-1 rounded-xl
+              transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+              ${isSelected
+                ? "bg-portal-text text-white shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+                : "bg-white text-portal-text hover:bg-portal-hover"
+              }
+            `}
+          >
+            <span
+              className={`text-[10px] font-semibold uppercase tracking-[0.08em] ${
+                isSelected ? "text-white/70" : "text-portal-muted"
+              }`}
+            >
+              {day.dayName}
+            </span>
+            <span
+              className={`text-base font-semibold tabular-nums ${
+                isSelected ? "text-white" : "text-portal-text"
+              }`}
+            >
+              {format(new Date(day.dateISO), "d", { locale: nb })}
+            </span>
+            <div className="h-1.5 flex items-center justify-center">
+              {hasSession && (
+                <div
+                  className={`w-1.5 h-1.5 rounded-full ${
+                    isCompleted
+                      ? "bg-success"
+                      : isSelected
+                        ? "bg-white/60"
+                        : "bg-primary"
+                  }`}
+                />
               )}
             </div>
-          </Link>
-        ) : (
-          <div className="h-full flex flex-col items-center justify-center text-center py-8">
-            <Target className="w-6 h-6 mb-2" style={{ color: "var(--color-grey-300)" }} />
-            <p className="text-[11px]" style={{ color: "var(--color-muted)" }}>Hviledag</p>
-          </div>
-        )}
-      </div>
-    </motion.div>
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
 // ---------------------------------------------------------------------
-// Main component
+// Today's Session Card — exercise list
 // ---------------------------------------------------------------------
-export function TreningsplanClient({
-  hasPlan, weekNumber, weekRange, weekOffset, weekDays, canGenerate, userId,
-}: TreningsplanClientProps) {
-  const heroTitle = (
-    <>
-      Din trenings
-      <span className="font-serif italic text-[var(--color-primary)] font-normal">plan</span>
-      <span className="text-[var(--color-accent-cta)]">.</span>
-    </>
-  );
+function TodaySessionCard({ day }: { day: DayData }) {
+  const router = useRouter();
+  const [isToggling, startToggle] = useTransition();
 
-  if (!hasPlan) {
+  if (!day.session) {
     return (
-      <div className="space-y-10">
-        <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/treningsplan" />
-        <HeroHeading
-          label={`Uke ${weekNumber}`}
-          title={heroTitle}
-          description="Ingen aktiv plan enda. La AI lage en personlig plan, eller kontakt coachen din."
-        />
-        <GlassCard variant="light" padding="lg" className="text-center">
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-[var(--color-primary)]/10">
-            <Calendar className="w-8 h-8 text-[var(--color-primary)]" strokeWidth={1.75} />
+      <PremiumCard delay={0.1}>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <div className="w-12 h-12 rounded-xl bg-portal-hover flex items-center justify-center mb-4">
+            <Target className="w-6 h-6 text-portal-muted" />
           </div>
-          <h2 className="text-[20px] font-semibold mb-2 text-[var(--color-grey-900)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted mb-1">
+            {day.dayName} {format(new Date(day.dateISO), "d. MMMM", { locale: nb })}
+          </p>
+          <p className="text-sm text-portal-secondary">
+            Ingen okt planlagt. Nyt hviledagen.
+          </p>
+        </div>
+      </PremiumCard>
+    );
+  }
+
+  const session = day.session;
+
+  function handleToggleComplete() {
+    startToggle(async () => {
+      await toggleSessionComplete(session.id);
+      router.refresh();
+    });
+  }
+
+  return (
+    <PremiumCard delay={0.1}>
+      {/* Header */}
+      <div className="flex items-start justify-between mb-5">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted mb-1">
+            Dagens okt
+          </p>
+          <h3 className="text-lg font-bold tracking-tight text-portal-text">
+            {session.title}
+          </h3>
+          <div className="flex items-center gap-3 mt-2">
+            {session.pyramidLevel && (
+              <PyramidTag level={session.pyramidLevel} />
+            )}
+            <span className="flex items-center gap-1 text-xs text-portal-secondary">
+              <Clock className="w-3.5 h-3.5" />
+              {session.duration} min
+            </span>
+          </div>
+        </div>
+        {session.completed ? (
+          <button
+            onClick={handleToggleComplete}
+            disabled={isToggling}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success/10 hover:bg-success/20 transition-colors"
+          >
+            {isToggling ? (
+              <Loader2 className="w-3.5 h-3.5 text-success animate-spin" />
+            ) : (
+              <CheckCircle2 className="w-3.5 h-3.5 text-success" />
+            )}
+            <span className="text-[11px] font-medium text-success">Fullfort</span>
+          </button>
+        ) : (
+          <button
+            onClick={handleToggleComplete}
+            disabled={isToggling}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-portal-border text-portal-muted hover:bg-success/10 hover:text-success hover:border-success/30 transition-colors"
+          >
+            {isToggling ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <CheckCircle2 className="w-3.5 h-3.5" />
+            )}
+            <span className="text-[11px] font-medium">Marker fullfort</span>
+          </button>
+        )}
+      </div>
+
+      {/* Exercise list */}
+      {session.exercises.length > 0 && (
+        <div className="space-y-0">
+          {session.exercises.map((exercise, idx) => (
+            <div
+              key={`${exercise.name}-${idx}`}
+              className={`flex items-start gap-4 py-4 ${
+                idx < session.exercises.length - 1 ? "border-b border-portal-border" : ""
+              }`}
+            >
+              <div className="w-10 h-10 rounded-xl bg-portal-hover flex items-center justify-center flex-shrink-0">
+                <Dumbbell className="w-5 h-5 text-portal-secondary" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-portal-text">
+                  {exercise.name}
+                </p>
+                {exercise.details && (
+                  <p className="text-xs text-portal-muted mt-0.5 line-clamp-2">
+                    {exercise.details}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {session.exercises.length === 0 && (
+        <p className="text-xs text-portal-muted py-4">
+          Ingen ovelser lagt til enna.
+        </p>
+      )}
+
+      {/* CTA Buttons */}
+      <div className="flex gap-3 mt-5 pt-5 border-t border-portal-border">
+        <Link
+          href={`/portal/treningsplan/${session.id}`}
+          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-[20px] bg-primary text-white text-sm font-semibold
+            transition-all duration-300 hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] active:opacity-75"
+        >
+          <Play className="w-4 h-4" />
+          Start okt
+        </Link>
+        <Link
+          href="/portal/bookinger"
+          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-[20px] border border-portal-border text-portal-text text-sm font-semibold
+            transition-all duration-300 hover:bg-portal-hover"
+        >
+          <Calendar className="w-4 h-4" />
+          Book coaching
+        </Link>
+      </div>
+    </PremiumCard>
+  );
+}
+
+// ---------------------------------------------------------------------
+// Weekly Focus Card
+// ---------------------------------------------------------------------
+function WeeklyFocusCard({ weekDays }: { weekDays: DayData[] }) {
+  const focusAreas = weekDays
+    .filter((d) => d.session?.focusArea)
+    .map((d) => d.session!.focusArea!);
+
+  const primaryFocus = focusAreas[0] ?? "Generell trening";
+  const uniqueAreas = [...new Set(focusAreas)];
+
+  return (
+    <PremiumCard delay={0.2}>
+      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted mb-1">
+        Ukens fokusomrade
+      </p>
+      <h3 className="text-lg font-bold tracking-tight text-portal-text mb-4">
+        {primaryFocus}
+      </h3>
+      {uniqueAreas.length > 1 && (
+        <div className="flex flex-wrap gap-2">
+          {uniqueAreas.map((area) => (
+            <span
+              key={area}
+              className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-portal-hover text-portal-secondary"
+            >
+              {area}
+            </span>
+          ))}
+        </div>
+      )}
+      {uniqueAreas.length <= 1 && (
+        <p className="text-xs text-portal-muted leading-relaxed">
+          Coach-anbefaling for denne uken. Fokuser pa {primaryFocus.toLowerCase()} for best mulig fremgang.
+        </p>
+      )}
+    </PremiumCard>
+  );
+}
+
+// ---------------------------------------------------------------------
+// Progress Card — completed vs planned
+// ---------------------------------------------------------------------
+function ProgressCard({ weekDays }: { weekDays: DayData[] }) {
+  const planned = weekDays.filter((d) => d.session).length;
+  const completed = weekDays.filter((d) => d.session?.completed).length;
+  const percentage = planned > 0 ? Math.round((completed / planned) * 100) : 0;
+
+  return (
+    <PremiumCard delay={0.3} glow={completed === planned && planned > 0 ? "green" : undefined}>
+      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted mb-3">
+        Fremgang denne uken
+      </p>
+
+      {/* Big number */}
+      <div className="flex items-baseline gap-1 mb-4">
+        <span className="text-4xl font-extrabold tracking-tight tabular-nums text-portal-text">
+          {completed}
+        </span>
+        <span className="text-lg font-semibold text-portal-muted tabular-nums">
+          / {planned}
+        </span>
+      </div>
+
+      {/* Progress bar */}
+      <div className="h-[5px] bg-black/5 rounded-full overflow-hidden mb-3">
+        <div
+          className="h-full rounded-full bg-primary transition-all duration-[1200ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
+
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-portal-muted">
+          {planned === 0
+            ? "Ingen okter planlagt"
+            : completed === planned
+              ? "Alle okter fullfort!"
+              : `${planned - completed} okter gjenstaar`}
+        </span>
+        {completed > 0 && (
+          <span className="flex items-center gap-1 text-xs font-medium text-success">
+            <TrendingUp className="w-3.5 h-3.5" />
+            {percentage}%
+          </span>
+        )}
+      </div>
+    </PremiumCard>
+  );
+}
+
+// ---------------------------------------------------------------------
+// Empty State
+// ---------------------------------------------------------------------
+function EmptyState({
+  weekNumber,
+  canGenerate,
+  userId,
+}: {
+  weekNumber: string;
+  canGenerate: boolean;
+  userId: string;
+}) {
+  return (
+    <div className="space-y-8">
+      <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/treningsplan" />
+
+      <div className="mb-2">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted mb-2">
+          Uke {weekNumber}
+        </p>
+        <h1 className="text-3xl font-bold tracking-tight text-portal-text">
+          Treningsplan
+        </h1>
+      </div>
+
+      <PremiumCard className="text-center">
+        <div className="py-8">
+          <div className="w-16 h-16 rounded-2xl bg-portal-hover flex items-center justify-center mx-auto mb-5">
+            <Calendar className="w-8 h-8 text-portal-secondary" strokeWidth={1.75} />
+          </div>
+          <h2 className="text-xl font-semibold text-portal-text mb-2">
             Din treningsplan er tom
           </h2>
-          <p className="text-[13px] max-w-md mx-auto mb-6 text-[var(--color-muted)] leading-relaxed">
+          <p className="text-sm text-portal-muted max-w-md mx-auto mb-6 leading-relaxed">
             {canGenerate
-              ? "Dra ovelser fra banken, eller la AI lage en plan for deg."
+              ? "Opprett en plan manuelt, eller la AI lage en personlig plan for deg."
               : "Kontakt din coach for a fa en personlig treningsplan."}
           </p>
           {canGenerate && (
@@ -176,78 +416,117 @@ export function TreningsplanClient({
               <GeneratePlanButton studentId={userId} />
             </div>
           )}
-        </GlassCard>
-      </div>
+        </div>
+      </PremiumCard>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------
+// Main Component
+// ---------------------------------------------------------------------
+export function TreningsplanClient({
+  hasPlan,
+  weekNumber,
+  weekRange,
+  weekOffset,
+  weekDays,
+  canGenerate,
+  userId,
+}: TreningsplanClientProps) {
+  // Find initial selected day — today or first day with session
+  const initialIndex = useMemo(() => {
+    const todayIdx = weekDays.findIndex((d) => d.isToday);
+    if (todayIdx >= 0) return todayIdx;
+    const firstSession = weekDays.findIndex((d) => d.session);
+    return firstSession >= 0 ? firstSession : 0;
+  }, [weekDays]);
+
+  const [selectedDay, setSelectedDay] = useState(initialIndex);
+
+  if (!hasPlan) {
+    return (
+      <EmptyState
+        weekNumber={weekNumber}
+        canGenerate={canGenerate}
+        userId={userId}
+      />
     );
   }
 
-  const heroDescription = (
-    <>
-      Uken din i fugleperspektiv.{" "}
-      <span className="font-semibold text-[var(--color-grey-900)]">{weekRange}</span>
-    </>
-  );
-
-  const headerActions = (
-    <>
-      <div className="flex items-center gap-1 p-1 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 shadow-sm">
-        <Link href={`/portal/treningsplan?week=${weekOffset - 1}`}
-          className="w-9 h-9 flex items-center justify-center rounded-full text-[var(--color-muted)] hover:text-[var(--color-grey-900)] hover:bg-white transition-colors"
-          aria-label="Forrige uke">
-          <ChevronLeft className="w-4 h-4" />
-        </Link>
-        {weekOffset !== 0 && (
-          <Link href="/portal/treningsplan"
-            className="h-9 px-3 rounded-full text-[12px] font-semibold text-[var(--color-text)] hover:bg-white transition-colors inline-flex items-center">
-            I dag
-          </Link>
-        )}
-        <Link href={`/portal/treningsplan?week=${weekOffset + 1}`}
-          className="w-9 h-9 flex items-center justify-center rounded-full text-[var(--color-muted)] hover:text-[var(--color-grey-900)] hover:bg-white transition-colors"
-          aria-label="Neste uke">
-          <ChevronRight className="w-4 h-4" />
-        </Link>
-      </div>
-      {canGenerate && (
-        <>
-          <ManualPlanButton studentId={userId} />
-          <GeneratePlanButton studentId={userId} />
-        </>
-      )}
-    </>
-  );
+  const currentDay = weekDays[selectedDay];
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/treningsplan" />
-      <HeroHeading
-        label={`Uke ${weekNumber}`}
-        title={heroTitle}
-        description={heroDescription}
-        actions={headerActions}
-      />
 
-      <div>
-        <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase mb-4 flex items-center gap-2">
-          <span className="w-6 h-px bg-[var(--color-muted)]" />
-          Ukens plan
-        </p>
-        <motion.div variants={staggerContainer} initial="hidden" animate="visible"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {weekDays.map((day) => <DayCard key={day.dayName} day={day} />)}
-        </motion.div>
+      {/* Page header */}
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted mb-2">
+            Uke {weekNumber}
+          </p>
+          <h1 className="text-3xl font-bold tracking-tight text-portal-text">
+            Treningsplan
+          </h1>
+          <p className="text-sm text-portal-secondary mt-1">{weekRange}</p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {/* Week nav */}
+          <div className="flex items-center gap-1 p-1 rounded-full bg-white border border-portal-border shadow-card">
+            <Link
+              href={`/portal/treningsplan?week=${weekOffset - 1}`}
+              className="w-9 h-9 flex items-center justify-center rounded-full text-portal-muted hover:text-portal-text hover:bg-portal-hover transition-colors"
+              aria-label="Forrige uke"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Link>
+            {weekOffset !== 0 && (
+              <Link
+                href="/portal/treningsplan"
+                className="h-9 px-3 rounded-full text-xs font-semibold text-portal-text hover:bg-portal-hover transition-colors inline-flex items-center"
+              >
+                I dag
+              </Link>
+            )}
+            <Link
+              href={`/portal/treningsplan?week=${weekOffset + 1}`}
+              className="w-9 h-9 flex items-center justify-center rounded-full text-portal-muted hover:text-portal-text hover:bg-portal-hover transition-colors"
+              aria-label="Neste uke"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          {canGenerate && (
+            <>
+              <ManualPlanButton studentId={userId} />
+              <GeneratePlanButton studentId={userId} />
+            </>
+          )}
+        </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-4 text-[11px] pt-2">
-        <span className="font-bold uppercase tracking-[0.15em] text-[var(--color-muted)]">
-          Pyramidenivaaer
-        </span>
-        {(Object.keys(pyramidConfig) as PyramidLevel[]).map((key) => (
-          <div key={key} className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: pyramidConfig[key].token }} />
-            <span className="text-[var(--color-muted)]">{pyramidConfig[key].label} ({key})</span>
-          </div>
-        ))}
+      {/* Week Day Selector */}
+      <PremiumCard noHover delay={0}>
+        <WeekDaySelector
+          weekDays={weekDays}
+          selectedIndex={selectedDay}
+          onSelect={setSelectedDay}
+        />
+      </PremiumCard>
+
+      {/* Two-column layout: Session + Sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+        {/* Left: Today's session */}
+        <TodaySessionCard day={currentDay} />
+
+        {/* Right: Focus + Progress stacked */}
+        <div className="flex flex-col gap-4 lg:gap-6">
+          <WeeklyFocusCard weekDays={weekDays} />
+          <ProgressCard weekDays={weekDays} />
+        </div>
       </div>
     </div>
   );
