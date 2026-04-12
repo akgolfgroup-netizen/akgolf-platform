@@ -28,9 +28,16 @@ export function TrainerCard({
       }`}
     >
       <div
-        className="w-full aspect-[3/4] bg-cover bg-top bg-text relative"
-        style={{ backgroundImage: `url(${trainer.imageUrl})` }}
+        className={`w-full aspect-[3/4] bg-cover bg-center relative ${trainer.imageUrl ? "bg-text" : "bg-primary"}`}
+        style={trainer.imageUrl ? { backgroundImage: `url(${trainer.imageUrl})` } : undefined}
       >
+        {!trainer.imageUrl && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-6xl font-bold text-white/30 tracking-tight">
+              {trainer.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+            </span>
+          </div>
+        )}
         <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-[rgba(10,31,24,0.9)] via-[rgba(10,31,24,0.4)] to-transparent" />
         <div className="absolute inset-x-0 bottom-0 p-5 text-white z-[2]">
           <div className="text-xl font-bold tracking-tight">{trainer.name}</div>

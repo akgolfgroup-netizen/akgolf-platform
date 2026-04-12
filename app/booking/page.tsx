@@ -11,7 +11,7 @@ const TRAINER_META: Record<string, { imageUrl: string; role: string; badge: stri
     badge: "Performance · Flex",
   },
   Markus: {
-    imageUrl: "/images/academy/AK-Golf-Academy-25.jpg",
+    imageUrl: "",
     role: "Assistant Coach",
     badge: "Express · Flex",
   },
@@ -57,7 +57,8 @@ export default async function BookingPage() {
   const user = await getPortalUser();
 
   // Hent alle aktive public service types med koblede instruktører
-  const { data: serviceTypes } = await supabase
+  // Junction table er _InstructorToServiceType (Prisma implicit m2m: A=Instructor, B=ServiceType)
+  const { data: serviceTypes, error: stError } = await supabase
     .from("ServiceType")
     .select(
       `
@@ -68,8 +69,8 @@ export default async function BookingPage() {
       price,
       allowStripe,
       category,
-      Instructor:InstructorServiceType(
-        Instructor(
+      Instructor:_InstructorToServiceType(
+        Instructor:A(
           id,
           User:userId(name)
         )
@@ -81,6 +82,10 @@ export default async function BookingPage() {
     .neq("name", "Foundation")
     .neq("name", "Start")
     .neq("name", "Banecoaching");
+
+  if (stError) {
+    console.error("Booking ServiceType query error:", stError.message);
+  }
 
   const rows = (serviceTypes ?? []) as ServiceTypeRow[];
 
