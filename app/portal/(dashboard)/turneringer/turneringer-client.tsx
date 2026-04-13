@@ -47,26 +47,29 @@ interface TurneringerClientProps {
 // LEVEL BADGE CONFIG — med Tailwind-tokens
 // ════════════════════════════════════════════════════════════════
 
+/* ════════════════════════════════════════════════════════════════
+ * LEVEL BADGES — AK Golf Brand Colors
+ * ════════════════════════════════════════════════════════════════ */
 const LEVEL_BADGE_STYLES: Record<string, { bg: string; text: string; border: string }> = {
   nasjonal: {
-    bg: "bg-primary",
+    bg: "bg-[#154212]",
     text: "text-white",
-    border: "border-primary",
+    border: "border-[#154212]",
   },
   internasjonal: {
-    bg: "bg-black",
+    bg: "bg-[#1c1c16]",
     text: "text-white",
-    border: "border-black",
+    border: "border-[#1c1c16]",
   },
   regional: {
-    bg: "bg-info",
-    text: "text-white",
-    border: "border-info",
+    bg: "bg-[#d2f000]",
+    text: "text-[#0f2f0d]",
+    border: "border-[#d2f000]",
   },
   lokal: {
-    bg: "bg-portal-hover",
-    text: "text-portal-secondary",
-    border: "border-portal-border",
+    bg: "bg-[#f7f3ea]",
+    text: "text-[#5a5a52]",
+    border: "border-[#154212]/10",
   },
 };
 
@@ -162,9 +165,9 @@ export function TurneringerClient({
         </div>
       </div>
 
-      {/* Tab Navigation — Pill-tabs */}
+      {/* Tab Navigation — Modern Pill-tabs med Lime Accent */}
       <div className="flex items-center justify-between">
-        <div className="flex gap-1 p-[3px] rounded-[10px] bg-portal-hover">
+        <div className="flex gap-1 p-1.5 rounded-full bg-[#f7f3ea] border border-[#154212]/8">
           {([
             { key: "mine" as Tab, label: "Mine turneringer", count: myTournaments.length },
             { key: "alle" as Tab, label: "Alle turneringer", count: tournaments.length },
@@ -174,17 +177,17 @@ export function TurneringerClient({
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={cn(
-                "px-4 py-[7px] text-[13px] font-medium rounded-[7px] transition-all",
+                "px-5 py-2.5 text-[13px] font-semibold rounded-full transition-all duration-300",
                 activeTab === tab.key
-                  ? "bg-primary text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
-                  : "text-portal-muted hover:text-portal-secondary hover:bg-portal-hover"
+                  ? "bg-[#d2f000] text-[#0f2f0d] shadow-[0_2px_12px_rgba(210,240,0,0.4)]"
+                  : "text-[#5a5a52] hover:text-[#1c1c16] hover:bg-white/50"
               )}
             >
               {tab.label}
               {tab.count !== undefined && (
                 <span className={cn(
-                  "ml-1.5 text-xs tabular-nums",
-                  activeTab === tab.key ? "text-white/70" : "text-portal-muted"
+                  "ml-2 text-xs tabular-nums px-1.5 py-0.5 rounded-full",
+                  activeTab === tab.key ? "bg-[#0f2f0d]/10 text-[#0f2f0d]" : "bg-[#154212]/10 text-[#5a5a52]"
                 )}>
                   {tab.count}
                 </span>
@@ -199,22 +202,22 @@ export function TurneringerClient({
             <button
               onClick={() => setShowFilters((v) => !v)}
               className={cn(
-                "p-2 rounded-lg border transition-colors",
+                "p-2.5 rounded-full border transition-all duration-300",
                 showFilters
-                  ? "border-primary bg-primary text-white"
-                  : "border-portal-border text-portal-secondary hover:border-primary"
+                  ? "bg-[#154212] text-white border-[#154212] shadow-[0_2px_12px_rgba(21,66,18,0.3)]"
+                  : "border-[#154212]/15 text-[#5a5a52] hover:border-[#154212]/30 hover:bg-white"
               )}
             >
               <Filter className="w-4 h-4" />
             </button>
-            <div className="flex p-1 rounded-lg bg-portal-hover">
+            <div className="flex p-1 rounded-full bg-[#f7f3ea] border border-[#154212]/8">
               <button
                 onClick={() => setViewMode("list")}
                 className={cn(
-                  "p-1.5 rounded-md transition-colors",
+                  "p-2 rounded-full transition-all duration-300",
                   viewMode === "list"
-                    ? "bg-white shadow-sm text-portal-text"
-                    : "text-portal-muted"
+                    ? "bg-white shadow-sm text-[#1c1c16]"
+                    : "text-[#5a5a52] hover:text-[#1c1c16]"
                 )}
               >
                 <List className="w-4 h-4" />
@@ -222,10 +225,10 @@ export function TurneringerClient({
               <button
                 onClick={() => setViewMode("calendar")}
                 className={cn(
-                  "p-1.5 rounded-md transition-colors",
+                  "p-2 rounded-full transition-all duration-300",
                   viewMode === "calendar"
-                    ? "bg-white shadow-sm text-portal-text"
-                    : "text-portal-muted"
+                    ? "bg-white shadow-sm text-[#1c1c16]"
+                    : "text-[#5a5a52] hover:text-[#1c1c16]"
                 )}
               >
                 <CalendarDays className="w-4 h-4" />
@@ -235,7 +238,7 @@ export function TurneringerClient({
         )}
       </div>
 
-      {/* Filters — Chip style */}
+      {/* Filters — Modern Pill Chips */}
       {showFilters && activeTab !== "pro" && (
         <div className="flex gap-2 flex-wrap">
           {(["alle", "nasjonal", "regional", "lokal", "internasjonal"] as const).map((level) => (
@@ -243,10 +246,10 @@ export function TurneringerClient({
               key={level}
               onClick={() => setLevelFilter(level)}
               className={cn(
-                "px-3 py-1.5 text-xs font-medium rounded-full border transition-colors",
+                "px-4 py-2 text-xs font-semibold rounded-full border transition-all duration-300",
                 levelFilter === level
-                  ? "bg-primary text-white border-primary"
-                  : "bg-white text-portal-secondary border-portal-border hover:border-primary"
+                  ? "bg-[#d2f000] text-[#0f2f0d] border-[#d2f000] shadow-[0_2px_8px_rgba(210,240,0,0.3)]"
+                  : "bg-white text-[#5a5a52] border-[#154212]/10 hover:border-[#d2f000]/50"
               )}
             >
               {level === "alle"
@@ -334,7 +337,8 @@ function ListView({
     <div className="space-y-8">
       {upcoming.length > 0 && (
         <section>
-          <h2 className="text-[11px] font-semibold text-portal-secondary uppercase tracking-[0.08em] mb-3">
+          <h2 className="text-xs font-semibold text-[#154212] uppercase tracking-[0.1em] mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#d2f000]" />
             Kommende
           </h2>
           <div className="space-y-2">
@@ -351,7 +355,8 @@ function ListView({
 
       {past.length > 0 && (
         <section>
-          <h2 className="text-[11px] font-semibold text-portal-secondary uppercase tracking-[0.08em] mb-3">
+          <h2 className="text-xs font-semibold text-[#5a5a52] uppercase tracking-[0.1em] mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#5a5a52]/30" />
             Tidligere
           </h2>
           <div className="space-y-2 opacity-60">
@@ -393,7 +398,7 @@ function TournamentListCard({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left bg-white border border-portal-border rounded-xl p-4 hover:border-black/8 hover:shadow-card-hover transition-all duration-300 group"
+      className="w-full text-left bg-white border border-[#154212]/8 rounded-[24px] p-5 hover:border-[#d2f000]/40 hover:shadow-portal-card-hover transition-all duration-300 group"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
@@ -434,14 +439,14 @@ function TournamentListCard({
           </div>
 
           {/* Name */}
-          <h3 className="font-semibold text-portal-text text-sm group-hover:text-primary transition-colors truncate">
+          <h3 className="font-semibold text-[#1c1c16] text-sm group-hover:text-[#154212] transition-colors truncate">
             {tournament.name}
           </h3>
 
           {/* Meta */}
-          <div className="mt-2 space-y-1">
-            <div className="flex items-center gap-2 text-xs text-portal-secondary">
-              <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
+          <div className="mt-3 space-y-1.5">
+            <div className="flex items-center gap-2 text-xs text-[#5a5a52]">
+              <Calendar className="w-3.5 h-3.5 flex-shrink-0 text-[#154212]" />
               <span>
                 {format(new Date(tournament.startDate), "d. MMM yyyy", { locale: nb })}
                 {tournament.endDate &&
@@ -449,15 +454,15 @@ function TournamentListCard({
               </span>
             </div>
             {(tournament.course || tournament.location) && (
-              <div className="flex items-center gap-2 text-xs text-portal-secondary">
-                <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+              <div className="flex items-center gap-2 text-xs text-[#5a5a52]">
+                <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-[#154212]" />
                 <span className="truncate">
                   {[tournament.course, tournament.location].filter(Boolean).join(', ')}
                 </span>
               </div>
             )}
             {tournament.registrationDeadline && !deadlinePassed && (
-              <div className="flex items-center gap-2 text-xs text-portal-muted">
+              <div className="flex items-center gap-2 text-xs text-[#8a8a82]">
                 <Clock className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>
                   Påmeldingsfrist:{" "}
@@ -469,14 +474,14 @@ function TournamentListCard({
         </div>
 
         {/* Right side — plan info */}
-        <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
+        <div className="flex flex-col items-end gap-2 flex-shrink-0">
           {plan && (
-            <span className="text-xs font-medium text-portal-text">
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#154212]/10 text-[#154212]">
               {PLAN_LEVEL_CONFIG[plan.planLevel as PlanLevel]?.label}
             </span>
           )}
           {tournament.externalUrl && (
-            <span className="p-1.5 rounded-lg text-portal-muted group-hover:text-portal-secondary transition-colors">
+            <span className="p-2 rounded-full bg-[#f7f3ea] text-[#5a5a52] group-hover:bg-[#d2f000] group-hover:text-[#0f2f0d] transition-all duration-300">
               <ExternalLink className="w-3.5 h-3.5" />
             </span>
           )}
@@ -524,32 +529,32 @@ function CalendarView({
   const weekdays = ["Ma", "Ti", "On", "To", "Fr", "Lø", "Sø"];
 
   return (
-    <PremiumCard noHover className="p-0 overflow-hidden">
+    <PremiumCard noHover radius="large" className="p-0 overflow-hidden border-[#154212]/10">
       {/* Month nav */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-portal-border">
+      <div className="flex items-center justify-between px-6 py-5 border-b border-[#154212]/8">
         <button
           onClick={prevMonth}
-          className="p-1.5 rounded-lg hover:bg-portal-hover text-portal-secondary transition-colors"
+          className="p-2 rounded-full hover:bg-[#f7f3ea] text-[#5a5a52] transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-5 h-5" />
         </button>
-        <h3 className="text-sm font-semibold text-portal-text capitalize">
+        <h3 className="text-sm font-semibold text-[#1c1c16] capitalize">
           {format(calendarMonth, "MMMM yyyy", { locale: nb })}
         </h3>
         <button
           onClick={nextMonth}
-          className="p-1.5 rounded-lg hover:bg-portal-hover text-portal-secondary transition-colors"
+          className="p-2 rounded-full hover:bg-[#f7f3ea] text-[#5a5a52] transition-colors"
         >
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="w-5 h-5" />
         </button>
       </div>
 
       {/* Weekday headers */}
-      <div className="grid grid-cols-7 border-b border-portal-border">
+      <div className="grid grid-cols-7 border-b border-[#154212]/8">
         {weekdays.map((day) => (
           <div
             key={day}
-            className="py-2 text-center text-[10px] font-semibold text-portal-muted uppercase tracking-[0.08em]"
+            className="py-3 text-center text-[10px] font-semibold text-[#5a5a52] uppercase tracking-[0.1em]"
           >
             {day}
           </div>
@@ -567,21 +572,21 @@ function CalendarView({
             <div
               key={i}
               className={cn(
-                "min-h-[80px] p-1.5 border-b border-r border-portal-border last:border-r-0",
-                !isCurrentMonth && "bg-portal-hover/50"
+                "min-h-[90px] p-2 border-b border-r border-[#154212]/8 last:border-r-0",
+                !isCurrentMonth && "bg-[#f7f3ea]/50"
               )}
             >
               <span
                 className={cn(
-                  "inline-flex items-center justify-center w-6 h-6 text-xs rounded-full",
-                  isToday && "bg-primary text-white font-semibold",
-                  !isToday && isCurrentMonth && "text-portal-text",
-                  !isCurrentMonth && "text-portal-muted"
+                  "inline-flex items-center justify-center w-7 h-7 text-sm rounded-full",
+                  isToday && "bg-[#d2f000] text-[#0f2f0d] font-semibold",
+                  !isToday && isCurrentMonth && "text-[#1c1c16]",
+                  !isCurrentMonth && "text-[#8a8a82]"
                 )}
               >
                 {format(day, "d")}
               </span>
-              <div className="mt-0.5 space-y-0.5">
+              <div className="mt-1 space-y-1">
                 {dayTournaments.slice(0, 2).map((t) => {
                   const levelStyle = LEVEL_BADGE_STYLES[t.level] ?? LEVEL_BADGE_STYLES.lokal;
                   return (
@@ -589,7 +594,7 @@ function CalendarView({
                       key={t.id}
                       onClick={() => onSelect(t)}
                       className={cn(
-                        "w-full text-left px-1.5 py-0.5 text-[10px] font-medium rounded truncate transition-colors hover:opacity-80",
+                        "w-full text-left px-2 py-1 text-[10px] font-medium rounded-lg truncate transition-colors hover:opacity-80",
                         levelStyle.bg,
                         levelStyle.text
                       )}
@@ -599,7 +604,7 @@ function CalendarView({
                   );
                 })}
                 {dayTournaments.length > 2 && (
-                  <span className="text-[9px] text-portal-muted pl-1">
+                  <span className="text-[9px] text-[#8a8a82] pl-1">
                     +{dayTournaments.length - 2} til
                   </span>
                 )}
@@ -631,15 +636,15 @@ function ProTourSection({
 
   return (
     <div className="space-y-4">
-      {/* Tour toggle — Pills */}
-      <div className="flex gap-2">
+      {/* Tour toggle — Modern Pills */}
+      <div className="flex gap-2 p-1.5 rounded-full bg-[#f7f3ea] border border-[#154212]/8 w-fit">
         <button
           onClick={() => setProTour("pga")}
           className={cn(
-            "px-4 py-2 text-sm font-medium rounded-[20px] border transition-colors",
+            "px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300",
             proTour === "pga"
-              ? "bg-primary text-white border-primary"
-              : "bg-white text-portal-secondary border-portal-border hover:border-primary"
+              ? "bg-[#d2f000] text-[#0f2f0d] shadow-[0_2px_12px_rgba(210,240,0,0.4)]"
+              : "text-[#5a5a52] hover:text-[#1c1c16] hover:bg-white/50"
           )}
         >
           PGA Tour
@@ -647,10 +652,10 @@ function ProTourSection({
         <button
           onClick={() => setProTour("euro")}
           className={cn(
-            "px-4 py-2 text-sm font-medium rounded-[20px] border transition-colors",
+            "px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300",
             proTour === "euro"
-              ? "bg-primary text-white border-primary"
-              : "bg-white text-portal-secondary border-portal-border hover:border-primary"
+              ? "bg-[#d2f000] text-[#0f2f0d] shadow-[0_2px_12px_rgba(210,240,0,0.4)]"
+              : "text-[#5a5a52] hover:text-[#1c1c16] hover:bg-white/50"
           )}
         >
           DP World Tour
@@ -678,7 +683,7 @@ function ProTournamentCard({ event }: { event: TourScheduleEvent }) {
   return (
     <div
       className={cn(
-        "bg-white border border-portal-border rounded-xl p-4 transition-all duration-300 hover:border-black/8 hover:shadow-card-hover",
+        "bg-white border border-[#154212]/8 rounded-[24px] p-5 transition-all duration-300 hover:border-[#d2f000]/40 hover:shadow-portal-card-hover",
         isPast && "opacity-50"
       )}
     >
@@ -696,7 +701,7 @@ function ProTournamentCard({ event }: { event: TourScheduleEvent }) {
             )}
           </div>
 
-          <h3 className="font-semibold text-portal-text text-sm">
+          <h3 className="font-semibold text-[#1c1c16] text-sm">
             {event.event_name}
           </h3>
 
@@ -972,10 +977,10 @@ function TournamentDetailModal({
 function EmptyState({ message }: { message: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="w-12 h-12 rounded-2xl bg-portal-hover flex items-center justify-center mb-4">
-        <Trophy className="w-6 h-6 text-portal-muted" />
+      <div className="w-16 h-16 rounded-[24px] bg-[#f7f3ea] border border-[#154212]/10 flex items-center justify-center mb-4">
+        <Trophy className="w-7 h-7 text-[#154212]" />
       </div>
-      <p className="text-sm text-portal-secondary max-w-xs">{message}</p>
+      <p className="text-sm text-[#5a5a52] max-w-xs">{message}</p>
     </div>
   );
 }

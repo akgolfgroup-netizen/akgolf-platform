@@ -11,14 +11,26 @@
   /* COLORS — AK Golf Group Brand Guide V2.0                                    */
   /* ═══════════════════════════════════════════════════════════════════════════ */
 
-  /* Core Brand Colors */
-  --color-primary: #005840;
-  --color-primary-alt: #00594C;
+  /* ═══════════════════════════════════════════════════════════════════════════
+   * AK GOLF BRAND — Design System: "The Curated Laboratory"
+   * Fra design.md: The Alabaster Precision
+   * ═══════════════════════════════════════════════════════════════════════════ */
+  
+  /* Core Brand Colors — Design.md v2.0 */
+  --color-alabaster: #fdf9f0;        /* Hovedbakgrunn - varm, organisk */
+  --color-forest: #154212;           /* Primær - autoritær skoggrønn */
+  --color-lime: #d2f000;             /* Sekundær - energisk lime */
+  --color-on-surface: #1c1c16;       /* Tekst - aldri ren svart */
+  
+  /* Legacy aliases (for kompatibilitet) */
+  --color-primary: #154212;
+  --color-primary-alt: #154212;
   --color-primary-soft: #E6F3F1;
-  --color-accent: #D1F843;
-  --color-surface: #ECF0EF;
+  --color-secondary: #d2f000;
+  --color-accent: #d2f000;
+  --color-surface: #f7f3ea;
   --color-background-beige: #fdf9f0;
-  --color-text: #324D45;
+  --color-text: #1c1c16;
   --color-muted: #A5B2AD;
 
   /* Legacy aliases (gradvis utfasing — bruk --color-primary etc.) */
@@ -97,10 +109,13 @@
   --color-portal-border-subtle: rgba(0, 0, 0, 0.04);
   --color-portal-hover: #F0F0F2;
 
-  /* Portal shadows */
-  --shadow-portal-card: 0 0 0 1px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06);
-  --shadow-portal-glow-green: inset 0 0 30px rgba(0,88,64,0.08), 0 0 0 1px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06);
-  --shadow-portal-glow-ai: inset 0 0 30px rgba(175,82,222,0.08), 0 0 0 1px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06);
+  /* Portal shadows — tinted with Forest Green for harmony */
+  --shadow-portal-card: 0 0 0 1px rgba(21,66,18,0.06), 0 1px 2px rgba(21,66,18,0.04), 0 4px 16px rgba(21,66,18,0.06);
+  --shadow-portal-card-hover: 0 0 0 1px rgba(21,66,18,0.08), 0 8px 32px rgba(21,66,18,0.12);
+  --shadow-portal-floating: 0 20px 60px rgba(21,66,18,0.1), 0 0 0 1px rgba(21,66,18,0.05);
+  --shadow-portal-glow-green: inset 0 0 30px rgba(21,66,18,0.06), 0 0 0 1px rgba(21,66,18,0.06), 0 4px 16px rgba(21,66,18,0.06);
+  --shadow-portal-glow-lime: inset 0 0 20px rgba(210,240,0,0.15), 0 0 0 1px rgba(210,240,0,0.2);
+  --shadow-portal-glow-ai: inset 0 0 30px rgba(175,82,222,0.08), 0 0 0 1px rgba(175,82,222,0.1), 0 4px 16px rgba(0,0,0,0.04);
 
   /* ═══════════════════════════════════════════════════════════════════════════ */
   /* TYPOGRAPHY — Inter                                                         */
@@ -153,11 +168,16 @@
   --border-color: #D5DFDB;
   --border-color-light: #ECF0EF;
 
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.25rem;
-  --radius-card: 1.25rem; /* 20px as per brand guide */
+  /* Radius — Modern large corners fra screenshots
+   * Standard: 16px (lg), Hero/Featured: 32px (3xl), Pills: full
+   */
+  --radius-sm: 0.5rem;      /* 8px */
+  --radius-md: 0.75rem;     /* 12px - buttons */
+  --radius-lg: 1rem;        /* 16px - standard cards */
+  --radius-xl: 1.5rem;      /* 24px - large cards */
+  --radius-2xl: 2rem;       /* 32px - featured cards */
+  --radius-3xl: 2.5rem;     /* 40px - hero sections */
+  --radius-card: 1.25rem;   /* 20px legacy */
   --radius-pill: 980px;
   --radius-full: 9999px;
 
