@@ -1172,6 +1172,7 @@ model User {
   aiInsightGeneratedAt                        DateTime?
   lastCheckoutSessionId                       String?
   latestAiInsight                             Json?
+  unitPreference                              UnitSystem                 @default(METRIC)
   AILearning                                  AILearning[]
   ApprovedResponses                           AIResponse[]               @relation("ApprovedResponses")
   Account                                     Account[]
@@ -1899,6 +1900,11 @@ enum UserRole {
   INSTRUCTOR
   STUDENT
   INVITED
+}
+
+enum UnitSystem {
+  IMPERIAL
+  METRIC
 }
 
 enum WaitlistStatus {

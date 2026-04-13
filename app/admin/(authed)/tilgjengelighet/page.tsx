@@ -339,15 +339,15 @@ export default function TilgjengelighetPage() {
       sortable: true,
       render: (r) => (
         <div className="flex items-center gap-2">
-          <span>{r.reason}</span>
+          <span className="text-grey-800">{r.reason}</span>
           {r.source === "GOOGLE_CALENDAR" && (
             <AdminBadge variant="info">Google</AdminBadge>
           )}
         </div>
       ),
     },
-    { key: "when", label: "Dag", sortable: true },
-    { key: "time", label: "Tid", align: "right" },
+    { key: "when", label: "Dag", sortable: true, render: (r) => <span className="text-grey-700">{r.when}</span> },
+    { key: "time", label: "Tid", align: "right", render: (r) => <span className="text-grey-700">{r.time}</span> },
     {
       key: "id",
       label: "",
@@ -360,7 +360,7 @@ export default function TilgjengelighetPage() {
               e.stopPropagation();
               handleDeleteException(r.id);
             }}
-            className="p-1.5 rounded-md hover:bg-[var(--color-error)]/10 text-[var(--color-muted)] hover:text-[var(--color-error)] transition-colors"
+            className="p-1.5 rounded-md hover:bg-error-100 text-grey-400 hover:text-error-600 transition-colors"
             aria-label="Slett unntak"
           >
             <Trash2 className="w-4 h-4" />
@@ -381,7 +381,7 @@ export default function TilgjengelighetPage() {
         {/* Instructor Selector */}
         <AdminCard compact>
           <div className="flex items-center gap-4 flex-wrap">
-            <span className="text-sm text-[var(--color-muted)]">
+            <span className="text-sm text-grey-500">
               Velg instruktør:
             </span>
             <div className="flex gap-2 flex-wrap">
@@ -392,12 +392,12 @@ export default function TilgjengelighetPage() {
                   className={cn(
                     "flex items-center gap-2 px-3 py-2 rounded-lg transition-colors",
                     selectedInstructor === instructor.id
-                      ? "bg-[var(--color-primary)]/10 ring-2 ring-[var(--color-primary)]"
-                      : "hover:bg-[var(--color-grey-100)]",
+                      ? "bg-primary-100 ring-2 ring-primary-500"
+                      : "hover:bg-grey-100",
                   )}
                 >
-                  <div className="w-2 h-2 rounded-full bg-[var(--color-primary)]" />
-                  <span className="text-sm text-[var(--color-text)]">
+                  <div className="w-2 h-2 rounded-full bg-primary-500" />
+                  <span className="text-sm text-grey-900">
                     {instructor.name}
                   </span>
                 </button>
@@ -426,7 +426,7 @@ export default function TilgjengelighetPage() {
         {isLoading ? (
           <AdminCard>
             <div className="flex items-center justify-center py-8">
-              <Loader2 className="w-8 h-8 animate-spin text-[var(--color-primary)]" />
+              <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
             </div>
           </AdminCard>
         ) : (
@@ -434,13 +434,13 @@ export default function TilgjengelighetPage() {
             {/* Tab: Arbeidstider */}
             {activeTab === "hours" && (
               <>
-                <div className="bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
-                  <div className="px-4 py-3 border-b border-[var(--color-grey-200)] flex items-center justify-between">
-                    <h3 className="admin-section-title">Faste arbeidstider</h3>
+                <div className="bg-white rounded-xl shadow-card overflow-hidden">
+                  <div className="px-4 py-3 border-b border-grey-200 flex items-center justify-between">
+                    <h3 className="text-base font-semibold text-grey-900">Faste arbeidstider</h3>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
-                        <Repeat className="w-4 h-4 text-[var(--color-muted)]" />
-                        <span className="text-xs text-[var(--color-muted)]">
+                        <Repeat className="w-4 h-4 text-grey-400" />
+                        <span className="text-xs text-grey-500">
                           Gjentas ukentlig
                         </span>
                       </div>
@@ -454,7 +454,7 @@ export default function TilgjengelighetPage() {
                       </AdminButton>
                     </div>
                   </div>
-                  <div className="grid grid-cols-7 divide-x divide-[var(--color-grey-200)]">
+                  <div className="grid grid-cols-7 divide-x divide-grey-200">
                     {days.map((day, i) => {
                       const dayIndex = dayIndices[i];
                       const slots = editingSlots[dayIndex] || [];
@@ -462,7 +462,7 @@ export default function TilgjengelighetPage() {
                       return (
                         <div key={day} className="p-4">
                           <div className="text-center mb-3">
-                            <span className="text-xs font-medium text-[var(--color-muted)] uppercase">
+                            <span className="text-xs font-medium text-grey-500 uppercase">
                               {day}
                             </span>
                           </div>
@@ -471,7 +471,7 @@ export default function TilgjengelighetPage() {
                               slots.map((slot, j) => (
                                 <div
                                   key={j}
-                                  className="p-2 bg-[var(--color-success)]/10 rounded text-center space-y-1"
+                                  className="p-2 bg-success-100 rounded text-center space-y-1"
                                 >
                                   <div className="flex items-center justify-center gap-1">
                                     <input
@@ -485,9 +485,9 @@ export default function TilgjengelighetPage() {
                                           e.target.value,
                                         )
                                       }
-                                      className="w-16 text-xs bg-transparent border-0 p-0 text-[var(--color-success)] text-center"
+                                      className="w-16 text-xs bg-transparent border-0 p-0 text-success-700 text-center"
                                     />
-                                    <span className="text-xs text-[var(--color-success)]">
+                                    <span className="text-xs text-success-700">
                                       -
                                     </span>
                                     <input
@@ -501,22 +501,22 @@ export default function TilgjengelighetPage() {
                                           e.target.value,
                                         )
                                       }
-                                      className="w-16 text-xs bg-transparent border-0 p-0 text-[var(--color-success)] text-center"
+                                      className="w-16 text-xs bg-transparent border-0 p-0 text-success-700 text-center"
                                     />
                                   </div>
                                   <button
                                     onClick={() =>
                                       handleRemoveSlot(dayIndex, j)
                                     }
-                                    className="text-[10px] text-[var(--color-error)] hover:underline"
+                                    className="text-[10px] text-error-600 hover:underline"
                                   >
                                     Fjern
                                   </button>
                                 </div>
                               ))
                             ) : (
-                              <div className="p-2 bg-[var(--color-grey-100)] rounded text-center">
-                                <span className="text-xs text-[var(--color-muted)]">
+                              <div className="p-2 bg-grey-100 rounded text-center">
+                                <span className="text-xs text-grey-500">
                                   Fri
                                 </span>
                               </div>
@@ -524,9 +524,9 @@ export default function TilgjengelighetPage() {
                           </div>
                           <button
                             onClick={() => handleAddSlot(dayIndex)}
-                            className="w-full mt-2 p-1.5 rounded border border-dashed border-[var(--color-grey-200)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors"
+                            className="w-full mt-2 p-1.5 rounded border border-dashed border-grey-300 hover:border-primary-400 hover:text-primary-600 transition-colors"
                           >
-                            <Plus className="w-3.5 h-3.5 mx-auto text-[var(--color-muted)]" />
+                            <Plus className="w-3.5 h-3.5 mx-auto text-grey-400" />
                           </button>
                         </div>
                       );
@@ -535,17 +535,17 @@ export default function TilgjengelighetPage() {
                 </div>
 
                 {/* Calendar Preview */}
-                <div className="bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden">
-                  <div className="px-4 py-3 border-b border-[var(--color-grey-200)] flex items-center justify-between">
-                    <h3 className="admin-section-title">Kalendervisning</h3>
+                <div className="bg-white rounded-xl shadow-card overflow-hidden">
+                  <div className="px-4 py-3 border-b border-grey-200 flex items-center justify-between">
+                    <h3 className="text-base font-semibold text-grey-900">Kalendervisning</h3>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setCurrentWeek(addDays(currentWeek, -7))}
-                        className="p-1.5 rounded-lg hover:bg-[var(--color-grey-100)]"
+                        className="p-1.5 rounded-lg hover:bg-grey-100"
                       >
-                        <ChevronLeft className="w-4 h-4 text-[var(--color-muted)]" />
+                        <ChevronLeft className="w-4 h-4 text-grey-500" />
                       </button>
-                      <span className="text-sm text-[var(--color-text)]">
+                      <span className="text-sm text-grey-800">
                         {format(weekStart, "d. MMM", { locale: nb })} -{" "}
                         {format(addDays(weekStart, 6), "d. MMM", {
                           locale: nb,
@@ -553,9 +553,9 @@ export default function TilgjengelighetPage() {
                       </span>
                       <button
                         onClick={() => setCurrentWeek(addDays(currentWeek, 7))}
-                        className="p-1.5 rounded-lg hover:bg-[var(--color-grey-100)]"
+                        className="p-1.5 rounded-lg hover:bg-grey-100"
                       >
-                        <ChevronRight className="w-4 h-4 text-[var(--color-muted)]" />
+                        <ChevronRight className="w-4 h-4 text-grey-500" />
                       </button>
                     </div>
                   </div>
@@ -572,23 +572,23 @@ export default function TilgjengelighetPage() {
 
                         return (
                           <div key={day} className="text-center">
-                            <span className="text-xs text-[var(--color-muted)]">
+                            <span className="text-xs text-grey-500">
                               {day}
                             </span>
                             <div
                               className={cn(
                                 "mt-1 p-3 rounded-lg border min-h-[80px]",
                                 isBlocked
-                                  ? "bg-[var(--color-error)]/10 border-[var(--color-error)]"
-                                  : "bg-[var(--color-grey-100)] border-[var(--color-grey-200)]",
+                                  ? "bg-error-100 border-error-300"
+                                  : "bg-grey-100 border-grey-200",
                               )}
                             >
-                              <span className="text-sm font-medium text-[var(--color-text)]">
+                              <span className="text-sm font-medium text-grey-900">
                                 {format(date, "d")}
                               </span>
                               {isBlocked && (
                                 <div className="mt-1">
-                                  <span className="text-[10px] text-[var(--color-error)]">
+                                  <span className="text-[10px] text-error-600">
                                     {dayBlockedTimes.length} blokkering
                                     {dayBlockedTimes.length > 1 ? "er" : ""}
                                   </span>
@@ -609,10 +609,10 @@ export default function TilgjengelighetPage() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <h3 className="admin-section-title">
+                    <h3 className="text-base font-semibold text-grey-900">
                       Unntak (ferie, sykdom, blokkeringer)
                     </h3>
-                    <p className="text-xs text-[var(--color-muted)] mt-0.5">
+                    <p className="text-xs text-grey-500 mt-0.5">
                       {selectedInstructorData?.name ?? "Instruktør"} —{" "}
                       {blockedRows.length} kommende
                     </p>
@@ -641,13 +641,13 @@ export default function TilgjengelighetPage() {
             {activeTab === "google" && (
               <AdminCard>
                 <div className="flex flex-col items-center text-center py-6">
-                  <div className="w-12 h-12 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center mb-3">
-                    <Calendar className="w-6 h-6 text-[var(--color-primary)]" />
+                  <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center mb-3">
+                    <Calendar className="w-6 h-6 text-primary-600" />
                   </div>
-                  <h3 className="text-base font-semibold text-[var(--color-text)]">
+                  <h3 className="text-base font-semibold text-grey-900">
                     Google Calendar-synk
                   </h3>
-                  <p className="text-sm text-[var(--color-muted)] mt-1 max-w-md">
+                  <p className="text-sm text-grey-600 mt-1 max-w-md">
                     Synkroniser hendelser fra Google Calendar til{" "}
                     {selectedInstructorData?.name ?? "instruktøren"} som
                     blokkerte tider.
@@ -666,7 +666,7 @@ export default function TilgjengelighetPage() {
                   {blockedTimes.filter(
                     (bt) => bt.source === "GOOGLE_CALENDAR",
                   ).length > 0 && (
-                    <p className="text-xs text-[var(--color-muted)] mt-4">
+                    <p className="text-xs text-grey-500 mt-4">
                       {
                         blockedTimes.filter(
                           (bt) => bt.source === "GOOGLE_CALENDAR",

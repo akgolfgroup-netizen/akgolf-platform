@@ -18,6 +18,7 @@ import {
 import { nb } from "date-fns/locale";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
 interface DatePickerProps {
   selected: Date | null;
@@ -65,84 +66,86 @@ export function BookingDatePicker({
   }
 
   return (
-    <div className="select-none">
-      {/* Month header */}
-      <div className="flex items-center justify-between mb-4">
-        <button
-          onClick={() => setCurrentMonth((m) => addMonths(m, -1))}
-          disabled={!canGoBack}
-          className="w-9 h-9 rounded-lg flex items-center justify-center text-muted hover:bg-grey-100 hover:text-text disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-          aria-label="Forrige måned"
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </button>
-        <h3 className="text-base font-semibold text-black capitalize">
-          {format(currentMonth, "MMMM yyyy", { locale: nb })}
-        </h3>
-        <button
-          onClick={() => setCurrentMonth((m) => addMonths(m, 1))}
-          disabled={!canGoForward}
-          className="w-9 h-9 rounded-lg flex items-center justify-center text-muted hover:bg-grey-100 hover:text-text disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-          aria-label="Neste måned"
-        >
-          <ChevronRight className="w-4 h-4" />
-        </button>
-      </div>
-
-      {/* Weekday headers */}
-      <div className="grid grid-cols-7 mb-1">
-        {WEEKDAYS.map((day) => (
-          <div
-            key={day}
-            className="text-center text-xs font-medium text-muted uppercase tracking-wider py-2"
+    <PremiumCard className="p-4">
+      <div className="select-none">
+        {/* Month header */}
+        <div className="flex items-center justify-between mb-4">
+          <button
+            onClick={() => setCurrentMonth((m) => addMonths(m, -1))}
+            disabled={!canGoBack}
+            className="w-9 h-9 rounded-lg flex items-center justify-center text-portal-muted hover:bg-portal-hover hover:text-portal-text disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            aria-label="Forrige måned"
           >
-            {day}
-          </div>
-        ))}
-      </div>
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <h3 className="text-base font-semibold text-portal-text capitalize">
+            {format(currentMonth, "MMMM yyyy", { locale: nb })}
+          </h3>
+          <button
+            onClick={() => setCurrentMonth((m) => addMonths(m, 1))}
+            disabled={!canGoForward}
+            className="w-9 h-9 rounded-lg flex items-center justify-center text-portal-muted hover:bg-portal-hover hover:text-portal-text disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            aria-label="Neste måned"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
 
-      {/* Calendar grid */}
-      <div className="grid grid-cols-7">
-        {calendarDays.map((date) => {
-          const inMonth = isSameMonth(date, currentMonth);
-          const disabled = isDisabled(date);
-          const isSelected = selected && isSameDay(date, selected);
-          const todayDate = isToday(date);
-
-          return (
-            <button
-              key={date.toISOString()}
-              onClick={() => !disabled && inMonth && onSelect(date)}
-              disabled={disabled || !inMonth}
-              className="relative aspect-square flex items-center justify-center text-sm transition-colors duration-150"
-              aria-label={format(date, "d. MMMM yyyy", { locale: nb })}
+        {/* Weekday headers */}
+        <div className="grid grid-cols-7 mb-1">
+          {WEEKDAYS.map((day) => (
+            <div
+              key={day}
+              className="text-center text-xs font-medium text-portal-muted uppercase tracking-wider py-2"
             >
-              {isSelected ? (
-                <motion.div
-                  layoutId="booking-date-selected"
-                  className="absolute inset-1 bg-primary rounded-lg"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
-                />
-              ) : null}
-              <span
-                className={[
-                  "relative z-10 w-full h-full flex items-center justify-center rounded-lg",
-                  isSelected
-                    ? "text-white font-semibold"
-                    : !inMonth
-                      ? "text-transparent cursor-default"
-                      : disabled
-                        ? "text-grey-300 cursor-not-allowed"
-                        : "text-text font-medium hover:bg-grey-100 cursor-pointer",
-                  todayDate && !isSelected && inMonth ? "ring-1 ring-primary/30" : "",
-                ].join(" ")}
+              {day}
+            </div>
+          ))}
+        </div>
+
+        {/* Calendar grid */}
+        <div className="grid grid-cols-7">
+          {calendarDays.map((date) => {
+            const inMonth = isSameMonth(date, currentMonth);
+            const disabled = isDisabled(date);
+            const isSelected = selected && isSameDay(date, selected);
+            const todayDate = isToday(date);
+
+            return (
+              <button
+                key={date.toISOString()}
+                onClick={() => !disabled && inMonth && onSelect(date)}
+                disabled={disabled || !inMonth}
+                className="relative aspect-square flex items-center justify-center text-sm transition-colors duration-150"
+                aria-label={format(date, "d. MMMM yyyy", { locale: nb })}
               >
-                {format(date, "d")}
-              </span>
-            </button>
-          );
-        })}
+                {isSelected ? (
+                  <motion.div
+                    layoutId="booking-date-selected"
+                    className="absolute inset-1 bg-primary rounded-lg"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                  />
+                ) : null}
+                <span
+                  className={[
+                    "relative z-10 w-full h-full flex items-center justify-center rounded-lg",
+                    isSelected
+                      ? "text-white font-semibold"
+                      : !inMonth
+                        ? "text-transparent cursor-default"
+                        : disabled
+                          ? "text-portal-muted cursor-not-allowed"
+                          : "text-portal-text font-medium hover:bg-portal-hover cursor-pointer",
+                    todayDate && !isSelected && inMonth ? "ring-1 ring-primary/30" : "",
+                  ].join(" ")}
+                >
+                  {format(date, "d")}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </PremiumCard>
   );
 }

@@ -26,10 +26,8 @@ import {
 } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminCard,
   AdminButton,
   AdminBadge,
-  AdminStatCard,
   AdminEmptyState,
   AdminAreaChart,
   AdminDonutChart,
@@ -181,8 +179,8 @@ export default function MissionBoardPage() {
         />
         <div className="flex items-center justify-center py-32">
           <div className="flex flex-col items-center gap-4">
-            <Loader2 className="w-10 h-10 text-[var(--color-primary)] animate-spin" />
-            <p className="text-[var(--color-muted)] font-medium">
+            <Loader2 className="w-10 h-10 text-grey-600 animate-spin" />
+            <p className="text-grey-500 font-medium">
               Laster Mission Board...
             </p>
           </div>
@@ -201,7 +199,7 @@ export default function MissionBoardPage() {
         />
         <div className="flex items-center justify-center p-6 py-32">
           <AdminEmptyState
-            icon={<AlertCircle className="w-6 h-6 text-[var(--color-error)]" />}
+            icon={<AlertCircle className="w-6 h-6 text-red-500" />}
             title="Kunne ikke laste data"
             description={error}
             action={
@@ -230,7 +228,7 @@ export default function MissionBoardPage() {
   const sparkStudents = charts?.sparkStudents ?? [];
   const sparkActive = sparkBookings; // Bruker booking-sparkline som proxy
 
-  const heatmapRows = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
+  const heatmapRows = ["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"];
   const heatmapCols = ["08", "10", "12", "14", "16", "18", "20"];
   const heatmapData: AdminHeatmapCell[] = charts?.heatmap ?? [];
 
@@ -242,10 +240,10 @@ export default function MissionBoardPage() {
     date: b.time,
     color:
       b.status.toLowerCase() === "confirmed" || b.status.toLowerCase() === "completed"
-        ? "var(--color-success)"
+        ? "#22c55e"
         : b.status.toLowerCase() === "pending"
-          ? "var(--color-warning)"
-          : "var(--color-primary)",
+          ? "#f59e0b"
+          : "#16a34a",
   }));
 
   const monthlyGoal = charts?.monthlyGoal ?? 240;
@@ -289,9 +287,9 @@ export default function MissionBoardPage() {
       <div className="p-6 space-y-6">
         {/* Last Updated */}
         <div className="flex items-center justify-end">
-          <div className="flex items-center gap-2 px-4 py-2 admin-card-sm">
-            <div className="w-2 h-2 bg-[var(--color-success)] rounded-full animate-pulse" />
-            <span className="text-sm text-[var(--color-muted)]">
+          <div className="flex items-center gap-2 px-4 py-2 bg-grey-100 rounded-lg">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            <span className="text-sm text-grey-500">
               Sist oppdatert:{" "}
               {lastUpdated.toLocaleTimeString("nb-NO", {
                 hour: "2-digit",
@@ -302,11 +300,11 @@ export default function MissionBoardPage() {
               type="button"
               onClick={fetchDashboardData}
               disabled={loading}
-              className="ml-2 p-1.5 hover:bg-[var(--color-grey-100)] rounded-lg transition-colors disabled:opacity-50"
+              className="ml-2 p-1.5 hover:bg-grey-200 rounded-lg transition-colors disabled:opacity-50"
               aria-label="Oppdater"
             >
               <RefreshCw
-                className={`w-4 h-4 text-[var(--color-primary)] ${loading ? "animate-spin" : ""}`}
+                className={`w-4 h-4 text-grey-600 ${loading ? "animate-spin" : ""}`}
               />
             </button>
           </div>
@@ -345,30 +343,30 @@ export default function MissionBoardPage() {
             variants={itemVariants}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
           >
-            <AdminCard>
+            <div className="bg-white rounded-xl shadow-card p-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
-                  <p className="admin-label">Okter i dag</p>
-                  <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                  <p className="text-sm font-medium text-grey-500">Okter i dag</p>
+                  <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
                     {stats.today.totalBookings}
                   </p>
                 </div>
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-600">
                   <Calendar className="w-5 h-5" />
                 </div>
               </div>
               <AdminSparkline data={sparkBookings} width="100%" height={32} />
-            </AdminCard>
+            </div>
 
-            <AdminCard>
+            <div className="bg-white rounded-xl shadow-card p-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
-                  <p className="admin-label">Aktive okter</p>
-                  <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                  <p className="text-sm font-medium text-grey-500">Aktive okter</p>
+                  <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
                     {stats.today.activeSessions}
                   </p>
                 </div>
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-600">
                   <Activity className="w-5 h-5" />
                 </div>
               </div>
@@ -376,19 +374,19 @@ export default function MissionBoardPage() {
                 data={sparkActive}
                 width="100%"
                 height={32}
-                color="var(--color-success)"
+                color="#22c55e"
               />
-            </AdminCard>
+            </div>
 
-            <AdminCard>
+            <div className="bg-white rounded-xl shadow-card p-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
-                  <p className="admin-label">Nye elever (uke)</p>
-                  <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                  <p className="text-sm font-medium text-grey-500">Nye elever (uke)</p>
+                  <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
                     {stats.week.newStudents}
                   </p>
                 </div>
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-600">
                   <Users className="w-5 h-5" />
                 </div>
               </div>
@@ -396,19 +394,19 @@ export default function MissionBoardPage() {
                 data={sparkStudents}
                 width="100%"
                 height={32}
-                color="var(--color-accent-cta)"
+                color="#16a34a"
               />
-            </AdminCard>
+            </div>
 
-            <AdminCard>
+            <div className="bg-white rounded-xl shadow-card p-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
-                  <p className="admin-label">Omsetning (uke)</p>
-                  <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                  <p className="text-sm font-medium text-grey-500">Omsetning (uke)</p>
+                  <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
                     {`${stats.week.revenue.toLocaleString("nb-NO")} kr`}
                   </p>
                 </div>
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-600">
                   <DollarSign className="w-5 h-5" />
                 </div>
               </div>
@@ -416,9 +414,9 @@ export default function MissionBoardPage() {
                 data={sparkRevenue}
                 width="100%"
                 height={32}
-                color="var(--color-primary)"
+                color="#16a34a"
               />
-            </AdminCard>
+            </div>
           </motion.div>
 
           {/* Charts — trend + fordeling + manedsmal */}
@@ -426,16 +424,16 @@ export default function MissionBoardPage() {
             variants={itemVariants}
             className="grid grid-cols-1 lg:grid-cols-3 gap-6"
           >
-            <AdminCard className="lg:col-span-2">
+            <div className="bg-white rounded-xl shadow-card p-5 lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="admin-section-title">Bookinger siste 30 dager</h3>
+                <h3 className="text-base font-semibold text-grey-900">Bookinger siste 30 dager</h3>
                 <AdminBadge variant="info">Trend</AdminBadge>
               </div>
               <AdminAreaChart data={bookingTrendData} height={240} />
-            </AdminCard>
+            </div>
 
-            <AdminCard>
-              <h3 className="admin-section-title mb-4">Manedlig mal</h3>
+            <div className="bg-white rounded-xl shadow-card p-5">
+              <h3 className="text-base font-semibold text-grey-900 mb-4">Manedlig mal</h3>
               <div className="flex flex-col items-center justify-center py-4">
                 <AdminProgressRing
                   value={monthlyCurrent}
@@ -445,7 +443,7 @@ export default function MissionBoardPage() {
                   label={`${monthlyCurrent} / ${monthlyGoal} okter`}
                 />
               </div>
-            </AdminCard>
+            </div>
           </motion.div>
 
           {/* Heatmap + Donut */}
@@ -453,10 +451,10 @@ export default function MissionBoardPage() {
             variants={itemVariants}
             className="grid grid-cols-1 lg:grid-cols-2 gap-6"
           >
-            <AdminCard>
+            <div className="bg-white rounded-xl shadow-card p-5">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="admin-section-title">Aktivitet denne uken</h3>
-                <span className="text-xs text-[var(--color-muted)]">Dag x time</span>
+                <h3 className="text-base font-semibold text-grey-900">Aktivitet denne uken</h3>
+                <span className="text-xs text-grey-500">Dag x time</span>
               </div>
               <div className="overflow-x-auto">
                 <AdminHeatmap
@@ -467,32 +465,32 @@ export default function MissionBoardPage() {
                   formatTooltip={(c) => `${c.row} kl. ${c.col}:00 — ${c.value} okter`}
                 />
               </div>
-            </AdminCard>
+            </div>
 
-            <AdminCard>
-              <h3 className="admin-section-title mb-4">Fordeling per tjeneste</h3>
+            <div className="bg-white rounded-xl shadow-card p-5">
+              <h3 className="text-base font-semibold text-grey-900 mb-4">Fordeling per tjeneste</h3>
               <AdminDonutChart
                 data={bookingDistribution}
                 height={240}
                 centerLabel="Denne uken"
                 centerValue={bookingDistribution.reduce((s, d) => s + d.value, 0)}
               />
-            </AdminCard>
+            </div>
           </motion.div>
 
           {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Today's Schedule */}
             <motion.div variants={itemVariants} className="lg:col-span-2">
-              <AdminCard className="p-0 overflow-hidden">
-                <div className="px-6 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
+              <div className="bg-white rounded-xl shadow-card overflow-hidden">
+                <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-[var(--color-primary)]" />
-                    <h2 className="admin-section-title">Dagens timeplan</h2>
+                    <Clock className="w-5 h-5 text-green-600" />
+                    <h2 className="text-base font-semibold text-grey-900">Dagens timeplan</h2>
                   </div>
                   <Link
                     href="/admin/kalender"
-                    className="text-sm text-[var(--color-primary)] hover:opacity-80 font-medium flex items-center gap-1.5 transition-opacity"
+                    className="text-sm text-green-600 hover:text-green-700 font-medium flex items-center gap-1.5 transition-colors"
                   >
                     Se kalender
                     <ArrowRight className="w-4 h-4" />
@@ -500,7 +498,7 @@ export default function MissionBoardPage() {
                 </div>
 
                 {stats.todaysSchedule.length > 0 ? (
-                  <div className="divide-y divide-[var(--color-grey-100)]">
+                  <div className="divide-y divide-grey-100">
                     {stats.todaysSchedule.map((booking, index) => (
                       <motion.div
                         key={booking.id}
@@ -508,63 +506,63 @@ export default function MissionBoardPage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.05 }}
                         onClick={() => router.push(`/admin/bookinger?date=${new Date().toISOString().slice(0, 10)}`)}
-                        className="px-6 py-4 hover:bg-[var(--color-grey-50)] transition-colors group cursor-pointer"
+                        className="px-6 py-4 hover:bg-grey-50 transition-colors group cursor-pointer"
                       >
                         <div className="flex items-center gap-5">
                           <div className="text-center min-w-[60px]">
-                            <p className="text-lg font-bold text-[var(--color-text)] tabular-nums">
+                            <p className="text-lg font-bold text-grey-900 tabular-nums">
                               {booking.time}
                             </p>
                           </div>
 
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-1">
-                              <p className="font-semibold text-[var(--color-text)]">
+                              <p className="font-semibold text-grey-900">
                                 {booking.studentName}
                               </p>
                               <StatusBadge status={booking.status} />
                             </div>
-                            <p className="text-sm text-[var(--color-muted)]">
+                            <p className="text-sm text-grey-500">
                               {booking.service}
                             </p>
                           </div>
 
                           <div className="text-right">
-                            <p className="text-sm text-[var(--color-muted)]">
+                            <p className="text-sm text-grey-500">
                               {booking.instructor}
                             </p>
                           </div>
 
-                          <ArrowRight className="w-5 h-5 text-[var(--color-grey-300)] group-hover:text-[var(--color-primary)] transition-colors" />
+                          <ArrowRight className="w-5 h-5 text-grey-300 group-hover:text-green-600 transition-colors" />
                         </div>
                       </motion.div>
                     ))}
                   </div>
                 ) : (
                   <div className="px-6 py-12 text-center">
-                    <Calendar className="w-12 h-12 text-[var(--color-muted)] mx-auto mb-4 opacity-50" />
-                    <p className="text-[var(--color-muted)]">
+                    <Calendar className="w-12 h-12 text-grey-400 mx-auto mb-4" />
+                    <p className="text-grey-500">
                       Ingen bookinger i dag
                     </p>
                   </div>
                 )}
-              </AdminCard>
+              </div>
             </motion.div>
 
             {/* Sidebar */}
             <div className="space-y-6">
               {/* AI Insights Card */}
               <motion.div variants={itemVariants}>
-                <AdminCard className="relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-ai)]/5 rounded-full blur-3xl" />
+                <div className="bg-white rounded-xl shadow-card relative overflow-hidden p-5">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl" />
 
                   <div className="relative z-10">
                     <div className="flex items-center gap-2 mb-4">
-                      <Sparkles className="w-5 h-5 text-[var(--color-ai)]" />
-                      <h3 className="admin-section-title">AI-innsikt</h3>
+                      <Sparkles className="w-5 h-5 text-purple-500" />
+                      <h3 className="text-base font-semibold text-grey-900">AI-innsikt</h3>
                     </div>
 
-                    <p className="text-sm text-[var(--color-muted)] mb-4 leading-relaxed">
+                    <p className="text-sm text-grey-500 mb-4 leading-relaxed">
                       Basert pa monsteret denne uken, anbefales det a legge
                       til en ekstra &quot;Quick Fix&quot;-slot pa fredag
                       ettermiddag. Etterspurselen er hoy.
@@ -573,23 +571,23 @@ export default function MissionBoardPage() {
                     <button
                       type="button"
                       onClick={() => router.push("/admin/analytics")}
-                      className="w-full py-2.5 bg-[var(--color-ai)]/10 hover:bg-[var(--color-ai)]/20 border border-[var(--color-ai)]/30 text-[var(--color-ai)] rounded-lg text-sm font-semibold transition-colors"
+                      className="w-full py-2.5 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-600 rounded-lg text-sm font-semibold transition-colors"
                     >
                       Se detaljert analyse
                     </button>
                   </div>
-                </AdminCard>
+                </div>
               </motion.div>
 
               {/* Alerts */}
               <motion.div variants={itemVariants}>
-                <AdminCard className="p-0 overflow-hidden">
-                  <div className="px-6 py-4 border-b border-[var(--color-grey-200)]">
+                <div className="bg-white rounded-xl shadow-card overflow-hidden">
+                  <div className="px-6 py-4 border-b border-grey-200">
                     <div className="flex items-center gap-2">
-                      <Bell className="w-5 h-5 text-[var(--color-primary)]" />
-                      <h3 className="admin-section-title">Varsler</h3>
+                      <Bell className="w-5 h-5 text-green-600" />
+                      <h3 className="text-base font-semibold text-grey-900">Varsler</h3>
                       {stats.alerts.length > 0 && (
-                        <span className="ml-auto px-2.5 py-0.5 bg-[var(--color-accent-cta)] text-[var(--color-primary)] text-xs font-bold rounded-full">
+                        <span className="ml-auto px-2.5 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-full">
                           {stats.alerts.length}
                         </span>
                       )}
@@ -597,26 +595,26 @@ export default function MissionBoardPage() {
                   </div>
 
                   {stats.alerts.length > 0 ? (
-                    <div className="divide-y divide-[var(--color-grey-100)]">
+                    <div className="divide-y divide-grey-100">
                       {stats.alerts.map((alert, index) => (
                         <div
                           key={index}
-                          className="px-6 py-4 flex items-start gap-3 hover:bg-[var(--color-grey-50)] transition-colors"
+                          className="px-6 py-4 flex items-start gap-3 hover:bg-grey-50 transition-colors"
                         >
                           <div
                             className={`w-2 h-2 rounded-full mt-2 ${
                               alert.type === "warning"
-                                ? "bg-[var(--color-warning)]"
+                                ? "bg-amber-500"
                                 : alert.type === "success"
-                                  ? "bg-[var(--color-success)]"
-                                  : "bg-[var(--color-primary)]"
+                                  ? "bg-green-500"
+                                  : "bg-green-600"
                             }`}
                           />
                           <div className="flex-1">
-                            <p className="text-sm text-[var(--color-text)]">
+                            <p className="text-sm text-grey-900">
                               {alert.message}
                             </p>
-                            <p className="text-xs text-[var(--color-muted)] mt-1">
+                            <p className="text-xs text-grey-500 mt-1">
                               {alert.time}
                             </p>
                           </div>
@@ -625,63 +623,63 @@ export default function MissionBoardPage() {
                     </div>
                   ) : (
                     <div className="px-6 py-8 text-center">
-                      <CheckCircle className="w-10 h-10 text-[var(--color-success)] mx-auto mb-3 opacity-30" />
-                      <p className="text-sm text-[var(--color-muted)]">
+                      <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-3 opacity-50" />
+                      <p className="text-sm text-grey-500">
                         Ingen aktive varsler
                       </p>
                     </div>
                   )}
-                </AdminCard>
+                </div>
               </motion.div>
 
               {/* Timeline — dagens aktivitet */}
               {timelineItems.length > 0 && (
                 <motion.div variants={itemVariants}>
-                  <AdminCard>
-                    <h3 className="admin-section-title mb-4 flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-[var(--color-primary)]" />
+                  <div className="bg-white rounded-xl shadow-card p-5">
+                    <h3 className="text-base font-semibold text-grey-900 mb-4 flex items-center gap-2">
+                      <Clock className="w-5 h-5 text-green-600" />
                       Dagens aktivitet
                     </h3>
                     <AdminTimeline items={timelineItems} />
-                  </AdminCard>
+                  </div>
                 </motion.div>
               )}
 
               {/* Weekly Summary */}
               <motion.div variants={itemVariants}>
-                <AdminCard>
-                  <h3 className="admin-section-title mb-4 flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-[var(--color-primary)]" />
+                <div className="bg-white rounded-xl shadow-card p-5">
+                  <h3 className="text-base font-semibold text-grey-900 mb-4 flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-green-600" />
                     Denne uken
                   </h3>
 
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-[var(--color-muted)]">
+                      <span className="text-sm text-grey-500">
                         Totale bookinger
                       </span>
-                      <span className="font-semibold text-[var(--color-text)] tabular-nums">
+                      <span className="font-semibold text-grey-900 tabular-nums">
                         {stats.week.totalBookings}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-[var(--color-muted)]">
+                      <span className="text-sm text-grey-500">
                         Omsetning
                       </span>
-                      <span className="font-semibold text-[var(--color-primary)] tabular-nums">
+                      <span className="font-semibold text-green-600 tabular-nums">
                         {stats.week.revenue.toLocaleString("nb-NO")} kr
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-[var(--color-muted)]">
+                      <span className="text-sm text-grey-500">
                         Retention
                       </span>
-                      <span className="font-semibold text-[var(--color-text)] tabular-nums">
+                      <span className="font-semibold text-grey-900 tabular-nums">
                         {stats.week.retention}%
                       </span>
                     </div>
                   </div>
-                </AdminCard>
+                </div>
               </motion.div>
             </div>
           </div>

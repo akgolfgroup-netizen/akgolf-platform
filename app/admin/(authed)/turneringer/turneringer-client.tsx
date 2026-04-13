@@ -87,7 +87,7 @@ function NyTurneringModal({ open, onClose, onCreated }: NyTurneringModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <AdminCard className="w-full max-w-lg">
-        <h2 className="text-lg font-semibold text-[var(--color-text)] mb-4">
+        <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-4">
           Ny turnering
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -176,20 +176,20 @@ const STATUS_CONFIG: Record<
   ongoing: {
     label: "Pågående",
     variant: "info",
-    iconWrapClass: "bg-[var(--color-primary)]/10",
-    iconClass: "text-[var(--color-primary)]",
+    iconWrapClass: "bg-[var(--color-grey-100)]",
+    iconClass: "text-[var(--color-grey-700)]",
   },
   upcoming: {
     label: "Kommende",
     variant: "success",
-    iconWrapClass: "bg-[var(--color-success)]/10",
-    iconClass: "text-[var(--color-success)]",
+    iconWrapClass: "bg-[var(--color-grey-100)]",
+    iconClass: "text-[var(--color-grey-600)]",
   },
   completed: {
     label: "Fullført",
     variant: "muted",
     iconWrapClass: "bg-[var(--color-grey-100)]",
-    iconClass: "text-[var(--color-muted)]",
+    iconClass: "text-[var(--color-grey-400)]",
   },
 };
 
@@ -293,8 +293,8 @@ export function TurneringerClient({
                 className={cn(
                   "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
                   filter === f.id
-                    ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                    : "bg-white border-[var(--color-grey-200)] text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
+                    ? "bg-[var(--color-grey-800)] text-white border-[var(--color-grey-800)]"
+                    : "bg-white border-[var(--color-grey-200)] text-[var(--color-grey-700)] hover:bg-[var(--color-grey-100)]",
                 )}
               >
                 {f.label}
@@ -338,7 +338,7 @@ export function TurneringerClient({
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <h3 className="font-semibold text-[var(--color-text)]">
+                          <h3 className="font-semibold text-[var(--color-grey-900)]">
                             {tournament.name}
                           </h3>
                           <AdminBadge variant={config.variant}>
@@ -350,7 +350,7 @@ export function TurneringerClient({
                             </AdminBadge>
                           )}
                         </div>
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--color-muted)]">
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--color-grey-500)]">
                           <span className="flex items-center gap-1">
                             <Calendar className="w-3.5 h-3.5" />
                             {format(new Date(tournament.startDate), "d. MMM", {

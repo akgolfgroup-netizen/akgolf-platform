@@ -15,7 +15,6 @@ import {
   HGAlert,
 } from "@/components/portal/mission-control";
 import {
-  AdminCard,
   AdminStatCard,
   AdminBadge,
   AdminGauge,
@@ -245,8 +244,10 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
 
         {/* Hero — total utnyttelse + trend */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <AdminCard>
-            <h3 className="admin-section-title mb-4">Total utnyttelse</h3>
+          <div className="bg-white rounded-xl shadow-card p-6">
+            <h3 className="text-lg font-semibold text-grey-900 mb-4">
+              Total utnyttelse
+            </h3>
             <div className="flex flex-col items-center gap-3">
               <AdminProgressRing
                 value={occupancyPct}
@@ -255,16 +256,18 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                 label="denne uken"
               />
               <div className="text-center">
-                <p className="text-xs text-[var(--color-muted)]">
+                <p className="text-xs text-grey-500">
                   {weeklyTotal.booked} av {weeklyTotal.slots} sloter
                 </p>
               </div>
             </div>
-          </AdminCard>
+          </div>
 
-          <AdminCard className="lg:col-span-2">
+          <div className="bg-white rounded-xl shadow-card p-6 lg:col-span-2">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="admin-section-title">Kapasitetstrend</h3>
+              <h3 className="text-lg font-semibold text-grey-900">
+                Kapasitetstrend
+              </h3>
               <AdminBadge variant="info">Siste 6 uker</AdminBadge>
             </div>
             <AdminAreaChart
@@ -272,14 +275,16 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
               height={200}
               valueLabel="Utnyttelse %"
             />
-          </AdminCard>
+          </div>
         </div>
 
         {/* Coach Gauges */}
-        <AdminCard>
-          <h3 className="admin-section-title mb-4">Kapasitet per coach</h3>
+        <div className="bg-white rounded-xl shadow-card p-6">
+          <h3 className="text-lg font-semibold text-grey-900 mb-4">
+            Kapasitet per coach
+          </h3>
           {coaches.length === 0 ? (
-            <p className="text-sm text-[var(--color-muted)] py-4 text-center">
+            <p className="text-sm text-grey-500 py-4 text-center">
               Ingen coacher å vise.
             </p>
           ) : (
@@ -289,7 +294,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                 return (
                   <div
                     key={coach.id}
-                    className="flex flex-col items-center p-4 rounded-lg bg-[var(--color-grey-100)]"
+                    className="flex flex-col items-center p-4 rounded-lg bg-grey-100"
                   >
                     <AdminGauge
                       value={coachPct}
@@ -298,10 +303,10 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                       label={coach.name}
                     />
                     <div className="mt-2 text-center">
-                      <p className="text-xs text-[var(--color-muted)]">
+                      <p className="text-xs text-grey-500">
                         {coach.bookedSlots} av {coach.weeklySlots} sloter
                       </p>
-                      <p className="text-xs text-[var(--color-muted)]">
+                      <p className="text-xs text-grey-500">
                         {formatKr(coach.weeklyRevenue)} inntekt
                       </p>
                     </div>
@@ -310,23 +315,27 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
               })}
             </div>
           )}
-        </AdminCard>
+        </div>
 
         {/* Ukesutnyttelse + belegg heatmap */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <AdminCard>
-            <h3 className="admin-section-title mb-4">Ukesutnyttelse</h3>
+          <div className="bg-white rounded-xl shadow-card p-6">
+            <h3 className="text-lg font-semibold text-grey-900 mb-4">
+              Ukesutnyttelse
+            </h3>
             <AdminBarChart
               data={weekBarData}
               height={240}
               valueLabel="Utnyttelse %"
             />
-          </AdminCard>
+          </div>
 
-          <AdminCard>
-            <h3 className="admin-section-title mb-4">Belegg per coach og dag</h3>
+          <div className="bg-white rounded-xl shadow-card p-6">
+            <h3 className="text-lg font-semibold text-grey-900 mb-4">
+              Belegg per coach og dag
+            </h3>
             {heatmapRows.length === 0 ? (
-              <p className="text-sm text-[var(--color-muted)] py-4 text-center">
+              <p className="text-sm text-grey-500 py-4 text-center">
                 Ingen data å vise.
               </p>
             ) : (
@@ -336,18 +345,21 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                   rows={heatmapRows}
                   cols={heatmapCols}
                   cellSize={32}
+                  color="var(--color-grey-600)"
                   formatTooltip={(cell) =>
                     `${cell.row} ${cell.col}: ${cell.value}% belegg`
                   }
                 />
               </div>
             )}
-          </AdminCard>
+          </div>
         </div>
 
         {/* Detail table */}
         <div>
-          <h3 className="admin-section-title mb-3">Detaljer per coach</h3>
+          <h3 className="text-lg font-semibold text-grey-900 mb-3">
+            Detaljer per coach
+          </h3>
           <AdminDataTable
             columns={coachColumns}
             data={coachRows}
@@ -358,32 +370,34 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
         </div>
 
         {/* Empty slots */}
-        <AdminCard>
-          <h3 className="admin-section-title mb-4">Ledige sloter</h3>
-          <p className="text-xs text-[var(--color-muted)] mb-3">
+        <div className="bg-white rounded-xl shadow-card p-6">
+          <h3 className="text-lg font-semibold text-grey-900 mb-4">
+            Ledige sloter
+          </h3>
+          <p className="text-xs text-grey-500 mb-3">
             Ledige tider denne uken som kan fylles
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {emptySlotsList.length === 0 ? (
-              <p className="text-sm text-[var(--color-muted)] py-4 text-center col-span-full">
+              <p className="text-sm text-grey-500 py-4 text-center col-span-full">
                 Ingen ledige sloter denne uken
               </p>
             ) : (
               emptySlotsList.slice(0, 9).map((slot, i) => (
                 <div
                   key={i}
-                  className="p-3 bg-[var(--color-grey-100)] rounded-lg flex items-center justify-between hover:bg-[var(--color-grey-200)] transition-colors cursor-pointer"
+                  className="p-3 bg-grey-100 rounded-lg flex items-center justify-between hover:bg-grey-200 transition-colors cursor-pointer"
                 >
                   <div>
-                    <div className="text-sm font-medium text-[var(--color-text)] capitalize">
+                    <div className="text-sm font-medium text-grey-900 capitalize">
                       {slot.day}
                     </div>
-                    <div className="text-xs text-[var(--color-muted)]">
+                    <div className="text-xs text-grey-500">
                       {slot.coach} — {slot.free}{" "}
                       {slot.free === 1 ? "ledig slot" : "ledige sloter"}
                     </div>
                   </div>
-                  <span className="p-1.5 text-[var(--color-muted)]">
+                  <span className="p-1.5 text-grey-500">
                     <ChevronRight className="w-4 h-4" />
                   </span>
                 </div>
@@ -391,41 +405,43 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
             )}
           </div>
           {emptySlotsList.length > 9 && (
-            <p className="text-xs text-[var(--color-muted)] mt-2 text-center">
+            <p className="text-xs text-grey-500 mt-2 text-center">
               + {emptySlotsList.length - 9} flere
             </p>
           )}
-        </AdminCard>
+        </div>
 
         {/* AI Recommendations (statisk foreløpig) */}
-        <AdminCard>
+        <div className="bg-white rounded-xl shadow-card p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="w-5 h-5 text-[var(--color-ai)]" />
-            <h3 className="admin-section-title">AI-anbefalinger</h3>
+            <Sparkles className="w-5 h-5 text-grey-600" />
+            <h3 className="text-lg font-semibold text-grey-900">
+              AI-anbefalinger
+            </h3>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {recommendations.map((rec) => (
               <div
                 key={rec.title}
-                className="p-4 bg-[var(--color-grey-100)] rounded-lg border border-[var(--color-grey-200)] hover:border-[var(--color-primary)]/40 transition-colors"
+                className="p-4 bg-grey-100 rounded-lg border border-grey-200 hover:border-grey-400 transition-colors"
               >
                 <div className="flex items-start justify-between mb-2 gap-2">
-                  <h4 className="text-sm font-semibold text-[var(--color-text)]">
+                  <h4 className="text-sm font-semibold text-grey-900">
                     {rec.title}
                   </h4>
                   <AdminBadge variant="success">
                     {rec.confidence}% sikkert
                   </AdminBadge>
                 </div>
-                <p className="text-xs text-[var(--color-muted)] mb-3 leading-relaxed">
+                <p className="text-xs text-grey-500 mb-3 leading-relaxed">
                   {rec.description}
                 </p>
-                <div className="flex items-center justify-between pt-3 border-t border-[var(--color-grey-200)]">
-                  <span className="text-sm font-bold text-[var(--color-primary)]">
+                <div className="flex items-center justify-between pt-3 border-t border-grey-200">
+                  <span className="text-sm font-bold text-grey-900">
                     {rec.impact}
                   </span>
                   <span
-                    className="text-xs text-[var(--color-muted)] cursor-not-allowed"
+                    className="text-xs text-grey-500 cursor-not-allowed"
                     title="Kommer snart"
                   >
                     Kommer snart
@@ -434,36 +450,34 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
               </div>
             ))}
           </div>
-        </AdminCard>
+        </div>
 
         {/* Monthly summary */}
-        <AdminCard>
-          <h3 className="admin-section-title mb-3">
+        <div className="bg-white rounded-xl shadow-card p-6">
+          <h3 className="text-lg font-semibold text-grey-900 mb-3">
             Denne måneden ({data.monthRange.from} – {data.monthRange.to})
           </h3>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <p className="text-xs text-[var(--color-muted)]">Inntekt</p>
-              <p className="text-lg font-bold text-[var(--color-text)] tabular-nums">
+              <p className="text-xs text-grey-500">Inntekt</p>
+              <p className="text-lg font-bold text-grey-900 tabular-nums">
                 {formatKr(data.monthlyTotal.revenue)}
               </p>
             </div>
             <div>
-              <p className="text-xs text-[var(--color-muted)]">
-                Maks potensiell
-              </p>
-              <p className="text-lg font-bold text-[var(--color-text)] tabular-nums">
+              <p className="text-xs text-grey-500">Maks potensiell</p>
+              <p className="text-lg font-bold text-grey-900 tabular-nums">
                 {formatKr(data.monthlyTotal.maxRevenue)}
               </p>
             </div>
             <div>
-              <p className="text-xs text-[var(--color-muted)]">Bookinger</p>
-              <p className="text-lg font-bold text-[var(--color-text)] tabular-nums">
+              <p className="text-xs text-grey-500">Bookinger</p>
+              <p className="text-lg font-bold text-grey-900 tabular-nums">
                 {data.monthlyTotal.bookedCount}
               </p>
             </div>
           </div>
-        </AdminCard>
+        </div>
       </div>
     </>
   );

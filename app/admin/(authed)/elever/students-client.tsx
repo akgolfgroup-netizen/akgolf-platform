@@ -171,14 +171,14 @@ export function StudentsClient({ initialData }: Props) {
           }}
           className="flex items-center gap-3 group text-left"
         >
-          <div className="w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center text-xs font-semibold">
+          <div className="w-9 h-9 rounded-full bg-grey-100 text-grey-700 flex items-center justify-center text-xs font-semibold border border-grey-200">
             {getInitials(row.name)}
           </div>
           <div className="min-w-0">
-            <div className="font-medium text-[var(--color-text)] group-hover:text-[var(--color-primary)] transition-colors">
+            <div className="font-medium text-grey-900 group-hover:text-grey-700 transition-colors">
               {row.name ?? "Uten navn"}
             </div>
-            <div className="text-xs text-[var(--color-muted)] truncate">
+            <div className="text-xs text-grey-500 truncate">
               {row.email}
             </div>
           </div>
@@ -214,7 +214,7 @@ export function StudentsClient({ initialData }: Props) {
       sortable: true,
       align: "right",
       render: (row) => (
-        <span className="tabular-nums text-[var(--color-text)]">
+        <span className="tabular-nums text-grey-900">
           {row.handicap !== null ? row.handicap.toFixed(1) : "—"}
         </span>
       ),
@@ -225,7 +225,7 @@ export function StudentsClient({ initialData }: Props) {
       sortable: true,
       align: "center",
       render: (row) => (
-        <span className="tabular-nums font-semibold text-[var(--color-text)]">
+        <span className="tabular-nums font-semibold text-grey-900">
           {row.category ?? "—"}
         </span>
       ),
@@ -236,7 +236,7 @@ export function StudentsClient({ initialData }: Props) {
       sortable: true,
       align: "right",
       render: (row) => (
-        <span className="tabular-nums text-[var(--color-text)]">
+        <span className="tabular-nums text-grey-900">
           {row.sessionsThisMonth}
         </span>
       ),
@@ -246,7 +246,7 @@ export function StudentsClient({ initialData }: Props) {
       label: "Sist aktiv",
       sortable: true,
       render: (row) => (
-        <span className="text-sm text-[var(--color-muted)]">
+        <span className="text-sm text-grey-500">
           {formatRelativeDate(row.lastActiveAt)}
         </span>
       ),
@@ -257,11 +257,11 @@ export function StudentsClient({ initialData }: Props) {
       sortable: false,
       render: (row) =>
         row.nextBookingDate ? (
-          <span className="text-sm text-[var(--color-text)]">
+          <span className="text-sm text-grey-700">
             {formatFutureDate(row.nextBookingDate)}
           </span>
         ) : (
-          <span className="text-[var(--color-muted)]">—</span>
+          <span className="text-grey-400">—</span>
         ),
     },
     {
@@ -271,9 +271,9 @@ export function StudentsClient({ initialData }: Props) {
       align: "center",
       render: (row) =>
         row.hasActivePlan ? (
-          <CheckCircle className="w-4 h-4 text-[var(--color-success)] mx-auto" />
+          <CheckCircle className="w-4 h-4 text-green-600 mx-auto" />
         ) : (
-          <XCircle className="w-4 h-4 text-[var(--color-grey-300)] mx-auto" />
+          <XCircle className="w-4 h-4 text-grey-300 mx-auto" />
         ),
     },
   ];
@@ -365,11 +365,11 @@ export function StudentsClient({ initialData }: Props) {
           />
         </div>
 
-        {/* Filter-chips */}
-        <AdminCard>
+        {/* Filter-chips - bg-white rounded-xl shadow-card pattern */}
+        <div className="bg-white rounded-xl shadow-card p-5">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-[var(--color-muted)] mr-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-grey-500 mr-2">
                 Status
               </span>
               {(
@@ -386,8 +386,8 @@ export function StudentsClient({ initialData }: Props) {
                   onClick={() => setStatusFilter(f.value)}
                   className={
                     statusFilter === f.value
-                      ? "px-3 py-1 text-xs font-medium rounded-full bg-[var(--color-primary)] text-white"
-                      : "px-3 py-1 text-xs font-medium rounded-full bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
+                      ? "px-3 py-1 text-xs font-medium rounded-full bg-grey-900 text-grey-50"
+                      : "px-3 py-1 text-xs font-medium rounded-full bg-grey-100 text-grey-600 hover:text-grey-800 hover:bg-grey-200 transition-colors"
                   }
                 >
                   {f.label}
@@ -395,7 +395,7 @@ export function StudentsClient({ initialData }: Props) {
               ))}
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-[var(--color-muted)] mr-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-grey-500 mr-2">
                 Medlemskap
               </span>
               <button
@@ -403,8 +403,8 @@ export function StudentsClient({ initialData }: Props) {
                 onClick={() => setTierFilter("all")}
                 className={
                   tierFilter === "all"
-                    ? "px-3 py-1 text-xs font-medium rounded-full bg-[var(--color-primary)] text-white"
-                    : "px-3 py-1 text-xs font-medium rounded-full bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
+                    ? "px-3 py-1 text-xs font-medium rounded-full bg-grey-900 text-grey-50"
+                    : "px-3 py-1 text-xs font-medium rounded-full bg-grey-100 text-grey-600 hover:text-grey-800 hover:bg-grey-200 transition-colors"
                 }
               >
                 Alle
@@ -416,8 +416,8 @@ export function StudentsClient({ initialData }: Props) {
                   onClick={() => setTierFilter(tier)}
                   className={
                     tierFilter === tier
-                      ? "px-3 py-1 text-xs font-medium rounded-full bg-[var(--color-primary)] text-white"
-                      : "px-3 py-1 text-xs font-medium rounded-full bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
+                      ? "px-3 py-1 text-xs font-medium rounded-full bg-grey-900 text-grey-50"
+                      : "px-3 py-1 text-xs font-medium rounded-full bg-grey-100 text-grey-600 hover:text-grey-800 hover:bg-grey-200 transition-colors"
                   }
                 >
                   {TIER_LABEL[tier] ?? tier}
@@ -425,19 +425,21 @@ export function StudentsClient({ initialData }: Props) {
               ))}
             </div>
           </div>
-        </AdminCard>
+        </div>
 
-        {/* DataTable */}
-        <AdminDataTable<StudentRow>
-          columns={columns}
-          data={filtered}
-          searchable
-          searchPlaceholder="Sok etter navn eller e-post..."
-          pagination={{ pageSize: 20 }}
-          bulkActions={bulkActions}
-          emptyMessage="Ingen elever funnet. Prov a justere filter."
-          onRowClick={(row) => setPreviewStudent(row)}
-        />
+        {/* DataTable - bg-white rounded-xl shadow-card wrapper */}
+        <div className="bg-white rounded-xl shadow-card overflow-hidden">
+          <AdminDataTable<StudentRow>
+            columns={columns}
+            data={filtered}
+            searchable
+            searchPlaceholder="Sok etter navn eller e-post..."
+            pagination={{ pageSize: 20 }}
+            bulkActions={bulkActions}
+            emptyMessage="Ingen elever funnet. Prov a justere filter."
+            onRowClick={(row) => setPreviewStudent(row)}
+          />
+        </div>
       </div>
 
       {/* Drawer — hurtigvisning av elev */}
@@ -471,7 +473,7 @@ export function StudentsClient({ initialData }: Props) {
         {previewStudent && (
           <div className="space-y-5">
             <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center text-lg font-semibold">
+              <div className="w-14 h-14 rounded-full bg-grey-100 text-grey-700 flex items-center justify-center text-lg font-semibold border border-grey-200">
                 {getInitials(previewStudent.name)}
               </div>
               <div className="flex-1">
@@ -488,10 +490,10 @@ export function StudentsClient({ initialData }: Props) {
                     </AdminBadge>
                   )}
                 </div>
-                <div className="space-y-1 text-sm text-[var(--color-muted)]">
+                <div className="space-y-1 text-sm text-grey-500">
                   <a
                     href={`mailto:${previewStudent.email}`}
-                    className="flex items-center gap-1.5 hover:text-[var(--color-primary)]"
+                    className="flex items-center gap-1.5 hover:text-grey-800 transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5" />
                     {previewStudent.email}
@@ -499,7 +501,7 @@ export function StudentsClient({ initialData }: Props) {
                   {previewStudent.phone && (
                     <a
                       href={`tel:${previewStudent.phone}`}
-                      className="flex items-center gap-1.5 hover:text-[var(--color-primary)]"
+                      className="flex items-center gap-1.5 hover:text-grey-800 transition-colors"
                     >
                       <Phone className="w-3.5 h-3.5" />
                       {previewStudent.phone}
@@ -524,36 +526,36 @@ export function StudentsClient({ initialData }: Props) {
               />
             </div>
 
-            <AdminCard>
-              <h4 className="admin-section-title mb-2">Neste booking</h4>
+            <div className="bg-grey-50 rounded-lg p-4 border border-grey-100">
+              <h4 className="text-sm font-semibold text-grey-800 mb-2">Neste booking</h4>
               {previewStudent.nextBookingDate ? (
-                <div className="flex items-center gap-2 text-sm text-[var(--color-text)]">
-                  <Calendar className="w-4 h-4 text-[var(--color-primary)]" />
+                <div className="flex items-center gap-2 text-sm text-grey-700">
+                  <Calendar className="w-4 h-4 text-grey-500" />
                   {new Date(previewStudent.nextBookingDate).toLocaleDateString(
                     "nb-NO",
                     { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" },
                   )}
                 </div>
               ) : (
-                <p className="text-sm text-[var(--color-muted)]">
+                <p className="text-sm text-grey-500">
                   Ingen kommende bookinger.
                 </p>
               )}
-            </AdminCard>
+            </div>
 
-            <AdminCard>
-              <h4 className="admin-section-title mb-2">Treningsplan</h4>
+            <div className="bg-grey-50 rounded-lg p-4 border border-grey-100">
+              <h4 className="text-sm font-semibold text-grey-800 mb-2">Treningsplan</h4>
               {previewStudent.hasActivePlan ? (
-                <div className="flex items-center gap-2 text-sm text-[var(--color-success)]">
+                <div className="flex items-center gap-2 text-sm text-green-600">
                   <CheckCircle className="w-4 h-4" />
                   Aktiv treningsplan
                 </div>
               ) : (
-                <p className="text-sm text-[var(--color-muted)]">
+                <p className="text-sm text-grey-500">
                   Ingen aktiv treningsplan.
                 </p>
               )}
-            </AdminCard>
+            </div>
           </div>
         )}
       </AdminDrawer>

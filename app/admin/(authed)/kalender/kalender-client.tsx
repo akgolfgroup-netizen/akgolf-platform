@@ -21,7 +21,6 @@ import {
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminCard,
   AdminButton,
   AdminBadge,
   AdminSelect,
@@ -89,13 +88,13 @@ const viewTabs: AdminTabItem[] = [
 // — Status styles —
 const statusCellStyles: Record<string, string> = {
   PENDING:
-    "bg-[var(--color-warning)]/10 border-[var(--color-warning)]/40 text-[var(--color-warning)]",
+    "bg-grey-100 border-grey-300 text-grey-700",
   CONFIRMED:
-    "bg-[var(--color-primary)]/10 border-[var(--color-primary)]/30 text-[var(--color-primary)]",
+    "bg-grey-100 border-grey-300 text-grey-700",
   COMPLETED:
-    "bg-[var(--color-success)]/10 border-[var(--color-success)]/30 text-[var(--color-success)]",
+    "bg-grey-100 border-grey-300 text-grey-700",
   NO_SHOW:
-    "bg-[var(--color-error)]/10 border-[var(--color-error)]/30 text-[var(--color-error)]",
+    "bg-grey-100 border-grey-300 text-grey-700",
 };
 
 type StatusKey = "PENDING" | "CONFIRMED" | "COMPLETED" | "NO_SHOW";
@@ -113,8 +112,8 @@ const statusBadgeVariant: Record<
 const statusLabels: Record<string, string> = {
   PENDING: "Venter",
   CONFIRMED: "Bekreftet",
-  COMPLETED: "Fullfort",
-  NO_SHOW: "Ikke mott",
+  COMPLETED: "Fullført",
+  NO_SHOW: "Ikke møtt",
 };
 
 function isStatusKey(s: string): s is StatusKey {
@@ -209,7 +208,7 @@ export default function KalenderClient({
       await markNoShow(bookingId);
       toast({
         variant: "warning",
-        title: "Merket som ikke mott",
+        title: "Merket som ikke møtt",
         description: "Bookingen er oppdatert.",
       });
       fetchBookings(currentDate, viewMode, selectedInstructorId);
@@ -339,7 +338,7 @@ export default function KalenderClient({
     },
     {
       id: "no-show",
-      label: "Merk som ikke mott",
+      label: "Merk som ikke møtt",
       icon: <AlertTriangle className="w-4 h-4" />,
       variant: "danger" as const,
       disabled:
@@ -356,25 +355,25 @@ export default function KalenderClient({
         onMenuClick={toggle}
       />
 
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 bg-grey-50 min-h-screen">
         {/* Controls */}
-        <AdminCard compact>
+        <div className="bg-white rounded-xl shadow-card p-4">
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => handleNavigate(subMonths(currentDate, 1))}
-                className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-muted)] transition-colors"
-                aria-label="Forrige maned"
+                className="p-2 rounded-lg hover:bg-grey-100 text-grey-600 transition-colors"
+                aria-label="Forrige måned"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <h2 className="text-lg font-semibold text-[var(--color-text)] min-w-[150px] text-center capitalize">
+              <h2 className="text-lg font-semibold text-grey-900 min-w-[150px] text-center capitalize">
                 {format(currentDate, "MMMM yyyy", { locale: nb })}
               </h2>
               <button
                 onClick={() => handleNavigate(addMonths(currentDate, 1))}
-                className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-muted)] transition-colors"
-                aria-label="Neste maned"
+                className="p-2 rounded-lg hover:bg-grey-100 text-grey-600 transition-colors"
+                aria-label="Neste måned"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -386,7 +385,7 @@ export default function KalenderClient({
                 I dag
               </AdminButton>
               {isPending && (
-                <Loader2 className="w-4 h-4 animate-spin text-[var(--color-muted)]" />
+                <Loader2 className="w-4 h-4 animate-spin text-grey-500" />
               )}
             </div>
 
@@ -397,7 +396,7 @@ export default function KalenderClient({
                 onChange={(e) => handleInstructorFilter(e.target.value)}
                 containerClassName="min-w-[180px]"
               >
-                <option value="">Alle instruktorer</option>
+                <option value="">Alle instruktører</option>
                 {instructors.map((inst) => (
                   <option key={inst.id} value={inst.id}>
                     {inst.user.name || "Ukjent"}
@@ -430,19 +429,19 @@ export default function KalenderClient({
               size="sm"
             />
           </div>
-        </AdminCard>
+        </div>
 
         {/* Calendar Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Main Calendar */}
           <div className="lg:col-span-3 bg-white rounded-xl shadow-card overflow-hidden">
             {/* Weekday Headers */}
-            <div className="grid grid-cols-7 border-b border-[var(--color-grey-200)] bg-[var(--color-grey-50)]">
-              {["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"].map(
+            <div className="grid grid-cols-7 border-b border-grey-200 bg-grey-50">
+              {["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"].map(
                 (dayLabel) => (
                   <div
                     key={dayLabel}
-                    className="px-3 py-2.5 text-center text-xs font-semibold text-[var(--color-muted)] uppercase tracking-wider"
+                    className="px-3 py-2.5 text-center text-xs font-semibold text-grey-600 uppercase tracking-wider"
                   >
                     {dayLabel}
                   </div>
@@ -464,13 +463,13 @@ export default function KalenderClient({
                     key={i}
                     onClick={() => setSelectedDate(date)}
                     className={cn(
-                      "min-h-[110px] p-2 border-b border-r border-[var(--color-grey-100)] text-left transition-colors",
+                      "min-h-[110px] p-2 border-b border-r border-grey-100 text-left transition-colors",
                       !isCurrentMonth &&
-                        "bg-[var(--color-grey-50)] opacity-60",
-                      isToday && "bg-[var(--color-primary)]/5",
+                        "bg-grey-50 opacity-60",
+                      isToday && "bg-grey-100",
                       isSelected &&
-                        "ring-2 ring-[var(--color-primary)] ring-inset",
-                      "hover:bg-[var(--color-grey-50)]",
+                        "ring-2 ring-grey-400 ring-inset",
+                      "hover:bg-grey-50",
                     )}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -478,14 +477,14 @@ export default function KalenderClient({
                         className={cn(
                           "text-sm font-medium w-7 h-7 flex items-center justify-center rounded-full",
                           isToday
-                            ? "bg-[var(--color-primary)] text-white"
-                            : "text-[var(--color-text)]",
+                            ? "bg-grey-800 text-white"
+                            : "text-grey-900",
                         )}
                       >
                         {format(date, "d")}
                       </span>
                       {dayBookings.length > 0 && (
-                        <span className="text-[10px] text-[var(--color-muted)] tabular-nums">
+                        <span className="text-[10px] text-grey-500 tabular-nums">
                           {dayBookings.length}
                         </span>
                       )}
@@ -509,7 +508,7 @@ export default function KalenderClient({
                         </div>
                       ))}
                       {dayBookings.length > 3 && (
-                        <div className="text-[10px] text-[var(--color-muted)] pl-1">
+                        <div className="text-[10px] text-grey-500 pl-1">
                           +{dayBookings.length - 3} flere
                         </div>
                       )}
@@ -523,16 +522,16 @@ export default function KalenderClient({
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Selected Date Details */}
-            <AdminCard compact>
-              <h3 className="admin-section-title mb-3 capitalize">
+            <div className="bg-white rounded-xl shadow-card p-4">
+              <h3 className="text-sm font-semibold text-grey-900 mb-3 capitalize">
                 {selectedDate
                   ? format(selectedDate, "EEEE d. MMMM", { locale: nb })
                   : "Velg en dato"}
               </h3>
               {selectedDateBookings.length === 0 ? (
                 <div className="py-8 text-center">
-                  <CalendarIcon className="w-10 h-10 text-[var(--color-muted)] mx-auto mb-2 opacity-50" />
-                  <span className="text-sm text-[var(--color-muted)]">
+                  <CalendarIcon className="w-10 h-10 text-grey-400 mx-auto mb-2" />
+                  <span className="text-sm text-grey-500">
                     Ingen bookinger
                   </span>
                 </div>
@@ -545,16 +544,16 @@ export default function KalenderClient({
                     return (
                       <div
                         key={booking.id}
-                        className="p-3 rounded-lg border border-[var(--color-grey-200)] bg-white"
+                        className="p-3 rounded-lg border border-grey-200 bg-grey-50"
                       >
                         <div className="flex items-center justify-between mb-1.5">
-                          <div className="flex items-center gap-1.5 text-[var(--color-text)]">
-                            <Clock className="w-3.5 h-3.5 text-[var(--color-muted)]" />
+                          <div className="flex items-center gap-1.5 text-grey-900">
+                            <Clock className="w-3.5 h-3.5 text-grey-500" />
                             <span className="text-xs font-medium tabular-nums">
                               {formatTime(booking.startTime)}–
                               {formatTime(booking.endTime)}
                             </span>
-                            <span className="text-[10px] text-[var(--color-muted)]">
+                            <span className="text-[10px] text-grey-500">
                               ({formatDuration(booking)})
                             </span>
                           </div>
@@ -567,7 +566,7 @@ export default function KalenderClient({
                               trigger={
                                 <button
                                   aria-label="Handlinger"
-                                  className="p-1 rounded hover:bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+                                  className="p-1 rounded hover:bg-grey-200 text-grey-500"
                                 >
                                   <MoreHorizontal className="w-3.5 h-3.5" />
                                 </button>
@@ -580,21 +579,21 @@ export default function KalenderClient({
                           onClick={() => setDrawerBooking(booking)}
                           className="block w-full text-left"
                         >
-                          <div className="text-sm font-medium text-[var(--color-text)]">
+                          <div className="text-sm font-medium text-grey-900">
                             {booking.serviceType.name}
                           </div>
-                          <div className="text-xs text-[var(--color-muted)] mt-0.5">
+                          <div className="text-xs text-grey-600 mt-0.5">
                             {booking.student.name ||
                               booking.student.email ||
                               "Ukjent elev"}
                           </div>
                           {booking.instructor.user.name && (
-                            <div className="text-xs text-[var(--color-muted)]">
+                            <div className="text-xs text-grey-600">
                               Med {booking.instructor.user.name}
                             </div>
                           )}
                           {booking.location && (
-                            <div className="text-xs text-[var(--color-muted)]">
+                            <div className="text-xs text-grey-600">
                               {booking.location.name}
                             </div>
                           )}
@@ -612,11 +611,11 @@ export default function KalenderClient({
               >
                 Legg til hendelse
               </AdminButton>
-            </AdminCard>
+            </div>
 
             {/* Status Legend */}
-            <AdminCard compact>
-              <h3 className="admin-section-title mb-3">Status</h3>
+            <div className="bg-white rounded-xl shadow-card p-4">
+              <h3 className="text-sm font-semibold text-grey-900 mb-3">Status</h3>
               <div className="space-y-2">
                 {Object.entries(statusLabels).map(([status, label]) => (
                   <div key={status} className="flex items-center gap-2">
@@ -626,22 +625,22 @@ export default function KalenderClient({
                         statusCellStyles[status],
                       )}
                     />
-                    <span className="text-sm text-[var(--color-text)]">
+                    <span className="text-sm text-grey-700">
                       {label}
                     </span>
                   </div>
                 ))}
               </div>
-            </AdminCard>
+            </div>
           </div>
         </div>
 
         {/* Activity Heatmap */}
-        <AdminCard>
+        <div className="bg-white rounded-xl shadow-card p-4">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="admin-section-title">Aktivitet</h3>
-              <p className="text-xs text-[var(--color-muted)] mt-0.5">
+              <h3 className="text-sm font-semibold text-grey-900">Aktivitet</h3>
+              <p className="text-xs text-grey-500 mt-0.5">
                 Antall bookinger per ukedag og klokkeslett
               </p>
             </div>
@@ -659,7 +658,7 @@ export default function KalenderClient({
               }
             />
           </div>
-        </AdminCard>
+        </div>
       </div>
 
       {/* Note Dialog */}
@@ -806,7 +805,7 @@ export default function KalenderClient({
                     loading={isNoShowPending}
                     onClick={() => handleMarkNoShow(drawerBooking.id)}
                   >
-                    Ikke mott
+                    Ikke møtt
                   </AdminButton>
                 )}
             </div>
@@ -828,12 +827,12 @@ export default function KalenderClient({
 
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <Clock className="w-4 h-4 text-[var(--color-muted)] mt-0.5" />
+                <Clock className="w-4 h-4 text-grey-500 mt-0.5" />
                 <div>
-                  <div className="text-xs text-[var(--color-muted)]">
+                  <div className="text-xs text-grey-500">
                     Tidspunkt
                   </div>
-                  <div className="text-sm text-[var(--color-text)] font-medium tabular-nums">
+                  <div className="text-sm text-grey-900 font-medium tabular-nums">
                     {formatTime(drawerBooking.startTime)}–
                     {formatTime(drawerBooking.endTime)}
                   </div>
@@ -841,14 +840,14 @@ export default function KalenderClient({
               </div>
 
               <div className="flex items-start gap-3">
-                <User className="w-4 h-4 text-[var(--color-muted)] mt-0.5" />
+                <User className="w-4 h-4 text-grey-500 mt-0.5" />
                 <div>
-                  <div className="text-xs text-[var(--color-muted)]">Elev</div>
-                  <div className="text-sm text-[var(--color-text)] font-medium">
+                  <div className="text-xs text-grey-500">Elev</div>
+                  <div className="text-sm text-grey-900 font-medium">
                     {drawerBooking.student.name || "Ukjent"}
                   </div>
                   {drawerBooking.student.email && (
-                    <div className="text-xs text-[var(--color-muted)]">
+                    <div className="text-xs text-grey-500">
                       {drawerBooking.student.email}
                     </div>
                   )}
@@ -857,12 +856,12 @@ export default function KalenderClient({
 
               {drawerBooking.instructor.user.name && (
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-[var(--color-muted)] mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-grey-500 mt-0.5" />
                   <div>
-                    <div className="text-xs text-[var(--color-muted)]">
+                    <div className="text-xs text-grey-500">
                       Instruktør
                     </div>
-                    <div className="text-sm text-[var(--color-text)] font-medium">
+                    <div className="text-sm text-grey-900 font-medium">
                       {drawerBooking.instructor.user.name}
                     </div>
                   </div>
@@ -871,12 +870,12 @@ export default function KalenderClient({
 
               {drawerBooking.location && (
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-[var(--color-muted)] mt-0.5" />
+                  <MapPin className="w-4 h-4 text-grey-500 mt-0.5" />
                   <div>
-                    <div className="text-xs text-[var(--color-muted)]">
+                    <div className="text-xs text-grey-500">
                       Lokasjon
                     </div>
-                    <div className="text-sm text-[var(--color-text)] font-medium">
+                    <div className="text-sm text-grey-900 font-medium">
                       {drawerBooking.location.name}
                     </div>
                   </div>
@@ -885,11 +884,11 @@ export default function KalenderClient({
             </div>
 
             {drawerBooking.adminNotes && (
-              <div className="pt-3 border-t border-[var(--color-grey-200)]">
-                <div className="text-xs font-semibold text-[var(--color-muted)] uppercase tracking-wide mb-1">
+              <div className="pt-3 border-t border-grey-200">
+                <div className="text-xs font-semibold text-grey-500 uppercase tracking-wide mb-1">
                   Admin-notat
                 </div>
-                <p className="text-sm text-[var(--color-text)] whitespace-pre-wrap">
+                <p className="text-sm text-grey-900 whitespace-pre-wrap">
                   {drawerBooking.adminNotes}
                 </p>
               </div>

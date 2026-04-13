@@ -7,11 +7,10 @@ import {
   CheckCircle2,
   Clock,
   DollarSign,
+  ArrowUpRight,
 } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminCard,
-  AdminStatCard,
   AdminBadge,
   AdminEmptyState,
   AdminTimeline,
@@ -27,7 +26,7 @@ import { nb } from "date-fns/locale";
 import { motion } from "framer-motion";
 import type { WeekBooking, WeekStats } from "./actions";
 
-// ── Status config ──────────────────────────────────────────────────────
+// Status config
 
 const STATUS_CONFIG: Record<
   string,
@@ -39,7 +38,7 @@ const STATUS_CONFIG: Record<
   NO_SHOW: { label: "Ikke mott", variant: "error" },
 };
 
-// ── Component ──────────────────────────────────────────────────────────
+// Component
 
 interface ThisWeekClientProps {
   bookings: WeekBooking[];
@@ -71,7 +70,6 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
   const dailyCounts = new Array(7).fill(0) as number[];
   for (const b of bookings) {
     const d = new Date(b.startTime);
-    // getDay: 0=son, 1=man ... -> map til 0=man ... 6=son
     const idx = (d.getDay() + 6) % 7;
     dailyCounts[idx] += 1;
   }
@@ -80,7 +78,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
     value: dailyCounts[i],
   }));
 
-  // Timeline — ukens hendelser (topp 8 kommende)
+  // Timeline - ukens hendelser (topp 8 kommende)
   const now = new Date();
   const timelineItems: AdminTimelineItem[] = bookings
     .filter((b) => new Date(b.startTime) >= now)
@@ -88,7 +86,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
     .map((b) => ({
       id: b.id,
       title: b.student.name ?? "Ukjent elev",
-      description: `${b.service.name} · ${b.instructor.name ?? "Ukjent instruktor"}`,
+      description: b.service.name + " · " + (b.instructor.name ?? "Ukjent instruktor"),
       date: format(new Date(b.startTime), "EEE d. MMM HH:mm", { locale: nb }),
       color:
         b.status === "CONFIRMED" || b.status === "COMPLETED"
@@ -98,83 +96,132 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
             : "var(--color-primary)",
     }));
 
-  // Ukemal (eksempel — 50 okter per uke)
+  // Ukemal (eksempel - 50 okter per uke)
   const weeklyGoal = 50;
 
   return (
     <>
       <MCTopbar
         title="Denne uken"
-        subtitle={`Bookinger for ${stats.weekLabel}`}
+        subtitle={"Bookinger for " + stats.weekLabel}
         onMenuClick={toggle}
       />
 
       <div className="p-6 space-y-6">
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <AdminStatCard
-            label="Bookinger"
-            value={stats.totalBookings}
-            icon={<Calendar className="w-5 h-5" />}
-          />
-          <AdminStatCard
-            label="Unike elever"
-            value={stats.uniqueStudents}
-            icon={<Users className="w-5 h-5" />}
-          />
-          <AdminStatCard
-            label="Bekreftet"
-            value={stats.confirmedBookings}
-            icon={<CheckCircle2 className="w-5 h-5" />}
-            change={
-              confirmRate >= 80
-                ? { value: confirmRate, positive: true }
-                : undefined
-            }
-          />
-          <AdminStatCard
-            label="Inntekt"
-            value={`${stats.weeklyRevenue.toLocaleString("nb-NO")} kr`}
-            icon={<DollarSign className="w-5 h-5" />}
-          />
+          {/* Stat Card: Bookinger */}
+          <div className="bg-white rounded-xl shadow-card p-5">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
+                  Bookinger
+                </p>
+                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                  {stats.totalBookings}
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-600">
+                <Calendar className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
+
+          {/* Stat Card: Unike elever */}
+          <div className="bg-white rounded-xl shadow-card p-5">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
+                  Unike elever
+                </p>
+                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                  {stats.uniqueStudents}
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-600">
+                <Users className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
+
+          {/* Stat Card: Bekreftet */}
+          <div className="bg-white rounded-xl shadow-card p-5">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
+                  Bekreftet
+                </p>
+                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                  {stats.confirmedBookings}
+                </p>
+                {confirmRate >= 80 && (
+                  <div className="mt-2 flex items-center gap-1 text-xs font-medium">
+                    <ArrowUpRight className="w-3.5 h-3.5 text-grey-600" />
+                    <span className="text-grey-600">+{confirmRate}%</span>
+                    <span className="text-grey-400">vs forrige</span>
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-600">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
+
+          {/* Stat Card: Inntekt */}
+          <div className="bg-white rounded-xl shadow-card p-5">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
+                  Inntekt
+                </p>
+                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                  {stats.weeklyRevenue.toLocaleString("nb-NO")} kr
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-600">
+                <DollarSign className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Visualiseringer — ukemal, daglig aktivitet, timeline */}
+        {/* Visualiseringer - ukemal, daglig aktivitet, timeline */}
         {bookings.length > 0 && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <AdminCard>
-              <h3 className="admin-section-title mb-4">Ukemal</h3>
+            <div className="bg-white rounded-xl shadow-card p-6">
+              <h3 className="text-lg font-semibold text-grey-900 mb-4">Ukemal</h3>
               <div className="flex flex-col items-center justify-center py-2">
                 <AdminProgressRing
                   value={stats.totalBookings}
                   max={weeklyGoal}
                   size={160}
                   strokeWidth={12}
-                  label={`${stats.totalBookings} av ${weeklyGoal} bookinger`}
+                  label={stats.totalBookings + " av " + weeklyGoal + " bookinger"}
                 />
               </div>
-            </AdminCard>
+            </div>
 
-            <AdminCard className="lg:col-span-2">
+            <div className="bg-white rounded-xl shadow-card p-6 lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="admin-section-title">Daglig aktivitet</h3>
+                <h3 className="text-lg font-semibold text-grey-900">Daglig aktivitet</h3>
                 <AdminBadge variant="info">Denne uken</AdminBadge>
               </div>
               <AdminBarChart data={dailyData} height={220} />
-            </AdminCard>
+            </div>
           </div>
         )}
 
         {timelineItems.length > 0 && (
-          <AdminCard>
+          <div className="bg-white rounded-xl shadow-card p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="admin-section-title">Ukens kommende hendelser</h3>
-              <span className="text-xs text-[var(--color-muted)]">
+              <h3 className="text-lg font-semibold text-grey-900">Ukens kommende hendelser</h3>
+              <span className="text-xs text-grey-400">
                 {timelineItems.length} hendelser
               </span>
             </div>
             <AdminTimeline items={timelineItems} />
-          </AdminCard>
+          </div>
         )}
 
         {/* Bookings by Day */}
@@ -185,10 +232,10 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
             description="Nar elever booker okter vil de dukke opp her."
           />
         ) : (
-          <AdminCard className="p-0 overflow-hidden">
-            <div className="px-6 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
-              <h3 className="admin-section-title">Ukens bookinger</h3>
-              <span className="text-sm text-[var(--color-muted)]">
+          <div className="bg-white rounded-xl shadow-card p-0 overflow-hidden">
+            <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-grey-900">Ukens bookinger</h3>
+              <span className="text-sm text-grey-400">
                 {bookings.length} booking{bookings.length !== 1 ? "er" : ""}
               </span>
             </div>
@@ -203,12 +250,12 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                   >
                     {/* Day Header */}
-                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[var(--color-grey-100)]">
-                      <div className="w-10 h-10 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center">
-                        <Calendar className="w-5 h-5 text-[var(--color-primary)]" />
+                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-grey-100">
+                      <div className="w-10 h-10 rounded-xl bg-grey-100 flex items-center justify-center">
+                        <Calendar className="w-5 h-5 text-grey-600" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-[var(--color-text)] truncate capitalize">
+                        <h3 className="font-semibold text-grey-700 truncate capitalize">
                           {format(new Date(dateKey), "EEEE d. MMMM", {
                             locale: nb,
                           })}
@@ -231,7 +278,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                         return (
                           <div
                             key={booking.id}
-                            className="flex items-center gap-4 p-3 rounded-xl bg-[var(--color-grey-50)] hover:bg-[var(--color-grey-100)] transition-colors"
+                            className="flex items-center gap-4 p-3 rounded-xl bg-grey-50 hover:bg-grey-100 transition-colors"
                           >
                             {/* Avatar */}
                             {booking.student.image ? (
@@ -243,18 +290,18 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                                 className="w-11 h-11 rounded-xl object-cover ring-2 ring-white"
                               />
                             ) : (
-                              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold text-[var(--color-primary)] bg-[var(--color-primary)]/10">
+                              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold text-grey-600 bg-grey-100">
                                 {booking.student.name?.charAt(0) ?? "?"}
                               </div>
                             )}
 
                             {/* Info */}
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-semibold text-[var(--color-text)] truncate">
+                              <p className="text-sm font-semibold text-grey-700 truncate">
                                 {booking.student.name ?? "Ukjent elev"}
                               </p>
-                              <p className="text-xs text-[var(--color-muted)] truncate mt-0.5">
-                                {booking.service.name} &middot;{" "}
+                              <p className="text-xs text-grey-400 truncate mt-0.5">
+                                {booking.service.name} ·{" "}
                                 {booking.instructor.name ??
                                   "Ukjent instruktor"}
                               </p>
@@ -262,7 +309,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
 
                             {/* Time + Status */}
                             <div className="flex items-center gap-2 flex-shrink-0">
-                              <span className="text-xs text-[var(--color-muted)] flex items-center gap-1 tabular-nums">
+                              <span className="text-xs text-grey-400 flex items-center gap-1 tabular-nums">
                                 <Clock className="w-3 h-3" />
                                 {format(new Date(booking.startTime), "HH:mm")}
                               </span>
@@ -278,7 +325,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                 )
               )}
             </div>
-          </AdminCard>
+          </div>
         )}
       </div>
     </>

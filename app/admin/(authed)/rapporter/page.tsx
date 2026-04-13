@@ -18,7 +18,6 @@ import {
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminCard,
   AdminButton,
   AdminSelect,
   AdminInput,
@@ -221,10 +220,10 @@ export default function RapporterPage() {
       sortable: true,
       render: (row) => (
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-[var(--color-grey-100)]">
-            <FileText className="w-4 h-4 text-[var(--color-primary)]" />
+          <div className="p-2 rounded-lg bg-grey-100">
+            <FileText className="w-4 h-4 text-grey-600" />
           </div>
-          <span className="font-medium text-[var(--color-text)]">
+          <span className="font-medium text-grey-900">
             {row.name}
           </span>
         </div>
@@ -257,7 +256,7 @@ export default function RapporterPage() {
           trigger={
             <button
               type="button"
-              className="p-1.5 rounded-md hover:bg-[var(--color-grey-100)] text-[var(--color-muted)] transition-colors"
+              className="p-1.5 rounded-md hover:bg-grey-100 text-grey-500 transition-colors"
               aria-label={`Handlinger for ${row.name}`}
             >
               <MoreHorizontal className="w-4 h-4" />
@@ -317,14 +316,12 @@ export default function RapporterPage() {
             const Icon = report.icon;
             const isSelected = selectedReport === report.id;
             return (
-              <AdminCard
+              <div
                 key={report.id}
-                hover
                 onClick={() => setSelectedReport(report.id)}
                 className={cn(
-                  "cursor-pointer transition-all",
-                  isSelected &&
-                    "ring-2 ring-[var(--color-primary)] border-[var(--color-primary)]",
+                  "bg-white rounded-xl shadow-card p-5 cursor-pointer transition-all hover:shadow-lg",
+                  isSelected && "ring-2 ring-grey-600",
                 )}
               >
                 <div
@@ -336,14 +333,14 @@ export default function RapporterPage() {
                     style={{ color: report.colorVar }}
                   />
                 </div>
-                <h3 className="text-sm font-semibold text-[var(--color-text)] mb-1">
+                <h3 className="text-sm font-semibold text-grey-900 mb-1">
                   {report.name}
                 </h3>
-                <p className="text-xs text-[var(--color-muted)] mb-3">
+                <p className="text-xs text-grey-500 mb-3">
                   {report.description}
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-[var(--color-muted)]">
+                  <span className="text-[10px] text-grey-500">
                     Sist: {report.lastGenerated}
                   </span>
                   <AdminDropdown
@@ -353,7 +350,7 @@ export default function RapporterPage() {
                       <button
                         type="button"
                         onClick={(e) => e.stopPropagation()}
-                        className="p-1.5 rounded-md hover:bg-[var(--color-grey-100)] text-[var(--color-primary)] transition-colors"
+                        className="p-1.5 rounded-md hover:bg-grey-100 text-grey-600 transition-colors"
                         aria-label={`Last ned ${report.name}`}
                       >
                         <Download className="w-4 h-4" />
@@ -375,7 +372,7 @@ export default function RapporterPage() {
                     ]}
                   />
                 </div>
-              </AdminCard>
+              </div>
             );
           })}
         </div>
@@ -383,8 +380,8 @@ export default function RapporterPage() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Generate Report */}
-          <AdminCard>
-            <h3 className="text-sm font-semibold text-[var(--color-text)] mb-4">
+          <div className="bg-white rounded-xl shadow-card p-5">
+            <h3 className="text-sm font-semibold text-grey-900 mb-4">
               Generer ny rapport
             </h3>
             <div className="space-y-4">
@@ -422,8 +419,8 @@ export default function RapporterPage() {
                         className={cn(
                           "flex-1 py-2 text-xs font-medium rounded-lg border transition-colors",
                           isActive
-                            ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                            : "bg-white text-[var(--color-text)] border-[var(--color-grey-200)] hover:bg-[var(--color-grey-100)]",
+                            ? "bg-grey-700 text-white border-grey-700"
+                            : "bg-white text-grey-700 border-grey-200 hover:bg-grey-50",
                         )}
                       >
                         {fmt}
@@ -442,33 +439,33 @@ export default function RapporterPage() {
                 {isPending ? "Genererer..." : "Generer rapport"}
               </AdminButton>
             </div>
-          </AdminCard>
+          </div>
 
           {/* Scheduled Reports */}
-          <AdminCard className="p-0 overflow-hidden">
-            <div className="px-5 py-4 border-b border-[var(--color-grey-200)] flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-[var(--color-text)]">
+          <div className="bg-white rounded-xl shadow-card p-0 overflow-hidden">
+            <div className="px-5 py-4 border-b border-grey-200 flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-grey-900">
                 Automatiske rapporter
               </h3>
               <button
                 type="button"
                 disabled
-                className="p-1.5 rounded-md text-[var(--color-muted)] opacity-50 cursor-not-allowed"
+                className="p-1.5 rounded-md text-grey-400 opacity-50 cursor-not-allowed"
                 aria-label="Legg til automatisk rapport"
                 title="Kommer snart"
               >
                 <Plus className="w-4 h-4" />
               </button>
             </div>
-            <div className="divide-y divide-[var(--color-grey-200)]">
+            <div className="divide-y divide-grey-200">
               {scheduledReports.map((report) => (
                 <div key={report.id} className="p-4">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h4 className="text-sm font-medium text-[var(--color-text)]">
+                      <h4 className="text-sm font-medium text-grey-900">
                         {report.name}
                       </h4>
-                      <p className="text-xs text-[var(--color-muted)]">
+                      <p className="text-xs text-grey-500">
                         {report.frequency}
                       </p>
                     </div>
@@ -476,13 +473,13 @@ export default function RapporterPage() {
                       className={cn(
                         "w-2 h-2 rounded-full mt-1.5",
                         report.active
-                          ? "bg-[var(--color-success)]"
-                          : "bg-[var(--color-muted)]",
+                          ? "bg-emerald-500"
+                          : "bg-grey-400",
                       )}
                       aria-label={report.active ? "Aktiv" : "Inaktiv"}
                     />
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-[var(--color-muted)]">
+                  <div className="flex items-center gap-4 text-xs text-grey-500">
                     <span className="flex items-center gap-1">
                       <Mail className="w-3 h-3" />
                       {report.recipients}
@@ -495,16 +492,16 @@ export default function RapporterPage() {
                 </div>
               ))}
             </div>
-          </AdminCard>
+          </div>
         </div>
 
         {/* Nylig genererte rapporter — DataTable */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-[var(--color-text)]">
+            <h3 className="text-sm font-semibold text-grey-900">
               Nylig genererte rapporter
             </h3>
-            <span className="text-xs text-[var(--color-muted)]">
+            <span className="text-xs text-grey-500">
               {recentReports.length} rapporter
             </span>
           </div>
@@ -579,8 +576,8 @@ export default function RapporterPage() {
                     className={cn(
                       "flex-1 py-2 text-xs font-medium rounded-lg border transition-colors",
                       isActive
-                        ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                        : "bg-white text-[var(--color-text)] border-[var(--color-grey-200)] hover:bg-[var(--color-grey-100)]",
+                        ? "bg-grey-700 text-white border-grey-700"
+                        : "bg-white text-grey-700 border-grey-200 hover:bg-grey-50",
                     )}
                   >
                     {fmt}

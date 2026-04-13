@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Clock, User, Calendar, Mail, Phone, CreditCard, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import type { BookingServiceType, BookingInstructor, BookingMode } from "./booking-types";
 import { formatBookingPrice } from "./booking-types";
 
@@ -56,19 +57,19 @@ export function BookingSummary({
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-black mb-6 tracking-tight">
+      <h2 className="text-2xl font-semibold text-portal-text mb-6 tracking-tight">
         Bekreft din booking
       </h2>
 
-      {/* Summary card */}
-      <div className="bg-white rounded-xl border border-grey-200 shadow-card overflow-hidden mb-6">
-        <div className="p-5 border-b border-grey-100">
+      {/* Summary card - wrapped in PremiumCard */}
+      <PremiumCard className="mb-6" padding="sm" hover="none">
+        <div className="p-5 border-b border-portal-border">
           <div className="flex items-center gap-2.5">
             <div
               className="w-3 h-3 rounded-full"
               style={{ backgroundColor: service.color ?? undefined }}
             />
-            <h3 className="text-lg font-semibold text-black">{service.name}</h3>
+            <h3 className="text-lg font-semibold text-portal-text">{service.name}</h3>
           </div>
         </div>
 
@@ -85,13 +86,13 @@ export function BookingSummary({
           )}
         </div>
 
-        <div className="px-5 py-4 bg-grey-50 flex items-center justify-between">
-          <span className="text-sm text-muted">Totalpris</span>
-          <span className="text-2xl font-semibold text-black tabular-nums">
+        <div className="px-5 py-4 bg-portal-hover flex items-center justify-between">
+          <span className="text-sm text-portal-secondary">Totalpris</span>
+          <span className="text-2xl font-semibold text-portal-text tabular-nums">
             {formatBookingPrice(service.price)}
           </span>
         </div>
-      </div>
+      </PremiumCard>
 
       {/* Payment */}
       <motion.button
@@ -113,7 +114,7 @@ export function BookingSummary({
         )}
       </motion.button>
 
-      <p className="text-xs text-grey-300 text-center mt-4">
+      <p className="text-xs text-portal-muted text-center mt-4">
         Sikker betaling via Stripe. Du mottar bekreftelse på e-post.
       </p>
     </div>
@@ -149,17 +150,17 @@ function CustomerDetailsForm({
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-black mb-2 tracking-tight">
+      <h2 className="text-2xl font-semibold text-portal-text mb-2 tracking-tight">
         Dine opplysninger
       </h2>
-      <p className="text-sm text-muted mb-6">
+      <p className="text-sm text-portal-secondary mb-6">
         Fyll inn kontaktinformasjon for bookingen
       </p>
 
       {/* Mini summary */}
-      <div className="bg-grey-50 rounded-xl p-4 mb-6 text-sm space-y-1.5">
-        <p className="font-medium text-black">{service.name}</p>
-        <p className="text-muted">
+      <div className="bg-portal-hover rounded-xl p-4 mb-6 text-sm space-y-1.5">
+        <p className="font-medium text-portal-text">{service.name}</p>
+        <p className="text-portal-secondary">
           {instructor.user.name} — {format(slotDate, "EEE d. MMM 'kl.' HH:mm", { locale: nb })}
         </p>
       </div>
@@ -221,13 +222,13 @@ function SummaryRow({
 }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="w-9 h-9 rounded-lg bg-grey-50 flex items-center justify-center flex-shrink-0">
+      <div className="w-9 h-9 rounded-lg bg-portal-hover flex items-center justify-center flex-shrink-0">
         <Icon className="w-4 h-4 text-primary" />
       </div>
       <div className="min-w-0">
-        <p className="text-xs text-muted uppercase tracking-wider">{label}</p>
-        <p className="text-sm font-medium text-black truncate">{value}</p>
-        {sub && <p className="text-xs text-muted truncate">{sub}</p>}
+        <p className="text-xs text-portal-secondary uppercase tracking-wider">{label}</p>
+        <p className="text-sm font-medium text-portal-text truncate">{value}</p>
+        {sub && <p className="text-xs text-portal-secondary truncate">{sub}</p>}
       </div>
     </div>
   );
@@ -254,12 +255,12 @@ function InputField({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-text mb-1.5">
+      <label className="block text-sm font-medium text-portal-text mb-1.5">
         {label} {required && <span className="text-error">*</span>}
       </label>
       <div className="relative">
         {Icon && (
-          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-portal-secondary" />
         )}
         <input
           type={type}
@@ -267,13 +268,13 @@ function InputField({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className={[
-            "w-full py-3 rounded-lg border border-grey-200 bg-white text-text placeholder:text-grey-300",
+            "w-full py-3 rounded-lg border border-portal-border bg-white text-portal-text placeholder:text-portal-muted",
             "focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors",
             Icon ? "pl-10 pr-4" : "px-4",
           ].join(" ")}
         />
       </div>
-      {hint && <p className="text-xs text-grey-300 mt-1">{hint}</p>}
+      {hint && <p className="text-xs text-portal-muted mt-1">{hint}</p>}
     </div>
   );
 }

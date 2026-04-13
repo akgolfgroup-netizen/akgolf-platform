@@ -4,6 +4,8 @@ import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Loader2, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
+import { cn } from "@/lib/utils";
 
 interface TimeSlotsProps {
   date: Date | null;
@@ -16,37 +18,37 @@ interface TimeSlotsProps {
 export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: TimeSlotsProps) {
   if (!date) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <Calendar className="w-10 h-10 text-grey-300 mb-3" />
-        <p className="text-sm text-muted">
+      <PremiumCard className="flex flex-col items-center justify-center py-12 text-center" padding="lg">
+        <Calendar className="w-10 h-10 text-portal-muted mb-3" />
+        <p className="text-sm text-portal-secondary">
           Velg en dato i kalenderen for å se ledige tider
         </p>
-      </div>
+      </PremiumCard>
     );
   }
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center gap-2 py-12 text-muted">
-        <Loader2 className="w-4 h-4 animate-spin" />
-        <span className="text-sm">Henter tider...</span>
-      </div>
+      <PremiumCard className="flex items-center justify-center gap-2 py-12" padding="lg">
+        <Loader2 className="w-4 h-4 animate-spin text-portal-muted" />
+        <span className="text-sm text-portal-secondary">Henter tider...</span>
+      </PremiumCard>
     );
   }
 
   if (slots.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <Calendar className="w-10 h-10 text-grey-300 mb-3" />
-        <p className="text-sm text-muted">Ingen ledige tider denne dagen</p>
-        <p className="text-xs text-grey-300 mt-1">Prøv en annen dato</p>
-      </div>
+      <PremiumCard className="flex flex-col items-center justify-center py-12 text-center" padding="lg">
+        <Calendar className="w-10 h-10 text-portal-muted mb-3" />
+        <p className="text-sm text-portal-secondary">Ingen ledige tider denne dagen</p>
+        <p className="text-xs text-portal-muted mt-1">Prøv en annen dato</p>
+      </PremiumCard>
     );
   }
 
   return (
-    <div>
-      <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-3">
+    <PremiumCard>
+      <p className="text-xs font-semibold text-portal-muted uppercase tracking-wider mb-3">
         {format(date, "EEEE d. MMMM", { locale: nb })}
       </p>
       <div className="grid grid-cols-2 gap-2">
@@ -62,18 +64,18 @@ export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: Time
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.03, duration: 0.25 }}
               onClick={() => onSelect(slot)}
-              className={[
-                "py-3 px-4 rounded-lg text-sm font-medium transition-all duration-200 border",
+              className={cn(
+                "py-3 px-4 rounded-[20px] text-sm font-medium transition-all duration-200 border",
                 isSelected
                   ? "bg-primary text-white border-primary shadow-sm"
-                  : "bg-white text-text border-grey-200 hover:border-primary hover:shadow-card",
-              ].join(" ")}
+                  : "bg-white text-portal-text border-portal-border hover:border-primary hover:shadow-card"
+              )}
             >
               {timeStr}
             </motion.button>
           );
         })}
       </div>
-    </div>
+    </PremiumCard>
   );
 }

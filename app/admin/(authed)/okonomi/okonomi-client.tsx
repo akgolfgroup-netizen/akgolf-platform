@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminCard,
   AdminButton,
   AdminBadge,
   AdminDateRangePicker,
@@ -151,7 +150,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
       sortable: true,
       align: "right",
       render: (row) => (
-        <span className="tabular-nums font-semibold">
+        <span className="tabular-nums font-semibold text-grey-700">
           {formatKr(row.amount)}
         </span>
       ),
@@ -160,7 +159,9 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
       key: "createdAt",
       label: "Opprettet",
       sortable: true,
-      render: (row) => formatRelativeDate(row.createdAt),
+      render: (row) => (
+        <span className="text-grey-500">{formatRelativeDate(row.createdAt)}</span>
+      ),
     },
   ];
 
@@ -181,7 +182,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
       sortable: true,
       align: "right",
       render: (row) => (
-        <span className="tabular-nums text-[var(--color-error)] font-semibold">
+        <span className="tabular-nums font-semibold text-red-600">
           -{formatKr(row.grossAmount)}
         </span>
       ),
@@ -191,7 +192,11 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
       label: "Refundert",
       sortable: true,
       render: (row) =>
-        row.refundedAt ? formatRelativeDate(row.refundedAt) : "—",
+        row.refundedAt ? (
+          <span className="text-grey-500">{formatRelativeDate(row.refundedAt)}</span>
+        ) : (
+          <span className="text-grey-400">—</span>
+        ),
     },
   ];
 
@@ -277,26 +282,26 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
 
         {/* Inntektstrend (Area chart med gradient) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <AdminCard className="lg:col-span-2 p-0 overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)]">
+          <div className="bg-white rounded-xl shadow-card lg:col-span-2 overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
               <div>
-                <h3 className="admin-section-title">Inntektstrend</h3>
-                <span className="text-xs text-[var(--color-muted)]">
+                <h3 className="text-base font-semibold text-grey-800">Inntektstrend</h3>
+                <span className="text-xs text-grey-500">
                   {new Date().getFullYear()} — siste 6 måneder
                 </span>
               </div>
               <div className="text-right">
-                <span className="text-lg font-bold text-[var(--color-primary)] tabular-nums">
+                <span className="text-lg font-bold text-green-700 tabular-nums">
                   {yearTotal}
                 </span>
-                <span className="text-xs text-[var(--color-muted)] block">
+                <span className="text-xs text-grey-500 block">
                   totalt i år
                 </span>
               </div>
             </div>
             <div className="p-6">
               {data.monthlyTrend.length === 0 ? (
-                <p className="text-sm text-[var(--color-muted)] text-center py-10">
+                <p className="text-sm text-grey-500 text-center py-10">
                   Ingen trenddata ennå.
                 </p>
               ) : (
@@ -307,12 +312,14 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
                 />
               )}
             </div>
-          </AdminCard>
+          </div>
 
           {/* Måloppnåelse-gauge */}
-          <AdminCard>
-            <h3 className="admin-section-title mb-4">Måloppnåelse vs budsjett</h3>
-            <div className="flex flex-col items-center py-4">
+          <div className="bg-white rounded-xl shadow-card">
+            <div className="px-6 py-4 border-b border-grey-200">
+              <h3 className="text-base font-semibold text-grey-800">Måloppnåelse vs budsjett</h3>
+            </div>
+            <div className="flex flex-col items-center py-6">
               <AdminGauge
                 value={goalPercent}
                 max={100}
@@ -320,55 +327,55 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
                 warningThreshold={0.6}
                 errorThreshold={0.4}
               />
-              <div className="text-center mt-4 text-xs text-[var(--color-muted)]">
+              <div className="text-center mt-4 text-xs text-grey-500">
                 Budsjett {new Date().getFullYear()}
               </div>
             </div>
-          </AdminCard>
+          </div>
         </div>
 
         {/* Bar chart siste 6 mnd + Donut per kategori */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <AdminCard className="lg:col-span-2 p-0 overflow-hidden">
-            <div className="px-6 py-4 border-b border-[var(--color-grey-200)]">
-              <h3 className="admin-section-title">Inntekt per måned</h3>
-              <span className="text-xs text-[var(--color-muted)]">
+          <div className="bg-white rounded-xl shadow-card lg:col-span-2 overflow-hidden">
+            <div className="px-6 py-4 border-b border-grey-200">
+              <h3 className="text-base font-semibold text-grey-800">Inntekt per måned</h3>
+              <span className="text-xs text-grey-500">
                 Siste 6 måneder
               </span>
             </div>
             <div className="p-6">
               {barChart6mo.length === 0 ? (
-                <p className="text-sm text-[var(--color-muted)] text-center py-10">
+                <p className="text-sm text-grey-500 text-center py-10">
                   Ingen data
                 </p>
               ) : (
                 <AdminBarChart data={barChart6mo} valueLabel="Omsetning (kr)" />
               )}
             </div>
-          </AdminCard>
+          </div>
 
-          <AdminCard className="p-0 overflow-hidden">
-            <div className="px-6 py-4 border-b border-[var(--color-grey-200)]">
-              <h3 className="admin-section-title">Per tjeneste</h3>
+          <div className="bg-white rounded-xl shadow-card overflow-hidden">
+            <div className="px-6 py-4 border-b border-grey-200">
+              <h3 className="text-base font-semibold text-grey-800">Per tjeneste</h3>
             </div>
             <div className="p-4">
               {donutData.length === 0 ? (
-                <p className="text-sm text-[var(--color-muted)] text-center py-10">
+                <p className="text-sm text-grey-500 text-center py-10">
                   Ingen data
                 </p>
               ) : (
                 <AdminDonutChart data={donutData} />
               )}
             </div>
-          </AdminCard>
+          </div>
         </div>
 
         {/* Sammenligning i år vs i fjor */}
-        <AdminCard className="p-0 overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)]">
+        <div className="bg-white rounded-xl shadow-card overflow-hidden">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
             <div>
-              <h3 className="admin-section-title">I år vs i fjor</h3>
-              <span className="text-xs text-[var(--color-muted)]">
+              <h3 className="text-base font-semibold text-grey-800">I år vs i fjor</h3>
+              <span className="text-xs text-grey-500">
                 Sammenligning måned for måned
               </span>
             </div>
@@ -376,7 +383,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
           </div>
           <div className="p-6">
             {combinedTrend.length === 0 ? (
-              <p className="text-sm text-[var(--color-muted)] text-center py-10">
+              <p className="text-sm text-grey-500 text-center py-10">
                 Ingen data
               </p>
             ) : (
@@ -387,12 +394,12 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
               />
             )}
           </div>
-        </AdminCard>
+        </div>
 
         {/* Ubetalte bookinger (DataTable, søkbar + sorterbar) */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="admin-section-title">Ubetalte bookinger</h3>
+            <h3 className="text-base font-semibold text-grey-800">Ubetalte bookinger</h3>
             {unpaidRows.length > 0 && (
               <AdminBadge variant="warning">
                 {unpaidRows.length} stk · {formatKr(data.totalUnpaid)}
@@ -412,7 +419,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
         {/* Refusjoner (DataTable) */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="admin-section-title">Refusjoner</h3>
+            <h3 className="text-base font-semibold text-grey-800">Refusjoner</h3>
             {refundRows.length > 0 && (
               <AdminBadge variant="error">
                 {refundRows.length} totalt · {formatKr(data.totalRefunds)}
@@ -453,28 +460,28 @@ function StatCardSpark({
   change,
 }: StatCardSparkProps) {
   return (
-    <div className="admin-card">
+    <div className="bg-white rounded-xl shadow-card p-5">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <p className="admin-label">{label}</p>
-          <p className="mt-2 text-2xl font-bold text-[var(--color-text)] tracking-tight tabular-nums">
+          <p className="text-sm font-medium text-grey-500">{label}</p>
+          <p className="mt-2 text-2xl font-bold text-grey-800 tracking-tight tabular-nums">
             {value}
           </p>
           <div className="mt-2 flex items-center gap-1 text-xs font-medium">
             <span
               className={
                 change.positive
-                  ? "text-[var(--color-success)]"
-                  : "text-[var(--color-error)]"
+                  ? "text-green-600"
+                  : "text-red-600"
               }
             >
               {change.positive ? "+" : "-"}
               {change.value}%
             </span>
-            <span className="text-[var(--color-muted)]">vs forrige</span>
+            <span className="text-grey-400">vs forrige</span>
           </div>
         </div>
-        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-700">
           {icon}
         </div>
       </div>

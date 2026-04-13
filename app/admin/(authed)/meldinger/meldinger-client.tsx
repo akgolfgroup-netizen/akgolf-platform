@@ -112,10 +112,10 @@ export function MeldingerClient({
           onMenuClick={toggle}
         />
         <div className="p-6">
-          <div className="flex items-center justify-center py-20 text-[var(--color-muted)]">
+          <div className="flex items-center justify-center py-20 text-grey-500">
             <div className="text-center">
               <Inbox className="w-12 h-12 mx-auto mb-3 opacity-40" />
-              <p className="text-lg font-medium mb-1 text-[var(--color-text)]">
+              <p className="text-lg font-medium mb-1 text-grey-900">
                 Ingen meldinger ennå
               </p>
               <p className="text-sm">Nye meldinger fra spillere dukker opp her</p>
@@ -128,73 +128,76 @@ export function MeldingerClient({
 
   return (
     <>
-    <MCTopbar
-      title="Meldingskø"
-      subtitle={`${messages.length} meldinger`}
-      onMenuClick={toggle}
-    />
-    <div className="p-6">
-    <div className="flex flex-col bg-[var(--color-grey-50)] rounded-xl border border-[var(--color-grey-200)] overflow-hidden" style={{ height: "calc(100vh - 180px)" }}>
-      {/* Error banner */}
-      {error && (
-        <div className="flex items-center justify-between gap-3 px-4 py-3 bg-[var(--color-error)]/5 border-b border-[var(--color-error)]/20">
-          <div className="flex items-center gap-2 text-[var(--color-error)]">
-            <AlertCircle className="h-4 w-4 flex-shrink-0" />
-            <span className="text-sm">{error}</span>
-          </div>
-          <button
-            onClick={() => setError(null)}
-            className="text-[var(--color-error)] hover:text-[var(--color-error)]"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-      )}
-
-      {/* Channel filter */}
-      <div className="p-4 border-b border-[var(--color-grey-200)] bg-white">
-        <ChannelFilter
-          selected={selectedChannel}
-          onChange={setSelectedChannel}
-          counts={channelCounts as Record<Channel | "ALL", number>}
-        />
-      </div>
-
-      {/* Main content */}
-      <div className="flex-1 flex min-h-0">
-        {/* Message list */}
-        <div className="w-96 border-r border-[var(--color-grey-200)] overflow-auto bg-white">
-          <MessageList
-            messages={filteredMessages}
-            selectedId={selectedMessageId}
-            onSelect={setSelectedMessageId}
-          />
-        </div>
-
-        {/* Message detail */}
-        <div className="flex-1 bg-white overflow-hidden">
-          {selectedMessage ? (
-            <MessageDetail
-              message={selectedMessage}
-              onApprove={handleApprove}
-              onReject={handleReject}
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full text-[var(--color-grey-500)]">
-              <div className="text-center">
-                <p className="text-lg font-medium mb-1 text-[var(--color-grey-900)]">
-                  Velg en melding for å se detaljer
-                </p>
-                <p className="text-sm">
-                  {filteredMessages.length} meldinger i denne visningen
-                </p>
+      <MCTopbar
+        title="Meldingskø"
+        subtitle={`${messages.length} meldinger`}
+        onMenuClick={toggle}
+      />
+      <div className="p-6">
+        <div 
+          className="flex flex-col bg-white rounded-xl shadow-card overflow-hidden" 
+          style={{ height: "calc(100vh - 180px)" }}
+        >
+          {/* Error banner */}
+          {error && (
+            <div className="flex items-center justify-between gap-3 px-4 py-3 bg-red-50 border-b border-red-200">
+              <div className="flex items-center gap-2 text-red-600">
+                <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                <span className="text-sm">{error}</span>
               </div>
+              <button
+                onClick={() => setError(null)}
+                className="text-red-600 hover:text-red-700 transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
           )}
+
+          {/* Channel filter */}
+          <div className="p-4 border-b border-grey-200 bg-grey-50">
+            <ChannelFilter
+              selected={selectedChannel}
+              onChange={setSelectedChannel}
+              counts={channelCounts as Record<Channel | "ALL", number>}
+            />
+          </div>
+
+          {/* Main content */}
+          <div className="flex-1 flex min-h-0">
+            {/* Message list */}
+            <div className="w-96 border-r border-grey-200 overflow-auto bg-white">
+              <MessageList
+                messages={filteredMessages}
+                selectedId={selectedMessageId}
+                onSelect={setSelectedMessageId}
+              />
+            </div>
+
+            {/* Message detail */}
+            <div className="flex-1 bg-grey-50 overflow-hidden">
+              {selectedMessage ? (
+                <MessageDetail
+                  message={selectedMessage}
+                  onApprove={handleApprove}
+                  onReject={handleReject}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-grey-500">
+                  <div className="text-center">
+                    <p className="text-lg font-medium mb-1 text-grey-900">
+                      Velg en melding for å se detaljer
+                    </p>
+                    <p className="text-sm">
+                      {filteredMessages.length} meldinger i denne visningen
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
     </>
   );
 }

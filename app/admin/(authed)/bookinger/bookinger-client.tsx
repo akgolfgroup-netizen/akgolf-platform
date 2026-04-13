@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminCard, AdminButton, AdminBadge, AdminStatCard, AdminEmptyState,
+  AdminButton, AdminBadge, AdminStatCard, AdminEmptyState,
   AdminInput, AdminDropdown, AdminDataTable,
   type AdminDataTableColumn, type AdminDataTableBulkAction,
 } from "@/components/portal/mission-control/ui";
@@ -94,16 +94,16 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
 
   const listColumns: AdminDataTableColumn<AdminBooking>[] = [
     { key: "startTime", label: "Tidspunkt", sortable: true, render: (r) => (
-      <div><div className="text-sm font-medium text-[var(--color-text)]">{format(new Date(r.startTime), "d. MMM", { locale: nb })}</div><div className="text-xs text-[var(--color-muted)] tabular-nums">{formatTime(r.startTime)}</div></div>
+      <div><div className="text-sm font-medium text-[var(--color-grey-900)]">{format(new Date(r.startTime), "d. MMM", { locale: nb })}</div><div className="text-xs text-[var(--color-grey-500)] tabular-nums">{formatTime(r.startTime)}</div></div>
     )},
-    { key: "User", label: "Elev", render: (r) => <span className="text-sm text-[var(--color-text)]">{r.User?.name ?? r.User?.email ?? "Ukjent"}</span> },
-    { key: "ServiceType", label: "Tjeneste", render: (r) => <span className="text-sm text-[var(--color-text)]">{r.ServiceType?.name ?? "—"}</span> },
-    { key: "Instructor", label: "Instruktør", render: (r) => <span className="text-sm text-[var(--color-muted)]">{r.Instructor?.User?.name ?? "—"}</span> },
+    { key: "User", label: "Elev", render: (r) => <span className="text-sm text-[var(--color-grey-900)]">{r.User?.name ?? r.User?.email ?? "Ukjent"}</span> },
+    { key: "ServiceType", label: "Tjeneste", render: (r) => <span className="text-sm text-[var(--color-grey-900)]">{r.ServiceType?.name ?? "—"}</span> },
+    { key: "Instructor", label: "Instruktør", render: (r) => <span className="text-sm text-[var(--color-grey-500)]">{r.Instructor?.User?.name ?? "—"}</span> },
     { key: "status", label: "Status", sortable: true, render: (r) => {
       const k = isStatusKey(r.status) ? r.status : "PENDING"; const c = STATUS_CONFIG[k]; const I = c.icon;
       return <AdminBadge variant={c.variant} icon={<I className="w-3 h-3" />}>{c.label}</AdminBadge>;
     }},
-    { key: "amount", label: "Beløp", sortable: true, align: "right", render: (r) => <span className="text-sm font-semibold text-[var(--color-text)] tabular-nums">{(r.amount ?? 0).toLocaleString("nb-NO")} kr</span> },
+    { key: "amount", label: "Beløp", sortable: true, align: "right", render: (r) => <span className="text-sm font-semibold text-[var(--color-grey-900)] tabular-nums">{(r.amount ?? 0).toLocaleString("nb-NO")} kr</span> },
   ];
 
   const listBulkActions: AdminDataTableBulkAction<AdminBooking>[] = [
@@ -115,6 +115,7 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
     <>
       <MCTopbar title="Bookinger" subtitle="Administrer alle bookinger og timeplan" onMenuClick={toggle} />
       <div className="p-6 space-y-6">
+        {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <AdminStatCard label="I dag" value={dayBookings.length} />
           <AdminStatCard label="Bekreftet" value={confirmedCount} />
@@ -122,52 +123,121 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
           <AdminStatCard label="Omsetning i dag" value={`${todayRevenue.toLocaleString("nb-NO")} kr`} />
         </div>
 
-        <AdminCard compact>
+        {/* Controls Card */}
+        <div className="bg-white rounded-xl shadow-card p-6">
           <div className="flex flex-col lg:flex-row gap-3">
             <div className="flex-1 relative">
-              <Search className="w-4 h-4 text-[var(--color-muted)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-              <AdminInput value={searchQuery} onChange={(e) => handleSearchChange(e.target.value)} placeholder="Søk etter elev, tjeneste..." className="pl-9" />
-              {isPending && <Loader2 className="w-4 h-4 text-[var(--color-muted)] animate-spin absolute right-3 top-1/2 -translate-y-1/2" />}
+              <Search className="w-4 h-4 text-[var(--color-grey-400)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <AdminInput 
+                value={searchQuery} 
+                onChange={(e) => handleSearchChange(e.target.value)} 
+                placeholder="Søk etter elev, tjeneste..." 
+                className="pl-9" 
+              />
+              {isPending && <Loader2 className="w-4 h-4 text-[var(--color-grey-400)] animate-spin absolute right-3 top-1/2 -translate-y-1/2" />}
             </div>
-            <div className="inline-flex rounded-lg border border-[var(--color-grey-200)] bg-white p-1">
-              {VIEW_MODES.map((mode) => { const Icon = mode.icon; return (
-                <button key={mode.value} onClick={() => setViewMode(mode.value)} className={cn("inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors", viewMode === mode.value ? "bg-[var(--color-primary)] text-white" : "text-[var(--color-muted)] hover:text-[var(--color-text)]")}><Icon className="w-3.5 h-3.5" />{mode.label}</button>
-              );})}
+            
+            {/* View Mode Toggle */}
+            <div className="inline-flex rounded-lg border border-[var(--color-grey-200)] bg-[var(--color-grey-50)] p-1">
+              {VIEW_MODES.map((mode) => { 
+                const Icon = mode.icon; 
+                return (
+                  <button 
+                    key={mode.value} 
+                    onClick={() => setViewMode(mode.value)} 
+                    className={cn(
+                      "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors",
+                      viewMode === mode.value 
+                        ? "bg-[var(--color-primary)] text-white" 
+                        : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
+                    )}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                    {mode.label}
+                  </button>
+                );
+              })}
             </div>
-            <input type="date" value={format(selectedDate, "yyyy-MM-dd")} onChange={(e) => setSelectedDate(new Date(e.target.value))} className="admin-input w-auto" />
+            
+            <input 
+              type="date" 
+              value={format(selectedDate, "yyyy-MM-dd")} 
+              onChange={(e) => setSelectedDate(new Date(e.target.value))} 
+              className="admin-input w-auto" 
+            />
+            
             <div className="flex gap-2">
-              <AdminDropdown label="Handlinger" items={[
-                { id: "export", label: "Eksporter CSV", icon: <Download className="w-4 h-4" />, onSelect: () => exportCsv(bookings) },
-                { id: "remind", label: "Send påminnelse (dagens)", onSelect: () => handleBulkReminder(dayBookings) },
-              ]} />
-              <Link href="/admin/bookinger/ny"><AdminButton variant="primary" icon={<Plus className="w-4 h-4" />}><span className="hidden sm:inline">Ny booking</span></AdminButton></Link>
+              <AdminDropdown 
+                label="Handlinger" 
+                items={[
+                  { id: "export", label: "Eksporter CSV", icon: <Download className="w-4 h-4" />, onSelect: () => exportCsv(bookings) },
+                  { id: "remind", label: "Send påminnelse (dagens)", onSelect: () => handleBulkReminder(dayBookings) },
+                ]} 
+              />
+              <Link href="/admin/bookinger/ny">
+                <AdminButton variant="primary" icon={<Plus className="w-4 h-4" />}>
+                  <span className="hidden sm:inline">Ny booking</span>
+                </AdminButton>
+              </Link>
             </div>
           </div>
+          
+          {/* Status Filter Pills */}
           <div className="flex flex-wrap gap-2 mt-4">
-            <FilterPill active={!statusFilter} onClick={() => handleStatusFilter(null)}>Alle ({total})</FilterPill>
+            <FilterPill active={!statusFilter} onClick={() => handleStatusFilter(null)}>
+              Alle ({total})
+            </FilterPill>
             {(Object.entries(STATUS_CONFIG) as [StatusKey, (typeof STATUS_CONFIG)[StatusKey]][]).map(([s, c]) => {
               const Icon = c.icon;
-              return <FilterPill key={s} active={statusFilter === s} onClick={() => handleStatusFilter(statusFilter === s ? null : s)}><Icon className="w-3.5 h-3.5" />{c.label}</FilterPill>;
+              return (
+                <FilterPill 
+                  key={s} 
+                  active={statusFilter === s} 
+                  onClick={() => handleStatusFilter(statusFilter === s ? null : s)}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {c.label}
+                </FilterPill>
+              );
             })}
           </div>
-        </AdminCard>
+        </div>
 
+        {/* Day View */}
         {viewMode === "day" && (
-          <AdminCard className="p-0 overflow-hidden">
+          <div className="bg-white rounded-xl shadow-card overflow-hidden">
             <div className="px-6 py-4 border-b border-[var(--color-grey-200)]">
-              <h3 className="admin-section-title capitalize">{format(selectedDate, "EEEE d. MMMM", { locale: nb })}</h3>
-              <span className="text-xs text-[var(--color-muted)]">{dayBookings.length} booking{dayBookings.length !== 1 ? "er" : ""}</span>
+              <h3 className="text-lg font-semibold text-[var(--color-grey-900)] capitalize">
+                {format(selectedDate, "EEEE d. MMMM", { locale: nb })}
+              </h3>
+              <span className="text-xs text-[var(--color-grey-500)]">
+                {dayBookings.length} booking{dayBookings.length !== 1 ? "er" : ""}
+              </span>
             </div>
             <div className="divide-y divide-[var(--color-grey-100)]">
               {dayBookings.length === 0 ? (
-                <AdminEmptyState icon={<Calendar className="w-6 h-6" />} title="Ingen bookinger denne dagen" description="Velg en annen dato eller opprett en ny booking." className="border-0" />
+                <AdminEmptyState 
+                  icon={<Calendar className="w-6 h-6" />} 
+                  title="Ingen bookinger denne dagen" 
+                  description="Velg en annen dato eller opprett en ny booking." 
+                  className="border-0" 
+                />
               ) : dayBookings.map((b) => <DayBookingRow key={b.id} booking={b} onDetail={setDrawerBooking} />)}
             </div>
-          </AdminCard>
+          </div>
         )}
 
+        {/* List View */}
         {viewMode === "list" && (
-          <AdminDataTable<AdminBooking> columns={listColumns} data={bookings} searchable={false} pagination={{ pageSize: 15 }} bulkActions={listBulkActions} onRowClick={setDrawerBooking} emptyMessage="Ingen bookinger funnet." />
+          <AdminDataTable<AdminBooking> 
+            columns={listColumns} 
+            data={bookings} 
+            searchable={false} 
+            pagination={{ pageSize: 15 }} 
+            bulkActions={listBulkActions} 
+            onRowClick={setDrawerBooking} 
+            emptyMessage="Ingen bookinger funnet." 
+          />
         )}
       </div>
 
@@ -180,7 +250,17 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
 
 function FilterPill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
-    <button onClick={onClick} className={cn("inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-colors", active ? "bg-[var(--color-primary)] text-white" : "bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:text-[var(--color-text)]")}>{children}</button>
+    <button 
+      onClick={onClick} 
+      className={cn(
+        "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-colors",
+        active 
+          ? "bg-[var(--color-primary)] text-white" 
+          : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-200)]"
+      )}
+    >
+      {children}
+    </button>
   );
 }
 
@@ -191,25 +271,48 @@ function DayBookingRow({ booking, onDetail }: { booking: AdminBooking; onDetail:
   const focusCfg = booking.focusArea && isFocusAreaKey(booking.focusArea) ? FOCUS_AREA_CONFIG[booking.focusArea] : null;
 
   return (
-    <div className="p-4 hover:bg-[var(--color-grey-50)] transition-colors group cursor-pointer" onClick={() => onDetail(booking)}>
+    <div 
+      className="p-4 hover:bg-[var(--color-grey-50)] transition-colors group cursor-pointer" 
+      onClick={() => onDetail(booking)}
+    >
       <div className="flex items-start gap-4">
         <div className="flex flex-col items-center min-w-[4rem]">
-          <span className="text-lg font-bold text-[var(--color-text)] tabular-nums">{formatTime(booking.startTime)}</span>
-          <span className="text-xs text-[var(--color-muted)]">{booking.ServiceType?.duration ?? 0} min</span>
+          <span className="text-lg font-bold text-[var(--color-grey-900)] tabular-nums">
+            {formatTime(booking.startTime)}
+          </span>
+          <span className="text-xs text-[var(--color-grey-500)]">
+            {booking.ServiceType?.duration ?? 0} min
+          </span>
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
-            <h4 className="text-sm font-semibold text-[var(--color-text)]">{booking.ServiceType?.name ?? "Ukjent"}</h4>
-            <AdminBadge variant={cfg.variant} icon={<StatusIcon className="w-3 h-3" />}>{cfg.label}</AdminBadge>
-            {focusCfg && <AdminBadge variant={focusCfg.variant} icon={<Target className="w-3 h-3" />}>{focusCfg.label}</AdminBadge>}
+            <h4 className="text-sm font-semibold text-[var(--color-grey-900)]">
+              {booking.ServiceType?.name ?? "Ukjent"}
+            </h4>
+            <AdminBadge variant={cfg.variant} icon={<StatusIcon className="w-3 h-3" />}>
+              {cfg.label}
+            </AdminBadge>
+            {focusCfg && (
+              <AdminBadge variant={focusCfg.variant} icon={<Target className="w-3 h-3" />}>
+                {focusCfg.label}
+              </AdminBadge>
+            )}
           </div>
-          <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--color-muted)]">
-            <span className="flex items-center gap-1"><User className="w-3.5 h-3.5" />{booking.User?.name ?? booking.User?.email ?? "Ukjent"}</span>
-            <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{booking.Instructor?.User?.name ?? "Ukjent"}</span>
+          <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--color-grey-500)]">
+            <span className="flex items-center gap-1">
+              <User className="w-3.5 h-3.5" />
+              {booking.User?.name ?? booking.User?.email ?? "Ukjent"}
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="w-3.5 h-3.5" />
+              {booking.Instructor?.User?.name ?? "Ukjent"}
+            </span>
           </div>
           {booking.focusArea && booking.status !== "CANCELLED" && <SessionPlanPanel bookingId={booking.id} />}
         </div>
-        <span className="text-sm font-semibold text-[var(--color-text)] tabular-nums">{(booking.amount ?? 0).toLocaleString("nb-NO")} kr</span>
+        <span className="text-sm font-semibold text-[var(--color-grey-900)] tabular-nums">
+          {(booking.amount ?? 0).toLocaleString("nb-NO")} kr
+        </span>
       </div>
     </div>
   );

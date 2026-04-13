@@ -6,9 +6,6 @@ import {
   useMCSidebar,
 } from "@/components/portal/mission-control";
 import {
-  AdminCard,
-  AdminButton,
-  AdminBadge,
   AdminGauge,
   AdminSparkline,
   AdminLineChart,
@@ -80,6 +77,73 @@ interface HubOversiktClientProps {
   };
 }
 
+// Badge component with grey tokens
+function Badge({
+  children,
+  variant = "muted",
+}: {
+  children: React.ReactNode;
+  variant?: "success" | "warning" | "error" | "info" | "muted";
+}) {
+  const variantStyles = {
+    success: "bg-[var(--color-success)]/10 text-[var(--color-success)]",
+    warning: "bg-[var(--color-warning)]/10 text-[var(--color-warning)]",
+    error: "bg-[var(--color-error)]/10 text-[var(--color-error)]",
+    info: "bg-[var(--color-info)]/10 text-[var(--color-info)]",
+    muted: "bg-grey-100 text-grey-600",
+  };
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${variantStyles[variant]}`}
+    >
+      {children}
+    </span>
+  );
+}
+
+// Card component with grey tokens
+function Card({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`bg-white rounded-xl shadow-card ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+// Button component with grey tokens
+function Button({
+  children,
+  variant = "secondary",
+  icon,
+  className = "",
+}: {
+  children: React.ReactNode;
+  variant?: "primary" | "secondary";
+  icon?: React.ReactNode;
+  className?: string;
+}) {
+  const baseStyles =
+    "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors";
+  const variantStyles = {
+    primary: "bg-grey-900 text-white hover:bg-grey-800",
+    secondary: "bg-grey-100 text-grey-700 hover:bg-grey-200",
+  };
+
+  return (
+    <button className={`${baseStyles} ${variantStyles[variant]} ${className}`}>
+      {icon && <span className="w-4 h-4">{icon}</span>}
+      {children}
+    </button>
+  );
+}
+
 export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
   const { toggle } = useMCSidebar();
 
@@ -123,9 +187,24 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
 
   // Quick actions
   const quickActions = [
-    { label: "Ny booking", icon: Plus, href: "/admin/bookinger/ny", variant: "primary" as const },
-    { label: "Send melding", icon: MessageSquare, href: "/admin/meldinger", variant: "secondary" as const },
-    { label: "Legg til elev", icon: UserPlus, href: "/admin/elever", variant: "secondary" as const },
+    {
+      label: "Ny booking",
+      icon: Plus,
+      href: "/admin/bookinger/ny",
+      variant: "primary" as const,
+    },
+    {
+      label: "Send melding",
+      icon: MessageSquare,
+      href: "/admin/meldinger",
+      variant: "secondary" as const,
+    },
+    {
+      label: "Legg til elev",
+      icon: UserPlus,
+      href: "/admin/elever",
+      variant: "secondary" as const,
+    },
   ];
 
   const allActionItems = [
@@ -137,29 +216,58 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
 
   // Sparkline-data for KPI-kortene (siste 14 dager — eksempel-data)
   const sparkSessions = [6, 7, 5, 8, 9, 7, 10, 8, 9, 11, 10, 12, 11, 13];
-  const sparkActiveStudents = [140, 142, 143, 145, 146, 147, 148, 149, 150, 150, 151, 152, 153, 154];
+  const sparkActiveStudents = [
+    140, 142, 143, 145, 146, 147, 148, 149, 150, 150, 151, 152, 153, 154,
+  ];
   const sparkPending = [3, 2, 4, 3, 5, 4, 3, 2, 4, 3, 2, 3, 4, 2];
   const sparkRevenue = [
-    210000, 225000, 230000, 245000, 260000, 255000, 270000, 280000, 290000, 295000, 310000, 320000, 325000, 340000,
+    210000, 225000, 230000, 245000, 260000, 255000, 270000, 280000, 290000,
+    295000, 310000, 320000, 325000, 340000,
   ];
 
   // Handicap-trend siste 30 dager (eksempel — gjennomsnitt alle aktive elever)
-  const handicapTrend: AdminLineChartDatum[] = Array.from({ length: 30 }, (_, i) => {
-    const date = new Date();
-    date.setDate(date.getDate() - (29 - i));
-    return {
-      label: date.toLocaleDateString("nb-NO", { day: "numeric", month: "short" }),
-      value: Number((18.4 - i * 0.04 - Math.random() * 0.3).toFixed(1)),
-    };
-  });
+  const handicapTrend: AdminLineChartDatum[] = Array.from(
+    { length: 30 },
+    (_, i) => {
+      const date = new Date();
+      date.setDate(date.getDate() - (29 - i));
+      return {
+        label: date.toLocaleDateString("nb-NO", {
+          day: "numeric",
+          month: "short",
+        }),
+        value: Number((18.4 - i * 0.04 - Math.random() * 0.3).toFixed(1)),
+      };
+    }
+  );
 
   // Elevfordeling per tier (VISITOR / ACADEMY / STARTER / PRO / ELITE)
   const tierDistribution: AdminDonutChartDatum[] = [
-    { label: "Visitor", value: data.divisions.gfgk.studentCount, color: "var(--color-muted)" },
-    { label: "Academy", value: Math.round(data.divisions.junior.studentCount * 0.6), color: "var(--color-accent-cta)" },
-    { label: "Starter", value: Math.round(data.divisions.junior.studentCount * 0.4), color: "var(--color-warning)" },
-    { label: "Pro", value: Math.round(data.divisions.coaching.studentCount * 0.7), color: "var(--color-primary)" },
-    { label: "Elite", value: Math.round(data.divisions.coaching.studentCount * 0.3), color: "var(--color-ai)" },
+    {
+      label: "Visitor",
+      value: data.divisions.gfgk.studentCount,
+      color: "var(--color-grey-300)",
+    },
+    {
+      label: "Academy",
+      value: Math.round(data.divisions.junior.studentCount * 0.6),
+      color: "var(--color-accent-cta)",
+    },
+    {
+      label: "Starter",
+      value: Math.round(data.divisions.junior.studentCount * 0.4),
+      color: "var(--color-warning)",
+    },
+    {
+      label: "Pro",
+      value: Math.round(data.divisions.coaching.studentCount * 0.7),
+      color: "var(--color-primary)",
+    },
+    {
+      label: "Elite",
+      value: Math.round(data.divisions.coaching.studentCount * 0.3),
+      color: "var(--color-ai)",
+    },
   ];
 
   return (
@@ -172,44 +280,48 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
         notificationCount={data.alerts.length}
       />
 
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 bg-grey-50 min-h-screen">
         {/* Alerts */}
         {data.alerts.length > 0 && (
           <div className="flex flex-wrap items-center gap-2">
             {data.alerts.map((a, i) => (
-              <AdminBadge key={i} variant={a.variant}>
+              <Badge key={i} variant={a.variant}>
                 {a.label}
-              </AdminBadge>
+              </Badge>
             ))}
           </div>
         )}
 
         {/* Stats Grid med sparklines */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <AdminCard>
+          <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="admin-label">Okter i dag</p>
-                <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                <p className="text-xs font-medium text-grey-500 uppercase tracking-wide">
+                  Økter i dag
+                </p>
+                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight tabular-nums">
                   {data.kpis.sessionsToday}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-700">
                 <Calendar className="w-5 h-5" />
               </div>
             </div>
             <AdminSparkline data={sparkSessions} width="100%" height={32} />
-          </AdminCard>
+          </Card>
 
-          <AdminCard>
+          <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="admin-label">Aktive elever</p>
-                <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                <p className="text-xs font-medium text-grey-500 uppercase tracking-wide">
+                  Aktive elever
+                </p>
+                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight tabular-nums">
                   {data.kpis.activeStudents}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-700">
                 <Users className="w-5 h-5" />
               </div>
             </div>
@@ -219,17 +331,19 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
               height={32}
               color="var(--color-success)"
             />
-          </AdminCard>
+          </Card>
 
-          <AdminCard>
+          <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="admin-label">Ventende bookinger</p>
-                <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                <p className="text-xs font-medium text-grey-500 uppercase tracking-wide">
+                  Ventende bookinger
+                </p>
+                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight tabular-nums">
                   {data.kpis.pendingBookings}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-700">
                 <Clock className="w-5 h-5" />
               </div>
             </div>
@@ -239,17 +353,19 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
               height={32}
               color="var(--color-warning)"
             />
-          </AdminCard>
+          </Card>
 
-          <AdminCard>
+          <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="admin-label">Omsetning MTD</p>
-                <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+                <p className="text-xs font-medium text-grey-500 uppercase tracking-wide">
+                  Omsetning MTD
+                </p>
+                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight tabular-nums">
                   {formatRevenue(data.kpis.mtdRevenue)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-700">
                 <TrendingUp className="w-5 h-5" />
               </div>
             </div>
@@ -259,13 +375,15 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
               height={32}
               color="var(--color-primary)"
             />
-          </AdminCard>
+          </Card>
         </div>
 
         {/* Kapasitet + Tier fordeling + Handicap-trend */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <AdminCard>
-            <h3 className="admin-section-title mb-4">Kapasitetsutnyttelse</h3>
+          <Card className="p-5">
+            <h3 className="text-sm font-semibold text-grey-900 mb-4">
+              Kapasitetsutnyttelse
+            </h3>
             <div className="flex flex-col items-center justify-center py-2">
               <AdminGauge
                 value={kapasitetPct}
@@ -273,40 +391,46 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                 label={`${data.kpis.activeStudents} av 150 plasser`}
               />
             </div>
-          </AdminCard>
+          </Card>
 
-          <AdminCard>
-            <h3 className="admin-section-title mb-4">Elevfordeling per tier</h3>
+          <Card className="p-5">
+            <h3 className="text-sm font-semibold text-grey-900 mb-4">
+              Elevfordeling per tier
+            </h3>
             <AdminDonutChart
               data={tierDistribution}
               height={240}
               centerLabel="Totalt"
               centerValue={tierDistribution.reduce((s, d) => s + d.value, 0)}
             />
-          </AdminCard>
+          </Card>
 
-          <AdminCard>
+          <Card className="p-5">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="admin-section-title">Handicap-trend (30 dager)</h3>
-              <AdminBadge variant="info">Snitt</AdminBadge>
+              <h3 className="text-sm font-semibold text-grey-900">
+                Handicap-trend (30 dager)
+              </h3>
+              <Badge variant="info">Snitt</Badge>
             </div>
             <AdminLineChart data={handicapTrend} height={240} />
-          </AdminCard>
+          </Card>
         </div>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Today's Schedule - Takes 2 columns */}
           <div className="lg:col-span-2">
-            <AdminCard className="p-0 overflow-hidden">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)]">
+            <Card className="overflow-hidden">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
                 <div className="flex items-center gap-3">
-                  <Clock className="w-5 h-5 text-[var(--color-primary)]" />
-                  <h2 className="admin-section-title">Dagens timeplan</h2>
+                  <Clock className="w-5 h-5 text-grey-700" />
+                  <h2 className="text-sm font-semibold text-grey-900">
+                    Dagens timeplan
+                  </h2>
                 </div>
                 <Link
                   href="/admin/kalender"
-                  className="text-sm text-[var(--color-primary)] hover:opacity-80 font-medium inline-flex items-center gap-1.5 transition-opacity"
+                  className="text-sm text-grey-700 hover:text-grey-900 font-medium inline-flex items-center gap-1.5 transition-colors"
                 >
                   Se kalender
                   <ArrowRight className="w-4 h-4" />
@@ -314,119 +438,121 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
               </div>
 
               {timelineItems.length > 0 ? (
-                <ul className="divide-y divide-[var(--color-grey-100)]">
+                <ul className="divide-y divide-grey-100">
                   {timelineItems.map((item) => (
                     <li
                       key={item.id}
-                      className="flex items-center gap-5 px-6 py-4 hover:bg-[var(--color-grey-50)] transition-colors"
+                      className="flex items-center gap-5 px-6 py-4 hover:bg-grey-50 transition-colors"
                     >
                       <div className="min-w-[60px] text-center">
-                        <p className="text-lg font-bold text-[var(--color-text)] tabular-nums">
+                        <p className="text-lg font-bold text-grey-900 tabular-nums">
                           {item.time}
                         </p>
-                        <p className="text-[10px] uppercase tracking-wide text-[var(--color-muted)]">
+                        <p className="text-[10px] uppercase tracking-wide text-grey-500">
                           {item.duration}
                         </p>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-[var(--color-text)] truncate">
+                        <p className="font-semibold text-grey-900 truncate">
                           {item.name}
                         </p>
-                        <p className="text-xs text-[var(--color-muted)] truncate mt-0.5">
+                        <p className="text-xs text-grey-500 truncate mt-0.5">
                           {item.subtitle ?? item.division}
                         </p>
                       </div>
                       {item.isActive ? (
-                        <AdminBadge variant="success">Aktiv</AdminBadge>
+                        <Badge variant="success">Aktiv</Badge>
                       ) : (
-                        <AdminBadge variant="muted">{item.division}</AdminBadge>
+                        <Badge variant="muted">{item.division}</Badge>
                       )}
                     </li>
                   ))}
                 </ul>
               ) : (
                 <div className="px-6 py-16 text-center">
-                  <Calendar className="w-10 h-10 text-[var(--color-muted)] mx-auto mb-3 opacity-50" />
-                  <p className="text-sm text-[var(--color-muted)]">
-                    Ingen okter i dag
-                  </p>
+                  <Calendar className="w-10 h-10 text-grey-400 mx-auto mb-3 opacity-50" />
+                  <p className="text-sm text-grey-500">Ingen økter i dag</p>
                 </div>
               )}
-            </AdminCard>
+            </Card>
           </div>
 
           {/* Sidebar - Takes 1 column */}
           <div className="space-y-6">
             {/* Quick Actions */}
-            <AdminCard>
-              <h3 className="admin-section-title mb-4">Snarveier</h3>
+            <Card className="p-5">
+              <h3 className="text-sm font-semibold text-grey-900 mb-4">
+                Snarveier
+              </h3>
               <div className="space-y-2">
                 {quickActions.map((action) => {
                   const Icon = action.icon;
                   return (
-                    <Link key={action.label} href={action.href} className="block">
-                      <AdminButton
+                    <Link
+                      key={action.label}
+                      href={action.href}
+                      className="block"
+                    >
+                      <Button
                         variant={action.variant}
                         className="w-full justify-start"
                         icon={<Icon className="w-4 h-4" />}
                       >
                         {action.label}
-                      </AdminButton>
+                      </Button>
                     </Link>
                   );
                 })}
               </div>
-            </AdminCard>
+            </Card>
 
             {/* Division Stats */}
-            <AdminCard>
-              <h3 className="admin-section-title mb-4">Divisjoner</h3>
+            <Card className="p-5">
+              <h3 className="text-sm font-semibold text-grey-900 mb-4">
+                Divisjoner
+              </h3>
               <div className="space-y-2">
-                <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--color-grey-50)]">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-grey-50">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-[var(--color-primary)]" />
-                    <span className="text-sm text-[var(--color-text)]">
-                      Coaching
-                    </span>
+                    <span className="text-sm text-grey-700">Coaching</span>
                   </div>
-                  <span className="text-sm font-semibold text-[var(--color-text)] tabular-nums">
+                  <span className="text-sm font-semibold text-grey-900 tabular-nums">
                     {data.divisions.coaching.studentCount}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--color-grey-50)]">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-grey-50">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-[var(--color-warning)]" />
-                    <span className="text-sm text-[var(--color-text)]">
-                      Junior
-                    </span>
+                    <span className="text-sm text-grey-700">Junior</span>
                   </div>
-                  <span className="text-sm font-semibold text-[var(--color-text)] tabular-nums">
+                  <span className="text-sm font-semibold text-grey-900 tabular-nums">
                     {data.divisions.junior.studentCount}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--color-grey-50)]">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-grey-50">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-[var(--color-success)]" />
-                    <span className="text-sm text-[var(--color-text)]">
-                      GFGK
-                    </span>
+                    <span className="text-sm text-grey-700">GFGK</span>
                   </div>
-                  <span className="text-sm font-semibold text-[var(--color-text)] tabular-nums">
+                  <span className="text-sm font-semibold text-grey-900 tabular-nums">
                     {data.divisions.gfgk.studentCount}
                   </span>
                 </div>
               </div>
-            </AdminCard>
+            </Card>
 
             {/* Pending Actions */}
             {allActionItems.length > 0 && (
-              <AdminCard>
-                <h3 className="admin-section-title mb-3">Paminnelser</h3>
+              <Card className="p-5">
+                <h3 className="text-sm font-semibold text-grey-900 mb-3">
+                  Påminnelser
+                </h3>
                 <div className="space-y-2">
                   {allActionItems.map((item, i) => (
                     <div
                       key={i}
-                      className="flex items-start gap-2 p-3 rounded-lg bg-[var(--color-grey-50)]"
+                      className="flex items-start gap-2 p-3 rounded-lg bg-grey-50"
                     >
                       <AlertCircle
                         className={`w-4 h-4 shrink-0 mt-0.5 ${
@@ -434,16 +560,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                             ? "text-[var(--color-error)]"
                             : item.variant === "warning"
                               ? "text-[var(--color-warning)]"
-                              : "text-[var(--color-primary)]"
+                              : "text-[var(--color-info)]"
                         }`}
                       />
-                      <span className="text-xs text-[var(--color-text)]">
-                        {item.text}
-                      </span>
+                      <span className="text-xs text-grey-700">{item.text}</span>
                     </div>
                   ))}
                 </div>
-              </AdminCard>
+              </Card>
             )}
           </div>
         </div>

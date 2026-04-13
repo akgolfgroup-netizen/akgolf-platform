@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowLeft, MapPin, Check, X, User, Settings, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
-import { AdminCard, AdminBadge, AdminPageHeader } from "@/components/portal/mission-control/ui";
 import { toggleFacilityActive, deleteInstructorDefault } from "../actions";
 
 // ── Types ──────────────────────────────────────────────────
@@ -54,28 +53,36 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
     <>
       <MCTopbar title="Fasilitetinnstillinger" subtitle="Administrer fasiliteter og standard innstillinger" onMenuClick={toggle} />
       <div className={cn("p-6 max-w-4xl mx-auto space-y-6", isPending && "opacity-60 pointer-events-none")}>
-        <Link href="/admin/fasiliteter" className="inline-flex items-center gap-2 text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors">
+        <Link href="/admin/fasiliteter" className="inline-flex items-center gap-2 text-sm text-grey-500 hover:text-grey-700 transition-colors">
           <ArrowLeft className="w-4 h-4" />Tilbake til fasiliteter
         </Link>
 
-        <AdminPageHeader title="Innstillinger" subtitle="Administrer fasiliteter og instruktør-defaults"
-          breadcrumbs={[{ label: "Fasiliteter", href: "/admin/fasiliteter" }, { label: "Innstillinger" }]} />
+        {/* Page Header */}
+        <div>
+          <nav className="flex items-center gap-2 text-sm text-grey-500 mb-2">
+            <Link href="/admin/fasiliteter" className="hover:text-grey-700 transition-colors">Fasiliteter</Link>
+            <span>/</span>
+            <span className="text-grey-700">Innstillinger</span>
+          </nav>
+          <h1 className="text-2xl font-semibold text-grey-900">Innstillinger</h1>
+          <p className="text-grey-500 mt-1">Administrer fasiliteter og instruktør-defaults</p>
+        </div>
 
         {/* Facilities List */}
-        <AdminCard className="p-0 overflow-hidden">
-          <div className="px-5 py-4 border-b border-[var(--color-grey-200)]">
-            <h3 className="admin-section-title">Fasiliteter</h3>
+        <div className="bg-white rounded-xl shadow-card overflow-hidden">
+          <div className="px-5 py-4 border-b border-grey-200">
+            <h3 className="font-semibold text-grey-900">Fasiliteter</h3>
           </div>
-          <div className="divide-y divide-[var(--color-grey-200)]">
+          <div className="divide-y divide-grey-200">
             {facilities.map((f) => (
               <div key={f.id} className="px-5 py-4 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 rounded-lg bg-[var(--color-grey-100)] flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-[var(--color-muted)]" />
+                  <div className="w-10 h-10 rounded-lg bg-grey-100 flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5 text-grey-500" />
                   </div>
                   <div className="min-w-0">
-                    <p className="font-medium text-[var(--color-text)] truncate">{f.name}</p>
-                    <p className="text-sm text-[var(--color-muted)]">{f.locationName} · Kapasitet: {f.capacity}</p>
+                    <p className="font-medium text-grey-900 truncate">{f.name}</p>
+                    <p className="text-sm text-grey-500">{f.locationName} · Kapasitet: {f.capacity}</p>
                   </div>
                 </div>
                 <button
@@ -84,8 +91,8 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
                   className={cn(
                     "inline-flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors",
                     f.isActive
-                      ? "text-[var(--color-success)] bg-[var(--color-success)]/10 hover:bg-[var(--color-success)]/15"
-                      : "text-[var(--color-muted)] bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)]",
+                      ? "text-emerald-700 bg-emerald-50 hover:bg-emerald-100"
+                      : "text-grey-500 bg-grey-100 hover:bg-grey-200",
                   )}
                 >
                   {f.isActive ? <><Check className="w-3 h-3" />Aktiv</> : <><X className="w-3 h-3" />Inaktiv</>}
@@ -93,34 +100,36 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
               </div>
             ))}
             {facilities.length === 0 && (
-              <div className="px-5 py-8 text-center text-sm text-[var(--color-muted)]">Ingen fasiliteter registrert</div>
+              <div className="px-5 py-8 text-center text-sm text-grey-500">Ingen fasiliteter registrert</div>
             )}
           </div>
-        </AdminCard>
+        </div>
 
         {/* Instructor Defaults */}
-        <AdminCard className="p-0 overflow-hidden">
-          <div className="px-5 py-4 border-b border-[var(--color-grey-200)]">
-            <h3 className="admin-section-title">Instruktør-fasilitet defaults</h3>
-            <p className="text-sm text-[var(--color-muted)] mt-1">Standard fasilitet for hver instruktør ved booking-opprettelse</p>
+        <div className="bg-white rounded-xl shadow-card overflow-hidden">
+          <div className="px-5 py-4 border-b border-grey-200">
+            <h3 className="font-semibold text-grey-900">Instruktør-fasilitet defaults</h3>
+            <p className="text-sm text-grey-500 mt-1">Standard fasilitet for hver instruktør ved booking-opprettelse</p>
           </div>
           {defaults.length > 0 ? (
-            <div className="divide-y divide-[var(--color-grey-200)]">
+            <div className="divide-y divide-grey-200">
               {defaults.map((d) => (
                 <div key={d.id} className="px-5 py-4 flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-10 h-10 rounded-lg bg-[var(--color-grey-100)] flex items-center justify-center shrink-0">
-                      <User className="w-5 h-5 text-[var(--color-muted)]" />
+                    <div className="w-10 h-10 rounded-lg bg-grey-100 flex items-center justify-center shrink-0">
+                      <User className="w-5 h-5 text-grey-500" />
                     </div>
                     <div className="min-w-0">
-                      <p className="font-medium text-[var(--color-text)] truncate">{d.instructorName}</p>
-                      <p className="text-sm text-[var(--color-muted)] truncate">{d.facilityName}{d.serviceType ? ` (${d.serviceType})` : ""}</p>
+                      <p className="font-medium text-grey-900 truncate">{d.instructorName}</p>
+                      <p className="text-sm text-grey-500 truncate">{d.facilityName}{d.serviceType ? ` (${d.serviceType})` : ""}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 shrink-0">
-                    <AdminBadge variant="info">Prioritet: {d.priority}</AdminBadge>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-grey-100 text-grey-700">
+                      Prioritet: {d.priority}
+                    </span>
                     <button type="button" onClick={() => handleDeleteDefault(d.id)}
-                      className="p-2 rounded-lg hover:bg-[var(--color-error)]/10 text-[var(--color-error)] transition-colors" aria-label={`Slett default for ${d.instructorName}`}>
+                      className="p-2 rounded-lg hover:bg-red-50 text-red-600 transition-colors" aria-label={`Slett default for ${d.instructorName}`}>
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
@@ -128,14 +137,14 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
               ))}
             </div>
           ) : (
-            <div className="px-5 py-8 text-center text-sm text-[var(--color-muted)]">Ingen defaults konfigurert</div>
+            <div className="px-5 py-8 text-center text-sm text-grey-500">Ingen defaults konfigurert</div>
           )}
-        </AdminCard>
+        </div>
 
-        <div className="p-4 rounded-xl bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/20">
+        <div className="p-4 rounded-xl bg-grey-50 border border-grey-200">
           <div className="flex items-start gap-3">
-            <Settings className="w-5 h-5 text-[var(--color-primary)] mt-0.5 shrink-0" />
-            <p className="text-sm text-[var(--color-text)]">
+            <Settings className="w-5 h-5 text-grey-600 mt-0.5 shrink-0" />
+            <p className="text-sm text-grey-700">
               <strong>Tips:</strong> Fasilitet-defaults brukes til automatisk å tildele riktig fasilitet når en booking opprettes.
             </p>
           </div>

@@ -10,10 +10,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
-import {
-  AdminCard,
-  AdminEmptyState,
-} from "@/components/portal/mission-control/ui";
+import { AdminEmptyState } from "@/components/portal/mission-control/ui";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
 import type { ConversationSummary, ChatMessage } from "./chat-actions";
@@ -57,7 +54,7 @@ export function AdminChatClient({
     conv.participantName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Last meldinger når samtale velges
+  // Last meldinger nar samtale velges
   useEffect(() => {
     if (!selectedId) return;
 
@@ -133,29 +130,29 @@ export function AdminChatClient({
       />
 
       <div className="p-6">
-        <AdminCard
-          className="p-0 overflow-hidden"
+        <div
+          className="bg-white rounded-xl shadow-card overflow-hidden"
           style={{ minHeight: "calc(100vh - 180px)" }}
         >
           <div className="flex h-full">
             {/* Sidebar - Samtaleliste */}
             <div
               className={cn(
-                "w-full lg:w-80 border-r border-[var(--color-grey-200)] flex flex-col",
+                "w-full lg:w-80 border-r border-grey-200 flex flex-col",
                 selectedId && "hidden lg:flex"
               )}
             >
               {/* Sok */}
-              <div className="p-3 border-b border-[var(--color-grey-200)]">
+              <div className="p-3 border-b border-grey-200">
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 flex items-center gap-2 bg-white border border-[var(--color-grey-200)] rounded-lg px-3 py-2 focus-within:border-[var(--color-primary)]">
-                    <Search className="w-4 h-4 text-[var(--color-muted)]" />
+                  <div className="flex-1 flex items-center gap-2 bg-grey-50 border border-grey-200 rounded-lg px-3 py-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20 transition-all">
+                    <Search className="w-4 h-4 text-grey-400" />
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Sok i samtaler..."
-                      className="flex-1 bg-transparent text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none"
+                      className="flex-1 bg-transparent text-sm text-grey-900 placeholder:text-grey-400 outline-none"
                     />
                   </div>
                 </div>
@@ -165,7 +162,7 @@ export function AdminChatClient({
               <div className="flex-1 overflow-y-auto">
                 {filteredConversations.length === 0 ? (
                   <div className="p-6 text-center">
-                    <p className="text-sm text-[var(--color-muted)]">
+                    <p className="text-sm text-grey-500">
                       {searchQuery
                         ? "Ingen treff"
                         : "Ingen samtaler enna"}
@@ -177,18 +174,18 @@ export function AdminChatClient({
                       key={conv.id}
                       onClick={() => setSelectedId(conv.id)}
                       className={cn(
-                        "w-full p-3 flex items-start gap-3 text-left hover:bg-[var(--color-grey-100)] transition-colors border-b border-[var(--color-grey-100)] cursor-pointer",
-                        selectedId === conv.id && "bg-[var(--color-grey-100)]"
+                        "w-full p-3 flex items-start gap-3 text-left hover:bg-grey-100 transition-colors border-b border-grey-100 cursor-pointer",
+                        selectedId === conv.id && "bg-grey-100"
                       )}
                     >
-                      <div className="w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-xs font-semibold flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-full bg-primary/10 text-primary text-xs font-semibold flex items-center justify-center shrink-0">
                         {getInitials(conv.participantName)}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <span
                             className={cn(
-                              "text-sm truncate text-[var(--color-text)]",
+                              "text-sm truncate text-grey-900",
                               conv.unreadCount > 0 && "font-semibold"
                             )}
                           >
@@ -199,8 +196,8 @@ export function AdminChatClient({
                           className={cn(
                             "text-xs truncate mt-0.5",
                             conv.unreadCount > 0
-                              ? "text-[var(--color-text)]"
-                              : "text-[var(--color-muted)]"
+                              ? "text-grey-900"
+                              : "text-grey-500"
                           )}
                         >
                           {conv.lastMessage ?? "Ingen meldinger enna"}
@@ -208,7 +205,7 @@ export function AdminChatClient({
                       </div>
                       <div className="flex flex-col items-end gap-1">
                         {conv.lastMessageAt && (
-                          <span className="text-[10px] text-[var(--color-muted)] whitespace-nowrap">
+                          <span className="text-[10px] text-grey-500 whitespace-nowrap">
                             {formatDistanceToNow(
                               new Date(conv.lastMessageAt),
                               { addSuffix: true, locale: nb }
@@ -216,7 +213,7 @@ export function AdminChatClient({
                           </span>
                         )}
                         {conv.unreadCount > 0 && (
-                          <span className="w-5 h-5 rounded-full bg-[var(--color-primary)] text-white text-[10px] font-semibold flex items-center justify-center">
+                          <span className="w-5 h-5 rounded-full bg-primary text-white text-[10px] font-semibold flex items-center justify-center">
                             {conv.unreadCount}
                           </span>
                         )}
@@ -237,28 +234,28 @@ export function AdminChatClient({
               {selectedId && selectedConversation ? (
                 <>
                   {/* Chat Header */}
-                  <div className="p-3 border-b border-[var(--color-grey-200)] flex items-center gap-3">
+                  <div className="p-3 border-b border-grey-200 flex items-center gap-3 bg-white">
                     <button
                       onClick={() => setSelectedId(null)}
-                      className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-[var(--color-grey-100)] cursor-pointer"
+                      className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-grey-100 cursor-pointer"
                       aria-label="Tilbake"
                     >
-                      <ChevronLeft className="w-5 h-5 text-[var(--color-text)]" />
+                      <ChevronLeft className="w-5 h-5 text-grey-700" />
                     </button>
-                    <div className="w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-xs font-semibold flex items-center justify-center">
+                    <div className="w-9 h-9 rounded-full bg-primary/10 text-primary text-xs font-semibold flex items-center justify-center">
                       {getInitials(selectedConversation.participantName)}
                     </div>
                     <div className="flex-1">
-                      <h3 className="admin-section-title">
+                      <h3 className="font-semibold text-grey-900">
                         {selectedConversation.participantName}
                       </h3>
                     </div>
                   </div>
 
                   {/* Meldinger */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[var(--color-grey-50)]">
+                  <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-grey-50">
                     {isPending && messages.length === 0 ? (
-                      <div className="flex items-center justify-center h-full text-[var(--color-muted)]">
+                      <div className="flex items-center justify-center h-full text-grey-500">
                         <p className="text-sm">Laster meldinger...</p>
                       </div>
                     ) : (
@@ -272,7 +269,7 @@ export function AdminChatClient({
                               isMe ? "flex-row-reverse" : ""
                             )}
                           >
-                            <div className="w-8 h-8 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-[10px] font-semibold flex items-center justify-center shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-primary/10 text-primary text-[10px] font-semibold flex items-center justify-center shrink-0">
                               {isMe
                                 ? "ME"
                                 : getInitials(msg.senderName)}
@@ -281,8 +278,8 @@ export function AdminChatClient({
                               className={cn(
                                 "max-w-[70%] p-3 rounded-2xl text-sm",
                                 isMe
-                                  ? "bg-[var(--color-primary)] text-white rounded-tr-sm"
-                                  : "bg-white border border-[var(--color-grey-200)] text-[var(--color-text)] rounded-tl-sm"
+                                  ? "bg-primary text-white rounded-tr-sm"
+                                  : "bg-grey-100 text-grey-900 rounded-tl-sm"
                               )}
                             >
                               <p className="whitespace-pre-wrap">
@@ -293,7 +290,7 @@ export function AdminChatClient({
                                   "text-[10px] mt-1 flex items-center gap-1",
                                   isMe
                                     ? "text-white/70"
-                                    : "text-[var(--color-muted)]"
+                                    : "text-grey-500"
                                 )}
                               >
                                 {new Date(msg.createdAt).toLocaleTimeString(
@@ -313,13 +310,13 @@ export function AdminChatClient({
                   </div>
 
                   {/* Input */}
-                  <div className="p-3 border-t border-[var(--color-grey-200)] bg-white">
+                  <div className="p-3 border-t border-grey-200 bg-white">
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
                         handleSend();
                       }}
-                      className="flex items-end gap-2 bg-white border border-[var(--color-grey-200)] rounded-xl p-2 focus-within:border-[var(--color-primary)]"
+                      className="flex items-end gap-2 bg-grey-50 border border-grey-200 rounded-xl p-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20 transition-all"
                     >
                       <textarea
                         value={newMessage}
@@ -327,7 +324,7 @@ export function AdminChatClient({
                         placeholder="Skriv en melding..."
                         rows={1}
                         disabled={isSending}
-                        className="flex-1 bg-transparent text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none resize-none py-2"
+                        className="flex-1 bg-transparent text-sm text-grey-900 placeholder:text-grey-400 outline-none resize-none py-2"
                         style={{ minHeight: "20px", maxHeight: "100px" }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter" && !e.shiftKey) {
@@ -339,7 +336,7 @@ export function AdminChatClient({
                       <button
                         type="submit"
                         disabled={!newMessage.trim() || isSending}
-                        className="p-2 rounded-lg bg-[var(--color-primary)] text-white hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
+                        className="p-2 rounded-lg bg-primary text-white hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
                         aria-label="Send melding"
                       >
                         <Send className="w-4 h-4" />
@@ -348,18 +345,17 @@ export function AdminChatClient({
                   </div>
                 </>
               ) : (
-                <div className="flex-1 flex items-center justify-center p-8">
+                <div className="flex-1 flex items-center justify-center p-8 bg-grey-50">
                   <AdminEmptyState
                     icon={<MessageSquare className="w-6 h-6" />}
                     title="Velg en samtale"
                     description="Klikk pa en samtale i listen for a se meldinger og svare"
-                    className="border-0 shadow-none bg-transparent"
                   />
                 </div>
               )}
             </div>
           </div>
-        </AdminCard>
+        </div>
       </div>
     </>
   );

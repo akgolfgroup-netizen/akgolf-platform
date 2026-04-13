@@ -21,8 +21,6 @@ import {
 } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminCard,
-  AdminButton,
   AdminBadge,
   AdminStatCard,
   AdminPageHeader,
@@ -181,50 +179,46 @@ export function StudentDetailClient({ profile }: Props) {
           actions={
             <>
               <Link href="/admin/kalender">
-                <AdminButton
-                  variant="primary"
-                  icon={<Calendar className="w-4 h-4" />}
-                >
+                <button className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-[var(--color-grey-900)] text-white hover:bg-[var(--color-grey-800)] transition-colors">
+                  <Calendar className="w-4 h-4" />
                   Book ny time
-                </AdminButton>
+                </button>
               </Link>
-              <AdminButton
-                variant="secondary"
-                icon={<MessageSquare className="w-4 h-4" />}
+              <button
                 onClick={handleSendMessage}
-                loading={isSendingMessage}
+                disabled={isSendingMessage}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-900)] hover:bg-[var(--color-grey-50)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
+                <MessageSquare className="w-4 h-4" />
                 {isSendingMessage ? "Starter samtale..." : "Send melding"}
-              </AdminButton>
+              </button>
               <Link href={`/admin/treningsplan?studentId=${profile.id}`}>
-                <AdminButton
-                  variant="secondary"
-                  icon={<FileText className="w-4 h-4" />}
-                >
+                <button className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-900)] hover:bg-[var(--color-grey-50)] transition-colors">
+                  <FileText className="w-4 h-4" />
                   Treningsplan
-                </AdminButton>
+                </button>
               </Link>
-              <AdminButton
-                variant="ghost"
-                icon={<Edit3 className="w-4 h-4" />}
+              <button
                 disabled
                 title="Kommer snart"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-[var(--color-grey-400)] hover:bg-[var(--color-grey-50)] transition-colors cursor-not-allowed"
               >
+                <Edit3 className="w-4 h-4" />
                 Rediger
-              </AdminButton>
+              </button>
             </>
           }
         />
 
-        {/* Profile Header */}
-        <AdminCard>
+        {/* Profile Header Card */}
+        <div className="bg-white rounded-xl shadow-card p-6">
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="flex items-start gap-4">
-              <div className="w-16 h-16 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center text-xl font-semibold">
+              <div className="w-16 h-16 rounded-full bg-[var(--color-grey-100)] text-[var(--color-grey-700)] flex items-center justify-center text-xl font-semibold">
                 {getInitials(profile.name)}
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-[var(--color-text)]">
+                <h2 className="text-lg font-semibold text-[var(--color-grey-900)]">
                   {profile.name ?? "Uten navn"}
                 </h2>
                 <div className="flex flex-wrap items-center gap-2 mt-1.5">
@@ -238,11 +232,11 @@ export function StudentDetailClient({ profile }: Props) {
                     <AdminBadge variant="muted">Kat {profile.category}</AdminBadge>
                   )}
                 </div>
-                <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-[var(--color-muted)]">
+                <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-[var(--color-grey-500)]">
                   {profile.email && (
                     <a
                       href={`mailto:${profile.email}`}
-                      className="flex items-center gap-1.5 hover:text-[var(--color-primary)] transition-colors"
+                      className="flex items-center gap-1.5 hover:text-[var(--color-grey-700)] transition-colors"
                     >
                       <Mail className="w-4 h-4" />
                       {profile.email}
@@ -251,7 +245,7 @@ export function StudentDetailClient({ profile }: Props) {
                   {profile.phone && (
                     <a
                       href={`tel:${profile.phone}`}
-                      className="flex items-center gap-1.5 hover:text-[var(--color-primary)] transition-colors"
+                      className="flex items-center gap-1.5 hover:text-[var(--color-grey-700)] transition-colors"
                     >
                       <Phone className="w-4 h-4" />
                       {profile.phone}
@@ -263,10 +257,10 @@ export function StudentDetailClient({ profile }: Props) {
 
             <div className="flex-1 grid grid-cols-4 gap-4 lg:border-l lg:border-[var(--color-grey-200)] lg:pl-6 items-center">
               <div className="text-center">
-                <div className="text-3xl font-bold text-[var(--color-primary)] tabular-nums">
+                <div className="text-3xl font-bold text-[var(--color-grey-900)] tabular-nums">
                   {profile.handicap !== null ? profile.handicap.toFixed(1) : "—"}
                 </div>
-                <div className="text-xs text-[var(--color-muted)] mt-0.5">
+                <div className="text-xs text-[var(--color-grey-500)] mt-0.5">
                   Handicap
                 </div>
                 {hcpChange !== null && (
@@ -288,10 +282,10 @@ export function StudentDetailClient({ profile }: Props) {
                 )}
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-[var(--color-text)] tabular-nums">
+                <div className="text-3xl font-bold text-[var(--color-grey-900)] tabular-nums">
                   {profile.totalSessions}
                 </div>
-                <div className="text-xs text-[var(--color-muted)] mt-0.5">
+                <div className="text-xs text-[var(--color-grey-500)] mt-0.5">
                   Okter totalt
                 </div>
               </div>
@@ -299,7 +293,7 @@ export function StudentDetailClient({ profile }: Props) {
                 <div className="text-3xl font-bold text-[var(--color-success)] tabular-nums">
                   {profile.attendanceRate}%
                 </div>
-                <div className="text-xs text-[var(--color-muted)] mt-0.5">
+                <div className="text-xs text-[var(--color-grey-500)] mt-0.5">
                   Oppmote
                 </div>
               </div>
@@ -315,7 +309,7 @@ export function StudentDetailClient({ profile }: Props) {
               </div>
             </div>
           </div>
-        </AdminCard>
+        </div>
 
         {/* Stats Row */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -366,10 +360,12 @@ export function StudentDetailClient({ profile }: Props) {
         {activeTab === "overview" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {handicapTrend.length > 1 && (
-              <AdminCard className="lg:col-span-2">
+              <div className="bg-white rounded-xl shadow-card p-6 lg:col-span-2">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="admin-section-title">Handicap-utvikling</h3>
-                  <span className="text-xs text-[var(--color-muted)]">
+                  <h3 className="text-lg font-semibold text-[var(--color-grey-900)]">
+                    Handicap-utvikling
+                  </h3>
+                  <span className="text-xs text-[var(--color-grey-500)]">
                     {handicapTrend.length} maling{handicapTrend.length !== 1 ? "er" : ""}
                   </span>
                 </div>
@@ -379,12 +375,14 @@ export function StudentDetailClient({ profile }: Props) {
                   color="var(--color-primary)"
                   valueLabel="Handicap"
                 />
-              </AdminCard>
+              </div>
             )}
 
-            <AdminCard>
+            <div className="bg-white rounded-xl shadow-card p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="admin-section-title">Manedlig mal</h3>
+                <h3 className="text-lg font-semibold text-[var(--color-grey-900)]">
+                  Manedlig mal
+                </h3>
               </div>
               <div className="flex flex-col items-center gap-3">
                 <AdminProgressRing
@@ -395,17 +393,19 @@ export function StudentDetailClient({ profile }: Props) {
                   valueSuffix=""
                   label={`av ${monthlyGoal} okter`}
                 />
-                <p className="text-xs text-center text-[var(--color-muted)]">
+                <p className="text-xs text-center text-[var(--color-grey-500)]">
                   {Math.max(0, monthlyGoal - profile.sessionsThisMonth)} okter
                   igjen denne maneden
                 </p>
               </div>
-            </AdminCard>
+            </div>
 
-            <AdminCard className="lg:col-span-2">
+            <div className="bg-white rounded-xl shadow-card p-6 lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="admin-section-title">Treningsvolum</h3>
-                <span className="text-xs text-[var(--color-muted)]">
+                <h3 className="text-lg font-semibold text-[var(--color-grey-900)]">
+                  Treningsvolum
+                </h3>
+                <span className="text-xs text-[var(--color-grey-500)]">
                   Okter per maned
                 </span>
               </div>
@@ -415,13 +415,15 @@ export function StudentDetailClient({ profile }: Props) {
                 color="var(--color-primary)"
                 valueLabel="Okter"
               />
-            </AdminCard>
+            </div>
 
-            <AdminCard>
+            <div className="bg-white rounded-xl shadow-card p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="admin-section-title">Malsettinger</h3>
+                <h3 className="text-lg font-semibold text-[var(--color-grey-900)]">
+                  Malsettinger
+                </h3>
                 <button
-                  className="p-1.5 rounded-md text-[var(--color-muted)] opacity-50 cursor-not-allowed"
+                  className="p-1.5 rounded-md text-[var(--color-grey-400)] opacity-50 cursor-not-allowed"
                   disabled
                   title="Kommer snart"
                 >
@@ -433,14 +435,14 @@ export function StudentDetailClient({ profile }: Props) {
                   {goals.map((goal) => (
                     <div
                       key={goal.id}
-                      className="p-3 rounded-lg bg-[var(--color-grey-100)]"
+                      className="p-3 rounded-lg bg-[var(--color-grey-50)] border border-[var(--color-grey-100)]"
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="text-sm font-medium text-[var(--color-text)]">
+                        <h4 className="text-sm font-medium text-[var(--color-grey-900)]">
                           {goal.title}
                         </h4>
                         {goal.targetDate && (
-                          <span className="text-xs text-[var(--color-muted)]">
+                          <span className="text-xs text-[var(--color-grey-500)]">
                             {format(new Date(goal.targetDate), "MMM yyyy", {
                               locale: nb,
                             })}
@@ -448,10 +450,10 @@ export function StudentDetailClient({ profile }: Props) {
                         )}
                       </div>
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm font-semibold text-[var(--color-text)] tabular-nums">
+                        <span className="text-sm font-semibold text-[var(--color-grey-900)] tabular-nums">
                           {goal.currentValue ?? 0}
                         </span>
-                        <span className="text-xs text-[var(--color-muted)]">
+                        <span className="text-xs text-[var(--color-grey-500)]">
                           / {goal.targetValue ?? "?"}
                         </span>
                         <span className="text-xs text-[var(--color-success)] ml-auto">
@@ -468,22 +470,24 @@ export function StudentDetailClient({ profile }: Props) {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-[var(--color-muted)] py-4 text-center">
+                <p className="text-sm text-[var(--color-grey-500)] py-4 text-center">
                   Ingen aktive mal
                 </p>
               )}
-            </AdminCard>
+            </div>
 
             {activityTimeline.length > 0 && (
-              <AdminCard className="lg:col-span-3">
+              <div className="bg-white rounded-xl shadow-card p-6 lg:col-span-3">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="admin-section-title">Aktivitetslogg</h3>
-                  <span className="text-xs text-[var(--color-muted)]">
+                  <h3 className="text-lg font-semibold text-[var(--color-grey-900)]">
+                    Aktivitetslogg
+                  </h3>
+                  <span className="text-xs text-[var(--color-grey-500)]">
                     Siste aktiviteter
                   </span>
                 </div>
                 <AdminTimeline items={activityTimeline} />
-              </AdminCard>
+              </div>
             )}
           </div>
         )}
@@ -491,9 +495,11 @@ export function StudentDetailClient({ profile }: Props) {
         {/* Tab: Trening (kommende + historikk) */}
         {activeTab === "training" && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <AdminCard>
+            <div className="bg-white rounded-xl shadow-card p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="admin-section-title">Kommende bookinger</h3>
+                <h3 className="text-lg font-semibold text-[var(--color-grey-900)]">
+                  Kommende bookinger
+                </h3>
                 <Link
                   href="/admin/bookinger/ny"
                   className="text-xs text-[var(--color-primary)] hover:underline"
@@ -506,17 +512,17 @@ export function StudentDetailClient({ profile }: Props) {
                   {profile.UpcomingBooking.map((booking) => (
                     <div
                       key={booking.id}
-                      className="p-3 rounded-lg bg-[var(--color-grey-100)]"
+                      className="p-3 rounded-lg bg-[var(--color-grey-50)] border border-[var(--color-grey-100)]"
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-medium text-[var(--color-text)]">
+                        <span className="text-sm font-medium text-[var(--color-grey-900)]">
                           {format(new Date(booking.startTime), "EEEE d. MMMM", {
                             locale: nb,
                           })}
                         </span>
                         <AdminBadge variant="success">{booking.status}</AdminBadge>
                       </div>
-                      <div className="flex items-center gap-3 text-xs text-[var(--color-muted)]">
+                      <div className="flex items-center gap-3 text-xs text-[var(--color-grey-500)]">
                         <span className="flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           {format(new Date(booking.startTime), "HH:mm")}
@@ -530,33 +536,35 @@ export function StudentDetailClient({ profile }: Props) {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-[var(--color-muted)] py-4 text-center">
+                <p className="text-sm text-[var(--color-grey-500)] py-4 text-center">
                   Ingen kommende bookinger
                 </p>
               )}
-            </AdminCard>
+            </div>
 
-            <AdminCard>
-              <h3 className="admin-section-title mb-4">Treningshistorikk</h3>
+            <div className="bg-white rounded-xl shadow-card p-6">
+              <h3 className="text-lg font-semibold text-[var(--color-grey-900)] mb-4">
+                Treningshistorikk
+              </h3>
               {profile.Booking.length > 0 ? (
                 <div className="space-y-3">
                   {profile.Booking.slice(0, 10).map((session) => (
                     <div
                       key={session.id}
-                      className="flex items-start gap-3 p-3 rounded-lg bg-[var(--color-grey-100)]"
+                      className="flex items-start gap-3 p-3 rounded-lg bg-[var(--color-grey-50)] border border-[var(--color-grey-100)]"
                     >
-                      <div className="p-2 rounded-lg bg-white text-[var(--color-primary)]">
+                      <div className="p-2 rounded-lg bg-white text-[var(--color-primary)] border border-[var(--color-grey-100)]">
                         <Calendar className="w-4 h-4" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h4 className="text-sm font-medium text-[var(--color-text)]">
+                          <h4 className="text-sm font-medium text-[var(--color-grey-900)]">
                             {(session.ServiceType as { name?: string })?.name ??
                               "Okt"}
                           </h4>
                           <AdminBadge variant="muted">{session.status}</AdminBadge>
                         </div>
-                        <p className="text-xs text-[var(--color-muted)]">
+                        <p className="text-xs text-[var(--color-grey-500)]">
                           {format(new Date(session.startTime), "d. MMMM yyyy", {
                             locale: nb,
                           })}{" "}
@@ -567,17 +575,19 @@ export function StudentDetailClient({ profile }: Props) {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-[var(--color-muted)] py-4 text-center">
+                <p className="text-sm text-[var(--color-grey-500)] py-4 text-center">
                   Ingen treningshistorikk
                 </p>
               )}
-            </AdminCard>
+            </div>
 
             {/* Aktiv treningsplan */}
             {profile.ActivePlan && (
-              <AdminCard className="lg:col-span-2">
+              <div className="bg-white rounded-xl shadow-card p-6 lg:col-span-2">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="admin-section-title">Aktiv treningsplan</h3>
+                  <h3 className="text-lg font-semibold text-[var(--color-grey-900)]">
+                    Aktiv treningsplan
+                  </h3>
                   <Link
                     href={`/admin/treningsplan?studentId=${profile.id}`}
                     className="text-xs text-[var(--color-primary)] hover:underline"
@@ -585,13 +595,13 @@ export function StudentDetailClient({ profile }: Props) {
                     Se full plan
                   </Link>
                 </div>
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-[var(--color-grey-100)]">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-[var(--color-grey-50)] border border-[var(--color-grey-100)]">
                   <FileText className="w-5 h-5 text-[var(--color-primary)]" />
                   <div>
-                    <div className="text-sm font-medium text-[var(--color-text)]">
+                    <div className="text-sm font-medium text-[var(--color-grey-900)]">
                       {profile.ActivePlan.title}
                     </div>
-                    <div className="text-xs text-[var(--color-muted)]">
+                    <div className="text-xs text-[var(--color-grey-500)]">
                       {profile.ActivePlan.periodType} —{" "}
                       {format(new Date(profile.ActivePlan.startDate), "d. MMM", {
                         locale: nb,
@@ -603,7 +613,7 @@ export function StudentDetailClient({ profile }: Props) {
                     </div>
                   </div>
                 </div>
-              </AdminCard>
+              </div>
             )}
           </div>
         )}

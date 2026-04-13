@@ -2,6 +2,7 @@
 
 import { Clock, User, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import type { BookingServiceType } from "./booking-types";
 import { formatBookingPrice } from "./booking-types";
 
@@ -14,10 +15,10 @@ export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
   return (
     <div>
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-semibold text-black mb-3 tracking-tight">
+        <h2 className="text-3xl font-semibold text-portal-text mb-3 tracking-tight">
           Velg din treningsform
         </h2>
-        <p className="text-muted">
+        <p className="text-portal-secondary">
           Alle coaching-timer inkluderer TrackMan-analyse og personlig tilpasning
         </p>
       </div>
@@ -32,7 +33,7 @@ export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
             onClick={() => onSelect(svc)}
             className="w-full text-left group"
           >
-            <div className="bg-white rounded-xl p-5 border border-grey-200 shadow-card hover:shadow-card-hover hover:border-primary transition-all duration-300">
+            <PremiumCard delay={0} padding="md" hover="lift">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2.5 mb-2">
@@ -40,22 +41,22 @@ export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
                       className="w-3 h-3 rounded-full flex-shrink-0"
                       style={{ backgroundColor: svc.color ?? undefined }}
                     />
-                    <h3 className="text-base font-semibold text-black truncate">
+                    <h3 className="text-base font-semibold text-portal-text truncate">
                       {svc.name}
                     </h3>
                   </div>
                   {svc.description && (
-                    <p className="text-sm text-muted leading-relaxed mb-3 line-clamp-2">
+                    <p className="text-sm text-portal-secondary leading-relaxed mb-3 line-clamp-2">
                       {svc.description}
                     </p>
                   )}
-                  <div className="flex items-center gap-5 text-sm text-muted">
+                  <div className="flex items-center gap-5 text-sm text-portal-secondary">
                     <span className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-primary" />
+                      <Clock className="w-3.5 h-3.5 text-portal-muted" />
                       {svc.duration} min
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <User className="w-3.5 h-3.5 text-primary" />
+                      <User className="w-3.5 h-3.5 text-portal-muted" />
                       {svc.maxStudents === 1
                         ? "Individuell"
                         : `Gruppe (maks ${svc.maxStudents})`}
@@ -63,13 +64,13 @@ export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                  <span className="text-xl font-semibold text-black tabular-nums">
+                  <span className="text-xl font-semibold text-portal-text tabular-nums">
                     {formatBookingPrice(svc.price)}
                   </span>
-                  <ChevronRight className="w-4 h-4 text-muted opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <ChevronRight className="w-4 h-4 text-portal-muted opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </div>
-            </div>
+            </PremiumCard>
           </motion.button>
         ))}
       </div>

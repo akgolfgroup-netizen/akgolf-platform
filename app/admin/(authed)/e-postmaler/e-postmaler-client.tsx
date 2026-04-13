@@ -10,12 +10,10 @@ import {
   Variable,
   Save,
   Trash2,
-  Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminCard,
   AdminButton,
   AdminInput,
   AdminTextarea,
@@ -164,20 +162,21 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
       />
 
       <div className="p-6">
-        <AdminCard
-          className="p-0 overflow-hidden"
+        {/* Main Card */}
+        <div
+          className="bg-white rounded-xl shadow-card overflow-hidden"
           style={{ minHeight: "calc(100vh - 180px)" }}
         >
           <div className="flex h-full">
             {/* Sidebar - Template List */}
             <div
               className={cn(
-                "w-full lg:w-80 border-r border-[var(--color-grey-200)] flex flex-col",
+                "w-full lg:w-80 border-r border-grey-200 flex flex-col",
                 selectedTemplateId && "hidden lg:flex",
               )}
             >
               {/* Header */}
-              <div className="p-4 border-b border-[var(--color-grey-200)]">
+              <div className="p-4 border-b border-grey-200">
                 <AdminButton
                   variant="primary"
                   className="w-full"
@@ -191,7 +190,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               </div>
 
               {/* Categories */}
-              <div className="p-3 border-b border-[var(--color-grey-200)]">
+              <div className="p-3 border-b border-grey-200">
                 <div className="flex flex-wrap gap-1">
                   {categories.map((cat) => (
                     <button
@@ -200,8 +199,8 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                       className={cn(
                         "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors",
                         selectedCategory === cat
-                          ? "bg-[var(--color-primary)] text-white"
-                          : "bg-[var(--color-grey-100)] text-[var(--color-muted)] hover:text-[var(--color-text)]",
+                          ? "bg-grey-800 text-white"
+                          : "bg-grey-100 text-grey-600 hover:text-grey-900 hover:bg-grey-200",
                       )}
                     >
                       {cat}
@@ -213,7 +212,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               {/* Templates */}
               <div className="flex-1 overflow-y-auto">
                 {filteredTemplates.length === 0 ? (
-                  <div className="p-6 text-center text-sm text-[var(--color-muted)]">
+                  <div className="p-6 text-center text-sm text-grey-500">
                     Ingen maler funnet
                   </div>
                 ) : (
@@ -222,27 +221,26 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                       key={t.id}
                       onClick={() => selectTemplate(t)}
                       className={cn(
-                        "w-full p-4 text-left hover:bg-[var(--color-grey-100)] transition-colors border-b border-[var(--color-grey-100)]",
-                        selectedTemplateId === t.id &&
-                          "bg-[var(--color-grey-100)]",
+                        "w-full p-4 text-left hover:bg-grey-50 transition-colors border-b border-grey-100",
+                        selectedTemplateId === t.id && "bg-grey-50",
                       )}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
-                          <Mail className="w-5 h-5 text-[var(--color-primary)]" />
+                        <div className="w-10 h-10 rounded-lg bg-grey-100 flex items-center justify-center flex-shrink-0">
+                          <Mail className="w-5 h-5 text-grey-600" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium text-[var(--color-text)] truncate">
+                          <h4 className="text-sm font-medium text-grey-900 truncate">
                             {t.name}
                           </h4>
-                          <p className="text-xs text-[var(--color-muted)] truncate">
+                          <p className="text-xs text-grey-500 truncate">
                             {t.subject}
                           </p>
                           <div className="flex items-center gap-2 mt-2">
                             <AdminBadge variant="muted">
                               {getCategory(t.name)}
                             </AdminBadge>
-                            <span className="text-[10px] text-[var(--color-muted)]">
+                            <span className="text-[10px] text-grey-400">
                               {formatDate(t.updatedAt)}
                             </span>
                           </div>
@@ -264,20 +262,20 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               {selectedTemplate ? (
                 <>
                   {/* Editor Header */}
-                  <div className="p-4 border-b border-[var(--color-grey-200)] flex items-center justify-between gap-3 flex-wrap">
+                  <div className="p-4 border-b border-grey-200 flex items-center justify-between gap-3 flex-wrap">
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => setSelectedTemplateId(null)}
-                        className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-[var(--color-grey-100)]"
+                        className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-grey-100"
                         aria-label="Lukk"
                       >
-                        <X className="w-5 h-5 text-[var(--color-text)]" />
+                        <X className="w-5 h-5 text-grey-700" />
                       </button>
                       <div>
-                        <h3 className="admin-section-title">
+                        <h3 className="text-base font-semibold text-grey-900">
                           {editName}
                         </h3>
-                        <p className="text-xs text-[var(--color-muted)]">
+                        <p className="text-xs text-grey-500">
                           Sist redigert {formatDate(selectedTemplate.updatedAt)}
                         </p>
                       </div>
@@ -329,11 +327,11 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
 
                     {/* Variables */}
                     <div>
-                      <div className="admin-label flex items-center gap-2 mb-1.5">
+                      <div className="text-sm font-medium text-grey-700 flex items-center gap-2 mb-1.5">
                         <Variable className="w-4 h-4" />
                         Tilgjengelige variabler
                       </div>
-                      <div className="flex flex-wrap gap-2 p-3 rounded-lg bg-[var(--color-grey-100)]">
+                      <div className="flex flex-wrap gap-2 p-3 rounded-lg bg-grey-50">
                         {editVariables.length > 0 ? (
                           editVariables.map((v) => (
                             <button
@@ -341,13 +339,13 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                               onClick={() => {
                                 setEditHtmlContent((prev) => prev + v);
                               }}
-                              className="text-xs px-2 py-1 rounded bg-white border border-[var(--color-grey-200)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition-colors"
+                              className="text-xs px-2 py-1 rounded bg-white border border-grey-200 text-grey-700 hover:bg-grey-800 hover:text-white hover:border-grey-800 transition-colors"
                             >
                               {v}
                             </button>
                           ))
                         ) : (
-                          <span className="text-xs text-[var(--color-muted)]">
+                          <span className="text-xs text-grey-500">
                             Ingen variabler definert
                           </span>
                         )}
@@ -376,7 +374,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               )}
             </div>
           </div>
-        </AdminCard>
+        </div>
       </div>
     </>
   );

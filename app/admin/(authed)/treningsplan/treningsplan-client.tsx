@@ -166,7 +166,7 @@ function PlanOverview({
         onMenuClick={toggle}
       />
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+      <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[var(--color-grey-50)]">
         <AdminPageHeader
           title="Treningsplaner"
           subtitle="Oversikt over alle aktive og tidligere treningsplaner"
@@ -202,10 +202,10 @@ function PlanOverview({
         </div>
 
         {/* Filters */}
-        <AdminCard>
+        <div className="bg-white rounded-xl shadow-card p-4">
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-400)] pointer-events-none" />
               <AdminInput
                 type="text"
                 placeholder="Søk etter elev eller plantittel..."
@@ -224,7 +224,7 @@ function PlanOverview({
                     "px-3 py-2 rounded-lg text-sm font-medium transition-colors border",
                     filterActive === f
                       ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                      : "bg-white border-[var(--color-grey-200)] text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
+                      : "bg-white border-[var(--color-grey-200)] text-[var(--color-grey-700)] hover:bg-[var(--color-grey-100)]",
                   )}
                 >
                   {f === "all" ? "Alle" : f === "active" ? "Aktive" : "Inaktive"}
@@ -232,7 +232,7 @@ function PlanOverview({
               ))}
             </div>
           </div>
-        </AdminCard>
+        </div>
 
         {/* Plan list */}
         {filteredPlans.length === 0 ? (
@@ -260,11 +260,14 @@ function PlanOverview({
         ) : (
           <div className="space-y-3">
             {filteredPlans.map((plan) => (
-              <AdminCard key={plan.id} hover>
+              <div
+                key={plan.id}
+                className="bg-white rounded-xl shadow-card p-4 transition-all hover:shadow-md hover:border-[var(--color-grey-300)] border border-[var(--color-grey-200)]"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <h3 className="font-medium text-[var(--color-text)] truncate">
+                      <h3 className="font-medium text-[var(--color-grey-900)] truncate">
                         {plan.title}
                       </h3>
                       {plan.isActive && (
@@ -276,7 +279,7 @@ function PlanOverview({
                         <AdminBadge variant="muted">Manuell</AdminBadge>
                       )}
                     </div>
-                    <div className="flex items-center gap-4 text-sm text-[var(--color-muted)] flex-wrap">
+                    <div className="flex items-center gap-4 text-sm text-[var(--color-grey-500)] flex-wrap">
                       {plan.student?.name && (
                         <span className="flex items-center gap-1">
                           <User className="w-3.5 h-3.5" />
@@ -293,13 +296,13 @@ function PlanOverview({
                           locale: nb,
                         })}
                       </span>
-                      <span>
+                      <span className="text-[var(--color-grey-600)]">
                         {PERIOD_LABELS[plan.periodType] ?? plan.periodType}
                       </span>
                     </div>
                   </div>
                 </div>
-              </AdminCard>
+              </div>
             ))}
           </div>
         )}
@@ -381,7 +384,7 @@ function StudentPlanEditor({
         onMenuClick={toggle}
       />
 
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 bg-[var(--color-grey-50)] min-h-[calc(100vh-56px)]">
         <AdminPageHeader
           title={student?.name ?? "Treningsplan"}
           subtitle="Rediger uker, økter og fokus for eleven"
@@ -395,7 +398,7 @@ function StudentPlanEditor({
         {/* Back link */}
         <Link
           href={`/admin/elever/${studentId}`}
-          className="inline-flex items-center gap-1 text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
+          className="inline-flex items-center gap-1 text-sm text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Tilbake til elevprofil
@@ -434,7 +437,7 @@ function StudentPlanEditor({
 
         {/* Plan selector */}
         {plans.length > 1 && (
-          <AdminCard>
+          <div className="bg-white rounded-xl shadow-card p-4">
             <h3 className="admin-label mb-3">Velg plan</h3>
             <div className="flex gap-2 flex-wrap">
               {plans.map((plan) => (
@@ -451,7 +454,7 @@ function StudentPlanEditor({
                     "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
                     activePlanId === plan.id
                       ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                      : "bg-white text-[var(--color-text)] border-[var(--color-grey-200)] hover:border-[var(--color-primary)]",
+                      : "bg-white text-[var(--color-grey-700)] border-[var(--color-grey-200)] hover:border-[var(--color-primary)]",
                   )}
                 >
                   {plan.title}
@@ -463,16 +466,16 @@ function StudentPlanEditor({
                 </button>
               ))}
             </div>
-          </AdminCard>
+          </div>
         )}
 
         {/* Active plan header */}
         {activePlan && (
-          <AdminCard>
+          <div className="bg-white rounded-xl shadow-card p-4">
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
-                  <h2 className="text-lg font-bold text-[var(--color-text)]">
+                  <h2 className="text-lg font-bold text-[var(--color-grey-900)]">
                     {activePlan.title}
                   </h2>
                   {activePlan.aiGenerated && (
@@ -482,7 +485,7 @@ function StudentPlanEditor({
                     <AdminBadge variant="success">Aktiv</AdminBadge>
                   )}
                 </div>
-                <p className="text-xs text-[var(--color-muted)]">
+                <p className="text-xs text-[var(--color-grey-500)]">
                   {format(new Date(activePlan.startDate), "d. MMM yyyy", {
                     locale: nb,
                   })}{" "}
@@ -494,7 +497,7 @@ function StudentPlanEditor({
                   {activePlan.weeks.length} uker
                 </p>
                 {activePlan.description && (
-                  <p className="text-sm text-[var(--color-text)] mt-2">
+                  <p className="text-sm text-[var(--color-grey-700)] mt-2">
                     {activePlan.description}
                   </p>
                 )}
@@ -508,7 +511,7 @@ function StudentPlanEditor({
                 {isPending ? "Kopierer..." : "Kopier plan"}
               </AdminButton>
             </div>
-          </AdminCard>
+          </div>
         )}
 
         {/* Weeks */}
@@ -600,7 +603,7 @@ function WeekCard({
   }
 
   return (
-    <AdminCard className="p-0 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-card border border-[var(--color-grey-200)] overflow-hidden">
       {/* Week header */}
       <button
         type="button"
@@ -608,27 +611,27 @@ function WeekCard({
         className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[var(--color-grey-100)] transition-colors"
       >
         {expanded ? (
-          <ChevronDown className="w-4 h-4 text-[var(--color-muted)]" />
+          <ChevronDown className="w-4 h-4 text-[var(--color-grey-400)]" />
         ) : (
-          <ChevronRight className="w-4 h-4 text-[var(--color-muted)]" />
+          <ChevronRight className="w-4 h-4 text-[var(--color-grey-400)]" />
         )}
         <div className="flex-1 flex items-center gap-3 flex-wrap">
-          <span className="text-sm font-semibold text-[var(--color-text)]">
+          <span className="text-sm font-semibold text-[var(--color-grey-900)]">
             Uke {week.weekNumber}
           </span>
-          <span className="text-xs text-[var(--color-muted)]">
+          <span className="text-xs text-[var(--color-grey-500)]">
             {format(new Date(week.weekStart), "d. MMM", { locale: nb })}
           </span>
           {week.focus && (
             <AdminBadge variant="info">{week.focus}</AdminBadge>
           )}
           {week.volumeLabel && (
-            <span className="text-[10px] text-[var(--color-muted)]">
+            <span className="text-[10px] text-[var(--color-grey-400)]">
               {week.volumeLabel}
             </span>
           )}
         </div>
-        <span className="text-xs text-[var(--color-muted)]">
+        <span className="text-xs text-[var(--color-grey-500)]">
           {week.sessions.length} sesjoner
         </span>
       </button>
@@ -664,7 +667,7 @@ function WeekCard({
             </div>
           ) : (
             <div className="px-4 py-2 bg-[var(--color-grey-100)] flex items-center justify-between">
-              <span className="text-xs text-[var(--color-muted)]">
+              <span className="text-xs text-[var(--color-grey-600)]">
                 Fokus: {week.focus || "Ikke satt"}
               </span>
               <button
@@ -689,7 +692,7 @@ function WeekCard({
               return (
                 <div key={dayOfWeek} className="min-h-[120px]">
                   <div className="px-3 py-2 border-b border-[var(--color-grey-200)] bg-white">
-                    <span className="text-[10px] font-semibold text-[var(--color-muted)] uppercase tracking-wider">
+                    <span className="text-[10px] font-semibold text-[var(--color-grey-500)] uppercase tracking-wider">
                       {dayName}
                     </span>
                   </div>
@@ -753,7 +756,7 @@ function WeekCard({
                         onClick={() =>
                           onAddToWeek({ weekId: week.id, dayOfWeek })
                         }
-                        className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] text-[var(--color-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 rounded transition-colors"
+                        className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] text-[var(--color-grey-500)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 rounded transition-colors"
                       >
                         <Plus className="w-3 h-3" />
                         Legg til
@@ -766,7 +769,7 @@ function WeekCard({
           </div>
         </div>
       )}
-    </AdminCard>
+    </div>
   );
 }
 
@@ -806,7 +809,7 @@ function SessionCard({
   const focusKey = (session.focusArea ?? "") as FocusArea;
   const bgClass =
     FOCUS_BG[focusKey] ??
-    "bg-white border-[var(--color-grey-200)]";
+    "bg-white border-[var(--color-grey-300)]";
   const variant = FOCUS_VARIANT[focusKey] ?? "muted";
 
   if (isEditing) {
@@ -867,7 +870,7 @@ function SessionCard({
           <button
             type="button"
             onClick={onCancel}
-            className="px-2 py-1 text-[10px] text-[var(--color-muted)] hover:text-[var(--color-text)]"
+            className="px-2 py-1 text-[10px] text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
           >
             Avbryt
           </button>
@@ -895,14 +898,14 @@ function SessionCard({
       )}
     >
       <div className="flex items-start justify-between gap-1">
-        <span className="text-[11px] font-semibold leading-tight line-clamp-2 text-[var(--color-text)]">
+        <span className="text-[11px] font-semibold leading-tight line-clamp-2 text-[var(--color-grey-900)]">
           {session.title}
         </span>
       </div>
       {session.durationMinutes && (
         <div className="flex items-center gap-1 mt-1">
-          <Clock className="w-2.5 h-2.5 text-[var(--color-muted)]" />
-          <span className="text-[10px] text-[var(--color-muted)]">
+          <Clock className="w-2.5 h-2.5 text-[var(--color-grey-500)]" />
+          <span className="text-[10px] text-[var(--color-grey-500)]">
             {session.durationMinutes} min
           </span>
         </div>
@@ -983,7 +986,7 @@ function AddSessionForm({ isPending, onSave, onCancel }: AddSessionFormProps) {
         <button
           type="button"
           onClick={onCancel}
-          className="px-2 py-1 text-[10px] text-[var(--color-muted)] hover:text-[var(--color-text)]"
+          className="px-2 py-1 text-[10px] text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
         >
           Avbryt
         </button>
