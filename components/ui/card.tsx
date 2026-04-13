@@ -1,61 +1,58 @@
-"use client";
+import React from 'react';
+import { cn } from '@/lib/utils';
 
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-
-export interface CardProps {
-  variant?: "default" | "elevated" | "bordered" | "featured";
-  isHoverable?: boolean;
-  isAnimated?: boolean;
-  className?: string;
-  children?: React.ReactNode;
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: 'default' | 'hover' | 'training' | 'stat';
+  borderColor?: 'none' | 'green' | 'gold' | 'bronze' | 'blue';
 }
 
-const variants = {
-  default: "bg-white border border-[var(--color-grey-200)]",
-  elevated: "bg-white shadow-lg border border-[var(--color-grey-200)]",
-  bordered: "bg-transparent border-2 border-[var(--color-grey-200)]",
-  featured: "bg-white border border-[var(--color-grey-200)] shadow-lg",
+export const Card: React.FC<CardProps> = ({
+  children,
+  variant = 'default',
+  borderColor = 'none',
+  className,
+  ...props
+}) => {
+  const baseStyles = 'rounded-xl bg-[#1E293B] p-5';
+  
+  const variants = {
+    default: '',
+    hover: 'transition-all duration-200 hover:bg-[#334155] hover:-translate-y-0.5 cursor-pointer',
+    training: 'border-l-4',
+    stat: 'border border-[#334155]',
+  };
+  
+  const borderColors = {
+    none: '',
+    green: borderColor === 'green' && variant === 'training' ? 'border-l-[#16A34A]' : 'border-[#16A34A]',
+    gold: borderColor === 'gold' && variant === 'training' ? 'border-l-[#D4AF37]' : 'border-[#D4AF37]',
+    bronze: borderColor === 'bronze' && variant === 'training' ? 'border-l-[#CD7F32]' : 'border-[#CD7F32]',
+    blue: borderColor === 'blue' && variant === 'training' ? 'border-l-[#3B82F6]' : 'border-[#3B82F6]',
+  };
+
+  return (
+    <div
+      className={cn(baseStyles, variants[variant], borderColors[borderColor], className)}
+      {...props}
+    >
+      {children}
+    </div>
+  );
 };
 
-export function Card({
-  children,
-  variant = "default",
-  isHoverable = false,
-  isAnimated = false,
-  className,
-}: CardProps) {
-  const baseClasses = cn(
-    "rounded-2xl overflow-hidden",
-    variants[variant],
-    isHoverable && "transition-[box-shadow,border-color,transform] duration-300 hover:shadow-xl hover:border-[var(--color-grey-300)] hover:-translate-y-1",
-    className
-  );
+// Sub-komponenter for Card
+export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
+  <div className={cn('flex items-center justify-between mb-4', className)} {...props} />
+);
 
-  if (isAnimated) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-        className={baseClasses}
-      >
-        {children}
-      </motion.div>
-    );
-  }
+export const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({ className, ...props }) => (
+  <h3 className={cn('text-lg font-semibold text-white', className)} {...props} />
+);
 
-  return <div className={baseClasses}>{children}</div>;
-}
+export const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
+  <div className={cn('text-white/70', className)} {...props} />
+);
 
-export function CardHeader({ className, children }: { className?: string; children?: React.ReactNode }) {
-  return <div className={cn("p-6", className)}>{children}</div>;
-}
-
-export function CardContent({ className, children }: { className?: string; children?: React.ReactNode }) {
-  return <div className={cn("px-6 pb-6", className)}>{children}</div>;
-}
-
-export function CardFooter({ className, children }: { className?: string; children?: React.ReactNode }) {
-  return <div className={cn("px-6 py-4 bg-[var(--color-grey-100)] border-t border-[var(--color-grey-200)]", className)}>{children}</div>;
-}
+export const CardFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
+  <div className={cn('flex items-center justify-between mt-4 pt-4 border-t border-[#334155]', className)} {...props} />
+);

@@ -1,0 +1,70 @@
+{
+  "tittel": "Visualisering av Rory McIlroy - Tre Presteringsnivåer",
+  "spillernavn": "Rory McIlroy",
+  "test": "Beat Rory at Augusta - 100m Approach + Driver",
+  "dato": "2026",
+  
+  "nivaaer": {
+    "1_treningPerfekt": {
+      "beskrivelse": "Perfekte forhold på trening. Stille vind, perfekte lies, ingen press",
+      "emoji": "🏋️",
+      "approach100m": {
+        "proximity": 4.1,
+        "innenfor6m": 8.5,
+        "GIRprosent": 88
+      },
+      "driver": {
+        "fairwaysHit": 7.0,
+        "missSnittM": 12,
+        "spredningM": 25
+      }
+    },
+    "2_augustaVinner": {
+      "beskrivelse": "2026 Masters - Vinneruke. Peak performance under Major press",
+      "emoji": "🏆",
+      "approach100m": {
+        "proximity": 4.9,
+        "innenfor6m": 7.0,
+        "GIRprosent": 85
+      },
+      "driver": {
+        "fairwaysHit": 5.8,
+        "missSnittM": 16,
+        "spredningM": 32
+      }
+    },
+    "3_aarssnitt": {
+      "beskrivelse": "2025 PGA Tour sesongsnitt. Normal turneringsform",
+      "emoji": "⛳",
+      "approach100m": {
+        "proximity": 5.4,
+        "innenfor6m": 6.5,
+        "GIRprosent": 82
+      },
+      "driver": {
+        "fairwaysHit": 5.4,
+        "missSnittM": 18,
+        "spredningM": 35
+      }
+    }
+  },
+  
+  "sammenligning": {
+    "treningVsTurnering": "32% bedre på trening",
+    "augustaVsSnitt": "9% bedre under Masters",
+    "progressjon": "Trening (4.1m) → Augusta Vinner (4.9m) → År (5.4m)"
+  },
+  
+  "visualiseringskrav": {
+    "type": "Side-by-side sammenligning",
+    "elementer": [
+      "Tre statistikkbokser med emoji og fargekoding",
+      "Target scatter-plot for approach (10 punkter per nivå)",
+      "Fairway heatmap for driver",
+      "Stigende/nedadgående piler som viser forskjell",
+      "Prosentvis forskjell tydelig markert"
+    ]
+  },
+  
+  "prompt_til_claude": "Lag en visuell fremstilling av Rory McIlroys tre presteringsnivåer for 'Beat Rory at Augusta' testen. Vis TRE side-by-side kolonner:\n\n🏋️ TRENING (Perfekt):\n- 100m: 4.1m gj.snitt, 8.5/10 innenfor 6m\n- Driver: 7/10 fairways, 12m miss-snitt\n\n🏆 AUGUSTA 2026 (Vinner):\n- 100m: 4.9m gj.snitt, 7.0/10 innenfor 6m  \n- Driver: 5.8/10 fairways, 16m miss-snitt\n\n⛳ SESONGSNITT (2025):\n- 100m: 5.4m gj.snitt, 6.5/10 innenfor 6m\n- Driver: 5.4/10 fairways, 18m miss-snitt\n\nVis scatter plot for approach med 10 punkter per nivå, og fairway diagram for driver. Bruk grønn gradient - mørkest for trening (best), lysere for sesongsnitt. Vis piler og prosentvis forskjell."
+}

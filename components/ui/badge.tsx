@@ -1,43 +1,45 @@
-"use client";
+import React from 'react';
+import { cn } from '@/lib/utils';
 
-import { cn } from "@/lib/utils";
+type BadgeVariant = 'pro' | 'elite' | 'free' | 'gir' | 'bogey' | 'birdie' | 'success' | 'warning' | 'error';
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: "default" | "gold" | "navy" | "subtle" | "outline";
-  size?: "sm" | "md";
+interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+  variant?: BadgeVariant;
+  size?: 'sm' | 'md';
 }
 
-const variants = {
-  default: "bg-[var(--color-grey-100)] text-[var(--color-grey-700)]",
-  gold: "bg-[var(--color-grey-100)] text-[var(--color-grey-900)] border border-[var(--color-grey-200)]",
-  navy: "bg-[var(--color-grey-900)] text-white",
-  subtle: "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]",
-  outline: "bg-transparent border border-[var(--color-grey-200)] text-[var(--color-grey-600)]",
-};
-
-const sizes = {
-  sm: "px-2 py-0.5 text-xs",
-  md: "px-3 py-1 text-sm",
-};
-
-export function Badge({
+export const Badge: React.FC<BadgeProps> = ({
   children,
-  variant = "default",
-  size = "md",
+  variant = 'free',
+  size = 'sm',
   className,
   ...props
-}: BadgeProps) {
+}) => {
+  const baseStyles = 'inline-flex items-center font-medium rounded-full';
+  
+  const sizes = {
+    sm: 'px-2.5 py-0.5 text-xs',
+    md: 'px-3 py-1 text-sm',
+  };
+  
+  const variants: Record<BadgeVariant, string> = {
+    pro: 'bg-[#D4AF37] text-[#0F172A]',           // Gull for Pro
+    elite: 'bg-[#CD7F32] text-white',              // Bronse for Elite
+    free: 'bg-[#334155] text-white',               // Grå for Free
+    gir: 'bg-[#16A34A] text-white',                // Grønn for GIR
+    bogey: 'bg-[#F97316] text-white',              // Oransje for Bogey
+    birdie: 'bg-[#3B82F6] text-white',             // Blå for Birdie
+    success: 'bg-[#16A34A] text-white',
+    warning: 'bg-[#F97316] text-white',
+    error: 'bg-[#EF4444] text-white',
+  };
+
   return (
     <span
-      className={cn(
-        "inline-flex items-center justify-center font-medium rounded-full",
-        variants[variant],
-        sizes[size],
-        className
-      )}
+      className={cn(baseStyles, sizes[size], variants[variant], className)}
       {...props}
     >
       {children}
     </span>
   );
-}
+};
