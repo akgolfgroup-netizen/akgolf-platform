@@ -3,8 +3,8 @@
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Calendar, Clock, MapPin, User } from "lucide-react";
-import { AppleCard } from "@/components/portal/apple/apple-card";
-import { AppleBadge } from "@/components/portal/apple/apple-badge";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface BookingCardProps {
   booking: {
@@ -18,11 +18,11 @@ interface BookingCardProps {
   };
 }
 
-const statusConfig: Record<string, { label: string; variant: "success" | "warning" | "error" | "neutral" }> = {
+const statusConfig: Record<string, { label: string; variant: "success" | "warning" | "error" | "default" }> = {
   PENDING: { label: "Venter", variant: "warning" },
   CONFIRMED: { label: "Bekreftet", variant: "success" },
   CANCELLED: { label: "Avlyst", variant: "error" },
-  COMPLETED: { label: "Fullfort", variant: "neutral" },
+  COMPLETED: { label: "Fullfort", variant: "default" },
   NO_SHOW: { label: "Motte ikke", variant: "error" },
 };
 
@@ -31,7 +31,7 @@ export function BookingCard({ booking }: BookingCardProps) {
   const accent = booking.serviceType.color ?? "var(--color-grey-900)";
 
   return (
-    <AppleCard variant="glass" padding="none" className="overflow-hidden">
+    <Card variant="elevated" padding="none" className="overflow-hidden">
       {/* Accent bar */}
       <div
         className="h-1 w-full"
@@ -95,11 +95,11 @@ export function BookingCard({ booking }: BookingCardProps) {
           </div>
 
           {/* Status badge */}
-          <AppleBadge variant={status.variant} size="md" dot>
+          <Badge variant={status.variant} size="md">
             {status.label}
-          </AppleBadge>
+          </Badge>
         </div>
       </div>
-    </AppleCard>
+    </Card>
   );
 }

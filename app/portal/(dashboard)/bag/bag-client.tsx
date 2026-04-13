@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { addClub, deleteClub } from "./actions";
 import { useRouter } from "next/navigation";
-import { QuickAction } from "@/components/portal/heritage/quick-action";
+import { Button } from "@/components/ui/button";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import type { PlayerClubData, GapAnalysisItem } from "./actions";
 
@@ -350,24 +350,33 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <QuickAction
-          href="#"
-          icon={Target}
-          label="Mal avstander"
-          description="Kalibrer dine klubber"
-        />
-        <QuickAction
-          href="#"
-          icon={TrendingUp}
-          label="Se trend"
-          description="Avstandsutvikling"
-        />
-        <QuickAction
-          href="#"
-          icon={ChevronRight}
-          label="Anbefalinger"
-          description="Optimaliser bagen"
-        />
+        <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
+          <a href="#">
+            <Target className="w-4 h-4" />
+            <div className="text-left">
+              <p className="text-sm font-medium">Mal avstander</p>
+              <p className="text-xs text-muted-foreground">Kalibrer dine klubber</p>
+            </div>
+          </a>
+        </Button>
+        <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
+          <a href="#">
+            <TrendingUp className="w-4 h-4" />
+            <div className="text-left">
+              <p className="text-sm font-medium">Se trend</p>
+              <p className="text-xs text-muted-foreground">Avstandsutvikling</p>
+            </div>
+          </a>
+        </Button>
+        <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
+          <a href="#">
+            <ChevronRight className="w-4 h-4" />
+            <div className="text-left">
+              <p className="text-sm font-medium">Anbefalinger</p>
+              <p className="text-xs text-muted-foreground">Optimaliser bagen</p>
+            </div>
+          </a>
+        </Button>
       </div>
     </div>
   );

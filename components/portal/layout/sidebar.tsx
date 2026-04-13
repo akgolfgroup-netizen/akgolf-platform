@@ -82,8 +82,8 @@ function NavLink({
           className={cn(
             "relative mx-2 flex items-center gap-3 rounded-xl px-4 py-[7px] text-[13px] transition-all duration-200",
             active
-              ? "bg-[#0A1F18] font-semibold text-white"
-              : "font-medium text-[#7A8C85] hover:bg-[#F5F8F7] hover:text-[#0A1F18]",
+              ? "bg-black font-semibold text-white"
+              : "font-medium text-grey-400 hover:bg-grey-50 hover:text-black",
           )}
         >
           <item.icon
@@ -91,7 +91,7 @@ function NavLink({
               "h-[18px] w-[18px] shrink-0 transition-colors",
               active
                 ? "text-white"
-                : "text-[#A5B2AD] group-hover:text-[#0A1F18]",
+                : "text-grey-300 group-hover:text-black",
             )}
           />
           <span>{item.label}</span>
@@ -121,13 +121,13 @@ function SidebarContent({
           ))}
         </ul>
 
-        <div className="mx-2 mt-6 border-t border-[#D5DFDB] pt-4">
+        <div className="mx-2 mt-6 border-t border-grey-200 pt-4">
           <button
             onClick={() => {
               onSignOut();
               onNavClick?.();
             }}
-            className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-2 text-[13px] font-medium text-[#7A8C85] transition-colors hover:text-[#B84233]"
+            className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-2 text-[13px] font-medium text-grey-400 transition-colors hover:text-error"
           >
             <LogOut className="h-4 w-4" />
             <span>Logg ut</span>
@@ -139,7 +139,7 @@ function SidebarContent({
             <Link
               href="/admin"
               onClick={onNavClick}
-              className="flex items-center gap-2.5 rounded-xl bg-[#0A1F18] px-4 py-2.5 text-[13px] font-bold text-white transition-opacity hover:opacity-90"
+              className="flex items-center gap-2.5 rounded-xl bg-black px-4 py-2.5 text-[13px] font-bold text-white transition-opacity hover:opacity-90"
             >
               <ShieldCheck className="h-4 w-4" />
               <span>Mission Control</span>
@@ -152,14 +152,14 @@ function SidebarContent({
         <Link
           href="/portal/bookinger/ny"
           onClick={onNavClick}
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-[#D1F843] px-4 py-2.5 text-[13px] font-bold text-[#0A1F18] transition-opacity hover:opacity-90"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-accent-cta px-4 py-2.5 text-[13px] font-bold text-accent-cta-text transition-opacity hover:opacity-90"
         >
           <Plus className="h-4 w-4" />
           Ny økt
         </Link>
       </div>
 
-      <div className="mx-3 mb-3 rounded-xl border border-[#D5DFDB] bg-[#F5F8F7] p-3">
+      <div className="mx-3 mb-3 rounded-xl border border-grey-200 bg-grey-50 p-3">
         <div className="flex items-center gap-3">
           {user.image ? (
             <img
@@ -168,17 +168,17 @@ function SidebarContent({
               className="h-9 w-9 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0A1F18]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-black">
               <span className="text-xs font-semibold text-white">
                 {(user.name ?? "S")[0].toUpperCase()}
               </span>
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-[#0A1F18]">
+            <p className="truncate text-sm font-medium text-black">
               {user.name ?? "Spiller"}
             </p>
-            <p className="truncate text-[11px] font-semibold uppercase tracking-wider text-[#5A6E66]">
+            <p className="truncate text-[11px] font-semibold uppercase tracking-wider text-grey-500">
               {user.subscriptionTier ?? "Academy"}
             </p>
           </div>
@@ -208,16 +208,16 @@ export function Sidebar({ user }: SidebarProps) {
 
   return (
     <>
-      <aside className="fixed left-0 top-0 z-20 hidden h-full w-[220px] flex-col border-r border-[#D5DFDB] bg-white lg:flex">
-        <div className="border-b border-[#D5DFDB] px-5 py-4">
+      <aside className="fixed left-0 top-0 z-20 hidden h-full w-[220px] flex-col border-r border-grey-200 bg-white lg:flex">
+        <div className="border-b border-grey-200 px-5 py-4">
           <div className="flex items-center justify-between">
             <Link href="/portal" className="group flex items-center gap-3">
               <AKLogo variant="black" size={32} />
               <div>
-                <span className="text-[17px] font-bold tracking-[-0.03em] text-[#0A1F18] transition-colors group-hover:text-[#005840]">
+                <span className="text-[17px] font-bold tracking-[-0.03em] text-black transition-colors group-hover:text-primary">
                   AK Golf
                 </span>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-[#7A8C85]">
+                <p className="text-[9px] font-bold uppercase tracking-wider text-grey-400">
                   Academy
                 </p>
               </div>
@@ -253,11 +253,11 @@ export function Sidebar({ user }: SidebarProps) {
               <div className="flex items-center justify-between border-b border-[#D5DFDB] px-5 py-4">
                 <div className="flex items-center gap-3">
                   <AKLogo variant="black" size={32} />
-                  <span className="text-[14px] font-bold text-[#0A1F18]">AK Golf</span>
+                  <span className="text-[14px] font-bold text-black">AK Golf</span>
                 </div>
                 <button
                   onClick={close}
-                  className="cursor-pointer rounded-lg p-2 text-[#7A8C85] transition-colors hover:bg-[#F5F8F7] hover:text-[#0A1F18]"
+                  className="cursor-pointer rounded-lg p-2 text-grey-400 transition-colors hover:bg-grey-50 hover:text-black"
                   aria-label="Lukk meny"
                 >
                   <X className="h-5 w-5" />

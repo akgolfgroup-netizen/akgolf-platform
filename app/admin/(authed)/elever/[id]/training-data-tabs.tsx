@@ -12,10 +12,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import {
-  AdminCard,
-  AdminButton,
   AdminInput,
-  AdminBadge,
   AdminSelect,
   AdminTable,
   AdminTableHead,
@@ -24,9 +21,8 @@ import {
   AdminTableHeaderCell,
   AdminTableCell,
   AdminEmptyState,
-  AdminTabs,
-  type AdminTabItem,
 } from "@/components/portal/mission-control/ui";
+import { Card, Button, Badge, Tabs, type TabItem } from "@/components/ui";
 import {
   getStudentTrainingPlan,
   getStudentTrainingLogs,
@@ -102,7 +98,7 @@ export function TrainingDataTabs({ studentId }: Props) {
     });
   }, [activeTab, studentId, data]);
 
-  const tabItems: AdminTabItem[] = TABS.map((t) => {
+  const tabItems: TabItem[] = TABS.map((t) => {
     const Icon = t.icon;
     return {
       id: t.id,
@@ -114,7 +110,7 @@ export function TrainingDataTabs({ studentId }: Props) {
   return (
     <div className="space-y-4">
       {/* Tab bar */}
-      <AdminTabs
+      <Tabs
         items={tabItems}
         value={activeTab}
         onValueChange={(v) => setActiveTab(v as TabId)}
@@ -123,10 +119,10 @@ export function TrainingDataTabs({ studentId }: Props) {
 
 
       {/* Content */}
-      <AdminCard className="min-h-[200px]">
+      <Card className="min-h-[200px]">
         {isPending ? (
           <div className="flex items-center justify-center py-12">
-            <div className="h-6 w-6 border-2 border-[#D5DFDB] border-t-[#0A1F18] rounded-full animate-spin" />
+            <div className="h-6 w-6 border-2 border-grey-200 border-t-black rounded-full animate-spin" />
           </div>
         ) : (
           <>
@@ -142,7 +138,7 @@ export function TrainingDataTabs({ studentId }: Props) {
             {activeTab === "trackman" && <TrackManTab data={data.trackman} />}
           </>
         )}
-      </AdminCard>
+      </Card>
     </div>
   );
 }
@@ -172,7 +168,7 @@ function PlanTab({ data }: { data: unknown }) {
 
   if (!plan) {
     return (
-      <p className="text-[#7A8C85] text-sm py-8 text-center">
+      <p className="text-grey-400 text-sm py-8 text-center">
         Ingen aktiv treningsplan
       </p>
     );
@@ -181,20 +177,20 @@ function PlanTab({ data }: { data: unknown }) {
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="font-semibold text-[#0A1F18]">{plan.title}</h3>
-        <p className="text-sm text-[#7A8C85]">
+        <h3 className="font-semibold text-black">{plan.title}</h3>
+        <p className="text-sm text-grey-400">
           {plan.periodType} {plan.goals ? `— ${plan.goals}` : ""}
         </p>
       </div>
       {plan.TrainingPlanWeek.map((week) => (
         <div
           key={week.weekNumber}
-          className="border border-[#D5DFDB] rounded-lg p-3 bg-white"
+          className="border border-grey-200 rounded-lg p-3 bg-white"
         >
-          <div className="text-sm font-medium text-[#0A1F18] mb-2 flex items-center gap-2">
+          <div className="text-sm font-medium text-black mb-2 flex items-center gap-2">
             Uke {week.weekNumber}
             {week.focus && (
-              <AdminBadge variant="info">{week.focus}</AdminBadge>
+              <Badge variant="info">{week.focus}</Badge>
             )}
           </div>
           <div className="space-y-1">
@@ -214,21 +210,21 @@ function PlanTab({ data }: { data: unknown }) {
                   key={i}
                   className="flex items-center gap-2 text-sm"
                 >
-                  <span className="text-[#7A8C85] w-8">
+                  <span className="text-grey-400 w-8">
                     {days[session.dayOfWeek]}
                   </span>
-                  <span className="text-[#0A1F18] flex-1">
+                  <span className="text-black flex-1">
                     {session.title}
                   </span>
                   {session.focusArea && (
-                    <AdminBadge
+                    <Badge
                       variant={FOCUS_BADGE_VARIANT[session.focusArea] ?? "muted"}
                     >
                       {session.focusArea}
-                    </AdminBadge>
+                    </Badge>
                   )}
                   {session.durationMinutes && (
-                    <span className="text-[#7A8C85] text-xs tabular-nums">
+                    <span className="text-grey-400 text-xs tabular-nums">
                       {session.durationMinutes} min
                     </span>
                   )}
@@ -281,7 +277,7 @@ function DagbokTab({
 
   if (logs.length === 0) {
     return (
-      <p className="text-[#7A8C85] text-sm py-8 text-center">
+      <p className="text-grey-400 text-sm py-8 text-center">
         Ingen treningslogger
       </p>
     );
@@ -292,17 +288,17 @@ function DagbokTab({
       {logs.map((log) => (
         <div
           key={log.id}
-          className="border border-[#D5DFDB] rounded-lg p-3 bg-white"
+          className="border border-grey-200 rounded-lg p-3 bg-white"
         >
           <div className="flex items-center justify-between">
-            <div className="text-sm font-medium text-[#0A1F18]">
+            <div className="text-sm font-medium text-black">
               {new Date(log.date).toLocaleDateString("nb-NO", {
                 day: "numeric",
                 month: "short",
               })}
               {log.focusArea && ` — ${log.focusArea}`}
             </div>
-            <div className="flex items-center gap-2 text-xs text-[#7A8C85]">
+            <div className="flex items-center gap-2 text-xs text-grey-400">
               {log.durationMinutes && `${log.durationMinutes} min`}
               {log.rating && ` — ${log.rating}/5`}
             </div>
@@ -312,13 +308,13 @@ function DagbokTab({
             log.primaryPressLevel) && (
             <div className="flex gap-1.5 mt-2">
               {log.primaryLPhase && (
-                <AdminBadge variant="muted">L-{log.primaryLPhase}</AdminBadge>
+                <Badge variant="muted">L-{log.primaryLPhase}</Badge>
               )}
               {log.primaryEnvironment && (
-                <AdminBadge variant="muted">M{log.primaryEnvironment}</AdminBadge>
+                <Badge variant="muted">M{log.primaryEnvironment}</Badge>
               )}
               {log.primaryPressLevel && (
-                <AdminBadge variant="muted">PR{log.primaryPressLevel}</AdminBadge>
+                <Badge variant="muted">PR{log.primaryPressLevel}</Badge>
               )}
             </div>
           )}
@@ -328,11 +324,11 @@ function DagbokTab({
             </div>
           )}
           {log.notes && (
-            <p className="text-sm text-[#0A1F18] mt-2">{log.notes}</p>
+            <p className="text-sm text-black mt-2">{log.notes}</p>
           )}
 
           {log.coachFeedback && (
-            <div className="mt-2 p-2 rounded bg-[#0A1F18]/5 text-sm text-[#0A1F18] flex items-start gap-1.5">
+            <div className="mt-2 p-2 rounded bg-black/5 text-sm text-black flex items-start gap-1.5">
               <MessageCircle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
               <span>{log.coachFeedback}</span>
             </div>
@@ -347,18 +343,18 @@ function DagbokTab({
                 placeholder="Skriv tilbakemelding..."
                 containerClassName="flex-1"
               />
-              <AdminButton
+              <Button
                 onClick={() => handleSaveFeedback(log.id)}
                 disabled={isPending || !feedbackText}
-                loading={isPending}
+                isLoading={isPending}
               >
                 Lagre
-              </AdminButton>
+              </Button>
             </div>
           ) : (
             <button
               onClick={() => setFeedbackId(log.id)}
-              className="mt-2 text-xs text-[#0A1F18] hover:underline"
+              className="mt-2 text-xs text-black hover:underline"
             >
               Legg til tilbakemelding
             </button>
@@ -398,7 +394,7 @@ function RunderTab({ data }: { data: unknown }) {
 
   if (rounds.length === 0) {
     return (
-      <p className="text-[#7A8C85] text-sm py-8 text-center">
+      <p className="text-grey-400 text-sm py-8 text-center">
         Ingen runder registrert
       </p>
     );
@@ -424,7 +420,7 @@ function RunderTab({ data }: { data: unknown }) {
       <AdminTableBody>
         {rounds.map((r) => (
           <AdminTableRow key={r.id}>
-            <AdminTableCell className="text-[#7A8C85]">
+            <AdminTableCell className="text-grey-400">
               {new Date(r.date).toLocaleDateString("nb-NO", {
                 day: "numeric",
                 month: "short",
@@ -449,18 +445,18 @@ function RunderTab({ data }: { data: unknown }) {
                 </span>
               )}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-[#7A8C85]">
+            <AdminTableCell className="text-right text-grey-400">
               {r.sgTotal !== null ? r.sgTotal.toFixed(1) : "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-[#7A8C85]">
+            <AdminTableCell className="text-right text-grey-400">
               {r.fairwaysHit !== null && r.fairwaysTotal
                 ? `${Math.round((r.fairwaysHit / r.fairwaysTotal) * 100)}%`
                 : "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-[#7A8C85]">
+            <AdminTableCell className="text-right text-grey-400">
               {r.gir ?? "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-[#7A8C85]">
+            <AdminTableCell className="text-right text-grey-400">
               {r.totalPutts ?? "—"}
             </AdminTableCell>
           </AdminTableRow>
@@ -520,7 +516,7 @@ function FoundationTab({
 
   if (!foundationData) {
     return (
-      <p className="text-[#7A8C85] text-sm py-8 text-center">
+      <p className="text-grey-400 text-sm py-8 text-center">
         Laster...
       </p>
     );
@@ -545,9 +541,9 @@ function FoundationTab({
             return (
               <div
                 key={st}
-                className="border border-[#D5DFDB] rounded-lg p-3 bg-white"
+                className="border border-grey-200 rounded-lg p-3 bg-white"
               >
-                <div className="text-xs text-[#7A8C85] mb-1.5">
+                <div className="text-xs text-grey-400 mb-1.5">
                   {st}
                 </div>
                 <AdminSelect
@@ -575,13 +571,13 @@ function FoundationTab({
           {foundationData.degradation.curves.map((curve) => (
             <div
               key={curve.shotType}
-              className="border border-[#D5DFDB] rounded-lg p-3 bg-white"
+              className="border border-grey-200 rounded-lg p-3 bg-white"
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-[#0A1F18]">
+                <span className="text-sm font-medium text-black">
                   {curve.shotType}
                 </span>
-                <AdminBadge
+                <Badge
                   variant={
                     curve.trend === "improving"
                       ? "success"
@@ -597,23 +593,23 @@ function FoundationTab({
                       : curve.trend === "stable"
                         ? "Stabil"
                         : "For lite data"}
-                </AdminBadge>
+                </Badge>
               </div>
               <div className="flex gap-2">
                 {["TEK", "SLAG", "SPILL", "TURN"].map((level) => {
                   const point = curve.points.find((p) => p.level === level);
                   return (
                     <div key={level} className="flex-1 text-center">
-                      <div className="text-lg font-bold text-[#0A1F18] tabular-nums">
+                      <div className="text-lg font-bold text-black tabular-nums">
                         {point?.avgScore !== null &&
                         point?.avgScore !== undefined
                           ? point.avgScore.toFixed(1)
                           : "—"}
                       </div>
-                      <div className="text-xs text-[#7A8C85]">
+                      <div className="text-xs text-grey-400">
                         {level}
                       </div>
-                      <div className="text-[10px] text-[#7A8C85] opacity-60">
+                      <div className="text-[10px] text-grey-400 opacity-60">
                         {point?.dataPoints ?? 0}p
                       </div>
                     </div>
@@ -634,16 +630,16 @@ function FoundationTab({
               key={env.environment}
               className="flex items-center gap-2"
             >
-              <span className="text-xs text-[#7A8C85] w-24">
+              <span className="text-xs text-grey-400 w-24">
                 M{env.environment}: {env.name}
               </span>
-              <div className="flex-1 h-2 bg-[#ECF0EF] rounded-full overflow-hidden">
+              <div className="flex-1 h-2 bg-grey-100 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[var(--color-primary)] rounded-full"
                   style={{ width: `${env.percentage}%` }}
                 />
               </div>
-              <span className="text-xs text-[#0A1F18] w-12 text-right tabular-nums">
+              <span className="text-xs text-black w-12 text-right tabular-nums">
                 {env.percentage}%
               </span>
             </div>
@@ -697,25 +693,25 @@ function TrackManTab({ data }: { data: unknown }) {
       <AdminTableBody>
         {sessions.map((s) => (
           <AdminTableRow key={s.id}>
-            <AdminTableCell className="text-[#7A8C85]">
+            <AdminTableCell className="text-grey-400">
               {new Date(s.sessionDate).toLocaleDateString("nb-NO", {
                 day: "numeric",
                 month: "short",
               })}
             </AdminTableCell>
             <AdminTableCell className="font-medium">{s.club}</AdminTableCell>
-            <AdminTableCell className="text-right text-[#7A8C85]">
+            <AdminTableCell className="text-right text-grey-400">
               {s.averages.avgCarry ? `${Math.round(s.averages.avgCarry)}m` : "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-[#7A8C85]">
+            <AdminTableCell className="text-right text-grey-400">
               {s.averages.avgTotal ? `${Math.round(s.averages.avgTotal)}m` : "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-[#7A8C85]">
+            <AdminTableCell className="text-right text-grey-400">
               {s.averages.avgOffline
                 ? `${Math.round(s.averages.avgOffline)}m`
                 : "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-[#7A8C85]">
+            <AdminTableCell className="text-right text-grey-400">
               {s.averages.count ?? "—"}
             </AdminTableCell>
           </AdminTableRow>

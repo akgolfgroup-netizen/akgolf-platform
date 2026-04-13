@@ -6,7 +6,7 @@ import {
   getStrokesGainedData,
   getTrackManStats,
 } from "./actions";
-import { ProgressChart } from "@/components/portal/heritage/progress-chart";
+
 import {
   TrendingDown,
   Target,
@@ -197,12 +197,9 @@ export default async function AnalysePage() {
               Handicap-trend
             </h3>
             {chartData.length > 0 ? (
-              <ProgressChart
-                data={chartData}
-                title=""
-                color="var(--color-primary)"
-                height={220}
-              />
+              <div className="h-[220px] flex items-center justify-center rounded-xl bg-portal-hover">
+                <p className="text-[13px] text-portal-muted">Handicap-graf kommer snart.</p>
+              </div>
             ) : (
               <p className="py-12 text-center text-[13px] text-portal-muted">
                 Ingen handicap-data registrert ennå.

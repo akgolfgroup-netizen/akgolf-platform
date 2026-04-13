@@ -11,8 +11,6 @@ import {
 } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
- AdminButton,
- AdminBadge,
  AdminDateRangePicker,
  AdminAreaChart,
  AdminBarChart,
@@ -25,6 +23,8 @@ import {
  type AdminDataTableColumn,
  type AdminDonutChartDatum,
 } from "@/components/portal/mission-control/ui";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import type { OkonomiData } from "./actions";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -150,7 +150,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  sortable: true,
  align: "right",
  render: (row) => (
- <span className="tabular-nums font-semibold text-[#324D45]">
+ <span className="tabular-nums font-semibold text-text">
  {formatKr(row.amount)}
  </span>
  ),
@@ -160,7 +160,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  label: "Opprettet",
  sortable: true,
  render: (row) => (
- <span className="text-[#5A6E66]">{formatRelativeDate(row.createdAt)}</span>
+ <span className="text-grey-500">{formatRelativeDate(row.createdAt)}</span>
  ),
  },
  ];
@@ -193,9 +193,9 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  sortable: true,
  render: (row) =>
  row.refundedAt ? (
- <span className="text-[#5A6E66]">{formatRelativeDate(row.refundedAt)}</span>
+ <span className="text-grey-500">{formatRelativeDate(row.refundedAt)}</span>
  ) : (
- <span className="text-[#7A8C85]">—</span>
+ <span className="text-grey-400">—</span>
  ),
  },
  ];
@@ -229,18 +229,18 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  <div className="flex items-center justify-between flex-wrap gap-3">
  <AdminDateRangePicker value={dateRange} onChange={setDateRange} />
  <div className="flex gap-2">
- <AdminButton
+ <Button
  variant="secondary"
- icon={<Download className="w-4 h-4"/>}
  >
+ <Download className="w-4 h-4 mr-2"/>
  Eksporter
- </AdminButton>
- <AdminButton
- variant="primary"
- icon={<FileText className="w-4 h-4"/>}
+ </Button>
+ <Button
+ variant="accent"
  >
+ <FileText className="w-4 h-4 mr-2"/>
  Ny faktura
- </AdminButton>
+ </Button>
  </div>
  </div>
 
@@ -251,7 +251,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  value={formatKr(data.revenue.day)}
  icon={<DollarSign className="w-5 h-5"/>}
  sparkData={sparkDaily}
- sparkColor="#0A1F18"
+ sparkColor="black"
  change={{ value: 8, positive: true }}
  />
  <StatCardSpark
@@ -259,7 +259,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  value={formatKr(data.revenue.week)}
  icon={<CreditCard className="w-5 h-5"/>}
  sparkData={sparkWeekly}
- sparkColor="#1A4D36"
+ sparkColor="success-text"
  change={{ value: 12, positive: true }}
  />
  <StatCardSpark
@@ -282,11 +282,11 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
 
  {/* Inntektstrend (Area chart med gradient) */}
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl lg:col-span-2 overflow-hidden">
- <div className="flex items-center justify-between px-6 py-4 border-b border-[#D5DFDB]">
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl lg:col-span-2 overflow-hidden">
+ <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
  <div>
- <h3 className="text-base font-semibold text-[#0A1F18]">Inntektstrend</h3>
- <span className="text-xs text-[#5A6E66]">
+ <h3 className="text-base font-semibold text-black">Inntektstrend</h3>
+ <span className="text-xs text-grey-500">
  {new Date().getFullYear()} — siste 6 måneder
  </span>
  </div>
@@ -294,14 +294,14 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  <span className="text-lg font-bold text-green-700 tabular-nums">
  {yearTotal}
  </span>
- <span className="text-xs text-[#5A6E66] block">
+ <span className="text-xs text-grey-500 block">
  totalt i år
  </span>
  </div>
  </div>
  <div className="p-6">
  {data.monthlyTrend.length === 0 ? (
- <p className="text-sm text-[#5A6E66] text-center py-10">
+ <p className="text-sm text-grey-500 text-center py-10">
  Ingen trenddata ennå.
  </p>
  ) : (
@@ -315,9 +315,9 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  </div>
 
  {/* Måloppnåelse-gauge */}
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl">
- <div className="px-6 py-4 border-b border-[#D5DFDB]">
- <h3 className="text-base font-semibold text-[#0A1F18]">Måloppnåelse vs budsjett</h3>
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl">
+ <div className="px-6 py-4 border-b border-grey-200">
+ <h3 className="text-base font-semibold text-black">Måloppnåelse vs budsjett</h3>
  </div>
  <div className="flex flex-col items-center py-6">
  <AdminGauge
@@ -327,7 +327,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  warningThreshold={0.6}
  errorThreshold={0.4}
  />
- <div className="text-center mt-4 text-xs text-[#5A6E66]">
+ <div className="text-center mt-4 text-xs text-grey-500">
  Budsjett {new Date().getFullYear()}
  </div>
  </div>
@@ -336,16 +336,16 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
 
  {/* Bar chart siste 6 mnd + Donut per kategori */}
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl lg:col-span-2 overflow-hidden">
- <div className="px-6 py-4 border-b border-[#D5DFDB]">
- <h3 className="text-base font-semibold text-[#0A1F18]">Inntekt per måned</h3>
- <span className="text-xs text-[#5A6E66]">
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl lg:col-span-2 overflow-hidden">
+ <div className="px-6 py-4 border-b border-grey-200">
+ <h3 className="text-base font-semibold text-black">Inntekt per måned</h3>
+ <span className="text-xs text-grey-500">
  Siste 6 måneder
  </span>
  </div>
  <div className="p-6">
  {barChart6mo.length === 0 ? (
- <p className="text-sm text-[#5A6E66] text-center py-10">
+ <p className="text-sm text-grey-500 text-center py-10">
  Ingen data
  </p>
  ) : (
@@ -354,13 +354,13 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  </div>
  </div>
 
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl overflow-hidden">
- <div className="px-6 py-4 border-b border-[#D5DFDB]">
- <h3 className="text-base font-semibold text-[#0A1F18]">Per tjeneste</h3>
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl overflow-hidden">
+ <div className="px-6 py-4 border-b border-grey-200">
+ <h3 className="text-base font-semibold text-black">Per tjeneste</h3>
  </div>
  <div className="p-4">
  {donutData.length === 0 ? (
- <p className="text-sm text-[#5A6E66] text-center py-10">
+ <p className="text-sm text-grey-500 text-center py-10">
  Ingen data
  </p>
  ) : (
@@ -371,19 +371,19 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  </div>
 
  {/* Sammenligning i år vs i fjor */}
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl overflow-hidden">
- <div className="flex items-center justify-between px-6 py-4 border-b border-[#D5DFDB]">
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl overflow-hidden">
+ <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
  <div>
- <h3 className="text-base font-semibold text-[#0A1F18]">I år vs i fjor</h3>
- <span className="text-xs text-[#5A6E66]">
+ <h3 className="text-base font-semibold text-black">I år vs i fjor</h3>
+ <span className="text-xs text-grey-500">
  Sammenligning måned for måned
  </span>
  </div>
- <AdminBadge variant="success">+22% YoY</AdminBadge>
+ <Badge variant="success">+22% YoY</Badge>
  </div>
  <div className="p-6">
  {combinedTrend.length === 0 ? (
- <p className="text-sm text-[#5A6E66] text-center py-10">
+ <p className="text-sm text-grey-500 text-center py-10">
  Ingen data
  </p>
  ) : (
@@ -399,11 +399,11 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  {/* Ubetalte bookinger (DataTable, søkbar + sorterbar) */}
  <div>
  <div className="flex items-center justify-between mb-3">
- <h3 className="text-base font-semibold text-[#0A1F18]">Ubetalte bookinger</h3>
+ <h3 className="text-base font-semibold text-black">Ubetalte bookinger</h3>
  {unpaidRows.length > 0 && (
- <AdminBadge variant="warning">
+ <Badge variant="warning">
  {unpaidRows.length} stk · {formatKr(data.totalUnpaid)}
- </AdminBadge>
+ </Badge>
  )}
  </div>
  <AdminDataTable<UnpaidRow>
@@ -419,11 +419,11 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  {/* Refusjoner (DataTable) */}
  <div>
  <div className="flex items-center justify-between mb-3">
- <h3 className="text-base font-semibold text-[#0A1F18]">Refusjoner</h3>
+ <h3 className="text-base font-semibold text-black">Refusjoner</h3>
  {refundRows.length > 0 && (
- <AdminBadge variant="error">
+ <Badge variant="error">
  {refundRows.length} totalt · {formatKr(data.totalRefunds)}
- </AdminBadge>
+ </Badge>
  )}
  </div>
  <AdminDataTable<RefundRow>
@@ -460,11 +460,11 @@ function StatCardSpark({
  change,
 }: StatCardSparkProps) {
  return (
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl p-5">
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-5">
  <div className="flex items-start justify-between gap-4">
  <div className="flex-1 min-w-0">
- <p className="text-sm font-medium text-[#5A6E66]">{label}</p>
- <p className="mt-2 text-2xl font-bold text-[#0A1F18] tracking-tight tabular-nums">
+ <p className="text-sm font-medium text-grey-500">{label}</p>
+ <p className="mt-2 text-2xl font-bold text-black tracking-tight tabular-nums">
  {value}
  </p>
  <div className="mt-2 flex items-center gap-1 text-xs font-medium">
@@ -478,7 +478,7 @@ function StatCardSpark({
  {change.positive ? "+": "-"}
  {change.value}%
  </span>
- <span className="text-[#7A8C85]">vs forrige</span>
+ <span className="text-grey-400">vs forrige</span>
  </div>
  </div>
  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-700">

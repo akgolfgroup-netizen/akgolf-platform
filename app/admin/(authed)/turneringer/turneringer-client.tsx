@@ -16,15 +16,15 @@ import {
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
- AdminCard,
- AdminButton,
  AdminInput,
  AdminSelect,
- AdminBadge,
  AdminStatCard,
  AdminPageHeader,
  AdminEmptyState,
 } from "@/components/portal/mission-control/ui";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import type { TournamentItem, TournamentStats } from "./actions";
@@ -86,8 +86,8 @@ function NyTurneringModal({ open, onClose, onCreated }: NyTurneringModalProps) {
 
  return (
  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
- <AdminCard className="w-full max-w-lg">
- <h2 className="text-lg font-semibold text-[#0A1F18] mb-4">
+ <Card className="w-full max-w-lg">
+ <h2 className="text-lg font-semibold text-black mb-4">
  Ny turnering
  </h2>
  <form onSubmit={handleSubmit} className="space-y-4">
@@ -142,24 +142,24 @@ function NyTurneringModal({ open, onClose, onCreated }: NyTurneringModalProps) {
  />
 
  {error && (
- <p className="text-sm text-[#EF4444]">{error}</p>
+ <p className="text-sm text-error">{error}</p>
  )}
 
  <div className="flex justify-end gap-2 pt-2">
- <AdminButton
+ <Button
  type="button"
  variant="secondary"
  onClick={onClose}
  disabled={isPending}
  >
  Avbryt
- </AdminButton>
- <AdminButton type="submit"variant="primary"loading={isPending}>
+ </Button>
+ <Button type="submit" variant="accent" isLoading={isPending}>
  {isPending ? "Oppretter...": "Opprett turnering"}
- </AdminButton>
+ </Button>
  </div>
  </form>
- </AdminCard>
+ </Card>
  </div>
  );
 }
@@ -176,20 +176,20 @@ const STATUS_CONFIG: Record<
  ongoing: {
  label: "Pågående",
  variant: "info",
- iconWrapClass: "bg-[#ECF0EF]",
- iconClass: "text-[#324D45]",
+ iconWrapClass: "bg-grey-100",
+ iconClass: "text-text",
  },
  upcoming: {
  label: "Kommende",
  variant: "success",
- iconWrapClass: "bg-[#ECF0EF]",
- iconClass: "text-[#5A6E66]",
+ iconWrapClass: "bg-grey-100",
+ iconClass: "text-grey-500",
  },
  completed: {
  label: "Fullført",
  variant: "muted",
- iconWrapClass: "bg-[#ECF0EF]",
- iconClass: "text-[#7A8C85]",
+ iconWrapClass: "bg-grey-100",
+ iconClass: "text-grey-400",
  },
 };
 
@@ -248,13 +248,13 @@ export function TurneringerClient({
  title="Turneringer"
  subtitle="Administrer turneringer og spillerplaner"
  actions={
- <AdminButton
- variant="primary"
- icon={<Plus className="w-4 h-4"/>}
+ <Button
+ variant="accent"
  onClick={() => setShowModal(true)}
  >
+ <Plus className="w-4 h-4 mr-2"/>
  Ny turnering
- </AdminButton>
+ </Button>
  }
  />
 
@@ -283,7 +283,7 @@ export function TurneringerClient({
  </div>
 
  {/* Filter tabs */}
- <AdminCard>
+ <Card>
  <div className="flex gap-2 flex-wrap">
  {filterTabs.map((f) => (
  <button
@@ -293,15 +293,15 @@ export function TurneringerClient({
  className={cn(
  "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
  filter === f.id
- ? "bg-[#0A1F18] text-white border-[#0A1F18]"
- : "bg-white border-[#D5DFDB] text-[#324D45] hover:bg-[#ECF0EF]",
+ ? "bg-black text-white border-black"
+ : "bg-white border-grey-200 text-text hover:bg-grey-100",
  )}
  >
  {f.label}
  </button>
  ))}
  </div>
- </AdminCard>
+ </Card>
 
  {/* Tournaments List */}
  {filteredTournaments.length === 0 ? (
@@ -310,13 +310,13 @@ export function TurneringerClient({
  title="Ingen turneringer funnet"
  description="Opprett en ny turnering for å komme i gang."
  action={
- <AdminButton
- variant="primary"
- icon={<Plus className="w-4 h-4"/>}
+ <Button
+ variant="accent"
  onClick={() => setShowModal(true)}
  >
+ <Plus className="w-4 h-4 mr-2"/>
  Ny turnering
- </AdminButton>
+ </Button>
  }
  />
  ) : (
@@ -325,7 +325,7 @@ export function TurneringerClient({
  const config =
  STATUS_CONFIG[tournament.status] ?? STATUS_CONFIG.upcoming;
  return (
- <AdminCard key={tournament.id}>
+ <Card key={tournament.id}>
  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
  <div className="flex items-start gap-4">
  <div
@@ -338,19 +338,19 @@ export function TurneringerClient({
  </div>
  <div className="min-w-0">
  <div className="flex items-center gap-2 mb-1 flex-wrap">
- <h3 className="font-semibold text-[#0A1F18]">
+ <h3 className="font-semibold text-black">
  {tournament.name}
  </h3>
- <AdminBadge variant={config.variant}>
+ <Badge variant={config.variant}>
  {config.label}
- </AdminBadge>
+ </Badge>
  {tournament.source && (
- <AdminBadge variant="muted">
+ <Badge variant="muted">
  {tournament.source}
- </AdminBadge>
+ </Badge>
  )}
  </div>
- <div className="flex flex-wrap items-center gap-4 text-sm text-[#5A6E66]">
+ <div className="flex flex-wrap items-center gap-4 text-sm text-grey-500">
  <span className="flex items-center gap-1">
  <Calendar className="w-3.5 h-3.5"/>
  {format(new Date(tournament.startDate), "d. MMM", {
@@ -383,7 +383,7 @@ export function TurneringerClient({
  </div>
  <div className="flex gap-2 shrink-0">
  <Link href={`/admin/turneringer/${tournament.id}`}>
- <AdminButton variant="secondary">Se plan</AdminButton>
+ <Button variant="secondary">Se plan</Button>
  </Link>
  {tournament.externalUrl && (
  <a
@@ -396,8 +396,8 @@ export function TurneringerClient({
  <ExternalLink className="w-4 h-4"/>
  </a>
  )}
- <AdminButton
- variant="danger"
+ <Button
+ variant="destructive"
  onClick={() =>
  handleDelete(tournament.id, tournament.name)
  }
@@ -405,10 +405,10 @@ export function TurneringerClient({
  aria-label="Slett turnering"
  >
  <Trash2 className="w-4 h-4"/>
- </AdminButton>
+ </Button>
  </div>
  </div>
- </AdminCard>
+ </Card>
  );
  })}
  </div>

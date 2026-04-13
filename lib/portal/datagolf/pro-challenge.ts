@@ -17,7 +17,7 @@ export interface ProChallengeScenario {
   category: 'APPROACH' | 'SHORT_GAME' | 'PUTTING';
   
   // Situasjon
-  lie: 'TEE' | 'FAIRWAY' | 'ROUGH' | 'SAND';
+  lie: 'TEE' | 'FAIRWAY' | 'ROUGH' | 'SAND' | 'GREEN';
   distance: number;        // Meter til pin
   distanceUnit: 'METERS' | 'YARDS' | 'FEET';
   
@@ -289,7 +289,7 @@ export async function getProPlayerStats(
 ): Promise<ProPlayerStats | null> {
   try {
     // Hent approach-skill data
-    const approachData = await getApproachSkill('pga');
+    const approachData = await getApproachSkill();
     const playerData = approachData.find(p => p.dg_id === playerId);
     
     if (!playerData) return null;
@@ -352,7 +352,7 @@ export async function getTopPlayersForScenario(
   limit: number = 5
 ): Promise<ProPlayerStats[]> {
   try {
-    const approachData = await getApproachSkill('pga');
+    const approachData = await getApproachSkill();
     
     // Filtrer og sorter etter proximity
     const sorted = approachData

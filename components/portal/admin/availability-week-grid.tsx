@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Save, Info } from "lucide-react";
-import { AppleButton } from "@/components/portal/apple/apple-button";
-import { AppleBadge } from "@/components/portal/apple/apple-badge";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 
 const DAYS = [
@@ -114,33 +114,33 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
       <div className="flex items-start gap-3 px-4 py-3 bg-blue-50/80 rounded-xl border border-blue-100">
         <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm text-[#324D45]">
+          <p className="text-sm text-text">
             Klikk på en celle for a legge til eller fjerne tilgjengelighet.
           </p>
-          <p className="text-xs text-[#7A8C85] mt-0.5">
+          <p className="text-xs text-grey-400 mt-0.5">
             Endringer lagres forst nar du klikker Lagre.
           </p>
         </div>
         <div className="ml-auto flex items-center gap-2">
-          <AppleBadge variant="info" size="md">
+          <Badge variant="info" size="md">
             {totalHours} timer/uke
-          </AppleBadge>
+          </Badge>
         </div>
       </div>
 
       {/* Week Grid */}
-      <div className="rounded-2xl bg-white border border-[#D5DFDB] overflow-hidden">
+      <div className="rounded-2xl bg-white border border-grey-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-[#ECF0EF]">
-                <th className="w-20 px-4 py-4 text-left text-xs font-semibold text-[#7A8C85] uppercase tracking-wider">
+              <tr className="bg-grey-100">
+                <th className="w-20 px-4 py-4 text-left text-xs font-semibold text-grey-400 uppercase tracking-wider">
                   Tid
                 </th>
                 {DAYS.map((day) => (
                   <th
                     key={day.value}
-                    className="px-2 py-4 text-center text-xs font-semibold text-[#7A8C85] uppercase tracking-wider min-w-[80px]"
+                    className="px-2 py-4 text-center text-xs font-semibold text-grey-400 uppercase tracking-wider min-w-[80px]"
                   >
                     {day.short}
                   </th>
@@ -151,9 +151,9 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
               {HOURS.map((hour, rowIndex) => (
                 <tr
                   key={hour}
-                  className={rowIndex % 2 === 0 ? "bg-white" : "bg-[#ECF0EF]/50"}
+                  className={rowIndex % 2 === 0 ? "bg-white" : "bg-grey-100/50"}
                 >
-                  <td className="px-4 py-0 text-xs font-medium text-[#7A8C85] w-20 border-r border-[#ECF0EF]">
+                  <td className="px-4 py-0 text-xs font-medium text-grey-400 w-20 border-r border-grey-100">
                     {String(hour).padStart(2, "0")}:00
                   </td>
                   {DAYS.map((day) => {
@@ -162,7 +162,7 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
                       <td key={day.value} className="px-1 py-0.5">
                         <motion.button
                           onClick={() => toggleCell(day.value, hour)}
-                          className={`w-full h-10 rounded-lg transition-colors duration-200 ${ active ? "bg-[#0A1F18] shadow-sm" : "bg-[#ECF0EF] hover:bg-[#D5DFDB]" }`}
+                          className={`w-full h-10 rounded-lg transition-colors duration-200 ${ active ? "bg-black shadow-sm" : "bg-grey-100 hover:bg-grey-200" }`}
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         />
@@ -180,12 +180,12 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-[#0A1F18]" />
-            <span className="text-xs text-[#5A6E66]">Tilgjengelig</span>
+            <div className="w-5 h-5 rounded bg-black" />
+            <span className="text-xs text-grey-500">Tilgjengelig</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-[#ECF0EF]" />
-            <span className="text-xs text-[#5A6E66]">Ikke tilgjengelig</span>
+            <div className="w-5 h-5 rounded bg-grey-100" />
+            <span className="text-xs text-grey-500">Ikke tilgjengelig</span>
           </div>
         </div>
 
@@ -194,16 +194,15 @@ export function AvailabilityWeekGrid({ slots, onSave, saving }: Props) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <AppleButton
+            <Button
               onClick={handleSave}
               disabled={saving}
-              loading={saving}
-              icon={Save}
+              isLoading={saving}
               variant="primary"
               size="md"
             >
               {saving ? "Lagrer..." : "Lagre endringer"}
-            </AppleButton>
+            </Button>
           </motion.div>
         )}
       </div>

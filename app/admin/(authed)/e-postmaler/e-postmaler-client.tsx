@@ -14,12 +14,12 @@ import {
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminButton,
   AdminInput,
   AdminTextarea,
-  AdminBadge,
   AdminEmptyState,
 } from "@/components/portal/mission-control/ui";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { createTemplate, updateTemplate, deleteTemplate } from "./actions";
 
 interface EmailTemplate {
@@ -164,33 +164,33 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
       <div className="p-6">
         {/* Main Card */}
         <div
-          className="bg-white border border-[#D5DFDB] rounded-xl overflow-hidden"
+          className="bg-white border border-grey-200 rounded-xl overflow-hidden"
           style={{ minHeight: "calc(100vh - 180px)" }}
         >
           <div className="flex h-full">
             {/* Sidebar - Template List */}
             <div
               className={cn(
-                "w-full lg:w-80 border-r border-[#D5DFDB] flex flex-col",
+                "w-full lg:w-80 border-r border-grey-200 flex flex-col",
                 selectedTemplateId && "hidden lg:flex",
               )}
             >
               {/* Header */}
-              <div className="p-4 border-b border-[#D5DFDB]">
-                <AdminButton
-                  variant="primary"
+              <div className="p-4 border-b border-grey-200">
+                <Button
+                  variant="accent"
                   className="w-full"
                   onClick={handleNewTemplate}
                   disabled={isPending}
-                  loading={isPending}
-                  icon={!isPending ? <Plus className="w-4 h-4" /> : undefined}
+                  isLoading={isPending}
                 >
+                  {!isPending && <Plus className="w-4 h-4 mr-2" />}
                   Ny mal
-                </AdminButton>
+                </Button>
               </div>
 
               {/* Categories */}
-              <div className="p-3 border-b border-[#D5DFDB]">
+              <div className="p-3 border-b border-grey-200">
                 <div className="flex flex-wrap gap-1">
                   {categories.map((cat) => (
                     <button
@@ -199,8 +199,8 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                       className={cn(
                         "px-3 py-1.5 text-xs font-medium rounded-full transition-colors",
                         selectedCategory === cat
-                          ? "bg-[#0A1F18] text-white"
-                          : "bg-[#F5F8F7] text-[#324D45] hover:text-[#0A1F18] hover:bg-[#D5DFDB]",
+                          ? "bg-black text-white"
+                          : "bg-grey-50 text-text hover:text-black hover:bg-grey-200",
                       )}
                     >
                       {cat}
@@ -212,7 +212,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               {/* Templates */}
               <div className="flex-1 overflow-y-auto">
                 {filteredTemplates.length === 0 ? (
-                  <div className="p-6 text-center text-sm text-[#7A8C85]">
+                  <div className="p-6 text-center text-sm text-grey-400">
                     Ingen maler funnet
                   </div>
                 ) : (
@@ -221,26 +221,26 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                       key={t.id}
                       onClick={() => selectTemplate(t)}
                       className={cn(
-                        "w-full p-4 text-left hover:bg-[#F5F8F7] transition-colors border-b border-[#D5DFDB]",
-                        selectedTemplateId === t.id && "bg-[#F5F8F7]",
+                        "w-full p-4 text-left hover:bg-grey-50 transition-colors border-b border-grey-200",
+                        selectedTemplateId === t.id && "bg-grey-50",
                       )}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-[#F5F8F7] flex items-center justify-center flex-shrink-0">
-                          <Mail className="w-5 h-5 text-[#324D45]" />
+                        <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center flex-shrink-0">
+                          <Mail className="w-5 h-5 text-text" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium text-[#0A1F18] truncate">
+                          <h4 className="text-sm font-medium text-black truncate">
                             {t.name}
                           </h4>
-                          <p className="text-xs text-[#7A8C85] truncate">
+                          <p className="text-xs text-grey-400 truncate">
                             {t.subject}
                           </p>
                           <div className="flex items-center gap-2 mt-2">
-                            <AdminBadge variant="muted">
+                            <Badge variant="muted">
                               {getCategory(t.name)}
-                            </AdminBadge>
-                            <span className="text-[10px] text-[#7A8C85]">
+                            </Badge>
+                            <span className="text-[10px] text-grey-400">
                               {formatDate(t.updatedAt)}
                             </span>
                           </div>
@@ -262,50 +262,46 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               {selectedTemplate ? (
                 <>
                   {/* Editor Header */}
-                  <div className="p-4 border-b border-[#D5DFDB] flex items-center justify-between gap-3 flex-wrap">
+                  <div className="p-4 border-b border-grey-200 flex items-center justify-between gap-3 flex-wrap">
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => setSelectedTemplateId(null)}
-                        className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-[#F5F8F7]"
+                        className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-grey-50"
                         aria-label="Lukk"
                       >
-                        <X className="w-5 h-5 text-[#324D45]" />
+                        <X className="w-5 h-5 text-text" />
                       </button>
                       <div>
-                        <h3 className="text-base font-semibold text-[#0A1F18]">
+                        <h3 className="text-base font-semibold text-black">
                           {editName}
                         </h3>
-                        <p className="text-xs text-[#7A8C85]">
+                        <p className="text-xs text-grey-400">
                           Sist redigert {formatDate(selectedTemplate.updatedAt)}
                         </p>
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <AdminButton
-                        variant="danger"
+                      <Button
+                        variant="destructive"
                         onClick={handleDelete}
                         disabled={isPending}
-                        icon={<Trash2 className="w-4 h-4" />}
                       >
+                        <Trash2 className="w-4 h-4 mr-2" />
                         Slett
-                      </AdminButton>
-                      <AdminButton
-                        variant="secondary"
-                        icon={<Eye className="w-4 h-4" />}
-                      >
+                      </Button>
+                      <Button variant="secondary">
+                        <Eye className="w-4 h-4 mr-2" />
                         Forhåndsvis
-                      </AdminButton>
-                      <AdminButton
-                        variant="primary"
+                      </Button>
+                      <Button
+                        variant="accent"
                         onClick={handleSave}
                         disabled={isPending}
-                        loading={isPending}
-                        icon={
-                          !isPending ? <Save className="w-4 h-4" /> : undefined
-                        }
+                        isLoading={isPending}
                       >
+                        {!isPending && <Save className="w-4 h-4 mr-2" />}
                         Lagre
-                      </AdminButton>
+                      </Button>
                     </div>
                   </div>
 
@@ -327,11 +323,11 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
 
                     {/* Variables */}
                     <div>
-                      <div className="text-sm font-medium text-[#324D45] flex items-center gap-2 mb-1.5">
+                      <div className="text-sm font-medium text-text flex items-center gap-2 mb-1.5">
                         <Variable className="w-4 h-4" />
                         Tilgjengelige variabler
                       </div>
-                      <div className="flex flex-wrap gap-2 p-3 rounded-lg bg-[#F5F8F7]">
+                      <div className="flex flex-wrap gap-2 p-3 rounded-lg bg-grey-50">
                         {editVariables.length > 0 ? (
                           editVariables.map((v) => (
                             <button
@@ -339,13 +335,13 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                               onClick={() => {
                                 setEditHtmlContent((prev) => prev + v);
                               }}
-                              className="text-xs px-2 py-1 rounded bg-white border border-[#D5DFDB] text-[#324D45] hover:bg-[#0A1F18] hover:text-white hover:border-[#0A1F18] transition-colors"
+                              className="text-xs px-2 py-1 rounded bg-white border border-grey-200 text-text hover:bg-black hover:text-white hover:border-black transition-colors"
                             >
                               {v}
                             </button>
                           ))
                         ) : (
-                          <span className="text-xs text-[#7A8C85]">
+                          <span className="text-xs text-grey-400">
                             Ingen variabler definert
                           </span>
                         )}

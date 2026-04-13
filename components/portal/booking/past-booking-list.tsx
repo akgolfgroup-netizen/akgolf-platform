@@ -6,7 +6,8 @@ import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Calendar, Target, Trophy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { GlassCard, fadeInUp, staggerContainer } from "@/components/portal/premium";
+import { fadeInUp, staggerContainer } from "@/components/portal/premium";
+import { Card } from "@/components/ui/card";
 import { BookingStatusBadge } from "./booking-status-badge";
 import type { BookingViewModel } from "./booking-types";
 import { getStatusConfig } from "./booking-types";
@@ -34,7 +35,7 @@ function PastBookingRow({ booking }: PastBookingRowProps) {
 
   return (
     <Link href={`/portal/bookinger/${booking.id}`} className="block">
-      <GlassCard variant="light" padding="sm" interactive className="group">
+      <Card variant="elevated" padding="sm" hover className="group">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-surface flex items-center justify-center shrink-0">
             <Icon className="w-4 h-4 text-muted" strokeWidth={1.75} />
@@ -49,7 +50,7 @@ function PastBookingRow({ booking }: PastBookingRowProps) {
           </div>
           <BookingStatusBadge label={status.label} variant={status.variant} />
         </div>
-      </GlassCard>
+      </Card>
     </Link>
   );
 }

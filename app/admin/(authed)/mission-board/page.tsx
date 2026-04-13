@@ -26,10 +26,6 @@ import {
 } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminButton,
-  AdminBadge,
-  AdminCard,
-  AdminEmptyState,
   AdminAreaChart,
   AdminSparkline,
   AdminTimeline,
@@ -39,6 +35,7 @@ import type {
   AdminAreaChartDatum,
   AdminTimelineItem,
 } from "@/components/portal/mission-control/ui";
+import { Card, Button, Badge } from "@/components/ui";
 import { getMissionBoardCharts, type MissionBoardCharts } from "./actions";
 
 // Types — matcher respons fra /api/portal/admin/dashboard
@@ -122,9 +119,9 @@ function StatusBadge({ status }: { status: string }) {
   };
 
   return (
-    <AdminBadge variant={variantMap[normalized] ?? "muted"}>
+    <Badge variant={variantMap[normalized] ?? "muted"}>
       {labels[normalized] ?? status}
-    </AdminBadge>
+    </Badge>
   );
 }
 
@@ -195,21 +192,15 @@ export default function MissionBoardPage() {
           onMenuClick={toggle}
         />
         <div className="flex items-center justify-center p-6 py-32">
-          <AdminEmptyState
-            icon={<AlertCircle className="w-6 h-6 text-red-500" />}
-            title="Kunne ikke laste data"
-            description={error}
-            action={
-              <AdminButton
-                variant="primary"
-                onClick={fetchDashboardData}
-                icon={<RefreshCw className="w-4 h-4" />}
-              >
-                Prov igjen
-              </AdminButton>
-            }
-            className="max-w-md"
-          />
+          <Card padding="lg" className="max-w-md flex flex-col items-center justify-center text-center py-12 px-6">
+            <AlertCircle className="w-12 h-12 text-error mb-4" />
+            <h3 className="text-lg font-semibold text-black mb-2">Kunne ikke laste data</h3>
+            <p className="text-sm text-grey-500 mb-6">{error}</p>
+            <Button variant="accent" onClick={fetchDashboardData} className="gap-2">
+              <RefreshCw className="w-4 h-4" />
+              Prøv igjen
+            </Button>
+          </Card>
         </div>
       </>
     );
@@ -271,7 +262,7 @@ export default function MissionBoardPage() {
         {/* Last Updated */}
         <div className="flex items-center justify-end">
           <div className="flex items-center gap-2 px-4 py-2 bg-grey-100 rounded-lg">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
             <span className="text-sm text-grey-500">
               Sist oppdatert:{" "}
               {lastUpdated.toLocaleTimeString("nb-NO", {
@@ -309,25 +300,25 @@ export default function MissionBoardPage() {
                 const Icon = action.icon;
                 return (
                   <Link key={action.label} href={action.href}>
-                    <AdminButton
+                    <Button
                       variant="secondary"
-                      icon={<Icon className="w-4 h-4" />}
                       className="gap-2"
                     >
+                      <Icon className="w-4 h-4" />
                       {action.label}
-                    </AdminButton>
+                    </Button>
                   </Link>
                 );
               })}
             </div>
             <Link href="/admin/bookinger/ny">
-              <AdminButton
-                variant="primary"
-                icon={<Plus className="w-4 h-4" />}
+              <Button
+                variant="accent"
                 className="gap-2"
               >
+                <Plus className="w-4 h-4" />
                 Ny booking
-              </AdminButton>
+              </Button>
             </Link>
           </motion.div>
 
@@ -336,7 +327,7 @@ export default function MissionBoardPage() {
             variants={itemVariants}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
           >
-            <AdminCard compact hover className="p-5">
+            <Card padding="sm" hover>
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-grey-500">Okter i dag</p>
@@ -344,14 +335,14 @@ export default function MissionBoardPage() {
                     {stats.today.totalBookings}
                   </p>
                 </div>
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-600">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success">
                   <Calendar className="w-5 h-5" />
                 </div>
               </div>
               <AdminSparkline data={sparkBookings} width="100%" height={32} />
-            </AdminCard>
+            </Card>
 
-            <AdminCard compact hover className="p-5">
+            <Card padding="sm" hover>
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-grey-500">Aktive okter</p>
@@ -359,7 +350,7 @@ export default function MissionBoardPage() {
                     {stats.today.activeSessions}
                   </p>
                 </div>
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-600">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success">
                   <Activity className="w-5 h-5" />
                 </div>
               </div>
@@ -369,9 +360,9 @@ export default function MissionBoardPage() {
                 height={32}
                 color="#22c55e"
               />
-            </AdminCard>
+            </Card>
 
-            <AdminCard compact hover className="p-5">
+            <Card padding="sm" hover>
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-grey-500">Nye elever (uke)</p>
@@ -379,7 +370,7 @@ export default function MissionBoardPage() {
                     {stats.week.newStudents}
                   </p>
                 </div>
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-600">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success">
                   <Users className="w-5 h-5" />
                 </div>
               </div>
@@ -389,9 +380,9 @@ export default function MissionBoardPage() {
                 height={32}
                 color="#16a34a"
               />
-            </AdminCard>
+            </Card>
 
-            <AdminCard compact hover className="p-5">
+            <Card padding="sm" hover>
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-grey-500">Omsetning (uke)</p>
@@ -399,7 +390,7 @@ export default function MissionBoardPage() {
                     {`${stats.week.revenue.toLocaleString("nb-NO")} kr`}
                   </p>
                 </div>
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-600">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success">
                   <DollarSign className="w-5 h-5" />
                 </div>
               </div>
@@ -409,7 +400,7 @@ export default function MissionBoardPage() {
                 height={32}
                 color="#16a34a"
               />
-            </AdminCard>
+            </Card>
           </motion.div>
 
           {/* Charts — trend + manedsmal */}
@@ -417,15 +408,15 @@ export default function MissionBoardPage() {
             variants={itemVariants}
             className="grid grid-cols-1 lg:grid-cols-3 gap-6"
           >
-            <AdminCard className="p-5 lg:col-span-2">
+            <Card padding="sm" className="lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-base font-semibold text-grey-900">Bookinger siste 30 dager</h3>
-                <AdminBadge variant="info">Trend</AdminBadge>
+                <Badge variant="info">Trend</Badge>
               </div>
               <AdminAreaChart data={bookingTrendData} height={240} />
-            </AdminCard>
+            </Card>
 
-            <AdminCard className="p-5">
+            <Card padding="sm">
               <h3 className="text-base font-semibold text-grey-900 mb-4">Manedlig mal</h3>
               <div className="flex flex-col items-center justify-center py-4">
                 <AdminProgressRing
@@ -436,22 +427,22 @@ export default function MissionBoardPage() {
                   label={`${monthlyCurrent} / ${monthlyGoal} okter`}
                 />
               </div>
-            </AdminCard>
+            </Card>
           </motion.div>
 
           {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Today's Schedule */}
             <motion.div variants={itemVariants} className="lg:col-span-2">
-              <AdminCard className="overflow-hidden p-0">
+              <Card padding="none" className="overflow-hidden">
                 <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-green-600" />
+                    <Clock className="w-5 h-5 text-success" />
                     <h2 className="text-base font-semibold text-grey-900">Dagens timeplan</h2>
                   </div>
                   <Link
                     href="/admin/kalender"
-                    className="text-sm text-green-600 hover:text-green-700 font-medium flex items-center gap-1.5 transition-colors"
+                    className="text-sm text-success hover:text-success-text font-medium flex items-center gap-1.5 transition-colors"
                   >
                     Se kalender
                     <ArrowRight className="w-4 h-4" />
@@ -494,7 +485,7 @@ export default function MissionBoardPage() {
                             </p>
                           </div>
 
-                          <ArrowRight className="w-5 h-5 text-grey-300 group-hover:text-green-600 transition-colors" />
+                          <ArrowRight className="w-5 h-5 text-grey-300 group-hover:text-success transition-colors" />
                         </div>
                       </motion.div>
                     ))}
@@ -507,16 +498,16 @@ export default function MissionBoardPage() {
                     </p>
                   </div>
                 )}
-              </AdminCard>
+              </Card>
             </motion.div>
 
             {/* Sidebar */}
             <div className="space-y-6">
               {/* AI Insights Card */}
               <motion.div variants={itemVariants}>
-                <AdminCard className="p-5 border-l-4 border-l-purple-500">
+                <Card padding="sm" className="border-l-4 border-l-ai">
                   <div className="flex items-center gap-2 mb-4">
-                    <Sparkles className="w-5 h-5 text-purple-500" />
+                    <Sparkles className="w-5 h-5 text-ai" />
                     <h3 className="text-base font-semibold text-grey-900">AI-innsikt</h3>
                   </div>
 
@@ -526,25 +517,25 @@ export default function MissionBoardPage() {
                     ettermiddag. Etterspurselen er hoy.
                   </p>
 
-                  <AdminButton
+                  <Button
                     variant="secondary"
                     onClick={() => router.push("/admin/analytics")}
                     className="w-full"
                   >
                     Se detaljert analyse
-                  </AdminButton>
-                </AdminCard>
+                  </Button>
+                </Card>
               </motion.div>
 
               {/* Alerts */}
               <motion.div variants={itemVariants}>
-                <AdminCard className="overflow-hidden p-0">
+                <Card padding="none" className="overflow-hidden">
                   <div className="px-6 py-4 border-b border-grey-200">
                     <div className="flex items-center gap-2">
-                      <Bell className="w-5 h-5 text-green-600" />
+                      <Bell className="w-5 h-5 text-success" />
                       <h3 className="text-base font-semibold text-grey-900">Varsler</h3>
                       {stats.alerts.length > 0 && (
-                        <span className="ml-auto px-2.5 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-full">
+                        <span className="ml-auto px-2.5 py-0.5 bg-success-light text-success-text text-xs font-bold rounded-full">
                           {stats.alerts.length}
                         </span>
                       )}
@@ -561,10 +552,10 @@ export default function MissionBoardPage() {
                           <div
                             className={`w-2 h-2 rounded-full mt-2 ${
                               alert.type === "warning"
-                                ? "bg-amber-500"
+                                ? "bg-warning"
                                 : alert.type === "success"
-                                  ? "bg-green-500"
-                                  : "bg-green-600"
+                                  ? "bg-success"
+                                  : "bg-success"
                             }`}
                           />
                           <div className="flex-1">
@@ -580,33 +571,33 @@ export default function MissionBoardPage() {
                     </div>
                   ) : (
                     <div className="px-6 py-8 text-center">
-                      <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-3 opacity-50" />
+                      <CheckCircle className="w-10 h-10 text-success mx-auto mb-3 opacity-50" />
                       <p className="text-sm text-grey-500">
                         Ingen aktive varsler
                       </p>
                     </div>
                   )}
-                </AdminCard>
+                </Card>
               </motion.div>
 
               {/* Timeline — dagens aktivitet */}
               {timelineItems.length > 0 && (
                 <motion.div variants={itemVariants}>
-                  <AdminCard compact className="p-5">
+                  <Card padding="sm" className="p-5">
                     <h3 className="text-base font-semibold text-grey-900 mb-4 flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-green-600" />
+                      <Clock className="w-5 h-5 text-success" />
                       Dagens aktivitet
                     </h3>
                     <AdminTimeline items={timelineItems} />
-                  </AdminCard>
+                  </Card>
                 </motion.div>
               )}
 
               {/* Weekly Summary */}
               <motion.div variants={itemVariants}>
-                <AdminCard compact className="p-5">
+                <Card padding="sm" className="p-5">
                   <h3 className="text-base font-semibold text-grey-900 mb-4 flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-green-600" />
+                    <Zap className="w-5 h-5 text-success" />
                     Denne uken
                   </h3>
 
@@ -623,7 +614,7 @@ export default function MissionBoardPage() {
                       <span className="text-sm text-grey-500">
                         Omsetning
                       </span>
-                      <span className="font-semibold text-green-600 tabular-nums">
+                      <span className="font-semibold text-success tabular-nums">
                         {stats.week.revenue.toLocaleString("nb-NO")} kr
                       </span>
                     </div>
@@ -636,7 +627,7 @@ export default function MissionBoardPage() {
                       </span>
                     </div>
                   </div>
-                </AdminCard>
+                </Card>
               </motion.div>
             </div>
           </div>

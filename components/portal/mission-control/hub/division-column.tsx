@@ -1,6 +1,7 @@
 import { cn } from "@/lib/portal/utils/cn";
-import { MCCard, MCCardHeader, MCCardBody } from "../ui/mc-card";
-import { MCBadge, DivisionDot } from "../ui/mc-badge";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { DivisionDot } from "../ui/division-dot";
 import { SessionItem } from "./session-item";
 import type { Division } from "../mc-nav-config";
 
@@ -43,18 +44,20 @@ export function DivisionColumn({
   className,
 }: DivisionColumnProps) {
   return (
-    <MCCard className={className}>
-      <MCCardHeader>
+    <Card className={className}>
+      <CardHeader className="px-4 py-3 flex flex-row items-center justify-between border-b border-grey-200">
         <div className="flex items-center gap-2">
           <DivisionDot division={division} />
-          <span className="text-[13px] font-bold text-black">{label}</span>
+          <span className="text-sm font-bold text-black">{label}</span>
         </div>
-        <MCBadge variant="neutral">{studentCount} elever</MCBadge>
-      </MCCardHeader>
+        <Badge variant="secondary">{studentCount} elever</Badge>
+      </CardHeader>
 
-      <MCCardBody>
+      <CardContent className="p-4">
         {/* Today's Sessions */}
-        <div className="text-[9px] font-semibold text-grey-400 mb-2">I DAG</div>
+        <div className="text-[10px] font-semibold uppercase tracking-wider text-grey-400 mb-2">
+          I dag
+        </div>
         <div className="flex flex-col gap-2">
           {sessions.length > 0 ? (
             sessions.map((session) => (
@@ -68,8 +71,8 @@ export function DivisionColumn({
               />
             ))
           ) : (
-            <div className="text-[10px] text-grey-400 py-4 text-center">
-              Ingen okter i dag
+            <div className="text-xs text-grey-400 py-4 text-center">
+              Ingen økter i dag
             </div>
           )}
         </div>
@@ -77,13 +80,13 @@ export function DivisionColumn({
         {/* Action Items */}
         {actionItems && actionItems.length > 0 && (
           <div className="mt-3 pt-3 border-t border-grey-200">
-            <div className="text-[9px] font-semibold text-grey-400 mb-1.5">
-              KREVER HANDLING
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-grey-400 mb-1.5">
+              Krever handling
             </div>
             {actionItems.map((item, index) => (
               <div
                 key={index}
-                className={cn("text-[10px] mt-0.5", actionColors[item.variant])}
+                className={cn("text-xs mt-0.5", actionColors[item.variant])}
               >
                 • {item.text}
               </div>
@@ -94,17 +97,17 @@ export function DivisionColumn({
         {/* Next Week */}
         {nextWeekItems && nextWeekItems.length > 0 && (
           <div className="mt-3 pt-3 border-t border-grey-200">
-            <div className="text-[9px] font-semibold text-grey-400 mb-1.5">
-              NESTE UKE
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-grey-400 mb-1.5">
+              Neste uke
             </div>
             {nextWeekItems.map((item, index) => (
-              <div key={index} className="text-[10px] text-grey-500 mt-0.5">
+              <div key={index} className="text-xs text-grey-500 mt-0.5">
                 • {item}
               </div>
             ))}
           </div>
         )}
-      </MCCardBody>
-    </MCCard>
+      </CardContent>
+    </Card>
   );
 }

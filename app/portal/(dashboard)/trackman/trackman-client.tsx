@@ -15,8 +15,7 @@ import {
   AlertCircle,
   X,
 } from "lucide-react";
-import { ProgressChart } from "@/components/portal/heritage/progress-chart";
-import { QuickAction } from "@/components/portal/heritage/quick-action";
+import { Button } from "@/components/ui/button";
 import type { TrackManOverview } from "./actions";
 
 // ── Typer ────────────────────────────────────────────────
@@ -253,12 +252,14 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Carry Trend */}
       {data.carryTrend.length >= 2 ? (
-        <ProgressChart
-          data={data.carryTrend}
-          title="Driver carry-trend"
-          color="#0A1F18"
-          height={200}
-        />
+        <div className="bg-white rounded-2xl p-6 border border-[#D5DFDB]/50">
+          <h3 className="text-sm font-semibold text-[#0A1F18] mb-4">
+            Driver carry-trend
+          </h3>
+          <div className="h-[200px] flex items-center justify-center rounded-xl bg-[#F5F8F7]">
+            <p className="text-sm text-[#7A8C85]">Carry-trend graf kommer snart.</p>
+          </div>
+        </div>
       ) : (
         <EmptyState
           title="Driver carry-trend"
@@ -390,24 +391,33 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
           Handlinger
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <QuickAction
-            href="#"
-            icon={Upload}
-            label="Last opp CSV"
-            description="Importer fra TrackMan"
-          />
-          <QuickAction
-            href="#"
-            icon={FileSpreadsheet}
-            label="Eksporter data"
-            description="Last ned rapport"
-          />
-          <QuickAction
-            href="/portal/analyse"
-            icon={TrendingUp}
-            label="Se analyse"
-            description="Dyp innsikt"
-          />
+          <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
+            <a href="#">
+              <Upload className="w-4 h-4" />
+              <div className="text-left">
+                <p className="text-sm font-medium">Last opp CSV</p>
+                <p className="text-xs text-muted-foreground">Importer fra TrackMan</p>
+              </div>
+            </a>
+          </Button>
+          <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
+            <a href="#">
+              <FileSpreadsheet className="w-4 h-4" />
+              <div className="text-left">
+                <p className="text-sm font-medium">Eksporter data</p>
+                <p className="text-xs text-muted-foreground">Last ned rapport</p>
+              </div>
+            </a>
+          </Button>
+          <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
+            <a href="/portal/analyse">
+              <TrendingUp className="w-4 h-4" />
+              <div className="text-left">
+                <p className="text-sm font-medium">Se analyse</p>
+                <p className="text-xs text-muted-foreground">Dyp innsikt</p>
+              </div>
+            </a>
+          </Button>
         </div>
       </div>
 

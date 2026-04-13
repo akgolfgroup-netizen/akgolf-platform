@@ -23,16 +23,16 @@ import Link from "next/link";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
- AdminCard,
- AdminButton,
  AdminInput,
  AdminTextarea,
  AdminSelect,
- AdminBadge,
  AdminStatCard,
  AdminPageHeader,
  AdminEmptyState,
 } from "@/components/portal/mission-control/ui";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import type {
@@ -78,11 +78,11 @@ const FOCUS_VARIANT: Record<
 };
 
 const FOCUS_BG: Record<FocusArea, string> = {
- FYS: "bg-[#0A1F18]/5 border-[#0A1F18]/20",
- TEK: "bg-[#1A4D36]/5 border-[#1A4D36]/20",
- SLAG: "bg-[#C48A32]/5 border-[#C48A32]/20",
- SPILL: "bg-[#EF4444]/5 border-[#EF4444]/20",
- TURN: "bg-[#ECF0EF] border-[#A5B2AD]",
+ FYS: "bg-black/5 border-black/20",
+ TEK: "bg-success-text/5 border-success-text/20",
+ SLAG: "bg-warning/5 border-warning/20",
+ SPILL: "bg-error/5 border-error/20",
+ TURN: "bg-grey-100 border-grey-300",
 };
 
 const PERIOD_LABELS: Record<string, string> = {
@@ -166,18 +166,18 @@ function PlanOverview({
  onMenuClick={toggle}
  />
 
- <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#F5F8F7]">
+ <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-grey-50">
  <AdminPageHeader
  title="Treningsplaner"
  subtitle="Oversikt over alle aktive og tidligere treningsplaner"
  actions={
  <Link href="/admin/treningsplan/ny">
- <AdminButton
- variant="primary"
- icon={<Plus className="w-4 h-4"/>}
+ <Button
+ variant="accent"
  >
+ <Plus className="w-4 h-4 mr-2"/>
  Ny plan
- </AdminButton>
+ </Button>
  </Link>
  }
  />
@@ -202,10 +202,10 @@ function PlanOverview({
  </div>
 
  {/* Filters */}
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl p-4">
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
  <div className="flex flex-col sm:flex-row gap-3">
  <div className="relative flex-1">
- <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7A8C85] pointer-events-none"/>
+ <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none"/>
  <AdminInput
  type="text"
  placeholder="Søk etter elev eller plantittel..."
@@ -223,8 +223,8 @@ function PlanOverview({
  className={cn(
  "px-3 py-2 rounded-lg text-sm font-medium transition-colors border",
  filterActive === f
- ? "bg-[#0A1F18] text-white border-[#0A1F18]"
- : "bg-white border-[#D5DFDB] text-[#324D45] hover:bg-[#ECF0EF]",
+ ? "bg-black text-white border-black"
+ : "bg-white border-grey-200 text-text hover:bg-grey-100",
  )}
  >
  {f === "all"? "Alle": f === "active"? "Aktive": "Inaktive"}
@@ -247,12 +247,12 @@ function PlanOverview({
  action={
  !searchQuery ? (
  <Link href="/admin/treningsplan/ny">
- <AdminButton
- variant="primary"
- icon={<Plus className="w-4 h-4"/>}
+ <Button
+ variant="accent"
  >
+ <Plus className="w-4 h-4 mr-2"/>
  Ny plan
- </AdminButton>
+ </Button>
  </Link>
  ) : undefined
  }
@@ -262,24 +262,24 @@ function PlanOverview({
  {filteredPlans.map((plan) => (
  <div
  key={plan.id}
- className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl p-4 transition-all hover:shadow-md hover:border-[#A5B2AD] border border-[#D5DFDB]"
+ className="bg-white rounded-xl border border-grey-200 rounded-xl p-4 transition-all hover:shadow-md hover:border-grey-300 border border-grey-200"
  >
  <div className="flex items-start justify-between gap-4">
  <div className="flex-1 min-w-0">
  <div className="flex items-center gap-2 mb-1 flex-wrap">
- <h3 className="font-medium text-[#0A1F18] truncate">
+ <h3 className="font-medium text-black truncate">
  {plan.title}
  </h3>
  {plan.isActive && (
- <AdminBadge variant="success">Aktiv</AdminBadge>
+ <Badge variant="success">Aktiv</Badge>
  )}
  {plan.aiGenerated ? (
- <AdminBadge variant="info">AI</AdminBadge>
+ <Badge variant="info">AI</Badge>
  ) : (
- <AdminBadge variant="muted">Manuell</AdminBadge>
+ <Badge variant="muted">Manuell</Badge>
  )}
  </div>
- <div className="flex items-center gap-4 text-sm text-[#5A6E66] flex-wrap">
+ <div className="flex items-center gap-4 text-sm text-grey-500 flex-wrap">
  {plan.student?.name && (
  <span className="flex items-center gap-1">
  <User className="w-3.5 h-3.5"/>
@@ -296,7 +296,7 @@ function PlanOverview({
  locale: nb,
  })}
  </span>
- <span className="text-[#5A6E66]">
+ <span className="text-grey-500">
  {PERIOD_LABELS[plan.periodType] ?? plan.periodType}
  </span>
  </div>
@@ -384,7 +384,7 @@ function StudentPlanEditor({
  onMenuClick={toggle}
  />
 
- <div className="p-6 space-y-6 bg-[#F5F8F7] min-h-[calc(100vh-56px)]">
+ <div className="p-6 space-y-6 bg-grey-50 min-h-[calc(100vh-56px)]">
  <AdminPageHeader
  title={student?.name ?? "Treningsplan"}
  subtitle="Rediger uker, økter og fokus for eleven"
@@ -398,7 +398,7 @@ function StudentPlanEditor({
  {/* Back link */}
  <Link
  href={`/admin/elever/${studentId}`}
- className="inline-flex items-center gap-1 text-sm text-[#5A6E66] hover:text-[#324D45] transition-colors"
+ className="inline-flex items-center gap-1 text-sm text-grey-500 hover:text-text transition-colors"
  >
  <ArrowLeft className="w-4 h-4"/>
  Tilbake til elevprofil
@@ -410,8 +410,8 @@ function StudentPlanEditor({
  className={cn(
  "flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium border",
  feedback.type === "success"
- ? "bg-[#1A4D36]/10 text-[#1A4D36] border-[#1A4D36]/20"
- : "bg-[#EF4444]/10 text-[#EF4444] border-[#EF4444]/20",
+ ? "bg-success-text/10 text-success-text border-success-text/20"
+ : "bg-error/10 text-error border-error/20",
  )}
  >
  <CheckCircle className="w-4 h-4"/>
@@ -427,9 +427,10 @@ function StudentPlanEditor({
  description="Denne eleven har ingen treningsplaner ennå. Generer en via AI-verktøyene eller opprett en manuelt."
  action={
  <Link href={`/admin/treningsplan/ny?studentId=${studentId}`}>
- <AdminButton variant="primary"icon={<Plus className="w-4 h-4"/>}>
+ <Button variant="accent">
+ <Plus className="w-4 h-4 mr-2"/>
  Ny plan
- </AdminButton>
+ </Button>
  </Link>
  }
  />
@@ -437,7 +438,7 @@ function StudentPlanEditor({
 
  {/* Plan selector */}
  {plans.length > 1 && (
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl p-4">
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
  <h3 className="admin-label mb-3">Velg plan</h3>
  <div className="flex gap-2 flex-wrap">
  {plans.map((plan) => (
@@ -453,8 +454,8 @@ function StudentPlanEditor({
  className={cn(
  "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
  activePlanId === plan.id
- ? "bg-[#0A1F18] text-white border-[#0A1F18]"
- : "bg-white text-[#324D45] border-[#D5DFDB] hover:border-[#0A1F18]",
+ ? "bg-black text-white border-black"
+ : "bg-white text-text border-grey-200 hover:border-black",
  )}
  >
  {plan.title}
@@ -471,21 +472,21 @@ function StudentPlanEditor({
 
  {/* Active plan header */}
  {activePlan && (
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl p-4">
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
  <div className="flex items-start justify-between gap-4">
  <div className="min-w-0">
  <div className="flex items-center gap-2 mb-1 flex-wrap">
- <h2 className="text-lg font-bold text-[#0A1F18]">
+ <h2 className="text-lg font-bold text-black">
  {activePlan.title}
  </h2>
  {activePlan.aiGenerated && (
- <AdminBadge variant="info">AI-generert</AdminBadge>
+ <Badge variant="info">AI-generert</Badge>
  )}
  {activePlan.isActive && (
- <AdminBadge variant="success">Aktiv</AdminBadge>
+ <Badge variant="success">Aktiv</Badge>
  )}
  </div>
- <p className="text-xs text-[#5A6E66]">
+ <p className="text-xs text-grey-500">
  {format(new Date(activePlan.startDate), "d. MMM yyyy", {
  locale: nb,
  })}{""}
@@ -497,19 +498,19 @@ function StudentPlanEditor({
  {activePlan.weeks.length} uker
  </p>
  {activePlan.description && (
- <p className="text-sm text-[#324D45] mt-2">
+ <p className="text-sm text-text mt-2">
  {activePlan.description}
  </p>
  )}
  </div>
- <AdminButton
+ <Button
  variant="secondary"
- icon={<Copy className="w-3.5 h-3.5"/>}
  onClick={handleDuplicatePlan}
  disabled={isPending}
  >
+ <Copy className="w-3.5 h-3.5 mr-2"/>
  {isPending ? "Kopierer...": "Kopier plan"}
- </AdminButton>
+ </Button>
  </div>
  </div>
  )}
@@ -603,44 +604,44 @@ function WeekCard({
  }
 
  return (
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl border border-[#D5DFDB] overflow-hidden">
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl border border-grey-200 overflow-hidden">
  {/* Week header */}
  <button
  type="button"
  onClick={onToggle}
- className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#ECF0EF] transition-colors"
+ className="w-full flex items-center gap-3 px-4 py-3 hover:bg-grey-100 transition-colors"
  >
  {expanded ? (
- <ChevronDown className="w-4 h-4 text-[#7A8C85]"/>
+ <ChevronDown className="w-4 h-4 text-grey-400"/>
  ) : (
- <ChevronRight className="w-4 h-4 text-[#7A8C85]"/>
+ <ChevronRight className="w-4 h-4 text-grey-400"/>
  )}
  <div className="flex-1 flex items-center gap-3 flex-wrap">
- <span className="text-sm font-semibold text-[#0A1F18]">
+ <span className="text-sm font-semibold text-black">
  Uke {week.weekNumber}
  </span>
- <span className="text-xs text-[#5A6E66]">
+ <span className="text-xs text-grey-500">
  {format(new Date(week.weekStart), "d. MMM", { locale: nb })}
  </span>
  {week.focus && (
- <AdminBadge variant="info">{week.focus}</AdminBadge>
+ <Badge variant="info">{week.focus}</Badge>
  )}
  {week.volumeLabel && (
- <span className="text-[10px] text-[#7A8C85]">
+ <span className="text-[10px] text-grey-400">
  {week.volumeLabel}
  </span>
  )}
  </div>
- <span className="text-xs text-[#5A6E66]">
+ <span className="text-xs text-grey-500">
  {week.sessions.length} sesjoner
  </span>
  </button>
 
  {expanded && (
- <div className="border-t border-[#D5DFDB]">
+ <div className="border-t border-grey-200">
  {/* Week focus edit */}
  {editingWeekFocus === week.id ? (
- <div className="px-4 py-3 bg-[#ECF0EF] flex items-center gap-2">
+ <div className="px-4 py-3 bg-grey-100 flex items-center gap-2">
  <div className="flex-1">
  <AdminInput
  type="text"
@@ -649,25 +650,25 @@ function WeekCard({
  placeholder="Ukefokus (f.eks. Putting, Kort spill)"
  />
  </div>
- <AdminButton
- variant="primary"
+ <Button
+ variant="accent"
  onClick={handleSaveWeekFocus}
  disabled={isPending}
- icon={<Save className="w-3.5 h-3.5"/>}
  >
+ <Save className="w-3.5 h-3.5 mr-2"/>
  {isPending ? "Lagrer...": "Lagre"}
- </AdminButton>
- <AdminButton
+ </Button>
+ <Button
  variant="secondary"
  onClick={() => onEditWeekFocus(null)}
  aria-label="Avbryt"
  >
  <X className="w-3.5 h-3.5"/>
- </AdminButton>
+ </Button>
  </div>
  ) : (
- <div className="px-4 py-2 bg-[#ECF0EF] flex items-center justify-between">
- <span className="text-xs text-[#5A6E66]">
+ <div className="px-4 py-2 bg-grey-100 flex items-center justify-between">
+ <span className="text-xs text-grey-500">
  Fokus: {week.focus || "Ikke satt"}
  </span>
  <button
@@ -676,7 +677,7 @@ function WeekCard({
  setWeekFocusValue(week.focus ??"");
  onEditWeekFocus(week.id);
  }}
- className="text-xs text-[#0A1F18] hover:underline"
+ className="text-xs text-black hover:underline"
  >
  Endre fokus
  </button>
@@ -684,15 +685,15 @@ function WeekCard({
  )}
 
  {/* Days grid */}
- <div className="grid grid-cols-1 md:grid-cols-7 divide-y md:divide-y-0 md:divide-x divide-[#D5DFDB]">
+ <div className="grid grid-cols-1 md:grid-cols-7 divide-y md:divide-y-0 md:divide-x divide-grey-200">
  {DAY_NAMES.map((dayName, idx) => {
  const dayOfWeek = idx + 1;
  const daySessions = sessionsByDay.get(dayOfWeek) ?? [];
 
  return (
  <div key={dayOfWeek} className="min-h-[120px]">
- <div className="px-3 py-2 border-b border-[#D5DFDB] bg-white">
- <span className="text-[10px] font-semibold text-[#5A6E66] uppercase tracking-wider">
+ <div className="px-3 py-2 border-b border-grey-200 bg-white">
+ <span className="text-[10px] font-semibold text-grey-500 uppercase tracking-wider">
  {dayName}
  </span>
  </div>
@@ -756,7 +757,7 @@ function WeekCard({
  onClick={() =>
  onAddToWeek({ weekId: week.id, dayOfWeek })
  }
- className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] text-[#5A6E66] hover:text-[#0A1F18] hover:bg-[#0A1F18]/5 rounded transition-colors"
+ className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] text-grey-500 hover:text-black hover:bg-black/5 rounded transition-colors"
  >
  <Plus className="w-3 h-3"/>
  Legg til
@@ -809,12 +810,12 @@ function SessionCard({
  const focusKey = (session.focusArea ??"") as FocusArea;
  const bgClass =
  FOCUS_BG[focusKey] ??
- "bg-white border-[#A5B2AD]";
+ "bg-white border-grey-300";
  const variant = FOCUS_VARIANT[focusKey] ?? "muted";
 
  if (isEditing) {
  return (
- <div className="p-2 bg-white border border-[#0A1F18]/40 rounded-lg space-y-2">
+ <div className="p-2 bg-white border border-black/40 rounded-lg space-y-2">
  <AdminInput
  type="text"
  value={title}
@@ -862,7 +863,7 @@ function SessionCard({
  })
  }
  disabled={isPending || !title.trim()}
- className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium bg-[#0A1F18] text-white rounded hover:opacity-90 disabled:opacity-50"
+ className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium bg-black text-white rounded hover:opacity-90 disabled:opacity-50"
  >
  <Save className="w-3 h-3"/>
  {isPending ? "Lagrer...": "Lagre"}
@@ -870,7 +871,7 @@ function SessionCard({
  <button
  type="button"
  onClick={onCancel}
- className="px-2 py-1 text-[10px] text-[#5A6E66] hover:text-[#324D45]"
+ className="px-2 py-1 text-[10px] text-grey-500 hover:text-text"
  >
  Avbryt
  </button>
@@ -878,7 +879,7 @@ function SessionCard({
  type="button"
  onClick={onDelete}
  disabled={isPending}
- className="p-1 text-[#EF4444] hover:bg-[#EF4444]/10 rounded"
+ className="p-1 text-error hover:bg-error/10 rounded"
  aria-label="Slett sesjon"
  >
  <Trash2 className="w-3 h-3"/>
@@ -898,21 +899,21 @@ function SessionCard({
  )}
  >
  <div className="flex items-start justify-between gap-1">
- <span className="text-[11px] font-semibold leading-tight line-clamp-2 text-[#0A1F18]">
+ <span className="text-[11px] font-semibold leading-tight line-clamp-2 text-black">
  {session.title}
  </span>
  </div>
  {session.durationMinutes && (
  <div className="flex items-center gap-1 mt-1">
- <Clock className="w-2.5 h-2.5 text-[#5A6E66]"/>
- <span className="text-[10px] text-[#5A6E66]">
+ <Clock className="w-2.5 h-2.5 text-grey-500"/>
+ <span className="text-[10px] text-grey-500">
  {session.durationMinutes} min
  </span>
  </div>
  )}
  {session.focusArea && (
  <div className="mt-1">
- <AdminBadge variant={variant}>{session.focusArea}</AdminBadge>
+ <Badge variant={variant}>{session.focusArea}</Badge>
  </div>
  )}
  </button>
@@ -937,7 +938,7 @@ function AddSessionForm({ isPending, onSave, onCancel }: AddSessionFormProps) {
  const [focusArea, setFocusArea] = useState<string>("");
 
  return (
- <div className="p-2 bg-white border border-dashed border-[#0A1F18]/40 rounded-lg space-y-2">
+ <div className="p-2 bg-white border border-dashed border-black/40 rounded-lg space-y-2">
  <AdminInput
  type="text"
  value={title}
@@ -978,7 +979,7 @@ function AddSessionForm({ isPending, onSave, onCancel }: AddSessionFormProps) {
  })
  }
  disabled={isPending || !title.trim()}
- className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium bg-[#0A1F18] text-white rounded hover:opacity-90 disabled:opacity-50"
+ className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium bg-black text-white rounded hover:opacity-90 disabled:opacity-50"
  >
  <Plus className="w-3 h-3"/>
  {isPending ? "Legger til...": "Legg til"}
@@ -986,7 +987,7 @@ function AddSessionForm({ isPending, onSave, onCancel }: AddSessionFormProps) {
  <button
  type="button"
  onClick={onCancel}
- className="px-2 py-1 text-[10px] text-[#5A6E66] hover:text-[#324D45]"
+ className="px-2 py-1 text-[10px] text-grey-500 hover:text-text"
  >
  Avbryt
  </button>

@@ -17,8 +17,6 @@ import {
 import { repeatLastSession } from "./actions";
 import { LogSessionModal } from "@/components/portal/dagbok/log-session-modal";
 import {
-  HeroHeading,
-  Shimmer,
   staggerContainer,
 } from "@/components/portal/premium";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
@@ -152,7 +150,6 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
         onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
         className="relative h-11 px-6 rounded-full bg-[#D1F843] text-[#0A1F18] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
       >
-        <Shimmer />
         <Plus className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
         <span className="relative z-10">Logg ny økt</span>
       </motion.button>
@@ -163,16 +160,20 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
     <div className="space-y-10">
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/dagbok" />
 
-      <HeroHeading
-        label="Din treningsdagbok"
-        title={<>
+      <div className="space-y-3">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
+          Din treningsdagbok
+        </p>
+        <h1 className="text-2xl font-bold text-[#0A1F18]">
           Logg og{" "}
           <span className="font-serif italic text-[#0A1F18] font-normal">spor</span>
           <span className="text-[#D1F843]">.</span>
-        </>}
-        description="Hold oversikt over aktiviteten din. Hver økt teller, og hver streak er et skritt nærmere målet."
-        actions={heroActions}
-      />
+        </h1>
+        <p className="text-[13px] text-grey-400 max-w-xl">
+          Hold oversikt over aktiviteten din. Hver økt teller, og hver streak er et skritt nærmere målet.
+        </p>
+        {heroActions}
+      </div>
 
       {quickLogSuccess && (
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
@@ -194,7 +195,6 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
             <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}
               onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
               className="relative h-11 px-6 rounded-full bg-[#D1F843] text-[#0A1F18] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group">
-              <Shimmer />
               <Plus className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
               <span className="relative z-10">Logg ny økt</span>
             </motion.button>

@@ -6,10 +6,8 @@ import { CapacityGauge } from "@/components/portal/admin/capacity-gauge";
 import { WeekAdjustmentGrid } from "@/components/portal/admin/week-adjustment-grid";
 import { OverbookingAlert } from "@/components/portal/admin/overbooking-alert";
 import { User } from "lucide-react";
-import {
-  AdminCard,
-  AdminSelect,
-} from "@/components/portal/mission-control/ui";
+import { AdminSelect } from "@/components/portal/mission-control/ui";
+import { Card } from "@/components/ui/card";
 import {
   getWeekCapacityWithOverrides,
   saveWeekOverride,
@@ -141,7 +139,7 @@ export function WeekAdjustmentView() {
       {/* Loading State */}
       {isPending && !weekData && (
         <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#D5DFDB] border-t-[#0A1F18]" />
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-grey-200 border-t-black" />
         </div>
       )}
 
@@ -151,26 +149,26 @@ export function WeekAdjustmentView() {
           {/* Capacity Overview */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Gauge */}
-            <AdminCard className="flex items-center justify-center">
+            <Card variant="default" padding="lg" className="flex items-center justify-center">
               <CapacityGauge
                 bookedHours={weekData.totalBookedHours}
                 totalHours={weekData.totalEffectiveHours}
                 label="Belegg denne uken"
               />
-            </AdminCard>
+            </Card>
 
             {/* Stats */}
-            <AdminCard className="lg:col-span-2">
+            <Card variant="default" padding="lg" className="lg:col-span-2">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                   <p className="admin-label">Fast kapasitet</p>
-                  <p className="text-2xl font-bold text-[#0A1F18] mt-1">
+                  <p className="text-2xl font-bold text-black mt-1">
                     {weekData.totalRegularHours.toFixed(0)}t
                   </p>
                 </div>
                 <div>
                   <p className="admin-label">Justert kapasitet</p>
-                  <p className="text-2xl font-bold text-[#0A1F18] mt-1">
+                  <p className="text-2xl font-bold text-black mt-1">
                     {weekData.totalEffectiveHours.toFixed(0)}t
                   </p>
                   {weekData.totalEffectiveHours !==
@@ -179,8 +177,8 @@ export function WeekAdjustmentView() {
                       className={
                         weekData.totalEffectiveHours <
                         weekData.totalRegularHours
-                          ? "text-xs text-[#EF4444]"
-                          : "text-xs text-[#1A4D36]"
+                          ? "text-xs text-error"
+                          : "text-xs text-success-text"
                       }
                     >
                       {weekData.totalEffectiveHours >
@@ -197,7 +195,7 @@ export function WeekAdjustmentView() {
                 </div>
                 <div>
                   <p className="admin-label">Booket</p>
-                  <p className="text-2xl font-bold text-[#0A1F18] mt-1">
+                  <p className="text-2xl font-bold text-black mt-1">
                     {weekData.totalBookedHours.toFixed(1)}t
                   </p>
                 </div>
@@ -211,7 +209,7 @@ export function WeekAdjustmentView() {
                   </p>
                 </div>
               </div>
-            </AdminCard>
+            </Card>
           </div>
 
           {/* Overbooking Alert */}

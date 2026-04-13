@@ -9,35 +9,12 @@ export type { Division, NavGroup, NavItem } from "./mc-nav-config";
 
 // Division
 export { DivisionSelector, DivisionTabs } from "./division-selector";
-
-// UI Components - Heritage Grid (Dark Admin)
-export {
-  HGStatCard,
-  HGBookingTimeline,
-  HGStudentListItem,
-  HGCapacityBar,
-  HGAlertBanner,
-  HGAlert,
-  HGQuickActions,
-  HGRevenueChart,
-} from "./ui";
-
-// Legacy UI Components
-export { MCCard, MCCardHeader, MCCardTitle, MCCardBody, MCCardFooter } from "./ui/mc-card";
-export { MCBadge, DivisionDot, getDivisionBorderClass } from "./ui/mc-badge";
-export { MCStatCard, MCKPIStrip } from "./ui/mc-stat-card";
-export { MCButton } from "./ui/mc-button";
-export {
-  MCTable,
-  MCTableHeader,
-  MCTableBody,
-  MCTableRow,
-  MCTableHead,
-  MCTableCell,
-} from "./ui/mc-table";
-export { AgentCard, AGENT_CONFIGS } from "./ui/agent-card";
-export type { AgentConfig } from "./ui/agent-card";
+export { DivisionDot, getDivisionBorderClass } from "./ui/division-dot";
 
 // Hub Components
 export { DivisionColumn } from "./hub/division-column";
 export { SessionItem } from "./hub/session-item";
+
+// Agent Card
+export { AgentCard, AGENT_CONFIGS } from "./ui/agent-card";
+export type { AgentConfig } from "./ui/agent-card";

@@ -62,11 +62,11 @@ export function Topbar({ title, subtitle, user }: TopbarProps) {
     <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-grey-200 bg-white/90 px-6 backdrop-blur-md">
       <div className="flex items-center gap-3">
         <div>
-          <h1 className="text-lg font-semibold leading-tight text-grey-900">
+          <h1 className="text-lg font-semibold leading-tight text-black">
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-0.5 text-xs leading-tight text-grey-900">
+            <p className="mt-0.5 text-xs leading-tight text-black">
               {subtitle}
             </p>
           )}

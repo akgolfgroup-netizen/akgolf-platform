@@ -5,7 +5,7 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Mail, Lock, Shield } from "lucide-react";
 import { AKLogo } from "@/components/website/AKLogo";
-import { AdminButton } from "@/components/portal/mission-control/ui";
+import { Button } from "@/components/ui";
 
 function createSupabaseBrowser() {
   return createBrowserClient(
@@ -38,9 +38,9 @@ export default function AdminLoginPage() {
     if (authError) {
       setLoading(false);
       if (authError.message.includes("Invalid login credentials")) {
-        setError("Feil e-post eller passord. Prov igjen.");
+        setError("Feil e-post eller passord. Prøv igjen.");
       } else {
-        setError("Kunne ikke logge inn. Prov igjen.");
+        setError("Kunne ikke logge inn. Prøv igjen.");
       }
     } else {
       router.refresh();
@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[var(--color-surface)]">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-surface">
       <div className="w-full max-w-sm">
         {/* Logo og tittel */}
         <div className="text-center mb-8">
@@ -58,30 +58,30 @@ export default function AdminLoginPage() {
           </div>
           <div className="inline-flex items-center gap-2 mb-2">
             <Shield
-              className="w-4 h-4 text-[var(--color-primary)]"
+              className="w-4 h-4 text-primary"
               aria-hidden="true"
             />
-            <h1 className="admin-page-title text-2xl">Mission Control</h1>
+            <h1 className="text-2xl font-bold text-black tracking-tight">Mission Control</h1>
           </div>
-          <p className="text-sm text-[var(--color-muted)]">
+          <p className="text-sm text-muted">
             Kun for staff
           </p>
         </div>
 
         {/* Kort */}
-        <div className="admin-card">
+        <div className="bg-white border border-grey-200 rounded-xl p-6">
           <form onSubmit={handleLogin} className="space-y-5">
             {/* E-post */}
             <div className="space-y-1.5">
               <label
                 htmlFor="admin-email"
-                className="admin-label block"
+                className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400"
               >
                 E-postadresse
               </label>
               <div className="relative">
                 <Mail
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)]"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted"
                   aria-hidden="true"
                 />
                 <input
@@ -93,7 +93,7 @@ export default function AdminLoginPage() {
                   required
                   autoComplete="email"
                   spellCheck={false}
-                  className="admin-input pl-10"
+                  className="w-full px-3.5 py-2.5 pl-10 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
                 />
               </div>
             </div>
@@ -102,13 +102,13 @@ export default function AdminLoginPage() {
             <div className="space-y-1.5">
               <label
                 htmlFor="admin-password"
-                className="admin-label block"
+                className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400"
               >
                 Passord
               </label>
               <div className="relative">
                 <Lock
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)]"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted"
                   aria-hidden="true"
                 />
                 <input
@@ -119,13 +119,13 @@ export default function AdminLoginPage() {
                   placeholder="••••••••"
                   required
                   autoComplete="current-password"
-                  className="admin-input pl-10 pr-10"
+                  className="w-full px-3.5 py-2.5 pl-10 pr-10 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "Skjul passord" : "Vis passord"}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 cursor-pointer bg-transparent border-none text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 cursor-pointer bg-transparent border-none text-muted hover:text-text transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="w-4 h-4" aria-hidden="true" />
@@ -138,7 +138,7 @@ export default function AdminLoginPage() {
 
             {error && (
               <p
-                className="text-xs text-[var(--color-error)]"
+                className="text-xs text-error"
                 role="alert"
                 aria-live="assertive"
               >
@@ -146,22 +146,22 @@ export default function AdminLoginPage() {
               </p>
             )}
 
-            <AdminButton
+            <Button
               type="submit"
-              variant="primary"
-              loading={loading}
+              variant="accent"
+              isLoading={loading}
               className="w-full justify-center"
             >
               {loading ? "Logger inn..." : "Logg inn"}
-            </AdminButton>
+            </Button>
           </form>
         </div>
 
-        <p className="mt-6 text-center text-xs text-[var(--color-muted)]">
+        <p className="mt-6 text-center text-xs text-muted">
           Problemer med innlogging? Kontakt{" "}
           <a
             href="mailto:support@akgolf.no"
-            className="text-[var(--color-primary)] hover:underline"
+            className="text-primary hover:underline"
           >
             support@akgolf.no
           </a>

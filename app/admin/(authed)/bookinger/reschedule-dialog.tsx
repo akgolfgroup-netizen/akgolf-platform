@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { Calendar, Clock, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   AdminDialog,
-  AdminButton,
   AdminInput,
 } from "@/components/portal/mission-control/ui";
 import { format, addMinutes } from "date-fns";
@@ -99,28 +99,28 @@ export function RescheduleDialog({
       }
       footer={
         <>
-          <AdminButton variant="ghost" onClick={handleClose}>
+          <Button variant="ghost" onClick={handleClose}>
             Avbryt
-          </AdminButton>
-          <AdminButton
-            variant="primary"
-            loading={loading}
+          </Button>
+          <Button
+            variant="accent"
+            isLoading={loading}
             onClick={handleSubmit}
-            icon={loading ? undefined : <Calendar className="w-4 h-4" />}
           >
+            {!loading && <Calendar className="w-4 h-4" />}
             Flytt booking
-          </AdminButton>
+          </Button>
         </>
       }
     >
       <div className="space-y-4">
         {/* Navarende tid */}
         {booking && (
-          <div className="rounded-lg bg-[#F5F8F7] border border-[#D5DFDB] p-3">
-            <p className="text-xs font-medium text-[#7A8C85] mb-1">
+          <div className="rounded-lg bg-grey-50 border border-grey-200 p-3">
+            <p className="text-xs font-medium text-grey-400 mb-1">
               Navarende tidspunkt
             </p>
-            <p className="text-sm font-semibold text-[#0A1F18]">
+            <p className="text-sm font-semibold text-black">
               {format(
                 new Date(booking.startTime),
                 "EEEE d. MMMM 'kl.' HH:mm",
@@ -132,7 +132,7 @@ export function RescheduleDialog({
 
         {/* Ny dato */}
         <div>
-          <label className="block text-xs font-medium text-[#0A1F18] mb-1.5">
+          <label className="block text-xs font-medium text-black mb-1.5">
             Ny dato
           </label>
           <AdminInput
@@ -145,7 +145,7 @@ export function RescheduleDialog({
 
         {/* Ny tid */}
         <div>
-          <label className="block text-xs font-medium text-[#0A1F18] mb-1.5">
+          <label className="block text-xs font-medium text-black mb-1.5">
             Nytt klokkeslett
           </label>
           <AdminInput
@@ -158,7 +158,7 @@ export function RescheduleDialog({
 
         {/* Forhåndsvisning */}
         {newEnd && (
-          <div className="flex items-center gap-2 text-xs text-[#7A8C85]">
+          <div className="flex items-center gap-2 text-xs text-grey-400">
             <Clock className="w-3.5 h-3.5" />
             <span>
               {time} – {newEnd} ({duration} min)
@@ -168,7 +168,7 @@ export function RescheduleDialog({
 
         {/* Feil */}
         {error && (
-          <p className="text-xs text-[#EF4444] font-medium">
+          <p className="text-xs text-error font-medium">
             {error}
           </p>
         )}

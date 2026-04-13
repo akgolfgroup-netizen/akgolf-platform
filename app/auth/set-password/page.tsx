@@ -13,8 +13,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { AKLogo } from "@/components/website/AKLogo";
+import { Card } from "@/components/ui";
 import {
-  PortalCard,
   EASE,
   EASE_OUT_EXPO,
   fadeInUp,
@@ -35,10 +35,10 @@ export default function SetPasswordPage() {
   return (
     <Suspense
       fallback={
-        <main className="min-h-screen w-full flex items-center justify-center bg-[var(--color-background-beige)]">
+        <main className="min-h-screen w-full flex items-center justify-center bg-background-beige">
           <Loader2
             size={28}
-            className="animate-spin text-[var(--color-primary)]"
+            className="animate-spin text-primary"
           />
         </main>
       }
@@ -134,7 +134,7 @@ function SetPasswordContent() {
   return (
     <main
       id="main-content"
-      className="min-h-screen w-full flex flex-col lg:flex-row bg-[var(--color-background-beige)]"
+      className="min-h-screen w-full flex flex-col lg:flex-row bg-background-beige"
     >
       {/* VENSTRE — Hero */}
       <motion.aside
@@ -177,7 +177,7 @@ function SetPasswordContent() {
           >
             <AKLogo variant="white" size={56} />
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm bg-white/5">
-              <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent-cta)]" />
+              <Sparkles className="w-3.5 h-3.5 text-accent-cta" />
               <span className="text-[11px] font-medium tracking-wide uppercase text-white/90">
                 Ny konto
               </span>
@@ -192,7 +192,7 @@ function SetPasswordContent() {
           >
             <motion.p
               variants={fadeInUp}
-              className="text-sm font-medium tracking-[0.18em] uppercase text-[var(--color-accent-cta)] mb-6"
+              className="text-sm font-medium tracking-[0.18em] uppercase text-accent-cta mb-6"
             >
               Velkommen ombord
             </motion.p>
@@ -224,7 +224,7 @@ function SetPasswordContent() {
         </div>
       </motion.aside>
 
-      {/* HOYRE — Form */}
+      {/* HØYRE — Form */}
       <section className="flex-1 flex items-center justify-center px-5 py-12 lg:px-12 lg:py-16 relative">
         <div
           className="absolute inset-0 pointer-events-none opacity-40"
@@ -249,15 +249,15 @@ function SetPasswordContent() {
                 animate="visible"
                 exit={{ opacity: 0 }}
               >
-                <PortalCard padding="lg" className="text-center">
+                <Card padding="lg" className="text-center">
                   <Loader2
                     size={28}
-                    className="animate-spin text-[var(--color-primary)] mx-auto mb-4"
+                    className="animate-spin text-primary mx-auto mb-4"
                   />
-                  <p className="text-sm text-[var(--color-muted)]">
+                  <p className="text-sm text-muted">
                     Verifiserer invitasjon...
                   </p>
-                </PortalCard>
+                </Card>
               </motion.div>
             )}
 
@@ -269,27 +269,27 @@ function SetPasswordContent() {
                 animate="visible"
                 exit={{ opacity: 0 }}
               >
-                <PortalCard
+                <Card
                   padding="lg"
                   className="text-center shadow-[0_24px_60px_-30px_rgba(184,66,51,0.25)]"
                 >
-                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-[var(--color-error)]/10">
-                    <AlertTriangle className="w-7 h-7 text-[var(--color-error)]" />
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-error/10">
+                    <AlertTriangle className="w-7 h-7 text-error" />
                   </div>
-                  <h1 className="text-2xl font-semibold text-[var(--color-text)] mb-2">
+                  <h1 className="text-2xl font-semibold text-text mb-2">
                     Noe gikk galt
                   </h1>
-                  <p className="text-sm text-[var(--color-muted)] mb-8 leading-relaxed">
+                  <p className="text-sm text-muted mb-8 leading-relaxed">
                     {error}
                   </p>
                   <a
                     href="mailto:post@akgolf.no"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary-alt)] transition-colors"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-alt transition-colors"
                   >
                     Kontakt oss for hjelp
                     <ArrowRight className="w-3.5 h-3.5" />
                   </a>
-                </PortalCard>
+                </Card>
               </motion.div>
             )}
 
@@ -302,16 +302,16 @@ function SetPasswordContent() {
                 exit={{ opacity: 0, y: 10 }}
               >
                 <motion.div variants={fadeInUp} className="mb-8">
-                  <h1 className="text-3xl font-semibold text-[var(--color-text)] tracking-tight mb-2">
+                  <h1 className="text-3xl font-semibold text-text tracking-tight mb-2">
                     Velg passord
                   </h1>
-                  <p className="text-[15px] text-[var(--color-muted)]">
+                  <p className="text-[15px] text-muted">
                     Sett et passord for å logge inn på spillerportalen.
                   </p>
                 </motion.div>
 
                 <motion.div variants={fadeInUp}>
-                  <PortalCard
+                  <Card
                     padding="lg"
                     className="shadow-[0_24px_60px_-30px_rgba(0,88,64,0.20)]"
                   >
@@ -319,13 +319,13 @@ function SetPasswordContent() {
                       <div>
                         <label
                           htmlFor="password"
-                          className="block text-[13px] font-medium mb-2 text-[var(--color-text)]"
+                          className="block text-[13px] font-medium mb-2 text-text"
                         >
                           Passord
                         </label>
                         <div className="relative group">
                           <Lock
-                            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] transition-colors group-focus-within:text-[var(--color-primary)]"
+                            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted transition-colors group-focus-within:text-primary"
                             aria-hidden="true"
                           />
                           <input
@@ -337,7 +337,7 @@ function SetPasswordContent() {
                             minLength={8}
                             autoComplete="new-password"
                             placeholder="Minst 8 tegn"
-                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-white border border-black/10 text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/10 transition-[border-color,box-shadow]"
+                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-white border border-black/10 text-text placeholder:text-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-[border-color,box-shadow]"
                           />
                         </div>
                       </div>
@@ -345,13 +345,13 @@ function SetPasswordContent() {
                       <div>
                         <label
                           htmlFor="confirm"
-                          className="block text-[13px] font-medium mb-2 text-[var(--color-text)]"
+                          className="block text-[13px] font-medium mb-2 text-text"
                         >
                           Bekreft passord
                         </label>
                         <div className="relative group">
                           <Lock
-                            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] transition-colors group-focus-within:text-[var(--color-primary)]"
+                            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted transition-colors group-focus-within:text-primary"
                             aria-hidden="true"
                           />
                           <input
@@ -362,7 +362,7 @@ function SetPasswordContent() {
                             required
                             autoComplete="new-password"
                             placeholder="Gjenta passordet"
-                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-white border border-black/10 text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/10 transition-[border-color,box-shadow]"
+                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-white border border-black/10 text-text placeholder:text-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-[border-color,box-shadow]"
                           />
                         </div>
                       </div>
@@ -371,11 +371,11 @@ function SetPasswordContent() {
                         <motion.p
                           initial={{ opacity: 0, y: -4 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="text-xs font-medium text-[var(--color-error)] flex items-center gap-1.5"
+                          className="text-xs font-medium text-error flex items-center gap-1.5"
                           role="alert"
                           aria-live="assertive"
                         >
-                          <span className="w-1 h-1 rounded-full bg-[var(--color-error)]" />
+                          <span className="w-1 h-1 rounded-full bg-error" />
                           {error}
                         </motion.p>
                       )}
@@ -383,7 +383,7 @@ function SetPasswordContent() {
                       <button
                         type="submit"
                         disabled={submitting}
-                        className="w-full py-3 rounded-xl bg-[var(--color-primary)] text-white text-sm font-semibold hover:bg-[var(--color-primary-alt)] disabled:opacity-60 disabled:cursor-not-allowed transition-colors group relative overflow-hidden cursor-pointer border-none mt-1"
+                        className="w-full py-3 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-alt disabled:opacity-60 disabled:cursor-not-allowed transition-colors group relative overflow-hidden cursor-pointer border-none mt-1"
                       >
                         <span className="relative z-10 flex items-center justify-center gap-2">
                           {submitting
@@ -396,7 +396,7 @@ function SetPasswordContent() {
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
                       </button>
                     </form>
-                  </PortalCard>
+                  </Card>
                 </motion.div>
               </motion.div>
             )}
@@ -409,7 +409,7 @@ function SetPasswordContent() {
                 animate="visible"
                 exit={{ opacity: 0 }}
               >
-                <PortalCard
+                <Card
                   padding="lg"
                   className="text-center shadow-[0_24px_60px_-30px_rgba(42,125,90,0.25)]"
                 >
@@ -421,17 +421,17 @@ function SetPasswordContent() {
                       delay: 0.1,
                       ease: EASE_OUT_EXPO,
                     }}
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-[var(--color-success)]/10"
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-success/10"
                   >
-                    <CheckCircle2 className="w-7 h-7 text-[var(--color-success)]" />
+                    <CheckCircle2 className="w-7 h-7 text-success" />
                   </motion.div>
-                  <h1 className="text-2xl font-semibold text-[var(--color-text)] mb-2">
+                  <h1 className="text-2xl font-semibold text-text mb-2">
                     Passord satt
                   </h1>
-                  <p className="text-sm text-[var(--color-muted)]">
+                  <p className="text-sm text-muted">
                     Du blir nå sendt til spillerportalen...
                   </p>
-                </PortalCard>
+                </Card>
               </motion.div>
             )}
           </AnimatePresence>

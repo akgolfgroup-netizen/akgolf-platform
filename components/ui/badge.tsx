@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-type BadgeVariant = 'pro' | 'elite' | 'free' | 'gir' | 'bogey' | 'birdie' | 'success' | 'warning' | 'error' | 'lime' | 'purple';
+type BadgeVariant = 'default' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'muted' | 'pro' | 'lime' | 'purple';
 
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
@@ -10,7 +10,7 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 export const Badge: React.FC<BadgeProps> = ({
   children,
-  variant = 'free',
+  variant = 'default',
   size = 'sm',
   className,
   ...props
@@ -23,17 +23,16 @@ export const Badge: React.FC<BadgeProps> = ({
   };
   
   const variants: Record<BadgeVariant, string> = {
-    pro: 'bg-[#D1F843] text-[#0A1F18]',
-    elite: 'bg-[#CD7F32] text-white',
-    free: 'bg-[#F5F8F7] text-[#5A6E66] border border-[#D5DFDB]',
-    gir: 'bg-[#1A4D36] text-white',
-    bogey: 'bg-[#F97316] text-white',
-    birdie: 'bg-[#3B82F6] text-white',
-    success: 'bg-[#E8F5EF] text-[#1A4D36]',
-    warning: 'bg-[#FDF4E4] text-[#7A5520]',
-    error: 'bg-[#FCEAE8] text-[#7A2C22]',
-    lime: 'bg-[#D1F843] text-[#0A1F18]',
-    purple: 'bg-[#FAF5FF] text-[#AF52DE]',
+    default: 'bg-grey-100 text-text border border-grey-200',
+    secondary: 'bg-grey-100 text-grey-500 border border-grey-200',
+    success: 'bg-success-light text-success-text',
+    warning: 'bg-warning-light text-warning-text',
+    error: 'bg-error-light text-error-text',
+    info: 'bg-info-light text-info-text',
+    muted: 'bg-grey-50 text-grey-400 border border-grey-200',
+    pro: 'bg-accent-cta text-accent-cta-text',
+    lime: 'bg-accent-cta text-accent-cta-text',
+    purple: 'bg-ai-light text-ai-text',
   };
 
   return (

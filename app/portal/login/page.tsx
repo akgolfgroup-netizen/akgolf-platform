@@ -16,13 +16,13 @@ import {
 } from "lucide-react";
 import { AKLogo } from "@/components/website/AKLogo";
 import {
-  PortalCard,
   EASE,
   EASE_OUT_EXPO,
   fadeInUp,
   staggerContainer,
   scaleIn,
 } from "@/components/portal/premium";
+import { Card } from "@/components/ui/card";
 
 function createSupabaseBrowser() {
   return createBrowserClient(
@@ -279,7 +279,7 @@ export default function LoginPage() {
                 animate="visible"
                 exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}
               >
-                <PortalCard
+                <Card
                   padding="lg"
                   className="text-center shadow-[0_24px_60px_-30px_rgba(0,88,64,0.25)]"
                 >
@@ -311,7 +311,7 @@ export default function LoginPage() {
                     <ArrowRight className="w-3.5 h-3.5 rotate-180" />
                     Tilbake til innlogging
                   </button>
-                </PortalCard>
+                </Card>
               </motion.div>
             ) : (
               <motion.div
@@ -331,7 +331,7 @@ export default function LoginPage() {
                 </motion.div>
 
                 <motion.div variants={fadeInUp}>
-                  <PortalCard
+                  <Card
                     padding="lg"
                     className="shadow-[0_24px_60px_-30px_rgba(0,88,64,0.20)]"
                   >
@@ -511,7 +511,7 @@ export default function LoginPage() {
                         </button>
                       </div>
                     )}
-                  </PortalCard>
+                  </Card>
                 </motion.div>
 
                 {/* Footer */}

@@ -13,7 +13,7 @@ import {
   ArrowRight,
   type LucideIcon,
 } from "lucide-react";
-import { GlassCard } from "@/components/portal/premium";
+import { Card } from "@/components/ui/card";
 import { BookingStatusBadge } from "./booking-status-badge";
 import type { BookingViewModel } from "./booking-types";
 import { getStatusConfig } from "./booking-types";
@@ -55,7 +55,7 @@ export function UpcomingBookingCard({ booking }: UpcomingBookingCardProps) {
 
   return (
     <Link href={`/portal/bookinger/${booking.id}`} className="block">
-      <GlassCard variant="light" padding="md" interactive className="group">
+      <Card variant="elevated" padding="md" hover className="group">
         <div className="flex items-center gap-4">
           {/* Ikon */}
           <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105">
@@ -97,7 +97,7 @@ export function UpcomingBookingCard({ booking }: UpcomingBookingCardProps) {
           {/* Pil */}
           <ArrowRight className="w-4 h-4 text-muted opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all shrink-0" />
         </div>
-      </GlassCard>
+      </Card>
     </Link>
   );
 }

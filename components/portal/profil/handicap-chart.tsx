@@ -1,7 +1,7 @@
 "use client";
 
 import { TrendingDown } from "lucide-react";
-import { ProgressChart } from "@/components/portal/heritage/progress-chart";
+
 
 interface HandicapEntry {
   id: string;
@@ -66,11 +66,14 @@ export function HandicapChart({ entries }: HandicapChartProps) {
       </div>
 
       {hasData ? (
-        <ProgressChart
-          data={chartData}
-          color="var(--color-primary)"
-          height={180}
-        />
+        <div
+          className="h-[180px] flex items-center justify-center rounded-xl"
+          style={{ background: "var(--color-grey-200)" }}
+        >
+          <p className="text-xs text-[var(--color-grey-500)]">
+            Handicap-graf kommer snart.
+          </p>
+        </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-10">
           <TrendingDown className="w-8 h-8 text-[var(--color-grey-300)] mb-3" />
