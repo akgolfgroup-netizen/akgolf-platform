@@ -166,48 +166,48 @@ model BlockedTime {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Booking {
-  id                 String               @id
-  studentId          String
-  instructorId       String
-  serviceTypeId      String
-  locationId         String?
-  resourceId         String?
-  startTime          DateTime
-  endTime            DateTime
-  status             BookingStatus        @default(PENDING)
-  paymentMethod      PaymentMethod        @default(NONE)
-  paymentStatus      PaymentStatus        @default(PENDING)
-  amount             Int                  @default(0)
-  vatAmount          Int                  @default(0)
-  stripePaymentId    String?
-  vippsOrderId       String?
-  invoiceId          String?
-  isGroupBooking     Boolean              @default(false)
-  studentNotes       String?
-  adminNotes         String?
-  cancelledAt        DateTime?
-  cancelReason       String?
-  reminderSentAt     DateTime?
-  smsReminderSentAt  DateTime?
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime
-  facilityId         String?
-  guestEmail         String?
-  guestName          String?
-  guestPhone         String?
-  focusArea              FocusArea?
-  playerNotes            String?
-  googleCalendarEventId  String?
-  Facility           Facility?            @relation(fields: [facilityId], references: [id])
-  Instructor         Instructor           @relation(fields: [instructorId], references: [id])
-  Location           Location?            @relation(fields: [locationId], references: [id])
-  Resource           Resource?            @relation(fields: [resourceId], references: [id])
-  ServiceType        ServiceType          @relation(fields: [serviceTypeId], references: [id])
-  User               User                 @relation(fields: [studentId], references: [id])
-  CoachingSession    CoachingSession?
-  GroupParticipant   GroupParticipant[]
-  PaymentTransaction PaymentTransaction[]
-  WaitlistEntry      WaitlistEntry[]
+  id                    String               @id
+  studentId             String
+  instructorId          String
+  serviceTypeId         String
+  locationId            String?
+  resourceId            String?
+  startTime             DateTime
+  endTime               DateTime
+  status                BookingStatus        @default(PENDING)
+  paymentMethod         PaymentMethod        @default(NONE)
+  paymentStatus         PaymentStatus        @default(PENDING)
+  amount                Int                  @default(0)
+  vatAmount             Int                  @default(0)
+  stripePaymentId       String?
+  vippsOrderId          String?
+  invoiceId             String?
+  isGroupBooking        Boolean              @default(false)
+  studentNotes          String?
+  adminNotes            String?
+  cancelledAt           DateTime?
+  cancelReason          String?
+  reminderSentAt        DateTime?
+  smsReminderSentAt     DateTime?
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime
+  facilityId            String?
+  guestEmail            String?
+  guestName             String?
+  guestPhone            String?
+  focusArea             FocusArea?
+  playerNotes           String?
+  googleCalendarEventId String?
+  Facility              Facility?            @relation(fields: [facilityId], references: [id])
+  Instructor            Instructor           @relation(fields: [instructorId], references: [id])
+  Location              Location?            @relation(fields: [locationId], references: [id])
+  Resource              Resource?            @relation(fields: [resourceId], references: [id])
+  ServiceType           ServiceType          @relation(fields: [serviceTypeId], references: [id])
+  User                  User                 @relation(fields: [studentId], references: [id])
+  CoachingSession       CoachingSession?
+  GroupParticipant      GroupParticipant[]
+  PaymentTransaction    PaymentTransaction[]
+  WaitlistEntry         WaitlistEntry[]
 
   @@index([instructorId])
   @@index([startTime])
@@ -1028,6 +1028,329 @@ model TrackmanSession {
   @@index([userId])
 }
 
+/// TrackMan import metadata and raw data storage
+model TrackManImport {
+  id            String    @id @default(cuid())
+  playerId      String
+  importDate    DateTime  @default(now())
+  source        String // CSV_UPLOAD, API_SYNC, MULLIGAN_DIRECT
+  fileName      String?
+  rawData       Json
+  processed     Boolean   @default(false)
+  processedAt   DateTime?
+  context       String    @default("TRAINING") // TRAINING, CASUAL, COMPETITION
+  pressureLevel Int       @default(1) // PR1-PR5
+
+  User User @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+}
+
+/// Per-shot TrackMan data with full metrics
+model TrackManShotData {
+  id           String  @id @default(cuid())
+  sessionId    String
+  userId       String
+  shotNumber   Int
+  club         String
+  clubCategory String?
+
+  // Ball data
+  ballSpeed       Float?
+  launchAngle     Float?
+  launchDirection Float?
+  spinRate        Float?
+  spinAxis        Float?
+
+  // Flight data (stored in meters)
+  carryDistance Float?
+  totalDistance Float?
+  maxHeight     Float?
+  landingAngle  Float?
+  hangTime      Float?
+
+  // Dispersion
+  offlineDistance Float?
+  curveDistance   Float?
+
+  // Strike quality
+  smashFactor Float?
+
+  // Club data
+  clubSpeed   Float?
+  attackAngle Float?
+  clubPath    Float?
+  faceAngle   Float?
+  faceToPath  Float?
+  dynamicLoft Float?
+
+  // Classification
+  shotQuality String?
+  shotShape   String?
+  missType    String?
+
+  // Context
+  context       String  @default("TRAINING")
+  pressureLevel Int     @default(1)
+  notes         String?
+
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([sessionId])
+  @@index([userId, club])
+  @@index([userId, context])
+}
+
+/// Computed analytics per TrackMan session
+model TrackManSessionAnalytics {
+  id        String @id @default(cuid())
+  sessionId String @unique
+  userId    String
+
+  // Aggregates by club category (JSON)
+  driverStats Json?
+  ironStats   Json?
+  wedgeStats  Json?
+
+  // Overall metrics
+  avgBallSpeed     Float?
+  maxBallSpeed     Float?
+  avgCarryDistance Float?
+  maxCarryDistance Float?
+
+  // Consistency
+  ballSpeedConsistency Float?
+  distanceConsistency  Float?
+
+  // Pattern analysis
+  shotShapeDistribution Json?
+  missPattern           Json?
+  sweetSpotPercentage   Float?
+
+  // Trends
+  trendBallSpeed   String?
+  trendDistance    String?
+  trendConsistency String?
+
+  // AI insights
+  generatedInsights String[] @default([])
+  recommendedFocus  String[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+/// Player rolling averages and benchmarks
+model PlayerMetrics {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  last10DriverSpeed    Float?
+  last10DriverCarry    Float?
+  last10SevenIronSpeed Float?
+  last10SevenIronCarry Float?
+
+  pbBallSpeed      Float?
+  pbCarryDistance  Float?
+  pbDriverDistance Float?
+
+  expectedDriverSpeed    Float?
+  expectedSevenIronCarry Float?
+  speedGapToPotential    Float?
+  consistencyScore       Int?
+
+  updatedAt DateTime @updatedAt
+
+  User            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  metricSnapshots MetricSnapshot[]
+}
+
+/// Historical snapshots of player metrics
+model MetricSnapshot {
+  id              String   @id @default(cuid())
+  playerMetricsId String
+  snapshotDate    DateTime
+
+  driverSpeed      Float?
+  driverCarry      Float?
+  sevenIronCarry   Float?
+  consistencyScore Int?
+
+  PlayerMetrics PlayerMetrics @relation(fields: [playerMetricsId], references: [id], onDelete: Cascade)
+
+  @@index([playerMetricsId, snapshotDate])
+}
+
+/// Club dispersion per context (training/casual/competition)
+model ClubDispersionData {
+  id      String @id @default(cuid())
+  userId  String
+  club    String
+  context String @default("TRAINING") // TRAINING, CASUAL, COMPETITION
+
+  carryDistance  Float
+  totalDistance  Float
+  lateralStdDev  Float
+  distanceStdDev Float
+  lateral95      Float
+  distance95     Float
+
+  typicalShape String?
+  shapeBias    Float?
+  sampleSize   Int
+
+  lastCalculated DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, club, context])
+  @@index([userId])
+}
+
+/// Mental scorecard per shot in a round
+model MentalScorecardEntry {
+  id         String   @id @default(cuid())
+  roundId    String
+  userId     String
+  hole       Int
+  shotNumber Int
+  timestamp  DateTime @default(now())
+
+  // Pre-shot
+  plannedShot          String?
+  targetDescription    String?
+  focusLevel           Int?
+  focusQuality         String?
+  confidence           Int?
+  pressureLevel        Int      @default(1)
+  pressureSources      String[] @default([])
+  routineCompleted     Boolean  @default(false)
+  routineDuration      Float?
+  visualizationQuality Int?
+  sawShotClearly       Boolean  @default(false)
+
+  // Post-shot
+  outcome          String?
+  processScore     Int?
+  emotion          String?
+  emotionIntensity Int?
+  committedToShot  Boolean @default(false)
+  lastMinuteDoubt  Boolean @default(false)
+  acceptedResult   Boolean @default(false)
+  dwelling         Boolean @default(false)
+
+  // Context
+  situation     String?
+  scoreAtMoment Int?
+  position      String?
+  user          User    @relation(fields: [userId], references: [id])
+
+  @@index([roundId])
+  @@index([userId])
+}
+
+/// Mental profile baseline and trends per player
+model MentalProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  baselineConfidence Int?
+  pressureTolerance  Int  @default(3)
+  focusBaseline      Int?
+
+  focusTrend     Float?
+  commitmentRate Float?
+  acceptanceRate Float?
+
+  pr1Performance Float?
+  pr2Performance Float?
+  pr3Performance Float?
+  pr4Performance Float?
+  pr5Performance Float?
+
+  updatedAt DateTime @updatedAt
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// Course notes and prep-round data
+model CourseNotes {
+  id         String @id @default(cuid())
+  userId     String
+  courseId   String
+  holeNumber Int
+
+  // Tee notes
+  fairwayCondition  String?
+  dryFairwayRoll    Float?
+  teeNotes          String?
+  primaryAimLat     Float?
+  primaryAimLng     Float?
+  alternativeAimLat Float?
+  alternativeAimLng Float?
+  dangerArea        Json?
+  clubSelection     String?
+
+  // Approach
+  pinLocations     Json? // Array of {lat, lng, color, source, date}
+  elevationToGreen Float?
+  greenDepth       Float?
+  greenWidth       Float?
+  missStrategy     Json? // {optimalMiss, dangerMiss}
+  approachZones    Json? // {safeZone, dangerZone, pinZone}
+
+  // Layup (par 5)
+  layupMaxDistance Float?
+  layupTarget      Json?
+
+  // General
+  windImpact          String?
+  mentalNote          String?
+  previousRoundsNotes String?
+
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, courseId, holeNumber])
+  @@index([userId, courseId])
+}
+
+/// Reference courses for score estimation
+model ReferenceCourse {
+  id              String  @id @default(cuid())
+  name            String
+  location        String?
+  lengthMeter     Int
+  par             Int
+  courseRating    Float
+  slopeRating     Int
+  difficulty      String?
+  characteristics Json?
+
+  @@index([name])
+}
+
+/// Score estimation cache per player per course
+model ScoreEstimate {
+  id             String   @id @default(cuid())
+  userId         String
+  courseId       String
+  expectedScore  Int
+  scoreRangeLow  Int
+  scoreRangeHigh Int
+  confidence     Int
+  breakdown      Json?
+  reasoning      String[] @default([])
+  generatedAt    DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, courseId])
+  @@index([userId])
+}
+
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model TrainingLog {
   id                   String                @id
@@ -1211,6 +1534,15 @@ model User {
   Tournament                                  Tournament[]
   TournamentPrep                              TournamentPrep[]
   TrackmanSession                             TrackmanSession[]
+  TrackManImport                              TrackManImport[]
+  TrackManShotData                            TrackManShotData[]
+  TrackManSessionAnalytics                    TrackManSessionAnalytics[]
+  PlayerMetrics                               PlayerMetrics?
+  ClubDispersionData                          ClubDispersionData[]
+  MentalScorecardEntry                        MentalScorecardEntry[]
+  MentalProfile                               MentalProfile?
+  CourseNotes                                 CourseNotes[]
+  ScoreEstimate                               ScoreEstimate[]
   TrainingLog                                 TrainingLog[]
   TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
