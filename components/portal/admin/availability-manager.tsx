@@ -101,14 +101,14 @@ export function AvailabilityManager({ instructors }: Props) {
       <div className="flex flex-wrap items-center gap-4">
         {/* Instructor selector - Apple style dropdown */}
         <div className="relative">
-          <div className="flex items-center gap-3 px-4 py-3 bg-white/80 backdrop-blur-xl rounded-xl border border-[var(--color-grey-200)] shadow-sm">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--color-grey-900)] to-[var(--color-grey-700)] flex items-center justify-center">
+          <div className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border border-[#D5DFDB] shadow-sm">
+            <div className="w-8 h-8 rounded-lg bg-[#0A1F18] flex items-center justify-center">
               <User className="w-4 h-4 text-white" />
             </div>
             <select
               value={selectedInstructorId}
               onChange={(e) => handleInstructorChange(e.target.value)}
-              className="bg-transparent text-sm font-medium text-[var(--color-grey-900)] pr-6 appearance-none cursor-pointer focus:outline-none"
+              className="bg-transparent text-sm font-medium text-[#0A1F18] pr-6 appearance-none cursor-pointer focus:outline-none"
             >
               {instructors.map((inst) => (
                 <option key={inst.id} value={inst.id}>
@@ -116,30 +116,22 @@ export function AvailabilityManager({ instructors }: Props) {
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-4 h-4 text-[var(--color-grey-400)] absolute right-4" />
+            <ChevronDown className="w-4 h-4 text-[#7A8C85] absolute right-4" />
           </div>
         </div>
 
         {/* Tab Pills - Apple segment control style */}
-        <div className="flex bg-[var(--color-grey-100)] rounded-xl p-1">
+        <div className="flex bg-[#ECF0EF] rounded-xl p-1">
           <button
             onClick={() => setActiveTab("schedule")}
-            className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-[background-color,color,box-shadow] duration-300 ${
-              activeTab === "schedule"
-                ? "bg-white text-[var(--color-grey-900)] shadow-sm"
-                : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
-            }`}
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-[background-color,color] duration-300 ${ activeTab === "schedule" ? "bg-white text-[#0A1F18] shadow-sm" : "text-[#7A8C85] hover:text-[#324D45]" }`}
           >
             <Clock className="w-4 h-4" />
             Faste tider
           </button>
           <button
             onClick={() => setActiveTab("blocked")}
-            className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-[background-color,color,box-shadow] duration-300 ${
-              activeTab === "blocked"
-                ? "bg-white text-[var(--color-grey-900)] shadow-sm"
-                : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-700)]"
-            }`}
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-[background-color,color] duration-300 ${ activeTab === "blocked" ? "bg-white text-[#0A1F18] shadow-sm" : "text-[#7A8C85] hover:text-[#324D45]" }`}
           >
             <Ban className="w-4 h-4" />
             Blokkert tid
@@ -163,11 +155,11 @@ export function AvailabilityManager({ instructors }: Props) {
             className="py-20 flex flex-col items-center justify-center"
           >
             <motion.div
-              className="w-8 h-8 border-3 border-[var(--color-grey-900)] border-t-transparent rounded-full"
+              className="w-8 h-8 border-3 border-[#0A1F18] border-t-transparent rounded-full"
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />
-            <p className="mt-4 text-sm text-[var(--color-grey-500)]">Laster tilgjengelighet...</p>
+            <p className="mt-4 text-sm text-[#7A8C85]">Laster tilgjengelighet...</p>
           </motion.div>
         ) : activeTab === "schedule" ? (
           <motion.div
@@ -198,61 +190,61 @@ export function AvailabilityManager({ instructors }: Props) {
             />
 
             {/* Blocked time list - Apple style */}
-            <div className="rounded-2xl bg-white/80 backdrop-blur-xl border border-[var(--color-grey-200)] shadow-[var(--shadow-card)] overflow-hidden">
-              <div className="px-6 py-4 border-b border-[var(--color-grey-100)]">
-                <h3 className="text-sm font-semibold text-[var(--color-grey-900)]">
+            <div className="rounded-2xl bg-white border border-[#D5DFDB] overflow-hidden">
+              <div className="px-6 py-4 border-b border-[#ECF0EF]">
+                <h3 className="text-sm font-semibold text-[#0A1F18]">
                   Planlagte fravær
                 </h3>
-                <p className="text-xs text-[var(--color-grey-500)] mt-0.5">
+                <p className="text-xs text-[#7A8C85] mt-0.5">
                   Perioder hvor instruktøren ikke er tilgjengelig
                 </p>
               </div>
 
               {blockedTimes.length === 0 ? (
                 <div className="py-12 flex flex-col items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-[var(--color-grey-100)] flex items-center justify-center mb-3">
-                    <Ban className="w-6 h-6 text-[var(--color-grey-400)]" />
+                  <div className="w-12 h-12 rounded-full bg-[#ECF0EF] flex items-center justify-center mb-3">
+                    <Ban className="w-6 h-6 text-[#7A8C85]" />
                   </div>
-                  <p className="text-sm text-[var(--color-grey-500)]">
+                  <p className="text-sm text-[#7A8C85]">
                     Ingen blokkerte tider registrert
                   </p>
-                  <p className="text-xs text-[var(--color-grey-400)] mt-1">
+                  <p className="text-xs text-[#7A8C85] mt-1">
                     Bruk skjemaet over for å legge til fravær
                   </p>
                 </div>
               ) : (
-                <ul className="divide-y divide-[var(--color-grey-100)]">
+                <ul className="divide-y divide-[#ECF0EF]">
                   {blockedTimes.map((bt, index) => (
                     <motion.li
                       key={bt.id}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="flex items-center justify-between px-6 py-4 hover:bg-[var(--color-grey-100)] transition-colors"
+                      className="flex items-center justify-between px-6 py-4 hover:bg-[#ECF0EF] transition-colors"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-[var(--color-error)]/5 flex items-center justify-center">
-                          <Ban className="w-5 h-5 text-[var(--color-error)]" />
+                        <div className="w-10 h-10 rounded-xl bg-[#EF4444]/5 flex items-center justify-center">
+                          <Ban className="w-5 h-5 text-[#EF4444]" />
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-[var(--color-grey-900)]">
+                          <p className="text-sm font-medium text-[#0A1F18]">
                             {format(new Date(bt.startTime), "d. MMMM yyyy", { locale: nb })}
                             {format(new Date(bt.startTime), "d. MMMM yyyy") !==
                              format(new Date(bt.endTime), "d. MMMM yyyy") && (
-                              <span className="text-[var(--color-grey-400)]">
+                              <span className="text-[#7A8C85]">
                                 {" — "}
                                 {format(new Date(bt.endTime), "d. MMMM yyyy", { locale: nb })}
                               </span>
                             )}
                           </p>
                           <div className="flex items-center gap-2 mt-0.5">
-                            <span className="text-xs text-[var(--color-grey-500)]">
+                            <span className="text-xs text-[#7A8C85]">
                               {format(new Date(bt.startTime), "HH:mm")} — {format(new Date(bt.endTime), "HH:mm")}
                             </span>
                             {bt.reason && (
                               <>
-                                <span className="text-[var(--color-grey-300)]">·</span>
-                                <span className="text-xs text-[var(--color-grey-500)]">{bt.reason}</span>
+                                <span className="text-[#D5DFDB]">·</span>
+                                <span className="text-xs text-[#7A8C85]">{bt.reason}</span>
                               </>
                             )}
                           </div>
@@ -260,7 +252,7 @@ export function AvailabilityManager({ instructors }: Props) {
                       </div>
                       <motion.button
                         onClick={() => handleDeleteBlocked(bt.id)}
-                        className="p-2 rounded-lg hover:bg-[var(--color-error)]/5 text-[var(--color-grey-400)] hover:text-[var(--color-error)] transition-colors"
+                        className="p-2 rounded-lg hover:bg-[#EF4444]/5 text-[#7A8C85] hover:text-[#EF4444] transition-colors"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >

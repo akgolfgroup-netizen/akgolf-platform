@@ -120,9 +120,9 @@ export function NotificationManager() {
               onChange={(e) =>
                 setForm({ ...form, broadcast: e.target.checked })
               }
-              className="w-4 h-4 rounded border-[var(--color-grey-300)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
+              className="w-4 h-4 rounded border-[#D5DFDB] text-[#0A1F18] focus:ring-[#0A1F18]"
             />
-            <span className="text-sm text-[var(--color-text)]">
+            <span className="text-sm text-[#0A1F18]">
               Send til alle brukere (broadcast)
             </span>
           </label>

@@ -57,24 +57,23 @@ export function BookingSummary({
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-portal-text mb-6 tracking-tight">
+      <h2 className="text-2xl font-semibold text-[#0A1F18] mb-6 tracking-tight">
         Bekreft din booking
       </h2>
 
-      {/* Summary card - wrapped in PremiumCard */}
       <PremiumCard className="mb-6" padding="sm" hover="none">
-        <div className="p-5 border-b border-portal-border">
+        <div className="p-5 border-b border-[#D5DFDB]">
           <div className="flex items-center gap-2.5">
             <div
               className="w-3 h-3 rounded-full"
               style={{ backgroundColor: service.color ?? undefined }}
             />
-            <h3 className="text-lg font-semibold text-portal-text">{service.name}</h3>
+            <h3 className="text-lg font-semibold text-[#0A1F18]">{service.name}</h3>
           </div>
         </div>
 
         <div className="p-5 space-y-4">
-          <SummaryRow icon={User} label="Instruktor" value={instructor.user.name ?? ""} />
+          <SummaryRow icon={User} label="Instruktør" value={instructor.user.name ?? ""} />
           <SummaryRow
             icon={Calendar}
             label="Dato og tid"
@@ -86,19 +85,18 @@ export function BookingSummary({
           )}
         </div>
 
-        <div className="px-5 py-4 bg-portal-hover flex items-center justify-between">
-          <span className="text-sm text-portal-secondary">Totalpris</span>
-          <span className="text-2xl font-semibold text-portal-text tabular-nums">
+        <div className="px-5 py-4 bg-[#F5F8F7] flex items-center justify-between rounded-b-xl">
+          <span className="text-sm text-[#324D45]">Totalpris</span>
+          <span className="text-2xl font-semibold text-[#0A1F18] tabular-nums">
             {formatBookingPrice(service.price)}
           </span>
         </div>
       </PremiumCard>
 
-      {/* Payment */}
       <motion.button
         onClick={onBook}
         disabled={booking}
-        className="w-full py-4 rounded-[20px] bg-primary text-white font-semibold flex items-center justify-center gap-2.5 hover:bg-primary-alt transition-colors disabled:opacity-50"
+        className="w-full py-4 rounded-full bg-[#D1F843] text-[#0A1F18] font-semibold flex items-center justify-center gap-2.5 hover:brightness-95 transition-colors disabled:opacity-50"
         whileTap={{ scale: 0.99 }}
       >
         {booking ? (
@@ -114,7 +112,7 @@ export function BookingSummary({
         )}
       </motion.button>
 
-      <p className="text-xs text-portal-muted text-center mt-4">
+      <p className="text-xs text-[#7A8C85] text-center mt-4">
         Sikker betaling via Stripe. Du mottar bekreftelse på e-post.
       </p>
     </div>
@@ -150,22 +148,20 @@ function CustomerDetailsForm({
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-portal-text mb-2 tracking-tight">
+      <h2 className="text-2xl font-semibold text-[#0A1F18] mb-2 tracking-tight">
         Dine opplysninger
       </h2>
-      <p className="text-sm text-portal-secondary mb-6">
+      <p className="text-sm text-[#324D45] mb-6">
         Fyll inn kontaktinformasjon for bookingen
       </p>
 
-      {/* Mini summary */}
-      <div className="bg-portal-hover rounded-xl p-4 mb-6 text-sm space-y-1.5">
-        <p className="font-medium text-portal-text">{service.name}</p>
-        <p className="text-portal-secondary">
+      <div className="bg-[#F5F8F7] rounded-xl p-4 mb-6 text-sm space-y-1.5">
+        <p className="font-medium text-[#0A1F18]">{service.name}</p>
+        <p className="text-[#324D45]">
           {instructor.user.name} — {format(slotDate, "EEE d. MMM 'kl.' HH:mm", { locale: nb })}
         </p>
       </div>
 
-      {/* Form */}
       <div className="space-y-4">
         <InputField
           label="Fullt navn"
@@ -198,7 +194,7 @@ function CustomerDetailsForm({
       <motion.button
         onClick={onProceed}
         disabled={!isValid}
-        className="w-full mt-6 py-4 rounded-[20px] bg-primary text-white font-semibold hover:bg-primary-alt transition-colors disabled:opacity-50"
+        className="w-full mt-6 py-4 rounded-full bg-[#0A1F18] text-white font-semibold hover:bg-[#1A3529] transition-colors disabled:opacity-50"
         whileTap={{ scale: 0.99 }}
       >
         Fortsett til betaling
@@ -222,13 +218,13 @@ function SummaryRow({
 }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="w-9 h-9 rounded-lg bg-portal-hover flex items-center justify-center flex-shrink-0">
-        <Icon className="w-4 h-4 text-primary" />
+      <div className="w-9 h-9 rounded-lg bg-[#F5F8F7] flex items-center justify-center flex-shrink-0">
+        <Icon className="w-4 h-4 text-[#0A1F18]" />
       </div>
       <div className="min-w-0">
-        <p className="text-xs text-portal-secondary uppercase tracking-wider">{label}</p>
-        <p className="text-sm font-medium text-portal-text truncate">{value}</p>
-        {sub && <p className="text-xs text-portal-secondary truncate">{sub}</p>}
+        <p className="text-xs text-[#7A8C85] uppercase tracking-wider">{label}</p>
+        <p className="text-sm font-medium text-[#0A1F18] truncate">{value}</p>
+        {sub && <p className="text-xs text-[#324D45] truncate">{sub}</p>}
       </div>
     </div>
   );
@@ -255,12 +251,12 @@ function InputField({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-portal-text mb-1.5">
-        {label} {required && <span className="text-error">*</span>}
+      <label className="block text-sm font-medium text-[#0A1F18] mb-1.5">
+        {label} {required && <span className="text-[#EF4444]">*</span>}
       </label>
       <div className="relative">
         {Icon && (
-          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-portal-secondary" />
+          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A5B2AD]" />
         )}
         <input
           type={type}
@@ -268,13 +264,13 @@ function InputField({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className={[
-            "w-full py-3 rounded-lg border border-portal-border bg-white text-portal-text placeholder:text-portal-muted",
-            "focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors",
+            "w-full py-3 rounded-lg border border-[#D5DFDB] bg-white text-[#0A1F18] placeholder:text-[#A5B2AD]",
+            "focus:outline-none focus:border-[#0A1F18] focus:ring-1 focus:ring-[#0A1F18]/20 transition-colors",
             Icon ? "pl-10 pr-4" : "px-4",
           ].join(" ")}
         />
       </div>
-      {hint && <p className="text-xs text-portal-muted mt-1">{hint}</p>}
+      {hint && <p className="text-xs text-[#7A8C85] mt-1">{hint}</p>}
     </div>
   );
 }

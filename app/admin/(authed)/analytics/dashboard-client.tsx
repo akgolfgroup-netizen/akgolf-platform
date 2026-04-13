@@ -93,10 +93,10 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
               key={opt.value}
               onClick={() => handlePeriodChange(opt.value)}
               className={cn(
-                "px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200",
+                "px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200",
                 period === opt.value
-                  ? "bg-grey-900 text-white shadow-sm"
-                  : "bg-grey-100 text-grey-600 hover:text-grey-800 hover:bg-grey-200",
+                  ? "bg-[#0A1F18] text-white shadow-sm"
+                  : "bg-[#F5F8F7] text-[#324D45] hover:text-[#0A1F18] hover:bg-[#D5DFDB]",
               )}
             >
               {opt.label}
@@ -148,20 +148,20 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                   valueLabel="Aktive elever" 
                 />
               </ChartCard>
-              <div className="bg-white rounded-xl shadow-card p-0 overflow-hidden">
-                <div className="px-6 py-4 border-b border-grey-200">
-                  <h3 className="text-sm font-semibold text-grey-900">Churn-rate</h3>
+              <div className="bg-white border border-[#D5DFDB] rounded-xl p-0 overflow-hidden">
+                <div className="px-6 py-4 border-b border-[#D5DFDB]">
+                  <h3 className="text-sm font-semibold text-[#0A1F18]">Churn-rate</h3>
                 </div>
                 <div className="flex flex-col items-center gap-4 py-6 px-6">
                   <AdminProgressRing 
                     value={data.churnRate} 
                     max={10} 
                     size={140} 
-                    color="var(--color-success)" 
+                    color="#1A4D36" 
                     label="Siste periode" 
                     valueSuffix="%" 
                   />
-                  <p className="text-xs text-grey-500">Mål: under 5%</p>
+                  <p className="text-xs text-[#7A8C85]">Mål: under 5%</p>
                 </div>
               </div>
             </div>
@@ -186,10 +186,10 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
         {/* ── Students tab ──────────────────────────────────── */}
         {activeTab === "students" && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl shadow-card p-0 overflow-hidden">
-              <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-grey-900">Elev-status</h3>
-                <span className="text-xs text-grey-500">{data.studentHealth.length} elever</span>
+            <div className="bg-white border border-[#D5DFDB] rounded-xl p-0 overflow-hidden">
+              <div className="px-6 py-4 border-b border-[#D5DFDB] flex items-center justify-between">
+                <h3 className="text-sm font-semibold text-[#0A1F18]">Elev-status</h3>
+                <span className="text-xs text-[#7A8C85]">{data.studentHealth.length} elever</span>
               </div>
               <AdminTable containerClassName="border-0 rounded-none">
                 <AdminTableHead>
@@ -205,18 +205,18 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                   {data.studentHealth.map((s) => (
                     <AdminTableRow key={s.id}>
                       <AdminTableCell>
-                        <span className="font-medium text-grey-900">{s.name}</span>
+                        <span className="font-medium text-[#0A1F18]">{s.name}</span>
                       </AdminTableCell>
                       <AdminTableCell>
                         <AdminBadge variant={STATUS_CONFIG[s.status].variant}>
                           {STATUS_CONFIG[s.status].label}
                         </AdminBadge>
                       </AdminTableCell>
-                      <AdminTableCell className="text-grey-500">{relativeDate(s.lastSession)}</AdminTableCell>
-                      <AdminTableCell className={cn(!s.nextSession && "text-red-600")}>
+                      <AdminTableCell className="text-[#7A8C85]">{relativeDate(s.lastSession)}</AdminTableCell>
+                      <AdminTableCell className={cn(!s.nextSession && "text-[#EF4444]")}>
                         {futureDate(s.nextSession)}
                       </AdminTableCell>
-                      <AdminTableCell className="text-right tabular-nums text-grey-900">
+                      <AdminTableCell className="text-right tabular-nums text-[#0A1F18]">
                         {s.sessionsThisMonth}
                       </AdminTableCell>
                     </AdminTableRow>
@@ -224,20 +224,20 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                 </AdminTableBody>
               </AdminTable>
             </div>
-            <div className="bg-white rounded-xl shadow-card p-0 overflow-hidden">
-              <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-grey-900">Trenger oppfølging</h3>
+            <div className="bg-white border border-[#D5DFDB] rounded-xl p-0 overflow-hidden">
+              <div className="px-6 py-4 border-b border-[#D5DFDB] flex items-center justify-between">
+                <h3 className="text-sm font-semibold text-[#0A1F18]">Trenger oppfølging</h3>
                 <AdminBadge variant="warning">{followUp.length} elever</AdminBadge>
               </div>
-              <div className="divide-y divide-grey-100">
+              <div className="divide-y divide-[#D5DFDB]">
                 {followUp.map((s) => (
                   <div key={s.id} className="px-6 py-4 flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-grey-100 text-grey-700 text-xs font-semibold flex items-center justify-center">
+                    <div className="w-9 h-9 rounded-full bg-[#F5F8F7] text-[#324D45] text-xs font-semibold flex items-center justify-center">
                       {s.name.split(" ").map((n) => n[0]).join("")}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-grey-900 truncate">{s.name}</div>
-                      <div className="text-xs text-grey-500 flex items-center gap-1">
+                      <div className="text-sm font-medium text-[#0A1F18] truncate">{s.name}</div>
+                      <div className="text-xs text-[#7A8C85] flex items-center gap-1">
                         <AlertCircle className="w-3 h-3" />
                         Sist aktiv: {relativeDate(s.lastSession)}
                       </div>
@@ -247,8 +247,8 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                 ))}
                 {followUp.length === 0 && (
                   <div className="py-10 text-center">
-                    <Calendar className="w-10 h-10 text-green-600 mx-auto mb-2" />
-                    <span className="text-sm text-grey-500">Alle elever er aktive</span>
+                    <Calendar className="w-10 h-10 text-[#1A4D36] mx-auto mb-2" />
+                    <span className="text-sm text-[#7A8C85]">Alle elever er aktive</span>
                   </div>
                 )}
               </div>
@@ -306,23 +306,23 @@ function KpiCard({ label, value, icon, change, positive }: {
   change?: string; positive?: boolean;
 }) {
   return (
-    <div className="bg-white rounded-xl shadow-card p-5">
+    <div className="bg-white border border-[#D5DFDB] rounded-xl p-5">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-medium text-grey-500 uppercase tracking-wide">{label}</p>
-          <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight tabular-nums">
+          <p className="text-xs font-medium text-[#7A8C85] uppercase tracking-wide">{label}</p>
+          <p className="mt-2 text-3xl font-bold text-[#0A1F18] tracking-tight tabular-nums">
             {value}
           </p>
           {change && (
             <p className={cn(
               "mt-2 text-xs font-medium",
-              positive ? "text-green-600" : "text-red-600"
+              positive ? "text-[#1A4D36]" : "text-[#EF4444]"
             )}>
               {change}
             </p>
           )}
         </div>
-        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-600 shrink-0">
+        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#F5F8F7] text-[#324D45] shrink-0">
           {icon}
         </div>
       </div>
@@ -334,10 +334,10 @@ function ChartCard({ title, subtitle, className, children }: {
   title: string; subtitle?: string; className?: string; children: React.ReactNode;
 }) {
   return (
-    <div className={cn("bg-white rounded-xl shadow-card p-0 overflow-hidden", className)}>
-      <div className="px-6 py-4 border-b border-grey-200">
-        <h3 className="text-sm font-semibold text-grey-900">{title}</h3>
-        {subtitle && <span className="text-xs text-grey-500 mt-0.5 block">{subtitle}</span>}
+    <div className={cn("bg-white border border-[#D5DFDB] rounded-xl p-0 overflow-hidden", className)}>
+      <div className="px-6 py-4 border-b border-[#D5DFDB]">
+        <h3 className="text-sm font-semibold text-[#0A1F18]">{title}</h3>
+        {subtitle && <span className="text-xs text-[#7A8C85] mt-0.5 block">{subtitle}</span>}
       </div>
       <div className="p-6">{children}</div>
     </div>

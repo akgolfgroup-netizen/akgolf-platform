@@ -15,10 +15,10 @@ export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
   return (
     <div>
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-semibold text-portal-text mb-3 tracking-tight">
+        <h2 className="text-3xl font-semibold text-[#0A1F18] mb-3 tracking-tight">
           Velg din treningsform
         </h2>
-        <p className="text-portal-secondary">
+        <p className="text-[#324D45]">
           Alle coaching-timer inkluderer TrackMan-analyse og personlig tilpasning
         </p>
       </div>
@@ -41,22 +41,22 @@ export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
                       className="w-3 h-3 rounded-full flex-shrink-0"
                       style={{ backgroundColor: svc.color ?? undefined }}
                     />
-                    <h3 className="text-base font-semibold text-portal-text truncate">
+                    <h3 className="text-base font-semibold text-[#0A1F18] truncate">
                       {svc.name}
                     </h3>
                   </div>
                   {svc.description && (
-                    <p className="text-sm text-portal-secondary leading-relaxed mb-3 line-clamp-2">
+                    <p className="text-sm text-[#324D45] leading-relaxed mb-3 line-clamp-2">
                       {svc.description}
                     </p>
                   )}
-                  <div className="flex items-center gap-5 text-sm text-portal-secondary">
+                  <div className="flex items-center gap-5 text-sm text-[#324D45]">
                     <span className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-portal-muted" />
+                      <Clock className="w-3.5 h-3.5 text-[#7A8C85]" />
                       {svc.duration} min
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <User className="w-3.5 h-3.5 text-portal-muted" />
+                      <User className="w-3.5 h-3.5 text-[#7A8C85]" />
                       {svc.maxStudents === 1
                         ? "Individuell"
                         : `Gruppe (maks ${svc.maxStudents})`}
@@ -64,10 +64,10 @@ export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                  <span className="text-xl font-semibold text-portal-text tabular-nums">
+                  <span className="text-xl font-semibold text-[#0A1F18] tabular-nums">
                     {formatBookingPrice(svc.price)}
                   </span>
-                  <ChevronRight className="w-4 h-4 text-portal-muted opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <ChevronRight className="w-4 h-4 text-[#7A8C85] opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </div>
             </PremiumCard>

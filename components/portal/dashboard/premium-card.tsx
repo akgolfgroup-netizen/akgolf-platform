@@ -17,14 +17,6 @@ interface PremiumCardProps {
   radius?: "default" | "large" | "xl" | "pill";
 }
 
-const SHADOW_MAP = {
-  default: "var(--shadow-portal-card)",
-  green: "var(--shadow-portal-glow-green)",
-  lime: "var(--shadow-portal-glow-lime)",
-  ai: "var(--shadow-portal-glow-ai)",
-  accent: "var(--shadow-portal-glow-lime)",
-};
-
 const PADDING_MAP = {
   none: "",
   sm: "p-4",
@@ -34,10 +26,10 @@ const PADDING_MAP = {
 };
 
 const RADIUS_MAP = {
-  default: "rounded-2xl",      /* 16px */
-  large: "rounded-[32px]",     /* 32px - fra screenshots */
-  xl: "rounded-[40px]",        /* 40px - hero sections */
-  pill: "rounded-[9999px]",
+  default: "rounded-xl",
+  large: "rounded-2xl",
+  xl: "rounded-3xl",
+  pill: "rounded-full",
 };
 
 export function PremiumCard({
@@ -61,30 +53,23 @@ export function PremiumCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay, ease: EASE_APPLE }}
       className={cn(
-        "relative overflow-hidden",
+        "relative overflow-hidden border border-[#D5DFDB] bg-white",
         RADIUS_MAP[radius],
         PADDING_MAP[padding],
-        /* Variant styles */
-        isAccent && "bg-[#d2f000]/10 border-2 border-[#d2f000]/30",
-        isFeatured && "bg-white border-2 border-[#154212]/10 shadow-portal-floating",
-        isElevated && "bg-white shadow-portal-floating",
-        !isAccent && !isFeatured && !isElevated && "bg-white border border-[#154212]/6",
-        /* Hover effects */
-        !noHover && hover === "lift" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 hover:shadow-portal-card-hover",
-        !noHover && hover === "glow" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-portal-glow-lime hover:border-[#d2f000]/40",
-        !noHover && hover === "scale" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02] hover:shadow-portal-card-hover",
+        isAccent && "bg-[#D1F843]/10 border-[#D1F843]/30",
+        isFeatured && "shadow-[0_8px_32px_rgba(10,31,24,0.08)]",
+        isElevated && "shadow-[0_4px_20px_rgba(10,31,24,0.06)]",
+        !noHover && hover === "lift" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(10,31,24,0.08)] hover:border-[#A5B2AD]",
+        !noHover && hover === "glow" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-[0_0_24px_rgba(209,248,67,0.25)] hover:border-[#D1F843]/40",
+        !noHover && hover === "scale" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02] hover:shadow-[0_8px_32px_rgba(10,31,24,0.08)]",
         className,
       )}
       style={{
-        boxShadow: glow ? SHADOW_MAP[glow] : undefined,
+        boxShadow: glow && !isFeatured && !isElevated ? "0 0 0 1px rgba(10,31,24,0.04), 0 1px 2px rgba(10,31,24,0.03), 0 4px 12px rgba(10,31,24,0.04)" : undefined,
       }}
     >
-      {/* Inner gradient for premium depth */}
-      <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-b from-white/80 to-transparent" />
-      
-      {/* Subtle lime glow for featured cards */}
       {isFeatured && (
-        <div className="pointer-events-none absolute -top-20 -right-20 w-40 h-40 bg-[#d2f000]/10 rounded-full blur-3xl" />
+        <div className="pointer-events-none absolute -top-20 -right-20 w-40 h-40 bg-[#D1F843]/10 rounded-full blur-3xl" />
       )}
       
       <div className="relative">{children}</div>

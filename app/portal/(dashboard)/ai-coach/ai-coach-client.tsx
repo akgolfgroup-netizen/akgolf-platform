@@ -161,26 +161,20 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
       <div className="flex-shrink-0 px-4 pt-6 pb-4">
         <div className="flex items-center gap-3 mb-1">
           <div
-            className="flex items-center justify-center w-10 h-10 rounded-2xl"
-            style={{
-              backgroundColor: "var(--color-ai-light)",
-            }}
+            className="flex items-center justify-center w-10 h-10 rounded-2xl bg-[#FAF5FF]"
           >
             <Bot
-              className="w-5 h-5"
-              style={{ color: "var(--color-ai)" }}
+              className="w-5 h-5 text-[#AF52DE]"
             />
           </div>
           <div>
             <h1
-              className="text-xl font-bold tracking-tight"
-              style={{ color: "var(--color-portal-text)" }}
+              className="text-xl font-bold tracking-tight text-[#0A1F18]"
             >
               AI Coach
             </h1>
             <p
-              className="text-sm"
-              style={{ color: "var(--color-portal-secondary)" }}
+              className="text-sm text-[#324D45]"
             >
               Din personlige golfcoach
             </p>
@@ -192,18 +186,12 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
       {quickInsight && !hasMessages && (
         <div className="flex-shrink-0 mx-4 mb-4">
           <div
-            className="flex items-start gap-3 px-4 py-3 rounded-xl text-sm"
-            style={{
-              backgroundColor: "var(--color-ai-light)",
-              border: "1px solid var(--color-ai)",
-              borderColor: "rgba(175, 82, 222, 0.15)",
-            }}
+            className="flex items-start gap-3 px-4 py-3 rounded-xl text-sm bg-[#FAF5FF] border border-[#AF52DE]/15"
           >
             <Sparkles
-              className="w-4 h-4 mt-0.5 flex-shrink-0"
-              style={{ color: "var(--color-ai)" }}
+              className="w-4 h-4 mt-0.5 flex-shrink-0 text-[#AF52DE]"
             />
-            <p style={{ color: "var(--color-ai-text)" }}>{quickInsight}</p>
+            <p className="text-[#6B21A8]">{quickInsight}</p>
           </div>
         </div>
       )}
@@ -213,23 +201,19 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
         {!hasMessages && (
           <div className="flex flex-col items-center justify-center h-full pb-8">
             <div
-              className="w-16 h-16 rounded-3xl flex items-center justify-center mb-6"
-              style={{ backgroundColor: "var(--color-ai-light)" }}
+              className="w-16 h-16 rounded-3xl flex items-center justify-center mb-6 bg-[#FAF5FF]"
             >
               <MessageCircle
-                className="w-8 h-8"
-                style={{ color: "var(--color-ai)" }}
+                className="w-8 h-8 text-[#AF52DE]"
               />
             </div>
             <h2
-              className="text-lg font-semibold mb-2"
-              style={{ color: "var(--color-portal-text)" }}
+              className="text-lg font-semibold mb-2 text-[#0A1F18]"
             >
               Still et sporsmal
             </h2>
             <p
-              className="text-sm text-center mb-8 max-w-md"
-              style={{ color: "var(--color-portal-secondary)" }}
+              className="text-sm text-center mb-8 max-w-md text-[#324D45]"
             >
               AI Coach kjenner dine runder, treningshistorikk og mal. Spor om
               hva som helst relatert til golfen din.
@@ -242,12 +226,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
                   key={q.label}
                   onClick={() => sendMessage(q.message)}
                   disabled={isStreaming}
-                  className="text-left px-4 py-3 rounded-[20px] text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
-                  style={{
-                    backgroundColor: "var(--color-portal-hover)",
-                    color: "var(--color-portal-secondary)",
-                    border: "1px solid var(--color-portal-border)",
-                  }}
+                  className="text-left px-4 py-3 rounded-full text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 bg-[#F5F8F7] text-[#324D45] border border-[#D5DFDB] hover:border-[#A5B2AD]"
                 >
                   {q.label}
                 </button>
@@ -265,40 +244,30 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
           >
             {message.role === "assistant" && (
               <div
-                className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5"
-                style={{ backgroundColor: "var(--color-ai-light)" }}
+                className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 bg-[#FAF5FF]"
               >
                 <Bot
-                  className="w-4 h-4"
-                  style={{ color: "var(--color-ai)" }}
+                  className="w-4 h-4 text-[#AF52DE]"
                 />
               </div>
             )}
             <div
               className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                 message.role === "user" ? "rounded-br-md" : "rounded-bl-md"
-              }`}
-              style={
+              } ${
                 message.role === "user"
-                  ? {
-                      backgroundColor: "var(--color-portal-text)",
-                      color: "white",
-                    }
-                  : {
-                      backgroundColor: "var(--color-portal-hover)",
-                      color: "var(--color-portal-text)",
-                    }
-              }
+                  ? "bg-[#0A1F18] text-white"
+                  : "bg-[#F5F8F7] text-[#0A1F18]"
+              }`}
             >
               {message.content ? (
                 <div className="whitespace-pre-wrap">{message.content}</div>
               ) : (
                 <div className="flex items-center gap-2">
                   <Loader2
-                    className="w-4 h-4 animate-spin"
-                    style={{ color: "var(--color-ai)" }}
+                    className="w-4 h-4 animate-spin text-[#AF52DE]"
                   />
-                  <span style={{ color: "var(--color-portal-muted)" }}>
+                  <span className="text-[#7A8C85]">
                     Tenker...
                   </span>
                 </div>
@@ -306,12 +275,10 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
             </div>
             {message.role === "user" && (
               <div
-                className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5"
-                style={{ backgroundColor: "var(--color-portal-border)" }}
+                className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 bg-[#D5DFDB]"
               >
                 <User
-                  className="w-4 h-4"
-                  style={{ color: "var(--color-portal-secondary)" }}
+                  className="w-4 h-4 text-[#324D45]"
                 />
               </div>
             )}
@@ -329,12 +296,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
                 key={q.label}
                 onClick={() => sendMessage(q.message)}
                 disabled={isStreaming}
-                className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full transition-colors disabled:opacity-50"
-                style={{
-                  backgroundColor: "var(--color-portal-hover)",
-                  color: "var(--color-portal-secondary)",
-                  border: "1px solid var(--color-portal-border)",
-                }}
+                className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full transition-colors disabled:opacity-50 bg-[#F5F8F7] text-[#324D45] border border-[#D5DFDB] hover:border-[#A5B2AD]"
               >
                 {q.label}
               </button>
@@ -344,11 +306,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-end gap-2 rounded-2xl p-2"
-          style={{
-            backgroundColor: "var(--color-portal-hover)",
-            border: "1px solid var(--color-portal-border)",
-          }}
+          className="flex items-end gap-2 rounded-2xl p-2 bg-[#F5F8F7] border border-[#D5DFDB]"
         >
           <textarea
             ref={inputRef}
@@ -358,9 +316,8 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
             placeholder="Spor AI Coach om hva som helst..."
             disabled={isStreaming}
             rows={1}
-            className="flex-1 resize-none bg-transparent px-2 py-2 text-sm focus:outline-none placeholder:text-[var(--color-portal-muted)] disabled:opacity-50"
+            className="flex-1 resize-none bg-transparent px-2 py-2 text-sm focus:outline-none placeholder:text-[#7A8C85] disabled:opacity-50 text-[#0A1F18]"
             style={{
-              color: "var(--color-portal-text)",
               maxHeight: "120px",
             }}
             onInput={(e) => {
@@ -372,12 +329,11 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
           <button
             type="submit"
             disabled={!input.trim() || isStreaming}
-            className="flex-shrink-0 w-9 h-9 rounded-[20px] flex items-center justify-center transition-all duration-200 disabled:opacity-30"
+            className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-30 text-white"
             style={{
               backgroundColor: input.trim()
-                ? "var(--color-ai)"
-                : "var(--color-portal-muted)",
-              color: "white",
+                ? "#AF52DE"
+                : "#7A8C85",
             }}
           >
             {isStreaming ? (
@@ -389,8 +345,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
         </form>
 
         <p
-          className="text-center text-xs mt-2"
-          style={{ color: "var(--color-portal-muted)" }}
+          className="text-center text-xs mt-2 text-[#7A8C85]"
         >
           AI Coach bruker dine data for personlige rad. Svar er veiledende.
         </p>

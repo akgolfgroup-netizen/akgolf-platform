@@ -25,11 +25,11 @@ function getLevelColor(level: string): string {
   switch (level.toLowerCase()) {
     case "major":
     case "nasjonal":
-      return "bg-primary/10 text-primary";
+      return "bg-[#0A1F18]/10 text-[#0A1F18]";
     case "regional":
-      return "bg-[var(--color-info-light)] text-[var(--color-info-text)]";
+      return "bg-[#EFF6FF] text-[#1E40AF]";
     default:
-      return "bg-[var(--color-portal-hover)] text-[var(--color-portal-secondary)]";
+      return "bg-[#F5F8F7] text-[#324D45]";
   }
 }
 
@@ -68,63 +68,63 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
       {/* ═══ HEADER ═══ */}
       <div className="mb-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">
           Sesong 2026
         </p>
-        <h1 className="mt-1 text-[28px] font-bold tracking-tight text-[var(--color-portal-text)]">
+        <h1 className="mt-1 text-[28px] font-bold tracking-tight text-[#0A1F18]">
           Turneringsplan
         </h1>
       </div>
 
       {/* ═══ STAT-KORT ═══ */}
       <div className="mb-6 grid grid-cols-3 gap-4">
-        <PremiumCard delay={0} glow="green">
+        <PremiumCard delay={0} >
           <div className="flex flex-col items-center py-2 text-center">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">
               Kommende
             </span>
-            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums">
+            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-[#0A1F18] tabular-nums">
               <NumberTicker value={stats.upcoming} />
             </span>
-            <Target className="mt-2 h-4 w-4 text-[var(--color-portal-muted)]" />
+            <Target className="mt-2 h-4 w-4 text-[#7A8C85]" />
           </div>
         </PremiumCard>
 
         <PremiumCard delay={0.06}>
           <div className="flex flex-col items-center py-2 text-center">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">
               Påmeldt
             </span>
-            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-primary tabular-nums">
+            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-[#0A1F18] tabular-nums">
               <NumberTicker value={stats.registered} />
             </span>
-            <CheckCircle2 className="mt-2 h-4 w-4 text-[var(--color-portal-muted)]" />
+            <CheckCircle2 className="mt-2 h-4 w-4 text-[#7A8C85]" />
           </div>
         </PremiumCard>
 
         <PremiumCard delay={0.12}>
           <div className="flex flex-col items-center py-2 text-center">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">
               Fullført
             </span>
-            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums">
+            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-[#0A1F18] tabular-nums">
               <NumberTicker value={stats.completed} />
             </span>
-            <Flag className="mt-2 h-4 w-4 text-[var(--color-portal-muted)]" />
+            <Flag className="mt-2 h-4 w-4 text-[#7A8C85]" />
           </div>
         </PremiumCard>
       </div>
 
       {/* ═══ TABS ═══ */}
-      <div className="mb-5 flex gap-1.5 rounded-[10px] bg-[var(--color-portal-hover)] p-[3px]">
+      <div className="mb-5 flex gap-1.5 rounded-[10px] bg-[#F5F8F7] p-[3px]">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`rounded-[7px] px-4 py-[7px] text-[13px] font-medium transition-all duration-200 ${
               activeTab === tab.key
-                ? "bg-primary text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
-                : "text-[var(--color-portal-muted)] hover:text-[var(--color-portal-secondary)]"
+                ? "bg-[#0A1F18] text-white shadow-[0_2px_8px_rgba(10,31,24,0.3)]"
+                : "text-[#7A8C85] hover:text-[#324D45]"
             }`}
           >
             {tab.label}
@@ -137,11 +137,11 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {activeTab === "resultater" && stats.completed === 0 && (
         <PremiumCard delay={0}>
           <div className="flex flex-col items-center py-12 text-center">
-            <Trophy className="mb-3 h-8 w-8 text-[var(--color-portal-muted)] opacity-40" />
-            <p className="text-sm font-medium text-[var(--color-portal-secondary)]">
+            <Trophy className="mb-3 h-8 w-8 text-[#7A8C85] opacity-40" />
+            <p className="text-sm font-medium text-[#324D45]">
               Ingen resultater ennå
             </p>
-            <p className="mt-1 text-xs text-[var(--color-portal-muted)]">
+            <p className="mt-1 text-xs text-[#7A8C85]">
               Resultater vises her etter gjennomførte turneringer
             </p>
           </div>
@@ -151,11 +151,11 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {activeTab === "resultater" && stats.completed > 0 && (
         <PremiumCard delay={0}>
           <div className="flex flex-col items-center py-12 text-center">
-            <Trophy className="mb-3 h-8 w-8 text-primary opacity-60" />
-            <p className="text-sm font-medium text-[var(--color-portal-secondary)]">
+            <Trophy className="mb-3 h-8 w-8 text-[#0A1F18] opacity-60" />
+            <p className="text-sm font-medium text-[#324D45]">
               {stats.completed} fullførte turneringer
             </p>
-            <p className="mt-1 text-xs text-[var(--color-portal-muted)]">
+            <p className="mt-1 text-xs text-[#7A8C85]">
               Detaljert resultatoversikt kommer snart
             </p>
           </div>
@@ -165,13 +165,13 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {activeTab !== "resultater" && displayList.length === 0 && (
         <PremiumCard delay={0}>
           <div className="flex flex-col items-center py-12 text-center">
-            <Calendar className="mb-3 h-8 w-8 text-[var(--color-portal-muted)] opacity-40" />
-            <p className="text-sm font-medium text-[var(--color-portal-secondary)]">
+            <Calendar className="mb-3 h-8 w-8 text-[#7A8C85] opacity-40" />
+            <p className="text-sm font-medium text-[#324D45]">
               {activeTab === "pameldt"
                 ? "Du er ikke påmeldt noen turneringer"
                 : "Ingen kommende turneringer"}
             </p>
-            <p className="mt-1 text-xs text-[var(--color-portal-muted)]">
+            <p className="mt-1 text-xs text-[#7A8C85]">
               {activeTab === "pameldt"
                 ? "Meld deg på fra listen over kommende turneringer"
                 : "Nye turneringer legges til fortløpende"}
@@ -194,11 +194,11 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                   className="flex w-full items-start gap-4 p-5 text-left"
                 >
                   {/* Dato-blokk */}
-                  <div className="flex h-12 w-12 flex-shrink-0 flex-col items-center justify-center rounded-xl bg-[var(--color-portal-hover)]">
-                    <span className="text-[10px] font-semibold uppercase leading-none text-[var(--color-portal-muted)]">
+                  <div className="flex h-12 w-12 flex-shrink-0 flex-col items-center justify-center rounded-xl bg-[#F5F8F7]">
+                    <span className="text-[10px] font-semibold uppercase leading-none text-[#7A8C85]">
                       {format(tournamentDate, "MMM", { locale: nb })}
                     </span>
-                    <span className="text-lg font-bold leading-tight text-[var(--color-portal-text)] tabular-nums">
+                    <span className="text-lg font-bold leading-tight text-[#0A1F18] tabular-nums">
                       {format(tournamentDate, "d")}
                     </span>
                   </div>
@@ -206,18 +206,18 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                   {/* Innhold */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className="truncate text-[14px] font-semibold text-[var(--color-portal-text)]">
+                      <h3 className="truncate text-[14px] font-semibold text-[#0A1F18]">
                         {t.name}
                       </h3>
                       {t.isRegistered && (
-                        <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full bg-[var(--color-success-light)] px-2 py-0.5 text-[10px] font-semibold text-[var(--color-success-text)]">
+                        <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full bg-[#E8F5EF] px-2 py-0.5 text-[10px] font-semibold text-[#1A4D36]">
                           <CheckCircle2 className="h-3 w-3" />
                           Påmeldt
                         </span>
                       )}
                     </div>
 
-                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-[var(--color-portal-muted)]">
+                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-[#7A8C85]">
                       {(t.course ?? t.location) && (
                         <span className="flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
@@ -236,7 +236,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                   {/* Chevron */}
                   <ChevronRight
-                    className={`h-4 w-4 flex-shrink-0 text-[var(--color-portal-muted)] transition-transform duration-200 ${
+                    className={`h-4 w-4 flex-shrink-0 text-[#7A8C85] transition-transform duration-200 ${
                       isExpanded ? "rotate-90" : ""
                     }`}
                   />
@@ -244,42 +244,42 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                 {/* Utvidet detaljer */}
                 {isExpanded && (
-                  <div className="border-t border-[var(--color-portal-border)] px-5 pb-5 pt-4">
+                  <div className="border-t border-[#D5DFDB] px-5 pb-5 pt-4">
                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                       <div>
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">
                           Periode
                         </span>
-                        <p className="mt-0.5 text-sm font-medium text-[var(--color-portal-text)]">
+                        <p className="mt-0.5 text-sm font-medium text-[#0A1F18]">
                           {getPeriodLabel(tournamentDate)}
                         </p>
                       </div>
                       {t.numberOfHoles && (
                         <div>
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">
                             Hull
                           </span>
-                          <p className="mt-0.5 text-sm font-medium text-[var(--color-portal-text)]">
+                          <p className="mt-0.5 text-sm font-medium text-[#0A1F18]">
                             {t.numberOfHoles}
                           </p>
                         </div>
                       )}
                       {t.series && (
                         <div>
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">
                             Serie
                           </span>
-                          <p className="mt-0.5 text-sm font-medium text-[var(--color-portal-text)]">
+                          <p className="mt-0.5 text-sm font-medium text-[#0A1F18]">
                             {t.series}
                           </p>
                         </div>
                       )}
                       {t.planLevel && (
                         <div>
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">
                             Prioritet
                           </span>
-                          <p className="mt-0.5 text-sm font-medium text-[var(--color-portal-text)]">
+                          <p className="mt-0.5 text-sm font-medium text-[#0A1F18]">
                             {t.planLevel}
                           </p>
                         </div>
@@ -288,10 +288,10 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                     {t.goalType && (
                       <div className="mt-3">
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">
                           Mål
                         </span>
-                        <p className="mt-0.5 text-sm text-[var(--color-portal-secondary)]">
+                        <p className="mt-0.5 text-sm text-[#324D45]">
                           {t.goalType}
                         </p>
                       </div>
@@ -299,10 +299,10 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                     {t.planNotes && (
                       <div className="mt-3">
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">
                           Notater
                         </span>
-                        <p className="mt-0.5 text-sm italic text-[var(--color-portal-secondary)]">
+                        <p className="mt-0.5 text-sm italic text-[#324D45]">
                           {t.planNotes}
                         </p>
                       </div>
@@ -310,7 +310,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                     <div className="mt-4 flex items-center gap-3">
                       {!t.isRegistered && (
-                        <button className="inline-flex items-center gap-1.5 rounded-[20px] bg-accent-cta px-4 py-2 text-[12px] font-bold text-[var(--color-accent-cta-text)] transition-opacity hover:opacity-85">
+                        <button className="inline-flex items-center gap-1.5 rounded-full bg-[#D1F843] px-4 py-2 text-[12px] font-bold text-[#0A1F18] transition-opacity hover:opacity-85">
                           <CheckCircle2 className="h-3.5 w-3.5" />
                           Meld meg på
                         </button>
@@ -320,7 +320,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                           href={t.externalUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-[20px] border border-[var(--color-portal-border)] px-4 py-2 text-[12px] font-medium text-[var(--color-portal-secondary)] transition-colors hover:bg-[var(--color-portal-hover)]"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-[#D5DFDB] bg-white px-4 py-2 text-[12px] font-medium text-[#324D45] transition-colors hover:border-[#A5B2AD]"
                         >
                           <ExternalLink className="h-3.5 w-3.5" />
                           Se turnering

@@ -29,17 +29,17 @@ export function OverbookingAlert({
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-start gap-3 p-4 bg-[var(--color-success)]/10 rounded-xl border border-[var(--color-success)]/20"
+        className="flex items-start gap-3 p-4 bg-[#1A4D36]/10 rounded-xl border border-[#1A4D36]/20"
       >
-        <CheckCircle className="w-5 h-5 text-[var(--color-success)] flex-shrink-0 mt-0.5" />
+        <CheckCircle className="w-5 h-5 text-[#1A4D36] flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-medium text-[var(--color-grey-900)]">
+          <p className="text-sm font-medium text-[#0A1F18]">
             God kapasitet
           </p>
-          <p className="text-xs text-[var(--color-grey-600)] mt-0.5">
+          <p className="text-xs text-[#5A6E66] mt-0.5">
             {expectedSessions} forventede okter ({hoursNeeded.toFixed(1)}t) -{" "}
             {availableHours.toFixed(1)}t tilgjengelig.{" "}
-            <span className="font-medium text-[var(--color-success)]">
+            <span className="font-medium text-[#1A4D36]">
               +{surplus.toFixed(1)}t buffer
             </span>
           </p>
@@ -53,14 +53,14 @@ export function OverbookingAlert({
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-start gap-3 p-4 bg-[var(--color-warning)]/10 rounded-xl border border-[var(--color-warning)]/20"
+        className="flex items-start gap-3 p-4 bg-[#C48A32]/10 rounded-xl border border-[#C48A32]/20"
       >
-        <TrendingUp className="w-5 h-5 text-[var(--color-warning)] flex-shrink-0 mt-0.5" />
+        <TrendingUp className="w-5 h-5 text-[#C48A32] flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-medium text-[var(--color-grey-900)]">
+          <p className="text-sm font-medium text-[#0A1F18]">
             Nesten fullt
           </p>
-          <p className="text-xs text-[var(--color-grey-600)] mt-0.5">
+          <p className="text-xs text-[#5A6E66] mt-0.5">
             {expectedSessions} forventede okter ({hoursNeeded.toFixed(1)}t) mot{" "}
             {availableHours.toFixed(1)}t tilgjengelig. Lite margin.
           </p>
@@ -73,20 +73,20 @@ export function OverbookingAlert({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-start gap-3 p-4 bg-[var(--color-error)]/10 rounded-xl border border-[var(--color-error)]/20"
+      className="flex items-start gap-3 p-4 bg-[#EF4444]/10 rounded-xl border border-[#EF4444]/20"
     >
-      <AlertTriangle className="w-5 h-5 text-[var(--color-error)] flex-shrink-0 mt-0.5" />
+      <AlertTriangle className="w-5 h-5 text-[#EF4444] flex-shrink-0 mt-0.5" />
       <div>
-        <p className="text-sm font-medium text-[var(--color-grey-900)]">
+        <p className="text-sm font-medium text-[#0A1F18]">
           Overbooking-varsel
         </p>
-        <p className="text-xs text-[var(--color-grey-600)] mt-0.5">
+        <p className="text-xs text-[#5A6E66] mt-0.5">
           {expectedSessions} forventede okter krever{" "}
           <span className="font-medium">{hoursNeeded.toFixed(1)}t</span>, men
           kun{" "}
           <span className="font-medium">{availableHours.toFixed(1)}t</span>{" "}
           tilgjengelig.{" "}
-          <span className="font-medium text-[var(--color-error)]">
+          <span className="font-medium text-[#EF4444]">
             Mangler {Math.abs(surplus).toFixed(1)}t
           </span>
         </p>

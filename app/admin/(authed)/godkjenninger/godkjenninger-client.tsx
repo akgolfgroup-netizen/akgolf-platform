@@ -127,14 +127,14 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
           <div
             className={
               row.type === "activity"
-                ? "h-8 w-8 rounded-full flex items-center justify-center bg-grey-100"
-                : "h-8 w-8 rounded-full flex items-center justify-center bg-grey-100"
+                ? "h-8 w-8 rounded-full flex items-center justify-center bg-[#F5F8F7]"
+                : "h-8 w-8 rounded-full flex items-center justify-center bg-[#F5F8F7]"
             }
           >
             {row.type === "activity" ? (
-              <MapPin className="h-4 w-4 text-grey-700" />
+              <MapPin className="h-4 w-4 text-[#324D45]" />
             ) : (
-              <User className="h-4 w-4 text-grey-500" />
+              <User className="h-4 w-4 text-[#7A8C85]" />
             )}
           </div>
           <AdminBadge variant={row.type === "activity" ? "info" : "warning"}>
@@ -149,10 +149,10 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       sortable: true,
       render: (row) => (
         <div>
-          <div className="text-sm font-medium text-grey-900">
+          <div className="text-sm font-medium text-[#0A1F18]">
             {row.type === "activity" ? row.serviceName : row.studentName}
           </div>
-          <div className="text-xs text-grey-500">
+          <div className="text-xs text-[#7A8C85]">
             {row.type === "activity"
               ? `Opprettet av ${row.studentName}`
               : row.serviceName}
@@ -165,8 +165,8 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       label: "Ønsket tid",
       sortable: true,
       render: (row) => (
-        <div className="text-sm text-grey-900 flex items-center gap-1.5">
-          <Calendar className="h-3.5 w-3.5 text-grey-500" />
+        <div className="text-sm text-[#0A1F18] flex items-center gap-1.5">
+          <Calendar className="h-3.5 w-3.5 text-[#7A8C85]" />
           {format(new Date(row.requestedTime), "d. MMM 'kl.' HH:mm", {
             locale: nb,
           })}
@@ -180,9 +180,9 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       align: "right",
       render: (row) =>
         row.type === "activity" ? (
-          <span className="text-grey-500">—</span>
+          <span className="text-[#7A8C85]">—</span>
         ) : (
-          <span className="tabular-nums text-grey-900">
+          <span className="tabular-nums text-[#0A1F18]">
             {row.price.toLocaleString("nb-NO")} kr
           </span>
         ),
@@ -192,7 +192,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       label: "Opprettet",
       sortable: true,
       render: (row) => (
-        <span className="text-xs text-grey-500">
+        <span className="text-xs text-[#7A8C85]">
           {format(new Date(row.createdAt), "d. MMM HH:mm", { locale: nb })}
         </span>
       ),
@@ -281,7 +281,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
 
       <div className="p-6 space-y-6">
         {conflictItems.length > 0 && (
-          <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-amber-50 text-amber-700 text-sm border border-amber-200">
+          <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-[#F5F8F7] text-[#C48A32] text-sm border border-[#D5DFDB]">
             <AlertTriangle className="h-4 w-4 flex-shrink-0 mt-0.5" />
             <span>
               {conflictItems.length} aktivitet

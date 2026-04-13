@@ -133,7 +133,7 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
         {booking && (
           <div className="space-y-4">
             {error && (
-              <div className="p-3 rounded-lg bg-[var(--color-error-light)] text-[var(--color-error-text)] text-sm">
+              <div className="p-3 rounded-lg bg-[#EF4444]/10 text-[#EF4444] text-sm">
                 {error}
               </div>
             )}
@@ -151,17 +151,17 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
 
             <AdminCard>
               <h4 className="admin-section-title mb-2">Elev</h4>
-              <div className="space-y-1 text-sm text-[var(--color-text)]">
-                <div className="flex items-center gap-2"><User className="w-4 h-4 text-[var(--color-muted)]" />{booking.User?.name ?? "Ukjent"}</div>
-                {booking.User?.email && <div className="text-[var(--color-muted)] ml-6">{booking.User.email}</div>}
-                {booking.User?.phone && <div className="text-[var(--color-muted)] ml-6">{booking.User.phone}</div>}
+              <div className="space-y-1 text-sm text-[#0A1F18]">
+                <div className="flex items-center gap-2"><User className="w-4 h-4 text-[#7A8C85]" />{booking.User?.name ?? "Ukjent"}</div>
+                {booking.User?.email && <div className="text-[#7A8C85] ml-6">{booking.User.email}</div>}
+                {booking.User?.phone && <div className="text-[#7A8C85] ml-6">{booking.User.phone}</div>}
               </div>
             </AdminCard>
 
             <AdminCard>
               <h4 className="admin-section-title mb-2">Instruktør</h4>
-              <div className="flex items-center gap-2 text-sm text-[var(--color-text)]">
-                <Clock className="w-4 h-4 text-[var(--color-muted)]" />
+              <div className="flex items-center gap-2 text-sm text-[#0A1F18]">
+                <Clock className="w-4 h-4 text-[#7A8C85]" />
                 {booking.Instructor?.User?.name ?? "Ukjent"}
               </div>
             </AdminCard>
@@ -169,21 +169,21 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
             {booking.playerNotes && (
               <AdminCard>
                 <h4 className="admin-section-title mb-2">Spillernotater</h4>
-                <p className="text-sm text-[var(--color-text)] italic">{booking.playerNotes}</p>
+                <p className="text-sm text-[#0A1F18] italic">{booking.playerNotes}</p>
               </AdminCard>
             )}
 
             {booking.adminNotes && (
               <AdminCard>
                 <h4 className="admin-section-title mb-2">Admin-notater</h4>
-                <p className="text-sm text-[var(--color-text)]">{booking.adminNotes}</p>
+                <p className="text-sm text-[#0A1F18]">{booking.adminNotes}</p>
               </AdminCard>
             )}
 
             {booking.cancelReason && (
               <AdminCard>
                 <h4 className="admin-section-title mb-2">Avbestillingsgrunn</h4>
-                <p className="text-sm text-[var(--color-error)]">{booking.cancelReason}</p>
+                <p className="text-sm text-[#EF4444]">{booking.cancelReason}</p>
               </AdminCard>
             )}
 
@@ -204,13 +204,13 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
                   </div>
 
                   {loadingSlots && (
-                    <div className="flex items-center gap-2 text-xs text-[var(--color-muted)]">
+                    <div className="flex items-center gap-2 text-xs text-[#7A8C85]">
                       <Loader2 className="w-4 h-4 animate-spin" />Henter ledige tider...
                     </div>
                   )}
 
                   {rescheduleDate && !loadingSlots && rescheduleSlots.length === 0 && (
-                    <p className="text-xs text-[var(--color-muted)]">Ingen ledige tider denne dagen.</p>
+                    <p className="text-xs text-[#7A8C85]">Ingen ledige tider denne dagen.</p>
                   )}
 
                   {rescheduleSlots.length > 0 && (
@@ -226,8 +226,8 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
                               onClick={() => setRescheduleTime(slot)}
                               className={`py-2 text-sm font-medium rounded-lg border transition-colors ${
                                 isSelected
-                                  ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                                  : "bg-white text-[var(--color-text)] border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]"
+                                  ? "bg-[#0A1F18] text-white border-[#0A1F18]"
+                                  : "bg-white text-[#0A1F18] border-[#D5DFDB] hover:border-[#A5B2AD]"
                               }`}
                             >
                               {time}

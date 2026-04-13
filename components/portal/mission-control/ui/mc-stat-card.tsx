@@ -15,10 +15,10 @@ interface MCStatCardProps {
 }
 
 const valueColors: Record<StatVariant, string> = {
-  default: "text-black",
-  success: "text-success",
-  warning: "text-[var(--color-warning)]",
-  error: "text-error",
+  default: "text-[#0A1F18]",
+  success: "text-[#1A4D36]",
+  warning: "text-[#C48A32]",
+  error: "text-[#EF4444]",
 };
 
 export function MCStatCard({
@@ -36,7 +36,7 @@ export function MCStatCard({
         className
       )}
     >
-      <div className="text-[9px] font-medium text-[var(--color-grey-400)] uppercase tracking-[0.5px] mb-1">
+      <div className="text-[9px] font-medium text-[#7A8C85] uppercase tracking-[0.5px] mb-1">
         {label}
       </div>
       <div className="flex items-center gap-2">
@@ -48,7 +48,7 @@ export function MCStatCard({
         )}
       </div>
       {subtext && (
-        <div className="text-[9px] text-[var(--color-grey-400)] mt-1">{subtext}</div>
+        <div className="text-[9px] text-[#7A8C85] mt-1">{subtext}</div>
       )}
     </div>
   );
@@ -115,7 +115,7 @@ export function MCKPIStrip({ items, alerts, className }: MCKPIStripProps) {
             <div className={cn("text-2xl font-bold", valueColors[item.variant || "default"])}>
               {item.value}
             </div>
-            <div className="text-[9px] text-[var(--color-grey-400)] leading-tight">
+            <div className="text-[9px] text-[#7A8C85] leading-tight">
               {item.label.toUpperCase()}
               {item.sublabel && <br />}
               {item.sublabel?.toUpperCase()}
@@ -129,10 +129,10 @@ export function MCKPIStrip({ items, alerts, className }: MCKPIStripProps) {
           <div className="ml-auto flex gap-2">
             {alerts.map((alert) => {
               const alertColors = {
-                success: "bg-success-light text-success-text",
-                warning: "bg-warning-light text-warning-text",
-                error: "bg-error-light text-error-text",
-                info: "bg-info-light text-info-text",
+                success: "bg-[#1A4D36]/10 text-[#1A4D36]",
+                warning: "bg-[#C48A32]/10 text-[#C48A32]",
+                error: "bg-[#EF4444]/10 text-[#EF4444]",
+                info: "bg-[#0A1F18]/10 text-[#0A1F18]",
               };
               return (
                 <span

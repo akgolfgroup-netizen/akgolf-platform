@@ -56,35 +56,24 @@ export function AdminDialog({
       />
       <div
         className={cn(
-          "relative w-full rounded-2xl overflow-hidden shadow-2xl",
+          "relative w-full rounded-2xl overflow-hidden shadow-2xl bg-white border border-[#D5DFDB]",
           sizeClass[size],
           "animate-in fade-in zoom-in-95 duration-200",
         )}
-        style={{
-          background: "var(--color-surface)",
-          border: "1px solid var(--color-muted)",
-        }}
       >
         {(title || showClose) && (
-          <div
-            className="flex items-start justify-between gap-3 px-6 py-4 border-b"
-            style={{ borderColor: "var(--color-muted)" }}
-          >
+          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-[#D5DFDB]">
             <div className="flex-1 min-w-0">
               {title && (
                 <h2
                   id="admin-dialog-title"
-                  className="text-lg font-semibold"
-                  style={{ color: "var(--color-text)" }}
+                  className="text-lg font-semibold text-[#0A1F18]"
                 >
                   {title}
                 </h2>
               )}
               {description && (
-                <p
-                  className="text-sm mt-0.5"
-                  style={{ color: "var(--color-muted)" }}
-                >
+                <p className="text-sm mt-0.5 text-[#7A8C85]">
                   {description}
                 </p>
               )}
@@ -103,10 +92,7 @@ export function AdminDialog({
         )}
         {children && <div className="px-6 py-4">{children}</div>}
         {footer && (
-          <div
-            className="flex items-center justify-end gap-2 px-6 py-4 border-t"
-            style={{ borderColor: "var(--color-muted)" }}
-          >
+          <div className="flex items-center justify-end gap-2 px-6 py-4 border-t border-[#D5DFDB]">
             {footer}
           </div>
         )}

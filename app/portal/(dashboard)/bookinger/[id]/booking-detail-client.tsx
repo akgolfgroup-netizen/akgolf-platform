@@ -49,8 +49,8 @@ const STATUS_MAP: Record<string, Badge> = {
   CONFIRMED: { label: "Bekreftet", variant: "success" },
   PENDING: { label: "Venter", variant: "warning" },
   CANCELLED: { label: "Avlyst", variant: "cancelled" },
-  NO_SHOW: { label: "Ikke mott", variant: "cancelled" },
-  COMPLETED: { label: "Fullfort", variant: "success" },
+  NO_SHOW: { label: "Ikke møtt", variant: "cancelled" },
+  COMPLETED: { label: "Fullført", variant: "success" },
 };
 
 const PAYMENT_MAP: Record<string, Badge> = {
@@ -99,7 +99,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
       {/* Tilbake-lenke */}
       <Link
         href="/portal/bookinger"
-        className="inline-flex items-center gap-1.5 text-[12px] font-medium text-portal-muted hover:text-portal-text transition-colors"
+        className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#7A8C85] hover:text-[#0A1F18] transition-colors"
       >
         <ArrowLeft className="w-3.5 h-3.5" />
         Tilbake til bookinger
@@ -108,10 +108,10 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-portal-text">
+          <h1 className="text-xl font-bold text-[#0A1F18]">
             {booking.serviceName}
           </h1>
-          <p className="text-sm text-portal-muted mt-1 tabular-nums">
+          <p className="text-sm text-[#7A8C85] mt-1 tabular-nums">
             {format(start, "EEEE d. MMMM yyyy", { locale: nb })}
           </p>
         </div>
@@ -138,10 +138,10 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
             tabular
           />
 
-          {/* Instruktor */}
+          {/* Instruktør */}
           <DetailRow
             icon={<UserIcon className="w-4 h-4" />}
-            label="Instruktor"
+            label="Instruktør"
             value={
               booking.instructorTitle
                 ? `${booking.instructorName} · ${booking.instructorTitle}`
@@ -160,20 +160,20 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
 
           {/* Betaling */}
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-xl bg-portal-hover flex items-center justify-center shrink-0">
-              <CreditCard className="w-4 h-4 text-portal-secondary" />
+            <div className="w-8 h-8 rounded-xl bg-[#F5F8F7] flex items-center justify-center shrink-0">
+              <CreditCard className="w-4 h-4 text-[#324D45]" />
             </div>
             <div className="flex-1">
-              <p className="text-[11px] text-portal-muted uppercase tracking-[0.08em]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85]">
                 Betaling
               </p>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-[14px] text-portal-text tabular-nums">
+                <span className="text-[14px] text-[#0A1F18] tabular-nums">
                   {booking.amount > 0
                     ? `kr ${booking.amount.toLocaleString("nb-NO")}`
                     : "Inkludert i abonnement"}
                 </span>
-                <span className="text-[11px] text-portal-muted">
+                <span className="text-[11px] text-[#7A8C85]">
                   ({METHOD_LABELS[booking.paymentMethod] ?? booking.paymentMethod})
                 </span>
                 <BookingStatusBadge
@@ -207,7 +207,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
       {/* Resultatmelding */}
       {cancelResult && (
         <PremiumCard>
-          <p className="text-sm text-portal-text">{cancelResult}</p>
+          <p className="text-sm text-[#0A1F18]">{cancelResult}</p>
         </PremiumCard>
       )}
 
@@ -217,7 +217,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           {isActive(booking.status) && (
             <Link
               href={`/portal/bookinger/${booking.id}/endre`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[20px] bg-primary text-white text-[12px] font-bold hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D1F843] text-[#0A1F18] text-[12px] font-bold hover:opacity-90 transition-opacity"
             >
               <CalendarClock className="w-4 h-4" />
               Endre tidspunkt
@@ -227,7 +227,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           {!showCancelConfirm && (
             <button
               onClick={() => setShowCancelConfirm(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[20px] border border-portal-border text-portal-secondary text-[12px] font-bold hover:bg-portal-hover transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#D5DFDB] bg-white text-[#0A1F18] text-[12px] font-bold hover:border-[#A5B2AD] transition-colors cursor-pointer"
             >
               <XCircle className="w-4 h-4" />
               Avbestill
@@ -240,28 +240,28 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
       {showCancelConfirm && (
         <PremiumCard>
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-xl bg-portal-hover flex items-center justify-center shrink-0">
-              <AlertTriangle className="w-4 h-4 text-portal-secondary" />
+            <div className="w-8 h-8 rounded-xl bg-[#F5F8F7] flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-4 h-4 text-[#324D45]" />
             </div>
             <div className="flex-1">
-              <p className="text-[14px] font-semibold text-portal-text mb-1">
+              <p className="text-[14px] font-semibold text-[#0A1F18] mb-1">
                 Bekreft avbestilling
               </p>
-              <p className="text-[12px] text-portal-muted mb-4">
-                Er du sikker pa at du vil avbestille denne timen? Avbestillingsreglene gjelder.
+              <p className="text-[12px] text-[#7A8C85] mb-4">
+                Er du sikker på at du vil avbestille denne timen? Avbestillingsreglene gjelder.
               </p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleCancel}
                   disabled={isPending}
-                  className="px-4 py-2 rounded-[20px] bg-primary-alt text-white text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
+                  className="px-4 py-2 rounded-full bg-[#EF4444] text-white text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
                 >
                   {isPending ? "Avbestiller..." : "Ja, avbestill"}
                 </button>
                 <button
                   onClick={() => setShowCancelConfirm(false)}
                   disabled={isPending}
-                  className="px-4 py-2 rounded-[20px] border border-portal-border text-portal-secondary text-[12px] font-bold hover:bg-portal-hover transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-full border border-[#D5DFDB] bg-white text-[#0A1F18] text-[12px] font-bold hover:border-[#A5B2AD] transition-colors cursor-pointer"
                 >
                   Angre
                 </button>
@@ -289,14 +289,14 @@ function DetailRow({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="w-8 h-8 rounded-xl bg-portal-hover flex items-center justify-center shrink-0">
-        <span className="text-portal-secondary">{icon}</span>
+      <div className="w-8 h-8 rounded-xl bg-[#F5F8F7] flex items-center justify-center shrink-0">
+        <span className="text-[#324D45]">{icon}</span>
       </div>
       <div>
-        <p className="text-[11px] text-portal-muted uppercase tracking-[0.08em]">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85]">
           {label}
         </p>
-        <p className={`text-[14px] text-portal-text mt-0.5${tabular ? " tabular-nums" : ""}`}>{value}</p>
+        <p className={`text-[14px] text-[#0A1F18] mt-0.5${tabular ? " tabular-nums" : ""}`}>{value}</p>
       </div>
     </div>
   );

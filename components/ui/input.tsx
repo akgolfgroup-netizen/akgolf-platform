@@ -17,20 +17,20 @@ export const Input: React.FC<InputProps> = ({
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-white/70 mb-1.5">
+        <label className="block text-sm font-medium text-[#5A6E66] mb-1.5">
           {label}
         </label>
       )}
       <div className="relative">
         {icon && (
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#A5B2AD]">
             {icon}
           </div>
         )}
         <input
           className={cn(
-            'w-full bg-[#0F172A] border border-[#334155] rounded-lg px-4 py-3 text-white placeholder:text-white/40',
-            'focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]',
+            'w-full bg-white border border-[#D5DFDB] rounded-lg px-4 py-3 text-[#0A1F18] placeholder:text-[#A5B2AD]',
+            'focus:outline-none focus:border-[#0A1F18] focus:ring-1 focus:ring-[#0A1F18]',
             'transition-colors duration-200',
             icon && 'pl-10',
             error && 'border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]',
@@ -46,7 +46,6 @@ export const Input: React.FC<InputProps> = ({
   );
 };
 
-// TextArea variant
 export const TextArea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaElement> & { label?: string; error?: string }> = ({
   label,
   error,
@@ -56,14 +55,14 @@ export const TextArea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaElement
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-white/70 mb-1.5">
+        <label className="block text-sm font-medium text-[#5A6E66] mb-1.5">
           {label}
         </label>
       )}
       <textarea
         className={cn(
-          'w-full bg-[#0F172A] border border-[#334155] rounded-lg px-4 py-3 text-white placeholder:text-white/40',
-          'focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]',
+          'w-full bg-white border border-[#D5DFDB] rounded-lg px-4 py-3 text-[#0A1F18] placeholder:text-[#A5B2AD]',
+          'focus:outline-none focus:border-[#0A1F18] focus:ring-1 focus:ring-[#0A1F18]',
           'transition-colors duration-200 resize-none',
           error && 'border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]',
           className

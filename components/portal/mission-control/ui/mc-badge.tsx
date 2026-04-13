@@ -9,11 +9,11 @@ interface MCBadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  success: "bg-success-light text-success-text",
-  warning: "bg-warning-light text-warning-text",
-  error: "bg-error-light text-error-text",
-  info: "bg-info-light text-info-text",
-  neutral: "bg-surface text-grey-500",
+  success: "bg-[#1A4D36]/10 text-[#1A4D36]",
+  warning: "bg-[#C48A32]/10 text-[#C48A32]",
+  error: "bg-[#EF4444]/10 text-[#EF4444]",
+  info: "bg-[#0A1F18]/10 text-[#0A1F18]",
+  neutral: "bg-[#F5F8F7] text-[#5A6E66]",
 };
 
 export function MCBadge({ children, variant = "neutral", className }: MCBadgeProps) {
@@ -39,9 +39,9 @@ interface DivisionDotProps {
 }
 
 const divisionColors: Record<DivisionColor, string> = {
-  coaching: "bg-black",
-  junior: "bg-info",
-  gfgk: "bg-primary",
+  coaching: "bg-[#0A1F18]",
+  junior: "bg-[#C48A32]",
+  gfgk: "bg-[#1A4D36]",
 };
 
 export function DivisionDot({ division, className }: DivisionDotProps) {
@@ -55,9 +55,9 @@ export function DivisionDot({ division, className }: DivisionDotProps) {
 // Division border (for session items)
 export function getDivisionBorderClass(division: DivisionColor): string {
   const borders: Record<DivisionColor, string> = {
-    coaching: "border-l-black",
-    junior: "border-l-info",
-    gfgk: "border-l-primary",
+    coaching: "border-l-[#0A1F18]",
+    junior: "border-l-[#C48A32]",
+    gfgk: "border-l-[#1A4D36]",
   };
   return borders[division];
 }

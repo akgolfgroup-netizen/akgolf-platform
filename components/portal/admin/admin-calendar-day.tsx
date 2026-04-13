@@ -25,10 +25,10 @@ function bookingHeight(startTime: Date, endTime: Date): number {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  CONFIRMED: "var(--color-success)",
-  PENDING: "var(--color-warning)",
-  COMPLETED: "var(--color-grey-400)",
-  NO_SHOW: "var(--color-error)",
+  CONFIRMED: "#1A4D36",
+  PENDING: "#C48A32",
+  COMPLETED: "#7A8C85",
+  NO_SHOW: "#EF4444",
 };
 
 export function AdminCalendarDay({ date, bookings, onSelectBooking }: Props) {
@@ -37,17 +37,17 @@ export function AdminCalendarDay({ date, bookings, onSelectBooking }: Props) {
   );
 
   return (
-    <div className="rounded-2xl border border-[var(--color-grey-200)] bg-white backdrop-blur-md overflow-hidden">
+    <div className="rounded-2xl border border-[#D5DFDB] bg-white backdrop-blur-md overflow-hidden">
       {/* Time grid */}
       <div className="relative" style={{ height: HOURS.length * SLOT_HEIGHT }}>
         {/* Hour lines */}
         {HOURS.map((hour) => (
           <div
             key={hour}
-            className="absolute left-0 right-0 border-t border-[var(--color-grey-200)] flex"
+            className="absolute left-0 right-0 border-t border-[#D5DFDB] flex"
             style={{ top: (hour - 8) * SLOT_HEIGHT }}
           >
-            <span className="text-[10px] text-[var(--color-grey-400)] w-14 px-2 -translate-y-1/2 bg-[white]">
+            <span className="text-[10px] text-[#7A8C85] w-14 px-2 -translate-y-1/2 bg-white">
               {String(hour).padStart(2, "0")}:00
             </span>
           </div>
@@ -60,7 +60,7 @@ export function AdminCalendarDay({ date, bookings, onSelectBooking }: Props) {
             const end = new Date(booking.endTime);
             const top = bookingTop(start);
             const height = bookingHeight(start, end);
-            const color = booking.serviceType.color ?? STATUS_COLORS[booking.status] ?? "var(--color-grey-400)";
+            const color = booking.serviceType.color ?? STATUS_COLORS[booking.status] ?? "#7A8C85";
 
             return (
               <button
@@ -74,14 +74,14 @@ export function AdminCalendarDay({ date, bookings, onSelectBooking }: Props) {
                   borderLeft: `3px solid ${color}`,
                 }}
               >
-                <p className="font-semibold text-[var(--color-grey-900)] truncate">
+                <p className="font-semibold text-[#0A1F18] truncate">
                   {booking.student.name ?? "Ukjent"}
                 </p>
-                <p className="text-[var(--color-grey-500)] truncate">
+                <p className="text-[#7A8C85] truncate">
                   {booking.serviceType.name} • {format(start, "HH:mm")}–{format(end, "HH:mm")}
                 </p>
                 {booking.instructor.user.name && (
-                  <p className="text-[var(--color-grey-400)] truncate">
+                  <p className="text-[#7A8C85] truncate">
                     {booking.instructor.user.name}
                   </p>
                 )}
@@ -97,10 +97,10 @@ export function AdminCalendarDay({ date, bookings, onSelectBooking }: Props) {
           if (nowHours < 8 || nowHours > 22) return null;
           return (
             <div
-              className="absolute left-14 right-0 border-t-2 border-[var(--color-grey-900)] z-10 pointer-events-none"
+              className="absolute left-14 right-0 border-t-2 border-[#0A1F18] z-10 pointer-events-none"
               style={{ top: (nowHours - 8) * SLOT_HEIGHT }}
             >
-              <div className="w-2 h-2 rounded-full bg-[var(--color-grey-900)] -translate-y-1/2 -translate-x-1" />
+              <div className="w-2 h-2 rounded-full bg-[#0A1F18] -translate-y-1/2 -translate-x-1" />
             </div>
           );
         })()}

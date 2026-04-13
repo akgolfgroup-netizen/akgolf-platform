@@ -1,7 +1,7 @@
 import { cn } from "@/lib/portal/utils/cn";
 import type { LucideIcon } from "lucide-react";
 
-type ButtonVariant = "primary" | "secondary" | "success" | "danger";
+type ButtonVariant = "primary" | "secondary" | "success" | "danger" | "lime";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface MCButtonProps {
@@ -17,16 +17,17 @@ interface MCButtonProps {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: "bg-black text-white hover:bg-grey-800",
-  secondary: "bg-white border border-grey-200 text-grey-500 hover:bg-surface hover:text-black",
-  success: "bg-success text-white hover:bg-success/90",
-  danger: "bg-error text-white hover:bg-error/90",
+  primary: "bg-[#0A1F18] text-white hover:bg-[#1A3529]",
+  secondary: "bg-white border border-[#D5DFDB] text-[#0A1F18] hover:bg-[#F5F8F7] hover:border-[#A5B2AD]",
+  success: "bg-[#1A4D36] text-white hover:bg-[#1A4D36]/90",
+  danger: "bg-[#EF4444] text-white hover:bg-[#DC2626]",
+  lime: "bg-[#D1F843] text-[#0A1F18] hover:brightness-95",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "px-2.5 py-1 text-[9px]",
-  md: "px-3.5 py-1.5 text-[10px]",
-  lg: "px-4.5 py-2 text-xs",
+  sm: "px-3 py-1.5 text-[11px] rounded-full",
+  md: "px-4 py-2 text-xs rounded-full",
+  lg: "px-5 py-2.5 text-sm rounded-full",
 };
 
 export function MCButton({
@@ -46,7 +47,7 @@ export function MCButton({
       disabled={disabled}
       onClick={onClick}
       className={cn(
-        "inline-flex items-center justify-center gap-1 rounded-md font-medium transition-[background-color,border-color,color,opacity] duration-150 cursor-pointer",
+        "inline-flex items-center justify-center gap-1.5 font-semibold transition-all duration-150 cursor-pointer",
         variantStyles[variant],
         sizeStyles[size],
         disabled && "opacity-50 cursor-not-allowed",

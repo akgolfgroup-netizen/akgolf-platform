@@ -202,11 +202,11 @@ export function ApperClient({
       {/* Success message */}
       {isSuccess && (
         <motion.div variants={fadeInUp} role="alert">
-          <div className="flex items-center gap-3 rounded-xl p-4 bg-success/10 border border-success/25">
-            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-success/15">
-              <Check className="h-5 w-5 text-success" />
+          <div className="flex items-center gap-3 rounded-xl p-4 bg-[#1A4D36]/10 border border-[#1A4D36]/25">
+            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[#1A4D36]/15">
+              <Check className="h-5 w-5 text-[#1A4D36]" />
             </div>
-            <p className="text-sm font-medium text-success">
+            <p className="text-sm font-medium text-[#1A4D36]">
               Abonnementet ditt er aktivert. Din 14-dagers prøveperiode har startet.
             </p>
           </div>
@@ -216,11 +216,11 @@ export function ApperClient({
       {/* Error message */}
       {error && (
         <motion.div variants={fadeInUp} role="alert">
-          <div className="flex items-center gap-3 rounded-xl p-4 bg-error/10 border border-error/25">
-            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-error/15">
-              <AlertCircle className="h-5 w-5 text-error" />
+          <div className="flex items-center gap-3 rounded-xl p-4 bg-[#EF4444]/10 border border-[#EF4444]/25">
+            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[#EF4444]/15">
+              <AlertCircle className="h-5 w-5 text-[#EF4444]" />
             </div>
-            <p className="text-sm font-medium text-error">{error}</p>
+            <p className="text-sm font-medium text-[#EF4444]">{error}</p>
           </div>
         </motion.div>
       )}
@@ -228,13 +228,13 @@ export function ApperClient({
       {/* Pricing Table */}
       <motion.div variants={fadeInUp} className="space-y-5">
         <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85]">
             Velg plan
           </p>
-          <h2 className="mt-1 text-2xl font-bold tracking-tight text-portal-text lg:text-3xl">
+          <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#0A1F18] lg:text-3xl">
             Velg ditt abonnement
           </h2>
-          <p className="mt-2 text-portal-muted">
+          <p className="mt-2 text-[#7A8C85]">
             Få tilgang til avanserte verktøy for å forbedre golfen din.
           </p>
         </div>
@@ -249,15 +249,15 @@ export function ApperClient({
       {activeSubscriptions.length > 0 && (
         <motion.section variants={fadeInUp} className="space-y-4">
           <div className="flex items-center justify-between">
-            <p className="text-[10px] font-bold tracking-[0.22em] text-portal-muted uppercase flex items-center gap-2">
-              <span className="w-6 h-px bg-portal-muted" />
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85] flex items-center gap-2">
+              <span className="w-6 h-px bg-[#7A8C85]" />
               Aktive abonnement
             </p>
             {hasStripeCustomer && (
               <button
                 onClick={handlePortal}
                 disabled={loading === "portal"}
-                className="flex items-center gap-1.5 text-[11px] font-semibold text-primary hover:opacity-80 transition-opacity"
+                className="flex items-center gap-1.5 text-[11px] font-semibold text-[#0A1F18] hover:opacity-80 transition-opacity"
               >
                 <Settings className="h-3.5 w-3.5" />
                 {loading === "portal" ? "Åpner…" : "Administrer"}
@@ -265,7 +265,7 @@ export function ApperClient({
             )}
           </div>
           <PremiumCard padding="sm" noHover>
-            <ul className="divide-y divide-portal-border">
+            <ul className="divide-y divide-[#D5DFDB]">
               {activeSubscriptions.map((sub) => {
                 const name =
                   sub.bundle?.slug ?? sub.module?.slug ?? "Abonnement";
@@ -276,24 +276,24 @@ export function ApperClient({
                     className="flex items-center justify-between py-3 first:pt-0 last:pb-0"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#D1F843]/20 border border-[#D1F843]/30">
                         {isBundle ? (
-                          <Package className="h-[18px] w-[18px] text-primary" />
+                          <Package className="h-[18px] w-[18px] text-[#0A1F18]" />
                         ) : (
-                          <Sparkles className="h-[18px] w-[18px] text-primary" />
+                          <Sparkles className="h-[18px] w-[18px] text-[#0A1F18]" />
                         )}
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-portal-text capitalize">
+                        <p className="text-sm font-semibold text-[#0A1F18] capitalize">
                           {name.replace(/-/g, " ")}
                         </p>
-                        <p className="text-[11px] text-portal-muted">
+                        <p className="text-[11px] text-[#7A8C85]">
                           {sub.status === "TRIALING" ? "Prøveperiode" : "Aktiv"}
                           {sub.cancelAtPeriodEnd && " · Avsluttes ved periodeslutt"}
                         </p>
                       </div>
                     </div>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 border border-primary/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-[#1A4D36]/10 border border-[#1A4D36]/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#1A4D36]">
                       <Check className="h-3 w-3" />
                       Aktiv
                     </span>
@@ -307,8 +307,8 @@ export function ApperClient({
 
       {/* Bundles */}
       <motion.section variants={fadeInUp} className="space-y-4">
-        <p className="text-[10px] font-bold tracking-[0.22em] text-portal-muted uppercase flex items-center gap-2">
-          <span className="w-6 h-px bg-portal-muted" />
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85] flex items-center gap-2">
+          <span className="w-6 h-px bg-[#7A8C85]" />
           Pakker
         </p>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -330,16 +330,16 @@ export function ApperClient({
                     className={cn(
                       "w-11 h-11 rounded-xl flex items-center justify-center",
                       isPremium
-                        ? "bg-primary/10 border border-primary/20"
-                        : "bg-primary/10"
+                        ? "bg-[#D1F843]/20 border border-[#D1F843]/30"
+                        : "bg-[#F5F8F7]"
                     )}
                   >
                     <BundleIcon
                       className={cn(
                         "h-5 w-5",
                         isPremium
-                          ? "text-primary"
-                          : "text-primary"
+                          ? "text-[#0A1F18]"
+                          : "text-[#0A1F18]"
                       )}
                     />
                   </div>
@@ -348,8 +348,8 @@ export function ApperClient({
                       className={cn(
                         "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
                         isPremium
-                          ? "bg-primary/10 border border-primary/20 text-primary"
-                          : "bg-success/10 text-success"
+                          ? "bg-[#1A4D36]/10 border border-[#1A4D36]/20 text-[#1A4D36]"
+                          : "bg-[#1A4D36]/10 text-[#1A4D36]"
                       )}
                     >
                       <Check className="h-3 w-3" />
@@ -360,7 +360,7 @@ export function ApperClient({
                 <h3
                   className={cn(
                     "text-[18px] font-semibold tracking-tight mb-1.5",
-                    isPremium ? "text-portal-text" : "text-portal-text"
+                    isPremium ? "text-[#0A1F18]" : "text-[#0A1F18]"
                   )}
                 >
                   {bundle.name}
@@ -369,7 +369,7 @@ export function ApperClient({
                   <p
                     className={cn(
                       "text-[13px] leading-relaxed mb-4",
-                      isPremium ? "text-portal-secondary" : "text-portal-muted"
+                      isPremium ? "text-[#324D45]" : "text-[#7A8C85]"
                     )}
                   >
                     {bundle.description}
@@ -382,8 +382,8 @@ export function ApperClient({
                       className={cn(
                         "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium",
                         isPremium
-                          ? "bg-portal-hover text-portal-text border border-portal-border"
-                          : "bg-primary/10 text-primary"
+                          ? "bg-[#F5F8F7] text-[#0A1F18] border border-[#D5DFDB]"
+                          : "bg-[#D1F843]/15 text-[#0A1F18]"
                       )}
                     >
                       {item.module.name}
@@ -395,7 +395,7 @@ export function ApperClient({
                     <span
                       className={cn(
                         "text-[32px] font-[300] tabular-nums tracking-[-0.04em] leading-none",
-                        isPremium ? "text-portal-text" : "text-portal-text"
+                        isPremium ? "text-[#0A1F18]" : "text-[#0A1F18]"
                       )}
                     >
                       {bundle.monthlyPriceNok / 100}
@@ -403,7 +403,7 @@ export function ApperClient({
                     <span
                       className={cn(
                         "ml-1 text-sm",
-                        isPremium ? "text-portal-muted" : "text-portal-muted"
+                        isPremium ? "text-[#7A8C85]" : "text-[#7A8C85]"
                       )}
                     >
                       kr/mnd
@@ -414,10 +414,10 @@ export function ApperClient({
                       onClick={() => handleCheckout(undefined, bundle.slug)}
                       disabled={loading !== null}
                       className={cn(
-                        "relative h-10 px-5 rounded-[20px] text-[11px] font-bold inline-flex items-center gap-2 transition-all",
+                        "relative h-10 px-5 rounded-full text-[11px] font-bold inline-flex items-center gap-2 transition-all",
                         isPremium
-                          ? "bg-primary text-white hover:bg-primary-alt"
-                          : "bg-primary text-white hover:bg-primary-alt"
+                          ? "bg-[#D1F843] text-[#0A1F18] hover:brightness-95"
+                          : "bg-[#D1F843] text-[#0A1F18] hover:brightness-95"
                       )}
                     >
                       {loading === bundle.slug ? (
@@ -436,8 +436,8 @@ export function ApperClient({
 
       {/* Individual modules */}
       <motion.section variants={fadeInUp} className="space-y-4">
-        <p className="text-[10px] font-bold tracking-[0.22em] text-portal-muted uppercase flex items-center gap-2">
-          <span className="w-6 h-px bg-portal-muted" />
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85] flex items-center gap-2">
+          <span className="w-6 h-px bg-[#7A8C85]" />
           Enkeltapper
         </p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -453,9 +453,9 @@ export function ApperClient({
                 hover="lift"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-[#F5F8F7] flex items-center justify-center">
                     <Icon
-                      className="h-[18px] w-[18px] text-primary"
+                      className="h-[18px] w-[18px] text-[#0A1F18]"
                       strokeWidth={1.75}
                     />
                   </div>
@@ -464,8 +464,8 @@ export function ApperClient({
                       className={cn(
                         "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
                         active
-                          ? "bg-success/10 text-success"
-                          : "bg-primary/10 text-primary"
+                          ? "bg-[#1A4D36]/10 text-[#1A4D36]"
+                          : "bg-[#D1F843]/20 text-[#0A1F18]"
                       )}
                     >
                       {active ? (
@@ -479,22 +479,22 @@ export function ApperClient({
                     </span>
                   )}
                 </div>
-                <h3 className="text-[15px] font-semibold text-portal-text mb-1.5 tracking-tight">
+                <h3 className="text-[15px] font-semibold text-[#0A1F18] mb-1.5 tracking-tight">
                   {mod.name}
                 </h3>
                 {mod.description && (
-                  <p className="text-[12px] text-portal-secondary leading-relaxed mb-4 line-clamp-2">
+                  <p className="text-[12px] text-[#324D45] leading-relaxed mb-4 line-clamp-2">
                     {mod.description}
                   </p>
                 )}
                 <div className="flex items-center justify-between">
-                  <span className="text-[18px] font-semibold tracking-tight text-portal-text tabular-nums">
+                  <span className="text-[18px] font-semibold tracking-tight text-[#0A1F18] tabular-nums">
                     {isFree ? (
                       "Gratis"
                     ) : (
                       <>
                         {mod.monthlyPriceNok / 100}
-                        <span className="ml-1 text-[11px] font-normal text-portal-muted">
+                        <span className="ml-1 text-[11px] font-normal text-[#7A8C85]">
                           kr/mnd
                         </span>
                       </>
@@ -504,7 +504,7 @@ export function ApperClient({
                     <button
                       onClick={() => handleActivateFree(mod.slug)}
                       disabled={loading !== null}
-                      className="inline-flex h-8 items-center justify-center rounded-[20px] bg-success/10 px-3 text-[11px] font-semibold text-success hover:bg-success/15 transition-colors"
+                      className="inline-flex h-8 items-center justify-center rounded-full bg-[#1A4D36]/10 px-3 text-[11px] font-semibold text-[#1A4D36] hover:bg-[#1A4D36]/15 transition-colors"
                     >
                       {loading === mod.slug ? (
                         <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -516,7 +516,7 @@ export function ApperClient({
                     <button
                       onClick={() => handleCheckout(mod.slug)}
                       disabled={loading !== null}
-                      className="inline-flex h-8 items-center justify-center rounded-[20px] bg-primary/10 px-3 text-[11px] font-semibold text-primary hover:bg-primary/15 transition-colors"
+                      className="inline-flex h-8 items-center justify-center rounded-full bg-[#D1F843] px-3 text-[11px] font-semibold text-[#0A1F18] hover:brightness-95 transition-all"
                     >
                       {loading === mod.slug ? (
                         <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -538,7 +538,7 @@ export function ApperClient({
           <button
             onClick={handlePortal}
             disabled={loading === "portal"}
-            className="flex items-center gap-2 text-sm text-portal-muted hover:text-primary transition-colors"
+            className="flex items-center gap-2 text-sm text-[#7A8C85] hover:text-[#0A1F18] transition-colors"
           >
             <Settings className="h-4 w-4" />
             {loading === "portal" ? "Åpner…" : "Administrer abonnementer"}

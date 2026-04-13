@@ -141,14 +141,14 @@ export function LiveRoundClient({
   const scoreToPar = result.score - hole.par;
   const scoreColor =
     scoreToPar <= -2
-      ? "text-yellow-500"
+      ? "text-[#EAB308]"
       : scoreToPar === -1
-        ? "text-[var(--color-error)]"
+        ? "text-[#B84233]"
         : scoreToPar === 0
-          ? "text-[var(--color-portal-text)]"
+          ? "text-[#0A1F18]"
           : scoreToPar === 1
-            ? "text-[var(--color-portal-secondary)]"
-            : "text-[var(--color-portal-muted)]";
+            ? "text-[#324D45]"
+            : "text-[#7A8C85]";
 
   const scoreLabel =
     scoreToPar <= -2
@@ -168,8 +168,8 @@ export function LiveRoundClient({
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-lg font-bold text-[var(--color-portal-text)]">{courseName}</h1>
-          <div className="text-sm text-[var(--color-portal-secondary)]">
+          <h1 className="text-lg font-bold text-[#0A1F18]">{courseName}</h1>
+          <div className="text-sm text-[#324D45]">
             {results.size} av {holes.length} hull
             {results.size > 0 && (
               <span className="ml-2 font-medium">
@@ -188,10 +188,10 @@ export function LiveRoundClient({
                 onClick={() => setCurrentHole(i)}
                 className={`w-6 h-6 rounded-full text-xs font-medium flex items-center justify-center transition-all ${
                   i === currentHole
-                    ? "bg-primary text-white"
+                    ? "bg-[#0A1F18] text-white"
                     : hasResult
-                      ? "bg-[var(--color-portal-hover)] text-[var(--color-portal-text)]"
-                      : "bg-[var(--color-portal-hover)] text-[var(--color-portal-muted)]"
+                      ? "bg-[#F5F8F7] text-[#0A1F18]"
+                      : "bg-[#F5F8F7] text-[#7A8C85]"
                 }`}
               >
                 {h.holeNumber}
@@ -208,17 +208,17 @@ export function LiveRoundClient({
       <PremiumCard className="p-6 space-y-6" noHover>
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-3xl font-bold text-[var(--color-portal-text)]">
+            <div className="text-3xl font-bold text-[#0A1F18]">
               Hull {hole.holeNumber}
             </div>
-            <div className="text-sm text-[var(--color-portal-secondary)] mt-0.5">
+            <div className="text-sm text-[#324D45] mt-0.5">
               Par {hole.par} — {hole.lengthMeter}m
               {hole.handicap && ` — HCP ${hole.handicap}`}
             </div>
           </div>
           <div className="text-right">
             <div className={`text-4xl font-bold tabular-nums tracking-tight ${scoreColor}`}>{result.score}</div>
-            <div className="text-xs text-[var(--color-portal-secondary)]">{scoreLabel}</div>
+            <div className="text-xs text-[#324D45]">{scoreLabel}</div>
           </div>
         </div>
 
@@ -230,22 +230,22 @@ export function LiveRoundClient({
 
         {/* Score */}
         <div>
-          <label className="text-sm font-medium text-[var(--color-portal-secondary)] mb-2 block">
+          <label className="text-sm font-medium text-[#324D45] mb-2 block">
             Score
           </label>
           <div className="flex items-center justify-center gap-6">
             <button
               onClick={() => updateResult({ score: Math.max(1, result.score - 1) })}
-              className="h-12 w-12 rounded-full border border-[var(--color-portal-border)] flex items-center justify-center hover:bg-[var(--color-portal-hover)] transition-colors"
+              className="h-12 w-12 rounded-full border border-[#D5DFDB] flex items-center justify-center hover:bg-[#F5F8F7] transition-colors"
             >
               <Minus className="h-5 w-5" />
             </button>
-            <span className="text-5xl font-bold text-[var(--color-portal-text)] w-20 text-center tabular-nums tracking-tight">
+            <span className="text-5xl font-bold text-[#0A1F18] w-20 text-center tabular-nums tracking-tight">
               {result.score}
             </span>
             <button
               onClick={() => updateResult({ score: result.score + 1 })}
-              className="h-12 w-12 rounded-full border border-[var(--color-portal-border)] flex items-center justify-center hover:bg-[var(--color-portal-hover)] transition-colors"
+              className="h-12 w-12 rounded-full border border-[#D5DFDB] flex items-center justify-center hover:bg-[#F5F8F7] transition-colors"
             >
               <Plus className="h-5 w-5" />
             </button>
@@ -254,22 +254,22 @@ export function LiveRoundClient({
 
         {/* Putts */}
         <div>
-          <label className="text-sm font-medium text-[var(--color-portal-secondary)] mb-2 block">
+          <label className="text-sm font-medium text-[#324D45] mb-2 block">
             Putts
           </label>
           <div className="flex items-center justify-center gap-4">
             <button
               onClick={() => updateResult({ putts: Math.max(0, result.putts - 1) })}
-              className="h-12 w-12 rounded-full border border-[var(--color-portal-border)] flex items-center justify-center hover:bg-[var(--color-portal-hover)]"
+              className="h-12 w-12 rounded-full border border-[#D5DFDB] flex items-center justify-center hover:bg-[#F5F8F7]"
             >
               <Minus className="h-4 w-4" />
             </button>
-            <span className="text-3xl font-bold text-[var(--color-portal-text)] w-14 text-center tabular-nums tracking-tight">
+            <span className="text-3xl font-bold text-[#0A1F18] w-14 text-center tabular-nums tracking-tight">
               {result.putts}
             </span>
             <button
               onClick={() => updateResult({ putts: result.putts + 1 })}
-              className="h-12 w-12 rounded-full border border-[var(--color-portal-border)] flex items-center justify-center hover:bg-[var(--color-portal-hover)]"
+              className="h-12 w-12 rounded-full border border-[#D5DFDB] flex items-center justify-center hover:bg-[#F5F8F7]"
             >
               <Plus className="h-4 w-4" />
             </button>
@@ -280,7 +280,7 @@ export function LiveRoundClient({
         <div className="grid grid-cols-2 gap-3">
           {hole.par !== 3 && (
             <div>
-              <label className="text-sm font-medium text-[var(--color-portal-secondary)] mb-2 block">
+              <label className="text-sm font-medium text-[#324D45] mb-2 block">
                 Fairway
               </label>
               <div className="flex gap-2">
@@ -291,12 +291,12 @@ export function LiveRoundClient({
                   <button
                     key={String(opt.value)}
                     onClick={() => updateResult({ fairwayHit: opt.value })}
-                    className={`flex-1 py-2.5 rounded-[20px] text-sm font-medium transition-all ${
+                    className={`flex-1 py-2.5 rounded-full text-sm font-medium transition-all ${
                       result.fairwayHit === opt.value
                         ? opt.value
-                          ? "bg-[var(--color-success)]/10 text-[var(--color-success-text)] border border-[var(--color-success)]"
-                          : "bg-[var(--color-error)]/10 text-[var(--color-error)] border border-[var(--color-error)]"
-                        : "bg-[var(--color-portal-hover)] text-[var(--color-portal-secondary)] border border-transparent"
+                          ? "bg-[#E8F5EF] text-[#1A4D36] border border-[#1A4D36]"
+                          : "bg-[#FCEAE8] text-[#B84233] border border-[#B84233]"
+                        : "bg-[#F5F8F7] text-[#324D45] border border-transparent"
                     }`}
                   >
                     {opt.label}
@@ -307,7 +307,7 @@ export function LiveRoundClient({
           )}
 
           <div className={hole.par === 3 ? "col-span-2" : ""}>
-            <label className="text-sm font-medium text-[var(--color-portal-secondary)] mb-2 block">
+            <label className="text-sm font-medium text-[#324D45] mb-2 block">
               GIR
             </label>
             <div className="flex gap-2">
@@ -318,12 +318,12 @@ export function LiveRoundClient({
                 <button
                   key={String(opt.value)}
                   onClick={() => updateResult({ gir: opt.value })}
-                  className={`flex-1 py-2.5 rounded-[20px] text-sm font-medium transition-all ${
+                  className={`flex-1 py-2.5 rounded-full text-sm font-medium transition-all ${
                     result.gir === opt.value
                       ? opt.value
-                        ? "bg-[var(--color-success)]/10 text-[var(--color-success-text)] border border-[var(--color-success)]"
-                        : "bg-[var(--color-error)]/10 text-[var(--color-error)] border border-[var(--color-error)]"
-                      : "bg-[var(--color-portal-hover)] text-[var(--color-portal-secondary)] border border-transparent"
+                        ? "bg-[#E8F5EF] text-[#1A4D36] border border-[#1A4D36]"
+                        : "bg-[#FCEAE8] text-[#B84233] border border-[#B84233]"
+                      : "bg-[#F5F8F7] text-[#324D45] border border-transparent"
                   }`}
                 >
                   {opt.label}
@@ -337,7 +337,7 @@ export function LiveRoundClient({
         {currentStrategy && (
           <div className="space-y-3">
             <div>
-              <label className="text-sm font-medium text-[var(--color-portal-secondary)] mb-2 block">
+              <label className="text-sm font-medium text-[#324D45] mb-2 block">
                 Fulgte strategi?
               </label>
               <div className="flex gap-2">
@@ -350,12 +350,12 @@ export function LiveRoundClient({
                     onClick={() =>
                       updateResult({ strategyFollowed: opt.value })
                     }
-                    className={`flex-1 py-2.5 rounded-[20px] text-sm font-medium transition-all ${
+                    className={`flex-1 py-2.5 rounded-full text-sm font-medium transition-all ${
                       result.strategyFollowed === opt.value
                         ? opt.value
-                          ? "bg-[var(--color-success)]/10 text-[var(--color-success-text)] border border-[var(--color-success)]"
-                          : "bg-[var(--color-error)]/10 text-[var(--color-error)] border border-[var(--color-error)]"
-                        : "bg-[var(--color-portal-hover)] text-[var(--color-portal-secondary)] border border-transparent"
+                          ? "bg-[#E8F5EF] text-[#1A4D36] border border-[#1A4D36]"
+                          : "bg-[#FCEAE8] text-[#B84233] border border-[#B84233]"
+                        : "bg-[#F5F8F7] text-[#324D45] border border-transparent"
                     }`}
                   >
                     {opt.label}
@@ -367,14 +367,14 @@ export function LiveRoundClient({
             {preShotRoutine && (
               <button
                 onClick={() => setShowPreShot(true)}
-                className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-[20px] text-sm font-medium transition-all ${
+                className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-medium transition-all ${
                   preRoutineCompleted.has(hole.holeNumber)
-                    ? "bg-[var(--color-success)]/10 text-[var(--color-success-text)] border border-[var(--color-success)]"
-                    : "border border-[var(--color-ai)]/20 text-[var(--color-ai-text)]"
+                    ? "bg-[#E8F5EF] text-[#1A4D36] border border-[#1A4D36]"
+                    : "border border-[#AF52DE]/20 text-[#6B21A8]"
                 }`}
                 style={
                   !preRoutineCompleted.has(hole.holeNumber)
-                    ? { backgroundColor: "var(--color-ai-light)" }
+                    ? { backgroundColor: "#FAF5FF" }
                     : undefined
                 }
               >
@@ -407,7 +407,7 @@ export function LiveRoundClient({
         <button
           onClick={() => setCurrentHole(Math.max(0, currentHole - 1))}
           disabled={currentHole === 0}
-          className="flex items-center gap-2 px-4 py-3 rounded-[20px] border border-[var(--color-portal-border)] text-[var(--color-portal-secondary)] hover:bg-[var(--color-portal-hover)] disabled:opacity-30 transition-all"
+          className="flex items-center gap-2 px-4 py-3 rounded-full border border-[#D5DFDB] bg-white text-[#324D45] hover:border-[#A5B2AD] disabled:opacity-30 transition-all"
         >
           <ChevronLeft className="h-4 w-4" />
           Forrige
@@ -417,7 +417,7 @@ export function LiveRoundClient({
           <button
             onClick={saveAndNext}
             disabled={isPending}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-[20px] bg-primary text-white font-semibold hover:opacity-85 active:scale-[0.98] disabled:opacity-50 transition-all duration-300"
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-[#D1F843] text-[#0A1F18] font-semibold hover:opacity-85 active:scale-[0.98] disabled:opacity-50 transition-all duration-300"
           >
             <Check className="h-4 w-4" />
             {isPending ? "Lagrer..." : "Lagre & neste"}
@@ -427,7 +427,7 @@ export function LiveRoundClient({
           <button
             onClick={handleComplete}
             disabled={isPending}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-[20px] bg-primary text-white font-semibold hover:opacity-85 active:scale-[0.98] disabled:opacity-50 transition-all duration-300"
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-[#D1F843] text-[#0A1F18] font-semibold hover:opacity-85 active:scale-[0.98] disabled:opacity-50 transition-all duration-300"
           >
             <Flag className="h-4 w-4" />
             {isPending ? "Fullforter..." : "Fullfor runde"}
@@ -439,31 +439,31 @@ export function LiveRoundClient({
       <PremiumCard className="mt-6 p-4 overflow-x-auto" noHover>
         <table className="w-full text-xs tabular-nums">
           <thead>
-            <tr className="text-[var(--color-portal-secondary)]">
+            <tr className="text-[#324D45]">
               <th className="text-left font-medium pb-2">Hull</th>
               {holes.slice(0, 9).map((h) => (
                 <th key={h.holeNumber} className="text-center font-medium pb-2 w-8">
                   {h.holeNumber}
                 </th>
               ))}
-              <th className="text-center font-medium pb-2 border-l border-[var(--color-portal-border)] pl-2">
+              <th className="text-center font-medium pb-2 border-l border-[#D5DFDB] pl-2">
                 Ut
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr className="text-[var(--color-portal-muted)]">
+            <tr className="text-[#7A8C85]">
               <td className="py-1">Par</td>
               {holes.slice(0, 9).map((h) => (
                 <td key={h.holeNumber} className="text-center py-1">
                   {h.par}
                 </td>
               ))}
-              <td className="text-center py-1 border-l border-[var(--color-portal-border)] pl-2 font-medium">
+              <td className="text-center py-1 border-l border-[#D5DFDB] pl-2 font-medium">
                 {holes.slice(0, 9).reduce((s, h) => s + h.par, 0)}
               </td>
             </tr>
-            <tr className="font-semibold text-[var(--color-portal-text)]">
+            <tr className="font-semibold text-[#0A1F18]">
               <td className="py-1">Score</td>
               {holes.slice(0, 9).map((h) => {
                 const r = results.get(h.holeNumber);
@@ -473,7 +473,7 @@ export function LiveRoundClient({
                   </td>
                 );
               })}
-              <td className="text-center py-1 border-l border-[var(--color-portal-border)] pl-2">
+              <td className="text-center py-1 border-l border-[#D5DFDB] pl-2">
                 {holes
                   .slice(0, 9)
                   .reduce((s, h) => s + (results.get(h.holeNumber)?.score ?? 0), 0) || "-"}
@@ -483,39 +483,39 @@ export function LiveRoundClient({
         </table>
 
         {holes.length > 9 && (
-          <table className="w-full text-xs tabular-nums mt-3 border-t border-[var(--color-portal-border)] pt-3">
+          <table className="w-full text-xs tabular-nums mt-3 border-t border-[#D5DFDB] pt-3">
             <thead>
-              <tr className="text-[var(--color-portal-secondary)]">
+              <tr className="text-[#324D45]">
                 <th className="text-left font-medium pb-2">Hull</th>
                 {holes.slice(9).map((h) => (
                   <th key={h.holeNumber} className="text-center font-medium pb-2 w-8">
                     {h.holeNumber}
                   </th>
                 ))}
-                <th className="text-center font-medium pb-2 border-l border-[var(--color-portal-border)] pl-2">
+                <th className="text-center font-medium pb-2 border-l border-[#D5DFDB] pl-2">
                   Inn
                 </th>
-                <th className="text-center font-bold pb-2 border-l border-[var(--color-portal-border)] pl-2">
+                <th className="text-center font-bold pb-2 border-l border-[#D5DFDB] pl-2">
                   Tot
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr className="text-[var(--color-portal-muted)]">
+              <tr className="text-[#7A8C85]">
                 <td className="py-1">Par</td>
                 {holes.slice(9).map((h) => (
                   <td key={h.holeNumber} className="text-center py-1">
                     {h.par}
                   </td>
                 ))}
-                <td className="text-center py-1 border-l border-[var(--color-portal-border)] pl-2 font-medium">
+                <td className="text-center py-1 border-l border-[#D5DFDB] pl-2 font-medium">
                   {holes.slice(9).reduce((s, h) => s + h.par, 0)}
                 </td>
-                <td className="text-center py-1 border-l border-[var(--color-portal-border)] pl-2 font-bold">
+                <td className="text-center py-1 border-l border-[#D5DFDB] pl-2 font-bold">
                   {coursePar}
                 </td>
               </tr>
-              <tr className="font-semibold text-[var(--color-portal-text)]">
+              <tr className="font-semibold text-[#0A1F18]">
                 <td className="py-1">Score</td>
                 {holes.slice(9).map((h) => {
                   const r = results.get(h.holeNumber);
@@ -525,12 +525,12 @@ export function LiveRoundClient({
                     </td>
                   );
                 })}
-                <td className="text-center py-1 border-l border-[var(--color-portal-border)] pl-2">
+                <td className="text-center py-1 border-l border-[#D5DFDB] pl-2">
                   {holes
                     .slice(9)
                     .reduce((s, h) => s + (results.get(h.holeNumber)?.score ?? 0), 0) || "-"}
                 </td>
-                <td className="text-center py-1 border-l border-[var(--color-portal-border)] pl-2 font-bold">
+                <td className="text-center py-1 border-l border-[#D5DFDB] pl-2 font-bold">
                   {totalScore || "-"}
                 </td>
               </tr>

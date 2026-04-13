@@ -128,8 +128,8 @@ export function RapporterClient({ data }: RapporterClientProps) {
                 className={cn(
                   "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
                   isActive
-                    ? "bg-grey-700 text-white border-grey-700"
-                    : "bg-white border-grey-200 text-grey-700 hover:bg-grey-50",
+                    ? "bg-[#0A1F18] text-white border-[#0A1F18]"
+                    : "bg-white border-[#D5DFDB] text-[#324D45] hover:bg-[#F5F8F7]",
                 )}
               >
                 {range.label}
@@ -140,7 +140,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
 
         {/* Student KPIs */}
         <div>
-          <h2 className="text-xs font-semibold text-grey-500 uppercase tracking-wider mb-3">
+          <h2 className="text-xs font-semibold text-[#7A8C85] uppercase tracking-wider mb-3">
             Elever
           </h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -170,7 +170,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
 
         {/* Session KPIs */}
         <div>
-          <h2 className="text-xs font-semibold text-grey-500 uppercase tracking-wider mb-3">
+          <h2 className="text-xs font-semibold text-[#7A8C85] uppercase tracking-wider mb-3">
             Økter (siste 30 dager)
           </h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -203,9 +203,9 @@ export function RapporterClient({ data }: RapporterClientProps) {
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Booking Trends */}
-          <div className="bg-white rounded-xl shadow-card p-0 overflow-hidden">
-            <div className="px-5 py-4 border-b border-grey-200">
-              <h3 className="text-sm font-semibold text-grey-900">
+          <div className="bg-white border border-[#D5DFDB] rounded-xl p-0 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#D5DFDB]">
+              <h3 className="text-sm font-semibold text-[#0A1F18]">
                 Booking-trend
               </h3>
             </div>
@@ -214,16 +214,16 @@ export function RapporterClient({ data }: RapporterClientProps) {
                 data.bookingTrends.map((trend, index) => (
                   <div key={index}>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm text-grey-700">
+                      <span className="text-sm text-[#324D45]">
                         Uke fra {trend.week}
                       </span>
-                      <span className="text-sm text-grey-500">
+                      <span className="text-sm text-[#7A8C85]">
                         {trend.count} bookinger
                       </span>
                     </div>
-                    <div className="h-2 bg-grey-100 rounded-full overflow-hidden">
+                    <div className="h-2 bg-[#F5F8F7] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-grey-600 rounded-full transition-all"
+                        className="h-full bg-[#5A6E66] rounded-full transition-all"
                         style={{
                           width: `${(trend.count / maxBookings) * 100}%`,
                         }}
@@ -232,7 +232,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
                   </div>
                 ))
               ) : (
-                <div className="py-4 text-center text-sm text-grey-500">
+                <div className="py-4 text-center text-sm text-[#7A8C85]">
                   Ingen bookinger i perioden
                 </div>
               )}
@@ -240,9 +240,9 @@ export function RapporterClient({ data }: RapporterClientProps) {
           </div>
 
           {/* Tier Distribution */}
-          <div className="bg-white rounded-xl shadow-card p-0 overflow-hidden">
-            <div className="px-5 py-4 border-b border-grey-200">
-              <h3 className="text-sm font-semibold text-grey-900">
+          <div className="bg-white border border-[#D5DFDB] rounded-xl p-0 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#D5DFDB]">
+              <h3 className="text-sm font-semibold text-[#0A1F18]">
                 Fordeling per tier
               </h3>
             </div>
@@ -261,15 +261,15 @@ export function RapporterClient({ data }: RapporterClientProps) {
                             className="w-2 h-2 rounded-sm"
                             style={{ backgroundColor: colorVar }}
                           />
-                          <span className="text-sm text-grey-700">
+                          <span className="text-sm text-[#324D45]">
                             {tierLabels[tier.tier] ?? tier.tier}
                           </span>
                         </div>
-                        <span className="text-sm text-grey-500">
+                        <span className="text-sm text-[#7A8C85]">
                           {tier.count} ({percentage.toFixed(1)}%)
                         </span>
                       </div>
-                      <div className="h-2 bg-grey-100 rounded-full overflow-hidden">
+                      <div className="h-2 bg-[#F5F8F7] rounded-full overflow-hidden">
                         <div
                           className="h-full rounded-full transition-all"
                           style={{
@@ -295,42 +295,42 @@ export function RapporterClient({ data }: RapporterClientProps) {
 
         {/* Additional Insights */}
         <div className="bg-white rounded-xl shadow-card p-5">
-          <h3 className="text-sm font-semibold text-grey-900 mb-4">
+          <h3 className="text-sm font-semibold text-[#0A1F18] mb-4">
             Innsikt og anbefalinger
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-grey-50">
+            <div className="p-4 rounded-xl bg-[#F5F8F7]">
               <div className="flex items-center gap-2 mb-2">
-                <Users className="w-4 h-4 text-grey-600" />
-                <span className="text-sm font-medium text-grey-700">
+                <Users className="w-4 h-4 text-[#5A6E66]" />
+                <span className="text-sm font-medium text-[#324D45]">
                   Vekst
                 </span>
               </div>
-              <p className="text-xs text-grey-500">
+              <p className="text-xs text-[#7A8C85]">
                 {data.newStudents} nye elever denne måneden. Fortsett
                 markedsføringen på Instagram.
               </p>
             </div>
-            <div className="p-4 rounded-xl bg-grey-50">
+            <div className="p-4 rounded-xl bg-[#F5F8F7]">
               <div className="flex items-center gap-2 mb-2">
-                <CalendarCheck className="w-4 h-4 text-emerald-600" />
-                <span className="text-sm font-medium text-grey-700">
+                <CalendarCheck className="w-4 h-4 text-[#1A4D36]" />
+                <span className="text-sm font-medium text-[#324D45]">
                   Oppmøte
                 </span>
               </div>
-              <p className="text-xs text-grey-500">
+              <p className="text-xs text-[#7A8C85]">
                 {data.cancellationRate}% kanselleringsrate er innenfor normalen.
                 Send påminnelser dagen før.
               </p>
             </div>
-            <div className="p-4 rounded-xl bg-grey-50">
+            <div className="p-4 rounded-xl bg-[#F5F8F7]">
               <div className="flex items-center gap-2 mb-2">
-                <Trophy className="w-4 h-4 text-amber-500" />
-                <span className="text-sm font-medium text-grey-700">
+                <Trophy className="w-4 h-4 text-[#C48A32]" />
+                <span className="text-sm font-medium text-[#324D45]">
                   Fremskritt
                 </span>
               </div>
-              <p className="text-xs text-grey-500">
+              <p className="text-xs text-[#7A8C85]">
                 Elevene forbedrer i snitt {data.handicapImprovement} i handicap.
                 Godt arbeid!
               </p>

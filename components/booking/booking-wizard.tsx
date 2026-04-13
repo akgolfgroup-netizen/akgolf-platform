@@ -23,10 +23,10 @@ function InstructorPicker({ service, onSelect, selected }: InstructorPickerProps
 
   return (
     <div className="mb-6">
-      <p className="text-xs font-semibold text-portal-muted uppercase tracking-wider mb-3">
+      <p className="text-xs font-semibold text-[#7A8C85] uppercase tracking-wider mb-3">
         Velg instruktør
       </p>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
         {service.instructors.map((inst) => {
           const isActive = selected?.id === inst.id;
           return (
@@ -34,10 +34,10 @@ function InstructorPicker({ service, onSelect, selected }: InstructorPickerProps
               key={inst.id}
               onClick={() => onSelect(inst)}
               className={[
-                "flex items-center gap-2.5 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all duration-200",
+                "flex items-center gap-2.5 px-4 py-2.5 rounded-full border text-sm font-medium transition-all duration-200",
                 isActive
-                  ? "bg-primary text-white border-primary"
-                  : "bg-white text-portal-text border-portal-border hover:border-primary",
+                  ? "bg-[#0A1F18] text-white border-[#0A1F18]"
+                  : "bg-white text-[#0A1F18] border-[#D5DFDB] hover:border-[#A5B2AD]",
               ].join(" ")}
             >
               {inst.user.image ? (
@@ -47,7 +47,7 @@ function InstructorPicker({ service, onSelect, selected }: InstructorPickerProps
                   className="w-6 h-6 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-6 h-6 rounded-full bg-portal-bg flex items-center justify-center text-xs font-bold text-portal-muted">
+                <div className="w-6 h-6 rounded-full bg-[#F5F8F7] flex items-center justify-center text-xs font-bold text-[#7A8C85]">
                   {inst.user.name?.charAt(0) ?? "?"}
                 </div>
               )}
@@ -76,10 +76,10 @@ function ProgressBar({ steps, currentStep }: { steps: BookingStep[]; currentStep
               className={[
                 "flex items-center justify-center w-8 h-8 rounded-full text-xs font-semibold transition-all duration-300",
                 isActive
-                  ? "bg-primary text-white"
+                  ? "bg-[#0A1F18] text-white"
                   : isCompleted
-                    ? "bg-primary/10 text-primary border-2 border-primary"
-                    : "bg-portal-bg text-portal-muted border border-portal-border",
+                    ? "bg-[#E8F5EF] text-[#1A4D36] border-2 border-[#1A4D36]"
+                    : "bg-[#F5F8F7] text-[#7A8C85] border border-[#D5DFDB]",
               ].join(" ")}
             >
               {isCompleted ? <Check className="w-3.5 h-3.5" /> : i + 1}
@@ -87,7 +87,7 @@ function ProgressBar({ steps, currentStep }: { steps: BookingStep[]; currentStep
             <span
               className={[
                 "text-xs font-medium hidden sm:inline",
-                isActive ? "text-primary" : "text-portal-muted",
+                isActive ? "text-[#0A1F18]" : "text-[#7A8C85]",
               ].join(" ")}
             >
               {STEP_CONFIG[s].label}
@@ -96,7 +96,7 @@ function ProgressBar({ steps, currentStep }: { steps: BookingStep[]; currentStep
               <div
                 className={[
                   "w-8 h-0.5 mx-1",
-                  isCompleted ? "bg-primary" : "bg-portal-border",
+                  isCompleted ? "bg-[#1A4D36]" : "bg-[#D5DFDB]",
                 ].join(" ")}
               />
             )}
@@ -134,7 +134,7 @@ export function BookingWizard({ mode, services: preloadedServices, onComplete }:
 
   if (loadingServices) {
     return (
-      <div className="flex items-center justify-center py-20 gap-3 text-portal-muted">
+      <div className="flex items-center justify-center py-20 gap-3 text-[#7A8C85]">
         <Loader2 className="w-5 h-5 animate-spin" />
         <span>Laster tilgjengelige tjenester...</span>
       </div>
@@ -148,7 +148,7 @@ export function BookingWizard({ mode, services: preloadedServices, onComplete }:
       {showBackButton && (
         <button
           onClick={goBack}
-          className="flex items-center gap-1.5 text-sm text-portal-secondary hover:text-portal-text transition-colors mb-4"
+          className="flex items-center gap-1.5 text-sm text-[#324D45] hover:text-[#0A1F18] transition-colors mb-4"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Tilbake
@@ -164,10 +164,10 @@ export function BookingWizard({ mode, services: preloadedServices, onComplete }:
 
         {state.step === "datetime" && state.selectedService && (
           <StepWrapper key="datetime">
-            <h2 className="text-2xl font-semibold text-portal-text mb-1 tracking-tight">
+            <h2 className="text-2xl font-semibold text-[#0A1F18] mb-1 tracking-tight">
               Velg dato og tid
             </h2>
-            <p className="text-sm text-portal-muted mb-6">
+            <p className="text-sm text-[#7A8C85] mb-6">
               {state.selectedService.name}
               {state.selectedInstructor ? ` med ${state.selectedInstructor.user.name}` : ""}
             </p>
@@ -180,13 +180,13 @@ export function BookingWizard({ mode, services: preloadedServices, onComplete }:
 
             {state.selectedInstructor && (
               <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] gap-6">
-                <div className="bg-white rounded-xl border border-portal-border p-4">
+                <div className="bg-white rounded-xl border border-[#D5DFDB] p-4">
                   <BookingDatePicker
                     selected={state.selectedDate}
                     onSelect={wizard.selectDate}
                   />
                 </div>
-                <div className="bg-white rounded-xl border border-portal-border p-4">
+                <div className="bg-white rounded-xl border border-[#D5DFDB] p-4">
                   <TimeSlots
                     date={state.selectedDate}
                     slots={state.availableSlots}

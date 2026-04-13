@@ -171,14 +171,14 @@ export function StudentsClient({ initialData }: Props) {
           }}
           className="flex items-center gap-3 group text-left"
         >
-          <div className="w-9 h-9 rounded-full bg-grey-100 text-grey-700 flex items-center justify-center text-xs font-semibold border border-grey-200">
+          <div className="w-9 h-9 rounded-full bg-[#F5F8F7] text-[#0A1F18] flex items-center justify-center text-xs font-semibold border border-[#D5DFDB]">
             {getInitials(row.name)}
           </div>
           <div className="min-w-0">
-            <div className="font-medium text-grey-900 group-hover:text-grey-700 transition-colors">
+            <div className="font-medium text-[#0A1F18] group-hover:text-[#1A3529] transition-colors">
               {row.name ?? "Uten navn"}
             </div>
-            <div className="text-xs text-grey-500 truncate">
+            <div className="text-xs text-[#7A8C85] truncate">
               {row.email}
             </div>
           </div>
@@ -214,7 +214,7 @@ export function StudentsClient({ initialData }: Props) {
       sortable: true,
       align: "right",
       render: (row) => (
-        <span className="tabular-nums text-grey-900">
+        <span className="tabular-nums text-[#0A1F18]">
           {row.handicap !== null ? row.handicap.toFixed(1) : "—"}
         </span>
       ),
@@ -225,7 +225,7 @@ export function StudentsClient({ initialData }: Props) {
       sortable: true,
       align: "center",
       render: (row) => (
-        <span className="tabular-nums font-semibold text-grey-900">
+        <span className="tabular-nums font-semibold text-[#0A1F18]">
           {row.category ?? "—"}
         </span>
       ),
@@ -236,7 +236,7 @@ export function StudentsClient({ initialData }: Props) {
       sortable: true,
       align: "right",
       render: (row) => (
-        <span className="tabular-nums text-grey-900">
+        <span className="tabular-nums text-[#0A1F18]">
           {row.sessionsThisMonth}
         </span>
       ),
@@ -246,7 +246,7 @@ export function StudentsClient({ initialData }: Props) {
       label: "Sist aktiv",
       sortable: true,
       render: (row) => (
-        <span className="text-sm text-grey-500">
+        <span className="text-sm text-[#7A8C85]">
           {formatRelativeDate(row.lastActiveAt)}
         </span>
       ),
@@ -257,11 +257,11 @@ export function StudentsClient({ initialData }: Props) {
       sortable: false,
       render: (row) =>
         row.nextBookingDate ? (
-          <span className="text-sm text-grey-700">
+          <span className="text-sm text-[#324D45]">
             {formatFutureDate(row.nextBookingDate)}
           </span>
         ) : (
-          <span className="text-grey-400">—</span>
+          <span className="text-[#A5B2AD]">—</span>
         ),
     },
     {
@@ -271,9 +271,9 @@ export function StudentsClient({ initialData }: Props) {
       align: "center",
       render: (row) =>
         row.hasActivePlan ? (
-          <CheckCircle className="w-4 h-4 text-green-600 mx-auto" />
+          <CheckCircle className="w-4 h-4 text-[#1A4D36] mx-auto" />
         ) : (
-          <XCircle className="w-4 h-4 text-grey-300 mx-auto" />
+          <XCircle className="w-4 h-4 text-[#D5DFDB] mx-auto" />
         ),
     },
   ];
@@ -361,15 +361,15 @@ export function StudentsClient({ initialData }: Props) {
             label="Trenger oppfolging"
             value={data.stats.atRisk}
             icon={<AlertCircle className="w-5 h-5" />}
-            sparklineColor="var(--color-warning)"
+            sparklineColor="#C48A32"
           />
         </div>
 
         {/* Filter-chips - bg-white rounded-xl shadow-card pattern */}
-        <div className="bg-white rounded-xl shadow-card p-5">
+        <div className="bg-white rounded-xl border border-[#D5DFDB] p-5">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-grey-500 mr-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-[#7A8C85] mr-2">
                 Status
               </span>
               {(
@@ -386,8 +386,8 @@ export function StudentsClient({ initialData }: Props) {
                   onClick={() => setStatusFilter(f.value)}
                   className={
                     statusFilter === f.value
-                      ? "px-3 py-1 text-xs font-medium rounded-full bg-grey-900 text-grey-50"
-                      : "px-3 py-1 text-xs font-medium rounded-full bg-grey-100 text-grey-600 hover:text-grey-800 hover:bg-grey-200 transition-colors"
+                      ? "px-3 py-1 text-xs font-medium rounded-full bg-[#0A1F18] text-white"
+                      : "px-3 py-1 text-xs font-medium rounded-full bg-[#F5F8F7] text-[#5A6E66] hover:text-[#0A1F18] hover:bg-[#ECF0EF] transition-colors"
                   }
                 >
                   {f.label}
@@ -395,7 +395,7 @@ export function StudentsClient({ initialData }: Props) {
               ))}
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-grey-500 mr-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-[#7A8C85] mr-2">
                 Medlemskap
               </span>
               <button
@@ -403,8 +403,8 @@ export function StudentsClient({ initialData }: Props) {
                 onClick={() => setTierFilter("all")}
                 className={
                   tierFilter === "all"
-                    ? "px-3 py-1 text-xs font-medium rounded-full bg-grey-900 text-grey-50"
-                    : "px-3 py-1 text-xs font-medium rounded-full bg-grey-100 text-grey-600 hover:text-grey-800 hover:bg-grey-200 transition-colors"
+                    ? "px-3 py-1 text-xs font-medium rounded-full bg-[#0A1F18] text-white"
+                    : "px-3 py-1 text-xs font-medium rounded-full bg-[#F5F8F7] text-[#5A6E66] hover:text-[#0A1F18] hover:bg-[#ECF0EF] transition-colors"
                 }
               >
                 Alle
@@ -416,8 +416,8 @@ export function StudentsClient({ initialData }: Props) {
                   onClick={() => setTierFilter(tier)}
                   className={
                     tierFilter === tier
-                      ? "px-3 py-1 text-xs font-medium rounded-full bg-grey-900 text-grey-50"
-                      : "px-3 py-1 text-xs font-medium rounded-full bg-grey-100 text-grey-600 hover:text-grey-800 hover:bg-grey-200 transition-colors"
+                      ? "px-3 py-1 text-xs font-medium rounded-full bg-[#0A1F18] text-white"
+                      : "px-3 py-1 text-xs font-medium rounded-full bg-[#F5F8F7] text-[#5A6E66] hover:text-[#0A1F18] hover:bg-[#ECF0EF] transition-colors"
                   }
                 >
                   {TIER_LABEL[tier] ?? tier}
@@ -428,7 +428,7 @@ export function StudentsClient({ initialData }: Props) {
         </div>
 
         {/* DataTable - bg-white rounded-xl shadow-card wrapper */}
-        <div className="bg-white rounded-xl shadow-card overflow-hidden">
+        <div className="bg-white rounded-xl border border-[#D5DFDB] overflow-hidden">
           <AdminDataTable<StudentRow>
             columns={columns}
             data={filtered}
@@ -473,7 +473,7 @@ export function StudentsClient({ initialData }: Props) {
         {previewStudent && (
           <div className="space-y-5">
             <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-full bg-grey-100 text-grey-700 flex items-center justify-center text-lg font-semibold border border-grey-200">
+              <div className="w-14 h-14 rounded-full bg-[#F5F8F7] text-[#0A1F18] flex items-center justify-center text-lg font-semibold border border-[#D5DFDB]">
                 {getInitials(previewStudent.name)}
               </div>
               <div className="flex-1">
@@ -490,10 +490,10 @@ export function StudentsClient({ initialData }: Props) {
                     </AdminBadge>
                   )}
                 </div>
-                <div className="space-y-1 text-sm text-grey-500">
+                <div className="space-y-1 text-sm text-[#7A8C85]">
                   <a
                     href={`mailto:${previewStudent.email}`}
-                    className="flex items-center gap-1.5 hover:text-grey-800 transition-colors"
+                    className="flex items-center gap-1.5 hover:text-[#0A1F18] transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5" />
                     {previewStudent.email}
@@ -501,7 +501,7 @@ export function StudentsClient({ initialData }: Props) {
                   {previewStudent.phone && (
                     <a
                       href={`tel:${previewStudent.phone}`}
-                      className="flex items-center gap-1.5 hover:text-grey-800 transition-colors"
+                      className="flex items-center gap-1.5 hover:text-[#0A1F18] transition-colors"
                     >
                       <Phone className="w-3.5 h-3.5" />
                       {previewStudent.phone}
@@ -526,32 +526,32 @@ export function StudentsClient({ initialData }: Props) {
               />
             </div>
 
-            <div className="bg-grey-50 rounded-lg p-4 border border-grey-100">
-              <h4 className="text-sm font-semibold text-grey-800 mb-2">Neste booking</h4>
+            <div className="bg-[#F5F8F7] rounded-lg p-4 border border-[#ECF0EF]">
+              <h4 className="text-sm font-semibold text-[#0A1F18] mb-2">Neste booking</h4>
               {previewStudent.nextBookingDate ? (
-                <div className="flex items-center gap-2 text-sm text-grey-700">
-                  <Calendar className="w-4 h-4 text-grey-500" />
+                <div className="flex items-center gap-2 text-sm text-[#324D45]">
+                  <Calendar className="w-4 h-4 text-[#7A8C85]" />
                   {new Date(previewStudent.nextBookingDate).toLocaleDateString(
                     "nb-NO",
                     { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" },
                   )}
                 </div>
               ) : (
-                <p className="text-sm text-grey-500">
+                <p className="text-sm text-[#7A8C85]">
                   Ingen kommende bookinger.
                 </p>
               )}
             </div>
 
-            <div className="bg-grey-50 rounded-lg p-4 border border-grey-100">
-              <h4 className="text-sm font-semibold text-grey-800 mb-2">Treningsplan</h4>
+            <div className="bg-[#F5F8F7] rounded-lg p-4 border border-[#ECF0EF]">
+              <h4 className="text-sm font-semibold text-[#0A1F18] mb-2">Treningsplan</h4>
               {previewStudent.hasActivePlan ? (
-                <div className="flex items-center gap-2 text-sm text-green-600">
+                <div className="flex items-center gap-2 text-sm text-[#1A4D36]">
                   <CheckCircle className="w-4 h-4" />
                   Aktiv treningsplan
                 </div>
               ) : (
-                <p className="text-sm text-grey-500">
+                <p className="text-sm text-[#7A8C85]">
                   Ingen aktiv treningsplan.
                 </p>
               )}

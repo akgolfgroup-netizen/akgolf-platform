@@ -204,22 +204,10 @@ export function AdminBookingList() {
           <button
             key={key}
             onClick={() => handleStatusChange(key)}
-            className={`
-              flex items-center gap-2 px-5 py-3 text-sm font-medium rounded-xl transition-colors duration-200
-              ${statusFilter === key
-                ? "bg-[var(--color-grey-900)] text-white"
-                : "text-[var(--color-grey-500)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-700)]"
-              }
-            `}
+            className={`flex items-center gap-2 px-5 py-3 text-sm font-medium rounded-xl transition-colors duration-200 ${statusFilter === key ? "bg-[#0A1F18] text-white" : "text-[#7A8C85] hover:bg-[#ECF0EF] hover:text-[#324D45]" }`}
           >
             {label}
-            <span className={`
-              px-2 py-0.5 rounded-full text-xs font-semibold
-              ${statusFilter === key
-                ? "bg-white/20 text-white"
-                : "bg-[var(--color-grey-100)] text-[var(--color-grey-600)]"
-              }
-            `}>
+            <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${statusFilter === key ? "bg-white/20 text-white" : "bg-[#ECF0EF] text-[#5A6E66]" }`}>
               {statusCounts[key as keyof typeof statusCounts] || 0}
             </span>
           </button>
@@ -229,31 +217,31 @@ export function AdminBookingList() {
       {/* Filter Bar */}
       <AppleCard variant="glass" padding="md" hover={false} className="flex items-center gap-4 flex-wrap">
         {/* Search */}
-        <div className="flex items-center gap-3 flex-1 min-w-[280px] px-4 py-3 bg-[var(--color-grey-100)] rounded-xl border border-transparent focus-within:bg-white focus-within:border-[var(--color-grey-900)] focus-within:shadow-[0_0_0_3px_var(--color-grey-200)] transition-[background-color,border-color,box-shadow] duration-200">
-          <Search className="w-[18px] h-[18px] text-[var(--color-grey-400)]" />
+        <div className="flex items-center gap-3 flex-1 min-w-[280px] px-4 py-3 bg-[#ECF0EF] rounded-xl border border-transparent focus-within:bg-white focus-within:border-[#0A1F18] focus-within:shadow-[0_0_0_3px_#D5DFDB] transition-[background-color,border-color] duration-200">
+          <Search className="w-[18px] h-[18px] text-[#7A8C85]" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             placeholder="Sok etter navn, e-post eller tjeneste..."
-            className="flex-1 bg-transparent border-none outline-none text-sm text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)]"
+            className="flex-1 bg-transparent border-none outline-none text-sm text-[#0A1F18] placeholder:text-[#7A8C85]"
           />
         </div>
 
         {/* Divider */}
-        <div className="w-px h-8 bg-[var(--color-grey-200)]" />
+        <div className="w-px h-8 bg-[#D5DFDB]" />
 
         {/* Date Range */}
-        <button className="flex items-center gap-2 px-4 py-2 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl text-sm text-[var(--color-grey-700)] hover:bg-[var(--color-grey-200)] transition-colors">
-          <Calendar className="w-4 h-4 text-[var(--color-grey-400)]" />
+        <button className="flex items-center gap-2 px-4 py-2 bg-[#ECF0EF] border border-[#D5DFDB] rounded-xl text-sm text-[#324D45] hover:bg-[#D5DFDB] transition-colors">
+          <Calendar className="w-4 h-4 text-[#7A8C85]" />
           Denne uken
         </button>
 
         {/* Search Button */}
         <button
           onClick={handleSearch}
-          className="px-5 py-2.5 text-sm font-semibold bg-[var(--color-grey-900)] text-white rounded-xl hover:bg-[var(--color-grey-900)]/90 transition-[background-color,transform] duration-200 shadow-[var(--shadow-md)] hover:-translate-y-0.5"
+          className="px-5 py-2.5 text-sm font-semibold bg-[#0A1F18] text-white rounded-xl hover:bg-[#0A1F18]/90 transition-[background-color,transform] duration-200 hover:-translate-y-0.5"
         >
           Sok
         </button>
@@ -261,7 +249,7 @@ export function AdminBookingList() {
 
       {/* Bulk Actions Bar */}
       {selectedBookings.size > 0 && (
-        <div className="flex items-center gap-4 px-5 py-4 bg-[var(--color-grey-900)] text-white rounded-2xl">
+        <div className="flex items-center gap-4 px-5 py-4 bg-[#0A1F18] text-white rounded-2xl">
           <span className="text-sm font-medium">
             <strong>{selectedBookings.size}</strong> valgt
           </span>
@@ -275,7 +263,7 @@ export function AdminBookingList() {
           <button
             onClick={handleBulkCancel}
             disabled={bulkLoading}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-error)]/30 text-white text-[13px] font-medium rounded-lg hover:bg-[var(--color-error)]/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#EF4444]/30 text-white text-[13px] font-medium rounded-lg hover:bg-[#EF4444]/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {bulkLoading ? "Avbestiller..." : "Avbestill"}
           </button>
@@ -291,28 +279,22 @@ export function AdminBookingList() {
       {/* Data Table */}
       <AppleCard variant="glass" padding="none" hover={false} className="overflow-hidden">
         {loading ? (
-          <div className="py-16 text-center text-[var(--color-grey-500)]">
-            <div className="w-8 h-8 border-2 border-[var(--color-grey-900)] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <div className="py-16 text-center text-[#7A8C85]">
+            <div className="w-8 h-8 border-2 border-[#0A1F18] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
             Laster bookinger...
           </div>
         ) : bookings.length === 0 ? (
-          <div className="py-16 text-center text-[var(--color-grey-500)] text-sm">
+          <div className="py-16 text-center text-[#7A8C85] text-sm">
             Ingen bookinger funnet
           </div>
         ) : (
           <>
             {/* Table Header */}
-            <div className="grid grid-cols-[48px_140px_1fr_140px_120px_100px_120px] gap-4 px-5 py-4 bg-[var(--color-grey-100)] border-b border-[var(--color-grey-200)]">
+            <div className="grid grid-cols-[48px_140px_1fr_140px_120px_100px_120px] gap-4 px-5 py-4 bg-[#ECF0EF] border-b border-[#D5DFDB]">
               <div className="flex items-center justify-center">
                 <button
                   onClick={toggleAllBookings}
-                  className={`
-                    w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors duration-200
-                    ${selectedBookings.size === bookings.length
-                      ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)]"
-                      : "border-[var(--color-grey-300)] hover:border-[var(--color-grey-900)]"
-                    }
-                  `}
+                  className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors duration-200 ${selectedBookings.size === bookings.length ? "bg-[#0A1F18] border-[#0A1F18]" : "border-[#D5DFDB] hover:border-[#0A1F18]" }`}
                 >
                   {selectedBookings.size === bookings.length && (
                     <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -321,19 +303,19 @@ export function AdminBookingList() {
                   )}
                 </button>
               </div>
-              <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-500)] cursor-pointer hover:text-[var(--color-grey-900)]">
+              <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[#7A8C85] cursor-pointer hover:text-[#0A1F18]">
                 Dato/tid
                 <ArrowUpDown className="w-3.5 h-3.5" />
               </span>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">Student</span>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">Tjeneste</span>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">Status</span>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">Betaling</span>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-grey-500)]">Handlinger</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A8C85]">Student</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A8C85]">Tjeneste</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A8C85]">Status</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A8C85]">Betaling</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A8C85]">Handlinger</span>
             </div>
 
             {/* Table Rows */}
-            <div className="divide-y divide-[var(--color-grey-100)]">
+            <div className="divide-y divide-[#ECF0EF]">
               {bookings.map((b) => {
                 const ServiceIcon = SERVICE_ICONS[b.serviceType.name] || User;
                 const isSelected = selectedBookings.has(b.id);
@@ -341,23 +323,13 @@ export function AdminBookingList() {
                 return (
                   <div
                     key={b.id}
-                    className={`
-                      grid grid-cols-[48px_140px_1fr_140px_120px_100px_120px] gap-4 px-5 py-4 items-center
-                      transition-[background-color,transform] duration-200 hover:bg-[var(--color-grey-100)] hover:scale-[1.005]
-                      ${isSelected ? "bg-[var(--color-grey-100)]" : ""}
-                    `}
+                    className={`grid grid-cols-[48px_140px_1fr_140px_120px_100px_120px] gap-4 px-5 py-4 items-center transition-[background-color,transform] duration-200 hover:bg-[#ECF0EF] hover:scale-[1.005] ${isSelected ? "bg-[#ECF0EF]" : ""}`}
                   >
                     {/* Checkbox */}
                     <div className="flex items-center justify-center">
                       <button
                         onClick={() => toggleBookingSelection(b.id)}
-                        className={`
-                          w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors duration-200
-                          ${isSelected
-                            ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)]"
-                            : "border-[var(--color-grey-300)] hover:border-[var(--color-grey-900)]"
-                          }
-                        `}
+                        className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors duration-200 ${isSelected ? "bg-[#0A1F18] border-[#0A1F18]" : "border-[#D5DFDB] hover:border-[#0A1F18]" }`}
                       >
                         {isSelected && (
                           <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -369,10 +341,10 @@ export function AdminBookingList() {
 
                     {/* Date/Time */}
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium text-[var(--color-grey-900)]">
+                      <span className="text-sm font-medium text-[#0A1F18]">
                         {format(new Date(b.startTime), "d. MMM yyyy", { locale: nb })}
                       </span>
-                      <span className="text-xs font-mono text-[var(--color-grey-500)]">
+                      <span className="text-xs font-mono text-[#7A8C85]">
                         {format(new Date(b.startTime), "HH:mm")}–{format(new Date(b.endTime), "HH:mm")}
                       </span>
                     </div>
@@ -381,10 +353,10 @@ export function AdminBookingList() {
                     <div className="flex items-center gap-3">
                       <AppleAvatar name={b.student.name || "?"} size="sm" />
                       <div className="flex flex-col min-w-0">
-                        <span className="text-sm font-medium text-[var(--color-grey-900)] truncate">
+                        <span className="text-sm font-medium text-[#0A1F18] truncate">
                           {b.student.name || "—"}
                         </span>
-                        <span className="text-xs text-[var(--color-grey-500)] truncate">
+                        <span className="text-xs text-[#7A8C85] truncate">
                           {b.student.email}
                         </span>
                       </div>
@@ -392,10 +364,10 @@ export function AdminBookingList() {
 
                     {/* Service */}
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-[var(--color-grey-100)] text-[var(--color-grey-700)] flex items-center justify-center">
+                      <div className="w-7 h-7 rounded-lg bg-[#ECF0EF] text-[#324D45] flex items-center justify-center">
                         <ServiceIcon className="w-3.5 h-3.5" />
                       </div>
-                      <span className="text-[13px] text-[var(--color-grey-700)]">
+                      <span className="text-[13px] text-[#324D45]">
                         {b.serviceType.name}
                       </span>
                     </div>
@@ -411,16 +383,10 @@ export function AdminBookingList() {
 
                     {/* Payment */}
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium text-[var(--color-grey-900)]">
+                      <span className="text-sm font-medium text-[#0A1F18]">
                         kr {b.amount.toLocaleString("nb-NO")}
                       </span>
-                      <span className={`text-[11px] ${
-                        b.paymentStatus === "PAID"
-                          ? "text-[var(--color-success)]"
-                          : b.paymentStatus === "REFUNDED"
-                            ? "text-amber-500"
-                            : "text-[var(--color-error)]"
-                      }`}>
+                      <span className={`text-[11px] ${ b.paymentStatus === "PAID" ? "text-[#1A4D36]" : b.paymentStatus === "REFUNDED" ? "text-amber-500" : "text-[#EF4444]" }`}>
                         {PAYMENT_STATUS_LABELS[b.paymentStatus] || b.paymentStatus}
                       </span>
                     </div>
@@ -430,7 +396,7 @@ export function AdminBookingList() {
                       {(b.status === "CONFIRMED" || b.status === "PENDING") && (
                         <button
                           onClick={() => handleCancel(b.id)}
-                          className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center text-[var(--color-grey-500)] hover:border-[var(--color-error)]/40 hover:bg-[var(--color-error)]/5 hover:text-[var(--color-error)] transition-colors"
+                          className="w-8 h-8 rounded-lg border border-[#D5DFDB] bg-white flex items-center justify-center text-[#7A8C85] hover:border-[#EF4444]/40 hover:bg-[#EF4444]/5 hover:text-[#EF4444] transition-colors"
                           title="Avbestill"
                         >
                           <XCircle className="w-4 h-4" />
@@ -444,15 +410,15 @@ export function AdminBookingList() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between px-5 py-4 bg-[var(--color-grey-100)] border-t border-[var(--color-grey-200)]">
-                <span className="text-[13px] text-[var(--color-grey-500)]">
+              <div className="flex items-center justify-between px-5 py-4 bg-[#ECF0EF] border-t border-[#D5DFDB]">
+                <span className="text-[13px] text-[#7A8C85]">
                   Viser {(page - 1) * 20 + 1}–{Math.min(page * 20, total)} av {total}
                 </span>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => { setPage(page - 1); fetchBookings(query, statusFilter, page - 1); }}
                     disabled={page === 1}
-                    className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white flex items-center justify-center text-[var(--color-grey-700)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="w-9 h-9 rounded-xl border border-[#D5DFDB] bg-white flex items-center justify-center text-[#324D45] hover:border-[#0A1F18] hover:bg-[#ECF0EF] hover:text-[#0A1F18] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     <ChevronLeft className="w-[18px] h-[18px]" />
                   </button>
@@ -464,13 +430,7 @@ export function AdminBookingList() {
                       <button
                         key={pageNum}
                         onClick={() => { setPage(pageNum); fetchBookings(query, statusFilter, pageNum); }}
-                        className={`
-                          w-9 h-9 rounded-xl border text-sm font-medium flex items-center justify-center transition-colors
-                          ${page === pageNum
-                            ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)] text-white"
-                            : "bg-white border-[var(--color-grey-200)] text-[var(--color-grey-700)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)]"
-                          }
-                        `}
+                        className={`w-9 h-9 rounded-xl border text-sm font-medium flex items-center justify-center transition-colors ${page === pageNum ? "bg-[#0A1F18] border-[#0A1F18] text-white" : "bg-white border-[#D5DFDB] text-[#324D45] hover:border-[#0A1F18] hover:bg-[#ECF0EF] hover:text-[#0A1F18]" }`}
                       >
                         {pageNum}
                       </button>
@@ -480,7 +440,7 @@ export function AdminBookingList() {
                   <button
                     onClick={() => { setPage(page + 1); fetchBookings(query, statusFilter, page + 1); }}
                     disabled={page >= totalPages}
-                    className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white flex items-center justify-center text-[var(--color-grey-700)] hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="w-9 h-9 rounded-xl border border-[#D5DFDB] bg-white flex items-center justify-center text-[#324D45] hover:border-[#0A1F18] hover:bg-[#ECF0EF] hover:text-[#0A1F18] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     <ChevronRight className="w-[18px] h-[18px]" />
                   </button>

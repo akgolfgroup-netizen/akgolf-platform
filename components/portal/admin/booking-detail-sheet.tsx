@@ -22,11 +22,11 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  CONFIRMED: "bg-success-light text-success-text",
-  PENDING: "bg-warning-light text-warning-text",
-  COMPLETED: "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]",
-  NO_SHOW: "bg-error-light text-error-text",
-  CANCELLED: "bg-[var(--color-grey-100)] text-[var(--color-grey-400)]",
+  CONFIRMED: "bg-[#1A4D36]/10 text-[#1A4D36]",
+  PENDING: "bg-[#C48A32]/10 text-[#C48A32]",
+  COMPLETED: "bg-[#ECF0EF] text-[#7A8C85]",
+  NO_SHOW: "bg-[#EF4444]/10 text-[#EF4444]",
+  CANCELLED: "bg-[#ECF0EF] text-[#7A8C85]",
 };
 
 export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
@@ -89,17 +89,17 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="fixed right-0 top-0 h-full w-full max-w-md bg-[white] shadow-xl z-50 flex flex-col border-l border-[var(--color-grey-200)]"
+        className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-xl z-50 flex flex-col border-l border-[#D5DFDB]"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-grey-200)]">
-          <h2 id={titleId} className="text-lg font-semibold text-[var(--color-grey-900)]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#D5DFDB]">
+          <h2 id={titleId} className="text-lg font-semibold text-[#0A1F18]">
             Bookingdetaljer
           </h2>
           <button
             onClick={onClose}
             aria-label="Lukk panel"
-            className="p-1.5 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors text-[var(--color-grey-500)] focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="p-1.5 rounded-lg hover:bg-[#ECF0EF] transition-colors text-[#7A8C85] focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             <X className="w-4 h-4" aria-hidden="true" />
           </button>
@@ -110,9 +110,7 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
           {/* Status badge */}
           <div>
             <span
-              className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${
-                STATUS_COLORS[booking.status] ?? "bg-[var(--color-grey-100)] text-[var(--color-grey-500)]"
-              }`}
+              className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${ STATUS_COLORS[booking.status] ?? "bg-[#ECF0EF] text-[#7A8C85]" }`}
             >
               {STATUS_LABELS[booking.status] ?? booking.status}
             </span>
@@ -146,7 +144,7 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
 
           {/* Admin note */}
           <div>
-            <label className="text-xs font-medium text-[var(--color-grey-400)] flex items-center gap-1.5 mb-2">
+            <label className="text-xs font-medium text-[#7A8C85] flex items-center gap-1.5 mb-2">
               <StickyNote className="w-3.5 h-3.5" aria-hidden="true" />
               Admin-notat
             </label>
@@ -154,13 +152,13 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
               value={note}
               onChange={(e) => setNote(e.target.value)}
               rows={3}
-              className="w-full rounded-xl px-3 py-2 text-sm resize-none text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] bg-white border border-[var(--color-grey-200)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-900)]/40"
+              className="w-full rounded-xl px-3 py-2 text-sm resize-none text-[#0A1F18] placeholder:text-[#7A8C85] bg-white border border-[#D5DFDB] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/40"
               placeholder="Legg til et notat..."
             />
             <button
               onClick={handleSaveNote}
               disabled={saving}
-              className="mt-2 px-4 py-1.5 text-xs font-medium bg-[var(--color-grey-900)] text-white rounded-lg hover:bg-[var(--color-grey-900)]/90 disabled:opacity-50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="mt-2 px-4 py-1.5 text-xs font-medium bg-[#0A1F18] text-white rounded-lg hover:bg-[#0A1F18]/90 disabled:opacity-50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               {saving ? "Lagrer..." : "Lagre notat"}
             </button>
@@ -168,12 +166,12 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
         </div>
 
         {/* Actions */}
-        <div className="border-t border-[var(--color-grey-200)] p-6 space-y-2">
+        <div className="border-t border-[#D5DFDB] p-6 space-y-2">
           {(booking.status === "CONFIRMED" || booking.status === "PENDING") && (
             <button
               onClick={handleMarkNoShow}
               disabled={markingNoShow}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-error-text bg-error-light rounded-xl hover:bg-error/10 disabled:opacity-50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-[#EF4444] bg-[#EF4444]/10 rounded-xl hover:bg-error/10 disabled:opacity-50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               <UserX className="w-4 h-4" aria-hidden="true" />
               {markingNoShow ? "Registrerer..." : "Marker som no-show"}
@@ -188,8 +186,8 @@ export function BookingDetailSheet({ booking, onClose, onRefresh }: Props) {
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between text-sm">
-      <span className="text-[var(--color-grey-400)]">{label}</span>
-      <span className="font-medium text-[var(--color-grey-900)] text-right">{value}</span>
+      <span className="text-[#7A8C85]">{label}</span>
+      <span className="font-medium text-[#0A1F18] text-right">{value}</span>
     </div>
   );
 }

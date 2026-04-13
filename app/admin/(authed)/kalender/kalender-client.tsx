@@ -88,13 +88,13 @@ const viewTabs: AdminTabItem[] = [
 // — Status styles —
 const statusCellStyles: Record<string, string> = {
   PENDING:
-    "bg-grey-100 border-grey-300 text-grey-700",
+    "bg-[#F5F8F7] border-[#D5DFDB] text-[#324D45]",
   CONFIRMED:
-    "bg-grey-100 border-grey-300 text-grey-700",
+    "bg-[#F5F8F7] border-[#D5DFDB] text-[#324D45]",
   COMPLETED:
-    "bg-grey-100 border-grey-300 text-grey-700",
+    "bg-[#F5F8F7] border-[#D5DFDB] text-[#324D45]",
   NO_SHOW:
-    "bg-grey-100 border-grey-300 text-grey-700",
+    "bg-[#F5F8F7] border-[#D5DFDB] text-[#324D45]",
 };
 
 type StatusKey = "PENDING" | "CONFIRMED" | "COMPLETED" | "NO_SHOW";
@@ -355,24 +355,24 @@ export default function KalenderClient({
         onMenuClick={toggle}
       />
 
-      <div className="p-6 space-y-6 bg-grey-50 min-h-screen">
+      <div className="p-6 space-y-6 bg-[#F5F8F7] min-h-screen">
         {/* Controls */}
-        <div className="bg-white rounded-xl shadow-card p-4">
+        <div className="bg-white rounded-xl border border-[#D5DFDB] p-4">
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => handleNavigate(subMonths(currentDate, 1))}
-                className="p-2 rounded-lg hover:bg-grey-100 text-grey-600 transition-colors"
+                className="p-2 rounded-lg hover:bg-[#F5F8F7] text-[#5A6E66] transition-colors"
                 aria-label="Forrige måned"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <h2 className="text-lg font-semibold text-grey-900 min-w-[150px] text-center capitalize">
+              <h2 className="text-lg font-semibold text-[#0A1F18] min-w-[150px] text-center capitalize">
                 {format(currentDate, "MMMM yyyy", { locale: nb })}
               </h2>
               <button
                 onClick={() => handleNavigate(addMonths(currentDate, 1))}
-                className="p-2 rounded-lg hover:bg-grey-100 text-grey-600 transition-colors"
+                className="p-2 rounded-lg hover:bg-[#F5F8F7] text-[#5A6E66] transition-colors"
                 aria-label="Neste måned"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -385,7 +385,7 @@ export default function KalenderClient({
                 I dag
               </AdminButton>
               {isPending && (
-                <Loader2 className="w-4 h-4 animate-spin text-grey-500" />
+                <Loader2 className="w-4 h-4 animate-spin text-[#7A8C85]" />
               )}
             </div>
 
@@ -434,14 +434,14 @@ export default function KalenderClient({
         {/* Calendar Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Main Calendar */}
-          <div className="lg:col-span-3 bg-white rounded-xl shadow-card overflow-hidden">
+          <div className="lg:col-span-3 bg-white rounded-xl border border-[#D5DFDB] overflow-hidden">
             {/* Weekday Headers */}
-            <div className="grid grid-cols-7 border-b border-grey-200 bg-grey-50">
+            <div className="grid grid-cols-7 border-b border-[#D5DFDB] bg-[#F5F8F7]">
               {["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"].map(
                 (dayLabel) => (
                   <div
                     key={dayLabel}
-                    className="px-3 py-2.5 text-center text-xs font-semibold text-grey-600 uppercase tracking-wider"
+                    className="px-3 py-2.5 text-center text-xs font-semibold text-[#5A6E66] uppercase tracking-wider"
                   >
                     {dayLabel}
                   </div>
@@ -463,13 +463,13 @@ export default function KalenderClient({
                     key={i}
                     onClick={() => setSelectedDate(date)}
                     className={cn(
-                      "min-h-[110px] p-2 border-b border-r border-grey-100 text-left transition-colors",
+                      "min-h-[110px] p-2 border-b border-r border-[#ECF0EF] text-left transition-colors",
                       !isCurrentMonth &&
-                        "bg-grey-50 opacity-60",
-                      isToday && "bg-grey-100",
+                        "bg-[#F5F8F7] opacity-60",
+                      isToday && "bg-[#ECF0EF]",
                       isSelected &&
-                        "ring-2 ring-grey-400 ring-inset",
-                      "hover:bg-grey-50",
+                        "ring-2 ring-[#0A1F18] ring-inset",
+                      "hover:bg-[#F5F8F7]",
                     )}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -477,14 +477,14 @@ export default function KalenderClient({
                         className={cn(
                           "text-sm font-medium w-7 h-7 flex items-center justify-center rounded-full",
                           isToday
-                            ? "bg-grey-800 text-white"
-                            : "text-grey-900",
+                            ? "bg-[#0A1F18] text-white"
+                            : "text-[#0A1F18]",
                         )}
                       >
                         {format(date, "d")}
                       </span>
                       {dayBookings.length > 0 && (
-                        <span className="text-[10px] text-grey-500 tabular-nums">
+                        <span className="text-[10px] text-[#7A8C85] tabular-nums">
                           {dayBookings.length}
                         </span>
                       )}
@@ -508,7 +508,7 @@ export default function KalenderClient({
                         </div>
                       ))}
                       {dayBookings.length > 3 && (
-                        <div className="text-[10px] text-grey-500 pl-1">
+                        <div className="text-[10px] text-[#7A8C85] pl-1">
                           +{dayBookings.length - 3} flere
                         </div>
                       )}
@@ -522,16 +522,16 @@ export default function KalenderClient({
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Selected Date Details */}
-            <div className="bg-white rounded-xl shadow-card p-4">
-              <h3 className="text-sm font-semibold text-grey-900 mb-3 capitalize">
+            <div className="bg-white rounded-xl border border-[#D5DFDB] p-4">
+              <h3 className="text-sm font-semibold text-[#0A1F18] mb-3 capitalize">
                 {selectedDate
                   ? format(selectedDate, "EEEE d. MMMM", { locale: nb })
                   : "Velg en dato"}
               </h3>
               {selectedDateBookings.length === 0 ? (
                 <div className="py-8 text-center">
-                  <CalendarIcon className="w-10 h-10 text-grey-400 mx-auto mb-2" />
-                  <span className="text-sm text-grey-500">
+                  <CalendarIcon className="w-10 h-10 text-[#A5B2AD] mx-auto mb-2" />
+                  <span className="text-sm text-[#7A8C85]">
                     Ingen bookinger
                   </span>
                 </div>
@@ -544,16 +544,16 @@ export default function KalenderClient({
                     return (
                       <div
                         key={booking.id}
-                        className="p-3 rounded-lg border border-grey-200 bg-grey-50"
+                        className="p-3 rounded-lg border border-[#D5DFDB] bg-[#F5F8F7]"
                       >
                         <div className="flex items-center justify-between mb-1.5">
-                          <div className="flex items-center gap-1.5 text-grey-900">
-                            <Clock className="w-3.5 h-3.5 text-grey-500" />
+                          <div className="flex items-center gap-1.5 text-[#0A1F18]">
+                            <Clock className="w-3.5 h-3.5 text-[#7A8C85]" />
                             <span className="text-xs font-medium tabular-nums">
                               {formatTime(booking.startTime)}–
                               {formatTime(booking.endTime)}
                             </span>
-                            <span className="text-[10px] text-grey-500">
+                            <span className="text-[10px] text-[#7A8C85]">
                               ({formatDuration(booking)})
                             </span>
                           </div>
@@ -566,7 +566,7 @@ export default function KalenderClient({
                               trigger={
                                 <button
                                   aria-label="Handlinger"
-                                  className="p-1 rounded hover:bg-grey-200 text-grey-500"
+                                  className="p-1 rounded hover:bg-[#ECF0EF] text-[#7A8C85]"
                                 >
                                   <MoreHorizontal className="w-3.5 h-3.5" />
                                 </button>
@@ -579,10 +579,10 @@ export default function KalenderClient({
                           onClick={() => setDrawerBooking(booking)}
                           className="block w-full text-left"
                         >
-                          <div className="text-sm font-medium text-grey-900">
+                          <div className="text-sm font-medium text-[#0A1F18]">
                             {booking.serviceType.name}
                           </div>
-                          <div className="text-xs text-grey-600 mt-0.5">
+                          <div className="text-xs text-[#5A6E66] mt-0.5">
                             {booking.student.name ||
                               booking.student.email ||
                               "Ukjent elev"}
@@ -614,8 +614,8 @@ export default function KalenderClient({
             </div>
 
             {/* Status Legend */}
-            <div className="bg-white rounded-xl shadow-card p-4">
-              <h3 className="text-sm font-semibold text-grey-900 mb-3">Status</h3>
+            <div className="bg-white rounded-xl border border-[#D5DFDB] p-4">
+              <h3 className="text-sm font-semibold text-[#0A1F18] mb-3">Status</h3>
               <div className="space-y-2">
                 {Object.entries(statusLabels).map(([status, label]) => (
                   <div key={status} className="flex items-center gap-2">
@@ -625,7 +625,7 @@ export default function KalenderClient({
                         statusCellStyles[status],
                       )}
                     />
-                    <span className="text-sm text-grey-700">
+                    <span className="text-sm text-[#324D45]">
                       {label}
                     </span>
                   </div>
@@ -636,11 +636,11 @@ export default function KalenderClient({
         </div>
 
         {/* Activity Heatmap */}
-        <div className="bg-white rounded-xl shadow-card p-4">
+        <div className="bg-white rounded-xl border border-[#D5DFDB] p-4">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="text-sm font-semibold text-grey-900">Aktivitet</h3>
-              <p className="text-xs text-grey-500 mt-0.5">
+              <h3 className="text-sm font-semibold text-[#0A1F18]">Aktivitet</h3>
+              <p className="text-xs text-[#7A8C85] mt-0.5">
                 Antall bookinger per ukedag og klokkeslett
               </p>
             </div>
@@ -827,12 +827,12 @@ export default function KalenderClient({
 
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <Clock className="w-4 h-4 text-grey-500 mt-0.5" />
+                <Clock className="w-4 h-4 text-[#7A8C85] mt-0.5" />
                 <div>
-                  <div className="text-xs text-grey-500">
+                  <div className="text-xs text-[#7A8C85]">
                     Tidspunkt
                   </div>
-                  <div className="text-sm text-grey-900 font-medium tabular-nums">
+                  <div className="text-sm text-[#0A1F18] font-medium tabular-nums">
                     {formatTime(drawerBooking.startTime)}–
                     {formatTime(drawerBooking.endTime)}
                   </div>
@@ -840,14 +840,14 @@ export default function KalenderClient({
               </div>
 
               <div className="flex items-start gap-3">
-                <User className="w-4 h-4 text-grey-500 mt-0.5" />
+                <User className="w-4 h-4 text-[#7A8C85] mt-0.5" />
                 <div>
-                  <div className="text-xs text-grey-500">Elev</div>
+                  <div className="text-xs text-[#7A8C85]">Elev</div>
                   <div className="text-sm text-grey-900 font-medium">
                     {drawerBooking.student.name || "Ukjent"}
                   </div>
                   {drawerBooking.student.email && (
-                    <div className="text-xs text-grey-500">
+                    <div className="text-xs text-[#7A8C85]">
                       {drawerBooking.student.email}
                     </div>
                   )}
@@ -856,9 +856,9 @@ export default function KalenderClient({
 
               {drawerBooking.instructor.user.name && (
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-grey-500 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-[#7A8C85] mt-0.5" />
                   <div>
-                    <div className="text-xs text-grey-500">
+                    <div className="text-xs text-[#7A8C85]">
                       Instruktør
                     </div>
                     <div className="text-sm text-grey-900 font-medium">
@@ -870,9 +870,9 @@ export default function KalenderClient({
 
               {drawerBooking.location && (
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-grey-500 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-[#7A8C85] mt-0.5" />
                   <div>
-                    <div className="text-xs text-grey-500">
+                    <div className="text-xs text-[#7A8C85]">
                       Lokasjon
                     </div>
                     <div className="text-sm text-grey-900 font-medium">
@@ -884,11 +884,11 @@ export default function KalenderClient({
             </div>
 
             {drawerBooking.adminNotes && (
-              <div className="pt-3 border-t border-grey-200">
-                <div className="text-xs font-semibold text-grey-500 uppercase tracking-wide mb-1">
+              <div className="pt-3 border-t border-[#D5DFDB]">
+                <div className="text-xs font-semibold text-[#7A8C85] uppercase tracking-wide mb-1">
                   Admin-notat
                 </div>
-                <p className="text-sm text-grey-900 whitespace-pre-wrap">
+                <p className="text-sm text-[#0A1F18] whitespace-pre-wrap">
                   {drawerBooking.adminNotes}
                 </p>
               </div>

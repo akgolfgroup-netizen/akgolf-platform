@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'destructive' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'dark' | 'destructive' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
 }
@@ -16,19 +16,20 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#0F172A] disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variants = {
-    primary: 'bg-[#D4AF37] text-[#0F172A] hover:brightness-110 focus:ring-[#D4AF37] active:scale-95',
-    secondary: 'bg-transparent border border-[#334155] text-white hover:bg-[#334155] focus:ring-[#334155]',
+    primary: 'bg-[#D1F843] text-[#0A1F18] hover:brightness-95 focus:ring-[#D1F843] active:scale-95',
+    secondary: 'bg-white border border-[#D5DFDB] text-[#0A1F18] hover:border-[#A5B2AD] focus:ring-[#D5DFDB]',
+    dark: 'bg-[#0A1F18] text-white hover:bg-[#1A3529] focus:ring-[#0A1F18] active:scale-95',
     destructive: 'bg-[#EF4444] text-white hover:bg-[#DC2626] focus:ring-[#EF4444]',
-    ghost: 'bg-transparent text-white/70 hover:text-white hover:bg-white/5',
+    ghost: 'bg-transparent text-[#5A6E66] hover:text-[#0A1F18] hover:bg-[#F5F8F7]',
   };
   
   const sizes = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg',
+    sm: 'px-4 py-2 text-sm rounded-full',
+    md: 'px-6 py-3 text-sm rounded-full',
+    lg: 'px-8 py-4 text-base rounded-full',
   };
 
   return (

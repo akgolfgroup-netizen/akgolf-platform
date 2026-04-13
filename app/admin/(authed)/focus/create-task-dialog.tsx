@@ -64,12 +64,12 @@ export function CreateTaskDialog({ open, division, onClose, onCreated }: Props) 
     >
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-medium text-[var(--color-text)] mb-1.5">Oppgave</label>
+          <label className="block text-xs font-medium text-[#0A1F18] mb-1.5">Oppgave</label>
           <AdminInput value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Hva skal gjores?" autoFocus />
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-medium text-[var(--color-text)] mb-1.5">Prioritet</label>
+            <label className="block text-xs font-medium text-[#0A1F18] mb-1.5">Prioritet</label>
             <select value={priority} onChange={(e) => setPriority(e.target.value as AdminPriority)} className="admin-input w-full">
               <option value="NORMAL">Normal</option>
               <option value="IMPORTANT">Viktig</option>
@@ -77,7 +77,7 @@ export function CreateTaskDialog({ open, division, onClose, onCreated }: Props) 
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[var(--color-text)] mb-1.5">Frist</label>
+            <label className="block text-xs font-medium text-[#0A1F18] mb-1.5">Frist</label>
             <AdminInput type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
           </div>
         </div>

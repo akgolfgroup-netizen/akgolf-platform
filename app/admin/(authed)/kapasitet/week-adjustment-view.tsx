@@ -141,7 +141,7 @@ export function WeekAdjustmentView() {
       {/* Loading State */}
       {isPending && !weekData && (
         <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--color-grey-200)] border-t-[var(--color-primary)]" />
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#D5DFDB] border-t-[#0A1F18]" />
         </div>
       )}
 
@@ -164,13 +164,13 @@ export function WeekAdjustmentView() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                   <p className="admin-label">Fast kapasitet</p>
-                  <p className="text-2xl font-bold text-[var(--color-text)] mt-1">
+                  <p className="text-2xl font-bold text-[#0A1F18] mt-1">
                     {weekData.totalRegularHours.toFixed(0)}t
                   </p>
                 </div>
                 <div>
                   <p className="admin-label">Justert kapasitet</p>
-                  <p className="text-2xl font-bold text-[var(--color-text)] mt-1">
+                  <p className="text-2xl font-bold text-[#0A1F18] mt-1">
                     {weekData.totalEffectiveHours.toFixed(0)}t
                   </p>
                   {weekData.totalEffectiveHours !==
@@ -179,8 +179,8 @@ export function WeekAdjustmentView() {
                       className={
                         weekData.totalEffectiveHours <
                         weekData.totalRegularHours
-                          ? "text-xs text-[var(--color-error)]"
-                          : "text-xs text-[var(--color-success)]"
+                          ? "text-xs text-[#EF4444]"
+                          : "text-xs text-[#1A4D36]"
                       }
                     >
                       {weekData.totalEffectiveHours >
@@ -197,7 +197,7 @@ export function WeekAdjustmentView() {
                 </div>
                 <div>
                   <p className="admin-label">Booket</p>
-                  <p className="text-2xl font-bold text-[var(--color-text)] mt-1">
+                  <p className="text-2xl font-bold text-[#0A1F18] mt-1">
                     {weekData.totalBookedHours.toFixed(1)}t
                   </p>
                 </div>

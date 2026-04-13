@@ -18,9 +18,9 @@ interface TimeSlotsProps {
 export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: TimeSlotsProps) {
   if (!date) {
     return (
-      <PremiumCard className="flex flex-col items-center justify-center py-12 text-center" padding="lg">
-        <Calendar className="w-10 h-10 text-portal-muted mb-3" />
-        <p className="text-sm text-portal-secondary">
+      <PremiumCard className="flex flex-col items-center justify-center py-12 text-center" padding="lg" hover="none">
+        <Calendar className="w-10 h-10 text-[#A5B2AD] mb-3" />
+        <p className="text-sm text-[#324D45]">
           Velg en dato i kalenderen for å se ledige tider
         </p>
       </PremiumCard>
@@ -29,26 +29,26 @@ export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: Time
 
   if (loading) {
     return (
-      <PremiumCard className="flex items-center justify-center gap-2 py-12" padding="lg">
-        <Loader2 className="w-4 h-4 animate-spin text-portal-muted" />
-        <span className="text-sm text-portal-secondary">Henter tider...</span>
+      <PremiumCard className="flex items-center justify-center gap-2 py-12" padding="lg" hover="none">
+        <Loader2 className="w-4 h-4 animate-spin text-[#7A8C85]" />
+        <span className="text-sm text-[#324D45]">Henter tider...</span>
       </PremiumCard>
     );
   }
 
   if (slots.length === 0) {
     return (
-      <PremiumCard className="flex flex-col items-center justify-center py-12 text-center" padding="lg">
-        <Calendar className="w-10 h-10 text-portal-muted mb-3" />
-        <p className="text-sm text-portal-secondary">Ingen ledige tider denne dagen</p>
-        <p className="text-xs text-portal-muted mt-1">Prøv en annen dato</p>
+      <PremiumCard className="flex flex-col items-center justify-center py-12 text-center" padding="lg" hover="none">
+        <Calendar className="w-10 h-10 text-[#A5B2AD] mb-3" />
+        <p className="text-sm text-[#324D45]">Ingen ledige tider denne dagen</p>
+        <p className="text-xs text-[#7A8C85] mt-1">Prøv en annen dato</p>
       </PremiumCard>
     );
   }
 
   return (
-    <PremiumCard>
-      <p className="text-xs font-semibold text-portal-muted uppercase tracking-wider mb-3">
+    <PremiumCard hover="none">
+      <p className="text-xs font-semibold text-[#7A8C85] uppercase tracking-wider mb-3">
         {format(date, "EEEE d. MMMM", { locale: nb })}
       </p>
       <div className="grid grid-cols-2 gap-2">
@@ -65,10 +65,10 @@ export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: Time
               transition={{ delay: index * 0.03, duration: 0.25 }}
               onClick={() => onSelect(slot)}
               className={cn(
-                "py-3 px-4 rounded-[20px] text-sm font-medium transition-all duration-200 border",
+                "py-3 px-4 rounded-full text-sm font-medium transition-all duration-200 border",
                 isSelected
-                  ? "bg-primary text-white border-primary shadow-sm"
-                  : "bg-white text-portal-text border-portal-border hover:border-primary hover:shadow-card"
+                  ? "bg-[#0A1F18] text-white border-[#0A1F18] shadow-sm"
+                  : "bg-white text-[#0A1F18] border-[#D5DFDB] hover:border-[#A5B2AD]"
               )}
             >
               {timeStr}

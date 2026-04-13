@@ -183,14 +183,11 @@ export function CollapsibleSidebar() {
                         {!isCollapsed && (
                           <div className="ml-2 flex items-center gap-2">
                             <p className="text-sm font-medium">Chat</p>
-                            <Badge
-                              className={cn(
-                                "flex h-fit w-fit items-center gap-1.5 rounded border-none bg-blue-50 px-1.5 text-blue-600 dark:bg-blue-700 dark:text-blue-300",
-                              )}
-                              variant="outline"
-                            >
+                            <span className={cn(
+                              "flex h-fit w-fit items-center gap-1.5 rounded border-none bg-blue-50 px-1.5 text-[11px] font-medium text-blue-600 dark:bg-blue-700 dark:text-blue-300",
+                            )}>
                               BETA
-                            </Badge>
+                            </span>
                           </div>
                         )}
                       </motion.li>

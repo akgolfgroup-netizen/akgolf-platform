@@ -52,36 +52,24 @@ export function AdminDrawer({
       />
       <div
         className={cn(
-          "absolute top-0 bottom-0 w-full flex flex-col shadow-2xl",
-          side === "right" ? "right-0" : "left-0",
+          "absolute top-0 bottom-0 w-full flex flex-col shadow-2xl bg-white",
+          side === "right" ? "right-0 border-l border-[#D5DFDB]" : "left-0 border-r border-[#D5DFDB]",
           widthClass[width],
         )}
         style={{
-          background: "var(--color-surface)",
-          borderLeft: side === "right" ? "1px solid var(--color-muted)" : undefined,
-          borderRight: side === "left" ? "1px solid var(--color-muted)" : undefined,
           animation: `admin-drawer-${side} 240ms ease`,
         }}
       >
         {(title || description) && (
-          <div
-            className="flex items-start justify-between gap-3 px-6 py-4 border-b"
-            style={{ borderColor: "var(--color-muted)" }}
-          >
+          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-[#D5DFDB]">
             <div className="flex-1 min-w-0">
               {title && (
-                <h2
-                  className="text-lg font-semibold"
-                  style={{ color: "var(--color-text)" }}
-                >
+                <h2 className="text-lg font-semibold text-[#0A1F18]">
                   {title}
                 </h2>
               )}
               {description && (
-                <p
-                  className="text-sm mt-0.5"
-                  style={{ color: "var(--color-muted)" }}
-                >
+                <p className="text-sm mt-0.5 text-[#7A8C85]">
                   {description}
                 </p>
               )}
@@ -98,10 +86,7 @@ export function AdminDrawer({
         )}
         <div className="flex-1 overflow-y-auto px-6 py-4">{children}</div>
         {footer && (
-          <div
-            className="px-6 py-4 border-t"
-            style={{ borderColor: "var(--color-muted)" }}
-          >
+          <div className="px-6 py-4 border-t border-[#D5DFDB]">
             {footer}
           </div>
         )}
