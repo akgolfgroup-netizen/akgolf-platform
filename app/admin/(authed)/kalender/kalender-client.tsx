@@ -62,6 +62,7 @@ import {
   markNoShow,
   addAdminNote,
 } from "./actions";
+import { createBlockedTime } from "@/app/admin/(authed)/tilgjengelighet/actions";
 
 // — Types —
 
@@ -231,13 +232,33 @@ export default function KalenderClient({
   };
 
   const handleCreateNewEvent = () => {
-    // Foreløpig — server-integrasjon kommer senere
-    toast({
-      variant: "info",
-      title: "Ny hendelse",
-      description: `${newEventForm.title || "Uten tittel"} — ${newEventForm.date} ${newEventForm.startTime}`,
+    if (!newEventForm.title.trim()) return;
+    startTransition(async () => {
+      try {
+        const startDateTime = new Date(`${newEventForm.date}T${newEventForm.startTime}:00`);
+        const endDateTime = new Date(`${newEventForm.date}T${newEventForm.endTime}:00`);
+        await createBlockedTime({
+          instructorId: selectedInstructorId || null,
+          startTime: startDateTime.toISOString(),
+          endTime: endDateTime.toISOString(),
+          reason: newEventForm.title + (newEventForm.note ? ` — ${newEventForm.note}` : ""),
+        });
+        toast({
+          variant: "success",
+          title: "Tid blokkert",
+          description: `${newEventForm.title} — ${newEventForm.date} ${newEventForm.startTime}`,
+        });
+        setNewEventOpen(false);
+        setNewEventForm({ title: "", date: format(new Date(), "yyyy-MM-dd"), startTime: "09:00", endTime: "10:00", note: "" });
+        fetchBookings(currentDate, viewMode, selectedInstructorId);
+      } catch {
+        toast({
+          variant: "error",
+          title: "Feil",
+          description: "Kunne ikke blokkere tid. Prøv igjen.",
+        });
+      }
     });
-    setNewEventOpen(false);
   };
 
   // — Calendar calculations —

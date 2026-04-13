@@ -383,13 +383,9 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                       {slot.free === 1 ? "ledig slot" : "ledige sloter"}
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    aria-label="Se detaljer"
-                    className="p-1.5 rounded-md hover:bg-white text-[var(--color-primary)]"
-                  >
+                  <span className="p-1.5 text-[var(--color-muted)]">
                     <ChevronRight className="w-4 h-4" />
-                  </button>
+                  </span>
                 </div>
               ))
             )}
@@ -428,12 +424,12 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                   <span className="text-sm font-bold text-[var(--color-primary)]">
                     {rec.impact}
                   </span>
-                  <button
-                    type="button"
-                    className="text-xs text-[var(--color-primary)] hover:underline"
+                  <span
+                    className="text-xs text-[var(--color-muted)] cursor-not-allowed"
+                    title="Kommer snart"
                   >
-                    Implementer
-                  </button>
+                    Kommer snart
+                  </span>
                 </div>
               </div>
             ))}

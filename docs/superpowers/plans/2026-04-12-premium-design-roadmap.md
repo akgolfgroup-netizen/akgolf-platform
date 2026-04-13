@@ -1,5 +1,18 @@
 # Premium Design Roadmap — AK Golf Platform
 
+## Visuell referanse
+
+**100% referanse: Jack L. / RonDesignLab** — https://dribbble.com/jack-web-design
+
+Se `docs/DESIGN-REFERENCE.md` for komplett designanalyse, prinsipper og token-mapping.
+
+Nøkkelshots:
+- **Homiva Dashboard** — Portal + Mission Control referanse
+- **Kettler Sport App** — Mobil portal, live runde, lime accent
+- **Salesforce CRM** — Mission Control data-tunge views
+
+---
+
 ## Status etter dag 1
 
 ### Ferdig (konsistent premium design)

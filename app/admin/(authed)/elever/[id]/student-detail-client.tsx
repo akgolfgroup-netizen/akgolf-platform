@@ -180,12 +180,14 @@ export function StudentDetailClient({ profile }: Props) {
           ]}
           actions={
             <>
-              <AdminButton
-                variant="primary"
-                icon={<Calendar className="w-4 h-4" />}
-              >
-                Book ny time
-              </AdminButton>
+              <Link href="/admin/kalender">
+                <AdminButton
+                  variant="primary"
+                  icon={<Calendar className="w-4 h-4" />}
+                >
+                  Book ny time
+                </AdminButton>
+              </Link>
               <AdminButton
                 variant="secondary"
                 icon={<MessageSquare className="w-4 h-4" />}
@@ -205,6 +207,8 @@ export function StudentDetailClient({ profile }: Props) {
               <AdminButton
                 variant="ghost"
                 icon={<Edit3 className="w-4 h-4" />}
+                disabled
+                title="Kommer snart"
               >
                 Rediger
               </AdminButton>
@@ -416,7 +420,11 @@ export function StudentDetailClient({ profile }: Props) {
             <AdminCard>
               <div className="flex items-center justify-between mb-4">
                 <h3 className="admin-section-title">Malsettinger</h3>
-                <button className="p-1.5 rounded-md hover:bg-[var(--color-grey-100)] text-[var(--color-primary)]">
+                <button
+                  className="p-1.5 rounded-md text-[var(--color-muted)] opacity-50 cursor-not-allowed"
+                  disabled
+                  title="Kommer snart"
+                >
                   <Plus className="w-4 h-4" />
                 </button>
               </div>

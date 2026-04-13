@@ -57,7 +57,7 @@ export async function searchBookings(
   const pageSize = 20;
   const skip = (page - 1) * pageSize;
 
-  let baseQuery = supabase.from("Booking").select("*", { count: "exact" });
+  let baseQuery = supabase.from("Booking").select("*, User:studentId(name, email, phone), ServiceType:serviceTypeId(name, color, duration), Instructor:instructorId(User(name)), Location:locationId(name)", { count: "exact" });
   if (status && status !== "ALL") baseQuery = baseQuery.eq("status", status);
   if (query) {
     baseQuery = baseQuery.or(

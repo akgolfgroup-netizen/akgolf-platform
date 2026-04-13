@@ -64,7 +64,7 @@ export async function getStudentProfile(studentId: string) {
     { data: goals },
     { data: activePlan },
     { data: roundStats },
-    { data: monthlyBookings },
+    { count: monthlyBookingsCount },
   ] = await Promise.all([
     supabase
       .from("Booking")
@@ -151,7 +151,7 @@ export async function getStudentProfile(studentId: string) {
     handicap: latestHcp,
     category: scoreToCategory(avgScore),
     attendanceRate,
-    sessionsThisMonth: monthlyBookings?.length ?? 0,
+    sessionsThisMonth: monthlyBookingsCount ?? 0,
     totalSessions: totalCompleted,
     Booking: bookings ?? [],
     UpcomingBooking: upcomingBookings ?? [],

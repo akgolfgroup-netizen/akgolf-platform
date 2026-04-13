@@ -313,40 +313,30 @@ export function StudentsClient({ initialData }: Props) {
           title="Elever"
           subtitle="Oversikt over aktive elever, medlemskap og coaching"
           actions={
-            <>
-              <AdminDropdown
-                label="Handlinger"
-                items={[
-                  {
-                    id: "export-all",
-                    label: "Eksporter alle",
-                    icon: <Download className="w-4 h-4" />,
-                    onSelect: () => handleExport(data.students),
+            <AdminDropdown
+              label="Handlinger"
+              items={[
+                {
+                  id: "export-all",
+                  label: "Eksporter alle",
+                  icon: <Download className="w-4 h-4" />,
+                  onSelect: () => handleExport(data.students),
+                },
+                {
+                  id: "mail-all",
+                  label: "Send e-post til alle aktive",
+                  icon: <Mail className="w-4 h-4" />,
+                  onSelect: () => {
+                    const active = data.students
+                      .filter((s) => getStatus(s) === "active")
+                      .map((s) => s.email)
+                      .filter(Boolean)
+                      .join(",");
+                    window.location.href = `mailto:${active}`;
                   },
-                  {
-                    id: "mail-all",
-                    label: "Send e-post til alle aktive",
-                    icon: <Mail className="w-4 h-4" />,
-                    onSelect: () => {
-                      const active = data.students
-                        .filter((s) => getStatus(s) === "active")
-                        .map((s) => s.email)
-                        .filter(Boolean)
-                        .join(",");
-                      window.location.href = `mailto:${active}`;
-                    },
-                  },
-                ]}
-              />
-              <Link href="/admin/elever/ny">
-                <AdminButton
-                  variant="primary"
-                  icon={<UserPlus className="w-4 h-4" />}
-                >
-                  Ny elev
-                </AdminButton>
-              </Link>
-            </>
+                },
+              ]}
+            />
           }
         />
 

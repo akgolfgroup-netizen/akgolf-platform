@@ -1,9 +1,51 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Loader2, Sparkles } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState, useRef, useEffect, useCallback } from "react";
+import {
+  Send,
+  Sparkles,
+  User,
+  TrendingUp,
+  Users,
+  Calendar,
+  BarChart3,
+  Lightbulb,
+  Loader2,
+  Copy,
+  ThumbsUp,
+  ThumbsDown,
+  Clock,
+} from "lucide-react";
+import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import {
+  AdminCard,
+} from "@/components/portal/mission-control/ui";
+
+const suggestedQuestions = [
+  { icon: Users, text: "Hvem har ikke booket på 2 uker?", category: "elever" },
+  {
+    icon: Calendar,
+    text: "Hva er kapasiteten neste uke?",
+    category: "booking",
+  },
+  {
+    icon: TrendingUp,
+    text: "Hvordan går det med en spesifikk elev?",
+    category: "analyse",
+  },
+  {
+    icon: BarChart3,
+    text: "Gi meg en oppsummering av denne måneden",
+    category: "rapport",
+  },
+  {
+    icon: Lightbulb,
+    text: "Hvilke elever trenger oppfølging?",
+    category: "anbefaling",
+  },
+  { icon: Clock, text: "Når er neste ledige time?", category: "booking" },
+];
 
 interface Message {
   id: string;
@@ -12,188 +54,279 @@ interface Message {
   timestamp: Date;
 }
 
-const suggestions = [
-  "Vis meg statistikk for mine spillere",
-  "Hvem har forbedret seg mest denne måneden?",
-  "Lag en treningsplan for en spiller med HCP 18",
-  "Hvilke spillere bør jeg følge opp?",
-];
+const WELCOME_MESSAGE: Message = {
+  id: "welcome",
+  role: "assistant",
+  content:
+    "Hei! Jeg er din AI-assistent for AK Golf Academy. Jeg kan hjelpe deg med:\n\n- Spørsmål om elever, bookinger og kapasitet\n- Analyse av trender og statistikk\n- Forslag til oppfølging\n- Rapporter og oppsummeringer\n\nHva kan jeg hjelpe deg med i dag?",
+  timestamp: new Date(),
+};
 
 export function ChatClient() {
   const { toggle } = useMCSidebar();
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "welcome",
-      role: "assistant",
-      content:
-        "Hei! Jeg er din AI-assistent. Jeg kan hjelpe deg med å analysere spillerdata, lage treningsplaner, og gi innsikt om dine elever. Hva kan jeg hjelpe deg med?",
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, scrollToBottom]);
 
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+  const sendMessage = useCallback(
+    async (content: string) => {
+      if (!content.trim() || isStreaming) return;
 
-    const userMessage: Message = {
-      id: `user-${Date.now()}`,
-      role: "user",
-      content: input,
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setIsLoading(true);
-
-    // Simuler AI-respons (byttes ut med ekte API-kall)
-    setTimeout(() => {
-      const assistantMessage: Message = {
-        id: `assistant-${Date.now()}`,
-        role: "assistant",
-        content: getSimulatedResponse(input),
+      const userMessage: Message = {
+        id: crypto.randomUUID(),
+        role: "user",
+        content: content.trim(),
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, assistantMessage]);
-      setIsLoading(false);
-    }, 1500);
-  };
 
-  const handleSuggestion = (suggestion: string) => {
-    setInput(suggestion);
-  };
+      const assistantMessage: Message = {
+        id: crypto.randomUUID(),
+        role: "assistant",
+        content: "",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, userMessage, assistantMessage]);
+      setInput("");
+      setIsStreaming(true);
+
+      const apiMessages = [...messages, userMessage]
+        .filter((m) => m.id !== "welcome" && m.content.trim() !== "")
+        .map((m) => ({ role: m.role, content: m.content }));
+
+      try {
+        abortControllerRef.current = new AbortController();
+        const response = await fetch("/api/portal/ai/admin-chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: apiMessages }),
+          signal: abortControllerRef.current.signal,
+        });
+
+        if (!response.ok) {
+          const errorData = (await response.json().catch(() => null)) as {
+            error?: string;
+          } | null;
+          throw new Error(
+            errorData?.error ?? `Serverfeil (${response.status})`,
+          );
+        }
+
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error("Ingen streaming-støtte");
+
+        const decoder = new TextDecoder();
+        let accumulated = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          accumulated += decoder.decode(value, { stream: true });
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === assistantMessage.id
+                ? { ...m, content: accumulated }
+                : m,
+            ),
+          );
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") return;
+        const errorMsg =
+          error instanceof Error
+            ? error.message
+            : "Beklager, det oppstod en feil. Prøv igjen.";
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantMessage.id ? { ...m, content: errorMsg } : m,
+          ),
+        );
+      } finally {
+        setIsStreaming(false);
+        abortControllerRef.current = null;
+      }
+    },
+    [isStreaming, messages],
+  );
+
+  const handleSend = useCallback(
+    (text: string = input) => {
+      sendMessage(text);
+    },
+    [input, sendMessage],
+  );
+
+  const handleCopy = useCallback((content: string) => {
+    navigator.clipboard.writeText(content).catch(() => {
+      /* ignore */
+    });
+  }, []);
 
   return (
     <>
-    <MCTopbar
-      title="AI-chat"
-      subtitle="Chat med AI-assistenten"
-      onMenuClick={toggle}
-    />
-    <div className="p-6">
-    <div className="flex flex-col bg-white border border-[var(--color-grey-200)] rounded-xl overflow-hidden shadow-[var(--shadow-card)]" style={{ height: "calc(100vh - 180px)" }}>
-      {/* Messages */}
-      <div className="flex-1 overflow-auto p-6 space-y-4">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={cn(
-              "flex gap-3",
-              message.role === "user" ? "justify-end" : "justify-start"
-            )}
-          >
-            {message.role === "assistant" && (
-              <div className="h-8 w-8 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                <Bot className="h-4 w-4 text-[var(--color-grey-900)]" />
-              </div>
-            )}
+      <MCTopbar
+        title="AI-assistent"
+        subtitle="Still spørsmål om data, elever og analytikk"
+        onMenuClick={toggle}
+      />
+
+      <div className="p-6 flex flex-col" style={{ height: "calc(100vh - 56px)" }}>
+      <AdminCard className="flex-1 flex flex-col min-h-0 !p-0 overflow-hidden">
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          {messages.map((msg) => (
             <div
+              key={msg.id}
               className={cn(
-                "max-w-[70%] rounded-2xl px-4 py-3 text-[15px]",
-                message.role === "user"
-                  ? "bg-[var(--color-black)] text-white"
-                  : "bg-[var(--color-grey-50)] text-[var(--color-grey-900)] border border-[var(--color-grey-200)]"
+                "flex gap-3",
+                msg.role === "user" ? "flex-row-reverse" : "",
               )}
             >
-              <p className="whitespace-pre-wrap leading-relaxed">
-                {message.content}
-              </p>
-            </div>
-            {message.role === "user" && (
-              <div className="h-8 w-8 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                <User className="h-4 w-4 text-[var(--color-grey-500)]" />
+              <div
+                className={cn(
+                  "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
+                  msg.role === "assistant"
+                    ? "bg-[var(--color-ai)]/10 text-[var(--color-ai)]"
+                    : "bg-[var(--color-grey-100)] text-[var(--color-text)]",
+                )}
+              >
+                {msg.role === "assistant" ? (
+                  <Sparkles className="w-4 h-4" />
+                ) : (
+                  <User className="w-4 h-4" />
+                )}
               </div>
-            )}
-          </div>
-        ))}
-        {isLoading && (
-          <div className="flex gap-3">
-            <div className="h-8 w-8 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center">
-              <Bot className="h-4 w-4 text-[var(--color-grey-900)]" />
+              <div
+                className={cn(
+                  "max-w-[80%] rounded-2xl p-4",
+                  msg.role === "assistant"
+                    ? "bg-[var(--color-grey-100)] text-[var(--color-text)] rounded-tl-sm"
+                    : "bg-[var(--color-primary)] text-white rounded-tr-sm",
+                )}
+              >
+                <div className="text-sm whitespace-pre-wrap leading-relaxed">
+                  {msg.content}
+                </div>
+                {msg.role === "assistant" && msg.content && (
+                  <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-[var(--color-grey-200)]">
+                    <button
+                      onClick={() => handleCopy(msg.content)}
+                      className="p-1.5 rounded hover:bg-[var(--color-grey-200)] text-[var(--color-muted)] transition-colors"
+                      title="Kopier"
+                      aria-label="Kopier svar"
+                    >
+                      <Copy className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      className="p-1.5 rounded hover:bg-[var(--color-grey-200)] text-[var(--color-muted)] transition-colors"
+                      aria-label="Nyttig svar"
+                    >
+                      <ThumbsUp className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      className="p-1.5 rounded hover:bg-[var(--color-grey-200)] text-[var(--color-muted)] transition-colors"
+                      aria-label="Ikke nyttig"
+                    >
+                      <ThumbsDown className="w-3.5 h-3.5" />
+                    </button>
+                    <span className="text-[10px] text-[var(--color-muted)] ml-auto">
+                      {msg.timestamp.toLocaleTimeString("nb-NO", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="bg-[var(--color-grey-50)] border border-[var(--color-grey-200)] rounded-2xl px-4 py-3">
-              <Loader2 className="h-5 w-5 animate-spin text-[var(--color-grey-400)]" />
+          ))}
+          {isStreaming && (
+            <div className="flex gap-3">
+              <div className="w-8 h-8 rounded-lg bg-[var(--color-ai)]/10 flex items-center justify-center shrink-0">
+                <Sparkles className="w-4 h-4 text-[var(--color-ai)]" />
+              </div>
+              <div className="bg-[var(--color-grey-100)] rounded-2xl rounded-tl-sm p-4 flex items-center gap-2">
+                <Loader2 className="w-4 h-4 text-[var(--color-ai)] animate-spin" />
+                <span className="text-sm text-[var(--color-muted)]">
+                  Tenker...
+                </span>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Suggested Questions */}
+        {messages.length < 3 && (
+          <div className="px-6 py-3 border-t border-[var(--color-grey-200)]">
+            <p className="text-xs text-[var(--color-muted)] mb-2">
+              Foreslåtte spørsmål:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {suggestedQuestions.map((q, i) => {
+                const Icon = q.icon;
+                return (
+                  <button
+                    key={i}
+                    onClick={() => handleSend(q.text)}
+                    disabled={isStreaming}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-white hover:bg-[var(--color-grey-100)] text-[var(--color-text)] rounded-full transition-colors border border-[var(--color-grey-200)] disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Icon className="w-3 h-3" />
+                    {q.text}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
-        <div ref={messagesEndRef} />
-      </div>
 
-      {/* Suggestions */}
-      {messages.length === 1 && (
-        <div className="px-6 pb-4">
-          <div className="flex items-center gap-2 mb-2 text-sm text-[var(--color-grey-500)]">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>Forslag</span>
+        {/* Input */}
+        <div className="p-4 border-t border-[var(--color-grey-200)] bg-[var(--color-grey-100)]/50">
+          <div className="flex items-end gap-2 bg-white border border-[var(--color-grey-200)] rounded-xl p-2 focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[var(--color-primary)]/20 transition-all">
+            <div className="p-2 rounded-lg bg-[var(--color-ai)]/10">
+              <Sparkles className="w-4 h-4 text-[var(--color-ai)]" />
+            </div>
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Still et spørsmål om akademiet, elevene eller data..."
+              rows={1}
+              className="flex-1 bg-transparent text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none resize-none py-3"
+              style={{ minHeight: "20px", maxHeight: "120px" }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+            />
+            <button
+              onClick={() => handleSend()}
+              disabled={!input.trim() || isStreaming}
+              className="p-3 rounded-lg bg-[var(--color-primary)] text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              aria-label="Send melding"
+            >
+              <Send className="w-4 h-4" />
+            </button>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {suggestions.map((suggestion) => (
-              <button
-                key={suggestion}
-                onClick={() => handleSuggestion(suggestion)}
-                className="px-3 py-1.5 bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)] border border-[var(--color-grey-200)] rounded-full text-sm text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors"
-              >
-                {suggestion}
-              </button>
-            ))}
-          </div>
+          <p className="text-[10px] text-[var(--color-muted)] mt-2 text-center">
+            AI-assistenten kan gjøre feil. Viktig informasjon bør
+            dobbeltsjekkes.
+          </p>
         </div>
-      )}
-
-      {/* Input */}
-      <div className="p-4 border-t border-[var(--color-grey-200)] bg-[var(--color-grey-50)]">
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            placeholder="Skriv en melding..."
-            className="flex-1 px-4 py-3 bg-white border border-[var(--color-grey-200)] rounded-xl text-[15px] text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-grey-300)] focus:border-[var(--color-grey-300)] transition-[border-color,box-shadow]"
-          />
-          <button
-            onClick={handleSend}
-            disabled={!input.trim() || isLoading}
-            className="px-4 py-3 bg-[var(--color-black)] hover:bg-[var(--color-grey-900)] disabled:opacity-40 disabled:cursor-not-allowed rounded-xl transition-colors"
-          >
-            <Send className="h-5 w-5 text-white" />
-          </button>
-        </div>
+      </AdminCard>
       </div>
-    </div>
-    </div>
     </>
   );
-}
-
-function getSimulatedResponse(input: string): string {
-  const lowerInput = input.toLowerCase();
-
-  if (lowerInput.includes("statistikk")) {
-    return "Basert på dataene dine har jeg analysert statistikken:\n\n- Gjennomsnittlig HCP-forbedring: 2.3 slag\n- Mest aktive spillere: 8 økter siste måned\n- Områder med størst forbedring: Putting og nærspill\n\nVil du se detaljer for en spesifikk spiller?";
-  }
-
-  if (lowerInput.includes("forbedret")) {
-    return "De tre spillerne som har forbedret seg mest denne måneden:\n\n1. Ola Nordmann — HCP ned fra 18.2 til 15.8 (-2.4)\n2. Kari Hansen — HCP ned fra 24.1 til 22.3 (-1.8)\n3. Per Johansen — HCP ned fra 12.5 til 11.2 (-1.3)\n\nAlle tre har fokusert på kortspill og putting.";
-  }
-
-  if (lowerInput.includes("treningsplan")) {
-    return "For en spiller med HCP 18 anbefaler jeg følgende ukentlige plan:\n\n**Mandag:** Driving range — fokus på setup og grunnlag\n**Onsdag:** Nærspill — chipping og pitching\n**Fredag:** Putting-økt (45 min)\n**Helg:** Spille 9–18 hull med fokus på kurshåndtering\n\nSkal jeg tilpasse denne til en spesifikk spiller?";
-  }
-
-  if (lowerInput.includes("følge opp")) {
-    return "Spillere som bør følges opp:\n\n- Anna Svendsen — Ingen aktivitet siste 3 uker\n- Erik Berg — Booket men møtte ikke forrige gang\n- Live Eriksen — Har uttrykt frustrasjon over putting\n\nVil du at jeg skal lage oppfølgingsforslag for noen av disse?";
-  }
-
-  return "Jeg forstår spørsmålet ditt. For å gi deg best mulig svar, trenger jeg tilgang til spillerdataene. Denne funksjonen er under utvikling.\n\nI mellomtiden kan jeg hjelpe deg med:\n- Generelle treningsråd\n- Strukturering av økter\n- Analyse av spilleutfordringer\n\nHva vil du vite mer om?";
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import {
@@ -135,6 +136,7 @@ function StatusBadge({ status }: { status: string }) {
 // Main Component
 export default function MissionBoardPage() {
   const { toggle } = useMCSidebar();
+  const router = useRouter();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [charts, setCharts] = useState<MissionBoardCharts | null>(null);
   const [loading, setLoading] = useState(true);
@@ -505,7 +507,8 @@ export default function MissionBoardPage() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className="px-6 py-4 hover:bg-[var(--color-grey-50)] transition-colors group"
+                        onClick={() => router.push(`/admin/bookinger?date=${new Date().toISOString().slice(0, 10)}`)}
+                        className="px-6 py-4 hover:bg-[var(--color-grey-50)] transition-colors group cursor-pointer"
                       >
                         <div className="flex items-center gap-5">
                           <div className="text-center min-w-[60px]">
@@ -569,6 +572,7 @@ export default function MissionBoardPage() {
 
                     <button
                       type="button"
+                      onClick={() => router.push("/admin/analytics")}
                       className="w-full py-2.5 bg-[var(--color-ai)]/10 hover:bg-[var(--color-ai)]/20 border border-[var(--color-ai)]/30 text-[var(--color-ai)] rounded-lg text-sm font-semibold transition-colors"
                     >
                       Se detaljert analyse

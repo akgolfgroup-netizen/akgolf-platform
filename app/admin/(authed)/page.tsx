@@ -46,11 +46,10 @@ async function getHubData(_userId: string) {
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
   const { count: activeStudents } = await supabase
-    .from("User")
-    .select("id", { count: "exact", head: true })
-    .eq("role", "STUDENT")
-    .eq("isActive", true)
-    .gte("Booking.startTime", thirtyDaysAgo.toISOString());
+    .from("Booking")
+    .select("studentId", { count: "exact", head: true })
+    .gte("startTime", thirtyDaysAgo.toISOString())
+    .in("status", ["CONFIRMED", "COMPLETED"]);
 
   // Get pending bookings
   const { count: pendingBookings } = await supabase

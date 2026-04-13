@@ -47,6 +47,7 @@ import {
   deleteSession,
   addSession,
   updateWeekFocus,
+  duplicatePlan,
 } from "./actions";
 
 // ---------- Constants ----------
@@ -348,6 +349,18 @@ function StudentPlanEditor({
     setTimeout(() => setFeedback(null), 3000);
   }
 
+  async function handleDuplicatePlan() {
+    if (!activePlanId || !studentId) return;
+    startTransition(async () => {
+      const result = await duplicatePlan(activePlanId, studentId);
+      if (result.success) {
+        showFeedback("success", "Plan kopiert");
+      } else {
+        showFeedback("error", result.error ?? "Kunne ikke kopiere plan");
+      }
+    });
+  }
+
   function toggleWeek(weekId: string) {
     setExpandedWeeks((prev) => {
       const next = new Set(prev);
@@ -489,8 +502,10 @@ function StudentPlanEditor({
               <AdminButton
                 variant="secondary"
                 icon={<Copy className="w-3.5 h-3.5" />}
+                onClick={handleDuplicatePlan}
+                disabled={isPending}
               >
-                Kopier plan
+                {isPending ? "Kopierer..." : "Kopier plan"}
               </AdminButton>
             </div>
           </AdminCard>

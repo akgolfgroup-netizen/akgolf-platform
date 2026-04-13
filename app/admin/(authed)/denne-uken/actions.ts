@@ -86,7 +86,7 @@ export async function getThisWeekBookings(): Promise<WeekBooking[]> {
       image: b.User.image,
     },
     instructor: {
-      name: b.Instructor.User.name,
+      name: b.Instructor?.User?.name ?? "Ukjent",
     },
     service: {
       name: b.ServiceType.name,

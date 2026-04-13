@@ -268,13 +268,19 @@ export default function RapporterPage() {
               id: "excel",
               label: "Last ned som Excel (CSV)",
               icon: <FileSpreadsheet className="w-4 h-4" />,
-              onSelect: () => handleExport("monthly"),
+              onSelect: () => {
+                const map: Record<string, ReportTypeId> = { "Månedlig": "monthly", "Kvartalsvis": "financial", "Årlig": "financial" };
+                handleExport(map[row.type] ?? "monthly");
+              },
             },
             {
               id: "csv",
               label: "Last ned som CSV",
               icon: <FileText className="w-4 h-4" />,
-              onSelect: () => handleExport("monthly"),
+              onSelect: () => {
+                const map: Record<string, ReportTypeId> = { "Månedlig": "monthly", "Kvartalsvis": "financial", "Årlig": "financial" };
+                handleExport(map[row.type] ?? "monthly");
+              },
             },
           ] satisfies AdminDropdownItem[]}
         />
@@ -446,8 +452,10 @@ export default function RapporterPage() {
               </h3>
               <button
                 type="button"
-                className="p-1.5 rounded-md hover:bg-[var(--color-grey-100)] text-[var(--color-muted)] transition-colors"
+                disabled
+                className="p-1.5 rounded-md text-[var(--color-muted)] opacity-50 cursor-not-allowed"
                 aria-label="Legg til automatisk rapport"
+                title="Kommer snart"
               >
                 <Plus className="w-4 h-4" />
               </button>
