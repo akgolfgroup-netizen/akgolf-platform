@@ -33,26 +33,26 @@ export function CoachInsightCard({
   if (coachInsight && (coachInsight.primaryFocus || coachInsight.summary)) {
     const focusAreas = (coachInsight.focusAreas ?? []).slice(0, 3);
     return (
-      <PremiumCard className="flex h-full flex-col" glow="green">
+      <PremiumCard className="flex h-full flex-col" glow="green" radius="large">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-            <MessageSquare className="h-4 w-4 text-primary" strokeWidth={1.75} />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#d2f000]/20">
+            <MessageSquare className="h-4 w-4 text-[#154212]" strokeWidth={1.75} />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-[var(--color-portal-text)]">Fra din coach</h3>
-            <p className="text-[10px] text-[var(--color-portal-muted)]">
+            <h3 className="text-sm font-semibold text-[#1c1c16]">Fra din coach</h3>
+            <p className="text-[10px] text-[#8a8a82]">
               {format(new Date(coachInsight.date), "d. MMMM yyyy", { locale: nb })}
             </p>
           </div>
         </div>
 
         {coachInsight.primaryFocus && (
-          <div className="mt-4 rounded-[10px] border border-black/[0.04] bg-black/[0.02] p-3">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+          <div className="mt-4 rounded-xl border border-[#154212]/8 bg-[#f7f3ea] p-3">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#8a8a82]">
               Primaert fokus
             </p>
-            <p className="mt-1 flex items-center gap-2 text-sm font-semibold text-[var(--color-portal-text)]">
-              <Target className="h-3.5 w-3.5 text-primary" />
+            <p className="mt-1 flex items-center gap-2 text-sm font-semibold text-[#1c1c16]">
+              <Target className="h-3.5 w-3.5 text-[#154212]" />
               {coachInsight.primaryFocus}
             </p>
           </div>
@@ -84,7 +84,7 @@ export function CoachInsightCard({
 
         <Link
           href="/portal/coaching-historikk"
-          className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[12px] font-semibold text-primary transition-all hover:gap-2"
+          className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[12px] font-semibold text-[#154212] transition-all hover:gap-2"
         >
           Se full coaching-historikk
           <ArrowRight className="h-3.5 w-3.5" />
@@ -95,17 +95,17 @@ export function CoachInsightCard({
 
   if (aiInsight?.focusTip || aiInsight?.summary) {
     return (
-      <PremiumCard className="flex h-full flex-col" glow="ai">
+      <PremiumCard className="flex h-full flex-col" glow="ai" radius="large">
         {/* AI glow line */}
-        <div className="absolute left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-ai to-transparent" />
+        <div className="absolute left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-[#AF52DE] to-transparent" />
 
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-ai/15 bg-ai/[0.08]">
-            <Sparkles className="h-4 w-4 text-ai" strokeWidth={1.75} />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#AF52DE]/15 bg-[#AF52DE]/10">
+            <Sparkles className="h-4 w-4 text-[#AF52DE]" strokeWidth={1.75} />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-[var(--color-portal-text)]">AI-innsikt</h3>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+            <h3 className="text-sm font-semibold text-[#1c1c16]">AI-innsikt</h3>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#8a8a82]">
               Basert paa treningshistorikk
             </p>
           </div>
@@ -117,7 +117,7 @@ export function CoachInsightCard({
 
         <Link
           href="/portal/ai-coach"
-          className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[12px] font-semibold text-ai transition-all hover:gap-2"
+          className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[12px] font-semibold text-[#AF52DE] transition-all hover:gap-2"
         >
           Snakk med AI Coach
           <ArrowRight className="h-3.5 w-3.5" />
@@ -127,22 +127,22 @@ export function CoachInsightCard({
   }
 
   return (
-    <PremiumCard className="flex h-full flex-col border-dashed">
+    <PremiumCard className="flex h-full flex-col border-dashed border-[#154212]/15" radius="large">
       <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-ai/15 bg-ai/[0.08]">
-          <Sparkles className="h-4 w-4 text-ai" strokeWidth={1.75} />
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#AF52DE]/15 bg-[#AF52DE]/10">
+          <Sparkles className="h-4 w-4 text-[#AF52DE]" strokeWidth={1.75} />
         </div>
         <div>
-          <h3 className="text-sm font-semibold text-[var(--color-portal-text)]">Bli kjent med AI Coach</h3>
-          <p className="text-[10px] text-[var(--color-portal-muted)]">Din personlige assistent</p>
+          <h3 className="text-sm font-semibold text-[#1c1c16]">Bli kjent med AI Coach</h3>
+          <p className="text-[10px] text-[#8a8a82]">Din personlige assistent</p>
         </div>
       </div>
-      <p className="mt-4 text-sm leading-relaxed text-text">
+      <p className="mt-4 text-sm leading-relaxed text-[#5a5a52]">
         Naar du har logget okter og runder, vil AI Coach gi deg personlige innsikter og anbefalinger.
       </p>
       <Link
         href="/portal/ai-coach"
-        className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[12px] font-semibold text-ai transition-all hover:gap-2"
+        className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[12px] font-semibold text-[#AF52DE] transition-all hover:gap-2"
       >
         Start en samtale
         <ArrowRight className="h-3.5 w-3.5" />

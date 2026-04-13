@@ -24,15 +24,15 @@ const PLAN_ITEMS: PlanItem[] = [
     meta: "Man 7. apr \u00b7 20 min",
     done: true,
     icon: Circle,
-    iconColor: "var(--color-green-bright)",
-    iconBg: "rgba(0,88,64,0.08)",
+    iconColor: "#2A7D5A",
+    iconBg: "rgba(42,125,90,0.1)",
   },
   {
     name: "Short game",
     meta: "Tir 8. apr \u00b7 30 min",
     done: true,
     icon: TrendingUp,
-    iconColor: "var(--color-warning)",
+    iconColor: "#C48A32",
     iconBg: "rgba(196,138,50,0.12)",
   },
   {
@@ -40,16 +40,16 @@ const PLAN_ITEMS: PlanItem[] = [
     meta: "Ons 9. apr \u00b7 45 min",
     done: true,
     icon: Target,
-    iconColor: "var(--color-green-bright)",
-    iconBg: "rgba(0,88,64,0.08)",
+    iconColor: "#2A7D5A",
+    iconBg: "rgba(42,125,90,0.1)",
   },
   {
     name: "Coaching-okt",
     meta: "Fre 11. apr \u00b7 14:30",
     done: false,
     icon: User,
-    iconColor: "var(--color-ai)",
-    iconBg: "rgba(175,82,222,0.08)",
+    iconColor: "#AF52DE",
+    iconBg: "rgba(175,82,222,0.1)",
     highlight: true,
   },
   {
@@ -57,8 +57,8 @@ const PLAN_ITEMS: PlanItem[] = [
     meta: "Lor 12. apr",
     done: false,
     icon: Calendar,
-    iconColor: "var(--color-portal-muted)",
-    iconBg: "rgba(0,0,0,0.03)",
+    iconColor: "#8a8a82",
+    iconBg: "rgba(138,138,130,0.08)",
     dimmed: true,
   },
 ];
@@ -67,13 +67,13 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
   const doneCount = PLAN_ITEMS.filter((i) => i.done).length;
 
   return (
-    <PremiumCard delay={delay} className="h-full">
+    <PremiumCard delay={delay} className="h-full" radius="large">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-sm font-semibold tracking-[-0.01em] text-[var(--color-portal-text)]">
+          <p className="text-sm font-semibold tracking-[-0.01em] text-[#1c1c16]">
             Ukens plan
           </p>
-          <p className="text-[11px] text-[var(--color-portal-muted)]">
+          <p className="text-[11px] text-[#8a8a82]">
             {doneCount} av {PLAN_ITEMS.length} fullfort
           </p>
         </div>
@@ -83,7 +83,7 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
         {PLAN_ITEMS.map((item) => (
           <div
             key={item.name}
-            className="flex items-center gap-2.5 rounded-[10px] border border-[var(--color-portal-border)] bg-[var(--color-portal-border-subtle)] px-3 py-2.5 transition-colors duration-200 hover:border-[rgba(0,0,0,0.08)] hover:bg-[rgba(0,0,0,0.04)]"
+            className="flex items-center gap-2.5 rounded-xl border border-[#154212]/8 bg-[#f7f3ea]/50 px-3 py-2.5 transition-colors duration-200 hover:border-[#d2f000]/30 hover:bg-[#f7f3ea]"
             style={{ opacity: item.dimmed ? 0.4 : 1 }}
           >
             {/* Icon dot */}
@@ -104,13 +104,13 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
                 className="text-[13px] font-medium"
                 style={{
                   color: item.highlight
-                    ? "var(--color-green-bright)"
-                    : "var(--color-portal-text)",
+                    ? "#154212"
+                    : "#1c1c16",
                 }}
               >
                 {item.name}
               </p>
-              <p className="text-[11px] text-[var(--color-portal-muted)]">
+              <p className="text-[11px] text-[#8a8a82]">
                 {item.meta}
               </p>
             </div>
@@ -119,8 +119,8 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
             <div
               className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 text-[10px] transition-colors ${
                 item.done
-                  ? "border-[var(--color-success)] bg-[var(--color-success)] text-white"
-                  : "border-[var(--color-portal-border)]"
+                  ? "border-[#2A7D5A] bg-[#2A7D5A] text-white"
+                  : "border-[#154212]/15"
               }`}
             >
               {item.done && <Check className="h-2.5 w-2.5" strokeWidth={3} />}

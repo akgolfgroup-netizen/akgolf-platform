@@ -103,7 +103,7 @@ export function DashboardClient({
           {/* Avatar */}
           <Link
             href="/portal/profil"
-            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-white shadow-card transition-transform duration-300 hover:scale-105 overflow-hidden"
+            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#154212] text-lg font-bold text-white shadow-[0_4px_16px_rgba(21,66,18,0.3)] transition-transform duration-300 hover:scale-105 overflow-hidden"
           >
             {userImage ? (
               <img src={userImage} alt="" className="h-full w-full object-cover" />
@@ -112,10 +112,10 @@ export function DashboardClient({
             )}
           </Link>
           <div>
-            <p className="text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+            <p className="text-[13px] font-medium uppercase tracking-[0.08em] text-[#8a8a82]">
               {dateStr}
             </p>
-            <h1 className="text-[24px] font-bold tracking-tight text-[var(--color-portal-text)]">
+            <h1 className="text-[24px] font-bold tracking-tight text-[#1c1c16]">
               Hei, {firstName}.
             </h1>
           </div>
@@ -124,33 +124,33 @@ export function DashboardClient({
         {/* Nøkkeltall */}
         <div className="hidden items-center gap-6 md:flex">
           <div className="text-center">
-            <span className="text-xl font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums">
+            <span className="text-xl font-extrabold tracking-tight text-[#1c1c16] tabular-nums">
               {handicap.current?.toFixed(1) ?? "—"}
             </span>
-            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-[var(--color-portal-muted)]">
+            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-[#8a8a82]">
               HCP
             </p>
           </div>
-          <div className="h-8 w-px bg-black/6" />
+          <div className="h-8 w-px bg-[#154212]/10" />
           <div className="text-center">
-            <span className="text-xl font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums">
+            <span className="text-xl font-extrabold tracking-tight text-[#1c1c16] tabular-nums">
               {stats.roundsCount || 0}
             </span>
-            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-[var(--color-portal-muted)]">
+            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-[#8a8a82]">
               Runder
             </p>
           </div>
-          <div className="h-8 w-px bg-black/6" />
+          <div className="h-8 w-px bg-[#154212]/10" />
           <div className="text-center">
-            <span className="text-xl font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums">
+            <span className="text-xl font-extrabold tracking-tight text-[#1c1c16] tabular-nums">
               {stats.sessionsCount || 0}
             </span>
-            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-[var(--color-portal-muted)]">
+            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-[#8a8a82]">
               Økter
             </p>
           </div>
-          <div className="h-8 w-px bg-black/6" />
-          <span className="rounded-full bg-primary/10 px-3 py-1 text-[11px] font-semibold text-primary">
+          <div className="h-8 w-px bg-[#154212]/10" />
+          <span className="rounded-full bg-[#d2f000] px-3 py-1 text-[11px] font-semibold text-[#0f2f0d]">
             {tierLabel[tier] ?? tier}
           </span>
         </div>
@@ -167,14 +167,14 @@ export function DashboardClient({
         <PremiumCard delay={0.2} className="p-6">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <Calendar className="h-4 w-4 text-[var(--color-portal-muted)]" />
-              <span className="text-sm font-semibold text-[var(--color-portal-text)]">
+              <Calendar className="h-4 w-4 text-[#8a8a82]" />
+              <span className="text-sm font-semibold text-[#1c1c16]">
                 Denne uken
               </span>
             </div>
             <Link
               href="/portal/kalender"
-              className="flex items-center gap-1 text-xs font-medium text-primary transition-colors hover:text-primary-alt"
+              className="flex items-center gap-1 text-xs font-medium text-[#154212] transition-colors hover:text-[#d2f000]"
             >
               Se kalender
               <ArrowRight className="h-3 w-3" />
@@ -189,27 +189,27 @@ export function DashboardClient({
                   key={i}
                   className={`flex flex-col items-center rounded-xl px-2 py-3 transition-all duration-200 ${
                     isToday
-                      ? "bg-[var(--color-portal-text)] text-white"
+                      ? "bg-[#d2f000] text-[#0f2f0d]"
                       : "bg-transparent"
                   }`}
                 >
                   <span className={`text-[10px] font-medium uppercase tracking-[0.06em] ${
-                    isToday ? "text-white/60" : "text-[var(--color-portal-muted)]"
+                    isToday ? "text-[#0f2f0d]/60" : "text-[#8a8a82]"
                   }`}>
                     {day.dayLabel}
                   </span>
                   <span className={`mt-1 text-base font-semibold tabular-nums ${
-                    isToday ? "text-white" : "text-[var(--color-portal-text)]"
+                    isToday ? "text-[#0f2f0d]" : "text-[#1c1c16]"
                   }`}>
                     {day.dateNumber}
                   </span>
                   {day.trained && (
                     <span className={`mt-1.5 h-1.5 w-1.5 rounded-full ${
-                      isToday ? "bg-[var(--color-accent-cta)]" : "bg-[var(--color-success)]"
+                      isToday ? "bg-[#154212]" : "bg-[#2A7D5A]"
                     }`} />
                   )}
                   {day.hasCoaching && !day.trained && (
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#154212]" />
                   )}
                   {day.isRest && !day.trained && !day.hasCoaching && (
                     <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-transparent" />
@@ -226,7 +226,7 @@ export function DashboardClient({
 
         {/* Treningsstatistikk — kompakt */}
         <PremiumCard delay={0.3} glow="green">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#8a8a82]">
             Treningsstatistikk
           </p>
           <div className="mt-4 grid grid-cols-3 gap-4">
@@ -235,30 +235,30 @@ export function DashboardClient({
                 value={handicap.current ?? 12.4}
                 decimalPlaces={1}
                 delay={0.4}
-                className="text-[32px] font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums"
+                className="text-[32px] font-extrabold tracking-tight text-[#1c1c16] tabular-nums"
               />
-              <p className="mt-1 text-[11px] text-[var(--color-portal-muted)]">HCP</p>
+              <p className="mt-1 text-[11px] text-[#8a8a82]">HCP</p>
             </div>
             <div className="text-center">
               <NumberTicker
                 value={stats.roundsCount || 24}
                 delay={0.5}
-                className="text-[32px] font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums"
+                className="text-[32px] font-extrabold tracking-tight text-[#1c1c16] tabular-nums"
               />
-              <p className="mt-1 text-[11px] text-[var(--color-portal-muted)]">Runder</p>
+              <p className="mt-1 text-[11px] text-[#8a8a82]">Runder</p>
             </div>
             <div className="text-center">
               <NumberTicker
                 value={stats.sessionsCount || 48}
                 delay={0.6}
-                className="text-[32px] font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums"
+                className="text-[32px] font-extrabold tracking-tight text-[#1c1c16] tabular-nums"
               />
-              <p className="mt-1 text-[11px] text-[var(--color-portal-muted)]">Økter</p>
+              <p className="mt-1 text-[11px] text-[#8a8a82]">Økter</p>
             </div>
           </div>
           <Link
             href="/portal/statistikk"
-            className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-black/6 bg-black/[0.02] px-4 py-2.5 text-[13px] font-medium text-[var(--color-portal-text)] transition-colors hover:bg-black/[0.04]"
+            className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-[#154212]/10 bg-[#f7f3ea] px-4 py-2.5 text-[13px] font-medium text-[#1c1c16] transition-colors hover:bg-[#f0ebe0]"
           >
             <TrendingUp className="h-3.5 w-3.5" />
             Se full statistikk
@@ -294,12 +294,12 @@ function QuickLink({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 rounded-xl border border-black/6 bg-white p-4 transition-all duration-300 ease-[var(--ease-apple)] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
+      className="flex items-center gap-3 rounded-[20px] border border-[#154212]/8 bg-white p-4 transition-all duration-300 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(21,66,18,0.08)] hover:border-[#d2f000]/30"
     >
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-black/[0.03]">
-        <Icon className="h-4 w-4 text-[var(--color-portal-secondary)]" />
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f7f3ea]">
+        <Icon className="h-4 w-4 text-[#154212]" />
       </div>
-      <span className="text-[13px] font-medium text-[var(--color-portal-text)]">{label}</span>
+      <span className="text-[13px] font-medium text-[#1c1c16]">{label}</span>
     </Link>
   );
 }
