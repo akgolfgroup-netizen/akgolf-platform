@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { NumberTicker } from "@/components/portal/dashboard/number-ticker";
-import type { PortalTournament, TournamentStats } from "./actions";
+import { registerForTournament, type PortalTournament, type TournamentStats } from "./actions";
 
 // ── Helpers ─────────────────────────────────────────────────
 
@@ -47,6 +47,23 @@ interface Props {
 export function TurneringsplanClient({ tournaments, stats }: Props) {
   const [activeTab, setActiveTab] = useState<TabKey>("kommende");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [registeringId, setRegisteringId] = useState<string | null>(null);
+
+  async function handleRegister(tournamentId: string) {
+    setRegisteringId(tournamentId);
+    try {
+      const result = await registerForTournament({ tournamentId });
+      if (result.success) {
+        window.location.reload();
+      } else {
+        alert(result.error || "Kunne ikke melde på");
+      }
+    } catch {
+      alert("Kunne ikke melde på");
+    } finally {
+      setRegisteringId(null);
+    }
+  }
 
   const registered = tournaments.filter((t) => t.isRegistered);
 
@@ -310,9 +327,13 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                     <div className="mt-4 flex items-center gap-3">
                       {!t.isRegistered && (
-                        <button className="inline-flex items-center gap-1.5 rounded-full bg-[#D1F843] px-4 py-2 text-[12px] font-bold text-[#0A1F18] transition-opacity hover:opacity-85">
+                        <button
+                          onClick={() => handleRegister(t.id)}
+                          disabled={registeringId === t.id}
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[#D1F843] px-4 py-2 text-[12px] font-bold text-[#0A1F18] transition-opacity hover:opacity-85 disabled:opacity-60"
+                        >
                           <CheckCircle2 className="h-3.5 w-3.5" />
-                          Meld meg på
+                          {registeringId === t.id ? "Melder på..." : "Meld meg på"}
                         </button>
                       )}
                       {t.externalUrl && (

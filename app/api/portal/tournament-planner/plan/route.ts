@@ -28,10 +28,10 @@ export async function POST(req: NextRequest) {
     .upsert({
       studentId: data.studentId,
       tournamentId: data.tournamentId,
-      priority: data.priority || 1,
+      planLevel: data.planLevel || null,
+      goalType: data.goalType || null,
       notes: data.notes || null,
-      status: data.status || "INTERESTED",
-      plannedRounds: data.plannedRounds || null,
+      isRegistered: data.isRegistered ?? false,
       updatedAt: new Date().toISOString(),
     }, {
       onConflict: "studentId,tournamentId"

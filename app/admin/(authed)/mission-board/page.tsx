@@ -28,18 +28,15 @@ import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminButton,
   AdminBadge,
+  AdminCard,
   AdminEmptyState,
   AdminAreaChart,
-  AdminDonutChart,
   AdminSparkline,
-  AdminHeatmap,
   AdminTimeline,
   AdminProgressRing,
 } from "@/components/portal/mission-control/ui";
 import type {
   AdminAreaChartDatum,
-  AdminDonutChartDatum,
-  AdminHeatmapCell,
   AdminTimelineItem,
 } from "@/components/portal/mission-control/ui";
 import { getMissionBoardCharts, type MissionBoardCharts } from "./actions";
@@ -222,15 +219,10 @@ export default function MissionBoardPage() {
 
   // Reelle chart-data fra server action
   const bookingTrendData: AdminAreaChartDatum[] = charts?.bookingTrend ?? [];
-  const bookingDistribution: AdminDonutChartDatum[] = charts?.serviceDistribution ?? [];
   const sparkBookings = charts?.sparkBookings ?? [];
   const sparkRevenue = charts?.sparkRevenue ?? [];
   const sparkStudents = charts?.sparkStudents ?? [];
   const sparkActive = sparkBookings; // Bruker booking-sparkline som proxy
-
-  const heatmapRows = ["Man", "Tir", "Ons", "Tor", "Fre", "Lor", "Son"];
-  const heatmapCols = ["08", "10", "12", "14", "16", "18", "20"];
-  const heatmapData: AdminHeatmapCell[] = charts?.heatmap ?? [];
 
   // Timeline — dagens hendelser basert pa todaysSchedule
   const timelineItems: AdminTimelineItem[] = stats.todaysSchedule.slice(0, 6).map((b) => ({
@@ -249,30 +241,21 @@ export default function MissionBoardPage() {
   const monthlyGoal = charts?.monthlyGoal ?? 240;
   const monthlyCurrent = charts?.monthlyCurrent ?? 0;
 
-  const quickActions = [
-    {
-      icon: Plus,
-      label: "Ny booking",
-      href: "/admin/bookinger/ny",
-      variant: "primary" as const,
-    },
+  const secondaryActions = [
     {
       icon: MessageSquare,
       label: "Send melding",
       href: "/admin/meldinger",
-      variant: "secondary" as const,
     },
     {
       icon: UserPlus,
       label: "Ny elev",
       href: "/admin/elever/ny",
-      variant: "secondary" as const,
     },
     {
       icon: FileText,
       label: "Rapport",
       href: "/admin/rapporter",
-      variant: "secondary" as const,
     },
   ];
 
@@ -319,23 +302,33 @@ export default function MissionBoardPage() {
           {/* Quick Actions */}
           <motion.div
             variants={itemVariants}
-            className="grid grid-cols-2 md:grid-cols-4 gap-3"
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
           >
-            {quickActions.map((action) => {
-              const Icon = action.icon;
-              return (
-                <Link key={action.label} href={action.href}>
-                  <AdminButton
-                    variant={action.variant}
-                    className="w-full justify-between"
-                    icon={<Icon className="w-4 h-4" />}
-                  >
-                    <span className="flex-1 text-left">{action.label}</span>
-                    <ArrowRight className="w-4 h-4 opacity-60" />
-                  </AdminButton>
-                </Link>
-              );
-            })}
+            <div className="flex items-center gap-2">
+              {secondaryActions.map((action) => {
+                const Icon = action.icon;
+                return (
+                  <Link key={action.label} href={action.href}>
+                    <AdminButton
+                      variant="secondary"
+                      icon={<Icon className="w-4 h-4" />}
+                      className="gap-2"
+                    >
+                      {action.label}
+                    </AdminButton>
+                  </Link>
+                );
+              })}
+            </div>
+            <Link href="/admin/bookinger/ny">
+              <AdminButton
+                variant="primary"
+                icon={<Plus className="w-4 h-4" />}
+                className="gap-2"
+              >
+                Ny booking
+              </AdminButton>
+            </Link>
           </motion.div>
 
           {/* Stats Grid med sparklines */}
@@ -343,7 +336,7 @@ export default function MissionBoardPage() {
             variants={itemVariants}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
           >
-            <div className="bg-white rounded-xl shadow-card p-5">
+            <AdminCard compact hover className="p-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-grey-500">Okter i dag</p>
@@ -356,9 +349,9 @@ export default function MissionBoardPage() {
                 </div>
               </div>
               <AdminSparkline data={sparkBookings} width="100%" height={32} />
-            </div>
+            </AdminCard>
 
-            <div className="bg-white rounded-xl shadow-card p-5">
+            <AdminCard compact hover className="p-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-grey-500">Aktive okter</p>
@@ -376,9 +369,9 @@ export default function MissionBoardPage() {
                 height={32}
                 color="#22c55e"
               />
-            </div>
+            </AdminCard>
 
-            <div className="bg-white rounded-xl shadow-card p-5">
+            <AdminCard compact hover className="p-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-grey-500">Nye elever (uke)</p>
@@ -396,9 +389,9 @@ export default function MissionBoardPage() {
                 height={32}
                 color="#16a34a"
               />
-            </div>
+            </AdminCard>
 
-            <div className="bg-white rounded-xl shadow-card p-5">
+            <AdminCard compact hover className="p-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-grey-500">Omsetning (uke)</p>
@@ -416,23 +409,23 @@ export default function MissionBoardPage() {
                 height={32}
                 color="#16a34a"
               />
-            </div>
+            </AdminCard>
           </motion.div>
 
-          {/* Charts — trend + fordeling + manedsmal */}
+          {/* Charts — trend + manedsmal */}
           <motion.div
             variants={itemVariants}
             className="grid grid-cols-1 lg:grid-cols-3 gap-6"
           >
-            <div className="bg-white rounded-xl shadow-card p-5 lg:col-span-2">
+            <AdminCard className="p-5 lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-base font-semibold text-grey-900">Bookinger siste 30 dager</h3>
                 <AdminBadge variant="info">Trend</AdminBadge>
               </div>
               <AdminAreaChart data={bookingTrendData} height={240} />
-            </div>
+            </AdminCard>
 
-            <div className="bg-white rounded-xl shadow-card p-5">
+            <AdminCard className="p-5">
               <h3 className="text-base font-semibold text-grey-900 mb-4">Manedlig mal</h3>
               <div className="flex flex-col items-center justify-center py-4">
                 <AdminProgressRing
@@ -443,46 +436,14 @@ export default function MissionBoardPage() {
                   label={`${monthlyCurrent} / ${monthlyGoal} okter`}
                 />
               </div>
-            </div>
-          </motion.div>
-
-          {/* Heatmap + Donut */}
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-          >
-            <div className="bg-white rounded-xl shadow-card p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-semibold text-grey-900">Aktivitet denne uken</h3>
-                <span className="text-xs text-grey-500">Dag x time</span>
-              </div>
-              <div className="overflow-x-auto">
-                <AdminHeatmap
-                  data={heatmapData}
-                  rows={heatmapRows}
-                  cols={heatmapCols}
-                  cellSize={32}
-                  formatTooltip={(c) => `${c.row} kl. ${c.col}:00 — ${c.value} okter`}
-                />
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-card p-5">
-              <h3 className="text-base font-semibold text-grey-900 mb-4">Fordeling per tjeneste</h3>
-              <AdminDonutChart
-                data={bookingDistribution}
-                height={240}
-                centerLabel="Denne uken"
-                centerValue={bookingDistribution.reduce((s, d) => s + d.value, 0)}
-              />
-            </div>
+            </AdminCard>
           </motion.div>
 
           {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Today's Schedule */}
             <motion.div variants={itemVariants} className="lg:col-span-2">
-              <div className="bg-white rounded-xl shadow-card overflow-hidden">
+              <AdminCard className="overflow-hidden p-0">
                 <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Clock className="w-5 h-5 text-green-600" />
@@ -546,42 +507,38 @@ export default function MissionBoardPage() {
                     </p>
                   </div>
                 )}
-              </div>
+              </AdminCard>
             </motion.div>
 
             {/* Sidebar */}
             <div className="space-y-6">
               {/* AI Insights Card */}
               <motion.div variants={itemVariants}>
-                <div className="bg-white rounded-xl shadow-card relative overflow-hidden p-5">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl" />
-
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-2 mb-4">
-                      <Sparkles className="w-5 h-5 text-purple-500" />
-                      <h3 className="text-base font-semibold text-grey-900">AI-innsikt</h3>
-                    </div>
-
-                    <p className="text-sm text-grey-500 mb-4 leading-relaxed">
-                      Basert pa monsteret denne uken, anbefales det a legge
-                      til en ekstra &quot;Quick Fix&quot;-slot pa fredag
-                      ettermiddag. Etterspurselen er hoy.
-                    </p>
-
-                    <button
-                      type="button"
-                      onClick={() => router.push("/admin/analytics")}
-                      className="w-full py-2.5 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-600 rounded-lg text-sm font-semibold transition-colors"
-                    >
-                      Se detaljert analyse
-                    </button>
+                <AdminCard className="p-5 border-l-4 border-l-purple-500">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Sparkles className="w-5 h-5 text-purple-500" />
+                    <h3 className="text-base font-semibold text-grey-900">AI-innsikt</h3>
                   </div>
-                </div>
+
+                  <p className="text-sm text-grey-500 mb-4 leading-relaxed">
+                    Basert pa monsteret denne uken, anbefales det a legge
+                    til en ekstra &quot;Quick Fix&quot;-slot pa fredag
+                    ettermiddag. Etterspurselen er hoy.
+                  </p>
+
+                  <AdminButton
+                    variant="secondary"
+                    onClick={() => router.push("/admin/analytics")}
+                    className="w-full"
+                  >
+                    Se detaljert analyse
+                  </AdminButton>
+                </AdminCard>
               </motion.div>
 
               {/* Alerts */}
               <motion.div variants={itemVariants}>
-                <div className="bg-white rounded-xl shadow-card overflow-hidden">
+                <AdminCard className="overflow-hidden p-0">
                   <div className="px-6 py-4 border-b border-grey-200">
                     <div className="flex items-center gap-2">
                       <Bell className="w-5 h-5 text-green-600" />
@@ -629,25 +586,25 @@ export default function MissionBoardPage() {
                       </p>
                     </div>
                   )}
-                </div>
+                </AdminCard>
               </motion.div>
 
               {/* Timeline — dagens aktivitet */}
               {timelineItems.length > 0 && (
                 <motion.div variants={itemVariants}>
-                  <div className="bg-white rounded-xl shadow-card p-5">
+                  <AdminCard compact className="p-5">
                     <h3 className="text-base font-semibold text-grey-900 mb-4 flex items-center gap-2">
                       <Clock className="w-5 h-5 text-green-600" />
                       Dagens aktivitet
                     </h3>
                     <AdminTimeline items={timelineItems} />
-                  </div>
+                  </AdminCard>
                 </motion.div>
               )}
 
               {/* Weekly Summary */}
               <motion.div variants={itemVariants}>
-                <div className="bg-white rounded-xl shadow-card p-5">
+                <AdminCard compact className="p-5">
                   <h3 className="text-base font-semibold text-grey-900 mb-4 flex items-center gap-2">
                     <Zap className="w-5 h-5 text-green-600" />
                     Denne uken
@@ -679,7 +636,7 @@ export default function MissionBoardPage() {
                       </span>
                     </div>
                   </div>
-                </div>
+                </AdminCard>
               </motion.div>
             </div>
           </div>

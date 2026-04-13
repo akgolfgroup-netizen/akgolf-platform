@@ -2,6 +2,7 @@
 
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 
 export interface PortalTournament {
   id: string;
@@ -89,4 +90,31 @@ export async function getPlayerTournaments(): Promise<{
       completed: completedCount,
     },
   };
+}
+
+export async function registerForTournament(input: {
+  tournamentId: string;
+}): Promise<{ success: boolean; error?: string }> {
+  const user = await requirePortalUser();
+  if (!user?.id) return { success: false, error: "Ikke innlogget" };
+
+  const supabase = await createServerSupabase();
+
+  try {
+    const { error } = await supabase
+      .from("PlayerTournamentPlan")
+      .upsert({
+        studentId: user.id,
+        tournamentId: input.tournamentId,
+        isRegistered: true,
+        updatedAt: new Date().toISOString(),
+      }, {
+        onConflict: "studentId,tournamentId",
+      });
+
+    if (error) throw error;
+    return { success: true };
+  } catch {
+    return { success: false, error: "Kunne ikke melde på turnering" };
+  }
 }

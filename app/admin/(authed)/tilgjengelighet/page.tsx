@@ -454,80 +454,55 @@ export default function TilgjengelighetPage() {
                       </AdminButton>
                     </div>
                   </div>
-                  <div className="grid grid-cols-7 divide-x divide-[#D5DFDB]">
+                  <div className="divide-y divide-[#D5DFDB]">
                     {days.map((day, i) => {
                       const dayIndex = dayIndices[i];
                       const slots = editingSlots[dayIndex] || [];
 
                       return (
-                        <div key={day} className="p-4">
-                          <div className="text-center mb-3">
-                            <span className="text-xs font-medium text-[#5A6E66] uppercase">
+                        <div key={day} className="px-4 py-3 flex items-start gap-4">
+                          <div className="w-12 shrink-0 pt-1">
+                            <span className="text-sm font-semibold text-[#0A1F18]">
                               {day}
                             </span>
                           </div>
-                          <div className="space-y-2">
-                            {slots.length > 0 ? (
-                              slots.map((slot, j) => (
-                                <div
-                                  key={j}
-                                  className="p-2 bg-[#ECF0EF] rounded text-center space-y-1"
-                                >
-                                  <div className="flex items-center justify-center gap-1">
-                                    <input
-                                      type="time"
-                                      value={slot.start}
-                                      onChange={(e) =>
-                                        handleUpdateSlot(
-                                          dayIndex,
-                                          j,
-                                          "start",
-                                          e.target.value,
-                                        )
-                                      }
-                                      className="w-16 text-xs bg-transparent border-0 p-0 text-[#1A4D36] text-center"
-                                    />
-                                    <span className="text-xs text-[#1A4D36]">
-                                      -
-                                    </span>
-                                    <input
-                                      type="time"
-                                      value={slot.end}
-                                      onChange={(e) =>
-                                        handleUpdateSlot(
-                                          dayIndex,
-                                          j,
-                                          "end",
-                                          e.target.value,
-                                        )
-                                      }
-                                      className="w-16 text-xs bg-transparent border-0 p-0 text-[#1A4D36] text-center"
-                                    />
-                                  </div>
-                                  <button
-                                    onClick={() =>
-                                      handleRemoveSlot(dayIndex, j)
-                                    }
-                                    className="text-[10px] text-[#EF4444] hover:underline"
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-wrap items-center gap-2">
+                              {slots.length > 0 ? (
+                                slots.map((slot, j) => (
+                                  <div
+                                    key={j}
+                                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#ECF0EF] rounded-full text-sm text-[#1A4D36]"
                                   >
-                                    Fjern
-                                  </button>
-                                </div>
-                              ))
-                            ) : (
-                              <div className="p-2 bg-[#F5F8F7] rounded text-center">
-                                <span className="text-xs text-[#5A6E66]">
+                                    <span className="tabular-nums">
+                                      {slot.start} – {slot.end}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleRemoveSlot(dayIndex, j)}
+                                      className="w-5 h-5 rounded-full hover:bg-[#D5DFDB] flex items-center justify-center text-[#5A6E66] hover:text-[#EF4444] transition-colors"
+                                      aria-label="Fjern slot"
+                                      title="Fjern slot"
+                                    >
+                                      <span className="text-xs leading-none">×</span>
+                                    </button>
+                                  </div>
+                                ))
+                              ) : (
+                                <span className="text-sm text-[#5A6E66] py-1.5">
                                   Fri
                                 </span>
-                              </div>
-                            )}
+                              )}
+                              <AdminButton
+                                variant="secondary"
+                                onClick={() => handleAddSlot(dayIndex)}
+                                icon={<Plus className="w-3.5 h-3.5" />}
+                                className="text-sm px-3 py-1.5 h-auto"
+                              >
+                                Legg til slot
+                              </AdminButton>
+                            </div>
                           </div>
-                          <button
-                            onClick={() => handleAddSlot(dayIndex)}
-                            className="w-full mt-2 p-1.5 rounded border border-dashed border-[#A5B2AD] hover:border-[#0A1F18] hover:text-[#0A1F18] transition-colors"
-                          >
-                            <Plus className="w-3.5 h-3.5 mx-auto text-[#7A8C85]" />
-                          </button>
                         </div>
                       );
                     })}

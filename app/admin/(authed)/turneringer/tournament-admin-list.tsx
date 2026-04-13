@@ -64,7 +64,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
  setSyncResult(null);
  setSyncError(null);
  try {
- const res = await fetch("/api/tournament-planner/sync", {
+ const res = await fetch("/api/portal/tournament-planner/sync", {
  method: "POST",
  headers: { "Content-Type": "application/json"},
  body: JSON.stringify({ year: new Date().getFullYear() }),
@@ -97,7 +97,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
 
  setDeletingId(t.id);
  try {
- const res = await fetch(`/api/tournament-planner/${t.id}`, { method: "DELETE"});
+ const res = await fetch(`/api/portal/tournament-planner/${t.id}`, { method: "DELETE"});
  if (!res.ok) {
  alert(`Kunne ikke slette turneringen (${res.status})`);
  return;
