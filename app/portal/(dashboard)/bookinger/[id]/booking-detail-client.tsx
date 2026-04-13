@@ -17,7 +17,7 @@ import {
   AlertTriangle,
   FileText,
 } from "lucide-react";
-import { GlassCard } from "@/components/portal/premium";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { BookingStatusBadge } from "@/components/portal/booking/booking-status-badge";
 import type { BookingStatusVariant } from "@/components/portal/booking/booking-types";
 import { cancelBooking } from "../actions";
@@ -111,7 +111,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           <h1 className="text-xl font-bold text-portal-text">
             {booking.serviceName}
           </h1>
-          <p className="text-sm text-portal-muted mt-1">
+          <p className="text-sm text-portal-muted mt-1 tabular-nums">
             {format(start, "EEEE d. MMMM yyyy", { locale: nb })}
           </p>
         </div>
@@ -122,13 +122,14 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
       </div>
 
       {/* Detaljer */}
-      <GlassCard variant="light" padding="lg">
+      <PremiumCard>
         <div className="grid gap-5">
           {/* Tidspunkt */}
           <DetailRow
             icon={<Calendar className="w-4 h-4" />}
             label="Dato"
             value={format(start, "EEEE d. MMMM yyyy", { locale: nb })}
+            tabular
           />
           <DetailRow
             icon={<Clock className="w-4 h-4" />}
@@ -159,8 +160,8 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
 
           {/* Betaling */}
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <CreditCard className="w-4 h-4 text-primary" />
+            <div className="w-8 h-8 rounded-xl bg-portal-hover flex items-center justify-center shrink-0">
+              <CreditCard className="w-4 h-4 text-portal-secondary" />
             </div>
             <div className="flex-1">
               <p className="text-[11px] text-portal-muted uppercase tracking-[0.08em]">
@@ -201,13 +202,13 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
             />
           )}
         </div>
-      </GlassCard>
+      </PremiumCard>
 
       {/* Resultatmelding */}
       {cancelResult && (
-        <GlassCard variant="light" padding="md">
+        <PremiumCard>
           <p className="text-sm text-portal-text">{cancelResult}</p>
-        </GlassCard>
+        </PremiumCard>
       )}
 
       {/* Handlinger */}
@@ -226,7 +227,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           {!showCancelConfirm && (
             <button
               onClick={() => setShowCancelConfirm(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[20px] border border-error/30 text-error text-[12px] font-bold hover:bg-error/5 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[20px] border border-portal-border text-portal-secondary text-[12px] font-bold hover:bg-portal-hover transition-colors cursor-pointer"
             >
               <XCircle className="w-4 h-4" />
               Avbestill
@@ -237,10 +238,10 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
 
       {/* Bekreft kansellering */}
       {showCancelConfirm && (
-        <GlassCard variant="light" padding="md">
+        <PremiumCard>
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-xl bg-error/10 flex items-center justify-center shrink-0">
-              <AlertTriangle className="w-4 h-4 text-error" />
+            <div className="w-8 h-8 rounded-xl bg-portal-hover flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-4 h-4 text-portal-secondary" />
             </div>
             <div className="flex-1">
               <p className="text-[14px] font-semibold text-portal-text mb-1">
@@ -253,7 +254,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
                 <button
                   onClick={handleCancel}
                   disabled={isPending}
-                  className="px-4 py-2 rounded-[20px] bg-error text-white text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
+                  className="px-4 py-2 rounded-[20px] bg-primary-alt text-white text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
                 >
                   {isPending ? "Avbestiller..." : "Ja, avbestill"}
                 </button>
@@ -267,7 +268,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
               </div>
             </div>
           </div>
-        </GlassCard>
+        </PremiumCard>
       )}
     </div>
   );
@@ -288,8 +289,8 @@ function DetailRow({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-        <span className="text-primary">{icon}</span>
+      <div className="w-8 h-8 rounded-xl bg-portal-hover flex items-center justify-center shrink-0">
+        <span className="text-portal-secondary">{icon}</span>
       </div>
       <div>
         <p className="text-[11px] text-portal-muted uppercase tracking-[0.08em]">

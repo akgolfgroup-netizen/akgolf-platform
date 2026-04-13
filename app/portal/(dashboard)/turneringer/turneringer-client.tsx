@@ -22,6 +22,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { TOURNAMENT_LEVEL_CONFIG, GOAL_TYPE_CONFIG, PLAN_LEVEL_CONFIG } from "@/modules/tournament-planner/constants";
 import type { TournamentWithPlan, GoalType, PlanLevel, TournamentLevel } from "@/modules/tournament-planner";
 import type { TourScheduleEvent } from "@/lib/portal/datagolf/client";
@@ -43,29 +44,29 @@ interface TurneringerClientProps {
 }
 
 // ════════════════════════════════════════════════════════════════
-// LEVEL BADGE CONFIG
+// LEVEL BADGE CONFIG — med Tailwind-tokens
 // ════════════════════════════════════════════════════════════════
 
 const LEVEL_BADGE_STYLES: Record<string, { bg: string; text: string; border: string }> = {
   nasjonal: {
-    bg: "#154212",
-    text: "#ffffff",
-    border: "#154212",
+    bg: "bg-primary",
+    text: "text-white",
+    border: "border-primary",
   },
   internasjonal: {
-    bg: "#1c1c16",
-    text: "#ffffff",
-    border: "#1c1c16",
+    bg: "bg-black",
+    text: "text-white",
+    border: "border-black",
   },
   regional: {
-    bg: "#3b82f6",
-    text: "#ffffff",
-    border: "#3b82f6",
+    bg: "bg-info",
+    text: "text-white",
+    border: "border-info",
   },
   lokal: {
-    bg: "#f7f3ea",
-    text: "#6b7366",
-    border: "#c2c9bb",
+    bg: "bg-portal-hover",
+    text: "text-portal-secondary",
+    border: "border-portal-border",
   },
 };
 
@@ -154,16 +155,16 @@ export function TurneringerClient({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1c1c16]">Turneringer</h1>
-          <p className="text-sm text-[#6b7366] mt-1">
+          <h1 className="text-2xl font-bold text-portal-text">Turneringer</h1>
+          <p className="text-sm text-portal-secondary mt-1">
             {myTournaments.length} planlagte turneringer
           </p>
         </div>
       </div>
 
-      {/* Tab Navigation */}
+      {/* Tab Navigation — Pill-tabs */}
       <div className="flex items-center justify-between">
-        <div className="flex gap-1 p-1 rounded-xl bg-[#f7f3ea]">
+        <div className="flex gap-1 p-[3px] rounded-[10px] bg-portal-hover">
           {([
             { key: "mine" as Tab, label: "Mine turneringer", count: myTournaments.length },
             { key: "alle" as Tab, label: "Alle turneringer", count: tournaments.length },
@@ -173,17 +174,17 @@ export function TurneringerClient({
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={cn(
-                "px-4 py-2 text-sm font-medium rounded-lg transition-all",
+                "px-4 py-[7px] text-[13px] font-medium rounded-[7px] transition-all",
                 activeTab === tab.key
-                  ? "bg-white text-[#1c1c16] shadow-sm"
-                  : "text-[#8a9385] hover:text-[#1c1c16]"
+                  ? "bg-primary text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
+                  : "text-portal-muted hover:text-portal-secondary hover:bg-portal-hover"
               )}
             >
               {tab.label}
               {tab.count !== undefined && (
                 <span className={cn(
                   "ml-1.5 text-xs tabular-nums",
-                  activeTab === tab.key ? "text-[#8a9385]" : "text-[#c2c9bb]"
+                  activeTab === tab.key ? "text-white/70" : "text-portal-muted"
                 )}>
                   {tab.count}
                 </span>
@@ -200,20 +201,20 @@ export function TurneringerClient({
               className={cn(
                 "p-2 rounded-lg border transition-colors",
                 showFilters
-                  ? "border-[#154212] bg-[#154212] text-white"
-                  : "border-[#c2c9bb]/50 text-[#6b7366] hover:border-[#154212]"
+                  ? "border-primary bg-primary text-white"
+                  : "border-portal-border text-portal-secondary hover:border-primary"
               )}
             >
               <Filter className="w-4 h-4" />
             </button>
-            <div className="flex p-1 rounded-lg bg-[#f7f3ea]">
+            <div className="flex p-1 rounded-lg bg-portal-hover">
               <button
                 onClick={() => setViewMode("list")}
                 className={cn(
                   "p-1.5 rounded-md transition-colors",
                   viewMode === "list"
-                    ? "bg-white shadow-sm text-[#1c1c16]"
-                    : "text-[#8a9385]"
+                    ? "bg-white shadow-sm text-portal-text"
+                    : "text-portal-muted"
                 )}
               >
                 <List className="w-4 h-4" />
@@ -223,8 +224,8 @@ export function TurneringerClient({
                 className={cn(
                   "p-1.5 rounded-md transition-colors",
                   viewMode === "calendar"
-                    ? "bg-white shadow-sm text-[#1c1c16]"
-                    : "text-[#8a9385]"
+                    ? "bg-white shadow-sm text-portal-text"
+                    : "text-portal-muted"
                 )}
               >
                 <CalendarDays className="w-4 h-4" />
@@ -234,7 +235,7 @@ export function TurneringerClient({
         )}
       </div>
 
-      {/* Filters */}
+      {/* Filters — Chip style */}
       {showFilters && activeTab !== "pro" && (
         <div className="flex gap-2 flex-wrap">
           {(["alle", "nasjonal", "regional", "lokal", "internasjonal"] as const).map((level) => (
@@ -244,8 +245,8 @@ export function TurneringerClient({
               className={cn(
                 "px-3 py-1.5 text-xs font-medium rounded-full border transition-colors",
                 levelFilter === level
-                  ? "bg-[#154212] text-white border-[#154212]"
-                  : "bg-white text-[#6b7366] border-[#c2c9bb]/50 hover:border-[#154212]"
+                  ? "bg-primary text-white border-primary"
+                  : "bg-white text-portal-secondary border-portal-border hover:border-primary"
               )}
             >
               {level === "alle"
@@ -333,7 +334,7 @@ function ListView({
     <div className="space-y-8">
       {upcoming.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold text-[#6b7366] uppercase tracking-wider mb-3">
+          <h2 className="text-[11px] font-semibold text-portal-secondary uppercase tracking-[0.08em] mb-3">
             Kommende
           </h2>
           <div className="space-y-2">
@@ -350,7 +351,7 @@ function ListView({
 
       {past.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold text-[#6b7366] uppercase tracking-wider mb-3">
+          <h2 className="text-[11px] font-semibold text-portal-secondary uppercase tracking-[0.08em] mb-3">
             Tidligere
           </h2>
           <div className="space-y-2 opacity-60">
@@ -392,19 +393,19 @@ function TournamentListCard({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left bg-white border border-[#c2c9bb]/50 rounded-2xl p-4 hover:border-[#154212] hover:shadow-sm transition-all group"
+      className="w-full text-left bg-white border border-portal-border rounded-xl p-4 hover:border-black/8 hover:shadow-card-hover transition-all duration-300 group"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           {/* Badges row */}
           <div className="flex items-center gap-2 mb-1.5 flex-wrap">
             <span
-              className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full border"
-              style={{
-                backgroundColor: levelStyle.bg,
-                color: levelStyle.text,
-                borderColor: levelStyle.border,
-              }}
+              className={cn(
+                "text-[10px] font-semibold px-2.5 py-0.5 rounded-full border",
+                levelStyle.bg,
+                levelStyle.text,
+                levelStyle.border
+              )}
             >
               {levelLabel}
             </span>
@@ -412,34 +413,34 @@ function TournamentListCard({
               <span
                 className="text-[10px] font-medium px-2 py-0.5 rounded-full"
                 style={{
-                  backgroundColor: `${GOAL_TYPE_CONFIG[plan.goalType as GoalType]?.color ?? "#6b7366"}15`,
-                  color: GOAL_TYPE_CONFIG[plan.goalType as GoalType]?.color ?? "#6b7366",
+                  backgroundColor: `${GOAL_TYPE_CONFIG[plan.goalType as GoalType]?.color ?? "var(--color-portal-secondary)"}15`,
+                  color: GOAL_TYPE_CONFIG[plan.goalType as GoalType]?.color ?? "var(--color-portal-secondary)",
                 }}
               >
                 {GOAL_TYPE_CONFIG[plan.goalType as GoalType]?.label ?? plan.goalType}
               </span>
             )}
             {plan?.isRegistered && (
-              <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/20">
+              <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-success-light text-success-text border border-success/20">
                 <Check className="w-3 h-3" />
                 Påmeldt
               </span>
             )}
             {tournament.series && (
-              <span className="text-[10px] text-[#8a9385]">
+              <span className="text-[10px] text-portal-muted">
                 {tournament.series}
               </span>
             )}
           </div>
 
           {/* Name */}
-          <h3 className="font-semibold text-[#1c1c16] text-sm group-hover:text-[#154212] transition-colors truncate">
+          <h3 className="font-semibold text-portal-text text-sm group-hover:text-primary transition-colors truncate">
             {tournament.name}
           </h3>
 
           {/* Meta */}
           <div className="mt-2 space-y-1">
-            <div className="flex items-center gap-2 text-xs text-[#6b7366]">
+            <div className="flex items-center gap-2 text-xs text-portal-secondary">
               <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
               <span>
                 {format(new Date(tournament.startDate), "d. MMM yyyy", { locale: nb })}
@@ -448,15 +449,15 @@ function TournamentListCard({
               </span>
             </div>
             {(tournament.course || tournament.location) && (
-              <div className="flex items-center gap-2 text-xs text-[#6b7366]">
+              <div className="flex items-center gap-2 text-xs text-portal-secondary">
                 <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                 <span className="truncate">
-                  {[tournament.course, tournament.location].filter(Boolean).join(", ")}
+                  {[tournament.course, tournament.location].filter(Boolean).join(', ')}
                 </span>
               </div>
             )}
             {tournament.registrationDeadline && !deadlinePassed && (
-              <div className="flex items-center gap-2 text-xs text-[#8a9385]">
+              <div className="flex items-center gap-2 text-xs text-portal-muted">
                 <Clock className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>
                   Påmeldingsfrist:{" "}
@@ -470,12 +471,12 @@ function TournamentListCard({
         {/* Right side — plan info */}
         <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
           {plan && (
-            <span className="text-xs font-medium text-[#1c1c16]">
+            <span className="text-xs font-medium text-portal-text">
               {PLAN_LEVEL_CONFIG[plan.planLevel as PlanLevel]?.label}
             </span>
           )}
           {tournament.externalUrl && (
-            <span className="p-1.5 rounded-lg text-[#8a9385] group-hover:text-[#6b7366] transition-colors">
+            <span className="p-1.5 rounded-lg text-portal-muted group-hover:text-portal-secondary transition-colors">
               <ExternalLink className="w-3.5 h-3.5" />
             </span>
           )}
@@ -523,32 +524,32 @@ function CalendarView({
   const weekdays = ["Ma", "Ti", "On", "To", "Fr", "Lø", "Sø"];
 
   return (
-    <div className="bg-white border border-[#c2c9bb]/50 rounded-2xl overflow-hidden">
+    <PremiumCard noHover className="p-0 overflow-hidden">
       {/* Month nav */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-[#f7f3ea]">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-portal-border">
         <button
           onClick={prevMonth}
-          className="p-1.5 rounded-lg hover:bg-[#f7f3ea] text-[#6b7366] transition-colors"
+          className="p-1.5 rounded-lg hover:bg-portal-hover text-portal-secondary transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
-        <h3 className="text-sm font-semibold text-[#1c1c16] capitalize">
+        <h3 className="text-sm font-semibold text-portal-text capitalize">
           {format(calendarMonth, "MMMM yyyy", { locale: nb })}
         </h3>
         <button
           onClick={nextMonth}
-          className="p-1.5 rounded-lg hover:bg-[#f7f3ea] text-[#6b7366] transition-colors"
+          className="p-1.5 rounded-lg hover:bg-portal-hover text-portal-secondary transition-colors"
         >
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>
 
       {/* Weekday headers */}
-      <div className="grid grid-cols-7 border-b border-[#f7f3ea]">
+      <div className="grid grid-cols-7 border-b border-portal-border">
         {weekdays.map((day) => (
           <div
             key={day}
-            className="py-2 text-center text-[10px] font-semibold text-[#8a9385] uppercase tracking-wider"
+            className="py-2 text-center text-[10px] font-semibold text-portal-muted uppercase tracking-[0.08em]"
           >
             {day}
           </div>
@@ -566,16 +567,16 @@ function CalendarView({
             <div
               key={i}
               className={cn(
-                "min-h-[80px] p-1.5 border-b border-r border-[#f7f3ea] last:border-r-0",
-                !isCurrentMonth && "bg-[#f7f3ea]/30"
+                "min-h-[80px] p-1.5 border-b border-r border-portal-border last:border-r-0",
+                !isCurrentMonth && "bg-portal-hover/50"
               )}
             >
               <span
                 className={cn(
                   "inline-flex items-center justify-center w-6 h-6 text-xs rounded-full",
-                  isToday && "bg-[#154212] text-white font-semibold",
-                  !isToday && isCurrentMonth && "text-[#1c1c16]",
-                  !isCurrentMonth && "text-[#c2c9bb]"
+                  isToday && "bg-primary text-white font-semibold",
+                  !isToday && isCurrentMonth && "text-portal-text",
+                  !isCurrentMonth && "text-portal-muted"
                 )}
               >
                 {format(day, "d")}
@@ -587,18 +588,18 @@ function CalendarView({
                     <button
                       key={t.id}
                       onClick={() => onSelect(t)}
-                      className="w-full text-left px-1.5 py-0.5 text-[10px] font-medium rounded truncate transition-colors hover:opacity-80"
-                      style={{
-                        backgroundColor: levelStyle.bg,
-                        color: levelStyle.text,
-                      }}
+                      className={cn(
+                        "w-full text-left px-1.5 py-0.5 text-[10px] font-medium rounded truncate transition-colors hover:opacity-80",
+                        levelStyle.bg,
+                        levelStyle.text
+                      )}
                     >
                       {t.name}
                     </button>
                   );
                 })}
                 {dayTournaments.length > 2 && (
-                  <span className="text-[9px] text-[#8a9385] pl-1">
+                  <span className="text-[9px] text-portal-muted pl-1">
                     +{dayTournaments.length - 2} til
                   </span>
                 )}
@@ -607,7 +608,7 @@ function CalendarView({
           );
         })}
       </div>
-    </div>
+    </PremiumCard>
   );
 }
 
@@ -630,15 +631,15 @@ function ProTourSection({
 
   return (
     <div className="space-y-4">
-      {/* Tour toggle */}
+      {/* Tour toggle — Pills */}
       <div className="flex gap-2">
         <button
           onClick={() => setProTour("pga")}
           className={cn(
-            "px-4 py-2 text-sm font-medium rounded-xl border transition-colors",
+            "px-4 py-2 text-sm font-medium rounded-[20px] border transition-colors",
             proTour === "pga"
-              ? "bg-[#154212] text-white border-[#154212]"
-              : "bg-white text-[#6b7366] border-[#c2c9bb]/50 hover:border-[#154212]"
+              ? "bg-primary text-white border-primary"
+              : "bg-white text-portal-secondary border-portal-border hover:border-primary"
           )}
         >
           PGA Tour
@@ -646,10 +647,10 @@ function ProTourSection({
         <button
           onClick={() => setProTour("euro")}
           className={cn(
-            "px-4 py-2 text-sm font-medium rounded-xl border transition-colors",
+            "px-4 py-2 text-sm font-medium rounded-[20px] border transition-colors",
             proTour === "euro"
-              ? "bg-[#154212] text-white border-[#154212]"
-              : "bg-white text-[#6b7366] border-[#c2c9bb]/50 hover:border-[#154212]"
+              ? "bg-primary text-white border-primary"
+              : "bg-white text-portal-secondary border-portal-border hover:border-primary"
           )}
         >
           DP World Tour
@@ -677,31 +678,31 @@ function ProTournamentCard({ event }: { event: TourScheduleEvent }) {
   return (
     <div
       className={cn(
-        "bg-white border border-[#c2c9bb]/50 rounded-2xl p-4 transition-colors",
+        "bg-white border border-portal-border rounded-xl p-4 transition-all duration-300 hover:border-black/8 hover:shadow-card-hover",
         isPast && "opacity-50"
       )}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#154212]/10 text-[#154212] border border-[#154212]/20">
+            <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
               <Globe className="w-3 h-3" />
               Pro Tour
             </span>
             {event.winner_name && (
-              <span className="text-[10px] text-[#8a9385]">
+              <span className="text-[10px] text-portal-muted">
                 Vinner: {event.winner_name}
               </span>
             )}
           </div>
 
-          <h3 className="font-semibold text-[#1c1c16] text-sm">
+          <h3 className="font-semibold text-portal-text text-sm">
             {event.event_name}
           </h3>
 
           <div className="mt-2 space-y-1">
             {startDate && (
-              <div className="flex items-center gap-2 text-xs text-[#6b7366]">
+              <div className="flex items-center gap-2 text-xs text-portal-secondary">
                 <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>
                   {format(startDate, "d. MMM yyyy", { locale: nb })}
@@ -710,9 +711,9 @@ function ProTournamentCard({ event }: { event: TourScheduleEvent }) {
               </div>
             )}
             {(event.course || event.location) && (
-              <div className="flex items-center gap-2 text-xs text-[#6b7366]">
+              <div className="flex items-center gap-2 text-xs text-portal-secondary">
                 <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-                <span>{[event.course, event.location].filter(Boolean).join(", ")}</span>
+                <span>{[event.course, event.location].filter(Boolean).join(', ')}</span>
               </div>
             )}
           </div>
@@ -774,33 +775,33 @@ function TournamentDetailModal({
       {/* Modal */}
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-[#f7f3ea] px-6 py-4 flex items-start justify-between rounded-t-2xl z-10">
+        <div className="sticky top-0 bg-white border-b border-portal-border px-6 py-4 flex items-start justify-between rounded-t-2xl z-10">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <span
-                className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full border"
-                style={{
-                  backgroundColor: levelStyle.bg,
-                  color: levelStyle.text,
-                  borderColor: levelStyle.border,
-                }}
+                className={cn(
+                  "text-[10px] font-semibold px-2.5 py-0.5 rounded-full border",
+                  levelStyle.bg,
+                  levelStyle.text,
+                  levelStyle.border
+                )}
               >
                 {levelLabel}
               </span>
               {plan?.isRegistered && (
-                <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#22c55e]/10 text-[#22c55e]">
+                <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-success-light text-success-text">
                   <Check className="w-3 h-3" />
                   Påmeldt
                 </span>
               )}
             </div>
-            <h2 className="text-lg font-bold text-[#1c1c16] truncate">
+            <h2 className="text-lg font-bold text-portal-text truncate">
               {tournament.name}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-[#f7f3ea] text-[#6b7366] transition-colors ml-2"
+            className="p-1.5 rounded-lg hover:bg-portal-hover text-portal-secondary transition-colors ml-2"
           >
             <X className="w-4 h-4" />
           </button>
@@ -810,8 +811,8 @@ function TournamentDetailModal({
         <div className="px-6 py-5 space-y-6">
           {/* Info */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2.5 text-sm text-[#6b7366]">
-              <Calendar className="w-4 h-4 text-[#8a9385]" />
+            <div className="flex items-center gap-2.5 text-sm text-portal-secondary">
+              <Calendar className="w-4 h-4 text-portal-muted" />
               <span>
                 {format(new Date(tournament.startDate), "d. MMMM yyyy", { locale: nb })}
                 {tournament.endDate &&
@@ -819,16 +820,16 @@ function TournamentDetailModal({
               </span>
             </div>
             {(tournament.course || tournament.location) && (
-              <div className="flex items-center gap-2.5 text-sm text-[#6b7366]">
-                <MapPin className="w-4 h-4 text-[#8a9385]" />
+              <div className="flex items-center gap-2.5 text-sm text-portal-secondary">
+                <MapPin className="w-4 h-4 text-portal-muted" />
                 <span>
-                  {[tournament.course, tournament.location].filter(Boolean).join(", ")}
+                  {[tournament.course, tournament.location].filter(Boolean).join(', ')}
                 </span>
               </div>
             )}
             {tournament.registrationDeadline && (
-              <div className="flex items-center gap-2.5 text-sm text-[#6b7366]">
-                <Clock className="w-4 h-4 text-[#8a9385]" />
+              <div className="flex items-center gap-2.5 text-sm text-portal-secondary">
+                <Clock className="w-4 h-4 text-portal-muted" />
                 <span>
                   Påmeldingsfrist:{" "}
                   {format(new Date(tournament.registrationDeadline), "d. MMMM yyyy", { locale: nb })}
@@ -836,8 +837,8 @@ function TournamentDetailModal({
               </div>
             )}
             {tournament.numberOfHoles && (
-              <div className="flex items-center gap-2.5 text-sm text-[#6b7366]">
-                <Target className="w-4 h-4 text-[#8a9385]" />
+              <div className="flex items-center gap-2.5 text-sm text-portal-secondary">
+                <Target className="w-4 h-4 text-portal-muted" />
                 <span>{tournament.numberOfHoles} hull</span>
               </div>
             )}
@@ -849,7 +850,7 @@ function TournamentDetailModal({
               href={tournament.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl border border-[#c2c9bb]/50 text-[#6b7366] hover:border-[#154212] hover:text-[#1c1c16] transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-[20px] border border-portal-border text-portal-secondary hover:border-primary hover:text-portal-text transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
               Se turnering / meld deg på
@@ -857,15 +858,15 @@ function TournamentDetailModal({
           )}
 
           {/* Divider */}
-          <div className="border-t border-[#f7f3ea]" />
+          <div className="border-t border-portal-border" />
 
           {/* Plan section */}
           <div>
-            <h3 className="text-sm font-semibold text-[#1c1c16] mb-3">Min plan</h3>
+            <h3 className="text-sm font-semibold text-portal-text mb-3">Min plan</h3>
 
             {/* Goal type */}
             <div className="mb-4">
-              <label className="text-xs font-medium text-[#6b7366] mb-2 block">
+              <label className="text-xs font-medium text-portal-secondary mb-2 block">
                 Mål
               </label>
               <div className="flex gap-2">
@@ -878,7 +879,7 @@ function TournamentDetailModal({
                         "flex-1 px-3 py-2 text-xs font-medium rounded-xl border transition-all",
                         goalType === key
                           ? "border-2 shadow-sm"
-                          : "border-[#c2c9bb]/50 text-[#6b7366] hover:border-[#154212]"
+                          : "border-portal-border text-portal-secondary hover:border-primary"
                       )}
                       style={
                         goalType === key
@@ -900,7 +901,7 @@ function TournamentDetailModal({
 
             {/* Plan level */}
             <div className="mb-4">
-              <label className="text-xs font-medium text-[#6b7366] mb-2 block">
+              <label className="text-xs font-medium text-portal-secondary mb-2 block">
                 Prioritet
               </label>
               <div className="flex gap-2">
@@ -912,12 +913,12 @@ function TournamentDetailModal({
                       className={cn(
                         "flex-1 px-3 py-2 text-xs font-medium rounded-xl border transition-all text-center",
                         planLevel === key
-                          ? "border-[#154212] bg-[#154212] text-white"
-                          : "border-[#c2c9bb]/50 text-[#6b7366] hover:border-[#154212]"
+                          ? "border-primary bg-primary text-white"
+                          : "border-portal-border text-portal-secondary hover:border-primary"
                       )}
                     >
                       <div>{config.label}</div>
-                      <div className={cn("text-[10px] mt-0.5", planLevel === key ? "text-white/70" : "text-[#8a9385]")}>
+                      <div className={cn("text-[10px] mt-0.5", planLevel === key ? "text-white/70" : "text-portal-muted")}>
                         {config.description}
                       </div>
                     </button>
@@ -928,7 +929,7 @@ function TournamentDetailModal({
 
             {/* Notes */}
             <div className="mb-4">
-              <label className="text-xs font-medium text-[#6b7366] mb-2 block">
+              <label className="text-xs font-medium text-portal-secondary mb-2 block">
                 Notater
               </label>
               <textarea
@@ -936,24 +937,24 @@ function TournamentDetailModal({
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Tanker om turneringen, strategi, mål..."
                 rows={3}
-                className="w-full px-3 py-2.5 text-sm rounded-xl border border-[#c2c9bb]/50 focus:border-[#154212] focus:outline-none resize-none placeholder:text-[#c2c9bb] text-[#1c1c16]"
+                className="w-full px-3 py-2.5 text-sm rounded-xl border border-portal-border focus:border-primary focus:outline-none resize-none placeholder:text-portal-muted text-portal-text"
               />
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-white border-t border-[#f7f3ea] px-6 py-4 flex items-center justify-end gap-3 rounded-b-2xl">
+        <div className="sticky bottom-0 bg-white border-t border-portal-border px-6 py-4 flex items-center justify-end gap-3 rounded-b-2xl">
           <button
             onClick={onClose}
-            className="px-4 py-2.5 text-sm font-medium rounded-xl text-[#6b7366] hover:text-[#1c1c16] transition-colors"
+            className="px-4 py-2.5 text-sm font-medium rounded-[20px] text-portal-secondary hover:text-portal-text transition-colors"
           >
             Avbryt
           </button>
           <button
             onClick={handleSave}
             disabled={isPending}
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-[#154212] text-white hover:bg-[#0d2e0c] disabled:opacity-50 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-[20px] bg-primary text-white hover:bg-primary-alt disabled:opacity-50 transition-colors"
           >
             {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {plan ? "Oppdater plan" : "Legg til plan"}
@@ -971,10 +972,10 @@ function TournamentDetailModal({
 function EmptyState({ message }: { message: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="w-12 h-12 rounded-2xl bg-[#f7f3ea] flex items-center justify-center mb-4">
-        <Trophy className="w-6 h-6 text-[#c2c9bb]" />
+      <div className="w-12 h-12 rounded-2xl bg-portal-hover flex items-center justify-center mb-4">
+        <Trophy className="w-6 h-6 text-portal-muted" />
       </div>
-      <p className="text-sm text-[#6b7366] max-w-xs">{message}</p>
+      <p className="text-sm text-portal-secondary max-w-xs">{message}</p>
     </div>
   );
 }

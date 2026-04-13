@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { OnboardingWizard, type OnboardingData } from "@/components/portal/onboarding/onboarding-wizard";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { saveOnboardingData, skipOnboarding } from "./actions";
 
 export function OnboardingPageClient() {
@@ -28,14 +29,18 @@ export function OnboardingPageClient() {
 
   if (isPending) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#fdf9f0]">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-[#154212] border-t-transparent rounded-full animate-spin" />
-          <p className="text-[#6b7366]">Lagrer...</p>
-        </div>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-portal-bg">
+        <PremiumCard padding="lg" className="flex flex-col items-center gap-3 min-w-[200px]">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          <p className="text-portal-muted">Lagrer...</p>
+        </PremiumCard>
       </div>
     );
   }
 
-  return <OnboardingWizard onComplete={handleComplete} onSkip={handleSkip} />;
+  return (
+    <PremiumCard padding="lg" className="max-w-2xl mx-auto">
+      <OnboardingWizard onComplete={handleComplete} onSkip={handleSkip} />
+    </PremiumCard>
+  );
 }

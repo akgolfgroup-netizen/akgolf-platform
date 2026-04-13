@@ -12,7 +12,8 @@ import {
   subDays,
 } from "date-fns";
 import { motion } from "framer-motion";
-import { GlassCard, fadeInUp } from "@/components/portal/premium";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
+import { fadeInUp } from "@/components/portal/premium";
 import { StreakMilestone } from "@/components/portal/gamification/streak-milestone";
 import { cn } from "@/lib/portal/utils/cn";
 
@@ -99,26 +100,26 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
     <div className="space-y-6">
       {/* Streak card */}
       <motion.div variants={fadeInUp} initial="hidden" animate="visible">
-        <GlassCard variant="light" padding="lg">
+        <PremiumCard glow="green">
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 rounded-xl bg-[var(--color-accent-cta)]/15 flex items-center justify-center">
-              <Flame className="w-5 h-5 text-[var(--color-primary)]" strokeWidth={1.75} />
+            <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center">
+              <Flame className="w-5 h-5 text-primary" strokeWidth={1.75} />
             </div>
             <div>
-              <h3 className="font-semibold text-[var(--color-portal-text)] text-[14px]">
+              <h3 className="font-semibold text-portal-text text-sm">
                 Treningsstreak
               </h3>
-              <p className="text-[10px] text-[var(--color-portal-muted)] uppercase tracking-wider">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
                 {streak > 0 ? "Fortsett det gode arbeidet" : "Start i dag"}
               </p>
             </div>
           </div>
           <div className="flex items-baseline gap-3 mb-5">
-            <span className="text-[64px] font-[300] text-[var(--color-portal-text)] leading-none tabular-nums tracking-[-0.04em]">
+            <span className="text-4xl font-extrabold tabular-nums tracking-tight text-portal-text">
               {streak}
             </span>
-            <span className="text-[13px] text-[var(--color-portal-muted)]">
-              {streak === 1 ? "dag pa rad" : "dager pa rad"}
+            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
+              {streak === 1 ? "dag på rad" : "dager på rad"}
             </span>
           </div>
           <div className="flex gap-1.5 mb-4">
@@ -127,11 +128,11 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
                 key={idx}
                 className={cn(
                   "flex-1 h-9 rounded-lg flex items-center justify-center text-[11px] font-bold transition-colors",
-                  d.active && "bg-[var(--color-primary)] text-white",
+                  d.active && "bg-primary text-white",
                   d.today && !d.active &&
-                    "bg-white border-2 border-[var(--color-accent-cta)] text-[var(--color-primary)]",
+                    "bg-white border-2 border-primary text-primary",
                   !d.active && !d.today &&
-                    "bg-white/60 border border-[var(--color-portal-border)] text-[var(--color-portal-muted)]"
+                    "bg-portal-hover border border-portal-border text-portal-muted"
                 )}
               >
                 {d.day}
@@ -139,34 +140,36 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
             ))}
           </div>
           {streak > 0 && <StreakMilestone currentStreak={streak} />}
-        </GlassCard>
+        </PremiumCard>
       </motion.div>
 
       {/* Categories breakdown */}
       {categories.length > 0 && (
         <div>
-          <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-portal-muted)] uppercase mb-4 flex items-center gap-2">
-            <span className="w-6 h-px bg-[var(--color-portal-muted)]" />
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted mb-4 flex items-center gap-2">
+            <span className="w-6 h-px bg-portal-muted" />
             Treningskategorier
           </p>
-          <GlassCard variant="light" padding="lg">
+          <PremiumCard glow="green">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {categories.map((cat) => (
                 <div
                   key={cat.name}
-                  className="flex items-center gap-3 p-4 rounded-2xl bg-white/60 border border-white/80 hover:border-[var(--color-primary)]/20 transition-colors"
+                  className="flex items-center gap-3 p-4 rounded-2xl bg-portal-hover border border-portal-border hover:border-primary/20 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-[var(--color-primary)]/10">
-                    <Target className="w-5 h-5 text-[var(--color-primary)]" strokeWidth={1.75} />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-primary/10">
+                    <Target className="w-5 h-5 text-primary" strokeWidth={1.75} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13px] font-semibold text-[var(--color-portal-text)] truncate">
+                    <p className="text-sm font-semibold text-portal-text truncate">
                       {cat.name}
                     </p>
-                    <p className="text-[11px] text-[var(--color-portal-muted)]">{cat.count}</p>
-                    <div className="h-1 bg-[var(--color-portal-border)] rounded-full mt-2 overflow-hidden">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
+                      {cat.count}
+                    </p>
+                    <div className="h-1 bg-portal-border rounded-full mt-2 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-[var(--color-primary)]"
+                        className="h-full rounded-full bg-primary"
                         style={{ width: `${cat.progress}%` }}
                       />
                     </div>
@@ -174,7 +177,7 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
                 </div>
               ))}
             </div>
-          </GlassCard>
+          </PremiumCard>
         </div>
       )}
     </div>

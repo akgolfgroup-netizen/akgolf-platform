@@ -11,6 +11,7 @@ import {
   Search,
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { AddFriendDialog } from "@/components/portal/social/add-friend-dialog";
 import {
   PendingRequests,
@@ -114,8 +115,8 @@ export default function SosialtClient({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-grey-900">Sosialt</h1>
-          <p className="text-muted mt-1">
+          <h1 className="text-2xl font-bold text-portal-text">Sosialt</h1>
+          <p className="text-portal-secondary mt-1">
             {friends.length} venner · Bli inspirert av andre spillere
           </p>
         </div>
@@ -135,17 +136,17 @@ export default function SosialtClient({
         onDecline={declineFriendRequest}
       />
 
-      {/* Tabs */}
-      <div className="flex gap-2">
+      {/* Tabs — Pill style */}
+      <div className="flex gap-1 p-[3px] rounded-[10px] bg-portal-hover w-fit">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={cn(
-              "flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-colors",
+              "flex items-center gap-2 px-4 py-[7px] rounded-[7px] text-[13px] font-medium transition-all",
               activeTab === tab.id
-                ? "bg-primary text-white"
-                : "text-grey-500 hover:bg-grey-50"
+                ? "bg-primary text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
+                : "text-portal-muted hover:text-portal-secondary hover:bg-portal-hover"
             )}
           >
             <tab.icon className="w-4 h-4" />
@@ -156,23 +157,23 @@ export default function SosialtClient({
 
       {/* Friends Tab */}
       {activeTab === "friends" && (
-        <div className="bg-white rounded-2xl border border-grey-200/70 overflow-hidden">
-          <div className="p-4 border-b border-grey-200/50">
+        <PremiumCard noHover className="p-0 overflow-hidden">
+          <div className="p-4 border-b border-portal-border">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-portal-muted" />
               <input
                 type="text"
                 value={friendFilter}
                 onChange={(e) => setFriendFilter(e.target.value)}
                 placeholder="Filtrer venner..."
-                className="w-full pl-10 pr-4 py-2 rounded-xl bg-surface border-none text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="w-full pl-10 pr-4 py-2 rounded-xl bg-portal-hover border-none text-sm placeholder:text-portal-muted focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
             </div>
           </div>
           {filteredFriends.length === 0 ? (
             <div className="p-8 text-center">
-              <Users className="w-10 h-10 text-grey-300 mx-auto mb-3" />
-              <p className="text-muted">
+              <Users className="w-10 h-10 text-portal-muted mx-auto mb-3" />
+              <p className="text-portal-secondary">
                 {friends.length === 0
                   ? "Du har ingen venner ennå. Legg til noen for å komme i gang."
                   : "Ingen treff."}
@@ -188,13 +189,13 @@ export default function SosialtClient({
               )}
             </div>
           ) : (
-            <div className="divide-y divide-grey-200/50">
+            <div className="divide-y divide-portal-border">
               {filteredFriends.map((friend) => {
                 const status = getOnlineStatus(friend.lastActiveAt);
                 return (
                   <div
                     key={friend.id}
-                    className="p-4 flex items-center justify-between hover:bg-grey-50 transition-colors"
+                    className="p-4 flex items-center justify-between hover:bg-portal-hover transition-colors"
                   >
                     <div className="flex items-center gap-3">
                       <div className="relative">
@@ -204,15 +205,15 @@ export default function SosialtClient({
                         <span
                           className={cn(
                             "absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white",
-                            status === "online" ? "bg-success" : "bg-grey-400"
+                            status === "online" ? "bg-success" : "bg-portal-muted"
                           )}
                         />
                       </div>
                       <div>
-                        <h4 className="font-medium text-grey-900">
+                        <h4 className="font-medium text-portal-text">
                           {friend.name}
                         </h4>
-                        <p className="text-xs text-muted">
+                        <p className="text-xs text-portal-muted">
                           {friend.latestHandicap !== null
                             ? `HCP ${friend.latestHandicap.toFixed(1)}`
                             : "HCP ukjent"}{" "}
@@ -220,35 +221,35 @@ export default function SosialtClient({
                         </p>
                       </div>
                     </div>
-                    <button className="p-2 rounded-lg hover:bg-white transition-colors">
-                      <MessageCircle className="w-4 h-4 text-muted" />
+                    <button className="p-2 rounded-lg hover:bg-portal-hover transition-colors">
+                      <MessageCircle className="w-4 h-4 text-portal-muted" />
                     </button>
                   </div>
                 );
               })}
             </div>
           )}
-        </div>
+        </PremiumCard>
       )}
 
       {/* Leaderboard Tab */}
       {activeTab === "leaderboard" && (
-        <div className="bg-white rounded-2xl border border-grey-200/70 overflow-hidden">
-          <div className="p-4 border-b border-grey-200/50">
-            <h3 className="font-semibold text-grey-900">
+        <PremiumCard noHover className="p-0 overflow-hidden">
+          <div className="p-4 border-b border-portal-border">
+            <h3 className="font-semibold text-portal-text">
               Handicap-toppliste
             </h3>
           </div>
           {leaderboard.length === 0 ? (
             <div className="p-8 text-center">
-              <Trophy className="w-10 h-10 text-grey-300 mx-auto mb-3" />
-              <p className="text-muted">
+              <Trophy className="w-10 h-10 text-portal-muted mx-auto mb-3" />
+              <p className="text-portal-secondary">
                 Ingen data for topplisten ennå. Legg til venner og registrer
                 handicap.
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-grey-200/50">
+            <div className="divide-y divide-portal-border">
               {leaderboard.map((player, index) => {
                 const rank = index + 1;
                 return (
@@ -261,14 +262,14 @@ export default function SosialtClient({
                   >
                     <span
                       className={cn(
-                        "w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold",
+                        "w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold tabular-nums",
                         rank === 1
                           ? "bg-warning text-white"
                           : rank === 2
-                            ? "bg-grey-400 text-white"
+                            ? "bg-portal-secondary text-white"
                             : rank === 3
-                              ? "bg-grey-600 text-white"
-                              : "bg-grey-100 text-grey-500"
+                              ? "bg-portal-text text-white"
+                              : "bg-portal-hover text-portal-secondary"
                       )}
                     >
                       {rank}
@@ -277,7 +278,7 @@ export default function SosialtClient({
                       {getInitials(player.name)}
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-grey-900">
+                      <p className="font-medium text-portal-text">
                         {player.name}
                         {player.isCurrentUser && (
                           <span className="ml-2 text-xs text-primary">
@@ -287,7 +288,7 @@ export default function SosialtClient({
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-grey-900 tabular-nums">
+                      <p className="font-bold text-portal-text tabular-nums">
                         {player.value !== null ? player.value.toFixed(1) : "-"}
                       </p>
                     </div>
@@ -296,7 +297,7 @@ export default function SosialtClient({
               })}
             </div>
           )}
-        </div>
+        </PremiumCard>
       )}
 
       {/* Legg til venn dialog */}

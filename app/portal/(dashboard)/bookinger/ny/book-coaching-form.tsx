@@ -6,7 +6,7 @@ import { format, addDays, startOfDay } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Clock, User, Calendar, ChevronRight, Loader2, CreditCard, ArrowLeft, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { PremiumCard } from "@/components/portal/dashboard";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
 interface ServiceType {
   id: string;
@@ -132,7 +132,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <PremiumCard className="max-w-2xl mx-auto" noHover>
       {/* Progress Stepper */}
       <div className="mb-10">
         <div className="flex items-center justify-center">
@@ -214,7 +214,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="rounded-xl p-6 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-portal-card border-portal-border hover:border-black/8 hover:-translate-y-px hover:shadow-card-hover">
+                  <div className="rounded-[20px] p-6 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-portal-bg border-portal-border hover:border-portal-text/20 hover:-translate-y-px hover:shadow-lg">
                     <div className="flex items-start justify-between gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
@@ -291,7 +291,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   className="w-full text-left group"
                   whileHover={{ x: 4 }}
                 >
-                  <div className="rounded-xl p-5 flex items-center gap-5 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-portal-card border-portal-border hover:border-black/8 hover:shadow-card-hover">
+                  <div className="rounded-[20px] p-5 flex items-center gap-5 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-portal-bg border-portal-border hover:border-portal-text/20 hover:shadow-lg">
                     {inst.user.image ? (
                       <img
                         src={inst.user.image}
@@ -299,7 +299,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                         className="w-16 h-16 rounded-xl object-cover border-2 border-portal-border"
                       />
                     ) : (
-                      <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl font-bold bg-gradient-to-br from-portal-secondary to-portal-text text-white">
+                      <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl font-bold bg-portal-hover text-portal-text border-2 border-portal-border">
                         {inst.user.name?.charAt(0) ?? "?"}
                       </div>
                     )}
@@ -367,10 +367,10 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                       key={date.toISOString()}
                       onClick={() => !isWeekend && handleSelectDate(date)}
                       disabled={isWeekend}
-                      className={`flex-shrink-0 rounded-xl p-4 text-center min-w-[80px] transition-all duration-200 ${
+                      className={`flex-shrink-0 rounded-[20px] p-4 text-center min-w-[80px] transition-all duration-200 ${
                         isSelected
-                          ? "bg-portal-text border-none shadow-card"
-                          : "bg-portal-card border border-portal-border hover:border-black/8"
+                          ? "bg-portal-text border-none shadow-lg"
+                          : "bg-portal-bg border border-portal-border hover:border-portal-text/20"
                       }`}
                       style={{ opacity: isWeekend ? 0.4 : 1 }}
                       whileHover={!isWeekend ? { scale: 1.02 } : {}}
@@ -407,7 +407,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                     <span>Henter tilgjengelige tider...</span>
                   </div>
                 ) : availableSlots.length === 0 ? (
-                  <div className="rounded-xl p-8 text-center border bg-portal-hover border-portal-border">
+                  <div className="rounded-[20px] p-8 text-center border bg-portal-bg border-portal-border">
                     <Calendar className="w-12 h-12 mx-auto mb-4 text-portal-muted" />
                     <p className="text-portal-secondary">
                       Ingen ledige tider denne dagen.
@@ -429,7 +429,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                             setSelectedSlot(slot);
                             setStep("confirm");
                           }}
-                          className="rounded-[20px] py-4 text-sm font-medium transition-all duration-200 border bg-portal-card border-portal-border text-portal-text hover:border-portal-text tabular-nums"
+                          className="rounded-[20px] py-4 text-sm font-medium transition-all duration-200 border bg-portal-bg border-portal-border text-portal-text hover:border-portal-text tabular-nums"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
@@ -469,7 +469,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
             </p>
 
             {/* Summary Card */}
-            <PremiumCard className="p-8 mb-8" noHover>
+            <div className="rounded-[20px] p-8 mb-8 border bg-portal-bg border-portal-border">
               {/* Header */}
               <div className="flex items-center gap-4 pb-6 mb-6 border-b border-portal-border">
                 <div
@@ -523,7 +523,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   {formatPrice(selectedService.price)}
                 </span>
               </div>
-            </PremiumCard>
+            </div>
 
             {/* Payment Buttons */}
             <div className="space-y-4">
@@ -559,6 +559,6 @@ export function BookCoachingForm({ serviceTypes }: Props) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </PremiumCard>
   );
 }

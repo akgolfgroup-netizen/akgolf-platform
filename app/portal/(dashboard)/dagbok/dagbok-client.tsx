@@ -18,11 +18,10 @@ import { repeatLastSession } from "./actions";
 import { LogSessionModal } from "@/components/portal/dagbok/log-session-modal";
 import {
   HeroHeading,
-  DarkStatCard,
-  GlassCard,
   Shimmer,
   staggerContainer,
 } from "@/components/portal/premium";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
@@ -141,7 +140,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
           whileTap={{ scale: 0.97 }}
           onClick={handleQuickLog}
           disabled={isPending}
-          className="h-11 px-6 rounded-[20px] bg-white/70 backdrop-blur-xl border border-white/80 text-[var(--color-portal-text)] text-[12px] font-semibold hover:bg-white transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-60"
+          className="h-11 px-6 rounded-[20px] bg-white border border-portal-border text-portal-text text-[12px] font-semibold hover:bg-portal-hover transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-60"
         >
           {isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RotateCcw className="w-3.5 h-3.5" />}
           {isPending ? "Logger\u2026" : "Gjenta siste"}
@@ -151,7 +150,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.97 }}
         onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
-        className="relative h-11 px-6 rounded-[20px] bg-accent-cta text-[var(--color-portal-text)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group"
+        className="relative h-11 px-6 rounded-[20px] bg-accent-cta text-portal-text text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group"
       >
         <Shimmer />
         <Plus className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
@@ -166,37 +165,41 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
 
       <HeroHeading
         label="Din treningsdagbok"
-        title={<>Logg og{" "}<span className="font-serif italic text-[var(--color-primary)] font-normal">spor</span><span className="text-[var(--color-accent-cta)]">.</span></>}
+        title={<>
+          Logg og{" "}
+          <span className="font-serif italic text-primary font-normal">spor</span>
+          <span className="text-accent-cta">.</span>
+        </>}
         description="Hold oversikt over aktiviteten din. Hver okt teller, og hver streak er et skritt naermere malet."
         actions={heroActions}
       />
 
       {quickLogSuccess && (
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-          className="fixed top-4 right-4 z-50 px-4 py-3 rounded-xl bg-[var(--color-success)] text-white text-sm font-medium shadow-lg">
+          className="fixed top-4 right-4 z-50 px-4 py-3 rounded-xl bg-primary text-white text-sm font-medium shadow-lg">
           Okt logget!
         </motion.div>
       )}
 
       {isEmpty && (
-        <GlassCard variant="light" padding="lg" className="text-center py-16">
+        <PremiumCard variant="default" padding="lg" className="text-center py-16">
           <div className="flex flex-col items-center justify-center text-center">
-            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-[var(--color-primary)]/10">
-              <NotebookPen className="w-8 h-8 text-[var(--color-primary)]" strokeWidth={1.75} />
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-primary/10">
+              <NotebookPen className="w-8 h-8 text-primary" strokeWidth={1.75} />
             </div>
-            <p className="text-[20px] font-semibold text-[var(--color-portal-text)] mb-2">Din treningsdagbok er tom</p>
-            <p className="text-[13px] text-[var(--color-portal-muted)] mb-6 max-w-md leading-relaxed">
+            <p className="text-[20px] font-semibold text-portal-text mb-2">Din treningsdagbok er tom</p>
+            <p className="text-[13px] text-portal-muted mb-6 max-w-md leading-relaxed">
               Logg din forste treningsokt for a komme i gang. Alt du logger blir automatisk en del av fremdriften din.
             </p>
             <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}
               onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
-              className="relative h-11 px-6 rounded-[20px] bg-accent-cta text-[var(--color-portal-text)] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group">
+              className="relative h-11 px-6 rounded-[20px] bg-accent-cta text-portal-text text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group">
               <Shimmer />
               <Plus className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
               <span className="relative z-10">Logg ny okt</span>
             </motion.button>
           </div>
-        </GlassCard>
+        </PremiumCard>
       )}
 
       {!isEmpty && (
@@ -204,39 +207,80 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
           {/* Stats Row */}
           <motion.div className="grid grid-cols-12 gap-4" initial="hidden" animate="visible" variants={staggerContainer}>
             <div className="col-span-6 md:col-span-3">
-              <DarkStatCard label="Streak" value={streak} unit={streak === 1 ? "dag" : "dager"} icon={Flame} variant="accent" delay={0} />
+              <PremiumCard variant="accent" padding="md" className="h-full">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-portal-muted mb-1">Streak</p>
+                    <p className="text-[28px] font-bold text-portal-text tabular-nums">{streak}</p>
+                    <p className="text-[11px] text-portal-secondary">{streak === 1 ? "dag" : "dager"}</p>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-accent-cta/20 flex items-center justify-center">
+                    <Flame className="w-5 h-5 text-accent-cta" />
+                  </div>
+                </div>
+              </PremiumCard>
             </div>
             <div className="col-span-6 md:col-span-3">
-              <DarkStatCard label="Okter totalt" value={logs.length} icon={Activity} variant="default" delay={0.08} />
+              <PremiumCard variant="default" padding="md" className="h-full">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-portal-muted mb-1">Okter totalt</p>
+                    <p className="text-[28px] font-bold text-portal-text tabular-nums">{logs.length}</p>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-portal-hover flex items-center justify-center">
+                    <Activity className="w-5 h-5 text-portal-secondary" />
+                  </div>
+                </div>
+              </PremiumCard>
             </div>
             <div className="col-span-6 md:col-span-3">
-              <DarkStatCard label="Timer totalt" value={totalHours} decimals={1} icon={Clock} variant="default" delay={0.16} />
+              <PremiumCard variant="default" padding="md" className="h-full">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-portal-muted mb-1">Timer totalt</p>
+                    <p className="text-[28px] font-bold text-portal-text tabular-nums">{totalHours}</p>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-portal-hover flex items-center justify-center">
+                    <Clock className="w-5 h-5 text-portal-secondary" />
+                  </div>
+                </div>
+              </PremiumCard>
             </div>
             <div className="col-span-6 md:col-span-3">
-              <DarkStatCard label="Snitt vurdering" value={avgRating} decimals={1} icon={Star} variant="default" delay={0.24} />
+              <PremiumCard variant="default" padding="md" className="h-full">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-portal-muted mb-1">Snitt vurdering</p>
+                    <p className="text-[28px] font-bold text-portal-text tabular-nums">{avgRating}</p>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-portal-hover flex items-center justify-center">
+                    <Star className="w-5 h-5 text-portal-secondary" />
+                  </div>
+                </div>
+              </PremiumCard>
             </div>
           </motion.div>
 
           {/* Filters + View Toggle */}
           <motion.div className="flex flex-wrap items-center justify-between gap-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-            <div className="flex gap-1 p-1 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 shadow-sm">
+            <div className="flex gap-1 p-1 rounded-full bg-portal-bg border border-portal-border shadow-sm">
               {filters.map((filter) => (
                 <button key={filter} onClick={() => setActiveFilter(filter)}
                   className={cn("px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
-                    activeFilter === filter ? "bg-[var(--color-portal-text)] text-white shadow-sm" : "text-[var(--color-portal-muted)] hover:text-[var(--color-portal-text)]")}>
+                    activeFilter === filter ? "bg-portal-text text-white shadow-sm" : "text-portal-muted hover:text-portal-text")}>
                   {filter}
                 </button>
               ))}
             </div>
-            <div className="flex gap-1 p-1 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 shadow-sm">
+            <div className="flex gap-1 p-1 rounded-full bg-portal-bg border border-portal-border shadow-sm">
               <button onClick={() => setViewMode("list")}
                 className={cn("inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
-                  viewMode === "list" ? "bg-[var(--color-portal-text)] text-white shadow-sm" : "text-[var(--color-portal-muted)] hover:text-[var(--color-portal-text)]")}>
+                  viewMode === "list" ? "bg-portal-text text-white shadow-sm" : "text-portal-muted hover:text-portal-text")}>
                 <List className="w-3.5 h-3.5" /> Liste
               </button>
               <button onClick={() => setViewMode("calendar")}
                 className={cn("inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
-                  viewMode === "calendar" ? "bg-[var(--color-portal-text)] text-white shadow-sm" : "text-[var(--color-portal-muted)] hover:text-[var(--color-portal-text)]")}>
+                  viewMode === "calendar" ? "bg-portal-text text-white shadow-sm" : "text-portal-muted hover:text-portal-text")}>
                 <Calendar className="w-3.5 h-3.5" /> Kalender
               </button>
             </div>
@@ -253,25 +297,27 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
                   <motion.div key={log.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.05 * Math.min(idx, 6) }}
                     onClick={() => { setEditingLog(log); setLogModalOpen(true); }}
-                    className="cursor-pointer group relative rounded-[24px] overflow-hidden p-6 bg-white/70 backdrop-blur-xl border border-white/80 shadow-[0_8px_32px_-12px_rgba(10,31,24,0.1)] hover:border-[var(--color-primary)]/20 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_-12px_rgba(0,88,64,0.18)] transition-all duration-300 will-change-transform"
+                    className="cursor-pointer group"
                     role="button" tabIndex={0}
                     onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { setEditingLog(log); setLogModalOpen(true); } }}>
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="min-w-0">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-portal-muted)] mb-1">{formatLogDate(log.date)}</p>
-                        <p className="text-[16px] font-semibold text-[var(--color-portal-text)] truncate">{title}</p>
+                    <PremiumCard variant="default" padding="md" hover="lift" className="transition-all duration-300">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="min-w-0">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted mb-1">{formatLogDate(log.date)}</p>
+                          <p className="text-[16px] font-semibold text-portal-text truncate">{title}</p>
+                        </div>
+                        <span className={cn("px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.1em] shrink-0 border",
+                          isCoaching ? "bg-primary/10 text-primary border-primary/20" : "bg-primary-alt/10 text-primary-alt border-primary-alt/20")}>
+                          {isCoaching ? "Coaching" : "Fullfort"}
+                        </span>
                       </div>
-                      <span className={cn("px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.1em] shrink-0",
-                        isCoaching ? "bg-[var(--color-ai)]/10 text-[var(--color-ai)] border border-[var(--color-ai)]/20" : "bg-[var(--color-success)]/10 text-[var(--color-success)] border border-[var(--color-success)]/20")}>
-                        {isCoaching ? "Coaching" : "Fullfort"}
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap gap-5 mb-3 text-[11px] text-[var(--color-portal-muted)]">
-                      {log.durationMinutes && (<span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" />{log.durationMinutes} min</span>)}
-                      <span className="flex items-center gap-1.5"><Target className="w-3.5 h-3.5" />{area}</span>
-                      {log.rating != null && (<span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5" />{log.rating}/10</span>)}
-                    </div>
-                    {log.notes && <p className="text-[13px] text-[var(--color-portal-secondary)] leading-relaxed line-clamp-2">{log.notes}</p>}
+                      <div className="flex flex-wrap gap-5 mb-3 text-[11px] text-portal-muted">
+                        {log.durationMinutes && (<span className="flex items-center gap-1.5 tabular-nums"><Clock className="w-3.5 h-3.5" />{log.durationMinutes} min</span>)}
+                        <span className="flex items-center gap-1.5"><Target className="w-3.5 h-3.5" />{area}</span>
+                        {log.rating != null && (<span className="flex items-center gap-1.5 tabular-nums"><Star className="w-3.5 h-3.5" />{log.rating}/10</span>)}
+                      </div>
+                      {log.notes && <p className="text-[13px] text-portal-secondary leading-relaxed line-clamp-2">{log.notes}</p>}
+                    </PremiumCard>
                   </motion.div>
                 );
               })}

@@ -1,6 +1,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getMyConversations } from "./actions";
 import { MeldingerChatClient } from "./meldinger-chat-client";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
 export const metadata = {
   title: "Meldinger | AK Golf",
@@ -11,12 +12,12 @@ export default async function MeldingerPage() {
   const conversations = await getMyConversations();
 
   return (
-    <div className="p-4 sm:p-6 h-full">
+    <PremiumCard>
       <div className="mb-4">
-        <h1 className="text-xl font-bold text-[var(--color-grey-900)]">
+        <h1 className="text-xl font-bold text-portal-text">
           Meldinger
         </h1>
-        <p className="text-sm text-[var(--color-grey-500)] mt-1">
+        <p className="text-sm text-portal-secondary mt-1">
           Direkte meldinger med treneren din
         </p>
       </div>
@@ -24,6 +25,6 @@ export default async function MeldingerPage() {
         conversations={conversations}
         currentUserId={user.id}
       />
-    </div>
+    </PremiumCard>
   );
 }

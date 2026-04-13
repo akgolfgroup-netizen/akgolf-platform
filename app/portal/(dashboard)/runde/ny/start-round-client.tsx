@@ -2,8 +2,9 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, Search, Play, Cloud, Wind, Thermometer } from "lucide-react";
+import { MapPin, Search, Play, Cloud, Wind } from "lucide-react";
 import { startRound } from "../actions";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
 interface Course {
   id: string;
@@ -51,149 +52,151 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Bane-valg */}
-      {!selectedCourse ? (
-        <div className="space-y-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-portal-muted)]" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Sok etter bane..."
-              className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--color-portal-border)] bg-white text-[var(--color-portal-text)] placeholder:text-[var(--color-portal-muted)] focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-              autoFocus
-            />
-          </div>
+    <PremiumCard>
+      <div className="space-y-6">
+        {/* Bane-valg */}
+        {!selectedCourse ? (
+          <div className="space-y-3">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-portal-muted" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Sok etter bane..."
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-portal-border bg-white text-portal-text placeholder:text-portal-muted focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                autoFocus
+              />
+            </div>
 
-          <div className="space-y-2 max-h-[60vh] overflow-y-auto">
-            {filtered.map((course) => (
-              <button
-                key={course.id}
-                onClick={() => setSelectedCourse(course)}
-                className="w-full text-left p-4 rounded-xl border border-[var(--color-portal-border)] bg-white hover:border-primary hover:bg-[var(--color-portal-hover)] transition-all"
-              >
-                <div className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+            <div className="space-y-2 max-h-[60vh] overflow-y-auto">
+              {filtered.map((course) => (
+                <button
+                  key={course.id}
+                  onClick={() => setSelectedCourse(course)}
+                  className="w-full text-left p-4 rounded-xl border border-portal-border bg-white hover:border-primary hover:bg-portal-hover transition-all"
+                >
+                  <div className="flex items-start gap-3">
+                    <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                    <div>
+                      <div className="font-semibold text-portal-text">
+                        {course.name}
+                      </div>
+                      <div className="text-sm text-portal-secondary tabular-nums">
+                        {course.location} — Par <span className="tabular-nums">{course.par}</span>
+                        {course.courseRating && ` — CR ${course.courseRating}`}
+                        {course.slopeRating && ` / Slope ${course.slopeRating}`}
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              ))}
+              {filtered.length === 0 && (
+                <p className="text-center text-portal-muted py-8">
+                  Ingen baner funnet
+                </p>
+              )}
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Valgt bane */}
+            <div className="p-4 rounded-xl border border-primary bg-primary-alt">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <MapPin className="h-5 w-5 text-primary" />
                   <div>
-                    <div className="font-semibold text-[var(--color-portal-text)]">
-                      {course.name}
+                    <div className="font-semibold text-portal-text">
+                      {selectedCourse.name}
                     </div>
-                    <div className="text-sm text-[var(--color-portal-secondary)]">
-                      {course.location} — Par {course.par}
-                      {course.courseRating && ` — CR ${course.courseRating}`}
-                      {course.slopeRating && ` / Slope ${course.slopeRating}`}
+                    <div className="text-sm text-portal-secondary tabular-nums">
+                      Par <span className="tabular-nums">{selectedCourse.par}</span> — {selectedCourse.location}
                     </div>
                   </div>
                 </div>
-              </button>
-            ))}
-            {filtered.length === 0 && (
-              <p className="text-center text-[var(--color-portal-muted)] py-8">
-                Ingen baner funnet
-              </p>
-            )}
-          </div>
-        </div>
-      ) : (
-        <>
-          {/* Valgt bane */}
-          <div className="p-4 rounded-xl border border-primary bg-primary/5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <MapPin className="h-5 w-5 text-primary" />
-                <div>
-                  <div className="font-semibold text-[var(--color-portal-text)]">
-                    {selectedCourse.name}
-                  </div>
-                  <div className="text-sm text-[var(--color-portal-secondary)]">
-                    Par {selectedCourse.par} — {selectedCourse.location}
-                  </div>
-                </div>
+                <button
+                  onClick={() => setSelectedCourse(null)}
+                  className="text-sm text-primary hover:underline"
+                >
+                  Endre
+                </button>
               </div>
-              <button
-                onClick={() => setSelectedCourse(null)}
-                className="text-sm text-primary hover:underline"
-              >
-                Endre
-              </button>
             </div>
-          </div>
 
-          {/* Tee-valg */}
-          <div>
-            <label className="text-sm font-medium text-[var(--color-portal-text)] mb-2 block">
-              Tee
-            </label>
-            <div className="flex gap-2">
-              {teeColors.map((tee) => (
-                <button
-                  key={tee.value}
-                  onClick={() => setTeeColor(tee.value)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
-                    teeColor === tee.value
-                      ? "border-primary bg-primary/5 ring-1 ring-primary"
-                      : "border-[var(--color-portal-border)] bg-white hover:border-[var(--color-portal-border)]"
-                  }`}
-                >
-                  <div
-                    className="h-4 w-4 rounded-full border border-[var(--color-portal-border)]"
-                    style={{ backgroundColor: tee.color }}
-                  />
-                  <span className="text-sm font-medium text-[var(--color-portal-text)]">
-                    {tee.label}
-                  </span>
-                </button>
-              ))}
+            {/* Tee-valg */}
+            <div>
+              <label className="text-sm font-medium text-portal-text mb-2 block">
+                Tee
+              </label>
+              <div className="flex gap-2">
+                {teeColors.map((tee) => (
+                  <button
+                    key={tee.value}
+                    onClick={() => setTeeColor(tee.value)}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
+                      teeColor === tee.value
+                        ? "border-primary bg-primary-alt ring-1 ring-primary"
+                        : "border-portal-border bg-white hover:border-portal-border"
+                    }`}
+                  >
+                    <div
+                      className="h-4 w-4 rounded-full border border-portal-border"
+                      style={{ backgroundColor: tee.color }}
+                    />
+                    <span className="text-sm font-medium text-portal-text">
+                      {tee.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Vaer */}
-          <div>
-            <label className="text-sm font-medium text-[var(--color-portal-text)] mb-2 block">
-              Vaer (valgfritt)
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              {[
-                { value: "sol", icon: Cloud, label: "Sol" },
-                { value: "overskyet", icon: Cloud, label: "Overskyet" },
-                { value: "regn", icon: Cloud, label: "Regn" },
-                { value: "vind", icon: Wind, label: "Vind" },
-              ].map((w) => (
-                <button
-                  key={w.value}
-                  onClick={() => setWeather(weather === w.value ? "" : w.value)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
-                    weather === w.value
-                      ? "border-primary bg-primary/5"
-                      : "border-[var(--color-portal-border)] bg-white hover:border-[var(--color-portal-border)]"
-                  }`}
-                >
-                  <w.icon className="h-4 w-4 text-[var(--color-portal-secondary)]" />
-                  <span className="text-sm">{w.label}</span>
-                </button>
-              ))}
+            {/* Vaer */}
+            <div>
+              <label className="text-sm font-medium text-portal-text mb-2 block">
+                Vaer (valgfritt)
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { value: "sol", icon: Cloud, label: "Sol" },
+                  { value: "overskyet", icon: Cloud, label: "Overskyet" },
+                  { value: "regn", icon: Cloud, label: "Regn" },
+                  { value: "vind", icon: Wind, label: "Vind" },
+                ].map((w) => (
+                  <button
+                    key={w.value}
+                    onClick={() => setWeather(weather === w.value ? "" : w.value)}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
+                      weather === w.value
+                        ? "border-primary bg-primary-alt"
+                        : "border-portal-border bg-white hover:border-portal-border"
+                    }`}
+                  >
+                    <w.icon className="h-4 w-4 text-portal-secondary" />
+                    <span className="text-sm text-portal-text">{w.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {error && (
-            <div className="text-sm text-[var(--color-error)] bg-[var(--color-error)]/10 rounded-xl p-3">
-              {error}
-            </div>
-          )}
+            {error && (
+              <div className="text-sm text-portal-text bg-accent-cta/10 rounded-xl p-3">
+                {error}
+              </div>
+            )}
 
-          {/* Start */}
-          <button
-            onClick={handleStart}
-            disabled={isPending}
-            className="w-full flex items-center justify-center gap-3 py-4 rounded-[20px] bg-primary text-white font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
-          >
-            <Play className="h-5 w-5" />
-            {isPending ? "Starter..." : "Start runde"}
-          </button>
-        </>
-      )}
-    </div>
+            {/* Start */}
+            <button
+              onClick={handleStart}
+              disabled={isPending}
+              className="w-full flex items-center justify-center gap-3 py-4 rounded-[20px] bg-primary text-white font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
+            >
+              <Play className="h-5 w-5" />
+              {isPending ? "Starter..." : "Start runde"}
+            </button>
+          </>
+        )}
+      </div>
+    </PremiumCard>
   );
 }

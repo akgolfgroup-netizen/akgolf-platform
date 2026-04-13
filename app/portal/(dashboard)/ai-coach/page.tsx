@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Sparkles, Send, Bot, User, Loader2, Video, Lightbulb, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
 interface Message {
   id: string;
@@ -72,7 +73,7 @@ export default function AiCoachPage() {
       if (!response.ok) throw new Error("Feil fra server");
 
       const reader = response.body?.getReader();
-      if (!reader) throw new Error("Ingen streaming-støtte");
+      if (!reader) throw new Error("Ingen streaming-stotte");
 
       const decoder = new TextDecoder();
       let accumulated = "";
@@ -90,7 +91,7 @@ export default function AiCoachPage() {
       setMessages((prev) =>
         prev.map((m) =>
           m.id === assistantMessage.id
-            ? { ...m, content: "Beklager, det oppstod en feil. Prøv igjen." }
+            ? { ...m, content: "Beklager, det oppstod en feil. Prov igjen." }
             : m
         )
       );
@@ -110,10 +111,10 @@ export default function AiCoachPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1c1c16]">AI Coach</h1>
-          <p className="text-[#6b7366] mt-1">Din personlige golf-assistent</p>
+          <h1 className="text-2xl font-bold text-portal-text">AI Coach</h1>
+          <p className="text-portal-secondary mt-1">Din personlige golf-assistent</p>
         </div>
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#8b5cf6] to-[#6d28d9] flex items-center justify-center">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-bg-ai to-bg-ai-text flex items-center justify-center">
           <Sparkles className="w-6 h-6 text-white" />
         </div>
       </div>
@@ -126,36 +127,37 @@ export default function AiCoachPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-white rounded-xl p-4 border border-[#c2c9bb]/50 text-center"
           >
-            <div className="w-10 h-10 rounded-lg bg-[#8b5cf6]/10 flex items-center justify-center mx-auto mb-2">
-              <feature.icon className="w-5 h-5 text-[#8b5cf6]" />
-            </div>
-            <p className="text-sm font-medium text-[#1c1c16]">{feature.label}</p>
-            <p className="text-xs text-[#8a9385]">{feature.desc}</p>
+            <PremiumCard className="p-4 text-center">
+              <div className="w-10 h-10 rounded-lg bg-ai/10 flex items-center justify-center mx-auto mb-2">
+                <feature.icon className="w-5 h-5 text-ai" />
+              </div>
+              <p className="text-sm font-medium text-portal-text">{feature.label}</p>
+              <p className="text-xs text-portal-muted">{feature.desc}</p>
+            </PremiumCard>
           </motion.div>
         ))}
       </div>
 
       {/* Chat Container */}
-      <div className="flex-1 bg-white rounded-2xl border border-[#c2c9bb]/50 flex flex-col overflow-hidden">
+      <div className="flex-1 bg-white rounded-xl border border-portal-border flex flex-col overflow-hidden">
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-8">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#8b5cf6]/20 to-[#8b5cf6]/5 flex items-center justify-center mb-4">
-                <Bot className="w-8 h-8 text-[#8b5cf6]" />
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-bg-ai/20 to-bg-ai/5 flex items-center justify-center mb-4">
+                <Bot className="w-8 h-8 text-ai" />
               </div>
-              <h3 className="font-semibold text-[#1c1c16] mb-2">Hei! Jeg er din AI Coach</h3>
-              <p className="text-sm text-[#6b7366] max-w-md mb-6">
-                Jeg kan hjelpe deg med treningsplanlegging, analyse av dine runder, og tips for å forbedre spillet ditt.
+              <h3 className="font-semibold text-portal-text mb-2">Hei! Jeg er din AI Coach</h3>
+              <p className="text-sm text-portal-secondary max-w-md mb-6">
+                Jeg kan hjelpe deg med treningsplanlegging, analyse av dine runder, og tips for aa forbedre spillet ditt.
               </p>
               <div className="flex flex-wrap justify-center gap-2">
                 {QUICK_QUESTIONS.map((q) => (
                   <button
                     key={q.label}
                     onClick={() => sendMessage(q.message)}
-                    className="px-4 py-2 rounded-full bg-[#f7f3ea] text-sm text-[#1c1c16] hover:bg-[#e8e4db] transition-colors"
+                    className="px-4 py-2 rounded-[20px] bg-portal-hover text-sm text-portal-text hover:bg-portal-hover/80 transition-colors"
                   >
                     {q.label}
                   </button>
@@ -170,7 +172,7 @@ export default function AiCoachPage() {
               >
                 <div
                   className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                    message.role === "user" ? "bg-[#154212]" : "bg-[#8b5cf6]"
+                    message.role === "user" ? "bg-primary" : "bg-ai"
                   }`}
                 >
                   {message.role === "user" ? (
@@ -182,12 +184,12 @@ export default function AiCoachPage() {
                 <div
                   className={`max-w-[80%] rounded-2xl p-4 ${
                     message.role === "user"
-                      ? "bg-[#154212] text-white"
-                      : "bg-[#f7f3ea] text-[#1c1c16]"
+                      ? "bg-primary text-white"
+                      : "bg-portal-hover text-portal-text"
                   }`}
                 >
                   <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                  <p className="text-[10px] opacity-60 mt-2">
+                  <p className="text-[10px] opacity-60 mt-2 tabular-nums">
                     {message.timestamp.toLocaleTimeString("nb-NO", { hour: "2-digit", minute: "2-digit" })}
                   </p>
                 </div>
@@ -196,12 +198,12 @@ export default function AiCoachPage() {
           )}
           {isStreaming && (
             <div className="flex gap-3">
-              <div className="w-8 h-8 rounded-lg bg-[#8b5cf6] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-ai flex items-center justify-center">
                 <Bot className="w-4 h-4 text-white" />
               </div>
-              <div className="bg-[#f7f3ea] rounded-2xl p-4 flex items-center gap-2">
-                <Loader2 className="w-4 h-4 animate-spin text-[#8b5cf6]" />
-                <span className="text-sm text-[#6b7366]">Skriver...</span>
+              <div className="bg-portal-hover rounded-2xl p-4 flex items-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin text-ai" />
+                <span className="text-sm text-portal-secondary">Skriver...</span>
               </div>
             </div>
           )}
@@ -209,7 +211,7 @@ export default function AiCoachPage() {
         </div>
 
         {/* Input */}
-        <form onSubmit={handleSubmit} className="p-4 border-t border-[#c2c9bb]/30">
+        <form onSubmit={handleSubmit} className="p-4 border-t border-portal-border/30">
           <div className="flex gap-2">
             <div className="flex-1 relative">
               <input
@@ -217,13 +219,13 @@ export default function AiCoachPage() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Spør AI Coach om noe..."
-                className="w-full px-4 py-3 rounded-xl bg-[#f7f3ea] border border-[#c2c9bb]/50 text-[#1c1c16] placeholder-[#8a9385] focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/30"
+                className="w-full px-4 py-3 rounded-xl bg-portal-hover border border-portal-border/50 text-portal-text placeholder-portal-muted focus:outline-none focus:ring-2 focus:ring-ai/30"
               />
             </div>
             <button
               type="submit"
               disabled={isStreaming || !input.trim()}
-              className="px-4 py-3 rounded-xl bg-[#154212] text-white hover:bg-[#0d2e0c] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="px-4 py-3 rounded-[20px] bg-primary text-white hover:bg-primary-alt disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <Send className="w-5 h-5" />
             </button>
@@ -231,12 +233,12 @@ export default function AiCoachPage() {
           <div className="flex items-center justify-between mt-3">
             <button
               type="button"
-              className="flex items-center gap-1 text-xs text-[#8a9385] hover:text-[#154212] transition-colors"
+              className="flex items-center gap-1 text-xs text-portal-muted hover:text-primary transition-colors"
             >
               <Video className="w-3 h-3" />
               Last opp video
             </button>
-            <p className="text-xs text-[#8a9385]">AI-genererte svar kan inneholde feil</p>
+            <p className="text-xs text-portal-muted">AI-genererte svar kan inneholde feil</p>
           </div>
         </form>
       </div>

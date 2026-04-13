@@ -25,6 +25,7 @@ import {
   fadeInUp,
 } from "@/components/portal/premium";
 import { cn } from "@/lib/portal/utils/cn";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
 interface AppModule {
   id: string;
@@ -244,7 +245,7 @@ export function ApperClient({
         />
       </motion.div>
 
-      {/* Active subscriptions — dark featured */}
+      {/* Active subscriptions */}
       {activeSubscriptions.length > 0 && (
         <motion.section variants={fadeInUp} className="space-y-4">
           <div className="flex items-center justify-between">
@@ -256,15 +257,15 @@ export function ApperClient({
               <button
                 onClick={handlePortal}
                 disabled={loading === "portal"}
-                className="flex items-center gap-1.5 text-[11px] font-semibold text-accent-cta hover:opacity-80 transition-opacity"
+                className="flex items-center gap-1.5 text-[11px] font-semibold text-primary hover:opacity-80 transition-opacity"
               >
                 <Settings className="h-3.5 w-3.5" />
                 {loading === "portal" ? "Åpner…" : "Administrer"}
               </button>
             )}
           </div>
-          <div className="bg-black rounded-xl p-5">
-            <ul className="divide-y divide-white/10">
+          <PremiumCard padding="sm" noHover>
+            <ul className="divide-y divide-portal-border">
               {activeSubscriptions.map((sub) => {
                 const name =
                   sub.bundle?.slug ?? sub.module?.slug ?? "Abonnement";
@@ -275,24 +276,24 @@ export function ApperClient({
                     className="flex items-center justify-between py-3 first:pt-0 last:pb-0"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-cta/15 border border-accent-cta/25">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">
                         {isBundle ? (
-                          <Package className="h-[18px] w-[18px] text-accent-cta" />
+                          <Package className="h-[18px] w-[18px] text-primary" />
                         ) : (
-                          <Sparkles className="h-[18px] w-[18px] text-accent-cta" />
+                          <Sparkles className="h-[18px] w-[18px] text-primary" />
                         )}
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-white capitalize">
+                        <p className="text-sm font-semibold text-portal-text capitalize">
                           {name.replace(/-/g, " ")}
                         </p>
-                        <p className="text-[11px] text-white/60">
+                        <p className="text-[11px] text-portal-muted">
                           {sub.status === "TRIALING" ? "Prøveperiode" : "Aktiv"}
                           {sub.cancelAtPeriodEnd && " · Avsluttes ved periodeslutt"}
                         </p>
                       </div>
                     </div>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-accent-cta/15 border border-accent-cta/25 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-accent-cta">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 border border-primary/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
                       <Check className="h-3 w-3" />
                       Aktiv
                     </span>
@@ -300,7 +301,7 @@ export function ApperClient({
                 );
               })}
             </ul>
-          </div>
+          </PremiumCard>
         </motion.section>
       )}
 
@@ -317,21 +318,19 @@ export function ApperClient({
             const BundleIcon = isPremium ? Trophy : Package;
 
             return (
-              <div
+              <PremiumCard
                 key={bundle.id}
-                className={cn(
-                  "rounded-xl p-6 border shadow-card",
-                  isPremium
-                    ? "bg-black border-white/10"
-                    : "bg-white border-portal-border"
-                )}
+                padding="lg"
+                variant={isPremium ? "accent" : "default"}
+                hover={isPremium ? "glow" : "lift"}
+                glow={isPremium ? "accent" : undefined}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div
                     className={cn(
                       "w-11 h-11 rounded-xl flex items-center justify-center",
                       isPremium
-                        ? "bg-accent-cta/15 border border-accent-cta/25"
+                        ? "bg-primary/10 border border-primary/20"
                         : "bg-primary/10"
                     )}
                   >
@@ -339,7 +338,7 @@ export function ApperClient({
                       className={cn(
                         "h-5 w-5",
                         isPremium
-                          ? "text-accent-cta"
+                          ? "text-primary"
                           : "text-primary"
                       )}
                     />
@@ -349,7 +348,7 @@ export function ApperClient({
                       className={cn(
                         "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
                         isPremium
-                          ? "bg-accent-cta/15 border border-accent-cta/25 text-accent-cta"
+                          ? "bg-primary/10 border border-primary/20 text-primary"
                           : "bg-success/10 text-success"
                       )}
                     >
@@ -361,7 +360,7 @@ export function ApperClient({
                 <h3
                   className={cn(
                     "text-[18px] font-semibold tracking-tight mb-1.5",
-                    isPremium ? "text-white" : "text-portal-text"
+                    isPremium ? "text-portal-text" : "text-portal-text"
                   )}
                 >
                   {bundle.name}
@@ -370,7 +369,7 @@ export function ApperClient({
                   <p
                     className={cn(
                       "text-[13px] leading-relaxed mb-4",
-                      isPremium ? "text-white/70" : "text-portal-muted"
+                      isPremium ? "text-portal-secondary" : "text-portal-muted"
                     )}
                   >
                     {bundle.description}
@@ -383,7 +382,7 @@ export function ApperClient({
                       className={cn(
                         "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium",
                         isPremium
-                          ? "bg-white/10 text-white/90 border border-white/10"
+                          ? "bg-portal-hover text-portal-text border border-portal-border"
                           : "bg-primary/10 text-primary"
                       )}
                     >
@@ -396,7 +395,7 @@ export function ApperClient({
                     <span
                       className={cn(
                         "text-[32px] font-[300] tabular-nums tracking-[-0.04em] leading-none",
-                        isPremium ? "text-white" : "text-portal-text"
+                        isPremium ? "text-portal-text" : "text-portal-text"
                       )}
                     >
                       {bundle.monthlyPriceNok / 100}
@@ -404,7 +403,7 @@ export function ApperClient({
                     <span
                       className={cn(
                         "ml-1 text-sm",
-                        isPremium ? "text-white/60" : "text-portal-muted"
+                        isPremium ? "text-portal-muted" : "text-portal-muted"
                       )}
                     >
                       kr/mnd
@@ -417,8 +416,8 @@ export function ApperClient({
                       className={cn(
                         "relative h-10 px-5 rounded-[20px] text-[11px] font-bold inline-flex items-center gap-2 transition-all",
                         isPremium
-                          ? "bg-accent-cta text-accent-cta-text shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)]"
-                          : "bg-primary text-white hover:brightness-110"
+                          ? "bg-primary text-white hover:bg-primary-alt"
+                          : "bg-primary text-white hover:bg-primary-alt"
                       )}
                     >
                       {loading === bundle.slug ? (
@@ -429,7 +428,7 @@ export function ApperClient({
                     </button>
                   )}
                 </div>
-              </div>
+              </PremiumCard>
             );
           })}
         </div>
@@ -448,9 +447,10 @@ export function ApperClient({
             const isFree = mod.monthlyPriceNok === 0;
 
             return (
-              <div
+              <PremiumCard
                 key={mod.id}
-                className="bg-white rounded-xl border border-portal-border shadow-card p-5"
+                padding="md"
+                hover="lift"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -483,7 +483,7 @@ export function ApperClient({
                   {mod.name}
                 </h3>
                 {mod.description && (
-                  <p className="text-[12px] text-portal-muted leading-relaxed mb-4 line-clamp-2">
+                  <p className="text-[12px] text-portal-secondary leading-relaxed mb-4 line-clamp-2">
                     {mod.description}
                   </p>
                 )}
@@ -526,7 +526,7 @@ export function ApperClient({
                     </button>
                   ) : null}
                 </div>
-              </div>
+              </PremiumCard>
             );
           })}
         </div>

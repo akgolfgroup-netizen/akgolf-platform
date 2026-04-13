@@ -19,7 +19,8 @@ import {
 } from "date-fns";
 import { nb } from "date-fns/locale";
 import { motion } from "framer-motion";
-import { GlassCard, fadeInUp } from "@/components/portal/premium";
+import { PremiumCard } from "@/components/portal/dashboard/premium-card";
+import { fadeInUp } from "@/components/portal/premium";
 import { cn } from "@/lib/portal/utils/cn";
 
 interface TrainingLogEntry {
@@ -80,23 +81,23 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
       initial="hidden"
       animate="visible"
     >
-      <GlassCard variant="light" padding="lg">
+      <PremiumCard>
         {/* Month navigation */}
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-[16px] font-semibold text-[var(--color-portal-text)] capitalize">
+          <h3 className="text-[16px] font-semibold text-portal-text capitalize">
             {format(calendarMonth, "MMMM yyyy", { locale: nb })}
           </h3>
-          <div className="flex gap-1 p-1 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 shadow-sm">
+          <div className="flex gap-1 p-1 rounded-full bg-white border border-portal-border shadow-sm">
             <button
               onClick={() => setCalendarMonth(subMonths(calendarMonth, 1))}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-[var(--color-portal-muted)] hover:text-[var(--color-portal-text)] hover:bg-white transition-colors"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-portal-muted hover:text-portal-text hover:bg-portal-hover transition-colors"
               aria-label="Forrige maned"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => setCalendarMonth(addMonths(calendarMonth, 1))}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-[var(--color-portal-muted)] hover:text-[var(--color-portal-text)] hover:bg-white transition-colors"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-portal-muted hover:text-portal-text hover:bg-portal-hover transition-colors"
               aria-label="Neste maned"
             >
               <ChevronRight className="w-4 h-4" />
@@ -109,7 +110,7 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
           {WEEK_DAYS.map((day, i) => (
             <div
               key={`${day}-${i}`}
-              className="text-center text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-portal-muted)] py-2"
+              className="text-center text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted py-2"
             >
               {day}
             </div>
@@ -130,34 +131,34 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
                 day.hasLog ? "cursor-pointer" : "cursor-default",
                 day.otherMonth && "opacity-30",
                 day.today &&
-                  "bg-[var(--color-accent-cta)]/15 border-2 border-[var(--color-accent-cta)]",
+                  "bg-primary/15 border-2 border-primary",
                 day.hasLog &&
                   !day.today &&
-                  "bg-[var(--color-primary)]/8",
+                  "bg-primary/8",
                 !day.today &&
                   !day.hasLog &&
-                  "hover:bg-white/60"
+                  "hover:bg-portal-hover"
               )}
             >
               <span
                 className={cn(
                   "text-[13px] font-medium tabular-nums",
                   day.today
-                    ? "text-[var(--color-primary)] font-semibold"
-                    : "text-[var(--color-portal-text)]"
+                    ? "text-primary font-semibold"
+                    : "text-portal-text"
                 )}
               >
                 {day.day}
               </span>
               {day.hasLog && (
                 <span
-                  className="w-1.5 h-1.5 rounded-full mt-0.5 bg-[var(--color-primary)]"
+                  className="w-1.5 h-1.5 rounded-full mt-0.5 bg-primary"
                 />
               )}
             </button>
           ))}
         </div>
-      </GlassCard>
+      </PremiumCard>
     </motion.div>
   );
 }

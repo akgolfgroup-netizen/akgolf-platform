@@ -73,10 +73,10 @@ const SG_AREAS = [
 const HERO_TITLE = (
   <>
     Din{" "}
-    <span className="font-serif italic text-[var(--color-primary)] font-normal">
+    <span className="font-serif italic text-portal-text font-normal">
       statistikk
     </span>
-    <span className="text-[var(--color-accent-cta)]">.</span>
+    <span className="text-accent-cta">.</span>
   </>
 );
 
@@ -98,11 +98,11 @@ function SGBar({ label, value, delay }: { label: string; value: number | null; d
 
   return (
     <div className="flex items-center gap-3">
-      <span className="w-24 shrink-0 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-secondary)]">
+      <span className="w-24 shrink-0 text-[11px] font-semibold uppercase tracking-[0.08em] text-portal-secondary">
         {label}
       </span>
-      <div className="relative flex h-[5px] flex-1 items-center rounded-full bg-black/[0.05]">
-        <div className="absolute left-1/2 h-full w-px bg-black/[0.08]" />
+      <div className="relative flex h-[5px] flex-1 items-center rounded-full bg-portal-hover">
+        <div className="absolute left-1/2 h-full w-px bg-portal-border" />
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${widthPct / 2}%` }}
@@ -121,12 +121,9 @@ function SGBar({ label, value, delay }: { label: string; value: number | null; d
         />
       </div>
       <span
-        className="w-14 shrink-0 text-right text-[13px] font-bold tabular-nums"
-        style={{
-          color: isPositive
-            ? "var(--color-success)"
-            : "var(--color-error)",
-        }}
+        className={`w-14 shrink-0 text-right text-[13px] font-bold tabular-nums ${
+          isPositive ? "text-success" : "text-error"
+        }`}
       >
         {isPositive ? "+" : ""}
         {value.toFixed(1)}
@@ -150,7 +147,7 @@ function ScoreSparkline({ rounds }: { rounds: RoundStats[] }) {
 
   if (data.length < 2) {
     return (
-      <div className="flex h-[160px] items-center justify-center rounded-xl bg-black/[0.02] text-sm text-[var(--color-portal-muted)]">
+      <div className="flex h-[160px] items-center justify-center rounded-xl bg-portal-hover text-sm text-portal-muted">
         Registrer flere runder for a se trenden
       </div>
     );
@@ -198,19 +195,21 @@ function ScoreSparkline({ rounds }: { rounds: RoundStats[] }) {
           y1={PAD_Y + pct * (H - 2 * PAD_Y)}
           x2={W - PAD_X}
           y2={PAD_Y + pct * (H - 2 * PAD_Y)}
-          stroke="rgba(0,0,0,0.04)"
+          stroke="currentColor"
+          strokeOpacity="0.04"
+          className="text-portal-text"
           strokeWidth="1"
         />
       ))}
 
       <defs>
         <linearGradient id="scoreFillGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.15" />
-          <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.15" className="text-primary" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0" className="text-primary" />
         </linearGradient>
         <linearGradient id="scoreLineGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="1" />
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.5" className="text-primary" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="1" className="text-primary" />
         </linearGradient>
         <filter id="sparkGlow">
           <feGaussianBlur stdDeviation="3" result="blur" />
@@ -239,9 +238,11 @@ function ScoreSparkline({ rounds }: { rounds: RoundStats[] }) {
         cx={lastPt.x}
         cy={lastPt.y}
         r={5}
-        fill="var(--color-accent-cta)"
-        stroke="white"
+        fill="currentColor"
+        className="text-accent-cta"
+        stroke="currentColor"
         strokeWidth="2"
+        style={{ stroke: "var(--color-portal-card)" }}
         filter="url(#sparkGlow)"
       />
 
@@ -250,7 +251,7 @@ function ScoreSparkline({ rounds }: { rounds: RoundStats[] }) {
         x={points[0].x}
         y={H - 2}
         textAnchor="start"
-        className="fill-[var(--color-portal-muted)]"
+        className="fill-portal-muted tabular-nums"
         fontSize="10"
       >
         {data[0].score}
@@ -259,7 +260,7 @@ function ScoreSparkline({ rounds }: { rounds: RoundStats[] }) {
         x={lastPt.x}
         y={H - 2}
         textAnchor="end"
-        className="fill-[var(--color-primary)]"
+        className="fill-portal-text tabular-nums"
         fontSize="10"
         fontWeight="600"
       >
@@ -274,7 +275,7 @@ function ScoreSparkline({ rounds }: { rounds: RoundStats[] }) {
 function TrainingBarChart({ data }: { data: WeeklyTrainingData[] }) {
   if (data.length === 0) {
     return (
-      <div className="flex h-[160px] items-center justify-center rounded-xl bg-black/[0.02] text-sm text-[var(--color-portal-muted)]">
+      <div className="flex h-[160px] items-center justify-center rounded-xl bg-portal-hover text-sm text-portal-muted">
         Ingen treningsdata i valgt periode
       </div>
     );
@@ -291,8 +292,8 @@ function TrainingBarChart({ data }: { data: WeeklyTrainingData[] }) {
         return (
           <div key={week.week} className="group relative flex flex-1 flex-col items-center">
             {/* Tooltip on hover */}
-            <div className="pointer-events-none absolute -top-8 z-10 whitespace-nowrap rounded-md bg-[var(--color-portal-text)] px-2 py-1 text-[10px] font-medium text-white opacity-0 shadow-md transition-opacity group-hover:opacity-100">
-              {week.minutes} min
+            <div className="pointer-events-none absolute -top-8 z-10 whitespace-nowrap rounded-md bg-portal-text px-2 py-1 text-[10px] font-medium text-portal-bg opacity-0 shadow-md transition-opacity group-hover:opacity-100">
+              <span className="tabular-nums">{week.minutes}</span> min
             </div>
 
             {/* Bar */}
@@ -306,22 +307,13 @@ function TrainingBarChart({ data }: { data: WeeklyTrainingData[] }) {
               }}
               className={
                 isEmpty
-                  ? "w-full rounded-full bg-black/[0.05]"
-                  : "w-full rounded-t-md bg-[var(--color-primary)] opacity-70 transition-opacity hover:opacity-100"
-              }
-              style={
-                !isEmpty
-                  ? {
-                      background:
-                        "linear-gradient(180deg, var(--color-primary-alt), var(--color-primary))",
-                      boxShadow: "0 0 10px rgba(0,88,64,0.15)",
-                    }
-                  : undefined
+                  ? "w-full rounded-full bg-portal-hover"
+                  : "w-full rounded-t-md bg-primary opacity-70 transition-opacity hover:opacity-100"
               }
             />
 
             {/* Label */}
-            <span className="mt-2 text-[9px] text-[var(--color-portal-muted)] tabular-nums leading-none">
+            <span className="mt-2 text-[9px] text-portal-muted tabular-nums leading-none">
               {week.week.split(".")[0]}
             </span>
           </div>
@@ -343,19 +335,19 @@ function EmptyState() {
         description="Folg utviklingen din over tid. Registrer din forste runde for a se trender og analyser."
       />
       <GlassCard variant="light" padding="lg" className="text-center">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-surface)]">
-          <BarChart3 className="h-8 w-8 text-[var(--color-muted)]" />
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-portal-hover">
+          <BarChart3 className="h-8 w-8 text-portal-muted" />
         </div>
-        <h2 className="mb-2 text-xl font-semibold text-[var(--color-grey-900)]">
+        <h2 className="mb-2 text-xl font-semibold text-portal-text">
           Ingen runder registrert
         </h2>
-        <p className="mx-auto mb-8 max-w-md text-[var(--color-muted)]">
+        <p className="mx-auto mb-8 max-w-md text-portal-secondary">
           Registrer din forste runde for a se statistikk, Strokes Gained-analyse og
           utviklingstrender.
         </p>
         <Link
           href="/portal/statistikk/ny-runde"
-          className="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent-cta)] px-6 py-3 text-[12px] font-bold text-[var(--color-grey-900)] shadow-[0_8px_24px_rgba(209,248,67,0.4)] transition-shadow hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)]"
+          className="inline-flex items-center gap-2 rounded-[20px] bg-accent-cta px-6 py-3 text-[12px] font-bold text-accent-cta-text shadow-lg transition-shadow hover:shadow-xl"
         >
           <Plus className="h-4 w-4" />
           Registrer din forste runde
@@ -413,15 +405,15 @@ export function StatistikkClient({
         actions={
           <>
             {/* Chip-tabs periode-velger */}
-            <div className="flex gap-1.5 rounded-[10px] bg-[var(--color-portal-hover)] p-[3px]">
+            <div className="flex gap-1.5 rounded-[10px] bg-portal-hover p-[3px]">
               {PERIOD_OPTIONS.map((o) => (
                 <button
                   key={o.key}
                   onClick={() => handlePeriodChange(o.key)}
                   className={
                     o.key === currentPeriod
-                      ? "rounded-[7px] bg-[var(--color-primary)] px-4 py-[7px] text-[13px] font-medium text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
-                      : "rounded-[7px] px-4 py-[7px] text-[13px] font-medium text-[var(--color-portal-muted)] hover:text-[var(--color-portal-secondary)]"
+                      ? "rounded-[7px] bg-primary px-4 py-[7px] text-[13px] font-medium text-accent-cta-text shadow-md"
+                      : "rounded-[7px] px-4 py-[7px] text-[13px] font-medium text-portal-muted hover:text-portal-secondary"
                   }
                 >
                   {o.label}
@@ -433,7 +425,7 @@ export function StatistikkClient({
             <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
               <Link
                 href="/portal/statistikk/ny-runde"
-                className="relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-full bg-[var(--color-accent-cta)] px-6 text-[12px] font-bold text-[var(--color-grey-900)] shadow-[0_8px_24px_rgba(209,248,67,0.4)] transition-shadow hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)]"
+                className="relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-[20px] bg-accent-cta px-6 text-[12px] font-bold text-accent-cta-text shadow-lg transition-shadow hover:shadow-xl"
               >
                 <Shimmer />
                 <Plus className="relative z-10 h-3.5 w-3.5" strokeWidth={2.5} />
@@ -488,20 +480,20 @@ export function StatistikkClient({
       {/* 2-kolonne: Strokes Gained barer + Treningsvolum */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {/* Strokes Gained horisontale barer */}
-        <PremiumCard delay={0.15} glow="green">
+        <PremiumCard delay={0.15}>
           <div className="mb-5 flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
                 Strokes Gained
               </p>
-              <p className="mt-0.5 text-xs text-[var(--color-portal-muted)]">
+              <p className="mt-0.5 text-xs text-portal-secondary">
                 Per kategori
               </p>
             </div>
             {aggregates?.avgSgTotal != null && (
-              <span className="rounded-full border border-black/[0.06] bg-black/[0.02] px-3 py-1 text-[11px] font-bold tabular-nums text-[var(--color-portal-text)]">
+              <span className="rounded-full border border-portal-border bg-portal-hover px-3 py-1 text-[11px] font-bold tabular-nums text-portal-text">
                 Totalt: {aggregates.avgSgTotal > 0 ? "+" : ""}
-                {aggregates.avgSgTotal.toFixed(1)}
+                <span className="tabular-nums">{aggregates.avgSgTotal.toFixed(1)}</span>
               </span>
             )}
           </div>
@@ -516,7 +508,7 @@ export function StatistikkClient({
             ))}
           </div>
           {SG_AREAS.every((a) => (aggregates?.[a.key] ?? null) === null) && (
-            <div className="flex h-[120px] items-center justify-center text-sm text-[var(--color-portal-muted)]">
+            <div className="flex h-[120px] items-center justify-center text-sm text-portal-muted">
               Ingen SG-data i valgt periode
             </div>
           )}
@@ -525,10 +517,10 @@ export function StatistikkClient({
         {/* Treningsvolum stolpediagram */}
         <PremiumCard delay={0.2}>
           <div className="mb-5">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
               Treningsvolum
             </p>
-            <p className="mt-0.5 text-xs text-[var(--color-portal-muted)]">
+            <p className="mt-0.5 text-xs text-portal-secondary">
               Minutter per uke
             </p>
           </div>
@@ -540,16 +532,16 @@ export function StatistikkClient({
       <PremiumCard delay={0.25}>
         <div className="mb-5 flex items-start justify-between">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
               Score-trend
             </p>
-            <p className="mt-0.5 text-xs text-[var(--color-portal-muted)]">
+            <p className="mt-0.5 text-xs text-portal-secondary">
               Utvikling over tid
             </p>
           </div>
           {aggregates?.avgScore != null && (
-            <span className="rounded-full border border-[var(--color-primary)]/15 bg-[var(--color-primary)]/[0.08] px-3 py-1 text-xs font-bold tabular-nums text-[var(--color-primary)]">
-              Snitt {aggregates.avgScore.toFixed(1)}
+            <span className="rounded-full border border-portal-border bg-portal-hover px-3 py-1 text-xs font-bold tabular-nums text-portal-text">
+              Snitt <span className="tabular-nums">{aggregates.avgScore.toFixed(1)}</span>
             </span>
           )}
         </div>
@@ -563,24 +555,24 @@ export function StatistikkClient({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, type: "spring", damping: 20, stiffness: 100 }}
         >
-          <PremiumCard glow="ai" delay={0.4}>
+          <PremiumCard delay={0.4}>
             <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--color-ai)]/10">
-                <Lightbulb className="h-6 w-6 text-[var(--color-ai)]" strokeWidth={1.75} />
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                <Lightbulb className="h-6 w-6 text-primary" strokeWidth={1.75} />
               </div>
               <div>
-                <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-portal-muted)]">
+                <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">
                   AI-anbefaling
                 </p>
-                <h3 className="mb-2 text-[14px] font-semibold text-[var(--color-portal-text)]">
+                <h3 className="mb-2 text-[14px] font-semibold text-portal-text">
                   Fokuser pa {weakestArea.label}-trening
                 </h3>
-                <p className="text-[13px] leading-relaxed text-[var(--color-portal-secondary)]">
+                <p className="text-[13px] leading-relaxed text-portal-secondary">
                   Basert pa dine SG-data bor du oke fokus pa{" "}
-                  <strong className="text-[var(--color-portal-text)]">
+                  <strong className="text-portal-text">
                     {weakestArea.label}
                   </strong>
-                  . Du taper mest slag ({weakestArea.value.toFixed(1)}) i denne kategorien.
+                  . Du taper mest slag (<span className="tabular-nums">{weakestArea.value.toFixed(1)}</span>) i denne kategorien.
                 </p>
               </div>
             </div>
