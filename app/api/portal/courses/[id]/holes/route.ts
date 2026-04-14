@@ -25,7 +25,7 @@ export async function GET(
 
   const { data: holes, error: holesError } = await supabase
     .from("Hole")
-    .select("id, holeNumber, par, handicap, lengthMeter, teeColor, latitude, longitude, greenLat, greenLon")
+    .select("id, holeNumber, par, handicap, lengthMeter, teeColor, latitude, longitude, greenLat, greenLon, strategy")
     .eq("courseId", id)
     .eq("teeColor", teeColor)
     .order("holeNumber", { ascending: true });

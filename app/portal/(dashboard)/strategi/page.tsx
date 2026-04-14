@@ -27,6 +27,13 @@ interface Course {
   totalLength?: number;
 }
 
+interface Strategy {
+  recommendedClub: string;
+  aimPoint: string;
+  targetZone: string;
+  dangerAreas: string[];
+}
+
 interface Hole {
   id: string;
   holeNumber: number;
@@ -34,10 +41,15 @@ interface Hole {
   handicap: number;
   lengthMeter: number;
   teeColor?: string;
+  strategy?: Strategy | null;
 }
 
-// Fallback strategy generator when no course strategy data exists yet
-function getFallbackStrategy(hole: Hole) {
+// Fallback strategy generator when no persisted strategy exists
+function getFallbackStrategy(hole: Hole): Strategy {
+  if (hole.strategy) {
+    return hole.strategy;
+  }
+
   const recommendedClub =
     hole.lengthMeter > 400
       ? "Driver"
