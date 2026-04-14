@@ -14,17 +14,17 @@ const STEPS = [
     step: "02",
     title: "Tren med trener",
     description:
-      "Hver sesjon er fokusert pa ett tema. TrackMan maler, video dokumenterer. Du far konkrete tall pa endringen.",
+      "Hver sesjon er fokusert på ett tema. TrackMan måler, video dokumenterer. Du får konkrete tall på endringen.",
   },
   {
     step: "03",
-    title: "Tren pa egenhand",
+    title: "Tren på egenhånd",
     description:
-      "Mellom sesjonene har du en oppdatert treningsplan med ovelser, video og progresjon. Du vet alltid hva du skal jobbe med.",
+      "Mellom sesjonene har du en oppdatert treningsplan med øvelser, video og progresjon. Du vet alltid hva du skal jobbe med.",
   },
   {
     step: "04",
-    title: "Folg utviklingen",
+    title: "Følg utviklingen",
     description:
       "Spillerportalen viser handicap-utvikling, treningsstatistikk og Strokes Gained-analyse. Du ser fremgangen over tid.",
   },
@@ -38,12 +38,12 @@ export function HowItWorksSection() {
           <div className="max-w-[640px] mx-auto text-center mb-16">
             <SectionLabel>Slik fungerer det</SectionLabel>
             <h2 className="w-heading-lg mt-4 mb-6">
-              Coaching med oppfolging
+              Coaching med oppfølging
             </h2>
             <p className="text-text leading-relaxed">
-              De fleste golfere trener tilfeldig. Med et treningsabonnement far du
-              en fast trener, en personlig plan og et system som folger deg mellom
-              sesjonene. Resultatet er raskere utvikling og mer malrettet trening.
+              De fleste golfere trener tilfeldig. Med et treningsabonnement får du
+              en fast trener, en personlig plan og et system som følger deg mellom
+              sesjonene. Resultatet er raskere utvikling og mer målrettet trening.
             </p>
           </div>
         </RevealOnScroll>

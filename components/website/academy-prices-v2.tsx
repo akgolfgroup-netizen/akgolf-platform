@@ -21,7 +21,7 @@ export function AcademyPricesV2() {
               Finn pakken som passer deg
             </h2>
             <p className="text-text leading-relaxed">
-              Alle abonnementer er uten bindingstid og kan avsluttes nar som helst.
+              Alle abonnementer er uten bindingstid og kan avsluttes når som helst.
             </p>
           </div>
         </RevealOnScroll>
@@ -166,7 +166,7 @@ export function AcademyPricesV2() {
         </RevealOnScroll>
 
         <p className="text-center text-xs text-grey-300 mt-8">
-          Alle priser er inkludert. Ingen bindingstid pa abonnementer.
+          Alle priser er inkludert. Ingen bindingstid på abonnementer.
         </p>
       </div>
     </section>

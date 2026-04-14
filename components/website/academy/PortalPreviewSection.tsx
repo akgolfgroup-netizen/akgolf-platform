@@ -16,32 +16,32 @@ const FEATURES = [
   {
     icon: Calendar,
     title: "Booking",
-    description: "Book og administrer coaching-timer direkte. Se ledige tider og fa bekreftelse umiddelbart.",
+    description: "Book og administrer coaching-timer direkte. Se ledige tider og få bekreftelse umiddelbart.",
   },
   {
     icon: BookOpen,
     title: "Treningsplan",
-    description: "Personlig plan oppdatert av treneren etter hver sesjon. Ovelser med video, tid og progresjon.",
+    description: "Personlig plan oppdatert av treneren etter hver sesjon. Øvelser med video, tid og progresjon.",
   },
   {
     icon: BarChart3,
     title: "Statistikk og analyse",
-    description: "Handicap-utvikling, Strokes Gained-barer og benchmark mot spillere pa ditt niva.",
+    description: "Handicap-utvikling, Strokes Gained-barer og benchmark mot spillere på ditt nivå.",
   },
   {
     icon: Target,
     title: "Strokes Gained",
-    description: "Se hvor du taper og vinner slag. Tee, approach, kortspill og putting — malt og visualisert.",
+    description: "Se hvor du taper og vinner slag. Tee, approach, kortspill og putting — målt og visualisert.",
   },
   {
     icon: Video,
     title: "Coaching-historikk",
-    description: "Alle sesjoner logget med notater, video og TrackMan-data. Se tilbake pa hva dere jobbet med.",
+    description: "Alle sesjoner logget med notater, video og TrackMan-data. Se tilbake på hva dere jobbet med.",
   },
   {
     icon: TrendingUp,
     title: "Progresjon",
-    description: "Folg utviklingen din over uker og maneder. Tydelige grafer og milestones nar du nar nye niva.",
+    description: "Følg utviklingen din over uker og måneder. Tydelige grafer og milestones når du når nye nivå.",
   },
 ];
 
@@ -57,7 +57,7 @@ export function PortalPreviewSection() {
             </h2>
             <p className="text-text leading-relaxed">
               Spillerportalen er treningsappen din. Her ser du treningsplanen,
-              booker timer, folger progresjonen og har tilgang til alle ovelser
+              booker timer, følger progresjonen og har tilgang til alle øvelser
               med video. Treneren oppdaterer planen etter hver sesjon.
             </p>
           </div>
@@ -94,9 +94,9 @@ export function PortalPreviewSection() {
               </h3>
             </div>
             <p className="text-sm text-text max-w-md mx-auto">
-              Vi bygger portalen na. Alle med treningsabonnement far automatisk
-              tilgang nar den er klar. I mellomtiden far du treningsplan og
-              oppfolging direkte fra treneren.
+              Vi bygger portalen nå. Alle med treningsabonnement får automatisk
+              tilgang når den er klar. I mellomtiden får du treningsplan og
+              oppfølging direkte fra treneren.
             </p>
           </div>
         </RevealOnScroll>

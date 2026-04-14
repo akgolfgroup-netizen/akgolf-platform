@@ -157,33 +157,42 @@ export default function BookingPage() {
   }, [selectedTrainer]);
 
   return (
-    <div className="min-h-screen bg-surface">
-      {/* Header */}
-      <header className="bg-primary text-white">
-        <div className="max-w-[1120px] mx-auto px-4 md:px-8 py-12 md:py-20 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-accent-cta mb-4">
+    <div className="min-h-screen bg-white">
+      {/* Hero — matcher forsiden */}
+      <section className="relative flex items-center pt-[48px] overflow-hidden bg-black">
+        <Image
+          src="/images/branding/ak-golf-academy-22.jpg"
+          alt="Coaching på rangen"
+          fill
+          priority
+          quality={90}
+          className="object-cover opacity-25"
+          sizes="100vw"
+        />
+        <div className="w-container relative py-16 md:py-24">
+          <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/60 font-medium">
             AK Golf Academy
           </p>
-          <h1 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
+          <h1 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-[1.1] tracking-tight text-white mt-6 mb-4">
             Book coaching
           </h1>
-          <p className="text-white/70 max-w-md mx-auto">
-            Velg lokasjon og trener for a booke din neste coaching-time.
+          <p className="text-base text-white/60 max-w-md leading-relaxed">
+            Velg trener for å booke din neste coaching-time.
           </p>
         </div>
-      </header>
+      </section>
 
-      <main className="max-w-[1120px] mx-auto px-4 md:px-8 py-12 md:py-20">
+      <main className="w-container py-16 md:py-24">
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            <span className="ml-3 text-sm text-muted">Laster trenere...</span>
+            <span className="ml-3 text-sm text-text">Laster trenere...</span>
           </div>
         ) : locations.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-muted">Ingen trenere tilgjengelig for online booking akkurat nå.</p>
-            <p className="text-sm text-muted mt-2">
-              Ta kontakt pa{" "}
+            <p className="text-text">Ingen trenere tilgjengelig for online booking akkurat nå.</p>
+            <p className="text-sm text-text mt-2">
+              Ta kontakt på{" "}
               <a href="mailto:anders@akgolf.no" className="text-primary font-medium">
                 anders@akgolf.no
               </a>
@@ -191,16 +200,16 @@ export default function BookingPage() {
           </div>
         ) : selectedTrainer ? (
           <div ref={embedRef}>
-            {/* Back button */}
+            {/* Tilbake-knapp */}
             <button
               onClick={() => setSelectedTrainer(null)}
-              className="flex items-center gap-2 mb-8 text-sm font-medium text-muted hover:text-primary transition-colors"
+              className="flex items-center gap-2 mb-8 text-sm font-medium text-text hover:text-black transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               Tilbake til treneroversikt
             </button>
 
-            {/* Selected trainer header */}
+            {/* Valgt trener */}
             <div className="flex items-center gap-4 mb-8">
               <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-grey-100 shrink-0">
                 {selectedTrainer.trainer.image ? (
@@ -219,10 +228,10 @@ export default function BookingPage() {
                 )}
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-primary">
+                <h2 className="text-xl font-semibold text-black">
                   {selectedTrainer.trainer.name}
                 </h2>
-                <p className="text-sm text-muted">
+                <p className="text-sm text-text">
                   {selectedTrainer.trainer.role} — {selectedTrainer.locationName}
                 </p>
               </div>
@@ -243,32 +252,32 @@ export default function BookingPage() {
               </div>
             ) : (
               <div className="rounded-2xl border border-grey-200 bg-white p-12 text-center">
-                <Clock className="w-10 h-10 text-muted mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-primary mb-2">
+                <Clock className="w-10 h-10 text-text mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-black mb-2">
                   Kommer snart
                 </h3>
-                <p className="text-sm text-muted max-w-sm mx-auto">
-                  Online booking for {selectedTrainer.trainer.name} pa{" "}
+                <p className="text-sm text-text max-w-sm mx-auto">
+                  Online booking for {selectedTrainer.trainer.name} på{" "}
                   {selectedTrainer.locationName} er under oppsett.
-                  Ta kontakt pa{" "}
+                  Ta kontakt på{" "}
                   <a
                     href="mailto:anders@akgolf.no"
                     className="text-primary font-medium"
                   >
                     anders@akgolf.no
                   </a>{" "}
-                  for a booke.
+                  for å booke.
                 </p>
               </div>
             )}
           </div>
         ) : (
           <>
-            {/* Location cards */}
+            {/* Lokasjonskort */}
             <div className="space-y-16">
               {locations.map((location) => (
                 <section key={location.shortName}>
-                  {/* Location Header */}
+                  {/* Lokasjon-header */}
                   <div className="flex items-center gap-3 mb-8">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                       <MapPin className="w-5 h-5 text-primary" />
@@ -277,7 +286,7 @@ export default function BookingPage() {
                       <h2 className="text-xl font-semibold text-black">
                         {location.name}
                       </h2>
-                      <p className="text-sm text-grey-400">
+                      <p className="text-sm text-text">
                         {location.trainers.length === 1
                           ? "1 trener tilgjengelig"
                           : `${location.trainers.length} trenere tilgjengelige`}
@@ -285,7 +294,7 @@ export default function BookingPage() {
                     </div>
                   </div>
 
-                  {/* Trainer Cards */}
+                  {/* Trenerkort */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {location.trainers.map((trainer) => (
                       <button
@@ -298,7 +307,7 @@ export default function BookingPage() {
                         }
                         className="group rounded-2xl border border-grey-200 bg-white overflow-hidden transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover text-left"
                       >
-                        {/* Trainer Image */}
+                        {/* Trenerbilde */}
                         <div className="relative h-48 md:h-56 overflow-hidden bg-grey-100">
                           {trainer.image ? (
                             <Image
@@ -314,27 +323,26 @@ export default function BookingPage() {
                               </span>
                             </div>
                           )}
-                          {/* Role Badge */}
-                          <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-primary backdrop-blur-sm">
+                          <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-black backdrop-blur-sm">
                             {trainer.role}
                           </div>
                         </div>
 
-                        {/* Trainer Info */}
+                        {/* Trenerinfo */}
                         <div className="p-6">
                           <h3 className="text-lg font-semibold text-black mb-1">
                             {trainer.name}
                           </h3>
-                          <p className="text-sm text-grey-400 mb-4">
+                          <p className="text-sm text-text mb-4">
                             {location.name}
                           </p>
 
-                          {/* Services */}
+                          {/* Tjenester */}
                           <div className="flex flex-wrap gap-2 mb-6">
                             {trainer.services.map((service) => (
                               <span
                                 key={service}
-                                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-surface text-text"
+                                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-grey-100 text-text"
                               >
                                 {service}
                               </span>
@@ -342,7 +350,7 @@ export default function BookingPage() {
                           </div>
 
                           {/* CTA */}
-                          <div className="flex items-center justify-between">
+                          <div className="flex items-center justify-between pt-4 border-t border-grey-100">
                             <span className="text-sm font-semibold text-black group-hover:text-black/70 transition-colors">
                               Velg tid
                             </span>
@@ -371,17 +379,17 @@ export default function BookingPage() {
               ))}
             </div>
 
-            {/* Info Section */}
-            <div className="mt-16 rounded-2xl bg-white border border-grey-200 p-8 md:p-10">
+            {/* Info */}
+            <div className="mt-16 rounded-2xl bg-grey-50 border border-grey-200 p-8 md:p-10">
               <div className="flex items-start gap-4">
                 <Clock className="w-6 h-6 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="font-semibold text-primary mb-2">
+                  <h3 className="font-semibold text-black mb-2">
                     Slik booker du
                   </h3>
-                  <p className="text-sm text-muted leading-relaxed">
-                    Velg trener og lokasjon over. Du far opp tilgjengelige tider
-                    og kan booke direkte. Bekreftelse sendes pa e-post.
+                  <p className="text-sm text-text leading-relaxed">
+                    Velg trener og lokasjon over. Du får opp tilgjengelige tider
+                    og kan booke direkte. Bekreftelse sendes på e-post.
                   </p>
                 </div>
               </div>
@@ -389,13 +397,13 @@ export default function BookingPage() {
           </>
         )}
 
-        {/* Back to Academy */}
+        {/* Tilbake */}
         <div className="mt-10 text-center">
           <Link
             href="/academy"
-            className="text-sm text-muted hover:text-primary transition-colors"
+            className="text-sm text-text hover:text-black transition-colors"
           >
-            Tilbake til Academy
+            &larr; Tilbake til Academy
           </Link>
         </div>
       </main>
