@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Upload,
@@ -29,7 +29,7 @@ import {
   BarChart,
   Bar,
 } from "recharts";
-import type { TrackManOverview, TrackManSessionItem } from "./actions";
+import type { TrackManOverview } from "./actions";
 
 // ── Typer ────────────────────────────────────────────────
 
@@ -41,52 +41,25 @@ interface UploadState {
   success: string | null;
 }
 
-interface ShotRow {
+interface ApiSession {
+  sessionId: string;
+  date: string;
+  context: string;
+  pressureLevel: number;
+  totalShots: number;
+  clubs: { club: string; count: number }[];
+}
+
+interface ApiShot {
   id: string;
-  ballSpeed: number;
-  carry: number;
-  total: number;
+  shotNumber: number;
+  club: string;
+  ballSpeed: number | null;
+  carryDistance: number | null;
+  totalDistance: number | null;
   spinRate: number | null;
   launchAngle: number | null;
 }
-
-// ── Mock data ────────────────────────────────────────────
-
-const MOCK_SHOTS: Record<string, ShotRow[]> = {
-  "mock-session-1": [
-    { id: "s1", ballSpeed: 158.2, carry: 268, total: 292, spinRate: 2450, launchAngle: 12.5 },
-    { id: "s2", ballSpeed: 160.1, carry: 272, total: 296, spinRate: 2380, launchAngle: 13.1 },
-    { id: "s3", ballSpeed: 159.5, carry: 270, total: 294, spinRate: 2410, launchAngle: 12.8 },
-  ],
-  "mock-session-2": [
-    { id: "s4", ballSpeed: 152.3, carry: 245, total: 268, spinRate: 5200, launchAngle: 18.2 },
-    { id: "s5", ballSpeed: 153.0, carry: 248, total: 270, spinRate: 5100, launchAngle: 17.9 },
-  ],
-  "mock-session-3": [
-    { id: "s6", ballSpeed: 148.5, carry: 230, total: 252, spinRate: 6100, launchAngle: 20.1 },
-    { id: "s7", ballSpeed: 149.2, carry: 232, total: 254, spinRate: 6050, launchAngle: 19.8 },
-    { id: "s8", ballSpeed: 147.8, carry: 228, total: 250, spinRate: 6200, launchAngle: 20.4 },
-  ],
-};
-
-const BALL_SPEED_TREND = [
-  { date: "02. jan", speed: 156.2 },
-  { date: "09. jan", speed: 157.1 },
-  { date: "16. jan", speed: 156.8 },
-  { date: "23. jan", speed: 158.4 },
-  { date: "30. jan", speed: 159.2 },
-  { date: "06. feb", speed: 160.1 },
-  { date: "13. feb", speed: 159.5 },
-];
-
-const CARRY_BY_CLUB = [
-  { club: "Driver", carry: 270 },
-  { club: "3W", carry: 245 },
-  { club: "5W", carry: 230 },
-  { club: "4I", carry: 198 },
-  { club: "7I", carry: 165 },
-  { club: "PW", carry: 128 },
-];
 
 // ── Komponent ────────────────────────────────────────────
 
@@ -99,9 +72,41 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
     success: null,
   });
   const [expandedSessionId, setExpandedSessionId] = useState<string | null>(null);
+  const [sessions, setSessions] = useState<ApiSession[]>([]);
+  const [sessionShots, setSessionShots] = useState<Record<string, ApiShot[]>>({});
+  const [loadingSessions, setLoadingSessions] = useState(true);
 
   const csvInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch("/api/portal/trackman/sessions");
+        if (res.ok) {
+          const json = await res.json();
+          setSessions(json.items ?? []);
+        }
+      } finally {
+        setLoadingSessions(false);
+      }
+    }
+    load();
+  }, []);
+
+  useEffect(() => {
+    if (!expandedSessionId) return;
+    if (sessionShots[expandedSessionId]) return;
+
+    async function loadShots() {
+      const res = await fetch(`/api/portal/trackman/sessions/${expandedSessionId}/shots`);
+      if (res.ok) {
+        const json = await res.json();
+        setSessionShots((prev) => ({ ...prev, [expandedSessionId!]: json.shots ?? [] }));
+      }
+    }
+    loadShots();
+  }, [expandedSessionId, sessionShots]);
 
   const resetUpload = useCallback(() => {
     setUpload({
@@ -239,47 +244,44 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
     []
   );
 
-  const hasData = data.totalSessions > 0;
+  const hasData = data.totalSessions > 0 || sessions.length > 0;
 
-  // Merge real sessions with mock sessions for demo
-  const displaySessions: TrackManSessionItem[] =
-    data.sessions.length > 0
-      ? data.sessions
-      : [
-          {
-            id: "mock-session-1",
-            sessionDate: new Date().toISOString(),
-            club: "Driver",
-            shotCount: 3,
-            avgCarry: 270,
-            avgBallSpeed: 159.3,
-            avgClubSpeed: 112.4,
-            avgSpinRate: 2413,
-            avgLaunchAngle: 12.8,
-          },
-          {
-            id: "mock-session-2",
-            sessionDate: new Date(Date.now() - 86400000 * 2).toISOString(),
-            club: "3W",
-            shotCount: 2,
-            avgCarry: 246,
-            avgBallSpeed: 152.7,
-            avgClubSpeed: 105.1,
-            avgSpinRate: 5150,
-            avgLaunchAngle: 18.1,
-          },
-          {
-            id: "mock-session-3",
-            sessionDate: new Date(Date.now() - 86400000 * 5).toISOString(),
-            club: "7I",
-            shotCount: 3,
-            avgCarry: 230,
-            avgBallSpeed: 148.5,
-            avgClubSpeed: 98.2,
-            avgSpinRate: 6117,
-            avgLaunchAngle: 20.1,
-          },
-        ];
+  // Build chart data from real sessions if available
+  const driverSessions = sessions
+    .filter((s) => s.clubs.some((c) => c.club.toLowerCase().includes("driver")))
+    .slice(0, 10)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+  const ballSpeedTrend = driverSessions.map((s) => {
+    const date = new Date(s.date).toLocaleDateString("nb-NO", { day: "numeric", month: "short" });
+    return { date, speed: 0 }; // speed not available in session list, will show 0
+  });
+
+  const carryByClub = Array.from(
+    sessions.reduce((acc, s) => {
+      for (const c of s.clubs) {
+        const existing = acc.get(c.club);
+        if (existing) {
+          existing.carry += 0; // carry not in session list
+          existing.count += c.count;
+        } else {
+          acc.set(c.club, { club: c.club, carry: 0, count: c.count });
+        }
+      }
+      return acc;
+    }, new Map<string, { club: string; carry: number; count: number }>())
+  ).map(([, v]) => ({ club: v.club, carry: v.count }));
+
+  const displaySessions = sessions.length > 0
+    ? sessions.map((s) => ({
+        id: s.sessionId,
+        sessionDate: s.date,
+        club: s.clubs.map((c) => c.club).join(", ") || "Ukjent",
+        shotCount: s.totalShots,
+        avgBallSpeed: null as number | null,
+        avgCarry: 0,
+      }))
+    : [];
 
   return (
     <div className="space-y-8">
@@ -323,25 +325,27 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           label="Sesjoner"
-          value={hasData ? data.totalSessions.toLocaleString("nb-NO") : "3"}
+          value={hasData ? (data.totalSessions || sessions.length).toLocaleString("nb-NO") : "0"}
           icon={<Activity className="w-6 h-6 text-[#0A1F18]" />}
           iconBg="bg-[#0A1F18]/10"
         />
         <StatCard
           label="Slag totalt"
-          value={hasData ? data.totalShots.toLocaleString("nb-NO") : "8"}
+          value={hasData
+            ? (data.totalShots || sessions.reduce((a, s) => a + s.totalShots, 0)).toLocaleString("nb-NO")
+            : "0"}
           icon={<Target className="w-6 h-6 text-[#007AFF]" />}
           iconBg="bg-[#007AFF]/10"
         />
         <StatCard
           label="Beste carry"
-          value={hasData ? `${data.bestCarry}m` : "270m"}
+          value={hasData ? `${data.bestCarry}m` : "–"}
           icon={<TrendingUp className="w-6 h-6 text-[#C48A32]" />}
           iconBg="bg-[#C48A32]/10"
         />
         <StatCard
           label="Snitt carry"
-          value={hasData ? `${data.avgCarry}m` : "249m"}
+          value={hasData ? `${data.avgCarry}m` : "–"}
           icon={<Activity className="w-6 h-6 text-[#1A4D36]" />}
           iconBg="bg-[#1A4D36]/10"
         />
@@ -354,123 +358,60 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
             Ballfart-trend (Driver)
           </h3>
           <div className="h-[220px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={BALL_SPEED_TREND}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ECF0EF" />
-                <XAxis dataKey="date" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} domain={[150, 165]} />
-                <Tooltip
-                  contentStyle={{ borderRadius: 12, border: "1px solid #D5DFDB" }}
-                  labelStyle={{ color: "#0A1F18", fontWeight: 600 }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="speed"
-                  stroke="#0A1F18"
-                  strokeWidth={2}
-                  dot={{ r: 4, fill: "#0A1F18", strokeWidth: 0 }}
-                  activeDot={{ r: 6 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            {ballSpeedTrend.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={ballSpeedTrend}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ECF0EF" />
+                  <XAxis dataKey="date" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} domain={[0, 'auto']} />
+                  <Tooltip
+                    contentStyle={{ borderRadius: 12, border: "1px solid #D5DFDB" }}
+                    labelStyle={{ color: "#0A1F18", fontWeight: 600 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="speed"
+                    stroke="#0A1F18"
+                    strokeWidth={2}
+                    dot={{ r: 4, fill: "#0A1F18", strokeWidth: 0 }}
+                    activeDot={{ r: 6 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="flex items-center justify-center h-full text-sm text-[#7A8C85]">
+                Ingen driver-sesjoner ennå
+              </div>
+            )}
           </div>
         </div>
 
         <div className="bg-white rounded-2xl p-6 border border-[#D5DFDB]/50">
           <h3 className="text-sm font-semibold text-[#0A1F18] mb-4">
-            Carry per klubb
+            Sesjoner per klubb
           </h3>
           <div className="h-[220px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={CARRY_BY_CLUB}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ECF0EF" vertical={false} />
-                <XAxis dataKey="club" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
-                <Tooltip
-                  contentStyle={{ borderRadius: 12, border: "1px solid #D5DFDB" }}
-                  labelStyle={{ color: "#0A1F18", fontWeight: 600 }}
-                />
-                <Bar dataKey="carry" fill="#0A1F18" radius={[6, 6, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            {carryByClub.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={carryByClub}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ECF0EF" vertical={false} />
+                  <XAxis dataKey="club" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
+                  <Tooltip
+                    contentStyle={{ borderRadius: 12, border: "1px solid #D5DFDB" }}
+                    labelStyle={{ color: "#0A1F18", fontWeight: 600 }}
+                  />
+                  <Bar dataKey="carry" fill="#0A1F18" radius={[6, 6, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="flex items-center justify-center h-full text-sm text-[#7A8C85]">
+                Ingen sesjoner ennå
+              </div>
+            )}
           </div>
         </div>
       </div>
-
-      {/* Club Data Table */}
-      {(data.clubStats.length > 0 ? data.clubStats : CARRY_BY_CLUB.map((c) => ({ ...c, avgSpeed: null, avgBallSpeed: null, avgSpin: null, avgLaunch: null, sessionCount: 1 }))).length > 0 ? (
-        <div className="bg-white rounded-2xl border border-[#D5DFDB]/50 overflow-hidden">
-          <div className="p-4 border-b border-[#D5DFDB]/30">
-            <h3 className="font-semibold text-[#0A1F18]">Klubb-statistikk</h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-[#F5F8F7]">
-                <tr>
-                  {[
-                    "Klubb",
-                    "Klubb-fart",
-                    "Ball-fart",
-                    "Spin",
-                    "Launch",
-                    "Carry",
-                  ].map((header) => (
-                    <th
-                      key={header}
-                      className={`text-xs font-semibold text-[#7A8C85] uppercase tracking-wider p-4 ${
-                        header === "Klubb" ? "text-left" : "text-right"
-                      }`}
-                    >
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {(data.clubStats.length > 0
-                  ? data.clubStats
-                  : CARRY_BY_CLUB.map((c) => ({
-                      club: c.club,
-                      avgSpeed: null as number | null,
-                      avgBallSpeed: null as number | null,
-                      avgSpin: null as number | null,
-                      avgLaunch: null as number | null,
-                      avgCarry: c.carry,
-                      sessionCount: 1,
-                    }))
-                ).map((club) => (
-                  <tr
-                    key={club.club}
-                    className="border-t border-[#D5DFDB]/30 hover:bg-[#F5F8F7]/50"
-                  >
-                    <td className="p-4 font-medium text-[#0A1F18]">{club.club}</td>
-                    <td className="p-4 text-right text-[#0A1F18]">
-                      {club.avgSpeed ? `${club.avgSpeed} mph` : "\u2013"}
-                    </td>
-                    <td className="p-4 text-right text-[#0A1F18]">
-                      {club.avgBallSpeed ? `${club.avgBallSpeed} mph` : "\u2013"}
-                    </td>
-                    <td className="p-4 text-right text-[#0A1F18]">
-                      {club.avgSpin ? `${Math.round(club.avgSpin)} rpm` : "\u2013"}
-                    </td>
-                    <td className="p-4 text-right text-[#0A1F18]">
-                      {club.avgLaunch ? `${club.avgLaunch}\u00B0` : "\u2013"}
-                    </td>
-                    <td className="p-4 text-right font-semibold text-[#0A1F18]">
-                      {club.avgCarry}m
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ) : (
-        <EmptyState
-          title="Klubb-statistikk"
-          message="Last opp TrackMan-data for aa se statistikk per klubb"
-        />
-      )}
 
       {/* Session List */}
       <div>
@@ -480,7 +421,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
             <table className="w-full">
               <thead className="bg-[#F5F8F7]">
                 <tr>
-                  {["Dato", "Klubb", "Slag", "Ballfart", "Carry"].map((h) => (
+                  {["Dato", "Klubb", "Slag", "Kontekst"].map((h) => (
                     <th
                       key={h}
                       className="text-xs font-semibold text-[#7A8C85] uppercase tracking-wider p-4 text-left"
@@ -492,101 +433,110 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                 </tr>
               </thead>
               <tbody>
-                {displaySessions.map((session) => {
-                  const isOpen = expandedSessionId === session.id;
-                  const shots = MOCK_SHOTS[session.id] ?? [];
-                  return (
-                    <React.Fragment key={session.id}>
-                      <tr
-                        className="border-t border-[#D5DFDB]/30 hover:bg-[#F5F8F7]/50 cursor-pointer"
-                        onClick={() =>
-                          setExpandedSessionId(isOpen ? null : session.id)
-                        }
-                      >
-                        <td className="p-4 text-sm text-[#0A1F18]">
-                          {new Date(session.sessionDate).toLocaleDateString("nb-NO", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          })}
-                        </td>
-                        <td className="p-4 font-medium text-[#0A1F18]">{session.club}</td>
-                        <td className="p-4 text-sm text-[#0A1F18]">{session.shotCount}</td>
-                        <td className="p-4 text-sm text-[#0A1F18]">
-                          {session.avgBallSpeed ? `${session.avgBallSpeed.toFixed(1)} mph` : "\u2013"}
-                        </td>
-                        <td className="p-4 text-sm font-semibold text-[#0A1F18]">
-                          {session.avgCarry}m
-                        </td>
-                        <td className="p-4">
-                          <button className="p-1 rounded-lg hover:bg-[#D5DFDB]/30 transition-colors">
-                            {isOpen ? (
-                              <ChevronUp className="w-4 h-4 text-[#7A8C85]" />
-                            ) : (
-                              <ChevronDown className="w-4 h-4 text-[#7A8C85]" />
-                            )}
-                          </button>
-                        </td>
-                      </tr>
-                      <AnimatePresence initial={false}>
-                        {isOpen && (
-                          <motion.tr
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.25, ease: "easeInOut" }}
-                          >
-                            <td colSpan={6} className="p-0">
-                              <div className="bg-[#F5F8F7]/60 px-4 py-4">
-                                <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-3">
-                                  Slagdetaljer
-                                </p>
-                                <div className="overflow-x-auto">
-                                  <table className="w-full text-sm">
-                                    <thead>
-                                      <tr className="text-left text-xs text-[#7A8C85]">
-                                        <th className="pb-2 font-medium">#</th>
-                                        <th className="pb-2 font-medium">Ballfart</th>
-                                        <th className="pb-2 font-medium">Carry</th>
-                                        <th className="pb-2 font-medium">Total</th>
-                                        <th className="pb-2 font-medium">Spin</th>
-                                        <th className="pb-2 font-medium">Launch</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {shots.length > 0 ? (
-                                        shots.map((shot, idx) => (
-                                          <tr key={shot.id}>
-                                            <td className="py-2 text-[#0A1F18]">{idx + 1}</td>
-                                            <td className="py-2 text-[#0A1F18]">{shot.ballSpeed} mph</td>
-                                            <td className="py-2 text-[#0A1F18]">{shot.carry}m</td>
-                                            <td className="py-2 text-[#0A1F18]">{shot.total}m</td>
-                                            <td className="py-2 text-[#0A1F18]">
-                                              {shot.spinRate ? `${shot.spinRate} rpm` : "\u2013"}
-                                            </td>
-                                            <td className="py-2 text-[#0A1F18]">
-                                              {shot.launchAngle ? `${shot.launchAngle}\u00B0` : "\u2013"}
+                {loadingSessions ? (
+                  <tr>
+                    <td colSpan={5} className="p-4 text-sm text-[#7A8C85]">Laster sesjoner...</td>
+                  </tr>
+                ) : displaySessions.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="p-4 text-sm text-[#7A8C85]">Ingen sesjoner funnet. Last opp TrackMan-data for å komme i gang.</td>
+                  </tr>
+                ) : (
+                  displaySessions.map((session) => {
+                    const isOpen = expandedSessionId === session.id;
+                    const shots = sessionShots[session.id] ?? [];
+                    return (
+                      <React.Fragment key={session.id}>
+                        <tr
+                          className="border-t border-[#D5DFDB]/30 hover:bg-[#F5F8F7]/50 cursor-pointer"
+                          onClick={() => setExpandedSessionId(isOpen ? null : session.id)}
+                        >
+                          <td className="p-4 text-sm text-[#0A1F18]">
+                            {new Date(session.sessionDate).toLocaleDateString("nb-NO", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            })}
+                          </td>
+                          <td className="p-4 font-medium text-[#0A1F18]">{session.club}</td>
+                          <td className="p-4 text-sm text-[#0A1F18]">{session.shotCount}</td>
+                          <td className="p-4 text-sm text-[#0A1F18]">TRAINING</td>
+                          <td className="p-4">
+                            <button className="p-1 rounded-lg hover:bg-[#D5DFDB]/30 transition-colors">
+                              {isOpen ? (
+                                <ChevronUp className="w-4 h-4 text-[#7A8C85]" />
+                              ) : (
+                                <ChevronDown className="w-4 h-4 text-[#7A8C85]" />
+                              )}
+                            </button>
+                          </td>
+                        </tr>
+                        <AnimatePresence initial={false}>
+                          {isOpen && (
+                            <motion.tr
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.25, ease: "easeInOut" }}
+                            >
+                              <td colSpan={5} className="p-0">
+                                <div className="bg-[#F5F8F7]/60 px-4 py-4">
+                                  <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-3">
+                                    Slagdetaljer
+                                  </p>
+                                  <div className="overflow-x-auto">
+                                    <table className="w-full text-sm">
+                                      <thead>
+                                        <tr className="text-left text-xs text-[#7A8C85]">
+                                          <th className="pb-2 font-medium">#</th>
+                                          <th className="pb-2 font-medium">Ballfart</th>
+                                          <th className="pb-2 font-medium">Carry</th>
+                                          <th className="pb-2 font-medium">Total</th>
+                                          <th className="pb-2 font-medium">Spin</th>
+                                          <th className="pb-2 font-medium">Launch</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {shots.length > 0 ? (
+                                          shots.map((shot, idx) => (
+                                            <tr key={shot.id}>
+                                              <td className="py-2 text-[#0A1F18]">{idx + 1}</td>
+                                              <td className="py-2 text-[#0A1F18]">
+                                                {shot.ballSpeed ? `${Math.round(shot.ballSpeed * 10) / 10} mph` : "–"}
+                                              </td>
+                                              <td className="py-2 text-[#0A1F18]">
+                                                {shot.carryDistance ? `${Math.round(shot.carryDistance)}m` : "–"}
+                                              </td>
+                                              <td className="py-2 text-[#0A1F18]">
+                                                {shot.totalDistance ? `${Math.round(shot.totalDistance)}m` : "–"}
+                                              </td>
+                                              <td className="py-2 text-[#0A1F18]">
+                                                {shot.spinRate ? `${Math.round(shot.spinRate)} rpm` : "–"}
+                                              </td>
+                                              <td className="py-2 text-[#0A1F18]">
+                                                {shot.launchAngle ? `${Math.round(shot.launchAngle * 10) / 10}°` : "–"}
+                                              </td>
+                                            </tr>
+                                          ))
+                                        ) : (
+                                          <tr>
+                                            <td colSpan={6} className="py-3 text-[#7A8C85]">
+                                              Ingen detaljerte slagdata tilgjengelig.
                                             </td>
                                           </tr>
-                                        ))
-                                      ) : (
-                                        <tr>
-                                          <td colSpan={6} className="py-3 text-[#7A8C85]">
-                                            Ingen detaljerte slagdata tilgjengelig.
-                                          </td>
-                                        </tr>
-                                      )}
-                                    </tbody>
-                                  </table>
+                                        )}
+                                      </tbody>
+                                    </table>
+                                  </div>
                                 </div>
-                              </div>
-                            </td>
-                          </motion.tr>
-                        )}
-                      </AnimatePresence>
-                    </React.Fragment>
-                  );
-                })}
+                              </td>
+                            </motion.tr>
+                          )}
+                        </AnimatePresence>
+                      </React.Fragment>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>
@@ -783,26 +733,6 @@ function StatCard({
         <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${iconBg}`}>
           {icon}
         </div>
-      </div>
-    </div>
-  );
-}
-
-// ── EmptyState ───────────────────────────────────────────
-
-function EmptyState({
-  title,
-  message,
-}: {
-  title?: string;
-  message: string;
-}) {
-  return (
-    <div className="bg-white rounded-2xl p-6 border border-[#D5DFDB]/50">
-      {title && <h3 className="text-sm font-semibold text-[#0A1F18] mb-4">{title}</h3>}
-      <div className="flex flex-col items-center justify-center py-8 text-center">
-        <Upload className="w-8 h-8 text-[#7A8C85] mb-3" />
-        <p className="text-sm text-[#7A8C85]">{message}</p>
       </div>
     </div>
   );

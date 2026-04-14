@@ -16,6 +16,14 @@ const ALWAYS_ALLOWED_PATHS = [
   "/maintenance",
   "/api/maintenance",
   "/api/health",
+  "/academy",
+  "/junior-academy",
+  "/utvikling",
+  "/booking",
+  "/auth",
+  "/api/booking",
+  "/api/portal/public",
+  "/api/portal/webhooks",
   "/_next",
   "/static",
   "/favicon",
@@ -36,9 +44,11 @@ export async function proxy(request: NextRequest) {
   // 1. VEDLIKEHOLDSMODUS SJEKK
   // ============================================================
   if (MAINTENANCE_MODE) {
-    const isAlwaysAllowed = ALWAYS_ALLOWED_PATHS.some(
-      (path) => pathname.startsWith(path) || pathname === path
-    );
+    const isAlwaysAllowed =
+      pathname === "/" ||
+      ALWAYS_ALLOWED_PATHS.some(
+        (path) => pathname.startsWith(path) || pathname === path
+      );
 
     if (!isAlwaysAllowed) {
       if (
