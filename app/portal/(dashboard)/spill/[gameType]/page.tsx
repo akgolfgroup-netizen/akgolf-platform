@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Save, ChevronLeft, Flame, Target, Disc, Trophy } from "lucide-react";
@@ -12,11 +12,11 @@ const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 const GAME_META: Record<
   string,
-  { title: string; icon: React.ElementType; color: string; bg: string }
+  { title: string; icon: React.ElementType; color: string; bg: string; apiType: string }
 > = {
-  naerspill: { title: "Nærspill", icon: Target, color: "#007AFF", bg: "#EFF6FF" },
-  putting: { title: "Putting", icon: Disc, color: "#1A4D36", bg: "#E8F5EF" },
-  press: { title: "Press", icon: Flame, color: "#C48A32", bg: "#FDF4E4" },
+  naerspill: { title: "Nærspill", icon: Target, color: "#007AFF", bg: "#EFF6FF", apiType: "NEAR_GAME" },
+  putting: { title: "Putting", icon: Disc, color: "#1A4D36", bg: "#E8F5EF", apiType: "PUTTING_GAME" },
+  press: { title: "Press", icon: Flame, color: "#C48A32", bg: "#FDF4E4", apiType: "PRESSURE_GAME" },
 };
 
 export default function GameSessionPage() {
@@ -24,6 +24,7 @@ export default function GameSessionPage() {
   const router = useRouter();
   const meta = GAME_META[gameType] ?? GAME_META.naerspill;
 
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [shots, setShots] = useState(0);
   const [distance, setDistance] = useState("");
@@ -32,14 +33,52 @@ export default function GameSessionPage() {
   const [pressure, setPressure] = useState(1);
   const [finished, setFinished] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [creating, setCreating] = useState(true);
+
+  useEffect(() => {
+    async function createSession() {
+      try {
+        const res = await fetch("/api/portal/ai/games", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            gameType: meta.apiType,
+            pressureLevel: pressure,
+            displayName: meta.title,
+          }),
+        });
+        const data = await res.json();
+        if (res.ok && data.sessionId) {
+          setSessionId(data.sessionId);
+        }
+      } finally {
+        setCreating(false);
+      }
+    }
+    createSession();
+  }, [meta.apiType, meta.title, pressure]);
 
   async function handleLogShot() {
-    setShots((s) => s + 1);
-    // Mock scoring logic
+    if (!sessionId) return;
     const base = result.toLowerCase().includes("hit") || result.toLowerCase().includes("in")
       ? 10
       : 5;
     setScore((s) => s + base);
+    setShots((s) => s + 1);
+
+    await fetch("/api/portal/ai/games/shots", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId,
+        club: meta.title,
+        distance: distance ? parseFloat(distance) : null,
+        result,
+        notes,
+        pressureLevel: pressure,
+      }),
+    });
+
     setDistance("");
     setResult("");
     setNotes("");
@@ -47,7 +86,7 @@ export default function GameSessionPage() {
 
   async function handleFinish() {
     setSaving(true);
-    await new Promise((res) => setTimeout(res, 600));
+    await new Promise((res) => setTimeout(res, 400));
     setSaving(false);
     setFinished(true);
   }
@@ -114,6 +153,12 @@ export default function GameSessionPage() {
           </div>
         </div>
       </motion.div>
+
+      {creating && (
+        <PremiumCard padding="md" radius="large">
+          <p className="text-sm text-[#7A8C85]">Oppretter økt...</p>
+        </PremiumCard>
+      )}
 
       {/* Scoreboard */}
       <div className="grid grid-cols-2 gap-4">
@@ -196,7 +241,7 @@ export default function GameSessionPage() {
             variant="primary"
             className="w-full"
             onClick={handleLogShot}
-            disabled={!distance && !result}
+            disabled={!distance && !result || creating || !sessionId}
           >
             Logg slag
           </Button>

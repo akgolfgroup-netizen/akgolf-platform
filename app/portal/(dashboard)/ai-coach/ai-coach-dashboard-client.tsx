@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Upload,
@@ -24,15 +25,73 @@ interface AiCoachDashboardClientProps {
 
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
-// Mock KPI data
-const KPI_DATA = {
-  driverSpeed: { value: 112.4, trend: +2.1, unit: "mph" },
-  consistency: { value: 78, trend: +4, unit: "poeng" },
-  mentalTrend: { value: 7.2, trend: -0.3, unit: "snitt" },
-  decadeScore: { value: 82, trend: +5, unit: "poeng" },
-};
+interface MetricsData {
+  driverSpeed: { value: number; trend: number; unit: string };
+  consistency: { value: number; trend: number; unit: string };
+  mentalTrend: { value: number; trend: number; unit: string };
+  decadeScore: { value: number; trend: number; unit: string };
+}
 
 export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientProps) {
+  const [metrics, setMetrics] = useState<MetricsData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const [metricsRes, mentalRes] = await Promise.all([
+          fetch("/api/portal/ai/metrics"),
+          fetch("/api/portal/ai/mental/trends"),
+        ]);
+
+        const metricsJson = await metricsRes.json();
+        const mentalJson = await mentalRes.json();
+
+        const m = metricsJson.metrics;
+        const focusData = mentalJson.focus ?? [];
+        const lastFocus = focusData.length > 0
+          ? focusData.slice(-7).reduce((a: number, e: { value: number }) => a + e.value, 0) /
+            Math.min(focusData.length, 7)
+          : 0;
+
+        setMetrics({
+          driverSpeed: {
+            value: m?.last10DriverSpeed ? Math.round(m.last10DriverSpeed * 10) / 10 : 0,
+            trend: m?.speedGapToPotential ? -Math.round(m.speedGapToPotential * 10) / 10 : 0,
+            unit: "mph",
+          },
+          consistency: {
+            value: m?.consistencyScore ?? 0,
+            trend: 0,
+            unit: "poeng",
+          },
+          mentalTrend: {
+            value: Math.round(lastFocus * 10) / 10,
+            trend: 0,
+            unit: "snitt",
+          },
+          decadeScore: {
+            value: m?.consistencyScore ? Math.min(100, Math.round(m.consistencyScore * 0.8 + 20)) : 0,
+            trend: 0,
+            unit: "poeng",
+          },
+        });
+      } catch {
+        // fallback to empty metrics
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
+
+  const KPI_DATA = metrics ?? {
+    driverSpeed: { value: 0, trend: 0, unit: "mph" },
+    consistency: { value: 0, trend: 0, unit: "poeng" },
+    mentalTrend: { value: 0, trend: 0, unit: "snitt" },
+    decadeScore: { value: 0, trend: 0, unit: "poeng" },
+  };
+
   return (
     <div className="space-y-8">
       {/* Header */}

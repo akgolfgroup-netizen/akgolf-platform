@@ -20,11 +20,19 @@ export default function NewRoundPage() {
   async function handleStart() {
     if (!course.trim()) return;
     setSaving(true);
-    // Mock API call
-    await new Promise((res) => setTimeout(res, 600));
-    const mockId = "r-" + Math.random().toString(36).slice(2, 8);
-    setSaving(false);
-    router.push(`/portal/mental/${mockId}`);
+    try {
+      const res = await fetch("/api/portal/ai/mental/rounds", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ courseName: course }),
+      });
+      const data = await res.json();
+      if (res.ok && data.roundId) {
+        router.push(`/portal/mental/${data.roundId}`);
+      }
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (

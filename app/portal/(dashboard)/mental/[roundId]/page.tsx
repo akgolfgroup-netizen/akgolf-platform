@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Save, ChevronLeft, Flag } from "lucide-react";
@@ -33,6 +33,7 @@ export default function RoundDetailPage() {
   const { roundId } = useParams<{ roundId: string }>();
   const [selectedHole, setSelectedHole] = useState(1);
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [holeData, setHoleData] = useState<Record<number, HoleData>>(() => {
     const initial: Record<number, HoleData> = {};
     for (let i = 1; i <= 18; i++) {
@@ -53,6 +54,53 @@ export default function RoundDetailPage() {
     return initial;
   });
 
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch(`/api/portal/ai/mental/rounds/${roundId}`);
+        if (res.ok) {
+          const data = await res.json();
+          const entries = data.entries as Array<{
+            hole: number;
+            plannedShot: string | null;
+            targetDescription: string | null;
+            focusLevel: number | null;
+            confidence: number | null;
+            routineCompleted: boolean;
+            visualizationQuality: number | null;
+            outcome: string | null;
+            processScore: number | null;
+            emotion: string | null;
+            acceptedResult: boolean;
+            lastMinuteDoubt: boolean;
+          }>;
+          setHoleData((prev) => {
+            const next = { ...prev };
+            for (const e of entries) {
+              next[e.hole] = {
+                plan: e.plannedShot ?? "",
+                target: e.targetDescription ?? "",
+                focus: e.focusLevel ?? 7,
+                confidence: e.confidence ?? 7,
+                routineDone: e.routineCompleted,
+                visualization: e.visualizationQuality ?? 7,
+                result: e.outcome ?? "",
+                processScore: e.processScore ?? 7,
+                feeling: e.emotion ?? "",
+                accepted: e.acceptedResult,
+                doubt: e.lastMinuteDoubt,
+              };
+            }
+            return next;
+          });
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, [roundId]);
+
   const current = holeData[selectedHole];
 
   function updateField<K extends keyof HoleData>(field: K, value: HoleData[K]) {
@@ -64,9 +112,32 @@ export default function RoundDetailPage() {
 
   async function handleSave() {
     setSaving(true);
-    // Mock API call
-    await new Promise((res) => setTimeout(res, 600));
-    setSaving(false);
+    try {
+      const payload = {
+        roundId,
+        hole: selectedHole,
+        shotNumber: 1,
+        plannedShot: current.plan || null,
+        targetDescription: current.target || null,
+        focusLevel: current.focus,
+        confidence: current.confidence,
+        routineCompleted: current.routineDone,
+        visualizationQuality: current.visualization,
+        outcome: current.result || null,
+        processScore: current.processScore,
+        emotion: current.feeling || null,
+        acceptedResult: current.accepted,
+        lastMinuteDoubt: current.doubt,
+      };
+
+      await fetch("/api/portal/ai/mental/entries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (

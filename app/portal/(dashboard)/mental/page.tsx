@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, TrendingUp, Calendar, Target, Brain, Flag } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
@@ -20,63 +20,68 @@ import {
 
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
-// Mock data
-const ROUNDS = [
-  {
-    id: "r1",
-    date: "2026-04-12",
-    course: "Losby GK",
-    score: 78,
-    mentalScore: 8.2,
-    focus: 8,
-    confidence: 9,
-    commitment: 7,
-    acceptance: 9,
-  },
-  {
-    id: "r2",
-    date: "2026-04-05",
-    course: "Miklagard GK",
-    score: 82,
-    mentalScore: 6.8,
-    focus: 6,
-    confidence: 7,
-    commitment: 7,
-    acceptance: 7,
-  },
-  {
-    id: "r3",
-    date: "2026-03-29",
-    course: "Oslo GK",
-    mentalScore: 7.5,
-    score: 80,
-    focus: 7,
-    confidence: 8,
-    commitment: 8,
-    acceptance: 7,
-  },
-  {
-    id: "r4",
-    date: "2026-03-22",
-    course: "Losby GK",
-    mentalScore: 8.0,
-    score: 77,
-    focus: 8,
-    confidence: 8,
-    commitment: 8,
-    acceptance: 8,
-  },
-];
-
-const TREND_DATA = [
-  { date: "22. mar", focus: 8, confidence: 8, commitment: 8, acceptance: 8 },
-  { date: "29. mar", focus: 7, confidence: 8, commitment: 8, acceptance: 7 },
-  { date: "05. apr", focus: 6, confidence: 7, commitment: 7, acceptance: 7 },
-  { date: "12. apr", focus: 8, confidence: 9, commitment: 7, acceptance: 9 },
-];
+interface RoundSummary {
+  id: string;
+  date: string;
+  course: string;
+  score: number | null;
+  mentalScore: number;
+  focus: number;
+  confidence: number;
+  commitment: number;
+  acceptance: number;
+}
 
 export default function MentalPage() {
   const [activeTab, setActiveTab] = useState<string>("runder");
+  const [rounds, setRounds] = useState<RoundSummary[]>([]);
+  const [trendData, setTrendData] = useState<{ date: string; focus: number; confidence: number; commitment: number; acceptance: number }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const [roundsRes, trendsRes] = await Promise.all([
+          fetch("/api/portal/ai/mental/rounds"),
+          fetch("/api/portal/ai/mental/trends"),
+        ]);
+
+        // We don't have a list-all-rounds endpoint, so we can't fetch rounds directly.
+        // For now, show empty rounds tab and real trends.
+        if (trendsRes.ok) {
+          const trends = await trendsRes.json();
+          const focus = trends.focus ?? [];
+          const confidence = trends.confidence ?? [];
+          const commitment = trends.commitment ?? [];
+          const acceptance = trends.acceptance ?? [];
+
+          const dates = Array.from(new Set([
+            ...focus.map((d: { date: string }) => d.date.slice(0, 10)),
+            ...confidence.map((d: { date: string }) => d.date.slice(0, 10)),
+          ])).sort();
+
+          const data = dates.map((date) => {
+            const f = focus.find((d: { date: string; value: number }) => d.date.slice(0, 10) === date);
+            const c = confidence.find((d: { date: string; value: number }) => d.date.slice(0, 10) === date);
+            const com = commitment.find((d: { date: string; value: number }) => d.date.slice(0, 10) === date);
+            const a = acceptance.find((d: { date: string; value: number }) => d.date.slice(0, 10) === date);
+            return {
+              date: new Date(date).toLocaleDateString("nb-NO", { day: "numeric", month: "short" }),
+              focus: f?.value ?? 0,
+              confidence: c?.value ?? 0,
+              commitment: com ? Math.round(com.value * 10) : 0,
+              acceptance: a ? Math.round(a.value * 10) : 0,
+            };
+          });
+
+          setTrendData(data);
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -116,16 +121,32 @@ export default function MentalPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: EASE_APPLE }}
       >
-        {activeTab === "runder" ? <RoundsTab /> : <TrendsTab />}
+        {activeTab === "runder" ? (
+          rounds.length > 0 ? <RoundsTab rounds={rounds} /> : <EmptyRoundsTab />
+        ) : (
+          <TrendsTab data={trendData} loading={loading} />
+        )}
       </motion.div>
     </div>
   );
 }
 
-function RoundsTab() {
+function EmptyRoundsTab() {
+  return (
+    <PremiumCard padding="lg" radius="large">
+      <div className="text-center py-8">
+        <Brain className="w-10 h-10 text-[#7A8C85] mx-auto mb-4" />
+        <p className="text-sm text-[#7A8C85]">Ingen runder registrert ennå.</p>
+        <p className="text-xs text-[#A5B2AD] mt-1">Start din første mental scorecard-runde.</p>
+      </div>
+    </PremiumCard>
+  );
+}
+
+function RoundsTab({ rounds }: { rounds: RoundSummary[] }) {
   return (
     <div className="space-y-4">
-      {ROUNDS.map((round, idx) => (
+      {rounds.map((round, idx) => (
         <PremiumCard key={round.id} delay={idx * 0.05} padding="md" radius="large" hover="lift">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-start gap-4">
@@ -144,7 +165,7 @@ function RoundsTab() {
                 </div>
                 <div className="flex items-center gap-4 mt-2">
                   <span className="text-sm text-[#324D45]">
-                    Score: <span className="font-semibold text-[#0A1F18]">{round.score}</span>
+                    Score: <span className="font-semibold text-[#0A1F18]">{round.score ?? "–"}</span>
                   </span>
                   <span className="text-sm text-[#324D45]">
                     Mental: {" "}
@@ -165,7 +186,9 @@ function RoundsTab() {
   );
 }
 
-function TrendsTab() {
+function TrendsTab({ data, loading }: { data: { date: string; focus: number; confidence: number; commitment: number; acceptance: number }[]; loading: boolean }) {
+  const avg = (arr: number[]) => (arr.length > 0 ? (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1) : "0");
+
   return (
     <div className="space-y-6">
       <PremiumCard padding="md" radius="large">
@@ -174,30 +197,36 @@ function TrendsTab() {
           <h3 className="text-sm font-semibold text-[#0A1F18]">Mentale metrics over tid</h3>
         </div>
         <div className="h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={TREND_DATA}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#ECF0EF" />
-              <XAxis dataKey="date" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
-              <YAxis domain={[0, 10]} tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
-              <Tooltip
-                contentStyle={{ borderRadius: 12, border: "1px solid #D5DFDB" }}
-                labelStyle={{ color: "#0A1F18", fontWeight: 600 }}
-              />
-              <Legend wrapperStyle={{ paddingTop: 8 }} />
-              <Line type="monotone" dataKey="focus" name="Fokus" stroke="#AF52DE" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="confidence" name="Selvtillit" stroke="#007AFF" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="commitment" name="Engasjement" stroke="#0A1F18" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="acceptance" name="Aksept" stroke="#1A4D36" strokeWidth={2} dot={{ r: 3 }} />
-            </LineChart>
-          </ResponsiveContainer>
+          {loading ? (
+            <div className="flex items-center justify-center h-full text-[#7A8C85]">Laster...</div>
+          ) : data.length === 0 ? (
+            <div className="flex items-center justify-center h-full text-[#7A8C85]">Ingen data ennå</div>
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#ECF0EF" />
+                <XAxis dataKey="date" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
+                <YAxis domain={[0, 10]} tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
+                <Tooltip
+                  contentStyle={{ borderRadius: 12, border: "1px solid #D5DFDB" }}
+                  labelStyle={{ color: "#0A1F18", fontWeight: 600 }}
+                />
+                <Legend wrapperStyle={{ paddingTop: 8 }} />
+                <Line type="monotone" dataKey="focus" name="Fokus" stroke="#AF52DE" strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="confidence" name="Selvtillit" stroke="#007AFF" strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="commitment" name="Engasjement" stroke="#0A1F18" strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="acceptance" name="Aksept" stroke="#1A4D36" strokeWidth={2} dot={{ r: 3 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
         </div>
       </PremiumCard>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <MiniStat icon={<Brain className="w-4 h-4 text-[#AF52DE]" />} label="Fokus snitt" value="7.3" />
-        <MiniStat icon={<Target className="w-4 h-4 text-[#007AFF]" />} label="Selvtillit snitt" value="8.0" />
-        <MiniStat icon={<Calendar className="w-4 h-4 text-[#0A1F18]" />} label="Engasjement snitt" value="7.5" />
-        <MiniStat icon={<Flag className="w-4 h-4 text-[#1A4D36]" />} label="Aksept snitt" value="7.8" />
+        <MiniStat icon={<Brain className="w-4 h-4 text-[#AF52DE]" />} label="Fokus snitt" value={avg(data.map((d) => d.focus))} />
+        <MiniStat icon={<Target className="w-4 h-4 text-[#007AFF]" />} label="Selvtillit snitt" value={avg(data.map((d) => d.confidence))} />
+        <MiniStat icon={<Calendar className="w-4 h-4 text-[#0A1F18]" />} label="Engasjement snitt" value={avg(data.map((d) => d.commitment))} />
+        <MiniStat icon={<Flag className="w-4 h-4 text-[#1A4D36]" />} label="Aksept snitt" value={avg(data.map((d) => d.acceptance))} />
       </div>
     </div>
   );
