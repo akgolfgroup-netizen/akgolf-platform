@@ -183,7 +183,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                     <button
                       onClick={() => handleDelete(club.id)}
                       disabled={isPending}
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#EF4444]/10 text-sm text-[#EF4444] hover:bg-[#EF4444]/20 transition-colors disabled:opacity-50"
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[error]/10 text-sm text-[error] hover:bg-[error]/20 transition-colors disabled:opacity-50"
                     >
                       <Trash2 className="w-3 h-3" />
                       Fjern
@@ -264,7 +264,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
 
       {/* Gap Analysis */}
       {gapAnalysis.length > 0 && (
-        <div className="bg-accent-cta/10 rounded-2xl p-6 border border-[#D1F843]/40">
+        <div className="bg-accent-cta/10 rounded-2xl p-6 border border-[accent-cta]/40">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="w-5 h-5 text-black" />
             <h3 className="font-semibold text-black">Gap-analyse</h3>
@@ -290,7 +290,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
             <select
               value={newClub.name}
               onChange={(e) => setNewClub({ ...newClub, name: e.target.value })}
-              className="w-full px-3 py-2.5 rounded-xl border border-[#D5DFDB] text-black bg-grey-50 outline-none focus:border-[#0A1F18]"
+              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-black bg-grey-50 outline-none focus:border-[black]"
             >
               <option value="">Velg klubb...</option>
               {DEFAULT_CLUBS.filter(
@@ -306,7 +306,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
               value={newClub.brand}
               onChange={(e) => setNewClub({ ...newClub, brand: e.target.value })}
               placeholder="Merke (valgfritt)"
-              className="w-full px-3 py-2.5 rounded-xl border border-[#D5DFDB] text-black bg-grey-50 outline-none focus:border-[#0A1F18]"
+              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-black bg-grey-50 outline-none focus:border-[black]"
             />
             <input
               type="number"
@@ -315,7 +315,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                 setNewClub({ ...newClub, avgCarry: e.target.value })
               }
               placeholder="Gjennomsnittlig carry (meter)"
-              className="w-full px-3 py-2.5 rounded-xl border border-[#D5DFDB] text-black bg-grey-50 outline-none focus:border-[#0A1F18]"
+              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-black bg-grey-50 outline-none focus:border-[black]"
             />
             <div className="flex gap-2">
               <button
@@ -328,7 +328,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
               </button>
               <button
                 onClick={() => setShowAdd(false)}
-                className="px-4 py-2.5 rounded-full border border-[#D5DFDB] text-grey-400 hover:bg-grey-50 transition-colors"
+                className="px-4 py-2.5 rounded-full border border-[grey-200] text-grey-400 hover:bg-grey-50 transition-colors"
               >
                 <X className="h-4 w-4" />
               </button>

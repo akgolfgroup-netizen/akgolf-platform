@@ -72,18 +72,18 @@ export function BookingDatePicker({
           <button
             onClick={() => setCurrentMonth((m) => addMonths(m, -1))}
             disabled={!canGoBack}
-            className="w-9 h-9 rounded-lg flex items-center justify-center text-[#7A8C85] hover:bg-[#F5F8F7] hover:text-[#0A1F18] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-9 h-9 rounded-lg flex items-center justify-center text-grey-400 hover:bg-grey-50 hover:text-black disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             aria-label="Forrige måned"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <h3 className="text-base font-semibold text-[#0A1F18] capitalize">
+          <h3 className="text-base font-semibold text-black capitalize">
             {format(currentMonth, "MMMM yyyy", { locale: nb })}
           </h3>
           <button
             onClick={() => setCurrentMonth((m) => addMonths(m, 1))}
             disabled={!canGoForward}
-            className="w-9 h-9 rounded-lg flex items-center justify-center text-[#7A8C85] hover:bg-[#F5F8F7] hover:text-[#0A1F18] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-9 h-9 rounded-lg flex items-center justify-center text-grey-400 hover:bg-grey-50 hover:text-black disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             aria-label="Neste måned"
           >
             <ChevronRight className="w-4 h-4" />
@@ -119,7 +119,7 @@ export function BookingDatePicker({
                 {isSelected ? (
                   <motion.div
                     layoutId="booking-date-selected"
-                    className="absolute inset-1 bg-[#0A1F18] rounded-lg"
+                    className="absolute inset-1 bg-black rounded-lg"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
                   />
                 ) : null}
@@ -131,9 +131,9 @@ export function BookingDatePicker({
                       : !inMonth
                         ? "text-transparent cursor-default"
                         : disabled
-                          ? "text-[#A5B2AD] cursor-not-allowed"
-                          : "text-[#0A1F18] font-medium hover:bg-[#F5F8F7] cursor-pointer",
-                    todayDate && !isSelected && inMonth ? "ring-1 ring-[#D1F843]" : "",
+                          ? "text-grey-300 cursor-not-allowed"
+                          : "text-black font-medium hover:bg-grey-50 cursor-pointer",
+                    todayDate && !isSelected && inMonth ? "ring-1 ring-accent-cta" : "",
                   ].join(" ")}
                 >
                   {format(date, "d")}

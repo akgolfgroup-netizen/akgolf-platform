@@ -227,7 +227,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                         {t.name}
                       </h3>
                       {t.isRegistered && (
-                        <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full bg-[#E8F5EF] px-2 py-0.5 text-[10px] font-semibold text-[#1A4D36]">
+                        <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full bg-[#E8F5EF] px-2 py-0.5 text-[10px] font-semibold text-[success]">
                           <CheckCircle2 className="h-3 w-3" />
                           Påmeldt
                         </span>
@@ -261,7 +261,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                 {/* Utvidet detaljer */}
                 {isExpanded && (
-                  <div className="border-t border-[#D5DFDB] px-5 pb-5 pt-4">
+                  <div className="border-t border-[grey-200] px-5 pb-5 pt-4">
                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                       <div>
                         <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
@@ -330,7 +330,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                         <button
                           onClick={() => handleRegister(t.id)}
                           disabled={registeringId === t.id}
-                          className="inline-flex items-center gap-1.5 rounded-full bg-[#D1F843] px-4 py-2 text-[12px] font-bold text-black transition-opacity hover:opacity-85 disabled:opacity-60"
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[accent-cta] px-4 py-2 text-[12px] font-bold text-black transition-opacity hover:opacity-85 disabled:opacity-60"
                         >
                           <CheckCircle2 className="h-3.5 w-3.5" />
                           {registeringId === t.id ? "Melder på..." : "Meld meg på"}
@@ -341,7 +341,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                           href={t.externalUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-full border border-[#D5DFDB] bg-white px-4 py-2 text-[12px] font-medium text-grey-400 transition-colors hover:border-[#A5B2AD]"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-[grey-200] bg-white px-4 py-2 text-[12px] font-medium text-grey-400 transition-colors hover:border-[grey-300]"
                         >
                           <ExternalLink className="h-3.5 w-3.5" />
                           Se turnering

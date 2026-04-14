@@ -294,8 +294,8 @@ export function LiveRoundClient({
                     className={`flex-1 py-2.5 rounded-full text-sm font-medium transition-all ${
                       result.fairwayHit === opt.value
                         ? opt.value
-                          ? "bg-[#E8F5EF] text-[#1A4D36] border border-[#1A4D36]"
-                          : "bg-[#FCEAE8] text-error border border-[#B84233]"
+                          ? "bg-success-light text-success border border-success"
+                          : "bg-error-light text-error border border-error"
                         : "bg-grey-50 text-grey-400 border border-transparent"
                     }`}
                   >
@@ -321,8 +321,8 @@ export function LiveRoundClient({
                   className={`flex-1 py-2.5 rounded-full text-sm font-medium transition-all ${
                     result.gir === opt.value
                       ? opt.value
-                        ? "bg-[#E8F5EF] text-[#1A4D36] border border-[#1A4D36]"
-                        : "bg-[#FCEAE8] text-error border border-[#B84233]"
+                        ? "bg-success-light text-success border border-success"
+                        : "bg-error-light text-error border border-error"
                       : "bg-grey-50 text-grey-400 border border-transparent"
                   }`}
                 >
@@ -353,8 +353,8 @@ export function LiveRoundClient({
                     className={`flex-1 py-2.5 rounded-full text-sm font-medium transition-all ${
                       result.strategyFollowed === opt.value
                         ? opt.value
-                          ? "bg-[#E8F5EF] text-[#1A4D36] border border-[#1A4D36]"
-                          : "bg-[#FCEAE8] text-error border border-[#B84233]"
+                          ? "bg-success-light text-success border border-success"
+                          : "bg-error-light text-error border border-error"
                         : "bg-grey-50 text-grey-400 border border-transparent"
                     }`}
                   >
@@ -369,8 +369,8 @@ export function LiveRoundClient({
                 onClick={() => setShowPreShot(true)}
                 className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-medium transition-all ${
                   preRoutineCompleted.has(hole.holeNumber)
-                    ? "bg-[#E8F5EF] text-[#1A4D36] border border-[#1A4D36]"
-                    : "border border-[#AF52DE]/20 text-[#6B21A8]"
+                    ? "bg-success-light text-success border border-success"
+                    : "border border-purple-500/20 text-purple-500"
                 }`}
                 style={
                   !preRoutineCompleted.has(hole.holeNumber)
@@ -407,7 +407,7 @@ export function LiveRoundClient({
         <button
           onClick={() => setCurrentHole(Math.max(0, currentHole - 1))}
           disabled={currentHole === 0}
-          className="flex items-center gap-2 px-4 py-3 rounded-full border border-grey-200 bg-white text-grey-400 hover:border-[#A5B2AD] disabled:opacity-30 transition-all"
+          className="flex items-center gap-2 px-4 py-3 rounded-full border border-grey-200 bg-white text-grey-400 hover:border-grey-300 disabled:opacity-30 transition-all"
         >
           <ChevronLeft className="h-4 w-4" />
           Forrige
@@ -417,7 +417,7 @@ export function LiveRoundClient({
           <button
             onClick={saveAndNext}
             disabled={isPending}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-[#D1F843] text-black font-semibold hover:opacity-85 active:scale-[0.98] disabled:opacity-50 transition-all duration-300"
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-accent-cta text-black font-semibold hover:opacity-85 active:scale-[0.98] disabled:opacity-50 transition-all duration-300"
           >
             <Check className="h-4 w-4" />
             {isPending ? "Lagrer..." : "Lagre & neste"}
@@ -427,7 +427,7 @@ export function LiveRoundClient({
           <button
             onClick={handleComplete}
             disabled={isPending}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-[#D1F843] text-black font-semibold hover:opacity-85 active:scale-[0.98] disabled:opacity-50 transition-all duration-300"
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-accent-cta text-black font-semibold hover:opacity-85 active:scale-[0.98] disabled:opacity-50 transition-all duration-300"
           >
             <Flag className="h-4 w-4" />
             {isPending ? "Fullforter..." : "Fullfor runde"}

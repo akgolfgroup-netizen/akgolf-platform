@@ -249,7 +249,7 @@ export function DashboardClient({
           </div>
           <Link
             href="/portal/statistikk"
-            className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-[#D5DFDB] bg-[#F5F8F7] px-4 py-2.5 text-[13px] font-medium text-black transition-colors hover:bg-[#ECF0EF]"
+            className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-[grey-200] bg-[grey-50] px-4 py-2.5 text-[13px] font-medium text-black transition-colors hover:bg-[grey-50]"
           >
             <TrendingUp className="h-3.5 w-3.5" />
             Se full statistikk
@@ -282,9 +282,9 @@ function QuickLink({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 rounded-xl border border-[#D5DFDB] bg-white p-4 transition-all duration-300 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(10,31,24,0.06)] hover:border-[#A5B2AD]"
+      className="flex items-center gap-3 rounded-xl border border-[grey-200] bg-white p-4 transition-all duration-300 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(10,31,24,0.06)] hover:border-[grey-300]"
     >
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#F5F8F7]">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[grey-50]">
         <Icon className="h-4 w-4 text-black" />
       </div>
       <span className="text-[13px] font-medium text-black">{label}</span>

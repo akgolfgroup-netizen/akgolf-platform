@@ -44,8 +44,8 @@ export default function SpillModulPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: EASE_APPLE }}
       >
-        <h1 className="text-2xl font-bold text-[#0A1F18]">Spill-modul</h1>
-        <p className="text-[#7A8C85] mt-1">Treningspill for nærspill, putting og press</p>
+        <h1 className="text-2xl font-bold text-black">Spill-modul</h1>
+        <p className="text-grey-400 mt-1">Treningspill for nærspill, putting og press</p>
       </motion.div>
 
       {/* Game cards */}
@@ -64,8 +64,8 @@ export default function SpillModulPage() {
             >
               <game.icon className="w-6 h-6" style={{ color: game.color }} />
             </div>
-            <h3 className="text-lg font-semibold text-[#0A1F18] mb-1">{game.title}</h3>
-            <p className="text-sm text-[#7A8C85] mb-6">{game.description}</p>
+            <h3 className="text-lg font-semibold text-black mb-1">{game.title}</h3>
+            <p className="text-sm text-grey-400 mb-6">{game.description}</p>
             <Button variant="primary" className="w-full" asChild>
               <Link href={`/portal/spill/${game.id}`}>
                 Start spill
@@ -82,9 +82,9 @@ export default function SpillModulPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.35, ease: EASE_APPLE }}
       >
-        <h3 className="text-sm font-semibold text-[#0A1F18] mb-4">Siste økter</h3>
-        <div className="bg-white rounded-2xl border border-[#D5DFDB]/50 overflow-hidden">
-          <div className="p-4 text-sm text-[#7A8C85]">Ingen spilløkter registrert ennå.</div>
+        <h3 className="text-sm font-semibold text-black mb-4">Siste økter</h3>
+        <div className="bg-white rounded-2xl border border-grey-200/50 overflow-hidden">
+          <div className="p-4 text-sm text-grey-400">Ingen spilløkter registrert ennå.</div>
         </div>
       </motion.div>
     </div>

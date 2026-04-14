@@ -276,7 +276,7 @@ export function ApperClient({
                     className="flex items-center justify-between py-3 first:pt-0 last:pb-0"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#D1F843]/20 border border-[#D1F843]/30">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-cta/20 border border-accent-cta/30">
                         {isBundle ? (
                           <Package className="h-[18px] w-[18px] text-black" />
                         ) : (
@@ -293,7 +293,7 @@ export function ApperClient({
                         </p>
                       </div>
                     </div>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-success-light border border-[#1A4D36]/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-success">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-success-light border border-success/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-success">
                       <Check className="h-3 w-3" />
                       Aktiv
                     </span>
@@ -330,8 +330,8 @@ export function ApperClient({
                     className={cn(
                       "w-11 h-11 rounded-xl flex items-center justify-center",
                       isPremium
-                        ? "bg-[#D1F843]/20 border border-[#D1F843]/30"
-                        : "bg-[#F5F8F7]"
+                        ? "bg-accent-cta/20 border border-accent-cta/30"
+                        : "bg-grey-50"
                     )}
                   >
                     <BundleIcon
@@ -348,7 +348,7 @@ export function ApperClient({
                       className={cn(
                         "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
                         isPremium
-                          ? "bg-success-light border border-[#1A4D36]/20 text-success"
+                          ? "bg-success-light border border-success/20 text-success"
                           : "bg-success-light text-success"
                       )}
                     >
@@ -369,7 +369,7 @@ export function ApperClient({
                   <p
                     className={cn(
                       "text-[13px] leading-relaxed mb-4",
-                      isPremium ? "text-[#324D45]" : "text-grey-400"
+                      isPremium ? "text-grey-400" : "text-grey-400"
                     )}
                   >
                     {bundle.description}
@@ -382,8 +382,8 @@ export function ApperClient({
                       className={cn(
                         "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium",
                         isPremium
-                          ? "bg-[#F5F8F7] text-black border border-[#D5DFDB]"
-                          : "bg-[#D1F843]/15 text-black"
+                          ? "bg-grey-50 text-black border border-[#D5DFDB]"
+                          : "bg-accent-cta/15 text-black"
                       )}
                     >
                       {item.module.name}
@@ -416,8 +416,8 @@ export function ApperClient({
                       className={cn(
                         "relative h-10 px-5 rounded-full text-[11px] font-bold inline-flex items-center gap-2 transition-all",
                         isPremium
-                          ? "bg-[#D1F843] text-black hover:brightness-95"
-                          : "bg-[#D1F843] text-black hover:brightness-95"
+                          ? "bg-accent-cta text-black hover:brightness-95"
+                          : "bg-accent-cta text-black hover:brightness-95"
                       )}
                     >
                       {loading === bundle.slug ? (
@@ -453,7 +453,7 @@ export function ApperClient({
                 hover="lift"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#F5F8F7] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
                     <Icon
                       className="h-[18px] w-[18px] text-black"
                       strokeWidth={1.75}
@@ -465,7 +465,7 @@ export function ApperClient({
                         "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
                         active
                           ? "bg-success-light text-success"
-                          : "bg-[#D1F843]/20 text-black"
+                          : "bg-accent-cta/20 text-black"
                       )}
                     >
                       {active ? (
@@ -483,7 +483,7 @@ export function ApperClient({
                   {mod.name}
                 </h3>
                 {mod.description && (
-                  <p className="text-[12px] text-[#324D45] leading-relaxed mb-4 line-clamp-2">
+                  <p className="text-[12px] text-grey-400 leading-relaxed mb-4 line-clamp-2">
                     {mod.description}
                   </p>
                 )}

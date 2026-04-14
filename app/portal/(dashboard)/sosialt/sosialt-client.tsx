@@ -189,7 +189,7 @@ export default function SosialtClient({
               )}
             </div>
           ) : (
-            <div className="divide-y divide-[#D5DFDB]">
+            <div className="divide-y divide-[grey-200]">
               {filteredFriends.map((friend) => {
                 const status = getOnlineStatus(friend.lastActiveAt);
                 return (
@@ -199,7 +199,7 @@ export default function SosialtClient({
                   >
                     <div className="flex items-center gap-3">
                       <div className="relative">
-                        <div className="w-10 h-10 rounded-full bg-[#0A1F18] flex items-center justify-center text-white text-sm font-bold">
+                        <div className="w-10 h-10 rounded-full bg-[black] flex items-center justify-center text-white text-sm font-bold">
                           {getInitials(friend.name)}
                         </div>
                         <span
@@ -249,7 +249,7 @@ export default function SosialtClient({
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-[#D5DFDB]">
+            <div className="divide-y divide-[grey-200]">
               {leaderboard.map((player, index) => {
                 const rank = index + 1;
                 return (
@@ -274,7 +274,7 @@ export default function SosialtClient({
                     >
                       {rank}
                     </span>
-                    <div className="w-10 h-10 rounded-full bg-[#0A1F18] flex items-center justify-center text-white text-sm font-bold">
+                    <div className="w-10 h-10 rounded-full bg-[black] flex items-center justify-center text-white text-sm font-bold">
                       {getInitials(player.name)}
                     </div>
                     <div className="flex-1">

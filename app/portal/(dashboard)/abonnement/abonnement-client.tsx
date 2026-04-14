@@ -236,7 +236,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
               {user.hasStripeSubscription && (
                 <div className="pt-4 mt-2 border-t border-grey-200">
                   {error && (
-                    <p className="text-sm text-[#EF4444] mb-3">{error}</p>
+                    <p className="text-sm text-[error] mb-3">{error}</p>
                   )}
                   <button
                     onClick={handleStripePortal}
@@ -291,7 +291,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
         /* No subscription — upsell card */
         <PremiumCard className="p-0" noHover>
           <div className="bg-grey-50 px-6 py-10 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#D1F843]/20 flex items-center justify-center mx-auto mb-4">
+            <div className="w-14 h-14 rounded-2xl bg-[accent-cta]/20 flex items-center justify-center mx-auto mb-4">
               <Zap className="w-7 h-7 text-black" />
             </div>
             <h2 className="text-xl font-bold text-black mb-2">

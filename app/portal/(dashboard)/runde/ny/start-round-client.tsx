@@ -180,7 +180,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
             </div>
 
             {error && (
-              <div className="text-sm text-black bg-[#D1F843]/10 rounded-xl p-3">
+              <div className="text-sm text-black bg-[accent-cta]/10 rounded-xl p-3">
                 {error}
               </div>
             )}
@@ -189,7 +189,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
             <button
               onClick={handleStart}
               disabled={isPending}
-              className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-[#D1F843] text-black font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-[accent-cta] text-black font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
             >
               <Play className="h-5 w-5" />
               {isPending ? "Starter..." : "Start runde"}
