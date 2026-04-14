@@ -69,7 +69,7 @@ export function HeroSection() {
 
           <motion.div variants={fadeUp} className="flex gap-3 flex-wrap">
             <Link
-              href={BOOKING_URL}
+              href="/academy"
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-cta text-accent-cta-text rounded-[20px] text-[15px] font-bold hover:brightness-95 transition-all duration-300"
             >
               {HERO.ctaPrimary}

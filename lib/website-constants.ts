@@ -992,7 +992,7 @@ export const FOOTER_LINKS = {
 } as const;
 
 // ─── Booking ───
-export const BOOKING_URL = "/academy/abonnement";
+export const BOOKING_URL = "/booking";
 
 // ─── Portal ───
 export const PORTAL_URL = "/portal";
