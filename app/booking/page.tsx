@@ -159,14 +159,14 @@ export default function BookingPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero — matcher forsiden */}
-      <section className="relative flex items-center pt-[48px] overflow-hidden bg-black">
+      <section className="relative flex items-center pt-[48px] min-h-[50svh] overflow-hidden bg-black">
         <Image
-          src="/images/branding/ak-golf-academy-22.jpg"
-          alt="Coaching på rangen"
+          src="/images/hero/academy.jpg"
+          alt="Coaching på banen"
           fill
           priority
           quality={90}
-          className="object-cover opacity-25"
+          className="object-cover object-[center_30%] opacity-25"
           sizes="100vw"
         />
         <div className="w-container relative py-16 md:py-24">
