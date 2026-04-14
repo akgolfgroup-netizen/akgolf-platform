@@ -62,7 +62,7 @@ export function HeroSection() {
 
           <motion.p
             variants={fadeUp}
-            className="text-base md:text-lg text-white/50 max-w-[540px] leading-relaxed mb-10"
+            className="text-base md:text-lg text-white/80 max-w-[540px] leading-relaxed mb-10"
           >
             {HERO.subheading}
           </motion.p>
