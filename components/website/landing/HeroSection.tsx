@@ -67,38 +67,16 @@ export function HeroSection() {
             {HERO.subheading}
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex gap-3 flex-wrap">
+          <motion.div variants={fadeUp}>
             <Link
-              href="/academy"
+              href="/booking"
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-cta text-accent-cta-text rounded-[20px] text-[15px] font-bold hover:brightness-95 transition-all duration-300"
             >
-              {HERO.ctaPrimary}
+              Book coaching
               <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="#priser"
-              className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/15 text-white rounded-[20px] text-[15px] font-medium hover:bg-white/5 transition-colors duration-300"
-            >
-              {HERO.ctaSecondary}
             </Link>
           </motion.div>
 
-          {/* Trust bar */}
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap gap-6 mt-12 pt-8 border-t border-white/10"
-          >
-            {HERO.stats.map((stat) => (
-              <div key={stat.label}>
-                <p className="text-xl font-bold text-white tracking-tight">
-                  {stat.value}
-                </p>
-                <p className="text-[11px] text-white/35 mt-0.5">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </motion.div>
     </section>
