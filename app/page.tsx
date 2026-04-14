@@ -10,7 +10,7 @@ import { PortalPreviewSection } from "@/components/website/landing/PortalPreview
 import { TargetProfilesSection } from "@/components/website/landing/TargetProfilesSection";
 import { TeamSection } from "@/components/website/landing/TeamSection";
 
-import { TestimonialSection } from "@/components/website/landing/TestimonialSection";
+
 import { CTASection } from "@/components/website/landing/CTASection";
 
 export default function HomePage() {
@@ -32,7 +32,7 @@ export default function HomePage() {
         <TargetProfilesSection />
         <TeamSection />
 
-        <TestimonialSection />
+
         <CTASection />
       </main>
 

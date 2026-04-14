@@ -57,7 +57,7 @@ export const TEAM = [
     name: "Anders Kristiansen",
     role: "Hovedcoach",
     division: "AK Golf Academy",
-    image: "/images/branding/ak-golf-academy-20.jpg",
+    image: "/images/team/anders-kristiansen.jpg",
     bio: "15 års erfaring med spillerutvikling fra nybegynner til PGA Tour. Utvikler av coaching-systemet og spillerportalen. Jobber med spillere som vil ha individuell teknisk veiledning og langsiktig utvikling.",
     prices: [
       { name: "Performance", price: "1 400", unit: "kr/mnd", detail: "2x20 min" },
