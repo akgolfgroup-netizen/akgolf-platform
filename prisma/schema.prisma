@@ -1824,6 +1824,7 @@ model Hole {
   longitude   Float?
   greenLat    Float?
   greenLon    Float?
+  strategy    Json?
   Course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
   HoleResult  HoleResult[]
   Shot        Shot[]
