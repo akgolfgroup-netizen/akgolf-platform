@@ -9,7 +9,7 @@ import { HowItWorksSection } from "@/components/website/landing/HowItWorksSectio
 import { PortalPreviewSection } from "@/components/website/landing/PortalPreviewSection";
 import { TargetProfilesSection } from "@/components/website/landing/TargetProfilesSection";
 import { TeamSection } from "@/components/website/landing/TeamSection";
-import { DivisionsSection } from "@/components/website/landing/DivisionsSection";
+
 import { TestimonialSection } from "@/components/website/landing/TestimonialSection";
 import { CTASection } from "@/components/website/landing/CTASection";
 
@@ -31,7 +31,7 @@ export default function HomePage() {
         <PortalPreviewSection />
         <TargetProfilesSection />
         <TeamSection />
-        <DivisionsSection />
+
         <TestimonialSection />
         <CTASection />
       </main>
