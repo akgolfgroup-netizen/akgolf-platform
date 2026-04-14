@@ -994,7 +994,7 @@ export const FOOTER_LINKS = {
 } as const;
 
 // ─── Booking ───
-export const BOOKING_URL = "/booking";
+export const BOOKING_URL = "/academy/abonnement";
 
 // ─── Portal ───
 export const PORTAL_URL = "/portal";
