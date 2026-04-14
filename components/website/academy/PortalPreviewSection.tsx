@@ -63,6 +63,23 @@ export function PortalPreviewSection() {
           </div>
         </RevealOnScroll>
 
+        {/* Launch banner */}
+        <RevealOnScroll>
+          <div className="mb-12 rounded-2xl bg-accent-cta p-6 text-center">
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <Smartphone className="w-5 h-5 text-accent-cta-text" />
+              <h3 className="font-semibold text-accent-cta-text">
+                Spillerportalen lanseres mai 2026
+              </h3>
+            </div>
+            <p className="text-sm text-accent-cta-text/70 max-w-md mx-auto">
+              Vi bygger portalen nå. Alle med treningsabonnement får automatisk
+              tilgang når den er klar. I mellomtiden får du treningsplan og
+              oppfølging direkte fra treneren.
+            </p>
+          </div>
+        </RevealOnScroll>
+
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {FEATURES.map((feature) => {
             const Icon = feature.icon;
@@ -84,22 +101,6 @@ export function PortalPreviewSection() {
           })}
         </StaggerContainer>
 
-        {/* Launch banner */}
-        <RevealOnScroll>
-          <div className="mt-12 rounded-2xl border border-primary/20 bg-primary/5 p-8 text-center">
-            <div className="flex items-center justify-center gap-3 mb-3">
-              <Smartphone className="w-5 h-5 text-primary" />
-              <h3 className="font-semibold text-black">
-                Spillerportalen lanseres mai 2026
-              </h3>
-            </div>
-            <p className="text-sm text-text max-w-md mx-auto">
-              Vi bygger portalen nå. Alle med treningsabonnement får automatisk
-              tilgang når den er klar. I mellomtiden får du treningsplan og
-              oppfølging direkte fra treneren.
-            </p>
-          </div>
-        </RevealOnScroll>
       </div>
     </section>
   );
