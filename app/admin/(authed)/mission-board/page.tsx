@@ -223,10 +223,10 @@ export default function MissionBoardPage() {
     date: b.time,
     color:
       b.status.toLowerCase() === "confirmed" || b.status.toLowerCase() === "completed"
-        ? "#22c55e"
+        ? "var(--color-success)"
         : b.status.toLowerCase() === "pending"
-          ? "#f59e0b"
-          : "#16a34a",
+          ? "var(--color-warning)"
+          : "var(--color-success)",
   }));
 
   const monthlyGoal = charts?.monthlyGoal ?? 240;
@@ -358,7 +358,7 @@ export default function MissionBoardPage() {
                 data={sparkActive}
                 width="100%"
                 height={32}
-                color="#22c55e"
+                color="var(--color-success)"
               />
             </Card>
 
@@ -378,7 +378,7 @@ export default function MissionBoardPage() {
                 data={sparkStudents}
                 width="100%"
                 height={32}
-                color="#16a34a"
+                color="var(--color-success)"
               />
             </Card>
 
@@ -398,7 +398,7 @@ export default function MissionBoardPage() {
                 data={sparkRevenue}
                 width="100%"
                 height={32}
-                color="#16a34a"
+                color="var(--color-success)"
               />
             </Card>
           </motion.div>

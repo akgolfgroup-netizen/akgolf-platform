@@ -92,7 +92,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
         b.status === "CONFIRMED" || b.status === "COMPLETED"
           ? "success-text"
           : b.status === "PENDING"
-            ? "#D1F843"
+            ? "var(--color-accent-cta)"
             : "black",
     }));
 

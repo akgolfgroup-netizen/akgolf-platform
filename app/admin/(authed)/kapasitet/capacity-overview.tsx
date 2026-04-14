@@ -53,10 +53,10 @@ function StatCard({ title, value, subtitle, icon, trend, trendValue }: StatCardP
 
 function CoachCapacityCard({ coach }: { coach: CapacityData["coaches"][0] }) {
   const occupancyColor = coach.occupancy >= 0.8
-    ? "#1A4D36"
+    ? "var(--color-success)"
     : coach.occupancy >= 0.5
-    ? "#C48A32"
-    : "#EF4444";
+    ? "var(--color-warning)"
+    : "var(--color-error)";
 
   return (
     <div className="bg-white border border-grey-200 rounded-xl p-5">
@@ -107,12 +107,12 @@ function OccupancyHeatmap({ dailyBreakdown, coaches }: {
   coaches: string[];
 }) {
   const getColor = (booked: number, total: number) => {
-    if (total === 0) return "#ECF0EF";
+    if (total === 0) return "var(--color-grey-50)";
     const ratio = booked / total;
-    if (ratio >= 0.8) return "#1A4D36";
-    if (ratio >= 0.5) return "#C48A32";
+    if (ratio >= 0.8) return "var(--color-success)";
+    if (ratio >= 0.5) return "var(--color-warning)";
     if (ratio > 0) return "color-mix(in srgb, #C48A32 50%, #ECF0EF)";
-    return "#ECF0EF";
+    return "var(--color-grey-50)";
   };
 
   return (
@@ -164,15 +164,15 @@ function OccupancyHeatmap({ dailyBreakdown, coaches }: {
 
       <div className="flex items-center gap-4 mt-4 text-xs text-grey-400">
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded" style={{ background: "#1A4D36" }} />
+          <div className="w-3 h-3 rounded" style={{ background: "var(--color-success)" }} />
           <span>80%+</span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded" style={{ background: "#C48A32" }} />
+          <div className="w-3 h-3 rounded" style={{ background: "var(--color-warning)" }} />
           <span>50-80%</span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded" style={{ background: "#ECF0EF" }} />
+          <div className="w-3 h-3 rounded" style={{ background: "var(--color-grey-50)" }} />
           <span>&lt;50%</span>
         </div>
       </div>
