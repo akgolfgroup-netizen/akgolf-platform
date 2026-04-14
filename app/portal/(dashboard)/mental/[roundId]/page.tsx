@@ -152,13 +152,13 @@ export default function RoundDetailPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/portal/mental"
-            className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white border border-[#D5DFDB] text-[#0A1F18] hover:bg-[#F5F8F7] transition-colors"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white border border-grey-200 text-black hover:bg-grey-50 transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-[#0A1F18]">Rundedetaljer</h1>
-            <p className="text-[#7A8C85] mt-1">Runde-ID: {roundId}</p>
+            <h1 className="text-2xl font-bold text-black">Rundedetaljer</h1>
+            <p className="text-grey-400 mt-1">Runde-ID: {roundId}</p>
           </div>
         </div>
         <Button variant="primary" onClick={handleSave} isLoading={saving}>
@@ -178,8 +178,8 @@ export default function RoundDetailPage() {
                 onClick={() => setSelectedHole(h.number)}
                 className={`flex-shrink-0 w-10 h-10 rounded-lg text-sm font-semibold transition-colors ${
                   isActive
-                    ? "bg-[#0A1F18] text-white"
-                    : "bg-[#F5F8F7] text-[#0A1F18] hover:bg-[#ECF0EF]"
+                    ? "bg-black text-white"
+                    : "bg-[#F5F8F7] text-black hover:bg-[#ECF0EF]"
                 }`}
               >
                 {h.number}
@@ -191,11 +191,11 @@ export default function RoundDetailPage() {
 
       {/* Hole info */}
       <div className="flex items-center gap-4">
-        <div className="text-sm text-[#7A8C85]">
-          Hull <span className="font-semibold text-[#0A1F18]">{selectedHole}</span>
+        <div className="text-sm text-grey-400">
+          Hull <span className="font-semibold text-black">{selectedHole}</span>
         </div>
-        <div className="text-sm text-[#7A8C85]">
-          Par <span className="font-semibold text-[#0A1F18]">{HOLES[selectedHole - 1].par}</span>
+        <div className="text-sm text-grey-400">
+          Par <span className="font-semibold text-black">{HOLES[selectedHole - 1].par}</span>
         </div>
       </div>
 
@@ -204,10 +204,10 @@ export default function RoundDetailPage() {
         {/* Pre-shot */}
         <PremiumCard delay={0.1} padding="md" radius="large">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-[#EFF6FF] flex items-center justify-center">
-              <Flag className="w-4 h-4 text-[#007AFF]" />
+            <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+              <Flag className="w-4 h-4 text-blue-500" />
             </div>
-            <h3 className="text-base font-semibold text-[#0A1F18]">Pre-shot</h3>
+            <h3 className="text-base font-semibold text-black">Pre-shot</h3>
           </div>
           <div className="space-y-4">
             <FormField label="Plan">
@@ -216,7 +216,7 @@ export default function RoundDetailPage() {
                 value={current.plan}
                 onChange={(e) => updateField("plan", e.target.value)}
                 placeholder="F.eks. Treff fairway høyre side"
-                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-[#D5DFDB] text-[#0A1F18] placeholder:text-[#A5B2AD] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/10 focus:border-[#0A1F18]"
+                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </FormField>
             <FormField label="Target">
@@ -225,7 +225,7 @@ export default function RoundDetailPage() {
                 value={current.target}
                 onChange={(e) => updateField("target", e.target.value)}
                 placeholder="F.eks. Høyre kant av fairwaybunker"
-                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-[#D5DFDB] text-[#0A1F18] placeholder:text-[#A5B2AD] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/10 focus:border-[#0A1F18]"
+                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </FormField>
             <div className="grid grid-cols-2 gap-4">
@@ -256,9 +256,9 @@ export default function RoundDetailPage() {
                 type="checkbox"
                 checked={current.routineDone}
                 onChange={(e) => updateField("routineDone", e.target.checked)}
-                className="w-5 h-5 rounded border-[#D5DFDB] text-[#0A1F18] focus:ring-[#0A1F18]"
+                className="w-5 h-5 rounded border-grey-200 text-black focus:ring-black"
               />
-              <span className="text-sm text-[#0A1F18]">Rutine fullført</span>
+              <span className="text-sm text-black">Rutine fullført</span>
             </label>
           </div>
         </PremiumCard>
@@ -266,10 +266,10 @@ export default function RoundDetailPage() {
         {/* Post-shot */}
         <PremiumCard delay={0.15} padding="md" radius="large">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-[#FAF5FF] flex items-center justify-center">
-              <Flag className="w-4 h-4 text-[#AF52DE]" />
+            <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
+              <Flag className="w-4 h-4 text-purple-500" />
             </div>
-            <h3 className="text-base font-semibold text-[#0A1F18]">Post-shot</h3>
+            <h3 className="text-base font-semibold text-black">Post-shot</h3>
           </div>
           <div className="space-y-4">
             <FormField label="Resultat">
@@ -278,7 +278,7 @@ export default function RoundDetailPage() {
                 value={current.result}
                 onChange={(e) => updateField("result", e.target.value)}
                 placeholder="F.eks. Fairway, 145m til flagg"
-                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-[#D5DFDB] text-[#0A1F18] placeholder:text-[#A5B2AD] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/10 focus:border-[#0A1F18]"
+                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </FormField>
             <SliderField
@@ -294,7 +294,7 @@ export default function RoundDetailPage() {
                 value={current.feeling}
                 onChange={(e) => updateField("feeling", e.target.value)}
                 placeholder="F.eks. Rolig og kontrollert"
-                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-[#D5DFDB] text-[#0A1F18] placeholder:text-[#A5B2AD] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/10 focus:border-[#0A1F18]"
+                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </FormField>
             <div className="grid grid-cols-2 gap-4">
@@ -303,18 +303,18 @@ export default function RoundDetailPage() {
                   type="checkbox"
                   checked={current.accepted}
                   onChange={(e) => updateField("accepted", e.target.checked)}
-                  className="w-5 h-5 rounded border-[#D5DFDB] text-[#0A1F18] focus:ring-[#0A1F18]"
+                  className="w-5 h-5 rounded border-grey-200 text-black focus:ring-black"
                 />
-                <span className="text-sm text-[#0A1F18]">Akseptert</span>
+                <span className="text-sm text-black">Akseptert</span>
               </label>
               <label className="flex items-center gap-3 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={current.doubt}
                   onChange={(e) => updateField("doubt", e.target.checked)}
-                  className="w-5 h-5 rounded border-[#D5DFDB] text-[#0A1F18] focus:ring-[#0A1F18]"
+                  className="w-5 h-5 rounded border-grey-200 text-black focus:ring-black"
                 />
-                <span className="text-sm text-[#0A1F18]">Tvil</span>
+                <span className="text-sm text-black">Tvil</span>
               </label>
             </div>
           </div>
@@ -327,7 +327,7 @@ export default function RoundDetailPage() {
 function FormField({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-1.5">
+      <label className="block text-xs font-semibold uppercase tracking-wider text-grey-400 mb-1.5">
         {label}
       </label>
       {children}
@@ -351,10 +351,10 @@ function SliderField({
   return (
     <div>
       <div className="flex items-center justify-between mb-1.5">
-        <label className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85]">
+        <label className="text-xs font-semibold uppercase tracking-wider text-grey-400">
           {label}
         </label>
-        <span className="text-sm font-semibold text-[#0A1F18] tabular-nums">{value}</span>
+        <span className="text-sm font-semibold text-black tabular-nums">{value}</span>
       </div>
       <input
         type="range"
@@ -363,7 +363,7 @@ function SliderField({
         step={1}
         value={value}
         onChange={(e) => onChange(parseInt(e.target.value, 10))}
-        className="w-full accent-[#0A1F18]"
+        className="w-full accent-black"
       />
     </div>
   );

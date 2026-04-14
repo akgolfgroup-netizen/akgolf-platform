@@ -247,10 +247,10 @@ function HelpBtn({ title, items, color }: { title: string; items: RefItem[]; col
       {open && (
         <>
           <div onClick={() => setOpen(false)} className="fixed inset-0 z-[998]" />
-          <div onClick={(e) => e.stopPropagation()} className="absolute top-6 -left-2.5 w-[280px] bg-white rounded-[14px] shadow-[0_8px_32px_rgba(0,0,0,.18)] z-[999] p-3.5 border border-[#D5DFDB]">
+          <div onClick={(e) => e.stopPropagation()} className="absolute top-6 -left-2.5 w-[280px] bg-white rounded-[14px] shadow-[0_8px_32px_rgba(0,0,0,.18)] z-[999] p-3.5 border border-grey-200">
             <div className="flex justify-between mb-2">
               <div className="text-[13px] font-bold">{title}</div>
-              <button onClick={() => setOpen(false)} className="bg-transparent border-none cursor-pointer text-base text-[#7A8C85]">x</button>
+              <button onClick={() => setOpen(false)} className="bg-transparent border-none cursor-pointer text-base text-grey-400">x</button>
             </div>
             <div className="max-h-[220px] overflow-y-auto">
               {items.map((it, i) => (
@@ -258,7 +258,7 @@ function HelpBtn({ title, items, color }: { title: string; items: RefItem[]; col
                   <div className="text-[11px] font-bold" style={{ color: btnColor }}>
                     {it.code}{it.pct ? ` (${it.pct})` : ""}{it.name && it.code !== it.name ? ` — ${it.name}` : ""}
                   </div>
-                  <div className="text-[10px] text-[#324D45] mt-0.5 leading-[1.4]">{it.desc}</div>
+                  <div className="text-[10px] text-grey-400 mt-0.5 leading-[1.4]">{it.desc}</div>
                 </div>
               ))}
             </div>
@@ -276,7 +276,7 @@ function ParamPick({ label, helpTitle, helpItems, options, value, onChange, colo
   return (
     <div className={compact ? "mb-2" : "mb-3"}>
       <div className="flex items-center gap-1.5 mb-1.5">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">{label}</div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">{label}</div>
         <HelpBtn title={helpTitle} items={helpItems} color={color} />
       </div>
       <div className="flex flex-wrap gap-1">
@@ -312,7 +312,7 @@ function SlagFocusPick({ selected, onChange, color, compact }: {
   return (
     <div className={compact ? "mb-2" : "mb-3"}>
       <div className="flex items-center gap-1.5 mb-1.5">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">Slagfokus</div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">Slagfokus</div>
         <HelpBtn title="Slagkvalitet" items={SLAG_FOCUS.map((sf) => ({ code: sf.code, name: sf.name, desc: sf.desc }))} color={color} />
       </div>
       <div className="grid grid-cols-2 gap-1.5">
@@ -350,12 +350,12 @@ function PPosPick({ from, to, onChange, color }: {
   return (
     <div className="mb-3">
       <div className="flex items-center gap-1.5 mb-1.5">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">P-Posisjon</div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">P-Posisjon</div>
         <HelpBtn title="P-Posisjoner" items={P_POS.map((p) => ({ code: p.code, name: p.name, desc: `Svingposisjon: ${p.name}` }))} color={color} />
       </div>
       {([["Fra", from, (v: string) => onChange(v, to)] as const, ["Til", to, (v: string) => onChange(from, v)] as const]).map(([l, val, set]) => (
         <div key={l} className="flex items-center gap-1.5 mb-1">
-          <div className="text-[10px] text-[#324D45] font-semibold w-6">{l}</div>
+          <div className="text-[10px] text-grey-400 font-semibold w-6">{l}</div>
           <div className="flex flex-wrap gap-1">
             {P_POS.map((p) => {
               const sel = val === p.code;
@@ -386,7 +386,7 @@ function ExerciseParams({ ex, onChange, compact }: {
   const isTek = ex.pyramid === "TEK";
   const isFys = ex.pyramid === "FYS";
   return (
-    <div className="p-3 bg-[#F5F8F7] rounded-[10px]">
+    <div className="p-3 bg-grey-50 rounded-[10px]">
       {isTek && (
         <>
           <ParamPick label="L-Fase" helpTitle="Laeringsfaser" helpItems={L_PHASES} options={L_PHASES} value={ex.lPhase} onChange={(v) => onChange({ lPhase: v })} color={color} compact={compact} />
@@ -430,7 +430,7 @@ function ExerciseAddFlow({ onAdd, onClose }: { onAdd: (ex: V2Exercise) => void; 
     <div>
       {step === 0 && (
         <div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">1. Pyramideniva</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">1. Pyramideniva</div>
           <div className="grid grid-cols-5 gap-1.5">
             {PYRAMID.map((p) => (
               <button key={p.key} onClick={() => { setPyr(p.key); setStep(1); }}
@@ -438,7 +438,7 @@ function ExerciseAddFlow({ onAdd, onClose }: { onAdd: (ex: V2Exercise) => void; 
                 style={{ border: `2px solid ${p.color}30`, background: `${p.color}08` }}
               >
                 <div className="text-xs font-extrabold" style={{ color: p.color }}>{p.label}</div>
-                <div className="text-[9px] text-[#7A8C85] mt-0.5">{p.full}</div>
+                <div className="text-[9px] text-grey-400 mt-0.5">{p.full}</div>
               </button>
             ))}
           </div>
@@ -447,14 +447,14 @@ function ExerciseAddFlow({ onAdd, onClose }: { onAdd: (ex: V2Exercise) => void; 
       {step === 1 && pyr && (
         <div>
           <div className="flex items-center gap-1.5 mb-2">
-            <button onClick={() => setStep(0)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F8F7] text-[#324D45] border-none cursor-pointer">&#8592;</button>
+            <button onClick={() => setStep(0)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-grey-50 text-grey-400 border-none cursor-pointer">&#8592;</button>
             <span className="text-xs font-bold" style={{ color }}>{pyr}</span>
           </div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">2. Treningsomrade</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">2. Treningsomrade</div>
           <div className="grid grid-cols-3 gap-1.5 max-h-[200px] overflow-y-auto">
             {(AREAS[pyr] || []).map((a) => (
               <button key={a.code} onClick={() => pickArea(a.code)}
-                className="py-2 px-1.5 rounded-lg border border-[#D5DFDB] bg-white cursor-pointer text-center text-[11px] font-semibold hover:bg-[#F5F8F7] transition-colors"
+                className="py-2 px-1.5 rounded-lg border border-grey-200 bg-white cursor-pointer text-center text-[11px] font-semibold hover:bg-grey-50 transition-colors"
               >{a.name}</button>
             ))}
           </div>
@@ -463,19 +463,19 @@ function ExerciseAddFlow({ onAdd, onClose }: { onAdd: (ex: V2Exercise) => void; 
       {step === 2 && pyr && area && (
         <div>
           <div className="flex items-center gap-1.5 mb-2">
-            <button onClick={() => setStep(1)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F8F7] text-[#324D45] border-none cursor-pointer">&#8592;</button>
+            <button onClick={() => setStep(1)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-grey-50 text-grey-400 border-none cursor-pointer">&#8592;</button>
             <span className="text-xs font-bold" style={{ color }}>{pyr} · {area}</span>
           </div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">3. Konfigurer</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">3. Konfigurer</div>
           <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Ovelsesnavn"
-            className="w-full py-2.5 px-3.5 rounded-[10px] border border-[#D5DFDB] text-sm outline-none mb-3 box-border bg-white"
+            className="w-full py-2.5 px-3.5 rounded-[10px] border border-grey-200 text-sm outline-none mb-3 box-border bg-white"
           />
           <ExerciseParams
             ex={{ pyramid: pyr, area, lPhase: null, cs: null, m: null, pr: null, pFrom: null, pTo: null, slagFocus: [], ...params } as V2Exercise}
             onChange={(patch) => setParams((p) => ({ ...p, ...patch }))}
           />
           <button onClick={confirm}
-            className="w-full mt-2 py-3 rounded-full bg-[#D1F843] text-[#0A1F18] text-sm font-bold border-none cursor-pointer hover:opacity-85 transition-opacity"
+            className="w-full mt-2 py-3 rounded-full bg-accent-cta text-black text-sm font-bold border-none cursor-pointer hover:opacity-85 transition-opacity"
           >Legg til</button>
         </div>
       )}
@@ -498,9 +498,9 @@ function ExerciseCard({ ex, onRemove, onUpdate, showReps, editId, setEditId }: {
     <div className="bg-white rounded-xl shadow-card p-3.5 mb-2 relative"
       style={{ borderLeft: `4px solid ${ec}` }}
     >
-      <button onClick={() => onRemove(ex.id)} className="absolute top-2 right-2.5 bg-transparent border-none cursor-pointer text-base text-[#7A8C85] hover:text-[#B84233] transition-colors">x</button>
+      <button onClick={() => onRemove(ex.id)} className="absolute top-2 right-2.5 bg-transparent border-none cursor-pointer text-base text-grey-400 hover:text-error transition-colors">x</button>
       <div className="flex items-center gap-1.5 mb-0.5 pr-5">
-        <div className="text-[13px] font-bold flex-1 text-[#0A1F18]">{ex.name}</div>
+        <div className="text-[13px] font-bold flex-1 text-black">{ex.name}</div>
         <button onClick={() => setEditId(isEdit ? null : ex.id)}
           className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-semibold cursor-pointer border-none transition-colors"
           style={{ background: isEdit ? `${ec}15` : "#F5F8F7", color: isEdit ? ec : "#7A8C85" }}
@@ -522,27 +522,27 @@ function ExerciseCard({ ex, onRemove, onUpdate, showReps, editId, setEditId }: {
 
       {showReps && (
         <div className="flex gap-2.5">
-          <div className="flex-1 bg-[#1A4D36]/5 rounded-xl py-2 text-center border border-[#1A4D36]/20">
-            <div className="text-[9px] font-bold text-[#1A4D36] uppercase tracking-[0.08em] mb-1">Baller</div>
+          <div className="flex-1 bg-success/5 rounded-xl py-2 text-center border border-success/20">
+            <div className="text-[9px] font-bold text-success uppercase tracking-[0.08em] mb-1">Baller</div>
             <div className="flex items-center justify-center gap-2.5">
               <button onClick={() => onUpdate(ex.id, { baller: Math.max(0, ex.baller - 1) })}
-                className="w-[30px] h-[30px] rounded-full border border-[#D5DFDB] bg-white cursor-pointer text-base font-bold text-[#324D45] flex items-center justify-center"
+                className="w-[30px] h-[30px] rounded-full border border-grey-200 bg-white cursor-pointer text-base font-bold text-grey-400 flex items-center justify-center"
               >-</button>
               <div className="text-[26px] font-extrabold tabular-nums min-w-[36px]">{ex.baller}</div>
               <button onClick={() => onUpdate(ex.id, { baller: ex.baller + 1 })}
-                className="w-11 h-11 rounded-full border-none bg-[#1A4D36] cursor-pointer text-xl font-bold text-white flex items-center justify-center shadow-[0_2px_8px_rgba(26,77,54,.25)]"
+                className="w-11 h-11 rounded-full border-none bg-success cursor-pointer text-xl font-bold text-white flex items-center justify-center shadow-[0_2px_8px_rgba(26,77,54,.25)]"
               >+</button>
             </div>
           </div>
-          <div className="flex-1 bg-[#0A1F18]/5 rounded-xl py-2 text-center border border-[#0A1F18]/15">
-            <div className="text-[9px] font-bold text-[#0A1F18] uppercase tracking-[0.08em] mb-1">Bevegelser</div>
+          <div className="flex-1 bg-black/5 rounded-xl py-2 text-center border border-black/15">
+            <div className="text-[9px] font-bold text-black uppercase tracking-[0.08em] mb-1">Bevegelser</div>
             <div className="flex items-center justify-center gap-2.5">
               <button onClick={() => onUpdate(ex.id, { bevegelser: Math.max(0, ex.bevegelser - 1) })}
-                className="w-[30px] h-[30px] rounded-full border border-[#D5DFDB] bg-white cursor-pointer text-base font-bold text-[#324D45] flex items-center justify-center"
+                className="w-[30px] h-[30px] rounded-full border border-grey-200 bg-white cursor-pointer text-base font-bold text-grey-400 flex items-center justify-center"
               >-</button>
               <div className="text-[26px] font-extrabold tabular-nums min-w-[36px]">{ex.bevegelser}</div>
               <button onClick={() => onUpdate(ex.id, { bevegelser: ex.bevegelser + 1 })}
-                className="w-11 h-11 rounded-full border-none bg-[#0A1F18] cursor-pointer text-xl font-bold text-white flex items-center justify-center shadow-[0_2px_8px_rgba(10,31,24,.18)]"
+                className="w-11 h-11 rounded-full border-none bg-black cursor-pointer text-xl font-bold text-white flex items-center justify-center shadow-[0_2px_8px_rgba(10,31,24,.18)]"
               >+</button>
             </div>
           </div>
@@ -597,12 +597,12 @@ function LiveTracker({ session, setSession, onEnd, onSaveLive }: {
     <div className="max-w-[600px] mx-auto p-6">
       <div className="bg-white rounded-xl shadow-card p-5">
         <div className="text-center mb-5">
-          <div className="text-[13px] font-bold text-[#1A4D36] uppercase tracking-[0.1em]">Okt fullfort</div>
-          <div className="text-[44px] font-extrabold tabular-nums mt-2 text-[#0A1F18]">{fmtEl(elapsed)}</div>
+          <div className="text-[13px] font-bold text-success uppercase tracking-[0.1em]">Okt fullfort</div>
+          <div className="text-[44px] font-extrabold tabular-nums mt-2 text-black">{fmtEl(elapsed)}</div>
         </div>
         <div className="flex justify-center gap-8 mb-6">
-          <div className="text-center"><div className="text-[32px] font-extrabold">{totalB}</div><div className="text-[11px] text-[#7A8C85]">Baller</div></div>
-          <div className="text-center"><div className="text-[32px] font-extrabold">{totalM}</div><div className="text-[11px] text-[#7A8C85]">Bevegelser</div></div>
+          <div className="text-center"><div className="text-[32px] font-extrabold">{totalB}</div><div className="text-[11px] text-grey-400">Baller</div></div>
+          <div className="text-center"><div className="text-[32px] font-extrabold">{totalM}</div><div className="text-[11px] text-grey-400">Bevegelser</div></div>
         </div>
         {session.exercises.map((ex) => (
           <div key={ex.id} className="py-2.5 border-t border-black/4">
@@ -615,7 +615,7 @@ function LiveTracker({ session, setSession, onEnd, onSaveLive }: {
         ))}
         <div className="flex justify-center mt-6">
           <button onClick={handleSaveAndClose}
-            className="px-8 py-3 rounded-full bg-[#D1F843] text-[#0A1F18] text-[15px] font-bold border-none cursor-pointer hover:opacity-85 transition-opacity"
+            className="px-8 py-3 rounded-full bg-accent-cta text-black text-[15px] font-bold border-none cursor-pointer hover:opacity-85 transition-opacity"
           >Lagre og lukk</button>
         </div>
       </div>
@@ -629,11 +629,11 @@ function LiveTracker({ session, setSession, onEnd, onSaveLive }: {
         <div className="text-[52px] font-extrabold tabular-nums tracking-tight leading-none mt-2"
           style={{ color: session.paused ? "#7A8C85" : "#0A1F18" }}
         >{fmtEl(elapsed)}</div>
-        <div className="text-[11px] text-[#7A8C85] mt-1">{session.paused ? "PAUSET" : "AKTIV OKT"}</div>
+        <div className="text-[11px] text-grey-400 mt-1">{session.paused ? "PAUSET" : "AKTIV OKT"}</div>
         <div className="flex justify-center gap-7 mt-3">
-          <div><div className="text-[22px] font-extrabold tabular-nums text-[#1A4D36]">{totalB}</div><div className="text-[9px] text-[#7A8C85] uppercase">Baller</div></div>
-          <div><div className="text-[22px] font-extrabold tabular-nums">{totalM}</div><div className="text-[9px] text-[#7A8C85] uppercase">Beveg.</div></div>
-          <div><div className="text-[22px] font-extrabold tabular-nums">{session.exercises.length}</div><div className="text-[9px] text-[#7A8C85] uppercase">Ovelser</div></div>
+          <div><div className="text-[22px] font-extrabold tabular-nums text-success">{totalB}</div><div className="text-[9px] text-grey-400 uppercase">Baller</div></div>
+          <div><div className="text-[22px] font-extrabold tabular-nums">{totalM}</div><div className="text-[9px] text-grey-400 uppercase">Beveg.</div></div>
+          <div><div className="text-[22px] font-extrabold tabular-nums">{session.exercises.length}</div><div className="text-[9px] text-grey-400 uppercase">Ovelser</div></div>
         </div>
         <div className="flex justify-center gap-2 mt-3 pb-1">
           <button onClick={togglePause}
@@ -641,7 +641,7 @@ function LiveTracker({ session, setSession, onEnd, onSaveLive }: {
             style={{ background: session.paused ? "#D1F843" : "#F5F8F7", color: session.paused ? "#0A1F18" : "#324D45" }}
           >{session.paused ? "Fortsett" : "Pause"}</button>
           <button onClick={() => setShowSummary(true)}
-            className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F8F7] text-[#B84233] border-none cursor-pointer"
+            className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-grey-50 text-error border-none cursor-pointer"
           >Avslutt</button>
         </div>
       </div>
@@ -650,13 +650,13 @@ function LiveTracker({ session, setSession, onEnd, onSaveLive }: {
       ))}
       {!showAdd ? (
         <button onClick={() => setShowAdd(true)}
-          className="w-full mt-2 py-3.5 rounded-[14px] border-2 border-dashed border-[#D5DFDB] bg-transparent cursor-pointer text-sm font-semibold text-[#324D45] hover:bg-[#F5F8F7] transition-colors"
+          className="w-full mt-2 py-3.5 rounded-[14px] border-2 border-dashed border-grey-200 bg-transparent cursor-pointer text-sm font-semibold text-grey-400 hover:bg-grey-50 transition-colors"
         >+ Legg til ovelse</button>
       ) : (
         <div className="bg-white rounded-xl shadow-card mt-2 p-4">
           <div className="flex justify-between mb-3">
             <div className="text-sm font-bold">Ny ovelse</div>
-            <button onClick={() => setShowAdd(false)} className="bg-transparent border-none cursor-pointer text-lg text-[#7A8C85]">x</button>
+            <button onClick={() => setShowAdd(false)} className="bg-transparent border-none cursor-pointer text-lg text-grey-400">x</button>
           </div>
           <ExerciseAddFlow onAdd={addEx} onClose={() => setShowAdd(false)} />
         </div>
@@ -697,28 +697,28 @@ function PlanPanel({ initial, onSave, onCancel }: {
       <div className="bg-white rounded-xl shadow-card p-5 mb-4">
         <div className="flex justify-between items-center mb-4">
           <div className="text-lg font-bold">{initial?.id ? "Rediger okt" : "Planlegg okt"}</div>
-          <button onClick={onCancel} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F8F7] text-[#324D45] border-none cursor-pointer">Avbryt</button>
+          <button onClick={onCancel} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-grey-50 text-grey-400 border-none cursor-pointer">Avbryt</button>
         </div>
         <div className="mb-3.5">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">Oktnavn</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">Oktnavn</div>
           <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="F.eks. TEK Innspill 150m"
-            className="w-full py-2.5 px-3.5 rounded-[10px] border border-[#D5DFDB] text-sm outline-none box-border bg-white"
+            className="w-full py-2.5 px-3.5 rounded-[10px] border border-grey-200 text-sm outline-none box-border bg-white"
           />
         </div>
         <div className="flex gap-3 mb-3.5">
           <div className="flex-1">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">Starttid</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">Starttid</div>
             <div className="flex gap-1">
-              <select value={startH} onChange={(e) => setStartH(+e.target.value)} className="flex-1 py-2 px-2.5 rounded-lg border border-[#D5DFDB] text-sm bg-white outline-none">
+              <select value={startH} onChange={(e) => setStartH(+e.target.value)} className="flex-1 py-2 px-2.5 rounded-lg border border-grey-200 text-sm bg-white outline-none">
                 {hours.map((h) => <option key={h} value={h}>{fmt(h, 0)}</option>)}
               </select>
-              <select value={startM} onChange={(e) => setStartM(+e.target.value)} className="w-[70px] py-2 px-2.5 rounded-lg border border-[#D5DFDB] text-sm bg-white outline-none">
+              <select value={startM} onChange={(e) => setStartM(+e.target.value)} className="w-[70px] py-2 px-2.5 rounded-lg border border-grey-200 text-sm bg-white outline-none">
                 {[0, 15, 30, 45].map((m) => <option key={m} value={m}>:{String(m).padStart(2, "0")}</option>)}
               </select>
             </div>
           </div>
           <div className="flex-1">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">Varighet</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">Varighet</div>
             <div className="flex flex-wrap gap-1">
               {durations.map((d) => (
                 <button key={d} onClick={() => setDur(d)}
@@ -746,19 +746,19 @@ function PlanPanel({ initial, onSave, onCancel }: {
       </div>
 
       {!showAdd ? (
-        <button onClick={() => setShowAdd(true)} className="w-full py-3.5 rounded-[14px] border-2 border-dashed border-[#D5DFDB] bg-transparent cursor-pointer text-sm font-semibold text-[#324D45] mb-4 hover:bg-[#F5F8F7] transition-colors">+ Legg til ovelse</button>
+        <button onClick={() => setShowAdd(true)} className="w-full py-3.5 rounded-[14px] border-2 border-dashed border-grey-200 bg-transparent cursor-pointer text-sm font-semibold text-grey-400 mb-4 hover:bg-grey-50 transition-colors">+ Legg til ovelse</button>
       ) : (
         <div className="bg-white rounded-xl shadow-card p-4 mb-4">
           <div className="flex justify-between mb-3">
             <div className="text-sm font-bold">Ny ovelse</div>
-            <button onClick={() => setShowAdd(false)} className="bg-transparent border-none cursor-pointer text-lg text-[#7A8C85]">x</button>
+            <button onClick={() => setShowAdd(false)} className="bg-transparent border-none cursor-pointer text-lg text-grey-400">x</button>
           </div>
           <ExerciseAddFlow onAdd={(ex) => setExercises((e) => [...e, ex])} onClose={() => setShowAdd(false)} />
         </div>
       )}
 
       <button onClick={save}
-        className="w-full py-3.5 rounded-full bg-[#D1F843] text-[#0A1F18] text-[15px] font-bold border-none cursor-pointer shadow-[0_2px_8px_rgba(10,31,24,.15)] hover:opacity-85 transition-opacity"
+        className="w-full py-3.5 rounded-full bg-accent-cta text-black text-[15px] font-bold border-none cursor-pointer shadow-[0_2px_8px_rgba(10,31,24,.15)] hover:opacity-85 transition-opacity"
       >{initial?.id ? "Oppdater okt" : "Lagre til kalender"}</button>
     </div>
   );
@@ -869,16 +869,16 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
         {/* Toolbar */}
         <div className="flex items-center justify-between px-5 py-2.5 border-b border-black/4 bg-white flex-shrink-0">
           <div className="flex items-center gap-2">
-            <button onClick={() => nav(-1)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F8F7] text-[#0A1F18] border-none cursor-pointer">&#8592;</button>
-            <button onClick={() => nav(1)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F8F7] text-[#0A1F18] border-none cursor-pointer">&#8594;</button>
-            <button onClick={() => setBaseDate(new Date())} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#D1F843] text-[#0A1F18] border-none cursor-pointer">I dag</button>
+            <button onClick={() => nav(-1)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-grey-50 text-black border-none cursor-pointer">&#8592;</button>
+            <button onClick={() => nav(1)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-grey-50 text-black border-none cursor-pointer">&#8594;</button>
+            <button onClick={() => setBaseDate(new Date())} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-accent-cta text-black border-none cursor-pointer">I dag</button>
             <span className="text-[17px] font-bold ml-2 tracking-tight">{headerTitle}</span>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={() => setPlanning({ date: dk(new Date()), startH: 9, startM: 0 })}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-[#0A1F18]/10 text-[#0A1F18] border-none cursor-pointer hover:bg-[#0A1F18]/15 transition-colors"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-black/10 text-black border-none cursor-pointer hover:bg-black/15 transition-colors"
             >+ Planlegg okt</button>
-            <div className="flex gap-1 bg-[#F5F8F7] rounded-lg p-[3px]">
+            <div className="flex gap-1 bg-grey-50 rounded-lg p-[3px]">
               {([["day", "Dag"], ["week", "Uke"], ["month", "Maned"]] as const).map(([k, l]) => (
                 <button key={k} onClick={() => setView(k)} className="py-1.5 px-3.5 rounded-md text-xs font-semibold cursor-pointer border-none transition-all"
                   style={{ background: view === k ? "white" : "transparent", color: view === k ? "#0A1F18" : "#324D45", boxShadow: view === k ? "0 1px 2px rgba(0,0,0,.06)" : "none" }}
@@ -893,7 +893,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
         ) : (
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* Day headers */}
-            <div className="flex bg-white border-b border-[#D5DFDB] flex-shrink-0">
+            <div className="flex bg-white border-b border-grey-200 flex-shrink-0">
               <div className="w-[50px] flex-shrink-0" />
               <div className="flex flex-1">
                 {dates.map((d, i) => {
@@ -901,8 +901,8 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
                   const di = d.getDay() === 0 ? 6 : d.getDay() - 1;
                   return (
                     <div key={i} className={`flex-1 text-center py-1.5 ${i > 0 ? "border-l border-black/4" : ""}`}>
-                      <div className={`text-[10px] font-semibold uppercase tracking-[0.06em] ${td ? "text-[#0A1F18]" : "text-[#324D45]"}`}>{DN[di]}</div>
-                      <div className={`text-lg font-bold w-7 h-7 rounded-full inline-flex items-center justify-center mt-0.5 tabular-nums ${td ? "bg-[#0A1F18] text-white" : "text-[#0A1F18]"}`}>{d.getDate()}</div>
+                      <div className={`text-[10px] font-semibold uppercase tracking-[0.06em] ${td ? "text-black" : "text-grey-400"}`}>{DN[di]}</div>
+                      <div className={`text-lg font-bold w-7 h-7 rounded-full inline-flex items-center justify-center mt-0.5 tabular-nums ${td ? "bg-black text-white" : "text-black"}`}>{d.getDate()}</div>
                     </div>
                   );
                 })}
@@ -914,7 +914,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
                 <div className="w-[50px] flex-shrink-0">
                   {Array.from({ length: TH }, (_, i) => (
                     <div key={i} className="flex items-start justify-end pr-1.5" style={{ height: HH }}>
-                      <span className="text-[10px] text-[#7A8C85] tabular-nums -translate-y-1.5">{fmt(SH + i, 0)}</span>
+                      <span className="text-[10px] text-grey-400 tabular-nums -translate-y-1.5">{fmt(SH + i, 0)}</span>
                     </div>
                   ))}
                 </div>
@@ -959,8 +959,8 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
                         {/* Now line */}
                         {td && nowY > 0 && nowY < GH && (
                           <div className="absolute left-0 right-0 z-[12] pointer-events-none" style={{ top: nowY }}>
-                            <div className="w-2 h-2 rounded-full bg-[#B84233] absolute -left-1 -top-1" />
-                            <div className="h-0.5 bg-[#B84233] ml-1" />
+                            <div className="w-2 h-2 rounded-full bg-error absolute -left-1 -top-1" />
+                            <div className="h-0.5 bg-error ml-1" />
                           </div>
                         )}
                         {/* Events */}
@@ -992,7 +992,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
                               onClick={(e) => { e.stopPropagation(); setSelected(ev.id); }}
                             >
                               <div className="text-[11px] font-bold whitespace-nowrap overflow-hidden text-ellipsis" style={{ textDecoration: ev.done ? "line-through" : "none" }}>{ev.title}</div>
-                              {h > 28 && <div className="text-[9px] text-[#324D45] tabular-nums">{fmt(ev.startH, ev.startM)}-{fmt(et.h, et.m)}</div>}
+                              {h > 28 && <div className="text-[9px] text-grey-400 tabular-nums">{fmt(ev.startH, ev.startM)}-{fmt(et.h, et.m)}</div>}
                               {h > 42 && <div className="text-[9px] font-bold" style={{ color: c }}>{ev.focus}·{ev.dur}m{exCount > 0 ? ` · ${exCount} ov` : ""}</div>}
                               <div
                                 onMouseDown={(e) => {
@@ -1017,17 +1017,17 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
       </div>
 
       {/* SIDEBAR */}
-      <div className="w-[260px] border-l border-[#D5DFDB] bg-white overflow-y-auto p-3.5 flex flex-col gap-3.5 flex-shrink-0">
+      <div className="w-[260px] border-l border-grey-200 bg-white overflow-y-auto p-3.5 flex flex-col gap-3.5 flex-shrink-0">
         {ev && (() => {
           const et = eTime(ev);
           const exCount = ev.exercises?.length || 0;
           return (
-            <div className="bg-[#F5F8F7] rounded-xl p-3" style={{ border: `2px solid ${focColor(ev.focus)}30` }}>
+            <div className="bg-grey-50 rounded-xl p-3" style={{ border: `2px solid ${focColor(ev.focus)}30` }}>
               <div className="text-sm font-bold">{ev.title}</div>
-              <div className="text-[11px] text-[#324D45] mt-0.5">{fmt(ev.startH, ev.startM)} - {fmt(et.h, et.m)} · {ev.dur} min</div>
+              <div className="text-[11px] text-grey-400 mt-0.5">{fmt(ev.startH, ev.startM)} - {fmt(et.h, et.m)} · {ev.dur} min</div>
               {exCount > 0 && (
                 <div className="mt-2">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">{exCount} ovelser planlagt</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">{exCount} ovelser planlagt</div>
                   {ev.exercises.map((ex) => (
                     <div key={ex.id} className="py-1 border-b border-black/4">
                       <div className="text-xs font-semibold">{ex.name}</div>
@@ -1037,23 +1037,23 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
                 </div>
               )}
               <div className="flex gap-1.5 mt-2.5 flex-wrap">
-                <button onClick={() => startLive(ev)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#D1F843] text-[#0A1F18] border-none cursor-pointer">Start</button>
-                <button onClick={() => setPlanning(ev.id)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#0A1F18]/10 text-[#0A1F18] border-none cursor-pointer">Rediger</button>
+                <button onClick={() => startLive(ev)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-accent-cta text-black border-none cursor-pointer">Start</button>
+                <button onClick={() => setPlanning(ev.id)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-black/10 text-black border-none cursor-pointer">Rediger</button>
                 <button onClick={() => updateEvent(ev.id, { done: !ev.done })}
                   className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold border-none cursor-pointer"
                   style={{ background: ev.done ? "#F5F8F7" : "#E8F5EF", color: ev.done ? "#324D45" : "#1A4D36" }}
                 >{ev.done ? "Angre" : "Fullfort"}</button>
-                <button onClick={() => removeEvent(ev.id)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F8F7] text-[#B84233] border-none cursor-pointer">Slett</button>
+                <button onClick={() => removeEvent(ev.id)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-grey-50 text-error border-none cursor-pointer">Slett</button>
               </div>
             </div>
           );
         })()}
 
         <div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">Standard okter</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">Standard okter</div>
           {(templates.length > 0 ? templates : DEFAULT_TEMPLATES).map((t) => (
             <div key={t.id} draggable onDragStart={(e) => e.dataTransfer.setData("template", JSON.stringify(t))}
-              className="py-2 px-2.5 rounded-lg bg-[#F5F8F7] border border-black/4 cursor-grab mb-1 hover:bg-[#F5F8F7] transition-colors"
+              className="py-2 px-2.5 rounded-lg bg-grey-50 border border-black/4 cursor-grab mb-1 hover:bg-grey-50 transition-colors"
             >
               <div className="text-xs font-semibold">{t.title}</div>
               <div className="text-[10px] font-bold" style={{ color: focColor(t.focus) }}>{t.focus}·{t.dur}m</div>
@@ -1062,7 +1062,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
         </div>
 
         <div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">Pyramiden</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">Pyramiden</div>
           <div className="flex flex-col items-center gap-1">
             {[...PYRAMID].reverse().map((p) => (
               <div key={p.key} className="py-1 rounded-md text-center text-[10px] font-extrabold tracking-[0.1em]"
@@ -1098,7 +1098,7 @@ function MonthView({ baseDate, events, onSelect, setView, setBaseDate }: {
     <div className="flex-1 p-4 overflow-y-auto">
       <div className="grid grid-cols-7 bg-white rounded-[14px] overflow-hidden border border-black/4">
         {DN.map((d) => (
-          <div key={d} className="py-2 text-center text-[10px] font-semibold text-[#324D45] uppercase border-b border-black/4">{d}</div>
+          <div key={d} className="py-2 text-center text-[10px] font-semibold text-grey-400 uppercase border-b border-black/4">{d}</div>
         ))}
         {cells.map((cell, i) => {
           const d = dk(cell.date);
@@ -1106,7 +1106,7 @@ function MonthView({ baseDate, events, onSelect, setView, setBaseDate }: {
           const td = isTodayFn(cell.date);
           return (
             <div key={i} onClick={() => { setBaseDate(cell.date); setView("day"); }}
-              className="min-h-[80px] p-1.5 cursor-pointer hover:bg-[#F5F8F7]/50 transition-colors"
+              className="min-h-[80px] p-1.5 cursor-pointer hover:bg-grey-50/50 transition-colors"
               style={{
                 borderRight: (i + 1) % 7 ? "1px solid rgba(0,0,0,0.04)" : "none",
                 borderBottom: "1px solid rgba(0,0,0,0.04)",
@@ -1114,7 +1114,7 @@ function MonthView({ baseDate, events, onSelect, setView, setBaseDate }: {
                 opacity: cell.inM ? 1 : 0.35,
               }}
             >
-              <div className={`text-xs w-6 h-6 rounded-full inline-flex items-center justify-center tabular-nums ${td ? "font-bold bg-[#0A1F18] text-white" : "font-medium text-[#0A1F18]"}`}>{cell.date.getDate()}</div>
+              <div className={`text-xs w-6 h-6 rounded-full inline-flex items-center justify-center tabular-nums ${td ? "font-bold bg-black text-white" : "font-medium text-black"}`}>{cell.date.getDate()}</div>
               {de.slice(0, 2).map((ev) => (
                 <div key={ev.id} onClick={(e) => { e.stopPropagation(); onSelect(ev.id); }}
                   className="text-[9px] font-semibold px-1 py-0.5 rounded-sm mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis"
@@ -1139,27 +1139,27 @@ function AnalyseView() {
       <div className="grid grid-cols-4 gap-4 mb-6">
         {[{ l: "SNITT SCORE", v: "78.4" }, { l: "HANDICAP", v: "6.3" }, { l: "RUNDER", v: "14" }, { l: "SG TOTAL", v: "+1.8" }].map((k) => (
           <div key={k.l} className="bg-white rounded-xl shadow-card p-5">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">{k.l}</div>
-            <div className="text-4xl font-bold tabular-nums text-[#0A1F18] leading-none">{k.v}</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">{k.l}</div>
+            <div className="text-4xl font-bold tabular-nums text-black leading-none">{k.v}</div>
           </div>
         ))}
       </div>
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="bg-white rounded-xl shadow-card p-5">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-3">Strokes Gained</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-3">Strokes Gained</div>
           {([["Tee", 0.6], ["Approach", 0.8], ["Short Game", -0.2], ["Putting", 0.6]] as const).map(([l, v]) => {
             const p = Math.min(Math.abs(v) / 1.5 * 100, 100);
             return (
               <div key={l} className="mb-2.5">
                 <div className="flex justify-between mb-1">
                   <span className="text-xs font-semibold">{l}</span>
-                  <span className={`text-xs font-bold ${v >= 0 ? "text-[#1A4D36]" : "text-[#B84233]"}`}>{v >= 0 ? "+" : ""}{v.toFixed(1)}</span>
+                  <span className={`text-xs font-bold ${v >= 0 ? "text-success" : "text-error"}`}>{v >= 0 ? "+" : ""}{v.toFixed(1)}</span>
                 </div>
-                <div className="h-[7px] bg-[#F5F8F7] rounded-full relative overflow-hidden">
+                <div className="h-[7px] bg-grey-50 rounded-full relative overflow-hidden">
                   {v >= 0 ? (
-                    <div className="absolute left-1/2 h-full rounded-r-full bg-[#1A4D36]" style={{ width: `${p / 2}%` }} />
+                    <div className="absolute left-1/2 h-full rounded-r-full bg-success" style={{ width: `${p / 2}%` }} />
                   ) : (
-                    <div className="absolute right-1/2 h-full rounded-l-full bg-[#B84233]" style={{ width: `${p / 2}%` }} />
+                    <div className="absolute right-1/2 h-full rounded-l-full bg-error" style={{ width: `${p / 2}%` }} />
                   )}
                   <div className="absolute left-1/2 top-0 w-px h-full bg-portal-muted" />
                 </div>
@@ -1168,12 +1168,12 @@ function AnalyseView() {
           })}
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-3">Score-trend</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-3">Score-trend</div>
           <Spark data={[82, 80, 79, 81, 78, 77, 80, 78, 76, 79, 78, 77]} w={440} h={80} color="#0A1F18" />
         </div>
       </div>
       <div className="bg-white rounded-xl shadow-card p-5">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-3">HCP 12 mnd</div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-3">HCP 12 mnd</div>
         <Spark data={[8.1, 7.8, 7.5, 7.6, 7.2, 7.0, 6.9, 7.1, 6.8, 6.5, 6.4, 6.3]} w={1100} h={60} color="#1A4D36" />
       </div>
     </div>
@@ -1231,10 +1231,10 @@ export function TrainingPlannerV2({
   };
 
   return (
-    <div className="bg-[#F5F8F7] min-h-screen text-[#0A1F18] text-sm font-sans">
+    <div className="bg-grey-50 min-h-screen text-black text-sm font-sans">
       {/* Tab bar (integrated with portal design) */}
-      <div className="flex items-center justify-between px-6 py-2.5 bg-white border-b border-[#D5DFDB]">
-        <div className="flex gap-1 bg-[#F5F8F7] rounded-[10px] p-[3px]">
+      <div className="flex items-center justify-between px-6 py-2.5 bg-white border-b border-grey-200">
+        <div className="flex gap-1 bg-grey-50 rounded-[10px] p-[3px]">
           {([["planner", "Planlegger"], ["analyse", "Analyse"]] as const).map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)}
               className="py-1.5 px-4 rounded-[7px] text-[13px] font-semibold cursor-pointer border-none transition-all"
@@ -1248,11 +1248,11 @@ export function TrainingPlannerV2({
         </div>
         {!liveSession ? (
           <button onClick={() => startLive(null)}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-bold bg-[#D1F843] text-[#0A1F18] border-none cursor-pointer hover:opacity-85 transition-opacity"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-bold bg-accent-cta text-black border-none cursor-pointer hover:opacity-85 transition-opacity"
           >Start okt</button>
         ) : (
           <button onClick={() => setTab("live")}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-bold bg-[#B84233] text-white border-none cursor-pointer"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-bold bg-error text-white border-none cursor-pointer"
           >
             <span className="inline-block w-2 h-2 rounded-full bg-white animate-pulse" />
             Live

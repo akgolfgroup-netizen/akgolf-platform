@@ -185,7 +185,7 @@ export default function RonV2Preview() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#ECF0EF] relative overflow-x-hidden">
+    <div className="min-h-screen bg-grey-50 relative overflow-x-hidden">
       {/* ═══ ATMOSPHERIC BACKGROUND — aurora + grain ═══ */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <motion.div
@@ -222,14 +222,14 @@ export default function RonV2Preview() {
       </div>
 
       {/* ═══ SIDEBAR ═══ */}
-      <aside className="fixed left-0 top-0 bottom-0 w-[72px] bg-[#0A1F18] z-50 flex flex-col items-center py-6 gap-1">
+      <aside className="fixed left-0 top-0 bottom-0 w-[72px] bg-black z-50 flex flex-col items-center py-6 gap-1">
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 150, damping: 15, delay: 0.1 }}
-          className="w-11 h-11 rounded-2xl bg-[#D1F843] flex items-center justify-center mb-8 shadow-[0_8px_24px_rgba(209,248,67,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]"
+          className="w-11 h-11 rounded-2xl bg-accent-cta flex items-center justify-center mb-8 shadow-[0_8px_24px_rgba(209,248,67,0.35),inset_0_1px_0_rgba(255,255,255,0.4)]"
         >
-          <span className="text-[#0A1F18] font-black text-sm tracking-[-0.04em]">AK</span>
+          <span className="text-black font-black text-sm tracking-[-0.04em]">AK</span>
         </motion.div>
 
         <nav className="flex flex-col gap-1 w-full px-3 flex-1">
@@ -261,7 +261,7 @@ export default function RonV2Preview() {
                 />
               )}
               {item.active && (
-                <div className="absolute left-0 w-[3px] h-6 bg-[#D1F843] rounded-r-full" />
+                <div className="absolute left-0 w-[3px] h-6 bg-accent-cta rounded-r-full" />
               )}
               <item.icon className="w-[18px] h-[18px] relative z-10" strokeWidth={1.75} />
             </motion.button>
@@ -279,7 +279,7 @@ export default function RonV2Preview() {
               background: "conic-gradient(from 0deg, #D1F843, #2A7D5A, #0A1F18, #D1F843)",
             }}
           >
-            <div className="w-full h-full rounded-full bg-gradient-to-br from-[#005840] to-[#0A1F18] flex items-center justify-center text-white text-[10px] font-bold">
+            <div className="w-full h-full rounded-full bg-gradient-to-br from-[#005840] to-black flex items-center justify-center text-white text-[10px] font-bold">
               EH
             </div>
           </motion.div>
@@ -291,18 +291,18 @@ export default function RonV2Preview() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.1 }}
-        className="fixed top-0 left-[72px] right-0 h-14 z-40 backdrop-blur-2xl bg-[#ECF0EF]/60 border-b border-white/40"
+        className="fixed top-0 left-[72px] right-0 h-14 z-40 backdrop-blur-2xl bg-grey-50/60 border-b border-white/40"
       >
         <div className="h-full flex items-center justify-between px-8">
           <div className="flex items-center gap-5">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[14px] h-[14px] text-[#A5B2AD]" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[14px] h-[14px] text-grey-300" />
               <input
                 type="text"
                 placeholder="Sok etter runder, drills, notater..."
-                className="bg-white/70 backdrop-blur-xl border border-white/80 rounded-full h-8 pl-9 pr-4 text-[11px] w-80 focus:outline-none focus:ring-2 focus:ring-[#005840]/20 placeholder:text-[#A5B2AD] text-[#324D45]"
+                className="bg-white/70 backdrop-blur-xl border border-white/80 rounded-full h-8 pl-9 pr-4 text-[11px] w-80 focus:outline-none focus:ring-2 focus:ring-[#005840]/20 placeholder:text-grey-300 text-grey-400"
               />
-              <kbd className="absolute right-2 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded text-[8px] font-semibold bg-[#324D45]/5 text-[#A5B2AD] border border-[#A5B2AD]/20">
+              <kbd className="absolute right-2 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded text-[8px] font-semibold bg-grey-400/5 text-grey-300 border border-grey-300/20">
                 ⌘K
               </kbd>
             </div>
@@ -326,7 +326,7 @@ export default function RonV2Preview() {
                   {activeTab === tab.id && (
                     <motion.div
                       layoutId="active-tab"
-                      className="absolute inset-0 bg-[#0A1F18] rounded-full shadow-md"
+                      className="absolute inset-0 bg-black rounded-full shadow-md"
                       transition={{ type: "spring", damping: 25, stiffness: 300 }}
                     />
                   )}
@@ -339,13 +339,13 @@ export default function RonV2Preview() {
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1.5 px-3 h-8 rounded-full bg-white/60 backdrop-blur-xl border border-white/80">
               <div className="w-1.5 h-1.5 rounded-full bg-[#2A7D5A] shadow-[0_0_6px_#2A7D5A]" />
-              <span className="text-[10px] font-semibold text-[#324D45]">Live</span>
-              <span className="text-[10px] text-[#A5B2AD] tabular-nums">{now}</span>
+              <span className="text-[10px] font-semibold text-grey-400">Live</span>
+              <span className="text-[10px] text-grey-300 tabular-nums">{now}</span>
             </div>
 
             <button className="relative w-8 h-8 rounded-full bg-white/60 backdrop-blur-xl border border-white/80 flex items-center justify-center hover:bg-white transition-colors">
-              <Bell className="w-[14px] h-[14px] text-[#324D45]" strokeWidth={1.8} />
-              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#D1F843] rounded-full border border-white" />
+              <Bell className="w-[14px] h-[14px] text-grey-400" strokeWidth={1.8} />
+              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-accent-cta rounded-full border border-white" />
             </button>
 
             <div
@@ -354,7 +354,7 @@ export default function RonV2Preview() {
                 background: "conic-gradient(from 0deg, #D1F843, #2A7D5A, #0A1F18, #D1F843)",
               }}
             >
-              <div className="w-full h-full rounded-full bg-gradient-to-br from-[#005840] to-[#0A1F18] flex items-center justify-center text-white text-[9px] font-bold">
+              <div className="w-full h-full rounded-full bg-gradient-to-br from-[#005840] to-black flex items-center justify-center text-white text-[9px] font-bold">
                 EH
               </div>
             </div>
@@ -377,19 +377,19 @@ export default function RonV2Preview() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="text-[10px] font-bold tracking-[0.22em] text-[#A5B2AD] uppercase mb-4 flex items-center gap-2"
+                className="text-[10px] font-bold tracking-[0.22em] text-grey-300 uppercase mb-4 flex items-center gap-2"
               >
-                <span className="w-6 h-px bg-[#A5B2AD]" />
+                <span className="w-6 h-px bg-grey-300" />
                 Fredag 11. april 2026
               </motion.p>
-              <h1 className="text-[88px] leading-[0.85] font-[300] text-[#0A1F18] tracking-[-0.055em]">
+              <h1 className="text-[88px] leading-[0.85] font-[300] text-black tracking-[-0.055em]">
                 Hei,{" "}
                 <span className="font-serif italic text-[#005840] font-normal">Erik</span>
-                <span className="text-[#D1F843]">.</span>
+                <span className="text-accent-cta">.</span>
               </h1>
-              <p className="text-[14px] text-[#5A6E66] mt-5 max-w-lg leading-relaxed">
+              <p className="text-[14px] text-grey-400 mt-5 max-w-lg leading-relaxed">
                 Neste coaching om{" "}
-                <span className="font-semibold text-[#0A1F18] tabular-nums">
+                <span className="font-semibold text-black tabular-nums">
                   {countdown.days}d {countdown.hours}t {countdown.minutes}m
                 </span>
                 . Kort spill er fortsatt ditt storste potensial.
@@ -399,17 +399,17 @@ export default function RonV2Preview() {
               <motion.button
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
-                className="h-11 px-6 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 text-[#324D45] text-[11px] font-semibold hover:bg-white transition-colors shadow-sm"
+                className="h-11 px-6 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 text-grey-400 text-[11px] font-semibold hover:bg-white transition-colors shadow-sm"
               >
                 Logg runde
               </motion.button>
               <motion.button
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
-                className="relative h-11 px-6 rounded-full bg-[#D1F843] text-[#0A1F18] text-[11px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group"
+                className="relative h-11 px-6 rounded-full bg-accent-cta text-black text-[11px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(209,248,67,0.4)] hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] transition-shadow overflow-hidden group"
               >
                 <Shimmer />
-                <Play className="w-3 h-3 fill-[#0A1F18] relative z-10" />
+                <Play className="w-3 h-3 fill-black relative z-10" />
                 <span className="relative z-10">Start okt</span>
               </motion.button>
             </div>
@@ -426,7 +426,7 @@ export default function RonV2Preview() {
               className="col-span-4 row-span-2 relative rounded-[32px] overflow-hidden min-h-[380px] shadow-[0_20px_60px_-20px_rgba(10,31,24,0.25)] group"
             >
               {/* Background — gradient mesh */}
-              <div className="absolute inset-0 bg-[#0A1F18]" />
+              <div className="absolute inset-0 bg-black" />
               <div
                 className="absolute inset-0"
                 style={{
@@ -449,10 +449,10 @@ export default function RonV2Preview() {
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#D1F843]/[0.12] border border-[#D1F843]/25 backdrop-blur-xl"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-cta/[0.12] border border-accent-cta/25 backdrop-blur-xl"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#D1F843]" />
-                    <span className="text-[9px] font-bold tracking-[0.18em] text-[#D1F843] uppercase">
+                    <div className="w-1.5 h-1.5 rounded-full bg-accent-cta" />
+                    <span className="text-[9px] font-bold tracking-[0.18em] text-accent-cta uppercase">
                       Performance Pro
                     </span>
                   </motion.div>
@@ -479,10 +479,10 @@ export default function RonV2Preview() {
                           "conic-gradient(from 0deg, #D1F843 0%, #2A7D5A 25%, transparent 50%, #D1F843 100%)",
                       }}
                     />
-                    <div className="absolute inset-[-2px] rounded-full bg-[#0A1F18]" />
+                    <div className="absolute inset-[-2px] rounded-full bg-black" />
 
                     {/* Avatar */}
-                    <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-[#005840] to-[#003025] flex items-center justify-center text-[#D1F843] text-[36px] font-[300] tracking-[-0.04em] overflow-hidden shadow-[inset_0_2px_8px_rgba(0,0,0,0.4)]">
+                    <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-[#005840] to-[#003025] flex items-center justify-center text-accent-cta text-[36px] font-[300] tracking-[-0.04em] overflow-hidden shadow-[inset_0_2px_8px_rgba(0,0,0,0.4)]">
                       <span className="relative z-10">EH</span>
                       {/* Inner gloss */}
                       <div
@@ -495,7 +495,7 @@ export default function RonV2Preview() {
                     </div>
 
                     {/* Online dot */}
-                    <div className="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-[#2A7D5A] border-2 border-[#0A1F18] shadow-[0_0_8px_#2A7D5A]">
+                    <div className="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-[#2A7D5A] border-2 border-black shadow-[0_0_8px_#2A7D5A]">
                       <motion.div
                         animate={{ scale: [1, 2, 1], opacity: [0.6, 0, 0.6] }}
                         transition={{ duration: 2, repeat: Infinity }}
@@ -509,7 +509,7 @@ export default function RonV2Preview() {
                 <div className="text-center mb-5">
                   <h3 className="text-[28px] font-[300] text-white tracking-[-0.03em] leading-none">
                     Erik{" "}
-                    <span className="font-serif italic text-[#D1F843]">Hansen</span>
+                    <span className="font-serif italic text-accent-cta">Hansen</span>
                   </h3>
                   <p className="text-[10px] text-white/40 mt-2 tracking-[0.08em]">
                     Medlem siden januar 2025
@@ -542,7 +542,7 @@ export default function RonV2Preview() {
                   <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/[0.06] backdrop-blur-xl">
                     <AnimatedNumber
                       value={78}
-                      className="text-[24px] font-[300] text-[#D1F843] tabular-nums tracking-[-0.03em] block"
+                      className="text-[24px] font-[300] text-accent-cta tabular-nums tracking-[-0.03em] block"
                     />
                     <p className="text-[8px] text-white/35 uppercase tracking-[0.15em] mt-0.5">
                       Beste score
@@ -567,12 +567,12 @@ export default function RonV2Preview() {
                 <div className="mt-auto pt-4 border-t border-white/[0.08]">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-3 h-3 text-[#D1F843]" strokeWidth={2} />
+                      <MapPin className="w-3 h-3 text-accent-cta" strokeWidth={2} />
                       <span className="text-[10px] text-white/60 font-medium">
                         Gamle Fredrikstad GK
                       </span>
                     </div>
-                    <button className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#D1F843] hover:text-[#D1F843]/80 transition-colors inline-flex items-center gap-1">
+                    <button className="text-[9px] font-bold tracking-[0.1em] uppercase text-accent-cta hover:text-accent-cta/80 transition-colors inline-flex items-center gap-1">
                       Se profil
                       <ArrowUpRight className="w-2.5 h-2.5" strokeWidth={2.5} />
                     </button>
@@ -600,8 +600,8 @@ export default function RonV2Preview() {
               />
 
               {/* Dark gradient overlay — preserve readability */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1F18] via-[#0A1F18]/85 to-[#0A1F18]/40" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A1F18] via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-black via-black/85 to-black/40" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
 
               {/* Lime spotlight mix */}
               <div
@@ -655,14 +655,14 @@ export default function RonV2Preview() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-[#D1F843]/[0.12] border border-[#D1F843]/25 backdrop-blur-xl"
+                    className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-accent-cta/[0.12] border border-accent-cta/25 backdrop-blur-xl"
                   >
                     <motion.div
                       animate={{ scale: [1, 1.3, 1], opacity: [1, 0.6, 1] }}
                       transition={{ duration: 2, repeat: Infinity }}
-                      className="w-1.5 h-1.5 rounded-full bg-[#D1F843] shadow-[0_0_8px_#D1F843]"
+                      className="w-1.5 h-1.5 rounded-full bg-accent-cta shadow-[0_0_8px_accent-cta]"
                     />
-                    <span className="text-[9px] font-bold tracking-[0.18em] text-[#D1F843] uppercase">
+                    <span className="text-[9px] font-bold tracking-[0.18em] text-accent-cta uppercase">
                       Neste coaching-time
                     </span>
                   </motion.div>
@@ -733,7 +733,7 @@ export default function RonV2Preview() {
                             "conic-gradient(from 0deg, #D1F843, #2A7D5A, #0A1F18, #D1F843)",
                         }}
                       >
-                        <div className="w-full h-full rounded-full bg-gradient-to-br from-[#005840] to-[#0A1F18] flex items-center justify-center text-[#D1F843] text-[10px] font-bold">
+                        <div className="w-full h-full rounded-full bg-gradient-to-br from-[#005840] to-black flex items-center justify-center text-accent-cta text-[10px] font-bold">
                           AK
                         </div>
                       </div>
@@ -750,9 +750,9 @@ export default function RonV2Preview() {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="relative w-11 h-11 rounded-full bg-[#D1F843] flex items-center justify-center group-hover:rotate-45 transition-transform duration-500 shadow-[0_8px_24px_rgba(209,248,67,0.4)]"
+                      className="relative w-11 h-11 rounded-full bg-accent-cta flex items-center justify-center group-hover:rotate-45 transition-transform duration-500 shadow-[0_8px_24px_rgba(209,248,67,0.4)]"
                     >
-                      <ArrowUpRight className="w-4 h-4 text-[#0A1F18]" strokeWidth={2.5} />
+                      <ArrowUpRight className="w-4 h-4 text-black" strokeWidth={2.5} />
                     </motion.button>
                   </div>
                 </div>
@@ -770,7 +770,7 @@ export default function RonV2Preview() {
               <TiltCard className="h-full group relative rounded-[28px] bg-white/70 backdrop-blur-2xl border border-white/90 p-7 transition-colors hover:bg-white cursor-pointer shadow-[0_12px_40px_-12px_rgba(10,31,24,0.15)]">
                 <div style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}>
                   <div className="flex items-start justify-between mb-5">
-                    <span className="text-[9px] font-bold tracking-[0.18em] text-[#A5B2AD] uppercase">
+                    <span className="text-[9px] font-bold tracking-[0.18em] text-grey-300 uppercase">
                       Handicap
                     </span>
                     <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#E8F5EF] text-[#2A7D5A]">
@@ -783,9 +783,9 @@ export default function RonV2Preview() {
                     <AnimatedNumber
                       value={14.2}
                       decimals={1}
-                      className="text-[72px] leading-none font-[200] text-[#0A1F18] tracking-[-0.05em] tabular-nums"
+                      className="text-[72px] leading-none font-[200] text-black tracking-[-0.05em] tabular-nums"
                     />
-                    <span className="text-[12px] text-[#A5B2AD] font-semibold tracking-wider">
+                    <span className="text-[12px] text-grey-300 font-semibold tracking-wider">
                       HCP
                     </span>
                   </div>
@@ -816,7 +816,7 @@ export default function RonV2Preview() {
                       />
                     ))}
                   </div>
-                  <p className="text-[9px] text-[#A5B2AD] mt-2 tracking-wide">
+                  <p className="text-[9px] text-grey-300 mt-2 tracking-wide">
                     Fra 18.5 i april 2025
                   </p>
                 </div>
@@ -831,7 +831,7 @@ export default function RonV2Preview() {
               variants={revealVariants}
               className="col-span-3"
             >
-              <TiltCard className="h-full group relative rounded-[28px] bg-[#0A1F18] text-white p-7 overflow-hidden cursor-pointer shadow-[0_12px_40px_-12px_rgba(10,31,24,0.3)]">
+              <TiltCard className="h-full group relative rounded-[28px] bg-black text-white p-7 overflow-hidden cursor-pointer shadow-[0_12px_40px_-12px_rgba(10,31,24,0.3)]">
                 <div
                   className="absolute top-[-30px] right-[-30px] w-40 h-40 rounded-full opacity-30"
                   style={{
@@ -848,7 +848,7 @@ export default function RonV2Preview() {
                     }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <Flame className="w-7 h-7 text-[#D1F843] mb-4" strokeWidth={1.5} />
+                    <Flame className="w-7 h-7 text-accent-cta mb-4" strokeWidth={1.5} />
                   </motion.div>
                   <AnimatedNumber
                     value={21}
@@ -871,15 +871,15 @@ export default function RonV2Preview() {
             >
               <div className="flex items-center justify-between mb-5">
                 <div>
-                  <p className="text-[9px] font-bold tracking-[0.18em] text-[#A5B2AD] uppercase mb-1">
+                  <p className="text-[9px] font-bold tracking-[0.18em] text-grey-300 uppercase mb-1">
                     Treningsplan
                   </p>
-                  <h3 className="text-[20px] font-[300] text-[#0A1F18] tracking-[-0.02em]">
+                  <h3 className="text-[20px] font-[300] text-black tracking-[-0.02em]">
                     Uke 16 —{" "}
                     <span className="font-semibold text-[#005840]">3 av 5 fullfort</span>
                   </h3>
                 </div>
-                <button className="text-[10px] font-semibold text-[#5A6E66] hover:text-[#0A1F18] flex items-center gap-1">
+                <button className="text-[10px] font-semibold text-grey-400 hover:text-black flex items-center gap-1">
                   Se alle <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -909,7 +909,7 @@ export default function RonV2Preview() {
                         <div className="w-1 h-1 rounded-full bg-[#2A7D5A] mt-0.5" />
                       )}
                       {today && (
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#D1F843]" />
+                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-accent-cta" />
                       )}
                     </motion.button>
                   );
@@ -917,26 +917,26 @@ export default function RonV2Preview() {
               </div>
 
               {/* Today's session */}
-              <div className="relative p-5 rounded-2xl bg-gradient-to-br from-[#D1F843]/25 via-[#D1F843]/10 to-transparent border border-[#D1F843]/40 overflow-hidden">
+              <div className="relative p-5 rounded-2xl bg-gradient-to-br from-accent-cta/25 via-accent-cta/10 to-transparent border border-accent-cta/40 overflow-hidden">
                 <Shimmer />
                 <div className="flex items-center justify-between relative">
                   <div>
                     <p className="text-[9px] font-bold text-[#005840] tracking-[0.18em] uppercase">
                       I dag
                     </p>
-                    <h4 className="text-[16px] font-semibold text-[#0A1F18] mt-1 tracking-tight">
+                    <h4 className="text-[16px] font-semibold text-black mt-1 tracking-tight">
                       Chip shots 20-40m
                     </h4>
-                    <p className="text-[10px] text-[#5A6E66] mt-1">
+                    <p className="text-[10px] text-grey-400 mt-1">
                       20 min — AI-anbefalt fokusomrade
                     </p>
                   </div>
                   <motion.button
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-12 h-12 rounded-full bg-[#0A1F18] text-[#D1F843] flex items-center justify-center shadow-[0_8px_20px_-6px_rgba(10,31,24,0.5)]"
+                    className="w-12 h-12 rounded-full bg-black text-accent-cta flex items-center justify-center shadow-[0_8px_20px_-6px_rgba(10,31,24,0.5)]"
                   >
-                    <Play className="w-4 h-4 fill-[#D1F843]" />
+                    <Play className="w-4 h-4 fill-accent-cta" />
                   </motion.button>
                 </div>
               </div>
@@ -956,14 +956,14 @@ export default function RonV2Preview() {
                     <motion.div
                       animate={{ scale: [1, 1.3, 1] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
-                      className="w-1.5 h-1.5 rounded-full bg-[#D1F843] shadow-[0_0_8px_#D1F843]"
+                      className="w-1.5 h-1.5 rounded-full bg-accent-cta shadow-[0_0_8px_accent-cta]"
                     />
                   </div>
-                  <span className="text-[9px] font-bold tracking-[0.18em] text-[#A5B2AD] uppercase">
+                  <span className="text-[9px] font-bold tracking-[0.18em] text-grey-300 uppercase">
                     TrackMan
                   </span>
                 </div>
-                <span className="text-[9px] text-[#A5B2AD] tabular-nums">
+                <span className="text-[9px] text-grey-300 tabular-nums">
                   Driver — 8. april
                 </span>
               </div>
@@ -991,7 +991,7 @@ export default function RonV2Preview() {
                 })}
               </div>
 
-              <div className="grid grid-cols-3 gap-3 pt-4 border-t border-[#A5B2AD]/15">
+              <div className="grid grid-cols-3 gap-3 pt-4 border-t border-grey-300/15">
                 {[
                   { v: 142, u: "mph", l: "Ball speed" },
                   { v: 245, u: "m", l: "Carry" },
@@ -1002,11 +1002,11 @@ export default function RonV2Preview() {
                       <AnimatedNumber
                         value={s.v}
                         decimals={s.d ?? 0}
-                        className="text-[22px] font-[300] text-[#0A1F18] tabular-nums tracking-tight"
+                        className="text-[22px] font-[300] text-black tabular-nums tracking-tight"
                       />
-                      <span className="text-[9px] font-medium text-[#A5B2AD]">{s.u}</span>
+                      <span className="text-[9px] font-medium text-grey-300">{s.u}</span>
                     </div>
-                    <div className="text-[9px] text-[#A5B2AD] uppercase tracking-[0.12em] mt-0.5">
+                    <div className="text-[9px] text-grey-300 uppercase tracking-[0.12em] mt-0.5">
                       {s.l}
                     </div>
                   </div>
@@ -1020,7 +1020,7 @@ export default function RonV2Preview() {
               initial="hidden"
               animate="visible"
               variants={revealVariants}
-              className="col-span-3 group relative rounded-[28px] overflow-hidden p-7 bg-gradient-to-br from-[#F5EEFF] via-white to-white border border-[#AF52DE]/20 shadow-[0_12px_40px_-12px_rgba(175,82,222,0.2)]"
+              className="col-span-3 group relative rounded-[28px] overflow-hidden p-7 bg-gradient-to-br from-[#F5EEFF] via-white to-white border border-purple-500/20 shadow-[0_12px_40px_-12px_rgba(175,82,222,0.2)]"
             >
               <div
                 className="absolute -top-16 -right-16 w-40 h-40 rounded-full opacity-40"
@@ -1031,43 +1031,43 @@ export default function RonV2Preview() {
                 }}
               />
               <div className="relative">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#AF52DE]/15 border border-[#AF52DE]/25 mb-4">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-500/15 border border-purple-500/25 mb-4">
                   <motion.div
                     animate={{ rotate: [0, 15, -15, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
-                    <Sparkles className="w-3 h-3 text-[#AF52DE]" strokeWidth={2.5} />
+                    <Sparkles className="w-3 h-3 text-purple-500" strokeWidth={2.5} />
                   </motion.div>
-                  <span className="text-[9px] font-bold text-[#AF52DE] uppercase tracking-[0.15em]">
+                  <span className="text-[9px] font-bold text-purple-500 uppercase tracking-[0.15em]">
                     AI-innsikt
                   </span>
                 </div>
-                <h3 className="text-[14px] font-semibold text-[#0A1F18] leading-snug mb-2 tracking-tight">
+                <h3 className="text-[14px] font-semibold text-black leading-snug mb-2 tracking-tight">
                   Kort spill er ditt storste potensial
                 </h3>
-                <p className="text-[11px] text-[#5A6E66] leading-relaxed mb-5">
+                <p className="text-[11px] text-grey-400 leading-relaxed mb-5">
                   Chip shots 20-40m er 2.1 slag under snitt.
                 </p>
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-[28px] font-[200] text-[#AF52DE] tracking-[-0.02em] tabular-nums">
+                      <span className="text-[28px] font-[200] text-purple-500 tracking-[-0.02em] tabular-nums">
                         -
                       </span>
                       <AnimatedNumber
                         value={2.1}
                         decimals={1}
-                        className="text-[28px] font-[200] text-[#AF52DE] tracking-[-0.02em] tabular-nums"
+                        className="text-[28px] font-[200] text-purple-500 tracking-[-0.02em] tabular-nums"
                       />
                     </div>
-                    <div className="text-[9px] text-[#A5B2AD] uppercase tracking-[0.15em] mt-0.5">
+                    <div className="text-[9px] text-grey-300 uppercase tracking-[0.15em] mt-0.5">
                       SG kort spill
                     </div>
                   </div>
                   <motion.button
                     whileHover={{ scale: 1.08, rotate: 45 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-10 h-10 rounded-full bg-[#AF52DE] text-white flex items-center justify-center shadow-[0_8px_20px_-6px_rgba(175,82,222,0.5)]"
+                    className="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-[0_8px_20px_-6px_rgba(175,82,222,0.5)]"
                   >
                     <ArrowUpRight className="w-4 h-4" strokeWidth={2.5} />
                   </motion.button>
@@ -1095,7 +1095,7 @@ export default function RonV2Preview() {
                   tiltStrength={4}
                 >
                   <div style={{ transform: "translateZ(20px)", transformStyle: "preserve-3d" }}>
-                    <p className="text-[9px] font-bold tracking-[0.18em] text-[#A5B2AD] uppercase mb-3">
+                    <p className="text-[9px] font-bold tracking-[0.18em] text-grey-300 uppercase mb-3">
                       {s.label}
                     </p>
                     <div className="flex items-end justify-between">
@@ -1104,7 +1104,7 @@ export default function RonV2Preview() {
                         decimals={s.decimals}
                         prefix={s.prefix}
                         suffix={s.suffix}
-                        className="text-[36px] font-[200] text-[#0A1F18] leading-none tracking-[-0.035em] tabular-nums"
+                        className="text-[36px] font-[200] text-black leading-none tracking-[-0.035em] tabular-nums"
                       />
                       <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#E8F5EF] mb-1">
                         {s.up ? (
@@ -1128,12 +1128,12 @@ export default function RonV2Preview() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
-            className="mt-12 flex items-center justify-between text-[9px] tracking-[0.15em] uppercase text-[#A5B2AD]"
+            className="mt-12 flex items-center justify-between text-[9px] tracking-[0.15em] uppercase text-grey-300"
           >
             <span>AK Golf Academy — Spillerportal v2.0</span>
             <div className="flex items-center gap-3">
               <span>Brand Guide V2.0</span>
-              <span className="w-8 h-px bg-[#A5B2AD]" />
+              <span className="w-8 h-px bg-grey-300" />
               <span>#005840 / #D1F843</span>
             </div>
           </motion.div>

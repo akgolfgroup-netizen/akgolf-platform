@@ -106,17 +106,17 @@ export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanV
         className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
       >
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-2">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-2">
             Ukevisning
           </p>
-          <h1 className="text-3xl font-bold tracking-tight text-[#0A1F18]">Treningsplan</h1>
-          <p className="text-sm text-[#324D45] mt-1">{weekRange}</p>
+          <h1 className="text-3xl font-bold tracking-tight text-black">Treningsplan</h1>
+          <p className="text-sm text-grey-400 mt-1">{weekRange}</p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 p-1 rounded-full bg-white border border-[#D5DFDB]">
+          <div className="flex items-center gap-1 p-1 rounded-full bg-white border border-grey-200">
             <Link
               href={`/portal/treningsplan?view=viewer&week=${weekOffset - 1}`}
-              className="w-9 h-9 flex items-center justify-center rounded-full text-[#7A8C85] hover:text-[#0A1F18] hover:bg-[#F5F8F7] transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
               aria-label="Forrige uke"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -124,14 +124,14 @@ export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanV
             {weekOffset !== 0 && (
               <Link
                 href="/portal/treningsplan?view=viewer"
-                className="h-9 px-3 rounded-full text-xs font-semibold text-[#0A1F18] hover:bg-[#F5F8F7] transition-colors inline-flex items-center"
+                className="h-9 px-3 rounded-full text-xs font-semibold text-black hover:bg-grey-50 transition-colors inline-flex items-center"
               >
                 I dag
               </Link>
             )}
             <Link
               href={`/portal/treningsplan?view=viewer&week=${weekOffset + 1}`}
-              className="w-9 h-9 flex items-center justify-center rounded-full text-[#7A8C85] hover:text-[#0A1F18] hover:bg-[#F5F8F7] transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
               aria-label="Neste uke"
             >
               <ChevronRight className="w-4 h-4" />
@@ -152,23 +152,23 @@ export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanV
         <PremiumCard padding="md" radius="large">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-1">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-1">
+              <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-1">
                 Fremgang denne uken
               </p>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-[#0A1F18] tabular-nums">{completed}</span>
-                <span className="text-lg font-semibold text-[#7A8C85] tabular-nums">/ {planned}</span>
+                <span className="text-3xl font-bold text-black tabular-nums">{completed}</span>
+                <span className="text-lg font-semibold text-grey-400 tabular-nums">/ {planned}</span>
               </div>
             </div>
             <div className="flex-1">
-              <div className="h-2 bg-[#D5DFDB]/50 rounded-full overflow-hidden">
+              <div className="h-2 bg-grey-200/50 rounded-full overflow-hidden">
                 <div
-                  className="h-full rounded-full bg-[#0A1F18] transition-all duration-700"
+                  className="h-full rounded-full bg-black transition-all duration-700"
                   style={{ width: `${percentage}%` }}
                 />
               </div>
               <div className="flex items-center justify-between mt-2">
-                <span className="text-xs text-[#7A8C85]">
+                <span className="text-xs text-grey-400">
                   {planned === 0
                     ? "Ingen økter planlagt"
                     : completed === planned
@@ -176,7 +176,7 @@ export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanV
                     : `${planned - completed} økter gjenstår`}
                 </span>
                 {completed > 0 && (
-                  <span className="flex items-center gap-1 text-xs font-medium text-[#1A4D36]">
+                  <span className="flex items-center gap-1 text-xs font-medium text-success">
                     <TrendingUp className="w-3.5 h-3.5" />
                     {percentage}%
                   </span>
@@ -201,15 +201,15 @@ export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanV
                 <div
                   className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
                     day.isToday
-                      ? "bg-[#0A1F18] text-white"
-                      : "bg-[#F5F8F7] text-[#0A1F18]"
+                      ? "bg-black text-white"
+                      : "bg-grey-50 text-black"
                   }`}
                 >
                   {format(day.date, "d", { locale: nb })}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-[#0A1F18]">{day.dayName}</p>
-                  <p className="text-xs text-[#7A8C85]">
+                  <p className="text-sm font-semibold text-black">{day.dayName}</p>
+                  <p className="text-xs text-grey-400">
                     {day.events.length > 0
                       ? `${day.events.length} økt${day.events.length > 1 ? "er" : ""}`
                       : "Ingen økter"}
@@ -224,7 +224,7 @@ export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanV
                     return (
                       <div
                         key={event.id}
-                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 rounded-xl bg-[#F5F8F7]/60"
+                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 rounded-xl bg-grey-50/60"
                       >
                         <div className="flex items-start gap-3">
                           <div
@@ -235,7 +235,7 @@ export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanV
                           </div>
                           <div>
                             <div className="flex items-center gap-2">
-                              <p className="text-sm font-semibold text-[#0A1F18]">
+                              <p className="text-sm font-semibold text-black">
                                 {event.title}
                               </p>
                               <span
@@ -245,20 +245,20 @@ export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanV
                                 {cfg.label}
                               </span>
                             </div>
-                            <div className="flex items-center gap-3 mt-1 text-xs text-[#7A8C85]">
+                            <div className="flex items-center gap-3 mt-1 text-xs text-grey-400">
                               <span className="flex items-center gap-1">
                                 <Clock className="w-3 h-3" />
                                 {String(event.startH).padStart(2, "0")}:
                                 {String(event.startM).padStart(2, "0")} — {event.dur} min
                               </span>
                               {event.done && (
-                                <span className="text-[#1A4D36] font-medium">Fullført</span>
+                                <span className="text-success font-medium">Fullført</span>
                               )}
                             </div>
                             {event.exercises.length > 0 && (
                               <ul className="mt-2 space-y-1">
                                 {event.exercises.map((ex) => (
-                                  <li key={ex.id} className="text-xs text-[#324D45]">
+                                  <li key={ex.id} className="text-xs text-grey-400">
                                     • {ex.name}
                                   </li>
                                 ))}
@@ -292,12 +292,12 @@ export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanV
       >
         <PremiumCard variant="accent" padding="md" radius="large">
           <div className="flex items-start gap-3">
-            <Lightbulb className="w-5 h-5 text-[#0A1F18] mt-0.5 flex-shrink-0" />
+            <Lightbulb className="w-5 h-5 text-black mt-0.5 flex-shrink-0" />
             <div>
-              <p className="text-sm font-semibold text-[#0A1F18]">Tips fra AI Coach</p>
-              <p className="text-sm text-[#324D45] mt-0.5">
+              <p className="text-sm font-semibold text-black">Tips fra AI Coach</p>
+              <p className="text-sm text-grey-400 mt-0.5">
                 For SPILL-økter: bruk{" "}
-                <Link href="/portal/strategi" className="underline font-medium text-[#0A1F18]">
+                <Link href="/portal/strategi" className="underline font-medium text-black">
                   DECADE-strategien
                 </Link>{" "}
                 før runden for å forberede hull-for-hull plan.

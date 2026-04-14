@@ -102,13 +102,13 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
         className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
         <div>
-          <h1 className="text-2xl font-bold text-[#0A1F18]">AI Coach</h1>
-          <p className="text-[#7A8C85] mt-1">Din personlige golf-assistent</p>
+          <h1 className="text-2xl font-bold text-black">AI Coach</h1>
+          <p className="text-grey-400 mt-1">Din personlige golf-assistent</p>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href="/portal/ai-coach/chat"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0A1F18] text-white text-sm font-medium hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-sm font-medium hover:opacity-90 transition-opacity"
           >
             <Sparkles className="w-4 h-4" />
             Chat med AI Coach
@@ -125,10 +125,10 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
         >
           <PremiumCard variant="accent" padding="md" radius="large">
             <div className="flex items-start gap-3">
-              <Sparkles className="w-5 h-5 text-[#0A1F18] mt-0.5 flex-shrink-0" />
+              <Sparkles className="w-5 h-5 text-black mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-sm font-semibold text-[#0A1F18]">Dagens innsikt</p>
-                <p className="text-sm text-[#324D45] mt-0.5">{quickInsight}</p>
+                <p className="text-sm font-semibold text-black">Dagens innsikt</p>
+                <p className="text-sm text-grey-400 mt-0.5">{quickInsight}</p>
               </div>
             </div>
           </PremiumCard>
@@ -142,7 +142,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           value={KPI_DATA.driverSpeed.value}
           unit={KPI_DATA.driverSpeed.unit}
           trend={KPI_DATA.driverSpeed.trend}
-          icon={<Activity className="w-5 h-5 text-[#0A1F18]" />}
+          icon={<Activity className="w-5 h-5 text-black" />}
           delay={0.1}
         />
         <KpiCard
@@ -150,7 +150,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           value={KPI_DATA.consistency.value}
           unit={KPI_DATA.consistency.unit}
           trend={KPI_DATA.consistency.trend}
-          icon={<Target className="w-5 h-5 text-[#007AFF]" />}
+          icon={<Target className="w-5 h-5 text-blue-500" />}
           delay={0.15}
         />
         <KpiCard
@@ -158,7 +158,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           value={KPI_DATA.mentalTrend.value}
           unit={KPI_DATA.mentalTrend.unit}
           trend={KPI_DATA.mentalTrend.trend}
-          icon={<Brain className="w-5 h-5 text-[#AF52DE]" />}
+          icon={<Brain className="w-5 h-5 text-purple-500" />}
           delay={0.2}
         />
         <KpiCard
@@ -166,7 +166,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           value={KPI_DATA.decadeScore.value}
           unit={KPI_DATA.decadeScore.unit}
           trend={KPI_DATA.decadeScore.trend}
-          icon={<TrendingUp className="w-5 h-5 text-[#1A4D36]" />}
+          icon={<TrendingUp className="w-5 h-5 text-success" />}
           delay={0.25}
         />
       </div>
@@ -177,7 +177,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3, ease: EASE_APPLE }}
       >
-        <h3 className="text-sm font-semibold text-[#0A1F18] mb-4">Hurtighandlinger</h3>
+        <h3 className="text-sm font-semibold text-black mb-4">Hurtighandlinger</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <QuickActionButton
             href="/portal/trackman"
@@ -251,23 +251,23 @@ function KpiCard({
     <PremiumCard delay={delay} padding="md" radius="large" hover="lift">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
             {label}
           </p>
-          <p className="text-3xl font-bold text-[#0A1F18] mt-1 tabular-nums">
+          <p className="text-3xl font-bold text-black mt-1 tabular-nums">
             {typeof value === "number" && value % 1 !== 0
               ? value.toFixed(1)
               : value}
           </p>
           <div className="flex items-center gap-1 mt-2">
             {isPositive ? (
-              <TrendingUp className="w-3.5 h-3.5 text-[#1A4D36]" />
+              <TrendingUp className="w-3.5 h-3.5 text-success" />
             ) : (
-              <TrendingDown className="w-3.5 h-3.5 text-[#B84233]" />
+              <TrendingDown className="w-3.5 h-3.5 text-error" />
             )}
             <span
               className={`text-xs font-medium ${
-                isPositive ? "text-[#1A4D36]" : "text-[#B84233]"
+                isPositive ? "text-success" : "text-error"
               }`}
             >
               {isPositive ? "+" : ""}
@@ -275,7 +275,7 @@ function KpiCard({
             </span>
           </div>
         </div>
-        <div className="w-10 h-10 rounded-xl bg-[#F5F8F7] flex items-center justify-center">
+        <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
           {icon}
         </div>
       </div>
@@ -297,14 +297,14 @@ function QuickActionButton({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 rounded-xl bg-white border border-[#D5DFDB] p-4 text-sm font-medium text-[#0A1F18] hover:border-[#A5B2AD] hover:shadow-[0_4px_12px_rgba(10,31,24,0.04)] transition-all"
+      className="flex items-center gap-3 rounded-xl bg-white border border-grey-200 p-4 text-sm font-medium text-black hover:border-grey-300 hover:shadow-[0_4px_12px_rgba(10,31,24,0.04)] transition-all"
     >
-      <div className="w-10 h-10 rounded-xl bg-[#F5F8F7] flex items-center justify-center flex-shrink-0">
+      <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center flex-shrink-0">
         {icon}
       </div>
       <div className="text-left">
-        <p className="font-semibold text-sm text-[#0A1F18]">{title}</p>
-        <p className="text-xs text-[#7A8C85] mt-0.5">{subtitle}</p>
+        <p className="font-semibold text-sm text-black">{title}</p>
+        <p className="text-xs text-grey-400 mt-0.5">{subtitle}</p>
       </div>
     </Link>
   );
@@ -324,8 +324,8 @@ function ModulePreviewCard({
   return (
     <PremiumCard delay={delay} padding="md" radius="large" hover="lift">
       <div className="flex flex-col h-full">
-        <h4 className="text-sm font-semibold text-[#0A1F18]">{title}</h4>
-        <p className="text-sm text-[#7A8C85] mt-1 flex-1">{description}</p>
+        <h4 className="text-sm font-semibold text-black">{title}</h4>
+        <p className="text-sm text-grey-400 mt-1 flex-1">{description}</p>
         <div className="mt-4">
           <Button variant="secondary" size="sm" asChild>
             <Link href={href}>Åpne</Link>

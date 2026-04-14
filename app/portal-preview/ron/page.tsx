@@ -88,7 +88,7 @@ export default function RonPreviewPage() {
       {/* ═══════ SIDEBAR ═══════ */}
       <aside className="fixed left-0 top-0 h-full w-[72px] z-50 flex flex-col items-center py-6 backdrop-blur-xl bg-white/40 border-r border-[#0F1F1A]/5">
         <div className="w-11 h-11 rounded-[14px] bg-[#0F1F1A] flex items-center justify-center mb-10 shadow-lg">
-          <span className="text-[#D1F843] font-black text-sm tracking-tight">AK</span>
+          <span className="text-accent-cta font-black text-sm tracking-tight">AK</span>
         </div>
         <nav className="flex flex-col gap-2 flex-1">
           {[
@@ -115,7 +115,7 @@ export default function RonPreviewPage() {
                 strokeWidth={1.8}
               />
               {active && (
-                <span className="absolute -left-[10px] top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-full bg-[#D1F843]" />
+                <span className="absolute -left-[10px] top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-full bg-accent-cta" />
               )}
             </button>
           ))}
@@ -146,14 +146,14 @@ export default function RonPreviewPage() {
                 Kalender
               </button>
               <button className="px-4 h-10 rounded-full bg-[#0F1F1A] text-white flex items-center gap-2 text-[13px] font-semibold hover:bg-[#1a2d27] transition cursor-pointer">
-                <Sparkles className="w-4 h-4 text-[#D1F843]" strokeWidth={2} />
+                <Sparkles className="w-4 h-4 text-accent-cta" strokeWidth={2} />
                 AI Coach
               </button>
               <button className="relative w-10 h-10 rounded-full bg-white/70 border border-[#0F1F1A]/8 flex items-center justify-center hover:bg-white transition cursor-pointer">
                 <Bell className="w-[18px] h-[18px] text-[#0F1F1A]/60" strokeWidth={1.8} />
-                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#D1F843] ring-2 ring-[#F0F3F2]" />
+                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-accent-cta ring-2 ring-[#F0F3F2]" />
               </button>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#005840] to-[#0F1F1A] ring-2 ring-[#D1F843]/60 cursor-pointer" />
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#005840] to-[#0F1F1A] ring-2 ring-accent-cta/60 cursor-pointer" />
             </div>
           </div>
         </header>
@@ -200,7 +200,7 @@ export default function RonPreviewPage() {
             {/* HERO CARD — Neste coaching (spans 7) */}
             <div className="col-span-7 row-span-2 group relative rounded-[28px] overflow-hidden bg-gradient-to-br from-[#0F1F1A] via-[#1a3b30] to-[#005840] p-10 min-h-[420px] transition-all duration-500 hover:shadow-[0_40px_80px_rgba(0,40,28,0.25)] cursor-pointer">
               {/* Glow bg */}
-              <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl opacity-30 bg-[#D1F843]" />
+              <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl opacity-30 bg-accent-cta" />
               <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full blur-3xl opacity-10 bg-white" />
 
               {/* Grain texture */}
@@ -215,16 +215,16 @@ export default function RonPreviewPage() {
               <div className="relative h-full flex flex-col justify-between">
                 {/* Top: Badge + status */}
                 <div className="flex items-start justify-between">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#D1F843] text-[#0F1F1A] text-[10px] font-bold uppercase tracking-[0.1em] shadow-lg shadow-[#D1F843]/20">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-cta text-[#0F1F1A] text-[10px] font-bold uppercase tracking-[0.1em] shadow-lg shadow-accent-cta/20">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#0F1F1A] animate-pulse" />
                     Neste coaching
                   </div>
-                  <ChevronRight className="w-5 h-5 text-white/40 group-hover:text-[#D1F843] group-hover:translate-x-1 transition-all" />
+                  <ChevronRight className="w-5 h-5 text-white/40 group-hover:text-accent-cta group-hover:translate-x-1 transition-all" />
                 </div>
 
                 {/* Middle: Date + info */}
                 <div>
-                  <p className="text-[14px] text-[#D1F843]/80 font-semibold uppercase tracking-[0.1em] mb-2">
+                  <p className="text-[14px] text-accent-cta/80 font-semibold uppercase tracking-[0.1em] mb-2">
                     #PF-PRO-041526
                   </p>
                   <h2 className="text-[56px] leading-[1] font-black text-white tracking-[-0.03em] mb-1">
@@ -235,11 +235,11 @@ export default function RonPreviewPage() {
                   </h2>
                   <div className="flex items-center gap-5 mt-6 text-white/60 text-[13px]">
                     <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-[#D1F843]" strokeWidth={2} />
+                      <Clock className="w-4 h-4 text-accent-cta" strokeWidth={2} />
                       <span>10:00 — 10:20</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-[#D1F843]" strokeWidth={2} />
+                      <MapPin className="w-4 h-4 text-accent-cta" strokeWidth={2} />
                       <span>Gamle Fredrikstad GK</span>
                     </div>
                   </div>
@@ -248,9 +248,9 @@ export default function RonPreviewPage() {
                 {/* Bottom: Coach + CTA */}
                 <div className="flex items-end justify-between pt-6 border-t border-white/10">
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#D1F843] to-[#005840] p-[2px]">
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-accent-cta to-[#005840] p-[2px]">
                       <div className="w-full h-full rounded-full bg-[#0F1F1A] flex items-center justify-center">
-                        <span className="text-[#D1F843] font-bold text-sm">AK</span>
+                        <span className="text-accent-cta font-bold text-sm">AK</span>
                       </div>
                     </div>
                     <div>
@@ -262,7 +262,7 @@ export default function RonPreviewPage() {
                       </p>
                     </div>
                   </div>
-                  <button className="px-6 h-12 rounded-full bg-[#D1F843] text-[#0F1F1A] text-[13px] font-bold flex items-center gap-2 hover:scale-105 transition-transform shadow-lg shadow-[#D1F843]/30 cursor-pointer">
+                  <button className="px-6 h-12 rounded-full bg-accent-cta text-[#0F1F1A] text-[13px] font-bold flex items-center gap-2 hover:scale-105 transition-transform shadow-lg shadow-accent-cta/30 cursor-pointer">
                     Se i kalender
                     <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
                   </button>
@@ -272,7 +272,7 @@ export default function RonPreviewPage() {
 
             {/* HANDICAP RING CARD */}
             <div className="col-span-3 relative rounded-[28px] backdrop-blur-xl bg-white/70 border border-[#0F1F1A]/5 p-7 overflow-hidden hover:bg-white/90 transition-all cursor-pointer group">
-              <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[#D1F843]/20 blur-3xl" />
+              <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-accent-cta/20 blur-3xl" />
               <div className="relative">
                 <div className="flex items-center justify-between mb-4">
                   <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#0F1F1A]/40">
@@ -330,9 +330,9 @@ export default function RonPreviewPage() {
 
             {/* TRACKMAN LIVE CARD */}
             <div className="col-span-3 relative rounded-[28px] bg-[#0F1F1A] p-7 overflow-hidden group cursor-pointer hover:shadow-[0_24px_60px_rgba(0,40,28,0.3)] transition-all">
-              <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2 py-1 rounded-full bg-[#D1F843]/10 border border-[#D1F843]/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D1F843] animate-pulse" />
-                <span className="text-[9px] font-bold uppercase tracking-wider text-[#D1F843]">
+              <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2 py-1 rounded-full bg-accent-cta/10 border border-accent-cta/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-cta animate-pulse" />
+                <span className="text-[9px] font-bold uppercase tracking-wider text-accent-cta">
                   Live
                 </span>
               </div>

@@ -93,8 +93,8 @@ export default function MentalPage() {
         className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
         <div>
-          <h1 className="text-2xl font-bold text-[#0A1F18]">Mental scorecard</h1>
-          <p className="text-[#7A8C85] mt-1">Spor fokus, selvtillit og rutiner</p>
+          <h1 className="text-2xl font-bold text-black">Mental scorecard</h1>
+          <p className="text-grey-400 mt-1">Spor fokus, selvtillit og rutiner</p>
         </div>
         <Button variant="primary" asChild>
           <Link href="/portal/mental/ny">
@@ -135,9 +135,9 @@ function EmptyRoundsTab() {
   return (
     <PremiumCard padding="lg" radius="large">
       <div className="text-center py-8">
-        <Brain className="w-10 h-10 text-[#7A8C85] mx-auto mb-4" />
-        <p className="text-sm text-[#7A8C85]">Ingen runder registrert ennå.</p>
-        <p className="text-xs text-[#A5B2AD] mt-1">Start din første mental scorecard-runde.</p>
+        <Brain className="w-10 h-10 text-grey-400 mx-auto mb-4" />
+        <p className="text-sm text-grey-400">Ingen runder registrert ennå.</p>
+        <p className="text-xs text-grey-300 mt-1">Start din første mental scorecard-runde.</p>
       </div>
     </PremiumCard>
   );
@@ -150,13 +150,13 @@ function RoundsTab({ rounds }: { rounds: RoundSummary[] }) {
         <PremiumCard key={round.id} delay={idx * 0.05} padding="md" radius="large" hover="lift">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#FAF5FF] flex items-center justify-center flex-shrink-0">
-                <Brain className="w-5 h-5 text-[#AF52DE]" />
+              <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0">
+                <Brain className="w-5 h-5 text-purple-500" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-base font-semibold text-[#0A1F18]">{round.course}</h3>
-                  <span className="text-xs text-[#7A8C85]">
+                  <h3 className="text-base font-semibold text-black">{round.course}</h3>
+                  <span className="text-xs text-grey-400">
                     {new Date(round.date).toLocaleDateString("nb-NO", {
                       day: "numeric",
                       month: "short",
@@ -164,12 +164,12 @@ function RoundsTab({ rounds }: { rounds: RoundSummary[] }) {
                   </span>
                 </div>
                 <div className="flex items-center gap-4 mt-2">
-                  <span className="text-sm text-[#324D45]">
-                    Score: <span className="font-semibold text-[#0A1F18]">{round.score ?? "–"}</span>
+                  <span className="text-sm text-grey-400">
+                    Score: <span className="font-semibold text-black">{round.score ?? "–"}</span>
                   </span>
-                  <span className="text-sm text-[#324D45]">
+                  <span className="text-sm text-grey-400">
                     Mental: {" "}
-                    <span className="font-semibold text-[#0A1F18]">{round.mentalScore}</span>
+                    <span className="font-semibold text-black">{round.mentalScore}</span>
                   </span>
                 </div>
               </div>
@@ -193,14 +193,14 @@ function TrendsTab({ data, loading }: { data: { date: string; focus: number; con
     <div className="space-y-6">
       <PremiumCard padding="md" radius="large">
         <div className="flex items-center gap-2 mb-4">
-          <TrendingUp className="w-5 h-5 text-[#0A1F18]" />
-          <h3 className="text-sm font-semibold text-[#0A1F18]">Mentale metrics over tid</h3>
+          <TrendingUp className="w-5 h-5 text-black" />
+          <h3 className="text-sm font-semibold text-black">Mentale metrics over tid</h3>
         </div>
         <div className="h-[300px]">
           {loading ? (
-            <div className="flex items-center justify-center h-full text-[#7A8C85]">Laster...</div>
+            <div className="flex items-center justify-center h-full text-grey-400">Laster...</div>
           ) : data.length === 0 ? (
-            <div className="flex items-center justify-center h-full text-[#7A8C85]">Ingen data ennå</div>
+            <div className="flex items-center justify-center h-full text-grey-400">Ingen data ennå</div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data}>
@@ -223,10 +223,10 @@ function TrendsTab({ data, loading }: { data: { date: string; focus: number; con
       </PremiumCard>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <MiniStat icon={<Brain className="w-4 h-4 text-[#AF52DE]" />} label="Fokus snitt" value={avg(data.map((d) => d.focus))} />
-        <MiniStat icon={<Target className="w-4 h-4 text-[#007AFF]" />} label="Selvtillit snitt" value={avg(data.map((d) => d.confidence))} />
-        <MiniStat icon={<Calendar className="w-4 h-4 text-[#0A1F18]" />} label="Engasjement snitt" value={avg(data.map((d) => d.commitment))} />
-        <MiniStat icon={<Flag className="w-4 h-4 text-[#1A4D36]" />} label="Aksept snitt" value={avg(data.map((d) => d.acceptance))} />
+        <MiniStat icon={<Brain className="w-4 h-4 text-purple-500" />} label="Fokus snitt" value={avg(data.map((d) => d.focus))} />
+        <MiniStat icon={<Target className="w-4 h-4 text-blue-500" />} label="Selvtillit snitt" value={avg(data.map((d) => d.confidence))} />
+        <MiniStat icon={<Calendar className="w-4 h-4 text-black" />} label="Engasjement snitt" value={avg(data.map((d) => d.commitment))} />
+        <MiniStat icon={<Flag className="w-4 h-4 text-success" />} label="Aksept snitt" value={avg(data.map((d) => d.acceptance))} />
       </div>
     </div>
   );
@@ -236,10 +236,10 @@ function MiniStat({ icon, label, value }: { icon: React.ReactNode; label: string
   return (
     <PremiumCard padding="md" radius="large" hover="lift">
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-[#F5F8F7] flex items-center justify-center">{icon}</div>
+        <div className="w-9 h-9 rounded-lg bg-grey-50 flex items-center justify-center">{icon}</div>
         <div>
-          <p className="text-xs text-[#7A8C85]">{label}</p>
-          <p className="text-lg font-bold text-[#0A1F18] tabular-nums">{value}</p>
+          <p className="text-xs text-grey-400">{label}</p>
+          <p className="text-lg font-bold text-black tabular-nums">{value}</p>
         </div>
       </div>
     </PremiumCard>

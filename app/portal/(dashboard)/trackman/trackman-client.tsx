@@ -288,8 +288,8 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#0A1F18]">TrackMan Data</h1>
-          <p className="text-[#7A8C85] mt-1">
+          <h1 className="text-2xl font-bold text-black">TrackMan Data</h1>
+          <p className="text-grey-400 mt-1">
             Spredning, teknikk-profil og klubb-analyse
           </p>
         </div>
@@ -303,7 +303,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
               success: null,
             })
           }
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0A1F18] text-white text-sm font-medium hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-sm font-medium hover:opacity-90 transition-opacity"
         >
           <Upload className="w-4 h-4" />
           Last opp data
@@ -326,35 +326,35 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
         <StatCard
           label="Sesjoner"
           value={hasData ? (data.totalSessions || sessions.length).toLocaleString("nb-NO") : "0"}
-          icon={<Activity className="w-6 h-6 text-[#0A1F18]" />}
-          iconBg="bg-[#0A1F18]/10"
+          icon={<Activity className="w-6 h-6 text-black" />}
+          iconBg="bg-black/10"
         />
         <StatCard
           label="Slag totalt"
           value={hasData
             ? (data.totalShots || sessions.reduce((a, s) => a + s.totalShots, 0)).toLocaleString("nb-NO")
             : "0"}
-          icon={<Target className="w-6 h-6 text-[#007AFF]" />}
-          iconBg="bg-[#007AFF]/10"
+          icon={<Target className="w-6 h-6 text-blue-500" />}
+          iconBg="bg-blue-500/10"
         />
         <StatCard
           label="Beste carry"
           value={hasData ? `${data.bestCarry}m` : "–"}
-          icon={<TrendingUp className="w-6 h-6 text-[#C48A32]" />}
-          iconBg="bg-[#C48A32]/10"
+          icon={<TrendingUp className="w-6 h-6 text-warning" />}
+          iconBg="bg-warning/10"
         />
         <StatCard
           label="Snitt carry"
           value={hasData ? `${data.avgCarry}m` : "–"}
-          icon={<Activity className="w-6 h-6 text-[#1A4D36]" />}
-          iconBg="bg-[#1A4D36]/10"
+          icon={<Activity className="w-6 h-6 text-success" />}
+          iconBg="bg-success/10"
         />
       </div>
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="bg-white rounded-2xl p-6 border border-[#D5DFDB]/50">
-          <h3 className="text-sm font-semibold text-[#0A1F18] mb-4">
+        <div className="bg-white rounded-2xl p-6 border border-grey-200/50">
+          <h3 className="text-sm font-semibold text-black mb-4">
             Ballfart-trend (Driver)
           </h3>
           <div className="h-[220px]">
@@ -379,15 +379,15 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                 </LineChart>
               </ResponsiveContainer>
             ) : (
-              <div className="flex items-center justify-center h-full text-sm text-[#7A8C85]">
+              <div className="flex items-center justify-center h-full text-sm text-grey-400">
                 Ingen driver-sesjoner ennå
               </div>
             )}
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 border border-[#D5DFDB]/50">
-          <h3 className="text-sm font-semibold text-[#0A1F18] mb-4">
+        <div className="bg-white rounded-2xl p-6 border border-grey-200/50">
+          <h3 className="text-sm font-semibold text-black mb-4">
             Sesjoner per klubb
           </h3>
           <div className="h-[220px]">
@@ -405,7 +405,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <div className="flex items-center justify-center h-full text-sm text-[#7A8C85]">
+              <div className="flex items-center justify-center h-full text-sm text-grey-400">
                 Ingen sesjoner ennå
               </div>
             )}
@@ -415,16 +415,16 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Session List */}
       <div>
-        <h3 className="font-semibold text-[#0A1F18] mb-4">Sesjonsoversikt</h3>
-        <div className="bg-white rounded-2xl border border-[#D5DFDB]/50 overflow-hidden">
+        <h3 className="font-semibold text-black mb-4">Sesjonsoversikt</h3>
+        <div className="bg-white rounded-2xl border border-grey-200/50 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-[#F5F8F7]">
+              <thead className="bg-grey-50">
                 <tr>
                   {["Dato", "Klubb", "Slag", "Kontekst"].map((h) => (
                     <th
                       key={h}
-                      className="text-xs font-semibold text-[#7A8C85] uppercase tracking-wider p-4 text-left"
+                      className="text-xs font-semibold text-grey-400 uppercase tracking-wider p-4 text-left"
                     >
                       {h}
                     </th>
@@ -435,11 +435,11 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
               <tbody>
                 {loadingSessions ? (
                   <tr>
-                    <td colSpan={5} className="p-4 text-sm text-[#7A8C85]">Laster sesjoner...</td>
+                    <td colSpan={5} className="p-4 text-sm text-grey-400">Laster sesjoner...</td>
                   </tr>
                 ) : displaySessions.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="p-4 text-sm text-[#7A8C85]">Ingen sesjoner funnet. Last opp TrackMan-data for å komme i gang.</td>
+                    <td colSpan={5} className="p-4 text-sm text-grey-400">Ingen sesjoner funnet. Last opp TrackMan-data for å komme i gang.</td>
                   </tr>
                 ) : (
                   displaySessions.map((session) => {
@@ -448,25 +448,25 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                     return (
                       <React.Fragment key={session.id}>
                         <tr
-                          className="border-t border-[#D5DFDB]/30 hover:bg-[#F5F8F7]/50 cursor-pointer"
+                          className="border-t border-grey-200/30 hover:bg-grey-50/50 cursor-pointer"
                           onClick={() => setExpandedSessionId(isOpen ? null : session.id)}
                         >
-                          <td className="p-4 text-sm text-[#0A1F18]">
+                          <td className="p-4 text-sm text-black">
                             {new Date(session.sessionDate).toLocaleDateString("nb-NO", {
                               day: "numeric",
                               month: "short",
                               year: "numeric",
                             })}
                           </td>
-                          <td className="p-4 font-medium text-[#0A1F18]">{session.club}</td>
-                          <td className="p-4 text-sm text-[#0A1F18]">{session.shotCount}</td>
-                          <td className="p-4 text-sm text-[#0A1F18]">TRAINING</td>
+                          <td className="p-4 font-medium text-black">{session.club}</td>
+                          <td className="p-4 text-sm text-black">{session.shotCount}</td>
+                          <td className="p-4 text-sm text-black">TRAINING</td>
                           <td className="p-4">
-                            <button className="p-1 rounded-lg hover:bg-[#D5DFDB]/30 transition-colors">
+                            <button className="p-1 rounded-lg hover:bg-grey-200/30 transition-colors">
                               {isOpen ? (
-                                <ChevronUp className="w-4 h-4 text-[#7A8C85]" />
+                                <ChevronUp className="w-4 h-4 text-grey-400" />
                               ) : (
-                                <ChevronDown className="w-4 h-4 text-[#7A8C85]" />
+                                <ChevronDown className="w-4 h-4 text-grey-400" />
                               )}
                             </button>
                           </td>
@@ -480,14 +480,14 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                               transition={{ duration: 0.25, ease: "easeInOut" }}
                             >
                               <td colSpan={5} className="p-0">
-                                <div className="bg-[#F5F8F7]/60 px-4 py-4">
-                                  <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85] mb-3">
+                                <div className="bg-grey-50/60 px-4 py-4">
+                                  <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3">
                                     Slagdetaljer
                                   </p>
                                   <div className="overflow-x-auto">
                                     <table className="w-full text-sm">
                                       <thead>
-                                        <tr className="text-left text-xs text-[#7A8C85]">
+                                        <tr className="text-left text-xs text-grey-400">
                                           <th className="pb-2 font-medium">#</th>
                                           <th className="pb-2 font-medium">Ballfart</th>
                                           <th className="pb-2 font-medium">Carry</th>
@@ -500,27 +500,27 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                                         {shots.length > 0 ? (
                                           shots.map((shot, idx) => (
                                             <tr key={shot.id}>
-                                              <td className="py-2 text-[#0A1F18]">{idx + 1}</td>
-                                              <td className="py-2 text-[#0A1F18]">
+                                              <td className="py-2 text-black">{idx + 1}</td>
+                                              <td className="py-2 text-black">
                                                 {shot.ballSpeed ? `${Math.round(shot.ballSpeed * 10) / 10} mph` : "–"}
                                               </td>
-                                              <td className="py-2 text-[#0A1F18]">
+                                              <td className="py-2 text-black">
                                                 {shot.carryDistance ? `${Math.round(shot.carryDistance)}m` : "–"}
                                               </td>
-                                              <td className="py-2 text-[#0A1F18]">
+                                              <td className="py-2 text-black">
                                                 {shot.totalDistance ? `${Math.round(shot.totalDistance)}m` : "–"}
                                               </td>
-                                              <td className="py-2 text-[#0A1F18]">
+                                              <td className="py-2 text-black">
                                                 {shot.spinRate ? `${Math.round(shot.spinRate)} rpm` : "–"}
                                               </td>
-                                              <td className="py-2 text-[#0A1F18]">
+                                              <td className="py-2 text-black">
                                                 {shot.launchAngle ? `${Math.round(shot.launchAngle * 10) / 10}°` : "–"}
                                               </td>
                                             </tr>
                                           ))
                                         ) : (
                                           <tr>
-                                            <td colSpan={6} className="py-3 text-[#7A8C85]">
+                                            <td colSpan={6} className="py-3 text-grey-400">
                                               Ingen detaljerte slagdata tilgjengelig.
                                             </td>
                                           </tr>
@@ -545,7 +545,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Quick Actions */}
       <div>
-        <h3 className="text-sm font-semibold text-[#0A1F18] mb-4">Handlinger</h3>
+        <h3 className="text-sm font-semibold text-black mb-4">Handlinger</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
             <a href="#">
@@ -626,26 +626,26 @@ function UploadModal({
         className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-[#0A1F18]">Last opp TrackMan-data</h2>
+          <h2 className="text-lg font-bold text-black">Last opp TrackMan-data</h2>
           {!upload.loading && (
             <button
               onClick={resetUpload}
-              className="p-1 rounded-lg hover:bg-[#F5F8F7] transition-colors"
+              className="p-1 rounded-lg hover:bg-grey-50 transition-colors"
             >
-              <X className="w-5 h-5 text-[#7A8C85]" />
+              <X className="w-5 h-5 text-grey-400" />
             </button>
           )}
         </div>
 
         {/* Feedback */}
         {upload.error && (
-          <div className="flex items-start gap-3 p-3 rounded-xl bg-[#B84233]/10 text-[#B84233] text-sm mb-4">
+          <div className="flex items-start gap-3 p-3 rounded-xl bg-error/10 text-error text-sm mb-4">
             <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
             <p>{upload.error}</p>
           </div>
         )}
         {upload.success && (
-          <div className="flex items-start gap-3 p-3 rounded-xl bg-[#1A4D36]/10 text-[#1A4D36] text-sm mb-4">
+          <div className="flex items-start gap-3 p-3 rounded-xl bg-success/10 text-success text-sm mb-4">
             <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
             <p>{upload.success}</p>
           </div>
@@ -654,8 +654,8 @@ function UploadModal({
         {/* Loading */}
         {upload.loading && (
           <div className="flex flex-col items-center gap-3 py-8">
-            <Loader2 className="w-8 h-8 text-[#0A1F18] animate-spin" />
-            <p className="text-sm text-[#7A8C85]">
+            <Loader2 className="w-8 h-8 text-black animate-spin" />
+            <p className="text-sm text-grey-400">
               {upload.mode === "image"
                 ? "Analyserer bilde med AI..."
                 : "Importerer CSV-data..."}
@@ -671,14 +671,14 @@ function UploadModal({
                 setUpload((prev) => ({ ...prev, mode: "csv" }));
                 csvInputRef.current?.click();
               }}
-              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-[#D5DFDB] hover:border-[#0A1F18] hover:bg-[#F5F8F7] transition-all"
+              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-grey-200 hover:border-black hover:bg-grey-50 transition-all"
             >
-              <div className="w-12 h-12 rounded-xl bg-[#0A1F18]/10 flex items-center justify-center flex-shrink-0">
-                <FileSpreadsheet className="w-6 h-6 text-[#0A1F18]" />
+              <div className="w-12 h-12 rounded-xl bg-black/10 flex items-center justify-center flex-shrink-0">
+                <FileSpreadsheet className="w-6 h-6 text-black" />
               </div>
               <div className="text-left">
-                <p className="font-semibold text-sm text-[#0A1F18]">Last opp CSV-fil</p>
-                <p className="text-xs text-[#7A8C85] mt-0.5">
+                <p className="font-semibold text-sm text-black">Last opp CSV-fil</p>
+                <p className="text-xs text-grey-400 mt-0.5">
                   Eksporter fra TrackMan Range eller Performance Studio
                 </p>
               </div>
@@ -689,14 +689,14 @@ function UploadModal({
                 setUpload((prev) => ({ ...prev, mode: "image" }));
                 imageInputRef.current?.click();
               }}
-              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-[#D5DFDB] hover:border-[#AF52DE] hover:bg-[#AF52DE]/5 transition-all"
+              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-grey-200 hover:border-purple-500 hover:bg-purple-500/5 transition-all"
             >
-              <div className="w-12 h-12 rounded-xl bg-[#AF52DE]/10 flex items-center justify-center flex-shrink-0">
-                <Image className="w-6 h-6 text-[#AF52DE]" />
+              <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                <Image className="w-6 h-6 text-purple-500" />
               </div>
               <div className="text-left">
-                <p className="font-semibold text-sm text-[#0A1F18]">Last opp skjermbilde</p>
-                <p className="text-xs text-[#7A8C85] mt-0.5">
+                <p className="font-semibold text-sm text-black">Last opp skjermbilde</p>
+                <p className="text-xs text-grey-400 mt-0.5">
                   AI leser data fra TrackMan-skjerm (PNG, JPG)
                 </p>
               </div>
@@ -722,13 +722,13 @@ function StatCard({
   iconBg: string;
 }) {
   return (
-    <div className="bg-white rounded-2xl p-5 border border-[#D5DFDB]/50">
+    <div className="bg-white rounded-2xl p-5 border border-grey-200/50">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#7A8C85]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
             {label}
           </p>
-          <p className="text-3xl font-bold text-[#0A1F18] mt-1 tabular-nums">{value}</p>
+          <p className="text-3xl font-bold text-black mt-1 tabular-nums">{value}</p>
         </div>
         <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${iconBg}`}>
           {icon}

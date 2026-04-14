@@ -37,7 +37,7 @@ const ALWAYS_ALLOWED_PATHS = [
 // Beskyttede ruter som krever autentisering
 const PROTECTED_ROUTES = ["/portal", "/admin", "/mission-board"];
 
-export async function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // ============================================================
