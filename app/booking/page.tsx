@@ -57,7 +57,7 @@ const LOCATION_CONFIG: Record<string, { name: string; shortName: string; acuityE
 // Matcher på fornavn for å håndtere varianter i databasen
 function getTrainerImage(name: string): string | null {
   const lower = name.toLowerCase();
-  if (lower.includes("anders")) return "/images/branding/ak-golf-academy-20.jpg";
+  if (lower.includes("anders")) return "/images/team/anders-kristiansen.jpg";
   return null; // Markus bruker initialer
 }
 
