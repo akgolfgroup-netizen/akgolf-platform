@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, ArrowLeft, Clock, User } from "lucide-react";
+import { MapPin, ArrowLeft, Clock } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 // ─── Data ───
@@ -54,10 +54,27 @@ const LOCATION_CONFIG: Record<string, { name: string; shortName: string; acuityE
   },
 };
 
-const TRAINER_IMAGES: Record<string, string> = {
-  "Anders Kristiansen": "/images/branding/ak-golf-academy-20.jpg",
-  "Markus Røinås Pedersen": "/images/branding/ak-golf-academy-21.jpg",
-};
+// Matcher på fornavn for å håndtere varianter i databasen
+function getTrainerImage(name: string): string | null {
+  const lower = name.toLowerCase();
+  if (lower.includes("anders")) return "/images/branding/ak-golf-academy-20.jpg";
+  return null; // Markus bruker initialer
+}
+
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 3);
+}
+
+// Overstyr visningsnavn
+function getDisplayName(name: string): string {
+  if (name.toLowerCase().includes("markus")) return "Markus R. Pedersen";
+  return name;
+}
 
 // ─── Page ───
 
@@ -91,9 +108,9 @@ export default function BookingPage() {
 
           trainerMap.set(inst.id, {
             id: inst.id,
-            name,
+            name: getDisplayName(name),
             role: inst.title ?? "Coach",
-            image: TRAINER_IMAGES[name] ?? null,
+            image: getTrainerImage(name),
             acuityEmbedUrl: config.acuityEmbedUrl,
             services: [],
             instructorId: inst.id,
@@ -194,8 +211,10 @@ export default function BookingPage() {
                     className="object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <User className="w-7 h-7 text-grey-300" />
+                  <div className="w-full h-full flex items-center justify-center bg-primary">
+                    <span className="text-lg font-bold text-white">
+                      {getInitials(selectedTrainer.trainer.name)}
+                    </span>
                   </div>
                 )}
               </div>
@@ -255,10 +274,10 @@ export default function BookingPage() {
                       <MapPin className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-primary">
+                      <h2 className="text-xl font-semibold text-black">
                         {location.name}
                       </h2>
-                      <p className="text-sm text-muted">
+                      <p className="text-sm text-grey-400">
                         {location.trainers.length === 1
                           ? "1 trener tilgjengelig"
                           : `${location.trainers.length} trenere tilgjengelige`}
@@ -289,8 +308,10 @@ export default function BookingPage() {
                               className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <User className="w-16 h-16 text-grey-300" />
+                            <div className="w-full h-full flex items-center justify-center bg-primary">
+                              <span className="text-3xl font-bold text-white">
+                                {getInitials(trainer.name)}
+                              </span>
                             </div>
                           )}
                           {/* Role Badge */}
@@ -301,10 +322,10 @@ export default function BookingPage() {
 
                         {/* Trainer Info */}
                         <div className="p-6">
-                          <h3 className="text-lg font-semibold text-primary mb-1">
+                          <h3 className="text-lg font-semibold text-black mb-1">
                             {trainer.name}
                           </h3>
-                          <p className="text-sm text-muted mb-4">
+                          <p className="text-sm text-grey-400 mb-4">
                             {location.name}
                           </p>
 
@@ -322,7 +343,7 @@ export default function BookingPage() {
 
                           {/* CTA */}
                           <div className="flex items-center justify-between">
-                            <span className="text-sm font-semibold text-primary group-hover:text-primary/80 transition-colors">
+                            <span className="text-sm font-semibold text-black group-hover:text-black/70 transition-colors">
                               Velg tid
                             </span>
                             <div className="w-8 h-8 rounded-full bg-accent-cta flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
