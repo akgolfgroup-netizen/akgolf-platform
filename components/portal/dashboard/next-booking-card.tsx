@@ -26,22 +26,22 @@ export function NextBookingCard({ booking, delay = 0 }: NextBookingCardProps) {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay, ease: [0.4, 0, 0.2, 1] }}
-        className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-[#D5DFDB] bg-white p-6"
+        className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-grey-200 bg-white p-6"
       >
         <div>
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#F5F8F7]">
-            <Calendar className="h-5 w-5 text-[#0A1F18]" strokeWidth={1.75} />
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-grey-50">
+            <Calendar className="h-5 w-5 text-black" strokeWidth={1.75} />
           </div>
-          <h3 className="mt-4 text-sm font-semibold text-[#0A1F18]">
+          <h3 className="mt-4 text-sm font-semibold text-black">
             Ingen kommende coaching
           </h3>
-          <p className="mt-1 text-xs text-[#7A8C85]">
+          <p className="mt-1 text-xs text-grey-400">
             Book en coaching-time for å komme videre.
           </p>
         </div>
         <Link
           href="/portal/bookinger/ny"
-          className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-[#0A1F18] px-5 py-3 text-[13px] font-semibold text-white transition-all hover:bg-[#1A3529]"
+          className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-black px-5 py-3 text-[13px] font-semibold text-white transition-all hover:bg-grey-800"
         >
           Book coaching-time
           <ArrowRight className="h-3.5 w-3.5" />
@@ -57,15 +57,15 @@ export function NextBookingCard({ booking, delay = 0 }: NextBookingCardProps) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay, ease: [0.4, 0, 0.2, 1] }}
-      className="relative flex flex-col overflow-hidden rounded-2xl border border-[#D5DFDB] bg-white p-6"
+      className="relative flex flex-col overflow-hidden rounded-2xl border border-grey-200 bg-white p-6"
     >
-      <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#7A8C85]">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-grey-400">
         Neste økt
       </p>
-      <span className="mt-2 text-4xl font-semibold tracking-[-0.04em] text-[#0A1F18] tabular-nums">
+      <span className="mt-2 text-4xl font-semibold tracking-[-0.04em] text-black tabular-nums">
         {format(start, "HH:mm")}
       </span>
-      <span className="mt-0.5 text-[13px] text-[#7A8C85]">
+      <span className="mt-0.5 text-[13px] text-grey-400">
         {format(start, "EEEE d. MMMM", { locale: nb })}
       </span>
 
@@ -75,7 +75,7 @@ export function NextBookingCard({ booking, delay = 0 }: NextBookingCardProps) {
         <BookingRow icon={Clock} text={`${booking.duration} min coaching`} />
       </div>
 
-      <button className="mt-4 w-full rounded-xl border border-[#D5DFDB] bg-[#F5F8F7] px-4 py-2.5 text-center text-[13px] font-medium text-[#0A1F18] transition-colors hover:bg-[#ECF0EF]">
+      <button className="mt-4 w-full rounded-xl border border-grey-200 bg-grey-50 px-4 py-2.5 text-center text-[13px] font-medium text-black transition-colors hover:bg-grey-50">
         Se detaljer
       </button>
     </motion.div>
@@ -90,8 +90,8 @@ function BookingRow({
   text: string;
 }) {
   return (
-    <div className="flex items-center gap-2 text-xs text-[#7A8C85]">
-      <Icon className="h-[13px] w-[13px] text-[#A5B2AD]" />
+    <div className="flex items-center gap-2 text-xs text-grey-400">
+      <Icon className="h-[13px] w-[13px] text-grey-300" />
       {text}
     </div>
   );

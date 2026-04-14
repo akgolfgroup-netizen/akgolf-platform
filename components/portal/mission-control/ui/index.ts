@@ -1,10 +1,7 @@
 // Admin Portal — Lys Nexudus-stil (Brand Guide V2.0)
-export { AdminCard } from "./AdminCard";
-export { AdminButton } from "./AdminButton";
 export { AdminInput } from "./AdminInput";
 export { AdminTextarea } from "./AdminTextarea";
 export { AdminSelect } from "./AdminSelect";
-export { AdminBadge } from "./AdminBadge";
 export {
   AdminTable,
   AdminTableHead,
@@ -56,8 +53,6 @@ export {
 export type { AdminToast, AdminToastVariant } from "./AdminToast";
 export { AdminDropdown } from "./AdminDropdown";
 export type { AdminDropdownItem } from "./AdminDropdown";
-export { AdminTabs } from "./AdminTabs";
-export type { AdminTabItem } from "./AdminTabs";
 export { AdminDateRangePicker } from "./AdminDateRangePicker";
 export type { AdminDateRange } from "./AdminDateRangePicker";
 

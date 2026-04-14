@@ -42,10 +42,10 @@ export function SGOverviewCard({
   return (
     <div className="portal-card">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-[15px] font-semibold text-[#0A1F18]">
+        <h3 className="text-[15px] font-semibold text-black">
           Strokes Gained
         </h3>
-        <span className="text-xs text-[#7A8C85]">{period}</span>
+        <span className="text-xs text-grey-400">{period}</span>
       </div>
 
       {/* SG values grid */}
@@ -53,7 +53,7 @@ export function SGOverviewCard({
         {categories.map((cat) => (
           <div
             key={cat.label}
-            className="bg-[#ECF0EF] rounded-xl p-3 flex items-center justify-between"
+            className="bg-grey-50 rounded-xl p-3 flex items-center justify-between"
           >
             <span className="text-xs font-semibold text-[#3D5249]">
               {cat.label}
@@ -68,7 +68,7 @@ export function SGOverviewCard({
                 {cat.value.toFixed(2)}
               </span>
             ) : (
-              <span className="text-sm font-bold text-[#A5B2AD]">
+              <span className="text-sm font-bold text-grey-300">
                 &mdash;
               </span>
             )}

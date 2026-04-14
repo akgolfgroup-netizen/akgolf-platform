@@ -70,10 +70,10 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
     <PremiumCard delay={delay} className="h-full" radius="large">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-sm font-semibold tracking-[-0.01em] text-[#0A1F18]">
+          <p className="text-sm font-semibold tracking-[-0.01em] text-black">
             Ukens plan
           </p>
-          <p className="text-[11px] text-[#7A8C85]">
+          <p className="text-[11px] text-grey-400">
             {doneCount} av {PLAN_ITEMS.length} fullført
           </p>
         </div>
@@ -83,7 +83,7 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
         {PLAN_ITEMS.map((item) => (
           <div
             key={item.name}
-            className="flex items-center gap-2.5 rounded-xl border border-[#D5DFDB] bg-[#F5F8F7] px-3 py-2.5 transition-colors duration-200 hover:border-[#A5B2AD] hover:bg-[#ECF0EF]"
+            className="flex items-center gap-2.5 rounded-xl border border-grey-200 bg-grey-50 px-3 py-2.5 transition-colors duration-200 hover:border-grey-300 hover:bg-grey-50"
             style={{ opacity: item.dimmed ? 0.4 : 1 }}
           >
             <div
@@ -108,7 +108,7 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
               >
                 {item.name}
               </p>
-              <p className="text-[11px] text-[#7A8C85]">
+              <p className="text-[11px] text-grey-400">
                 {item.meta}
               </p>
             </div>
@@ -116,8 +116,8 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
             <div
               className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 text-[10px] transition-colors ${
                 item.done
-                  ? "border-[#1A4D36] bg-[#1A4D36] text-white"
-                  : "border-[#D5DFDB]"
+                  ? "border-success bg-success text-white"
+                  : "border-grey-200"
               }`}
             >
               {item.done && <Check className="h-2.5 w-2.5" strokeWidth={3} />}

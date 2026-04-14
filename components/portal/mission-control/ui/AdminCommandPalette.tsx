@@ -131,9 +131,9 @@ export function AdminCommandPalette({
         onClick={() => setOpen(false)}
         aria-hidden="true"
       />
-      <div className="relative w-full max-w-xl rounded-2xl overflow-hidden shadow-2xl bg-white border border-[#D5DFDB]">
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-[#D5DFDB]">
-          <Search className="w-4 h-4 text-[#7A8C85]" />
+      <div className="relative w-full max-w-xl rounded-2xl overflow-hidden shadow-2xl bg-white border border-grey-200">
+        <div className="flex items-center gap-3 px-4 py-3 border-b border-grey-200">
+          <Search className="w-4 h-4 text-grey-400" />
           <input
             ref={inputRef}
             type="text"
@@ -144,21 +144,21 @@ export function AdminCommandPalette({
             }}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            className="flex-1 bg-transparent outline-none text-sm text-[#0A1F18]"
+            className="flex-1 bg-transparent outline-none text-sm text-black"
           />
-          <kbd className="text-[10px] px-1.5 py-0.5 rounded border border-[#D5DFDB] text-[#7A8C85]">
+          <kbd className="text-[10px] px-1.5 py-0.5 rounded border border-grey-200 text-grey-400">
             ESC
           </kbd>
         </div>
         <div className="max-h-[50vh] overflow-y-auto py-2">
           {flat.length === 0 ? (
-            <div className="px-4 py-6 text-center text-sm text-[#7A8C85]">
+            <div className="px-4 py-6 text-center text-sm text-grey-400">
               Ingen treff.
             </div>
           ) : (
             grouped.map(([group, list]) => (
               <div key={group} className="mb-2 last:mb-0">
-                <div className="px-4 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#7A8C85]">
+                <div className="px-4 py-1 text-[10px] font-semibold uppercase tracking-wide text-grey-400">
                   {group}
                 </div>
                 {list.map((item) => {
@@ -177,8 +177,8 @@ export function AdminCommandPalette({
                       className={cn(
                         "w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors",
                         isActive
-                          ? "bg-[#0A1F18] text-white"
-                          : "bg-transparent text-[#0A1F18]"
+                          ? "bg-black text-white"
+                          : "bg-transparent text-black"
                       )}
                     >
                       {item.icon && (
@@ -192,7 +192,7 @@ export function AdminCommandPalette({
                           <div
                             className={cn(
                               "text-xs truncate",
-                              isActive ? "text-white/80" : "text-[#7A8C85]"
+                              isActive ? "text-white/80" : "text-grey-400"
                             )}
                           >
                             {item.description}

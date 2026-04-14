@@ -50,14 +50,14 @@ export function EmptyState({ type, compact = false }: EmptyStateProps) {
 
   if (compact) {
     return (
-      <div className="flex items-center justify-between p-4 rounded-[14px] bg-[#ECF0EF] border border-[#D5DFDB]">
+      <div className="flex items-center justify-between p-4 rounded-[14px] bg-grey-50 border border-grey-200">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-            <Icon className="w-5 h-5 text-[#7A8C85]" />
+            <Icon className="w-5 h-5 text-grey-400" />
           </div>
           <div>
-            <p className="text-sm font-medium text-[#0A1F18]">{config.title}</p>
-            <p className="text-xs text-[#7A8C85]">{config.description}</p>
+            <p className="text-sm font-medium text-black">{config.title}</p>
+            <p className="text-xs text-grey-400">{config.description}</p>
           </div>
         </div>
         <Link
@@ -75,23 +75,23 @@ export function EmptyState({ type, compact = false }: EmptyStateProps) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-[14px] border border-[#D5DFDB] bg-white p-6"
+      className="rounded-[14px] border border-grey-200 bg-white p-6"
     >
       {/* Preview rows -- faded mock data */}
       <div className="mb-6 space-y-2 opacity-30">
         {config.preview.map((row) => (
-          <div key={row} className="flex items-center gap-3 px-3 py-2 bg-[#ECF0EF] rounded-lg">
-            <div className="w-2 h-2 rounded-full bg-[#A5B2AD]" />
-            <span className="text-xs text-[#7A8C85]">{row}</span>
+          <div key={row} className="flex items-center gap-3 px-3 py-2 bg-grey-50 rounded-lg">
+            <div className="w-2 h-2 rounded-full bg-grey-300" />
+            <span className="text-xs text-grey-400">{row}</span>
           </div>
         ))}
       </div>
 
       <div className="text-center">
-        <h3 className="text-base font-semibold text-[#0A1F18] mb-1">
+        <h3 className="text-base font-semibold text-black mb-1">
           {config.title}
         </h3>
-        <p className="text-sm text-[#7A8C85] max-w-xs mx-auto mb-4">
+        <p className="text-sm text-grey-400 max-w-xs mx-auto mb-4">
           {config.description}
         </p>
 

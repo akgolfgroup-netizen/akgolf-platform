@@ -45,46 +45,46 @@ export function AdminCreateBookingForm({ serviceTypes, instructors }: Props) {
 
   if (success) {
     return (
-      <div className="bg-[#1A4D36]/10 border border-success/40 rounded-2xl p-8 text-center">
+      <div className="bg-success/10 border border-success/40 rounded-2xl p-8 text-center">
         <Check className="w-8 h-8 text-success mx-auto mb-3" />
-        <p className="text-[#1A4D36] font-semibold">Booking opprettet!</p>
+        <p className="text-success font-semibold">Booking opprettet!</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-2xl border border-[#D5DFDB] bg-white backdrop-blur-md p-6 space-y-4">
+    <form onSubmit={handleSubmit} className="rounded-2xl border border-grey-200 bg-white backdrop-blur-md p-6 space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="text-xs font-medium text-[#7A8C85] block mb-1">Kundens e-post</label>
+          <label className="text-xs font-medium text-grey-400 block mb-1">Kundens e-post</label>
           <input
             type="email"
             value={studentEmail}
             onChange={(e) => setStudentEmail(e.target.value)}
             required
-            className="w-full rounded-xl px-3 py-2 text-sm text-[#0A1F18] placeholder:text-[#7A8C85] bg-white border border-[#D5DFDB] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/40"
+            className="w-full rounded-xl px-3 py-2 text-sm text-black placeholder:text-grey-400 bg-white border border-grey-200 focus:outline-none focus:ring-2 focus:ring-black/40"
             placeholder="ola@eksempel.no"
           />
         </div>
         <div>
-          <label className="text-xs font-medium text-[#7A8C85] block mb-1">Kundens navn</label>
+          <label className="text-xs font-medium text-grey-400 block mb-1">Kundens navn</label>
           <input
             type="text"
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             required
-            className="w-full rounded-xl px-3 py-2 text-sm text-[#0A1F18] placeholder:text-[#7A8C85] bg-white border border-[#D5DFDB] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/40"
+            className="w-full rounded-xl px-3 py-2 text-sm text-black placeholder:text-grey-400 bg-white border border-grey-200 focus:outline-none focus:ring-2 focus:ring-black/40"
             placeholder="Ola Nordmann"
           />
         </div>
       </div>
 
       <div>
-        <label className="text-xs font-medium text-[#7A8C85] block mb-1">Tjeneste</label>
+        <label className="text-xs font-medium text-grey-400 block mb-1">Tjeneste</label>
         <select
           value={serviceTypeId}
           onChange={(e) => setServiceTypeId(e.target.value)}
-          className="w-full rounded-xl px-3 py-2 text-sm text-[#0A1F18] bg-white border border-[#D5DFDB]"
+          className="w-full rounded-xl px-3 py-2 text-sm text-black bg-white border border-grey-200"
         >
           {serviceTypes.map((st) => (
             <option key={st.id} value={st.id}>
@@ -95,11 +95,11 @@ export function AdminCreateBookingForm({ serviceTypes, instructors }: Props) {
       </div>
 
       <div>
-        <label className="text-xs font-medium text-[#7A8C85] block mb-1">Instruktør</label>
+        <label className="text-xs font-medium text-grey-400 block mb-1">Instruktør</label>
         <select
           value={instructorId}
           onChange={(e) => setInstructorId(e.target.value)}
-          className="w-full rounded-xl px-3 py-2 text-sm text-[#0A1F18] bg-white border border-[#D5DFDB]"
+          className="w-full rounded-xl px-3 py-2 text-sm text-black bg-white border border-grey-200"
         >
           {instructors.map((inst) => (
             <option key={inst.id} value={inst.id}>
@@ -110,24 +110,24 @@ export function AdminCreateBookingForm({ serviceTypes, instructors }: Props) {
       </div>
 
       <div>
-        <label className="text-xs font-medium text-[#7A8C85] block mb-1">Dato og tid</label>
+        <label className="text-xs font-medium text-grey-400 block mb-1">Dato og tid</label>
         <input
           type="datetime-local"
           value={startTime}
           onChange={(e) => setStartTime(e.target.value)}
           required
-          className="w-full rounded-xl px-3 py-2 text-sm text-[#0A1F18] bg-white border border-[#D5DFDB] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/40"
+          className="w-full rounded-xl px-3 py-2 text-sm text-black bg-white border border-grey-200 focus:outline-none focus:ring-2 focus:ring-black/40"
         />
       </div>
 
       {error && (
-        <p className="text-sm text-[#EF4444] bg-[#EF4444]/10 rounded-xl px-4 py-2">{error}</p>
+        <p className="text-sm text-error bg-error/10 rounded-xl px-4 py-2">{error}</p>
       )}
 
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-2.5 px-4 bg-[#0A1F18] text-white font-medium rounded-xl hover:bg-[#0A1F18]/90 disabled:opacity-50 transition-colors"
+        className="w-full py-2.5 px-4 bg-black text-white font-medium rounded-xl hover:bg-black/90 disabled:opacity-50 transition-colors"
       >
         {submitting ? "Oppretter..." : "Opprett booking"}
       </button>
