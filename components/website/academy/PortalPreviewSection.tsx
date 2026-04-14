@@ -55,7 +55,7 @@ export function PortalPreviewSection() {
             <h2 className="w-heading-lg mt-4 mb-6">
               Alt du trenger mellom sesjonene
             </h2>
-            <p className="text-grey-400 leading-relaxed">
+            <p className="text-text leading-relaxed">
               Spillerportalen er treningsappen din. Her ser du treningsplanen,
               booker timer, folger progresjonen og har tilgang til alle ovelser
               med video. Treneren oppdaterer planen etter hver sesjon.
@@ -75,7 +75,7 @@ export function PortalPreviewSection() {
                   <h3 className="text-base font-semibold text-black mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-sm text-grey-400 leading-relaxed">
+                  <p className="text-sm text-text leading-relaxed">
                     {feature.description}
                   </p>
                 </div>
@@ -93,7 +93,7 @@ export function PortalPreviewSection() {
                 Spillerportalen lanseres mai 2026
               </h3>
             </div>
-            <p className="text-sm text-grey-400 max-w-md mx-auto">
+            <p className="text-sm text-text max-w-md mx-auto">
               Vi bygger portalen na. Alle med treningsabonnement far automatisk
               tilgang nar den er klar. I mellomtiden far du treningsplan og
               oppfolging direkte fra treneren.

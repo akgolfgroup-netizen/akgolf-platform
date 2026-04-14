@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Bell } from "lucide-react";
 import { COACHING_PACKAGES, FLEX_PACKAGES } from "@/lib/website-constants";
 import { SectionLabel } from "@/components/website/SectionLabel";
 import {
@@ -12,16 +12,16 @@ import {
 
 export function AcademyPricesV2() {
   return (
-    <section id="priser" className="py-24 md:py-32 bg-white">
+    <section id="priser" className="w-section bg-white">
       <div className="w-container">
         <RevealOnScroll>
-          <div className="max-w-2xl mx-auto text-center mb-16">
+          <div className="max-w-[640px] mx-auto text-center mb-16">
             <SectionLabel>Pakker og priser</SectionLabel>
-            <h2 className="w-heading-lg mt-4 mb-4">
+            <h2 className="w-heading-lg mt-4 mb-6">
               Finn pakken som passer deg
             </h2>
-            <p className="text-grey-400 leading-relaxed">
-              Alle abonnementer er uten bindingstid og kan avsluttes naar som helst.
+            <p className="text-text leading-relaxed">
+              Alle abonnementer er uten bindingstid og kan avsluttes nar som helst.
             </p>
           </div>
         </RevealOnScroll>
@@ -29,12 +29,12 @@ export function AcademyPricesV2() {
         {/* Abonnementer */}
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-8">
           {COACHING_PACKAGES.map((pkg) => (
-            <StaggerItem key={pkg.name}>
+            <StaggerItem key={`${pkg.name}-${pkg.coach}`}>
               <div
                 className={`relative rounded-2xl p-8 flex flex-col gap-6 border h-full ${
                   pkg.highlighted
                     ? "bg-primary border-primary shadow-xl"
-                    : "bg-white border-grey-200 shadow-card hover:shadow-card-hover transition-shadow duration-300"
+                    : "bg-white border-grey-200 shadow-card"
                 }`}
               >
                 {pkg.badge && (
@@ -45,6 +45,13 @@ export function AcademyPricesV2() {
                   </div>
                 )}
                 <div>
+                  <p
+                    className={`text-xs font-semibold uppercase tracking-[0.08em] mb-1 ${
+                      pkg.highlighted ? "text-white/50" : "text-grey-300"
+                    }`}
+                  >
+                    {pkg.coach}
+                  </p>
                   <h3
                     className={`text-xl font-bold mb-1 ${
                       pkg.highlighted ? "text-white" : "text-black"
@@ -54,7 +61,7 @@ export function AcademyPricesV2() {
                   </h3>
                   <p
                     className={`text-sm ${
-                      pkg.highlighted ? "text-white/65" : "text-grey-400"
+                      pkg.highlighted ? "text-white/65" : "text-text"
                     }`}
                   >
                     {pkg.tagline}
@@ -70,7 +77,7 @@ export function AcademyPricesV2() {
                   </span>
                   <span
                     className={`text-sm mb-1 ${
-                      pkg.highlighted ? "text-white/65" : "text-grey-400"
+                      pkg.highlighted ? "text-white/65" : "text-text"
                     }`}
                   >
                     {pkg.period}
@@ -97,17 +104,18 @@ export function AcademyPricesV2() {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  href="/booking"
-                  className={`inline-flex items-center justify-center gap-2 font-bold px-6 py-3.5 rounded-[20px] transition-all duration-200 text-sm ${
+
+                {/* Lanseres mai 2026 — erstatter kjop-knapp */}
+                <div
+                  className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-[20px] text-sm font-semibold ${
                     pkg.highlighted
-                      ? "bg-accent-cta text-accent-cta-text hover:brightness-105"
-                      : "bg-primary text-white hover:bg-primary-alt"
+                      ? "bg-white/15 text-white/80"
+                      : "bg-surface text-text"
                   }`}
                 >
-                  Velg {pkg.name}
-                  <ArrowRight size={16} />
-                </Link>
+                  <Bell size={14} />
+                  Lanseres mai 2026
+                </div>
               </div>
             </StaggerItem>
           ))}
@@ -121,7 +129,7 @@ export function AcademyPricesV2() {
                 <h3 className="text-xl font-bold text-black mb-1">
                   {FLEX_PACKAGES[0].name}
                 </h3>
-                <p className="text-sm text-grey-400 mb-4">
+                <p className="text-sm text-text mb-4">
                   {FLEX_PACKAGES[0].tagline}
                 </p>
                 <ul className="space-y-2">
@@ -141,7 +149,7 @@ export function AcademyPricesV2() {
                   <div className="text-3xl font-bold text-black">
                     {FLEX_PACKAGES[0].price}
                   </div>
-                  <div className="text-sm text-grey-400">
+                  <div className="text-sm text-text">
                     {FLEX_PACKAGES[0].period} &middot; {FLEX_PACKAGES[0].duration}
                   </div>
                 </div>
