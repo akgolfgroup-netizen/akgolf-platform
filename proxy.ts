@@ -17,7 +17,6 @@ const ALWAYS_ALLOWED_PATHS = [
   "/api/maintenance",
   "/api/health",
   "/academy",
-  "/junior-academy",
   "/utvikling",
   "/booking",
   "/auth",

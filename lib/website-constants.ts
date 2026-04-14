@@ -1,7 +1,6 @@
 // ─── Navigation ───
 export const NAV_LINKS = [
   { label: "Coaching", href: "/academy" },
-  { label: "Junior Academy", href: "/junior-academy" },
   { label: "Utvikling", href: "/utvikling" },
 ] as const;
 
