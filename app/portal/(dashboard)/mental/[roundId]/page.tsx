@@ -3,17 +3,17 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Save, ChevronLeft, Flag } from "lucide-react";
+import { Save, ChevronLeft, Flag, Loader2 } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
-const HOLES = Array.from({ length: 18 }, (_, i) => ({
-  number: i + 1,
-  par: i % 3 === 0 ? 3 : i % 3 === 1 ? 4 : 5,
-}));
+interface HoleInfo {
+  holeNumber: number;
+  par: number;
+}
 
 interface HoleData {
   plan: string;
@@ -34,25 +34,9 @@ export default function RoundDetailPage() {
   const [selectedHole, setSelectedHole] = useState(1);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [holeData, setHoleData] = useState<Record<number, HoleData>>(() => {
-    const initial: Record<number, HoleData> = {};
-    for (let i = 1; i <= 18; i++) {
-      initial[i] = {
-        plan: "",
-        target: "",
-        focus: 7,
-        confidence: 7,
-        routineDone: false,
-        visualization: 7,
-        result: "",
-        processScore: 7,
-        feeling: "",
-        accepted: false,
-        doubt: false,
-      };
-    }
-    return initial;
-  });
+  const [holes, setHoles] = useState<HoleInfo[]>([]);
+  const [loadingHoles, setLoadingHoles] = useState(true);
+  const [holeData, setHoleData] = useState<Record<number, HoleData>>({});
 
   useEffect(() => {
     async function load() {
@@ -74,28 +58,56 @@ export default function RoundDetailPage() {
             acceptedResult: boolean;
             lastMinuteDoubt: boolean;
           }>;
-          setHoleData((prev) => {
-            const next = { ...prev };
-            for (const e of entries) {
-              next[e.hole] = {
-                plan: e.plannedShot ?? "",
-                target: e.targetDescription ?? "",
-                focus: e.focusLevel ?? 7,
-                confidence: e.confidence ?? 7,
-                routineDone: e.routineCompleted,
-                visualization: e.visualizationQuality ?? 7,
-                result: e.outcome ?? "",
-                processScore: e.processScore ?? 7,
-                feeling: e.emotion ?? "",
-                accepted: e.acceptedResult,
-                doubt: e.lastMinuteDoubt,
-              };
+
+          // Build initial hole data for all 18 holes
+          const initial: Record<number, HoleData> = {};
+          for (let i = 1; i <= 18; i++) {
+            initial[i] = {
+              plan: "",
+              target: "",
+              focus: 7,
+              confidence: 7,
+              routineDone: false,
+              visualization: 7,
+              result: "",
+              processScore: 7,
+              feeling: "",
+              accepted: false,
+              doubt: false,
+            };
+          }
+          for (const e of entries) {
+            initial[e.hole] = {
+              plan: e.plannedShot ?? "",
+              target: e.targetDescription ?? "",
+              focus: e.focusLevel ?? 7,
+              confidence: e.confidence ?? 7,
+              routineDone: e.routineCompleted,
+              visualization: e.visualizationQuality ?? 7,
+              result: e.outcome ?? "",
+              processScore: e.processScore ?? 7,
+              feeling: e.emotion ?? "",
+              accepted: e.acceptedResult,
+              doubt: e.lastMinuteDoubt,
+            };
+          }
+          setHoleData(initial);
+
+          // Load course holes if courseId exists
+          if (data.courseId) {
+            const holesRes = await fetch(`/api/portal/courses/${data.courseId}/holes`);
+            if (holesRes.ok) {
+              const holesData = await holesRes.json();
+              const courseHoles: HoleInfo[] = (holesData.holes || [])
+                .sort((a: { holeNumber: number }, b: { holeNumber: number }) => a.holeNumber - b.holeNumber)
+                .map((h: { holeNumber: number; par: number }) => ({ holeNumber: h.holeNumber, par: h.par }));
+              setHoles(courseHoles);
             }
-            return next;
-          });
+          }
         }
       } finally {
         setLoading(false);
+        setLoadingHoles(false);
       }
     }
     load();
@@ -111,6 +123,7 @@ export default function RoundDetailPage() {
   }
 
   async function handleSave() {
+    if (!current) return;
     setSaving(true);
     try {
       const payload = {
@@ -138,6 +151,26 @@ export default function RoundDetailPage() {
     } finally {
       setSaving(false);
     }
+  }
+
+  const displayHoles = holes.length > 0 ? holes : Array.from({ length: 18 }, (_, i) => ({ holeNumber: i + 1, par: 4 }));
+  const currentPar = displayHoles.find((h) => h.holeNumber === selectedHole)?.par ?? 4;
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-8 h-8 text-black animate-spin" />
+        <span className="ml-3 text-sm text-grey-400">Laster runde...</span>
+      </div>
+    );
+  }
+
+  if (!current) {
+    return (
+      <div className="text-center py-20 text-sm text-grey-400">
+        Kunne ikke laste rundedata.
+      </div>
+    );
   }
 
   return (
@@ -170,19 +203,19 @@ export default function RoundDetailPage() {
       {/* Hole navigator */}
       <PremiumCard padding="sm" radius="large" noHover>
         <div className="flex gap-2 overflow-x-auto pb-1">
-          {HOLES.map((h) => {
-            const isActive = selectedHole === h.number;
+          {displayHoles.map((h) => {
+            const isActive = selectedHole === h.holeNumber;
             return (
               <button
-                key={h.number}
-                onClick={() => setSelectedHole(h.number)}
+                key={h.holeNumber}
+                onClick={() => setSelectedHole(h.holeNumber)}
                 className={`flex-shrink-0 w-10 h-10 rounded-lg text-sm font-semibold transition-colors ${
                   isActive
                     ? "bg-black text-white"
                     : "bg-[#F5F8F7] text-black hover:bg-[#ECF0EF]"
                 }`}
               >
-                {h.number}
+                {h.holeNumber}
               </button>
             );
           })}
@@ -195,8 +228,14 @@ export default function RoundDetailPage() {
           Hull <span className="font-semibold text-black">{selectedHole}</span>
         </div>
         <div className="text-sm text-grey-400">
-          Par <span className="font-semibold text-black">{HOLES[selectedHole - 1].par}</span>
+          Par <span className="font-semibold text-black">{currentPar}</span>
         </div>
+        {loadingHoles && (
+          <div className="text-sm text-grey-400 flex items-center gap-2">
+            <Loader2 className="w-3 h-3 animate-spin" />
+            Laster baneinfo...
+          </div>
+        )}
       </div>
 
       {/* Forms */}

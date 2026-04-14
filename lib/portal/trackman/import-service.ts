@@ -4,6 +4,7 @@
  */
 
 import { nanoid } from "nanoid";
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/portal/prisma";
 import {
   parseTrackManCSV,
@@ -126,7 +127,7 @@ export async function importTrackManSession(options: ImportTrackManOptions) {
       importDate: new Date(),
       source: "CSV_UPLOAD",
       fileName: fileName ?? null,
-      rawData: rawShots as unknown as Record<string, unknown>,
+      rawData: rawShots as unknown as Prisma.InputJsonValue,
       processed: true,
       processedAt: new Date(),
       context,
@@ -235,9 +236,9 @@ async function computeSessionAnalytics(
     data: {
       sessionId,
       userId,
-      driverStats: driverStats as unknown as Record<string, unknown>,
-      ironStats: ironStats as unknown as Record<string, unknown>,
-      wedgeStats: wedgeStats as unknown as Record<string, unknown>,
+      driverStats: driverStats as unknown as Prisma.InputJsonValue,
+      ironStats: ironStats as unknown as Prisma.InputJsonValue,
+      wedgeStats: wedgeStats as unknown as Prisma.InputJsonValue,
       avgBallSpeed,
       maxBallSpeed,
       avgCarryDistance,

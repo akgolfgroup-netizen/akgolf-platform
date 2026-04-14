@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
       situation: JSON.stringify({
         type: "ROUND_CREATED",
         courseName: body.courseName ?? null,
+        courseId: body.courseId ?? null,
         date: new Date().toISOString(),
       }),
     },

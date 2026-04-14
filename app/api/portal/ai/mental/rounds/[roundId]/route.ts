@@ -59,16 +59,20 @@ export async function GET(
 
   const roundMeta = entries.find((e) => e.hole === 0);
   let courseName: string | null = null;
+  let courseId: string | null = null;
   try {
     const parsed = JSON.parse(roundMeta?.situation ?? "{}");
     courseName = parsed.courseName ?? null;
+    courseId = parsed.courseId ?? null;
   } catch {
     courseName = null;
+    courseId = null;
   }
 
   return NextResponse.json({
     roundId,
     courseName,
+    courseId,
     entries: shotEntries,
     summary: {
       avgFocus,

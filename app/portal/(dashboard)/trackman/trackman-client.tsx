@@ -48,6 +48,7 @@ interface ApiSession {
   pressureLevel: number;
   totalShots: number;
   clubs: { club: string; count: number }[];
+  avgBallSpeed: number | null;
 }
 
 interface ApiShot {
@@ -254,7 +255,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
   const ballSpeedTrend = driverSessions.map((s) => {
     const date = new Date(s.date).toLocaleDateString("nb-NO", { day: "numeric", month: "short" });
-    return { date, speed: 0 }; // speed not available in session list, will show 0
+    return { date, speed: s.avgBallSpeed ?? 0 };
   });
 
   const carryByClub = Array.from(
@@ -412,6 +413,65 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
           </div>
         </div>
       </div>
+
+      {/* Club Stats Table */}
+      {data.clubStats.length > 0 && (
+        <div className="bg-white rounded-2xl border border-grey-200/50 overflow-hidden">
+          <div className="p-4 border-b border-grey-200/30">
+            <h3 className="font-semibold text-black">Klubb-statistikk</h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-grey-50">
+                <tr>
+                  {[
+                    "Klubb",
+                    "Klubb-fart",
+                    "Ball-fart",
+                    "Spin",
+                    "Launch",
+                    "Carry",
+                  ].map((header) => (
+                    <th
+                      key={header}
+                      className={`text-xs font-semibold text-grey-400 uppercase tracking-wider p-4 ${
+                        header === "Klubb" ? "text-left" : "text-right"
+                      }`}
+                    >
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {data.clubStats.map((club) => (
+                  <tr
+                    key={club.club}
+                    className="border-t border-grey-200/30 hover:bg-grey-50/50"
+                  >
+                    <td className="p-4 font-medium text-black">{club.club}</td>
+                    <td className="p-4 text-right text-black">
+                      {club.avgSpeed ? `${club.avgSpeed} mph` : "\u2013"}
+                    </td>
+                    <td className="p-4 text-right text-black">
+                      {club.avgBallSpeed ? `${club.avgBallSpeed} mph` : "\u2013"}
+                    </td>
+                    <td className="p-4 text-right text-black">
+                      {club.avgSpin ? `${Math.round(club.avgSpin)} rpm` : "\u2013"}
+                    </td>
+                    <td className="p-4 text-right text-black">
+                      {club.avgLaunch ? `${club.avgLaunch}\u00B0` : "\u2013"}
+                    </td>
+                    <td className="p-4 text-right font-semibold text-black">
+                      {club.avgCarry}m
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* Session List */}
       <div>

@@ -51,11 +51,18 @@ export async function GET(req: NextRequest) {
     _count: { club: true },
   });
 
+  const ballSpeedAvgs = await prisma.trackManShotData.groupBy({
+    by: ["sessionId"],
+    where: { sessionId: { in: sessionIds }, userId: user.id, ballSpeed: { not: null } },
+    _avg: { ballSpeed: true },
+  });
+
   const items = sessions.map((s) => {
     const meta = firstShots.find((f) => f.sessionId === s.sessionId);
     const clubs = clubCounts
       .filter((c) => c.sessionId === s.sessionId)
       .map((c) => ({ club: c.club, count: c._count.club }));
+    const avgBallSpeed = ballSpeedAvgs.find((b) => b.sessionId === s.sessionId)?._avg.ballSpeed ?? null;
 
     return {
       sessionId: s.sessionId,
@@ -64,6 +71,7 @@ export async function GET(req: NextRequest) {
       pressureLevel: meta?.pressureLevel ?? 1,
       totalShots: s._count.sessionId,
       clubs,
+      avgBallSpeed: avgBallSpeed ? Math.round(avgBallSpeed * 10) / 10 : null,
     };
   });
 

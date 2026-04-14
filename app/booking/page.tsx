@@ -2,10 +2,27 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, ArrowLeft, Clock, User, X } from "lucide-react";
+import { MapPin, ArrowLeft, Clock, User } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 // ─── Data ───
+
+interface ServiceType {
+  id: string;
+  name: string;
+  description?: string | null;
+  duration: number;
+  price: number;
+  category?: string | null;
+}
+
+interface Instructor {
+  id: string;
+  title?: string | null;
+  bio?: string | null;
+  specialization?: string | null;
+  User: { name: string; image?: string | null };
+}
 
 interface Trainer {
   id: string;
@@ -14,6 +31,7 @@ interface Trainer {
   image: string | null;
   acuityEmbedUrl: string;
   services: string[];
+  instructorId: string;
 }
 
 interface Location {
@@ -22,56 +40,98 @@ interface Location {
   trainers: Trainer[];
 }
 
-const LOCATIONS: Location[] = [
-  {
+// Hardcoded location mapping + Acuity URLs until backend has full facility data
+const LOCATION_CONFIG: Record<string, { name: string; shortName: string; acuityEmbedUrl: string }> = {
+  instr_anders: {
     name: "Gamle Fredrikstad Golfklubb",
     shortName: "GFGK",
-    trainers: [
-      {
-        id: "anders-gfgk",
-        name: "Anders Kristiansen",
-        role: "Head Coach",
-        image: "/images/branding/ak-golf-academy-20.jpg",
-        acuityEmbedUrl:
-          "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=11780416&ref=embedded_csp",
-        services: ["Performance", "Performance Pro", "Flex 50", "Banecoaching"],
-      },
-      {
-        id: "markus-gfgk",
-        name: "Markus R. Pedersen",
-        role: "Coach",
-        image: "/images/branding/ak-golf-academy-21.jpg",
-        acuityEmbedUrl:
-          "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=13938964&ref=embedded_csp",
-        services: ["Flex 20", "Flex 50", "Gruppe", "After Work"],
-      },
-    ],
+    acuityEmbedUrl: "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=11780416&ref=embedded_csp",
   },
-  {
-    name: "Miklagard Golfklubb",
-    shortName: "Miklagard",
-    trainers: [
-      {
-        id: "anders-miklagard",
-        name: "Anders Kristiansen",
-        role: "Head Coach",
-        image: "/images/branding/ak-golf-academy-20.jpg",
-        acuityEmbedUrl:
-          "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=7951417&ref=embedded_csp",
-        services: ["Performance", "Performance Pro", "Flex 50"],
-      },
-    ],
+  instr_markus: {
+    name: "Gamle Fredrikstad Golfklubb",
+    shortName: "GFGK",
+    acuityEmbedUrl: "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=13938964&ref=embedded_csp",
   },
-];
+};
+
+const TRAINER_IMAGES: Record<string, string> = {
+  "Anders Kristiansen": "/images/branding/ak-golf-academy-20.jpg",
+  "Markus Røinås Pedersen": "/images/branding/ak-golf-academy-21.jpg",
+};
 
 // ─── Page ───
 
-export default function TempBookingPage() {
+export default function BookingPage() {
   const [selectedTrainer, setSelectedTrainer] = useState<{
     trainer: Trainer;
     locationName: string;
   } | null>(null);
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [loading, setLoading] = useState(true);
   const embedRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const [instructorsRes, servicesRes] = await Promise.all([
+          fetch("/api/portal/public/instructors"),
+          fetch("/api/portal/public/service-types"),
+        ]);
+
+        const instructors: Instructor[] = instructorsRes.ok ? await instructorsRes.json() : [];
+        const serviceTypes: ServiceType[] = servicesRes.ok ? await servicesRes.json() : [];
+
+        // Build trainer objects from backend data
+        const trainerMap = new Map<string, Trainer>();
+
+        for (const inst of instructors) {
+          const name = inst.User?.name ?? "Coach";
+          const config = LOCATION_CONFIG[inst.id];
+          if (!config) continue; // Skip instructors without location config
+
+          trainerMap.set(inst.id, {
+            id: inst.id,
+            name,
+            role: inst.title ?? "Coach",
+            image: TRAINER_IMAGES[name] ?? null,
+            acuityEmbedUrl: config.acuityEmbedUrl,
+            services: [],
+            instructorId: inst.id,
+          });
+        }
+
+        // Map services to trainers based on service-types API (which includes instructors)
+        for (const st of serviceTypes) {
+          const instructorLinks = (st as unknown as { Instructor?: { id: string }[] }).Instructor ?? [];
+          for (const link of instructorLinks) {
+            const trainer = trainerMap.get(link.id);
+            if (trainer) {
+              trainer.services.push(st.name);
+            }
+          }
+        }
+
+        // Group by location
+        const locationMap = new Map<string, Location>();
+        for (const trainer of trainerMap.values()) {
+          const config = LOCATION_CONFIG[trainer.instructorId];
+          if (!locationMap.has(config.shortName)) {
+            locationMap.set(config.shortName, {
+              name: config.name,
+              shortName: config.shortName,
+              trainers: [],
+            });
+          }
+          locationMap.get(config.shortName)!.trainers.push(trainer);
+        }
+
+        setLocations(Array.from(locationMap.values()));
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
 
   useEffect(() => {
     if (selectedTrainer && embedRef.current) {
@@ -97,8 +157,22 @@ export default function TempBookingPage() {
       </header>
 
       <main className="max-w-[1120px] mx-auto px-4 md:px-8 py-12 md:py-20">
-        {/* Trainer selection or embed */}
-        {selectedTrainer ? (
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            <span className="ml-3 text-sm text-muted">Laster trenere...</span>
+          </div>
+        ) : locations.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-muted">Ingen trenere tilgjengelig for online booking akkurat nå.</p>
+            <p className="text-sm text-muted mt-2">
+              Ta kontakt pa{" "}
+              <a href="mailto:anders@akgolf.no" className="text-primary font-medium">
+                anders@akgolf.no
+              </a>
+            </p>
+          </div>
+        ) : selectedTrainer ? (
           <div ref={embedRef}>
             {/* Back button */}
             <button
@@ -173,7 +247,7 @@ export default function TempBookingPage() {
           <>
             {/* Location cards */}
             <div className="space-y-16">
-              {LOCATIONS.map((location) => (
+              {locations.map((location) => (
                 <section key={location.shortName}>
                   {/* Location Header */}
                   <div className="flex items-center gap-3 mb-8">
