@@ -34,7 +34,7 @@ export function BentoFeatures() {
           <div className="text-center mb-16">
             <SectionLabel>Metodikk</SectionLabel>
             <h2 className="w-heading-lg mt-5">Data-drevet coaching</h2>
-            <p className="text-[#5A6E66] max-w-xl mx-auto mt-5 text-lg leading-relaxed">
+            <p className="text-[grey-400] max-w-xl mx-auto mt-5 text-lg leading-relaxed">
               Kombinasjonen av TrackMan-data, Strokes Gained-analyse og
               individuell oppfolging gir deg en klar retning.
             </p>
@@ -47,14 +47,14 @@ export function BentoFeatures() {
         >
           {/* ── SG Card (large 2x2) ── */}
           <StaggerItem className="md:col-span-2 md:row-span-2">
-            <div className="bg-white rounded-[20px] p-10 md:p-12 h-full border border-[#D5DFDB] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] relative overflow-hidden">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 bg-[#ECF0EF]">
-                <Target className="w-5 h-5 text-[#0A1F18]" />
+            <div className="bg-white rounded-[20px] p-10 md:p-12 h-full border border-[grey-200] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] relative overflow-hidden">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 bg-[grey-50]">
+                <Target className="w-5 h-5 text-[black]" />
               </div>
-              <h3 className="font-display text-xl md:text-2xl font-bold mb-3 text-[#0A1F18]">
+              <h3 className="font-display text-xl md:text-2xl font-bold mb-3 text-[black]">
                 Strokes Gained-analyse
               </h3>
-              <p className="text-sm leading-relaxed text-[#5A6E66] max-w-md">
+              <p className="text-sm leading-relaxed text-[grey-400] max-w-md">
                 Identifiser noyaktig hvor du taper og vinner slag sammenlignet
                 med ditt handicap-niva. Data-drevet beslutninger for treningen
                 din.
@@ -70,11 +70,11 @@ export function BentoFeatures() {
               >
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart data={sgData} cx="50%" cy="50%" outerRadius="75%">
-                    <PolarGrid stroke="#D5DFDB" strokeWidth={0.5} />
+                    <PolarGrid stroke="grey-200" strokeWidth={0.5} />
                     <Radar
                       dataKey="normalized"
-                      stroke="#005840"
-                      fill="#005840"
+                      stroke="success"
+                      fill="success"
                       fillOpacity={0.1}
                       strokeWidth={2}
                       animationDuration={1200}
@@ -87,14 +87,14 @@ export function BentoFeatures() {
 
           {/* ── AI Card (small) ── */}
           <StaggerItem className="md:col-span-1">
-            <div className="bg-[var(--color-brand-light)] rounded-[20px] p-8 h-full border border-[#D5DFDB] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
+            <div className="bg-[var(--color-brand-light)] rounded-[20px] p-8 h-full border border-[grey-200] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 bg-[var(--color-brand)]/10">
                 <Sparkles className="w-5 h-5 text-[var(--color-brand)]" />
               </div>
-              <h3 className="font-display text-xl font-bold mb-3 text-[#0A1F18]">
+              <h3 className="font-display text-xl font-bold mb-3 text-[black]">
                 AI-drevet treningsplan
               </h3>
-              <p className="text-sm leading-relaxed text-[#5A6E66]">
+              <p className="text-sm leading-relaxed text-[grey-400]">
                 Personlig treningsplan som oppdateres etter hver okt basert pa
                 dine data.
               </p>
@@ -105,10 +105,10 @@ export function BentoFeatures() {
                   <div key={d.day} className="flex flex-col items-center gap-1.5">
                     <div
                       className={`w-10 h-10 rounded-lg ${
-                        d.done ? "bg-[#005840]" : "bg-[#D5DFDB]"
+                        d.done ? "bg-[success]" : "bg-[grey-200]"
                       }`}
                     />
-                    <span className="text-[10px] font-medium text-[#5A6E66]">
+                    <span className="text-[10px] font-medium text-[grey-400]">
                       {d.day}
                     </span>
                   </div>
@@ -119,14 +119,14 @@ export function BentoFeatures() {
 
           {/* ── TrackMan Card (small, dark) ── */}
           <StaggerItem className="md:col-span-1">
-            <div className="bg-[#0A1F18] rounded-[20px] p-8 h-full border border-transparent transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
+            <div className="bg-[black] rounded-[20px] p-8 h-full border border-transparent transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 bg-white/10">
                 <Crosshair className="w-5 h-5 text-white" />
               </div>
               <h3 className="font-display text-xl font-bold mb-3 text-white">
                 TrackMan-integrasjon
               </h3>
-              <p className="text-sm leading-relaxed text-[#7A8C85]">
+              <p className="text-sm leading-relaxed text-[grey-400]">
                 Hver okt inkluderer fullstendig TrackMan-analyse med balldata og
                 klubbdata.
               </p>

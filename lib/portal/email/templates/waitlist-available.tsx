@@ -79,12 +79,12 @@ export function WaitlistAvailableEmail({
 }
 
 const body = {
-  backgroundColor: "#f6f6f6",
+  backgroundColor: "#f5f5f5",
   fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
 };
 
 const container = {
-  backgroundColor: "#ffffff",
+  backgroundColor: "white",
   margin: "0 auto",
   padding: "32px",
   maxWidth: "560px",
@@ -92,34 +92,34 @@ const container = {
 };
 
 const heading = {
-  color: "#0A1F18",
+  color: "black",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
 };
 
 const greeting = {
-  color: "#333",
+  color: "#333333",
   fontSize: "16px",
   margin: "0 0 8px",
 };
 
 const text = {
-  color: "#555",
+  color: "#555555",
   fontSize: "14px",
   lineHeight: "1.6",
   margin: "0 0 16px",
 };
 
 const detailsBox = {
-  backgroundColor: "#f9fafb",
+  backgroundColor: "#f8f9fa",
   borderRadius: "6px",
   padding: "16px",
   margin: "0 0 16px",
 };
 
 const detailRow = {
-  color: "#333",
+  color: "#333333",
   fontSize: "14px",
   margin: "0 0 6px",
   lineHeight: "1.5",
@@ -128,7 +128,7 @@ const detailRow = {
 const button = {
   backgroundColor: "#22c55e",
   borderRadius: "6px",
-  color: "#ffffff",
+  color: "white",
   fontSize: "14px",
   fontWeight: "600" as const,
   padding: "12px 24px",
@@ -139,7 +139,7 @@ const button = {
 };
 
 const warningBox = {
-  backgroundColor: "#ECF0EF",
+  backgroundColor: "#f5f5f5",
   borderRadius: "6px",
   padding: "12px 16px",
   margin: "0 0 16px",
@@ -153,12 +153,12 @@ const warningText = {
 };
 
 const hr = {
-  borderColor: "#e5e7eb",
+  borderColor: "#e5e5e5",
   margin: "24px 0",
 };
 
 const footer = {
-  color: "#999",
+  color: "#999999",
   fontSize: "12px",
   margin: "24px 0 0",
 };

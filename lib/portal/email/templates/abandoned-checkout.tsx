@@ -86,7 +86,7 @@ export function AbandonedCheckoutEmail({
 }
 
 const main = {
-  backgroundColor: "#ECF0EF",
+  backgroundColor: "#f5f5f5",
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
 };
@@ -105,33 +105,33 @@ const header = {
 const logo = {
   fontSize: "24px",
   fontWeight: "700",
-  color: "#0A1F18",
+  color: "black",
   margin: "0",
 };
 
 const content = {
-  backgroundColor: "#FFFFFF",
+  backgroundColor: "white",
   borderRadius: "16px",
   padding: "32px",
-  border: "1px solid #D5DFDB",
+  border: "1px solid #d1d5db",
 };
 
 const greeting = {
   fontSize: "18px",
   fontWeight: "600",
-  color: "#0A1F18",
+  color: "black",
   margin: "0 0 16px 0",
 };
 
 const paragraph = {
   fontSize: "15px",
   lineHeight: "24px",
-  color: "#0A1F18",
+  color: "black",
   margin: "0 0 16px 0",
 };
 
 const featureList = {
-  backgroundColor: "#ECF0EF",
+  backgroundColor: "#f5f5f5",
   borderRadius: "12px",
   padding: "16px 20px",
   margin: "16px 0",
@@ -139,7 +139,7 @@ const featureList = {
 
 const featureItem = {
   fontSize: "14px",
-  color: "#0A1F18",
+  color: "black",
   margin: "8px 0",
   paddingLeft: "20px",
   position: "relative" as const,
@@ -151,8 +151,8 @@ const buttonContainer = {
 };
 
 const button = {
-  backgroundColor: "#0A1F18",
-  color: "#FFFFFF",
+  backgroundColor: "black",
+  color: "white",
   fontSize: "15px",
   fontWeight: "600",
   padding: "14px 28px",
@@ -162,13 +162,13 @@ const button = {
 
 const smallText = {
   fontSize: "13px",
-  color: "#7A8C85",
+  color: "#6b7280",
   textAlign: "center" as const,
   margin: "16px 0 0 0",
 };
 
 const hr = {
-  borderColor: "#D5DFDB",
+  borderColor: "#d1d5db",
   margin: "32px 0",
 };
 
@@ -178,7 +178,7 @@ const footer = {
 
 const footerText = {
   fontSize: "13px",
-  color: "#7A8C85",
+  color: "#6b7280",
   margin: "0 0 8px 0",
 };
 

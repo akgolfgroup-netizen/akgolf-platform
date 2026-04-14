@@ -69,12 +69,12 @@ export function WelcomeDay0Email({ name }: WelcomeDay0Props) {
 }
 
 const body = {
-  backgroundColor: "#f6f6f6",
+  backgroundColor: "#f5f5f5",
   fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
 };
 
 const container = {
-  backgroundColor: "#ffffff",
+  backgroundColor: "white",
   margin: "0 auto",
   padding: "32px",
   maxWidth: "560px",
@@ -82,27 +82,27 @@ const container = {
 };
 
 const heading = {
-  color: "#0A1F18",
+  color: "black",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
 };
 
 const greeting = {
-  color: "#333",
+  color: "#333333",
   fontSize: "16px",
   margin: "0 0 8px",
 };
 
 const text = {
-  color: "#555",
+  color: "#555555",
   fontSize: "14px",
   lineHeight: "1.6",
   margin: "0 0 16px",
 };
 
 const ctaBox = {
-  backgroundColor: "#f9fafb",
+  backgroundColor: "#f8f9fa",
   borderRadius: "8px",
   padding: "20px",
   margin: "24px 0",
@@ -110,22 +110,22 @@ const ctaBox = {
 };
 
 const ctaTitle = {
-  color: "#0A1F18",
+  color: "black",
   fontSize: "16px",
   fontWeight: "600" as const,
   margin: "0 0 8px",
 };
 
 const ctaText = {
-  color: "#555",
+  color: "#555555",
   fontSize: "14px",
   margin: "0 0 16px",
 };
 
 const button = {
-  backgroundColor: "#0A1F18",
+  backgroundColor: "black",
   borderRadius: "980px",
-  color: "#ffffff",
+  color: "white",
   fontSize: "14px",
   fontWeight: "600" as const,
   padding: "12px 24px",
@@ -135,32 +135,32 @@ const button = {
 };
 
 const tipsBox = {
-  backgroundColor: "#EFF6FF",
+  backgroundColor: "#eff6ff",
   borderRadius: "8px",
   padding: "16px",
   margin: "16px 0",
 };
 
 const tipsTitle = {
-  color: "#1E40AF",
+  color: "#1e40af",
   fontSize: "14px",
   fontWeight: "600" as const,
   margin: "0 0 12px",
 };
 
 const tipItem = {
-  color: "#1E40AF",
+  color: "#1e40af",
   fontSize: "13px",
   margin: "0 0 8px",
 };
 
 const hr = {
-  borderColor: "#e5e7eb",
+  borderColor: "#e5e5e5",
   margin: "24px 0",
 };
 
 const footer = {
-  color: "#999",
+  color: "#999999",
   fontSize: "12px",
   margin: "8px 0 0",
 };
